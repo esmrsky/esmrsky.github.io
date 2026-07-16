@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fear of God — Discussion Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E0D0B;
+    --bg-2:#151310;
+    --ink:#F2EBDC;
+    --ink-dim:#B6AC9B;
+    --ink-faint:#7E7768;
+    --ember:#F3651C;
+    --ember-hi:#FF8B4D;
+    --ember-line:rgba(243,101,28,.45);
+    --ember-bg:rgba(243,101,28,.12);
+    --gold:#DFCB93;
+    --gold-line:rgba(223,203,147,.42);
+    --gold-bg:rgba(223,203,147,.10);
+    --sage:#A5CBB5;
+    --sage-line:rgba(165,203,181,.42);
+    --sage-bg:rgba(165,203,181,.10);
+    --ash:#9FB2C6;
+    --ash-line:rgba(159,178,198,.45);
+    --ash-bg:rgba(159,178,198,.08);
+    --line:rgba(242,235,220,.14);
+    --line-soft:rgba(242,235,220,.08);
+    --head-bg:rgba(14,13,11,.92);
+    --pop-bg:#1B1815;
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Instrument Sans",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  body.light{
+    --bg:#F5EFE1;
+    --bg-2:#ECE4D0;
+    --ink:#181510;
+    --ink-dim:#52493A;
+    --ink-faint:#756C5B;
+    --ember-hi:#B84A08;
+    --ember-line:rgba(184,74,8,.45);
+    --ember-bg:rgba(230,88,12,.09);
+    --gold:#7A6827;
+    --gold-line:rgba(122,104,39,.45);
+    --gold-bg:rgba(122,104,39,.08);
+    --sage:#3C674F;
+    --sage-line:rgba(60,103,79,.45);
+    --sage-bg:rgba(60,103,79,.08);
+    --ash:#4E637A;
+    --ash-line:rgba(78,99,122,.45);
+    --ash-bg:rgba(78,99,122,.08);
+    --line:rgba(24,21,16,.18);
+    --line-soft:rgba(24,21,16,.10);
+    --head-bg:rgba(245,239,225,.92);
+    --pop-bg:#FFFBF1;
+  }
+  body.light .pop{box-shadow:0 16px 48px rgba(70,52,28,.22)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  h1,h2,h4,.q-sub,.lede,.coda,.view-q{text-wrap:balance}
+  p,li,.chip,.gloss,.view-body,.vfoot,.vnote,.note,.attrib,.pop-text{text-wrap:pretty}
+  html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:1.0625rem;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    transition:background .35s ease,color .35s ease;
+  }
+  ::selection{background:var(--ember);color:var(--bg)}
+
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  @media(min-width:1200px){
+    html{font-size:18.5px}
+    .wrap,.top-inner{max-width:1100px}
+  }
+
+  /* ---------- header ---------- */
+  header.top{
+    position:sticky;top:0;z-index:50;
+    background:var(--head-bg);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:860px;margin:0 auto;padding:12px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .top-title{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim)}
+  .top-title b{color:var(--ink);font-weight:700}
+  .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tpill{
+    font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;
+    padding:6px 12px;border:1px solid var(--line);border-radius:999px;
+    background:none;color:var(--ink-dim);cursor:pointer;transition:all .2s;
+  }
+  .tpill:hover{border-color:var(--ink-dim);color:var(--ink)}
+  .tpill.active{border-color:var(--ember);color:var(--ember-hi);background:var(--ember-bg)}
+  .expand-btn{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    padding:6px 12px;border:none;border-left:1px solid var(--line);
+    background:none;color:var(--ink-faint);cursor:pointer;
+  }
+  .expand-btn:hover{color:var(--ink)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:calc(100svh - 58px);display:flex;flex-direction:column;justify-content:center;padding:72px 0 56px;border-bottom:1px solid var(--line)}
+  .hero .kicker{
+    align-self:flex-start;display:inline-flex;align-items:center;
+    font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ember-hi);background:var(--ember-bg);border:1px solid var(--ember-line);
+    border-radius:999px;padding:7px 16px;margin-bottom:26px;
+  }
+  .hero h1{
+    font-family:var(--serif);font-weight:380;font-size:clamp(3rem,9vw,5.6rem);
+    line-height:1.04;letter-spacing:-.01em;padding-bottom:.05em;width:fit-content;
+    background:linear-gradient(108deg,var(--ink) 38%,var(--ember-hi) 96%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero h1 em{font-style:italic;font-weight:330}
+  .hero p.lede{margin-top:28px;font-size:1.125rem;color:var(--ink-dim);max-width:540px}
+  .hero p.rule{
+    margin-top:36px;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;
+    color:var(--ink-dim);border-left:2px solid var(--ember);padding-left:14px;max-width:520px;line-height:1.8;
+  }
+
+  /* ---------- sections ---------- */
+  section.q{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:96px 0;border-bottom:1px solid var(--line);scroll-snap-align:start}
+  .q-meta{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .q-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ember-hi);letter-spacing:.08em}
+  .q-kicker{
+    font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ember-hi);background:var(--ember-bg);border:1px solid var(--ember-line);
+    border-radius:999px;padding:5px 13px;
+  }
+  h2.q-text{
+    font-family:var(--serif);font-weight:440;font-size:clamp(1.75rem,4.6vw,3.15rem);
+    line-height:1.16;letter-spacing:-.005em;max-width:760px;
+  }
+  h2.q-text em{font-style:italic;font-weight:390;color:var(--ember-hi)}
+  .q-sub{margin-top:16px;font-size:1.1rem;color:var(--ink-dim);max-width:640px}
+  .q-sub em{color:var(--ink);font-style:italic}
+
+  /* reveal buttons */
+  .rev-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  button.rev{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+    padding:10px 18px;border:1px solid var(--line);border-radius:999px;
+    background:none;color:var(--ink-dim);cursor:pointer;transition:all .25s;
+  }
+  button.rev .plus{
+    display:inline-block;width:11px;height:11px;position:relative;transition:transform .3s;
+  }
+  button.rev .plus::before,button.rev .plus::after{
+    content:"";position:absolute;background:var(--ember);
+  }
+  button.rev .plus::before{left:5px;top:0;width:1.5px;height:11px}
+  button.rev .plus::after{left:0;top:5px;width:11px;height:1.5px}
+  button.rev:hover{border-color:var(--ink-dim);color:var(--ink)}
+  button.rev[aria-expanded="true"]{border-color:var(--ember);color:var(--ember-hi);background:var(--ember-bg)}
+  button.rev[aria-expanded="true"] .plus{transform:rotate(45deg)}
+
+  /* panels */
+  .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1)}
+  .panel>.panel-in{overflow:hidden}
+  .panel.open{grid-template-rows:1fr}
+  .panel-body{padding-top:28px}
+
+  /* epistemics tags */
+  .tag{
+    display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:5px 13px;border-radius:999px;margin-bottom:12px;
+  }
+  .tag.text{color:var(--ember-hi);border:1px solid var(--ember-line);background:var(--ember-bg)}
+  .tag.scholarship{color:var(--gold);border:1px solid var(--gold-line);background:var(--gold-bg)}
+  .tag.interp{color:var(--sage);border:1px solid var(--sage-line);background:var(--sage-bg)}
+  .tag.discuss{color:var(--ink);border:1px solid var(--line);background:var(--line-soft)}
+
+  .note{max-width:680px;color:var(--ink-dim);margin-bottom:26px}
+  .note:last-child{margin-bottom:0}
+  .note strong{color:var(--ink);font-weight:700}
+  .note em{color:var(--ink)}
+  .note p+p{margin-top:12px}
+
+  /* listen-for chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;max-width:680px}
+  .chip{
+    font-size:14.5px;color:var(--ink-dim);background:var(--bg-2);
+    border:1px solid var(--line-soft);border-radius:6px;padding:7px 13px;
+  }
+  .chip b{color:var(--ink);font-weight:650}
+
+  /* ---------- verse cards ---------- */
+  .verse{
+    border-left:3px solid var(--ember);
+    background:linear-gradient(100deg,var(--ember-bg),transparent 46%),var(--bg-2);
+    padding:22px 26px;margin:0 0 18px;max-width:720px;border-radius:0 8px 8px 0;
+  }
+  .vhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .vref{font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ember-hi)}
+  .vtag{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--ink-faint)}
+  .vtext{display:none;font-family:var(--serif);font-weight:350;font-size:1.18rem;line-height:1.55}
+  .vtext.show{display:block}
+  .vnote{display:none;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink-faint)}
+  .vnote.show{display:block}
+  .vfoot{margin-top:12px;font-size:14px;color:var(--ink-dim)}
+  .vfoot em{color:var(--ink)}
+  .vfoot strong{color:var(--ink);font-weight:650}
+
+  /* word cards */
+  .words{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;max-width:760px;margin-bottom:26px}
+  .word{border:1px solid var(--line-soft);border-top:2px solid var(--ember-line);border-radius:6px;padding:20px;background:var(--bg-2)}
+  .word .orig{font-family:var(--serif);font-size:1.7rem;font-weight:380;line-height:1.2;color:var(--gold)}
+  .word .translit{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ember-hi);letter-spacing:.08em;margin-top:6px}
+  .word .gloss{font-size:15px;color:var(--ink-dim);margin-top:10px;line-height:1.62}
+  .word .gloss b{color:var(--ink);font-weight:650}
+
+  /* ---------- word swap signature ---------- */
+  .swap-stage{
+    margin:36px 0 10px;padding:56px 24px;border:1px solid var(--ember-line);border-radius:8px;
+    text-align:center;background:radial-gradient(120% 90% at 50% 0%,var(--ember-bg),transparent 62%) ,var(--bg-2);
+    max-width:720px;position:relative;overflow:hidden;
+  }
+  .swap-word{position:relative;height:clamp(3.4rem,10vw,5.2rem);margin-bottom:18px}
+  .swap-word span{
+    position:absolute;left:0;right:0;top:0;
+    font-family:var(--serif);font-weight:340;letter-spacing:.02em;
+    font-size:clamp(2.6rem,8vw,4.4rem);line-height:1.1;
+  }
+  .swap-word .w-fear{color:var(--ink);animation:fearFade 8s ease-in-out infinite}
+  .swap-word .w-worship{color:var(--ember-hi);animation:worshipFade 8s ease-in-out infinite}
+  @keyframes fearFade{0%,38%{opacity:1}50%,88%{opacity:0}100%{opacity:1}}
+  @keyframes worshipFade{0%,38%{opacity:0}50%,88%{opacity:1}100%{opacity:0}}
+  .swap-cap{position:relative;height:1.4em;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .swap-cap span{position:absolute;left:0;right:0}
+  .swap-cap .c-fear{color:var(--ink-faint);animation:fearFade 8s ease-in-out infinite}
+  .swap-cap .c-worship{color:var(--ember-hi);animation:worshipFade 8s ease-in-out infinite}
+  .swap-line{margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--ink-dim);letter-spacing:.04em}
+  @media (prefers-reduced-motion: reduce){
+    .swap-word .w-fear,.swap-cap .c-fear{animation:none;opacity:0}
+    .swap-word .w-worship,.swap-cap .c-worship{animation:none;opacity:1}
+    .panel{transition:none}
+    .hero-glow,.scroll-cue,.pulse path,.fire-rule,.threads-svg .tline,.threads-svg .tdot,.displace .core,.displace .minor{animation:none}
+  }
+
+  /* covenant compare */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:720px;margin-bottom:26px}
+  @media(max-width:620px){.compare{grid-template-columns:1fr}}
+  .cov{border:1px solid var(--line-soft);border-top:2px solid var(--line);border-radius:6px;padding:22px;background:var(--bg-2)}
+  .cov h4{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+  .cov.sinai{border-top-color:var(--ash-line);background:linear-gradient(180deg,var(--ash-bg),transparent 55%),var(--bg-2)}
+  .cov.zion{border-top-color:var(--ember-line);background:linear-gradient(180deg,var(--ember-bg),transparent 55%),var(--bg-2)}
+  .cov.sinai h4{color:var(--ash)}
+  .cov.zion h4{color:var(--ember-hi)}
+  .cov ul{list-style:none}
+  .cov li{font-size:15px;color:var(--ink-dim);padding:7px 0;border-top:1px solid var(--line-soft)}
+  .cov li:first-child{border-top:none}
+  .cov li b{color:var(--ink);font-weight:650}
+
+  /* ---------- reference popovers ---------- */
+  .xref{border-bottom:1px dotted var(--ember);cursor:pointer;transition:color .2s}
+  .xref:hover,.xref:focus-visible{color:var(--ember-hi);outline:none}
+  .pop{
+    position:fixed;z-index:100;max-width:min(340px,calc(100vw - 20px));
+    background:var(--pop-bg);border:1px solid rgba(243,101,28,.38);border-radius:8px;
+    padding:16px 18px 13px;box-shadow:0 16px 48px rgba(0,0,0,.65);
+    opacity:0;visibility:hidden;transform:translateY(4px);
+    transition:opacity .18s ease,transform .18s ease,visibility .18s;
+  }
+  .pop.on{opacity:1;visibility:visible;transform:translateY(0)}
+  .pop-ref{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ember-hi);margin-bottom:8px}
+  .pop-text{font-family:var(--serif);font-weight:350;font-size:15.5px;line-height:1.55;color:var(--ink)}
+  .pop-tag{margin-top:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--ink-faint)}
+  @media (prefers-reduced-motion: reduce){.pop{transition:none}}
+
+  /* ---------- ambient loops ---------- */
+  .hero-glow{
+    position:absolute;left:-70px;top:16%;width:440px;height:440px;border-radius:50%;
+    background:radial-gradient(circle,rgba(243,101,28,.24),transparent 62%);
+    filter:blur(10px);pointer-events:none;animation:breathe 7s ease-in-out infinite;z-index:-1;
+  }
+  @keyframes breathe{0%,100%{transform:scale(.94);opacity:.55}50%{transform:scale(1.08);opacity:.95}}
+  .scroll-cue{
+    margin-top:44px;width:14px;height:14px;
+    border-right:1.5px solid var(--ember);border-bottom:1.5px solid var(--ember);
+    transform:rotate(45deg);animation:cue 2.2s ease-in-out infinite;
+  }
+  @keyframes cue{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.9}50%{transform:rotate(45deg) translate(6px,6px);opacity:.35}}
+  .pulse{display:block;width:min(440px,100%);height:54px;margin-top:26px}
+  .pulse path{fill:none;stroke:var(--ember);stroke-width:1.6;stroke-dasharray:100;animation:pulse 3.4s linear infinite}
+  @keyframes pulse{0%{stroke-dashoffset:100}55%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}
+  .fire-rule{
+    height:2px;max-width:720px;margin:0 0 26px;border-radius:2px;
+    background:linear-gradient(90deg,transparent,#F3651C 25%,#FFB37A 50%,#F3651C 75%,transparent);
+    background-size:200% 100%;animation:shimmer 4s linear infinite;
+  }
+  @keyframes shimmer{to{background-position:-200% 0}}
+  .threads-svg{display:block;width:min(640px,100%);height:110px;margin:34px 0 4px}
+  .threads-svg .tline{fill:none;stroke:rgba(243,101,28,.5);stroke-width:1.4;stroke-dasharray:7 9;animation:tflow 2.6s linear infinite}
+  .threads-svg .tdot{fill:var(--ember);animation:tdotp 2.6s ease-in-out infinite}
+  @keyframes tflow{to{stroke-dashoffset:-16}}
+  @keyframes tdotp{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* displacement loop */
+  .displace{display:block;width:min(560px,100%);height:130px;margin:30px 0 4px}
+  .displace circle{transform-box:fill-box;transform-origin:center}
+  .displace .core{fill:none;stroke:var(--ember);stroke-width:1.6;animation:coreGrow 6.5s ease-in-out infinite}
+  @keyframes coreGrow{0%,100%{transform:scale(.34);opacity:.4}50%{transform:scale(1);opacity:1}}
+  .displace .minor{fill:var(--ink-faint);animation:minorFade 6.5s ease-in-out infinite}
+  @keyframes minorFade{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(.3);opacity:.1}}
+
+  /* ---------- views ---------- */
+  .views{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;max-width:760px}
+  .view{border:1px solid var(--line-soft);border-top:2px solid var(--ember-line);border-radius:6px;padding:20px;background:var(--bg-2)}
+  .view-q{font-family:var(--serif);font-style:italic;font-weight:420;font-size:1.18rem;margin-bottom:10px;color:var(--ember-hi)}
+  .view-body{font-size:15px;color:var(--ink-dim);line-height:1.62}
+  .view-body b{color:var(--ink);font-weight:650}
+
+  /* footer */
+  footer{padding:64px 0 96px}
+  .coda{
+    font-family:var(--serif);font-style:italic;font-weight:320;
+    font-size:clamp(1.3rem,3.6vw,1.9rem);line-height:1.4;max-width:640px;
+  }
+  .coda-ref{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ember-hi);margin-top:16px}
+  .attrib{margin-top:56px;font-family:var(--mono);font-size:10.5px;line-height:1.9;color:var(--ink-faint);max-width:720px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="top-title"><b>The Fear of God</b> · discussion guide</div>
+    <div class="controls" role="group" aria-label="Bible translation">
+      <button class="tpill active" data-t="NIV">NIV</button>
+      <button class="tpill" data-t="NLT">NLT</button>
+      <button class="tpill" data-t="NASB">NASB</button>
+      <button class="tpill" data-t="TPT">TPT</button>
+      <button class="expand-btn" id="expandAll">Expand all</button>
+      <button class="expand-btn" id="modeBtn">Light</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="kicker">A conversation, not a lecture</div>
+    <h1>The Fear <em>of</em> God</h1>
+    <p class="lede">Sixteen questions, honest answers first. We talk before we tap — the reveals hold scripture, the original languages, and places the conversation can go.</p>
+    <p class="rule">HOW THIS WORKS — Read the question. Sit in the silence. Say the honest thing, not the church one. Then reveal. Translations switch any time with the pills above.</p>
+    <div class="scroll-cue" aria-hidden="true"></div>
+  </div>
+
+  <!-- 01 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">01</span><span class="q-kicker">Open floor</span></div>
+    <h2 class="q-text">What comes to mind when you hear <em>"the fear of God"?</em></h2>
+    <p class="q-sub">Not the right answer — the honest one. First word, first image, first flinch.</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p1a"><span class="plus"></span>Common first answers</button>
+    </div>
+    <div class="panel" id="p1a"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="chips">
+        <div class="chip"><b>Terror</b> — being scared of punishment, hell, lightning bolts</div>
+        <div class="chip"><b>Respect</b> — "it just means respect" (the quick defuse)</div>
+        <div class="chip"><b>Distance</b> — God as unapproachable, keep your head down</div>
+        <div class="chip"><b>Awe</b> — bigness, smallness, standing at the edge of something vast</div>
+        <div class="chip"><b>Old religion</b> — "that's an Old Testament thing"</div>
+        <div class="chip"><b>Nothing</b> — some have honestly never thought about it</div>
+      </div>
+      <div class="note" style="margin-top:22px"><p>No wrong answers here — every one of these is a thread the rest of the night pulls on. If "it just means respect" is in the room, hold it loosely: question 05 tests whether the original words let us off that easily.</p></div>
+    </div></div></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">02</span><span class="q-kicker">The feeling itself</span></div>
+    <h2 class="q-text">How would you describe the <em>feeling</em> of fear?</h2>
+    <p class="q-sub">Any fear. What does it do to your body, your thoughts, your attention?</p>
+    <svg class="pulse" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M0,30 L170,30 200,30 216,10 234,50 250,20 262,30 600,30"/></svg>
+    <div class="rev-row">
+      <button class="rev" data-panel="p2a"><span class="plus"></span>Notes</button>
+    </div>
+    <div class="panel" id="p2a"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>Heart pounding. Time slowing. Tunnel vision. Going quiet. And underneath all of it, one thing: <em>you can't think about anything else.</em></p>
+        <p><strong>Fear is the body's involuntary attention system.</strong> Whatever you fear owns your focus completely — your posture orients toward it, your breathing changes, everything else in the room goes dim. You cannot casually fear something. Fear is total.</p>
+        <p>Hold onto that. It becomes the hinge of the whole night at question 07: if fear is <em>involuntary total attention</em>, what would it mean to give that same totality to God — on purpose?</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 03 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">03</span><span class="q-kicker">Into the text</span></div>
+    <h2 class="q-text">Does fear split into <em>good fear</em> and <em>bad fear?</em></h2>
+    <p class="q-sub">And if so — where's the line?</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p3a"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p3b"><span class="plus"></span>Notes</button>
+    </div>
+    <div class="panel" id="p3a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="na">
+        <div class="vhead"><span class="vref">Exodus 20:20</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Moses said to the people, "Do not be afraid. God has come to test you, so that the fear of God will be with you to keep you from sinning."</p>
+        <p class="vtext" data-t="NLT">"Don't be afraid," Moses answered them, "for God has come in this way to test you, and so that your fear of him will keep you from sinning!"</p>
+        <p class="vtext" data-t="NASB">Moses said to the people, "Do not be afraid; for God has come in order to test you, and in order that the fear of Him may remain with you, so that you will not sin."</p>
+        <p class="vnote" data-t="TPT">TPT — this book isn't yet published in The Passion Translation. Tap another translation above.</p>
+        <div class="vfoot">Sinai. Thunder, smoke, the mountain trembling. The people are terrified — and Moses says <em>both things in one breath.</em></div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p3b"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="note">
+        <p><strong>"Do not fear... so that the fear of God will be with you."</strong> One verse, both fears — and in Hebrew it's the <em>same root word</em> both times (yare). So the split isn't between two different words. It's between two directions the same capacity can point.</p>
+      </div>
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>One fear makes Israel back away from the mountain. The other is meant to <em>stay with them</em> and keep them from sin when the smoke is gone. So — what's the difference between fear that drives you <em>from</em> God and fear that holds you <em>near</em> him?</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 04 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">04</span><span class="q-kicker">Into the text</span></div>
+    <h2 class="q-text">What does the Bible actually <em>say</em> about it?</h2>
+    <p class="q-sub">Before we interpret anything — what claims does scripture make about the fear of the Lord?</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p4a"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p4b"><span class="plus"></span>Notes</button>
+    </div>
+    <div class="panel" id="p4a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Proverbs 9:10</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">The fear of the LORD is the beginning of wisdom, and knowledge of the Holy One is understanding.</p>
+        <p class="vtext" data-t="NLT">Fear of the LORD is the foundation of wisdom. Knowledge of the Holy One results in good judgment.</p>
+        <p class="vtext" data-t="NASB">The fear of the LORD is the beginning of wisdom, and the knowledge of the Holy One is understanding.</p>
+        <p class="vtext" data-t="TPT">The starting point for acquiring wisdom is to be consumed with awe as you worship YAHWEH. To receive the revelation of the Holy One, you must come to the one who has living-understanding.</p>
+        <div class="vfoot">Notice what TPT already does with the word "fear" here. Hold that thought until question 07.</div>
+      </div>
+      <div class="chips">
+        <div class="chip"><b>Prov 1:7</b> — the beginning of knowledge</div>
+        <div class="chip"><b>Ps 34:11</b> — "Come, my children... I will teach you the fear of the LORD" — it can be taught</div>
+        <div class="chip"><b>Prov 19:23</b> — "leads to life; then one rests content, untouched by trouble"</div>
+        <div class="chip"><b>Ps 19:9</b> — "pure, enduring forever"</div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p4b"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="note">
+        <p>Scripture's claims are strange if fear only means dread: it's the <strong>starting point of wisdom</strong>, it's <strong>teachable</strong>, it <strong>leads to life and rest</strong>, and it's <strong>clean</strong>. Nobody describes panic that way. Whatever this is, the Bible treats it as a treasure, not a threat.</p>
+      </div>
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>Why would <em>wisdom</em> start here — and not with intelligence, education, or experience?</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 05 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">05</span><span class="q-kicker">The original words</span></div>
+    <h2 class="q-text">Many words in the original — all translated <em>"fear"?</em></h2>
+    <p class="q-sub">English flattens several Hebrew and Greek words into one. What are we actually reading?</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p5a"><span class="plus"></span>Hebrew</button>
+      <button class="rev" data-panel="p5b"><span class="plus"></span>Greek</button>
+    </div>
+    <div class="panel" id="p5a"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="words">
+        <div class="word">
+          <div class="orig">יִרְאָה</div>
+          <div class="translit">yirah · verb yare</div>
+          <div class="gloss">The workhorse — by far the most common. Spans <b>terror, reverence, and awe</b> depending on object and context. Both halves of Exodus 20:20 use this root. So does <b>nora — "awesome"</b> (Ps 47:2): every time we sing that God is awesome, we're singing the fear-word.</div>
+        </div>
+        <div class="word">
+          <div class="orig">פַּחַד</div>
+          <div class="translit">pachad</div>
+          <div class="gloss"><b>Dread, trembling terror.</b> Strong enough that "the Fear of Isaac" is used as a name of God himself (Gen 31:42) — the One before whom Isaac trembled.</div>
+        </div>
+        <div class="word">
+          <div class="orig">אֵימָה</div>
+          <div class="translit">emah</div>
+          <div class="gloss"><b>Terror that falls on people</b> — "terror and dread will fall on them" (Ex 15:16). Overwhelming, external, event-like.</div>
+        </div>
+        <div class="word">
+          <div class="orig">מוֹרָא</div>
+          <div class="translit">morah</div>
+          <div class="gloss"><b>Fear owed — reverence, awe.</b> "If I am a master, where is the respect due me?" (Mal 1:6 — NIV renders morah as "respect"). Isa 8:13 makes it personal: let the LORD himself <b>be your fear</b>.</div>
+        </div>
+        <div class="word">
+          <div class="orig">חָרַד</div>
+          <div class="translit">charad</div>
+          <div class="gloss"><b>To tremble, quake.</b> The person God esteems is the one "who trembles at my word" (Isa 66:2). Trembling as <b>teachability</b> — the opposite of a calloused ear.</div>
+        </div>
+        <div class="word">
+          <div class="orig">עָרַץ</div>
+          <div class="translit">aratz</div>
+          <div class="gloss"><b>To dread, stand in terror.</b> Scripture aims it both ways: "do not be afraid" of men (Josh 1:9), but of God — "he is the one you are to dread" (Isa 8:13). Not less fear; <b>relocated</b> fear.</div>
+        </div>
+      </div>
+      <div class="note"><p>Six words where English has one — and translators still make choices inside the range. Watch Psalm 19:9 across the pills above: NIV says "fear," NLT says <em>reverence</em> — same Hebrew word, two English readings of where it sits. And Isa 8:13 rewards reading in full: <em>"do not fear what they fear"</em> — the fear of the Lord isn't added to your fears; it replaces them.</p></div>
+    </div></div></div>
+    <div class="panel" id="p5b"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="words">
+        <div class="word">
+          <div class="orig">φόβος</div>
+          <div class="translit">phobos</div>
+          <div class="gloss">The broad Greek term — root of "phobia," but in the NT it covers everything from <b>panic to holy reverence</b>. It's the word in Acts 9:31 and Phil 2:12.</div>
+        </div>
+        <div class="word">
+          <div class="orig">δέος</div>
+          <div class="translit">deos</div>
+          <div class="gloss"><b>Awe.</b> Appears once in the NT — Heb 12:28, paired with eulabeia: "with reverence and awe." The trembling edge of new-covenant worship.</div>
+        </div>
+        <div class="word">
+          <div class="orig">εὐλάβεια</div>
+          <div class="translit">eulabeia</div>
+          <div class="gloss"><b>Careful, devoted reverence.</b> Heb 12:28 pairs it with deos. And Heb 5:7 says Jesus' own prayers were heard <b>because of this very thing</b>.</div>
+        </div>
+        <div class="word">
+          <div class="orig">τρόμος</div>
+          <div class="translit">tromos</div>
+          <div class="gloss"><b>Trembling</b> — the body agreeing with the moment. "Fear and trembling" (Phil 2:12) isn't panic; it's the shake of hands holding something weighty.</div>
+        </div>
+        <div class="word">
+          <div class="orig">ἔκφοβος</div>
+          <div class="translit">ekphobos</div>
+          <div class="gloss"><b>Utterly terrified.</b> Heb 12:21 — even Moses at Sinai: "I am trembling with fear." The old mountain's word, kept in the past tense of the story.</div>
+        </div>
+        <div class="word">
+          <div class="orig">δειλία</div>
+          <div class="translit">deilia</div>
+          <div class="gloss"><b>Cowardice, timidity.</b> Used once — 2 Tim 1:7 — and never for the fear of God. This is the fear God does <b>not</b> give.</div>
+        </div>
+        <div class="word">
+          <div class="orig">εὐσέβεια</div>
+          <div class="translit">eusebeia · sebomai</div>
+          <div class="gloss"><b>Godliness, devotion</b> — from sebomai, "to revere, to worship." Luke calls Gentile seekers both "worshipers" (sebomenoi, Acts 13:43) and "God-fearing" (Acts 10:2) — for him the two labels name <b>one posture</b>.</div>
+        </div>
+        <div class="word">
+          <div class="orig">προσκυνέω</div>
+          <div class="translit">proskyneo</div>
+          <div class="gloss">Not a fear-word at all: <b>to bow toward, to kiss toward</b> — whole-body homage. Remember this one. It's about to matter.</div>
+        </div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">2 Timothy 1:7</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.</p>
+        <p class="vtext" data-t="NLT">For God has not given us a spirit of fear and timidity, but of power, love, and self-discipline.</p>
+        <p class="vtext" data-t="NASB">For God has not given us a spirit of timidity, but of power and love and discipline.</p>
+        <p class="vtext" data-t="TPT">For God will never give you the spirit of fear, but the Holy Spirit who gives you mighty power, love, and self-control.</p>
+        <div class="vfoot">The TPT footnote on this verse is worth reading aloud: the "fear" here is fear of man — and <em>"the fear of God prevents us from fearing others."</em> One fear displaces all the rest.</div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 06 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">06</span><span class="q-kicker">Jesus</span></div>
+    <h2 class="q-text">What does <em>Jesus</em> say about it?</h2>
+    <p class="q-sub">He talks about fear more than we remember — and he says two things that seem to collide.</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p6a"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p6b"><span class="plus"></span>Notes</button>
+    </div>
+    <div class="panel" id="p6a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="unverified">
+        <div class="vhead"><span class="vref">Luke 12:4–5</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">"I tell you, my friends, do not be afraid of those who kill the body and after that can do nothing more. But I will show you whom you should fear: Fear him who, after your body has been killed, has authority to throw you into hell. Yes, I tell you, fear him."</p>
+        <p class="vtext" data-t="NLT">"Dear friends, don't be afraid of those who want to kill your body; they cannot do any more to you after that. But I'll tell you whom to fear. Fear God, who has the power to kill you and then throw you into hell. Yes, he's the one to fear."</p>
+        <p class="vtext" data-t="NASB">"I say to you, My friends, do not be afraid of those who kill the body, and after that have nothing more that they can do. But I will warn you whom to fear: fear the One who, after He has killed, has authority to throw you into hell; yes, I tell you, fear Him!"</p>
+        <p class="vtext" data-t="TPT">"Listen, my beloved friends, don't fear those who may want to take your life but can do nothing more. It's true that they may kill your body, but they have no power over your soul. The one you must fear is God, for he has both the power to take your life and the authority to cast your soul into hell. Yes, the only one you need to fear is God."</p>
+        <div class="vfoot">Notice he says it to <em>"my friends."</em> This is not a threat to enemies — it's counsel to people he loves.</div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Luke 12:32 — twenty-seven verses later</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">"Do not be afraid, little flock, for your Father has been pleased to give you the kingdom."</p>
+        <p class="vtext" data-t="NLT">"So don't be afraid, little flock. For it gives your Father great happiness to give you the Kingdom."</p>
+        <p class="vtext" data-t="NASB">"Do not be afraid, little flock, for your Father has chosen gladly to give you the kingdom."</p>
+        <p class="vtext" data-t="TPT">"So don't ever be afraid, dearest friends! Your loving Father joyously gives you his kingdom with all its promises!"</p>
+        <div class="vfoot">Same chapter. Same speaker. Same audience.</div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p6b"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="note">
+        <p>In one conversation Jesus says <strong>"fear him"</strong> and <strong>"do not be afraid."</strong> In Matthew's version (Matt 10:28–31) they're four verses apart: fear the One who can destroy soul and body — and don't be afraid, <em>you are worth more than many sparrows</em>. He clearly doesn't think these cancel each other out.</p>
+      </div>
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>How can both be true at once? What kind of fear survives being told "your Father joyously gives you the kingdom" — and what kind doesn't?</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">07</span><span class="q-kicker">The word swap</span></div>
+    <h2 class="q-text">Why does Jesus quote <em>"fear the Lord"</em> — and say <em>"worship the Lord"?</em></h2>
+    <p class="q-sub">In the wilderness, Jesus quotes Deuteronomy 6:13 back at Satan. But one word comes out different.</p>
+
+    <div class="swap-stage" aria-label="The word fear crossfading into the word worship">
+      <div class="swap-word">
+        <span class="w-fear">FEAR</span>
+        <span class="w-worship">WORSHIP</span>
+      </div>
+      <div class="swap-cap">
+        <span class="c-fear">Deuteronomy 6:13 · the Hebrew text</span>
+        <span class="c-worship">Matthew 4:10 · in the mouth of Jesus</span>
+      </div>
+      <div class="swap-line">yare&nbsp;&nbsp;→&nbsp;&nbsp;proskyneo</div>
+    </div>
+
+    <div class="rev-row">
+      <button class="rev" data-panel="p7a"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p7b"><span class="plus"></span>What's going on</button>
+      <button class="rev" data-panel="p7c"><span class="plus"></span>Plug it in</button>
+    </div>
+    <div class="panel" id="p7a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="na">
+        <div class="vhead"><span class="vref">Deuteronomy 6:13</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Fear the LORD your God, serve him only and take your oaths in his name.</p>
+        <p class="vtext" data-t="NLT">You must fear the LORD your God and serve him. When you take an oath, you must use only his name.</p>
+        <p class="vtext" data-t="NASB">You shall fear only the LORD your God; and you shall worship Him and swear by His name.</p>
+        <p class="vnote" data-t="TPT">TPT — this book isn't yet published in The Passion Translation. Tap another translation above.</p>
+        <div class="vfoot">Look at the NASB. Even in Deuteronomy itself, the translators render "serve him" (avad) as <em>"worship Him."</em> The overlap Jesus exploits is already visible to translators.</div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Matthew 4:10</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Jesus said to him, "Away from me, Satan! For it is written: 'Worship the Lord your God, and serve him only.'"</p>
+        <p class="vtext" data-t="NLT">"Get out of here, Satan," Jesus told him. "For the Scriptures say, 'You must worship the LORD your God and serve only him.'"</p>
+        <p class="vtext" data-t="NASB">Then Jesus said to him, "Go away, Satan! For it is written, 'You shall worship the Lord your God, and serve Him only.'"</p>
+        <p class="vtext" data-t="TPT">But Jesus said, "Go away, Satan! For the Scriptures say: Kneel before the Lord your God and worship only him."</p>
+        <div class="vfoot">One verse earlier, Satan had demanded exactly this word: "if you will <em>bow down and worship</em> (proskyneo) me." Jesus answers the worship-demand with the fear-command — rendered as worship.</div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p7b"><div class="panel-in"><div class="panel-body">
+      <span class="tag scholarship">Scholarship</span>
+      <div class="note">
+        <p>Careful here — "intentionally misquotes" is stronger than we can prove. The Hebrew of Deuteronomy 6:13 says <em>fear</em> (yare). Most copies of the Greek Old Testament (the Septuagint) also say <em>fear</em> — but some manuscripts read <em>worship</em> (proskyneseis), matching Jesus' wording. So either Jesus is deliberately rendering fear as worship, or he's using a Greek rendering that had already made that move before him.</p>
+        <p><strong>Either way, the equivalence stands as legitimate.</strong> In the mouth of Jesus, "fear the Lord" and "worship the Lord" occupy the same slot — and the context sharpens it, because the whole scene is a fight over who gets his worship.</p>
+      </div>
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p>Now bring back question 02. Fear is <em>involuntary total attention</em> — the threat owns your focus, your posture, your breathing. Proskyneo is a posture word: to bow toward, to orient your whole body at something. Put them together and a working definition appears:</p>
+        <p><strong>Fear of the Lord is the totality of fear, aimed at worth instead of threat — undivided attention, given on purpose.</strong> That's a framework to test tonight, not a dictionary entry. See if the verses can carry it.</p>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p7c"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>Run the substitution through the verses we've already read and see what happens:</p>
+      </div>
+      <div class="chips">
+        <div class="chip">"The <b>worship</b> of the LORD is the beginning of wisdom" — Prov 9:10 (TPT already prints it this way)</div>
+        <div class="chip">"<b>Worship</b> the LORD with reverence and rejoice with trembling" — Ps 2:11 (NASB already prints it this way)</div>
+        <div class="chip">"Give me an undivided heart, that I may <b>attend to</b> your name" — Ps 86:11</div>
+        <div class="chip">"The church... living in the <b>worship</b> of the Lord... increased in numbers" — Acts 9:31</div>
+      </div>
+      <div class="note" style="margin-top:22px">
+        <p>Where does the substitution illuminate, and where does it lose something? (It shouldn't work everywhere — pachad-dread is real too. Find the edges together.)</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 08 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">08</span><span class="q-kicker">Covenants</span></div>
+    <h2 class="q-text">Old covenant, new covenant — did the fear of God <em>change?</em></h2>
+    <p class="q-sub">"Perfect love casts out fear." So is fear of God over?</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p8a"><span class="plus"></span>Two mountains</button>
+      <button class="rev" data-panel="p8b"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p8c"><span class="plus"></span>The reconciliation</button>
+    </div>
+    <div class="panel" id="p8a"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text · Hebrews 12:18–29</span>
+      <div class="compare">
+        <div class="cov sinai">
+          <h4>Sinai — where you have not come</h4>
+          <ul>
+            <li><b>Fire, darkness, gloom, storm</b></li>
+            <li>A boundary — touch the mountain and die</li>
+            <li>Even Moses: <b>"I am trembling with fear"</b></li>
+            <li>The terror of <b>distance</b></li>
+          </ul>
+        </div>
+        <div class="cov zion">
+          <h4>Zion — where you have come</h4>
+          <ul>
+            <li>The city of the living God, <b>angels in joyful assembly</b></li>
+            <li><b>Jesus</b>, mediator of a new covenant</li>
+            <li>Yet still: <b>"worship God with reverence and awe"</b></li>
+            <li>The awe of <b>access</b> — "for our God is a consuming fire"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fire-rule" aria-hidden="true"></div>
+      <div class="note"><p><strong>The covenant changed. The fire didn't.</strong> What changed is where you stand in relation to it.</p></div>
+    </div></div></div>
+    <div class="panel" id="p8b"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Hebrews 12:28–29</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Therefore, since we are receiving a kingdom that cannot be shaken, let us be thankful, and so worship God acceptably with reverence and awe, for our "God is a consuming fire."</p>
+        <p class="vtext" data-t="NLT">Since we are receiving a Kingdom that is unshakable, let us be thankful and please God by worshiping him with holy fear and awe. For our God is a devouring fire.</p>
+        <p class="vtext" data-t="NASB">Therefore, since we receive a kingdom which cannot be shaken, let us show gratitude, by which we may offer to God an acceptable service with reverence and awe; for our God is a consuming fire.</p>
+        <p class="vtext" data-t="TPT">Since we are receiving our rights to an unshakable kingdom we should be extremely thankful and offer God the purest worship that delights his heart as we lay down our lives in absolute surrender, filled with awe. For our God is a holy, devouring fire!</p>
+        <div class="vfoot">The new-covenant conclusion is not "so relax" — it's <em>reverence and awe</em>, on the far side of grace.</div>
+      </div>
+      <div class="verse" data-tpt="na">
+        <div class="vhead"><span class="vref">Jeremiah 32:40 — the new covenant promise</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">"I will make an everlasting covenant with them: I will never stop doing good to them, and I will inspire them to fear me, so that they will never turn away from me."</p>
+        <p class="vtext" data-t="NLT">"And I will make an everlasting covenant with them: I will never stop doing good for them. I will put a desire in their hearts to worship me, and they will never leave me."</p>
+        <p class="vtext" data-t="NASB">"I will make an everlasting covenant with them that I will not turn away from them, to do them good; and I will put the fear of Me in their hearts so that they will not turn away from Me."</p>
+        <p class="vnote" data-t="TPT">TPT — this book isn't yet published in The Passion Translation. Tap another translation above.</p>
+        <div class="vfoot">Read all three. The new covenant doesn't delete the fear of God — <em>it promises to plant it in our hearts.</em> And watch what the NLT does with the word.</div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">1 John 4:18</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">There is no fear in love. But perfect love drives out fear, because fear has to do with punishment. The one who fears is not made perfect in love.</p>
+        <p class="vtext" data-t="NLT">Such love has no fear, because perfect love expels all fear. If we are afraid, it is for fear of punishment, and this shows that we have not fully experienced his perfect love.</p>
+        <p class="vtext" data-t="NASB">There is no fear in love; but perfect love casts out fear, because fear involves punishment, and the one who fears is not perfected in love.</p>
+        <p class="vtext" data-t="TPT">Love never brings fear, for fear is always related to punishment. But love's perfection drives the fear of punishment far from our hearts. Whoever walks constantly afraid of punishment has not reached love's perfection.</p>
+        <div class="vfoot">John tells us exactly which fear gets evicted: the one tied to <em>punishment</em>. TPT's footnote agrees — fear of correction, punishment, rejection. Awe was never on the eviction notice.</div>
+      </div>
+      <div class="verse" data-tpt="unverified">
+        <div class="vhead"><span class="vref">Psalm 130:4</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">But with you there is forgiveness, so that we can, with reverence, serve you.</p>
+        <p class="vtext" data-t="NLT">But you offer forgiveness, that we might learn to fear you.</p>
+        <p class="vtext" data-t="NASB">But there is forgiveness with You, that You may be feared.</p>
+        <p class="vtext" data-t="TPT">But your forgiving love is what makes you so wonderful. No wonder you are loved and worshiped!</p>
+        <div class="vfoot">The most backwards verse in the Bible, until it isn't: <em>forgiveness produces fear.</em> Dread ends where forgiveness begins — and awe starts there. And watch TPT render "feared" as <em>loved and worshiped</em> — the swap, again.</div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p8c"><div class="panel-in"><div class="panel-body">
+      <span class="tag scholarship">Scholarship</span>
+      <div class="note">
+        <p>The historic answer is that <strong>two different fears are wearing one English word.</strong> Augustine and Aquinas named them, and the distinction has carried ever since:</p>
+      </div>
+      <div class="compare">
+        <div class="cov sinai">
+          <h4>Servile fear — cast out</h4>
+          <ul>
+            <li><b>Dreads punishment</b> — "he's going to get me"</li>
+            <li>Motive: <b>self-preservation</b></li>
+            <li>Hides, tiptoes, manages its image</li>
+            <li>Hates sin for what it <b>costs me</b></li>
+            <li><b>Shrinks</b> as love is experienced (1 Jn 4:18)</li>
+          </ul>
+        </div>
+        <div class="cov zion">
+          <h4>Filial fear — planted</h4>
+          <ul>
+            <li><b>Dreads grieving a Father</b> — "he's this good?"</li>
+            <li>Motive: <b>love and awe of who he is</b></li>
+            <li>Confesses, comes close, stays</li>
+            <li>Hates sin for what it <b>does to him</b></li>
+            <li><b>Grows</b> as love is experienced (Jer 32:40)</li>
+          </ul>
+        </div>
+      </div>
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p>That's the reconciliation. Perfect love casts out the <em>servile</em> fear — the terror of what God will do to you. The new covenant plants the <em>filial</em> fear — the awe of who he is. Augustine's sharp observation: a person who avoids sin only out of servile fear hasn't beaten sin at all — their heart still loves it, and only the threat is holding them back.</p>
+        <p>Ps 130:4 is the hinge where they trade places: dread ends where forgiveness begins, and awe starts there. <strong>Grace doesn't shrink God. It brings you close enough to finally see how big he is.</strong></p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- NEURO -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">09</span><span class="q-kicker">In the body</span></div>
+    <h2 class="q-text">Two fears, two nervous systems — <em>what does each one do to you?</em></h2>
+    <p class="q-sub">Back to question 02. If fear is total attention, the two fears shouldn't just <em>feel</em> different. They should run on different machinery.</p>
+    <svg class="threads-svg" viewBox="0 0 600 120" aria-hidden="true" preserveAspectRatio="none">
+      <path class="tline" d="M0,60 L290,60 C420,60 460,16 585,16"/>
+      <path class="tline" d="M290,60 C420,60 460,104 585,104"/>
+      <circle class="tdot" cx="290" cy="60" r="5"/>
+      <circle class="tdot" cx="588" cy="16" r="4"/>
+      <circle class="tdot" cx="588" cy="104" r="4"/>
+    </svg>
+    <div class="rev-row">
+      <button class="rev" data-panel="pNa"><span class="plus"></span>The fork</button>
+      <button class="rev" data-panel="pNb"><span class="plus"></span>Where it meets the text</button>
+      <button class="rev" data-panel="pNc"><span class="plus"></span>How solid is this?</button>
+    </div>
+    <div class="panel" id="pNa"><div class="panel-in"><div class="panel-body">
+      <span class="tag scholarship">Scholarship</span>
+      <div class="note">
+        <p>Researchers who study awe describe it with two ingredients: <strong>perceived vastness</strong> — something bigger than you — and <strong>the need to accommodate</strong>, meaning your mental model has to resize to fit what you just met.</p>
+        <p>Here's the fork. <em>Vastness alone doesn't decide anything.</em> The same overwhelming thing can be appraised two ways, and the body goes two completely different directions:</p>
+      </div>
+      <div class="compare">
+        <div class="cov sinai">
+          <h4>Appraised as threat</h4>
+          <ul>
+            <li>Fight-or-flight surges — heart rate, cortisol</li>
+            <li>The body's <b>alarm system</b> stays lit</li>
+            <li>Thinking goes <b>rigid</b> — hyper-vigilant, defensive</li>
+            <li>Behavior: <b>avoid, flee, hide</b></li>
+            <li>Chronically: exhaustion, shutdown</li>
+          </ul>
+        </div>
+        <div class="cov zion">
+          <h4>Appraised as safe vastness</h4>
+          <ul>
+            <li>The <b>calm-and-connect</b> branch engages</li>
+            <li>Self-focused chatter quiets — the "small self"</li>
+            <li>Attention turns <b>outward</b>; thinking stays flexible</li>
+            <li>Behavior: <b>approach, open up, give</b></li>
+            <li>Downstream: compassion, generosity</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">
+        <p><strong>Same vastness. Opposite outcome.</strong> The whole difference is the appraisal: <em>is this bigness coming for me, or holding me?</em> Awe research even has a name for the first one — the threat-based variant, the dark side of the sublime.</p>
+        <p>And this tracks with how people attach. Someone whose deep model of God is <em>safe</em> approaches him when things go wrong. Someone whose model is <em>punitive</em> braces and withdraws — from the same God, reading the same bigness.</p>
+      </div>
+    </div></div></div>
+    <div class="panel" id="pNb"><div class="panel-in"><div class="panel-body">
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p><strong>Exodus 20:20 is the fork, described three thousand years early.</strong> One mountain. One vastness. Israel backs away — and Moses says the fear that <em>stays with you</em> is a different thing entirely. Same stimulus, two appraisals, two directions. The text already knew.</p>
+        <p><strong>Servile and filial aren't just two attitudes — they're two states.</strong> Dread runs on the alarm system; awe runs on the calm-and-connect system. Which is why "just fear God more" is useless advice to someone stuck in dread. You can't get to filial fear by adding servile fear. Different machinery.</p>
+        <p><strong>Awe's definition is the wisdom thread.</strong> Vastness plus accommodation — <em>seeing something at true size and letting your model resize to fit it.</em> That is almost word for word what we said wisdom is (Prov 9:10). The starting point of wisdom is the one moment you stop shrinking God to a manageable size.</p>
+        <p><strong>The "small self" is the Isaiah 6 arc.</strong> Awe quiets self-preoccupation — and Isaiah, undone in front of the throne, ends up volunteering. Not collapse. <em>Unselfing.</em> The self gets quiet enough to hear "whom shall I send?"</p>
+        <p><strong>And Eden.</strong> The first recorded response to God's approach was hiding. That's the threat appraisal, in the very first chapter of the story.</p>
+      </div>
+    </div></div></div>
+    <div class="panel" id="pNc"><div class="panel-in"><div class="panel-body">
+      <span class="tag scholarship">Scholarship — confidence check</span>
+      <div class="note">
+        <p><strong>Reasonably solid:</strong> awe involves vastness plus mental accommodation; awe reduces self-referential focus and increases prosocial behavior; threat and safety are genuinely different autonomic states; a threat-based variant of awe exists and behaves differently from the positive kind.</p>
+        <p><strong>Suggestive, not settled:</strong> specific claims about brain <em>structure</em> — that a punitive God-image correlates with measurable volume differences — come from small studies, one of the best-known with about forty participants. The direction is interesting. It is not "science proves your brain shrinks." Don't preach it.</p>
+        <p><strong>Discarded:</strong> the old "God spot" idea — one dedicated religion module in the temporal lobe. The field abandoned it for distributed networks. If you've heard it, it's out of date.</p>
+      </div>
+      <span class="tag interp">The guardrail</span>
+      <div class="note">
+        <p>Worth saying plainly: <strong>none of this proves anything about God.</strong> A scan can describe the state; it can't validate the object. It can't tell you your awe is aimed at something real, or aimed rightly — idols produce awe too, and so do stadiums. The mechanism is not the message.</p>
+        <p>What it <em>can</em> do is confirm that the two fears scripture distinguishes are not a wordplay. They're visible all the way down to your heart rate. The text drew the line first; the body just keeps agreeing with it.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- DISPLACEMENT -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">10</span><span class="q-kicker">The displacement</span></div>
+    <h2 class="q-text">When you fear God, do the other fears <em>just fall off?</em></h2>
+    <p class="q-sub">Or is that a nicer way of saying <em>distract yourself?</em></p>
+    <svg class="displace" viewBox="0 0 560 130" aria-hidden="true">
+      <circle class="core" cx="280" cy="65" r="44"/>
+      <circle class="minor" cx="64" cy="30" r="6"/>
+      <circle class="minor" cx="132" cy="96" r="5"/>
+      <circle class="minor" cx="196" cy="22" r="4"/>
+      <circle class="minor" cx="376" cy="104" r="6"/>
+      <circle class="minor" cx="452" cy="34" r="5"/>
+      <circle class="minor" cx="508" cy="88" r="4"/>
+    </svg>
+    <div class="rev-row">
+      <button class="rev" data-panel="pDa"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="pDb"><span class="plus"></span>Test the mechanism</button>
+      <button class="rev" data-panel="pDc"><span class="plus"></span>What's really happening</button>
+      <button class="rev" data-panel="pDd"><span class="plus"></span>The guardrail</button>
+    </div>
+
+    <div class="panel" id="pDa"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Psalm 112:1, 7–8</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Praise the LORD. Blessed are those who fear the LORD, who find great delight in his commands… They will have no fear of bad news; their hearts are steadfast, trusting in the LORD. Their hearts are secure, they will have no fear; in the end they will look in triumph on their foes.</p>
+        <p class="vtext" data-t="NLT">Praise the LORD! How joyful are those who fear the LORD and delight in obeying his commands… They do not fear bad news; they confidently trust the LORD to care for them. They are confident and fearless and can face their foes triumphantly.</p>
+        <p class="vtext" data-t="NASB">Praise the LORD! How blessed is the man who fears the LORD, who greatly delights in His commandments… He will not fear evil tidings; his heart is steadfast, trusting in the LORD. His heart is upheld, he will not fear, until he looks with satisfaction on his adversaries.</p>
+        <p class="vtext" data-t="TPT">Shout in celebration of praise to the Lord! Everyone who loves the Lord and delights in him will cherish his words and be blessed beyond expectation… They will not live in fear or dread of what may come, for their hearts are firm, ever secure in their faith. Steady and strong, they will not be afraid, but will calmly face their every foe until they all go down in defeat.</p>
+        <div class="vfoot">The whole psalm is one long equation: <em>fears the LORD</em> in verse 1 → <em>no fear of bad news</em> in verse 7. And read TPT closely — it renders the fear-word as <em>"loves the Lord and delights in him."</em> The swap, one more time.</div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Proverbs 29:25</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Fear of man will prove to be a snare, but whoever trusts in the LORD is kept safe.</p>
+        <p class="vtext" data-t="NLT">Fearing people is a dangerous trap, but trusting the LORD means safety.</p>
+        <p class="vtext" data-t="NASB">The fear of man brings a snare, but he who trusts in the LORD will be exalted.</p>
+        <p class="vtext" data-t="TPT">Fear and intimidation is a trap that holds you back. But when you place your confidence in the Lord, you will be seated in the high place.</p>
+        <div class="vfoot">The Hebrew here for "fear of man" is <em>cherdah</em> — trembling — from the same root as Isaiah 66:2, where the one who <em>trembles</em> at God's word is the one he looks on with favor. Identical trembling. One is a snare; the other is what God delights in. <strong>It was never the trembling that differed. Only the object.</strong></div>
+      </div>
+      <div class="chips">
+        <div class="chip"><b>Isaiah 8:13</b> — "Do not fear what they fear… he is the one you are to fear" — relocation, in one command</div>
+        <div class="chip"><b>Psalm 27:1</b> — "The LORD is my light and my salvation — whom shall I fear?" — a question, not a technique</div>
+        <div class="chip"><b>Psalm 34:4</b> — "he delivered me from all my fears" — <em>all</em> of them, by one encounter</div>
+        <div class="chip"><b>2 Timothy 1:7</b> — the Spirit doesn't give timidity; the fear of God is what evicts the fear of man</div>
+      </div>
+    </div></div></div>
+
+    <div class="panel" id="pDb"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>The tempting explanation: <em>attention is finite. God is huge. He fills the tank, and the small anxieties get no bandwidth.</em> Crowded out.</p>
+        <p>It's intuitive, and it's the weakest version of a strong idea. Push on it with the texts we just read:</p>
+      </div>
+      <div class="chips">
+        <div class="chip"><b>Prov 19:23</b> — "rests content, <b>untouched by</b> trouble." Untouched <em>by</em> it. The trouble is still there.</div>
+        <div class="chip"><b>Ps 112:7</b> — "no fear of <b>bad news</b>." The news <em>arrives</em>. He hears it. His heart is steady <em>while</em> receiving it.</div>
+        <div class="chip"><b>Luke 12</b> — Jesus gives a <b>reason</b>, not a distraction: "they can do nothing more"; "you're worth more than sparrows."</div>
+        <div class="chip"><b>Daniel 3</b> — "<b>even if he does not</b>." They can see the furnace perfectly well. They've ranked it.</div>
+      </div>
+      <div class="note" style="margin-top:22px">
+        <p><strong>And the fatal one: bandwidth is fragile.</strong> Distraction lasts exactly as long as the focus does. Look away and it all floods back — that's spiritual whack-a-mole. But Jer 32:40 promises <em>permanence</em>: "so that they will never turn away." No capacity trick delivers that.</p>
+        <p>So the other fears are not <em>erased</em>. Something else happens to them.</p>
+      </div>
+    </div></div></div>
+
+    <div class="panel" id="pDc"><div class="panel-in"><div class="panel-body">
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p><strong>Start here: all fear is a power-assessment.</strong> You fear something because you believe it can take something you love. Fear of man = <em>their opinion can take my worth.</em> Fear of lack = <em>money can take my security.</em> Fear of death = <em>death can take my life.</em> Name the fear and you've named what you think has power over you.</p>
+        <p><strong>1 · Jurisdiction — and this is Jesus' own argument.</strong> Fear of the Lord is recognizing that God holds <em>all</em> of it. Then comes the turn: that God has bound himself to you in covenant love. Every other power is <em>demoted, not deleted</em>. They can still act — they cannot reach what he's holding. "They can kill the body, and after that can do nothing more" isn't <em>they aren't frightening.</em> It's <em>their authority has a ceiling, and his doesn't.</em></p>
+        <p><strong>2 · Rescaling.</strong> Awe forces your model to resize (question 09). Once God is at true size in your map, everything else is permanently smaller <em>relative to him</em> — not because you're staring at him, but because the map itself changed. That's why it survives you looking away.</p>
+        <p><strong>3 · The brake.</strong> Here's the bandwidth intuition, corrected. It isn't that there's no room. It's that the calm-and-connect state and the alarm state <em>can't run at the same time</em>. Filial awe puts your body in a state the other fears need you not to be in. Not a full hard drive — an active brake.</p>
+      </div>
+      <span class="tag interp">The line</span>
+      <div class="note">
+        <p><strong>The fear of the Lord is the only fear that makes you fearless.</strong> Every other fear multiplies — fear of man breeds more fear of man, anxiety compounds into anxiety. This is the only one that ends the chain. Why? <em>Because it's the only fear whose object loves you.</em></p>
+        <p>Which is Luke 12 in a single breath: <em>fear him</em> — and <em>don't be afraid, little flock.</em> Same mouth. Same conversation. Same person. There was never a contradiction to fix.</p>
+      </div>
+    </div></div></div>
+
+    <div class="panel" id="pDd"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Say this plainly</span>
+      <div class="note">
+        <p><strong>This is not a technique, and it is not advice for an anxious person.</strong> "Just fear God more" is useless to someone already living in dread — you'd be stacking fear on fear, not displacing it. You cannot get to filial fear by adding servile fear. Different machinery (question 08).</p>
+        <p><strong>Displacement is a byproduct of seeing, not a lever you pull.</strong> Nobody in scripture achieves it. Isaiah gets shown a throne. Peter gets a boat full of fish. The disciples get told what they're worth. In every case the fear falls off <em>downstream</em> of a revelation — it's never the assignment.</p>
+        <p><strong>And "no fear of bad news" is not numbness.</strong> Ps 112 says the heart is <em>steady</em>, not that the heart stops feeling. Jesus wept. Paul had sleepless nights. The fear of the Lord doesn't delete grief, caution, medical care, or wisdom about real danger — those aren't the fears in question. What it ends is the fear that <em>rules</em>.</p>
+      </div>
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>So: name one fear you're actually carrying. Not a noble one — a real one. Now ask the jurisdiction question about it: <em>what exactly do I believe this thing can take from me — and does it actually have the authority to take it?</em></p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 09 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">09</span><span class="q-kicker">The church now</span></div>
+    <h2 class="q-text">What happened to the church? Is the fear of God a <em>fading subject?</em></h2>
+    <p class="q-sub">When did you last hear it preached? And the motives we do have — "I don't want to hurt him," "I don't want to disappoint him," "He is so holy and I am such a sinner" — are those the fear of the Lord?</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p9a"><span class="plus"></span>Motive check</button>
+      <button class="rev" data-panel="p9c"><span class="plus"></span>Who's talking about this</button>
+      <button class="rev" data-panel="p9b"><span class="plus"></span>Two case studies</button>
+    </div>
+    <div class="panel" id="p9a"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>The honest diagnosis first: have we traded awe for familiarity? Is "God is my friend" the whole gospel we tell? Then test the motives on the table:</p>
+        <p><strong>"I don't want God to punish me"</strong> — 1 John 4:18 says perfect love drives exactly this out. If it's still running the relationship, the problem isn't too much fear; it's not enough experienced love.</p>
+        <p><strong>"I don't want to hurt him / disappoint him"</strong> — this is a different animal. It's not dread of what he'll do to you; it's grief at what you'd do to him. A child who fears the belt and a child who can't bear to break their father's heart are both called "afraid" — but only one of those fears gets cast out. The second one looks a lot like the fear that remains.</p>
+        <p><strong>The caution:</strong> even "I don't want to disappoint him" can quietly turn back into performance — earning, tiptoeing, image-managing. The test is where it drives you: toward him (confession, honesty, nearness) or away from him (hiding). Hiding is Eden's fear. Nearness is Sinai's gift.</p>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p9c"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>It isn't as fading as it looks — the subject has been pushed back onto the table from several directions at once, and the people doing the pushing <em>don't agree with each other.</em> A few examples of the range, not endorsements:</p>
+      </div>
+      <div class="chips">
+        <div class="chip"><b>John Bevere</b> — argues the church has "villainized" godly fear, and that awe is the missing piece</div>
+        <div class="chip"><b>Paul Ellis</b> — grace-first: biblical fear is breathless adoration, and only the eternally secure can actually tremble well</div>
+        <div class="chip"><b>Dan Mohler</b> — reverence for what the cross cost; refusing to live casually, without becoming sin-conscious</div>
+        <div class="chip"><b>Todd White</b> — publicly repented of a man-centered gospel after an encounter with God's holiness</div>
+        <div class="chip"><b>African Apostolic churches</b> (Zimbabwe) — fear of God as visible, communal, ethical: recited commandments, ordered lives</div>
+        <div class="chip"><b>Augustine · Aquinas</b> — the servile/filial distinction the whole conversation still runs on</div>
+      </div>
+      <div class="note" style="margin-top:22px">
+        <p>Notice the spread: some reach for fear to <em>correct</em> cheap grace, others reach for grace to <em>correct</em> cheap fear. Both corrections exist because both errors are real. Where does our church actually sit on that line — and which error are we more likely to make?</p>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p9b"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="note">
+        <p><strong>Isaiah 6.</strong> The throne, the seraphim, the shaking doorposts. Isaiah's response is exactly "He is so holy and I am such a sinner" — <em>"Woe to me! I am ruined!"</em> But the scene doesn't end there. A coal touches his lips: <em>"your guilt is taken away."</em> And the undone man becomes the volunteering man: <em>"Here am I. Send me."</em></p>
+        <p><strong>Luke 5.</strong> Peter, after the catch of fish: <em>"Go away from me, Lord; I am a sinful man."</em> Jesus: <em>"Don't be afraid; from now on you will catch people."</em></p>
+        <p>Same arc both times: holiness produces the collapse, grace produces the commission. <strong>"I am such a sinner" is a doorway in the fear of the Lord — never the room you live in.</strong> Awe that ends in groveling is incomplete. Biblical awe ends in sending.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">10</span><span class="q-kicker">Practice</span></div>
+    <h2 class="q-text">What does it look like <em>today?</em> How do I practically live it?</h2>
+    <div class="rev-row">
+      <button class="rev" data-panel="p10a"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p10b"><span class="plus"></span>Practices</button>
+    </div>
+    <div class="panel" id="p10a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="unverified">
+        <div class="vhead"><span class="vref">Psalm 86:11</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Teach me your way, LORD, that I may rely on your faithfulness; give me an undivided heart, that I may fear your name.</p>
+        <p class="vtext" data-t="NLT">Teach me your ways, O LORD, that I may live according to your truth! Grant me purity of heart, so that I may honor you.</p>
+        <p class="vtext" data-t="NASB">Teach me Your way, O LORD; I will walk in Your truth; unite my heart to fear Your name.</p>
+        <p class="vtext" data-t="TPT">Teach me more about you, how you work and how you move, so that I can walk onward in your truth until everything within me brings honor to your name.</p>
+        <div class="vfoot">"Unite my heart to fear your name" (NASB) — and TPT's <em>"everything within me"</em> carries the same undivided idea. If fear is undivided attention, David is praying for exactly that. It's asked for, and it's taught (Ps 34:11).</div>
+      </div>
+      <div class="chips">
+        <div class="chip"><b>Prov 8:13</b> — "To fear the LORD is to hate evil" — it's measurable in ethics, not goosebumps</div>
+        <div class="chip"><b>2 Cor 7:1</b> — "perfecting holiness out of reverence for God"</div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p10b"><div class="panel-in"><div class="panel-body">
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p><strong>Put your body in it.</strong> Proskyneo is postural — kneel when you pray, stand when the Word is read, lift hands. The body teaches the heart what the mind forgets.</p>
+        <p><strong>Read the throne room aloud.</strong> Isaiah 6, Revelation 1, Revelation 4 — slowly, out loud, until the furniture of heaven stops being familiar. Awe can be rehearsed.</p>
+        <p><strong>Obey in the small hidden thing this week.</strong> Proverbs 8:13 makes fear of the Lord an ethics word: what you do when no one is watching is your actual measurement of it.</p>
+        <p><strong>Keep short accounts.</strong> Confession isn't groveling — it's refusing to hide. Hiding is the wrong fear; nearness is the right one.</p>
+        <p><strong>Let it eat your other fears.</strong> The practical payoff of 2 Timothy 1:7 — the person who kneels lowest before God stands tallest before everything else. Fear of man shrinks in exact proportion to fear of God.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">11</span><span class="q-kicker">New Testament</span></div>
+    <h2 class="q-text">What does the <em>New Testament</em> actually teach on it?</h2>
+    <p class="q-sub">If it were only an old-covenant theme, the epistles would go quiet. Do they?</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p11a"><span class="plus"></span>Scripture</button>
+    </div>
+    <div class="panel" id="p11a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="unverified">
+        <div class="vhead"><span class="vref">Acts 9:31</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Then the church throughout Judea, Galilee and Samaria enjoyed a time of peace and was strengthened. Living in the fear of the Lord and encouraged by the Holy Spirit, it increased in numbers.</p>
+        <p class="vtext" data-t="NLT">The church then had peace throughout Judea, Galilee, and Samaria, and it became stronger as the believers lived in the fear of the Lord. And with the encouragement of the Holy Spirit, it also grew in numbers.</p>
+        <p class="vtext" data-t="NASB">So the church throughout all Judea and Galilee and Samaria enjoyed peace, being built up; and going on in the fear of the Lord and in the comfort of the Holy Spirit, it continued to increase.</p>
+        <p class="vtext" data-t="TPT">After this, the church all over Judea, Galilee, and Samaria experienced a season of peace. The congregations grew larger and larger, with the believers being empowered and encouraged by the Holy Spirit. They worshiped God in wonder and awe, and walked in the fear of the Lord.</p>
+        <div class="vfoot">Fear of the Lord + comfort of the Spirit, in the same church, at the same time — and the result is <em>growth</em>. Awe is not a repellent. It's soil. TPT makes the pairing explicit: "worshiped God in wonder and awe, and walked in the fear of the Lord."</div>
+      </div>
+      <div class="verse" data-tpt="unverified">
+        <div class="vhead"><span class="vref">Philippians 2:12–13</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">...continue to work out your salvation with fear and trembling, for it is God who works in you to will and to act in order to fulfill his good purpose.</p>
+        <p class="vtext" data-t="NLT">Work hard to show the results of your salvation, obeying God with deep reverence and fear. For God is working in you, giving you the desire and the power to do what pleases him.</p>
+        <p class="vtext" data-t="NASB">...work out your salvation with fear and trembling; for it is God who is at work in you, both to will and to work for His good pleasure.</p>
+        <p class="vtext" data-t="TPT">Now you must continue to make this new life fully manifested as you live in the holy awe of God—which brings you trembling into his presence. God will continually revitalize you, implanting within you the passion to do what pleases him.</p>
+        <div class="vfoot">"Fear and trembling" — because <em>God himself is at work in you.</em> The trembling of a surgeon's hands would be fear; this is the trembling of the operating table realizing who's operating.</div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">1 Peter 1:17</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Since you call on a Father who judges each person's work impartially, live out your time as foreigners here in reverent fear.</p>
+        <p class="vtext" data-t="NLT">And remember that the heavenly Father to whom you pray has no favorites. He will judge or reward you according to what you do. So you must live in reverent fear of him during your time here as "temporary residents."</p>
+        <p class="vtext" data-t="NASB">If you address as Father the One who impartially judges according to each one's work, conduct yourselves in fear during the time of your stay on earth.</p>
+        <p class="vtext" data-t="TPT">Since you call on him as your heavenly Father, the impartial Judge who judges according to each one's works, live each day with holy awe and reverence throughout your time on earth.</p>
+        <div class="vfoot">Peter holds "Father" and "fear" in one sentence without blinking. So did Jesus in Luke 12.</div>
+      </div>
+      <div class="note"><p>Add Hebrews 12:28 (question 08) and 2 Corinthians 7:1, and the pattern is unmistakable: the New Testament doesn't retire the fear of the Lord. It relocates it — from the foot of a forbidden mountain to the inside of a family.</p></div>
+    </div></div></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">12</span><span class="q-kicker">Tone &amp; fruit</span></div>
+    <h2 class="q-text">Somber and serious — or <em>joyful?</em> And which fruit of the Spirit does it align with?</h2>
+    <div class="rev-row">
+      <button class="rev" data-panel="p12a"><span class="plus"></span>Scripture</button>
+      <button class="rev" data-panel="p12b"><span class="plus"></span>The fruit question</button>
+    </div>
+    <div class="panel" id="p12a"><div class="panel-in"><div class="panel-body">
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Psalm 2:11</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">Serve the LORD with fear and celebrate his rule with trembling.</p>
+        <p class="vtext" data-t="NLT">Serve the LORD with reverent fear, and rejoice with trembling.</p>
+        <p class="vtext" data-t="NASB">Worship the LORD with reverence and rejoice with trembling.</p>
+        <p class="vtext" data-t="TPT">Serve and worship the awe-inspiring God. Recognize his greatness and bow before him, trembling with reverence in his presence.</p>
+        <div class="vfoot"><em>Rejoice with trembling.</em> The Bible's emotional oxymoron — joy and trembling aren't rivals; they're roommates. (And the NASB opens with "Worship the LORD" — the swap again.)</div>
+      </div>
+      <div class="verse" data-tpt="ok">
+        <div class="vhead"><span class="vref">Isaiah 11:2–3 — the Messiah himself</span><span class="vtag">NIV</span></div>
+        <p class="vtext" data-t="NIV">The Spirit of the LORD will rest on him — the Spirit of wisdom and of understanding, the Spirit of counsel and of might, the Spirit of the knowledge and fear of the LORD — and he will delight in the fear of the LORD.</p>
+        <p class="vtext" data-t="NLT">And the Spirit of the LORD will rest on him — the Spirit of wisdom and understanding, the Spirit of counsel and might, the Spirit of knowledge and the fear of the LORD. He will delight in obeying the LORD.</p>
+        <p class="vtext" data-t="NASB">The Spirit of the LORD will rest on Him, the spirit of wisdom and understanding, the spirit of counsel and strength, the spirit of knowledge and the fear of the LORD. And He will delight in the fear of the LORD.</p>
+        <p class="vtext" data-t="TPT">The Spirit of YAHWEH will rest upon him, the Spirit of Extraordinary Wisdom, the Spirit of Perfect Understanding, the Spirit of Wise Strategy, the Spirit of Mighty Power, the Spirit of Revelation, and the Spirit of the Fear of YAHWEH. He will find his delight in living by the Spirit of the Fear of the Lord.</p>
+        <div class="vfoot">Jesus <em>delights</em> in it. The Hebrew behind "delight" (vaharicho) comes from the root "to smell, to breathe in" — as if the fear of the LORD is fragrance to him. The air the Messiah breathes.</div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p12b"><div class="panel-in"><div class="panel-body">
+      <span class="tag text">Text</span>
+      <div class="note">
+        <p>Honest answer first: the fear of the Lord is <strong>not one of the nine</strong> in Galatians 5:22–23 — "love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control." But Isaiah 11:2 lists it among the sevenfold Spirit resting on the Messiah. So it isn't a fruit; it's more like <strong>climate</strong> — the atmosphere the Spirit's fruit grows in.</p>
+      </div>
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>Which fruit does it feed most directly? Make the case from tonight's verses: <strong>Joy</strong> (Ps 2:11 — rejoice with trembling; Isa 11:3 — he delights in it). <strong>Peace</strong> (Prov 19:23 — rests content, untouched by trouble; Acts 9:31 — the fearing church enjoyed peace). <strong>Faithfulness</strong> (Jer 32:40 — so that they never turn away). <strong>Self-control</strong> (Prov 8:13 — to fear the LORD is to hate evil; Ex 20:20 — to keep you from sinning).</p>
+      </div>
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p>And notice how the fruit list reads next to question 09. <strong>Peace and patience</strong> are what the calm-and-connect system produces — the body's own recovery from alarm. <strong>Self-control</strong> is the executive brain overriding a survival reflex. <strong>Love</strong> requires enough safety to stop defending yourself. Paul's list isn't a mood board; it describes a person whose alarm is off.</p>
+        <p>Which is exactly why fear of the Lord functions as <em>climate</em> rather than fruit. Servile dread keeps the alarm lit, and almost nothing on that list grows in an alarm state. Filial awe is the safety the fruit needs to grow in. The atmosphere isn't the harvest — it's what makes a harvest possible.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">13</span><span class="q-kicker">The views</span></div>
+    <h2 class="q-text">Six ways people hold it — <em>which is closest to the texts?</em></h2>
+    <p class="q-sub">Most of us walked in carrying one of the first five. Weigh each against tonight's verses.</p>
+    <div class="rev-row">
+      <button class="rev" data-panel="p13a"><span class="plus"></span>Common views</button>
+      <button class="rev" data-panel="p13b"><span class="plus"></span>A fuller frame</button>
+    </div>
+    <div class="panel" id="p13a"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="views">
+        <div class="view">
+          <div class="view-q">"It just means respect."</div>
+          <div class="view-body"><b>Gets right:</b> fear isn't panic. <b>Misses:</b> respect doesn't tremble. Sinai shook, Isaiah collapsed, John fell as though dead (Revelation 1). The word is bigger than manners.</div>
+        </div>
+        <div class="view">
+          <div class="view-q">"It's terror of punishment."</div>
+          <div class="view-body"><b>Gets right:</b> holiness is not casual. <b>Misses:</b> the gospel — punishment-fear is exactly the fear perfect love evicts (1 Jn 4:18). This view keeps people hiding.</div>
+        </div>
+        <div class="view">
+          <div class="view-q">"That's an Old Testament thing."</div>
+          <div class="view-body"><b>Gets right:</b> something really did change at the cross. <b>Misses:</b> the epistles — the fearing church grows (Acts 9:31), worship still comes with reverence and awe (Heb 12:28), and the new covenant plants the fear of God in hearts (Jer 32:40).</div>
+        </div>
+        <div class="view">
+          <div class="view-q">"It's reverent awe."</div>
+          <div class="view-body"><b>Gets right:</b> the closest of the four to the texts. <b>The risk:</b> staying abstract — awe as vocabulary we nod at instead of attention we actually give.</div>
+        </div>
+        <div class="view">
+          <div class="view-q">"It's obeying the rules."</div>
+          <div class="view-body"><b>Gets right:</b> it's measurable — Prov 8:13 makes fear of the LORD an ethics word, and Ex 20:20 ties it to not sinning. <b>Misses:</b> the order. Obedience is what filial fear <em>produces</em>, not what manufactures it. Reverse it and you get performance with God's name on it.</div>
+        </div>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p13b"><div class="panel-in"><div class="panel-body">
+      <span class="tag scholarship">Scholarship</span>
+      <div class="note">
+        <p>The classic grid sorts it by <em>what you're actually afraid of.</em> Two of these are aimed at God, two at consequences:</p>
+      </div>
+      <div class="words">
+        <div class="word">
+          <div class="orig">Servile</div>
+          <div class="translit">timor servilis</div>
+          <div class="gloss">Fears <b>punishment.</b> Motive: self-preservation. Status: <b>cast out</b> by perfect love. Ends in scrupulosity or legalism.</div>
+        </div>
+        <div class="word">
+          <div class="orig">Filial</div>
+          <div class="translit">timor filialis</div>
+          <div class="gloss">Fears <b>grieving a Father.</b> Motive: love and awe of his character. Status: <b>perfected</b> by love. Ends in wisdom, intimacy, integrity.</div>
+        </div>
+        <div class="word">
+          <div class="orig">Horizontal</div>
+          <div class="translit">timor humanus</div>
+          <div class="gloss">Fears <b>circumstances and people</b> — lack, illness, opinion. Status: <b>displaced</b> as you rest in his care. Ends in cowardice if it rules.</div>
+        </div>
+        <div class="word">
+          <div class="orig">Vertical</div>
+          <div class="translit">timor divinus</div>
+          <div class="gloss">Recognizes <b>his power and sovereignty.</b> Motive: awe of the King's majesty. Status: <b>cultivated.</b> Ends in unshakable confidence.</div>
+        </div>
+      </div>
+      <div class="note">
+        <p>Read the columns and the puzzle dissolves. <em>Perfect love casts out fear</em> is about the first one. <em>The beginning of wisdom</em> is about the second and fourth. And the third explains 2 Tim 1:7 and Isa 8:13 — when vertical fear rises, horizontal fear has nowhere to stand.</p>
+      </div>
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p><strong>Whole-being worship: total attention — trembling and joyful at once — given to God as he actually is.</strong></p>
+        <p>It keeps what every view above got right and loses nothing the texts require: it trembles (Ps 2:11), it obeys (Prov 8:13), it delights (Isa 11:3), it displaces every other fear (2 Tim 1:7), and it starts wisdom (Prov 9:10) — because wisdom begins the moment you finally see things at true size.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 14 -->
+  <section class="q">
+    <div class="q-meta"><span class="q-num">14</span><span class="q-kicker">Pulling the threads</span></div>
+    <h2 class="q-text">Four threads that hold the <em>whole thing</em> together</h2>
+    <svg class="threads-svg" viewBox="0 0 600 120" aria-hidden="true" preserveAspectRatio="none">
+      <path class="tline" d="M0,12 C280,12 400,60 585,60"/>
+      <path class="tline" d="M0,44 C280,44 400,60 585,60"/>
+      <path class="tline" d="M0,76 C280,76 400,60 585,60"/>
+      <path class="tline" d="M0,108 C280,108 400,60 585,60"/>
+      <circle class="tdot" cx="588" cy="60" r="5"/>
+    </svg>
+    <div class="rev-row">
+      <button class="rev" data-panel="p14a"><span class="plus"></span>The threads</button>
+      <button class="rev" data-panel="p14b"><span class="plus"></span>Back to the start</button>
+    </div>
+    <div class="panel" id="p14a"><div class="panel-in"><div class="panel-body">
+      <span class="tag interp">Interpretation</span>
+      <div class="note">
+        <p><strong>01 · One capacity, two directions.</strong> Fear is total attention. Pointed at a threat, it's dread; pointed at worth, it's worship. Same vastness, two appraisals — that's the whole distance between the two fears of Ex 20:20, and it shows up in the body as two different nervous systems. It's also the ground under Jesus' word-swap in Matt 4:10.</p>
+        <p><strong>02 · Punishment leaves. Awe stays.</strong> Servile fear dreads what God will do to you; filial fear dreads grieving him. The cross evicts the first (1 Jn 4:18); the covenant plants the second (Jer 32:40). Forgiveness doesn't end the fear of the Lord — it's where it finally begins (Ps 130:4).</p>
+        <p><strong>03 · Wisdom is seeing true size.</strong> The fear of the Lord is reality at correct scale — God as big as he actually is, everything else where it actually sits. Awe researchers define their subject almost identically: vastness, plus a model that has to resize to fit it. Every wise decision downstream depends on that scale. That's why it's the <em>beginning</em> of wisdom (Prov 9:10), and why it ends in rest (Prov 19:23).</p>
+        <p><strong>04 · One fear eats the rest — and only one can.</strong> All fear is a power-assessment: you fear what you believe can take something you love. Fear of the Lord recognizes he holds all of it — and that he's <em>for</em> you. Every other power gets demoted, not deleted; they can still act, they can't reach what he's holding. "Do not fear what they fear" (Isa 8:13). The person who trembles before God stops trembling before everything else (2 Tim 1:7), has no fear of bad news (Ps 112:7), and a church like that grows (Acts 9:31). <em>It's the only fear that makes you fearless — because it's the only fear whose object loves you.</em></p>
+      </div>
+    </div></div></div>
+    <div class="panel" id="p14b"><div class="panel-in"><div class="panel-body">
+      <span class="tag discuss">Discuss</span>
+      <div class="note">
+        <p>Back to where we started: after all of this — when you hear <em>"the fear of God"</em> now, what comes to mind?</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <footer>
+    <p class="coda">"The fear of the LORD is pure, enduring forever."</p>
+    <div class="coda-ref">Psalm 19:9</div>
+    <div class="attrib">
+      Scripture quotations marked NIV are from THE HOLY BIBLE, NEW INTERNATIONAL VERSION®, NIV® © 1973, 1978, 1984, 2011 by Biblica, Inc. Used by permission. · Scripture quotations marked NLT are from the Holy Bible, New Living Translation, © 1996, 2004, 2015 by Tyndale House Foundation. Used by permission of Tyndale House Publishers. · Scripture quotations marked NASB are from the New American Standard Bible®, © The Lockman Foundation. Used by permission. · Scripture quotations marked TPT are from The Passion Translation®, © 2017, 2018, 2020 by Passion &amp; Fire Ministries, Inc. Used by permission. All rights reserved.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var current = "NIV";
+  var pills = document.querySelectorAll(".tpill");
+  var verses = document.querySelectorAll(".verse");
+
+  function applyTranslation(t){
+    current = t;
+    pills.forEach(function(p){ p.classList.toggle("active", p.dataset.t === t); });
+    verses.forEach(function(v){
+      v.querySelectorAll(".vtext,.vnote").forEach(function(el){
+        el.classList.toggle("show", el.dataset.t === t);
+      });
+      var tag = v.querySelector(".vtag");
+      if(tag) tag.textContent = t;
+    });
+  }
+
+  pills.forEach(function(p){
+    p.addEventListener("click", function(){ applyTranslation(p.dataset.t); });
+  });
+
+  /* reveal panels */
+  var revs = document.querySelectorAll("button.rev");
+  revs.forEach(function(btn){
+    btn.setAttribute("aria-expanded","false");
+    btn.addEventListener("click", function(){
+      var panel = document.getElementById(btn.dataset.panel);
+      var open = panel.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+
+  /* expand / collapse all */
+  var allOpen = false;
+  var expandBtn = document.getElementById("expandAll");
+  expandBtn.addEventListener("click", function(){
+    allOpen = !allOpen;
+    document.querySelectorAll(".panel").forEach(function(p){ p.classList.toggle("open", allOpen); });
+    revs.forEach(function(b){ b.setAttribute("aria-expanded", allOpen ? "true" : "false"); });
+    expandBtn.textContent = allOpen ? "Collapse all" : "Expand all";
+  });
+
+  /* auto-number sections */
+  document.querySelectorAll("section.q").forEach(function(s, i){
+    var n = s.querySelector(".q-num");
+    if(n) n.textContent = ("0" + (i+1)).slice(-2);
+  });
+
+  /* light / dark */
+  var modeBtn = document.getElementById("modeBtn");
+  modeBtn.addEventListener("click", function(){
+    var light = document.body.classList.toggle("light");
+    modeBtn.textContent = light ? "Dark" : "Light";
+  });
+
+  /* ---------- scripture reference popovers ---------- */
+  var REFDATA = [
+    {k:["Psalm 112:7","Ps 112:7"], r:"Psalm 112:1, 7", v:"Blessed are those who fear the LORD, who find great delight in his commands… They will have no fear of bad news; their hearts are steadfast, trusting in the LORD."},
+    {k:["Proverbs 29:25","Prov 29:25"], r:"Proverbs 29:25", v:"Fear of man will prove to be a snare, but whoever trusts in the LORD is kept safe."},
+    {k:["Psalm 27:1","Ps 27:1"], r:"Psalm 27:1", v:"The LORD is my light and my salvation — whom shall I fear? The LORD is the stronghold of my life — of whom shall I be afraid?"},
+    {k:["Psalm 34:4","Ps 34:4"], r:"Psalm 34:4", v:"I sought the LORD, and he answered me; he delivered me from all my fears."},
+    {k:["Daniel 3","Dan 3"], r:"Daniel 3:17–18", v:"“…the God we serve is able to deliver us from it, and he will deliver us from Your Majesty’s hand. But even if he does not, we want you to know, Your Majesty, that we will not serve your gods.”"},
+    {k:["Exodus 20:20","Ex 20:20"], r:"Exodus 20:20", v:"Moses said to the people, “Do not be afraid. God has come to test you, so that the fear of God will be with you to keep you from sinning.”"},
+    {k:["Deuteronomy 6:13","Deut 6:13"], r:"Deuteronomy 6:13", v:"Fear the LORD your God, serve him only and take your oaths in his name."},
+    {k:["Proverbs 9:10","Prov 9:10"], r:"Proverbs 9:10", v:"The fear of the LORD is the beginning of wisdom, and knowledge of the Holy One is understanding."},
+    {k:["Matthew 4:10","Matt 4:10"], r:"Matthew 4:10", v:"Jesus said to him, “Away from me, Satan! For it is written: ‘Worship the Lord your God, and serve him only.’”"},
+    {k:["Luke 12:4–5","Luke 12:4-5"], r:"Luke 12:4–5", v:"“Do not be afraid of those who kill the body and after that can do nothing more. But I will show you whom you should fear: Fear him who, after your body has been killed, has authority to throw you into hell. Yes, I tell you, fear him.”"},
+    {k:["Luke 12:32"], r:"Luke 12:32", v:"“Do not be afraid, little flock, for your Father has been pleased to give you the kingdom.”"},
+    {k:["Luke 12"], r:"Luke 12:5, 32", v:"“Fear him.” … “Do not be afraid, little flock.” Same conversation, same voice, twenty-seven verses apart."},
+    {k:["Hebrews 12:28","Heb 12:28"], r:"Hebrews 12:28–29", v:"Therefore, since we are receiving a kingdom that cannot be shaken, let us be thankful, and so worship God acceptably with reverence and awe, for our “God is a consuming fire.”"},
+    {k:["Jeremiah 32:40","Jer 32:40"], r:"Jeremiah 32:40", v:"“I will make an everlasting covenant with them: I will never stop doing good to them, and I will inspire them to fear me, so that they will never turn away from me.”"},
+    {k:["1 John 4:18","1 Jn 4:18"], r:"1 John 4:18", v:"There is no fear in love. But perfect love drives out fear, because fear has to do with punishment. The one who fears is not made perfect in love."},
+    {k:["Psalm 130:4","Ps 130:4"], r:"Psalm 130:4", v:"But with you there is forgiveness, so that we can, with reverence, serve you."},
+    {k:["2 Timothy 1:7","2 Tim 1:7"], r:"2 Timothy 1:7", v:"For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline."},
+    {k:["Acts 9:31"], r:"Acts 9:31", v:"Then the church throughout Judea, Galilee and Samaria enjoyed a time of peace and was strengthened. Living in the fear of the Lord and encouraged by the Holy Spirit, it increased in numbers."},
+    {k:["Philippians 2:12–13","Philippians 2:12","Phil 2:12"], r:"Philippians 2:12–13", v:"…continue to work out your salvation with fear and trembling, for it is God who works in you to will and to act in order to fulfill his good purpose."},
+    {k:["1 Peter 1:17","1 Pet 1:17"], r:"1 Peter 1:17", v:"Since you call on a Father who judges each person’s work impartially, live out your time as foreigners here in reverent fear."},
+    {k:["Psalm 2:11","Ps 2:11"], r:"Psalm 2:11", v:"Serve the LORD with fear and celebrate his rule with trembling."},
+    {k:["Isaiah 11:2","Isa 11:2"], r:"Isaiah 11:2", v:"The Spirit of the LORD will rest on him — the Spirit of wisdom and of understanding, the Spirit of counsel and of might, the Spirit of the knowledge and fear of the LORD."},
+    {k:["Isaiah 11:3","Isa 11:3"], r:"Isaiah 11:3", v:"…and he will delight in the fear of the LORD. He will not judge by what he sees with his eyes, or decide by what he hears with his ears."},
+    {k:["Psalm 86:11","Ps 86:11"], r:"Psalm 86:11", v:"Teach me your way, LORD, that I may rely on your faithfulness; give me an undivided heart, that I may fear your name."},
+    {k:["Proverbs 1:7","Prov 1:7"], r:"Proverbs 1:7", v:"The fear of the LORD is the beginning of knowledge, but fools despise wisdom and instruction."},
+    {k:["Psalm 34:11","Ps 34:11"], r:"Psalm 34:11", v:"Come, my children, listen to me; I will teach you the fear of the LORD."},
+    {k:["Proverbs 19:23","Prov 19:23"], r:"Proverbs 19:23", v:"The fear of the LORD leads to life; then one rests content, untouched by trouble."},
+    {k:["Psalm 19:9","Ps 19:9"], r:"Psalm 19:9", v:"The fear of the LORD is pure, enduring forever. The decrees of the LORD are firm, and all of them are righteous."},
+    {k:["Psalm 47:2","Ps 47:2"], r:"Psalm 47:2", v:"For the LORD Most High is awesome, the great King over all the earth."},
+    {k:["Genesis 31:42","Gen 31:42"], r:"Genesis 31:42", v:"“If the God of my father, the God of Abraham and the Fear of Isaac, had not been with me, you would surely have sent me away empty-handed…”"},
+    {k:["Exodus 15:16","Ex 15:16"], r:"Exodus 15:16", v:"Terror and dread will fall on them. By the power of your arm they will be as still as a stone…"},
+    {k:["Isaiah 8:13","Isa 8:13","Isa 8:12–13"], r:"Isaiah 8:12–13", v:"“Do not fear what they fear, and do not dread it. The LORD Almighty is the one you are to regard as holy, he is the one you are to fear, he is the one you are to dread.”"},
+    {k:["Isaiah 66:2","Isa 66:2"], r:"Isaiah 66:2", v:"…“These are the ones I look on with favor: those who are humble and contrite in spirit, and who tremble at my word.”"},
+    {k:["Joshua 1:9","Josh 1:9"], r:"Joshua 1:9", v:"“…Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go.”"},
+    {k:["Malachi 1:6","Mal 1:6"], r:"Malachi 1:6", v:"“…If I am a father, where is the honor due me? If I am a master, where is the respect due me?” says the LORD Almighty."},
+    {k:["Hebrews 12:21","Heb 12:21"], r:"Hebrews 12:21", v:"The sight was so terrifying that Moses said, “I am trembling with fear.”"},
+    {k:["Hebrews 5:7","Heb 5:7"], r:"Hebrews 5:7", v:"…he offered up prayers and petitions with fervent cries and tears to the one who could save him from death, and he was heard because of his reverent submission."},
+    {k:["Matthew 10:28–31","Matt 10:28–31","Matt 10:28-31"], r:"Matthew 10:28, 31", v:"“Do not be afraid of those who kill the body but cannot kill the soul. Rather, be afraid of the One who can destroy both soul and body in hell… So don’t be afraid; you are worth more than many sparrows.”"},
+    {k:["2 Corinthians 7:1","2 Cor 7:1"], r:"2 Corinthians 7:1", v:"…let us purify ourselves from everything that contaminates body and spirit, perfecting holiness out of reverence for God."},
+    {k:["Galatians 5:22–23","Gal 5:22–23","Galatians 5:22-23","Gal 5:22-23"], r:"Galatians 5:22–23", v:"But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law."},
+    {k:["Proverbs 8:13","Prov 8:13"], r:"Proverbs 8:13", v:"To fear the LORD is to hate evil; I hate pride and arrogance, evil behavior and perverse speech."},
+    {k:["Isaiah 6"], r:"Isaiah 6:5–8", v:"“Woe to me! I am ruined! For I am a man of unclean lips… and my eyes have seen the King, the LORD Almighty.” … “Your guilt is taken away and your sin atoned for.” … “Here am I. Send me!”"},
+    {k:["Luke 5"], r:"Luke 5:8, 10", v:"“Go away from me, Lord; I am a sinful man!” … Jesus said, “Don’t be afraid; from now on you will fish for people.”"},
+    {k:["Revelation 1"], r:"Revelation 1:17", v:"When I saw him, I fell at his feet as though dead. Then he placed his right hand on me and said: “Do not be afraid. I am the First and the Last.”"},
+    {k:["Revelation 4"], r:"Revelation 4:8", v:"Day and night they never stop saying: “Holy, holy, holy is the Lord God Almighty, who was, and is, and is to come.”"},
+    {k:["Acts 13:43"], r:"Acts 13:43", v:"…many of the Jews and devout converts to Judaism followed Paul and Barnabas, who talked with them and urged them to continue in the grace of God."},
+    {k:["Acts 10:2"], r:"Acts 10:2", v:"He and all his family were devout and God-fearing; he gave generously to those in need and prayed to God regularly."}
+  ];
+  var REFS = {};
+  REFDATA.forEach(function(d){ d.k.forEach(function(key){ REFS[key] = d; }); });
+  var refKeys = Object.keys(REFS).sort(function(a,b){ return b.length - a.length; });
+  var refRx = new RegExp("(" + refKeys.map(function(k){ return k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|") + ")", "g");
+
+  var pop = document.createElement("div");
+  pop.className = "pop";
+  pop.setAttribute("role","tooltip");
+  pop.innerHTML = '<div class="pop-ref"></div><div class="pop-text"></div><div class="pop-tag">NIV</div>';
+  document.body.appendChild(pop);
+
+  document.querySelectorAll(".note, .chip, .vfoot, .gloss, .q-sub, .cov li, .view-body").forEach(function(box){
+    var walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while(walker.nextNode()){ nodes.push(walker.currentNode); }
+    nodes.forEach(function(node){
+      var txt = node.nodeValue;
+      refRx.lastIndex = 0;
+      if(!refRx.test(txt)) return;
+      refRx.lastIndex = 0;
+      var frag = document.createDocumentFragment(), last = 0, m;
+      while((m = refRx.exec(txt)) !== null){
+        if(m.index > last) frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+        var s = document.createElement("span");
+        s.className = "xref";
+        s.textContent = m[0];
+        s.dataset.key = m[0];
+        s.setAttribute("role","button");
+        s.setAttribute("tabindex","0");
+        frag.appendChild(s);
+        last = m.index + m[0].length;
+      }
+      if(last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  });
+
+  var pinned = null, hideTimer = null;
+  function showPop(el){
+    var d = REFS[el.dataset.key];
+    if(!d) return;
+    pop.querySelector(".pop-ref").textContent = d.r;
+    pop.querySelector(".pop-text").textContent = d.v;
+    pop.classList.add("on");
+    pop.style.visibility = "hidden";
+    var pw = pop.offsetWidth, ph = pop.offsetHeight, rect = el.getBoundingClientRect();
+    var left = Math.min(Math.max(rect.left + rect.width/2 - pw/2, 10), window.innerWidth - pw - 10);
+    var top = rect.top - ph - 10;
+    if(top < 68) top = rect.bottom + 10;
+    pop.style.left = left + "px";
+    pop.style.top = top + "px";
+    pop.style.visibility = "visible";
+  }
+  function hidePop(){ pop.classList.remove("on"); pinned = null; }
+
+  document.addEventListener("click", function(e){
+    var x = e.target.closest(".xref");
+    if(x){
+      if(pinned === x){ hidePop(); } else { pinned = x; showPop(x); }
+    } else if(!e.target.closest(".pop")){
+      hidePop();
+    }
+  });
+  document.addEventListener("keydown", function(e){
+    if((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("xref")){
+      e.preventDefault();
+      pinned = e.target;
+      showPop(e.target);
+    }
+    if(e.key === "Escape") hidePop();
+  });
+  window.addEventListener("scroll", function(){
+    if(pinned && pop.classList.contains("on")) showPop(pinned);
+  }, {passive:true});
+
+  if(window.matchMedia("(hover:hover) and (pointer:fine)").matches){
+    document.addEventListener("mouseover", function(e){
+      var x = e.target.closest(".xref");
+      if(!x) return;
+      clearTimeout(hideTimer);
+      showPop(x);
+    });
+    document.addEventListener("mouseout", function(e){
+      var x = e.target.closest(".xref");
+      if(!x || pinned) return;
+      hideTimer = setTimeout(hidePop, 220);
+    });
+  }
+
+  applyTranslation("NIV");
+})();
+</script>
+</body>
+</html>
