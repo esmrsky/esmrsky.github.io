@@ -259,8 +259,7 @@ a:hover{color:#8FDDFF}
   font-weight:700;color:#3A2A05;letter-spacing:.18em;
   font-size:clamp(.55rem,2cqi,.75rem);
 }
-@keyframes pulseGlow{
-  0%,100%{opacity:.92;filter:brightness(1)}
+@keyframes pulseGlow{0%,100%{opacity:.92;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.03)}}
   50%{opacity:1;filter:brightness(1.08)}
 }
 
@@ -712,6 +711,56 @@ a:hover{color:#8FDDFF}
   .nav-brand span.hide-sm{display:none}
 }
 
+
+/* Original presentation art — pixel-true, scaled to container */
+.orig-art{
+  width:100%;
+  max-width:min(100%, calc(var(--aw) * 1px));
+  margin-inline:auto;
+  position:relative;
+  aspect-ratio: var(--aw) / var(--ah);
+  container-type:inline-size;
+  flex-shrink:0;
+}
+.orig-art-stage{
+  width:calc(var(--aw) * 1px);
+  height:calc(var(--ah) * 1px);
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%) scale(calc(100cqi / var(--aw)));
+  transform-origin:top center;
+  pointer-events:none;
+}
+.orig-art-stage > div{ max-width:none; }
+.split-visual .orig-art{ margin-inline:auto; max-width:100%; }
+
+.split-visual .orig-art{
+  max-width: 100%;
+}
+.stress-split .orig-art{
+  max-width: 100%;
+}
+.stress-split .split-visual{
+  min-width: 0;
+}
+
+.orig-art[data-full]{ max-width:min(100%, 660px); margin-left:0; }
+@media (min-width:901px){
+  .stress-split{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+    gap:clamp(1.5rem,4vw,3rem);
+    align-items:center;
+    margin-top:1.75rem;
+  }
+}
+
+@media (max-width:900px){
+  .orig-art{ max-width:min(100%, 420px); }
+  .panel.hero .orig-art{ max-width:min(92vw, 400px); }
+}
+
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
   .ring.core{animation:none}
@@ -761,14 +810,20 @@ a:hover{color:#8FDDFF}
               <div class="ref">1 Thessalonians 5:23 · NIV</div>
             </div>
           </div>
-          <div class="split-visual"><div class="rings lg" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
-    </div></div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:660;--ah:660" aria-label="Spirit soul body diagram">
+  <div class="orig-art-stage">
+<div style="position:relative;width:660px;height:660px">
+    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(181,123,255,0.5);box-shadow:0 0 70px rgba(181,123,255,0.22), inset 0 0 70px rgba(181,123,255,0.07)"><div style="position: absolute; left: 327px; top: 8px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: #B57BFF">BODY</div></div>
+    <div style="position:absolute;width:430px;height:430px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(76,201,240,0.55);box-shadow:0 0 60px rgba(76,201,240,0.18), inset 0 0 50px rgba(76,201,240,0.06)"><div style="position: absolute; left: 212px; top: 10px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: #4CC9F0">SOUL</div></div>
+    <div style="position:absolute;width:210px;height:210px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 42px 2px rgba(255,216,140,0.45), 0 0 120px 26px rgba(255,182,74,0.26);animation:pulseGlow 5s ease-in-out infinite"></div>
+    
+    
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
+  </div>
+  </div>
+</div>
+</div>
         </div>
       </div>
     </section>
@@ -792,18 +847,21 @@ a:hover{color:#8FDDFF}
             </div>
           </div>
           <div class="split-visual">
-            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--fg-faint);margin-bottom:.75rem">
-              <span>← WORLD</span><span>GOD →</span>
-            </div>
-            <div class="rings md" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
+<div class="orig-art" style="--aw:620;--ah:520" aria-label="Three dimensions diagram">
+  <div class="orig-art-stage">
+<div style="width:620px;height:520px;position:relative">
+      <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#9B8BC4;writing-mode:vertical-rl;rotate:180deg">← WORLD</div>
+      <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#C9A855;writing-mode:vertical-rl">GOD →</div>
+      <div style="position:absolute;width:490px;height:490px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(181,123,255,0.55);box-shadow:0 0 60px rgba(181,123,255,0.14), inset 0 0 60px rgba(181,123,255,0.05)"></div>
+      <div style="position:absolute;width:330px;height:330px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(76,201,240,0.6);box-shadow:0 0 50px rgba(76,201,240,0.12), inset 0 0 46px rgba(76,201,240,0.05)"></div>
+      <div style="position:absolute;width:170px;height:170px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 32px 2px rgba(255,216,140,0.42), 0 0 92px 18px rgba(255,182,74,0.22);animation:pulseGlow 6s ease-in-out infinite"></div>
+      <div style="position:absolute;left:50%;top:24px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:#B57BFF">BODY</div>
+      <div style="position:absolute;left:50%;top:106px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:#4CC9F0">SOUL</div>
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:15px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
     </div>
-          </div>
+  </div>
+</div>
+</div>
         </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
@@ -846,14 +904,20 @@ a:hover{color:#8FDDFF}
             <div class="model-item"><span class="dot soul"></span><div><h3>Soul <span>— the middle</span></h3><p>Mind, will and emotion — the seat of the self.</p></div></div>
             <div class="model-item"><span class="dot spirit"></span><div><h3>Spirit <span>— the core</span></h3><p>Where we commune with God. We'll move from outside in.</p></div></div>
           </div>
-          <div class="split-visual"><div class="rings lg" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
-    </div></div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:600;--ah:600" aria-label="Three-part design diagram">
+  <div class="orig-art-stage">
+<div style="width:600px;height:600px;position:relative">
+      <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(181,123,255,0.5);box-shadow:0 0 70px rgba(181,123,255,0.20), inset 0 0 70px rgba(181,123,255,0.06)"></div>
+      <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(76,201,240,0.55);box-shadow:0 0 60px rgba(76,201,240,0.16), inset 0 0 50px rgba(76,201,240,0.05)"></div>
+      <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 40px 2px rgba(255,216,140,0.45), 0 0 110px 24px rgba(255,182,74,0.24);animation:pulseGlow 5s ease-in-out infinite"></div>
+      <div style="position:absolute;left:50%;top:16px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#B57BFF">BODY</div>
+      <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#4CC9F0">SOUL</div>
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
+    </div>
+  </div>
+</div>
+</div>
         </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
@@ -1015,30 +1079,66 @@ a:hover{color:#8FDDFF}
             <p class="part-desc">The physical vessel — five senses, brain, nervous system. How we touch, and are touched by, the world.</p>
             <div class="part-quote"><span class="bar"></span><span>"Your bodies are temples of the Holy Spirit" — 1 Cor 6:19</span></div>
           </div>
-          <div class="split-visual"><div class="rings lg hl-body" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
-    </div></div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:600;--ah:600" aria-label="Body emphasis diagram">
+  <div class="orig-art-stage">
+<div style="position:relative;width:600px;height:600px">
+    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(181,123,255,0.9);box-shadow:0 0 90px rgba(181,123,255,0.4), inset 0 0 80px rgba(181,123,255,0.12)"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.12)"></div>
+    <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.015)"></div>
+    <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#C6A3FF">BODY</div>
+    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">SOUL</div>
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:#59637A">SPIRIT</div>
+  </div>
+  </div>
+</div>
+</div>
         </div>
       </div>
     </section>
 
     <!-- 10 STRESS -->
+    
     <section class="panel" data-accent="body">
-      <div class="panel-inner">
+      <div class="panel-inner wide">
         <div class="reveal">
           <div class="eyebrow"><span class="pip body"></span><span>Body · Rest</span></div>
           <h2 class="h2">Stress, cortisol &amp; the gift of rest</h2>
-          <p class="lead">A threat triggers <span class="em">cortisol</span> — it sharpens you, then should switch off. Under chronic stress it never does.</p>
-          <p class="body-copy" style="margin-top:1rem">Sustained cortisol wears the body down and can shrink the <span class="em">hippocampus</span>, the brain's memory center.</p>
-          <div class="sci-tags"><span>HPA axis</span><span>Allostatic load · McEwen</span></div>
-          <div class="quote-block">
-            <p>"Come to me, all you who are weary and burdened, and I will give you rest."</p>
-            <span class="ref">Matthew 11:28 · NIV</span>
+        </div>
+        <div class="stress-split reveal">
+          <div>
+            <p class="lead" style="margin-top:0">A threat triggers <span class="em">cortisol</span> — it sharpens you, then should switch off. Under chronic stress it never does.</p>
+            <p class="body-copy" style="margin-top:1rem">Sustained cortisol wears the body down and can shrink the <span class="em">hippocampus</span>, the brain's memory center.</p>
+            <div class="sci-tags"><span>HPA axis</span><span>Allostatic load · McEwen</span></div>
+            <div class="quote-block">
+              <p>"Come to me, all you who are weary and burdened, and I will give you rest."</p>
+              <span class="ref">Matthew 11:28 · NIV</span>
+            </div>
+          </div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:660;--ah:430" aria-label="Cortisol stress chart" data-full="1">
+  <div class="orig-art-stage">
+<div style="width:660px;height:430px;position:relative">
+      <svg viewBox="0 0 660 430" style="width:100%;height:auto" data-om-raster="">
+        <defs>
+          <linearGradient id="acuteFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4CC9F0" stop-opacity="0.25"></stop><stop offset="1" stop-color="#4CC9F0" stop-opacity="0"></stop></linearGradient>
+        </defs>
+        <line x1="70" y1="40" x2="70" y2="360" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"></line>
+        <line x1="70" y1="360" x2="630" y2="360" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"></line>
+        <line x1="70" y1="300" x2="630" y2="300" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" stroke-dasharray="5 7"></line>
+        <text x="80" y="292" fill="#6B7488" font-family="'Space Mono',monospace" font-size="14">baseline</text>
+        <path d="M70 300 C 150 300, 175 90, 235 90 C 300 90, 330 300, 630 300" fill="url(#acuteFill)" stroke="none"></path>
+        <path d="M70 300 C 150 300, 175 90, 235 90 C 300 90, 330 300, 630 300" fill="none" stroke="#4CC9F0" stroke-width="4" stroke-linecap="round"></path>
+        <path d="M70 300 C 150 300, 190 150, 255 140 C 340 127, 360 150, 420 145 C 500 139, 540 158, 630 150" fill="none" stroke="#F0776A" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 0"></path>
+        <circle cx="235" cy="90" r="5" fill="#4CC9F0"></circle>
+        <text x="34" y="45" fill="#8A93A6" font-family="'Space Mono',monospace" font-size="14" transform="rotate(-90 34 200)" text-anchor="middle" style="letter-spacing:2px">CORTISOL</text>
+        <text x="350" y="392" fill="#8A93A6" font-family="'Space Mono',monospace" font-size="14" text-anchor="middle" style="letter-spacing:2px">TIME →</text>
+        <g><rect x="330" y="60" width="14" height="14" rx="3" fill="#4CC9F0"></rect><text x="352" y="72" fill="#CBD2E0" font-family="'Space Grotesk',sans-serif" font-size="19">Acute — spikes, then resets</text></g>
+        <g><rect x="330" y="92" width="14" height="14" rx="3" fill="#F0776A"></rect><text x="352" y="104" fill="#CBD2E0" font-family="'Space Grotesk',sans-serif" font-size="19">Chronic — stays elevated</text></g>
+      </svg>
+    </div>
+  </div>
+</div>
           </div>
         </div>
         <div class="foot-strip">
@@ -1047,6 +1147,7 @@ a:hover{color:#8FDDFF}
     </div>
       </div>
     </section>
+
 
     <!-- 11 TEMPLE -->
     <section class="panel" data-accent="body">
@@ -1116,14 +1217,20 @@ a:hover{color:#8FDDFF}
             <p class="part-desc">Mind, will and emotions — the seat of the self. The "you" that thinks, chooses, and feels.</p>
             <div class="part-quote"><span class="bar"></span><span>"Praise the Lord, my soul; all my inmost being" — Ps 103:1</span></div>
           </div>
-          <div class="split-visual"><div class="rings lg hl-soul" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
-    </div></div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:600;--ah:600" aria-label="Soul emphasis diagram">
+  <div class="orig-art-stage">
+<div style="position:relative;width:600px;height:600px">
+    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(76,201,240,0.9);box-shadow:0 0 80px rgba(76,201,240,0.34), inset 0 0 60px rgba(76,201,240,0.10)"></div>
+    <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.015)"></div>
+    <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">BODY</div>
+    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#8FDDFF">SOUL</div>
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:#59637A">SPIRIT</div>
+  </div>
+  </div>
+</div>
+</div>
         </div>
       </div>
     </section>
@@ -1145,13 +1252,20 @@ a:hover{color:#8FDDFF}
             </div>
           </div>
           <div class="split-visual">
-            <div class="venn" aria-hidden="true">
-              <div class="c c1"></div><div class="c c2"></div><div class="c c3"></div>
-              <div class="vl m">Mind<span>KNOW</span></div>
-              <div class="vl w">Will<span>CHOOSE</span></div>
-              <div class="vl e">Emotion<span>FEEL</span></div>
-              <div class="self">THE<br>SELF</div>
-            </div>
+<div class="orig-art" style="--aw:580;--ah:500" aria-label="Mind will emotion diagram">
+  <div class="orig-art-stage">
+<div style="width:580px;height:500px;position:relative">
+      <div style="position:absolute;width:300px;height:300px;left:130px;top:0;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
+      <div style="position:absolute;width:300px;height:300px;left:30px;top:190px;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
+      <div style="position:absolute;width:300px;height:300px;left:230px;top:190px;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
+      <div style="position:absolute;left:280px;top:128px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:36px;color:#EAF6FF">Mind</div><div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#6FD0EE;margin-top:6px">KNOW</div></div>
+      <div style="position:absolute;left:168px;top:362px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:36px;color:#EAF6FF">Will</div><div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#6FD0EE;margin-top:6px">CHOOSE</div></div>
+      <div style="position:absolute;left:392px;top:362px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:36px;color:#EAF6FF">Emotion</div><div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#6FD0EE;margin-top:6px">FEEL</div></div>
+      <div style="position:absolute;left:280px;top:268px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:2px;color:#8FDDFF;line-height:1.25">THE<br>SELF</div></div>
+    </div>
+  </div>
+</div>
+</div>
           </div>
         </div>
         <div class="foot-strip">
@@ -1174,11 +1288,42 @@ a:hover{color:#8FDDFF}
           <p class="lead">The adult brain isn't fixed — it's <span class="em">plastic</span>. Every repeated thought strengthens a neural pathway. The brain rewires around what we dwell on.</p>
           <p class="body-copy" style="margin-top:1rem">Renewal isn't only a feeling. What you rehearse, you become.</p>
         </div>
-        <div class="pathways reveal">
-          <div class="path"><div class="bar" style="--w:28%"></div><p>A thought, once — a faint trace</p></div>
-          <div class="path"><div class="bar" style="--w:58%"></div><p>Repeated — the pathway thickens</p></div>
-          <div class="path"><div class="bar" style="--w:92%"></div><p>Rehearsed — a strong, automatic path</p></div>
+        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:660;--ah:300" aria-label="Neural pathway diagram">
+  <div class="orig-art-stage">
+<div style="width:660px;height:300px;position:relative">
+      <div style="display:flex;flex-direction:column;gap:34px">
+        <div>
+          <div style="display:flex;align-items:center;gap:0">
+            <div style="width:20px;height:20px;border-radius:50%;background:#233047;border:1.5px solid rgba(76,201,240,0.5);flex-shrink:0"></div>
+            <div style="flex:1;height:2px;background:rgba(76,201,240,0.35);margin:0 -2px"></div>
+            <div style="width:20px;height:20px;border-radius:50%;background:#233047;border:1.5px solid rgba(76,201,240,0.5);flex-shrink:0"></div>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;color:#7A8496;margin-top:10px">A thought, once — a faint trace</div>
         </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:0">
+            <div style="width:24px;height:24px;border-radius:50%;background:#1c3346;border:2px solid rgba(76,201,240,0.8);flex-shrink:0"></div>
+            <div style="flex:1;height:5px;background:rgba(76,201,240,0.65);margin:0 -3px;border-radius:3px"></div>
+            <div style="width:24px;height:24px;border-radius:50%;background:#1c3346;border:2px solid rgba(76,201,240,0.8);flex-shrink:0"></div>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;color:#7A8496;margin-top:10px">Repeated — the pathway thickens</div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:0">
+            <div style="width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#8FDDFF,#4CC9F0);box-shadow:0 0 20px rgba(76,201,240,0.7);flex-shrink:0"></div>
+            <div style="flex:1;height:10px;background:linear-gradient(90deg,#4CC9F0,#8FDDFF,#4CC9F0);box-shadow:0 0 18px rgba(76,201,240,0.6);margin:0 -4px;border-radius:5px"></div>
+            <div style="width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#8FDDFF,#4CC9F0);box-shadow:0 0 20px rgba(76,201,240,0.7);flex-shrink:0"></div>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;color:#8FDDFF;margin-top:10px">Rehearsed — a strong, automatic path</div>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+</div></div>
         <p class="body-copy reveal" style="margin-top:1.5rem">London cabbies who memorize 25,000 streets grow larger hippocampi.</p>
         <p class="ref reveal" style="margin-top:.5rem">Maguire et al., UCL · 2000 · "Fire together, wire together" — Hebb, 1949</p>
         <div class="foot-strip">
@@ -1202,11 +1347,36 @@ a:hover{color:#8FDDFF}
             <span class="ref">Psalm 46:10 · NIV</span>
           </div>
         </div>
-        <div class="still-flow reveal">
-          <div class="still-box"><h4>Mind wandering</h4><p>self-referential loop</p></div>
-          <div class="still-mid">Quiets<br>→</div>
-          <div class="still-box on"><h4>Stillness</h4><p>the loop dims · attention frees</p></div>
-        </div>
+        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:670;--ah:300" aria-label="Mind wandering to stillness">
+  <div class="orig-art-stage">
+<div style="width:670px;height:280px;position:relative;display:flex;align-items:center;gap:16px">
+      <div style="flex:1;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px 18px 18px;background:rgba(255,255,255,0.02)">
+        <div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:#8FDDFF;text-align:center;margin-bottom:8px">MIND WANDERING</div>
+        <svg viewBox="0 0 240 200" style="width:100%;height:auto" data-om-raster="">
+          <g stroke="#4CC9F0" stroke-width="1.6" opacity="0.55">
+            <line x1="60" y1="40" x2="140" y2="32"></line><line x1="140" y1="32" x2="200" y2="70"></line><line x1="60" y1="40" x2="95" y2="95"></line><line x1="95" y1="95" x2="170" y2="120"></line><line x1="200" y1="70" x2="170" y2="120"></line><line x1="95" y1="95" x2="55" y2="150"></line><line x1="170" y1="120" x2="135" y2="165"></line><line x1="135" y1="165" x2="205" y2="150"></line><line x1="170" y1="120" x2="205" y2="150"></line><line x1="140" y1="32" x2="170" y2="120"></line><line x1="55" y1="150" x2="135" y2="165"></line>
+          </g>
+          <g fill="#4CC9F0" opacity="0.22"><circle cx="60" cy="40" r="12"></circle><circle cx="140" cy="32" r="12"></circle><circle cx="200" cy="70" r="12"></circle><circle cx="95" cy="95" r="12"></circle><circle cx="170" cy="120" r="12"></circle><circle cx="55" cy="150" r="12"></circle><circle cx="135" cy="165" r="12"></circle><circle cx="205" cy="150" r="12"></circle></g>
+          <g fill="#8FDDFF"><circle cx="60" cy="40" r="7"></circle><circle cx="140" cy="32" r="7"></circle><circle cx="200" cy="70" r="7"></circle><circle cx="95" cy="95" r="7"></circle><circle cx="170" cy="120" r="7"></circle><circle cx="55" cy="150" r="7"></circle><circle cx="135" cy="165" r="7"></circle><circle cx="205" cy="150" r="7"></circle></g>
+        </svg>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:#9AA3B5;text-align:center;margin-top:6px">self-referential loop</div>
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:1px;color:#7A8496;text-align:center;flex-shrink:0;width:54px">QUIETS<br>→</div>
+      <div style="flex:1;border:1px solid rgba(255,194,75,0.25);border-radius:16px;padding:22px 18px 18px;background:rgba(255,194,75,0.03)">
+        <div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:#E8B45A;text-align:center;margin-bottom:8px">STILLNESS</div>
+        <svg viewBox="0 0 240 200" style="width:100%;height:auto" data-om-raster="">
+          <g stroke="#B7BFCE" stroke-width="1.2" opacity="0.12">
+            <line x1="60" y1="40" x2="140" y2="32"></line><line x1="140" y1="32" x2="200" y2="70"></line><line x1="60" y1="40" x2="95" y2="95"></line><line x1="95" y1="95" x2="170" y2="120"></line><line x1="95" y1="95" x2="55" y2="150"></line><line x1="170" y1="120" x2="135" y2="165"></line><line x1="135" y1="165" x2="205" y2="150"></line>
+          </g>
+          <g fill="#4A5568"><circle cx="60" cy="40" r="6"></circle><circle cx="140" cy="32" r="6"></circle><circle cx="200" cy="70" r="6"></circle><circle cx="170" cy="120" r="6"></circle><circle cx="55" cy="150" r="6"></circle><circle cx="135" cy="165" r="6"></circle><circle cx="205" cy="150" r="6"></circle></g>
+          <circle cx="95" cy="95" r="16" fill="#FFC24B" opacity="0.28"></circle>
+          <circle cx="95" cy="95" r="9" fill="#FFD98A"></circle>
+        </svg>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:#9AA3B5;text-align:center;margin-top:6px">the loop dims · attention frees</div>
+      </div>
+    </div>
+  </div>
+</div></div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Ps 46:10 · NIV</div>
@@ -1228,16 +1398,32 @@ a:hover{color:#8FDDFF}
           <p class="body-copy" style="margin-top:1rem">Not suppressed. Not in charge. Named — the way the psalms of lament name grief, then turn it Godward.</p>
           <div class="sci-tags"><span>Affect labeling · Lieberman, UCLA 2007</span></div>
         </div>
-        <div class="bars reveal">
-          <div class="bar-row"><div class="lvl">HIGH</div><div class="bar-track"><div class="bar-fill hi">Feeling unnamed</div></div></div>
-          <div class="bar-row"><div class="lvl">LOW</div><div class="bar-track"><div class="bar-fill lo">Feeling named in words</div></div></div>
+        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:660;--ah:400" aria-label="Amygdala response chart">
+  <div class="orig-art-stage">
+<div style="width:660px;height:380px;position:relative">
+      <div style="display:flex;align-items:flex-end;gap:44px;height:300px;padding:0 30px">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end">
+          <div style="font-family:'Space Mono',monospace;font-size:20px;color:#F0776A;margin-bottom:12px">HIGH</div>
+          <div style="width:100%;max-width:150px;height:240px;border-radius:12px 12px 0 0;background:linear-gradient(180deg,#F0776A,rgba(240,119,106,0.25));box-shadow:0 0 40px rgba(240,119,106,0.25)"></div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:19px;color:#CBD2E0;margin-top:16px;text-align:center">Feeling <span style="color:#F0776A">unnamed</span></div>
         </div>
-        <p class="panel-label reveal" style="margin-top:1.25rem">Amygdala response</p>
-        <div class="flow reveal">
-          <span>Feel it</span><span class="sep">→</span>
-          <span>Name it</span><span class="sep">→</span>
-          <span>Bring it to God</span>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end">
+          <div style="font-family:'Space Mono',monospace;font-size:20px;color:#8FDDFF;margin-bottom:12px">LOW</div>
+          <div style="width:100%;max-width:150px;height:96px;border-radius:12px 12px 0 0;background:linear-gradient(180deg,#4CC9F0,rgba(76,201,240,0.25));box-shadow:0 0 40px rgba(76,201,240,0.3)"></div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:19px;color:#CBD2E0;margin-top:16px;text-align:center">Feeling <span style="color:#8FDDFF">named in words</span></div>
         </div>
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:1px;color:#6B7488;text-align:center;margin-top:8px">AMYGDALA RESPONSE</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:26px;border-top:1px solid rgba(255,255,255,0.12);padding-top:22px">
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:20px;color:#EEF1F8">Feel it</span>
+        <span style="color:#59637A">→</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:20px;color:#EEF1F8">Name it</span>
+        <span style="color:#59637A">→</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:20px;color:#FFD98A">Bring it to God</span>
+      </div>
+    </div>
+  </div>
+</div></div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Prov 4:23 · NIV</div>
@@ -1256,14 +1442,20 @@ a:hover{color:#8FDDFF}
             <p class="part-desc">The innermost core, where we commune with God — conscience, intuition, communion.</p>
             <div class="part-quote"><span class="bar"></span><span>"The Spirit testifies with our spirit" — Rom 8:16</span></div>
           </div>
-          <div class="split-visual"><div class="rings lg hl-spirit" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
-    </div></div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:600;--ah:600" aria-label="Spirit emphasis diagram">
+  <div class="orig-art-stage">
+<div style="position:relative;width:600px;height:600px">
+    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.12)"></div>
+    <div style="position:absolute;width:230px;height:230px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 50px 3px rgba(255,216,140,0.5), 0 0 160px 34px rgba(255,182,74,0.30);animation:pulseGlow 5s ease-in-out infinite"></div>
+    <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">BODY</div>
+    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">SOUL</div>
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:17px;font-weight:700;letter-spacing:3px;color:#3A2A05">SPIRIT</div>
+  </div>
+  </div>
+</div>
+</div>
         </div>
       </div>
     </section>
@@ -1314,12 +1506,29 @@ a:hover{color:#8FDDFF}
           <div class="sci-tags"><span>Enteric nervous system · Gershon</span><span>Heart coherence · HeartMath</span></div>
           <p class="body-copy" style="margin-top:1.25rem">A gut feeling is <span class="em">real data</span> — but data, not a verdict. A signal to weigh, not a voice to obey.</p>
         </div>
-        <div class="neurons reveal">
-          <div class="n-row"><strong>Head</strong><span>~86 billion neurons</span></div>
-          <div class="n-row"><strong>Heart</strong><span>~40,000 neurons · a "little brain"</span></div>
-          <div class="n-row"><strong>Gut</strong><span>~500 million neurons · the "second brain"</span></div>
+        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:540;--ah:460" aria-label="Head heart gut diagram">
+  <div class="orig-art-stage">
+<div style="width:540px;height:420px;position:relative;position:relative;padding:8px 0">
+      <div style="position:absolute;left:31px;top:56px;bottom:150px;width:2px;background:linear-gradient(180deg,rgba(76,201,240,0.6),rgba(255,194,75,0.6),rgba(181,123,255,0.6))"></div>
+      <div style="display:flex;flex-direction:column;gap:40px">
+        <div style="display:flex;align-items:center;gap:28px">
+          <div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(76,201,240,0.85);background:radial-gradient(circle,rgba(76,201,240,0.28),rgba(76,201,240,0.04));box-shadow:0 0 34px rgba(76,201,240,0.3);flex-shrink:0"></div>
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;color:#F1F4FA">Head</div><div style="font-family:'Space Mono',monospace;font-size:17px;color:#9AA3B5;margin-top:3px">~86 billion neurons</div></div>
         </div>
-        <p class="ref reveal" style="margin-top:1rem">Vagus nerve ≈ 80% of fibers carry signal ↑ upward (body → brain)</p>
+        <div style="display:flex;align-items:center;gap:28px">
+          <div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,194,75,0.85);background:radial-gradient(circle,rgba(255,194,75,0.3),rgba(255,194,75,0.04));box-shadow:0 0 34px rgba(255,194,75,0.32);flex-shrink:0"></div>
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;color:#F1F4FA">Heart</div><div style="font-family:'Space Mono',monospace;font-size:17px;color:#9AA3B5;margin-top:3px">~40,000 neurons · a "little brain"</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:28px">
+          <div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(181,123,255,0.85);background:radial-gradient(circle,rgba(181,123,255,0.28),rgba(181,123,255,0.04));box-shadow:0 0 34px rgba(181,123,255,0.3);flex-shrink:0"></div>
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;color:#F1F4FA">Gut</div><div style="font-family:'Space Mono',monospace;font-size:17px;color:#9AA3B5;margin-top:3px">~500 million neurons · the "second brain"</div></div>
+        </div>
+      </div>
+      <div style="margin-top:26px;border-top:1px solid rgba(255,255,255,0.12);padding-top:16px;font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px;color:#8A93A6">VAGUS NERVE ≈ 80% of fibers carry signal <span style="color:#DCE1EC">↑ upward</span> (body → brain)</div>
+    </div>
+  </div>
+</div></div>
+        <p class="ref reveal" style="margin-top:1rem;display:none">Vagus nerve ≈ 80% of fibers carry signal ↑ upward (body → brain)</p>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Signal, not verdict</div>
@@ -1454,14 +1663,20 @@ a:hover{color:#8FDDFF}
               </div>
             </div>
           </div>
-          <div class="split-visual"><div class="rings lg" aria-hidden="true">
-      <div class="ring outer"></div>
-      <div class="ring mid"></div>
-      <div class="ring core"></div>
-      <span class="ring-label body">BODY</span>
-      <span class="ring-label soul">SOUL</span>
-      <span class="ring-label spirit">SPIRIT</span>
-    </div></div>
+          <div class="split-visual">
+<div class="orig-art" style="--aw:600;--ah:600" aria-label="Spirit soul body diagram">
+  <div class="orig-art-stage">
+<div style="position:relative;width:600px;height:600px">
+    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(181,123,255,0.75);box-shadow:0 0 80px rgba(181,123,255,0.28), inset 0 0 70px rgba(181,123,255,0.08)"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(76,201,240,0.8);box-shadow:0 0 70px rgba(76,201,240,0.24), inset 0 0 55px rgba(76,201,240,0.08)"></div>
+    <div style="position:absolute;width:200px;height:200px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 46px 3px rgba(255,216,140,0.48), 0 0 150px 30px rgba(255,182,74,0.28);animation:pulseGlow 5s ease-in-out infinite"></div>
+    <div style="position:absolute;left:50%;top:16px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#C6A3FF">BODY</div>
+    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#8FDDFF">SOUL</div>
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;color:#3A2A05">SPIRIT</div>
+  </div>
+  </div>
+</div>
+</div>
         </div>
       </div>
     </section>
