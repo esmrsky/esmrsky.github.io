@@ -11,8 +11,12 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080705'/%3E%3Cpath d='M32 16L18 42h28z' fill='none' stroke='%238B5CF6' stroke-width='3.5' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='29' r='4' fill='%238B5CF6'/%3E%3C/svg%3E">
 <script>
   (function() {
-    var theme = localStorage.getItem('fogTheme') || 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      var theme = localStorage.getItem('fogTheme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
   })();
 </script>
 <style>
@@ -958,7 +962,9 @@
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('fogTheme', newTheme);
+    try {
+      localStorage.setItem('fogTheme', newTheme);
+    } catch (e) {}
   });
 
   // 2. Lexical Explorer Interaction (Event Delegation)
@@ -995,7 +1001,9 @@
       // Paint left boundary & display box
       detailBox.style.display = 'block';
       detailBox.style.borderLeft = `4px solid var(--c-${card.dataset.cat})`;
-      detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (typeof detailBox.scrollIntoView === 'function') {
+        detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
   });
 
@@ -1006,6 +1014,7 @@
   const step6 = document.getElementById('step6Container');
 
   function selectChoice(group, id) {
+    if (!group) return;
     state[group] = id;
     document.querySelectorAll(`[data-choice-group="${group}"] .choice`).forEach(c => {
       c.classList.toggle('selected', c.dataset.id === id);
@@ -1055,7 +1064,9 @@
   document.addEventListener('click', (e) => {
     const ch = e.target.closest('.choice');
     if (ch) {
-      selectChoice(ch.dataset.group, ch.dataset.id);
+      const groupEl = ch.closest('.choices');
+      const group = groupEl ? groupEl.dataset.choiceGroup : null;
+      selectChoice(group, ch.dataset.id);
       return;
     }
     
@@ -1070,10 +1081,14 @@
       if (g.dataset.reqChoice === 'vector') {
         step4.style.display = 'block';
         step5.style.display = 'block';
-        step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (typeof step4.scrollIntoView === 'function') {
+          step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       } else if (g.dataset.reqText === 'vocabRecall') {
         step6.style.display = 'block';
-        step6.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (typeof step6.scrollIntoView === 'function') {
+          step6.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       }
       return;
     }
