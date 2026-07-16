@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="FOG — An interactive visual and lexical deep-dive into the fear of the LORD in Scripture, exploring Hebrew, Greek, covenants, and alignment.">
+<meta name="description" content="FOG — An explanatory visual and lexical deep-dive into the fear of the LORD in Scripture, exploring Hebrew, Greek, covenants, and alignment.">
 <title>FOG · The Fear of God</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,16 +32,16 @@
     
     /* Semantic Evidence / Category Colors */
     --c-awe: #22C55E;
-    --c-awe-bg: rgba(34, 197, 94, 0.06);
+    --c-awe-bg: rgba(34, 197, 94, 0.04);
     --c-awe-border: rgba(34, 197, 94, 0.2);
     
     --c-panic: #EAB308;
-    --c-panic-bg: rgba(234, 179, 8, 0.06);
-    --c-panic-border: rgba(234, 179, 8, 0.25);
+    --c-panic-bg: rgba(234, 179, 8, 0.04);
+    --c-panic-border: rgba(234, 179, 8, 0.2);
     
     --c-retreat: #EF4444;
-    --c-retreat-bg: rgba(239, 68, 68, 0.06);
-    --c-retreat-border: rgba(239, 68, 68, 0.25);
+    --c-retreat-bg: rgba(239, 68, 68, 0.04);
+    --c-retreat-border: rgba(239, 68, 68, 0.2);
 
     --font-display: "Outfit", system-ui, sans-serif;
     --font-body: "Instrument Sans", system-ui, sans-serif;
@@ -59,16 +59,16 @@
     --hair-hover: rgba(28, 25, 21, 0.2);
     
     --c-awe: #16A34A;
-    --c-awe-bg: rgba(22, 163, 74, 0.08);
-    --c-awe-border: rgba(22, 163, 74, 0.35);
+    --c-awe-bg: rgba(22, 163, 74, 0.06);
+    --c-awe-border: rgba(22, 163, 74, 0.3);
     
     --c-panic: #CA8A04;
-    --c-panic-bg: rgba(202, 138, 4, 0.08);
+    --c-panic-bg: rgba(202, 138, 4, 0.06);
     --c-panic-border: rgba(202, 138, 4, 0.35);
     
     --c-retreat: #DC2626;
-    --c-retreat-bg: rgba(220, 38, 38, 0.08);
-    --c-retreat-border: rgba(220, 38, 38, 0.35);
+    --c-retreat-bg: rgba(220, 38, 38, 0.06);
+    --c-retreat-border: rgba(220, 38, 38, 0.3);
   }
 
   * {
@@ -180,12 +180,15 @@
 
   h4 {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--fg-faint);
-    margin-bottom: 8px;
+    margin-top: 24px;
+    margin-bottom: 14px;
+    border-left: 3px solid var(--hair);
+    padding-left: 10px;
   }
 
   p {
@@ -261,51 +264,67 @@
     margin-bottom: 40px;
   }
 
-  .lexicon-grid {
+  .lexicon-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
-    margin-bottom: 30px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
   }
 
   .lexicon-card {
     background: var(--panel);
-    border: 1px solid var(--hair);
-    padding: 18px;
-    border-radius: 12px;
-    cursor: pointer;
+    border: 1.5px solid var(--hair);
+    padding: 24px;
+    border-radius: 14px;
     text-align: left;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lexicon-card:hover {
     background: var(--panel-hover);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
+    border-color: var(--hair-hover);
   }
 
-  .lexicon-card.c-awe { border-color: var(--c-awe-border); }
-  .lexicon-card.c-awe:hover { box-shadow: 0 6px 18px rgba(34, 197, 94, 0.12); }
-  .lexicon-card.c-awe .word-tag { color: var(--c-awe); }
+  .lexicon-card.c-awe { border-left: 5px solid var(--c-awe); }
+  .lexicon-card.c-awe .word-tag { color: var(--c-awe); background: var(--c-awe-bg); border: 1px solid var(--c-awe-border); }
 
-  .lexicon-card.c-panic { border-color: var(--c-panic-border); }
-  .lexicon-card.c-panic:hover { box-shadow: 0 6px 18px rgba(234, 179, 8, 0.12); }
-  .lexicon-card.c-panic .word-tag { color: var(--c-panic); }
+  .lexicon-card.c-panic { border-left: 5px solid var(--c-panic); }
+  .lexicon-card.c-panic .word-tag { color: var(--c-panic); background: var(--c-panic-bg); border: 1px solid var(--c-panic-border); }
 
-  .lexicon-card.c-retreat { border-color: var(--c-retreat-border); }
-  .lexicon-card.c-retreat:hover { box-shadow: 0 6px 18px rgba(239, 68, 68, 0.12); }
-  .lexicon-card.c-retreat .word-tag { color: var(--c-retreat); }
+  .lexicon-card.c-retreat { border-left: 5px solid var(--c-retreat); }
+  .lexicon-card.c-retreat .word-tag { color: var(--c-retreat); background: var(--c-retreat-bg); border: 1px solid var(--c-retreat-border); }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 
   .word-title {
     font-family: var(--font-display);
-    font-size: 21px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 800;
   }
 
   .word-translit {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--fg-dim);
     font-style: italic;
-    margin-bottom: 10px;
+    margin-left: 8px;
+  }
+
+  .word-strong {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-faint);
+    background: rgba(244, 240, 230, 0.03);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--hair);
   }
 
   .word-tag {
@@ -314,91 +333,40 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
   }
 
-  /* Word Detail Display Box */
-  .detail-box {
-    background: rgba(24, 22, 19, 0.85);
-    border: 2px solid var(--hair-hover);
-    border-radius: 16px;
-    padding: 36px;
-    margin-bottom: 60px;
-    min-height: 200px;
-    display: none;
-    animation: riseIn 0.3s ease both;
-  }
-
-  .detail-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-bottom: 1.5px solid var(--hair);
-    padding-bottom: 14px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 14px;
-  }
-
-  .detail-word {
-    font-family: var(--font-display);
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--fg);
-  }
-
-  .detail-translit {
-    font-size: 18px;
-    font-style: italic;
+  .word-def {
+    font-size: 17.5px;
     color: var(--fg-dim);
-    margin-left: 10px;
+    line-height: 1.62;
+    margin-bottom: 14px;
   }
 
-  .detail-strong {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--fg-faint);
-    background: rgba(244, 240, 230, 0.04);
-    padding: 3px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--hair);
-  }
-
-  .detail-definition {
-    font-size: 18px;
-    color: var(--fg-dim);
-    line-height: 1.65;
-    margin-bottom: 20px;
-  }
-
-  .detail-verse {
-    font-size: 16.5px;
+  .word-verse {
+    font-size: 15.5px;
     font-style: italic;
-    background: rgba(244, 240, 230, 0.03);
-    border-left: 3px solid var(--fg-faint);
-    padding: 16px 20px;
-    border-radius: 0 8px 8px 0;
+    background: rgba(244, 240, 230, 0.02);
+    border-left: 2.5px solid var(--fg-faint);
+    padding: 10px 16px;
+    border-radius: 0 6px 6px 0;
+    color: var(--fg-dim);
   }
 
-  .detail-verse-ref {
+  .word-verse-ref {
     display: block;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--fg-faint);
-    margin-top: 8px;
+    margin-top: 6px;
   }
 
   /* Curriculum Scaffolding Steps */
-  .curriculum {
-    border-top: 1.5px dashed var(--hair);
-    padding-top: 80px;
-    margin-top: 80px;
-  }
-
-  .step-container {
+  .section-container {
     border: 1.5px solid var(--hair);
     border-radius: 16px;
     padding: 44px 34px;
@@ -406,14 +374,14 @@
     background: var(--panel);
   }
 
-  .step-header {
+  .section-header {
     display: flex;
     align-items: center;
     gap: 14px;
     margin-bottom: 24px;
   }
 
-  .step-icon {
+  .section-icon {
     width: 42px;
     height: 42px;
     border-radius: 10px;
@@ -425,7 +393,10 @@
     color: var(--c-panic);
   }
 
-  .step-icon svg {
+  .section-icon.c-awe { color: var(--c-awe); }
+  .section-icon.c-retreat { color: var(--c-retreat); }
+
+  .section-icon svg {
     width: 22px;
     height: 22px;
     stroke: currentColor;
@@ -433,7 +404,7 @@
     fill: none;
   }
 
-  .step-badge {
+  .section-badge {
     font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 700;
@@ -446,166 +417,30 @@
     letter-spacing: 0.1em;
   }
 
-  .step-title {
+  .section-badge.c-awe {
+    color: var(--c-awe);
+    background: rgba(34, 197, 94, 0.06);
+    border-color: var(--c-awe-border);
+  }
+
+  .section-badge.c-retreat {
+    color: var(--c-retreat);
+    background: rgba(239, 68, 68, 0.06);
+    border-color: var(--c-retreat-border);
+  }
+
+  .section-title {
     font-family: var(--font-display);
     font-size: 24px;
     font-weight: 700;
     margin: 0;
   }
 
-  /* Interactive Elements */
-  .choices {
-    display: grid;
-    gap: 12px;
-    margin: 24px 0;
-  }
-
-  .choice {
-    text-align: left;
-    cursor: pointer;
-    background: transparent;
-    color: var(--fg-dim);
-    border: 1.5px solid var(--hair);
-    border-radius: 8px;
-    padding: 18px 24px;
-    font-family: var(--font-body);
-    font-size: 17.5px;
-    font-weight: 500;
-    line-height: 1.45;
-    transition: all 0.2s ease;
-  }
-
-  .choice:hover {
-    border-color: var(--hair-hover);
-    color: var(--fg);
-    background: rgba(244, 240, 230, 0.02);
-  }
-
-  .choice.selected {
-    background: var(--fg);
-    color: var(--bg);
-    border-color: var(--fg);
-    font-weight: 600;
-  }
-
-  .gate {
-    margin-top: 24px;
-  }
-
-  .gate-btn {
-    width: 100%;
-    text-align: center;
-    cursor: pointer;
-    background: transparent;
-    border: 2px solid var(--c-panic);
-    border-radius: 8px;
-    padding: 16px 24px;
-    color: var(--c-panic);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: all 0.2s ease;
-  }
-
-  .gate-btn:hover:not(:disabled) {
-    background: rgba(202, 138, 4, 0.08);
-  }
-
-  .gate-btn:disabled {
-    cursor: not-allowed;
-    border-color: var(--hair);
-    color: var(--fg-faint);
-  }
-
-  .gate-content {
-    margin-top: 24px;
-    animation: riseIn 0.35s ease both;
-  }
-
-  .responses .resp {
-    display: none;
-    font-size: 17.5px;
-    line-height: 1.6;
-    color: var(--fg-dim);
-    padding: 20px;
-    border-radius: 8px;
-    background: rgba(244, 240, 230, 0.02);
-    border-left: 4px solid var(--c-retreat);
-    margin-bottom: 20px;
-  }
-
-  .responses .resp.show {
-    display: block;
-  }
-
-  .responses .resp.correct {
-    border-left-color: var(--c-awe);
-  }
-
-  /* Free Recall Box */
-  textarea {
-    width: 100%;
-    margin-top: 16px;
-    background: rgba(244, 240, 230, 0.02);
-    border: 1.5px solid var(--hair);
-    border-radius: 8px;
-    padding: 20px;
-    font-family: var(--font-body);
-    font-size: 17.5px;
-    line-height: 1.5;
-    color: var(--fg);
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-
-  textarea:focus {
-    border-color: var(--hair-hover);
-  }
-
-  /* Verdict container */
-  .verdict {
-    border-radius: 8px;
-    padding: 26px;
-    font-size: 17.5px;
-    line-height: 1.62;
-    border: 1.5px solid transparent;
-  }
-
-  .verdict.correct {
-    background: var(--c-awe-bg);
-    border-color: var(--c-awe-border);
-    color: var(--fg-dim);
-  }
-
-  .verdict.incorrect {
-    background: var(--c-retreat-bg);
-    border-color: var(--c-retreat-border);
-    color: var(--fg-dim);
-  }
-
-  .vspace {
-    margin-top: 14px;
-  }
-
-  @keyframes riseIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   @media (max-width: 600px) {
     .container {
       padding: 40px 16px;
     }
-    .step-container {
+    .section-container {
       padding: 28px 18px;
     }
     .theme-toggle-btn {
@@ -638,7 +473,7 @@
       <span>•</span>
       <span>COVENANTAL SYNTHESIS</span>
       <span>•</span>
-      <span>6-STEP STUDY</span>
+      <span>VISUAL ESSAY</span>
     </div>
     
     <p>Modern English collapses a massive array of scriptural concepts into the single flat word <strong>"fear"</strong>. In the original Hebrew and Greek, however, the vocabulary is deeply somatic, diverse, and relational.</p>
@@ -667,296 +502,365 @@
   <!-- Lexical Grid Explorer -->
   <section>
     <h2>The 22 Original Words</h2>
-    <p class="lexicon-intro">Click any card below to explore its transliteration, literal somatic or psychological nuance, and key scripture passage.</p>
+    <p class="lexicon-intro">The following dictionary catalogs every key term for fear, trembling, quaking, and awe in the original biblical languages, grouped by their semantic posture.</p>
     
     <!-- HEBREW GRID -->
-    <h4 style="margin-bottom:12px; color:var(--fg-dim);">Hebrew (Old Testament)</h4>
-    <div class="lexicon-grid">
-      <div class="lexicon-card c-awe" data-word="Yirah" data-trans="Yir’āh" data-strong="H3374" data-def="Holy relational awe, reverence, or respect. A cognitive boundary-keeping fear that attracts and anchors rather than repelling." data-verse="Psalm 111:10 — 'The fear [yir’at] of the Lord is the beginning of wisdom.'" data-cat="awe">
-        <div class="word-title">יִרְאָה</div>
-        <div class="word-translit">Yir’āh</div>
-        <span class="word-tag">🛡️ Awe / Align</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Pachad" data-trans="Paḥaḏ" data-strong="H6343" data-def="Sudden visceral dread or panic. Associated somatically with the quivering of thighs and shaking bones when facing immediate danger." data-verse="Job 4:14 — 'Dread [paḥaḏ] came upon me, and trembling, which made all my bones shake.'" data-cat="panic">
-        <div class="word-title">פַּחַד</div>
-        <div class="word-translit">Paḥaḏ</div>
-        <span class="word-tag">⚡ Somatic Dread</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Charad" data-trans="Ḥāraḏ" data-strong="H2729" data-def="Physical quaking, shuddering, or being startled out of stasis by a sudden shock or divine manifestation." data-verse="Exodus 19:16 — '...and a very loud trumpet blast, so that all the people in the camp trembled [yeḥĕraḏ].'" data-cat="panic">
-        <div class="word-title">חָרַד</div>
-        <div class="word-translit">Ḥāraḏ</div>
-        <span class="word-tag">🌋 Startled Quake</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Arats" data-trans="‘Āraṣ" data-strong="H6206" data-def="The dread of being shattered or crushed. Psychologically, it describes feeling pulverized before irresistible, infinite power." data-verse="Isaiah 8:13 — 'But the Lord of hosts... let him be your fear, and let him be your dread [ma‘ăriskem].'" data-cat="panic">
-        <div class="word-title">עָרַץ</div>
-        <div class="word-translit">‘Āraṣ</div>
-        <span class="word-tag">💥 Crushing Dread</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Chil" data-trans="Ḥîl / Ḥîl" data-strong="H2427" data-def="Writhing, convulsing, or twisting in fear. Modeled directly after the severe somatic cramps and writhes of a woman in labor." data-verse="Isaiah 13:8 — 'They will be dismayed. Pangs and agony will seize them; they will writhe [yeḥīlūn] like a woman in labor.'" data-cat="panic">
-        <div class="word-title">חִיל</div>
-        <div class="word-translit">Ḥîl</div>
-        <span class="word-tag">🌀 Writhing Panic</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Ragaz" data-trans="Rāḡaz" data-strong="H7264" data-def="Internal agitation or shaking of the viscera. Describes the churning of the bowels and stomach under extreme stress." data-verse="Habakkuk 3:16 — 'I hear, and my body trembles [tirgaz]; my lips quiver... my legs tremble beneath me.'" data-cat="panic">
-        <div class="word-title">רָגַז</div>
-        <div class="word-translit">Rāḡaz</div>
-        <span class="word-tag">🌊 Visceral Churn</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Raad" data-trans="Rā‘aḏ" data-strong="H7460" data-def="Ongoing, uncontrollable physical quivering or trembling of the limbs." data-verse="Psalm 2:11 — 'Serve the Lord with fear, and rejoice with trembling [rə‘āḏāh].'" data-cat="panic">
-        <div class="word-title">רָעַד</div>
-        <div class="word-translit">Rā‘aḏ</div>
-        <span class="word-tag">🥶 Physical Shaking</span>
-      </div>
-
-      <div class="lexicon-card c-retreat" data-word="Zachal" data-trans="Zāḥal" data-strong="H2119" data-def="To crawl away or shrink back in fear. Somatically mirrors a snake or insect creeping away to hide in the dust." data-verse="Job 32:6 — 'I am young, and you are very old; therefore I was timid [zāḥaleti - shrank back] and durst not...'" data-cat="retreat">
-        <div class="word-title">זָחַל</div>
-        <div class="word-translit">Zāḥal</div>
-        <span class="word-tag">🐍 Shrink Away</span>
-      </div>
-
-      <div class="lexicon-card c-retreat" data-word="Yagor" data-trans="Yāḡōr" data-strong="H3025" data-def="Dread of a specific, imminent, and highly destructive outcome or agent of wrath." data-verse="Deuteronomy 9:19 — 'For I was afraid [yāḡōrtī] of the anger and hot displeasure...'" data-cat="retreat">
-        <div class="word-title">יָגֹר</div>
-        <div class="word-translit">Yāḡōr</div>
-        <span class="word-tag">⚠️ Specific Dread</span>
-      </div>
-
-      <div class="lexicon-card c-retreat" data-word="Chaphaz" data-trans="Ḥāp̄az" data-strong="H2648" data-def="Precipitous, panic-driven haste. The sudden rush of flight adrenaline." data-verse="Psalm 31:22 — 'I had said in my alarm [ḥop̄zō - haste/panic], 'I am cut off from your sight.''" data-cat="retreat">
-        <div class="word-title">חָפַז</div>
-        <div class="word-translit">Ḥāp̄az</div>
-        <span class="word-tag">🏃 Panic Flight</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Saar" data-trans="Śā‘ar / Sāmar" data-strong="H5568" data-def="Horripilation: the shivering of the skin and hair standing on end due to supernatural awe or raw horror." data-verse="Job 4:15 — 'A spirit glided past my face; the hair of my flesh stood up [tessamēr].'" data-cat="panic">
-        <div class="word-title">סָמַר</div>
-        <div class="word-translit">Sāmar</div>
-        <span class="word-tag">🥶 Hair Standing</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Shamem" data-trans="Šāmēm" data-strong="H8074" data-def="A catatonic freeze state. Appalled dumbness or numbness where the mind is completely devastated by shock." data-verse="Daniel 8:27 — 'And I, Daniel, was overcome and lay sick... I was appalled [’eštōmēm] by the vision...'" data-cat="panic">
-        <div class="word-title">שָׁמֵם</div>
-        <div class="word-translit">Šāmēm</div>
-        <span class="word-tag">🧊 Appalled Freeze</span>
-      </div>
-    </div>
-
-    <!-- GREEK GRID -->
-    <h4 style="margin-bottom:12px; color:var(--fg-dim);">Greek (New Testament)</h4>
-    <div class="lexicon-grid">
-      <div class="lexicon-card c-panic" data-word="Phobos" data-trans="Phobos" data-strong="G5401" data-def="Generic fear. Derived from the ancient root for flight/retreat. Used to span both raw panic and holy reverence." data-verse="Acts 9:31 — '...walking in the fear [phobō] of the Lord and in the comfort of the Holy Spirit...'" data-cat="panic">
-        <div class="word-title">φόβος</div>
-        <div class="word-translit">Phobos</div>
-        <span class="word-tag">⚖️ Generic Fear</span>
-      </div>
-
-      <div class="lexicon-card c-retreat" data-word="Deilia" data-trans="Deilia" data-strong="G1167" data-def="Cowardice, timidity, or faithless anxiety. Always used in a negative sense in Scripture. Represents protective ego retreat." data-verse="2 Timothy 1:7 — 'For God gave us a spirit not of fear [deilias] but of power and love and self-control.'" data-cat="retreat">
-        <div class="word-title">δειλία</div>
-        <div class="word-translit">Deilia</div>
-        <span class="word-tag">🥀 Cowardice</span>
-      </div>
-
-      <div class="lexicon-card c-awe" data-word="Eulabeia" data-trans="Eulabeia" data-strong="G2124" data-def="Literally 'taking hold of well'. Holy circumspection, caution, and reverence. Moving carefully out of deep respect for the sacred." data-verse="Hebrews 12:28 — '...let us offer to God acceptable worship, with reverence [eulabeias] and awe.'" data-cat="awe">
-        <div class="word-title">εὐλάβεια</div>
-        <div class="word-translit">Eulabeia</div>
-        <span class="word-tag">🕯️ Holy Caution</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Tromos" data-trans="Tromos" data-strong="G5156" data-def="Trembling or motor shaking. The physical motor tremor that manifests from encounters with the infinite." data-verse="Philippians 2:12 — '...work out your own salvation with fear and trembling [tromou]...'" data-cat="panic">
-        <div class="word-title">τρόμος</div>
-        <div class="word-translit">Tromos</div>
-        <span class="word-tag">👣 Quaking Tremor</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Thambos" data-trans="Thambos" data-strong="G2285" data-def="Awe-struck amazement or jaw-dropping shock. Involuntary suspension of mental faculties upon meeting the supernatural." data-verse="Luke 4:36 — 'And amazement [thambos] came upon them all, and they said to one another...'" data-cat="panic">
-        <div class="word-title">θάμβος</div>
-        <div class="word-translit">Thambos</div>
-        <span class="word-tag">😳 Stunned Shock</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Ekstasis" data-trans="Ekstasis" data-strong="G1611" data-def="Literally 'standing outside oneself'. Being thrown out of normal cognitive processing due to overwhelming divine power." data-verse="Mark 16:8 — 'And they went out and fled... for trembling [tromos] and astonishment [ekstasis] had seized them...'" data-cat="panic">
-        <div class="word-title">ἔκστασις</div>
-        <div class="word-translit">Ekstasis</div>
-        <span class="word-tag">🌌 Mind Displaced</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Phrisso" data-trans="Phrissō" data-strong="G5425" data-def="Shivering and bristle of horror. Involuntary goosebumps and skin-prickle." data-verse="James 2:19 — 'Even the demons believe—and shudder [phrissousin].'" data-cat="panic">
-        <div class="word-title">φρίσσω</div>
-        <div class="word-translit">Phrissō</div>
-        <span class="word-tag">🥶 Goosebumps</span>
-      </div>
-
-      <div class="lexicon-card c-awe" data-word="Aidos" data-trans="Aidōs" data-strong="G127" data-def="Modesty, bashfulness, or inward reverence that respects relational boundaries and shrinks from assertiveness before a superior." data-verse="Hebrews 12:28 (Variant) — '...let us offer to God acceptable worship, with reverence [aidous] and awe.'" data-cat="awe">
-        <div class="word-title">αἰδώς</div>
-        <div class="word-translit">Aidōs</div>
-        <span class="word-tag">🤝 Bashful Awe</span>
-      </div>
-
-      <div class="lexicon-card c-retreat" data-word="Ptyro" data-trans="Ptyrō" data-strong="G4426" data-def="Startle response, like a frightened horse shying away or bolting. A defensive flinch." data-verse="Philippians 1:28 — '...and not frightened [ptyromenoi - shying away] in anything by your opponents.'" data-cat="retreat">
-        <div class="word-title">πτύρω</div>
-        <div class="word-translit">Ptyrō</div>
-        <span class="word-tag">🐎 Defensive Flinch</span>
-      </div>
-
-      <div class="lexicon-card c-retreat" data-word="Hypostello" data-trans="Hypostellō" data-strong="G5288" data-def="Stealthy retreat or shrinking back to avoid social or physical consequences." data-verse="Hebrews 10:38 — '...but my righteous one shall live by faith, and if he shrinks back [hyposteilētai], my soul has no pleasure...'" data-cat="retreat">
-        <div class="word-title">ὑποστέλλω</div>
-        <div class="word-translit">Hypostellō</div>
-        <span class="word-tag">🐢 Shrinking Back</span>
-      </div>
-
-      <div class="lexicon-card c-panic" data-word="Apopsycho" data-trans="Apopsychō" data-strong="G674" data-def="Physiological fainting or swooning. Visceral failure of the autonomic nervous system under terror." data-verse="Luke 21:26 — '...people fainting [apopsychontōn - hearts failing them] with fear and with foreboding...'" data-cat="panic">
-        <div class="word-title">ἀποψύχω</div>
-        <div class="word-translit">Apopsychō</div>
-        <span class="word-tag">🥀 Fainting Swoon</span>
-      </div>
-    </div>
-
-    <!-- Lexicon Detail Display Box -->
-    <div id="lexiconDetail" class="detail-box">
-      <div class="detail-header">
-        <div>
-          <span id="detailWord" class="detail-word">יִרְאָה</span>
-          <span id="detailTranslit" class="detail-translit">Yir’āh</span>
+    <h4>🟢 Holy Awe & Relational Alignment (Reverential Fear)</h4>
+    <p style="margin-bottom: 20px; font-size:16.5px;">These words define a healthy, loving recognition of God's majesty that attracts and anchors the soul, serving as a protective safeguard rather than a repellent threat.</p>
+    <div class="lexicon-list">
+      <div class="lexicon-card c-awe">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">יִרְאָה</span>
+            <span class="word-translit">Yir’āh</span>
+          </div>
+          <span class="word-strong">H3374</span>
         </div>
-        <span id="detailStrong" class="detail-strong">H3374</span>
+        <div class="word-def"><strong>Awe & Reverence:</strong> Relational awe, reverence, or respect. A cognitive boundary-keeping fear that attracts, anchors, and aligns the heart.</div>
+        <div class="word-verse">"The fear [yir’at] of the Lord is the beginning of wisdom." <span class="word-verse-ref">Psalm 111:10</span></div>
       </div>
-      <div id="detailDefinition" class="detail-definition"></div>
-      <div id="detailVerse" class="detail-verse"></div>
+
+      <div class="lexicon-card c-awe">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">εὐλάβεια</span>
+            <span class="word-translit">Eulabeia</span>
+          </div>
+          <span class="word-strong">G2124</span>
+        </div>
+        <div class="word-def"><strong>Godly Caution:</strong> Literally "taking hold of well". Holy circumspection and careful devotion. Handling sacred things with absolute respect, avoiding casual offense.</div>
+        <div class="word-verse">"...let us offer to God acceptable worship, with reverence [eulabeias] and awe." <span class="word-verse-ref">Hebrews 12:28</span></div>
+      </div>
+
+      <div class="lexicon-card c-awe">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">αἰδώς</span>
+            <span class="word-translit">Aidōs</span>
+          </div>
+          <span class="word-strong">G127</span>
+        </div>
+        <div class="word-def"><strong>Inward Reverence:</strong> Modesty, bashfulness, or a soft inward reverence that respects relational boundaries and shrinks from vulgar self-assertion before a superior.</div>
+        <div class="word-verse">"...let us offer to God acceptable worship, with reverence [aidous] and awe." <span class="word-verse-ref">Hebrews 12:28 (Variant)</span></div>
+      </div>
+    </div>
+
+    <h4>🟡 Somatic & Involuntary Physical Panic (Somatic Shock)</h4>
+    <p style="margin-bottom: 20px; font-size:16.5px;">These words describe the raw physiological trembling of the human body when exposed to the unshielded majesty of God or sudden natural alarms. Scripture treats these responses as natural but transitional.</p>
+    <div class="lexicon-list">
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">פַּחַד</span>
+            <span class="word-translit">Paḥaḏ</span>
+          </div>
+          <span class="word-strong">H6343</span>
+        </div>
+        <div class="word-def"><strong>Visceral Dread:</strong> Sudden, overwhelming dread or terror of an external threat. Somatically associated with the quivering of joints, thighs, and rattling of bones.</div>
+        <div class="word-verse">"Dread [paḥaḏ] came upon me, and trembling, which made all my bones shake." <span class="word-verse-ref">Job 4:14</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">חָרַד</span>
+            <span class="word-translit">Ḥāraḏ</span>
+          </div>
+          <span class="word-strong">H2729</span>
+        </div>
+        <div class="word-def"><strong>Startled Shudder:</strong> Physiological quaking, trembling, or being startled out of stasis by sudden supernatural presence or alarm.</div>
+        <div class="word-verse">"...and a very loud trumpet blast, so that all the people in the camp trembled [yeḥĕraḏ]." <span class="word-verse-ref">Exodus 19:16</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">עָרַץ</span>
+            <span class="word-translit">‘Āraṣ</span>
+          </div>
+          <span class="word-strong">H6206</span>
+        </div>
+        <div class="word-def"><strong>Crushing Dread:</strong> The dread of being shattered, broken, or pulverized by a vastly superior, irresistible force.</div>
+        <div class="word-verse">"But the Lord of hosts... let him be your fear, and let him be your dread [ma‘ăriskem]." <span class="word-verse-ref">Isaiah 8:13</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">חִיל</span>
+            <span class="word-translit">Ḥîl / Ḥûl</span>
+          </div>
+          <span class="word-strong">H2427</span>
+        </div>
+        <div class="word-def"><strong>Convulsive Pain:</strong> Somatic writhing, twisting, or shaking, modeled directly after the core contractions and physical agony of a woman in labor.</div>
+        <div class="word-verse">"They will be dismayed. Pangs and agony will seize them; they will writhe [yeḥīlūn] like a woman in labor." <span class="word-verse-ref">Isaiah 13:8</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">רָגַז</span>
+            <span class="word-translit">Rāḡaz</span>
+          </div>
+          <span class="word-strong">H7264</span>
+        </div>
+        <div class="word-def"><strong>Bowels Churning:</strong> Visceral churning, shaking of the belly, bowels, and thighs under intense providential shock or rage.</div>
+        <div class="word-verse">"I hear, and my body trembles [tirgaz]; my lips quiver... my legs tremble beneath me." <span class="word-verse-ref">Habakkuk 3:16</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">רָעַד</span>
+            <span class="word-translit">Rā‘aḏ</span>
+          </div>
+          <span class="word-strong">H7460</span>
+        </div>
+        <div class="word-def"><strong>Muscular Quivering:</strong> Continuous, uncontrollable muscular trembling or quaking of the limbs.</div>
+        <div class="word-verse">"Serve the Lord with fear, and rejoice with trembling [rə‘āḏāh]." <span class="word-verse-ref">Psalm 2:11</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">סָמַר</span>
+            <span class="word-translit">Sāmar / Śā‘ar</span>
+          </div>
+          <span class="word-strong">H5568</span>
+        </div>
+        <div class="word-def"><strong>Horripilation:</strong> Hair standing on end and shivers running across the skin due to sudden contact with a spiritual entity or intense dread.</div>
+        <div class="word-verse">"A spirit glided past my face; the hair of my flesh stood up [tessamēr]." <span class="word-verse-ref">Job 4:15</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">שָׁמֵם</span>
+            <span class="word-translit">Šāmēm</span>
+          </div>
+          <span class="word-strong">H8074</span>
+        </div>
+        <div class="word-def"><strong>Catatonic Astonishment:</strong> Jaw-dropping freeze state. Appalled dumbness or numbness where the mind is temporarily petrified and unable to process the scale of the shock.</div>
+        <div class="word-verse">"And I, Daniel, was overcome and lay sick... I was appalled [’eštōmēm] by the vision..." <span class="word-verse-ref">Daniel 8:27</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">φόβος</span>
+            <span class="word-translit">Phobos</span>
+          </div>
+          <span class="word-strong">G5401</span>
+        </div>
+        <div class="word-def"><strong>Generic Fear:</strong> Root of flight/retreat in classical Greek. Used generically in the New Testament to capture both visceral panic and holy piety.</div>
+        <div class="word-verse">"And for fear [phobou] of him the guards trembled and became like dead men." <span class="word-verse-ref">Matthew 28:4</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">τρόμος</span>
+            <span class="word-translit">Tromos</span>
+          </div>
+          <span class="word-strong">G5156</span>
+        </div>
+        <div class="word-def"><strong>Motor Shaking:</strong> Trembling or motor quaking (cognate of "tremor"). The somatic manifestation of physical frailty before the absolute.</div>
+        <div class="word-verse">"...work out your own salvation with fear and trembling [tromou]..." <span class="word-verse-ref">Philippians 2:12</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">θάμβος</span>
+            <span class="word-translit">Thambos</span>
+          </div>
+          <span class="word-strong">G2285</span>
+        </div>
+        <div class="word-def"><strong>Jaw-Dropping Shock:</strong> Dumbfounded astonishment or sudden alarming wonder when supernatural force crashes into the physical plane.</div>
+        <div class="word-verse">"And amazement [thambos] came upon them all, and they said to one another..." <span class="word-verse-ref">Luke 4:36</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">ἔκστασις</span>
+            <span class="word-translit">Ekstasis</span>
+          </div>
+          <span class="word-strong">G1611</span>
+        </div>
+        <div class="word-def"><strong>Cognitive Displacement:</strong> Literally "standing outside oneself". Thrown out of normal cognitive processing due to overwhelming divine power.</div>
+        <div class="word-verse">"And they went out and fled... for trembling [tromos] and astonishment [ekstasis] had seized them..." <span class="word-verse-ref">Mark 16:8</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">φρίσσω</span>
+            <span class="word-translit">Phrissō</span>
+          </div>
+          <span class="word-strong">G5425</span>
+        </div>
+        <div class="word-def"><strong>Goosebumps Shiver:</strong> To bristle, shiver, or shudder. Describes the physiological skin-prickle of horror or awe.</div>
+        <div class="word-verse">"You believe that God is one; you do well. Even the demons believe—and shudder [phrissousin]." <span class="word-verse-ref">James 2:19</span></div>
+      </div>
+
+      <div class="lexicon-card c-panic">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">ἀποψύχω</span>
+            <span class="word-translit">Apopsychō</span>
+          </div>
+          <span class="word-strong">G674</span>
+        </div>
+        <div class="word-def"><strong>Autonomic Swoon:</strong> Fainting or breathing out life. Visceral collapse of the nervous system under overwhelming dread of ruin.</div>
+        <div class="word-verse">"...people fainting [apopsychontōn - hearts failing them] with fear and with foreboding..." <span class="word-verse-ref">Luke 21:26</span></div>
+      </div>
+    </div>
+
+    <h4>🔴 Cowardice, Flight & Retreat (Ungodly Fear)</h4>
+    <p style="margin-bottom: 20px; font-size:16.5px;">These words describe the self-protective retreat of the ego that shrinks from sacrifice, avoids exposure, or separates from God's promise due to social or physical threat. This category is consistently condemned in Scripture.</p>
+    <div class="lexicon-list">
+      <div class="lexicon-card c-retreat">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">δειλία</span>
+            <span class="word-translit">Deilia</span>
+          </div>
+          <span class="word-strong">G1167</span>
+        </div>
+        <div class="word-def"><strong>Faithless Cowardice:</strong> Slavish, faithless fear. Always used negatively. Represents shrinking back to avoid cost.</div>
+        <div class="word-verse">"For God gave us a spirit not of fear [deilias] but of power and love and self-control." <span class="word-verse-ref">2 Timothy 1:7</span></div>
+      </div>
+
+      <div class="lexicon-card c-retreat">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">זָחַל</span>
+            <span class="word-translit">Zāḥal</span>
+          </div>
+          <span class="word-strong">H2119</span>
+        </div>
+        <div class="word-def"><strong>Crawling Backwards:</strong> Crawling away or creeping back in shame or timidity. Mirrors a snake slinking into the dust.</div>
+        <div class="word-verse">"I am young, and you are very old; therefore I was timid [zāḥaleti - shrank back] and durst not..." <span class="word-verse-ref">Job 32:6</span></div>
+      </div>
+
+      <div class="lexicon-card c-retreat">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">יָגֹר</span>
+            <span class="word-translit">Yāḡōr</span>
+          </div>
+          <span class="word-strong">H3025</span>
+        </div>
+        <div class="word-def"><strong>Apprehension:</strong> Relentless dread or apprehension of a specific, imminent destructive outcome.</div>
+        <div class="word-verse">"For I was afraid [yāḡōrtī] of the anger and hot displeasure..." <span class="word-verse-ref">Deuteronomy 9:19</span></div>
+      </div>
+
+      <div class="lexicon-card c-retreat">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">חָפַז</span>
+            <span class="word-translit">Ḥāp̄az</span>
+          </div>
+          <span class="word-strong">H2648</span>
+        </div>
+        <div class="word-def"><strong>Panic Haste:</strong> Precipitous flight or panic-stricken haste. The adrenaline flight response.</div>
+        <div class="word-verse">"I had said in my alarm [ḥop̄zō - haste/panic], 'I am cut off from your sight.'" <span class="word-verse-ref">Psalm 31:22</span></div>
+      </div>
+
+      <div class="lexicon-card c-retreat">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">πτύρω</span>
+            <span class="word-translit">Ptyrō</span>
+          </div>
+          <span class="word-strong">G4426</span>
+        </div>
+        <div class="word-def"><strong>Defensive Flinch:</strong> Defensive startle, originally used of a horse shying away or stampeding in panic.</div>
+        <div class="word-verse">"...and not frightened [ptyromenoi - shying away] in anything by your opponents." <span class="word-verse-ref">Philippians 1:28</span></div>
+      </div>
+
+      <div class="lexicon-card c-retreat">
+        <div class="card-header-row">
+          <div>
+            <span class="word-title">ὑποστέλλω</span>
+            <span class="word-translit">Hypostellō</span>
+          </div>
+          <span class="word-strong">G5288</span>
+        </div>
+        <div class="word-def"><strong>Stealthy Retreat:</strong> Drawing back, pulling back, or separating oneself to avoid public or social consequences.</div>
+        <div class="word-verse">"but my righteous one shall live by faith, and if he shrinks back [hyposteilētai], my soul has no pleasure..." <span class="word-verse-ref">Hebrews 10:38</span></div>
+      </div>
     </div>
   </section>
 
-  <!-- Interactive Scrollytelling Study -->
+  <!-- Explanatory Visual Essay Sections -->
   <section class="curriculum">
-    <h2>An Interactive Synthesis</h2>
-    <p>Let's map these terms onto a unified framework of relational postures. Follow the steps below, committing your predictions at each stage to unlock the next.</p>
+    <h2>A Theological Synthesis</h2>
+    <p>By mapping these original terms, we can resolve the false paradox between intimate love and the fear of God.</p>
 
-    <!-- STEP 1 & 2 -->
-    <div class="step-container">
-      <div class="step-header">
-        <div class="step-icon">
+    <!-- SECTION 1 -->
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-icon c-retreat">
           <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
         </div>
-        <span class="step-badge">Step 1 & 2</span>
-        <h3 class="step-title">The Vector of Fear</h3>
+        <span class="section-badge c-retreat">POSTURE ONE</span>
+        <h3 class="section-title">The Vector of Fear: Centrifugal vs. Centripetal</h3>
       </div>
-      <p>Consider two men who experience a raw, terrifying encounter with the divine presence:</p>
-      <div style="background:rgba(0,0,0,0.25); padding:24px; border-radius:8px; margin-bottom:24px; font-size:18px;">
-        <p style="margin-bottom:12px; font-style:italic;"><strong>Case A (Adam):</strong> Hears the sound of the LORD walking in the garden. He is afraid, and he crawls away (<span class="hl-retreat">zachal</span>) to hide among the thick trees of the garden.</p>
-        <p style="margin-bottom:0; font-style:italic;"><strong>Case B (Isaiah):</strong> Sees the Lord sitting on a high throne. He cries out in terror that he is ruined and undone (<span class="hl-panic">charadah</span> / <span class="hl-panic">tromos</span>) — but he remains standing in the temple, is touched by a coal, and says: 'Send me.'</p>
-      </div>
-      <p>Both experienced physiological quaking. <strong>Which man is demonstrating the filial <span class="hl-awe">yirah</span> (fear of the Lord) commended as wisdom?</strong></p>
+      <p>Consider the contrast between two historic accounts of supernatural terror in Scripture:</p>
       
-      <div class="choices" data-choice-group="vector">
-        <button class="choice" data-id="a">Adam — his fear is the more natural, visceral reaction to absolute danger.</button>
-        <button class="choice" data-id="b">Isaiah — his fear, despite the shock, keeps him oriented toward the presence.</button>
-        <button class="choice" data-id="c">Both — they experienced the same fear; only their moral choices differed.</button>
-        <button class="choice" data-id="d">Neither — fear of the Lord is a metaphor for obedience, not a sensory experience.</button>
+      <div style="background:rgba(0,0,0,0.2); border-left:3px solid var(--c-retreat); padding:20px; border-radius:0 8px 8px 0; margin-bottom:20px;">
+        <p style="margin-bottom:8px; font-style:italic; font-size:17.5px;"><strong>Adam in the Trees (Genesis 3:10):</strong> Hears the sound of the Creator walking in the garden. Driven by self-protection, he crawls away (<span class="hl-retreat">zachal</span>) to hide in the thick shadows. His vector is <strong>centrifugal</strong> — it pushes him away from the source.</p>
+        <p style="margin-bottom:0; font-style:italic; font-size:17.5px;"><strong>Isaiah at the Throne (Isaiah 6:5):</strong> Sees the Lord sitting high and lifted up. Griped by crushing awe (<span class="hl-panic">charadah</span> / <span class="hl-panic">tromos</span>), he cries out that he is ruined and undone — yet he remains standing in the temple. His vector is <strong>centripetal</strong> — it anchors him directly in the presence.</p>
       </div>
 
-      <!-- STEP 3 -->
-      <div class="gate" data-locked="true" data-req-choice="vector">
-        <button class="gate-btn" disabled data-label="Examine the friction" data-lock="Choose an option above to unlock">🔒 Choose an option above to unlock</button>
-        <div class="gate-content" hidden>
-          <div class="responses" data-responses-for="vector">
-            <div class="resp" data-when="a">Adam’s fear is <strong>centrifugal</strong> — it drives him away. It is the fear of a slave (<span class="hl-panic">timor servilis</span>) who hides (<span class="hl-retreat">zachal</span>) from his master. Scripture notes that 'perfect love casts out' this fear.</div>
-            <div class="resp correct" data-when="b">Correct. Isaiah’s fear is <strong>centripetal</strong> — it keeps him aligned to the throne. His body quakes, but he does not shrink away (<span class="hl-retreat">hypostello</span>). True fear of the Lord (<span class="hl-awe">yirah</span>) is a relational orientation, not flight.</div>
-            <div class="resp" data-when="c">They felt different modes of fear. Adam felt the panic of punishment (<span class="hl-panic">pachad</span>), while Isaiah felt the awe of majesty (<span class="hl-awe">yirah</span>). They are different vectors.</div>
-            <div class="resp" data-when="d">Too shallow. Both texts describe raw sensory shocks. It is an emotional and somatic posture, not just a compliance policy.</div>
-          </div>
-          <p style="margin-bottom:0;">The difference is not the volume of the fear; it is the **direction of the vector**. True godly fear (<span class="hl-awe">yirah</span> / <span class="hl-awe">eulabeia</span>) pulls the soul into alignment, whereas servile panic (<span class="hl-panic">pachad</span> / <span class="hl-retreat">deilia</span>) repels it.</p>
-        </div>
-      </div>
+      <p>True godly fear (<span class="hl-awe">yirah</span> / <span class="hl-awe">eulabeia</span>) is not defined by a lack of physical trembling. It is defined by its <strong>relational orientation</strong>. Servile fear (<span class="hl-panic">timor servilis</span>) fears punishment and flees; filial fear (<span class="hl-awe">timor filialis</span>) fears offending the Father and clings.</p>
     </div>
 
-    <!-- STEP 4 -->
-    <div class="step-container" id="step4Container" style="display:none;">
-      <div class="step-header">
-        <div class="step-icon">
+    <!-- SECTION 2 -->
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-icon c-awe">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </div>
-        <span class="step-badge">Step 4</span>
-        <h3 class="step-title">The Mechanism: Covenants and Intimacy</h3>
+        <span class="section-badge c-awe">POSTURE TWO</span>
+        <h3 class="section-title">The Mechanism: Covenants & Intimacy</h3>
       </div>
-      <p>How does this vector function across Scripture?</p>
       
-      <p style="border-left: 3px solid var(--c-awe); padding-left: 20px; font-style: italic; font-size: 20px;">
+      <p style="border-left: 3px solid var(--c-awe); padding-left: 20px; font-style: italic; font-size: 20px; margin-bottom: 24px;">
         "I will make with them an everlasting covenant... And I will put the fear of me in their hearts, that they may not turn from me." (Jeremiah 32:40)
       </p>
 
-      <p>Under the <strong>Old Covenant</strong>, fear functioned as an external fence around stone tablets (e.g., the smoke and tempests of Mt. Sinai). The law was external, and Israel's failure converted <span class="hl-awe">yirah</span> into the servile panic (<span class="hl-panic">pachad</span>) of impending judgment.</p>
+      <p>Under the <strong>Old Covenant</strong>, fear functioned as an external boundary around stone tablets (the tempest, darkness, and trumpet blast of Sinai). Because the law was external, Israel's constant failure triggered a fallback into servile panic (<span class="hl-panic">pachad</span>) under the threat of death.</p>
       
-      <p>Under the <strong>New Covenant</strong>, the fear of God is an <strong>internalized gift</strong> written on the heart. Because believers stand secure in Christ at Mt. Zion rather than trembling at Sinai, they offer acceptable worship with reverence (<span class="hl-awe">eulabeia</span>) and awe, knowing that our God is a consuming fire (Hebrews 12:28).</p>
+      <p>Under the <strong>New Covenant</strong>, the fear of God is an <strong>internalized gift</strong> of grace. Written on the heart, it anchors the believer at Mount Zion rather than Sinai. We worship with reverence (<span class="hl-awe">eulabeia</span>) and quiet awe (<span class="hl-awe">aidos</span>) because our position in Christ is secure, transforming consuming-fire holiness from a threat into our sanctuary.</p>
 
-      <p><strong>Jesus' Redefinition:</strong> In Matthew 10:28, Jesus commands us to fear the sovereign Creator who has authority over hell, rather than human executioners. But He immediately adds that this sovereign Creator counts the hairs of our head (Matt 10:30). A healthy fear of God's absolute weight **neutralizes all lesser fears**, establishing relational safety.</p>
+      <p><strong>Jesus' Redefinition (Matthew 10:28-31):</strong> Jesus instructs us to redirect our fear away from human rulers and executioners, placing it solely on the sovereign Creator who has authority over hell. But immediately, He establishes intimacy: <em>"Even the hairs of your head are all numbered... Fear not, you are of more value than many sparrows."</em> A sovereign fear of God displaces and neutralizes all worldly anxieties.</p>
     </div>
 
-    <!-- STEP 5 -->
-    <div class="step-container" id="step5Container" style="display:none;">
-      <div class="step-header">
-        <div class="step-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-        </div>
-        <span class="step-badge">Step 5</span>
-        <h3 class="step-title">Reconstruct the Vocabulary</h3>
-      </div>
-      <p>Without scrolling up, write a brief definition explaining the difference between <strong>Yirah</strong> (reverential awe) and <strong>Pachad</strong> (visceral panic), and how the New Covenant internalizes this fear.</p>
-      
-      <textarea id="vocabRecall" rows="4" placeholder="From memory..."></textarea>
-      
-      <div class="gate" data-locked="true" data-req-text="vocabRecall">
-        <button class="gate-btn" disabled data-label="Verify my recall" data-lock="Write your recall attempt first (at least 15 characters)">🔒 Write your recall attempt first</button>
-        <div class="gate-content" hidden>
-          <div style="background:rgba(244, 240, 230, 0.02); border:1.5px solid var(--hair); padding:20px; border-radius:6px; margin-bottom:20px;">
-            <p><strong>Check your recall against the core definitions:</strong></p>
-            <p style="font-size:16.5px; margin-bottom:8px;">🟢 <strong>Yirah</strong> is the relational, filial awe of God's majesty that aligns the soul and prevents turning away.</p>
-            <p style="font-size:16.5px; margin-bottom:8px;">🟡 <strong>Pachad</strong> is the visceral, somatic terror of punishment or danger that causes trembling bones and flight.</p>
-            <p style="font-size:16.5px; margin-bottom:0;">🟢 The **New Covenant** internalizes this fear (Jeremiah 32:40), writing it on our hearts as a gift of preservation rather than an external threat.</p>
-          </div>
-          <p style="margin-bottom:0;">Making this effort to recall is what builds long-term memory schema. Proceed below to test your transfer model.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 6 -->
-    <div class="step-container" id="step6Container" style="display:none;">
-      <div class="step-header">
-        <div class="step-icon">
+    <!-- SECTION 3 -->
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-icon">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
         </div>
-        <span class="step-badge">Step 6</span>
-        <h3 class="step-title">Transfer Test: Peter at the Knees of Christ</h3>
+        <span class="section-badge">POSTURE THREE</span>
+        <h3 class="section-title">Case Study: Peter at the Knees of Christ</h3>
       </div>
-      <p>Apply this model to a new scriptural case: Luke 5:8.</p>
-      <p style="border-left: 3px solid var(--c-panic-border); padding-left: 20px; font-style: italic; font-size: 20px;">
+      <p>This relational tension manifests beautifully in Luke 5:8:</p>
+      <p style="border-left: 3px solid var(--c-panic-border); padding-left: 20px; font-style: italic; font-size: 20px; margin-bottom: 24px;">
         "But when Simon Peter saw it, he fell down at Jesus' knees, saying, 'Depart from me, for I am a sinful man, O Lord.'"
       </p>
-      <p>Peter is gripped by awe after the miraculous catch of fish. <strong>How does his reaction map onto our vector model of fear?</strong></p>
-      
-      <div class="choices" data-choice-group="transfer">
-        <button class="choice" data-id="a">It is pure Pachad (servile fear) because he tells Jesus to depart, seeking distance.</button>
-        <button class="choice" data-id="b">It is a tension: his words say 'depart' (unworthy), but his body is at Jesus's knees (drawing close).</button>
-        <button class="choice" data-id="c">It is Deilia (cowardice) because he wants to avoid the calling Jesus is about to give him.</button>
-      </div>
-
-      <div class="gate" data-locked="true" data-req-choice="transfer">
-        <button class="gate-btn" disabled data-label="Verify Transfer Test" data-lock="Choose an option to see results">🔒 Choose an option to see results</button>
-        <div class="gate-content" hidden>
-          <div class="verdict" data-verdict-for="transfer" data-answer="b">
-            <!-- JS will populate custom verdict styles here -->
-          </div>
-        </div>
-      </div>
+      <p>Gripped by awe after the miraculous catch of fish, Peter falls at Jesus's knees. His response reveals a profound paradox:</p>
+      <p>His words cry <em>"Depart from me"</em> — acknowledging his unworthiness, a natural reaction of shame and distance. Yet his physical body is <strong>clinging to Jesus's knees</strong>. He does not crawl away (<span class="hl-retreat">zachal</span>) or flee in haste (<span class="hl-retreat">chaphaz</span>). True yirah pulls you into the presence of holiness, holding you close even when you feel completely undone.</p>
     </div>
 
   </section>
 </div>
 
 <script>
-  // 1. Theme Switcher Logic
+  // Theme Switcher Logic
   const themeToggle = document.getElementById('themeToggle');
   themeToggle.addEventListener('click', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -966,139 +870,6 @@
       localStorage.setItem('fogTheme', newTheme);
     } catch (e) {}
   });
-
-  // 2. Lexical Explorer Interaction (Event Delegation)
-  const detailBox = document.getElementById('lexiconDetail');
-  const detailWord = document.getElementById('detailWord');
-  const detailTranslit = document.getElementById('detailTranslit');
-  const detailStrong = document.getElementById('detailStrong');
-  const detailDefinition = document.getElementById('detailDefinition');
-  const detailVerse = document.getElementById('detailVerse');
-
-  document.addEventListener('click', (e) => {
-    const card = e.target.closest('.lexicon-card');
-    if (card) {
-      // Remove Highlights from all cards
-      document.querySelectorAll('.lexicon-card').forEach(c => {
-        c.style.transform = '';
-        c.style.boxShadow = '';
-      });
-      
-      // Apply scale to selected
-      card.style.transform = 'translateY(-3px) scale(1.025)';
-      
-      // Populate detail content
-      detailWord.textContent = card.querySelector('.word-title').textContent;
-      detailTranslit.textContent = card.dataset.trans;
-      detailStrong.textContent = card.dataset.strong;
-      detailDefinition.innerHTML = `<strong>Definition:</strong> ${card.dataset.def}`;
-      
-      const verseParts = card.dataset.verse.split(' — ');
-      const verseText = verseParts[1] ? verseParts[1] : '';
-      const verseRef = verseParts[0] ? verseParts[0] : '';
-      detailVerse.innerHTML = `"${verseText}" <span class="detail-verse-ref">${verseRef}</span>`;
-      
-      // Paint left boundary & display box
-      detailBox.style.display = 'block';
-      detailBox.style.borderLeft = `4px solid var(--c-${card.dataset.cat})`;
-      if (typeof detailBox.scrollIntoView === 'function') {
-        detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    }
-  });
-
-  // 3. Gates Scaffolding Logic
-  const state = {};
-  const step4 = document.getElementById('step4Container');
-  const step5 = document.getElementById('step5Container');
-  const step6 = document.getElementById('step6Container');
-
-  function selectChoice(group, id) {
-    if (!group) return;
-    state[group] = id;
-    document.querySelectorAll(`[data-choice-group="${group}"] .choice`).forEach(c => {
-      c.classList.toggle('selected', c.dataset.id === id);
-    });
-    document.querySelectorAll(`[data-responses-for="${group}"]`).forEach(w => {
-      w.querySelectorAll('.resp').forEach(r => {
-        r.classList.toggle('show', r.dataset.when === id);
-      });
-    });
-    
-    // Special verdict coloring for Step 6
-    if (group === 'transfer') {
-      const v = document.querySelector('[data-verdict-for="transfer"]');
-      if (id === 'b') {
-        v.className = 'verdict correct';
-        v.innerHTML = `<strong>🟢 Correct.</strong><div class="vspace">This is the exact tension of filial fear in the presence of incarnate holiness. Peter’s words express his unworthiness (seeking distance), but his physical posture is one of total surrender and closeness (clinging to Jesus's knees). Jesus resolves this tension by saying, 'Do not fear; from now on you will be catching men.'</div>`;
-      } else {
-        v.className = 'verdict incorrect';
-        v.innerHTML = `<strong>🔴 Not quite.</strong><div class="vspace">If it were pure servile fear (A) or cowardice (C), he would have fled like Adam. The correct choice is <strong>B</strong>: his words say 'depart' but his body is at Jesus's knees. True yirah holds you close even when you feel undone.</div>`;
-      }
-    }
-    
-    refreshGates();
-  }
-
-  function refreshGates() {
-    document.querySelectorAll('.gate').forEach(g => {
-      const rc = g.dataset.reqChoice;
-      const rt = g.dataset.reqText;
-      let locked = false;
-      
-      if (rc && !state[rc]) locked = true;
-      if (rt) {
-        const ta = document.getElementById(rt);
-        if (!ta || ta.value.trim().length < 15) locked = true;
-      }
-      
-      g.dataset.locked = locked ? 'true' : 'false';
-      const btn = g.querySelector('.gate-btn');
-      if (btn && !btn.hidden) {
-        btn.disabled = locked;
-        btn.textContent = locked ? ('🔒 ' + btn.dataset.lock) : ('→ ' + btn.dataset.label);
-      }
-    });
-  }
-
-  document.addEventListener('click', (e) => {
-    const ch = e.target.closest('.choice');
-    if (ch) {
-      const groupEl = ch.closest('.choices');
-      const group = groupEl ? groupEl.dataset.choiceGroup : null;
-      selectChoice(group, ch.dataset.id);
-      return;
-    }
-    
-    const gb = e.target.closest('.gate-btn');
-    if (gb) {
-      const g = gb.closest('.gate');
-      if (g.dataset.locked === 'true') return;
-      g.querySelector('.gate-content').hidden = false;
-      gb.hidden = true;
-      
-      // Show next steps in curriculum sequentially
-      if (g.dataset.reqChoice === 'vector') {
-        step4.style.display = 'block';
-        step5.style.display = 'block';
-        if (typeof step4.scrollIntoView === 'function') {
-          step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      } else if (g.dataset.reqText === 'vocabRecall') {
-        step6.style.display = 'block';
-        if (typeof step6.scrollIntoView === 'function') {
-          step6.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      }
-      return;
-    }
-  });
-
-  document.querySelectorAll('textarea').forEach(ta => {
-    ta.addEventListener('input', refreshGates);
-  });
-
-  refreshGates();
 </script>
 </body>
 </html>
