@@ -149,7 +149,7 @@
     :root {
       --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'Space Mono', monospace;
-      --wrap: 1200px;
+      --wrap-width: 1200px;
       
       /* Dark mode color values */
       --bg-rgb: 7, 10, 20;
@@ -157,9 +157,10 @@
       --bg-section: #070A14;
       --fg: #F1F4FA;
       --fg-dim: #AEB6C8;
-      --fg-faint: #7A8496;
+      --fg-faint: #6B7488;
       --border: rgba(255, 255, 255, 0.08);
       --card-bg: rgba(255, 255, 255, 0.03);
+      --nav-bg: rgba(7, 10, 20, 0.85);
       
       --color-spirit: #FFC24B;
       --color-soul: #4CC9F0;
@@ -175,16 +176,17 @@
     
     html[data-mode="light"] {
       /* Light mode color values (high contrast, readable) */
-      --bg-rgb: 245, 247, 250;
-      --bg: #F5F7FA;
+      --bg-rgb: 248, 250, 252;
+      --bg: #F8FAFC;
       --bg-section: #FFFFFF;
       --fg: #0F172A;
       --fg-dim: #475569;
-      --fg-faint: #64748B;
+      --fg-faint: #94A3B8;
       --border: rgba(0, 0, 0, 0.08);
       --card-bg: rgba(0, 0, 0, 0.02);
+      --nav-bg: rgba(248, 250, 252, 0.85);
       
-      --color-spirit: #B45309;  /* Darker Gold/Amber */
+      --color-spirit: #B45309;  /* Darker Amber/Gold */
       --color-soul: #0284C7;    /* Darker Cyan/Sky Blue */
       --color-body: #6D28D9;    /* Darker Violet/Purple */
       --color-red: #DC2626;     /* Darker Red */
@@ -192,8 +194,8 @@
       
       --border-body-glow: rgba(109, 40, 217, 0.4);
       --border-soul-glow: rgba(2, 132, 199, 0.4);
-      --border-red: rgba(220, 38, 38, 0.25);
-      --bg-red-tint: rgba(220, 38, 38, 0.06);
+      --border-red: rgba(220, 38, 38, 0.2);
+      --bg-red-tint: rgba(220, 38, 38, 0.05);
     }
     
     * {
@@ -214,12 +216,21 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     
     /* Animations */
     @keyframes pulseGlow {
       0%, 100% { opacity: 0.92; transform: translate(-50%, -50%) scale(1); }
       50% { opacity: 1; transform: translate(-50%, -50%) scale(1.03); }
+    }
+    @keyframes rotateClockwise {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    @keyframes rotateCounterClockwise {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(-360deg); }
     }
     @keyframes breathe {
       0%, 100% { opacity: 0.55; }
@@ -237,7 +248,7 @@
       left: 0;
       right: 0;
       height: 70px;
-      background: rgba(var(--bg-rgb), 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -245,18 +256,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2rem;
+      padding: 0 clamp(1rem, 5vw, 3rem);
+      transition: background 0.3s, border-color 0.3s;
     }
     
     header.site-header .logo {
       font-family: var(--font-sans);
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       letter-spacing: -0.5px;
       color: var(--fg);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
     
     header.site-header .logo span.dot {
@@ -270,37 +282,56 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: clamp(1rem, 3vw, 2rem);
     }
     
     .nav-link {
       font-family: var(--font-mono);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       letter-spacing: 1px;
       color: var(--fg-dim);
       text-decoration: none;
       text-transform: uppercase;
+      position: relative;
+      padding: 0.25rem 0;
       transition: color 0.2s;
     }
     .nav-link:hover, .nav-link.active {
       color: var(--fg);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--color-spirit);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.25s ease-out;
+    }
+    .nav-link.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
     }
     
     .theme-toggle {
       background: none;
       border: 1px solid var(--border);
       color: var(--fg);
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s, transform 0.3s;
     }
     .theme-toggle:hover {
       background: var(--card-bg);
+      transform: rotate(30deg);
     }
     
     /* Visual Essay container */
@@ -314,7 +345,7 @@
     /* Section overrides to force responsive visual-essay flow */
     section {
       width: 100% !important;
-      padding: 9rem 2rem !important; /* Breathable spacing */
+      padding: clamp(6rem, 10vw, 10rem) clamp(1rem, 5vw, 4rem) !important;
       min-height: auto !important;
       display: flex !important;
       flex-direction: column !important;
@@ -323,174 +354,192 @@
       border-bottom: 1px solid var(--border) !important;
       box-sizing: border-box !important;
       overflow: visible !important;
+      transition: background 0.3s, border-color 0.3s;
     }
     
-    /* Force background colors to adapt to data-mode */
+    /* Force backgrounds and general text colors to adapt to data-mode */
     section, section * {
       background-color: transparent !important;
     }
     
-    /* Apply base section background */
     section {
       background-color: var(--bg-section) !important;
     }
     
-    /* Force text colors to adapt to data-mode globally, preserving accent colors */
     section, section div, section p, section span:not([style*="color"]) {
       color: var(--fg);
     }
     
-    /* Inner wrappers center alignment and width limits */
-    section > div:not([style*="position:absolute"]) {
+    /* Split Column responsive layouts */
+    .split-layout {
       width: 100% !important;
-      max-width: var(--wrap) !important;
+      max-width: var(--wrap-width) !important;
       margin-left: auto !important;
       margin-right: auto !important;
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      gap: 5rem !important;
     }
     
-    /* Add extra breathing room inside elements */
-    section div[style*="font-size:72px"], 
-    section div[style*="font-size:66px"], 
-    section div[style*="font-size:74px"] {
-      margin-bottom: 1.5rem !important;
-      font-weight: 700 !important;
+    .content-col {
+      flex: 1.2 !important;
+      max-width: 620px !important;
     }
-    section p, 
-    section div[style*="font-size:24px"], 
-    section div[style*="font-size:23px"], 
-    section div[style*="font-size:25px"], 
-    section div[style*="font-size:29px"] {
-      margin-bottom: 1.25rem !important;
-      line-height: 1.6 !important; /* Increase line height */
+    
+    .diagram-col {
+      width: 600px !important;
+      height: 600px !important;
+      position: relative !important;
+      flex-shrink: 0 !important;
+    }
+    
+    .column-item {
+      flex: 1 !important;
+      min-width: 280px !important;
+    }
+    
+    /* Card layouts */
+    .grid-layout {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+      gap: 1.5rem !important;
+      margin-top: 2rem !important;
+    }
+    
+    .card-item {
+      border: 1px solid var(--border) !important;
+      border-radius: 12px !important;
+      padding: 24px !important;
+      background: var(--card-bg) !important;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s !important;
+    }
+    .card-item:hover {
+      border-color: var(--color-spirit) !important;
+      transform: translateY(-4px) !important;
+      box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.15) !important;
     }
     
     /* Section footer styling converted to relative divider */
-    section > div[style*="position:absolute"][style*="bottom:50px"],
-    section > div[style*="position:absolute"][style*="bottom:46px"] {
-      position: relative !important;
-      left: auto !important;
-      right: auto !important;
-      bottom: auto !important;
+    .section-footer {
       margin: 4rem auto 0 !important;
-      max-width: var(--wrap) !important;
+      max-width: var(--wrap-width) !important;
       border-top: 1px dashed var(--border) !important;
       padding-top: 1.5rem !important;
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
       width: 100% !important;
+      font-family: var(--font-mono) !important;
+      font-size: 0.9rem !important;
+      letter-spacing: 1px !important;
     }
     
-    section > div[style*="position:absolute"][style*="bottom:50px"] div,
-    section > div[style*="position:absolute"][style*="bottom:46px"] div {
+    .section-footer div {
       color: var(--fg-faint) !important;
     }
     
     /* Title Page spacing overrides */
     section[data-label="Title"] {
-      padding: 12rem 2rem 10rem !important;
+      padding: clamp(8rem, 15vw, 14rem) clamp(1rem, 5vw, 4rem) clamp(8rem, 12vw, 12rem) !important;
       background: radial-gradient(1200px 800px at 50% 100%, rgba(181, 123, 255, 0.04), transparent 60%), var(--bg-section) !important;
     }
     
-    /* Make Title Page layouts flow side by side */
-    section[data-label="Title"] > div:first-of-type {
-      position: relative !important;
-      width: 100% !important;
-      max-width: 600px !important;
-    }
-    section[data-label="Title"] > div:nth-of-type(2) {
-      position: relative !important;
-      right: auto !important;
-      top: auto !important;
-      transform: none !important;
-      width: 600px !important;
-      height: 600px !important;
-      margin-left: auto !important;
+    section[data-label="Title"] .diagram-col {
+      width: 660px !important;
+      height: 660px !important;
     }
     
     /* Chapter divider sections formatting overrides (Breathing Room) */
     section[data-label^="Part "] {
-      padding: 10rem 2rem !important;
-      background: radial-gradient(1200px 950px at 50% 50%, rgba(181, 123, 255, 0.05), transparent 60%), var(--bg) !important;
+      padding: clamp(8rem, 12vw, 12rem) clamp(1rem, 5vw, 4rem) !important;
+      background: radial-gradient(1200px 950px at 50% 50%, rgba(181, 123, 255, 0.04), transparent 60%), var(--bg) !important;
       border-top: 1px solid var(--border) !important;
       border-bottom: 1px solid var(--border) !important;
     }
     
-    section[data-label^="Part "] > div:first-of-type {
-      position: relative !important;
-      left: auto !important;
-      top: auto !important;
-      bottom: auto !important;
-      width: 100% !important;
-      max-width: 600px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-    }
-    
-    section[data-label^="Part "] > div:nth-of-type(2) {
-      position: relative !important;
-      right: auto !important;
-      top: auto !important;
-      transform: none !important;
+    section[data-label^="Part "] .diagram-col {
       width: 500px !important;
       height: 500px !important;
-      margin-left: auto !important;
-      flex-shrink: 0 !important;
     }
     
-    /* Responsive grids and flex blocks */
+    /* Typography spacing elements */
+    section div[style*="font-size:158px"], 
+    section div[style*="font-size:150px"] {
+      font-weight: 700 !important;
+      margin-bottom: 1rem !important;
+    }
+    
+    section div[style*="font-size:72px"], 
+    section div[style*="font-size:66px"], 
+    section div[style*="font-size:74px"] {
+      margin-bottom: 2rem !important;
+      font-weight: 700 !important;
+    }
+    
+    section p, 
+    section div[style*="font-size:24px"], 
+    section div[style*="font-size:23px"], 
+    section div[style*="font-size:25px"], 
+    section div[style*="font-size:29px"] {
+      margin-bottom: 1.5rem !important;
+      line-height: 1.6 !important;
+    }
+    
+    /* Nested circular diagram animation classes */
+    .animate-rotate-cw {
+      animation: rotateClockwise 120s linear infinite !important;
+    }
+    .animate-rotate-ccw {
+      animation: rotateCounterClockwise 120s linear infinite !important;
+    }
+    
+    /* Scroll Reveal transitions */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Responsive overrides */
     @media (max-width: 1024px) {
-      /* Force column stack */
-      div[style*="display:flex"], div[style*="display: flex"] {
+      .split-layout {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 3rem !important;
       }
       
-      /* Make inline widths flexible */
-      div[style*="width:"], div[style*="max-width:"] {
+      .content-col, .diagram-col, .column-item {
         width: 100% !important;
         max-width: 100% !important;
       }
       
-      /* Reset absolute side columns (e.g. title/divider diagrams) */
-      div[style*="position:absolute"][style*="top:50%"],
-      section[data-label="Title"] > div:nth-of-type(2),
-      section[data-label^="Part "] > div:nth-of-type(2) {
-        position: relative !important;
-        right: auto !important;
-        top: auto !important;
-        transform: none !important;
-        margin: 3rem auto 0 !important;
+      .diagram-col {
         width: 320px !important;
         height: 320px !important;
-        max-width: 100% !important;
+        margin: 2rem auto 0 !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
       }
       
-      /* Circular diagrams overrides */
-      div[style*="width:660px"], div[style*="width:620px"], div[style*="width:600px"], div[style*="width:500px"] {
-        width: 320px !important;
-        height: 320px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        flex-shrink: 0 !important;
-      }
-      
-      /* Scaled circles */
-      div[style*="width:490px"] { width: 300px !important; height: 300px !important; }
-      div[style*="width:430px"] { width: 280px !important; height: 280px !important; }
-      div[style*="width:392px"] { width: 200px !important; height: 200px !important; }
-      div[style*="width:330px"] { width: 180px !important; height: 180px !important; }
-      div[style*="width:230px"] { width: 120px !important; height: 120px !important; }
+      /* Scale down concentric circles diagram */
+      div[style*="width:490px"] { width: 280px !important; height: 280px !important; }
+      div[style*="width:430px"] { width: 250px !important; height: 250px !important; }
+      div[style*="width:392px"] { width: 220px !important; height: 220px !important; }
+      div[style*="width:330px"] { width: 190px !important; height: 190px !important; }
+      div[style*="width:230px"] { width: 140px !important; height: 140px !important; }
       div[style*="width:210px"], div[style*="width:190px"], div[style*="width:170px"] {
         width: 100px !important; height: 100px !important;
       }
       
-      /* Adjusted label offsets inside scaled circles */
+      /* Circular diagram labels offset adjust */
       div[style*="top:8px"], div[style*="top:10px"], div[style*="top:24px"], div[style*="top:16px"], div[style*="top:14px"] {
         top: 6px !important;
       }
@@ -498,37 +547,31 @@
         top: 62px !important;
       }
       
-      /* Text size overrides */
+      /* Font sizes responsive scaling */
       div[style*="font-size:158px"], div[style*="font-size:150px"] {
-        font-size: 4rem !important;
+        font-size: 3.5rem !important;
         line-height: 1.0 !important;
       }
       div[style*="font-size:72px"], div[style*="font-size:66px"], div[style*="font-size:74px"] {
-        font-size: 2.25rem !important;
+        font-size: 2rem !important;
         line-height: 1.15 !important;
       }
       div[style*="font-size:52px"] {
-        font-size: 1.85rem !important;
+        font-size: 1.6rem !important;
         line-height: 1.3 !important;
       }
       div[style*="font-size:46px"] {
-        font-size: 1.6rem !important;
+        font-size: 1.4rem !important;
       }
       div[style*="font-size:30px"], div[style*="font-size:31px"], div[style*="font-size:33px"] {
-        font-size: 1.35rem !important;
+        font-size: 1.25rem !important;
       }
       div[style*="font-size:24px"], div[style*="font-size:23px"], div[style*="font-size:25px"], div[style*="font-size:29px"] {
-        font-size: 1.15rem !important;
+        font-size: 1.05rem !important;
         line-height: 1.45 !important;
       }
       div[style*="font-size:19px"], div[style*="font-size:20px"], div[style*="font-size:22px"] {
-        font-size: 1rem !important;
-      }
-      
-      /* Grid elements scaling */
-      div[style*="grid-template-columns"] {
-        grid-template-columns: 1fr !important;
-        gap: 1.25rem !important;
+        font-size: 0.95rem !important;
       }
     }
   </style>
@@ -555,8 +598,8 @@
   </header>
   
   <main class="visual-essay">
-    <section data-label="Title" data-screen-label="01 Title" data-speaker-notes="Welcome. Tonight we look at one of the most quietly radical claims in Scripture: that you are not a body that happens to have feelings, or a brain that produces a soul. Paul prays for your 'whole spirit, soul and body.' Three dimensions, one person. And here's the hook — the more neuroscience learns about the brain, the more it keeps stumbling onto patterns Scripture described long ago. We'll hold that lightly, but it's striking." style="background:radial-gradient(1200px 820px at 66% 50%, rgba(76,201,240,0.10), transparent 62%), radial-gradient(1000px 760px at 70% 52%, rgba(181,123,255,0.12), transparent 60%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);overflow:hidden">
-  <div style="position:absolute;left:150px;top:0;bottom:0;width:840px;display:flex;flex-direction:column;justify-content:center">
+    <section data-label="Title" data-screen-label="01 Title" data-speaker-notes="Welcome. Tonight we look at one of the most quietly radical claims in Scripture: that you are not a body that happens to have feelings, or a brain that produces a soul. Paul prays for your 'whole spirit, soul and body.' Three dimensions, one person. And here's the hook — the more neuroscience learns about the brain, the more it keeps stumbling onto patterns Scripture described long ago. We'll hold that lightly, but it's striking." style="background: radial-gradient(1200px 820px at 66% 50%, rgba(76, 201, 240, 0.1), transparent 62%), radial-gradient(1000px 760px at 70% 52%, rgba(181, 123, 255, 0.12), transparent 60%), rgb(7, 10, 20);" class="scroll-reveal">
+  <div class="split-layout"><div class="content-col">
     <div style="font-family:'Space Mono',monospace;font-size:22px;letter-spacing:5px;color:var(--color-soul);text-transform:uppercase;margin-bottom:34px">A Bible study in three parts</div>
     <div style="font-weight:700;font-size:150px;line-height:0.98;letter-spacing:-3px">
       <div style="color:var(--color-spirit)">SPIRIT</div>
@@ -568,24 +611,24 @@
       <div style="width:60px;height:1px;background:rgba(255,255,255,0.25)"></div>
       <div style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:2px;color:var(--fg-faint)">1 THESSALONIANS 5:23 · NIV</div>
     </div>
-  </div>
-  <div style="position:absolute;right:155px;top:50%;transform:translateY(-50%);width:660px;height:660px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--border-body-glow);box-shadow:0 0 70px rgba(181,123,255,0.22), inset 0 0 70px rgba(181,123,255,0.07)"><div style="position: absolute; left: 327px; top: 8px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: var(--color-body)">BODY</div></div>
-    <div style="position:absolute;width:430px;height:430px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-soul-glow);box-shadow:0 0 60px rgba(76,201,240,0.18), inset 0 0 50px rgba(76,201,240,0.06)"><div style="position: absolute; left: 212px; top: 10px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: var(--color-soul)">SOUL</div></div>
+  </div><div class="diagram-col">
+    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--border-body-glow);box-shadow:0 0 70px rgba(181,123,255,0.22), inset 0 0 70px rgba(181,123,255,0.07)" class="animate-rotate-cw"></div>
+    <div style="position:absolute;width:430px;height:430px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-soul-glow);box-shadow:0 0 60px rgba(76,201,240,0.18), inset 0 0 50px rgba(76,201,240,0.06)" class="animate-rotate-cw"></div>
     <div style="position:absolute;width:210px;height:210px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, var(--color-spirit) 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 42px 2px rgba(255,216,140,0.45), 0 0 120px 26px rgba(255,182,74,0.26);animation:pulseGlow 5s ease-in-out infinite"></div>
     
     
     <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
-  </div>
+  <div style="position: absolute; left: 327px; top: 8px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: var(--color-body)">BODY</div><div style="position: absolute; left: 212px; top: 10px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: var(--color-soul)">SOUL</div></div></div>
+  
 </section>
-<section data-label="Three Dimensions" data-screen-label="02 Three Dimensions" data-speaker-notes="Start with the big idea: three ways of knowing. Your body is world-conscious — it knows the world through five senses. Your soul is self-conscious — it's the seat of your mind, your will, your emotions; it knows itself. Your spirit is God-conscious — the innermost part, made to commune with God. This world/self/God framing goes back to Watchman Nee and is a helpful map. Notice the arrows: the body faces outward to the world, the spirit faces inward toward God." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:88px 130px 88px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Three Dimensions" data-screen-label="02 Three Dimensions" data-speaker-notes="Start with the big idea: three ways of knowing. Your body is world-conscious — it knows the world through five senses. Your soul is self-conscious — it's the seat of your mind, your will, your emotions; it knows itself. Your spirit is God-conscious — the innermost part, made to commune with God. This world/self/God framing goes back to Watchman Nee and is a helpful map. Notice the arrows: the body faces outward to the world, the spirit faces inward toward God." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 88px; padding-right: 130px; padding-bottom: 88px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">Orientation</span>
   </div>
   <div style="font-weight:700;font-size:72px;line-height:1.03;letter-spacing:-2px;margin-top:22px;max-width:1050px">One person, three dimensions</div>
-  <div style="display:flex;gap:90px;margin-top:50px;flex:1;align-items:center">
-    <div style="flex:1;max-width:640px">
+  <div class="split-layout">
+    <div class="content-col">
       <div style="font-weight:400;font-size:30px;line-height:1.5;color:var(--fg-dim)">You are not a body that happens to have a soul. Scripture describes a <span style="color:var(--fg);font-weight:500">whole person</span> — three interwoven dimensions, each with its own way of knowing.</div>
       <div style="margin-top:44px;display:flex;flex-direction:column;gap:26px">
         <div style="display:flex;gap:20px;align-items:baseline">
@@ -604,42 +647,42 @@
         </div>
       </div>
     </div>
-    <div style="width:620px;height:520px;position:relative;flex-shrink:0">
+    <div class="diagram-col">
       <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#9B8BC4;writing-mode:vertical-rl;rotate:180deg">← WORLD</div>
       <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#C9A855;writing-mode:vertical-rl">GOD →</div>
-      <div style="position:absolute;width:490px;height:490px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-body-glow);box-shadow:0 0 60px rgba(181,123,255,0.14), inset 0 0 60px rgba(181,123,255,0.05)"></div>
-      <div style="position:absolute;width:330px;height:330px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-soul-glow);box-shadow:0 0 50px rgba(76,201,240,0.12), inset 0 0 46px rgba(76,201,240,0.05)"></div>
+      <div style="position:absolute;width:490px;height:490px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-body-glow);box-shadow:0 0 60px rgba(181,123,255,0.14), inset 0 0 60px rgba(181,123,255,0.05)" class="animate-rotate-cw"></div>
+      <div style="position:absolute;width:330px;height:330px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-soul-glow);box-shadow:0 0 50px rgba(76,201,240,0.12), inset 0 0 46px rgba(76,201,240,0.05)" class="animate-rotate-ccw"></div>
       <div style="position:absolute;width:170px;height:170px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, var(--color-spirit) 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 32px 2px rgba(255,216,140,0.42), 0 0 92px 18px rgba(255,182,74,0.22);animation:pulseGlow 6s ease-in-out infinite"></div>
       <div style="position:absolute;left:50%;top:24px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-body)">BODY</div>
       <div style="position:absolute;left:50%;top:106px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-soul)">SOUL</div>
       <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:15px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:50px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>THE FRAMEWORK</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>THE FRAMEWORK</div></div>
 </section>
-<section data-label="The Text" data-screen-label="03 Foundational Text" data-speaker-notes="Two anchor texts. First, Paul's benediction in 1 Thessalonians 5:23 — he names all three: spirit, soul and body. Second, Hebrews 4:12 — the word of God is sharp enough to divide 'soul and spirit.' You don't divide two things that are identical. So Scripture treats soul and spirit as genuinely distinct — close, interwoven, but not the same. That's the textual foundation for everything tonight." style="background:radial-gradient(1200px 800px at 50% 120%, rgba(255,194,75,0.06), transparent 60%), radial-gradient(1000px 760px at 90% -10%, rgba(76,201,240,0.06), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:88px 140px 88px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="The Text" data-screen-label="03 Foundational Text" data-speaker-notes="Two anchor texts. First, Paul's benediction in 1 Thessalonians 5:23 — he names all three: spirit, soul and body. Second, Hebrews 4:12 — the word of God is sharp enough to divide 'soul and spirit.' You don't divide two things that are identical. So Scripture treats soul and spirit as genuinely distinct — close, interwoven, but not the same. That's the textual foundation for everything tonight." style="background: radial-gradient(1200px 800px at 50% 120%, rgba(255, 194, 75, 0.06), transparent 60%), radial-gradient(1000px 760px at 90% -10%, rgba(76, 201, 240, 0.06), transparent 58%), rgb(7, 10, 20); padding-top: 88px; padding-right: 140px; padding-bottom: 88px; padding-left: 140px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--fg);box-shadow:0 0 12px rgba(255,255,255,0.6)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:#AEB6C8">The Text</span>
   </div>
-  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1400px">
-    <div style="font-family:'Space Mono',monospace;font-size:19px;letter-spacing:3px;color:var(--color-soul);margin-bottom:26px">1 THESSALONIANS 5:23 · NIV</div>
-    <div style="font-weight:400;font-size:52px;line-height:1.32;letter-spacing:-0.5px;color:var(--fg)">"May God himself, the God of peace, sanctify you through and through. May your whole <span style="color:var(--color-spirit);font-weight:500">spirit</span>, <span style="color:var(--color-soul);font-weight:500">soul</span> and <span style="color:var(--color-body);font-weight:500">body</span> be kept blameless at the coming of our Lord Jesus Christ."</div>
+  <div class="split-layout">
+    <div class="column-item">1 THESSALONIANS 5:23 · NIV</div>
+    <div class="column-item">"May God himself, the God of peace, sanctify you through and through. May your whole <span style="color:var(--color-spirit);font-weight:500">spirit</span>, <span style="color:var(--color-soul);font-weight:500">soul</span> and <span style="color:var(--color-body);font-weight:500">body</span> be kept blameless at the coming of our Lord Jesus Christ."</div>
     <div style="margin-top:56px;display:flex;gap:34px;align-items:flex-start;border-top:1px solid var(--border);padding-top:40px;max-width:1180px">
       <div style="font-family:'Space Mono',monospace;font-size:18px;letter-spacing:2px;color:var(--fg-faint);white-space:nowrap;padding-top:6px">HEBREWS 4:12</div>
       <div style="font-weight:400;font-size:29px;line-height:1.5;color:var(--fg-dim)">"...it penetrates even to <span style="color:var(--fg)">dividing soul and spirit</span>..." — the word of God is sharp enough to distinguish what looks like one thing but is truly two.</div>
     </div>
   </div>
-  <div style="position:absolute;left:140px;right:140px;bottom:50px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>THE FOUNDATION</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>THE FOUNDATION</div></div>
 </section>
-<section data-label="The Design" data-screen-label="04 The Design" data-speaker-notes="This is our map for the night. Picture concentric circles. Outermost is the body — it meets the world. In the middle is the soul — mind, will, emotion. At the very center, the luminous core, is the spirit — where God meets us. Everything flows through: what happens in the spirit affects the soul, which affects the body, and vice versa. We'll walk from the outside in — body, then soul, then spirit." style="background:radial-gradient(1000px 780px at 74% 50%, rgba(76,201,240,0.08), transparent 60%), radial-gradient(900px 720px at 78% 55%, rgba(181,123,255,0.10), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:88px 130px 88px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="The Design" data-screen-label="04 The Design" data-speaker-notes="This is our map for the night. Picture concentric circles. Outermost is the body — it meets the world. In the middle is the soul — mind, will, emotion. At the very center, the luminous core, is the spirit — where God meets us. Everything flows through: what happens in the spirit affects the soul, which affects the body, and vice versa. We'll walk from the outside in — body, then soul, then spirit." style="background: radial-gradient(1000px 780px at 74% 50%, rgba(76, 201, 240, 0.08), transparent 60%), radial-gradient(900px 720px at 78% 55%, rgba(181, 123, 255, 0.1), transparent 58%), rgb(7, 10, 20); padding-top: 88px; padding-right: 130px; padding-bottom: 88px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-spirit);box-shadow:0 0 12px var(--color-spirit)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-spirit)">The Model</span>
   </div>
   <div style="font-weight:700;font-size:72px;line-height:1.03;letter-spacing:-2px;margin-top:22px">The three-part design</div>
-  <div style="display:flex;gap:70px;margin-top:34px;flex:1;align-items:center">
-    <div style="flex:1;max-width:600px;display:flex;flex-direction:column;gap:30px">
+  <div class="split-layout">
+    <div class="content-col">
       <div style="display:flex;gap:22px;align-items:flex-start">
         <span style="width:15px;height:15px;border-radius:50%;background:var(--color-body);box-shadow:0 0 14px var(--color-body);margin-top:9px;flex-shrink:0"></span>
         <div><div style="font-size:30px;font-weight:600;color:var(--fg)">Body <span style="font-weight:400;color:var(--fg-faint);font-size:24px">— the outer layer</span></div><div style="font-size:23px;line-height:1.45;color:#AEB6C8;margin-top:6px">Meets the physical world through the senses.</div></div>
@@ -653,31 +696,31 @@
         <div><div style="font-size:30px;font-weight:600;color:var(--fg)">Spirit <span style="font-weight:400;color:var(--fg-faint);font-size:24px">— the core</span></div><div style="font-size:23px;line-height:1.45;color:#AEB6C8;margin-top:6px">Where we commune with God. We'll move from outside in.</div></div>
       </div>
     </div>
-    <div style="width:600px;height:600px;position:relative;flex-shrink:0">
-      <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--border-body-glow);box-shadow:0 0 70px rgba(181,123,255,0.20), inset 0 0 70px rgba(181,123,255,0.06)"></div>
-      <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-soul-glow);box-shadow:0 0 60px rgba(76,201,240,0.16), inset 0 0 50px rgba(76,201,240,0.05)"></div>
+    <div class="diagram-col">
+      <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--border-body-glow);box-shadow:0 0 70px rgba(181,123,255,0.20), inset 0 0 70px rgba(181,123,255,0.06)" class="animate-rotate-cw"></div>
+      <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border-soul-glow);box-shadow:0 0 60px rgba(76,201,240,0.16), inset 0 0 50px rgba(76,201,240,0.05)" class="animate-rotate-ccw"></div>
       <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, var(--color-spirit) 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 40px 2px rgba(255,216,140,0.45), 0 0 110px 24px rgba(255,182,74,0.24);animation:pulseGlow 5s ease-in-out infinite"></div>
       <div style="position:absolute;left:50%;top:16px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:var(--color-body)">BODY</div>
       <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:var(--color-soul)">SOUL</div>
       <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:50px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>OUTSIDE → IN</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>OUTSIDE → IN</div></div>
 </section>
-<section data-label="How &amp; Why" data-screen-label="05 How &amp; Why" data-speaker-notes="People sometimes fear that if science can explain something, it explains God away — so let's clear that up before we go further. The key is that science and Scripture answer different questions. Science asks 'how': it traces the mechanism — the cortisol, the neurons, the networks. Scripture answers 'who' and 'why': who made it, and for what. A brain scan can show you exactly what happens in someone's body when they pray; it can never tell you whether God is on the other end of that prayer. Those aren't rival answers — they're different questions. Think of a watch: understanding every gear has never once disproved the watchmaker; if anything, the more intricate the mechanism, the more obvious the design. Paul says it plainly in Romans 1 — God's invisible qualities are clearly seen in what he has made. So all night, when the science lines up with Scripture, don't hear it as God being explained away. Hear it as the design pointing to a Designer." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:88px 130px 88px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="How &amp; Why" data-screen-label="05 How &amp; Why" data-speaker-notes="People sometimes fear that if science can explain something, it explains God away — so let's clear that up before we go further. The key is that science and Scripture answer different questions. Science asks 'how': it traces the mechanism — the cortisol, the neurons, the networks. Scripture answers 'who' and 'why': who made it, and for what. A brain scan can show you exactly what happens in someone's body when they pray; it can never tell you whether God is on the other end of that prayer. Those aren't rival answers — they're different questions. Think of a watch: understanding every gear has never once disproved the watchmaker; if anything, the more intricate the mechanism, the more obvious the design. Paul says it plainly in Romans 1 — God's invisible qualities are clearly seen in what he has made. So all night, when the science lines up with Scripture, don't hear it as God being explained away. Hear it as the design pointing to a Designer." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 88px; padding-right: 130px; padding-bottom: 88px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">A word on method</span>
   </div>
   <div style="font-weight:700;font-size:72px;line-height:1.03;letter-spacing:-2px;margin-top:22px;max-width:1200px">Does science explain God away?</div>
   <div style="font-weight:400;font-size:29px;line-height:1.5;color:var(--fg-dim);max-width:1160px;margin-top:26px">No — it explains the <span style="color:var(--fg)">mechanism</span>, not the <span style="color:var(--fg)">meaning</span>. A scan can show what happens in you when you pray or forgive. It can't tell you whether God is on the other end. Science and Scripture answer different questions.</div>
-  <div style="display:flex;gap:40px;margin-top:44px">
-    <div style="flex:1;border-top:2px solid var(--border-soul-glow);padding-top:24px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:2px;color:var(--color-soul);margin-bottom:10px">SCIENCE ASKS</div>
       <div style="font-weight:700;font-size:56px;line-height:1;letter-spacing:-1px;color:var(--color-soul)">How?</div>
       <div style="font-size:23px;line-height:1.45;color:#AEB6C8;margin-top:14px">Cortisol, neurons, networks — the <span style="color:#DCE1EC">mechanism</span>. What happens, and how it works.</div>
     </div>
-    <div style="flex:1;border-top:2px solid rgba(255,194,75,0.6);padding-top:24px">
+    <div class="column-item">
       <div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:2px;color:var(--color-spirit);margin-bottom:10px">SCRIPTURE ANSWERS</div>
       <div style="font-weight:700;font-size:56px;line-height:1;letter-spacing:-1px;color:#FFD98A">Who &amp; why?</div>
       <div style="font-size:23px;line-height:1.45;color:#AEB6C8;margin-top:14px">Who made it, and for what — the <span style="color:#DCE1EC">meaning</span> a mechanism can never hold.</div>
@@ -687,16 +730,16 @@
     <div style="font-size:30px;line-height:1.42;color:var(--fg);max-width:960px">Knowing <span style="color:var(--color-soul)">how</span> the watch works has never disproved the watchmaker. The clearer the design, the more there is to <span style="color:#FFD98A">marvel</span> at — the mechanism points to a Maker.</div>
     <div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--fg-faint);white-space:nowrap;text-align:right;line-height:1.7">"CLEARLY SEEN... FROM<br>WHAT HAS BEEN MADE"<br><span style="color:var(--fg-faint)">ROMANS 1:20 · NIV</span></div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:50px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>HOW &amp; WHY</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>HOW &amp; WHY</div></div>
 </section>
-<section data-label="Two Books" data-screen-label="06 Two Books" data-speaker-notes="One more word on how science and Scripture relate, because it shapes everything after this. There's an old Christian idea that God has written two books. The first is the book of his Word — Scripture — which tells us who God is and why we exist. The second is the book of his works — creation — which shows us what we're made of and how it runs. Both have the same Author, so they cannot finally contradict; where they seem to, we're misreading one or the other. Kepler, doing his astronomy, called science 'thinking God's thoughts after him.' So when we look at a brain scan tonight, we haven't left the things of God — we're reading his second book. Scripture already told us we're fearfully and wonderfully made; the science just lets us trace a little of the how." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Two Books" data-screen-label="06 Two Books" data-speaker-notes="One more word on how science and Scripture relate, because it shapes everything after this. There's an old Christian idea that God has written two books. The first is the book of his Word — Scripture — which tells us who God is and why we exist. The second is the book of his works — creation — which shows us what we're made of and how it runs. Both have the same Author, so they cannot finally contradict; where they seem to, we're misreading one or the other. Kepler, doing his astronomy, called science 'thinking God's thoughts after him.' So when we look at a brain scan tonight, we haven't left the things of God — we're reading his second book. Scripture already told us we're fearfully and wonderfully made; the science just lets us trace a little of the how." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">The two books</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Two books, one Author</div>
-  <div style="display:flex;gap:80px;margin-top:38px;flex:1;align-items:center">
-    <div style="flex:1;max-width:620px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim)">A historic Christian conviction: God has written <span style="color:var(--fg)">two books</span> — the book of his Word, and the book of his works. The same Author wrote both, so they cannot finally contradict.</div>
       <div style="font-size:24px;line-height:1.5;color:var(--fg-dim);margin-top:20px">Studying the brain, then, isn't a threat to faith. Done humbly, it's reading the second book — "thinking God's thoughts after him."</div>
       <div style="border-left:2px solid rgba(255,194,75,0.7);padding-left:22px;margin-top:32px">
@@ -704,7 +747,7 @@
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-spirit);margin-top:12px">PSALM 19:1 · 139:14 · NIV</div>
       </div>
     </div>
-    <div style="width:600px;flex-shrink:0">
+    <div class="column-item">
       <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--fg-faint);margin-bottom:24px">TWO BOOKS · ONE AUTHOR</div>
       <div style="display:flex;gap:22px;align-items:flex-start;padding-bottom:24px">
         <span style="width:15px;height:15px;border-radius:50%;background:var(--color-spirit);box-shadow:0 0 14px var(--color-spirit);margin-top:8px;flex-shrink:0"></span>
@@ -721,22 +764,22 @@
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PS 19 · 139 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PS 19 · 139 · NIV</div></div>
 </section>
-<section data-label="Convergences I" data-screen-label="07 Convergences I" data-speaker-notes="Let me show you what I mean — not with theory, but with a list. On the left, things Scripture has told God's people to do for centuries. On the right, what modern neuroscience finds actually happens in the brain when we do them. 'Be transformed by the renewing of your mind' — and the brain literally rewires around what we rehearse. 'Be still, and know that I am God' — and contemplative prayer measurably quiets the brain's restless wandering network. 'Give thanks in all circumstances' — and gratitude practice is tied to steadier mood and more regulation. 'Cast your anxiety on him' — and simply naming a feeling calms the brain's alarm. Notice the direction of travel: Scripture said it first; the science is catching up. We'll unpack several of these in depth as we go." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Convergences I" data-screen-label="07 Convergences I" data-speaker-notes="Let me show you what I mean — not with theory, but with a list. On the left, things Scripture has told God's people to do for centuries. On the right, what modern neuroscience finds actually happens in the brain when we do them. 'Be transformed by the renewing of your mind' — and the brain literally rewires around what we rehearse. 'Be still, and know that I am God' — and contemplative prayer measurably quiets the brain's restless wandering network. 'Give thanks in all circumstances' — and gratitude practice is tied to steadier mood and more regulation. 'Cast your anxiety on him' — and simply naming a feeling calms the brain's alarm. Notice the direction of travel: Scripture said it first; the science is catching up. We'll unpack several of these in depth as we go." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--fg);box-shadow:0 0 12px rgba(255,255,255,0.6)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:#AEB6C8">Science &amp; Scripture · Convergences</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1200px">Where the Word and the brain agree</div>
   <div style="font-size: 24px; line-height: 1.5; color: var(--fg-dim); max-width: 1133px; margin-top: 16px; width: 1185px; height: 91px">Left: what Scripture has asked for centuries. Right: what the brain shows when we actually do it.</div>
-  <div style="margin-top:30px;flex:1;display:flex;flex-direction:column;justify-content:center">
-    <div style="display:flex;align-items:center;gap:26px;padding-bottom:12px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="flex:1;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-spirit)">SCRIPTURE SAYS</div>
       <div style="flex-shrink:0;width:34px"></div>
       <div style="flex:1;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-soul)">THE BRAIN SHOWS</div>
     </div>
-    <div style="height:1px;background:rgba(255,255,255,0.16)"></div>
+    <div class="column-item"></div>
     <div style="display:flex;align-items:center;gap:26px;padding:15px 0">
       <div style="flex:1"><div style="font-size:24px;line-height:1.38;color:var(--fg)">"Be transformed by the renewing of your mind."</div><div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--color-spirit);margin-top:7px">ROMANS 12:2</div></div>
       <div style="flex-shrink:0;width:34px;text-align:center;font-family:'Space Mono',monospace;font-size:20px;color:var(--fg-faint)">↔</div>
@@ -761,22 +804,22 @@
       <div style="flex:1"><div style="font-size:23px;line-height:1.38;color:var(--fg-dim)">Naming a feeling — affect labeling — lowers the amygdala's alarm.</div><div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--color-soul);margin-top:7px">"NAME IT TO TAME IT" · LIEBERMAN</div></div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>THE CONVERGENCES</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>THE CONVERGENCES</div></div>
 </section>
-<section data-label="Convergences II" data-screen-label="08 Convergences II" data-speaker-notes="The pattern keeps holding — and it reaches past the mind into the body and our relationships. 'Come to me and I will give you rest' — and rest lowers the stress hormones that, left unchecked, wear the brain down. 'A cheerful heart is good medicine' — and positive emotion really does track with better immune and stress markers. 'Forgive as the Lord forgave you' — and forgiveness is linked to lower blood pressure and anxiety; bitterness is measurably corrosive. 'Carry each other's burdens' — and connection buffers stress while isolation drives inflammation. A fair caution: these are associations, not laboratory proofs of God, and we hold them humbly. But taken together it's a striking picture — the Maker's instructions and the Maker's design keep turning out to match." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Convergences II" data-screen-label="08 Convergences II" data-speaker-notes="The pattern keeps holding — and it reaches past the mind into the body and our relationships. 'Come to me and I will give you rest' — and rest lowers the stress hormones that, left unchecked, wear the brain down. 'A cheerful heart is good medicine' — and positive emotion really does track with better immune and stress markers. 'Forgive as the Lord forgave you' — and forgiveness is linked to lower blood pressure and anxiety; bitterness is measurably corrosive. 'Carry each other's burdens' — and connection buffers stress while isolation drives inflammation. A fair caution: these are associations, not laboratory proofs of God, and we hold them humbly. But taken together it's a striking picture — the Maker's instructions and the Maker's design keep turning out to match." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--fg);box-shadow:0 0 12px rgba(255,255,255,0.6)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:#AEB6C8">Science &amp; Scripture · Convergences</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1200px">The pattern keeps holding</div>
   <div style="font-size:24px;line-height:1.5;color:var(--fg-dim);max-width:1100px;margin-top:16px">Into the body, and into how we treat one another — the same design shows up.</div>
-  <div style="margin-top:30px;flex:1;display:flex;flex-direction:column;justify-content:center">
-    <div style="display:flex;align-items:center;gap:26px;padding-bottom:12px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="flex:1;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-spirit)">SCRIPTURE SAYS</div>
       <div style="flex-shrink:0;width:34px"></div>
       <div style="flex:1;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-soul)">THE BODY SHOWS</div>
     </div>
-    <div style="height:1px;background:rgba(255,255,255,0.16)"></div>
+    <div class="column-item"></div>
     <div style="display:flex;align-items:center;gap:26px;padding:15px 0">
       <div style="flex:1"><div style="font-size:24px;line-height:1.38;color:var(--fg)">"Come to me... and I will give you rest."</div><div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--color-spirit);margin-top:7px">MATTHEW 11:28</div></div>
       <div style="flex-shrink:0;width:34px;text-align:center;font-family:'Space Mono',monospace;font-size:20px;color:var(--fg-faint)">↔</div>
@@ -801,10 +844,10 @@
       <div style="flex:1"><div style="font-size:23px;line-height:1.38;color:var(--fg-dim)">Social connection buffers stress; isolation raises inflammation.</div><div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--color-soul);margin-top:7px">SOCIAL NEUROSCIENCE</div></div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>SCRIPTURE SAID IT FIRST</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>SCRIPTURE SAID IT FIRST</div></div>
 </section>
-<section id="body" data-label="Part I · Body" data-screen-label="09 Body" data-speaker-notes="Part one: the body. World-conscious. This is the physical vessel — five senses, brain, nervous system. It's how we touch the world and how the world touches us. Scripture never treats the body as a prison to escape; it calls it a temple of the Holy Spirit. So caring for the body is a spiritual act, not a distraction from one." style="background:radial-gradient(1200px 950px at 74% 50%, rgba(181,123,255,0.16), transparent 60%), radial-gradient(900px 700px at 20% 20%, rgba(181,123,255,0.05), transparent 60%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);overflow:hidden">
-  <div style="position:absolute;left:150px;top:0;bottom:0;width:880px;display:flex;flex-direction:column;justify-content:center">
+<section data-label="Part I · Body" data-screen-label="09 Body" data-speaker-notes="Part one: the body. World-conscious. This is the physical vessel — five senses, brain, nervous system. It's how we touch the world and how the world touches us. Scripture never treats the body as a prison to escape; it calls it a temple of the Holy Spirit. So caring for the body is a spiritual act, not a distraction from one." style="background: radial-gradient(1200px 950px at 74% 50%, rgba(181, 123, 255, 0.16), transparent 60%), radial-gradient(900px 700px at 20% 20%, rgba(181, 123, 255, 0.05), transparent 60%), rgb(7, 10, 20);" id="body" class="scroll-reveal">
+  <div class="split-layout"><div class="content-col">
     <div style="font-family:'Space Mono',monospace;font-size:22px;letter-spacing:7px;color:var(--color-body);margin-bottom:26px">PART I</div>
     <div style="font-weight:700;font-size:158px;line-height:0.94;letter-spacing:-4px;color:var(--color-body)">BODY</div>
     <div style="font-weight:500;font-size:46px;color:var(--fg);margin-top:14px">World-conscious</div>
@@ -813,24 +856,24 @@
       <div style="width:50px;height:2px;background:rgba(181,123,255,0.6)"></div>
       <div style="font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;color:var(--fg-faint)">"Your bodies are temples of the Holy Spirit" — 1 COR 6:19</div>
     </div>
-  </div>
-  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid var(--border-body-glow);box-shadow:0 0 90px rgba(181,123,255,0.4), inset 0 0 80px rgba(181,123,255,0.12)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border)"></div>
+  </div><div class="diagram-col">
+    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid var(--border-body-glow);box-shadow:0 0 90px rgba(181,123,255,0.4), inset 0 0 80px rgba(181,123,255,0.12)" class="animate-rotate-cw"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border)" class="animate-rotate-ccw"></div>
     <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border);background:rgba(255,255,255,0.015)"></div>
     <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:var(--color-body)">BODY</div>
     <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:var(--fg-faint)">SOUL</div>
     <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:var(--fg-faint)">SPIRIT</div>
-  </div>
+  </div></div>
+  
 </section>
-<section data-label="Stress &amp; Rest" data-screen-label="10 Stress &amp; Rest" data-speaker-notes="The body runs on a stress system — the HPA axis. A real threat triggers cortisol, which sharpens you to respond, and then should switch off. The problem of modern life is that it never switches off. Chronically elevated cortisol wears the body down and can even shrink the hippocampus, the brain's memory center — McEwen called this allostatic load. Here's the point: rest isn't optional maintenance. Jesus says 'come to me... I will give you rest.' Sabbath is a design feature, a built-in reset for the stress system." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Stress &amp; Rest" data-screen-label="10 Stress &amp; Rest" data-speaker-notes="The body runs on a stress system — the HPA axis. A real threat triggers cortisol, which sharpens you to respond, and then should switch off. The problem of modern life is that it never switches off. Chronically elevated cortisol wears the body down and can even shrink the hippocampus, the brain's memory center — McEwen called this allostatic load. Here's the point: rest isn't optional maintenance. Jesus says 'come to me... I will give you rest.' Sabbath is a design feature, a built-in reset for the stress system." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-body);box-shadow:0 0 12px var(--color-body)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-body)">Body · Rest</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Stress, cortisol &amp; the gift of rest</div>
-  <div style="display:flex;gap:76px;margin-top:40px;flex:1;align-items:center">
-    <div style="flex:1;max-width:600px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim)">A threat triggers <span style="color:var(--fg)">cortisol</span> — it sharpens you, then should switch off. Under chronic stress it never does.</div>
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim);margin-top:22px">Sustained cortisol wears the body down and can shrink the <span style="color:var(--fg)">hippocampus</span>, the brain's memory center.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:30px">
@@ -842,7 +885,7 @@
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-spirit);margin-top:12px">MATTHEW 11:28 · NIV</div>
       </div>
     </div>
-    <div style="width:660px;flex-shrink:0">
+    <div class="column-item">
       <svg sc-camel-view-box="0 0 660 430" style="width:100%;height:auto" data-om-raster="">
         <defs>
           <linearGradient id="acuteFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--color-soul)" stop-opacity="0.25"></stop><stop offset="1" stop-color="var(--color-soul)" stop-opacity="0"></stop></linearGradient>
@@ -862,16 +905,16 @@
       </svg>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>MATT 11:28 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>MATT 11:28 · NIV</div></div>
 </section>
-<section data-label="Body · Temple" data-screen-label="11 Temple" data-speaker-notes="We said the body isn't a prison to escape — Scripture goes further and calls it a temple, the dwelling place of the Spirit. That reframes everything. There are two ditches. One says the body doesn't matter, so neglect it — that's an old error, gnosticism in modern dress. The other makes the body everything: worship its appetites, its image. The biblical road runs between them: stewardship. 'You are not your own; you were bought at a price. Honor God with your bodies.' So how you eat, move, rest and sleep is not beneath the spiritual life — it's part of it." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(181,123,255,0.08), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.07), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Body · Temple" data-screen-label="11 Temple" data-speaker-notes="We said the body isn't a prison to escape — Scripture goes further and calls it a temple, the dwelling place of the Spirit. That reframes everything. There are two ditches. One says the body doesn't matter, so neglect it — that's an old error, gnosticism in modern dress. The other makes the body everything: worship its appetites, its image. The biblical road runs between them: stewardship. 'You are not your own; you were bought at a price. Honor God with your bodies.' So how you eat, move, rest and sleep is not beneath the spiritual life — it's part of it." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(181, 123, 255, 0.08), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.07), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-body);box-shadow:0 0 12px var(--color-body)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-body)">Body · Stewardship</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">A temple, not a prison</div>
-  <div style="display:flex;gap:76px;margin-top:40px;flex:1;align-items:center">
-    <div style="flex:1;max-width:640px">
+  <div class="split-layout">
+    <div class="content-col">
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim)">Scripture never treats the body as a prison to escape — nor an idol to serve. It is the <span style="color:var(--fg)">dwelling place of the Spirit</span>, entrusted to your care.</div>
       <div style="font-size:24px;line-height:1.5;color:var(--fg-dim);margin-top:20px">So how you eat, move, rest and sleep isn't beneath the spiritual life. It's part of it.</div>
       <div style="border-left:2px solid rgba(181,123,255,0.7);padding-left:22px;margin-top:32px">
@@ -879,7 +922,7 @@
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-body);margin-top:12px">1 CORINTHIANS 6:19–20 · NIV</div>
       </div>
     </div>
-    <div style="width:600px;flex-shrink:0">
+    <div class="diagram-col">
       <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-body);margin-bottom:6px">TWO DITCHES, ONE ROAD</div>
       <div style="position:relative;padding:0 6px">
         <div style="position:absolute;left:80px;right:80px;top:57px;height:2px;background:linear-gradient(90deg,rgba(138,147,166,0.25),rgba(181,123,255,0.75),rgba(138,147,166,0.25))"></div>
@@ -904,16 +947,16 @@
       <div style="margin-top:52px;border-top:1px solid var(--border);padding-top:22px;font-size:22px;line-height:1.5;color:#AEB6C8">The body is neither to be escaped nor obeyed — but <span style="color:var(--fg)">offered</span>.</div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>1 COR 6:19 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>1 COR 6:19 · NIV</div></div>
 </section>
-<section data-label="Body · Sleep &amp; Motion" data-screen-label="12 Sleep &amp; Movement" data-speaker-notes="Two more pieces of stewardship the Bible assumes and science now underlines: sleep and movement. When you sleep your brain isn't idle — it consolidates memory and literally washes out waste through the glymphatic system, discovered in 2013. Skimp on sleep and that cleaning never finishes. Movement matters too: exercise releases BDNF, sometimes called Miracle-Gro for the brain, growing new connections and lifting mood. And the psalmist already knew the heart of it — 'in vain you rise early and stay up late... for he grants sleep to those he loves.' Sleep is trust made physical: you lay down control, and God keeps the world turning without you." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(181,123,255,0.08), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.07), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Body · Sleep &amp; Motion" data-screen-label="12 Sleep &amp; Movement" data-speaker-notes="Two more pieces of stewardship the Bible assumes and science now underlines: sleep and movement. When you sleep your brain isn't idle — it consolidates memory and literally washes out waste through the glymphatic system, discovered in 2013. Skimp on sleep and that cleaning never finishes. Movement matters too: exercise releases BDNF, sometimes called Miracle-Gro for the brain, growing new connections and lifting mood. And the psalmist already knew the heart of it — 'in vain you rise early and stay up late... for he grants sleep to those he loves.' Sleep is trust made physical: you lay down control, and God keeps the world turning without you." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(181, 123, 255, 0.08), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.07), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-body);box-shadow:0 0 12px var(--color-body)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-body)">Body · Care</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Sleep &amp; movement as worship</div>
-  <div style="display:flex;gap:76px;margin-top:40px;flex:1;align-items:center">
-    <div style="flex:1;max-width:600px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim)">The body runs on a design — a daily and weekly rhythm of work, rest and sleep. Honoring it is stewardship, not vanity.</div>
       <div style="font-size:24px;line-height:1.5;color:var(--fg-dim);margin-top:18px">In sleep the brain consolidates memory and clears waste. Movement grows new connections and steadies the mind.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px">
@@ -925,7 +968,7 @@
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-spirit);margin-top:12px">PSALM 127:2 · NIV</div>
       </div>
     </div>
-    <div style="width:620px;flex-shrink:0">
+    <div class="column-item">
       <div style="display:flex;gap:22px;align-items:flex-start;padding:16px 0">
         <div style="font-family:'Space Mono',monospace;font-size:18px;color:var(--color-body);width:132px;flex-shrink:0;letter-spacing:2px;padding-top:5px">SLEEP</div>
         <div><div style="font-size:26px;font-weight:600;color:var(--fg)">Restores &amp; clears</div><div style="font-size:21px;color:var(--fg-dim);margin-top:4px;line-height:1.4">Memory consolidates and the brain washes out waste as you rest. <span style="color:var(--fg-faint)">(glymphatic system, 2013)</span></div></div>
@@ -942,10 +985,10 @@
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PS 127:2 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PS 127:2 · NIV</div></div>
 </section>
-<section id="soul" data-label="Part II · Soul" data-screen-label="13 Soul" data-speaker-notes="Part two: the soul. Self-conscious. This is your mind, your will, your emotions — the seat of your personality. It's the 'you' that thinks, decides, and feels. The Hebrew word nephesh points to the whole living self. Most of our discipleship, and most of the science tonight, lives here — because the soul is where the body and the spirit meet." style="background:radial-gradient(1200px 950px at 74% 50%, rgba(76,201,240,0.16), transparent 60%), radial-gradient(900px 700px at 20% 20%, rgba(76,201,240,0.05), transparent 60%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);overflow:hidden">
-  <div style="position:absolute;left:150px;top:0;bottom:0;width:880px;display:flex;flex-direction:column;justify-content:center">
+<section data-label="Part II · Soul" data-screen-label="13 Soul" data-speaker-notes="Part two: the soul. Self-conscious. This is your mind, your will, your emotions — the seat of your personality. It's the 'you' that thinks, decides, and feels. The Hebrew word nephesh points to the whole living self. Most of our discipleship, and most of the science tonight, lives here — because the soul is where the body and the spirit meet." style="background: radial-gradient(1200px 950px at 74% 50%, rgba(76, 201, 240, 0.16), transparent 60%), radial-gradient(900px 700px at 20% 20%, rgba(76, 201, 240, 0.05), transparent 60%), rgb(7, 10, 20);" id="soul" class="scroll-reveal">
+  <div class="split-layout"><div class="content-col">
     <div style="font-family:'Space Mono',monospace;font-size:22px;letter-spacing:7px;color:var(--color-soul);margin-bottom:26px">PART II</div>
     <div style="font-weight:700;font-size:158px;line-height:0.94;letter-spacing:-4px;color:var(--color-soul)">SOUL</div>
     <div style="font-weight:500;font-size:46px;color:var(--fg);margin-top:14px">Self-conscious</div>
@@ -954,24 +997,24 @@
       <div style="width:50px;height:2px;background:var(--border-soul-glow)"></div>
       <div style="font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;color:var(--fg-faint)">"Praise the Lord, my soul; all my inmost being" — PS 103:1</div>
     </div>
-  </div>
-  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--border-soul-glow);box-shadow:0 0 80px rgba(76,201,240,0.34), inset 0 0 60px rgba(76,201,240,0.10)"></div>
+  </div><div class="diagram-col">
+    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)" class="animate-rotate-cw"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--border-soul-glow);box-shadow:0 0 80px rgba(76,201,240,0.34), inset 0 0 60px rgba(76,201,240,0.10)" class="animate-rotate-ccw"></div>
     <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border);background:rgba(255,255,255,0.015)"></div>
     <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:var(--fg-faint)">BODY</div>
     <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:var(--color-soul)">SOUL</div>
     <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:var(--fg-faint)">SPIRIT</div>
-  </div>
+  </div></div>
+  
 </section>
-<section data-label="Soul · Faculties" data-screen-label="14 Mind, Will &amp; Emotion" data-speaker-notes="Before the science of the soul, let's name its parts. Historically the soul has three faculties: the mind — what you know and think; the will — what you choose; and the emotions — what you feel. They're meant to work in concert: you know what's true, you feel its weight, you choose accordingly. Dysfunction is when one seizes the wheel — emotions dragging the will around, or a cold intellect that knows everything and loves nothing. Notice Jesus' summary of the whole law engages all of it: love God with all your heart, soul, mind and strength. Discipleship isn't just information for the mind or a feeling for the emotions — it's the whole soul, reordered under the spirit." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.08), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(76,201,240,0.06), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Soul · Faculties" data-screen-label="14 Mind, Will &amp; Emotion" data-speaker-notes="Before the science of the soul, let's name its parts. Historically the soul has three faculties: the mind — what you know and think; the will — what you choose; and the emotions — what you feel. They're meant to work in concert: you know what's true, you feel its weight, you choose accordingly. Dysfunction is when one seizes the wheel — emotions dragging the will around, or a cold intellect that knows everything and loves nothing. Notice Jesus' summary of the whole law engages all of it: love God with all your heart, soul, mind and strength. Discipleship isn't just information for the mind or a feeling for the emotions — it's the whole soul, reordered under the spirit." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.08), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(76, 201, 240, 0.06), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">Soul · Faculties</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Mind, will &amp; emotion</div>
-  <div style="display:flex;gap:70px;margin-top:36px;flex:1;align-items:center">
-    <div style="flex:1;max-width:620px">
+  <div class="split-layout">
+    <div class="content-col">
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim)">The soul has three faculties — the <span style="color:var(--fg)">mind</span> that knows, the <span style="color:var(--fg)">will</span> that chooses, and the <span style="color:var(--fg)">emotions</span> that respond.</div>
       <div style="font-size:24px;line-height:1.5;color:var(--fg-dim);margin-top:20px">They're made to work in concert: know what's true, feel its weight, choose accordingly. Trouble comes when one seizes the wheel — feeling that drags the will, or a cold mind that loves nothing.</div>
       <div style="border-left:2px solid rgba(76,201,240,0.7);padding-left:22px;margin-top:30px">
@@ -979,7 +1022,7 @@
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-soul);margin-top:12px">MARK 12:30 · NIV</div>
       </div>
     </div>
-    <div style="width:580px;height:500px;position:relative;flex-shrink:0">
+    <div class="diagram-col">
       <div style="position:absolute;width:300px;height:300px;left:130px;top:0;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
       <div style="position:absolute;width:300px;height:300px;left:30px;top:190px;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
       <div style="position:absolute;width:300px;height:300px;left:230px;top:190px;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
@@ -989,16 +1032,16 @@
       <div style="position:absolute;left:280px;top:268px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:2px;color:var(--color-soul);line-height:1.25">THE<br>SELF</div></div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>MARK 12:30 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>MARK 12:30 · NIV</div></div>
 </section>
-<section data-label="Renewing the Mind" data-screen-label="15 Neuroplasticity" data-speaker-notes="Paul says 'be transformed by the renewing of your mind.' For most of history we assumed the adult brain was fixed hardware. It isn't. It's plastic — it rewires. Hebb's principle from 1949: neurons that fire together, wire together. Every repeated thought physically strengthens a pathway. The most famous proof: London taxi drivers who memorize 25,000 streets grow measurably larger hippocampi — Maguire's study at UCL in 2000. So 'renewing the mind' isn't a metaphor for positive thinking. What you rehearse, you literally become. Which means our thought life is not neutral." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Renewing the Mind" data-screen-label="15 Neuroplasticity" data-speaker-notes="Paul says 'be transformed by the renewing of your mind.' For most of history we assumed the adult brain was fixed hardware. It isn't. It's plastic — it rewires. Hebb's principle from 1949: neurons that fire together, wire together. Every repeated thought physically strengthens a pathway. The most famous proof: London taxi drivers who memorize 25,000 streets grow measurably larger hippocampi — Maguire's study at UCL in 2000. So 'renewing the mind' isn't a metaphor for positive thinking. What you rehearse, you literally become. Which means our thought life is not neutral." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">Soul · Mind</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Renewing the mind, literally</div>
-  <div style="display:flex;gap:76px;margin-top:40px;flex:1;align-items:center">
-    <div style="flex:1;max-width:600px">
+  <div class="split-layout">
+    <div class="content-col">
       <div style="border-left:2px solid rgba(76,201,240,0.7);padding-left:22px;margin-bottom:30px">
         <div style="font-size:26px;line-height:1.45;color:var(--fg)">"Do not conform to the pattern of this world, but be transformed by the renewing of your mind."</div>
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-soul);margin-top:12px">ROMANS 12:2 · NIV</div>
@@ -1006,7 +1049,7 @@
       <div style="font-size:27px;line-height:1.5;color:var(--fg-dim)">The adult brain isn't fixed — it's <span style="color:var(--fg)">plastic</span>. Every repeated thought strengthens a neural pathway. The brain rewires around what we dwell on.</div>
       <div style="font-size:24px;line-height:1.45;color:var(--fg-dim);margin-top:20px">Renewal isn't only a feeling. What you rehearse, you become.</div>
     </div>
-    <div style="width:660px;flex-shrink:0">
+    <div class="diagram-col">
       <div style="display:flex;flex-direction:column;gap:34px">
         <div>
           <div style="display:flex;align-items:center;gap:0">
@@ -1039,16 +1082,16 @@
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>ROM 12:2 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>ROM 12:2 · NIV</div></div>
 </section>
-<section data-label="Stillness" data-screen-label="16 Default Mode Network" data-speaker-notes="Your brain has something called the Default Mode Network — Raichle named it in 2001. It switches ON when you're not focused on a task: it replays the past, rehearses conversations, loops on the self. A Harvard study found our minds wander about half of our waking hours, and — their words — 'a wandering mind is an unhappy mind.' Here's the beautiful part: contemplative prayer and meditation measurably quiet this network (Brewer, Yale, 2011), and just eight weeks of practice changes gray matter (Hölzel, Harvard, 2011). So when the psalmist says 'be still, and know that I am God,' stillness turns out to have a physiology. Quiet the chatter, and there's room to know Him." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Stillness" data-screen-label="16 Default Mode Network" data-speaker-notes="Your brain has something called the Default Mode Network — Raichle named it in 2001. It switches ON when you're not focused on a task: it replays the past, rehearses conversations, loops on the self. A Harvard study found our minds wander about half of our waking hours, and — their words — 'a wandering mind is an unhappy mind.' Here's the beautiful part: contemplative prayer and meditation measurably quiet this network (Brewer, Yale, 2011), and just eight weeks of practice changes gray matter (Hölzel, Harvard, 2011). So when the psalmist says 'be still, and know that I am God,' stillness turns out to have a physiology. Quiet the chatter, and there's room to know Him." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">Soul · Attention</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1200px">The wandering mind &amp; stillness</div>
-  <div style="display:flex;gap:70px;margin-top:36px;flex:1;align-items:center">
-    <div style="flex:1;max-width:590px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="font-size:26px;line-height:1.5;color:var(--fg-dim)">The brain's <span style="color:var(--fg)">Default Mode Network</span> switches on when the mind wanders — replaying the past, looping on the self.</div>
       <div style="font-size:26px;line-height:1.5;color:var(--fg-dim);margin-top:20px">Contemplative prayer <span style="color:var(--fg)">quiets</span> it. Weeks of practice reshape gray matter.</div>
       <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:26px">
@@ -1061,7 +1104,7 @@
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-spirit);margin-top:10px">PSALM 46:10 · NIV</div>
       </div>
     </div>
-    <div style="width:670px;flex-shrink:0;display:flex;align-items:center;gap:16px">
+    <div class="column-item">
       <div style="flex:1;border:1px solid var(--border);border-radius:16px;padding:22px 18px 18px;background:rgba(255,255,255,0.02)">
         <div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:var(--color-soul);text-align:center;margin-bottom:8px">MIND WANDERING</div>
         <svg sc-camel-view-box="0 0 240 200" style="width:100%;height:auto" data-om-raster="">
@@ -1088,16 +1131,16 @@
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PS 46:10 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PS 46:10 · NIV</div></div>
 </section>
-<section data-label="Guard the Heart" data-screen-label="17 Emotional Health" data-speaker-notes="'Above all else, guard your heart, for everything you do flows from it.' The soul's emotions aren't the enemy — but they can't be the driver either. Here's a striking finding: Matt Lieberman at UCLA showed that simply putting a feeling into words — affect labeling — reduces activity in the amygdala, the brain's alarm. Dan Siegel calls it 'name it to tame it.' Naming an emotion pulls the prefrontal cortex online and calms the threat response. That's exactly what the psalms of lament do — they name grief honestly, out loud, and then turn it toward God. So guarding the heart isn't suppressing feeling or being ruled by it. It's a third way: feel it, name it, bring it to God." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.09), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Guard the Heart" data-screen-label="17 Emotional Health" data-speaker-notes="'Above all else, guard your heart, for everything you do flows from it.' The soul's emotions aren't the enemy — but they can't be the driver either. Here's a striking finding: Matt Lieberman at UCLA showed that simply putting a feeling into words — affect labeling — reduces activity in the amygdala, the brain's alarm. Dan Siegel calls it 'name it to tame it.' Naming an emotion pulls the prefrontal cortex online and calms the threat response. That's exactly what the psalms of lament do — they name grief honestly, out loud, and then turn it toward God. So guarding the heart isn't suppressing feeling or being ruled by it. It's a third way: feel it, name it, bring it to God." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.07), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.09), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-soul);box-shadow:0 0 12px var(--color-soul)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-soul)">Soul · Emotion</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Guarding the heart</div>
-  <div style="display:flex;gap:76px;margin-top:38px;flex:1;align-items:center">
-    <div style="flex:1;max-width:600px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="border-left:2px solid rgba(181,123,255,0.7);padding-left:22px;margin-bottom:28px">
         <div style="font-size:26px;line-height:1.45;color:var(--fg)">"Above all else, guard your heart, for everything you do flows from it."</div>
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-body);margin-top:12px">PROVERBS 4:23 · NIV</div>
@@ -1108,7 +1151,7 @@
         <span style="font-family:'Space Mono',monospace;font-size:15px;color:var(--color-body);border:1px solid rgba(181,123,255,0.3);border-radius:999px;padding:6px 14px">Affect labeling · Lieberman, UCLA 2007</span>
       </div>
     </div>
-    <div style="width:660px;flex-shrink:0">
+    <div class="column-item">
       <div style="display:flex;align-items:flex-end;gap:44px;height:300px;padding:0 30px">
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end">
           <div style="font-family:'Space Mono',monospace;font-size:20px;color:var(--color-red);margin-bottom:12px">HIGH</div>
@@ -1131,10 +1174,10 @@
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PROV 4:23 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PROV 4:23 · NIV</div></div>
 </section>
-<section id="spirit" data-label="Part III · Spirit" data-screen-label="18 Spirit" data-speaker-notes="Part three: the spirit. God-conscious. This is the innermost core — the part of you made to commune with God. Conscience, intuition, communion. When you were born again, this is what came alive. Romans 8:16 — 'The Spirit himself testifies with our spirit that we are God's children.' Here science goes quiet; you can't put the spirit under a microscope. But we can talk about how the spirit speaks, and how to tell its voice from the noise." style="background:radial-gradient(1200px 950px at 74% 50%, rgba(255,194,75,0.16), transparent 60%), radial-gradient(900px 700px at 20% 20%, rgba(255,194,75,0.05), transparent 60%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);overflow:hidden">
-  <div style="position:absolute;left:150px;top:0;bottom:0;width:880px;display:flex;flex-direction:column;justify-content:center">
+<section data-label="Part III · Spirit" data-screen-label="18 Spirit" data-speaker-notes="Part three: the spirit. God-conscious. This is the innermost core — the part of you made to commune with God. Conscience, intuition, communion. When you were born again, this is what came alive. Romans 8:16 — 'The Spirit himself testifies with our spirit that we are God's children.' Here science goes quiet; you can't put the spirit under a microscope. But we can talk about how the spirit speaks, and how to tell its voice from the noise." style="background: radial-gradient(1200px 950px at 74% 50%, rgba(255, 194, 75, 0.16), transparent 60%), radial-gradient(900px 700px at 20% 20%, rgba(255, 194, 75, 0.05), transparent 60%), rgb(7, 10, 20);" id="spirit" class="scroll-reveal">
+  <div class="split-layout"><div class="content-col">
     <div style="font-family:'Space Mono',monospace;font-size:22px;letter-spacing:7px;color:var(--color-spirit);margin-bottom:26px">PART III</div>
     <div style="font-weight:700;font-size:158px;line-height:0.94;letter-spacing:-4px;color:var(--color-spirit)">SPIRIT</div>
     <div style="font-weight:500;font-size:46px;color:var(--fg);margin-top:14px">God-conscious</div>
@@ -1143,24 +1186,24 @@
       <div style="width:50px;height:2px;background:rgba(255,194,75,0.6)"></div>
       <div style="font-family:'Space Mono',monospace;font-size:19px;letter-spacing:1px;color:var(--fg-faint)">"The Spirit testifies with our spirit" — ROM 8:16</div>
     </div>
-  </div>
-  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border)"></div>
+  </div><div class="diagram-col">
+    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)" class="animate-rotate-cw"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--border)" class="animate-rotate-ccw"></div>
     <div style="position:absolute;width:230px;height:230px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, var(--color-spirit) 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 50px 3px rgba(255,216,140,0.5), 0 0 160px 34px rgba(255,182,74,0.30);animation:pulseGlow 5s ease-in-out infinite"></div>
     <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:var(--fg-faint)">BODY</div>
     <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:var(--fg-faint)">SOUL</div>
     <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:17px;font-weight:700;letter-spacing:3px;color:#3A2A05">SPIRIT</div>
-  </div>
+  </div></div>
+  
 </section>
-<section data-label="Still Small Voice" data-screen-label="19 Hearing God" data-speaker-notes="How does the spirit hear God? The classic text is 1 Kings 19. Elijah is on the mountain. A great wind tears the rocks — but the Lord was not in the wind. Then an earthquake — not in the earthquake. Then fire — not in the fire. And after the fire, a gentle whisper. That's how God most often speaks: not in the spectacular, but in the quiet. Which is sobering, because the noise of the body and soul — stress, rumination, hurry — can drown out a whisper. Jesus says 'my sheep listen to my voice.' Practically, God speaks through Scripture first, and confirms through settled peace, wise counsel, and circumstances. And notice — this is exactly why stillness matters: quiet the network we saw earlier, and the whisper becomes audible." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(255,194,75,0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.08), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Still Small Voice" data-screen-label="19 Hearing God" data-speaker-notes="How does the spirit hear God? The classic text is 1 Kings 19. Elijah is on the mountain. A great wind tears the rocks — but the Lord was not in the wind. Then an earthquake — not in the earthquake. Then fire — not in the fire. And after the fire, a gentle whisper. That's how God most often speaks: not in the spectacular, but in the quiet. Which is sobering, because the noise of the body and soul — stress, rumination, hurry — can drown out a whisper. Jesus says 'my sheep listen to my voice.' Practically, God speaks through Scripture first, and confirms through settled peace, wise counsel, and circumstances. And notice — this is exactly why stillness matters: quiet the network we saw earlier, and the whisper becomes audible." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(255, 194, 75, 0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.08), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-spirit);box-shadow:0 0 12px var(--color-spirit)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-spirit)">Spirit · Hearing God</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">The still, small voice</div>
-  <div style="display:flex;gap:76px;margin-top:38px;flex:1;align-items:center">
-    <div style="flex:1;max-width:600px">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="font-size:26px;line-height:1.5;color:var(--fg-dim)">God most often speaks not in the spectacular, but in the quiet. The noise of body and soul can drown a whisper.</div>
       <div style="border-left:2px solid rgba(255,194,75,0.7);padding-left:22px;margin-top:26px">
         <div style="font-size:24px;line-height:1.4;color:var(--fg)">"My sheep listen to my voice; I know them, and they follow me."</div>
@@ -1174,7 +1217,7 @@
         <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;color:#DCE1EC;border:1px solid rgba(255,255,255,0.16);border-radius:999px;padding:8px 18px">Circumstances</span>
       </div>
     </div>
-    <div style="width:560px;flex-shrink:0">
+    <div class="column-item">
       <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint);margin-bottom:18px">1 KINGS 19:11–12</div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center;gap:18px;opacity:0.5"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;color:var(--fg-faint);width:200px">WIND</div><div style="font-size:19px;color:var(--fg-faint)">the Lord was not in the wind</div></div>
@@ -1188,16 +1231,16 @@
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>1 KINGS 19 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>1 KINGS 19 · NIV</div></div>
 </section>
-<section data-label="Gut &amp; Heart" data-screen-label="20 Gut-Brain / Heart" data-speaker-notes="Scripture keeps locating discernment lower than the head. The heart, of course — but also the gut. Paul's word for compassion, splagchna, literally means the bowels; the old translations say 'bowels of mercy.' And the body backs this up in a startling way. The gut contains around 500 million neurons — scientists literally call it the 'second brain.' The heart has its own little network of about 40,000 neurons. And the vagus nerve, the great mind-body cable, runs roughly 80% upward — carrying far more signal from body to brain than the other way. HeartMath's research links a smooth, coherent heart rhythm to calm and clarity. So a 'gut feeling' is real information. But — and this is the hinge for the rest of tonight — a gut feeling is data, not a verdict. Signal to be weighed, not a voice to obey." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(255,194,75,0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.08), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Gut &amp; Heart" data-screen-label="20 Gut-Brain / Heart" data-speaker-notes="Scripture keeps locating discernment lower than the head. The heart, of course — but also the gut. Paul's word for compassion, splagchna, literally means the bowels; the old translations say 'bowels of mercy.' And the body backs this up in a startling way. The gut contains around 500 million neurons — scientists literally call it the 'second brain.' The heart has its own little network of about 40,000 neurons. And the vagus nerve, the great mind-body cable, runs roughly 80% upward — carrying far more signal from body to brain than the other way. HeartMath's research links a smooth, coherent heart rhythm to calm and clarity. So a 'gut feeling' is real information. But — and this is the hinge for the rest of tonight — a gut feeling is data, not a verdict. Signal to be weighed, not a voice to obey." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(255, 194, 75, 0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.08), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-spirit);box-shadow:0 0 12px var(--color-spirit)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-spirit)">Spirit · Intuition</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Gut feelings &amp; the listening heart</div>
-  <div style="display:flex;gap:80px;margin-top:36px;flex:1;align-items:center">
-    <div style="flex:1;max-width:640px">
+  <div class="split-layout">
+    <div class="content-col">
       <div style="font-size:26px;line-height:1.5;color:var(--fg-dim)">Scripture locates discernment in the <span style="color:var(--fg)">heart</span> — and even the <span style="color:var(--fg)">gut</span>. Paul's word for compassion, <span style="font-style:italic">splagchna</span>, literally means the bowels.</div>
       <div style="font-size:26px;line-height:1.5;color:var(--fg-dim);margin-top:20px">The body agrees. The gut and heart carry their own neural networks; most of the vagus nerve runs <span style="color:var(--fg)">upward</span>, body to brain.</div>
       <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:24px">
@@ -1208,7 +1251,7 @@
         <div style="font-size:25px;line-height:1.45;color:var(--fg)">A gut feeling is <span style="color:#FFD98A">real data</span> — but data, not a verdict. A signal to weigh, not a voice to obey.</div>
       </div>
     </div>
-    <div style="width:540px;flex-shrink:0;position:relative;padding:8px 0">
+    <div class="diagram-col">
       <div style="position:absolute;left:31px;top:56px;bottom:150px;width:2px;background:linear-gradient(180deg,var(--border-soul-glow),rgba(255,194,75,0.6),rgba(181,123,255,0.6))"></div>
       <div style="display:flex;flex-direction:column;gap:40px">
         <div style="display:flex;align-items:center;gap:28px">
@@ -1227,23 +1270,23 @@
       <div style="margin-top:26px;border-top:1px solid var(--border);padding-top:16px;font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px;color:var(--fg-faint)">VAGUS NERVE ≈ 80% of fibers carry signal <span style="color:#DCE1EC">↑ upward</span> (body → brain)</div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>SIGNAL, NOT VERDICT</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>SIGNAL, NOT VERDICT</div></div>
 </section>
-<section data-label="Weigh &amp; Test" data-screen-label="21 Testing Spirits" data-speaker-notes="So how do we weigh it? John says plainly: 'do not believe every spirit, but test the spirits.' Paul: 'Test them all; hold on to what is good.' The Bereans were commended because they examined the Scriptures every day to check what even the apostle Paul told them. Discernment is not cynicism and it's not gullibility — it's testing. Here's a simple grid you can run any impression, teaching, or gut-feeling through. Does it agree with Scripture? Does it exalt Jesus? Does it leave settled peace, or fear and striving? Is it confirmed by wise counsel? And — the one we'll land on next — does it bear good fruit over time?" style="background:radial-gradient(1100px 820px at 82% 6%, rgba(255,194,75,0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.08), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Weigh &amp; Test" data-screen-label="21 Testing Spirits" data-speaker-notes="So how do we weigh it? John says plainly: 'do not believe every spirit, but test the spirits.' Paul: 'Test them all; hold on to what is good.' The Bereans were commended because they examined the Scriptures every day to check what even the apostle Paul told them. Discernment is not cynicism and it's not gullibility — it's testing. Here's a simple grid you can run any impression, teaching, or gut-feeling through. Does it agree with Scripture? Does it exalt Jesus? Does it leave settled peace, or fear and striving? Is it confirmed by wise counsel? And — the one we'll land on next — does it bear good fruit over time?" style="background: radial-gradient(1100px 820px at 82% 6%, rgba(255, 194, 75, 0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.08), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-spirit);box-shadow:0 0 12px var(--color-spirit)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-spirit)">Spirit · Discernment</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Weighing what you hear</div>
-  <div style="display:flex;gap:80px;margin-top:36px;flex:1;align-items:center">
-    <div style="width:470px;flex-shrink:0">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="border-left:2px solid rgba(255,194,75,0.7);padding-left:22px">
         <div style="font-size:28px;line-height:1.4;color:var(--fg)">"Do not believe every spirit, but test the spirits to see whether they are from God."</div>
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-spirit);margin-top:12px">1 JOHN 4:1 · NIV</div>
       </div>
       <div style="font-size:24px;line-height:1.5;color:var(--fg-dim);margin-top:28px">Not cynicism. Not gullibility. Run every impression, teaching, or gut-feeling through the filter — "test them all; hold on to what is good." <span style="color:var(--fg-faint);font-size:20px">(1 Thess 5:21; the Bereans, Acts 17:11)</span></div>
     </div>
-    <div style="flex:1;display:flex;flex-direction:column">
+    <div class="column-item">
       <div style="display:flex;gap:20px;align-items:flex-start;padding:18px 0"><div style="font-family:'Space Mono',monospace;font-size:20px;color:#FFD98A;width:44px;flex-shrink:0">01</div><div><div style="font-size:26px;font-weight:600;color:var(--fg)">Does it agree with Scripture?</div><div style="font-size:20px;color:var(--fg-dim);margin-top:2px">The Word is the fixed measure.</div></div></div>
       <div style="height:1px;background:var(--border)"></div>
       <div style="display:flex;gap:20px;align-items:flex-start;padding:18px 0"><div style="font-family:'Space Mono',monospace;font-size:20px;color:#FFD98A;width:44px;flex-shrink:0">02</div><div><div style="font-size:26px;font-weight:600;color:var(--fg)">Does it exalt Jesus?</div><div style="font-size:20px;color:var(--fg-dim);margin-top:2px">The Spirit always points to Christ. (1 John 4:2–3)</div></div></div>
@@ -1255,16 +1298,16 @@
       <div style="display:flex;gap:20px;align-items:flex-start;padding:18px 0"><div style="font-family:'Space Mono',monospace;font-size:20px;color:#FFD98A;width:44px;flex-shrink:0">05</div><div><div style="font-size:26px;font-weight:600;color:var(--fg)">Does it bear good fruit?</div><div style="font-size:20px;color:var(--fg-dim);margin-top:2px">The test time reveals — next.</div></div></div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>1 JOHN 4:1 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>1 JOHN 4:1 · NIV</div></div>
 </section>
-<section data-label="By Their Fruit" data-screen-label="22 Fruit Discernment" data-speaker-notes="Jesus gives us the master test: 'by their fruit you will recognize them.' Not by how impressive, how gifted, how intense, how confident — by what grows over time. And Paul tells us exactly what the Spirit's fruit looks like: love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness, self-control. Contrast that with the fruit of the flesh — division, jealousy, fits of rage, chaos. So when you're weighing a teacher, a movement, an impression, even your own heart: give it time, and look at the harvest. The Spirit grows a garden. The flesh leaves wreckage. Fruit doesn't lie." style="background:radial-gradient(1200px 900px at 78% 55%, rgba(255,194,75,0.10), transparent 60%), radial-gradient(1000px 800px at 6% 5%, rgba(181,123,255,0.06), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="By Their Fruit" data-screen-label="22 Fruit Discernment" data-speaker-notes="Jesus gives us the master test: 'by their fruit you will recognize them.' Not by how impressive, how gifted, how intense, how confident — by what grows over time. And Paul tells us exactly what the Spirit's fruit looks like: love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness, self-control. Contrast that with the fruit of the flesh — division, jealousy, fits of rage, chaos. So when you're weighing a teacher, a movement, an impression, even your own heart: give it time, and look at the harvest. The Spirit grows a garden. The flesh leaves wreckage. Fruit doesn't lie." style="background: radial-gradient(1200px 900px at 78% 55%, rgba(255, 194, 75, 0.1), transparent 60%), radial-gradient(1000px 800px at 6% 5%, rgba(181, 123, 255, 0.06), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-spirit);box-shadow:0 0 12px var(--color-spirit)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-spirit)">Spirit · Discernment</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">Known by their fruit</div>
-  <div style="display:flex;gap:80px;margin-top:36px;flex:1;align-items:center">
-    <div style="width:500px;flex-shrink:0">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="border-left:2px solid rgba(255,194,75,0.7);padding-left:22px">
         <div style="font-size:28px;line-height:1.4;color:var(--fg)">"By their fruit you will recognize them."</div>
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-spirit);margin-top:12px">MATTHEW 7:16 · NIV</div>
@@ -1272,31 +1315,31 @@
       <div style="font-size:25px;line-height:1.5;color:var(--fg-dim);margin-top:28px">Not by how impressive, gifted, or intense — by what <span style="color:var(--fg)">grows over time</span>. Give it time, then look at the harvest.</div>
       <div style="font-size:22px;line-height:1.45;color:var(--fg-dim);margin-top:20px">The flesh leaves wreckage — division, fear, chaos. The Spirit grows a garden. <span style="color:var(--fg-faint);font-size:19px">(Gal 5:19–23)</span></div>
     </div>
-    <div style="flex:1">
+    <div class="column-item">
       <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-spirit);margin-bottom:18px">THE FRUIT OF THE SPIRIT · GALATIANS 5:22–23</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Love</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Joy</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Peace</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Forbearance</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Kindness</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Goodness</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Faithfulness</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Gentleness</div></div>
-        <div style="border:1px solid rgba(255,194,75,0.32);border-radius:14px;padding:22px 16px;text-align:center;background:radial-gradient(200px 120px at 50% 0%, rgba(255,194,75,0.10), transparent 70%)"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Self-control</div></div>
+      <div class="grid-layout">
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Love</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Joy</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Peace</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Forbearance</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Kindness</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Goodness</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Faithfulness</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Gentleness</div></div>
+        <div class="card-item"><div style="font-size:26px;font-weight:600;color:#FFE7B0">Self-control</div></div>
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>MATT 7:16 · GAL 5 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>MATT 7:16 · GAL 5 · NIV</div></div>
 </section>
-<section data-label="Fruit of the Flesh" data-screen-label="23 Fruit of the Flesh" data-speaker-notes="We saw the Spirit's fruit — here's the contrast Paul draws in the very same breath: the fruit of the flesh. He calls these acts 'obvious.' Look at the texture of the list — sexual immorality, idolatry, hatred, discord, jealousy, fits of rage, selfish ambition, dissensions, factions, envy, drunkenness. Notice how many are relational. This is the wreckage side of the fruit test: whatever consistently grows this harvest — a teaching, a movement, a habit, an impulse in your own chest — its root is not the Spirit, however spiritual it looks. Paul's warning is sober, but the invitation underneath it is grace: walk by the Spirit, and you will not gratify the desires of the flesh." style="background:radial-gradient(1200px 900px at 78% 55%, var(--bg-red-tint), transparent 60%), radial-gradient(1000px 800px at 6% 5%, rgba(181,123,255,0.06), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Fruit of the Flesh" data-screen-label="23 Fruit of the Flesh" data-speaker-notes="We saw the Spirit's fruit — here's the contrast Paul draws in the very same breath: the fruit of the flesh. He calls these acts 'obvious.' Look at the texture of the list — sexual immorality, idolatry, hatred, discord, jealousy, fits of rage, selfish ambition, dissensions, factions, envy, drunkenness. Notice how many are relational. This is the wreckage side of the fruit test: whatever consistently grows this harvest — a teaching, a movement, a habit, an impulse in your own chest — its root is not the Spirit, however spiritual it looks. Paul's warning is sober, but the invitation underneath it is grace: walk by the Spirit, and you will not gratify the desires of the flesh." style="background: radial-gradient(1200px 900px at 78% 55%, rgba(240, 119, 106, 0.09), transparent 60%), radial-gradient(1000px 800px at 6% 5%, rgba(181, 123, 255, 0.06), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--color-red);box-shadow:0 0 12px var(--color-red)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:var(--color-red-dim)">The Contrast</span>
   </div>
   <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px;margin-top:20px;max-width:1150px">The fruit of the flesh</div>
-  <div style="display:flex;gap:80px;margin-top:36px;flex:1;align-items:center">
-    <div style="width:500px;flex-shrink:0">
+  <div class="split-layout">
+    <div class="column-item">
       <div style="border-left:2px solid rgba(240,119,106,0.7);padding-left:22px">
         <div style="font-size:26px;line-height:1.42;color:var(--fg)">"The acts of the flesh are obvious... those who live like this will not inherit the kingdom of God."</div>
         <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-red-dim);margin-top:12px">GALATIANS 5:19–21 · NIV</div>
@@ -1305,37 +1348,37 @@
       <div style="font-size:22px;line-height:1.45;color:var(--fg-dim);margin-top:16px">Whatever consistently grows this fruit, its root is not the Spirit — however spiritual it looks.</div>
       <div style="font-family:'Space Mono',monospace;font-size:18px;line-height:1.5;color:var(--color-soul);margin-top:24px;border-top:1px solid var(--border);padding-top:20px">→ "Walk by the Spirit, and you will not gratify the desires of the flesh." <span style="color:var(--fg-faint)">GAL 5:16</span></div>
     </div>
-    <div style="flex:1">
+    <div class="column-item">
       <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:var(--color-red-dim);margin-bottom:18px">THE ACTS OF THE FLESH · GALATIANS 5:19–21</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Sexual immorality</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Impurity</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Debauchery</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Idolatry</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Witchcraft</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Hatred</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Discord</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Jealousy</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Fits of rage</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Selfish ambition</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Dissensions</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Factions</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Envy</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Drunkenness</div></div>
-        <div style="border:1px solid var(--border-red);border-radius:12px;padding:16px 10px;text-align:center;background:radial-gradient(180px 100px at 50% 0%, var(--bg-red-tint), transparent 70%)"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Orgies</div></div>
+      <div class="grid-layout">
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Sexual immorality</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Impurity</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Debauchery</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Idolatry</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Witchcraft</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Hatred</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Discord</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Jealousy</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Fits of rage</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Selfish ambition</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Dissensions</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Factions</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Envy</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Drunkenness</div></div>
+        <div class="card-item"><div style="font-size:20px;font-weight:600;color:var(--color-red-dim);line-height:1.2">Orgies</div></div>
       </div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>GAL 5:19–21 · NIV</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>GAL 5:19–21 · NIV</div></div>
 </section>
-<section id="rhythms" data-label="Rhythms" data-screen-label="24 Practices" data-speaker-notes="Let's make it practical. If what we repeat we become — neurologically and spiritually — then formation is just the sum of our rhythms. Here are five, and notice each one tends a different dimension. Scripture and meditation renew the mind — that's the soul, the plasticity we talked about. Silence and solitude quiet the default mode network and tune us to the whisper — that's the spirit. Sabbath and rest reset the cortisol system — that's the body. Prayer and examen guard and order the heart — soul again. And fasting is the body deliberately serving the spirit. You don't need all five this week. Pick one." style="background:radial-gradient(1100px 820px at 82% 6%, rgba(76,201,240,0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181,123,255,0.08), transparent 58%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);padding:80px 130px 84px;display:flex;flex-direction:column;overflow:hidden">
+<section data-label="Rhythms" data-screen-label="24 Practices" data-speaker-notes="Let's make it practical. If what we repeat we become — neurologically and spiritually — then formation is just the sum of our rhythms. Here are five, and notice each one tends a different dimension. Scripture and meditation renew the mind — that's the soul, the plasticity we talked about. Silence and solitude quiet the default mode network and tune us to the whisper — that's the spirit. Sabbath and rest reset the cortisol system — that's the body. Prayer and examen guard and order the heart — soul again. And fasting is the body deliberately serving the spirit. You don't need all five this week. Pick one." style="background: radial-gradient(1100px 820px at 82% 6%, rgba(76, 201, 240, 0.06), transparent 58%), radial-gradient(1000px 800px at 6% 100%, rgba(181, 123, 255, 0.08), transparent 58%), rgb(7, 10, 20); padding-top: 80px; padding-right: 130px; padding-bottom: 84px; padding-left: 130px;" id="rhythms" class="scroll-reveal">
   <div style="display:flex;align-items:center;gap:14px">
     <span style="width:11px;height:11px;border-radius:50%;background:var(--fg);box-shadow:0 0 12px rgba(255,255,255,0.6)"></span>
     <span style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:#AEB6C8">Practice</span>
   </div>
-  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:20px">
-    <div style="font-weight:700;font-size:66px;line-height:1.03;letter-spacing:-2px">Rhythms that form us</div>
-    <div style="font-size:23px;color:var(--fg-faint);max-width:440px;text-align:right;padding-bottom:8px">What we repeat, we become — neurologically <span style="color:#AEB6C8">and</span> spiritually.</div>
+  <div class="split-layout">
+    <div class="column-item">Rhythms that form us</div>
+    <div class="column-item">What we repeat, we become — neurologically <span style="color:#AEB6C8">and</span> spiritually.</div>
   </div>
   <div style="margin-top:20px;flex:1;display:flex;flex-direction:column;justify-content:center">
     <div style="display:flex;align-items:center;gap:26px;padding:20px 0">
@@ -1373,10 +1416,10 @@
       <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--color-body);width:80px;text-align:right">BODY→SPIRIT</div>
     </div>
   </div>
-  <div style="position:absolute;left:130px;right:130px;bottom:46px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:2px;color:var(--fg-faint)"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PICK ONE THIS WEEK</div></div>
+  <div class="section-footer"><div><span style="color:var(--color-spirit)">SPIRIT</span> · <span style="color:var(--color-soul)">SOUL</span> · <span style="color:var(--color-body)">BODY</span></div><div>PICK ONE THIS WEEK</div></div>
 </section>
-<section data-label="Kept Whole" data-screen-label="25 Closing" data-speaker-notes="We started with Paul's prayer; let's end there. 'May your whole spirit, soul and body be kept blameless... The one who calls you is faithful, and he will do it.' Notice the good news buried in that: the integrating, the keeping whole — that's His work, not ours. We tend the rhythms; He does the sanctifying. Three questions to take into your week and your group. First, which dimension — body, soul, or spirit — are you neglecting right now? Second, where might you have mistaken a soul-feeling for the Spirit's voice? And third, what one rhythm could you begin this week? Let's talk." style="background:radial-gradient(900px 720px at 78% 50%, rgba(255,194,75,0.11), transparent 60%), radial-gradient(1100px 860px at 82% 55%, rgba(76,201,240,0.08), transparent 62%), radial-gradient(1000px 820px at 74% 58%, rgba(181,123,255,0.11), transparent 60%), var(--bg-section);font-family:'Space Grotesk',sans-serif;color:var(--fg);overflow:hidden">
-  <div style="position:absolute;left:150px;top:0;bottom:0;width:900px;display:flex;flex-direction:column;justify-content:center">
+<section data-label="Kept Whole" data-screen-label="25 Closing" data-speaker-notes="We started with Paul's prayer; let's end there. 'May your whole spirit, soul and body be kept blameless... The one who calls you is faithful, and he will do it.' Notice the good news buried in that: the integrating, the keeping whole — that's His work, not ours. We tend the rhythms; He does the sanctifying. Three questions to take into your week and your group. First, which dimension — body, soul, or spirit — are you neglecting right now? Second, where might you have mistaken a soul-feeling for the Spirit's voice? And third, what one rhythm could you begin this week? Let's talk." style="background: radial-gradient(900px 720px at 78% 50%, rgba(255, 194, 75, 0.11), transparent 60%), radial-gradient(1100px 860px at 82% 55%, rgba(76, 201, 240, 0.08), transparent 62%), radial-gradient(1000px 820px at 74% 58%, rgba(181, 123, 255, 0.11), transparent 60%), rgb(7, 10, 20);" class="scroll-reveal">
+  <div class="split-layout"><div class="content-col">
     <div style="font-family:'Space Mono',monospace;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:#AEB6C8;margin-bottom:22px">Benediction</div>
     <div style="font-weight:700;font-size:74px;line-height:1.0;letter-spacing:-2.5px">Kept whole &amp; blameless</div>
     <div style="font-size:27px;line-height:1.45;color:var(--fg-dim);max-width:760px;margin-top:26px">"May your whole <span style="color:var(--color-spirit)">spirit</span>, <span style="color:var(--color-soul)">soul</span> and <span style="color:var(--color-body)">body</span> be kept blameless... <span style="color:var(--fg)">The one who calls you is faithful, and he will do it.</span>"</div>
@@ -1387,15 +1430,15 @@
       <div style="display:flex;gap:18px;align-items:baseline"><span style="font-family:'Space Mono',monospace;font-size:18px;color:#FFD98A">2</span><span style="font-size:24px;line-height:1.4;color:#DCE1EC">Where might you have mistaken a soul-feeling for the Spirit's voice?</span></div>
       <div style="display:flex;gap:18px;align-items:baseline"><span style="font-family:'Space Mono',monospace;font-size:18px;color:#FFD98A">3</span><span style="font-size:24px;line-height:1.4;color:#DCE1EC">What one rhythm could you begin this week?</span></div>
     </div>
-  </div>
-  <div style="position:absolute;right:150px;top:50%;transform:translateY(-50%);width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(181,123,255,0.75);box-shadow:0 0 80px rgba(181,123,255,0.28), inset 0 0 70px rgba(181,123,255,0.08)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(76,201,240,0.8);box-shadow:0 0 70px rgba(76,201,240,0.24), inset 0 0 55px rgba(76,201,240,0.08)"></div>
+  </div><div class="diagram-col">
+    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(181,123,255,0.75);box-shadow:0 0 80px rgba(181,123,255,0.28), inset 0 0 70px rgba(181,123,255,0.08)" class="animate-rotate-cw"></div>
+    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(76,201,240,0.8);box-shadow:0 0 70px rgba(76,201,240,0.24), inset 0 0 55px rgba(76,201,240,0.08)" class="animate-rotate-ccw"></div>
     <div style="position:absolute;width:200px;height:200px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, var(--color-spirit) 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 46px 3px rgba(255,216,140,0.48), 0 0 150px 30px rgba(255,182,74,0.28);animation:pulseGlow 5s ease-in-out infinite"></div>
     <div style="position:absolute;left:50%;top:16px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:var(--color-body)">BODY</div>
     <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:var(--color-soul)">SOUL</div>
     <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;color:#3A2A05">SPIRIT</div>
-  </div>
+  </div></div>
+  
 </section>
   </main>
   
@@ -1415,6 +1458,21 @@
       localStorage.setItem('ssbMode', newMode);
     });
     
+    // Scroll Reveal Intersection Observer
+    const revealSections = document.querySelectorAll('.scroll-reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    revealSections.forEach(sec => revealObserver.observe(sec));
+    
     // Active navigation scroll highlighting
     const sections = [
       { id: 'body', el: document.getElementById('body') },
@@ -1427,7 +1485,7 @@
     
     window.addEventListener('scroll', () => {
       let currentSectionId = '';
-      const scrollPos = window.scrollY + 120;
+      const scrollPos = window.scrollY + 150;
       
       sections.forEach(sec => {
         if (sec.el && scrollPos >= sec.el.offsetTop) {
