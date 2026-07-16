@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +7,64 @@
 <title>FOG · The Fear of God</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080705'/%3E%3Cpath d='M32 16L18 42h28z' fill='none' stroke='%238B5CF6' stroke-width='3.5' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='29' r='4' fill='%238B5CF6'/%3E%3C/svg%3E">
+<script>
+  (function() {
+    var theme = localStorage.getItem('fogTheme') || 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
 <style>
   :root {
     --bg: #0A0908;
     --fg: #F4F0E6;
-    --fg-dim: rgba(244, 240, 230, 0.65);
-    --fg-faint: rgba(244, 240, 230, 0.38);
+    --fg-dim: rgba(244, 240, 230, 0.72);
+    --fg-faint: rgba(244, 240, 230, 0.44);
     --panel: rgba(24, 22, 19, 0.7);
     --panel-hover: rgba(34, 30, 26, 0.9);
     --hair: rgba(244, 240, 230, 0.08);
     --hair-hover: rgba(244, 240, 230, 0.18);
     
     /* Semantic Evidence / Category Colors */
-    --c-awe: #83CFA3;
-    --c-awe-bg: rgba(131, 207, 163, 0.06);
-    --c-awe-border: rgba(131, 207, 163, 0.18);
+    --c-awe: #22C55E;
+    --c-awe-bg: rgba(34, 197, 94, 0.06);
+    --c-awe-border: rgba(34, 197, 94, 0.2);
     
-    --c-panic: #E6B86C;
-    --c-panic-bg: rgba(230, 184, 108, 0.06);
-    --c-panic-border: rgba(230, 184, 108, 0.18);
+    --c-panic: #EAB308;
+    --c-panic-bg: rgba(234, 179, 8, 0.06);
+    --c-panic-border: rgba(234, 179, 8, 0.25);
     
-    --c-retreat: #EE8E86;
-    --c-retreat-bg: rgba(238, 142, 134, 0.06);
-    --c-retreat-border: rgba(238, 142, 134, 0.18);
+    --c-retreat: #EF4444;
+    --c-retreat-bg: rgba(239, 68, 68, 0.06);
+    --c-retreat-border: rgba(239, 68, 68, 0.25);
 
     --font-display: "Outfit", system-ui, sans-serif;
     --font-body: "Instrument Sans", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
+  }
+
+  html[data-theme="light"] {
+    --bg: #FAF8F2;
+    --fg: #1C1915;
+    --fg-dim: rgba(28, 25, 21, 0.82);
+    --fg-faint: rgba(28, 25, 21, 0.48);
+    --panel: rgba(240, 234, 222, 0.65);
+    --panel-hover: rgba(230, 222, 206, 0.85);
+    --hair: rgba(28, 25, 21, 0.09);
+    --hair-hover: rgba(28, 25, 21, 0.2);
+    
+    --c-awe: #16A34A;
+    --c-awe-bg: rgba(22, 163, 74, 0.08);
+    --c-awe-border: rgba(22, 163, 74, 0.35);
+    
+    --c-panic: #CA8A04;
+    --c-panic-bg: rgba(202, 138, 4, 0.08);
+    --c-panic-border: rgba(202, 138, 4, 0.35);
+    
+    --c-retreat: #DC2626;
+    --c-retreat-bg: rgba(220, 38, 38, 0.08);
+    --c-retreat-border: rgba(220, 38, 38, 0.35);
   }
 
   * {
@@ -49,66 +78,123 @@
     color: var(--fg);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
-    line-height: 1.62;
+    line-height: 1.68;
     padding-bottom: 120px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  html[data-theme="dark"] body {
     background-image: 
-      radial-gradient(circle at 5% 5%, rgba(131, 207, 163, 0.02) 0%, transparent 35%),
-      radial-gradient(circle at 95% 95%, rgba(238, 142, 134, 0.02) 0%, transparent 35%);
+      radial-gradient(circle at 5% 5%, rgba(34, 197, 94, 0.02) 0%, transparent 35%),
+      radial-gradient(circle at 95% 95%, rgba(239, 68, 68, 0.02) 0%, transparent 35%);
+  }
+  
+  html[data-theme="light"] body {
+    background-image: 
+      radial-gradient(circle at 5% 5%, rgba(34, 197, 94, 0.04) 0%, transparent 35%),
+      radial-gradient(circle at 95% 95%, rgba(239, 68, 68, 0.04) 0%, transparent 35%);
   }
 
   .container {
-    max-width: 780px; /* ~66 CPL reader container */
+    max-width: 760px; /* ~66 CPL reader container */
     margin: 0 auto;
     padding: 80px 24px;
   }
 
+  header {
+    position: relative;
+  }
+
+  /* Theme Switcher Button */
+  .theme-toggle-btn {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    color: var(--fg);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+
+  .theme-toggle-btn:hover {
+    border-color: var(--hair-hover);
+    transform: scale(1.05);
+  }
+
+  .theme-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+  }
+
+  .sun-icon { display: none; }
+  .moon-icon { display: block; }
+  
+  html[data-theme="light"] .sun-icon { display: block; }
+  html[data-theme="light"] .moon-icon { display: none; }
+
   /* Typography */
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(34px, 6vw, 56px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 16px;
+    font-size: clamp(38px, 7vw, 62px);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    margin-bottom: 20px;
     text-wrap: balance;
   }
 
   h2 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 4vw, 30px);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-top: 48px;
-    margin-bottom: 16px;
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-top: 56px;
+    margin-bottom: 20px;
     text-wrap: balance;
+    border-bottom: 1.5px solid var(--hair);
+    padding-bottom: 8px;
   }
 
   h3 {
     font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
   }
 
   h4 {
     font-family: var(--font-mono);
     font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--fg-faint);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   p {
-    font-size: 17.5px;
+    font-size: 19.5px; /* Larger body size */
+    font-weight: 480; /* Bolder body base weight */
     color: var(--fg-dim);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     text-wrap: pretty;
   }
 
   strong {
     color: var(--fg);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   a.back-link {
@@ -141,26 +227,31 @@
     font-size: 11px;
   }
 
+  /* Color-Coded Word Highlights */
+  .hl-awe { color: var(--c-awe); font-weight: 700; }
+  .hl-panic { color: var(--c-panic); font-weight: 700; }
+  .hl-retreat { color: var(--c-retreat); font-weight: 700; }
+
   /* Interactive Graph */
   .spectrum-container {
     background: var(--panel);
     border: 1px solid var(--hair);
-    border-radius: 12px;
-    padding: 30px 20px;
-    margin: 30px 0 40px;
+    border-radius: 16px;
+    padding: 34px 24px;
+    margin: 40px 0 50px;
     text-align: center;
   }
 
   .spectrum-title {
     font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 22px;
   }
 
   /* Bento Lexical Explorer */
   .lexicon-intro {
-    border-left: 2px solid var(--c-panic-border);
+    border-left: 3px solid var(--c-panic);
     padding-left: 20px;
     margin-top: 30px;
     margin-bottom: 40px;
@@ -169,65 +260,66 @@
   .lexicon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 30px;
   }
 
   .lexicon-card {
     background: var(--panel);
     border: 1px solid var(--hair);
-    padding: 16px;
-    border-radius: 10px;
+    padding: 18px;
+    border-radius: 12px;
     cursor: pointer;
     text-align: left;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lexicon-card:hover {
     background: var(--panel-hover);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 
   .lexicon-card.c-awe { border-color: var(--c-awe-border); }
-  .lexicon-card.c-awe:hover { box-shadow: 0 4px 12px rgba(131, 207, 163, 0.08); }
+  .lexicon-card.c-awe:hover { box-shadow: 0 6px 18px rgba(34, 197, 94, 0.12); }
   .lexicon-card.c-awe .word-tag { color: var(--c-awe); }
 
   .lexicon-card.c-panic { border-color: var(--c-panic-border); }
-  .lexicon-card.c-panic:hover { box-shadow: 0 4px 12px rgba(230, 184, 108, 0.08); }
+  .lexicon-card.c-panic:hover { box-shadow: 0 6px 18px rgba(234, 179, 8, 0.12); }
   .lexicon-card.c-panic .word-tag { color: var(--c-panic); }
 
   .lexicon-card.c-retreat { border-color: var(--c-retreat-border); }
-  .lexicon-card.c-retreat:hover { box-shadow: 0 4px 12px rgba(238, 142, 134, 0.08); }
+  .lexicon-card.c-retreat:hover { box-shadow: 0 6px 18px rgba(239, 68, 68, 0.12); }
   .lexicon-card.c-retreat .word-tag { color: var(--c-retreat); }
 
   .word-title {
     font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 21px;
+    font-weight: 700;
   }
 
   .word-translit {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--fg-dim);
     font-style: italic;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .word-tag {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 9.5px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
   /* Word Detail Display Box */
   .detail-box {
-    background: rgba(16, 14, 12, 0.8);
-    border: 1.5px solid var(--hair);
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 50px;
-    min-height: 180px;
+    background: rgba(24, 22, 19, 0.85);
+    border: 2px solid var(--hair-hover);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 60px;
+    min-height: 200px;
     display: none;
     animation: riseIn 0.3s ease both;
   }
@@ -236,87 +328,111 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 1px solid var(--hair);
-    padding-bottom: 12px;
-    margin-bottom: 16px;
+    border-bottom: 1.5px solid var(--hair);
+    padding-bottom: 14px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 14px;
   }
 
   .detail-word {
     font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 700;
+    font-size: 32px;
+    font-weight: 800;
     color: var(--fg);
   }
 
   .detail-translit {
-    font-size: 16px;
+    font-size: 18px;
     font-style: italic;
     color: var(--fg-dim);
-    margin-left: 8px;
+    margin-left: 10px;
   }
 
   .detail-strong {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
+    font-weight: 700;
     color: var(--fg-faint);
-    background: rgba(244, 240, 230, 0.03);
-    padding: 2px 8px;
-    border-radius: 4px;
+    background: rgba(244, 240, 230, 0.04);
+    padding: 3px 10px;
+    border-radius: 6px;
     border: 1px solid var(--hair);
   }
 
   .detail-definition {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--fg-dim);
-    line-height: 1.6;
-    margin-bottom: 16px;
+    line-height: 1.65;
+    margin-bottom: 20px;
   }
 
   .detail-verse {
-    font-size: 14.5px;
-    background: rgba(244, 240, 230, 0.02);
-    border-left: 2.5px solid var(--fg-faint);
-    padding: 12px 16px;
-    border-radius: 0 6px 6px 0;
+    font-size: 16.5px;
+    font-style: italic;
+    background: rgba(244, 240, 230, 0.03);
+    border-left: 3px solid var(--fg-faint);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
   }
 
   .detail-verse-ref {
     display: block;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--fg-faint);
-    margin-top: 6px;
+    margin-top: 8px;
   }
 
   /* Curriculum Scaffolding Steps */
   .curriculum {
-    border-top: 1px dashed var(--hair);
-    padding-top: 60px;
-    margin-top: 60px;
+    border-top: 1.5px dashed var(--hair);
+    padding-top: 80px;
+    margin-top: 80px;
   }
 
   .step-container {
-    border: 1px solid var(--hair);
-    border-radius: 12px;
-    padding: 40px 30px;
-    margin-bottom: 24px;
+    border: 1.5px solid var(--hair);
+    border-radius: 16px;
+    padding: 44px 34px;
+    margin-bottom: 30px;
     background: var(--panel);
   }
 
   .step-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .step-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(244, 240, 230, 0.03);
+    border: 1.5px solid var(--hair);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-panic);
+  }
+
+  .step-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
   }
 
   .step-badge {
     font-family: var(--font-mono);
     font-size: 11px;
+    font-weight: 700;
     color: var(--c-panic);
     background: rgba(230, 184, 108, 0.06);
     border: 1px solid var(--c-panic-border);
@@ -328,16 +444,16 @@
 
   .step-title {
     font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 700;
     margin: 0;
   }
 
   /* Interactive Elements */
   .choices {
     display: grid;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 12px;
+    margin: 24px 0;
   }
 
   .choice {
@@ -345,13 +461,14 @@
     cursor: pointer;
     background: transparent;
     color: var(--fg-dim);
-    border: 1px solid var(--hair);
-    border-radius: 6px;
-    padding: 16px 20px;
+    border: 1.5px solid var(--hair);
+    border-radius: 8px;
+    padding: 18px 24px;
     font-family: var(--font-body);
-    font-size: 16.5px;
-    line-height: 1.4;
-    transition: all 0.15s ease;
+    font-size: 17.5px;
+    font-weight: 500;
+    line-height: 1.45;
+    transition: all 0.2s ease;
   }
 
   .choice:hover {
@@ -364,11 +481,11 @@
     background: var(--fg);
     color: var(--bg);
     border-color: var(--fg);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .gate {
-    margin-top: 20px;
+    margin-top: 24px;
   }
 
   .gate-btn {
@@ -376,20 +493,20 @@
     text-align: center;
     cursor: pointer;
     background: transparent;
-    border: 1.5px solid var(--c-panic);
-    border-radius: 6px;
-    padding: 14px 20px;
+    border: 2px solid var(--c-panic);
+    border-radius: 8px;
+    padding: 16px 24px;
     color: var(--c-panic);
     font-family: var(--font-mono);
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     transition: all 0.2s ease;
   }
 
   .gate-btn:hover:not(:disabled) {
-    background: rgba(230, 184, 108, 0.05);
+    background: rgba(202, 138, 4, 0.08);
   }
 
   .gate-btn:disabled {
@@ -399,20 +516,20 @@
   }
 
   .gate-content {
-    margin-top: 20px;
+    margin-top: 24px;
     animation: riseIn 0.35s ease both;
   }
 
   .responses .resp {
     display: none;
-    font-size: 16.5px;
+    font-size: 17.5px;
     line-height: 1.6;
     color: var(--fg-dim);
-    padding: 16px;
-    border-radius: 6px;
+    padding: 20px;
+    border-radius: 8px;
     background: rgba(244, 240, 230, 0.02);
-    border-left: 3px solid var(--c-retreat);
-    margin-bottom: 16px;
+    border-left: 4px solid var(--c-retreat);
+    margin-bottom: 20px;
   }
 
   .responses .resp.show {
@@ -426,13 +543,13 @@
   /* Free Recall Box */
   textarea {
     width: 100%;
-    margin-top: 14px;
+    margin-top: 16px;
     background: rgba(244, 240, 230, 0.02);
-    border: 1px solid var(--hair);
-    border-radius: 6px;
-    padding: 16px;
+    border: 1.5px solid var(--hair);
+    border-radius: 8px;
+    padding: 20px;
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 17.5px;
     line-height: 1.5;
     color: var(--fg);
     resize: vertical;
@@ -446,11 +563,11 @@
 
   /* Verdict container */
   .verdict {
-    border-radius: 6px;
-    padding: 24px;
-    font-size: 16.5px;
-    line-height: 1.6;
-    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 26px;
+    font-size: 17.5px;
+    line-height: 1.62;
+    border: 1.5px solid transparent;
   }
 
   .verdict.correct {
@@ -466,7 +583,7 @@
   }
 
   .vspace {
-    margin-top: 12px;
+    margin-top: 14px;
   }
 
   @keyframes riseIn {
@@ -485,7 +602,10 @@
       padding: 40px 16px;
     }
     .step-container {
-      padding: 24px 16px;
+      padding: 28px 18px;
+    }
+    .theme-toggle-btn {
+      top: -55px;
     }
   }
 </style>
@@ -502,6 +622,12 @@
   </a>
 
   <header>
+    <!-- Floating Theme Switcher Button -->
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+      <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+
     <h1>FOG · The Fear of God</h1>
     <div class="meta-bar">
       <span>LEXICAL EXPLORER</span>
@@ -523,14 +649,14 @@
       <line x1="80" y1="40" x2="620" y2="40" stroke="rgba(244, 240, 230, 0.15)" stroke-width="3"></line>
       <!-- Dots & Categories -->
       <!-- Category 1: Retreat -->
-      <circle cx="150" cy="40" r="8" fill="#EE8E86"></circle>
-      <text x="150" y="65" fill="#EE8E86" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">COWARDICE / RETREAT</text>
+      <circle cx="150" cy="40" r="8" fill="#EF4444"></circle>
+      <text x="150" y="65" fill="#EF4444" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">COWARDICE / RETREAT</text>
       <!-- Category 2: Panic -->
-      <circle cx="350" cy="40" r="8" fill="#E6B86C"></circle>
-      <text x="350" y="65" fill="#E6B86C" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">SOMATIC PANIC / SHOCK</text>
+      <circle cx="350" cy="40" r="8" fill="#EAB308"></circle>
+      <text x="350" y="65" fill="#EAB308" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">SOMATIC PANIC / SHOCK</text>
       <!-- Category 3: Awe -->
-      <circle cx="550" cy="40" r="8" fill="#83CFA3"></circle>
-      <text x="550" y="65" fill="#83CFA3" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">HOLY FILIAL AWE</text>
+      <circle cx="550" cy="40" r="8" fill="#22C55E"></circle>
+      <text x="550" y="65" fill="#22C55E" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">HOLY FILIAL AWE</text>
     </svg>
   </div>
 
@@ -545,73 +671,73 @@
       <div class="lexicon-card c-awe" data-word="Yirah" data-trans="Yir’āh" data-strong="H3374" data-def="Holy relational awe, reverence, or respect. A cognitive boundary-keeping fear that attracts and anchors rather than repelling." data-verse="Psalm 111:10 — 'The fear [yir’at] of the Lord is the beginning of wisdom.'" data-cat="awe">
         <div class="word-title">יִרְאָה</div>
         <div class="word-translit">Yir’āh</div>
-        <span class="word-tag">Awe / Align</span>
+        <span class="word-tag">🛡️ Awe / Align</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Pachad" data-trans="Paḥaḏ" data-strong="H6343" data-def="Sudden visceral dread or panic. Associated somatically with the quivering of thighs and shaking bones when facing immediate danger." data-verse="Job 4:14 — 'Dread [paḥaḏ] came upon me, and trembling, which made all my bones shake.'" data-cat="panic">
         <div class="word-title">פַּחַד</div>
         <div class="word-translit">Paḥaḏ</div>
-        <span class="word-tag">Somatic Dread</span>
+        <span class="word-tag">⚡ Somatic Dread</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Charad" data-trans="Ḥāraḏ" data-strong="H2729" data-def="Physical quaking, shuddering, or being startled out of stasis by a sudden shock or divine manifestation." data-verse="Exodus 19:16 — '...and a very loud trumpet blast, so that all the people in the camp trembled [yeḥĕraḏ].'" data-cat="panic">
         <div class="word-title">חָרַד</div>
         <div class="word-translit">Ḥāraḏ</div>
-        <span class="word-tag">Startled Quake</span>
+        <span class="word-tag">🌋 Startled Quake</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Arats" data-trans="‘Āraṣ" data-strong="H6206" data-def="The dread of being shattered or crushed. Psychologically, it describes feeling pulverized before irresistible, infinite power." data-verse="Isaiah 8:13 — 'But the Lord of hosts... let him be your fear, and let him be your dread [ma‘ăriskem].'" data-cat="panic">
         <div class="word-title">עָרַץ</div>
         <div class="word-translit">‘Āraṣ</div>
-        <span class="word-tag">Crushing Dread</span>
+        <span class="word-tag">💥 Crushing Dread</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Chil" data-trans="Ḥîl / Ḥîl" data-strong="H2427" data-def="Writhing, convulsing, or twisting in fear. Modeled directly after the severe somatic cramps and writhes of a woman in labor." data-verse="Isaiah 13:8 — 'They will be dismayed. Pangs and agony will seize them; they will writhe [yeḥīlūn] like a woman in labor.'" data-cat="panic">
         <div class="word-title">חִיל</div>
         <div class="word-translit">Ḥîl</div>
-        <span class="word-tag">Writhing Panic</span>
+        <span class="word-tag">🌀 Writhing Panic</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Ragaz" data-trans="Rāḡaz" data-strong="H7264" data-def="Internal agitation or shaking of the viscera. Describes the churning of the bowels and stomach under extreme stress." data-verse="Habakkuk 3:16 — 'I hear, and my body trembles [tirgaz]; my lips quiver... my legs tremble beneath me.'" data-cat="panic">
         <div class="word-title">רָגַז</div>
         <div class="word-translit">Rāḡaz</div>
-        <span class="word-tag">Visceral Churn</span>
+        <span class="word-tag">🌊 Visceral Churn</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Raad" data-trans="Rā‘aḏ" data-strong="H7460" data-def="Ongoing, uncontrollable physical quivering or trembling of the limbs." data-verse="Psalm 2:11 — 'Serve the Lord with fear, and rejoice with trembling [rə‘āḏāh].'" data-cat="panic">
         <div class="word-title">רָעַד</div>
         <div class="word-translit">Rā‘aḏ</div>
-        <span class="word-tag">Physical Shaking</span>
+        <span class="word-tag">🥶 Physical Shaking</span>
       </div>
 
       <div class="lexicon-card c-retreat" data-word="Zachal" data-trans="Zāḥal" data-strong="H2119" data-def="To crawl away or shrink back in fear. Somatically mirrors a snake or insect creeping away to hide in the dust." data-verse="Job 32:6 — 'I am young, and you are very old; therefore I was timid [zāḥaleti - shrank back] and durst not...'" data-cat="retreat">
         <div class="word-title">זָחַל</div>
         <div class="word-translit">Zāḥal</div>
-        <span class="word-tag">Shrink Away</span>
+        <span class="word-tag">🐍 Shrink Away</span>
       </div>
 
       <div class="lexicon-card c-retreat" data-word="Yagor" data-trans="Yāḡōr" data-strong="H3025" data-def="Dread of a specific, imminent, and highly destructive outcome or agent of wrath." data-verse="Deuteronomy 9:19 — 'For I was afraid [yāḡōrtī] of the anger and hot displeasure...'" data-cat="retreat">
         <div class="word-title">יָגֹר</div>
         <div class="word-translit">Yāḡōr</div>
-        <span class="word-tag">Specific Dread</span>
+        <span class="word-tag">⚠️ Specific Dread</span>
       </div>
 
       <div class="lexicon-card c-retreat" data-word="Chaphaz" data-trans="Ḥāp̄az" data-strong="H2648" data-def="Precipitous, panic-driven haste. The sudden rush of flight adrenaline." data-verse="Psalm 31:22 — 'I had said in my alarm [ḥop̄zō - haste/panic], 'I am cut off from your sight.''" data-cat="retreat">
         <div class="word-title">חָפַז</div>
         <div class="word-translit">Ḥāp̄az</div>
-        <span class="word-tag">Panic Flight</span>
+        <span class="word-tag">🏃 Panic Flight</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Saar" data-trans="Śā‘ar / Sāmar" data-strong="H5568" data-def="Horripilation: the shivering of the skin and hair standing on end due to supernatural awe or raw horror." data-verse="Job 4:15 — 'A spirit glided past my face; the hair of my flesh stood up [tessamēr].'" data-cat="panic">
         <div class="word-title">סָמַר</div>
         <div class="word-translit">Sāmar</div>
-        <span class="word-tag">Hair Standing</span>
+        <span class="word-tag">🥶 Hair Standing</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Shamem" data-trans="Šāmēm" data-strong="H8074" data-def="A catatonic freeze state. Appalled dumbness or numbness where the mind is completely devastated by shock." data-verse="Daniel 8:27 — 'And I, Daniel, was overcome and lay sick... I was appalled [’eštōmēm] by the vision...'" data-cat="panic">
         <div class="word-title">שָׁמֵם</div>
         <div class="word-translit">Šāmēm</div>
-        <span class="word-tag">Appalled Freeze</span>
+        <span class="word-tag">🧊 Appalled Freeze</span>
       </div>
     </div>
 
@@ -621,67 +747,67 @@
       <div class="lexicon-card c-panic" data-word="Phobos" data-trans="Phobos" data-strong="G5401" data-def="Generic fear. Derived from the ancient root for flight/retreat. Used to span both raw panic and holy reverence." data-verse="Acts 9:31 — '...walking in the fear [phobō] of the Lord and in the comfort of the Holy Spirit...'" data-cat="panic">
         <div class="word-title">φόβος</div>
         <div class="word-translit">Phobos</div>
-        <span class="word-tag">Generic Fear</span>
+        <span class="word-tag">⚖️ Generic Fear</span>
       </div>
 
       <div class="lexicon-card c-retreat" data-word="Deilia" data-trans="Deilia" data-strong="G1167" data-def="Cowardice, timidity, or faithless anxiety. Always used in a negative sense in Scripture. Represents protective ego retreat." data-verse="2 Timothy 1:7 — 'For God gave us a spirit not of fear [deilias] but of power and love and self-control.'" data-cat="retreat">
         <div class="word-title">δειλία</div>
         <div class="word-translit">Deilia</div>
-        <span class="word-tag">Cowardice</span>
+        <span class="word-tag">🥀 Cowardice</span>
       </div>
 
       <div class="lexicon-card c-awe" data-word="Eulabeia" data-trans="Eulabeia" data-strong="G2124" data-def="Literally 'taking hold of well'. Holy circumspection, caution, and reverence. Moving carefully out of deep respect for the sacred." data-verse="Hebrews 12:28 — '...let us offer to God acceptable worship, with reverence [eulabeias] and awe.'" data-cat="awe">
         <div class="word-title">εὐλάβεια</div>
         <div class="word-translit">Eulabeia</div>
-        <span class="word-tag">Holy Caution</span>
+        <span class="word-tag">🕯️ Holy Caution</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Tromos" data-trans="Tromos" data-strong="G5156" data-def="Trembling or motor shaking. The physical motor tremor that manifests from encounters with the infinite." data-verse="Philippians 2:12 — '...work out your own salvation with fear and trembling [tromou]...'" data-cat="panic">
         <div class="word-title">τρόμος</div>
         <div class="word-translit">Tromos</div>
-        <span class="word-tag">Quaking Tremor</span>
+        <span class="word-tag">👣 Quaking Tremor</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Thambos" data-trans="Thambos" data-strong="G2285" data-def="Awe-struck amazement or jaw-dropping shock. Involuntary suspension of mental faculties upon meeting the supernatural." data-verse="Luke 4:36 — 'And amazement [thambos] came upon them all, and they said to one another...'" data-cat="panic">
         <div class="word-title">θάμβος</div>
         <div class="word-translit">Thambos</div>
-        <span class="word-tag">Stunned Shock</span>
+        <span class="word-tag">😳 Stunned Shock</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Ekstasis" data-trans="Ekstasis" data-strong="G1611" data-def="Literally 'standing outside oneself'. Being thrown out of normal cognitive processing due to overwhelming divine power." data-verse="Mark 16:8 — 'And they went out and fled... for trembling [tromos] and astonishment [ekstasis] had seized them...'" data-cat="panic">
         <div class="word-title">ἔκστασις</div>
         <div class="word-translit">Ekstasis</div>
-        <span class="word-tag">Mind Displaced</span>
+        <span class="word-tag">🌌 Mind Displaced</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Phrisso" data-trans="Phrissō" data-strong="G5425" data-def="Shivering and bristle of horror. Involuntary goosebumps and skin-prickle." data-verse="James 2:19 — 'Even the demons believe—and shudder [phrissousin].'" data-cat="panic">
         <div class="word-title">φρίσσω</div>
         <div class="word-translit">Phrissō</div>
-        <span class="word-tag">Goosebumps</span>
+        <span class="word-tag">🥶 Goosebumps</span>
       </div>
 
       <div class="lexicon-card c-awe" data-word="Aidos" data-trans="Aidōs" data-strong="G127" data-def="Modesty, bashfulness, or inward reverence that respects relational boundaries and shrinks from assertiveness before a superior." data-verse="Hebrews 12:28 (Variant) — '...let us offer to God acceptable worship, with reverence [aidous] and awe.'" data-cat="awe">
         <div class="word-title">αἰδώς</div>
         <div class="word-translit">Aidōs</div>
-        <span class="word-tag">Bashful Awe</span>
+        <span class="word-tag">🤝 Bashful Awe</span>
       </div>
 
       <div class="lexicon-card c-retreat" data-word="Ptyro" data-trans="Ptyrō" data-strong="G4426" data-def="Startle response, like a frightened horse shying away or bolting. A defensive flinch." data-verse="Philippians 1:28 — '...and not frightened [ptyromenoi - shying away] in anything by your opponents.'" data-cat="retreat">
         <div class="word-title">πτύρω</div>
         <div class="word-translit">Ptyrō</div>
-        <span class="word-tag">Defensive Flinch</span>
+        <span class="word-tag">🐎 Defensive Flinch</span>
       </div>
 
       <div class="lexicon-card c-retreat" data-word="Hypostello" data-trans="Hypostellō" data-strong="G5288" data-def="Stealthy retreat or shrinking back to avoid social or physical consequences." data-verse="Hebrews 10:38 — '...but my righteous one shall live by faith, and if he shrinks back [hyposteilētai], my soul has no pleasure...'" data-cat="retreat">
         <div class="word-title">ὑποστέλλω</div>
         <div class="word-translit">Hypostellō</div>
-        <span class="word-tag">Shrinking Back</span>
+        <span class="word-tag">🐢 Shrinking Back</span>
       </div>
 
       <div class="lexicon-card c-panic" data-word="Apopsycho" data-trans="Apopsychō" data-strong="G674" data-def="Physiological fainting or swooning. Visceral failure of the autonomic nervous system under terror." data-verse="Luke 21:26 — '...people fainting [apopsychontōn - hearts failing them] with fear and with foreboding...'" data-cat="panic">
         <div class="word-title">ἀποψύχω</div>
         <div class="word-translit">Apopsychō</div>
-        <span class="word-tag">Fainting Swoon</span>
+        <span class="word-tag">🥀 Fainting Swoon</span>
       </div>
     </div>
 
@@ -707,15 +833,18 @@
     <!-- STEP 1 & 2 -->
     <div class="step-container">
       <div class="step-header">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
         <span class="step-badge">Step 1 & 2</span>
         <h3 class="step-title">The Vector of Fear</h3>
       </div>
       <p>Consider two men who experience a raw, terrifying encounter with the divine presence:</p>
-      <div style="background:rgba(0,0,0,0.25); padding:20px; border-radius:6px; margin-bottom:20px; font-size:16px;">
-        <p style="margin-bottom:12px; font-style:italic;"><strong>Case A (Adam):</strong> Hears the sound of the LORD walking in the garden. He is afraid, and he crawls away to hide among the thick trees of the garden.</p>
-        <p style="margin-bottom:0; font-style:italic;"><strong>Case B (Isaiah):</strong> Sees the Lord sitting on a high throne. He cries out in terror that he is ruined and undone — but he remains standing in the temple, is touched by a coal, and says: 'Send me.'</p>
+      <div style="background:rgba(0,0,0,0.25); padding:24px; border-radius:8px; margin-bottom:24px; font-size:18px;">
+        <p style="margin-bottom:12px; font-style:italic;"><strong>Case A (Adam):</strong> Hears the sound of the LORD walking in the garden. He is afraid, and he crawls away (<span class="hl-retreat">zachal</span>) to hide among the thick trees of the garden.</p>
+        <p style="margin-bottom:0; font-style:italic;"><strong>Case B (Isaiah):</strong> Sees the Lord sitting on a high throne. He cries out in terror that he is ruined and undone (<span class="hl-panic">charadah</span> / <span class="hl-panic">tromos</span>) — but he remains standing in the temple, is touched by a coal, and says: 'Send me.'</p>
       </div>
-      <p>Both experienced physiological quaking. <strong>Which man is demonstrating the filial "fear of the Lord" commended as wisdom?</strong></p>
+      <p>Both experienced physiological quaking. <strong>Which man is demonstrating the filial <span class="hl-awe">yirah</span> (fear of the Lord) commended as wisdom?</strong></p>
       
       <div class="choices" data-choice-group="vector">
         <button class="choice" data-id="a">Adam — his fear is the more natural, visceral reaction to absolute danger.</button>
@@ -729,12 +858,12 @@
         <button class="gate-btn" disabled data-label="Examine the friction" data-lock="Choose an option above to unlock">🔒 Choose an option above to unlock</button>
         <div class="gate-content" hidden>
           <div class="responses" data-responses-for="vector">
-            <div class="resp" data-when="a">Adam’s fear is <strong>centrifugal</strong> — it drives him away. It is the fear of a slave (*timor servilis*) who hides (*zachal*) from his master. Scripture notes that 'perfect love casts out' this fear.</div>
-            <div class="resp correct" data-when="b">Correct. Isaiah’s fear is <strong>centripetal</strong> — it keeps him aligned to the throne. His body quakes, but he does not shrink away (*hypostello*). True fear of the Lord is a relational orientation, not flight.</div>
-            <div class="resp" data-when="c">They felt different modes of fear. Adam felt the panic of punishment (*pachad*), while Isaiah felt the awe of majesty (*yirah*). They are different vectors.</div>
+            <div class="resp" data-when="a">Adam’s fear is <strong>centrifugal</strong> — it drives him away. It is the fear of a slave (<span class="hl-panic">timor servilis</span>) who hides (<span class="hl-retreat">zachal</span>) from his master. Scripture notes that 'perfect love casts out' this fear.</div>
+            <div class="resp correct" data-when="b">Correct. Isaiah’s fear is <strong>centripetal</strong> — it keeps him aligned to the throne. His body quakes, but he does not shrink away (<span class="hl-retreat">hypostello</span>). True fear of the Lord (<span class="hl-awe">yirah</span>) is a relational orientation, not flight.</div>
+            <div class="resp" data-when="c">They felt different modes of fear. Adam felt the panic of punishment (<span class="hl-panic">pachad</span>), while Isaiah felt the awe of majesty (<span class="hl-awe">yirah</span>). They are different vectors.</div>
             <div class="resp" data-when="d">Too shallow. Both texts describe raw sensory shocks. It is an emotional and somatic posture, not just a compliance policy.</div>
           </div>
-          <p style="margin-bottom:0;">The difference is not the volume of the fear; it is the **direction of the vector**. True godly fear (*yirah* / *eulabeia*) pulls the soul into alignment, whereas servile panic (*pachad* / *deilia*) repels it.</p>
+          <p style="margin-bottom:0;">The difference is not the volume of the fear; it is the **direction of the vector**. True godly fear (<span class="hl-awe">yirah</span> / <span class="hl-awe">eulabeia</span>) pulls the soul into alignment, whereas servile panic (<span class="hl-panic">pachad</span> / <span class="hl-retreat">deilia</span>) repels it.</p>
         </div>
       </div>
     </div>
@@ -742,18 +871,21 @@
     <!-- STEP 4 -->
     <div class="step-container" id="step4Container" style="display:none;">
       <div class="step-header">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </div>
         <span class="step-badge">Step 4</span>
         <h3 class="step-title">The Mechanism: Covenants and Intimacy</h3>
       </div>
       <p>How does this vector function across Scripture?</p>
       
-      <p style="border-left: 2px solid var(--c-awe); padding-left: 15px; font-style: italic;">
+      <p style="border-left: 3px solid var(--c-awe); padding-left: 20px; font-style: italic; font-size: 20px;">
         "I will make with them an everlasting covenant... And I will put the fear of me in their hearts, that they may not turn from me." (Jeremiah 32:40)
       </p>
 
-      <p>Under the <strong>Old Covenant</strong>, fear functioned as an external fence around stone tablets (e.g., the smoke and tempests of Mt. Sinai). The law was external, and Israel's failure converted *yirah* into the servile panic (*pachad*) of impending judgment.</p>
+      <p>Under the <strong>Old Covenant</strong>, fear functioned as an external fence around stone tablets (e.g., the smoke and tempests of Mt. Sinai). The law was external, and Israel's failure converted <span class="hl-awe">yirah</span> into the servile panic (<span class="hl-panic">pachad</span>) of impending judgment.</p>
       
-      <p>Under the <strong>New Covenant</strong>, the fear of God is an <strong>internalized gift</strong> written on the heart. Because believers stand secure in Christ at Mt. Zion rather than trembling at Sinai, they offer acceptable worship with reverence (*eulabeia*) and awe, knowing that our God is a consuming fire (Hebrews 12:28).</p>
+      <p>Under the <strong>New Covenant</strong>, the fear of God is an <strong>internalized gift</strong> written on the heart. Because believers stand secure in Christ at Mt. Zion rather than trembling at Sinai, they offer acceptable worship with reverence (<span class="hl-awe">eulabeia</span>) and awe, knowing that our God is a consuming fire (Hebrews 12:28).</p>
 
       <p><strong>Jesus' Redefinition:</strong> In Matthew 10:28, Jesus commands us to fear the sovereign Creator who has authority over hell, rather than human executioners. But He immediately adds that this sovereign Creator counts the hairs of our head (Matt 10:30). A healthy fear of God's absolute weight **neutralizes all lesser fears**, establishing relational safety.</p>
     </div>
@@ -761,6 +893,9 @@
     <!-- STEP 5 -->
     <div class="step-container" id="step5Container" style="display:none;">
       <div class="step-header">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        </div>
         <span class="step-badge">Step 5</span>
         <h3 class="step-title">Reconstruct the Vocabulary</h3>
       </div>
@@ -773,9 +908,9 @@
         <div class="gate-content" hidden>
           <div style="background:rgba(244, 240, 230, 0.02); border:1.5px solid var(--hair); padding:20px; border-radius:6px; margin-bottom:20px;">
             <p><strong>Check your recall against the core definitions:</strong></p>
-            <p style="font-size:15px; margin-bottom:8px;">🟢 <strong>Yirah</strong> is the relational, filial awe of God's majesty that aligns the soul and prevents turning away.</p>
-            <p style="font-size:15px; margin-bottom:8px;">🟡 <strong>Pachad</strong> is the visceral, somatic terror of punishment or danger that causes trembling bones and flight.</p>
-            <p style="font-size:15px; margin-bottom:0;">🟢 The **New Covenant** internalizes this fear (Jeremiah 32:40), writing it on our hearts as a gift of preservation rather than an external threat.</p>
+            <p style="font-size:16.5px; margin-bottom:8px;">🟢 <strong>Yirah</strong> is the relational, filial awe of God's majesty that aligns the soul and prevents turning away.</p>
+            <p style="font-size:16.5px; margin-bottom:8px;">🟡 <strong>Pachad</strong> is the visceral, somatic terror of punishment or danger that causes trembling bones and flight.</p>
+            <p style="font-size:16.5px; margin-bottom:0;">🟢 The **New Covenant** internalizes this fear (Jeremiah 32:40), writing it on our hearts as a gift of preservation rather than an external threat.</p>
           </div>
           <p style="margin-bottom:0;">Making this effort to recall is what builds long-term memory schema. Proceed below to test your transfer model.</p>
         </div>
@@ -785,11 +920,14 @@
     <!-- STEP 6 -->
     <div class="step-container" id="step6Container" style="display:none;">
       <div class="step-header">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+        </div>
         <span class="step-badge">Step 6</span>
         <h3 class="step-title">Transfer Test: Peter at the Knees of Christ</h3>
       </div>
       <p>Apply this model to a new scriptural case: Luke 5:8.</p>
-      <p style="border-left: 2px solid var(--c-panic-border); padding-left: 15px; font-style: italic;">
+      <p style="border-left: 3px solid var(--c-panic-border); padding-left: 20px; font-style: italic; font-size: 20px;">
         "But when Simon Peter saw it, he fell down at Jesus' knees, saying, 'Depart from me, for I am a sinful man, O Lord.'"
       </p>
       <p>Peter is gripped by awe after the miraculous catch of fish. <strong>How does his reaction map onto our vector model of fear?</strong></p>
@@ -814,130 +952,138 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1. Lexical Explorer Interaction
-    const cards = document.querySelectorAll('.lexicon-card');
-    const detailBox = document.getElementById('lexiconDetail');
-    const detailWord = document.getElementById('detailWord');
-    const detailTranslit = document.getElementById('detailTranslit');
-    const detailStrong = document.getElementById('detailStrong');
-    const detailDefinition = document.getElementById('detailDefinition');
-    const detailVerse = document.getElementById('detailVerse');
-
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        // Remove active highlights
-        cards.forEach(c => c.style.transform = '');
-        
-        // Highlight clicked card
-        card.style.transform = 'translateY(-2px) scale(1.02)';
-        
-        // Populate detail box
-        detailWord.textContent = card.querySelector('.word-title').textContent;
-        detailTranslit.textContent = card.dataset.trans;
-        detailStrong.textContent = card.dataset.strong;
-        detailDefinition.innerHTML = `<strong>Definition:</strong> ${card.dataset.def}`;
-        
-        // Extract verse and reference
-        const verseParts = card.dataset.verse.split(' — ');
-        const verseText = verseParts[1] ? verseParts[1] : '';
-        const verseRef = verseParts[0] ? verseParts[0] : '';
-        
-        detailVerse.innerHTML = `"${verseText}" <span class="detail-verse-ref">${verseRef}</span>`;
-        
-        // Show detail box with category coloring
-        detailBox.style.display = 'block';
-        detailBox.style.borderLeft = `4px solid var(--c-${card.dataset.cat})`;
-        detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    });
-
-    // 2. Gates Scaffolding Logic
-    const state = {};
-    const step4 = document.getElementById('step4Container');
-    const step5 = document.getElementById('step5Container');
-    const step6 = document.getElementById('step6Container');
-
-    function selectChoice(group, id) {
-      state[group] = id;
-      document.querySelectorAll(`[data-choice-group="${group}"] .choice`).forEach(c => {
-        c.classList.toggle('selected', c.dataset.id === id);
-      });
-      document.querySelectorAll(`[data-responses-for="${group}"]`).forEach(w => {
-        w.querySelectorAll('.resp').forEach(r => {
-          r.classList.toggle('show', r.dataset.when === id);
-        });
-      });
-      
-      // Special verdict coloring for Step 6
-      if (group === 'transfer') {
-        const v = document.querySelector('[data-verdict-for="transfer"]');
-        if (id === 'b') {
-          v.className = 'verdict correct';
-          v.innerHTML = `<strong>🟢 Correct.</strong><div class="vspace">This is the exact tension of filial fear in the presence of incarnate holiness. Peter’s words express his unworthiness (seeking distance), but his physical posture is one of total surrender and closeness (clinging to Jesus's knees). Jesus resolves this tension by saying, 'Do not fear; from now on you will be catching men.'</div>`;
-        } else {
-          v.className = 'verdict incorrect';
-          v.innerHTML = `<strong>🔴 Not quite.</strong><div class="vspace">If it were pure servile fear (A) or cowardice (C), he would have fled like Adam. The correct choice is <strong>B</strong>: his words say 'depart' but his body is at Jesus's knees. True yirah holds you close even when you feel undone.</div>`;
-        }
-      }
-      
-      refreshGates();
-    }
-
-    function refreshGates() {
-      document.querySelectorAll('.gate').forEach(g => {
-        const rc = g.dataset.reqChoice;
-        const rt = g.dataset.reqText;
-        let locked = false;
-        
-        if (rc && !state[rc]) locked = true;
-        if (rt) {
-          const ta = document.getElementById(rt);
-          if (!ta || ta.value.trim().length < 15) locked = true;
-        }
-        
-        g.dataset.locked = locked ? 'true' : 'false';
-        const btn = g.querySelector('.gate-btn');
-        if (btn && !btn.hidden) {
-          btn.disabled = locked;
-          btn.textContent = locked ? ('🔒 ' + btn.dataset.lock) : ('→ ' + btn.dataset.label);
-        }
-      });
-    }
-
-    document.addEventListener('click', (e) => {
-      const ch = e.target.closest('.choice');
-      if (ch) {
-        selectChoice(ch.dataset.group, ch.dataset.id);
-        return;
-      }
-      
-      const gb = e.target.closest('.gate-btn');
-      if (gb) {
-        const g = gb.closest('.gate');
-        if (g.dataset.locked === 'true') return;
-        g.querySelector('.gate-content').hidden = false;
-        gb.hidden = true;
-        
-        // Show next steps in curriculum sequentially
-        if (g.dataset.reqChoice === 'vector') {
-          step4.style.display = 'block';
-          step5.style.display = 'block';
-          step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else if (g.dataset.reqText === 'vocabRecall') {
-          step6.style.display = 'block';
-          step6.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        return;
-      }
-    });
-
-    document.querySelectorAll('textarea').forEach(ta => {
-      ta.addEventListener('input', refreshGates);
-    });
-
-    refreshGates();
+  // 1. Theme Switcher Logic
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('fogTheme', newTheme);
   });
+
+  // 2. Lexical Explorer Interaction (Event Delegation)
+  const detailBox = document.getElementById('lexiconDetail');
+  const detailWord = document.getElementById('detailWord');
+  const detailTranslit = document.getElementById('detailTranslit');
+  const detailStrong = document.getElementById('detailStrong');
+  const detailDefinition = document.getElementById('detailDefinition');
+  const detailVerse = document.getElementById('detailVerse');
+
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.lexicon-card');
+    if (card) {
+      // Remove Highlights from all cards
+      document.querySelectorAll('.lexicon-card').forEach(c => {
+        c.style.transform = '';
+        c.style.boxShadow = '';
+      });
+      
+      // Apply scale to selected
+      card.style.transform = 'translateY(-3px) scale(1.025)';
+      
+      // Populate detail content
+      detailWord.textContent = card.querySelector('.word-title').textContent;
+      detailTranslit.textContent = card.dataset.trans;
+      detailStrong.textContent = card.dataset.strong;
+      detailDefinition.innerHTML = `<strong>Definition:</strong> ${card.dataset.def}`;
+      
+      const verseParts = card.dataset.verse.split(' — ');
+      const verseText = verseParts[1] ? verseParts[1] : '';
+      const verseRef = verseParts[0] ? verseParts[0] : '';
+      detailVerse.innerHTML = `"${verseText}" <span class="detail-verse-ref">${verseRef}</span>`;
+      
+      // Paint left boundary & display box
+      detailBox.style.display = 'block';
+      detailBox.style.borderLeft = `4px solid var(--c-${card.dataset.cat})`;
+      detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  });
+
+  // 3. Gates Scaffolding Logic
+  const state = {};
+  const step4 = document.getElementById('step4Container');
+  const step5 = document.getElementById('step5Container');
+  const step6 = document.getElementById('step6Container');
+
+  function selectChoice(group, id) {
+    state[group] = id;
+    document.querySelectorAll(`[data-choice-group="${group}"] .choice`).forEach(c => {
+      c.classList.toggle('selected', c.dataset.id === id);
+    });
+    document.querySelectorAll(`[data-responses-for="${group}"]`).forEach(w => {
+      w.querySelectorAll('.resp').forEach(r => {
+        r.classList.toggle('show', r.dataset.when === id);
+      });
+    });
+    
+    // Special verdict coloring for Step 6
+    if (group === 'transfer') {
+      const v = document.querySelector('[data-verdict-for="transfer"]');
+      if (id === 'b') {
+        v.className = 'verdict correct';
+        v.innerHTML = `<strong>🟢 Correct.</strong><div class="vspace">This is the exact tension of filial fear in the presence of incarnate holiness. Peter’s words express his unworthiness (seeking distance), but his physical posture is one of total surrender and closeness (clinging to Jesus's knees). Jesus resolves this tension by saying, 'Do not fear; from now on you will be catching men.'</div>`;
+      } else {
+        v.className = 'verdict incorrect';
+        v.innerHTML = `<strong>🔴 Not quite.</strong><div class="vspace">If it were pure servile fear (A) or cowardice (C), he would have fled like Adam. The correct choice is <strong>B</strong>: his words say 'depart' but his body is at Jesus's knees. True yirah holds you close even when you feel undone.</div>`;
+      }
+    }
+    
+    refreshGates();
+  }
+
+  function refreshGates() {
+    document.querySelectorAll('.gate').forEach(g => {
+      const rc = g.dataset.reqChoice;
+      const rt = g.dataset.reqText;
+      let locked = false;
+      
+      if (rc && !state[rc]) locked = true;
+      if (rt) {
+        const ta = document.getElementById(rt);
+        if (!ta || ta.value.trim().length < 15) locked = true;
+      }
+      
+      g.dataset.locked = locked ? 'true' : 'false';
+      const btn = g.querySelector('.gate-btn');
+      if (btn && !btn.hidden) {
+        btn.disabled = locked;
+        btn.textContent = locked ? ('🔒 ' + btn.dataset.lock) : ('→ ' + btn.dataset.label);
+      }
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const ch = e.target.closest('.choice');
+    if (ch) {
+      selectChoice(ch.dataset.group, ch.dataset.id);
+      return;
+    }
+    
+    const gb = e.target.closest('.gate-btn');
+    if (gb) {
+      const g = gb.closest('.gate');
+      if (g.dataset.locked === 'true') return;
+      g.querySelector('.gate-content').hidden = false;
+      gb.hidden = true;
+      
+      // Show next steps in curriculum sequentially
+      if (g.dataset.reqChoice === 'vector') {
+        step4.style.display = 'block';
+        step5.style.display = 'block';
+        step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else if (g.dataset.reqText === 'vocabRecall') {
+        step6.style.display = 'block';
+        step6.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      return;
+    }
+  });
+
+  document.querySelectorAll('textarea').forEach(ta => {
+    ta.addEventListener('input', refreshGates);
+  });
+
+  refreshGates();
 </script>
 </body>
 </html>
