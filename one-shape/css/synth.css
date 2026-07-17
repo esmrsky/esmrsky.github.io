@@ -1,0 +1,67 @@
+/* ============================================================
+   SYNTHESIS — the need-map hub, need-chips, and the need drawer
+   (the cross-cutting view: one need seen across every lens)
+   ============================================================ */
+
+/* ---- The need-map crosswalk (home centerpiece) ---- */
+.needmap { margin-top: 1.6rem; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+.needmap-head, .need-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; align-items: stretch; }
+.needmap-head { background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.needmap-head span { padding: .7rem .9rem; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+.needmap-head span:first-child { color: var(--ink-dim); }
+.need-row { width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--line); cursor: pointer; font-family: inherit; color: inherit; transition: background-color .15s; }
+.need-row:first-of-type { border-top: 0; }
+.need-row:hover, .need-row:focus-visible { background: var(--accent-soft); }
+.need-row > span { padding: .85rem .9rem; font-size: var(--step--1); color: var(--ink-dim); border-left: 1px solid var(--line); display: flex; align-items: center; }
+.need-row > span:first-child { border-left: 0; flex-direction: column; align-items: flex-start; gap: .15rem; }
+.need-row .nm-name { font-family: var(--font-serif); font-size: 1.12rem; color: var(--ink); line-height: 1.1; }
+.need-row .nm-q { font-size: .76rem; color: var(--ink-faint); }
+.need-row .dash { color: var(--ink-faint); opacity: .55; }
+.needmap-foot { padding: .7rem .9rem; font-size: .76rem; color: var(--ink-faint); border-top: 1px solid var(--line); background: var(--surface-2); }
+.needmap-foot b { color: var(--accent-ink); font-weight: 500; }
+
+/* ---- Need chip (used inside lens cards) ---- */
+.need-chip { display: inline-flex; align-items: center; gap: .45ch; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 999px; padding: .2rem .6rem; cursor: pointer; transition: all .15s; }
+.need-chip:hover { background: var(--accent); color: #fff; }
+.need-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* ---- Need drawer ---- */
+.need-scrim { position: fixed; inset: 0; background: rgba(20,16,12,.5); backdrop-filter: blur(2px); z-index: 150; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.need-scrim.open { opacity: 1; pointer-events: auto; }
+.need-drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(480px, 92vw); background: var(--bg); border-left: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); z-index: 160; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overscroll-behavior: contain; }
+.need-drawer.open { transform: none; }
+.nd-head { position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 1.2rem var(--pad) 1rem; display: flex; align-items: flex-start; gap: 1rem; }
+.nd-head .nd-tt { flex: 1; }
+.nd-eyebrow { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+.nd-head h2 { margin: .25rem 0 .1rem; font-size: var(--step-2); }
+.nd-head .nd-q { color: var(--ink-dim); font-family: var(--font-serif); font-style: italic; margin: 0; }
+.nd-close { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--ink-dim); cursor: pointer; display: grid; place-items: center; }
+.nd-close:hover { color: var(--ink); border-color: var(--line-strong); }
+.nd-body { padding: 1.2rem var(--pad) 3rem; }
+.nd-line { margin: 0 0 .6rem; }
+.nd-line .lab { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); display: block; }
+.nd-promise { color: var(--c-love); font-style: italic; font-family: var(--font-serif); }
+.nd-exit { border-left: 2px solid var(--grace); padding-left: .9rem; color: var(--ink); }
+.nd-scripture { font-family: var(--font-serif); font-style: italic; color: var(--ink-dim); border-top: 1px dashed var(--line-strong); margin-top: 1.2rem; padding-top: 1rem; }
+.nd-scripture cite { display: block; font-style: normal; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-top: .4rem; }
+
+.nd-sec { margin-top: 1.5rem; }
+.nd-sec h3 { font-size: 1.02rem; margin: 0 0 .2rem; display: flex; align-items: baseline; gap: .6ch; }
+.nd-sec h3 .nd-lenstag { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+.nd-sec p { font-size: var(--step--1); color: var(--ink-dim); margin: .3rem 0; }
+.nd-words { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .4rem; }
+.nd-word { font-size: .76rem; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: .2rem .6rem; color: var(--ink-dim); }
+.nd-mini { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .7rem .85rem; margin-top: .5rem; }
+.nd-mini .nm-name { font-family: var(--font-serif); color: var(--ink); }
+.nd-mini .nm-sub { font-size: .76rem; color: var(--ink-faint); }
+.nd-jump { margin-top: .6rem; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); background: none; border: 0; cursor: pointer; padding: 0; }
+.nd-jump:hover { text-decoration: underline; }
+
+@media (max-width: 720px) {
+  .needmap-head { display: none; }
+  .need-row { grid-template-columns: 1fr; }
+  .need-row > span { border-left: 0; padding: .35rem .9rem; }
+  .need-row > span:not(:first-child)::before { content: attr(data-lens) ": "; font-family: var(--font-mono); font-size: .6rem; text-transform: uppercase; color: var(--ink-faint); margin-right: .4ch; }
+  .need-row > span:first-child { padding-top: .8rem; }
+  .need-row { padding-bottom: .5rem; }
+}
