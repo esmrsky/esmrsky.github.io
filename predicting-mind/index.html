@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Predicting Mind</title>
+<meta name="description" content="An interactive field guide to your own head — how the brain predicts, why feelings happen, and what to do next time you feel weird.">
+<meta name="theme-color" content="#0B0A08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='30' fill='%23F3651C'/%3E%3Ccircle cx='50' cy='50' r='44' fill='none' stroke='%23F3651C' stroke-opacity='.5' stroke-width='5' stroke-dasharray='7 11'/%3E%3C/svg%3E">
+<meta property="og:title" content="The Predicting Mind">
+<meta property="og:description" content="Your brain doesn't react to the world — it guesses what's coming. A field guide for the next time you feel weird.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE PREDICTING MIND — palette carries meaning
+   ember  = fast / now / survival + craving
+   teal   = slow / future / goals + values
+   gold   = reward / aligned / integration
+   red    = threat / trapped loops
+   dream  = self / identity / default mode
+   ============================================================ */
+:root{
+  --bg:#0B0A08;
+  --bg2:#131009;
+  --cream:#F2EBDC;
+  --cream-dim:rgba(242,235,220,.62);
+  --cream-faint:rgba(242,235,220,.34);
+  --cream-ghost:rgba(242,235,220,.12);
+  --ember:#F3651C;
+  --ember-soft:#FF8C4D;
+  --teal:#33C2C9;
+  --teal-soft:#77E3E8;
+  --gold:#E9B24A;
+  --red:#FF4E36;
+  --dream:#9B8CF2;
+  --dream-soft:#BCB1FF;
+  --line:rgba(242,235,220,.14);
+  --ff-sans:'Instrument Sans',system-ui,sans-serif;
+  --ff-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--ff-sans);
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* deep atmospheric field behind everything */
+.atmosphere{position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(1200px 800px at 78% -5%, rgba(243,101,28,.10), transparent 60%),
+    radial-gradient(1000px 900px at 12% 110%, rgba(51,194,201,.09), transparent 62%),
+    radial-gradient(900px 700px at 50% 45%, rgba(155,140,242,.05), transparent 70%),
+    linear-gradient(180deg,#0B0A08 0%, #0A0906 60%, #0C0A07 100%);
+}
+#field{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.9}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ---------- layout ---------- */
+.scene{position:relative;min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:clamp(72px,12vh,140px) clamp(20px,5vw,40px);gap:clamp(20px,4vh,40px)}
+.wrap{width:100%;max-width:940px;display:flex;flex-direction:column;align-items:center;gap:clamp(16px,3vh,28px)}
+
+/* ---------- type ---------- */
+.eyebrow{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--cream-faint);display:flex;align-items:center;gap:.7em}
+.eyebrow::before{content:"";width:26px;height:1px;background:currentColor;opacity:.6}
+.eyebrow.tint-ember{color:var(--ember-soft)} .eyebrow.tint-teal{color:var(--teal-soft)}
+.eyebrow.tint-gold{color:var(--gold)} .eyebrow.tint-red{color:var(--red)}
+.eyebrow.tint-dream{color:var(--dream-soft)}
+
+h1{font-weight:600;font-size:clamp(2.6rem,9vw,6.4rem);line-height:.98;letter-spacing:-.03em}
+h2{font-weight:600;font-size:clamp(1.9rem,5.2vw,3.4rem);line-height:1.02;letter-spacing:-.025em;max-width:16ch}
+.lede{font-size:clamp(1.05rem,2.6vw,1.4rem);color:var(--cream-dim);max-width:34ch;font-weight:400}
+.body{font-size:clamp(1rem,2.2vw,1.18rem);color:var(--cream-dim);max-width:46ch;font-weight:400}
+.body strong{color:var(--cream);font-weight:600}
+em.soft{font-style:italic;color:var(--cream)}
+.mono-tag{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint)}
+
+/* honest little footnotes inside scenes */
+.note{font-family:var(--ff-mono);font-size:.72rem;line-height:1.6;color:var(--cream-faint);
+  max-width:44ch;border-top:1px solid var(--cream-ghost);padding-top:12px;margin-top:4px}
+.note b{color:var(--cream-dim);font-weight:500}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);filter:blur(6px);
+  transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1),filter 1s ease}
+.in .reveal{opacity:1;transform:none;filter:none}
+.in .reveal.d1{transition-delay:.08s}.in .reveal.d2{transition-delay:.18s}
+.in .reveal.d3{transition-delay:.30s}.in .reveal.d4{transition-delay:.42s}
+
+/* ---------- side progress nav ---------- */
+.nav{position:fixed;right:clamp(12px,2.4vw,26px);top:50%;transform:translateY(-50%);
+  z-index:40;display:flex;flex-direction:column;gap:14px}
+.nav a{width:9px;height:9px;border-radius:50%;background:var(--cream-ghost);
+  border:1px solid transparent;transition:.35s;cursor:pointer;position:relative}
+/* generous invisible tap target — the dot itself is far below the 44px touch minimum */
+.nav a::after{content:"";position:absolute;inset:-9px;border-radius:50%}
+.nav a:hover{background:var(--cream-faint);transform:scale(1.25)}
+.nav a.active{background:var(--ember);box-shadow:0 0 12px var(--ember);transform:scale(1.25)}
+.nav a span{position:absolute;right:20px;top:50%;transform:translateY(-50%) translateX(6px);
+  font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cream-faint);white-space:nowrap;opacity:0;pointer-events:none;transition:.3s}
+.nav a:hover span{opacity:1;transform:translateY(-50%)}
+
+/* scroll cue */
+.cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--cream-faint);display:flex;flex-direction:column;align-items:center;gap:10px}
+.cue .dot{width:5px;height:5px;border-radius:50%;background:var(--ember);
+  animation:cueFall 2.8s ease-in-out infinite;box-shadow:0 0 8px var(--ember)}
+@keyframes cueFall{0%{transform:translateY(-6px);opacity:0}30%{opacity:1}100%{transform:translateY(14px);opacity:0}}
+
+/* ============================================================ SVG glow helpers */
+.glow-e{filter:drop-shadow(0 0 6px rgba(243,101,28,.7))}
+.glow-t{filter:drop-shadow(0 0 6px rgba(51,194,201,.7))}
+.glow-g{filter:drop-shadow(0 0 6px rgba(233,178,74,.7))}
+.glow-r{filter:drop-shadow(0 0 7px rgba(255,78,54,.8))}
+.glow-d{filter:drop-shadow(0 0 6px rgba(155,140,242,.7))}
+.glow-c{filter:drop-shadow(0 0 5px rgba(242,235,220,.5))}
+
+/* ============================================================ HERO orb */
+.orb-stage{position:relative;width:min(74vw,340px);aspect-ratio:1;display:grid;place-items:center;margin:6px 0}
+.orb-svg{width:100%;height:100%;overflow:visible}
+.breathe{transform-origin:center;animation:breathe 8.5s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.spin-cw{transform-origin:200px 200px;animation:spin 44s linear infinite}
+.spin-ccw{transform-origin:200px 200px;animation:spin 58s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* generic ring-traveller: a group rotating around center carrying a packet */
+.travel{transform-origin:200px 200px}
+.packet{fill:var(--cream)}
+.pulse-ring{transform-origin:center;animation:pulseRing 5.5s ease-out infinite}
+@keyframes pulseRing{0%{transform:scale(.5);opacity:.8}80%,100%{transform:scale(2.4);opacity:0}}
+
+/* flowing dashed connectors — slow enough to read as drift, not scurry */
+.flow{stroke-dasharray:4 10;animation:dash 4.5s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-28}}
+
+/* ============================================================ THE ENGINE loop */
+.loop-stage{position:relative;width:min(88vw,460px);aspect-ratio:1;margin:2px auto}
+/* labels sit outside the ring and pulses scale past it — both need room to breathe */
+.loop-svg{overflow:visible}
+.node-label{font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;fill:var(--cream-dim)}
+.node-c{fill:rgba(11,10,8,.9);stroke-width:1.4}
+.ring-base{fill:none;stroke:var(--cream-ghost);stroke-width:1.4}
+.ring-flow{fill:none;stroke:var(--ember);stroke-width:2}
+.chord{fill:none;stroke:var(--teal);stroke-width:1.6;stroke-dasharray:3 7}
+.node-pulse{transform-origin:center;animation:nodePulse 9s ease-out infinite}
+@keyframes nodePulse{0%,70%,100%{transform:scale(.6);opacity:0}6%{transform:scale(.6);opacity:.9}30%{transform:scale(1.9);opacity:0}}
+
+.legend{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.legend .k{display:flex;align-items:center;gap:9px;font-family:var(--ff-mono);font-size:.72rem;
+  letter-spacing:.1em;color:var(--cream-dim)}
+.legend .sw{width:22px;height:2px;border-radius:2px}
+.legend .sw.ember{background:var(--ember);box-shadow:0 0 8px var(--ember)}
+.legend .sw.teal{background:var(--teal);box-shadow:0 0 8px var(--teal);
+  background-image:repeating-linear-gradient(90deg,var(--teal) 0 4px,transparent 4px 8px)}
+
+/* ============================================================ TWO SPEEDS gauge */
+.gauge-wrap{width:min(92vw,560px);display:flex;flex-direction:column;align-items:center;gap:26px}
+.gauge{width:100%;overflow:visible}
+.needle{transform-origin:280px 250px;transition:transform .5s cubic-bezier(.34,1.4,.5,1)}
+.poles{display:flex;justify-content:space-between;width:100%;max-width:560px;gap:16px}
+.pole{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;transition:.5s;opacity:.55}
+.pole.on{opacity:1}
+.pole h3{font-family:var(--ff-sans);font-weight:600;font-size:1.05rem;letter-spacing:-.01em}
+.pole .sub{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint)}
+.pole .ics{display:flex;gap:12px;margin-top:2px}
+.pole.fast h3{color:var(--ember-soft)} .pole.slow h3{color:var(--teal-soft)}
+
+.slider-row{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.slider-row .lab{display:flex;justify-content:space-between;font-family:var(--ff-mono);
+  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--teal),var(--ember));outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--cream);border:3px solid var(--bg);box-shadow:0 0 14px rgba(242,235,220,.5);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--cream);
+  border:3px solid var(--bg);box-shadow:0 0 14px rgba(242,235,220,.5);cursor:pointer;border-width:3px}
+.readout{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.06em;color:var(--cream-dim);
+  min-height:1.4em;text-align:center;transition:.4s}
+
+/* ============================================================ EMOTIONS dashboard */
+.dash{width:min(94vw,720px);display:flex;flex-direction:column;gap:26px}
+.screen{position:relative;border:1px solid var(--line);border-radius:20px;padding:clamp(26px,5vw,40px);
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));min-height:210px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;overflow:hidden;transition:.5s}
+.screen::before{content:"";position:absolute;inset:0;opacity:.5;transition:.6s;pointer-events:none;
+  background:radial-gradient(420px 240px at 50% 0%,var(--glowc,transparent),transparent 70%)}
+.screen-ic{width:64px;height:64px;display:grid;place-items:center;transition:.4s}
+.screen-name{font-family:var(--ff-sans);font-weight:600;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:-.01em;transition:.4s}
+.screen-gap{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-faint)}
+.screen-desc{font-size:clamp(.98rem,2.2vw,1.12rem);color:var(--cream-dim);max-width:40ch}
+.screen-empty{color:var(--cream-faint);font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{display:flex;align-items:center;gap:9px;padding:10px 16px;border-radius:100px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--cream-dim);
+  font-family:var(--ff-sans);font-weight:500;font-size:.92rem;transition:.28s}
+.chip:hover{border-color:var(--cream-faint);color:var(--cream);transform:translateY(-2px)}
+.chip.active{color:var(--bg);font-weight:600}
+.chip svg{width:17px;height:17px;flex:none}
+.pair-note{font-family:var(--ff-mono);font-size:.74rem;line-height:1.7;color:var(--cream-faint);
+  max-width:48ch;margin:0 auto;text-align:center}
+.pair-note b.g{color:var(--teal-soft)} .pair-note b.s{color:var(--dream-soft)}
+
+/* ============================================================ TRAP loop */
+.trap-stage{position:relative;width:min(88vw,440px);aspect-ratio:1;margin:0 auto}
+.trap-svg{width:100%;height:100%;overflow:visible;transition:1s}
+.trap-ring{fill:none;stroke:var(--red);stroke-width:2.4;stroke-linecap:round;transition:1s;
+  filter:drop-shadow(0 0 8px rgba(255,78,54,.7))}
+.trap-spin{transform-origin:200px 200px;animation:spin 5.5s linear infinite}
+.trap-node text{font-family:var(--ff-mono);font-size:11px;letter-spacing:.08em;fill:var(--cream-dim)}
+.settled .trap-ring{stroke:var(--teal);filter:drop-shadow(0 0 8px rgba(51,194,201,.6))}
+.settled .trap-spin{animation-duration:16s;opacity:.5}
+.settled .evi{opacity:1;transform:scale(1)}
+.evi{opacity:0;transform:scale(.7);transform-origin:200px 348px;transition:.7s .2s}
+
+.btn{font-family:var(--ff-mono);font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:14px 26px;border-radius:100px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  color:var(--cream);cursor:pointer;transition:.3s;display:inline-flex;align-items:center;gap:10px}
+.btn:hover{border-color:var(--teal);color:var(--teal-soft);box-shadow:0 0 22px rgba(51,194,201,.2)}
+.btn .bdot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.caption{font-size:clamp(.95rem,2.1vw,1.08rem);color:var(--cream-dim);max-width:44ch;min-height:3em;transition:.5s}
+
+/* ============================================================ STORYTELLER / DMN */
+.dmn-stage{position:relative;width:min(90vw,460px);aspect-ratio:1;margin:0 auto}
+.dmn-svg{width:100%;height:100%;overflow:visible}
+.dmn-net line{stroke:var(--dream);stroke-width:1.2;opacity:.25;transition:.6s}
+.dmn-net circle.n{fill:var(--dream);opacity:.3;transition:.6s;filter:none}
+.world-node{transition:.6s}
+.spiralpath{fill:none;stroke:var(--dream);stroke-width:2;opacity:0;transition:.6s;
+  filter:drop-shadow(0 0 6px rgba(155,140,242,.6));stroke-dasharray:1000;stroke-dashoffset:1000}
+.dmn-stage.alone .dmn-net line{opacity:.85}
+.dmn-stage.alone .dmn-net circle.n{opacity:1;filter:drop-shadow(0 0 7px rgba(155,140,242,.8))}
+.dmn-stage.alone .world-node{opacity:.25}
+.dmn-stage.alone .spiralpath{opacity:.9;animation:draw 4.5s ease forwards, spin 22s linear infinite 4.5s;transform-origin:200px 200px}
+@keyframes draw{to{stroke-dashoffset:0}}
+.dmn-stage:not(.alone) .world-node{opacity:1}
+.spiral-dot{opacity:0;transition:.5s}
+.dmn-stage.alone .spiral-dot{opacity:1}
+
+.toggle{display:inline-flex;padding:5px;border-radius:100px;border:1px solid var(--line);background:rgba(255,255,255,.02);gap:4px}
+.toggle button{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:11px 20px;border-radius:100px;border:none;background:transparent;color:var(--cream-faint);cursor:pointer;transition:.3s}
+.toggle button.on{background:var(--dream);color:var(--bg);font-weight:500;box-shadow:0 0 18px rgba(155,140,242,.4)}
+
+/* ============================================================ THE WHOLE — concentric */
+.whole-stage{position:relative;width:min(92vw,520px);aspect-ratio:1;margin:2px auto}
+.whole-svg{width:100%;height:100%;overflow:visible}
+.wr{fill:none;stroke-width:1.6}
+/* ring colour follows the palette meaning established earlier:
+   senses = raw data (neutral) · reward & threat = ember (fast) · goals = teal (slow) · identity = dream */
+.wr.r1{stroke:var(--cream-faint)} .wr.r2{stroke:var(--ember)} .wr.r3{stroke:var(--teal)} .wr.r4{stroke:var(--dream)}
+.rot1{transform-origin:250px 250px;animation:spin 64s linear infinite}
+.rot2{transform-origin:250px 250px;animation:spin 48s linear infinite reverse}
+.rot3{transform-origin:250px 250px;animation:spin 35s linear infinite}
+.rot4{transform-origin:250px 250px;animation:spin 26s linear infinite reverse}
+.wlabel{font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.outpulse{transform-origin:250px 250px;animation:outPulse 7s ease-out infinite}
+@keyframes outPulse{0%{r:6;opacity:.9}70%,100%{r:210;opacity:0}}
+
+/* ============================================================ WANTING vs LIKING */
+.meters{width:min(94vw,540px);display:flex;flex-direction:column;gap:22px;margin:4px auto 0}
+.meter{display:flex;flex-direction:column;gap:9px}
+.mlab{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--ff-mono);
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-dim)}
+.mlab .mhint{letter-spacing:.1em;color:var(--cream-faint);font-size:.62rem}
+.mtrack{height:7px;border-radius:7px;background:rgba(255,255,255,.06);overflow:hidden}
+.mfill{height:100%;width:0;border-radius:7px;
+  transition:width 1.1s cubic-bezier(.22,1,.36,1)}
+.mfill.want{background:var(--ember);box-shadow:0 0 16px rgba(243,101,28,.55)}
+.mfill.like{background:var(--gold);box-shadow:0 0 16px rgba(233,178,74,.55)}
+.rw-note{font-size:clamp(.98rem,2.2vw,1.1rem);color:var(--cream-dim);max-width:46ch;
+  margin:10px auto 0;text-align:center;min-height:4.2em;transition:.5s}
+.rw-note.empty{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--cream-faint)}
+
+/* ============================================================ FIELD GUIDE / weird */
+.skip{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--cream-faint);text-decoration:none;border-bottom:1px solid var(--cream-ghost);
+  padding-bottom:5px;transition:.3s}
+.skip:hover{color:var(--teal-soft);border-color:var(--teal)}
+.wx-move{font-size:clamp(.98rem,2.2vw,1.1rem);color:var(--cream);max-width:42ch;
+  border-top:1px solid var(--cream-ghost);padding-top:15px;margin-top:2px}
+.wx-move b{display:block;font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--teal-soft);margin-bottom:9px;font-weight:500}
+
+/* ---------- footer ---------- */
+.footer{padding:clamp(60px,10vh,120px) 24px 90px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.footer .big{font-weight:600;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:-.02em;max-width:20ch;line-height:1.08}
+.footer .close{font-size:clamp(1rem,2.2vw,1.16rem);color:var(--cream-dim);max-width:40ch}
+.footer .honest{font-family:var(--ff-mono);font-size:.72rem;line-height:1.8;color:var(--cream-faint);
+  max-width:52ch;border-top:1px solid var(--cream-ghost);padding-top:20px;margin-top:14px}
+.sig{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cream-ghost)}
+
+/* ---------- responsive ---------- */
+@media (max-width:560px){
+  /* no hover on touch — so the active section names itself instead of nothing at all */
+  .nav a span{display:none}
+  .nav a.active span{display:block;opacity:1;transform:translateY(-50%);right:17px;font-size:.6rem;
+    background:rgba(11,10,8,.72);padding:4px 8px;border-radius:100px;backdrop-filter:blur(4px)}
+  .nav{gap:17px}
+  .legend{gap:14px}
+  .poles{gap:8px}
+  .pole .ics svg{width:20px;height:20px}
+}
+
+/* ---------- accessibility: honor reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.2s!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;filter:none}
+}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="atmosphere"></div>
+<canvas id="field"></canvas>
+<div class="grain"></div>
+
+<nav class="nav" id="nav" aria-label="Section navigation"></nav>
+
+<!-- ============================================================ 0 · HERO -->
+<section class="scene" id="hero" data-nav="Start">
+  <div class="wrap">
+    <div class="eyebrow reveal">A field guide to your own head</div>
+    <h1 class="reveal d1">The&nbsp;Predicting<br>Mind</h1>
+
+    <div class="orb-stage reveal d2">
+      <svg class="orb-svg" viewBox="0 0 400 400" aria-hidden="true">
+        <defs>
+          <radialGradient id="core" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFD9B0" stop-opacity=".95"/>
+            <stop offset="35%" stop-color="#F3651C" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#F3651C" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g class="breathe" style="transform-origin:200px 200px">
+          <circle cx="200" cy="200" r="150" fill="none" stroke="var(--cream-ghost)" stroke-width="1"/>
+          <circle class="spin-ccw" cx="200" cy="200" r="118" fill="none" stroke="rgba(51,194,201,.35)" stroke-width="1.4" stroke-dasharray="2 12"/>
+          <circle class="spin-cw" cx="200" cy="200" r="150" fill="none" stroke="rgba(243,101,28,.4)" stroke-width="1.6" stroke-dasharray="3 16"/>
+          <circle cx="200" cy="200" r="92" fill="url(#core)"/>
+          <circle cx="200" cy="200" r="46" fill="none" stroke="var(--cream)" stroke-width="1" opacity=".5"/>
+          <circle class="pulse-ring" cx="200" cy="200" r="46" fill="none" stroke="var(--ember-soft)" stroke-width="1.5"/>
+        </g>
+        <!-- orbiting packets -->
+        <g class="spin-cw"><circle class="packet glow-e" cx="200" cy="50" r="4"/></g>
+        <g class="spin-ccw"><circle class="packet glow-t" cx="200" cy="82" r="3"/></g>
+      </svg>
+    </div>
+
+    <p class="lede reveal d3">It doesn't react to the world. It <em class="soft">guesses</em> what's coming — and everything you feel follows from that.</p>
+    <a class="skip reveal d4" href="#weird">Feeling weird right now? Skip ahead →</a>
+  </div>
+  <div class="cue reveal d4">Scroll<span class="dot"></span></div>
+</section>
+
+<!-- ============================================================ 1 · THE ENGINE -->
+<section class="scene" id="engine" data-nav="The engine">
+  <div class="wrap">
+    <div class="eyebrow tint-ember reveal">The engine</div>
+    <h2 class="reveal d1">Your brain guesses first.</h2>
+
+    <div class="loop-stage reveal d2">
+      <svg class="loop-svg" viewBox="-55 -40 510 510" width="100%" height="100%" aria-label="The prediction loop: predict, reality, compare, gap, and back">
+        <!-- ring -->
+        <circle class="ring-base" cx="200" cy="200" r="130"/>
+        <circle class="ring-flow flow glow-e" cx="200" cy="200" r="130" stroke-dasharray="4 10"/>
+        <!-- inner chord: ACT -->
+        <path class="chord glow-t" d="M 70 200 Q 200 130 330 200"/>
+        <text x="200" y="148" text-anchor="middle" class="node-label" fill="var(--teal-soft)" style="letter-spacing:.14em">act · change the world</text>
+
+        <!-- traveling packets -->
+        <g class="travel spin-cw"><circle class="packet glow-c" cx="200" cy="70" r="4.5"/></g>
+        <g class="travel spin-cw" style="animation-delay:-14.7s"><circle class="packet glow-e" cx="200" cy="70" r="3"/></g>
+        <g class="travel spin-cw" style="animation-delay:-29.3s"><circle class="packet glow-e" cx="200" cy="70" r="3"/></g>
+
+        <!-- NODE: predict (top) -->
+        <g>
+          <circle class="node-pulse" cx="200" cy="70" r="30" fill="none" stroke="var(--ember)" stroke-width="1.4" style="animation-delay:0s"/>
+          <circle class="node-c glow-e" cx="200" cy="70" r="30" stroke="var(--ember)"/>
+          <!-- eye glyph -->
+          <path d="M186 70 q14 -13 28 0 q-14 13 -28 0" fill="none" stroke="var(--ember-soft)" stroke-width="1.6"/>
+          <circle cx="200" cy="70" r="3.4" fill="var(--ember-soft)"/>
+          <text x="200" y="24" text-anchor="middle" class="node-label" style="fill:var(--cream)">Predict</text>
+          <text x="200" y="40" text-anchor="middle" class="node-label" style="font-size:9px">the guess</text>
+        </g>
+        <!-- NODE: reality (right) -->
+        <g>
+          <circle class="node-pulse" cx="330" cy="200" r="30" fill="none" stroke="var(--gold)" stroke-width="1.4" style="animation-delay:2.25s"/>
+          <circle class="node-c glow-g" cx="330" cy="200" r="30" stroke="var(--gold)"/>
+          <path d="M320 200 h20 M330 190 v20" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="330" cy="200" r="9" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+          <text x="410" y="196" text-anchor="middle" class="node-label" style="fill:var(--cream)">Reality</text>
+          <text x="410" y="212" text-anchor="middle" class="node-label" style="font-size:9px">what happens</text>
+        </g>
+        <!-- NODE: compare (bottom) -->
+        <g>
+          <circle class="node-pulse" cx="200" cy="330" r="30" fill="none" stroke="var(--cream)" stroke-width="1.4" style="animation-delay:4.5s"/>
+          <circle class="node-c glow-c" cx="200" cy="330" r="30" stroke="var(--cream-dim)"/>
+          <path d="M188 324 h24 M188 336 h24" stroke="var(--cream)" stroke-width="1.6" stroke-linecap="round"/>
+          <text x="200" y="378" text-anchor="middle" class="node-label" style="fill:var(--cream)">Compare</text>
+          <text x="200" y="394" text-anchor="middle" class="node-label" style="font-size:9px">guess vs real</text>
+        </g>
+        <!-- NODE: gap (left) -->
+        <g>
+          <circle class="node-pulse" cx="70" cy="200" r="30" fill="none" stroke="var(--red)" stroke-width="1.4" style="animation-delay:6.75s"/>
+          <circle class="node-c glow-r" cx="70" cy="200" r="30" stroke="var(--red)"/>
+          <path d="M74 188 l-8 12 h7 l-4 12" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <text x="-10" y="196" text-anchor="middle" class="node-label" style="fill:var(--cream)">Gap</text>
+          <text x="-10" y="212" text-anchor="middle" class="node-label" style="font-size:9px">the error</text>
+        </g>
+      </svg>
+    </div>
+
+    <p class="body reveal d3">It never waits to see the world. It predicts what's next, then checks. The one thing it truly tracks: <strong>the gap</strong> between what it expected and what actually arrived.</p>
+    <p class="body reveal d3" style="max-width:44ch">Close that gap two ways — <strong>update the guess</strong> (learn) or <strong>act on the world</strong> to make it match. Every thought, feeling, and habit grows out of this.</p>
+
+    <div class="legend reveal d4">
+      <div class="k"><span class="sw ember"></span>the loop, running</div>
+      <div class="k"><span class="sw teal"></span>act · the shortcut</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 2 · TWO SPEEDS -->
+<section class="scene" id="speeds" data-nav="Two speeds">
+  <div class="wrap">
+    <div class="eyebrow tint-teal reveal">Two speeds</div>
+    <h2 class="reveal d1">One machine, two clocks.</h2>
+    <p class="lede reveal d2" style="max-width:38ch">The same loop runs fast and slow. The dial just decides which one has the wheel.</p>
+
+    <div class="gauge-wrap reveal d2">
+      <svg class="gauge" viewBox="0 0 560 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="arc" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--teal)"/>
+            <stop offset="100%" stop-color="var(--ember)"/>
+          </linearGradient>
+        </defs>
+        <!-- arc from 180° (left) to 0° (right), center 280,250 r180 -->
+        <path d="M 100 250 A 180 180 0 0 1 460 250" fill="none" stroke="url(#arc)" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+        <!-- ticks -->
+        <g stroke="var(--cream-faint)" stroke-width="1.4" stroke-linecap="round">
+          <line x1="100" y1="250" x2="118" y2="250"/>
+          <line x1="145" y1="164" x2="160" y2="174"/>
+          <line x1="280" y1="70" x2="280" y2="90"/>
+          <line x1="415" y1="164" x2="400" y2="174"/>
+          <line x1="460" y1="250" x2="442" y2="250"/>
+        </g>
+        <text x="100" y="278" text-anchor="middle" class="node-label" style="fill:var(--teal-soft)">Slow</text>
+        <text x="460" y="278" text-anchor="middle" class="node-label" style="fill:var(--ember-soft)">Fast</text>
+        <!-- needle -->
+        <g class="needle" id="needle">
+          <line x1="280" y1="250" x2="280" y2="98" stroke="var(--cream)" stroke-width="3" stroke-linecap="round" class="glow-c"/>
+          <circle cx="280" cy="98" r="6" fill="var(--cream)" class="glow-c"/>
+        </g>
+        <circle cx="280" cy="250" r="10" fill="var(--bg2)" stroke="var(--cream-faint)" stroke-width="1.5"/>
+      </svg>
+
+      <div class="poles">
+        <div class="pole slow on" id="poleSlow">
+          <div class="ics">
+            <svg width="24" height="24" class="glow-t" viewBox="0 0 24 24" fill="none" stroke="var(--teal-soft)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 5 l3 7 -3 2 -3-2z"/></svg>
+            <svg width="24" height="24" class="glow-t" viewBox="0 0 24 24" fill="none" stroke="var(--teal-soft)" stroke-width="1.5" stroke-linejoin="round"><path d="M3 20 l7-15 4 8 3-4 4 11z"/></svg>
+          </div>
+          <h3>Future you</h3>
+          <div class="sub">values · goals · later</div>
+        </div>
+        <div class="pole fast" id="poleFast">
+          <div class="ics">
+            <svg width="24" height="24" class="glow-e" viewBox="0 0 24 24" fill="none" stroke="var(--ember-soft)" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3 c4 5 5 8 3 12 a5 5 0 1 1 -8-3 c1 3 3 3 3 1 c-2-4 0-7 2-10z"/></svg>
+            <svg width="24" height="24" class="glow-e" viewBox="0 0 24 24" fill="none" stroke="var(--ember-soft)" stroke-width="1.5" stroke-linejoin="round"><path d="M13 2 L5 13 h5 l-1 9 8-12 h-5z"/></svg>
+          </div>
+          <h3>Right now</h3>
+          <div class="sub">safe? · feels good?</div>
+        </div>
+      </div>
+
+      <div class="slider-row">
+        <div class="lab"><span>calm &amp; safe</span><span>threat &amp; stress</span></div>
+        <input type="range" id="stress" min="0" max="100" value="18" aria-label="Stress level">
+        <div class="readout" id="stressReadout" aria-live="polite">Calm. The slow system can steer toward what you actually want.</div>
+      </div>
+    </div>
+
+    <p class="body reveal d3">Fast asks <em class="soft">is this safe? does this feel good?</em> — survival and craving fused into one urgent voice. Slow asks <em class="soft">who am I becoming? where am I headed?</em></p>
+    <p class="body reveal d3" style="max-width:44ch">Threat isn't the only thing that turns this dial. Sleep, food, illness, noise — <strong>the body pushes it right too</strong>. A lot of feeling off for no reason is just a tired body, with your mind busy inventing a reason.</p>
+    <p class="note reveal d4"><b>Honest map, not the wiring.</b> Real brains aren't two boxes — this is threat, reward, and planning circuits overlapping. But "fast now / slow later" is a handle that holds. Neither speed is the enemy; they just run on different clocks.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 3 · EMOTIONS -->
+<section class="scene" id="dashboard" data-nav="The dashboard">
+  <div class="wrap">
+    <div class="eyebrow tint-gold reveal">The dashboard</div>
+    <h2 class="reveal d1">Feelings are readouts.</h2>
+    <p class="lede reveal d2" style="max-width:40ch">Not noise — your brain's summary of how the guessing is going. Each one points at a specific kind of gap.</p>
+
+    <div class="dash reveal d2">
+      <div class="screen" id="emoScreen" aria-live="polite">
+        <div class="screen-empty" id="emoEmpty">Tap a feeling ↓</div>
+        <div class="screen-ic" id="emoIc" style="display:none"></div>
+        <div class="screen-name" id="emoName" style="display:none"></div>
+        <div class="screen-gap" id="emoGap" style="display:none"></div>
+        <div class="screen-desc" id="emoDesc" style="display:none"></div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <p class="pair-note reveal d3"><b class="g">Guilt</b> aims at the act — <em class="soft">I did a bad thing</em>, and it can be repaired. &nbsp;<b class="s">Shame</b> aims at you — <em class="soft">I am a bad thing</em>. Same gap, different target. Naming which one you're in changes what happens next.</p>
+      <p class="note reveal d3" style="max-width:50ch;margin:0 auto">
+        <b>Readouts report change, not level.</b> A signal that never varies stops getting reported at all. That's how you can run on anxiety for months and not feel anxious — just tired, wired at night, jaw tight, short with people. The gauge went quiet because nothing on it <em class="soft">moved</em>, not because it dropped to zero.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 4 · WANTING vs LIKING -->
+<section class="scene" id="reward" data-nav="Wanting vs liking">
+  <div class="wrap">
+    <div class="eyebrow tint-gold reveal">The reward channel</div>
+    <h2 class="reveal d1">Wanting isn't liking.</h2>
+    <p class="lede reveal d2" style="max-width:40ch">Two separate systems. They usually travel together — and when they come apart, you get the pull with none of the payoff.</p>
+
+    <div class="meters reveal d2">
+      <div class="meter">
+        <div class="mlab"><span>Wanting</span><span class="mhint">the pull toward it</span></div>
+        <div class="mtrack"><div class="mfill want" id="wantFill"></div></div>
+      </div>
+      <div class="meter">
+        <div class="mlab"><span>Liking</span><span class="mhint">the actual pleasure</span></div>
+        <div class="mtrack"><div class="mfill like" id="likeFill"></div></div>
+      </div>
+      <p class="rw-note empty" id="rwNote" aria-live="polite">Pick a moment ↓</p>
+    </div>
+    <div class="chips reveal d3" id="rwChips"></div>
+
+    <p class="body reveal d3">Dopamine isn't the pleasure chemical. It's the <strong>gap signal for reward</strong> — it fires on <em class="soft">better than expected</em>, not on <em class="soft">good</em>. That's why anticipation so often beats arrival, and why the thing you chased for months can land with almost nothing.</p>
+    <p class="note reveal d4"><b>Where fun actually lives.</b> Play is prediction error you chose — a steady drip of small surprises at a size you can handle. That's the difference between a good game and a slot machine: both crank wanting, but only one keeps paying out in liking.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 5 · TRAP LOOPS -->
+<section class="scene" id="loops" data-nav="When loops trap">
+  <div class="wrap">
+    <div class="eyebrow tint-red reveal">When loops trap</div>
+    <h2 class="reveal d1">Some gaps never get to close.</h2>
+
+    <div class="trap-stage reveal d2">
+      <svg class="trap-svg" id="trapSvg" viewBox="0 0 400 400" aria-label="A self-feeding fear loop that can be broken by new evidence">
+        <circle class="trap-ring" cx="200" cy="200" r="120"/>
+        <!-- spinning packets -->
+        <g class="trap-spin"><circle class="packet glow-r" cx="200" cy="80" r="4.5"/></g>
+        <g class="trap-spin" style="animation-delay:-1.83s"><circle class="packet glow-r" cx="200" cy="80" r="3.4"/></g>
+        <g class="trap-spin" style="animation-delay:-3.67s"><circle class="packet glow-r" cx="200" cy="80" r="3.4"/></g>
+
+        <!-- 3 nodes -->
+        <g class="trap-node">
+          <circle cx="200" cy="80" r="26" class="node-c glow-r" stroke="var(--red)"/>
+          <path d="M191 74 h18 M200 80 v10 M200 66 v2" stroke="var(--red)" stroke-width="1.7" stroke-linecap="round"/>
+          <text x="200" y="42" text-anchor="middle">predict danger</text>
+        </g>
+        <g class="trap-node">
+          <circle cx="304" cy="260" r="26" class="node-c glow-r" stroke="var(--red)"/>
+          <path d="M295 268 q9 -16 18 0" fill="none" stroke="var(--red)" stroke-width="1.7"/>
+          <path d="M304 250 v-4" stroke="var(--red)" stroke-width="1.7" stroke-linecap="round"/>
+          <text x="344" y="300" text-anchor="middle">avoid it</text>
+        </g>
+        <g class="trap-node">
+          <circle cx="96" cy="260" r="26" class="node-c glow-r" stroke="var(--red)"/>
+          <path d="M86 260 h20 M96 250 v20" stroke="var(--red)" stroke-width="1.3" opacity=".5" stroke-linecap="round"/>
+          <circle cx="96" cy="260" r="11" fill="none" stroke="var(--red)" stroke-width="1.3" stroke-dasharray="2 4"/>
+          <text x="56" y="300" text-anchor="middle">no new proof</text>
+        </g>
+
+        <!-- evidence node revealed on break -->
+        <g class="evi">
+          <circle cx="200" cy="348" r="26" class="node-c glow-t" stroke="var(--teal)"/>
+          <path d="M190 348 l6 7 12-14" fill="none" stroke="var(--teal-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="200" y="392" text-anchor="middle" style="fill:var(--teal-soft)">it was safe</text>
+          <line x1="200" y1="322" x2="200" y2="228" stroke="var(--teal)" stroke-width="1.4" stroke-dasharray="3 5" class="flow"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="body reveal d3" id="trapBody">Predict danger → avoid it → so you never learn it was safe → predict danger again. The loop feeds itself and spins tighter. That's anxiety in one picture.</p>
+
+    <button class="btn reveal d3" id="breakBtn"><span class="bdot"></span>Let the evidence in</button>
+    <p class="caption reveal d4" id="trapCaption" aria-live="polite">The escape isn't fighting the loop harder. It's letting in the one thing that updates the guess.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 6 · STORYTELLER / DMN -->
+<section class="scene" id="storyteller" data-nav="The storyteller">
+  <div class="wrap">
+    <div class="eyebrow tint-dream reveal">The storyteller</div>
+    <h2 class="reveal d1">The part that narrates you.</h2>
+
+    <div class="dmn-stage" id="dmnStage">
+      <svg class="dmn-svg" viewBox="0 0 400 400" aria-label="The default mode network: quiet when engaged, spiraling when left alone">
+        <!-- world / task anchor -->
+        <g class="world-node">
+          <circle cx="200" cy="60" r="30" class="node-c glow-t" stroke="var(--teal)"/>
+          <path d="M188 60 h24 M200 48 v24" stroke="var(--teal-soft)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="200" cy="60" r="11" fill="none" stroke="var(--teal-soft)" stroke-width="1.4"/>
+          <text x="200" y="20" text-anchor="middle" class="node-label" style="fill:var(--teal-soft)">the world</text>
+        </g>
+
+        <!-- DMN network (a loose constellation) -->
+        <g class="dmn-net">
+          <line x1="130" y1="200" x2="200" y2="150"/><line x1="200" y1="150" x2="270" y2="200"/>
+          <line x1="130" y1="200" x2="200" y2="260"/><line x1="270" y1="200" x2="200" y2="260"/>
+          <line x1="200" y1="150" x2="200" y2="260"/><line x1="130" y1="200" x2="270" y2="200"/>
+          <circle class="n" cx="200" cy="150" r="8"/><circle class="n" cx="130" cy="200" r="8"/>
+          <circle class="n" cx="270" cy="200" r="8"/><circle class="n" cx="200" cy="260" r="8"/>
+          <circle class="n" cx="200" cy="205" r="6"/>
+        </g>
+
+        <!-- spiral, drawn when alone -->
+        <path class="spiralpath" d="M200 205
+          m0 0
+          a10 10 0 1 1 -14 6
+          a26 26 0 1 1 42 -10
+          a44 44 0 1 1 -66 20
+          a64 64 0 1 1 96 -34"/>
+        <g class="spiral-dot"><circle class="packet glow-d rot4" cx="264" cy="205" r="4.5" style="transform-origin:200px 205px"/></g>
+
+        <text x="200" y="330" text-anchor="middle" class="node-label" id="dmnState" style="fill:var(--dream-soft)">default mode · idling</text>
+      </svg>
+    </div>
+
+    <div class="toggle reveal d2" role="group" aria-label="Attention state">
+      <button id="btnWorld" class="on" aria-pressed="true">Out in the world</button>
+      <button id="btnAlone" aria-pressed="false">Alone with the story</button>
+    </div>
+
+    <p class="body reveal d3">When you're not busy with the world, a background network — the <strong>default mode network</strong> — switches on. It replays the past, rehearses the future, and keeps the running story of who you are.</p>
+    <p class="caption reveal d4" id="dmnCaption" aria-live="polite">Right now: engaged. The storyteller is quiet, feeding on real input from the world.</p>
+    <p class="note reveal d4"><b>Why presence works.</b> The spiral is the same network running alone on a dark story with no fresh data — rumination, identity stuck on repeat. Give the loop something real to chew on, and the narrator settles.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 7 · THE WHOLE -->
+<section class="scene" id="whole" data-nav="The whole thing">
+  <div class="wrap">
+    <div class="eyebrow reveal">The whole thing</div>
+    <h2 class="reveal d1">It was always one machine.</h2>
+
+    <div class="whole-stage reveal d2">
+      <svg class="whole-svg" viewBox="0 0 500 500" aria-label="One loop running at four nested levels: senses, reward and threat, goals, and identity">
+        <!-- concentric loops = same loop at bigger scales -->
+        <circle class="wr r1 rot1 glow-c" cx="250" cy="250" r="70" stroke-dasharray="4 12"/>
+        <circle class="wr r2 rot2 glow-e" cx="250" cy="250" r="115" stroke-dasharray="4 14"/>
+        <circle class="wr r3 rot3 glow-t" cx="250" cy="250" r="160" stroke-dasharray="4 16"/>
+        <circle class="wr r4 rot4 glow-d" cx="250" cy="250" r="205" stroke-dasharray="4 18"/>
+
+        <!-- outward pulse showing one signal moving through every level -->
+        <circle class="outpulse" cx="250" cy="250" fill="none" stroke="var(--cream)" stroke-width="1.4"/>
+
+        <!-- core -->
+        <circle cx="250" cy="250" r="30" fill="none" stroke="var(--cream)" stroke-width="1.4" class="glow-c"/>
+        <circle cx="250" cy="250" r="6" fill="var(--cream)" class="glow-c breathe" style="transform-origin:250px 250px"/>
+        <text x="250" y="254" text-anchor="middle" class="wlabel" style="fill:var(--cream);font-size:9px">one loop</text>
+
+        <!-- level markers riding each ring -->
+        <g class="rot1"><circle cx="250" cy="180" r="3" fill="var(--cream)" class="glow-c"/></g>
+        <g class="rot2"><circle cx="250" cy="135" r="3" fill="var(--ember)" class="glow-e"/></g>
+        <g class="rot3"><circle cx="250" cy="90" r="3" fill="var(--teal)" class="glow-t"/></g>
+        <g class="rot4"><circle cx="250" cy="45" r="3" fill="var(--dream)" class="glow-d"/></g>
+
+        <!-- labels -->
+        <text x="250" y="330" text-anchor="middle" class="wlabel" style="fill:var(--cream-dim)">senses</text>
+        <text x="405" y="255" text-anchor="middle" class="wlabel" style="fill:var(--ember-soft)">reward &amp; threat</text>
+        <text x="95" y="255" text-anchor="middle" class="wlabel" style="fill:var(--teal-soft)">goals</text>
+        <text x="250" y="30" text-anchor="middle" class="wlabel" style="fill:var(--dream-soft)">identity</text>
+      </svg>
+    </div>
+
+    <p class="body reveal d3">One loop — <strong>guess, feel the gap, respond</strong> — running at every level at once. Sensation. Reward and threat. Goals. Identity. Different scales, same engine.</p>
+    <p class="body reveal d4" style="max-width:42ch">The two speeds, the feelings, the wanting, the fear loops, the spiral — none of them were separate systems. They're what this single loop looks like from different heights.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 8 · FIELD GUIDE -->
+<section class="scene" id="weird" data-nav="Feeling weird?">
+  <div class="wrap">
+    <div class="eyebrow tint-teal reveal">The field guide</div>
+    <h2 class="reveal d1">So you feel weird.</h2>
+    <p class="lede reveal d2" style="max-width:39ch">Find what's happening. See what the loop is doing. Then the one move that actually helps.</p>
+
+    <div class="dash reveal d2">
+      <div class="screen" id="wxScreen" aria-live="polite">
+        <div class="screen-empty" id="wxEmpty">Pick what's going on ↓</div>
+        <div class="screen-name" id="wxName" style="display:none"></div>
+        <div class="screen-gap" id="wxGap" style="display:none"></div>
+        <div class="screen-desc" id="wxDesc" style="display:none"></div>
+        <div class="wx-move" id="wxMove" style="display:none"></div>
+      </div>
+      <div class="chips" id="wxChips"></div>
+      <p class="note reveal d3" style="max-width:50ch;margin:10px auto 0">
+        <b>For ordinary weird.</b> A bad afternoon, a stuck thought, a mood with no obvious cause — that's what this is for. When it's heavier than that, or it just won't lift, that isn't a loop to debug on your own. Tell someone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER -->
+<footer class="footer">
+  <div class="eyebrow tint-ember reveal">Once you can see it</div>
+  <p class="big reveal d1">You stop living <em class="soft">inside</em> the loop and start working <em class="soft">with</em> it.</p>
+  <p class="close reveal d2">Every practice that changes you — attention, honesty, rest, worship — is really just teaching this one loop a better set of guesses.</p>
+  <p class="honest reveal d3"><b style="color:var(--cream-dim)">A map, not a diagnosis.</b> This leans on predictive processing and modern reward research — leading lenses in current neuroscience, not the final word. The brain is messier than any diagram. Use this as a handle for thinking, hold it loosely, and trust your own experience over the picture.</p>
+  <div class="sig reveal d3">The Predicting Mind</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- side nav build ---------- */
+  var scenes = Array.prototype.slice.call(document.querySelectorAll('section[data-nav], footer'));
+  var nav = document.getElementById('nav');
+  var navMap = [];
+  document.querySelectorAll('section[data-nav]').forEach(function(sec){
+    var a = document.createElement('a');
+    a.href = '#'+sec.id;
+    a.setAttribute('aria-label', sec.getAttribute('data-nav'));
+    var s = document.createElement('span'); s.textContent = sec.getAttribute('data-nav');
+    a.appendChild(s);
+    a.addEventListener('click', function(e){ e.preventDefault(); sec.scrollIntoView({behavior: reduce?'auto':'smooth'}); });
+    nav.appendChild(a);
+    navMap.push({el:a, sec:sec});
+  });
+
+  /* ---------- reveal on view + active nav ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.classList.add('in');
+        navMap.forEach(function(m){ m.el.classList.toggle('active', m.sec===en.target); });
+      }
+    });
+  }, {threshold:0.28});
+  document.querySelectorAll('section').forEach(function(s){ io.observe(s); });
+  // footer reveal only
+  var fio = new IntersectionObserver(function(e){ e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('in'); }); },{threshold:0.2});
+  fio.observe(document.querySelector('.footer'));
+
+  /* ---------- ambient particle field ---------- */
+  var cv = document.getElementById('field'), cx = cv.getContext('2d'), parts = [], W, H, DPR;
+  function size(){ DPR = Math.min(window.devicePixelRatio||1, 2); W = cv.width = innerWidth*DPR; H = cv.height = innerHeight*DPR; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px'; }
+  size(); addEventListener('resize', size);
+  var COUNT = innerWidth < 640 ? 26 : 46;
+  var cols = ['243,101,28','51,194,201','155,140,242','233,178,74'];
+  for(var i=0;i<COUNT;i++){
+    parts.push({ x:Math.random()*W, y:Math.random()*H, r:(Math.random()*1.6+.4)*DPR,
+      vx:(Math.random()-.5)*.14*DPR, vy:(Math.random()-.5)*.14*DPR,
+      a:Math.random()*.4+.1, c:cols[i%cols.length], tw:Math.random()*Math.PI*2 });
+  }
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    for(var i=0;i<parts.length;i++){ var p=parts[i];
+      p.x+=p.vx; p.y+=p.vy; p.tw+=0.02;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      var al = p.a*(0.6+0.4*Math.sin(p.tw));
+      cx.beginPath(); cx.arc(p.x,p.y,p.r,0,6.28);
+      cx.fillStyle='rgba('+p.c+','+al+')';
+      cx.shadowBlur=8*DPR; cx.shadowColor='rgba('+p.c+','+(al*0.8)+')';
+      cx.fill();
+    }
+    cx.shadowBlur=0;
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  if(reduce){ draw(); } else { requestAnimationFrame(draw); }
+
+  /* ---------- TWO SPEEDS: stress dial ---------- */
+  var stress = document.getElementById('stress'),
+      needle = document.getElementById('needle'),
+      readout = document.getElementById('stressReadout'),
+      poleFast = document.getElementById('poleFast'),
+      poleSlow = document.getElementById('poleSlow'),
+      speedsScene = document.getElementById('speeds');
+  function setStress(v){
+    var t = v/100;                       // 0 calm .. 1 threat
+    var deg = -78 + t*156;               // needle sweep left->right
+    needle.style.transform = 'rotate('+deg+'deg)';
+    var fast = t>0.5;
+    poleFast.classList.toggle('on', fast);
+    poleSlow.classList.toggle('on', !fast);
+    // warm the scene glow toward ember as stress rises
+    speedsScene.style.filter = 'saturate('+(1+t*0.25)+')';
+    if(t<0.28) readout.textContent = "Calm. The slow system can steer toward what you actually want.";
+    else if(t<0.58) readout.textContent = "Rising. Fast starts pulling focus to the immediate.";
+    else if(t<0.82) readout.textContent = "Fast has the wheel — survival and craving get loud, later goes quiet.";
+    else readout.textContent = "Full freak-out. Only right now exists. Future you isn't in the room.";
+  }
+  stress.addEventListener('input', function(){ setStress(+stress.value); });
+  setStress(+stress.value);
+
+  /* ---------- EMOTIONS dashboard ---------- */
+  var EMO = [
+    { key:'calm',  name:'Calm · reward', color:'233,178,74',
+      gap:'gap: none — or better than hoped',
+      desc:'Reality matched your guess, or beat it. Nothing to fix. Rest, or savor the win.',
+      svg:'<circle cx="12" cy="12" r="9"/><path d="M8 13 q4 4 8 0" fill="none"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/>' },
+    { key:'fear',  name:'Fear', color:'255,78,54',
+      gap:'gap: a threat is predicted, not yet here',
+      desc:'Your brain braces before danger arrives. Priceless in real danger. Exhausting on a loop.',
+      svg:'<path d="M12 3 l9 16 H3 z" fill="none"/><path d="M12 10 v4 M12 16.5 v.5"/>' },
+    { key:'guilt', name:'Guilt', color:'51,194,201',
+      gap:'gap: action vs. what you value → the act',
+      desc:'You did something against what you value. Points at the deed — "I did a bad thing." It can be repaired.',
+      svg:'<path d="M12 3 v18 M5 8 h14 M6 8 l-2 5 h4z M18 8 l-2 5 h4z" fill="none"/>' },
+    { key:'shame', name:'Shame', color:'155,140,242',
+      gap:'gap: action vs. self-model → the self',
+      desc:'The same gap, aimed at YOU — "I am a bad thing." Heavier, stickier, and usually a distortion of the data.',
+      svg:'<circle cx="12" cy="8" r="4" fill="none"/><path d="M5 21 c0-4 3-7 7-7 s7 3 7 7" fill="none"/><path d="M9 8 l6 0" opacity=".5"/>' },
+    { key:'curio', name:'Curiosity', color:'119,227,232',
+      gap:'gap: one you can close by learning',
+      desc:'A gap you sense you can actually close — the pleasant pull toward figuring something out.',
+      svg:'<circle cx="11" cy="11" r="7" fill="none"/><path d="M16 16 l4 4"/><path d="M11 8 a2 2 0 1 1 1 4 v1" fill="none"/>' },
+    { key:'over',  name:'Overwhelm', color:'242,235,220',
+      gap:'gap: too many at once, none rankable',
+      desc:'Too many gaps firing together. The system can\'t sort them, so everything screams. The fix is fewer, not louder.',
+      svg:'<path d="M4 7 h16 M4 12 h16 M4 17 h16" opacity=".9"/><path d="M18 4 l2 3 M20 4 l-2 3" stroke-width="1.2"/>' }
+  ];
+  var chips = document.getElementById('chips');
+  var scr = document.getElementById('emoScreen'),
+      icEl = document.getElementById('emoIc'), nmEl = document.getElementById('emoName'),
+      gpEl = document.getElementById('emoGap'), dsEl = document.getElementById('emoDesc'),
+      emptyEl = document.getElementById('emoEmpty');
+  EMO.forEach(function(e){
+    var b = document.createElement('button');
+    b.className='chip'; b.type='button'; b.setAttribute('aria-pressed','false');
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="rgb('+e.color+')" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+e.svg+'</svg>'+e.name;
+    b.addEventListener('click', function(){
+      chips.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); c.style.background=''; c.style.borderColor=''; c.setAttribute('aria-pressed','false'); });
+      b.classList.add('active'); b.setAttribute('aria-pressed','true'); b.style.background='rgb('+e.color+')'; b.style.borderColor='rgb('+e.color+')';
+      emptyEl.style.display='none';
+      icEl.style.display='grid'; nmEl.style.display='block'; gpEl.style.display='block'; dsEl.style.display='block';
+      icEl.innerHTML='<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgb('+e.color+')" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px rgba('+e.color+',.6))">'+e.svg+'</svg>';
+      nmEl.textContent=e.name; nmEl.style.color='rgb('+e.color+')';
+      gpEl.textContent=e.gap; dsEl.textContent=e.desc;
+      scr.style.setProperty('--glowc','rgba('+e.color+',.16)');
+      scr.style.borderColor='rgba('+e.color+',.4)';
+    });
+    chips.appendChild(b);
+  });
+
+  /* ---------- WANTING vs LIKING ---------- */
+  var RW = [
+    { label:'Endless scrolling', want:90, like:12,
+      note:'Maximum pull, almost no payoff. The system dragging you back isn\'t the one that enjoys it — which is how an hour vanishes and you feel worse than when you started.' },
+    { label:'A notification', want:76, like:8,
+      note:'A pure wanting spike. It promises a reward gap and almost never closes one.' },
+    { label:'First bite when you\'re starving', want:84, like:92,
+      note:'Both systems aligned. This is what reward is supposed to feel like — the pull pointing at something that actually delivers.' },
+    { label:'Fifth bite of the same thing', want:28, like:24,
+      note:'The gap has closed, so the signal fades. Nothing is wrong with the food — your prediction simply caught up with it.' },
+    { label:'The thing you worked months for', want:72, like:52,
+      note:'Usually quieter than predicted. You already spent the anticipation in installments on the way up, so there\'s less left to collect at the top.' },
+    { label:'A game that\'s just hard enough', want:64, like:80,
+      note:'The challenge fits, so every small win pays out in both channels at once. Liking leads for once — which is more or less the definition of fun.' }
+  ];
+  var rwChips = document.getElementById('rwChips'), wantFill = document.getElementById('wantFill'),
+      likeFill = document.getElementById('likeFill'), rwNote = document.getElementById('rwNote');
+  RW.forEach(function(r){
+    var b = document.createElement('button');
+    b.className = 'chip'; b.type = 'button'; b.setAttribute('aria-pressed','false'); b.textContent = r.label;
+    b.addEventListener('click', function(){
+      rwChips.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); c.style.background=''; c.style.borderColor=''; c.setAttribute('aria-pressed','false'); });
+      b.classList.add('active'); b.setAttribute('aria-pressed','true'); b.style.background='var(--cream)'; b.style.borderColor='var(--cream)';
+      wantFill.style.width = r.want+'%';
+      likeFill.style.width = r.like+'%';
+      rwNote.classList.remove('empty');
+      rwNote.textContent = r.note;
+    });
+    rwChips.appendChild(b);
+  });
+
+  /* ---------- FIELD GUIDE: what's happening right now ---------- */
+  var WEIRD = [
+    { label:"Can't stop worrying", color:'255,78,54',
+      tag:'the loop: guessing danger, never testing it',
+      what:'Your brain predicted a threat, then steered you away from finding out. The guess never got corrected — so tomorrow it fires again, just as confident.',
+      move:'Let in one small piece of real evidence. Not reassurance from someone else — an actual test, however small it has to be.' },
+    { label:'Replaying a conversation', color:'155,140,242',
+      tag:'the loop: running with no fresh input',
+      what:'With nothing real to chew on, the storyteller feeds on its own output. Every replay makes the story feel truer without adding a single new fact.',
+      move:'Give it something real. A walk, a task, another person — anything with actual sensory data attached. The narrator quiets when it has input.' },
+    { label:"Everything's too much", color:'242,235,220',
+      tag:'the loop: too many gaps, none rankable',
+      what:"Several gaps are open at once and none is clearly the biggest. The system can't sort them, so it marks all of them urgent.",
+      move:'Close one gap completely — the nearest one, not the most important one. Ranking comes back online the moment something actually resolves.' },
+    { label:"I did the thing I said I wouldn't", color:'243,101,28',
+      tag:'the loop: fast had the wheel',
+      what:"Under load the horizon shrinks to right now, and future you simply wasn't in the room to be consulted. That's the dial moving, not your character failing.",
+      move:'The move is earlier, not in the moment — lower the load before the decision arrives. And aim the regret at the act, not at yourself. That version can be repaired.' },
+    { label:'Fine on paper, feel flat', color:'233,178,74',
+      tag:'the loop: reading speed, not distance',
+      what:"Feelings track how fast the gap is closing, not how close you are. A plateau reads as failure even when you're further along than you've ever been.",
+      move:'Measure the change, not the distance. Look at where you were a month ago instead of how far there is left to go.' },
+    { label:"I don't know what I want", color:'233,178,74',
+      tag:'the loop: wanting and liking have come apart',
+      what:"Wanting points wherever your history trained it to point, not at what actually satisfies you. Repeat that enough times and the pull stops being useful information about what's good for you — so you can chase all day and never arrive anywhere.",
+      move:"Stop asking what you want and check what you actually liked. Look back at the last few weeks for what left you better afterwards, not for what pulled hardest at the time." },
+    { label:"Fine, but I can't sleep", color:'155,140,242',
+      tag:'the loop: a signal so constant it stopped being reported',
+      what:"Feelings report change, not level. Run on threat long enough and the readout goes quiet while the body stays braced — so it surfaces as sleep, stomach, jaw or a short fuse instead of as fear.",
+      move:"Trust the body over the readout. If the physical signs say braced, treat that as real even when you don't feel anxious. That gauge is not a reliable zero." },
+    { label:'Off, and no reason why', color:'51,194,201',
+      tag:'the loop: the body is an input',
+      what:'Tired, hungry, sick or overstimulated, the brain predicts threat more readily and everything reads a shade worse. Often there is no story — just a body state your mind is busy explaining.',
+      move:"Check the physical before you trust the interpretation. After a bad night, treat the mood as data about your body, not a verdict on your life." }
+  ];
+  var wxChips = document.getElementById('wxChips'), wxScr = document.getElementById('wxScreen'),
+      wxName = document.getElementById('wxName'), wxGap = document.getElementById('wxGap'),
+      wxDesc = document.getElementById('wxDesc'), wxMove = document.getElementById('wxMove'),
+      wxEmpty = document.getElementById('wxEmpty');
+  WEIRD.forEach(function(w){
+    var b = document.createElement('button');
+    b.className = 'chip'; b.type = 'button'; b.setAttribute('aria-pressed','false'); b.textContent = w.label;
+    b.addEventListener('click', function(){
+      wxChips.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); c.style.background=''; c.style.borderColor=''; c.setAttribute('aria-pressed','false'); });
+      b.classList.add('active'); b.setAttribute('aria-pressed','true'); b.style.background='rgb('+w.color+')'; b.style.borderColor='rgb('+w.color+')';
+      wxEmpty.style.display='none';
+      wxName.style.display='block'; wxGap.style.display='block';
+      wxDesc.style.display='block'; wxMove.style.display='block';
+      wxName.textContent = w.label; wxName.style.color = 'rgb('+w.color+')';
+      wxGap.textContent = w.tag;
+      wxDesc.textContent = w.what;
+      wxMove.innerHTML = '<b>Try this</b>' + w.move;
+      wxScr.style.setProperty('--glowc','rgba('+w.color+',.16)');
+      wxScr.style.borderColor = 'rgba('+w.color+',.4)';
+    });
+    wxChips.appendChild(b);
+  });
+
+  /* ---------- TRAP loop break ---------- */
+  var trapSvg = document.getElementById('trapSvg'),
+      breakBtn = document.getElementById('breakBtn'),
+      trapCaption = document.getElementById('trapCaption'),
+      trapBody = document.getElementById('trapBody'),
+      trapped = true;
+  breakBtn.addEventListener('click', function(){
+    trapped = !trapped;
+    trapSvg.classList.toggle('settled', !trapped);
+    if(!trapped){
+      breakBtn.innerHTML='<span class="bdot"></span>Run the trap again';
+      trapCaption.textContent='The guess finally gets updated: "safe." Arousal cools, the loop slows and lets go. That\'s exactly how exposure and honesty work.';
+      trapBody.innerHTML='One piece of real evidence reaches the compare step — and the whole self-feeding loop loses its fuel.';
+    } else {
+      breakBtn.innerHTML='<span class="bdot"></span>Let the evidence in';
+      trapCaption.textContent='The escape isn\'t fighting the loop harder. It\'s letting in the one thing that updates the guess.';
+      trapBody.innerHTML='Predict danger → avoid it → so you never learn it was safe → predict danger again. The loop feeds itself and spins tighter. That\'s anxiety in one picture.';
+    }
+  });
+
+  /* ---------- STORYTELLER / DMN toggle ---------- */
+  var dmnStage = document.getElementById('dmnStage'),
+      btnWorld = document.getElementById('btnWorld'),
+      btnAlone = document.getElementById('btnAlone'),
+      dmnCaption = document.getElementById('dmnCaption'),
+      dmnState = document.getElementById('dmnState');
+  function setDmn(alone){
+    dmnStage.classList.toggle('alone', alone);
+    btnAlone.classList.toggle('on', alone);
+    btnWorld.classList.toggle('on', !alone);
+    btnAlone.setAttribute('aria-pressed', String(alone));
+    btnWorld.setAttribute('aria-pressed', String(!alone));
+    if(alone){
+      dmnState.textContent='default mode · spiraling';
+      dmnCaption.textContent='Left alone with the story, the network loops on itself with no fresh input. Same machine — now it\'s rumination.';
+    } else {
+      dmnState.textContent='default mode · quiet';
+      dmnCaption.textContent='Engaged with the world, the storyteller stays quiet, feeding on real input instead of its own echo.';
+    }
+  }
+  btnWorld.addEventListener('click', function(){ setDmn(false); });
+  btnAlone.addEventListener('click', function(){ setDmn(true); });
+
+})();
+</script>
+</body>
+</html>
