@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Master Key</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..520&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0D0B;
+    --ink-raised:#15130F;
+    --cream:#F2EBDC;
+    --cream-dim:rgba(242,235,220,0.60);
+    --cream-faint:rgba(242,235,220,0.32);
+    --orange:#F3651C;
+    --orange-tint:rgba(243,101,28,0.08);
+    --line:rgba(242,235,220,0.12);
+    --line-soft:rgba(242,235,220,0.07);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:#0E0D0B;
+    color:#F2EBDC;
+    font-family:"Instrument Sans",system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 28px}
+
+  .mono{
+    font-family:"JetBrains Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:120px 0 64px;text-align:center}
+  .eyebrow{color:#F3651C;margin-bottom:30px}
+  .hero h1{
+    font-family:"Fraunces",serif;
+    font-optical-sizing:auto;
+    font-weight:380;
+    font-size:clamp(56px,12vw,104px);
+    line-height:0.94;
+    letter-spacing:-0.02em;
+    margin-bottom:8px;
+  }
+  .hero h1 em{font-style:italic;font-weight:340;color:#F3651C}
+  .hero .sub{
+    font-family:"Fraunces",serif;
+    font-weight:300;
+    font-style:italic;
+    font-size:clamp(19px,3.4vw,25px);
+    color:rgba(242,235,220,0.60);
+    letter-spacing:-0.01em;
+    margin-top:18px;
+  }
+
+  .hero-loop{margin:64px auto 0;max-width:380px}
+  .hero-loop svg{width:100%;height:auto;display:block}
+
+  .lede{
+    max-width:600px;
+    margin:64px auto 0;
+    font-size:clamp(19px,3.2vw,22px);
+    line-height:1.58;
+    color:#F2EBDC;
+    text-align:center;
+  }
+  .lede .accent{color:#F3651C}
+
+  /* ---------- SECTIONS ---------- */
+  .section{padding:96px 0;border-top:1px solid rgba(242,235,220,0.07)}
+  .section-head{margin-bottom:48px}
+  .section-num{color:#F3651C;display:block;margin-bottom:18px}
+  .section-title{
+    font-family:"Fraunces",serif;
+    font-weight:360;
+    font-size:clamp(32px,6vw,46px);
+    line-height:1.02;
+    letter-spacing:-0.018em;
+  }
+  .section-title em{font-style:italic;color:#F3651C;font-weight:340}
+  p{margin-bottom:22px;color:rgba(242,235,220,0.60)}
+  p strong{color:#F2EBDC;font-weight:600}
+  p .hot{color:#F3651C;font-weight:500}
+  .body-em{
+    font-family:"Fraunces",serif;
+    font-style:italic;
+    font-weight:340;
+    font-size:1.06em;
+    color:#F2EBDC;
+  }
+
+  /* diagram blocks */
+  .diagram{
+    margin:40px 0;
+    padding:36px 28px;
+    background:#15130F;
+    border:1px solid rgba(242,235,220,0.12);
+    border-radius:2px;
+  }
+  .diagram svg{width:100%;height:auto;display:block}
+  .diagram-cap{
+    margin-top:24px;
+    text-align:center;
+    font-size:14.5px;
+    color:rgba(242,235,220,0.60);
+    line-height:1.5;
+  }
+
+  .twin{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:40px 0}
+  .twin .cell{
+    background:#15130F;
+    border:1px solid rgba(242,235,220,0.12);
+    border-radius:2px;
+    padding:28px 20px 24px;
+  }
+  .twin .cell.hot{border-color:rgba(243,101,28,0.35);background:rgba(243,101,28,0.08)}
+  .twin .cell-label{margin-bottom:6px;color:rgba(242,235,220,0.32)}
+  .twin .cell.hot .cell-label{color:#F3651C}
+  .twin .cell svg{width:100%;height:auto;display:block;margin:6px 0 16px}
+  .twin .cell-note{font-size:13.5px;line-height:1.48;color:rgba(242,235,220,0.60)}
+  @media(max-width:560px){.twin{grid-template-columns:1fr}}
+
+  /* ---------- LADDER ---------- */
+  .ladder{margin:44px 0 12px}
+  .rung{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:20px;
+    align-items:start;
+    padding:24px 24px 24px 22px;
+    border-left:2px solid rgba(242,235,220,0.32);
+    background:#15130F;
+    border-radius:0 2px 2px 0;
+    margin-bottom:10px;
+  }
+  .rung.hot{border-left-color:#F3651C;background:rgba(243,101,28,0.08)}
+  .rung-label{color:rgba(242,235,220,0.32);margin-bottom:12px}
+  .rung.hot .rung-label{color:#F3651C}
+  .rung-q{
+    font-family:"Fraunces",serif;
+    font-style:italic;
+    font-weight:340;
+    font-size:clamp(20px,3.6vw,25px);
+    line-height:1.22;
+    color:#F2EBDC;
+    letter-spacing:-0.01em;
+  }
+  .rung-lands{margin-top:14px;font-size:14.5px;color:rgba(242,235,220,0.60)}
+  .rung-lands b{color:#F2EBDC;font-weight:600}
+  .rung.hot .rung-lands b{color:#F3651C}
+  .badge{
+    font-family:"JetBrains Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    padding:7px 11px;
+    border-radius:2px;
+    border:1px solid rgba(242,235,220,0.12);
+    color:rgba(242,235,220,0.60);
+    text-align:center;
+  }
+  .badge.closes{border-color:rgba(242,235,220,0.3)}
+  .badge.loops{border-color:rgba(243,101,28,0.45);color:#F3651C}
+  .badge.doc{border-color:rgba(242,235,220,0.30);color:rgba(242,235,220,0.60)}
+  .badge.ext{border-color:rgba(243,101,28,0.45);color:#F3651C}
+
+  /* ---------- SPOOF LIST ---------- */
+  .spoof-legend{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin:30px 0 6px}
+  .spoof-legend span{display:inline-flex;align-items:center;gap:10px;font-size:13px;color:rgba(242,235,220,0.60)}
+  .spoof{margin:14px 0 12px}
+  .spoof-row{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;padding:24px 4px;border-top:1px solid rgba(242,235,220,0.07)}
+  .spoof-row:last-child{border-bottom:1px solid rgba(242,235,220,0.07)}
+  .sig-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:11px;margin-bottom:10px}
+  .sig{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#F2EBDC}
+  .sig-arrow{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:rgba(242,235,220,0.32)}
+  .sig-read{font-family:"Fraunces",serif;font-style:italic;font-weight:360;font-size:clamp(19px,3.4vw,24px);color:#F3651C;letter-spacing:-0.01em}
+  .spoof-note{font-size:14.5px;color:rgba(242,235,220,0.60);line-height:1.52}
+  .spoof-note b{color:#F2EBDC;font-weight:600}
+  .spoof-row .badge{align-self:start}
+  @media(max-width:560px){.spoof-row{grid-template-columns:1fr;gap:13px}.spoof-row .badge{justify-self:start}}
+
+  /* gate tests */
+  .tests{margin:36px 0 0;padding:30px 28px;border:1px solid rgba(242,235,220,0.12);border-radius:2px;background:#15130F}
+  .tests .t-head{margin-bottom:16px;color:#F3651C}
+  .tests ul{list-style:none}
+  .tests li{font-family:"Fraunces",serif;font-style:italic;font-weight:340;font-size:clamp(18px,3.2vw,22px);line-height:1.3;color:#F2EBDC;padding:13px 0;border-bottom:1px solid rgba(242,235,220,0.07)}
+  .tests li:last-child{border-bottom:none}
+  .tests .t-foot{margin-top:18px;color:rgba(242,235,220,0.60);font-size:15px}
+
+  .threshold{
+    display:flex;align-items:center;gap:16px;
+    margin:22px 2px 22px;
+  }
+  .threshold .rule{flex:1;height:1px;background:linear-gradient(90deg,rgba(242,235,220,0.32),#F3651C)}
+  .threshold .rule.rev{background:linear-gradient(90deg,#F3651C,rgba(242,235,220,0.32))}
+  .threshold .label{color:#F3651C;text-align:center;flex-shrink:0}
+  .threshold .label small{
+    display:block;font-family:"Instrument Sans",sans-serif;
+    text-transform:none;letter-spacing:normal;font-size:12.5px;
+    color:rgba(242,235,220,0.60);margin-top:5px;max-width:230px;line-height:1.4;
+  }
+  @media(max-width:560px){
+    .rung{grid-template-columns:1fr;gap:14px}
+    .badge{justify-self:start}
+  }
+
+  /* ---------- CLOSE ---------- */
+  .close{padding:104px 0 40px;text-align:center;border-top:1px solid rgba(242,235,220,0.07)}
+  .close-dot{margin:0 auto 44px;width:120px}
+  .close-dot svg{width:100%;height:auto;display:block}
+  .close-line{
+    font-family:"Fraunces",serif;
+    font-weight:330;
+    font-style:italic;
+    font-size:clamp(24px,4.6vw,34px);
+    line-height:1.3;
+    letter-spacing:-0.015em;
+    max-width:600px;margin:0 auto;
+  }
+  .close-line .accent{color:#F3651C}
+  .close-sub{max-width:520px;margin:30px auto 0;color:rgba(242,235,220,0.60);font-size:16px}
+
+  footer{
+    text-align:center;padding:60px 0 80px;
+    color:rgba(242,235,220,0.32);
+  }
+  footer .mono{font-size:11px;letter-spacing:0.18em}
+
+  /* SVG shared text */
+  .svg-label{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:0.08em;fill:#F2EBDC}
+  .svg-label-dim{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.06em;fill:rgba(242,235,220,0.32)}
+  .svg-em{font-family:"Fraunces",serif;font-style:italic;font-size:13px;fill:rgba(242,235,220,0.60)}
+
+  @media(prefers-reduced-motion:reduce){
+    .moving{animation:none !important}
+    animateMotion{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="mono eyebrow">Wanting / liking · applied to knowing</div>
+    <h1>The <em>Master</em> Key</h1>
+    <div class="sub">the optimization loop that hunts for the one sentence behind everything</div>
+
+    <div class="hero-loop">
+      <svg viewBox="0 0 400 400" role="img" aria-label="A loop cycling through Seek, Synthesize, The Click, and Decay, with a pulse traveling it endlessly and no exit.">
+        <defs>
+          <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <path id="loopPath" d="M 200,64 A 136,136 0 0,1 200,336 A 136,136 0 0,1 200,64" fill="none"/>
+        </defs>
+
+        <!-- track -->
+        <circle cx="200" cy="200" r="136" fill="none" stroke="rgba(242,235,220,0.12)" stroke-width="1.5" stroke-dasharray="2 7"/>
+
+        <!-- nodes -->
+        <circle cx="200" cy="64" r="5" fill="#F2EBDC"/>
+        <circle cx="336" cy="200" r="5" fill="#F2EBDC"/>
+        <circle cx="200" cy="336" r="5" fill="#F3651C"/>
+        <circle cx="64" cy="200" r="5" fill="#F2EBDC"/>
+
+        <!-- labels -->
+        <text x="200" y="44" text-anchor="middle" class="svg-label">SEEK</text>
+        <text x="352" y="204" text-anchor="start" class="svg-label">SYNTHESIZE</text>
+        <text x="200" y="364" text-anchor="middle" class="svg-label" fill="#F3651C">THE CLICK</text>
+        <text x="48" y="204" text-anchor="end" class="svg-label">DECAY</text>
+
+        <!-- center -->
+        <text x="200" y="196" text-anchor="middle" class="svg-em">no exit</text>
+        <text x="200" y="216" text-anchor="middle" class="svg-label-dim">IT JUST RUNS</text>
+
+        <!-- traveling pulse + chevron -->
+        <g>
+          <circle r="5.5" fill="#F3651C" filter="url(#glow)"/>
+          <path d="M -4,-5 L 7,0 L -4,5 Z" fill="#F2EBDC"/>
+          <animateMotion dur="8s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#loopPath"/>
+          </animateMotion>
+        </g>
+      </svg>
+    </div>
+
+    <p class="lede">The drive to understand everything is real, and it is good. The craving for the <span class="accent">feeling</span> of having understood is its counterfeit — and it runs as a loop that cannot stop, because the reward fires on revelation, not on truth.</p>
+  </header>
+
+  <!-- I. THE ENGINE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="mono section-num">I — The engine</span>
+      <h2 class="section-title">Four beats, then it resets</h2>
+    </div>
+    <p>The cycle is simple. You <strong>seek</strong> — scan, read, gather. You <strong>synthesize</strong> — strip the noise until a common denominator surfaces. Then comes <span class="hot">the click</span>: the sudden <em>aha</em>, the high-density sentence that sounds like it explains everything. And then it <strong>decays</strong>.</p>
+    <p>That last beat is the whole problem. The hit doesn't bank. It returns to baseline — the hedonic setpoint — and the gap between that flat baseline and the remembered high <em>is</em> the hunger. The hunger is what starts the next lap.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 620 230" role="img" aria-label="A sawtooth curve: flat baseline, sharp spike to a peak labeled the click, decay back to baseline, repeating. The gap between baseline and peak is labeled the wanting.">
+        <!-- baseline -->
+        <line x1="0" y1="178" x2="620" y2="178" stroke="rgba(242,235,220,0.12)" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="0" y="200" class="svg-label-dim">BASELINE — the setpoint always returns here</text>
+
+        <!-- curve -->
+        <path d="M 0,178 L 64,178 L 92,52 Q 108,178 200,178 L 248,178 L 276,52 Q 292,178 384,178 L 432,178 L 460,52 Q 476,178 568,178 L 620,178"
+              fill="none" stroke="#F3651C" stroke-width="2.5" stroke-linejoin="round"/>
+
+        <!-- click label on first peak -->
+        <circle cx="92" cy="52" r="3.5" fill="#F3651C"/>
+        <text x="92" y="42" text-anchor="middle" class="svg-label" fill="#F3651C">THE CLICK</text>
+
+        <!-- the gap / wanting -->
+        <line x1="176" y1="178" x2="176" y2="74" stroke="rgba(242,235,220,0.32)" stroke-width="1" stroke-dasharray="2 4"/>
+        <path d="M 176,86 L 172,96 M 176,86 L 180,96" stroke="rgba(242,235,220,0.32)" stroke-width="1" fill="none"/>
+        <path d="M 176,166 L 172,156 M 176,166 L 180,156" stroke="rgba(242,235,220,0.32)" stroke-width="1" fill="none"/>
+        <text x="186" y="128" text-anchor="start" class="svg-em">the gap = the wanting</text>
+      </svg>
+      <div class="diagram-cap">Each spike decays to the same floor. The loop isn't paying out understanding — it's paying out the <em>sensation</em> of it, and that sensation is engineered to fade.</div>
+    </div>
+  </section>
+
+  <!-- II. WHY IT NEVER RESOLVES -->
+  <section class="section">
+    <div class="section-head">
+      <span class="mono section-num">II — The missing gate</span>
+      <h2 class="section-title">Why it can't <em>terminate</em></h2>
+    </div>
+    <p>A real learning loop has a gate. You ask a question, you inquire, you <strong>actually understand</strong> — and the question closes. You stop. The loop knows it's done because the thing it was after has arrived.</p>
+    <p>This loop has no gate. The reward is the <em>feeling</em> of insight, and that feeling fires <span class="hot">identically</span> whether the connection is true (real insight) or false (apophenia — the mind forcing coherence onto chaos). So the loop literally cannot tell <span class="body-em">"I understood"</span> apart from <span class="body-em">"I felt like I understood."</span> And a loop that can't detect its own completion has no way to stop.</p>
+
+    <div class="twin">
+      <div class="cell">
+        <div class="mono cell-label">Learning</div>
+        <svg viewBox="0 0 280 200" role="img" aria-label="A loop with an exit arrow leading out to a terminal dot labeled rest.">
+          <defs>
+            <path id="lp2" d="M 110,40 A 70,70 0 0,1 110,180 A 70,70 0 0,1 110,40" fill="none"/>
+          </defs>
+          <circle cx="110" cy="110" r="70" fill="none" stroke="rgba(242,235,220,0.12)" stroke-width="1.5" stroke-dasharray="2 6"/>
+          <!-- exit -->
+          <path d="M 180,110 L 236,110" stroke="#F2EBDC" stroke-width="1.5" fill="none"/>
+          <path d="M 230,104 L 240,110 L 230,116" stroke="#F2EBDC" stroke-width="1.5" fill="none"/>
+          <circle cx="252" cy="110" r="6" fill="#F2EBDC"/>
+          <text x="252" y="134" text-anchor="middle" class="svg-label">REST</text>
+          <text x="110" y="114" text-anchor="middle" class="svg-em">gate</text>
+          <g>
+            <circle r="4" fill="#F2EBDC"/>
+            <animateMotion dur="6s" repeatCount="indefinite"><mpath href="#lp2"/></animateMotion>
+          </g>
+        </svg>
+        <div class="cell-note">When the question is truly answered, the loop exits into rest. Truth is the gate.</div>
+      </div>
+
+      <div class="cell hot">
+        <div class="mono cell-label">Insight chasing</div>
+        <svg viewBox="0 0 280 200" role="img" aria-label="The same loop but the exit is severed by an X. The pulse keeps circling with no way out.">
+          <defs>
+            <path id="lp3" d="M 110,40 A 70,70 0 0,1 110,180 A 70,70 0 0,1 110,40" fill="none"/>
+          </defs>
+          <circle cx="110" cy="110" r="70" fill="none" stroke="rgba(243,101,28,0.3)" stroke-width="1.5" stroke-dasharray="2 6"/>
+          <!-- severed exit -->
+          <path d="M 180,110 L 214,110" stroke="rgba(243,101,28,0.4)" stroke-width="1.5" fill="none" stroke-dasharray="3 4"/>
+          <path d="M 222,102 L 238,118 M 238,102 L 222,118" stroke="#F3651C" stroke-width="2" fill="none"/>
+          <text x="252" y="134" text-anchor="middle" class="svg-label" fill="#F3651C">NO EXIT</text>
+          <text x="110" y="114" text-anchor="middle" class="svg-em">no gate</text>
+          <g>
+            <circle r="4.5" fill="#F3651C" filter="url(#glow)"/>
+            <animateMotion dur="4.5s" repeatCount="indefinite"><mpath href="#lp3"/></animateMotion>
+          </g>
+        </svg>
+        <div class="cell-note">The reward fires on the feeling — true or false — so completion is never detected. It can't exit.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- III. THE THRESHOLD -->
+  <section class="section">
+    <div class="section-head">
+      <span class="mono section-num">III — The threshold</span>
+      <h2 class="section-title">The same hunt, four <em>destinations</em></h2>
+    </div>
+    <p>Here's the move that matters: the difference between wisdom and the divination impulse is <strong>not</strong> the pattern-hunting. It's the same activity. What changes is what the seeking is <em>for</em> — where its reward is allowed to land. And as the destination slides from <strong>reality</strong> toward <span class="hot">a feeling</span>, the loop loses its ability to close.</p>
+
+    <div class="ladder">
+      <div class="rung">
+        <div>
+          <div class="mono rung-label">01 · Wisdom</div>
+          <div class="rung-q">"What is true, and how should I live?"</div>
+          <div class="rung-lands">Lands in <b>living</b>.</div>
+        </div>
+        <div class="badge closes">✓ closes</div>
+      </div>
+
+      <div class="rung">
+        <div>
+          <div class="mono rung-label">02 · Systems thinking</div>
+          <div class="rung-q">"What pattern connects these things?"</div>
+          <div class="rung-lands">Lands in <b>a working model</b>.</div>
+        </div>
+        <div class="badge closes">✓ closes</div>
+      </div>
+
+      <div class="threshold">
+        <span class="rule"></span>
+        <span class="mono label">The threshold<small>below here, the destination detaches from reality — and the loop can no longer terminate</small></span>
+        <span class="rule rev"></span>
+      </div>
+
+      <div class="rung hot">
+        <div>
+          <div class="mono rung-label">03 · Insight addiction</div>
+          <div class="rung-q">"Give me the sentence that makes everything click."</div>
+          <div class="rung-lands">Lands in <b>a feeling</b>. Then seeks again.</div>
+        </div>
+        <div class="badge loops">↻ can't close</div>
+      </div>
+
+      <div class="rung hot">
+        <div>
+          <div class="mono rung-label">04 · The divination impulse</div>
+          <div class="rung-q">"Decode the master-key, so I'm above the ordinary confusion."</div>
+          <div class="rung-lands">Lands in <b>a fantasy of exemption</b>. Then seeks again.</div>
+        </div>
+        <div class="badge loops">↻ can't close</div>
+      </div>
+    </div>
+
+    <p style="margin-top:36px">That bottom rung is the actual hook. It isn't wanting to understand — it's wanting to be <span class="body-em">exempt</span> from the confusion everyone else is stuck in, by holding a secret code. And because exemption is a feeling and not a fact, no sentence ever delivers it for good. So you go back for another.</p>
+  </section>
+
+  <!-- IV. THE GENERAL LAW -->
+  <section class="section">
+    <div class="section-head">
+      <span class="mono section-num">IV — The general law</span>
+      <h2 class="section-title">The signal is not the <em>thing</em></h2>
+    </div>
+    <p>Eureka is one instance of a much bigger trap. A feeling is a <strong>detector</strong> — it fires when something valuable is supposed to be near. But every detector throws false positives, and here's the catch: from the inside, a false positive feels <em>identical</em> to a true one. So the error always has the same shape: you take <span class="hot">the detector firing</span> as proof of <span class="hot">the thing it detects</span>. The feeling is evidence about your nervous system. You read it as evidence about the world.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 600 200" role="img" aria-label="Two identical spike waveforms side by side; the left labeled real insight, the right labeled false positive. From the inside they are indistinguishable.">
+        <line x1="0" y1="150" x2="600" y2="150" stroke="rgba(242,235,220,0.12)" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="300" y="20" text-anchor="middle" class="svg-label" fill="#F3651C">FROM THE INSIDE — IDENTICAL</text>
+        <line x1="300" y1="34" x2="300" y2="164" stroke="rgba(242,235,220,0.12)" stroke-width="1" stroke-dasharray="2 5"/>
+        <path d="M 50,150 Q 120,150 150,52 Q 180,150 250,150" fill="none" stroke="#F2EBDC" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow)"/>
+        <circle cx="150" cy="52" r="4" fill="#F2EBDC" filter="url(#glow)"/>
+        <text x="150" y="184" text-anchor="middle" class="svg-label">REAL INSIGHT</text>
+        <path d="M 350,150 Q 420,150 450,52 Q 480,150 550,150" fill="none" stroke="#F2EBDC" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow)"/>
+        <circle cx="450" cy="52" r="4" fill="#F2EBDC" filter="url(#glow)"/>
+        <text x="450" y="184" text-anchor="middle" class="svg-label" fill="#F3651C">FALSE POSITIVE</text>
+      </svg>
+      <div class="diagram-cap">Same waveform, opposite truth value. The spike carries no information about whether the connection is real — which is exactly why you can't sort the two by how they feel.</div>
+    </div>
+
+    <p>Once you have the shape, you start seeing it everywhere:</p>
+
+    <div class="spoof-legend">
+      <span><span class="badge doc">documented</span> research underneath</span>
+      <span><span class="badge ext">applied</span> same shape, my extension</span>
+    </div>
+
+    <div class="spoof">
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">Fluency · ease</span><span class="sig-arrow">feels like</span><span class="sig-read">truth</span></div>
+          <div class="spoof-note">Tracking <b>familiarity</b>, not validity. A claim heard ten times feels truer than one heard once; rhymes feel wiser; a clean confident delivery beats a hesitant accurate one.</div>
+        </div>
+        <span class="badge doc">documented</span>
+      </div>
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">A smooth explanation</span><span class="sig-arrow">feels like</span><span class="sig-read">competence</span></div>
+          <div class="spoof-note">Tracking <b>the clarity of their explanation</b>, not your skill. The feeling collapses the moment you try to reproduce it without them.</div>
+        </div>
+        <span class="badge doc">documented</span>
+      </div>
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">The pull</span><span class="sig-arrow">feels like</span><span class="sig-read">need</span></div>
+          <div class="spoof-note">Tracking <b>wanting</b>, which has come unhooked from liking. You want it more than the payoff actually returns.</div>
+        </div>
+        <span class="badge doc">documented</span>
+      </div>
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">The jolt of being seen</span><span class="sig-arrow">feels like</span><span class="sig-read">accuracy</span></div>
+          <div class="spoof-note">Tracking <b>a description vague enough to fit almost anyone</b>. The closest cousin to eureka — resonance mistaken for evidence.</div>
+        </div>
+        <span class="badge doc">documented</span>
+      </div>
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">A strong reaction</span><span class="sig-arrow">feels like</span><span class="sig-read">significance</span></div>
+          <div class="spoof-note">Tracking <b>volume</b>, not meaning. So drama feels like passion, jealousy like love, the anxious churn about a person like "this matters."</div>
+        </div>
+        <span class="badge ext">applied</span>
+      </div>
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">Dread before a thing</span><span class="sig-arrow">feels like</span><span class="sig-read">real danger</span></div>
+          <div class="spoof-note">Tracking <b>the alarm's own baseline</b>, not the actual threat. It fires just as hard before the speech that goes fine.</div>
+        </div>
+        <span class="badge ext">applied</span>
+      </div>
+      <div class="spoof-row">
+        <div>
+          <div class="sig-line"><span class="sig">The heat of outrage</span><span class="sig-arrow">feels like</span><span class="sig-read">being right</span></div>
+          <div class="spoof-note">Tracking <b>arousal</b>, not the validity of your position. The certainty is a temperature, not a verdict.</div>
+        </div>
+        <span class="badge ext">applied</span>
+      </div>
+    </div>
+
+    <p style="margin-top:36px">And the reason every one of these is hard is the reason eureka is hard: <strong>you can't feel the gap from the inside.</strong> The false positive never arrives dimmer. So the only real fix is the same gate from the diagram — route the signal through something outside itself that it can't fake.</p>
+
+    <div class="tests">
+      <div class="mono t-head">The gate, in practice</div>
+      <ul>
+        <li>Does the insight survive being written out plainly?</li>
+        <li>Does the craving survive twenty minutes?</li>
+        <li>Does the danger actually arrive?</li>
+      </ul>
+      <div class="t-foot">The feeling can't tell true from false. An external check can.</div>
+    </div>
+  </section>
+
+  <!-- V. THE TURN -->
+  <section class="close">
+    <div class="close-dot">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Concentric rings collapsing into a single still center point.">
+        <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(242,235,220,0.07)" stroke-width="1"/>
+        <circle cx="60" cy="60" r="34" fill="none" stroke="rgba(242,235,220,0.12)" stroke-width="1"/>
+        <circle cx="60" cy="60" r="20" fill="none" stroke="rgba(242,235,220,0.2)" stroke-width="1"/>
+        <circle cx="60" cy="60" r="6" fill="#F3651C" filter="url(#glow)"/>
+      </svg>
+    </div>
+    <p class="close-line"><span class="accent">Epistemic restlessness:</span> the mind cannot rest until everything has been reduced to a pattern, a principle, a quote, a master explanation.</p>
+    <p class="close-sub">The cure isn't less seeking — the hunger is good, and it's yours. It's re-attaching the seeking to its true destination: a truth you can <em>live</em>, not the hit of having decoded. Re-anchor the loop to the top rung, and it can finally close.</p>
+  </section>
+
+  <footer>
+    <div class="mono">EPISTEMOPHILIA · SYSTEMIZING · APOPHENIA · THE CLICK</div>
+  </footer>
+
+</div>
+</body>
+</html>

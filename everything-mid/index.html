@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>why is everything mid now?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:dark;
+    --ink:#0E0D0B;
+    --ink-soft:#16140F;
+    --cream:#F2EBDC;
+    --cream-dim:#A39C8C;
+    --orange:#F3651C;
+    --line:rgba(242,235,220,.10); /* hairlines / card borders */
+    --hi:#ffffff;                 /* high-emphasis text */
+
+    /* meaning-coded stage palette */
+    --teal:#4FB6A8;     /* easy mode  */
+    --violet:#9B7FE0;   /* the hole   */
+    --amber:#E0A92E;    /* the fade   */
+    --red:#E5564B;      /* the reset  */
+    --grey:#807A6E;     /* flatline   */
+    --wine:#C6477E;     /* shame      */
+    --toxic:#86A84B;    /* fake exit  */
+    --water:#46A0E0;    /* real exit  */
+
+    --maxw:720px;
+  }
+
+  /* ---- LIGHT MODE: neutrals flip; washed-out accents darken for paper ---- */
+  :root[data-theme="light"]{
+    color-scheme:light;
+    --ink:#EAE3D2;        /* page background (warm paper) */
+    --ink-soft:#F5F0E4;   /* raised surfaces / cards      */
+    --cream:#17150F;      /* body text (near-black)        */
+    --cream-dim:#5E574C;  /* muted text                    */
+    --line:rgba(20,18,12,.16);
+    --hi:#0B0A08;         /* high-emphasis text            */
+    --orange:#D9540F;
+    --teal:#2F8E80;
+    --violet:#7657C9;
+    --amber:#9A6B0E;      /* yellow dies on cream -> deep goldenrod */
+    --red:#CC3C30;
+    --grey:#5C554A;       /* still reads "dead", now legible */
+    --wine:#AE2F66;
+    --toxic:#5E7A2A;      /* sickly green -> darker olive    */
+    --water:#2C7FC4;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:"Instrument Sans",system-ui,sans-serif;
+    font-size:18px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    text-wrap:pretty;
+  }
+  ::selection{background:var(--orange);color:#0E0D0B}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 60px;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:.30;mix-blend-mode:screen;will-change:transform}
+  .blob.b1{width:44vmax;height:44vmax;max-width:460px;max-height:460px;background:var(--orange);top:-14%;left:-8%;animation:drift1 26s ease-in-out infinite}
+  .blob.b2{width:38vmax;height:38vmax;max-width:420px;max-height:420px;background:var(--water);bottom:-16%;right:-6%;animation:drift2 31s ease-in-out infinite}
+  .blob.b3{width:34vmax;height:34vmax;max-width:380px;max-height:380px;background:var(--violet);top:28%;left:54%;animation:drift3 28s ease-in-out infinite}
+  .blob.b4{width:28vmax;height:28vmax;max-width:320px;max-height:320px;background:var(--teal);bottom:6%;left:4%;animation:drift4 34s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(9%,7%) scale(1.18)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8%,-5%) scale(1.12)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-7%,8%) scale(.88)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8%,-7%) scale(1.16)}}
+  .particle{position:absolute;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;opacity:0;will-change:transform,opacity;animation:floatUp linear infinite}
+  @keyframes floatUp{0%{transform:translateY(24px) scale(.6);opacity:0}18%{opacity:.65}82%{opacity:.65}100%{transform:translateY(-70px) scale(1);opacity:0}}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:26px}
+  .hero .wrap{position:relative;z-index:2}
+  .hero h1{
+    font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:800;line-height:.9;letter-spacing:-.035em;
+    font-size:clamp(48px,12.5vw,114px);
+    margin-bottom:30px;text-wrap:balance;
+  }
+  .hero h1 em{font-family:"Fraunces",serif;font-style:italic;font-weight:600;letter-spacing:-.01em;color:var(--orange)}
+  .hero .sub{font-size:clamp(18px,4.5vw,23px);color:var(--cream);max-width:30ch;line-height:1.45}
+  .hero .sub b{color:var(--orange);font-weight:600}
+  .scroll-cue{position:absolute;bottom:30px;left:22px;z-index:2;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-dim);display:flex;align-items:center;gap:10px}
+  .scroll-cue .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* ---------- SECTIONS ---------- */
+  section.step{padding:62px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow .emoji{font-size:21px;filter:saturate(1.1)}
+  .eyebrow .num{color:var(--cream-dim)}
+  .step h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(30px,7vw,46px);line-height:1.04;letter-spacing:-.015em;margin-bottom:22px;text-wrap:balance}
+  .step p{margin-bottom:18px;max-width:62ch}
+  .step p:last-child{margin-bottom:0}
+  .lead{font-size:21px;line-height:1.5}
+  .dim{color:var(--cream-dim)}
+  strong{font-weight:600;color:var(--hi)}
+
+  .accent-bar{width:46px;height:4px;border-radius:3px;margin-bottom:24px}
+
+  /* example chips */
+  .examples{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 4px}
+  .chip{font-size:15.5px;line-height:1.3;padding:9px 14px;border-radius:13px;background:var(--ink-soft);background:color-mix(in srgb,var(--accent,var(--cream-dim)) 9%,var(--ink-soft));border:1px solid var(--line);border:1px solid color-mix(in srgb,var(--accent,transparent) 32%,var(--line))}
+  .chip b{color:var(--accent,var(--cream));font-weight:600}
+
+  /* pull quote */
+  .pq{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:clamp(22px,5.2vw,29px);line-height:1.32;margin:48px 0 16px;padding:18px 22px;border-left:4px solid var(--orange);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--orange) 7%,transparent);color:var(--hi);text-wrap:pretty}
+  .pq.alt{border-left-color:currentColor;background:color-mix(in srgb,currentColor 8%,transparent)}
+
+  /* scripture tag */
+  .verse{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.02em;color:var(--cream-dim);margin-top:8px}
+  .verse b{color:var(--cream)}
+
+  /* ---------- MECHANISM CARDS ---------- */
+  .mech-intro{margin-bottom:34px}
+  .cards{display:grid;grid-template-columns:1fr;gap:16px}
+  .card{background:var(--ink-soft);border:1px solid var(--line);border-radius:18px;padding:24px 22px;position:relative;overflow:hidden}
+  .card .tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:13px}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:25px;line-height:1.05;margin-bottom:6px;text-wrap:balance}
+  .card .mech-name{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--cream-dim);margin-bottom:14px}
+  .card p{font-size:16.5px;margin-bottom:12px;max-width:none}
+  .card .punch{font-family:"Fraunces",serif;font-style:italic;font-size:18px;color:var(--hi);margin:26px 0 0}
+  .card svg.viz{width:100%;height:54px;margin:6px 0 16px;display:block}
+
+  /* glitch viz animations (CSS so reduced-motion can disable them) */
+  .v-want{transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 6px var(--orange));animation:vSplitWant 4.2s ease-in-out infinite}
+  .v-like{transform-box:fill-box;transform-origin:center;animation:vSplitLike 4.2s ease-in-out infinite}
+  @keyframes vSplitWant{0%,100%{transform:translateX(0)}50%{transform:translateX(-64px)}}
+  @keyframes vSplitLike{0%,100%{transform:translateX(0);opacity:1}50%{transform:translateX(80px);opacity:.12}}
+  .v-dash{animation:vDash .8s linear infinite}
+  @keyframes vDash{to{stroke-dashoffset:-16}}
+  .v-bar{transform-box:fill-box;transform-origin:bottom;animation:vFade 3s ease-in-out infinite}
+  @keyframes vFade{0%,60%,100%{transform:scaleY(.6)}16%{transform:scaleY(1.55)}}
+  .v-drop{transform-box:fill-box;animation:vDrop 3.6s ease-in-out infinite}
+  @keyframes vDrop{0%{transform:translateY(-22px);opacity:0}12%{opacity:1}68%{transform:translateY(0);opacity:1}86%{transform:translateY(0);opacity:0}100%{transform:translateY(-22px);opacity:0}}
+
+  /* ---------- WAVE MODULE ---------- */
+  .wave-mod{background:color-mix(in srgb,var(--phase,var(--water)) 9%,transparent);border:1px solid color-mix(in srgb,var(--phase,var(--water)) 36%,var(--line));border-radius:20px;padding:26px 22px 28px;margin:8px 0 4px;transition:background .5s ease,border-color .5s ease}
+  .wave-mod .wlabel{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--water);margin-bottom:16px;display:flex;align-items:center;gap:9px}
+  .phases{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .phases li{font-family:"Instrument Sans",sans-serif;font-size:15px;line-height:1.3;color:var(--cream);opacity:.3;transform:translateX(0);transition:opacity .45s ease,color .45s ease,transform .45s ease}
+  .phases li.active{opacity:1;color:var(--pc,var(--water));font-weight:600;transform:translateX(5px)}
+  svg#wave{width:100%;height:150px;display:block}
+  .wave-canvas{position:relative}
+  .surfer{position:absolute;left:0;top:120px;width:15px;height:15px;border-radius:50%;background:var(--dotc,var(--water));transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 0 5px color-mix(in srgb,var(--dotc,var(--water)) 18%,transparent),0 0 16px 3px color-mix(in srgb,var(--dotc,var(--water)) 42%,transparent);transition:background .4s ease,box-shadow .4s ease}
+  .surf-uses{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+  .surf-uses .uses-label{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--water);margin-bottom:12px}
+  .surf-uses .examples{margin:0}
+
+  /* moves list in real exit */
+  .move{display:flex;gap:16px;margin-bottom:26px;align-items:flex-start}
+  .move .n{font-family:"Fraunces",serif;font-weight:900;font-size:40px;line-height:.8;color:var(--water);flex:0 0 auto;width:42px}
+  .move .body h4{font-family:"Fraunces",serif;font-weight:600;font-size:21px;margin-bottom:6px}
+  .move .body p{font-size:16.5px;margin-bottom:0;max-width:54ch}
+
+  /* ---------- TL;DR ---------- */
+  .tldr{padding:60px 0 30px}
+  .tldr .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .tldr .box{border-radius:16px;padding:20px 18px;border:1px solid var(--line)}
+  .tldr .box.loop{background:rgba(229,86,75,.07);border-color:rgba(229,86,75,.3)}
+  .tldr .box.out{background:rgba(70,160,224,.07);border-color:rgba(70,160,224,.3)}
+  .tldr .box h5{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .tldr .box.loop h5{color:var(--red)}
+  .tldr .box.out h5{color:var(--water)}
+  .tldr .box p{font-size:15px;line-height:1.45;color:var(--cream)}
+  .tldr .box.loop p{color:var(--cream-dim)}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:50px 0 70px;border-top:1px solid var(--line);text-align:center}
+  footer .closer{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(26px,6vw,38px);line-height:1.05;letter-spacing:-.015em;margin-bottom:22px;text-wrap:balance}
+  footer .closer em{font-style:italic;color:var(--water)}
+  footer .src{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:var(--cream-dim);line-height:1.7;max-width:54ch;margin:0 auto}
+
+  /* reveal anim */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:600px){
+    body{font-size:17px}
+    .step{padding:50px 0}
+    .tldr .grid{grid-template-columns:1fr}
+    .move .n{font-size:34px;width:34px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .scroll-cue .dot{animation:none}
+    .v-want,.v-like,.v-bar,.v-drop,.v-dash{animation:none}
+    .v-want{transform:translateX(-50px)}
+    .v-like{transform:translateX(64px);opacity:.4}
+    .blob,.particle{animation:none}
+  }
+  /* keyboard focus */
+  a:focus-visible,button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+  /* theme toggle */
+  .theme-toggle{position:fixed;top:14px;right:14px;z-index:100;font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:var(--cream);background:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,border-color .2s ease}
+  .theme-toggle:hover{border-color:var(--orange)}
+  .theme-toggle:active{transform:scale(.95)}
+  .theme-toggle .ti{font-size:13px;line-height:1}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark mode"><span class="ti" id="themeIcon">🌙</span><span id="themeLabel">dark</span></button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg" id="heroBg">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  </div>
+  <div class="wrap">
+    <div class="kicker">a map of the loop · and the way out</div>
+    <h1>why is <em>everything</em><br>mid now?</h1>
+    <p class="sub">you used to feel things. now it's all <b>meh</b>. here's exactly what happened to your brain — and how to get it back.</p>
+  </div>
+  <div class="scroll-cue"><span class="dot"></span> scroll</div>
+</header>
+
+<!-- 0 EASY MODE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--teal)"></div>
+    <div class="eyebrow"><span class="emoji">🍽️</span><span class="num">00 — tutorial mode</span></div>
+    <h2 style="color:var(--teal)">you come pre-installed with the basics.</h2>
+    <p class="lead">hungry → eat. tired → sleep. bored → scroll. these run themselves, no thinking required.</p>
+    <p class="dim">for a while, being a person is basically easy difficulty. the game plays itself.</p>
+  </div>
+</section>
+
+<!-- 1 THE HOLE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--violet)"></div>
+    <div class="eyebrow"><span class="emoji">🕳️</span><span class="num">01 — the hole</span></div>
+    <h2 style="color:var(--violet)">then you clock there's stuff underneath the basics.</h2>
+    <p>you want to be <strong>known</strong>. to <strong>matter</strong>. to feel close to people. to be building toward something instead of feeling like an NPC in your own life.</p>
+    <p>and here's the problem: <strong>nobody hands you the manual for those.</strong> snacks don't fix loneliness. eight hours of sleep doesn't fix feeling invisible. so you do the most human thing possible — you reach for whatever's <em>closest</em> that feels like it might work.</p>
+    <p class="verse">📖 <b>"there's a way that seems right to a person… but it ends in death."</b> — Proverbs 14:12. tag this verse. it comes back.</p>
+  </div>
+</section>
+
+<!-- 2 THE SUBSTITUTE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--orange)"></div>
+    <div class="eyebrow"><span class="emoji">🪤</span><span class="num">02 — the substitute</span></div>
+    <h2 style="color:var(--orange)">the swap nobody notices they're making.</h2>
+    <p>the hole says <em>"connection."</em> you hear <em>"open the app."</em><br>the hole says <em>"rest."</em> you hear <em>"one more episode."</em></p>
+    <p>the substitute is always faster, closer, and cheaper than the real thing. and at first? <strong>it kinda works.</strong></p>
+    <p class="pq">that's the whole trap. it works just enough to keep you coming back.</p>
+  </div>
+</section>
+
+<!-- 3 LOOP MECHANICS -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--orange)"></div>
+    <div class="eyebrow"><span class="emoji">🌀</span><span class="num">03 — the part everyone gets wrong</span></div>
+    <h2>getting hooked isn't "it feels too good." it's the opposite.</h2>
+    <div class="mech-intro">
+      <p>most people think compulsion = too much pleasure. nope. what's actually happening is <strong>three separate glitches</strong>, and naming them apart is the entire game — because each one has a different exit.</p>
+    </div>
+
+    <div class="cards">
+      <!-- split -->
+      <div class="card reveal" style="--accent:var(--orange)">
+        <div class="tag" style="color:var(--orange)"><span>🧲</span> glitch 01</div>
+        <h3>the split</h3>
+        <div class="mech-name">wanting ≠ liking</div>
+        <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
+          <line x1="0" y1="27" x2="300" y2="27" stroke="var(--line)" stroke-width="1"/>
+          <circle class="v-want" cx="150" cy="27" r="7" fill="var(--orange)"/>
+          <circle class="v-like" cx="150" cy="27" r="7" fill="none" stroke="var(--cream-dim)" stroke-width="2"/>
+          <text x="44" y="50" fill="var(--orange)" font-family="JetBrains Mono" font-size="9">WANT</text>
+          <text x="228" y="50" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="9">LIKE</text>
+        </svg>
+        <p>your brain runs two systems: one that <strong>wants</strong> and one that <strong>likes</strong>. they're supposed to move together. in the loop, they divorce. the wanting stays loud. the liking goes quiet.</p>
+        <div class="examples">
+          <span class="chip">refreshing a feed with <b>nothing new</b> on it</span>
+          <span class="chip">opening the app you <b>just closed</b></span>
+          <span class="chip">the "wyd" text you don't even want a <b>reply</b> to</span>
+          <span class="chip">doomscrolling stuff you're <b>not even reading</b></span>
+          <span class="chip">finally buying it → feeling <b>nothing</b> when it ships</span>
+        </div>
+        <p class="punch">the chase outlives the payoff.</p>
+      </div>
+
+      <!-- fade -->
+      <div class="card reveal" style="--accent:var(--amber)">
+        <div class="tag" style="color:var(--amber)"><span>📉</span> glitch 02</div>
+        <h3>the fade</h3>
+        <div class="mech-name">tolerance</div>
+        <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
+          <rect class="v-bar" style="animation-delay:0s"   x="10"  y="20" width="40" height="26" rx="3" fill="var(--amber)" opacity="1"/>
+          <rect class="v-bar" style="animation-delay:.16s" x="70"  y="25" width="40" height="21" rx="3" fill="var(--amber)" opacity=".82"/>
+          <rect class="v-bar" style="animation-delay:.32s" x="130" y="30" width="40" height="16" rx="3" fill="var(--amber)" opacity=".62"/>
+          <rect class="v-bar" style="animation-delay:.48s" x="190" y="35" width="40" height="11" rx="3" fill="var(--amber)" opacity=".42"/>
+          <rect class="v-bar" style="animation-delay:.64s" x="250" y="40" width="40" height="6"  rx="3" fill="var(--amber)" opacity=".26"/>
+        </svg>
+        <p>same hit stops landing. you need <strong>more</strong> to feel the <strong>same</strong> — and "the same" keeps getting more expensive.</p>
+        <div class="examples">
+          <span class="chip">the show that used to slap is now <b>background noise</b></span>
+          <span class="chip">watching at <b>2x</b> because 1x is unbearable</span>
+          <span class="chip">the song that gave you chills is just <b>sound</b> now</span>
+          <span class="chip">memes that used to send you → a <b>nose-exhale</b></span>
+          <span class="chip">needing a <b>"crazy" night</b> just to feel a normal one</span>
+        </div>
+        <p class="punch">the dose creeps. the payoff shrinks.</p>
+      </div>
+
+      <!-- reset -->
+      <div class="card reveal" style="--accent:var(--red)">
+        <div class="tag" style="color:var(--red)"><span>🚨</span> glitch 03 · boss level</div>
+        <h3>the reset</h3>
+        <div class="mech-name">your baseline drops</div>
+        <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
+          <line class="v-dash" x1="0" y1="16" x2="150" y2="16" stroke="var(--cream-dim)" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="6" y="12" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="8">old normal</text>
+          <path d="M150 16 C 175 16, 175 40, 200 40 L300 40" stroke="var(--red)" stroke-width="2" fill="none"/>
+          <text x="210" y="52" fill="var(--red)" font-family="JetBrains Mono" font-size="8">new normal</text>
+          <circle class="v-drop" cx="150" cy="40" r="5" fill="var(--red)"/>
+        </svg>
+        <p>this is the one that gets you. your baseline shifts <strong>down</strong>. now you're not chasing a high — you're chasing <strong>normal</strong>. putting the phone down doesn't feel like freedom, it feels <em>itchy. wrong.</em></p>
+        <div class="examples">
+          <span class="chip">silence suddenly feels <b>loud</b></span>
+          <span class="chip">3-second gap → hand reaches for <b>phone</b> on its own</span>
+          <span class="chip">not doing it feels like <b>withdrawal</b>, not missing out</span>
+          <span class="chip">reaching for your phone <b>before your eyes focus</b> at 7am</span>
+          <span class="chip">a day with nothing planned feels <b>stressful</b>, not restful</span>
+        </div>
+        <p class="punch">"I do this for fun" quietly becomes "I do this so I don't feel bad."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 FLATLINE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--grey)"></div>
+    <div class="eyebrow"><span class="emoji">⚪</span><span class="num">04 — the flatline</span></div>
+    <h2 style="color:var(--grey)">stack all that up and you land here: everything's mid.</h2>
+    <p>nothing hits. you've trained your brain so hard on the spikes that <strong>normal life now reads as boring.</strong> so you need bigger: a trip, a festival, a new situationship, a hobby haul you'll abandon in three weeks.</p>
+    <p>you can't enjoy <em>today</em>, so you over-plan <em>later</em> — because at least the planning gives you a hit. you end up <strong>permanently bored on purpose</strong>… except you never chose it. your brain is just trying to balance the books.</p>
+    <p class="dim">(and real quick — it is <strong>not</strong> actually permanent. "bored while you're in the loop" ≠ "broken forever." hold that. it's the whole point of the back half.)</p>
+  </div>
+</section>
+
+<!-- 5 SHAME ENGINE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--wine)"></div>
+    <div class="eyebrow"><span class="emoji">🔥</span><span class="num">05 — the shame engine</span></div>
+    <h2 style="color:var(--wine)">the real warning sign isn't "you forgot why you walked into a room."</h2>
+    <p class="dim">everyone does that. that's just brains. that one's a myth. the actual tell is this 👇</p>
+    <p>you slip <strong>once</strong>. and instead of "ok, one slip," your brain goes:</p>
+    <p class="pq alt" style="color:var(--wine)">"well, I already broke the streak — might as well."</p>
+    <p>broke the no-scroll rule at 11am? <em>"guess today's cooked."</em> skipped the gym Monday? <em>"this whole week's a wash."</em> one crack becomes a flood. <span class="dim">(psych name: the <strong>abstinence violation effect</strong> — one lapse → "I've ruined it" → full send.)</span></p>
+    <p>and then it mutates. watch the slide:</p>
+    <p class="pq alt" style="color:var(--wine)">"I did something bad" → "I <em>am</em> bad" → "I'm just like this."</p>
+    <p>that slide is everything. <strong>guilt</strong> can actually help you — it's about a thing you <em>did</em>, and you can fix a thing. <strong>shame</strong> just rots you from the inside, and — plot twist — makes you relapse <em>more</em>. because why would someone worthless bother trying?</p>
+    <p class="punch" style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:var(--hi)">the loop doesn't just cause shame as a side effect. shame is the fuel it runs on.</p>
+  </div>
+</section>
+
+<!-- 6 FAKE EXIT -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--toxic)"></div>
+    <div class="eyebrow"><span class="emoji">🎭</span><span class="num">06 — the fake exit</span></div>
+    <h2 style="color:var(--toxic)">there's an escape hatch everyone reaches for first. it's a trap.</h2>
+    <p>you're cooked, you want out, and the brain offers a shortcut:</p>
+    <p class="pq alt" style="color:var(--toxic)">"what if I just… stop caring? delete the rules. redefine 'messing up' so nothing counts as messing up — then I can't break it, right? no standard, no guilt, problem solved."</p>
+    <p>and ngl, it <em>feels</em> like freedom.</p>
+    <p><strong>it's not. it's the loop wearing a fit.</strong></p>
+    <p>you didn't fix anything. you ripped the smoke alarm off the wall and called it <em>"no more fires."</em> the hunger's still there. the hole's still there. you just deleted the part of you that noticed.</p>
+    <p class="verse">📖 remember <b>Proverbs 14:12</b> — "a way that <i>seems</i> right"? this is it. this is the verse. lowering the bar until you can't fail isn't winning. it's the same loop, just quieter.</p>
+  </div>
+</section>
+
+<!-- 7 REAL EXIT -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--water)"></div>
+    <div class="eyebrow"><span class="emoji">🌊</span><span class="num">07 — the real exit</span></div>
+    <h2 style="color:var(--water)">the actual way out is harder. but it's real. three moves.</h2>
+
+    <div class="move reveal">
+      <div class="n">1</div>
+      <div class="body">
+        <h4>🚦 keep the signal — don't kill it.</h4>
+        <p>your guilt, your "this isn't working" feeling — that's not the enemy. that's the dashboard light. don't smash the dashboard. the goal isn't to stop <em>feeling</em> the gap. it's to actually <em>close</em> it.</p>
+      </div>
+    </div>
+
+    <div class="move reveal">
+      <div class="n">2</div>
+      <div class="body">
+        <h4>🏄 surf the urge.</h4>
+        <p>the craving feels like a <em>command</em>. it's not. it's a <strong>wave</strong>. it builds, it peaks — usually in a couple minutes — and if you don't feed it, it <strong>crashes</strong>. you don't have to white-knuckle it. you just have to outlast it. watch one rise and fall below 👇</p>
+      </div>
+    </div>
+
+    <!-- WAVE MODULE -->
+    <div class="wave-mod reveal">
+      <div class="wlabel"><span>🌊</span> urge surfing</div>
+      <div class="wave-canvas">
+        <svg id="wave" viewBox="0 0 320 150" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="waveGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="320" y2="0">
+              <stop offset="0"    style="stop-color:var(--teal)"/>
+              <stop offset="0.09" style="stop-color:var(--teal)"/>
+              <stop offset="0.18" style="stop-color:var(--amber)"/>
+              <stop offset="0.40" style="stop-color:var(--amber)"/>
+              <stop offset="0.47" style="stop-color:var(--red)"/>
+              <stop offset="0.55" style="stop-color:var(--water)"/>
+              <stop offset="0.86" style="stop-color:var(--water)"/>
+              <stop offset="0.94" style="stop-color:var(--teal)"/>
+              <stop offset="1"    style="stop-color:var(--teal)"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="120" x2="320" y2="120" stroke="var(--line)" stroke-width="1"/>
+          <path id="waveFill" d="M0,120 C60,120 90,40 150,38 C210,40 255,120 320,120 L320,150 L0,150 Z" fill="url(#waveGrad)" opacity="0.14"/>
+          <path id="wavePath" d="M0,120 C60,120 90,40 150,38 C210,40 255,120 320,120" fill="none" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div id="surfer" class="surfer"></div>
+      </div>
+      <ul class="phases" id="phases">
+        <li style="--pc:var(--teal)"><b>🌱 it shows up</b> — a craving pings out of nowhere</li>
+        <li style="--pc:var(--amber)"><b>📈 it builds</b> — feels urgent, feels permanent, like you <em>have</em> to</li>
+        <li style="--pc:var(--red)"><b>⛰️ peak</b> — the hardest few seconds; your whole body says give in</li>
+        <li style="--pc:var(--water)"><b>🌊 it crashes</b> — you didn't feed it, so it just drops</li>
+        <li style="--pc:var(--teal)"><b>✓ gone</b> — it passed on its own. it always does.</li>
+      </ul>
+      <div class="surf-uses">
+        <div class="uses-label">🏄 the wild part — you already do this all day:</div>
+        <div class="examples" style="--accent:var(--water)">
+          <span class="chip">🍔 starving at 11am → you <b>wait</b> for lunch</span>
+          <span class="chip">🚽 gotta go mid-meeting → you <b>hold it</b></span>
+          <span class="chip">😴 dead tired at 3pm → you <b>push</b> to bedtime</span>
+          <span class="chip">😤 wanna snap at someone → you <b>bite your tongue</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="move reveal" style="margin-top:28px">
+      <div class="n">3</div>
+      <div class="body">
+        <h4>🩵 fill the actual hole — with something that doesn't have a tolerance curve.</h4>
+        <p>here's the part nobody tells you: <strong>every counterfeit runs on tolerance.</strong> the scroll, the substance, the situationship, the new shoes — all of it has a fade built in. so the real question was never "how do I get a better hit." it's: <em>is there anything that doesn't fade?</em></p>
+        <p style="margin-top:14px">there's an old line about water — that whoever drinks regular water gets thirsty again, but there's a kind of water where you <strong>"never thirst again."</strong> <span class="verse" style="display:inline">(John 4.)</span> that's the whole claim here: the deepest hunger — to be known, to matter, to be loved without earning it — was never getting filled by something on a tolerance curve. it needs a source that doesn't run dry.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 BUILD -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--cream)"></div>
+    <div class="eyebrow"><span class="emoji">🏗️</span><span class="num">08 — then go build</span></div>
+    <h2>and once you're not starving — the good part.</h2>
+    <p>not parched. not refreshing the feed of your own life looking for the next hit. you get your <strong>attention</strong> back. your wants line up with what you actually do. the fog lifts.</p>
+    <p>and you can finally start the thing you've been too foggy to start. <strong>build something. join something. become someone.</strong> not to fill the hole — the hole's handled — but because you're free to.</p>
+  </div>
+</section>
+
+<!-- TL;DR -->
+<section class="tldr wrap reveal">
+  <div class="eyebrow"><span class="emoji">⚡</span><span class="num">tl;dr</span></div>
+  <div class="grid">
+    <div class="box loop">
+      <h5>🌀 the loop</h5>
+      <p>chase what you don't even enjoy → need more for less → baseline drops → everything goes mid → slip → shame → "might as well" → repeat. lowering the bar doesn't escape it. it just makes it quiet.</p>
+    </div>
+    <div class="box out">
+      <h5>🌊 the way out</h5>
+      <p>keep the signal. surf the urge instead of feeding it. fill the real hunger with the one thing that doesn't run on tolerance. then go build the life you were too foggy to start.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p class="closer">stop living <em>starving.</em></p>
+    <p class="src">grounded in: wanting vs. liking (Berridge &amp; Robinson) · tolerance &amp; the dopamine setpoint (Koob; Lembke) · hedonic adaptation · the abstinence violation effect (Marlatt) · guilt vs. shame (Tangney) · urge surfing (MBRP) · Proverbs 14:12 &amp; John 4.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- scroll reveals ----
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    els.forEach(function(e){e.classList.add('in');});
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  }
+
+  // ---- hero drifting particles ----
+  var heroBg = document.getElementById('heroBg');
+  if(heroBg && !reduce){
+    var pcolors=['var(--orange)','var(--teal)','var(--violet)','var(--water)','var(--cream)'];
+    for(var pi=0; pi<16; pi++){
+      var d=document.createElement('div');
+      d.className='particle';
+      var sz=(2+Math.random()*4).toFixed(1);
+      d.style.width=sz+'px'; d.style.height=sz+'px';
+      d.style.left=(Math.random()*100).toFixed(1)+'%';
+      d.style.top=(Math.random()*100).toFixed(1)+'%';
+      d.style.color=pcolors[Math.floor(Math.random()*pcolors.length)];
+      d.style.animationDuration=(7+Math.random()*11).toFixed(1)+'s';
+      d.style.animationDelay=(-Math.random()*12).toFixed(1)+'s';
+      heroBg.appendChild(d);
+    }
+  }
+
+  // ---- urge-surf wave: round HTML dot rides a fixed curve; color-coded by phase ----
+  var wave     = document.getElementById('wave');
+  var wavePath = document.getElementById('wavePath');
+  var surfer   = document.getElementById('surfer');
+  var phaseEls = document.querySelectorAll('#phases li');
+  var waveMod  = document.querySelector('.wave-mod');
+  var PHASE_COLORS = ['var(--teal)','var(--amber)','var(--red)','var(--water)','var(--teal)'];
+  var PERIOD=15000, startT=null, totalLen=0;
+
+  function highlight(idx){
+    for(var i=0;i<phaseEls.length;i++){ phaseEls[i].classList.toggle('active', i===idx); }
+  }
+  function place(p){
+    if(!totalLen) totalLen=wavePath.getTotalLength();
+    var pt=wavePath.getPointAtLength(p*totalLen);
+    var r=wave.getBoundingClientRect();
+    // map user space (320x150, stretched to fill) -> pixels, so the dot sits on the curve
+    surfer.style.left=((pt.x/320)*r.width ).toFixed(1)+'px';
+    surfer.style.top =((pt.y/150)*r.height).toFixed(1)+'px';
+    var op = p<0.04 ? p/0.04 : (p>0.96 ? (1-p)/0.04 : 1); // fade at the loop seam
+    surfer.style.opacity=Math.max(0,op).toFixed(2);
+    // phase by x-position, aligned to the wave gradient (rise=amber, peak=red, fall=blue)
+    var xf=pt.x/320;
+    var idx = xf<0.10 ? 0 : xf<0.42 ? 1 : xf<0.53 ? 2 : xf<0.90 ? 3 : 4;
+    surfer.style.setProperty('--dotc', PHASE_COLORS[idx]);
+    if(waveMod) waveMod.style.setProperty('--phase', PHASE_COLORS[idx]);
+    highlight(idx);
+  }
+  // dwell on the peak — it gets the biggest share of the cycle (it's the hard part)
+  function progress(phi){            // phi: linear time 0..1  ->  p: arc-length 0..1
+    if(phi<0.30) return (phi/0.30)*0.40;                 // rise:  p 0    -> 0.40
+    if(phi<0.75) return 0.40 + ((phi-0.30)/0.45)*0.16;   // peak:  p 0.40 -> 0.56 (slow)
+    return 0.56 + ((phi-0.75)/0.25)*0.44;                // fall:  p 0.56 -> 1.0
+  }
+  function loop(ts){
+    if(startT===null) startT=ts;
+    place(progress(((ts-startT)%PERIOD)/PERIOD));
+    requestAnimationFrame(loop);
+  }
+  if(reduce){ place(0.5); }                 // static: dot at crest, "peak" lit
+  else { requestAnimationFrame(loop); }
+
+  // ---- theme toggle (in-memory; default dark = brand) ----
+  var root  = document.documentElement;
+  var tBtn  = document.getElementById('themeToggle');
+  var tIcon = document.getElementById('themeIcon');
+  var tLab  = document.getElementById('themeLabel');
+  function setTheme(mode){
+    if(mode==='light'){ root.setAttribute('data-theme','light'); tIcon.textContent='☀️'; tLab.textContent='light'; }
+    else { root.removeAttribute('data-theme'); tIcon.textContent='🌙'; tLab.textContent='dark'; }
+  }
+  tBtn.addEventListener('click', function(){
+    setTheme(root.getAttribute('data-theme')==='light' ? 'dark' : 'light');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freedom, or a Master — on what desire trains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..60;1,9..144,400..600,0..40&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0D0B;
+    --cream:#F2EBDC;
+    --orange:#F3651C;
+    --cream-dim:rgba(242,235,220,.66);
+    --cream-faint:rgba(242,235,220,.40);
+    --cream-ghost:rgba(242,235,220,.16);
+    --line:rgba(242,235,220,.13);
+    --line-strong:rgba(242,235,220,.26);
+    --orange-tint:rgba(243,101,28,.12);
+    --orange-line:rgba(243,101,28,.40);
+    --maxw:660px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:"Instrument Sans",system-ui,sans-serif;
+    font-size:clamp(1rem,.96rem + .3vw,1.12rem);
+    line-height:1.76;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* faint grain so the near-black reads as a surface, not a void */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:.025;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;
+    font-size:.70rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--orange);font-weight:500;
+  }
+  .eyebrow.muted{color:var(--cream-faint)}
+
+  h1,h2,h3,.serif{font-family:"Fraunces",Georgia,serif;font-weight:500;letter-spacing:-.01em}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:clamp(6rem,18vh,10rem) 0 clamp(4rem,10vh,6rem)}
+  .hero h1{
+    font-size:clamp(2.7rem,7.5vw,5.1rem);
+    line-height:.98;
+    font-optical-sizing:auto;
+    margin:1.4rem 0 0;
+    font-variation-settings:"SOFT" 24;
+    text-wrap:balance;
+  }
+  .hero h1 em{font-style:italic;color:var(--orange);font-variation-settings:"SOFT" 40}
+  .hero .sub{
+    margin-top:2rem;max-width:44ch;color:var(--cream-dim);
+    font-size:clamp(1.08rem,1rem + .5vw,1.3rem);line-height:1.6;
+    text-wrap:pretty;
+  }
+  .hero .sub b{color:var(--cream);font-weight:600}
+
+  .compass{display:flex;align-items:center;gap:.7rem;margin-top:3rem;color:var(--cream-faint)}
+  .compass svg{flex:none}
+  .compass span{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
+
+  /* ---------- generic section ---------- */
+  section{padding:clamp(5rem,13vh,9.5rem) 0;position:relative}
+  .rule{height:1px;background:var(--line);max-width:var(--maxw);margin:0 auto}
+  h2{font-size:clamp(2.1rem,4.5vw,3rem);line-height:1.12;margin:1.4rem 0 2.2rem;font-variation-settings:"SOFT" 20;text-wrap:balance}
+  .lede{font-size:clamp(1.18rem,1rem + .6vw,1.38rem);line-height:1.68;color:var(--cream-dim);max-width:52ch;margin-bottom:2.8rem;text-wrap:pretty}
+  p + p{margin-top:1.45rem}
+  .body p{color:var(--cream-dim);text-wrap:pretty}
+  .body p strong, .body strong{color:var(--cream);font-weight:600}
+
+  .pull{
+    font-family:"Fraunces",serif;font-weight:500;
+    font-size:clamp(1.6rem,1.5rem + 2.4vw,2.5rem);
+    line-height:1.2;letter-spacing:-.02em;
+    margin:clamp(3.5rem,8vh,5rem) 0;padding-left:1.8rem;
+    border-left:3px solid var(--orange);
+    font-variation-settings:"SOFT" 32;
+    text-wrap:balance;
+  }
+  .pull em{font-style:italic}
+
+  /* ---------- MECHANISM (signature) ---------- */
+  .mech{background:linear-gradient(180deg,rgba(242,235,220,.018),transparent 40%)}
+  .switch-row{display:flex;flex-direction:column;gap:1.1rem;margin:2.5rem 0 3.2rem}
+  .switch-label{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint)}
+  .switch{
+    display:inline-flex;align-self:flex-start;position:relative;
+    border:1px solid var(--line-strong);border-radius:2px;padding:3px;
+    background:rgba(14,13,11,.5);gap:2px;
+  }
+  .switch button{
+    appearance:none;border:0;background:transparent;cursor:pointer;
+    font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.06em;
+    color:var(--cream-faint);padding:.6rem 1.05rem;border-radius:1px;
+    transition:color .35s var(--ease);position:relative;z-index:1;white-space:nowrap;
+  }
+  .switch button[aria-pressed="true"]{color:var(--ink)}
+  .switch .thumb{
+    position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);
+    background:var(--cream);border-radius:1px;z-index:0;
+    transition:transform .42s var(--ease),background .42s var(--ease);
+  }
+  .mech.is-remedy .switch .thumb{transform:translateX(100%)}
+  .mech:not(.is-remedy) .switch .thumb{background:var(--orange)}
+
+  .axes{display:flex;flex-direction:column;gap:0}
+  .axis{
+    border-top:1px solid var(--line);padding:2.6rem 0;
+    display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:start;
+  }
+  .axis:last-child{border-bottom:1px solid var(--line)}
+  .axis .dot{
+    margin-top:.5rem;width:9px;height:9px;border-radius:50%;
+    background:var(--orange);transition:background .4s var(--ease),box-shadow .4s var(--ease);
+    box-shadow:0 0 0 0 rgba(243,101,28,.4);
+  }
+  .mech.is-remedy .axis .dot{background:var(--cream);box-shadow:0 0 14px 1px rgba(242,235,220,.25)}
+  .axis h3{font-size:clamp(1.18rem,1.05rem + .6vw,1.5rem);line-height:1.12;margin-bottom:.8rem;min-height:1.2em;text-wrap:balance}
+  .axis .states{position:relative}
+  .axis .state{color:var(--cream-dim);transition:opacity .4s var(--ease);text-wrap:pretty}
+  .axis .state .line{
+    display:block;margin-top:1rem;font-family:"Fraunces",serif;font-style:italic;
+    font-size:1.08rem;color:var(--cream);font-variation-settings:"SOFT" 30;
+  }
+  /* crossfade: stack states, show one */
+  .axis .remedy{position:absolute;inset:0;opacity:0;pointer-events:none}
+  .axis .trap{opacity:1}
+  .mech.is-remedy .axis .trap{opacity:0;pointer-events:none}
+  .mech.is-remedy .axis .remedy{opacity:1;pointer-events:auto;position:relative}
+  /* swap title text */
+  .axis h3 .t-remedy{display:none}
+  .mech.is-remedy .axis h3 .t-trap{display:none}
+  .mech.is-remedy .axis h3 .t-remedy{display:inline}
+
+  .mech-foot{margin-top:2.8rem;color:var(--cream-faint);font-size:.95rem;max-width:46ch;text-wrap:pretty}
+
+  /* ---------- RESIST TRAP ---------- */
+  .resist .pull{border-left-color:var(--cream-ghost)}
+
+  /* ---------- EXAMPLES ---------- */
+  .tabs{display:flex;flex-wrap:wrap;gap:.6rem;margin:2.5rem 0 3rem}
+  .tabs button{
+    appearance:none;cursor:pointer;background:transparent;
+    border:1px solid var(--line-strong);color:var(--cream-dim);
+    font-family:"JetBrains Mono",monospace;font-size:.70rem;letter-spacing:.12em;text-transform:uppercase;
+    padding:.55rem .8rem;border-radius:2px;transition:all .3s var(--ease);
+  }
+  .tabs button:hover{border-color:var(--cream)}
+  .tabs button[aria-selected="true"]{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .5s var(--ease)}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .field{
+    display:grid;grid-template-columns:84px 1fr;gap:.6rem 1.6rem;align-items:baseline;
+    padding:1.5rem 0;border-top:1px solid var(--line);
+  }
+  .field:first-of-type{border-top:0}
+  .field .k{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);padding-top:.18rem}
+  .field.cost .k{color:var(--cream-faint)}
+  .field .v{font-size:1.06rem;line-height:1.45}
+  .field.ache .v{font-family:"Fraunces",serif;font-style:italic;font-size:1.18rem;color:var(--cream);font-variation-settings:"SOFT" 30}
+  .field.cost .v{color:var(--cream-dim)}
+
+  .ex-foot{margin-top:3.2rem;padding-top:2.2rem;border-top:1px solid var(--line-strong);color:var(--cream-dim);text-wrap:pretty}
+  .ex-foot strong{color:var(--cream);font-weight:600}
+
+  /* ---------- ROOT ---------- */
+  .root .faith{
+    margin-top:2.5rem;padding:2rem 2.2rem;border:1px solid var(--line);border-radius:3px;
+    background:rgba(242,235,220,.02);
+  }
+  .root .faith .tag{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint);display:block;margin-bottom:.7rem}
+  .root .faith p{color:var(--cream-dim);text-wrap:pretty}
+  .root .faith b{color:var(--cream)}
+
+  /* ---------- INTEGRATED FLOW ---------- */
+  .shape{background:linear-gradient(180deg,transparent,rgba(242,235,220,.02))}
+  .paths{display:grid;gap:1.6rem;margin:3rem 0 2rem}
+  @media(min-width:640px){.paths{grid-template-columns:1fr 1fr}}
+  .path{border:1px solid var(--line);border-radius:3px;padding:2.2rem 2rem}
+  .path.down{border-color:var(--orange-line);background:var(--orange-tint)}
+  .path .head{display:flex;align-items:center;gap:.55rem;margin-bottom:1rem}
+  .path .head svg{flex:none}
+  .path .head .lbl{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+  .path.down .lbl{color:var(--orange)}
+  .path.up .lbl{color:var(--cream)}
+  .step{font-size:.99rem;line-height:1.4;color:var(--cream-dim);padding:0.6rem 0;display:flex;gap:.6rem;text-wrap:pretty}
+  .step .arr{color:var(--cream-faint);flex:none;font-family:"JetBrains Mono",monospace}
+  .step.bend{color:var(--cream);font-style:italic;font-family:"Fraunces",serif;font-variation-settings:"SOFT" 20}
+  .closing{
+    text-align:center;max-width:36ch;margin:4rem auto 0;
+    font-family:"Fraunces",serif;font-size:clamp(1.4rem,1.6rem + 1vw,2rem);line-height:1.2;
+    font-variation-settings:"SOFT" 36;
+    text-wrap:balance;
+  }
+  .closing em{font-style:italic;color:var(--orange)}
+
+  footer{padding:4rem 0 5rem;text-align:center}
+  footer .mk{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-faint)}
+
+  /* ---------- reveal + a11y ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:1px}
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important;transition-duration:.01ms !important}
+    .reveal{opacity:1;transform:none}
+  }
+  @media(max-width:430px){
+    .field{grid-template-columns:1fr;gap:.15rem}
+    .field .k{padding-top:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <p class="eyebrow reveal">On desire · what it trains</p>
+  <h1 class="reveal">Freedom,<br>or a <em>Master</em></h1>
+  <p class="sub reveal">“Just do whatever I feel like.” It sounds like the most free a person could be. <b>It’s a training program</b> — and it has a direction. Here’s what it teaches the brain, why “just resist it” fails too, and the way back.</p>
+  <div class="compass reveal" aria-hidden="true">
+    <svg width="46" height="14" viewBox="0 0 46 14" fill="none"><path d="M1 7h30" stroke="#F3651C" stroke-width="1.2"/><path d="M27 3l5 4-5 4" stroke="#F3651C" stroke-width="1.2" fill="none"/><path d="M45 13C45 7 40 7 36 9" stroke="rgba(242,235,220,.45)" stroke-width="1.2" fill="none"/></svg>
+    <span>down is easy · back is real</span>
+  </div>
+</header>
+
+<div class="rule"></div>
+
+<!-- THE PROMISE -->
+<section class="wrap body">
+  <p class="eyebrow muted reveal">The promise</p>
+  <h2 class="reveal">It markets itself as freedom</h2>
+  <p class="lede reveal">“Obey the urge.” “Instant gratification.” “Follow your gut.” Always sold the same way — no rules, no friction, no waiting. But the brain doesn’t learn freedom from obeying impulses. It learns a <strong>pattern</strong>. And every pattern you rehearse gets stronger and faster.</p>
+  <p class="pull reveal">You think you’re maximizing your will. You’re handing it to whatever shows up wanting.</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- MECHANISM: the signature toggle -->
+<section class="mech wrap" id="mech">
+  <p class="eyebrow muted reveal">The mechanism</p>
+  <h2 class="reveal">Three things get trained — not your freedom</h2>
+  <p class="lede reveal">Every time you obey an urge, the same three dials move. Flip the switch to see how the exact same dials run in reverse when you stop feeding them. <strong>Indulgence and recovery aren’t different machines.</strong> They’re one machine, pointed two directions.</p>
+
+  <div class="switch-row reveal">
+    <span class="switch-label">Which direction?</span>
+    <div class="switch" role="group" aria-label="Direction of training">
+      <span class="thumb" aria-hidden="true"></span>
+      <button type="button" data-dir="trap" aria-pressed="true">The spiral</button>
+      <button type="button" data-dir="remedy" aria-pressed="false">The way back</button>
+    </div>
+  </div>
+
+  <div class="axes reveal">
+    <div class="axis">
+      <span class="dot" aria-hidden="true"></span>
+      <div>
+        <h3><span class="t-trap">Wanting climbs, liking flattens</span><span class="t-remedy">Wanting and liking, back in sync</span></h3>
+        <div class="states">
+          <div class="state trap">
+            The first scroll, the first cookie, the first buy was genuinely good. Now you do it more and feel it less. The brain’s <em>wanting</em> system sharpens with every rep; the <em>liking</em> system doesn’t keep up.
+            <span class="line">The spike is in the wanting, not the having.</span>
+          </div>
+          <div class="state remedy">
+            Stop chasing the hits that don’t pay, and get present to the ones that do — actually taste the meal, finish the conversation. The pleasure was always there; you just weren’t around to collect it.
+            <span class="line">Presence is how you collect what you’re already being given.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="axis">
+      <span class="dot" aria-hidden="true"></span>
+      <div>
+        <h3><span class="t-trap">The gap collapses</span><span class="t-remedy">The gap comes back</span></h3>
+        <div class="states">
+          <div class="state trap">
+            Between the urge and the action is a pause — the one place “you” actually decide. Obey it enough and the pause disappears. Urge becomes action with no one left in between.
+            <span class="line">You’re not choosing the urge. It’s choosing you, faster every time.</span>
+          </div>
+          <div class="state remedy">
+            Let the urge crest without obeying it. Urges are waves — they peak and fall within minutes if you don’t feed them. Every wave you ride teaches the brain the discomfort is survivable, and quietly rebuilds the pause.
+            <span class="line">It was never a command. It was a wave.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="axis">
+      <span class="dot" aria-hidden="true"></span>
+      <div>
+        <h3><span class="t-trap">The baseline drops</span><span class="t-remedy">The baseline climbs back</span></h3>
+        <div class="states">
+          <div class="state trap">
+            Keep spiking and “normal” stops feeling like enough. The volume on ordinary good things turns down. Eventually you need the hit just to feel okay.
+            <span class="line">Normal stops feeling like enough.</span>
+          </div>
+          <div class="state remedy">
+            Step off the spike long enough and the floor rises. Early on it feels worse — that part isn’t failure, it’s withdrawal, the baseline recovering. Then the color comes back. The “boring” things were only boring because the spike drowned them out.
+            <span class="line">Withdrawal feels like failure. It’s the baseline climbing back.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="mech-foot reveal">Same three dials. The only difference is which way you turn them — and which way takes patience.</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- RESIST IS A TRAP -->
+<section class="resist wrap body">
+  <p class="eyebrow muted reveal">The fix that isn’t one</p>
+  <h2 class="reveal">“Just resist it” is a trap too</h2>
+  <p class="lede reveal">So the answer is to white-knuckle every urge into the ground? It fails — and not because you’re weak. <strong>Resistance runs on the same engine:</strong> effort, attention, force. What you fight, you make louder. It drains a battery that runs out. And it breeds a brittle, joyless discipline that becomes its own kind of cage.</p>
+  <p class="pull reveal"><em>You can’t beat a desire. You can only outrank it.</em></p>
+</section>
+
+<div class="rule"></div>
+
+<!-- EXAMPLES -->
+<section class="wrap" id="examples">
+  <p class="eyebrow muted reveal">The same shape, everywhere</p>
+  <h2 class="reveal">One pattern, many costumes</h2>
+  <p class="lede reveal">It’s always the same four beats: a real ache underneath, a counterfeit that promises to reach it, a spike that fades, a cost that compounds. Pick one and watch the shape repeat.</p>
+
+  <div class="tabs reveal" role="tablist" aria-label="Examples">
+    <button role="tab" aria-selected="true" data-tab="phone">Phone</button>
+    <button role="tab" aria-selected="false" data-tab="food">Food</button>
+    <button role="tab" aria-selected="false" data-tab="buy">Buying</button>
+    <button role="tab" aria-selected="false" data-tab="snap">Snapping</button>
+    <button role="tab" aria-selected="false" data-tab="seen">Being seen</button>
+  </div>
+
+  <div class="panels reveal">
+    <div class="panel active" id="phone" role="tabpanel">
+      <div class="field ache"><span class="k">The ache</span><span class="v">I don’t want to be alone with myself right now.</span></div>
+      <div class="field"><span class="k">The offer</span><span class="v">An endless feed. Always something next.</span></div>
+      <div class="field"><span class="k">The spike</span><span class="v">The first ten minutes felt like company.</span></div>
+      <div class="field cost"><span class="k">The cost</span><span class="v">An hour gone, emptier than when you started — and you can’t put it down.</span></div>
+    </div>
+    <div class="panel" id="food" role="tabpanel">
+      <div class="field ache"><span class="k">The ache</span><span class="v">I want comfort. I want one small reward.</span></div>
+      <div class="field"><span class="k">The offer</span><span class="v">Something sweet, right now.</span></div>
+      <div class="field"><span class="k">The spike</span><span class="v">The first bite was genuinely good.</span></div>
+      <div class="field cost"><span class="k">The cost</span><span class="v">By the fifth you’re not tasting it. You’re just feeding the itch.</span></div>
+    </div>
+    <div class="panel" id="buy" role="tabpanel">
+      <div class="field ache"><span class="k">The ache</span><span class="v">I want to feel like enough — like the kind of person who has this.</span></div>
+      <div class="field"><span class="k">The offer</span><span class="v">One click. Here by tomorrow.</span></div>
+      <div class="field"><span class="k">The spike</span><span class="v">The thrill lives in the cart and the checkout.</span></div>
+      <div class="field cost"><span class="k">The cost</span><span class="v">It arrives and the feeling’s already gone. So you fill the cart again.</span></div>
+    </div>
+    <div class="panel" id="snap" role="tabpanel">
+      <div class="field ache"><span class="k">The ache</span><span class="v">I want to feel powerful, not helpless.</span></div>
+      <div class="field"><span class="k">The offer</span><span class="v">Let it out. Say the thing.</span></div>
+      <div class="field"><span class="k">The spike</span><span class="v">The release feels like relief.</span></div>
+      <div class="field cost"><span class="k">The cost</span><span class="v">The fuse gets shorter every time. You trained the fuse.</span></div>
+    </div>
+    <div class="panel" id="seen" role="tabpanel">
+      <div class="field ache"><span class="k">The ache</span><span class="v">I want to be known. To matter to someone.</span></div>
+      <div class="field"><span class="k">The offer</span><span class="v">Post it. Check the likes.</span></div>
+      <div class="field"><span class="k">The spike</span><span class="v">The notification feels like being loved.</span></div>
+      <div class="field cost"><span class="k">The cost</span><span class="v">The number never holds. The hunger comes back bigger.</span></div>
+    </div>
+  </div>
+
+  <p class="ex-foot reveal">Notice what sits at the bottom of every one. Not the phone, not the sugar, not the likes — <strong>an ache the counterfeit can’t actually reach.</strong></p>
+</section>
+
+<div class="rule"></div>
+
+<!-- ROOT -->
+<section class="root wrap body">
+  <p class="eyebrow muted reveal">How it comes together</p>
+  <h2 class="reveal">The thing underneath</h2>
+  <p class="lede reveal">This is why “just stop” never holds. The urge isn’t the real problem — it’s a <strong>counterfeit answer to a real need.</strong> Suppress the urge and the ache stays untouched, so the urge grows back. You treated the symptom and left the wound bleeding.</p>
+  <p class="reveal">The way out isn’t more force. It’s <strong>displacement.</strong> You don’t dig a desire out by hand — you crowd it out with a truer, stronger one. The lower want doesn’t get beaten. It gets outranked, and quietly let go.</p>
+  <p class="pull reveal">Force buries the weed. A new affection crowds it out.</p>
+
+  <div class="faith reveal">
+    <span class="tag">Where this comes from</span>
+    <p>The old name for it is <b>“the expulsive power of a new affection”</b> (Thomas Chalmers; later carried by Tim Keller). The move is <b>grace-first</b>: you can’t grind your way into contentment, because the grinding is still the same hungry seizing. Contentment is <b>received first</b> — and then, from underneath, it reorders everything you want. The behavior follows the affection. It can never manufacture it.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- INTEGRATED SHAPE -->
+<section class="shape wrap">
+  <p class="eyebrow muted reveal">The whole shape</p>
+  <h2 class="reveal">Two roads out of the same ache</h2>
+  <p class="lede reveal">The desire that traps you and the desire that frees you are the same desire. Everything turns on what you bring it to.</p>
+
+  <div class="paths reveal">
+    <div class="path down">
+      <div class="head"><svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 1v15" stroke="#F3651C" stroke-width="1.3"/><path d="M2 12l5 6 5-6" stroke="#F3651C" stroke-width="1.3" fill="none"/></svg><span class="lbl">The spiral</span></div>
+      <div class="step"><span class="arr">→</span><span>A real ache</span></div>
+      <div class="step"><span class="arr">→</span><span>A counterfeit offer</span></div>
+      <div class="step"><span class="arr">→</span><span>You obey it</span></div>
+      <div class="step bend"><span class="arr">↳</span><span>more wanting · less pause · lower floor</span></div>
+      <div class="step"><span class="arr">→</span><span>a deeper ache</span></div>
+      <div class="step"><span class="arr">→</span><span>a tighter loop</span></div>
+    </div>
+    <div class="path up">
+      <div class="head"><svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 19V4" stroke="#F2EBDC" stroke-width="1.3"/><path d="M2 8l5-6 5 6" stroke="#F2EBDC" stroke-width="1.3" fill="none"/></svg><span class="lbl">The way back</span></div>
+      <div class="step"><span class="arr">→</span><span>The same ache</span></div>
+      <div class="step"><span class="arr">→</span><span>brought to its true source</span></div>
+      <div class="step bend"><span class="arr">↳</span><span>a truer affection takes hold</span></div>
+      <div class="step"><span class="arr">→</span><span>the wants reorder</span></div>
+      <div class="step"><span class="arr">→</span><span>the counterfeit loosens its grip</span></div>
+      <div class="step"><span class="arr">→</span><span>freedom that’s actually free</span></div>
+    </div>
+  </div>
+
+  <p class="closing reveal">The same desire that traps you is the one that frees you. The only question is <em>what you bring it to.</em></p>
+</section>
+
+<footer>
+  <p class="mk">Freedom, or a Master</p>
+</footer>
+
+<script>
+(function(){
+  // ---- mechanism toggle ----
+  var mech = document.getElementById('mech');
+  var btns = mech.querySelectorAll('.switch button');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var dir = b.dataset.dir;
+      mech.classList.toggle('is-remedy', dir === 'remedy');
+      btns.forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+
+  // ---- examples tabs ----
+  var tablist = document.querySelector('.tabs');
+  var tabs = Array.prototype.slice.call(tablist.querySelectorAll('button'));
+  var panels = document.querySelectorAll('.panel');
+  function select(tab){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t === tab)); });
+    panels.forEach(function(p){ p.classList.toggle('active', p.id === tab.dataset.tab); });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ select(t); });
+    t.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        var n = e.key === 'ArrowRight' ? (i+1)%tabs.length : (i-1+tabs.length)%tabs.length;
+        tabs[n].focus(); select(tabs[n]);
+      }
+    });
+  });
+
+  // ---- scroll reveal ----
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
