@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Architecture of Desire — Wanting, Liking and the Life That Satisfies</title>
+<meta name="description" content="Why the things we want most often satisfy us least — desire, enjoyment, play, purpose, and the New Covenant answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   Colour is meaning, not decoration:
+     need · counterfeit · fruit  →  the central diagnostic axis
+     theory · transcend · amber  →  section identity & flow zones
+   Everything else stays in neutral ink. Palette validated for
+   CVD separation and contrast on both surfaces.
+   ============================================================ */
+:root{
+  color-scheme:light;
+  --surface:#fffdf9; --surface-2:#f8f5ee; --surface-3:#f1ece0;
+  --page:#faf7f0;
+  --ink:#1a1815; --ink-2:#57534a; --ink-3:#8a8477;
+  --line:#e8e2d4; --line-2:#d8d0bd;
+
+  --need:#1baf7a;        --need-ink:#0a6e4c;       --need-wash:#e9f7f1;
+  --counterfeit:#eb6834; --counterfeit-ink:#a63f14;--counterfeit-wash:#fdefe8;
+  --fruit:#e34948;       --fruit-ink:#a52725;      --fruit-wash:#fdeded;
+  --theory:#2a78d6;      --theory-ink:#1a4f92;     --theory-wash:#eaf2fd;
+  --transcend:#6b4fd8;   --transcend-ink:#4a34a5;  --transcend-wash:#f0ecfd;
+  --amber:#c98500;       --amber-ink:#8a5c00;      --amber-wash:#fdf5e4;
+
+  --grid:#ebe6d9; --axis:#d2cab6;
+
+  /* type scale — fixed steps, no ad-hoc sizes */
+  --t-micro:.75rem; --t-sm:.875rem; --t-base:1.0625rem; --t-lg:1.1875rem;
+  --t-h4:1.0625rem; --t-h3:1.375rem;
+  --t-h2:clamp(1.7rem,3.2vw,2.3rem);
+  --t-display:clamp(2.5rem,5.8vw,4rem);
+
+  /* space scale */
+  --s1:.25rem; --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.5rem;
+  --s6:2rem; --s7:3rem; --s8:4.5rem; --s9:6.5rem;
+
+  --r:14px; --r-lg:22px;
+  --shadow:0 1px 3px rgba(26,24,21,.05);
+  --shadow-lift:0 10px 30px rgba(26,24,21,.08);
+  --measure:66ch;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#201d19; --surface-2:#1a1714; --surface-3:#282420;
+  --page:#141210;
+  --ink:#f7f4ec; --ink-2:#c8c2b4; --ink-3:#948e80;
+  --line:#332e26; --line-2:#443d33;
+
+  --need:#199e70;        --need-ink:#5fd3a7;       --need-wash:#12261f;
+  --counterfeit:#d95926; --counterfeit-ink:#f59264;--counterfeit-wash:#2b1a12;
+  --fruit:#e66767;       --fruit-ink:#f39898;      --fruit-wash:#2b1616;
+  --theory:#3987e5;      --theory-ink:#7db4f2;     --theory-wash:#131f2e;
+  --transcend:#9085e9;   --transcend-ink:#b3abf2;  --transcend-wash:#1c1830;
+  --amber:#c98500;       --amber-ink:#e8b755;      --amber-wash:#2a2010;
+
+  --grid:#2c2721; --axis:#443d33;
+  --shadow:0 1px 3px rgba(0,0,0,.4);
+  --shadow-lift:0 10px 30px rgba(0,0,0,.5);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+body{
+  margin:0;font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:var(--t-base);line-height:1.75;letter-spacing:-.003em;
+  background:var(--page);color:var(--ink);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4,.serif{font-family:'Lora',Georgia,serif;font-weight:600;line-height:1.2;letter-spacing:-.015em;margin:0}
+p{margin:0 0 var(--s4)}
+p:last-child{margin-bottom:0}
+a{color:inherit}
+svg{display:block}
+em{font-style:italic}
+.icon{width:1.2em;height:1.2em;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
+.narrow{max-width:var(--measure)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:2.5px solid var(--theory);outline-offset:3px;border-radius:6px}
+::selection{background:var(--transcend-wash)}
+
+/* tint context */
+.t-need{--tint:var(--need);--tint-ink:var(--need-ink);--tint-wash:var(--need-wash)}
+.t-counterfeit{--tint:var(--counterfeit);--tint-ink:var(--counterfeit-ink);--tint-wash:var(--counterfeit-wash)}
+.t-fruit{--tint:var(--fruit);--tint-ink:var(--fruit-ink);--tint-wash:var(--fruit-wash)}
+.t-theory{--tint:var(--theory);--tint-ink:var(--theory-ink);--tint-wash:var(--theory-wash)}
+.t-transcend{--tint:var(--transcend);--tint-ink:var(--transcend-ink);--tint-wash:var(--transcend-wash)}
+.t-amber{--tint:var(--amber);--tint-ink:var(--amber-ink);--tint-wash:var(--amber-wash)}
+
+/* ============ ONE PANEL COMPONENT ============ */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s6)}
+.panel--flat{background:transparent;border:0;padding:0}
+.panel--lift{box-shadow:var(--shadow-lift)}
+.panel--accent{border-left:3px solid var(--tint,var(--line-2))}
+.panel--pad-sm{padding:var(--s5)}
+@media (max-width:640px){.panel{padding:var(--s5)}}
+
+.panel h3,.panel h4{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s3)}
+.panel h3{font-size:var(--t-h3)}
+.panel h4{font-size:var(--t-h4)}
+.panel h3 .icon,.panel h4 .icon{width:20px;height:20px;color:var(--tint-ink,var(--ink-3))}
+.panel p{color:var(--ink-2);font-size:var(--t-sm);line-height:1.7}
+
+.stack{display:flex;flex-direction:column;gap:var(--s4)}
+.stack--lg{gap:var(--s5)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.gauto{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--s4)}
+@media (max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+
+/* ============ NAV ============ */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:70;
+  background:linear-gradient(90deg,var(--need),var(--amber),var(--counterfeit),var(--fruit));transition:width .1s linear}
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  background:color-mix(in srgb,var(--page) 85%,transparent);
+  backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+  border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;gap:var(--s4);height:62px}
+.brand{display:flex;align-items:center;gap:var(--s2);font-family:'Lora',serif;font-weight:600;
+  font-size:1rem;text-decoration:none;white-space:nowrap;letter-spacing:-.02em}
+.brand .icon{width:22px;height:22px;color:var(--transcend)}
+.nav-links{display:flex;gap:2px;margin-left:auto}
+.nav-links a{padding:6px 10px;border-radius:8px;text-decoration:none;white-space:nowrap;
+  font-size:var(--t-micro);font-weight:600;color:var(--ink-3);letter-spacing:.01em;
+  transition:background .18s,color .18s}
+.nav-links a:hover{background:var(--surface-3);color:var(--ink)}
+.nav-links a.active{color:var(--transcend-ink);background:var(--transcend-wash)}
+.nav-actions{display:flex;align-items:center;gap:var(--s2);margin-left:var(--s3)}
+.ibtn{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer;transition:all .18s}
+.ibtn:hover{background:var(--surface-3);color:var(--ink)}
+.ibtn .icon{width:17px;height:17px}
+.btn{display:inline-flex;align-items:center;gap:var(--s2);padding:9px 15px;border-radius:9px;
+  border:0;background:var(--ink);color:var(--page);font:inherit;font-size:var(--t-micro);
+  font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .18s}
+.btn:hover{opacity:.85}
+.btn .icon{width:15px;height:15px}
+#menuBtn{display:none}
+.mmenu{display:none;flex-direction:column;padding:var(--s2) 0 var(--s4);border-top:1px solid var(--line);max-height:70vh;overflow-y:auto}
+.mmenu.open{display:flex}
+.mmenu a{display:flex;align-items:center;gap:var(--s3);padding:11px 8px;border-radius:9px;
+  text-decoration:none;font-size:var(--t-sm);font-weight:500;color:var(--ink-2)}
+.mmenu a .num{font-size:var(--t-micro);font-weight:700;color:var(--ink-3);min-width:26px}
+.mmenu a:hover,.mmenu a.active{background:var(--surface-3);color:var(--ink)}
+@media (max-width:1120px){
+  .nav-links{display:none}#menuBtn{display:grid}.nav-actions{margin-left:auto}.btn span{display:none}
+}
+
+/* ============ HERO ============ */
+.hero{position:relative;padding:var(--s9) 0 var(--s8);text-align:center;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-25% -10% auto;height:520px;z-index:-1;
+  background:
+    radial-gradient(36% 52% at 24% 44%,color-mix(in srgb,var(--need) 17%,transparent),transparent 70%),
+    radial-gradient(32% 48% at 76% 40%,color-mix(in srgb,var(--transcend) 17%,transparent),transparent 70%);
+  filter:blur(50px);opacity:.8}
+.eyebrow{display:inline-flex;align-items:center;gap:var(--s2);padding:5px 13px;border-radius:99px;
+  border:1px solid var(--line-2);background:var(--surface);
+  font-size:var(--t-micro);font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:var(--s5)}
+.eyebrow .icon{width:13px;height:13px;color:var(--transcend)}
+.hero h1{font-size:var(--t-display);margin-bottom:var(--s5);letter-spacing:-.03em;line-height:1.08}
+.hero h1 em{font-weight:500;background:linear-gradient(100deg,var(--need),var(--transcend));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lede{font-family:'Lora',serif;font-style:italic;font-size:var(--t-lg);
+  color:var(--ink-2);max-width:44rem;margin:0 auto var(--s6);line-height:1.6}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s2)}
+.pill{display:inline-flex;align-items:center;gap:var(--s2);padding:7px 14px;border-radius:99px;
+  background:var(--surface);border:1px solid var(--line);font-size:var(--t-sm);font-weight:500;color:var(--ink-2)}
+.pill .icon{width:15px;height:15px}
+
+/* ============ SECTION HEAD ============
+   One meta row: part number + a single register tag. Never
+   inside a heading — that was what made the type look broken. */
+section{scroll-margin-top:84px}
+.band{padding:var(--s9) 0}
+.band--alt{background:var(--surface-2);border-block:1px solid var(--line)}
+.shead{margin-bottom:var(--s7);max-width:var(--measure)}
+.smeta{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s4)}
+.spart{display:inline-flex;align-items:center;gap:var(--s2);font-size:var(--t-micro);
+  font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tint-ink)}
+.spart .icon{width:15px;height:15px}
+.smeta .rule{flex:1;height:1px;background:var(--line-2)}
+.shead h2{font-size:var(--t-h2);margin-bottom:var(--s4);letter-spacing:-.025em}
+.shead > p{color:var(--ink-2);font-size:var(--t-base);margin:0}
+.shead > p + p{margin-top:var(--s3)}
+
+/* register tag — quiet by design */
+.reg{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:5px;
+  border:1px solid var(--line-2);background:var(--surface);
+  font-size:.6875rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap}
+.reg .icon{width:11px;height:11px}
+.reg--empirical{color:var(--theory-ink);border-color:color-mix(in srgb,var(--theory) 28%,transparent)}
+.reg--contested{color:var(--amber-ink);border-color:color-mix(in srgb,var(--amber) 34%,transparent);border-style:dashed}
+.reg--interpretive{color:var(--transcend-ink);border-color:color-mix(in srgb,var(--transcend) 26%,transparent)}
+.reg--confessional{color:var(--ink-2);border-color:var(--line-2)}
+
+.hsub{font-size:var(--t-h3);margin-bottom:var(--s3);margin-top:var(--s8)}
+.hsub + p{color:var(--ink-2);font-size:var(--t-sm);max-width:var(--measure);margin-bottom:var(--s5)}
+
+/* ============ SMALL PARTS ============ */
+.tile{display:flex;gap:var(--s3);align-items:flex-start}
+.tile .ic{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:10px;
+  background:var(--tint-wash);color:var(--tint-ink)}
+.tile .ic .icon{width:17px;height:17px}
+.tile b{display:block;font-size:var(--t-sm);font-weight:600;color:var(--ink);margin-bottom:2px}
+.tile span{display:block;font-size:var(--t-sm);color:var(--ink-2);line-height:1.65}
+
+.note{display:flex;gap:var(--s3);padding:var(--s4);border-radius:var(--r);
+  background:var(--surface-2);border:1px dashed var(--line-2);
+  font-size:var(--t-sm);line-height:1.65;color:var(--ink-2)}
+.note .icon{width:16px;height:16px;color:var(--ink-3);flex:none;margin-top:3px}
+.note b{color:var(--ink)}
+
+.quote{padding:var(--s5) var(--s6);border-radius:var(--r-lg);background:var(--ink);color:var(--surface)}
+:root[data-theme="dark"] .quote{background:var(--surface-3);border:1px solid var(--line-2)}
+.quote .icon{width:22px;height:22px;color:var(--amber);margin-bottom:var(--s3)}
+.quote p{font-family:'Lora',serif;font-style:italic;font-size:var(--t-base);line-height:1.6;
+  margin:0;color:color-mix(in srgb,var(--surface) 90%,transparent)}
+:root[data-theme="dark"] .quote p{color:var(--ink-2)}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:var(--s3)}
+.chip{font-size:var(--t-micro);font-weight:600;padding:3px 9px;border-radius:5px;
+  background:var(--tint-wash);color:var(--tint-ink)}
+
+/* ============ CHARTS ============ */
+.chart{width:100%;height:auto;display:block;overflow:visible;font-family:'Inter',system-ui,sans-serif}
+.chart-note{font-size:var(--t-sm);color:var(--ink-3);margin-bottom:var(--s5);line-height:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:var(--s4);margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--line)}
+.legend span{display:flex;align-items:center;gap:7px;font-size:var(--t-sm);color:var(--ink-2)}
+.legend i{width:11px;height:11px;border-radius:3px;flex:none}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--s5)}
+.seg button{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:99px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  font:inherit;font-size:var(--t-sm);font-weight:500;cursor:pointer;transition:all .18s}
+.seg button .icon{width:14px;height:14px}
+.seg button:hover{border-color:var(--line-2)}
+.seg button[aria-pressed="true"]{background:var(--tint-wash);color:var(--tint-ink);
+  border-color:color-mix(in srgb,var(--tint) 45%,transparent)}
+.readout{margin-top:var(--s4);padding:var(--s4);border-radius:var(--r);
+  background:var(--tint-wash);font-size:var(--t-sm);line-height:1.65;color:var(--ink-2)}
+.readout b{color:var(--tint-ink)}
+#flowChart{cursor:crosshair;touch-action:none}
+.fr{margin-top:var(--s4);padding:var(--s5);border-radius:var(--r);background:var(--tint-wash)}
+.fr-top{display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s2)}
+.fr-top .icon{width:19px;height:19px;color:var(--tint-ink)}
+.fr-top b{font-family:'Lora',serif;font-size:var(--t-h4);color:var(--tint-ink)}
+.fr p{font-size:var(--t-sm);color:var(--ink-2);line-height:1.65;margin-bottom:var(--s3)}
+.fr .fix{font-size:var(--t-sm);color:var(--ink);padding-top:var(--s3);
+  border-top:1px solid color-mix(in srgb,var(--tint) 22%,transparent)}
+.fr .fix b{color:var(--tint-ink)}
+.fr .eg{display:block;margin-top:6px;font-size:var(--t-sm);color:var(--ink-3);font-style:italic}
+
+/* ============ WANTS vs NEEDS ============ */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:820px){.vs{grid-template-columns:1fr}}
+.vs .panel{padding:var(--s5)}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;
+  background:var(--tint-wash);color:var(--tint-ink);font-size:var(--t-micro);font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;margin-bottom:var(--s3)}
+.tag .icon{width:13px;height:13px}
+.eg{margin-top:var(--s3);padding:var(--s3) var(--s4);border-radius:10px;background:var(--surface-2);
+  border-left:2px solid var(--tint);font-size:var(--t-sm);font-style:italic;color:var(--ink-2)}
+
+/* ============ FUN CARDS ============ */
+.fun .gk{font-family:'Lora',serif;font-size:1.5rem;font-weight:600;color:var(--ink);
+  display:block;margin-bottom:2px;letter-spacing:-.02em}
+.fun .en{display:block;font-size:var(--t-micro);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tint-ink);margin-bottom:var(--s3)}
+.fun .ic{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;
+  background:var(--tint-wash);color:var(--tint-ink);margin-bottom:var(--s4)}
+.fun .ic .icon{width:20px;height:20px}
+.fun .egs{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--line);
+  font-size:var(--t-sm);color:var(--ink-3)}
+.spectrum{display:flex;align-items:center;gap:var(--s3);margin-top:var(--s4)}
+.spectrum .bar{flex:1;height:6px;border-radius:4px;
+  background:linear-gradient(90deg,var(--need),var(--amber),var(--theory))}
+.spectrum span{font-size:var(--t-micro);font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+
+/* ============ SCENARIOS (details) ============ */
+.scn{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.scn + .scn{margin-top:var(--s3)}
+.scn summary{display:flex;align-items:center;gap:var(--s3);padding:var(--s4) var(--s5);
+  cursor:pointer;list-style:none;font-weight:500;font-size:var(--t-base);color:var(--ink);
+  transition:background .18s}
+.scn summary::-webkit-details-marker{display:none}
+.scn summary:hover{background:var(--surface-2)}
+.scn summary .ic{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:9px;
+  background:var(--tint-wash);color:var(--tint-ink)}
+.scn summary .ic .icon{width:16px;height:16px}
+.scn summary .chev{margin-left:auto;color:var(--ink-3);transition:transform .25s}
+.scn[open] summary .chev{transform:rotate(180deg)}
+.scn[open] summary{border-bottom:1px solid var(--line)}
+.scn-body{padding:var(--s5);display:grid;gap:var(--s4)}
+.scn-row{display:grid;grid-template-columns:130px 1fr;gap:var(--s4);align-items:start}
+@media (max-width:640px){.scn-row{grid-template-columns:1fr;gap:var(--s1)}}
+.scn-row dt{font-size:var(--t-micro);font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding-top:3px}
+.scn-row dd{margin:0;font-size:var(--t-sm);color:var(--ink-2);line-height:1.7}
+.scn-row dd b{color:var(--ink)}
+
+/* ============ MATRIX ============ */
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:var(--s4)}
+.filters button{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:99px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  font:inherit;font-size:var(--t-sm);font-weight:500;cursor:pointer;transition:all .18s}
+.filters button .icon{width:14px;height:14px}
+.filters button:hover{border-color:var(--line-2)}
+.filters button[aria-pressed="true"]{background:var(--tint-wash);color:var(--tint-ink);
+  border-color:color-mix(in srgb,var(--tint) 45%,transparent)}
+.search{position:relative;margin-left:auto;min-width:220px}
+.search .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;color:var(--ink-3);pointer-events:none}
+#matrixSearch{width:100%;padding:8px 14px 8px 34px;border-radius:99px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font:inherit;font-size:var(--t-sm)}
+@media (max-width:760px){.search{margin-left:0;width:100%}}
+.count{font-size:var(--t-sm);color:var(--ink-3);margin-bottom:var(--s3)}
+.count b{color:var(--ink);font-variant-numeric:tabular-nums}
+.tbl{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+table{width:100%;border-collapse:collapse;text-align:left}
+thead th{padding:12px 16px;font-size:var(--t-micro);font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--line);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--line)}
+tbody tr:last-child{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+tbody td{padding:14px 16px;font-size:var(--t-sm);vertical-align:top;color:var(--ink-2);line-height:1.6}
+.dom{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink)}
+.dom .ic{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:8px;
+  background:var(--tint-wash);color:var(--tint-ink)}
+.dom .ic .icon{width:15px;height:15px}
+.c-need{color:var(--need-ink);font-weight:500}
+.c-cf{display:inline-block;padding:3px 8px;border-radius:6px;background:var(--counterfeit-wash);
+  color:var(--counterfeit-ink);font-weight:500}
+.c-fruit{color:var(--fruit-ink);font-weight:500}
+.empty{padding:var(--s7) var(--s4);text-align:center;color:var(--ink-3);font-size:var(--t-sm)}
+@media (max-width:820px){
+  thead{display:none}
+  tbody tr{display:block;padding:var(--s4)}
+  tbody td{display:block;padding:0 0 10px}
+  tbody td:last-child{padding-bottom:0}
+  tbody td::before{content:attr(data-label);display:block;font-size:.6875rem;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+  tbody td:first-child::before{display:none}
+}
+
+/* ============ PATHWAY ============ */
+.pw{background:var(--ink);color:var(--surface);border-radius:var(--r-lg);
+  padding:var(--s7);position:relative;overflow:hidden}
+:root[data-theme="dark"] .pw{background:var(--surface-3);border:1px solid var(--line-2)}
+.pw::after{content:"";position:absolute;top:-140px;right:-140px;width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,var(--sc,var(--need)),transparent 68%);opacity:.18;
+  transition:background .5s;pointer-events:none}
+.pw-stage{position:relative;z-index:1;min-height:240px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+.pw-ic{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;margin-bottom:var(--s4);
+  background:color-mix(in srgb,var(--sc,var(--need)) 20%,transparent);color:var(--sc,var(--need));
+  transition:background .35s,color .35s}
+.pw-ic .icon{width:26px;height:26px}
+.pw-lbl{font-size:var(--t-micro);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sc,var(--need));margin-bottom:var(--s3);transition:color .35s}
+.pw-stage h3{font-size:clamp(1.6rem,3.6vw,2.2rem);margin-bottom:var(--s3);color:var(--surface)}
+:root[data-theme="dark"] .pw-stage h3{color:var(--ink)}
+.pw-stage p{font-size:var(--t-base);max-width:34rem;margin:0;line-height:1.6;
+  color:color-mix(in srgb,var(--surface) 74%,transparent)}
+:root[data-theme="dark"] .pw-stage p{color:var(--ink-2)}
+.pw-ctrl{display:flex;align-items:center;gap:var(--s4);margin-top:var(--s6);position:relative;z-index:1}
+.pw-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:99px;
+  border:1px solid color-mix(in srgb,var(--surface) 24%,transparent);background:transparent;
+  color:color-mix(in srgb,var(--surface) 84%,transparent);
+  font:inherit;font-size:var(--t-sm);font-weight:600;cursor:pointer;transition:background .18s}
+:root[data-theme="dark"] .pw-btn{border-color:var(--line-2);color:var(--ink-2)}
+.pw-btn:hover:not(:disabled){background:color-mix(in srgb,var(--surface) 12%,transparent)}
+.pw-btn:disabled{opacity:.3;cursor:not-allowed}
+.pw-btn .icon{width:15px;height:15px}
+.pw-dots{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+/* colour set inline from JS — no cascade conflict with the theme rules */
+.pw-dot{width:100%;max-width:30px;height:6px;border-radius:3px;border:0;padding:0;cursor:pointer;
+  transition:transform .2s,opacity .2s}
+.pw-dot:hover{transform:scaleY(1.6)}
+.pw-dot[data-cur="1"]{transform:scaleY(1.9)}
+@media (max-width:700px){
+  .pw{padding:var(--s5)}
+  .pw-ctrl{flex-wrap:wrap}
+  .pw-dots{order:-1;width:100%;margin-bottom:var(--s2)}
+  .pw-btn{flex:1;justify-content:center}
+}
+
+/* ============ OBJECTIONS ============ */
+.obj{border-top:2px solid var(--tint)}
+.obj .n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;
+  background:var(--tint-wash);color:var(--tint-ink);font-size:var(--t-micro);font-weight:700;
+  margin-bottom:var(--s3);font-variant-numeric:tabular-nums}
+.obj h4{font-size:var(--t-h4);margin-bottom:var(--s3);display:block}
+.obj .resp{margin-top:var(--s4);padding-top:var(--s3);border-top:1px dashed var(--line-2);
+  font-size:var(--t-sm);color:var(--ink-2);line-height:1.65}
+.obj .resp b{display:block;font-size:.6875rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+
+/* ============ SCRIPTURE ============ */
+.scr{position:relative}
+.scr .ref{display:inline-flex;align-items:center;gap:6px;font-size:var(--t-micro);font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--tint-ink);margin-bottom:var(--s3)}
+.scr .ref .icon{width:13px;height:13px}
+.scr blockquote{margin:0 0 var(--s4);padding-left:var(--s4);border-left:2px solid var(--tint);
+  font-family:'Lora',serif;font-style:italic;font-size:var(--t-base);line-height:1.55;color:var(--ink)}
+.scr blockquote cite{display:block;font-style:normal;font-family:'Inter',sans-serif;
+  font-size:var(--t-micro);font-weight:600;color:var(--ink-3);margin-top:6px;letter-spacing:.03em}
+.scr h4{font-size:var(--t-h4);margin-bottom:var(--s3);display:block}
+.scr p{font-size:var(--t-sm);color:var(--ink-2);line-height:1.7}
+
+.compass{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;text-align:center;padding:var(--s7);
+  background:radial-gradient(circle at 50% 50%,var(--surface) 59%,transparent 60%),
+    conic-gradient(from 0deg,var(--need),var(--theory),var(--transcend),var(--counterfeit),var(--fruit),var(--need))}
+.compass .in{max-width:19rem}
+.compass .icon{width:26px;height:26px;color:var(--transcend-ink);margin:0 auto var(--s3)}
+.compass h3{font-size:1.6rem;margin-bottom:var(--s2)}
+.compass .rule{width:48px;height:2px;background:var(--line-2);margin:var(--s3) auto}
+.compass blockquote{font-family:'Lora',serif;font-style:italic;color:var(--ink-2);
+  margin:0;font-size:var(--t-sm);line-height:1.6}
+.compass cite{display:block;font-size:var(--t-micro);font-style:normal;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin-top:var(--s4)}
+
+/* ============ MODAL ============ */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:var(--s4);
+  background:color-mix(in srgb,var(--ink) 74%,transparent);backdrop-filter:blur(6px)}
+.modal.open{display:flex}
+.mbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  width:min(620px,100%);max-height:88vh;overflow-y:auto;position:relative}
+.mhd{position:sticky;top:0;background:var(--surface);padding:var(--s6) var(--s6) var(--s4);
+  border-bottom:1px solid var(--line);z-index:2}
+.mhd h2{font-size:var(--t-h3);margin-bottom:var(--s2);padding-right:var(--s7);display:flex;align-items:center;gap:var(--s2)}
+.mhd h2 .icon{width:21px;height:21px;color:var(--transcend-ink)}
+.mhd p{font-size:var(--t-sm);color:var(--ink-2);margin:0;padding-right:var(--s7)}
+.mclose{position:absolute;top:var(--s5);right:var(--s5)}
+.mbody{padding:var(--s5) var(--s6) var(--s6)}
+.q{padding:var(--s4) 0;border-bottom:1px solid var(--line)}
+.q:first-child{padding-top:0}
+.q h4{font-size:var(--t-h4);margin-bottom:4px;display:block}
+.q p{font-size:var(--t-sm);color:var(--ink-2);margin-bottom:var(--s3)}
+.qo{display:flex;gap:var(--s2)}
+.qo button{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:1;
+  padding:9px 12px;border-radius:9px;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink-2);font:inherit;font-size:var(--t-sm);font-weight:600;cursor:pointer;transition:all .18s}
+.qo button .icon{width:14px;height:14px}
+.qo button:hover{border-color:var(--line-2)}
+.qo button[aria-pressed="true"][data-v="1"]{background:var(--need-wash);color:var(--need-ink);border-color:var(--need)}
+.qo button[aria-pressed="true"][data-v="0"]{background:var(--fruit-wash);color:var(--fruit-ink);border-color:var(--fruit)}
+.verdict{margin-top:var(--s5);padding:var(--s5);border-radius:var(--r);background:var(--surface-2);border:1px solid var(--line)}
+.vtop{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s3)}
+.vscore{font-size:1.75rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;color:var(--ink-3)}
+.vscore.on{color:var(--tint-ink)}
+.vtxt b{display:block;font-size:var(--t-sm);color:var(--ink)}
+.vtxt span{font-size:var(--t-sm);color:var(--ink-2)}
+.meter{height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;margin-bottom:var(--s3)}
+.meter i{display:block;height:100%;width:0;border-radius:4px;background:var(--ink-3);transition:width .35s,background .35s}
+.verdict > p{font-size:var(--t-sm);color:var(--ink-2);margin:0;font-style:italic}
+
+/* ============ FOOTER ============ */
+footer{background:var(--ink);color:var(--ink-3);padding:var(--s8) 0 var(--s6)}
+:root[data-theme="dark"] footer{background:var(--surface-2);border-top:1px solid var(--line)}
+footer h2{font-size:var(--t-micro);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--surface) 60%,transparent);margin-bottom:var(--s6);
+  font-family:'Inter',sans-serif;text-align:center}
+:root[data-theme="dark"] footer h2{color:var(--ink-2)}
+.srcs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-bottom:var(--s7)}
+@media (max-width:820px){.srcs{grid-template-columns:repeat(2,1fr)}}
+.src b{display:block;font-size:var(--t-micro);font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--tint-ink);margin-bottom:var(--s3)}
+.src span{display:block;font-size:var(--t-sm);line-height:1.9;
+  color:color-mix(in srgb,var(--surface) 66%,transparent)}
+:root[data-theme="dark"] .src span{color:var(--ink-2)}
+.colophon{text-align:center;font-size:var(--t-sm);padding-top:var(--s5);max-width:48rem;margin-inline:auto;
+  border-top:1px solid color-mix(in srgb,var(--surface) 14%,transparent);
+  color:color-mix(in srgb,var(--surface) 48%,transparent);line-height:1.7}
+:root[data-theme="dark"] .colophon{border-color:var(--line);color:var(--ink-3)}
+.totop{position:fixed;right:var(--s5);bottom:var(--s5);z-index:55;opacity:0;visibility:hidden;
+  transform:translateY(8px);transition:all .25s;box-shadow:var(--shadow-lift)}
+.totop.show{opacity:1;visibility:visible;transform:none}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m6.08 11-3.5 1.6a1 1 0 0 0 0 1.83l8.6 3.9a2 2 0 0 0 1.65 0l8.58-3.9a1 1 0 0 0 0-1.83L17.9 11"/></symbol>
+<symbol id="i-split" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.17-2.83L3 3"/><path d="m21 3-7.83 7.87A4 4 0 0 0 12 13.7v.3"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></symbol>
+<symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="M19 3v4"/><path d="M17 5h4"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+<symbol id="i-rain" viewBox="0 0 24 24"><path d="M4 14.9A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.24"/><path d="M16 14v6M8 14v6M12 16v6"/></symbol>
+<symbol id="i-dice" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="3"/><circle cx="8.5" cy="8.5" r="1.15"/><circle cx="15.5" cy="15.5" r="1.15"/><circle cx="15.5" cy="8.5" r="1.15"/><circle cx="8.5" cy="15.5" r="1.15"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-infinity" viewBox="0 0 24 24"><path d="M6 16c5 0 7-8 12-8a4 4 0 0 1 0 8c-5 0-7-8-12-8a4 4 0 1 0 0 8"/></symbol>
+<symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+<symbol id="i-chev-d" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="3"/><path d="M12 18h.01"/></symbol>
+<symbol id="i-brief" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="7" rx="2.5"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-anchor" viewBox="0 0 24 24"><path d="M12 22V8"/><circle cx="12" cy="5" r="3"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24"><path d="M10 11H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v7a4 4 0 0 1-4 4"/><path d="M19 11h-4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v7a4 4 0 0 1-4 4"/></symbol>
+<symbol id="i-pill" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+<symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V2"/><path d="M5.5 11v11"/><path d="M18 2c-1.7 1-3 3-3 6v4h3"/><path d="M18 2v20"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.82 8.82a2 2 0 0 0 2.82 0l7.18-7.18a2 2 0 0 0 0-2.82Z"/><path d="M7 7h.01"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+<symbol id="i-trend-down" viewBox="0 0 24 24"><path d="M16 17h6v-6"/><path d="m22 17-8.5-8.5-5 5L2 7"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+<symbol id="i-wind" viewBox="0 0 24 24"><path d="M12.8 19.6A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M9.8 4.4A2 2 0 1 1 11 8H2"/></symbol>
+<symbol id="i-crown" viewBox="0 0 24 24"><path d="M11.56 3.69a.5.5 0 0 1 .88 0l2.42 4.41a.5.5 0 0 0 .72.17l4.1-2.74a.5.5 0 0 1 .77.53l-2.02 8.2a1 1 0 0 1-.97.74H6.54a1 1 0 0 1-.97-.74l-2.02-8.2a.5.5 0 0 1 .77-.53l4.1 2.74a.5.5 0 0 0 .72-.17Z"/><path d="M5 20h14"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+<symbol id="i-megaphone" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+<symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+<symbol id="i-mask" viewBox="0 0 24 24"><path d="M4 5v6a8 8 0 0 0 16 0V5a1 1 0 0 0-1.2-1c-2 .4-4.4.6-6.8.6s-4.8-.2-6.8-.6A1 1 0 0 0 4 5Z"/><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M9.5 14.5a3.5 3.5 0 0 0 5 0"/></symbol>
+<symbol id="i-spiral" viewBox="0 0 24 24"><path d="M12 12a2 2 0 1 1 2 2c-1.5 0-3-1-3-3a4 4 0 0 1 5-4c2 .5 3.5 2.5 3.5 5 0 3.5-3 6.5-7 6.5S6 15.5 6 11c0-4.5 3.5-8 8-8"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24"><path d="M10 2v7.5L4.5 19A2 2 0 0 0 6.2 22h11.6a2 2 0 0 0 1.7-3L14 9.5V2"/><path d="M8.5 2h7"/><path d="M7.5 15h9"/></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.2a2 2 0 0 0-.6-1.4L13 13l3.4-3.4a2 2 0 0 0 .6-1.4V2"/><path d="M7 2v4.2c0 .5.2 1 .6 1.4L11 11l-3.4 3.4a2 2 0 0 0-.6 1.4V22"/></symbol>
+<symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+<symbol id="i-aperture" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></symbol>
+<symbol id="i-msg-q" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.6c0 1.7-2.5 2.5-2.5 2.5"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-move" viewBox="0 0 24 24"><path d="M5 9 2 12l3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z"/><circle cx="12" cy="13" r="3"/></symbol>
+<symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+<symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></symbol>
+<symbol id="i-seed" viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12c0-4 3-8 8-8 0 5-4 8-8 8Z"/><path d="M12 14c0-3-2.5-6-6-6 0 4 3 6 6 6Z"/></symbol>
+<symbol id="i-yoke" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M7 7v3a5 5 0 0 0 10 0V7"/><path d="M12 15v6"/><path d="M9 21h6"/></symbol>
+<symbol id="i-wine" viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M6 3h12l-1 6a5 5 0 0 1-10 0L6 3Z"/><path d="M6.5 7h11"/></symbol>
+</defs></svg>
+
+<div id="progress" role="presentation"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="#top" class="brand"><svg class="icon"><use href="#i-compass"/></svg>Architecture of Desire</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#foundations">Needs</a>
+        <a href="#reward">Reward</a>
+        <a href="#enjoyment">Enjoyment</a>
+        <a href="#purpose">Purpose</a>
+        <a href="#pathways">Pathway</a>
+        <a href="#matrix">Matrix</a>
+        <a href="#objections">Limits</a>
+        <a href="#covenant">New Covenant</a>
+      </div>
+      <div class="nav-actions">
+        <button class="ibtn" id="themeBtn" aria-label="Switch to dark theme"><svg class="icon" id="themeIcon"><use href="#i-moon"/></svg></button>
+        <button class="btn" id="openModal" aria-label="Open the discernment checklist"><svg class="icon"><use href="#i-check-circle"/></svg><span>Discernment</span></button>
+        <button class="ibtn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><svg class="icon"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <div class="mmenu" id="mobileMenu">
+      <a href="#foundations"><span class="num">I</span>The Foundations of Flourishing</a>
+      <a href="#reward"><span class="num">II</span>Wanting, Liking, Learning</a>
+      <a href="#enjoyment"><span class="num">III</span>The Anatomy of Enjoyment</a>
+      <a href="#purpose"><span class="num">IV</span>Purpose &amp; Performance</a>
+      <a href="#pathways"><span class="num">V</span>How Enjoyment Goes Wrong</a>
+      <a href="#matrix"><span class="num">VI</span>The Displacement Matrix</a>
+      <a href="#objections"><span class="num">VII</span>Objections &amp; Limits</a>
+      <a href="#covenant"><span class="num">VIII</span>The New Covenant Answer</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow"><svg class="icon"><use href="#i-sparkles"/></svg>Interactive Synthesis</span>
+    <h1>The Architecture of<br><em>Human Desire</em></h1>
+    <p class="lede">Why the things we want most often satisfy us least &mdash; and what genuine enjoyment, play and rest actually consist of.</p>
+    <div class="pills">
+      <span class="pill"><svg class="icon" style="color:var(--need)"><use href="#i-leaf"/></svg>Deep needs</span>
+      <span class="pill"><svg class="icon" style="color:var(--amber)"><use href="#i-dice"/></svg>Real enjoyment</span>
+      <span class="pill"><svg class="icon" style="color:var(--counterfeit)"><use href="#i-zap"/></svg>Counterfeits</span>
+      <span class="pill"><svg class="icon" style="color:var(--transcend)"><use href="#i-sunrise"/></svg>New Covenant</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- I. FOUNDATIONS -->
+<section id="foundations" class="band t-theory">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-layers"/></svg>Part I</span>
+        <span class="reg reg--empirical"><svg class="icon"><use href="#i-flask"/></svg>Empirical</span>
+        <span class="rule"></span>
+      </div>
+      <h2>The Foundations of Flourishing</h2>
+      <p>Human needs form an integrated system. Thwart one dimension &mdash; biological, psychological, existential &mdash; and the whole structure destabilises. We begin with the three &ldquo;nutrients&rdquo; of Self-Determination Theory, the most strongly evidenced framework in this synthesis.</p>
+    </div>
+
+    <div class="g2">
+      <div class="panel panel--lift">
+        <h3><svg class="icon"><use href="#i-target"/></svg>The three nutrients</h3>
+        <p class="chart-note">Select a state to see how it reshapes the balance. The shape matters more than the numbers.</p>
+        <svg class="chart" id="sdtChart" viewBox="0 0 420 250" role="img" aria-labelledby="sdtT"><title id="sdtT">Radar chart of Autonomy, Competence and Relatedness</title></svg>
+        <div class="seg" id="sdtSeg" role="group" aria-label="Psychological state">
+          <button data-mode="flourishing" aria-pressed="true"><svg class="icon"><use href="#i-leaf"/></svg>Flourishing</button>
+          <button data-mode="alienation" aria-pressed="false"><svg class="icon"><use href="#i-rain"/></svg>Alienation</button>
+          <button data-mode="compliance" aria-pressed="false"><svg class="icon"><use href="#i-brief"/></svg>Compliance</button>
+        </div>
+        <div class="readout" id="sdtReadout"></div>
+      </div>
+
+      <div class="stack">
+        <div class="panel panel--accent t-need">
+          <h4><svg class="icon"><use href="#i-anchor"/></svg>Attachment security</h4>
+          <p>Relational co-regulation is the scaffold for the developing brain. Secure attachment creates a base for exploration; insecure styles tend toward hypervigilance or compulsive self-reliance.</p>
+        </div>
+        <div class="panel panel--accent t-amber">
+          <h4><svg class="icon"><use href="#i-pulse"/></svg>The seven affective systems</h4>
+          <p>Panksepp proposed seven primary-process circuits &mdash; SEEKING, LUST, CARE, PLAY, FEAR, RAGE and PANIC/GRIEF &mdash; conserved across mammals. Note that SEEKING, the appetitive system, is the engine of curiosity. It is not a fault to be corrected.</p>
+          <p style="margin-top:var(--s3)">This taxonomy is influential but <em>not</em> consensus &mdash; constructionist accounts reject the premise of discrete, evolutionarily fixed emotion circuits. Treat it as a useful vocabulary rather than settled neuroanatomy.</p>
+        </div>
+        <div class="panel panel--accent t-transcend">
+          <h4><svg class="icon"><use href="#i-sunrise"/></svg>Self-transcendence</h4>
+          <p>Beyond the three nutrients lies the search for meaning past the ego. Frankl's claim &mdash; that meaning is found rather than manufactured &mdash; is a philosophical position with clinical support, not an experimental result.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- II. REWARD -->
+<section id="reward" class="band band--alt t-counterfeit">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-split"/></svg>Part II</span>
+        <span class="reg reg--empirical"><svg class="icon"><use href="#i-flask"/></svg>Empirical</span>
+        <span class="rule"></span>
+      </div>
+      <h2>Wanting, Liking, Learning</h2>
+      <p>The strongest finding here: <strong>wanting something and enjoying it run on different systems</strong>, and they can come apart. Berridge and Robinson separate reward into three components that usually travel together &mdash; and, under the right conditions, dramatically fail to.</p>
+    </div>
+
+    <div class="g3" style="margin-bottom:var(--s6)">
+      <div class="panel panel--accent t-counterfeit">
+        <h4><svg class="icon"><use href="#i-zap"/></svg>Wanting</h4>
+        <p><b>Incentive salience.</b> Dopaminergic. Makes a cue feel magnetic and pulls you toward it. Felt as craving, urgency, the tug of the notification.</p>
+      </div>
+      <div class="panel panel--accent t-need">
+        <h4><svg class="icon"><use href="#i-heart"/></svg>Liking</h4>
+        <p><b>Hedonic impact.</b> Opioid and endocannabinoid, in small hotspots. The actual pleasure. Far more spatially limited in the brain than wanting.</p>
+      </div>
+      <div class="panel panel--accent t-theory">
+        <h4><svg class="icon"><use href="#i-infinity"/></svg>Learning</h4>
+        <p><b>Associative prediction.</b> Binds cues to outcomes so the world becomes navigable. The mechanism by which a place, a time, or a mood becomes a trigger.</p>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="panel panel--lift">
+        <h3><svg class="icon"><use href="#i-scale"/></svg>The reward dissociation</h3>
+        <p class="chart-note">Repeated exposure can sensitise wanting while hedonic impact stays flat or declines &mdash; craving grows as satisfaction shrinks.</p>
+        <svg class="chart" id="rewardChart" viewBox="0 0 420 280" role="img" aria-labelledby="rwT"><title id="rwT">Schematic comparison of wanting and liking in a healthy versus sensitised cycle</title></svg>
+        <div class="legend">
+          <span><i style="background:var(--counterfeit)"></i>Wanting</span>
+          <span><i style="background:var(--need)"></i>Liking</span>
+        </div>
+        <div class="note" style="margin-top:var(--s4)"><svg class="icon"><use href="#i-info"/></svg>
+          <span><b>Schematic.</b> These magnitudes show the direction of the dissociation reported in the literature. They are not measured values.</span></div>
+      </div>
+
+      <div class="panel panel--lift">
+        <h3><svg class="icon"><use href="#i-trend-down"/></svg>Why it escalates</h3>
+        <p class="chart-note">Dopamine tracks <em>prediction error</em> &mdash; better than expected &mdash; not goodness. As a reward becomes predictable, the signal shrinks even though the reward is unchanged.</p>
+        <svg class="chart" id="rpeChart" viewBox="0 0 420 250" role="img" aria-labelledby="rpeT"><title id="rpeT">Line chart showing constant reward against a declining dopamine response over repeated exposures</title></svg>
+        <div class="note" style="margin-top:var(--s4)"><svg class="icon"><use href="#i-info"/></svg>
+          <span>This is why escalation is built in rather than a failure of willpower: holding the input constant guarantees the response fades. Novelty, variability and volume are the only ways to restore the signal &mdash; which is precisely what engineered feeds supply.</span></div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:var(--s6)">
+      <div class="vs">
+        <div class="panel t-counterfeit">
+          <span class="tag"><svg class="icon"><use href="#i-zap"/></svg>Surface want</span>
+          <h4 style="display:block;margin-bottom:var(--s3)">The strategy</h4>
+          <p>Concrete tactics for resolving distress. Substitutable, immediately available, and the primary target of attention markets.</p>
+          <div class="eg">&ldquo;I want a thousand likes on this post.&rdquo;</div>
+        </div>
+        <div class="panel t-need">
+          <span class="tag"><svg class="icon"><use href="#i-leaf"/></svg>Deep need</span>
+          <h4 style="display:block;margin-bottom:var(--s3)">The requirement</h4>
+          <p>Universal conditions for flourishing. Non-substitutable, slow to satisfy, requiring effort and genuine vulnerability.</p>
+          <div class="eg">&ldquo;I need to be understood and to matter to someone.&rdquo;</div>
+        </div>
+      </div>
+      <div class="quote">
+        <svg class="icon"><use href="#i-quote"/></svg>
+        <p>Desire is not the problem. A life without wanting is not a liberated life, it is a depressed one. The problem is <em>decoupling</em> &mdash; when the system that pulls you toward something stops being informed by the system that registers whether it was any good.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- III. ENJOYMENT -->
+<section id="enjoyment" class="band t-need">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-dice"/></svg>Part III</span>
+        <span class="reg reg--empirical"><svg class="icon"><use href="#i-flask"/></svg>Empirical</span>
+        <span class="rule"></span>
+      </div>
+      <h2>The Anatomy of Enjoyment</h2>
+      <p>It is easy to catalogue what goes wrong and much harder to say what enjoyment positively <em>is</em>. This part does the harder thing: the conditions that reliably produce absorption, the distinct kinds of fun, and the learnable skill of getting more from what you already have.</p>
+    </div>
+
+    <div class="g2">
+      <div class="panel panel--lift">
+        <h3><svg class="icon"><use href="#i-mountain"/></svg>The flow channel</h3>
+        <p class="chart-note">Absorption happens where challenge and skill are both high <em>and</em> matched. Click or drag anywhere on the map.</p>
+        <svg class="chart" id="flowChart" viewBox="0 0 420 340" role="img" aria-labelledby="flT" tabindex="0"><title id="flT">Interactive map of challenge against skill showing flow, anxiety, boredom and apathy</title></svg>
+        <div class="fr t-need" id="flowReadout">
+          <div class="fr-top"><svg class="icon" id="flowIcon"><use href="#i-mountain"/></svg><b id="flowState">Flow</b></div>
+          <p id="flowDesc"></p>
+          <div class="fix" id="flowFix"></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel panel--accent t-need">
+          <h4><svg class="icon"><use href="#i-target"/></svg>What flow requires</h4>
+          <p>Clear goals, immediate feedback, and a challenge that stretches without exceeding you. Self-consciousness recedes, time distorts, and the activity becomes worth doing for its own sake &mdash; what Csikszentmihalyi called <em>autotelic</em>.</p>
+        </div>
+        <div class="panel panel--accent t-amber">
+          <h4><svg class="icon"><use href="#i-mountain"/></svg>The effort paradox</h4>
+          <p>We assume effort is a cost to minimise. But effort frequently <em>adds</em> value to its outcome &mdash; people prefer what they worked for, and difficulty is much of why games are fun. An experience engineered to demand nothing has removed the main ingredient.</p>
+        </div>
+        <div class="panel panel--accent t-theory">
+          <h4><svg class="icon"><use href="#i-hourglass"/></svg>Anticipation is real pleasure</h4>
+          <p>Looking forward to something is not merely instrumental &mdash; it is a substantial part of the enjoyment, and sometimes exceeds the event. Removing all delay from a pleasure often removes most of it. Friction is not always the enemy.</p>
+        </div>
+        <div class="panel panel--accent t-transcend">
+          <h4><svg class="icon"><use href="#i-eye"/></svg>Experiencing vs. remembering</h4>
+          <p>Kahneman distinguished the self that lives an experience from the self that recalls it &mdash; and they disagree constantly. Memory weights peaks and endings and ignores duration, so what you choose to repeat rests on a distorted record.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="hsub serif">Four kinds of fun</h3>
+    <p>Caillois argued that play is not one thing. Most people reliably prefer some of these over others &mdash; and knowing which kind you were actually after explains a great deal about why a given &ldquo;fun&rdquo; activity left you flat.</p>
+    <div class="gauto" id="funGrid"></div>
+    <div class="panel panel--pad-sm" style="margin-top:var(--s4)">
+      <div class="tile">
+        <span class="ic" style="--tint-wash:var(--surface-3);--tint-ink:var(--ink-3)"><svg class="icon"><use href="#i-move"/></svg></span>
+        <div>
+          <b>The second axis: free play to formal rules</b>
+          <span>Caillois placed every kind of fun on a spectrum from <em>paidia</em> &mdash; improvised, turbulent, rule-free &mdash; to <em>ludus</em>, where arbitrary constraints are deliberately added to make an activity harder and therefore better. Both ends are legitimate. Trouble finding enjoyment is often a mismatch on this axis rather than a deficit of desire.</span>
+          <div class="spectrum"><span>Paidia &mdash; free</span><div class="bar"></div><span>Ludus &mdash; structured</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="hsub serif">Savouring: enjoyment as a skill</h3>
+    <p>The capacity to extract enjoyment from a good experience varies between people and can be trained. Most of us under-consume the pleasures we already have while pursuing new ones.</p>
+    <div class="gauto" id="savourGrid"></div>
+  </div>
+</section>
+
+<!-- IV. PURPOSE -->
+<section id="purpose" class="band band--alt t-transcend">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-crown"/></svg>Part IV</span>
+        <span class="reg reg--interpretive"><svg class="icon"><use href="#i-book"/></svg>Interpretive</span>
+        <span class="rule"></span>
+      </div>
+      <h2>Purpose and Performance</h2>
+      <p>What play is to leisure, vocation is to work &mdash; and it fails the same way. Byung-Chul Han argues that late modernity replaced the external overseer with an internal one, so the subject now exploits itself and calls the result freedom. This is social criticism, not measurement: a lens, offered as a lens.</p>
+    </div>
+
+    <div class="g2">
+      <div class="panel">
+        <h3><svg class="icon"><use href="#i-dice"/></svg>Restorative play vs. empty stimulation</h3>
+        <p style="margin-bottom:var(--s5)">The difference is not what the activity looks like from outside &mdash; it is who authored the experience, and whether you had real agency inside it.</p>
+        <div class="panel panel--accent panel--pad-sm t-need" style="background:var(--surface-2)">
+          <h4 style="display:block;margin-bottom:var(--s2)">The magic circle</h4>
+          <p>Rules entered voluntarily, genuine agency within them, absorption in flow. Huizinga's term for the bounded space where play becomes its own world.</p>
+          <div class="chips"><span class="chip">Agency</span><span class="chip">Absorption</span><span class="chip">Rejuvenation</span></div>
+        </div>
+        <div class="panel panel--accent panel--pad-sm t-fruit" style="background:var(--surface-2);margin-top:var(--s3)">
+          <h4 style="display:block;margin-bottom:var(--s2)">Attentional capture</h4>
+          <p>Variable rewards on someone else's schedule, consumption without authorship. The form resembles play; the agency that made play restorative is missing.</p>
+          <div class="chips"><span class="chip">Scheduled reward</span><span class="chip">No authorship</span><span class="chip">Emptiness</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><svg class="icon"><use href="#i-crown"/></svg>Purpose vs. performance</h3>
+        <p style="margin-bottom:var(--s5)">In late modernity vocation is quietly replaced by performance &mdash; the internalised demand for perpetual self-optimisation.</p>
+        <div class="panel panel--accent panel--pad-sm t-transcend" style="background:var(--surface-2)">
+          <h4 style="display:block;margin-bottom:var(--s2)">The order of love</h4>
+          <p>Work as relational service and gift. Worth is received rather than won, so effort carries no existential threat.</p>
+          <div class="chips"><span class="chip">Caritas</span><span class="chip">Gift</span><span class="chip">Enduring peace</span></div>
+        </div>
+        <div class="panel panel--accent panel--pad-sm t-counterfeit" style="background:var(--surface-2);margin-top:var(--s3)">
+          <h4 style="display:block;margin-bottom:var(--s2)">Entrepreneur of the self</h4>
+          <p>Worth must be continuously re-earned through output. The subject becomes both exploiter and exploited &mdash; a war with no external enemy to resist.</p>
+          <div class="chips"><span class="chip">Auto-exploitation</span><span class="chip">Status</span><span class="chip">Burnout</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V. PATHWAY -->
+<section id="pathways" class="band t-counterfeit">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-route"/></svg>Part V</span>
+        <span class="reg reg--interpretive"><svg class="icon"><use href="#i-book"/></svg>Interpretive</span>
+        <span class="rule"></span>
+      </div>
+      <h2>How Enjoyment Goes Wrong</h2>
+      <p>Having established what enjoyment consists of, we can trace how it degrades. Ten stages from an unmet need to a self-sustaining loop. The early stages are well grounded; the later ones are a plausible reconstruction rather than a documented sequence.</p>
+    </div>
+
+    <div class="pw" id="pathway" tabindex="0" role="group" aria-label="Pathway explorer — use left and right arrow keys">
+      <div class="pw-stage">
+        <div class="pw-ic" id="pwIcon"><svg class="icon"><use href="#i-leaf"/></svg></div>
+        <div class="pw-lbl" id="pwLabel">Stage 1 of 10</div>
+        <h3 id="pwTitle">Deep need</h3>
+        <p id="pwDesc" aria-live="polite"></p>
+      </div>
+      <div class="pw-ctrl">
+        <button class="pw-btn" id="pwPrev"><svg class="icon"><use href="#i-arrow-l"/></svg>Back</button>
+        <div class="pw-dots" id="pwDots"></div>
+        <button class="pw-btn" id="pwNext">Next<svg class="icon"><use href="#i-arrow-r"/></svg></button>
+      </div>
+    </div>
+
+    <h3 class="hsub serif">Four everyday runs of the loop</h3>
+    <p>The mechanism above is abstract. Here is what it looks like on an ordinary Tuesday.</p>
+    <div id="scenarios"></div>
+  </div>
+</section>
+
+<!-- VI. MATRIX -->
+<section id="matrix" class="band band--alt t-fruit">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-grid"/></svg>Part VI</span>
+        <span class="reg reg--interpretive"><svg class="icon"><use href="#i-book"/></svg>Interpretive</span>
+        <span class="rule"></span>
+      </div>
+      <h2>The Matrix of Modern Displacement</h2>
+      <p>Eighteen runs of the same machine. Each maps a deep need to the counterfeit that impersonates it and the fruit that tends to follow. These are interpretive readings offered as a diagnostic vocabulary &mdash; not empirical claims about any individual, and not a verdict on anyone who enjoys these things.</p>
+    </div>
+
+    <div class="filters" id="matrixFilters" role="group" aria-label="Filter by category">
+      <button data-cat="all" aria-pressed="true" class="t-transcend"><svg class="icon"><use href="#i-grid"/></svg>All 18</button>
+      <button data-cat="digital" aria-pressed="false" class="t-theory"><svg class="icon"><use href="#i-phone"/></svg>Digital</button>
+      <button data-cat="relational" aria-pressed="false" class="t-need"><svg class="icon"><use href="#i-users"/></svg>Relational</button>
+      <button data-cat="existential" aria-pressed="false" class="t-transcend"><svg class="icon"><use href="#i-sparkles"/></svg>Existential</button>
+      <button data-cat="material" aria-pressed="false" class="t-amber"><svg class="icon"><use href="#i-brief"/></svg>Work &amp; money</button>
+      <button data-cat="embodied" aria-pressed="false" class="t-fruit"><svg class="icon"><use href="#i-pulse"/></svg>Body</button>
+      <div class="search">
+        <svg class="icon"><use href="#i-search"/></svg>
+        <label for="matrixSearch" class="sr-only">Search the matrix</label>
+        <input type="search" id="matrixSearch" placeholder="Search&hellip;">
+      </div>
+    </div>
+    <div class="count" id="matrixCount" role="status" aria-live="polite"></div>
+    <div class="tbl">
+      <table id="matrixTable">
+        <thead><tr>
+          <th scope="col">Domain</th><th scope="col">Deep need</th>
+          <th scope="col">Counterfeit solution</th><th scope="col">Long-term fruit</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- VII. OBJECTIONS -->
+<section id="objections" class="band t-amber">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-msg-q"/></svg>Part VII</span>
+        <span class="reg reg--contested"><svg class="icon"><use href="#i-alert"/></svg>Contested</span>
+        <span class="rule"></span>
+      </div>
+      <h2>Objections and Limits</h2>
+      <p>A synthesis that never argues against itself is advocacy. These are the strongest objections to the framework above. None are fully answered, and at least two of them land.</p>
+    </div>
+    <div class="gauto" id="objGrid" style="--min:320px"></div>
+  </div>
+</section>
+
+<!-- VIII. NEW COVENANT -->
+<section id="covenant" class="band band--alt t-transcend">
+  <div class="wrap">
+    <div class="shead">
+      <div class="smeta">
+        <span class="spart"><svg class="icon"><use href="#i-sunrise"/></svg>Part VIII</span>
+        <span class="reg reg--confessional"><svg class="icon"><use href="#i-sunrise"/></svg>Confessional</span>
+        <span class="rule"></span>
+      </div>
+      <h2>The New Covenant Answer</h2>
+      <p>This part changes register deliberately, and you should know that before reading it. Everything above describes a problem it cannot solve: the wanting system cannot be argued into wanting differently, and rules imposed from outside do not reach it. What follows is the Christian claim that this is exactly the problem the New Covenant addresses &mdash; not by suppressing desire, but by giving it a new object and a new heart.</p>
+      <p>It is offered as a confession rather than a conclusion. The preceding seven parts do not entail it.</p>
+    </div>
+
+    <div class="gauto" id="scripGrid" style="margin-bottom:var(--s7)"></div>
+
+    <div class="g2" style="align-items:center;gap:var(--s7)">
+      <div class="stack">
+        <h3 class="serif" style="font-size:var(--t-h3)">What integration looks like</h3>
+        <div class="panel panel--pad-sm">
+          <div class="stack" id="marksList"></div>
+        </div>
+      </div>
+      <div class="compass">
+        <div class="in">
+          <svg class="icon"><use href="#i-compass"/></svg>
+          <h3 class="serif">Beatitude</h3>
+          <div class="rule"></div>
+          <blockquote>&ldquo;Our hearts are restless until they rest in You.&rdquo;</blockquote>
+          <cite>Augustine &mdash; Ordered Loves</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="mbox">
+    <div class="mhd">
+      <h2 id="mTitle"><svg class="icon"><use href="#i-check-circle"/></svg>The Discernment Checklist</h2>
+      <p>Five questions for a strategy you are considering. The tool scores whether it looks more like satisfying a need or simulating satisfaction.</p>
+      <button class="ibtn mclose" id="closeModal" aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="mbody">
+      <div id="questions"></div>
+      <div class="verdict" id="verdict">
+        <div class="vtop">
+          <div class="vscore" id="score">&mdash;</div>
+          <div class="vtxt"><b id="verdictTitle">Awaiting your answers</b><span id="verdictText">Answer all five to see a reading.</span></div>
+        </div>
+        <div class="meter"><i id="meterFill"></i></div>
+        <p>Does the satisfaction leave a lasting sense of peace and gratitude &mdash; or does it vanish instantly, triggering an urgent desire to repeat at escalating intensity?</p>
+      </div>
+      <div class="note" style="margin-top:var(--s4)"><svg class="icon"><use href="#i-alert"/></svg>
+        <span><b>Use this lightly.</b> A reflective prompt, not a diagnostic instrument &mdash; unvalidated, and the scoring is arithmetic rather than science. It also cannot tell a counterfeit from a pleasure that is simply pleasant. Not everything enjoyable needs justifying by a need it meets. See <a href="#objections">Objections</a>.</span></div>
+    </div>
+  </div>
+</div>
+
+<button class="ibtn totop" id="toTop" aria-label="Back to top"><svg class="icon"><use href="#i-arrow-up"/></svg></button>
+
+<footer>
+  <div class="wrap">
+    <h2>Thinkers &amp; Sources</h2>
+    <div class="srcs">
+      <div class="src t-theory"><b>Reward</b><span>Kent Berridge<br>Terry Robinson<br>Wolfram Schultz<br>Daniel Kahneman</span></div>
+      <div class="src t-need"><b>Play &amp; Enjoyment</b><span>M. Csikszentmihalyi<br>Roger Caillois<br>Johan Huizinga<br>Bryant &amp; Veroff</span></div>
+      <div class="src t-counterfeit"><b>Social Theory</b><span>Byung-Chul Han<br>Hartmut Rosa<br>Jenny Odell<br>Lisa F. Barrett</span></div>
+      <div class="src t-transcend"><b>Scripture &amp; Theology</b><span>Jeremiah &amp; Ezekiel<br>The Gospels<br>St. Augustine<br>Viktor Frankl</span></div>
+    </div>
+    <div class="colophon">Claims are tagged by evidential register; charts marked <em>schematic</em> use illustrative rather than measured values. Where the sources disagree, the disagreement is shown rather than resolved. Scripture quotations are given in common English renderings with references for checking.</div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ===================== DATA ===================== */
+const SDT = {
+  flourishing:{v:[9,9,9],label:'Flourishing',text:'All three nutrients supplied. The shape is <b>large and even</b> — intrinsic motivation, vitality, resilience under stress.'},
+  alienation:{v:[2,3,2],label:'Alienation',text:'All three thwarted. The shape <b>collapses toward the centre</b> — amotivation, anhedonia, and vulnerability to any counterfeit promising quick relief.'},
+  compliance:{v:[2,8,4],label:'Controlled compliance',text:'High competence propped up by near-zero autonomy — the <b>lopsided</b> signature of achievement culture. Output stays high while meaning drains away.'}
+};
+
+const FUN = [
+  {gk:'Agôn',en:'Competition',icon:'i-trophy',tint:'t-theory',
+   d:'Testing yourself against a worthy, evenly matched opponent. The pleasure depends entirely on the match being fair and the outcome genuinely uncertain.',
+   eg:'Chess, football, debate, competitive games'},
+  {gk:'Alea',en:'Chance',icon:'i-dice',tint:'t-amber',
+   d:'Surrendering to luck — the exact opposite of agôn. You deliberately give up control, and the thrill is precisely that merit has nothing to do with it.',
+   eg:'Dice, lotteries, loot boxes, roulette'},
+  {gk:'Mimicry',en:'Make-believe',icon:'i-mask',tint:'t-transcend',
+   d:'Temporarily becoming someone else. Accepting an illusion and inhabiting it — the pleasure of a self other than your own, briefly worn.',
+   eg:'Theatre, fiction, role-play, costume'},
+  {gk:'Ilinx',en:'Vertigo',icon:'i-spiral',tint:'t-fruit',
+   d:'Voluntarily disrupting your own perception. A controlled scrambling of ordinary stability, sought precisely for the disorder it creates.',
+   eg:'Rollercoasters, skiing, spinning, dancing'}
+];
+
+const SAVOUR = [
+  {t:'Sharing it',icon:'i-share',tint:'t-need',d:'Telling someone, or simply being with them in it. The most robust single amplifier of a good experience.'},
+  {t:'Sharpening perception',icon:'i-aperture',tint:'t-theory',d:'Deliberately attending to detail — the specific taste, the exact sound — rather than consuming it as background.'},
+  {t:'Memory-building',icon:'i-camera',tint:'t-amber',d:'Consciously forming a memory while it happens, knowing you will want to return to it.'},
+  {t:'Absorption',icon:'i-hourglass',tint:'t-transcend',d:'Resisting the pull to narrate, evaluate or optimise the experience while it is still going on.'}
+];
+
+const MATRIX = [
+  {d:'Scrolling',n:'Belonging & connection',s:'Infinite algorithmic scroll',f:'Attention fragmentation, loneliness',c:'digital',i:'i-phone'},
+  {d:'Entertainment',n:'Rest & release from strain',s:'Endless media bingeing',f:'Boredom intolerance',c:'digital',i:'i-eye'},
+  {d:'Parasocial bonds',n:'Being known',s:'One-way intimacy with creators',f:'Asymmetric attachment, isolation',c:'digital',i:'i-mic'},
+  {d:'Outrage & news',n:'Moral agency & significance',s:'Perpetual indignation feed',f:'Compassion fatigue, cynicism',c:'digital',i:'i-megaphone'},
+  {d:'Limerence',n:'Secure attachment',s:'Projective infatuation',f:'Obsession, anxiety loops',c:'relational',i:'i-heart'},
+  {d:'Friendship',n:'Relatedness',s:'Superficial networking',f:'Loneliness in a crowd',c:'relational',i:'i-users'},
+  {d:'Pornography',n:'Intimacy & being desired',s:'Novelty-driven simulation',f:'Desensitisation, intimacy avoidance',c:'relational',i:'i-flame'},
+  {d:'Nominal spirituality',n:'Self-transcendence',s:'Performative ritual',f:'Existential dryness, acedia',c:'existential',i:'i-sunrise'},
+  {d:'Conspiracy thinking',n:'Existential coherence',s:'Totalising theories',f:'Paranoia, alienation',c:'existential',i:'i-help'},
+  {d:'Wellness culture',n:'Ontological security',s:'Ritualised self-care protocols',f:'Anxious perfectionism',c:'existential',i:'i-leaf'},
+  {d:'Ideological belonging',n:'Tribal identity & meaning',s:'Totalising group membership',f:'Surrendered judgement, enmity',c:'existential',i:'i-flag'},
+  {d:'Work & ambition',n:'Competence & worth',s:'Compulsive achievement',f:'Auto-exploitation, burnout',c:'material',i:'i-brief'},
+  {d:'Money',n:'Resource security',s:'Compulsive accumulation',f:'Relational isolation, greed',c:'material',i:'i-scale'},
+  {d:'Self-optimisation',n:'Competence & growth',s:'Quantified self-tracking',f:'The metric displaces the meaning',c:'material',i:'i-gauge'},
+  {d:'Consumption',n:'Identity & distinction',s:'Aspirational purchasing',f:'Hedonic treadmill, debt',c:'material',i:'i-cart'},
+  {d:'Substances',n:'Nervous-system regulation',s:'Chemical downregulation',f:'Tolerance, rebound anxiety',c:'embodied',i:'i-pill'},
+  {d:'Food',n:'Comfort & soothing',s:'Hyperpalatable eating',f:'Metabolic strain, shame cycles',c:'embodied',i:'i-utensils'},
+  {d:'Sleep displacement',n:'Restoration',s:'Revenge bedtime procrastination',f:'Cognitive debt, dysregulation',c:'embodied',i:'i-bed'}
+];
+const CAT_TINT = {digital:'t-theory',relational:'t-need',existential:'t-transcend',material:'t-amber',embodied:'t-fruit'};
+
+const PATHWAY = [
+  {t:'Deep need',d:'The objective requirement for flourishing — relatedness, competence, rest.',i:'i-leaf',col:'--need'},
+  {t:'Felt lack',d:'The distress signal raised when the need goes unmet. Loneliness, restlessness, unease.',i:'i-rain',col:'--need'},
+  {t:'Surface desire',d:'Distress translated into a concrete, actionable want: "I need to check my phone."',i:'i-zap',col:'--amber'},
+  {t:'Chosen strategy',d:'The specific behaviour selected to discharge the want — compulsive scrolling, for instance.',i:'i-phone',col:'--amber'},
+  {t:'Temporary reward',d:'A surge from the wanting system. Real, measurable, and very short-lived.',i:'i-sparkles',col:'--amber'},
+  {t:'Counterfeit satisfaction',d:'Simulated connection that bypasses the mechanisms which would actually meet the need.',i:'i-eye',col:'--counterfeit'},
+  {t:'The loop',d:'Control migrates from goal-directed circuits toward habitual ones. The behaviour needs less deciding each time.',i:'i-infinity',col:'--counterfeit'},
+  {t:'Identity formation',d:'It stops being something you do and becomes something you are: the distracted consumer, the achiever.',i:'i-users',col:'--counterfeit'},
+  {t:'Fruit over time',d:'Systemic fragmentation. The original need is further from being met than when you started.',i:'i-trend-down',col:'--fruit'},
+  {t:'Crisis point',d:'Acedia — a monastic term for the inability to care about what you know actually matters.',i:'i-alert',col:'--fruit'}
+];
+
+const SCENARIOS = [
+  {t:'"I\'ll just check one thing" — and surface forty minutes later',icon:'i-phone',tint:'t-theory',
+   happening:'An idle moment is a <b>cue</b>. Your learning system has bound "unoccupied" to "phone" so tightly that the reach happens before any decision does. The wanting spike arrives at the cue, not the content — which is why the scroll continues long after it stopped being interesting.',
+   need:'Usually stimulation or connection. Sometimes, genuinely, just rest.',
+   works:'The cue cannot be argued with in the moment, so decide in advance what the idle minute is <em>for</em>. A pre-committed alternative beats resistance, because you are replacing the behaviour rather than fighting the pull.'},
+  {t:'I got the thing I wanted and felt strangely flat',icon:'i-trophy',tint:'t-amber',
+   happening:'Wanting did all the work and liking was never really engaged. The anticipation was the pleasure; the acquisition ends it. Hedonic adaptation then resets the baseline within days, which is why the next target already looks brighter.',
+   need:'Competence and worth — which an achievement can <em>signal</em> but cannot supply.',
+   works:'Separate two questions that feel like one: "do I want this?" and "will I like having it?" They are answered by different systems. Then savour deliberately on arrival, because the liking system needs attention to register anything at all.'},
+  {t:'Three episodes in and not enjoying it, but still going',icon:'i-eye',tint:'t-fruit',
+   happening:'Goal-directed control has handed over to habit. On the flow map this is not rest — it is <b>apathy</b>: neither challenged nor exercising skill. It is the state most often mistaken for recovery, and it neither restores nor engages.',
+   need:'Genuine rest, which passive consumption does not deliver.',
+   works:'Name it as apathy rather than rest, and the choice gets easier. Almost anything with a goal and feedback outperforms it — and real rest, the kind with no output at all, is a different thing again and worth protecting separately.'},
+  {t:'I keep refreshing the news and feel worse each time',icon:'i-megaphone',tint:'t-counterfeit',
+   happening:'Variable reward crossed with threat detection. Each refresh may or may not deliver, which is the schedule that most reliably sustains a behaviour. Meanwhile the moral-agency need is being <em>engaged</em> without ever being <em>discharged</em>.',
+   need:'Significance and agency — to matter, and to be able to act.',
+   works:'Convert consumption into one concrete action, however small: give, write, vote, show up. Agency is the missing ingredient, and no quantity of information substitutes for it.'}
+];
+
+const OBJECTIONS = [
+  {t:'It cannot be falsified',tint:'t-fruit',
+   d:'If an activity satisfies, it was genuine; if you want to repeat it, it was counterfeit. No observation could show a behaviour is <em>not</em> displacement. A framework that explains every outcome equally well has explained none of them.',
+   r:'This lands. The framework is best used as a vocabulary for reflection, not a test that returns verdicts.'},
+  {t:'Some pleasure is just pleasure',tint:'t-amber',
+   d:'The scheme assumes every enjoyment must be redeemed by a deep need it serves. But a good meal, a silly show, an afternoon wasted pleasantly may need no justification. Demanding that all enjoyment be nourishing is its own kind of achievement thinking.',
+   r:'Also lands, and is the commonest failure mode of frameworks like this: pathologising ordinary fun.'},
+  {t:'The evidence is thinner than it looks',tint:'t-amber',
+   d:'The digital-harms literature is contested, with small and inconsistent effect sizes. Panksepp\'s taxonomy and polyvagal theory are both disputed. Only the wanting/liking dissociation and Self-Determination Theory are on genuinely firm ground.',
+   r:'Correct — which is why claims here are tagged by register rather than presented as one evidentiary fabric.'},
+  {t:'It privatises a structural problem',tint:'t-transcend',
+   d:'Han and Odell argue about political economy — attention markets, labour conditions, engineered environments. Converting that into a personal checklist relocates the fault from the system to the individual reading about it.',
+   r:'Serious. Note the irony: a self-monitoring protocol for detecting over-optimisation is arguably an instance of what it criticises.'},
+  {t:'"Objective needs" is a philosophical stance',tint:'t-theory',
+   d:'The architecture rests on needs being objective facts rather than preferences — a substantive, broadly neo-Aristotelian commitment presented as though it were a finding. A preference-satisfaction view of wellbeing rejects the frame entirely.',
+   r:'True. SDT supports something in this neighbourhood empirically, but the leap to "objective requirement" is philosophy doing the work.'},
+  {t:'The ending does not follow',tint:'t-need',
+   d:'Seven parts of psychology and social theory do not entail a Christian conclusion. A reader could accept every empirical claim here and reach an entirely secular account of ordered desire.',
+   r:'Granted, and Part VIII says so plainly. The theological answer is offered, not derived.'}
+];
+
+const SCRIPTURE = [
+  {icon:'i-droplet',tint:'t-theory',ref:'John 4',
+   q:'Everyone who drinks this water will be thirsty again.',cite:'Jesus, at the well in Samaria',
+   h:'The diagnosis is not new',
+   p:'The counterfeit-satisfaction problem is stated in the first century, to a woman drawing water she would have to come back for tomorrow. The point is not that water is bad. It is that some thirsts are structured so that meeting them guarantees their return &mdash; and that mistaking one kind of thirst for the other is the oldest error there is.'},
+  {icon:'i-seed',tint:'t-need',ref:'Jeremiah 31 · Ezekiel 36',
+   q:'I will put my law within them, and write it on their hearts.',cite:'The New Covenant promise',
+   h:'Rules cannot re-form desire',
+   p:'This is the distinctive New Covenant claim, and it maps precisely onto the problem this synthesis describes. External constraint &mdash; law on tablets, blockers on phones, resolutions in January &mdash; does not reach the wanting system. What is promised is not better rules but a changed wanter: a new heart in place of a heart of stone.'},
+  {icon:'i-yoke',tint:'t-transcend',ref:'Matthew 11 · Hebrews 4',
+   q:'Come to me, all who labour and are heavy laden, and I will give you rest.',cite:'The invitation',
+   h:'Rest is received, not achieved',
+   p:'The direct answer to the achievement society of Part IV. Where auto-exploitation demands that worth be continuously re-earned through output, the offer here is a worth conferred before any output exists &mdash; and therefore a rest that does not have to be produced. Hebrews puts it as a sabbath that remains: the striving can stop because it was never what secured you.'},
+  {icon:'i-wine',tint:'t-amber',ref:'John 2 · John 10 · Matthew 11',
+   q:'I came that they may have life, and have it abundantly.',cite:'On the point of the whole thing',
+   h:'Enjoyment is affirmed, not suspected',
+   p:'Against every ascetic reading: the first sign is wine at a wedding, the kingdom is repeatedly figured as a banquet, and the charge levelled at Jesus was that he ate and drank too freely. This matters for Objection 2. The problem was never pleasure. Nothing here asks you to enjoy less &mdash; only to stop asking of small pleasures what they were never able to give.'},
+  {icon:'i-leaf',tint:'t-fruit',ref:'Matthew 7 · Galatians 5',
+   q:'You will know them by their fruits.',cite:'The test',
+   h:'Fruit is the diagnostic',
+   p:'The matrix in Part VI judges by long-term fruit rather than by intensity in the moment &mdash; and that vocabulary is borrowed, not invented. The test proposed here is the same one: not how strong the experience felt, but what grew over the following year. Fruit is also, notably, <em>grown</em> rather than manufactured &mdash; which is the same claim about desire made agriculturally.'},
+  {icon:'i-heart',tint:'t-counterfeit',ref:'Matthew 6 · Augustine',
+   q:'Where your treasure is, there your heart will be also.',cite:'On ordered loves',
+   h:'Desire follows what you treasure',
+   p:'Augustine\'s <em>ordo amoris</em> in its source text. Note the causal direction: the heart follows the treasure, not the reverse. You do not fix desire by attacking it head-on, which is what willpower attempts and why willpower fails. You change what you treasure, and the wanting reorganises itself around the new centre.'}
+];
+
+const MARKS = [
+  {t:'Embodied safety',icon:'i-pulse',tint:'t-need',d:'A nervous system able to rest deeply and return to baseline. Often framed via polyvagal theory, whose anatomical claims have drawn substantial criticism — the clinical intuition outlasts the mechanism.'},
+  {t:'Resonance',icon:'i-link',tint:'t-theory',d:'Rosa\'s term for mutual, responsive transformation between self and world — the opposite of relating to things as mute, controllable objects.'},
+  {t:'Creative flow',icon:'i-dice',tint:'t-amber',d:'Participation in mastery without the ego-threat that turns every attempt into a referendum on your worth.'},
+  {t:'Acceptance of hevel',icon:'i-wind',tint:'t-transcend',d:'Qohelet\'s word — vapour, breath, the ungraspable. Recognising the fleetingness of things is what lets joy be received as gift rather than seized as possession.'}
+];
+
+const QUESTIONS = [
+  {t:'The autonomy test',q:'Does this arise from an internal value you endorse — or from urgent external compulsion?',yes:'Internal value',no:'Compulsion'},
+  {t:'The attention test',q:'Does this preserve the boundaries of your attention — or fragment your focus?',yes:'Preserves',no:'Fragments'},
+  {t:'The resonance test',q:'Does this foster a mutual relationship — or reduce people to instruments?',yes:'Mutual',no:'Instrumental'},
+  {t:'The sieve test',q:'Does the satisfaction leave peace — or an urgent desire to repeat immediately?',yes:'Leaves peace',no:'Urgent repeat'},
+  {t:'The vulnerability test',q:'Does this invite honest self-examination — or shield you from it?',yes:'Invites',no:'Shields'}
+];
+
+/* ===================== HELPERS ===================== */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const NS='http://www.w3.org/2000/svg';
+const cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function el(tag,a={},p){const n=document.createElementNS(NS,tag);for(const k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;}
+function tx(p,s,a){const t=el('text',a,p);t.textContent=s;return t;}
+const SANS='Inter, system-ui, sans-serif';
+
+/* ===================== THEME ===================== */
+const themeBtn=$('#themeBtn');
+function applyTheme(m){
+  document.documentElement.setAttribute('data-theme',m);
+  $('#themeIcon').firstElementChild.setAttribute('href',m==='dark'?'#i-sun':'#i-moon');
+  themeBtn.setAttribute('aria-label',m==='dark'?'Switch to light theme':'Switch to dark theme');
+  try{localStorage.setItem('aod-theme',m);}catch(e){}
+  redraw();
+}
+themeBtn.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'));
+function redraw(){drawSDT(sdtMode);drawReward();drawRPE();drawFlow();renderPathway();}
+
+/* ===================== SDT RADAR ===================== */
+const AXES=['Autonomy','Competence','Relatedness'];
+let sdtMode='flourishing';
+function drawSDT(mode){
+  const svg=$('#sdtChart'),t=svg.querySelector('title');
+  svg.textContent='';if(t)svg.appendChild(t);
+  const cx=210,cy=150,R=100,v=SDT[mode].v;
+  const pt=(i,r)=>{const a=-Math.PI/2+i*(2*Math.PI/3);return[cx+Math.cos(a)*r,cy+Math.sin(a)*r];};
+  const poly=r=>AXES.map((_,i)=>pt(i,r).join(',')).join(' ');
+  [.25,.5,.75,1].forEach(f=>el('polygon',{points:poly(R*f),fill:'none',stroke:cv('--grid'),'stroke-width':1},svg));
+  AXES.forEach((_,i)=>{const[x,y]=pt(i,R);el('line',{x1:cx,y1:cy,x2:x,y2:y,stroke:cv('--axis'),'stroke-width':1},svg);});
+  const c=cv('--theory');
+  el('polygon',{points:v.map((n,i)=>pt(i,R*n/10).join(',')).join(' '),
+    fill:c,'fill-opacity':.16,stroke:c,'stroke-width':2,'stroke-linejoin':'round'},svg);
+  v.forEach((n,i)=>{
+    const[x,y]=pt(i,R*n/10);
+    el('circle',{cx:x,cy:y,r:4.5,fill:c,stroke:cv('--surface'),'stroke-width':2},svg);
+    const[lx,ly]=pt(i,R+30);
+    tx(svg,AXES[i],{x:lx,y:ly,'text-anchor':'middle',fill:cv('--ink-2'),'font-size':12,'font-weight':600,'font-family':SANS});
+    tx(svg,n+'/10',{x:lx,y:ly+16,'text-anchor':'middle',fill:cv('--theory-ink'),'font-size':13,'font-weight':700,'font-family':SANS});
+  });
+  $('#sdtReadout').innerHTML='<b>'+esc(SDT[mode].label)+'.</b> '+SDT[mode].text;
+}
+$$('#sdtSeg button').forEach(b=>b.addEventListener('click',()=>{
+  sdtMode=b.dataset.mode;
+  $$('#sdtSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  drawSDT(sdtMode);
+}));
+
+/* ===================== REWARD BARS ===================== */
+const REWARD=[{g:'Healthy',w:5,l:6},{g:'Sensitised',w:10,l:2}];
+function drawReward(){
+  const svg=$('#rewardChart'),t=svg.querySelector('title');
+  svg.textContent='';if(t)svg.appendChild(t);
+  const L=40,R=14,T=22,B=48,W=420,H=280,pw=W-L-R,ph=H-T-B,max=10;
+  const y=n=>T+ph-(n/max)*ph;
+  for(let n=0;n<=max;n+=2.5){
+    el('line',{x1:L,y1:y(n),x2:W-R,y2:y(n),stroke:cv('--grid'),'stroke-width':1},svg);
+    tx(svg,n,{x:L-8,y:y(n)+4,'text-anchor':'end',fill:cv('--ink-3'),'font-size':10,'font-family':SANS});
+  }
+  el('line',{x1:L,y1:y(0),x2:W-R,y2:y(0),stroke:cv('--axis'),'stroke-width':1.5},svg);
+  const gw=pw/REWARD.length,bw=42,gap=2;
+  REWARD.forEach((g,gi)=>{
+    const gx=L+gi*gw+gw/2;
+    [{v:g.w,c:cv('--counterfeit'),o:-(bw+gap)/2},{v:g.l,c:cv('--need'),o:(bw+gap)/2}].forEach(b=>{
+      const x=gx+b.o-bw/2,r=4,yt=y(b.v);
+      el('path',{d:`M${x},${y(0)} L${x},${yt+r} Q${x},${yt} ${x+r},${yt} L${x+bw-r},${yt} Q${x+bw},${yt} ${x+bw},${yt+r} L${x+bw},${y(0)} Z`,fill:b.c},svg);
+      tx(svg,b.v,{x:x+bw/2,y:yt-7,'text-anchor':'middle',fill:cv('--ink'),'font-size':12,'font-weight':700,'font-family':SANS});
+    });
+    tx(svg,g.g,{x:gx,y:H-B+20,'text-anchor':'middle',fill:cv('--ink-2'),'font-size':11.5,'font-weight':600,'font-family':SANS});
+  });
+}
+
+/* ===================== RPE LINE ===================== */
+/* Both series indexed to first exposure = 100, so one axis serves
+   both — never a second y-scale. */
+const RPE=[100,72,53,39,29,22,17,13];
+function drawRPE(){
+  const svg=$('#rpeChart'),t=svg.querySelector('title');
+  svg.textContent='';if(t)svg.appendChild(t);
+  const L=42,R=76,T=20,B=46,W=420,H=250,pw=W-L-R,ph=H-T-B;
+  const x=i=>L+(i/(RPE.length-1))*pw, y=n=>T+ph-(n/100)*ph;
+  [0,25,50,75,100].forEach(n=>{
+    el('line',{x1:L,y1:y(n),x2:L+pw,y2:y(n),stroke:cv('--grid'),'stroke-width':1},svg);
+    tx(svg,n,{x:L-8,y:y(n)+4,'text-anchor':'end',fill:cv('--ink-3'),'font-size':10,'font-family':SANS});
+  });
+  el('line',{x1:L,y1:y(0),x2:L+pw,y2:y(0),stroke:cv('--axis'),'stroke-width':1.5},svg);
+
+  // constant reward reference
+  el('line',{x1:L,y1:y(100),x2:L+pw,y2:y(100),stroke:cv('--ink-3'),'stroke-width':2,'stroke-dasharray':'5 4'},svg);
+  tx(svg,'Reward delivered',{x:L+pw+8,y:y(100)+3,fill:cv('--ink-3'),'font-size':10.5,'font-weight':600,'font-family':SANS});
+  tx(svg,'(unchanged)',{x:L+pw+8,y:y(100)+16,fill:cv('--ink-3'),'font-size':9.5,'font-family':SANS});
+
+  // declining response
+  const c=cv('--counterfeit');
+  el('path',{d:RPE.map((n,i)=>`${i?'L':'M'}${x(i)},${y(n)}`).join(' '),fill:'none',stroke:c,'stroke-width':2.5,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+  RPE.forEach((n,i)=>el('circle',{cx:x(i),cy:y(n),r:3.5,fill:c,stroke:cv('--surface'),'stroke-width':1.5},svg));
+  tx(svg,'Dopamine',{x:L+pw+8,y:y(RPE[RPE.length-1])-2,fill:cv('--counterfeit-ink'),'font-size':10.5,'font-weight':700,'font-family':SANS});
+  tx(svg,'response',{x:L+pw+8,y:y(RPE[RPE.length-1])+11,fill:cv('--counterfeit-ink'),'font-size':10.5,'font-weight':700,'font-family':SANS});
+
+  tx(svg,'REPEATED EXPOSURE →',{x:L+pw/2,y:H-16,'text-anchor':'middle',fill:cv('--ink-2'),'font-size':10,'font-weight':700,'letter-spacing':'.09em','font-family':SANS});
+  tx(svg,'% of first',{x:12,y:T+ph/2,'text-anchor':'middle',fill:cv('--ink-3'),'font-size':10,'font-family':SANS,transform:`rotate(-90 12 ${T+ph/2})`});
+}
+
+/* ===================== FLOW MAP ===================== */
+const FL=54,FR=16,FT=16,FB=58,FW=420,FH=340;
+let flowPos={s:7.4,c:7.0};
+const STATES={
+  flow:{n:'Flow',icon:'i-mountain',tint:'t-need',col:'--need',
+    d:'Challenge and skill are both high and well matched. This is the condition under which absorption happens — self-consciousness recedes and the activity becomes worth doing for its own sake.',
+    fix:'<b>Protect it.</b> Guard the block of time, remove interruptions, and resist the urge to make it more productive.',
+    eg:'Playing at the edge of your ability; work that is hard but tractable.'},
+  anxiety:{n:'Anxiety',icon:'i-alert',tint:'t-fruit',col:'--fruit',
+    d:'The challenge exceeds your current skill. Attention goes to the threat of failing rather than to the task, which is why this state feels urgent but produces little.',
+    fix:'<b>Lower the rung, not the ladder.</b> Break it into a piece you can almost already do, or find someone to scaffold it.',
+    eg:'A project two levels above anything you have done; a language you cannot yet hear.'},
+  boredom:{n:'Boredom',icon:'i-hourglass',tint:'t-amber',col:'--amber',
+    d:'Your skill outstrips what is being asked. Boredom here is not laziness — it is an accurate signal that the task no longer merits your full attention.',
+    fix:'<b>Add constraints.</b> This is Caillois\'s <em>ludus</em>: impose an arbitrary difficulty — speed, elegance, a self-imposed rule — and it becomes interesting again.',
+    eg:'The tenth identical report; a game you have already solved.'},
+  apathy:{n:'Apathy',icon:'i-rain',tint:'t-theory',col:'--theory',
+    d:'Neither challenged nor exercising skill. The commonest state of passive consumption, and the one most easily mistaken for rest — it neither restores nor engages.',
+    fix:'<b>Raise both together.</b> Almost anything with a goal and feedback beats this; the specific activity matters less than that it asks something of you.',
+    eg:'Scrolling with no memory of what you saw; an episode you are not watching.'}
+};
+const stateOf=(s,c)=>(s<3.2&&c<3.2)?'apathy':(c-s>1.8)?'anxiety':(c-s<-1.8)?'boredom':'flow';
+
+function drawFlow(){
+  const svg=$('#flowChart'),t=svg.querySelector('title');
+  svg.textContent='';if(t)svg.appendChild(t);
+  const pw=FW-FL-FR,ph=FH-FT-FB;
+  const px=s=>FL+(s/10)*pw, py=c=>FT+ph-(c/10)*ph;
+  const P=a=>a.map(([s,c])=>`${px(s)},${py(c)}`).join(' ');
+  const zone=(a,col,op)=>el('polygon',{points:P(a),fill:cv(col),'fill-opacity':op},svg);
+  zone([[1.8,0],[10,8.2],[10,10],[8.2,10],[0,1.8],[0,0]],'--need',.16);
+  zone([[0,1.8],[8.2,10],[0,10]],'--fruit',.14);
+  zone([[1.8,0],[10,0],[10,8.2]],'--amber',.14);
+  zone([[0,0],[3.2,0],[3.2,3.2],[0,3.2]],'--ink-3',.12);
+  for(let n=2;n<=10;n+=2){
+    el('line',{x1:px(n),y1:py(0),x2:px(n),y2:py(10),stroke:cv('--grid'),'stroke-width':1},svg);
+    el('line',{x1:px(0),y1:py(n),x2:px(10),y2:py(n),stroke:cv('--grid'),'stroke-width':1},svg);
+  }
+  const zl=(s,c,l,col)=>tx(svg,l,{x:px(s),y:py(c),'text-anchor':'middle',fill:cv(col),
+    'font-size':11.5,'font-weight':700,'letter-spacing':'.08em','font-family':SANS});
+  zl(2.6,7.9,'ANXIETY','--fruit-ink');
+  zl(7.6,2.3,'BOREDOM','--amber-ink');
+  zl(1.7,1.7,'APATHY','--ink-3');
+  zl(6.9,6.4,'FLOW','--need-ink');
+  el('line',{x1:px(0),y1:py(0),x2:px(10),y2:py(0),stroke:cv('--axis'),'stroke-width':1.5},svg);
+  el('line',{x1:px(0),y1:py(0),x2:px(0),y2:py(10),stroke:cv('--axis'),'stroke-width':1.5},svg);
+  tx(svg,'SKILL →',{x:FL+pw/2,y:FH-22,'text-anchor':'middle',fill:cv('--ink-2'),'font-size':10.5,'font-weight':700,'letter-spacing':'.1em','font-family':SANS});
+  tx(svg,'CHALLENGE →',{x:14,y:FT+ph/2,'text-anchor':'middle',fill:cv('--ink-2'),'font-size':10.5,'font-weight':700,'letter-spacing':'.1em','font-family':SANS,transform:`rotate(-90 14 ${FT+ph/2})`});
+  tx(svg,'low',{x:px(0),y:FH-40,fill:cv('--ink-3'),'font-size':9.5,'font-family':SANS});
+  tx(svg,'high',{x:px(10),y:FH-40,'text-anchor':'end',fill:cv('--ink-3'),'font-size':9.5,'font-family':SANS});
+
+  const mx=px(flowPos.s),my=py(flowPos.c),st=stateOf(flowPos.s,flowPos.c);
+  el('line',{x1:mx,y1:py(0),x2:mx,y2:my,stroke:cv('--ink-3'),'stroke-width':1,'stroke-dasharray':'3 3',opacity:.5},svg);
+  el('line',{x1:px(0),y1:my,x2:mx,y2:my,stroke:cv('--ink-3'),'stroke-width':1,'stroke-dasharray':'3 3',opacity:.5},svg);
+  el('circle',{cx:mx,cy:my,r:10,fill:cv(STATES[st].col),'fill-opacity':.25},svg);
+  el('circle',{cx:mx,cy:my,r:6,fill:cv(STATES[st].col),stroke:cv('--surface'),'stroke-width':2.5},svg);
+
+  const s=STATES[st],ro=$('#flowReadout');
+  ro.className='fr '+s.tint;
+  $('#flowIcon').firstElementChild.setAttribute('href','#'+s.icon);
+  $('#flowState').textContent=s.n;
+  $('#flowDesc').textContent=s.d;
+  $('#flowFix').innerHTML=s.fix+'<span class="eg">'+s.eg+'</span>';
+}
+(function(){
+  const svg=$('#flowChart'),pw=FW-FL-FR,ph=FH-FT-FB;let drag=false;
+  function set(e){
+    const r=svg.getBoundingClientRect();
+    const vx=(e.clientX-r.left)/r.width*FW, vy=(e.clientY-r.top)/r.height*FH;
+    const cl=v=>Math.max(0,Math.min(10,v));
+    flowPos.s=cl((vx-FL)/pw*10); flowPos.c=cl((FT+ph-vy)/ph*10); drawFlow();
+  }
+  svg.addEventListener('pointerdown',e=>{drag=true;svg.setPointerCapture(e.pointerId);set(e);e.preventDefault();});
+  svg.addEventListener('pointermove',e=>{if(drag)set(e);});
+  svg.addEventListener('pointerup',()=>drag=false);
+  svg.addEventListener('pointercancel',()=>drag=false);
+  svg.addEventListener('keydown',e=>{
+    const st=e.shiftKey?1:.4;
+    const m={ArrowRight:['s',st],ArrowLeft:['s',-st],ArrowUp:['c',st],ArrowDown:['c',-st]}[e.key];
+    if(!m)return;
+    flowPos[m[0]]=Math.max(0,Math.min(10,flowPos[m[0]]+m[1]));drawFlow();e.preventDefault();
+  });
+})();
+
+/* ===================== RENDERERS ===================== */
+function renderFun(){
+  $('#funGrid').innerHTML=FUN.map(f=>`
+    <div class="panel ${f.tint} fun">
+      <div class="ic"><svg class="icon"><use href="#${f.icon}"/></svg></div>
+      <span class="gk">${esc(f.gk)}</span><span class="en">${esc(f.en)}</span>
+      <p>${esc(f.d)}</p><div class="egs">${esc(f.eg)}</div>
+    </div>`).join('');
+}
+function renderSavour(){
+  $('#savourGrid').innerHTML=SAVOUR.map(s=>`
+    <div class="panel panel--pad-sm ${s.tint}">
+      <div class="tile"><span class="ic"><svg class="icon"><use href="#${s.icon}"/></svg></span>
+      <div><b>${esc(s.t)}</b><span>${esc(s.d)}</span></div></div>
+    </div>`).join('');
+}
+function renderObjections(){
+  $('#objGrid').innerHTML=OBJECTIONS.map((o,i)=>`
+    <div class="panel ${o.tint} obj">
+      <span class="n">${i+1}</span><h4>${esc(o.t)}</h4><p>${o.d}</p>
+      <div class="resp"><b>Response</b>${esc(o.r)}</div>
+    </div>`).join('');
+}
+function renderScripture(){
+  $('#scripGrid').innerHTML=SCRIPTURE.map(s=>`
+    <div class="panel ${s.tint} scr">
+      <span class="ref"><svg class="icon"><use href="#${s.icon}"/></svg>${esc(s.ref)}</span>
+      <blockquote>&ldquo;${esc(s.q)}&rdquo;<cite>${esc(s.cite)}</cite></blockquote>
+      <h4>${esc(s.h)}</h4><p>${s.p}</p>
+    </div>`).join('');
+}
+function renderMarks(){
+  $('#marksList').innerHTML=MARKS.map(m=>`
+    <div class="tile ${m.tint}"><span class="ic"><svg class="icon"><use href="#${m.icon}"/></svg></span>
+    <div><b>${esc(m.t)}</b><span>${esc(m.d)}</span></div></div>`).join('');
+}
+function renderScenarios(){
+  $('#scenarios').innerHTML=SCENARIOS.map(s=>`
+    <details class="scn ${s.tint}">
+      <summary><span class="ic"><svg class="icon"><use href="#${s.icon}"/></svg></span>
+        ${esc(s.t)}<svg class="icon chev"><use href="#i-chev-d"/></svg></summary>
+      <div class="scn-body">
+        <dl class="scn-row"><dt>What's happening</dt><dd>${s.happening}</dd></dl>
+        <dl class="scn-row"><dt>The real need</dt><dd>${s.need}</dd></dl>
+        <dl class="scn-row"><dt>What helps</dt><dd>${s.works}</dd></dl>
+      </div>
+    </details>`).join('');
+}
+
+/* ===================== MATRIX ===================== */
+let cat='all';
+function renderMatrix(){
+  const q=$('#matrixSearch').value.trim().toLowerCase();
+  const rows=MATRIX.filter(r=>(cat==='all'||r.c===cat)&&
+    (!q||(r.d+' '+r.n+' '+r.s+' '+r.f).toLowerCase().includes(q)));
+  const tb=$('#matrixTable tbody');
+  tb.innerHTML=rows.length?rows.map(r=>`
+    <tr class="${CAT_TINT[r.c]}">
+      <td data-label="Domain"><span class="dom"><span class="ic"><svg class="icon"><use href="#${r.i}"/></svg></span>${esc(r.d)}</span></td>
+      <td data-label="Deep need"><span class="c-need">${esc(r.n)}</span></td>
+      <td data-label="Counterfeit"><span class="c-cf">${esc(r.s)}</span></td>
+      <td data-label="Long-term fruit"><span class="c-fruit">${esc(r.f)}</span></td>
+    </tr>`).join(''):'<tr><td colspan="4" class="empty">No domains match that search.</td></tr>';
+  $('#matrixCount').innerHTML=`Showing <b>${rows.length}</b> of <b>${MATRIX.length}</b> domains`;
+}
+$$('#matrixFilters button').forEach(b=>b.addEventListener('click',()=>{
+  cat=b.dataset.cat;
+  $$('#matrixFilters button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  renderMatrix();
+}));
+$('#matrixSearch').addEventListener('input',renderMatrix);
+
+/* ===================== PATHWAY ===================== */
+let step=0;
+function renderPathway(){
+  const s=PATHWAY[step];
+  $('#pathway').style.setProperty('--sc',cv(s.col));
+  $('#pwIcon').firstElementChild.firstElementChild.setAttribute('href','#'+s.i);
+  $('#pwLabel').textContent=`Stage ${step+1} of ${PATHWAY.length}`;
+  $('#pwTitle').textContent=s.t;
+  $('#pwDesc').textContent=s.d;
+  // colour applied inline so no theme rule can override it
+  $('#pwDots').innerHTML=PATHWAY.map((p,i)=>
+    `<button class="pw-dot" data-i="${i}" data-cur="${i===step?1:0}"
+      style="background:${i<=step?cv(p.col):cv('--line-2')}"
+      aria-label="Stage ${i+1}: ${esc(p.t)}"${i===step?' aria-current="step"':''}></button>`).join('');
+  $$('#pwDots .pw-dot').forEach(d=>d.addEventListener('click',()=>{step=+d.dataset.i;renderPathway();}));
+  $('#pwPrev').disabled=step===0;
+  $('#pwNext').innerHTML=step===PATHWAY.length-1
+    ?'Restart<svg class="icon"><use href="#i-route"/></svg>'
+    :'Next<svg class="icon"><use href="#i-arrow-r"/></svg>';
+}
+$('#pwNext').addEventListener('click',()=>{step=step===PATHWAY.length-1?0:step+1;renderPathway();});
+$('#pwPrev').addEventListener('click',()=>{if(step>0){step--;renderPathway();}});
+$('#pathway').addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'&&step<PATHWAY.length-1){step++;renderPathway();e.preventDefault();}
+  if(e.key==='ArrowLeft'&&step>0){step--;renderPathway();e.preventDefault();}
+});
+
+/* ===================== MODAL ===================== */
+const answers=new Array(QUESTIONS.length).fill(null);
+function renderQuestions(){
+  $('#questions').innerHTML=QUESTIONS.map((q,i)=>`
+    <div class="q"><h4>${esc(q.t)}</h4><p>${esc(q.q)}</p>
+      <div class="qo" role="group" aria-label="${esc(q.t)}">
+        <button data-q="${i}" data-v="1" aria-pressed="false"><svg class="icon"><use href="#i-check"/></svg>${esc(q.yes)}</button>
+        <button data-q="${i}" data-v="0" aria-pressed="false"><svg class="icon"><use href="#i-alert"/></svg>${esc(q.no)}</button>
+      </div></div>`).join('');
+  $$('#questions button').forEach(b=>b.addEventListener('click',()=>{
+    const i=+b.dataset.q;answers[i]=+b.dataset.v;
+    $$(`#questions button[data-q="${i}"]`).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    updateVerdict();
+  }));
+}
+function updateVerdict(){
+  const done=answers.filter(a=>a!==null).length;
+  const score=answers.reduce((a,b)=>a+(b||0),0);
+  const v=$('#verdict'),se=$('#score');
+  if(done<QUESTIONS.length){
+    se.textContent=done?`${score}/${done}`:'—';se.className='vscore';v.className='verdict';
+    $('#verdictTitle').textContent='Awaiting your answers';
+    $('#verdictText').textContent=`${QUESTIONS.length-done} question${QUESTIONS.length-done===1?'':'s'} remaining.`;
+    $('#meterFill').style.width=(done/QUESTIONS.length*100)+'%';
+    $('#meterFill').style.background=cv('--ink-3');
+    return;
+  }
+  const bands=[
+    {min:5,tint:'t-need',title:'Genuine satisfaction',txt:'This looks like it meets the need it addresses. Protect it — these are rarer than they look.'},
+    {min:4,tint:'t-need',title:'Broadly sound',txt:'Mostly nourishing, with one weak axis. Name that axis rather than treating the whole thing as suspect.'},
+    {min:3,tint:'t-amber',title:'Mixed signal',txt:'Partly nourishing, partly compensatory. Strategies here tend to drift downward under stress.'},
+    {min:2,tint:'t-counterfeit',title:'Likely displacement',txt:'Resembles a counterfeit. Ask what need it stands in for, and what would actually meet it.'},
+    {min:0,tint:'t-fruit',title:'Counterfeit pattern',txt:'The full signature of displacement: compelled, fragmenting, instrumental, self-repeating.'}
+  ];
+  const b=bands.find(x=>score>=x.min);
+  v.className='verdict '+b.tint;
+  se.textContent=`${score}/5`;se.className='vscore on';
+  $('#verdictTitle').textContent=b.title;
+  $('#verdictText').textContent=b.txt;
+  $('#meterFill').style.width=(score/QUESTIONS.length*100)+'%';
+  $('#meterFill').style.background=getComputedStyle(v).getPropertyValue('--tint').trim();
+}
+const modal=$('#modal');let lastFocus=null;
+function openModal(){lastFocus=document.activeElement;modal.classList.add('open');document.body.style.overflow='hidden';$('#closeModal').focus();}
+function closeModal(){modal.classList.remove('open');document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+$('#openModal').addEventListener('click',openModal);
+$('#closeModal').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+$$('.note a',modal).forEach(a=>a.addEventListener('click',closeModal));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();
+  if(e.key==='Tab'&&modal.classList.contains('open')){
+    const f=$$('button, input, [href], [tabindex]:not([tabindex="-1"])',modal).filter(x=>x.offsetParent!==null);
+    if(!f.length)return;
+    const a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){z.focus();e.preventDefault();}
+    else if(!e.shiftKey&&document.activeElement===z){a.focus();e.preventDefault();}
+  }
+});
+
+/* ===================== NAV ===================== */
+const menuBtn=$('#menuBtn'),mmenu=$('#mobileMenu');
+menuBtn.addEventListener('click',()=>{
+  const o=mmenu.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',String(o));
+  menuBtn.firstElementChild.firstElementChild.setAttribute('href',o?'#i-x':'#i-menu');
+});
+$$('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>{
+  mmenu.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
+  menuBtn.firstElementChild.firstElementChild.setAttribute('href','#i-menu');
+}));
+const SECTIONS=['foundations','reward','enjoyment','purpose','pathways','matrix','objections','covenant'];
+const toTop=$('#toTop');
+function onScroll(){
+  const h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+  $('#progress').style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+  toTop.classList.toggle('show',h.scrollTop>700);
+  let active='';
+  for(const id of SECTIONS){
+    const s=document.getElementById(id);
+    if(s&&s.getBoundingClientRect().top<=140)active=id;
+  }
+  $$('.nav-links a, .mmenu a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+active));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ===================== INIT ===================== */
+(function(){
+  let saved=null;try{saved=localStorage.getItem('aod-theme');}catch(e){}
+  const m=saved||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  document.documentElement.setAttribute('data-theme',m);
+  $('#themeIcon').firstElementChild.setAttribute('href',m==='dark'?'#i-sun':'#i-moon');
+  themeBtn.setAttribute('aria-label',m==='dark'?'Switch to light theme':'Switch to dark theme');
+  renderFun();renderSavour();renderObjections();renderScripture();renderMarks();
+  renderScenarios();renderMatrix();renderQuestions();updateVerdict();
+  redraw();onScroll();
+  window.addEventListener('resize',()=>{drawSDT(sdtMode);drawReward();drawRPE();drawFlow();});
+})();
+</script>
+</body>
+</html>
