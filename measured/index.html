@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Same Struggle, Three Disguises</title>
+<meta name="description" content="Comparison, rejection, and people-pleasing feel like three problems. More often they're one — the fear that your worth still has to be earned. What's happening, and how it loosens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&display=swap" rel="stylesheet">
+<script>
+  (function(){try{var s=localStorage.getItem('theme');}catch(e){var s=null;}
+  var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', s||(d?'dark':'light'));})();
+</script>
+<style>
+  :root{
+    --paper:#F5F2EA; --ink:#1B1712; --muted:#6B6252; --faint:#8F8570;
+    --rule:rgba(27,23,18,0.12); --card:#EFEBE0;
+    --red:#CE3B2B; --blue:#2A4BAF; --amber:#D98A0E; --green:#147A62; --indigo:#4A3F9E;
+    --red-ink:#C0311F; --blue-ink:#263F9C; --amber-ink:#946008; --green-ink:#116B57; --indigo-ink:#463BA0;
+    --cycle-band:#201E19; --cycle-fg:#F5F2EA;
+    --shadow:0 1px 0 rgba(27,23,18,.04);
+    --max:1080px;
+  }
+  :root[data-theme="dark"]{
+    --paper:#15120E; --ink:#ECE6D9; --muted:#A69B87; --faint:#7B7163;
+    --rule:rgba(255,255,255,0.13); --card:#211D17;
+    --red-ink:#F19181; --blue-ink:#98AEF2; --amber-ink:#EEB752; --green-ink:#50C7A9; --indigo-ink:#AEA3EF;
+    --cycle-band:#2B2720; --cycle-fg:#ECE6D9;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Instrument Sans",system-ui,sans-serif;font-size:18px;line-height:1.62;font-weight:400;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+    transition:background .3s ease,color .3s ease;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);}
+  p{margin:0 0 1em;max-width:62ch;text-wrap:pretty;}
+  .mapnote{text-wrap:pretty;}
+  /* balance short display text so headings don't leave orphan words */
+  h1,h2,h3,h4,.htitle,.hthesis,.htail,.hwords,.subh,.ana-h,.step h3,.caveat h3,.close blockquote p{text-wrap:balance;}
+  strong{font-weight:600;}
+  section[id]{scroll-margin-top:72px;}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;
+    background:linear-gradient(90deg,var(--red),var(--indigo) 30%,var(--blue) 55%,var(--amber) 78%,var(--green));}
+
+  /* icons */
+  .ic{width:24px;height:24px;display:inline-block;vertical-align:middle;flex:0 0 auto;}
+  .ic path,.ic circle{stroke-linecap:round;stroke-linejoin:round;}
+  .ic-lg{width:56px;height:56px;}
+  .ic-hero{width:clamp(26px,4.4vw,38px);height:clamp(26px,4.4vw,38px);}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--rule);
+    background:var(--paper);background:color-mix(in srgb,var(--paper) 90%,transparent);
+    -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);transition:background .3s ease,border-color .3s ease;}
+  .nav-in{max-width:var(--max);margin:0 auto;padding:.8rem clamp(1.25rem,5vw,3rem);
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .navL{display:flex;align-items:center;gap:1rem;min-width:0;}
+  .brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1rem;letter-spacing:-.01em;
+    display:flex;align-items:center;white-space:nowrap;}
+  .brand .dots{display:inline-flex;gap:5px;margin-right:.6rem;}
+  .brand .dots i{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  nav ul{display:flex;gap:1.05rem;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none;}
+  nav ul::-webkit-scrollbar{display:none;}
+  nav a{font-size:.85rem;font-weight:500;text-decoration:none;color:var(--faint);white-space:nowrap;
+    padding-bottom:2px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+  nav a:hover{color:var(--ink);}
+  nav a.active{color:var(--ink);}
+  nav a.c-red.active{border-color:var(--red);}nav a.c-blue.active{border-color:var(--blue);}
+  nav a.c-amber.active{border-color:var(--amber);}nav a.c-green.active{border-color:var(--green);}
+  nav a.c-indigo.active{border-color:var(--indigo);}nav a.c-ink.active{border-color:var(--ink);}
+  @media(max-width:820px){nav ul{display:none;}}
+  .toggle{appearance:none;border:1px solid var(--rule);background:transparent;color:var(--ink);
+    width:38px;height:38px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+    flex:0 0 auto;transition:background .2s,border-color .2s;}
+  .toggle:hover{background:var(--card);}
+  @media(pointer:coarse){.toggle{width:44px;height:44px;}}
+  .toggle .i-sun{display:none;}.toggle .i-moon{display:inline-block;}
+  [data-theme="dark"] .toggle .i-sun{display:inline-block;}[data-theme="dark"] .toggle .i-moon{display:none;}
+
+  /* hero */
+  .hero{padding:clamp(3.4rem,9vh,7rem) 0 clamp(2.8rem,6vh,4.6rem);}
+  .eyebrow{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:.8rem;
+    letter-spacing:.03em;text-transform:uppercase;color:var(--faint);margin:0 0 1.4rem;}
+  .hwords{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;line-height:1.0;
+    letter-spacing:-.03em;font-size:clamp(2.3rem,9vw,4.8rem);margin:0;}
+  .hwords span{display:flex;align-items:center;gap:.62rem;}
+  .w-red{color:var(--red-ink);}.w-blue{color:var(--blue-ink);}.w-amber{color:var(--amber-ink);}
+  .htail{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;color:var(--muted);
+    font-size:clamp(1.35rem,3.6vw,2.05rem);line-height:1.14;letter-spacing:-.02em;margin:1.35rem 0 0;max-width:22ch;}
+  .htail strong{color:var(--ink);font-weight:700;}
+  .hsub{font-size:clamp(1.05rem,1.7vw,1.2rem);color:var(--muted);max-width:56ch;margin-top:1.5rem;line-height:1.5;}
+  .hsub em{font-style:normal;color:var(--ink);font-weight:600;}
+  .hnote{font-size:.9rem;color:var(--faint);max-width:52ch;margin-top:1.5rem;line-height:1.5;
+    padding-left:.9rem;border-left:2px solid var(--rule);}
+  .skip{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.9rem;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:600;font-size:.92rem;color:var(--green-ink);text-decoration:none;border-bottom:2px solid transparent;transition:border-color .2s;}
+  .skip:hover{border-color:var(--green-ink);}
+
+  /* full-bleed section head */
+  .head{position:relative;overflow:hidden;background:var(--band);color:var(--bandfg);
+    padding:clamp(2.6rem,6vh,4rem) 0;}
+  .head .wrap{position:relative;z-index:1;}
+  .head .eyebrow{color:inherit;opacity:.82;}
+  .head .ic-lg{margin-bottom:1.05rem;}
+  .htitle{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.025em;
+    line-height:.99;font-size:clamp(2.15rem,6.2vw,3.8rem);margin:0;}
+  .hthesis{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;letter-spacing:-.01em;
+    font-size:clamp(1.12rem,2.5vw,1.55rem);line-height:1.2;margin:.7rem 0 0;max-width:28ch;opacity:.94;}
+  .wm{position:absolute;right:clamp(-30px,-2vw,-10px);top:50%;transform:translateY(-50%);
+    width:210px;height:210px;color:var(--bandfg);opacity:.1;pointer-events:none;z-index:0;}
+  @media(max-width:820px){.wm{display:none;}}
+
+  .body{padding:clamp(2.4rem,5vh,3.3rem) 0 clamp(3rem,7vh,4.6rem);}
+
+  /* section accents */
+  #s-root{--band:var(--indigo);--bandfg:#fff;--mark:var(--indigo-ink);}
+  #s-cycle{--band:var(--cycle-band);--bandfg:var(--cycle-fg);--mark:var(--ink);}
+  #s-comparison{--band:var(--red);--bandfg:#fff;--mark:var(--red-ink);}
+  #s-rejection{--band:var(--blue);--bandfg:#fff;--mark:var(--blue-ink);}
+  #s-pleasing{--band:var(--amber);--bandfg:#1B1712;--mark:var(--amber-ink);}
+  #s-way{--band:var(--green);--bandfg:#fff;--mark:var(--green-ink);}
+
+  /* anatomy blocks */
+  .ana{display:grid;grid-template-columns:46px 1fr;gap:1.15rem;padding:1.55rem 0;border-top:1px solid var(--rule);}
+  .ana:first-of-type{border-top:none;padding-top:.3rem;}
+  .ana-ic{color:var(--mark);padding-top:.2rem;}
+  .ana-h{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.12rem;
+    letter-spacing:-.01em;color:var(--mark);margin:.05rem 0 .45rem;}
+  .ana p{margin:0;color:var(--ink);}
+  .ana .ref{color:var(--faint);font-size:.82rem;font-weight:500;}
+  @media(max-width:560px){.ana{grid-template-columns:1fr;gap:.5rem;}.ana-ic{padding-top:0;}}
+
+  /* everyday example — grounds each disguise in a felt moment */
+  .example{position:relative;background:color-mix(in srgb,var(--mark) 7%,var(--card));
+    border:1px solid color-mix(in srgb,var(--mark) 22%,var(--rule));border-left:3px solid var(--mark);
+    border-radius:12px;padding:1.1rem 1.3rem;margin:.2rem 0 2rem;max-width:60ch;}
+  .example .ex-lbl{display:inline-flex;align-items:center;gap:.45rem;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mark);margin-bottom:.55rem;}
+  .example .ex-lbl .ic{width:16px;height:16px;}
+  .example p.ex-q{margin:0;color:var(--ink);font-size:1.08rem;font-weight:500;line-height:1.4;max-width:none;
+    font-family:"Bricolage Grotesque",sans-serif;letter-spacing:-.01em;}
+  .example .ex-tail{color:var(--muted);font-size:.94rem;line-height:1.5;display:block;margin-top:.55rem;max-width:52ch;}
+
+  /* caveat card */
+  .caveat{background:var(--card);border:1px solid var(--rule);border-radius:14px;
+    padding:1.4rem 1.5rem;margin:.6rem 0 2.2rem;max-width:64ch;}
+  .caveat h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.08rem;margin:0 0 .5rem;
+    display:flex;align-items:center;gap:.55rem;color:var(--indigo-ink);}
+  .caveat p{margin:0;color:var(--muted);}.caveat p b{color:var(--ink);}
+
+  /* converge graphic */
+  .converge{display:flex;align-items:center;gap:1.6rem;flex-wrap:wrap;margin:.2rem 0 2rem;}
+  .converge svg{width:min(360px,100%);height:auto;}
+  .cv-hub,.cv-label{fill:var(--ink);}
+  .cv-sub{fill:var(--muted);}
+  .cv-lead{max-width:36ch;color:var(--muted);}.cv-lead b{color:var(--ink);}
+
+  /* axes */
+  .subh{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.2rem;color:var(--indigo-ink);margin:.4rem 0 .3rem;}
+  .axes{display:grid;grid-template-columns:1fr 1fr;gap:0 2.4rem;margin-top:.5rem;}
+  .axis{padding:1rem 0;border-top:1px solid var(--rule);}
+  .axis h4{margin:0;font-weight:600;font-size:1rem;}
+  .axis p{margin:.1rem 0 0;color:var(--muted);font-size:.94rem;max-width:32ch;}
+  @media(max-width:600px){.axes{grid-template-columns:1fr;}}
+  .axnote{margin-top:1.6rem;color:var(--muted);max-width:58ch;}.axnote b{color:var(--ink);}
+
+  /* cycle */
+  .cyc{list-style:none;margin:.5rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;}
+  .cyc li{position:relative;padding-right:1.1rem;}
+  .cyc li:not(:last-child)::after{content:"";position:absolute;right:.15rem;top:.5rem;width:13px;height:13px;
+    border-top:2px solid var(--faint);border-right:2px solid var(--faint);transform:rotate(45deg);}
+  .cyc-n{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--ink);display:block;line-height:1;margin-bottom:.4rem;}
+  .cyc p{margin:0;font-size:.97rem;color:var(--ink);}
+  .cyc em{font-family:"Bricolage Grotesque",sans-serif;font-style:italic;font-weight:500;color:var(--muted);}
+  .cyc-note{margin-top:1.7rem;display:flex;align-items:flex-start;gap:.7rem;color:var(--muted);max-width:58ch;}
+  .cyc-note .ic{color:var(--ink);margin-top:.1rem;}.cyc-note b{color:var(--ink);}
+  @media(max-width:680px){.cyc{grid-template-columns:1fr 1fr;}.cyc li:nth-child(2)::after{display:none;}}
+  @media(max-width:420px){.cyc{grid-template-columns:1fr;}.cyc li::after{display:none;}}
+
+  /* way-out */
+  .mapnote{background:var(--card);border-radius:14px;border:1px solid var(--rule);padding:1.3rem 1.5rem;
+    margin:0 0 2rem;max-width:64ch;color:var(--muted);}.mapnote b{color:var(--ink);}
+  .steps{margin-top:.3rem;}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;padding:1.7rem 0;border-top:1px solid var(--rule);}
+  .step:first-child{border-top:none;padding-top:.3rem;}
+  .step-n{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:2rem;line-height:1;color:var(--green-ink);}
+  .step h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:clamp(1.22rem,2.3vw,1.55rem);
+    letter-spacing:-.01em;margin:0 0 .45rem;}
+  .step p{margin:0;color:var(--ink);}
+  @media(max-width:560px){.step{grid-template-columns:1fr;gap:.5rem;}}
+
+  /* close */
+  .close{padding:clamp(3.6rem,10vh,7rem) 0 clamp(2.6rem,6vh,4.2rem);}
+  .close blockquote{margin:0;max-width:24ch;}
+  .close blockquote p{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.03em;
+    font-size:clamp(2rem,6.4vw,3.9rem);line-height:1.03;margin:0;max-width:none;}
+  .close blockquote .dim{color:var(--muted);font-weight:600;display:block;font-size:.62em;letter-spacing:-.02em;margin-top:.5rem;}
+  .close .three{display:inline-flex;gap:.5rem;margin-top:2.2rem;}
+  .close .three i{width:12px;height:12px;border-radius:50%;display:inline-block;}
+
+  footer{border-top:1px solid var(--rule);padding:2.1rem 0 3.2rem;}
+  footer p{max-width:64ch;color:var(--muted);font-size:.92rem;line-height:1.55;}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(15px);transition:opacity .7s ease,transform .7s cubic-bezier(.4,0,.2,1);}
+  .rv.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none;}}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-compare" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 21h18"/><path d="M6.5 21v-5"/><path d="M12 21v-11"/><path d="M17.5 21v-7.5"/></symbol>
+  <symbol id="i-reject" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/>
+    <circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-mask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 3C7.3 3 4.5 6.6 4.5 11.5S8 21 12 21s7.5-4.6 7.5-9.5S16.7 3 12 3z"/>
+    <circle cx="9.4" cy="10.4" r="1.1" fill="currentColor" stroke="none"/>
+    <circle cx="14.6" cy="10.4" r="1.1" fill="currentColor" stroke="none"/>
+    <path d="M9 14.6c1.8 2 4.2 2 6 0"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="3.3"/>
+    <path d="M12 1.2v3M12 19.8v3M1.2 12h3M19.8 12h3"/></symbol>
+  <symbol id="i-cycle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 9a8 8 0 0 1 13.7-3.1"/><path d="M18 2.5v4h-4"/>
+    <path d="M20 15a8 8 0 0 1-13.7 3.1"/><path d="M6 21.5v-4h4"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M7 8.5 17 6.5M17 6.5 12.5 16.5M12.5 16.5 7 8.5"/>
+    <circle cx="7" cy="8.5" r="2" fill="currentColor" stroke="none"/>
+    <circle cx="17" cy="6.5" r="2" fill="currentColor" stroke="none"/>
+    <circle cx="12.5" cy="16.5" r="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-root" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="4.2" r="2.2" fill="currentColor" stroke="none"/><path d="M12 6.4v8.6"/>
+    <path d="M12 15c-1.5 1.9-2.4 4.4-3.2 6.9M12 15c1.5 1.9 2.4 4.4 3.2 6.9M12 15v6.9"/></symbol>
+  <symbol id="i-snare" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="4.4" r="2"/><path d="M12 6.4v8.1a4.6 4.6 0 1 1-4.6-4.6"/>
+    <path d="M7.4 9.9 5.4 8M7.4 9.9l1.9-1.7"/></symbol>
+  <symbol id="i-truth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="3.9"/>
+    <path d="M12 1.4v3M12 19.6v3M1.4 12h3M19.6 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M19.4 4.6l-2.1 2.1M4.6 19.4l2.1-2.1"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M13 21H5.5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1H13"/><path d="M10.5 12H21"/><path d="M18 9l3 3-3 3"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 1.8v2.6M12 19.6v2.6M1.8 12h2.6M19.6 12h2.6M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M4.9 19.1l1.8-1.8"/></symbol>
+</defs></svg>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="navL">
+      <span class="brand"><span class="dots"><i style="background:var(--red)"></i><i style="background:var(--blue)"></i><i style="background:var(--amber)"></i></span>Three Disguises</span>
+    </div>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a class="c-indigo" href="#s-root">The root</a></li>
+        <li><a class="c-ink" href="#s-cycle">The cycle</a></li>
+        <li><a class="c-red" href="#s-comparison">Comparison</a></li>
+        <li><a class="c-blue" href="#s-rejection">Rejection</a></li>
+        <li><a class="c-amber" href="#s-pleasing">People-pleasing</a></li>
+        <li><a class="c-green" href="#s-way">The way out</a></li>
+      </ul>
+    </nav>
+    <button class="toggle" id="themeBtn" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+      <svg class="ic i-moon"><use href="#i-moon"/></svg><svg class="ic i-sun"><use href="#i-sun"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">The same struggle, three disguises</p>
+      <h1 class="hwords">
+        <span class="w-red"><svg class="ic ic-hero"><use href="#i-compare"/></svg>Comparison</span>
+        <span class="w-blue"><svg class="ic ic-hero"><use href="#i-reject"/></svg>Rejection</span>
+        <span class="w-amber"><svg class="ic ic-hero"><use href="#i-mask"/></svg>People-pleasing</span>
+      </h1>
+      <p class="htail">feel like three different battles. <strong>More often, they're one.</strong></p>
+      <p class="hsub">Underneath all three tends to run a single ache: to earn a worth you're not sure you already have. Here's what's actually happening — <em>in your brain and in your soul</em> — and how it loosens its grip.</p>
+      <p class="hnote">Written from a Christian view, taking the brain science seriously. The two are kept side by side and clearly marked — never collapsed into each other.</p>
+      <a class="skip" href="#s-way">In a hurry? Jump to the way out <svg class="ic" style="width:18px;height:18px"><use href="#i-door"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ROOT -->
+  <section id="s-root">
+    <div class="head">
+      <svg class="ic wm"><use href="#i-target"/></svg>
+      <div class="wrap rv">
+        <svg class="ic ic-lg"><use href="#i-target"/></svg>
+        <p class="eyebrow">Start here</p>
+        <h2 class="htitle">One root — most of the time</h2>
+        <p class="hthesis">The three usually run on the same doubt.</p>
+      </div>
+    </div>
+    <div class="body"><div class="wrap rv">
+      <div class="converge">
+        <svg viewBox="0 0 380 150" role="img" aria-label="Comparison, rejection, and people-pleasing all connect to one center: the doubt that your worth is settled.">
+          <line x1="70" y1="32" x2="176" y2="75" stroke="var(--red)" stroke-width="2.4"/>
+          <line x1="58" y1="75" x2="176" y2="75" stroke="var(--blue)" stroke-width="2.4"/>
+          <line x1="70" y1="118" x2="176" y2="75" stroke="var(--amber)" stroke-width="2.4"/>
+          <circle cx="60" cy="32" r="9" fill="var(--red)"/>
+          <circle cx="48" cy="75" r="9" fill="var(--blue)"/>
+          <circle cx="60" cy="118" r="9" fill="var(--amber)"/>
+          <text class="cv-label" x="78" y="36" font-family="Bricolage Grotesque,sans-serif" font-size="12" font-weight="600">Comparison</text>
+          <text class="cv-label" x="66" y="79" font-family="Bricolage Grotesque,sans-serif" font-size="12" font-weight="600">Rejection</text>
+          <text class="cv-label" x="78" y="122" font-family="Bricolage Grotesque,sans-serif" font-size="12" font-weight="600">People-pleasing</text>
+          <circle class="cv-hub" cx="186" cy="75" r="13"/>
+          <text class="cv-label" x="208" y="72" font-family="Bricolage Grotesque,sans-serif" font-size="13" font-weight="700">Am I enough?</text>
+          <text class="cv-sub" x="208" y="88" font-family="Instrument Sans,sans-serif" font-size="11">the question no result closes</text>
+        </svg>
+        <p class="cv-lead">You rank yourself above others, or brace against being turned away, or work to keep everyone happy. Different moves — <b>often the same engine.</b> That engine is the quiet doubt that your worth is already settled. No achievement reliably switches it off, because it was never really about the achievement.</p>
+      </div>
+
+      <div class="caveat">
+        <h3><svg class="ic"><use href="#i-target"/></svg>Not always, though</h3>
+        <p>Sometimes comparison is just ordinary ambition, or a useful way to gauge where you stand. Sometimes rejection-sensitivity is wired in early, or is your body remembering a real danger. Sometimes people-pleasing is the smart move in a situation that genuinely isn't safe. <b>The one-root story fits most cases, not all.</b> If yours doesn't fit it, trust that over the tidy version.</p>
+      </div>
+
+      <h3 class="subh">Where it lands</h3>
+      <p style="color:var(--muted);max-width:56ch;margin-bottom:1rem;">The ache is rarely vague. It usually sits on one specific spot — and naming which one matters, because that's the spot that needs healing.</p>
+      <div class="axes">
+        <div class="axis"><h4>Being seen</h4><p>Did anyone even notice I was there?</p></div>
+        <div class="axis"><h4>Being wanted, not tolerated</h4><p>Am I chosen, or just endured?</p></div>
+        <div class="axis"><h4>Being known</h4><p>Do they know the real me, or a version?</p></div>
+        <div class="axis"><h4>Belonging, not fitting in</h4><p>Accepted as I am — or only if I conform?</p></div>
+        <div class="axis"><h4>Mattering</h4><p>Would my absence actually be felt?</p></div>
+        <div class="axis"><h4>Loved for who I am, not what I do</h4><p>Am I valued apart from what I produce?</p></div>
+      </div>
+      <p class="axnote"><b>This is why reassurance so often misses.</b> "You're fine, people like you" lands nowhere if the real question underneath was "was I ever actually chosen?" Comfort only helps when it reaches the exact spot.</p>
+    </div></div>
+  </section>
+
+  <!-- CYCLE -->
+  <section id="s-cycle">
+    <div class="head">
+      <svg class="ic wm"><use href="#i-cycle"/></svg>
+      <div class="wrap rv">
+        <svg class="ic ic-lg"><use href="#i-cycle"/></svg>
+        <p class="eyebrow">The engine</p>
+        <h2 class="htitle">Why it keeps coming back</h2>
+        <p class="hthesis">It's a loop — and it feeds itself.</p>
+      </div>
+    </div>
+    <div class="body"><div class="wrap rv">
+      <ol class="cyc">
+        <li><span class="cyc-n">1</span><p>The ache flares. <em>I'm not enough.</em></p></li>
+        <li><span class="cyc-n">2</span><p>You reach for the fix — rank higher, manage the room, please them.</p></li>
+        <li><span class="cyc-n">3</span><p>It works. For a minute. Relief.</p></li>
+        <li><span class="cyc-n">4</span><p>The relief fades — and seems to prove the ache was right.</p></li>
+      </ol>
+      <p class="cyc-note"><svg class="ic"><use href="#i-cycle"/></svg><span>Then it starts over. Each loop digs the groove a little deeper. <b>That's why trying harder inside the loop never ends it</b> — the effort is part of the machine.</span></p>
+    </div></div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section id="s-comparison">
+    <div class="head">
+      <svg class="ic wm"><use href="#i-compare"/></svg>
+      <div class="wrap rv">
+        <svg class="ic ic-lg"><use href="#i-compare"/></svg>
+        <p class="eyebrow">Disguise one</p>
+        <h2 class="htitle">Comparison</h2>
+        <p class="hthesis">You measure yourself against everyone in the room.</p>
+      </div>
+    </div>
+    <div class="body"><div class="wrap rv">
+      <div class="example">
+        <span class="ex-lbl"><svg class="ic"><use href="#i-compare"/></svg>In the wild</span>
+        <p class="ex-q">You open the app to unwind and close it feeling behind.</p>
+        <span class="ex-tail">Everyone's highlight reel quietly becomes your baseline — and your own good day stops counting.</span>
+      </div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-brain"/></svg></div><div>
+        <h3 class="ana-h">What's happening</h3>
+        <p>Your brain judges worth by comparison, not on its own — and it fixates on the gap, not on what you have. So closing one gap just reveals the next one. Arriving never quite satisfies.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-root"/></svg></div><div>
+        <h3 class="ana-h">Where it comes from</h3>
+        <p>When your worth was never settled on the inside, you go looking for the answer outside — so you measure. It isn't vanity. It's a question ("am I enough?") that nobody ever closed for you.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-snare"/></svg></div><div>
+        <h3 class="ana-h">The trap</h3>
+        <p>The promise is simple: rank high enough and you'll finally feel okay. But the ranking is never finished, and every new room resets the score.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-truth"/></svg></div><div>
+        <h3 class="ana-h">What's actually true</h3>
+        <p>You were handed a specific life, not a ranking. Faith puts it bluntly: measuring yourself against others isn't so much wrong as pointless <span class="ref">(2 Corinthians 10:12)</span>. When Peter compared his path to a friend's, Jesus basically said, <em>that's not your concern — you follow me</em> <span class="ref">(John 21:22)</span>.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-door"/></svg></div><div>
+        <h3 class="ana-h">The way out</h3>
+        <p>You can't argue yourself calm. It quiets when your worth comes from somewhere that isn't up for a vote — received, not earned. Then there's simply nothing left to prove.</p></div></div>
+    </div></div>
+  </section>
+
+  <!-- REJECTION -->
+  <section id="s-rejection">
+    <div class="head">
+      <svg class="ic wm"><use href="#i-reject"/></svg>
+      <div class="wrap rv">
+        <svg class="ic ic-lg"><use href="#i-reject"/></svg>
+        <p class="eyebrow">Disguise two</p>
+        <h2 class="htitle">Rejection</h2>
+        <p class="hthesis">You brace for the "no" before it even comes.</p>
+      </div>
+    </div>
+    <div class="body"><div class="wrap rv">
+      <div class="example">
+        <span class="ex-lbl"><svg class="ic"><use href="#i-reject"/></svg>In the wild</span>
+        <p class="ex-q">They took six hours to text back, and you've already written the whole story.</p>
+        <span class="ex-tail">They're annoyed, you said the wrong thing, they're pulling away. The silence gets read as a verdict.</span>
+      </div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-brain"/></svg></div><div>
+        <h3 class="ana-h">What's happening</h3>
+        <p>Being left out genuinely hurts. Brain scans show it draws on some of the same machinery as physical pain — though researchers still argue about how much the two really overlap. And if you've been hurt this way before, your alarm system stays switched on, scanning faces and silences for the verdict. The constant watching is exhausting.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-root"/></svg></div><div>
+        <h3 class="ana-h">Where it comes from</h3>
+        <p>Somewhere, love came with conditions or got taken away, and your body learned that closeness isn't safe. Notice the flavor: unseen? wanted but not chosen? valued only for what you did? That's the spot that needs repair.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-snare"/></svg></div><div>
+        <h3 class="ana-h">The trap</h3>
+        <p>The promise: control every impression and you can prevent the "no." So you fill the silences, manage the mood, watch yourself from the outside. It works just often enough to keep you doing it.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-truth"/></svg></div><div>
+        <h3 class="ana-h">What's actually true</h3>
+        <p>The verdict that matters most isn't pending. In the Christian view you're accepted <em>before</em> you perform, not because of it <span class="ref">(Ephesians 1:6)</span>. People can still reject you — but they don't get the deciding vote. Handing strangers that kind of power is called a snare for a reason <span class="ref">(Proverbs 29:25)</span>.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-door"/></svg></div><div>
+        <h3 class="ana-h">The way out</h3>
+        <p>Your alarm won't update from a pep talk. It updates from repeated, felt safety — slowly, in real relationships and real experience. This is where being present beats being clever.</p></div></div>
+    </div></div>
+  </section>
+
+  <!-- PEOPLE-PLEASING -->
+  <section id="s-pleasing">
+    <div class="head">
+      <svg class="ic wm"><use href="#i-mask"/></svg>
+      <div class="wrap rv">
+        <svg class="ic ic-lg"><use href="#i-mask"/></svg>
+        <p class="eyebrow">Disguise three</p>
+        <h2 class="htitle">People-pleasing</h2>
+        <p class="hthesis">You perform to keep everyone happy with you.</p>
+      </div>
+    </div>
+    <div class="body"><div class="wrap rv">
+      <div class="example">
+        <span class="ex-lbl"><svg class="ic"><use href="#i-mask"/></svg>In the wild</span>
+        <p class="ex-q">"Yes" is out of your mouth before you've decided.</p>
+        <span class="ex-tail">Someone asks a favor you don't have time for — and saying no feels physically risky, like it could cost you the relationship.</span>
+      </div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-brain"/></svg></div><div>
+        <h3 class="ana-h">What's happening</h3>
+        <p>Approval feels like reward; disapproval feels like danger. Pleasing brings relief — and relief is addictive. So the habit runs on autopilot, below your awareness. It feels like kindness; it works like a compulsion.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-root"/></svg></div><div>
+        <h3 class="ana-h">Where it comes from</h3>
+        <p>It's built where love felt earned — where being liked depended on being good, useful, or easy. Now a quiet voice rates every interaction: <em>did they approve?</em> It runs before you even notice it's on.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-snare"/></svg></div><div>
+        <h3 class="ana-h">The trap</h3>
+        <p>The promise: earn belonging and you'll never lose it. But earned belonging is never safe — you have to re-earn it in every room. And a life run by other people's approval isn't really yours.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-truth"/></svg></div><div>
+        <h3 class="ana-h">What's actually true</h3>
+        <p>You don't have to buy what you already own. Faith says you're already seen, already chosen, already delighted in — before you do a single useful thing <span class="ref">(Zephaniah 3:17)</span>. The goal isn't to stop being kind. It's to stop paying for love that's already yours.</p></div></div>
+      <div class="ana"><div class="ana-ic"><svg class="ic"><use href="#i-door"/></svg></div><div>
+        <h3 class="ana-h">The way out</h3>
+        <p>Practice acting <em>from</em> acceptance instead of <em>for</em> it. Say the small no. Leave a silence unfilled. Learn, one uncomfortable moment at a time, that the floor holds without you propping it up.</p></div></div>
+    </div></div>
+  </section>
+
+  <!-- WAY OUT -->
+  <section id="s-way">
+    <div class="head">
+      <svg class="ic wm"><use href="#i-door"/></svg>
+      <div class="wrap rv">
+        <svg class="ic ic-lg"><use href="#i-door"/></svg>
+        <p class="eyebrow">The way out</p>
+        <h2 class="htitle">You can't fix this by trying harder</h2>
+        <p class="hthesis">The loop loosens in the opposite direction from the one instinct wants.</p>
+      </div>
+    </div>
+    <div class="body"><div class="wrap rv">
+      <p style="max-width:60ch;margin-bottom:1.6rem;">Instinct says try harder — be more impressive, more careful, more agreeable. But effort driven by fear tends to backfire: the stress it creates works against the very change you're after, so white-knuckling can dig the groove deeper. The order has to flip.</p>
+      <div class="mapnote"><b>This is the map, not turn-by-turn directions.</b> The actual walking almost always needs other people — a good therapist, a safe community, and, for a person of faith, God. Nobody thinks their way out of this alone.</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div>
+          <h3>Start from rest, not fear</h3>
+          <p>You can't heal a wound while you're braced against it. Safety comes first — it calms the alarm and lets your thinking brain come back online. In practice that's grounding, breath, and safe relationships — and, for a person of faith, prayer and worship that actually settle you. If the alarm won't quiet at all, that's a signal to get help, not to push harder.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div>
+          <h3>Go back to the wound gently — with new evidence</h3>
+          <p>From a calm place, the old hurt gets revisited alongside a new experience that contradicts it. Researchers think a memory reactivated this way can actually be updated — revised, not just buried — though the evidence is still mostly from the lab. It's the engine inside approaches like EMDR and parts work (IFS), and it usually needs a skilled guide. For a person of faith, the "new experience" is meeting Someone who is actually present at the wound — real on its own terms, not just a technique that happens to calm you down.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div>
+          <h3>Let it re-teach you slowly</h3>
+          <p>The old pattern doesn't vanish overnight. It fades as you repeatedly feel the new thing — seen, wanted, chosen, safe — in real relationships and, for a person of faith, with God, over time. You stop managing your behavior and start changing your source. It's slow, and slow is normal.</p></div></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- CLOSE -->
+  <section class="close">
+    <div class="wrap rv">
+      <blockquote><p>You were never on trial.<span class="dim">The verdict came in before you started trying to earn it.</span></p></blockquote>
+      <span class="three"><i style="background:var(--red)"></i><i style="background:var(--blue)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Where the brain is described, that's how these patterns tend to work — with the uncertain parts flagged as uncertain. Where it says "faith says," that's a spiritual claim, kept separate on purpose. This is a map, not a diagnosis. If you're carrying something heavy, please talk to someone you trust — a counselor, a doctor, a pastor, a friend.</p>
+  </div>
+</footer>
+
+<script>
+  // theme toggle
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('themeBtn');
+    if(root.getAttribute('data-theme')==='dark') btn.setAttribute('aria-pressed','true');
+    btn.addEventListener('click',function(){
+      var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+      root.setAttribute('data-theme',next);
+      btn.setAttribute('aria-pressed', next==='dark'?'true':'false');
+      try{localStorage.setItem('theme',next);}catch(e){}
+    });
+  })();
+  // reveal
+  (function(){
+    var els=document.querySelectorAll('.rv');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+  // active nav
+  (function(){
+    var links=Array.prototype.slice.call(document.querySelectorAll('nav a')),map={};
+    links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+    var secs=Object.keys(map).map(function(id){return document.getElementById(id);}).filter(Boolean);
+    if(!('IntersectionObserver' in window))return;
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.remove('active');});var a=map[x.target.id];if(a)a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){io.observe(s);});
+  })();
+  // progress bar
+  (function(){
+    var bar=document.getElementById('progress'),tick=false;
+    function upd(){var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+      bar.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';tick=false;}
+    window.addEventListener('scroll',function(){if(!tick){requestAnimationFrame(upd);tick=true;}},{passive:true});
+    window.addEventListener('resize',upd);upd();
+  })();
+</script>
+</body>
+</html>

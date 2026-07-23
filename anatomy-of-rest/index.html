@@ -6,7 +6,7 @@
 <title>The Anatomy of Rest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
      THE ANATOMY OF REST — design tokens
@@ -14,13 +14,14 @@
      semantic accent hues, each mapped to one domain of the argument.
      ============================================================ */
   :root {
-    --ember:      #F3651C;  /* the connective thread */
+    --ember:      #FF6A2B;  /* the connective thread */
     --sleep:      #5C7CFA;  /* deep maintenance / night / glymphatic */
-    --nsdr:       #9B72F0;  /* the liminal awake-rest state / dopamine */
-    --scripture:  #DDA23A;  /* the older map / menuchah / light */
-    --counterfeit:#CE4B2E;  /* fake rest / the warning */
-    --real:       #38B187;  /* real rest / go */
+    --nsdr:       #A97BFF;  /* the liminal awake-rest state / dopamine */
+    --scripture:  #F0AE3C;  /* the older map / menuchah / light */
+    --counterfeit:#F65C42;  /* fake rest / the warning */
+    --real:       #34C892;  /* real rest / go */
 
+    --disp: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
     --step: clamp(1.05rem, 0.9rem + 0.6vw, 1.2rem);
     --wrap: 74rem;
     --text: 40rem;
@@ -71,7 +72,7 @@
   ::selection { background: var(--ember); color: #0E0D0B; }
 
   /* ---------- typography ---------- */
-  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 400; line-height: 1.04; letter-spacing: -0.012em; }
+  h1, h2, h3 { font-family: var(--disp); font-weight: 700; line-height: 1.0; letter-spacing: -0.025em; }
   .eyebrow {
     font-family: "JetBrains Mono", monospace;
     font-size: .72rem; font-weight: 500; letter-spacing: .22em;
@@ -88,13 +89,20 @@
   .movement { padding-block: clamp(5rem, 11vh, 8.5rem); position: relative; }
   .movement + .movement { border-top: 1px solid var(--hair); }
 
-  .movement__head { margin-bottom: 2.6rem; }
-  .movement__num {
-    font-family: "JetBrains Mono", monospace; font-size: .74rem;
-    letter-spacing: .18em; color: var(--ember); display: inline-flex; gap: .7ch; align-items: center;
+  .movement__head { margin-bottom: 2.6rem; position: relative; padding-top: 1.5rem; }
+  .movement__head::before {
+    content: ""; position: absolute; top: 0; left: 0;
+    width: 60px; height: 5px; border-radius: 3px;
+    background: var(--accent, var(--ember));
+    box-shadow: 0 0 calc(20px * var(--glow)) color-mix(in srgb, var(--accent, var(--ember)) 55%, transparent);
   }
-  .movement__num::before { content: ""; width: 26px; height: 1px; background: var(--ember); display: inline-block; }
-  h2 { font-size: clamp(2rem, 1.3rem + 2.7vw, 3.4rem); margin-top: .8rem; max-width: 20ch; }
+  .movement__num {
+    font-family: "JetBrains Mono", monospace; font-size: .74rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent, var(--ember)); display: inline-flex; gap: .7ch; align-items: center;
+  }
+  .movement__num::before { content: ""; width: 26px; height: 2px; background: var(--accent, var(--ember)); display: inline-block; }
+  h2 { font-size: clamp(2.3rem, 1.3rem + 3.6vw, 4.4rem); font-weight: 800; margin-top: .7rem; max-width: 18ch; }
   .lede { font-size: clamp(1.12rem, 1rem + .5vw, 1.35rem); color: var(--fg); margin-top: 1.4rem; max-width: 46ch; text-wrap: balance; }
   p { color: var(--fg-dim); }
   p + p { margin-top: 1.1rem; }
@@ -102,7 +110,7 @@
   .prose strong { color: var(--fg); font-weight: 600; }
 
   .pull {
-    font-family: "Fraunces", serif; font-style: italic; font-weight: 400;
+    font-family: var(--disp); font-style: italic; font-weight: 400;
     font-size: clamp(1.4rem, 1.05rem + 1.6vw, 2.15rem); line-height: 1.28;
     color: var(--fg); max-width: 24ch; margin-block: 2.4rem;
     padding-left: 1.4rem; border-left: 2px solid var(--ember); text-wrap: balance;
@@ -146,10 +154,14 @@
       linear-gradient(180deg, var(--bg) 0%, transparent 22%); }
   .hero__inner { position: relative; z-index: 2; padding-block: 9rem 4rem; }
   .hero h1 {
-    font-size: clamp(3.1rem, 2rem + 6.6vw, 8rem); font-weight: 300;
-    letter-spacing: -0.03em; text-wrap: balance;
+    font-size: clamp(3.3rem, 2rem + 7.4vw, 8.8rem); font-weight: 800;
+    letter-spacing: -0.035em; text-wrap: balance; line-height: 0.94;
   }
-  .hero h1 .accent { font-style: italic; font-weight: 400; color: var(--ember); }
+  .hero h1 .accent {
+    font-style: normal; font-weight: 800;
+    background: linear-gradient(102deg, var(--ember), var(--nsdr) 55%, var(--sleep));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
   .hero__sub { margin-top: 1.8rem; font-size: clamp(1.1rem, .95rem + .7vw, 1.4rem); color: var(--fg-dim); max-width: 42rem; line-height: 1.55; text-wrap: pretty; }
   .hero__sub b { color: var(--fg); font-weight: 500; }
   .hero__meta { margin-top: 2.6rem; display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; }
@@ -168,9 +180,20 @@
      ============================================================ */
   .panel {
     background: var(--panel); border: 1px solid var(--hair);
+    border-top: 2.5px solid color-mix(in srgb, var(--accent, var(--ember)) 65%, var(--hair));
     border-radius: var(--radius); padding: clamp(1.3rem, 1rem + 1.2vw, 2.1rem);
     backdrop-filter: blur(2px);
   }
+
+  /* ---------- per-movement accent (vivid, semantic) ---------- */
+  #spectrum    { --accent: var(--sleep); }
+  #nsdr        { --accent: var(--nsdr); }
+  #glymph-sec  { --accent: var(--sleep); }
+  #quality     { --accent: var(--real); }
+  #discern     { --accent: var(--counterfeit); }
+  #scripture   { --accent: var(--scripture); }
+  #convergence { --accent: var(--ember); }
+  #practice    { --accent: var(--real); }
   .panel__cap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
   .panel__title { font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--fg); }
   .figtag { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .1em; color: var(--fg-faint); }
@@ -191,7 +214,7 @@
   .lane { display: grid; grid-template-columns: minmax(0,1fr); position: relative; border-radius: 10px; overflow: hidden; }
   .lane-row { display: grid; grid-template-columns: 8.5rem minmax(0,1fr); align-items: center; gap: 1rem; padding: .1rem 0; }
   .lane-label { text-align: right; }
-  .lane-label .band { font-family: "Fraunces", serif; font-size: 1.15rem; display: block; }
+  .lane-label .band { font-family: var(--disp); font-size: 1.15rem; display: block; }
   .lane-label .hz { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .06em; color: var(--fg-faint); }
   .lane-label .state { font-family: "JetBrains Mono", monospace; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-dim); display:block; margin-top:.15rem;}
   .wave-box { height: 62px; position: relative; overflow: hidden; border-radius: 8px; }
@@ -244,7 +267,7 @@
 
   .statbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem,1fr)); gap: 1px; background: var(--hair); border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; margin-top: 1.6rem; }
   .statbar > div { background: var(--bg); padding: 1.1rem 1.2rem; }
-  .statbar .n { font-family: "Fraunces", serif; font-size: clamp(1.7rem,1.3rem+1.4vw,2.4rem); line-height: 1; display: block; }
+  .statbar .n { font-family: var(--disp); font-size: clamp(1.7rem,1.3rem+1.4vw,2.4rem); line-height: 1; display: block; }
   .statbar .k { font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); margin-top: .5rem; display: block; }
   .statbar .n.c-sleep { color: var(--sleep); }
   .statbar .n.c-nsdr  { color: var(--nsdr); }
@@ -290,7 +313,7 @@
     margin-top: 2rem; text-align: center; padding: 2rem 1.4rem; border-radius: var(--radius);
     border: 1px dashed var(--hair-strong); background: var(--panel);
   }
-  .test .q { font-family: "Fraunces", serif; font-style: italic; font-size: clamp(1.4rem,1.05rem+1.5vw,2rem); color: var(--fg); text-wrap: balance; max-width: 22ch; margin-inline: auto; }
+  .test .q { font-family: var(--disp); font-style: italic; font-size: clamp(1.4rem,1.05rem+1.5vw,2rem); color: var(--fg); text-wrap: balance; max-width: 22ch; margin-inline: auto; }
   .test .k { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ember); margin-bottom: 1rem; }
 
   /* ============================================================
@@ -299,7 +322,7 @@
   .term { display: grid; grid-template-columns: 1fr; gap: .3rem 1.6rem; padding: 1.3rem 0; border-top: 1px solid var(--hair); }
   @media (min-width: 720px) { .term { grid-template-columns: 13rem 1fr; } }
   .term:last-of-type { border-bottom: 1px solid var(--hair); }
-  .term__word { font-family: "Fraunces", serif; font-size: 1.5rem; color: var(--scripture); }
+  .term__word { font-family: var(--disp); font-size: 1.5rem; color: var(--scripture); }
   .term__word .translit { display: block; font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .1em; color: var(--fg-faint); text-transform: uppercase; margin-top: .3rem; }
   .term__gloss { color: var(--fg-dim); font-size: .98rem; }
   .term__gloss b { color: var(--fg); font-weight: 600; }
@@ -310,7 +333,7 @@
   .ring-legend { display: flex; flex-direction: column; gap: 1.1rem; }
   .ring-legend div { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: baseline; }
   .ring-legend .rl-dot { width: 11px; height: 11px; border-radius: 50%; align-self: center; }
-  .ring-legend .rl-t { font-family: "Fraunces", serif; font-size: 1.15rem; color: var(--fg); }
+  .ring-legend .rl-t { font-family: var(--disp); font-size: 1.15rem; color: var(--fg); }
   .ring-legend .rl-s { font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); display: block; }
   /* ============================================================
      MOVEMENT 07 — convergence cards
@@ -375,7 +398,7 @@
   .sources p { break-inside: avoid; font-size: .78rem; line-height: 1.5; color: var(--fg-faint); margin-bottom: .8rem; font-family: "JetBrains Mono", monospace; letter-spacing: .01em; }
   .sources p b { color: var(--fg-dim); font-weight: 500; }
   .disclaimer { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1px solid var(--hair); font-size: .8rem; color: var(--fg-faint); max-width: 52rem; }
-  .signoff { font-family: "Fraunces", serif; font-style: italic; font-size: clamp(1.5rem,1.1rem+1.8vw,2.4rem); color: var(--fg); text-wrap: balance; max-width: 20ch; margin-bottom: 3rem; line-height: 1.25; }
+  .signoff { font-family: var(--disp); font-style: italic; font-size: clamp(1.5rem,1.1rem+1.8vw,2.4rem); color: var(--fg); text-wrap: balance; max-width: 20ch; margin-bottom: 3rem; line-height: 1.25; }
   .signoff .accent { color: var(--ember); }
 
   /* ============================================================
