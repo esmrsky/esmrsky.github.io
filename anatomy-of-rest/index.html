@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Anatomy of Rest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     THE ANATOMY OF REST — design tokens
+     Base: Vitrine (void / porcelain / ember). Extended with five
+     semantic accent hues, each mapped to one domain of the argument.
+     ============================================================ */
+  :root {
+    --ember:      #F3651C;  /* the connective thread */
+    --sleep:      #5C7CFA;  /* deep maintenance / night / glymphatic */
+    --nsdr:       #9B72F0;  /* the liminal awake-rest state / dopamine */
+    --scripture:  #DDA23A;  /* the older map / menuchah / light */
+    --counterfeit:#CE4B2E;  /* fake rest / the warning */
+    --real:       #38B187;  /* real rest / go */
+
+    --step: clamp(1.05rem, 0.9rem + 0.6vw, 1.2rem);
+    --wrap: 74rem;
+    --text: 40rem;
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --radius: 14px;
+  }
+
+  html[data-theme="dark"] {
+    --bg:        #0E0D0B;
+    --bg-soft:   #141210;
+    --panel:     #17151140;
+    --panel-solid:#161410;
+    --fg:        #F2EBDC;
+    --fg-dim:    rgba(242,235,220,.60);
+    --fg-faint:  rgba(242,235,220,.38);
+    --hair:      rgba(242,235,220,.13);
+    --hair-strong: rgba(242,235,220,.22);
+    --glow:      .55;
+  }
+  html[data-theme="light"] {
+    --bg:        #F2EBDC;
+    --bg-soft:   #EFE7D6;
+    --panel:     #F8F2E650;
+    --panel-solid:#F7F1E4;
+    --fg:        #100F0C;
+    --fg-dim:    rgba(16,15,12,.62);
+    --fg-faint:  rgba(16,15,12,.40);
+    --hair:      rgba(16,15,12,.14);
+    --hair-strong: rgba(16,15,12,.24);
+    --glow:      0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Instrument Sans", system-ui, sans-serif;
+    font-size: var(--step);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background .5s var(--ease), color .5s var(--ease);
+  }
+
+  ::selection { background: var(--ember); color: #0E0D0B; }
+
+  /* ---------- typography ---------- */
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 400; line-height: 1.04; letter-spacing: -0.012em; }
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: .72rem; font-weight: 500; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--fg-dim);
+  }
+  .mono { font-family: "JetBrains Mono", monospace; }
+  em, .em { font-style: italic; }
+
+  a { color: inherit; }
+
+  /* ---------- layout scaffolding ---------- */
+  .wrap { width: min(100% - 2.6rem, var(--wrap)); margin-inline: auto; }
+  .measure { max-width: var(--text); }
+  .movement { padding-block: clamp(5rem, 11vh, 8.5rem); position: relative; }
+  .movement + .movement { border-top: 1px solid var(--hair); }
+
+  .movement__head { margin-bottom: 2.6rem; }
+  .movement__num {
+    font-family: "JetBrains Mono", monospace; font-size: .74rem;
+    letter-spacing: .18em; color: var(--ember); display: inline-flex; gap: .7ch; align-items: center;
+  }
+  .movement__num::before { content: ""; width: 26px; height: 1px; background: var(--ember); display: inline-block; }
+  h2 { font-size: clamp(2rem, 1.3rem + 2.7vw, 3.4rem); margin-top: .8rem; max-width: 20ch; }
+  .lede { font-size: clamp(1.12rem, 1rem + .5vw, 1.35rem); color: var(--fg); margin-top: 1.4rem; max-width: 46ch; text-wrap: balance; }
+  p { color: var(--fg-dim); }
+  p + p { margin-top: 1.1rem; }
+  .prose p { max-width: var(--text); }
+  .prose strong { color: var(--fg); font-weight: 600; }
+
+  .pull {
+    font-family: "Fraunces", serif; font-style: italic; font-weight: 400;
+    font-size: clamp(1.4rem, 1.05rem + 1.6vw, 2.15rem); line-height: 1.28;
+    color: var(--fg); max-width: 24ch; margin-block: 2.4rem;
+    padding-left: 1.4rem; border-left: 2px solid var(--ember); text-wrap: balance;
+  }
+
+  /* ============================================================
+     TOP BAR — scroll progress + theme toggle
+     ============================================================ */
+  .progress { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--ember); z-index: 90; transition: width .1s linear; box-shadow: 0 0 8px color-mix(in srgb, var(--ember) 60%, transparent); }
+
+  .toggle {
+    position: fixed; top: 1.1rem; right: 1.1rem; z-index: 100;
+    display: inline-flex; align-items: center; gap: .55rem;
+    background: var(--panel-solid); border: 1px solid var(--hair-strong);
+    color: var(--fg); padding: .5rem .8rem; border-radius: 100px;
+    font-family: "JetBrains Mono", monospace; font-size: .68rem; letter-spacing: .12em;
+    cursor: pointer; backdrop-filter: blur(8px); transition: border-color .3s, transform .3s var(--ease);
+  }
+  .toggle:hover { border-color: var(--ember); transform: translateY(-1px); }
+  .toggle:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+  /* 44px touch target on phones/tablets; the .68rem pill computes to ~33px otherwise.
+     Coarse-pointer only, so the mouse pill keeps its compact proportions. */
+  @media (pointer: coarse) { .toggle { min-height: 44px; } }
+  .toggle svg { width: 15px; height: 15px; }
+  .toggle .lbl-dark { display: none; }
+  html[data-theme="dark"] .toggle .lbl-dark { display: inline; }
+  html[data-theme="dark"] .toggle .lbl-light { display: none; }
+  html[data-theme="dark"] .toggle .i-sun { display: block; }
+  html[data-theme="dark"] .toggle .i-moon { display: none; }
+  html[data-theme="light"] .toggle .i-sun { display: none; }
+  html[data-theme="light"] .toggle .i-moon { display: block; }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+  .hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .9; }
+  .hero__grad { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(120% 80% at 50% 120%, transparent 40%, var(--bg) 78%),
+      linear-gradient(180deg, var(--bg) 0%, transparent 22%); }
+  .hero__inner { position: relative; z-index: 2; padding-block: 9rem 4rem; }
+  .hero h1 {
+    font-size: clamp(3.1rem, 2rem + 6.6vw, 8rem); font-weight: 300;
+    letter-spacing: -0.03em; text-wrap: balance;
+  }
+  .hero h1 .accent { font-style: italic; font-weight: 400; color: var(--ember); }
+  .hero__sub { margin-top: 1.8rem; font-size: clamp(1.1rem, .95rem + .7vw, 1.4rem); color: var(--fg-dim); max-width: 42rem; line-height: 1.55; text-wrap: pretty; }
+  .hero__sub b { color: var(--fg); font-weight: 500; }
+  .hero__meta { margin-top: 2.6rem; display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; }
+  .chip {
+    display: inline-flex; align-items: center; gap: .5rem; font-family: "JetBrains Mono", monospace;
+    font-size: .68rem; letter-spacing: .1em; color: var(--fg-dim);
+    border: 1px solid var(--hair-strong); padding: .35rem .7rem; border-radius: 100px;
+  }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .scrollcue { position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 2; font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .2em; color: var(--fg-faint); text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+  .scrollcue span { width: 1px; height: 34px; background: linear-gradient(var(--fg-faint), transparent); animation: cue 2.4s var(--ease) infinite; }
+  @keyframes cue { 0%,100% { transform: scaleY(.5); opacity:.3; transform-origin: top; } 50% { transform: scaleY(1); opacity:1; } }
+
+  /* ============================================================
+     GENERIC DIAGRAM PANEL
+     ============================================================ */
+  .panel {
+    background: var(--panel); border: 1px solid var(--hair);
+    border-radius: var(--radius); padding: clamp(1.3rem, 1rem + 1.2vw, 2.1rem);
+    backdrop-filter: blur(2px);
+  }
+  .panel__cap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
+  .panel__title { font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--fg); }
+  .figtag { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .1em; color: var(--fg-faint); }
+
+  /* evidence grade tag */
+  .grade { display: inline-flex; align-items: center; gap: .45rem; font-family: "JetBrains Mono", monospace; font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; padding: .22rem .55rem; border-radius: 5px; border: 1px solid var(--hair-strong); color: var(--fg-dim); white-space: nowrap; }
+  .grade::before { content: ""; width: 6px; height: 6px; border-radius: 2px; }
+  .grade.g-strong::before { background: var(--real); }
+  .grade.g-mod::before    { background: var(--scripture); }
+  .grade.g-weak::before   { background: var(--counterfeit); }
+  .grade.g-mech::before   { background: var(--sleep); }
+  .grade.g-interp::before { background: var(--nsdr); }
+
+  /* ============================================================
+     MOVEMENT 01 — THE SPECTRUM (brainwave lanes)
+     ============================================================ */
+  .spectrum { position: relative; }
+  .lane { display: grid; grid-template-columns: minmax(0,1fr); position: relative; border-radius: 10px; overflow: hidden; }
+  .lane-row { display: grid; grid-template-columns: 8.5rem minmax(0,1fr); align-items: center; gap: 1rem; padding: .1rem 0; }
+  .lane-label { text-align: right; }
+  .lane-label .band { font-family: "Fraunces", serif; font-size: 1.15rem; display: block; }
+  .lane-label .hz { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .06em; color: var(--fg-faint); }
+  .lane-label .state { font-family: "JetBrains Mono", monospace; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-dim); display:block; margin-top:.15rem;}
+  .wave-box { height: 62px; position: relative; overflow: hidden; border-radius: 8px; }
+  .wave-box svg { position: absolute; top: 0; left: 0; height: 100%; }
+  .wave-flow { animation: flow linear infinite; }
+  @keyframes flow { to { transform: translateX(-600px); } }
+  .spectrum__zone {
+    margin-top: 1.6rem; display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+    font-size: .96rem; color: var(--fg-dim);
+  }
+  .zone-swatch { width: 44px; height: 10px; border-radius: 3px; background: linear-gradient(90deg, var(--nsdr), var(--sleep)); }
+
+  /* ============================================================
+     MOVEMENT 02 — NSDR / dopamine curve
+     ============================================================ */
+  .split { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 860px) { .split { grid-template-columns: 1.05fr 1fr; gap: 3rem; align-items: start; } }
+
+  .steps { list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 1rem; margin-top: 1.6rem; }
+  .steps li { display: grid; grid-template-columns: 2.1rem 1fr; gap: .9rem; align-items: start; }
+  .steps li::before { counter-increment: s; content: counter(s,decimal-leading-zero); font-family: "JetBrains Mono", monospace; font-size: .7rem; color: var(--nsdr); padding-top: .25rem; }
+  .steps b { color: var(--fg); font-weight: 600; }
+  .steps span { color: var(--fg-dim); font-size: .95rem; }
+
+  .curve-legend { display: flex; gap: 1.4rem; margin-top: 1rem; flex-wrap: wrap; }
+  .curve-legend div { display: flex; align-items: center; gap: .5rem; font-family: "JetBrains Mono", monospace; font-size: .66rem; letter-spacing: .05em; color: var(--fg-dim); }
+  .curve-legend i { width: 20px; height: 2px; border-radius: 2px; display: inline-block; }
+  .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+  .reveal-draw .draw { animation: draw 2.4s var(--ease) forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .callout { margin-top: 1.4rem; padding: 1rem 1.15rem; border-radius: 10px; border: 1px solid var(--hair); background: var(--panel); display: flex; gap: .8rem; align-items: flex-start; }
+  .callout svg { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; }
+  .callout p { font-size: .92rem; margin: 0; }
+  .callout.warn { border-color: color-mix(in srgb, var(--counterfeit) 45%, var(--hair)); }
+  .callout.warn svg { color: var(--counterfeit); }
+  .callout.note svg { color: var(--sleep); }
+
+  /* ============================================================
+     MOVEMENT 03 — glymphatic power-wash
+     ============================================================ */
+  .glymph { display: grid; grid-template-columns: 1fr; gap: 2.2rem; align-items: center; }
+  @media (min-width: 900px) { .glymph { grid-template-columns: 1.15fr 1fr; gap: 3rem; } }
+  .neuron { transform-box: fill-box; transform-origin: center; animation: shrink 5s var(--ease) infinite; }
+  @keyframes shrink { 0%,100% { transform: scale(1); } 45%,60% { transform: scale(.82); } }
+  .csf-flow { stroke-dasharray: 5 9; animation: csf 1.1s linear infinite; }
+  @keyframes csf { to { stroke-dashoffset: -28; } }
+  .waste { offset-rotate: 0deg; animation: wasteOut 5s linear infinite; opacity: 0; }
+  @keyframes wasteOut { 0% { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+
+  .statbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem,1fr)); gap: 1px; background: var(--hair); border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; margin-top: 1.6rem; }
+  .statbar > div { background: var(--bg); padding: 1.1rem 1.2rem; }
+  .statbar .n { font-family: "Fraunces", serif; font-size: clamp(1.7rem,1.3rem+1.4vw,2.4rem); line-height: 1; display: block; }
+  .statbar .k { font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); margin-top: .5rem; display: block; }
+  .statbar .n.c-sleep { color: var(--sleep); }
+  .statbar .n.c-nsdr  { color: var(--nsdr); }
+  .statbar .n.c-ember { color: var(--ember); }
+
+  /* ============================================================
+     MOVEMENT 04 — architecture strips
+     ============================================================ */
+  .archi { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.7rem; }
+  .archi-row .archi-cap { display: flex; justify-content: space-between; font-family: "JetBrains Mono", monospace; font-size: .66rem; letter-spacing: .08em; color: var(--fg-dim); margin-bottom: .5rem; text-transform: uppercase; }
+  .hyp { display: flex; height: 46px; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--hair); }
+  .hyp span { display: block; height: 100%; position: relative; }
+  .hyp .awake { background: repeating-linear-gradient(90deg, color-mix(in srgb,var(--counterfeit) 30%, transparent) 0 3px, transparent 3px 7px); }
+  .hyp .rem   { background: color-mix(in srgb, var(--nsdr) 42%, transparent); }
+  .hyp .light { background: color-mix(in srgb, var(--sleep) 22%, transparent); }
+  .hyp .deep  { background: color-mix(in srgb, var(--sleep) 68%, transparent); }
+  .hyp-legend { display: flex; gap: 1.1rem; flex-wrap: wrap; margin-top: 1rem; font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .05em; color: var(--fg-dim); }
+  .hyp-legend div { display: flex; align-items: center; gap: .45rem; }
+  .hyp-legend i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+
+  /* ============================================================
+     MOVEMENT 05 — fake vs real
+     ============================================================ */
+  .versus { display: grid; grid-template-columns: 1fr; gap: 1.4rem; margin-top: 1.8rem; }
+  @media (min-width: 820px) { .versus { grid-template-columns: 1fr 1fr; } }
+  .vcard { border: 1px solid var(--hair); border-radius: var(--radius); padding: 1.5rem; background: var(--panel); }
+  .vcard.fake { border-color: color-mix(in srgb, var(--counterfeit) 40%, var(--hair)); }
+  .vcard.reeal { border-color: color-mix(in srgb, var(--real) 40%, var(--hair)); }
+  .vcard h3 { font-size: 1.5rem; display: flex; align-items: center; gap: .6rem; }
+  .vcard.fake h3 { color: var(--counterfeit); }
+  .vcard.reeal h3 { color: var(--real); }
+  .vcard h3 svg { width: 22px; height: 22px; }
+  .vcard ul { list-style: none; margin-top: 1.1rem; display: flex; flex-direction: column; gap: .75rem; }
+  .vcard li { display: grid; grid-template-columns: 1.2rem 1fr; gap: .6rem; font-size: .95rem; color: var(--fg-dim); align-items: start; }
+  .vcard li svg { width: 15px; height: 15px; margin-top: 4px; }
+  .vcard.fake li svg { color: var(--counterfeit); }
+  .vcard.reeal li svg { color: var(--real); }
+
+  .loops { display: grid; grid-template-columns: 1fr; gap: 1.6rem; margin-top: 2rem; }
+  @media (min-width: 760px) { .loops { grid-template-columns: 1fr 1fr; } }
+
+  .test {
+    margin-top: 2rem; text-align: center; padding: 2rem 1.4rem; border-radius: var(--radius);
+    border: 1px dashed var(--hair-strong); background: var(--panel);
+  }
+  .test .q { font-family: "Fraunces", serif; font-style: italic; font-size: clamp(1.4rem,1.05rem+1.5vw,2rem); color: var(--fg); text-wrap: balance; max-width: 22ch; margin-inline: auto; }
+  .test .k { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ember); margin-bottom: 1rem; }
+
+  /* ============================================================
+     MOVEMENT 06 — scripture + nested rhythms
+     ============================================================ */
+  .term { display: grid; grid-template-columns: 1fr; gap: .3rem 1.6rem; padding: 1.3rem 0; border-top: 1px solid var(--hair); }
+  @media (min-width: 720px) { .term { grid-template-columns: 13rem 1fr; } }
+  .term:last-of-type { border-bottom: 1px solid var(--hair); }
+  .term__word { font-family: "Fraunces", serif; font-size: 1.5rem; color: var(--scripture); }
+  .term__word .translit { display: block; font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .1em; color: var(--fg-faint); text-transform: uppercase; margin-top: .3rem; }
+  .term__gloss { color: var(--fg-dim); font-size: .98rem; }
+  .term__gloss b { color: var(--fg); font-weight: 600; }
+  .term__ref { font-family: "JetBrains Mono", monospace; font-size: .62rem; color: var(--scripture); letter-spacing: .04em; margin-top: .5rem; display: inline-block; }
+
+  .rings-wrap { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; margin-top: 2.4rem; }
+  @media (min-width: 860px) { .rings-wrap { grid-template-columns: 1fr 1.1fr; } }
+  .ring-legend { display: flex; flex-direction: column; gap: 1.1rem; }
+  .ring-legend div { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: baseline; }
+  .ring-legend .rl-dot { width: 11px; height: 11px; border-radius: 50%; align-self: center; }
+  .ring-legend .rl-t { font-family: "Fraunces", serif; font-size: 1.15rem; color: var(--fg); }
+  .ring-legend .rl-s { font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); display: block; }
+  /* ============================================================
+     MOVEMENT 07 — convergence cards
+     ============================================================ */
+  .conv { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin-top: 2rem; }
+  @media (min-width: 900px) { .conv { grid-template-columns: 1fr 1fr; } }
+  .ccard { border: 1px solid var(--hair); border-radius: var(--radius); overflow: hidden; }
+  .ccard__top { padding: 1.2rem 1.4rem; background: var(--panel); border-bottom: 1px solid var(--hair); }
+  .ccard__top h3 { font-size: 1.35rem; text-wrap: balance; }
+  .ccard__pair { display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 480px) { .ccard__pair { grid-template-columns: 1fr 1fr; } }
+  .ccard__cell { padding: 1.1rem 1.4rem; }
+  .ccard__cell:first-child { border-bottom: 1px solid var(--hair); }
+  @media (min-width: 480px) { .ccard__cell:first-child { border-bottom: none; border-right: 1px solid var(--hair); } }
+  .ccard__tag { font-family: "JetBrains Mono", monospace; font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+  .ccard__tag.sci { color: var(--sleep); }
+  .ccard__tag.scr { color: var(--scripture); }
+  .ccard__tag::before { content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+  .ccard__cell p { font-size: .9rem; color: var(--fg-dim); margin: 0; }
+  .conv-note { margin-top: 1.4rem; }
+
+  /* ============================================================
+     MOVEMENT 08 — practice + breathing
+     ============================================================ */
+  .practice { display: grid; grid-template-columns: 1fr; gap: 2.4rem; align-items: center; margin-top: 1.4rem; }
+  @media (min-width: 880px) { .practice { grid-template-columns: 1.2fr .8fr; gap: 3.5rem; } }
+  .todo { display: flex; flex-direction: column; gap: 1.3rem; }
+  .todo__item { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; }
+  .todo__icon { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--hair-strong); display: grid; place-items: center; flex-shrink: 0; }
+  .todo__icon svg { width: 19px; height: 19px; }
+  .todo h3 { font-size: 1.2rem; font-family: "Instrument Sans", sans-serif; font-weight: 600; letter-spacing: 0; }
+  .todo p { font-size: .93rem; margin-top: .25rem; }
+
+  .breath { display: grid; place-items: center; gap: 1.4rem; text-align: center; padding: 1rem 0; }
+  .breath__stage { position: relative; width: 220px; height: 220px; display: grid; place-items: center; }
+  .breath__ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid color-mix(in srgb, var(--nsdr) 55%, transparent); }
+  .breath__core {
+    width: 76px; height: 76px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, color-mix(in srgb,var(--nsdr) 85%, transparent), color-mix(in srgb,var(--sleep) 60%, transparent));
+    animation: breathe 11s ease-in-out infinite; box-shadow: 0 0 calc(40px * var(--glow)) color-mix(in srgb,var(--nsdr) 60%, transparent);
+  }
+  .breath__halo { position: absolute; width: 76px; height: 76px; border-radius: 50%; border: 1px solid color-mix(in srgb,var(--nsdr) 70%, transparent); animation: breathe 11s ease-in-out infinite; }
+  @keyframes breathe {
+    0%   { transform: scale(1);   }   /* inhale start */
+    36%  { transform: scale(2.5); }   /* ~4s in */
+    50%  { transform: scale(2.5); }   /* brief hold */
+    100% { transform: scale(1);   }   /* ~5-6s out (longer exhale) */
+  }
+  .breath__word { position: relative; font-family: "JetBrains Mono", monospace; font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-dim); }
+  .breath__word b { display: block; }
+  .breath__cap { font-size: .88rem; color: var(--fg-dim); max-width: 26ch; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer { border-top: 1px solid var(--hair); padding-block: 4rem 5rem; }
+  .legend-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(9rem,1fr)); gap: .8rem 1.4rem; margin: 1.6rem 0 2.6rem; }
+  .legend-grid div { display: flex; align-items: center; gap: .5rem; font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .04em; color: var(--fg-dim); }
+  .legend-grid i { width: 8px; height: 8px; border-radius: 2px; }
+  .sources { columns: 2; column-gap: 2.4rem; }
+  @media (max-width: 640px) { .sources { columns: 1; } }
+  .sources p { break-inside: avoid; font-size: .78rem; line-height: 1.5; color: var(--fg-faint); margin-bottom: .8rem; font-family: "JetBrains Mono", monospace; letter-spacing: .01em; }
+  .sources p b { color: var(--fg-dim); font-weight: 500; }
+  .disclaimer { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1px solid var(--hair); font-size: .8rem; color: var(--fg-faint); max-width: 52rem; }
+  .signoff { font-family: "Fraunces", serif; font-style: italic; font-size: clamp(1.5rem,1.1rem+1.8vw,2.4rem); color: var(--fg); text-wrap: balance; max-width: 20ch; margin-bottom: 3rem; line-height: 1.25; }
+  .signoff .accent { color: var(--ember); }
+
+  /* ============================================================
+     SECTION RAIL NAV — fixed dots, desktop only (built in JS)
+     ============================================================ */
+  .railnav { position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%); z-index: 80; display: flex; flex-direction: column; gap: .35rem; align-items: flex-end; }
+  .railnav__dot { position: relative; display: grid; place-items: center; width: 26px; height: 22px; text-decoration: none; }
+  .railnav__dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--hair-strong); background: transparent; transition: background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease); }
+  .railnav__dot:hover::after { border-color: var(--ember); transform: scale(1.25); }
+  .railnav__dot.is-active::after { background: var(--ember); border-color: var(--ember); box-shadow: 0 0 calc(9px * (0.4 + var(--glow))) color-mix(in srgb, var(--ember) 65%, transparent); }
+  .railnav__lbl { position: absolute; right: 26px; top: 50%; transform: translateY(-50%) translateX(6px); white-space: nowrap; font-family: "JetBrains Mono", monospace; font-size: .6rem; letter-spacing: .09em; text-transform: uppercase; color: var(--fg); background: var(--panel-solid); border: 1px solid var(--hair); padding: .3rem .55rem; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity .25s var(--ease), transform .25s var(--ease); backdrop-filter: blur(6px); }
+  .railnav__dot:hover .railnav__lbl { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .railnav__dot:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; border-radius: 4px; }
+  @media (max-width: 1180px) { .railnav { display: none; } }
+  section[id] { scroll-margin-top: 1.5rem; }
+
+  /* ---------- scroll reveal ---------- */
+  .r { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .r.in { opacity: 1; transform: none; }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001s !important; animation-iteration-count: 1 !important; scroll-behavior: auto; }
+    .r { opacity: 1; transform: none; transition: none; }
+    .wave-flow, .neuron, .csf-flow, .waste, .breath__core, .breath__halo, .scrollcue span { animation: none; }
+    .draw { stroke-dashoffset: 0; }
+  }
+</style>
+<script>
+  /* Set theme before first paint: saved choice → system preference → dark.
+     Runs in <head> so there is no flash of the wrong theme. */
+  (function () {
+    try {
+      var saved = localStorage.getItem("aor-theme");
+      var sys = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", saved === "light" || saved === "dark" ? saved : sys);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<button class="toggle" id="toggle" aria-label="Switch between dark and light mode">
+  <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
+  <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5Z"/></svg>
+  <span class="lbl-dark">DARK</span><span class="lbl-light">LIGHT</span>
+</button>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <canvas class="hero__canvas" id="heroWave" aria-hidden="true"></canvas>
+  <div class="hero__grad"></div>
+  <div class="hero__inner wrap">
+    <p class="eyebrow">The Anatomy of Rest &nbsp;·&nbsp; Neuroscience ⟡ Scripture</p>
+    <h1>Rest is not <span class="accent">one thing.</span></h1>
+    <p class="hero__sub">Two different processes hide under a single word. One restores you in twenty minutes with your eyes closed. The other cleans your brain while you sleep — and <b>nothing else can do its job.</b> Most of what we call "rest" does neither.</p>
+    <div class="hero__meta">
+      <span class="chip"><span class="dot" style="background:var(--nsdr)"></span>Non-sleep deep rest</span>
+      <span class="chip"><span class="dot" style="background:var(--sleep)"></span>The glymphatic night shift</span>
+      <span class="chip"><span class="dot" style="background:var(--counterfeit)"></span>Fake rest vs. real rest</span>
+      <span class="chip"><span class="dot" style="background:var(--scripture)"></span>The older map</span>
+    </div>
+  </div>
+  <div class="scrollcue"><span></span>Scroll</div>
+</header>
+
+<main>
+
+<!-- ==================== 01 · THE SPECTRUM ==================== -->
+<section class="movement" id="spectrum">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">01 — The Spectrum</span>
+      <h2>Awake and asleep is not a switch.</h2>
+      <p class="lede">It's a dial. And there's a deep, restorative setting in the middle that you can reach on purpose — conscious, but downshifted.</p>
+    </div>
+
+    <div class="prose measure r">
+      <p>We treat consciousness as binary: on, or off. The neuroscience says it's a <strong>spectrum of brain states</strong>, sorted by how fast the brain's electrical rhythm runs. Fast and shallow means alert. Slow and deep means asleep. In between sits a band most people only pass through on the way down — a state you can learn to hold.</p>
+    </div>
+
+    <div class="panel spectrum r" style="margin-top:2.4rem" role="img" aria-label="Four brainwave bands from fast, low-amplitude Beta (awake) down to slow, high-amplitude Delta (deep sleep). NSDR occupies the Alpha–Theta middle zone.">
+      <div class="panel__cap">
+        <span class="panel__title">The brainwave gradient</span>
+        <span class="figtag">fig. 01 · faster → slower ↓</span>
+      </div>
+      <div class="spectrum__lanes" id="lanes">
+        <div class="lane-row">
+          <div class="lane-label"><span class="band">Beta</span><span class="hz">13–30 Hz</span><span class="state">Awake · alert</span></div>
+          <div class="wave-box" data-band="beta" data-amp="6"  data-k="10" data-dur="4"  data-color="var(--counterfeit)"></div>
+        </div>
+        <div class="lane-row">
+          <div class="lane-label"><span class="band">Alpha</span><span class="hz">8–13 Hz</span><span class="state">Relaxed · eyes closed</span></div>
+          <div class="wave-box" data-band="alpha" data-amp="12" data-k="6"  data-dur="6"  data-color="var(--nsdr)"></div>
+        </div>
+        <div class="lane-row">
+          <div class="lane-label"><span class="band">Theta</span><span class="hz">4–8 Hz</span><span class="state">Deep NSDR · light sleep</span></div>
+          <div class="wave-box" data-band="theta" data-amp="20" data-k="3"  data-dur="9"  data-color="var(--sleep)"></div>
+        </div>
+        <div class="lane-row">
+          <div class="lane-label"><span class="band">Delta</span><span class="hz">0.5–4 Hz</span><span class="state">Deep sleep · the night shift</span></div>
+          <div class="wave-box" data-band="delta" data-amp="30" data-k="1"  data-dur="14" data-color="var(--sleep)"></div>
+        </div>
+      </div>
+      <div class="spectrum__zone">
+        <span class="zone-swatch"></span>
+        <span><strong style="color:var(--fg)">This middle zone — alpha into theta — is where non-sleep deep rest lives.</strong> You're aware. You're not producing anything. Your physiology has already begun to recover.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 02 · NSDR ==================== -->
+<section class="movement" id="nsdr">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">02 — Non-Sleep Deep Rest</span>
+      <h2>Rest with your eyes open.</h2>
+      <p class="lede">A ten-to-twenty-minute protocol that walks the brain down the dial on purpose — and starts refilling the tank while you're still awake.</p>
+    </div>
+
+    <div class="split">
+      <div class="r">
+        <div class="prose">
+          <p><strong>What it is.</strong> Lie down. Close your eyes. A voice guides a slow scan through the body while you lengthen each exhale. That's it. The state it induces is drawn from <strong>yoga nidra</strong>, an old contemplative practice; the label "NSDR" was coined by neuroscientist Andrew Huberman in 2022 to keep the mechanism and drop the metaphysics.</p>
+        </div>
+        <div class="callout note r">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+          <p><b style="color:var(--fg)">An honest note on origins.</b> Yoga nidra carries yogic and tantric religious framing. NSDR keeps only the physiological move — the parasympathetic downshift — which is separable from any belief system attached to it. The practice of stopping is older and wider than any one tradition.</p>
+        </div>
+        <ol class="steps r">
+          <li><b>Sympathetic → parasympathetic.</b><br><span>The long exhale tips the autonomic balance from "fight-or-flight" toward "rest-and-digest."</span></li>
+          <li><b>Cortisol falls.</b><br><span>Structured yoga-nidra protocols measurably shift diurnal cortisol and lower perceived stress.</span></li>
+          <li><b>Dopamine is replenished.</b><br><span>Not a spike — a refill of baseline reserves that motivation and focus draw from.</span></li>
+          <li><b>Attention recovers.</b><br><span>A brief practice sharpens focus and working memory afterward — useful before hard cognitive work.</span></li>
+        </ol>
+      </div>
+
+      <div class="r">
+        <div class="panel" id="dopaPanel">
+          <div class="panel__cap">
+            <span class="panel__title">Dopamine: a refill, not a hit</span>
+            <span class="figtag">fig. 02</span>
+          </div>
+          <svg viewBox="0 0 360 220" style="width:100%;height:auto" role="img" aria-label="Two dopamine curves over time relative to a baseline. Stimulation spikes sharply then crashes below baseline. NSDR rises gently and stays above baseline.">
+            <!-- baseline -->
+            <line x1="20" y1="130" x2="345" y2="130" stroke="var(--hair-strong)" stroke-width="1" stroke-dasharray="2 4"/>
+            <text x="24" y="124" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1">BASELINE</text>
+            <!-- stimulation: spike then crash -->
+            <path class="draw" style="--len:680"
+              d="M20,130 L70,128 C95,126 105,52 120,50 C132,49 138,120 150,150 C162,180 185,178 210,172 C250,162 300,150 345,146"
+              fill="none" stroke="var(--counterfeit)" stroke-width="2.4" stroke-linecap="round"/>
+            <!-- nsdr: gentle sustained rise -->
+            <path class="draw" style="--len:560"
+              d="M20,130 C70,128 90,120 130,104 C175,86 210,82 260,80 C300,79 330,80 345,80"
+              fill="none" stroke="var(--nsdr)" stroke-width="2.4" stroke-linecap="round"/>
+            <circle r="4" fill="var(--nsdr)"><animateMotion dur="6s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" path="M20,130 C70,128 90,120 130,104 C175,86 210,82 260,80 C300,79 330,80 345,80"/></circle>
+            <!-- axis hint -->
+            <text x="20" y="212" font-family="JetBrains Mono" font-size="8.5" fill="var(--fg-faint)" letter-spacing="1">TIME →</text>
+          </svg>
+          <div class="curve-legend">
+            <div><i style="background:var(--counterfeit)"></i>Stimulation — spike, then trough</div>
+            <div><i style="background:var(--nsdr)"></i>NSDR — sustained above baseline</div>
+          </div>
+          <div class="callout warn" style="margin-top:1.2rem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <p><b style="color:var(--fg)">The famous "65%" — read the fine print.</b> A 2002 PET study (Kjaer et&nbsp;al.) found roughly 65% more endogenous dopamine in the reward center during yoga nidra. But: <b style="color:var(--fg)">n&nbsp;=&nbsp;8</b>, all experienced practitioners, and the figure is <em>calculated</em> from a ~8% drop in receptor binding — not dopamine measured directly. The direction is real; the magnitude for a beginner is almost certainly smaller.</p>
+          </div>
+          <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+            <span class="grade g-weak">Dopamine · small study</span>
+            <span class="grade g-strong">Stress / anxiety · RCT-backed*</span>
+          </div>
+          <p style="font-size:.74rem;color:var(--fg-faint);margin-top:.9rem;font-family:'JetBrains Mono',monospace;line-height:1.5">*The stronger evidence is for <em>structured yoga&nbsp;nidra</em>. A 2026 meta-analysis pooled 73 studies and 5,201 participants, finding real effects on stress, anxiety and sleep onset — while cautioning the sizes are likely inflated by weak study quality. A random 10-minute audio labeled "NSDR" is not the same as the studied protocol.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 03 · THE NIGHT SHIFT ==================== -->
+<section class="movement" id="glymph-sec">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">03 — What Sleep Does That NSDR Can't</span>
+      <h2>The brain runs a night shift.</h2>
+      <p class="lede">Deep sleep is not deep relaxation. It's plumbing. And it only runs in a state you cannot fake awake.</p>
+    </div>
+
+    <div class="glymph">
+      <div class="panel r" role="img" aria-label="Diagram of the glymphatic system: during slow-wave sleep, neurons shrink, opening channels around blood vessels through which cerebrospinal fluid flows and carries out metabolic waste.">
+        <div class="panel__cap">
+          <span class="panel__title">The glymphatic power-wash</span>
+          <span class="figtag">fig. 03 · slow-wave sleep only</span>
+        </div>
+        <svg viewBox="0 0 380 260" style="width:100%;height:auto">
+          <defs>
+            <linearGradient id="csfGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="var(--sleep)" stop-opacity="0"/>
+              <stop offset="0.5" stop-color="var(--sleep)" stop-opacity="0.9"/>
+              <stop offset="1" stop-color="var(--sleep)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- perivascular channel (the vessel + fluid space) -->
+          <path d="M30,130 C120,90 260,90 350,130" fill="none" stroke="color-mix(in srgb,var(--sleep) 25%, transparent)" stroke-width="18" stroke-linecap="round"/>
+          <path class="csf-flow" d="M30,130 C120,90 260,90 350,130" fill="none" stroke="var(--sleep)" stroke-width="3" stroke-linecap="round"/>
+          <text x="30" y="112" font-family="JetBrains Mono" font-size="9" fill="var(--sleep)" letter-spacing="1">CSF FLOW →</text>
+          <!-- neurons that shrink to open the channels -->
+          <g fill="none" stroke="var(--fg-dim)" stroke-width="1.5">
+            <circle class="neuron" style="animation-delay:0s"   cx="70"  cy="185" r="18"/>
+            <circle class="neuron" style="animation-delay:.5s"  cx="130" cy="205" r="20"/>
+            <circle class="neuron" style="animation-delay:1s"   cx="195" cy="188" r="17"/>
+            <circle class="neuron" style="animation-delay:1.4s" cx="255" cy="208" r="19"/>
+            <circle class="neuron" style="animation-delay:.8s"  cx="315" cy="186" r="18"/>
+          </g>
+          <text x="30" y="250" font-family="JetBrains Mono" font-size="8.5" fill="var(--fg-faint)" letter-spacing="1">NEURONS SHRINK → INTERSTITIAL SPACE OPENS ~60%</text>
+          <!-- waste particles carried out along the channel -->
+          <g fill="var(--counterfeit)">
+            <circle class="waste" style="offset-path:path('M40,128 C120,92 260,92 350,128'); animation-delay:0s"   r="3.2"/>
+            <circle class="waste" style="offset-path:path('M40,128 C120,92 260,92 350,128'); animation-delay:1.6s" r="2.6"/>
+            <circle class="waste" style="offset-path:path('M40,128 C120,92 260,92 350,128'); animation-delay:3.2s" r="3"/>
+          </g>
+        </svg>
+        <p style="font-size:.8rem;color:var(--fg-faint);margin-top:.8rem;font-family:'JetBrains Mono',monospace;line-height:1.55">Amyloid-β &amp; tau (rust) flush out along the vessel. In deep sleep, brain cells contract, cerebrospinal fluid rushes the widened channels, and metabolic waste is carried away.</p>
+      </div>
+
+      <div class="r">
+        <div class="prose">
+          <p>During <strong>slow-wave (deep) sleep</strong>, brain cells physically shrink — opening the spaces between them by as much as 60%. Cerebrospinal fluid floods through like a power-wash, clearing out the day's metabolic waste, including the amyloid-β and tau proteins tied to Alzheimer's.</p>
+          <p>Newer work from Nedergaard's lab (<em>Cell</em>, 2025) shows what may drive it: slow, synchronized waves of <strong>norepinephrine</strong> that squeeze the blood vessels about once a minute, pumping fluid through the tissue. Tellingly, the same study found a common sleep drug — <strong>zolpidem</strong> — flattened those waves and cut clearance. Sedation is not the night shift.</p>
+        </div>
+        <div class="statbar">
+          <div><span class="n c-sleep">~60%</span><span class="k">interstitial space opens in deep sleep</span></div>
+          <div><span class="n c-ember">~1/min</span><span class="k">norepinephrine waves that pump the fluid</span></div>
+          <div><span class="n c-nsdr">✕</span><span class="k">NSDR does not run this cycle</span></div>
+        </div>
+        <div class="callout warn" style="margin-top:1.4rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+          <p><b style="color:var(--fg)">This is genuinely contested.</b> Most direct evidence is from mice. A 2024 study (Franks &amp; Wisden, Imperial College) measured dye movement directly and argued clearance may <em>slow</em> during sleep, not speed up — Nedergaard called the method misleading. Human confirmation is early and the mechanism is unsettled. That's why it's graded below as <em>mechanism</em>, not fact.</p>
+        </div>
+        <div style="margin-top:1.2rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <span class="grade g-mech">Mechanism · strong in mice · contested in humans</span>
+        </div>
+        <p class="pull">You can borrow alertness from NSDR. You cannot borrow the night shift.</p>
+        <div class="prose"><p style="font-size:.95rem">Memory consolidation, growth-hormone release, immune calibration — filed under the same roof. NSDR downshifts you. It does not clean the house.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04 · QUALITY OVER QUANTITY ==================== -->
+<section class="movement" id="quality">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">04 — Quality Over Quantity</span>
+      <h2>Why you wake up tired after "enough."</h2>
+      <p class="lede">Eight broken hours can lose to seven whole ones. The number on the clock says almost nothing about whether the night shift actually ran.</p>
+    </div>
+
+    <div class="prose measure r">
+      <p>Deep sleep is only about <strong>13–23% of a night</strong>, and it has to arrive in sustained "trains" of slow waves — coordinated bursts of recovery. Fragment those trains with micro-awakenings and sleep feels unrestorative <em>even when the total minutes look normal.</em> Research is consistent on this: fragmentation damages sleep quality more than simply sleeping less.</p>
+    </div>
+
+    <div class="panel r" style="margin-top:2rem" role="img" aria-label="Two sleep-architecture strips. The consolidated night shows long unbroken blocks of deep sleep. The fragmented night shows the same total time broken by frequent awakenings, with little sustained deep sleep.">
+      <div class="panel__cap">
+        <span class="panel__title">Same hours in bed · different night</span>
+        <span class="figtag">fig. 04 · illustrative</span>
+      </div>
+      <div class="archi">
+        <div class="archi-row">
+          <div class="archi-cap"><span>Consolidated — ~7h</span><span style="color:var(--real)">deep sleep in long trains ✓</span></div>
+          <div class="hyp">
+            <span class="light" style="width:14%"></span>
+            <span class="deep"  style="width:20%"></span>
+            <span class="rem"   style="width:12%"></span>
+            <span class="deep"  style="width:18%"></span>
+            <span class="light" style="width:10%"></span>
+            <span class="rem"   style="width:14%"></span>
+            <span class="deep"  style="width:12%"></span>
+          </div>
+        </div>
+        <div class="archi-row">
+          <div class="archi-cap"><span>Fragmented — ~8h in bed</span><span style="color:var(--counterfeit)">deep sleep never sustains ✕</span></div>
+          <div class="hyp">
+            <span class="awake" style="width:7%"></span>
+            <span class="light" style="width:12%"></span>
+            <span class="deep"  style="width:6%"></span>
+            <span class="awake" style="width:6%"></span>
+            <span class="light" style="width:14%"></span>
+            <span class="deep"  style="width:5%"></span>
+            <span class="awake" style="width:7%"></span>
+            <span class="rem"   style="width:9%"></span>
+            <span class="light" style="width:13%"></span>
+            <span class="awake" style="width:6%"></span>
+            <span class="deep"  style="width:5%"></span>
+            <span class="light" style="width:10%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="hyp-legend">
+        <div><i style="background:color-mix(in srgb,var(--sleep) 68%, transparent)"></i>Deep (slow-wave)</div>
+        <div><i style="background:color-mix(in srgb,var(--sleep) 22%, transparent)"></i>Light</div>
+        <div><i style="background:color-mix(in srgb,var(--nsdr) 42%, transparent)"></i>REM</div>
+        <div><i style="background:repeating-linear-gradient(90deg,var(--counterfeit) 0 3px,transparent 3px 6px)"></i>Awake / micro-arousal</div>
+      </div>
+    </div>
+
+    <div class="callout note r" style="margin-top:1.8rem;max-width:52rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/><path d="M12 7v5l3 2"/></svg>
+      <p><b style="color:var(--fg)">Here's where NSDR genuinely wins.</b> After a broken night, a 20-minute NSDR session can leave you <em>more refreshed than the sleep did</em> — not because it beats sleep, but because it delivers the real downshift the fragmented night never completed. NSDR doesn't out-perform good sleep. It out-performs <em>bad</em> sleep at the one thing bad sleep failed to do.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05 · FAKE VS REAL ==================== -->
+<section class="movement" id="discern">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">05 — Fake Rest / Real Rest</span>
+      <h2>Most "rest" is stimulation in disguise.</h2>
+      <p class="lede">The scroll, the binge, the vegging-out. It wears the costume of rest while keeping the whole system switched on.</p>
+    </div>
+
+    <div class="versus">
+      <div class="vcard fake r">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+          Counterfeit rest
+        </h3>
+        <p style="color:var(--fg-dim);font-size:.95rem;margin-top:.4rem">Feels like rest. Physiologically, it isn't. The sympathetic system stays engaged; dopamine spikes and crashes below baseline; you get up more depleted, and craving more.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>You reach for it reflexively, without deciding.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>It <em>accelerates</em> — one more episode, one more scroll.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Afterward you feel foggy, wired, or vaguely worse.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>It can't survive stillness — it needs input.</li>
+        </ul>
+      </div>
+      <div class="vcard reeal r">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M8 12.5l2.6 2.5L16 9.5"/></svg>
+          Real rest
+        </h3>
+        <p style="color:var(--fg-dim);font-size:.95rem;margin-top:.4rem">Genuine downregulation — sleep or NSDR. The marker isn't "not working." It's a measurable physiological downshift: slower rhythm, lower stress tone, recovery underway.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>You enter it deliberately.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>It <em>decelerates</em> — the system winds down.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Afterward you feel clearer and calmer.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>It survives silence — it releases attention.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="loops">
+      <div class="panel r" role="img" aria-label="The counterfeit loop: stimulus leads to brief relief, then deeper depletion, then stronger craving, back to stimulus.">
+        <div class="panel__cap"><span class="panel__title" style="color:var(--counterfeit)">The counterfeit loop</span><span class="figtag">closed cycle</span></div>
+        <svg viewBox="0 0 260 200" style="width:100%;height:auto">
+          <circle cx="130" cy="100" r="72" fill="none" stroke="var(--hair)" stroke-width="1"/>
+          <g font-family="Instrument Sans" font-size="11" fill="var(--fg-dim)" text-anchor="middle">
+            <text x="130" y="34">Stimulus</text>
+            <text x="212" y="104">Brief relief</text>
+            <text x="130" y="176">Depletion</text>
+            <text x="48" y="104">Craving</text>
+          </g>
+          <!-- arrowed loop -->
+          <path d="M130 40 A60 60 0 0 1 190 100" fill="none" stroke="var(--counterfeit)" stroke-width="1.6" marker-end="url(#ah)"/>
+          <path d="M190 100 A60 60 0 0 1 130 160" fill="none" stroke="var(--counterfeit)" stroke-width="1.6" marker-end="url(#ah)"/>
+          <path d="M130 160 A60 60 0 0 1 70 100" fill="none" stroke="var(--counterfeit)" stroke-width="1.6" marker-end="url(#ah)"/>
+          <path d="M70 100 A60 60 0 0 1 130 40" fill="none" stroke="var(--counterfeit)" stroke-width="1.6" marker-end="url(#ah)"/>
+          <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="var(--counterfeit)" stroke-width="1.4"/></marker></defs>
+          <circle r="5" fill="var(--counterfeit)"><animateMotion dur="6s" repeatCount="indefinite" path="M130 40 A60 60 0 0 1 190 100 A60 60 0 0 1 130 160 A60 60 0 0 1 70 100 A60 60 0 0 1 130 40"/></circle>
+        </svg>
+      </div>
+      <div class="panel r" role="img" aria-label="The real-rest path: stop, then downshift, then restore — a line that settles rather than a loop.">
+        <div class="panel__cap"><span class="panel__title" style="color:var(--real)">The real-rest path</span><span class="figtag">it settles</span></div>
+        <svg viewBox="0 0 260 200" style="width:100%;height:auto">
+          <line x1="30" y1="100" x2="230" y2="100" stroke="var(--hair)" stroke-width="1"/>
+          <g font-family="Instrument Sans" font-size="11" fill="var(--fg-dim)" text-anchor="middle">
+            <text x="45" y="130">Stop</text>
+            <text x="130" y="130">Downshift</text>
+            <text x="220" y="130">Restore</text>
+          </g>
+          <path d="M45 100 L215 100" fill="none" stroke="var(--real)" stroke-width="1.6" marker-end="url(#ah2)"/>
+          <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="var(--real)" stroke-width="1.4"/></marker></defs>
+          <circle cx="45" cy="100" r="6" fill="none" stroke="var(--real)" stroke-width="1.5"/>
+          <circle cx="130" cy="100" r="6" fill="none" stroke="var(--real)" stroke-width="1.5"/>
+          <circle cx="215" cy="100" r="6" fill="var(--real)"/>
+          <circle r="5" fill="var(--real)"><animateMotion dur="4s" begin="0s" fill="freeze" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.7;1" calcMode="linear" path="M45 100 L215 100"/></circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="test r">
+      <div class="k">The one-line test</div>
+      <p class="q">"Could I do this with my eyes closed, doing nothing? If not — it may be stimulation wearing rest's clothes."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06 · THE OLDER MAP ==================== -->
+<section class="movement" id="scripture">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">06 — The Older Map</span>
+      <h2>One tradition made rest a law of reality.</h2>
+      <p class="lede">Long before the labs, Scripture built rest into the structure of the week — and drew, in its own vocabulary, exactly the distinctions the neuroscience keeps rediscovering.</p>
+    </div>
+
+    <div class="r" style="margin-top:1rem">
+      <div class="term">
+        <div class="term__word">שָׁבַת<span class="translit">shabbat</span></div>
+        <div>
+          <p class="term__gloss">To <b>cease</b>. To stop. Rest begins not with a feeling but with a <b>boundary</b> — a hard edge where production ends. On the seventh day God rests: not from exhaustion, but as completion, blessing, and setting-apart.</p>
+          <span class="term__ref">Genesis 2:2–3</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__word">מְנוּחָה<span class="translit">menuchah</span></div>
+        <div>
+          <p class="term__gloss">Settled <b>repose</b> — tranquility, not merely the absence of work. This is rest as a <b>state you enter</b>. "He leads me beside still waters" — <em>mei menuchot</em>, waters of rest.</p>
+          <span class="term__ref">Psalm 23:2</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__word">Two groundings<span class="translit">why we rest</span></div>
+        <div>
+          <p class="term__gloss">Exodus roots the Sabbath in <b>creation's rhythm</b>; Deuteronomy roots it in <b>liberation</b> — "remember you were slaves in Egypt." Egypt is the anti-Sabbath: endless brick-quotas, production that never ceases. Rest is what freedom looks like.</p>
+          <span class="term__ref">Exodus 20:8–11 · Deuteronomy 5:12–15</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__word">The gift<span class="translit">release of control</span></div>
+        <div>
+          <p class="term__gloss">"In vain you rise early and stay up late, eating the bread of anxious toil — for he gives to his beloved <b>sleep</b>." You cannot manufacture sleep. You can only stop, and receive it. (Every insomniac knows: the harder you try, the more it flees.)</p>
+          <span class="term__ref">Psalm 127:2</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__word">The easy yoke<span class="translit">rest through form</span></div>
+        <div>
+          <p class="term__gloss">"Come to me, all who are weary… and I will give you rest. Take my yoke… and you will find rest for your souls." The paradox: rest not as the <em>absence</em> of a burden, but the <b>right</b> burden, rightly carried. Freedom through form, not formlessness.</p>
+          <span class="term__ref">Matthew 11:28–30</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rings-wrap">
+      <div class="ring-legend r">
+        <p style="color:var(--fg-dim);font-size:.98rem;max-width:34ch">The tradition layers rest at every scale — nested rhythms, each a different tempo of the same command to stop.</p>
+        <div><span class="rl-dot" style="background:var(--sleep)"></span><span><span class="rl-t">Sleep</span><span class="rl-s">nightly · the body's night shift</span></span></div>
+        <div><span class="rl-dot" style="background:var(--scripture)"></span><span><span class="rl-t">Sabbath</span><span class="rl-s">weekly · the week's boundary</span></span></div>
+        <div><span class="rl-dot" style="background:var(--ember)"></span><span><span class="rl-t">A rest that remains</span><span class="rl-s">a Sabbath-rest still open · Hebrews 4</span></span></div>
+      </div>
+      <div class="panel r" role="img" aria-label="Three concentric rings representing nested rhythms of rest: nightly sleep, weekly Sabbath, and an ongoing eschatological rest, each turning at a different speed.">
+        <svg viewBox="0 0 300 300" style="width:100%;height:auto;max-width:340px;margin-inline:auto;display:block">
+          <g fill="none" stroke-width="1.4">
+            <circle cx="150" cy="150" r="55"  stroke="color-mix(in srgb,var(--sleep) 55%, transparent)"/>
+            <circle cx="150" cy="150" r="95"  stroke="color-mix(in srgb,var(--scripture) 55%, transparent)"/>
+            <circle cx="150" cy="150" r="135" stroke="color-mix(in srgb,var(--ember) 55%, transparent)"/>
+          </g>
+          <!-- markers orbiting the center at different tempos (SMIL: robust in SVG user space) -->
+          <circle cx="205" cy="150" r="5" fill="var(--sleep)"><animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" dur="6s" repeatCount="indefinite"/></circle>
+          <circle cx="245" cy="150" r="5" fill="var(--scripture)"><animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" dur="16s" repeatCount="indefinite"/></circle>
+          <circle cx="285" cy="150" r="5" fill="var(--ember)"><animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" dur="34s" repeatCount="indefinite"/></circle>
+          <circle cx="150" cy="150" r="7" fill="var(--fg)"/>
+          <text x="150" y="154" font-family="JetBrains Mono" font-size="8" fill="var(--bg)" text-anchor="middle" font-weight="600">REST</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 07 · THE CONVERGENCE ==================== -->
+<section class="movement" id="convergence">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">07 — The Convergence</span>
+      <h2>Where the two maps agree.</h2>
+      <p class="lede">Not the lab confirming the text, nor the text predicting the lab. Two very different traditions — one empirical, one liturgical — arriving at the same structure of a human being.</p>
+    </div>
+
+    <div class="callout note r conv-note" style="max-width:52rem;margin-bottom:.4rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <p><b style="color:var(--fg)">Read this as synthesis, not proof.</b> Ancient wisdom and modern neuroscience use different methods and answer different questions. That they converge on the same practical shape is striking and useful — but it's an interpretation drawn across two domains, not a scientific finding. <span class="grade g-interp" style="margin-left:.3rem">Interpretation</span></p>
+    </div>
+
+    <div class="conv">
+      <div class="ccard r">
+        <div class="ccard__top"><h3>Stopping is the prerequisite.</h3></div>
+        <div class="ccard__pair">
+          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>No downshift without a hard boundary. NSDR begins by lying down and doing nothing — the recovery can't start until the input stops.</p></div>
+          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p><em>Shabbat</em> means <em>cease</em>. Rest is defined first by its edge — the stopping — before any of its content.</p></div>
+        </div>
+      </div>
+      <div class="ccard r">
+        <div class="ccard__top"><h3>Rest is a state, not an absence.</h3></div>
+        <div class="ccard__pair">
+          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>Real rest is an active parasympathetic shift you induce — a positive physiological state, not merely "off the clock."</p></div>
+          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p><em>Menuchah</em> — still waters, settled repose. A place you're led <em>into</em>, with its own texture and peace.</p></div>
+        </div>
+      </div>
+      <div class="ccard r">
+        <div class="ccard__top"><h3>You can't force it — only release.</h3></div>
+        <div class="ccard__pair">
+          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>Trying harder to sleep drives it away. NSDR works precisely by ceasing to <em>do</em> sleep and letting it arrive.</p></div>
+          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p>"He gives to his beloved sleep." Rest is received, not achieved — a gift that follows the release of control.</p></div>
+        </div>
+      </div>
+      <div class="ccard r">
+        <div class="ccard__top"><h3>The counterfeit is ancient.</h3></div>
+        <div class="ccard__pair">
+          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>Stimulation dressed as rest: the dopamine spike-and-crash that leaves you more depleted and craving more.</p></div>
+          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p>The "bread of anxious toil"; Pharaoh's quota that never lets up. Restlessness disguised as life.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 08 · THE PRACTICE ==================== -->
+<section class="movement" id="practice">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">08 — The Practice</span>
+      <h2>What to actually do.</h2>
+      <p class="lede">Four moves. Maximum signal.</p>
+    </div>
+
+    <div class="practice">
+      <div class="todo r">
+        <div class="todo__item">
+          <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sleep)" stroke-width="1.7" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5Z"/></svg></div>
+          <div><h3>Protect the night shift</h3><p>Consolidation beats hours. Keep a regular sleep/wake time; cool and dark; defend against fragmentation. Deep sleep can't be rushed — only allowed.</p></div>
+        </div>
+        <div class="todo__item">
+          <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--nsdr)" stroke-width="1.7" stroke-linecap="round"><path d="M2 12s3.5-6 10-6 10 6 10 6M2 12h20"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+          <div><h3>Keep an NSDR in your pocket</h3><p>10–20 min, lying down, eyes closed, exhale-lengthened breathing, a slow body scan. Use it after a bad night, before deep focus, or when you're wired-but-tired. It won't replace sleep; it restores what a broken night didn't.</p></div>
+        </div>
+        <div class="todo__item">
+          <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--counterfeit)" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></div>
+          <div><h3>Refuse the counterfeit</h3><p>Run the one-line test. If it feeds the system instead of quieting it, it isn't rest — no matter how much it feels like a break.</p></div>
+        </div>
+        <div class="todo__item">
+          <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--scripture)" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><h3>Build the rhythm</h3><p>Rest isn't a reward you earn once the work is finished. It's a boundary you set so the work has a shape. Stop on purpose — nightly, weekly, deliberately.</p></div>
+        </div>
+      </div>
+
+      <div class="breath r">
+        <div class="panel" style="width:100%">
+          <div class="panel__cap"><span class="panel__title">Extended-exhale pacer</span><span class="figtag">4 in · 6 out</span></div>
+          <div class="breath__stage">
+            <div class="breath__ring"></div>
+            <div class="breath__halo"></div>
+            <div class="breath__core"></div>
+          </div>
+          <div class="breath__word" id="breathWord"><b>Breathe with it</b></div>
+          <p class="breath__cap">The long exhale is the lever. Making the out-breath longer than the in-breath tips the nervous system toward rest — the fastest way in.</p>
+          <div style="margin-top:1.1rem;display:flex;justify-content:center">
+            <span class="grade g-strong">Extended-exhale breathing · RCT-backed</span>
+          </div>
+          <p class="breath__cap" style="margin-top:.7rem;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--fg-faint)">A 2023 Stanford trial (Balban et&nbsp;al.) found five minutes a day of exhale-extended "cyclic sighing" beat box-breathing <em>and</em> mindfulness for calming mood and slowing the breath.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="wrap">
+    <p class="signoff">The oldest command and the newest neuroscience say the same thing: <span class="accent">stop, and be restored.</span></p>
+
+    <p class="eyebrow">Evidence grades used above</p>
+    <div class="legend-grid">
+      <div><i style="background:var(--real)"></i>Strong — RCT / replicated</div>
+      <div><i style="background:var(--scripture)"></i>Moderate — supported</div>
+      <div><i style="background:var(--sleep)"></i>Mechanism — strong in animals</div>
+      <div><i style="background:var(--counterfeit)"></i>Weak — small / single study</div>
+      <div><i style="background:var(--nsdr)"></i>Interpretation — cross-domain</div>
+    </div>
+
+    <p class="eyebrow" style="margin-bottom:1rem">Sources &amp; honest caveats</p>
+    <div class="sources">
+      <p><b>NSDR / yoga nidra.</b> Term coined by A. Huberman (2022). Most citable evidence is on structured <em>yoga nidra</em>, not branded "NSDR" audio. Ghai et&nbsp;al., <em>Annals of the New York Academy of Sciences</em> (2026): meta-analysis of 73 studies / 5,201 participants — moderate-to-large effects on stress, anxiety and depression, expressly cautioned as likely inflated by low study quality.</p>
+      <p><b>Dopamine +65%.</b> Kjaer et&nbsp;al., <em>Cognitive Brain Research</em> (2002). n&nbsp;=&nbsp;8 experienced practitioners; ¹¹C-raclopride PET; figure is calculated from ~8% reduced receptor binding — not a direct dopamine measurement. Treat magnitude cautiously.</p>
+      <p><b>Attention / mood.</b> Suzuki et&nbsp;al., <em>Behavioral Brain Research</em> (2019): 13-min daily practice improved attention, memory, mood, emotional regulation in non-meditators.</p>
+      <p><b>Glymphatic clearance.</b> Xie et&nbsp;al., <em>Science</em> (2013); Nedergaard lab, <em>Cell</em> (2025) on norepinephrine-driven vasomotion and zolpidem suppressing it; early human evidence reported 2024. <b>Contested:</b> Miao/Franks/Wisden (Imperial, 2024) directly measured dye movement and argued clearance <em>slows</em> in sleep. Strongest in rodents; unsettled in humans.</p>
+      <p><b>Extended-exhale breathing.</b> Balban et&nbsp;al., <em>Cell Reports Medicine</em> (2023): RCT, 108 participants; 5&nbsp;min/day of exhale-extended "cyclic sighing" for 28 days improved mood and lowered respiratory rate more than box breathing or mindfulness meditation.</p>
+      <p><b>Sleep quality vs. quantity.</b> Sleep-architecture &amp; fragmentation literature: fragmentation harms restorative quality more than mild restriction. The "8h/15% vs 6.5h/22% deep sleep" contrast is illustrative from secondary sources; the direction is well-supported.</p>
+      <p><b>Scripture.</b> Genesis 2; Exodus 20; Deuteronomy 5; Psalm 23; Psalm 127; Matthew 11; Hebrews 4. Hebrew: <em>shabbat</em> (cease), <em>menuchah</em> (repose). Greek: <em>anapausis</em> (rest), <em>sabbatismos</em> (Sabbath-rest).</p>
+    </div>
+
+    <p class="disclaimer">A teaching artifact, not medical advice. NSDR is a complement to sleep, never a replacement for it. Persistent insomnia, non-restorative sleep, or daytime exhaustion warrant a conversation with a clinician — some causes (sleep apnea, among others) need diagnosis, not just better habits.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // CSS handles reduced motion for CSS animations; SMIL (animateMotion / animateTransform)
+  // needs an explicit pause so the ambient dots don't keep moving.
+  if (reduce) {
+    window.addEventListener("load", function () {
+      document.querySelectorAll("svg").forEach(function (s) {
+        if (typeof s.pauseAnimations === "function") { try { s.pauseAnimations(); } catch (e) {} }
+      });
+    });
+  }
+
+  /* ---------- theme toggle ---------- */
+  var root = document.documentElement;
+  document.getElementById("toggle").addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("aor-theme", next); } catch (e) {}
+    if (heroCtx) resizeHero(); // recolor on next frame
+  });
+
+  /* ---------- scroll progress ---------- */
+  var prog = document.getElementById("progress");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- reveal on scroll ---------- */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".r").forEach(function (el) { io.observe(el); });
+
+  /* ---------- section rail nav (desktop) ---------- */
+  (function () {
+    var secs = [].slice.call(document.querySelectorAll("section.movement"));
+    if (!secs.length) return;
+    var nav = document.createElement("nav");
+    nav.className = "railnav";
+    nav.setAttribute("aria-label", "Sections");
+    var map = [];
+    secs.forEach(function (s) {
+      var num = s.querySelector(".movement__num");
+      var label = num ? num.textContent.replace(/^\s*\d+\s*[—–-]\s*/, "").trim() : s.id;
+      var a = document.createElement("a");
+      a.className = "railnav__dot";
+      a.href = "#" + s.id;
+      a.setAttribute("aria-label", label);
+      a.innerHTML = '<span class="railnav__lbl">' + label + "</span>";
+      nav.appendChild(a);
+      map.push({ sec: s, a: a });
+    });
+    document.body.appendChild(nav);
+    var railIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          map.forEach(function (m) { m.a.classList.toggle("is-active", m.sec === e.target); });
+        }
+      });
+    }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+    map.forEach(function (m) { railIO.observe(m.sec); });
+  })();
+
+  /* ---------- dopamine draw trigger ---------- */
+  var dopa = document.getElementById("dopaPanel");
+  if (dopa) {
+    var dio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { dopa.classList.add("reveal-draw"); dio.disconnect(); } });
+    }, { threshold: 0.3 });
+    dio.observe(dopa);
+  }
+
+  /* ---------- brainwave lanes (seamless flowing SVG) ---------- */
+  // Build each lane's wave across several identical tiles so translating exactly one
+  // tile (-600px, see @keyframes flow) loops seamlessly and never leaves a blank edge.
+  var TILE = 600, NTILES = 6, TOTAL = TILE * NTILES, PTS = NTILES * 90;
+  function wavePath(amp, periods, height) {
+    var y0 = height / 2, d = "M0," + y0.toFixed(1);
+    for (var i = 1; i <= PTS; i++) {
+      var x = (i / PTS) * TOTAL;
+      var y = y0 - amp * Math.sin((2 * Math.PI * periods * x) / TILE);
+      d += " L" + x.toFixed(1) + "," + y.toFixed(2);
+    }
+    return d;
+  }
+  document.querySelectorAll(".wave-box").forEach(function (box) {
+    var amp = parseFloat(box.dataset.amp), k = parseFloat(box.dataset.k),
+        dur = parseFloat(box.dataset.dur), color = box.dataset.color;
+    var H = box.clientHeight || 62;
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", TOTAL);
+    svg.setAttribute("height", H);
+    svg.setAttribute("viewBox", "0 0 " + TOTAL + " " + H);
+    svg.setAttribute("preserveAspectRatio", "none");
+    var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    p.setAttribute("d", wavePath(amp, k, H));
+    p.setAttribute("fill", "none");
+    p.setAttribute("stroke", color);
+    p.setAttribute("stroke-width", "2");
+    p.setAttribute("stroke-linecap", "round");
+    p.setAttribute("class", "wave-flow");
+    if (!reduce) p.style.animationDuration = dur + "s";
+    svg.appendChild(p);
+    svg.style.width = TOTAL + "px";
+    box.appendChild(svg);
+  });
+
+  /* ---------- hero living wave (canvas) ---------- */
+  var heroCanvas = document.getElementById("heroWave");
+  var heroCtx = heroCanvas ? heroCanvas.getContext("2d") : null;
+  var W = 0, Hh = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function css(v) { return getComputedStyle(root).getPropertyValue(v).trim(); }
+
+  function resizeHero() {
+    if (!heroCtx) return;
+    var rect = heroCanvas.getBoundingClientRect();
+    W = rect.width; Hh = rect.height;
+    heroCanvas.width = W * dpr; heroCanvas.height = Hh * dpr;
+    heroCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (reduce) drawHero(0); // one static frame
+  }
+
+  function drawHero(t) {
+    if (!heroCtx) return;
+    heroCtx.clearRect(0, 0, W, Hh);
+    var cy = Hh * 0.62;
+    var colors = [css("--nsdr"), css("--sleep"), css("--ember")];
+    // three layered waves; base wavelength slowly drifts (alert → deep → alert)
+    var drift = 0.5 + 0.5 * Math.sin(t * 0.00013); // 0..1
+    for (var layer = 0; layer < 3; layer++) {
+      heroCtx.beginPath();
+      var amp = (26 + layer * 20) * (0.55 + 0.6 * drift);
+      var wl = (120 + layer * 90) * (0.7 + 0.9 * drift);   // wavelength grows as it "deepens"
+      var speed = 0.00022 * (1 - layer * 0.22);
+      var phase = t * speed + layer * 1.4;
+      heroCtx.globalAlpha = 0.42 - layer * 0.07;
+      for (var x = -20; x <= W + 20; x += 6) {
+        var y = cy + layer * 26
+              + amp * Math.sin(x / wl + phase)
+              + amp * 0.35 * Math.sin(x / (wl * 0.42) - phase * 1.6);
+        if (x === -20) heroCtx.moveTo(x, y); else heroCtx.lineTo(x, y);
+      }
+      heroCtx.strokeStyle = colors[layer];
+      heroCtx.lineWidth = 2;
+      heroCtx.stroke();
+    }
+    heroCtx.globalAlpha = 1;
+  }
+
+  var raf;
+  function loop(ts) { drawHero(ts); raf = requestAnimationFrame(loop); }
+
+  if (heroCtx) {
+    resizeHero();
+    window.addEventListener("resize", function () { cancelAnimationFrame(raf); resizeHero(); if (!reduce) raf = requestAnimationFrame(loop); });
+    if (!reduce) raf = requestAnimationFrame(loop);
+  }
+
+  /* ---------- breathing label sync (in/out) ---------- */
+  var bw = document.getElementById("breathWord");
+  if (bw && !reduce) {
+    var CYCLE = 11000, phase = -1;
+    setInterval(function () {
+      var m = (performance.now() % CYCLE) / CYCLE; // 0..1
+      var label = m < 0.36 ? "Inhale" : (m < 0.5 ? "Hold" : "Exhale — slow");
+      if (label !== phase) { bw.innerHTML = "<b>" + label + "</b>"; phase = label; }
+    }, 250);
+  }
+})();
+</script>
+</body>
+</html>
