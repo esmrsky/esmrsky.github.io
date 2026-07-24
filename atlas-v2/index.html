@@ -89,6 +89,10 @@
 
     /* Anchor offset for sticky nav */
     section[id] { scroll-margin-top: 90px; }
+
+    /* Reading comfort: balance short display text, avoid orphans in prose */
+    h1, h2, h3, h4 { text-wrap: balance; }
+    p, li { text-wrap: pretty; }
   </style>
 </head>
 <body class="min-h-screen font-sans pb-20 relative bg-gray-50 dark:bg-[#070707] text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -142,8 +146,10 @@
 
   <!-- High-Fidelity Intelligence Drawer -->
   <div id="drawer-overlay" class="fixed inset-0 bg-black/30 dark:bg-black/70 backdrop-blur-md z-50 hidden transition-opacity duration-500 opacity-0" onclick="closeDrawer()"></div>
-  <aside id="intelligence-drawer" class="fixed top-0 right-0 h-full w-[95%] sm:w-[650px] lg:w-[1000px] bg-white dark:bg-[#0c0c0c] shadow-2xl z-50 transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-l border-gray-200 dark:border-white/10 flex flex-col">
-      <div class="flex-1 overflow-y-auto overflow-x-hidden drawer-scroll p-6 sm:p-8 lg:p-12" id="drawer-content"></div>
+  <aside id="intelligence-drawer" class="fixed top-0 right-0 h-full w-full bg-white dark:bg-[#0c0c0c] shadow-2xl z-50 transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col">
+      <!-- Padding lives on inner wrappers, not here: the tab bar must be able
+           to pin flush at top:0 of this scroll container with no gap above it. -->
+      <div class="flex-1 overflow-y-auto overflow-x-hidden drawer-scroll" id="drawer-content"></div>
   </aside>
 
   <script>
@@ -1208,6 +1214,40 @@
           </div>
         </section>
 
+        <!-- Inverse Diagnostic — find the calling by where the attack lands.
+             Built entirely from atlasData (shortStruggles, primaryShadow,
+             synthesis.lie), so it can never drift from the profiles. -->
+        <section class="mb-24 pb-16 border-b border-gray-200 dark:border-white/10" id="attack-map">
+          <div class="mb-10">
+            <span class="font-mono text-sm uppercase tracking-[0.2em] text-red-600 dark:text-red-500 flex items-center gap-2"><i class="ph ph-crosshair text-lg"></i> The Inverse Diagnostic</span>
+            <h2 class="text-4xl font-serif text-gray-900 dark:text-white mt-3">Read the Attack Backwards.</h2>
+            <p class="text-gray-600 dark:text-gray-400 text-lg mt-4 max-w-3xl leading-relaxed">The enemy does not waste ammunition. Pharaoh drowned sons when a deliverer was due (Ex 1:22); Herod emptied cradles when a King had arrived (Matt 2:16); Simon was renamed the Rock and then asked for by name, to be sifted (Luke 22:31). The attack aims at the office — which means the place you keep getting hit is often the clearest signature of what you carry. Find the card that stings to read. It may be pointing home.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            ${atlasData.flatMap(axis => axis.archetypes).map(a => `
+            <button onclick="openDrawer('${a.tribe}')" class="text-left glass-panel rounded-2xl p-6 shadow-sm border-t-4 border-t-red-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
+                <span class="text-red-600 dark:text-red-400 text-[10px] font-mono uppercase tracking-widest font-bold flex items-center gap-1.5 mb-3"><i class="ph ph-crosshair-simple text-sm"></i> If the attack looks like&hellip;</span>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    ${a.shortStruggles.map(s => `<span class="px-2 py-0.5 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-500/20 rounded text-[11px] font-mono uppercase tracking-wide">${s}</span>`).join('')}
+                </div>
+                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-3">${a.symptomCluster.primaryShadow}</p>
+                <p class="text-sm italic text-gray-500 dark:text-gray-400 leading-relaxed mb-5">The lie underneath: ${a.synthesis.lie}</p>
+                <div class="mt-auto border-t border-gray-200 dark:border-white/10 pt-4 flex items-center gap-3">
+                    <span class="text-3xl drop-shadow-sm">${a.symbol}</span>
+                    <div class="min-w-0">
+                        <span class="text-green-600 dark:text-green-400 text-[10px] font-mono uppercase tracking-widest font-bold block">&hellip;you may carry</span>
+                        <span class="font-serif text-lg text-gray-900 dark:text-white leading-tight block">${a.tribe} · ${a.name}</span>
+                    </div>
+                    <i class="ph ph-arrow-right ml-auto text-xl text-gray-400 group-hover:text-red-500 group-hover:translate-x-1 transition-all"></i>
+                </div>
+            </button>`).join('')}
+          </div>
+          <div class="mt-8 flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed">
+            <i class="ph ph-info text-lg mt-0.5 flex-shrink-0"></i>
+            <p>Read this gently: not every struggle is a calling-marker — some wounds are just wounds, and some seasons are just hard. Treat a hit that keeps landing in the same place as a pointer worth testing against the full profile, not a verdict.</p>
+          </div>
+        </section>
+
         <!-- Framework Architecture Overview -->
         <section class="mb-24 pb-16 border-b border-gray-200 dark:border-white/10" id="framework-overview">
           <div class="mb-12">
@@ -1417,31 +1457,99 @@
              <span class="bg-gray-200 dark:bg-white/10 text-sm w-8 h-8 flex items-center justify-center rounded-full font-mono">B</span>
              The Fivefold Function (APEST)
           </h3>
-          <p class="text-gray-600 dark:text-gray-400 text-base mb-6 max-w-3xl">Ephesians 4:11 gives the body five functions — Apostle, Prophet, Evangelist, Shepherd, Teacher. Every archetype operates primarily through one. Tribes that share a function tend to build the same kinds of things, and burn out the same way.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+          <p class="text-gray-600 dark:text-gray-400 text-base mb-6 max-w-3xl">Ephesians 4:11 gives the body five functions — Apostle, Prophet, Evangelist, Shepherd, Teacher — given "to equip the saints for the work of ministry" (Eph 4:12). Every archetype operates primarily through one. Tribes that share a function tend to build the same kinds of things, and burn out the same way.</p>
+          <div class="flex flex-col gap-5 mb-16">
             ${(() => {
                 const ORDER = ['Apostle', 'Prophet', 'Evangelist', 'Shepherd', 'Teacher'];
                 const HUE = { Apostle: 'red', Prophet: 'purple', Evangelist: 'amber', Shepherd: 'green', Teacher: 'blue' };
-                const DESC = {
-                    Apostle: 'Sent ones. Break new ground, build the structures others inhabit.',
-                    Prophet: 'Seers. Name what is actually happening and call it back to covenant.',
-                    Evangelist: 'Gatherers. Carry contagious fire across boundaries others will not cross.',
-                    Shepherd: 'Keepers. Protect, feed, and hold the flock together under pressure.',
-                    Teacher: 'Guardians. Preserve the deposit and make it livable for the next generation.'
+                const ICON = { Apostle: 'ph-paper-plane-tilt', Prophet: 'ph-eye', Evangelist: 'ph-megaphone', Shepherd: 'ph-heart', Teacher: 'ph-book-open' };
+                const DETAIL = {
+                    Apostle: {
+                        gk: 'apostolos — "one who is sent"',
+                        essence: 'Sent ones. They break open ground that does not exist yet — new works, new structures, new territory — then hand the work off and move toward the next frontier.',
+                        work: 'An apostle measures health by what survives their absence. They lay foundations others build on (1 Cor 3:10), carry blueprints no one else can see yet, and are most alive at the edge of the map — where nothing is established and everything is possible.',
+                        shadow: 'Empire. Sent-ness without submission becomes conquest: ground held for the builder\'s own name, structures built to mirror the builder. The test of a true apostle is whether the work is handed off or gripped.',
+                        examples: [
+                            { n: 'Paul', ref: '1 Cor 3:10 · Rom 15:20', arc: '"As a wise master builder I laid a foundation" — planted churches across Asia and Europe, then governed by letter rather than staying to rule. His stated ambition: to preach where Christ was not yet named, "lest I build on someone else\'s foundation."' },
+                            { n: 'Nehemiah', ref: 'Neh 2–6', arc: 'Sent from the palace to a ruined wall everyone had learned to live with. Surveyed it by night, organized the families gate by gate, finished in fifty-two days — then handed the city back and returned to his post.' }
+                        ]
+                    },
+                    Prophet: {
+                        gk: 'prophētēs — "one who speaks for"',
+                        essence: 'Seers. They perceive what is actually happening beneath what appears to be happening — and say it, whatever it costs, to call the people back to covenant.',
+                        work: 'The prophet\'s gift is the gap: the distance between what God said and what is being lived. They drag the hidden thing into the light — not to expose, but to heal. A true prophetic word leaves a door open: "The LORD has put away your sin" (2 Sam 12:13).',
+                        shadow: 'The accuser. Sight without love becomes a weapon: verdicts that never aim at restoration, purity that leaves no survivors. Counterfeit and true prophet see the same flaw — they differ in what they want done with it.',
+                        examples: [
+                            { n: 'Nathan', ref: '2 Sam 12', arc: 'Walked into the throne room with a story about a stolen lamb and closed it with the most dangerous sentence a courtier ever spoke: "You are the man." David lived — because the word was aimed at repentance, not ruin.' },
+                            { n: 'Elijah', ref: '1 Kgs 18–19', arc: 'Stood alone against four hundred fifty on Carmel and called down fire — then had to learn at Horeb that the LORD was not in the wind or the earthquake but in a low whisper. The sight is loud; the Voice usually is not.' }
+                        ]
+                    },
+                    Evangelist: {
+                        gk: 'euangelistēs — "herald of good news"',
+                        essence: 'Gatherers. They carry the message across lines everyone else treats as walls — and they cannot stay quiet about what they have found.',
+                        work: 'The evangelist makes the gospel plausible to the person furthest from it. They read a room of outsiders the way a teacher reads a text, and they are wired to bring people in — every scene with Andrew in it is Andrew bringing someone to Jesus.',
+                        shadow: 'The salesman. Fire that needs an audience; conversions counted like commissions; a message bent until it sells. The herald\'s test is the desert road — will you leave the crowd for the one?',
+                        examples: [
+                            { n: 'Philip', ref: 'Acts 8', arc: 'Preached Christ in Samaria — the wrong side of every line his people drew — and "there was much joy in that city." Then left a city-wide revival for one Ethiopian official on a desert road, because a herald goes where he is sent, not where the numbers are.' },
+                            { n: 'Andrew', ref: 'John 1:41–42 · 6:8–9', arc: 'His first act after meeting Jesus: "He first found his own brother Simon." Later, the boy with five loaves. Andrew gets three scenes in John — in each one he is bringing somebody in.' }
+                        ]
+                    },
+                    Shepherd: {
+                        gk: 'poimēn — "shepherd, pastor"',
+                        essence: 'Keepers. They guard and feed a particular flock — known by name, counted nightly — and they stay when the wolf comes.',
+                        work: 'Presence over program. The shepherd notices the one missing from the hundred, heals in the field, and absorbs danger on the flock\'s behalf. Jesus reserved this office-name for himself: "I am the good shepherd. The good shepherd lays down his life for the sheep" (John 10:11).',
+                        shadow: 'The hireling — or the smotherer. Care traded for approval runs when the wolf comes (John 10:12–13); protection that becomes control never lets the sheep leave the pen. Both are shepherding the shepherd\'s need, not the flock.',
+                        examples: [
+                            { n: 'David', ref: '1 Sam 17:34–36', arc: 'The résumé he offered Saul was not the harp — it was the lion and the bear: "your servant struck him down and rescued the lamb from his mouth." A shepherd\'s courage exists for the flock\'s sake, and his scaled from sheepfold to nation.' },
+                            { n: 'Peter, restored', ref: 'John 21:15–17', arc: 'Three denials, three questions — and the recommissioning runs entirely in shepherd grammar: "Feed my lambs. Tend my sheep." The failed disciple is not demoted; he is handed the flock.' }
+                        ]
+                    },
+                    Teacher: {
+                        gk: 'didaskalos — "teacher"',
+                        essence: 'Guardians. They keep the deposit intact and make truth learnable — line upon line — so the next generation is not "tossed to and fro by every wind" (Eph 4:14).',
+                        work: 'The teacher turns revelation into curriculum: study it first, live it second, teach it third — Ezra\'s order, and not accidental (Ezra 7:10). At their best they "give the sense" (Neh 8:8): the text opened until the people actually understand what they are hearing.',
+                        shadow: 'The scribe. Knowledge as gatekeeping; orthodoxy without obedience; guarding God from the very people He is trying to reach. The corrupted teacher knows forever and does never.',
+                        examples: [
+                            { n: 'Ezra', ref: 'Ezra 7:10 · Neh 8', arc: '"Set his heart to study the Law of the LORD, and to do it, and to teach" — in that order. At the Water Gate the readers "gave the sense," and a returned nation wept at finally hearing itself addressed.' },
+                            { n: 'Apollos', ref: 'Acts 18:24–28', arc: 'Mighty in the Scriptures, fervent, eloquent — and missing a piece. Teachable enough to be pulled aside by two tentmakers and shown "the way of God more accurately." The mark of a real teacher: they can still be someone\'s student.' }
+                        ]
+                    }
                 };
                 const groups = {};
                 atlasData.forEach(axis => axis.archetypes.forEach(arch => {
                     (groups[arch.apest.role] = groups[arch.apest.role] || []).push(arch);
                 }));
                 return ORDER.filter(r => groups[r]).map(role => {
-                    const c = HUE[role];
+                    const c = HUE[role], d = DETAIL[role];
                     return `
-                    <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-${c}-500 shadow-sm">
-                        <h4 class="text-gray-900 dark:text-white font-serif text-xl mb-1">${role}</h4>
-                        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-3">${groups[role].length} ${groups[role].length > 1 ? 'tribes' : 'tribe'}</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">${DESC[role]}</p>
-                        <div class="flex flex-wrap gap-2">
-                            ${groups[role].map(a => `<button onclick="openDrawer('${a.tribe}')" class="flex items-center gap-1.5 bg-${c}-50 dark:bg-${c}-500/10 border border-${c}-200 dark:border-${c}-500/30 text-${c}-800 dark:text-${c}-300 px-2.5 py-1.5 rounded-lg text-sm hover:opacity-75 transition-opacity">${a.symbol} ${a.tribe}</button>`).join('')}
+                    <div class="glass-panel rounded-2xl p-6 md:p-8 border-t-4 border-t-${c}-500 shadow-sm">
+                        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-2">
+                            <h4 class="text-gray-900 dark:text-white font-serif text-2xl flex items-center gap-2.5"><i class="ph ${ICON[role]} text-${c}-500 text-xl"></i>${role}</h4>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-gray-500">${d.gk}</span>
+                        </div>
+                        <p class="text-base text-gray-800 dark:text-gray-200 leading-relaxed mb-5 max-w-3xl">${d.essence}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 mb-6">
+                            <div>
+                                <span class="text-${c}-600 dark:text-${c}-400 text-[10px] font-mono uppercase tracking-widest font-bold block mb-1.5">The work</span>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-4">${d.work}</p>
+                                <span class="text-red-600 dark:text-red-400 text-[10px] font-mono uppercase tracking-widest font-bold block mb-1.5">The shadow</span>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">${d.shadow}</p>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <span class="text-${c}-600 dark:text-${c}-400 text-[10px] font-mono uppercase tracking-widest font-bold">In the text</span>
+                                ${d.examples.map(ex => `
+                                <div class="bg-${c}-50/60 dark:bg-${c}-500/[0.07] border border-${c}-200/60 dark:border-${c}-500/20 rounded-xl p-4">
+                                    <div class="flex items-baseline justify-between gap-3 mb-1">
+                                        <span class="font-serif text-base text-gray-900 dark:text-white">${ex.n}</span>
+                                        <span class="text-[10px] font-mono text-${c}-700 dark:text-${c}-300 whitespace-nowrap">${ex.ref}</span>
+                                    </div>
+                                    <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">${ex.arc}</p>
+                                </div>`).join('')}
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2 border-t border-gray-200 dark:border-white/10 pt-4">
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-gray-500 mr-1">Carried by</span>
+                            ${groups[role].map(a => `<button onclick="openDrawer('${a.tribe}')" class="flex items-center gap-1.5 bg-${c}-50 dark:bg-${c}-500/10 border border-${c}-200 dark:border-${c}-500/30 text-${c}-800 dark:text-${c}-300 px-2.5 py-1.5 rounded-lg text-sm hover:opacity-75 transition-opacity">${a.symbol} ${a.tribe} <span class="text-xs text-gray-500 dark:text-gray-400">· ${a.name}</span></button>`).join('')}
                         </div>
                     </div>`;
                 }).join('');
@@ -1742,14 +1850,25 @@
     const TAB_IDLE = ['text-gray-600', 'dark:text-gray-400', 'hover:bg-red-50', 'dark:hover:bg-red-500/10', 'hover:text-red-600', 'dark:hover:text-red-400'];
     const TAB_ON   = ['bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/20'];
 
+    /* The bar sits in normal flow below the profile header, then pins flush at
+       the drawer's very top edge once you scroll (sticky top-0 — the scroll
+       container carries no padding of its own, so there is no offset gap).
+       It carries its own close button so the drawer can always be exited
+       even when the header has scrolled away. */
     const drawerTabBar = () => `
-        <div id="drawer-tabbar" class="sticky top-0 z-20 -mx-6 sm:-mx-8 lg:-mx-12 px-6 sm:px-8 lg:px-12 py-3 mb-8 bg-white/95 dark:bg-[#0c0c0c]/95 backdrop-blur-xl border-b border-gray-200 dark:border-white/10">
-            <div class="grid grid-cols-4 gap-1.5" role="group" aria-label="Jump to section">
-                ${DRAWER_TABS.map(t => `
-                <button data-tab-btn="${t.id}" aria-current="false" onclick="goToDrawerSection('${t.id}')"
-                    class="flex items-center justify-center gap-2 px-2 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-colors">
-                    <i class="ph ${t.icon} text-lg hidden sm:inline"></i>${t.label}
-                </button>`).join('')}
+        <div id="drawer-tabbar" class="sticky top-0 z-20 px-6 sm:px-8 lg:px-12 py-3 bg-white/95 dark:bg-[#0c0c0c]/95 backdrop-blur-xl border-b border-gray-200 dark:border-white/10">
+            <div class="max-w-6xl mx-auto flex items-center gap-2">
+                <div class="grid grid-cols-4 gap-1.5 flex-1" role="group" aria-label="Jump to section">
+                    ${DRAWER_TABS.map(t => `
+                    <button data-tab-btn="${t.id}" aria-current="false" onclick="goToDrawerSection('${t.id}')"
+                        class="flex items-center justify-center gap-2 px-2 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-colors">
+                        <i class="ph ${t.icon} text-lg hidden sm:inline"></i>${t.label}
+                    </button>`).join('')}
+                </div>
+                <button onclick="closeDrawer()" aria-label="Close profile"
+                    class="p-2.5 rounded-xl text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
             </div>
         </div>`;
 
@@ -1859,6 +1978,7 @@
       `).join('');
 
       const html = `
+        <div class="px-6 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-12"><div class="max-w-6xl mx-auto">
         <div class="flex justify-between items-start mb-8 pb-8 border-b border-gray-200 dark:border-white/10">
             <div>
                 <div class="flex items-center gap-5 mb-4">
@@ -1878,8 +1998,11 @@
         </div>
         
         <p class="text-base md:text-lg font-serif italic text-gray-600 dark:text-gray-300 mb-10 pl-5 border-l-4 border-gray-300 dark:border-gray-700 leading-relaxed">${archData.scripture}</p>
+        </div></div><!-- /header wrapper: the tab bar must be a direct child of the scroller -->
 
         ${drawerTabBar()}
+
+        <div class="px-6 sm:px-8 lg:px-12 pt-8 pb-6 sm:pb-8 lg:pb-12"><div class="max-w-6xl mx-auto">
 
         <!-- All four sections render at once — the drawer is one continuous scroll.
              The sticky bar above jumps between them and highlights the current one
@@ -2093,6 +2216,7 @@
             ${caseStudiesHtml}
         </div>
         </section><!-- /witnesses -->
+        </div></div><!-- /sections wrapper -->
       `;
       contentDiv.innerHTML = html;
       contentDiv.scrollTop = 0;
@@ -2112,6 +2236,12 @@
       if (drawerSpy) { drawerSpy(); drawerSpy = null; }
       setTimeout(() => { overlay.classList.add('hidden'); document.body.style.overflow = ''; }, 500);
     };
+
+    // The drawer is full-width, so the click-to-close overlay is unreachable.
+    // Escape is the keyboard exit; the sticky tab bar carries the visible ✕.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !document.getElementById('intelligence-drawer').classList.contains('translate-x-full')) closeDrawer();
+    });
 
     // --- CONVERGENCE WHEEL INTERACTIONS ---
     window.wheelFocus = function(tribe) {

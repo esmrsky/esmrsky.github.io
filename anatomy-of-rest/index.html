@@ -109,6 +109,11 @@
   .prose p { max-width: var(--text); }
   .prose strong { color: var(--fg); font-weight: 600; }
 
+  /* reading comfort: balance display text, no orphan words in prose */
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  .ref-inline { font-family: "JetBrains Mono", monospace; font-size: .74em; color: var(--fg-faint); letter-spacing: .02em; white-space: nowrap; }
+
   .pull {
     font-family: var(--disp); font-style: italic; font-weight: 400;
     font-size: clamp(1.4rem, 1.05rem + 1.6vw, 2.15rem); line-height: 1.28;
@@ -192,8 +197,15 @@
   #quality     { --accent: var(--real); }
   #discern     { --accent: var(--counterfeit); }
   #scripture   { --accent: var(--scripture); }
+  #shalom      { --accent: var(--real); }
   #convergence { --accent: var(--ember); }
   #practice    { --accent: var(--real); }
+
+  /* NSDR spelled out — the acronym is used everywhere and expanded nowhere */
+  .acronym { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: .6rem; margin: 0 0 2.2rem; max-width: 34rem; }
+  .acronym div { border: 1px solid var(--hair); border-top: 2.5px solid var(--nsdr); border-radius: 10px; padding: .85rem .5rem .75rem; text-align: center; background: var(--panel); }
+  .acronym b { font-family: var(--disp); font-weight: 800; font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem); line-height: 1; color: var(--nsdr); display: block; }
+  .acronym span { font-family: "JetBrains Mono", monospace; font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); display: block; margin-top: .45rem; }
   .panel__cap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
   .panel__title { font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--fg); }
   .figtag { font-family: "JetBrains Mono", monospace; font-size: .64rem; letter-spacing: .1em; color: var(--fg-faint); }
@@ -341,7 +353,23 @@
   .ring-legend .rl-t { font-family: var(--disp); font-size: 1.15rem; color: var(--fg); }
   .ring-legend .rl-s { font-family: "JetBrains Mono", monospace; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); display: block; }
   /* ============================================================
-     MOVEMENT 07 — convergence cards
+     MOVEMENT 07 — shalom (two ideas of peace)
+     ============================================================ */
+  .shalom-grid { display: grid; grid-template-columns: 1fr; gap: 1.8rem; }
+  @media (min-width: 780px) { .shalom-grid { grid-template-columns: 1fr 1fr; } }
+  .shalom-cell svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto .7rem; }
+  .shalom-cell p { font-size: .93rem; max-width: 32ch; margin-inline: auto; text-align: center; }
+  .shalom-cell p strong { color: var(--fg); }
+  .shalom-ring { filter: drop-shadow(0 0 calc(7px * var(--glow)) color-mix(in srgb, var(--real) 70%, transparent)); }
+  /* the final quarter of the ring draws itself in when the panel reveals —
+     "nothing missing" arriving. One-shot, piggybacks on the .r -> .in reveal. */
+  .sr-last { stroke-dasharray: 70; stroke-dashoffset: 70; }
+  .r.in .sr-last { animation: joinIn 1.4s var(--ease) .45s forwards; }
+  @keyframes joinIn { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .sr-last { stroke-dashoffset: 0; animation: none; } }
+
+  /* ============================================================
+     MOVEMENT 08 — convergence cards
      ============================================================ */
   .conv { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin-top: 2rem; }
   @media (min-width: 900px) { .conv { grid-template-columns: 1fr 1fr; } }
@@ -527,10 +555,17 @@
       <p class="lede">A ten-to-twenty-minute protocol that walks the brain down the dial on purpose — and starts refilling the tank while you're still awake.</p>
     </div>
 
+    <div class="acronym r" role="img" aria-label="N S D R stands for Non-Sleep Deep Rest.">
+      <div><b>N</b><span>Non</span></div>
+      <div><b>S</b><span>Sleep</span></div>
+      <div><b>D</b><span>Deep</span></div>
+      <div><b>R</b><span>Rest</span></div>
+    </div>
+
     <div class="split">
       <div class="r">
         <div class="prose">
-          <p><strong>What it is.</strong> Lie down. Close your eyes. A voice guides a slow scan through the body while you lengthen each exhale. That's it. The state it induces is drawn from <strong>yoga nidra</strong>, an old contemplative practice; the label "NSDR" was coined by neuroscientist Andrew Huberman in 2022 to keep the mechanism and drop the metaphysics.</p>
+          <p><strong>What it is.</strong> Lie down. Close your eyes. A voice guides a slow scan through the body while you lengthen each exhale. That's it. The state it induces is drawn from <strong>yoga nidra</strong>, an old contemplative practice; the label "NSDR" was coined by neuroscientist Andrew Huberman in 2022 to keep the mechanism and drop the metaphysics. One boundary before anything else: <strong>NSDR supplements sleep — it never substitutes for it.</strong> Sleep is the meal; this is what keeps you upright between meals.</p>
         </div>
         <div class="callout note r">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
@@ -883,11 +918,83 @@
   </div>
 </section>
 
-<!-- ==================== 07 · THE CONVERGENCE ==================== -->
+<!-- ==================== 07 · SHALOM ==================== -->
+<section class="movement" id="shalom">
+  <div class="wrap">
+    <div class="movement__head r">
+      <span class="movement__num">07 — Shalom</span>
+      <h2>Peace is not quiet. It's wholeness.</h2>
+      <p class="lede">The Bible's word for peace — <em>shalom</em> — doesn't mean the absence of noise. It means nothing missing, nothing broken. Rest is what wholeness feels like.</p>
+    </div>
+
+    <div class="prose measure r">
+      <p>The Hebrew root <strong>sh-l-m</strong> carries the idea of completeness. The same root repays a debt (<em>shillem</em> — to make whole), names the king who built the temple (<em>Shlomo</em>, Solomon), and greets a friend on the street — because the greeting is literally a question about wholeness: <em>is anything missing? is anything broken?</em></p>
+      <p>That changes what "peace" means. The world's version is subtraction: remove the noise, the conflict, the demands — and call the silence peace. Shalom is addition: presence, repair, completion. It's why Gideon could build an altar named <strong>"The LORD is Peace"</strong> while a war was still coming <span class="ref-inline">(Judges 6:24)</span>, and why Jesus could hand his friends peace on the worst night of their lives — <em>"my peace I give to you; not as the world gives"</em> <span class="ref-inline">(John 14:27)</span>.</p>
+    </div>
+
+    <div class="panel r" style="margin-top:2.4rem" role="img" aria-label="Two ideas of peace compared. The world's peace: a faint, empty flat line — noise removed, absence. Shalom: a circle of joined pieces completing itself — every piece present, wholeness.">
+      <div class="panel__cap">
+        <span class="panel__title">Two ideas of peace</span>
+        <span class="figtag">fig. 05</span>
+      </div>
+      <div class="shalom-grid">
+        <div class="shalom-cell">
+          <svg viewBox="0 0 200 150">
+            <line x1="34" y1="72" x2="166" y2="72" stroke="var(--hair-strong)" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/>
+            <text x="100" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1.5">ABSENCE · NOISE REMOVED</text>
+          </svg>
+          <p><strong>The world's peace.</strong> Subtraction. Quiet as the goal — and fragile, because any noise ends it.</p>
+        </div>
+        <div class="shalom-cell">
+          <svg viewBox="0 0 200 150">
+            <g class="shalom-ring" fill="none" stroke="var(--real)" stroke-width="6" stroke-linecap="round">
+              <path d="M100,28 A44,44 0 1 1 56,72"/>
+              <path class="sr-last" d="M56,72 A44,44 0 0 1 100,28"/>
+            </g>
+            <g fill="var(--bg)" stroke="var(--real)" stroke-width="2">
+              <circle cx="100" cy="28" r="4"/><circle cx="144" cy="72" r="4"/>
+              <circle cx="100" cy="116" r="4"/><circle cx="56" cy="72" r="4"/>
+            </g>
+            <text x="100" y="145" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1.5">PRESENCE · EVERY PIECE JOINED</text>
+          </svg>
+          <p><strong>Shalom.</strong> Addition. Every piece present and joined — peace that holds even when it isn't quiet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="r" style="margin-top:2.6rem">
+      <div class="term">
+        <div class="term__word">שָׁלוֹם<span class="translit">shalom</span></div>
+        <div>
+          <p class="term__gloss"><b>Wholeness as a kept state.</b> "You keep him in perfect peace" — the Hebrew doubles the word, <em>shalom shalom</em> — "whose mind is stayed on you, <b>because he trusts</b>." Peace isn't the absence of the storm; it's the presence of the anchor.</p>
+          <span class="term__ref">Isaiah 26:3</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__word">The benediction<span class="translit">where blessing lands</span></div>
+        <div>
+          <p class="term__gloss">"The LORD bless you and keep you… and give you <b>shalom</b>." The oldest blessing in Scripture walks six lines to a single destination — and the destination isn't wealth or safety. Everything ends at wholeness.</p>
+          <span class="term__ref">Numbers 6:24–26</span>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__word">Sleep as trust<span class="translit">shalom, embodied</span></div>
+        <div>
+          <p class="term__gloss">"In <b>shalom</b> I will both lie down and sleep; for you alone, O LORD, make me dwell in safety." David wrote that while being hunted — and slept mid-rebellion <span class="ref-inline">(Ps 3:5)</span>. Falling asleep is the body's act of trust: the one thing you cannot do while defending yourself. The night shift of §03 is what the brain does with that surrender.</p>
+          <span class="term__ref">Psalm 4:8</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="pull r">Sleep is nightly trust. Sabbath is weekly trust. Shalom is what trust feels like when it settles.</p>
+  </div>
+</section>
+
+<!-- ==================== 08 · THE CONVERGENCE ==================== -->
 <section class="movement" id="convergence">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">07 — The Convergence</span>
+      <span class="movement__num">08 — The Convergence</span>
       <h2>Where the two maps agree.</h2>
       <p class="lede">Not the lab confirming the text, nor the text predicting the lab. Two very different traditions — one empirical, one liturgical — arriving at the same structure of a human being.</p>
     </div>
@@ -930,11 +1037,11 @@
   </div>
 </section>
 
-<!-- ==================== 08 · THE PRACTICE ==================== -->
+<!-- ==================== 09 · THE PRACTICE ==================== -->
 <section class="movement" id="practice">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">08 — The Practice</span>
+      <span class="movement__num">09 — The Practice</span>
       <h2>What to actually do.</h2>
       <p class="lede">Four moves. Maximum signal.</p>
     </div>
@@ -1003,7 +1110,7 @@
       <p><b>Glymphatic clearance.</b> Xie et&nbsp;al., <em>Science</em> (2013); Nedergaard lab, <em>Cell</em> (2025) on norepinephrine-driven vasomotion and zolpidem suppressing it; early human evidence reported 2024. <b>Contested:</b> Miao/Franks/Wisden (Imperial, 2024) directly measured dye movement and argued clearance <em>slows</em> in sleep. Strongest in rodents; unsettled in humans.</p>
       <p><b>Extended-exhale breathing.</b> Balban et&nbsp;al., <em>Cell Reports Medicine</em> (2023): RCT, 108 participants; 5&nbsp;min/day of exhale-extended "cyclic sighing" for 28 days improved mood and lowered respiratory rate more than box breathing or mindfulness meditation.</p>
       <p><b>Sleep quality vs. quantity.</b> Sleep-architecture &amp; fragmentation literature: fragmentation harms restorative quality more than mild restriction. The "8h/15% vs 6.5h/22% deep sleep" contrast is illustrative from secondary sources; the direction is well-supported.</p>
-      <p><b>Scripture.</b> Genesis 2; Exodus 20; Deuteronomy 5; Psalm 23; Psalm 127; Matthew 11; Hebrews 4. Hebrew: <em>shabbat</em> (cease), <em>menuchah</em> (repose). Greek: <em>anapausis</em> (rest), <em>sabbatismos</em> (Sabbath-rest).</p>
+      <p><b>Scripture.</b> Genesis 2; Exodus 20; Deuteronomy 5; Numbers 6:24–26; Judges 6:24; Psalms 3–4, 23, 127; Isaiah 26:3; Matthew 11; John 14:27; Hebrews 4. Hebrew: <em>shabbat</em> (cease), <em>menuchah</em> (repose), <em>shalom</em> (wholeness — root <em>sh-l-m</em>, complete/repay/restore). Greek: <em>anapausis</em> (rest), <em>sabbatismos</em> (Sabbath-rest).</p>
     </div>
 
     <p class="disclaimer">A teaching artifact, not medical advice. NSDR is a complement to sleep, never a replacement for it. Persistent insomnia, non-restorative sleep, or daytime exhaustion warrant a conversation with a clinician — some causes (sleep apnea, among others) need diagnosis, not just better habits.</p>
