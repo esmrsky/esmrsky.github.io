@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Weight of Rest — The Science and Soul of Stillness</title>
+<meta name="description" content="Sleep, rest, and peace were never three separate things. An editorial essay braiding the neuroscience of the sleeping brain — the glymphatic wash, sleep pressure, overnight emotional repair — with the counterfeits of rest and the older wisdom of stillness.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* nocturne -> dawn */
+    --void:#08071A;
+    --deep:#100E2C;
+    --dusk:#1B1547;
+    --plum:#2E1F60;
+    --aurora:#59E3D0;   /* neural glow / the wash */
+    --violet:#9C7CF4;   /* electric aurora */
+    --dawn:#FF9E77;     /* dawn peach */
+    --gold:#FFCB6B;     /* morning / sabbath light */
+    --rose:#FF8FB0;     /* dawn rose */
+    --cream:#F6EEE1;    /* warm paper */
+    --ink:#1A1533;      /* dark text on cream */
+    --haze:#C4BDEB;     /* muted lavender body */
+    --haze-dim:#8E88BE;
+    --line:rgba(196,189,235,.16);
+
+    --sans:'Space Grotesk',system-ui,-apple-system,sans-serif;
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --display:'Fraunces',Georgia,serif;
+
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--haze);
+    font-family:var(--serif);
+    font-size:19px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;}
+  a{color:inherit;}
+
+  /* reading comfort: balance display text, no orphan words in prose */
+  h1,h2,h3{text-wrap:balance;}
+  p,li,blockquote{text-wrap:pretty;}
+
+  ::selection{background:var(--violet);color:#fff;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---------- shared type ---------- */
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:.72rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--aurora);
+    display:inline-flex;
+    align-items:center;
+    gap:.7em;
+  }
+  .eyebrow::before{
+    content:"";width:26px;height:1px;background:var(--aurora);opacity:.7;
+  }
+  h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;margin:0;color:#fff;font-optical-sizing:auto;}
+  .lede{font-size:1.28rem;line-height:1.55;color:var(--haze);font-weight:300;}
+  em,i{font-style:italic;}
+  .accent{color:var(--aurora);}
+  .accent-v{color:var(--violet);}
+  .accent-g{color:var(--gold);}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;
+    font-family:var(--sans);
+    font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+    background:linear-gradient(to bottom,rgba(8,7,26,.85),rgba(8,7,26,0));
+    backdrop-filter:blur(2px);
+    transition:background .4s;
+  }
+  nav .brand{display:flex;align-items:center;gap:.6em;color:#fff;font-weight:600;letter-spacing:.14em;}
+  nav .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:breathe 6s ease-in-out infinite;}
+  nav .links{display:flex;gap:26px;color:var(--haze-dim);}
+  nav .links a{text-decoration:none;transition:color .25s;}
+  nav .links a:hover{color:var(--aurora);}
+  @media(max-width:720px){nav .links{display:none;}}
+
+  /* =================================================================
+     HERO
+  ================================================================= */
+  .hero{
+    position:relative;min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:120px 0 80px;
+    overflow:hidden;
+    background:
+      radial-gradient(1200px 700px at 72% 8%, rgba(156,124,244,.20), transparent 60%),
+      radial-gradient(900px 600px at 12% 90%, rgba(89,227,208,.12), transparent 60%),
+      linear-gradient(180deg,var(--void),var(--deep) 70%,var(--dusk));
+  }
+  .stars{position:absolute;inset:0;pointer-events:none;}
+  .star{position:absolute;background:#fff;border-radius:50%;opacity:.7;animation:twinkle 4s ease-in-out infinite;}
+  .aurora-ribbon{
+    position:absolute;left:-20%;width:140%;height:220px;border-radius:50%;
+    filter:blur(60px);opacity:.42;mix-blend-mode:screen;pointer-events:none;
+  }
+  .ribbon-1{top:12%;background:linear-gradient(90deg,transparent,var(--violet),transparent);animation:sway 22s ease-in-out infinite;}
+  .ribbon-2{top:34%;background:linear-gradient(90deg,transparent,var(--aurora),transparent);animation:sway 28s ease-in-out infinite reverse;}
+
+  .moon{
+    position:absolute;right:8%;top:16%;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle at 38% 34%, #fff, #efe9ff 30%, #b9aef0 62%, #7c6bd0 100%);
+    box-shadow:0 0 60px 12px rgba(179,168,240,.45), inset -18px -14px 40px rgba(60,40,110,.55);
+    animation:breathe 9s ease-in-out infinite, floaty 14s ease-in-out infinite;
+  }
+  .moon .crater{position:absolute;border-radius:50%;background:rgba(90,70,150,.35);box-shadow:inset 2px 3px 5px rgba(50,30,100,.5);}
+  @media(max-width:820px){.moon{width:120px;height:120px;top:11%;right:6%;opacity:.9;}}
+
+  .hero-content{position:relative;z-index:5;}
+  .hero h1{
+    font-size:clamp(2.7rem,7.3vw,6.4rem);
+    letter-spacing:-.015em;
+    max-width:16ch;
+    margin:.5em 0 .55em;
+  }
+  .hero h1 .soft{font-style:italic;font-weight:300;color:var(--haze);}
+  .hero .lede{max-width:44ch;}
+  .scrolldown{
+    margin-top:60px;display:inline-flex;align-items:center;gap:.8em;
+    font-family:var(--sans);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--haze-dim);
+  }
+  .scrolldown .chev{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;animation:bob 2.2s ease-in-out infinite;}
+  .scrolldown svg{stroke:var(--aurora);}
+
+  /* three-word overline */
+  .triad{display:flex;gap:0;flex-wrap:wrap;font-family:var(--sans);font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;color:var(--haze-dim);margin-top:6px;}
+  .triad span{padding-right:1.1em;margin-right:1.1em;border-right:1px solid var(--line);}
+  .triad span:last-child{border:none;}
+
+  /* =================================================================
+     SECTION scaffolding
+  ================================================================= */
+  section{position:relative;}
+  .band{padding:118px 0;position:relative;}
+  .band-head{max-width:60ch;margin-bottom:56px;}
+  .band-head h2{font-size:clamp(2rem,4.6vw,3.5rem);letter-spacing:-.01em;margin:.35em 0 .5em;}
+  .band-head p{margin:0;color:var(--haze);}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* =================================================================
+     BRAID  (one thread, three names)
+  ================================================================= */
+  .braid{background:linear-gradient(180deg,var(--dusk),var(--deep));}
+  .braid-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;}
+  @media(max-width:900px){.braid-grid{grid-template-columns:1fr;gap:40px;}}
+  .braid-cards{display:flex;flex-direction:column;gap:18px;}
+  .braid-card{
+    display:flex;gap:20px;align-items:flex-start;
+    padding:22px 24px;border:1px solid var(--line);border-radius:18px;
+    background:rgba(255,255,255,.02);
+    transition:border-color .35s,transform .35s,background .35s;
+  }
+  .braid-card:hover{border-color:rgba(89,227,208,.4);transform:translateX(6px);background:rgba(89,227,208,.04);}
+  .braid-card .ic{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(156,124,244,.12);}
+  .braid-card:nth-child(2) .ic{background:rgba(89,227,208,.12);}
+  .braid-card:nth-child(3) .ic{background:rgba(255,203,107,.12);}
+  .braid-card h3{font-size:1.35rem;color:#fff;margin-bottom:.15em;}
+  .braid-card .tag{font-family:var(--sans);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--haze-dim);}
+  .braid-card p{margin:.4em 0 0;font-size:.98rem;color:var(--haze);}
+
+  /* interlocking orbits */
+  .orbits{position:relative;width:100%;aspect-ratio:1/1;max-width:440px;margin:0 auto;}
+  .orbits svg{width:100%;height:100%;overflow:visible;}
+
+  /* =================================================================
+     NEUROSCIENCE
+  ================================================================= */
+  .neuro{background:linear-gradient(180deg,var(--deep),var(--void));}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+  .grid-2.wide{grid-template-columns:1.15fr .85fr;}
+  @media(max-width:900px){.grid-2,.grid-2.wide{grid-template-columns:1fr;gap:26px;}}
+
+  .panel{
+    border:1px solid var(--line);border-radius:22px;padding:32px 30px;
+    background:linear-gradient(160deg,rgba(255,255,255,.035),rgba(255,255,255,.01));
+    position:relative;overflow:hidden;
+  }
+  .panel .kicker{font-family:var(--sans);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--aurora);margin-bottom:14px;display:block;}
+  .panel h3{font-size:1.7rem;color:#fff;margin-bottom:.4em;}
+  .panel p{font-size:1rem;color:var(--haze);margin:.4em 0 0;}
+  .panel.feature{grid-column:1/-1;}
+
+  /* hypnogram */
+  .hypno{width:100%;height:170px;margin-top:8px;}
+  .hypno text{font-family:var(--sans);font-size:11px;fill:var(--haze-dim);letter-spacing:.05em;}
+
+  /* eeg */
+  .eeg-rows{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+  .eeg-row{display:grid;grid-template-columns:78px 1fr 46px;align-items:center;gap:14px;}
+  .eeg-row .lab{font-family:var(--sans);font-size:.72rem;letter-spacing:.06em;color:var(--haze);}
+  .eeg-row .hz{font-family:var(--sans);font-size:.66rem;color:var(--haze-dim);text-align:right;}
+  .eeg-row svg{width:100%;height:34px;}
+
+  /* glymphatic — signature */
+  .wash-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;}
+  @media(max-width:820px){.wash-wrap{grid-template-columns:1fr;}}
+  .brainstage{position:relative;width:100%;aspect-ratio:1.2/1;max-width:460px;margin:0 auto;}
+  .brainstage svg{width:100%;height:100%;overflow:visible;}
+  .np-note{font-family:var(--sans);font-size:.72rem;color:var(--haze-dim);letter-spacing:.04em;margin-top:14px;display:flex;align-items:center;gap:.6em;}
+  .np-dot{width:8px;height:8px;border-radius:50%;background:var(--aurora);box-shadow:0 0 10px var(--aurora);animation:pulse-np 3.2s ease-in-out infinite;}
+
+  /* sleep pressure meter */
+  .meter{margin-top:16px;}
+  .meter .bar{height:14px;border-radius:20px;background:rgba(255,255,255,.06);overflow:hidden;position:relative;}
+  .meter .fill{position:absolute;inset:0;width:0;border-radius:20px;background:linear-gradient(90deg,var(--aurora),var(--violet));animation:fillup 6s ease-in-out infinite;}
+  .meter .labels{display:flex;justify-content:space-between;font-family:var(--sans);font-size:.66rem;letter-spacing:.08em;color:var(--haze-dim);margin-top:8px;text-transform:uppercase;}
+
+  .twoproc{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;}
+  .chip{font-family:var(--sans);font-size:.72rem;padding:7px 14px;border-radius:40px;border:1px solid var(--line);color:var(--haze);}
+  .chip b{color:var(--aurora);font-weight:600;}
+
+  /* stat inline */
+  .bigstat{display:flex;align-items:baseline;gap:14px;margin:6px 0 2px;}
+  .bigstat .n{font-family:var(--display);font-size:3.2rem;font-weight:500;color:var(--violet);line-height:1;}
+  .bigstat .u{font-family:var(--sans);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--haze-dim);max-width:16ch;}
+
+  /* =================================================================
+     LATEST DISCOVERIES
+  ================================================================= */
+  .discover{background:linear-gradient(180deg,var(--void),var(--deep));}
+  .disc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  @media(max-width:820px){.disc-grid{grid-template-columns:1fr;}}
+  .disc{
+    border:1px solid var(--line);border-radius:20px;padding:28px;
+    background:rgba(255,255,255,.02);position:relative;overflow:hidden;
+    transition:transform .35s,border-color .35s;
+  }
+  .disc:hover{transform:translateY(-4px);border-color:rgba(156,124,244,.4);}
+  .disc .num{font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;color:var(--haze-dim);}
+  .disc h3{font-size:1.4rem;color:#fff;margin:.5em 0 .3em;}
+  .disc p{font-size:.97rem;color:var(--haze);margin:0;}
+  .disc .src{font-family:var(--sans);font-size:.64rem;letter-spacing:.06em;color:var(--aurora);margin-top:14px;display:block;text-transform:uppercase;}
+  .disc .glow{position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;filter:blur(50px);opacity:.3;background:var(--violet);}
+  .disc:nth-child(2) .glow{background:var(--rose);}
+  .disc:nth-child(3) .glow{background:var(--aurora);}
+  .disc:nth-child(4) .glow{background:var(--gold);}
+  .caveat{margin-top:14px;font-size:.86rem;color:var(--haze-dim);border-left:2px solid var(--line);padding-left:12px;}
+
+  /* =================================================================
+     COUNTERFEIT REST
+  ================================================================= */
+  .fake{background:linear-gradient(180deg,var(--deep),#160b28);}
+  .fake .band-head h2 .accent{color:var(--rose);}
+  .fake-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:900px){.fake-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){.fake-grid{grid-template-columns:1fr;}}
+  .fk{
+    border:1px solid var(--line);border-radius:18px;padding:24px;
+    background:rgba(255,110,140,.03);position:relative;overflow:hidden;
+    transition:border-color .35s;
+  }
+  .fk:hover{border-color:rgba(255,143,176,.45);}
+  .fk .top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .fk .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:rgba(255,143,176,.1);flex:none;}
+  .fk h3{font-size:1.12rem;color:#fff;line-height:1.15;}
+  .fk .why{font-family:var(--sans);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;display:block;}
+  .fk p{font-size:.92rem;margin:0;color:var(--haze);}
+  /* a battery that looks full but drains */
+  .drain{display:flex;align-items:center;gap:8px;margin-top:16px;}
+  .batt{width:52px;height:22px;border:1.5px solid var(--haze-dim);border-radius:4px;position:relative;padding:2px;}
+  .batt::after{content:"";position:absolute;right:-5px;top:6px;width:3px;height:10px;background:var(--haze-dim);border-radius:0 2px 2px 0;}
+  .batt .lvl{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--rose),var(--dawn));animation:drain 5.5s ease-in-out infinite;}
+  .drain span{font-family:var(--sans);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--haze-dim);}
+
+  /* =================================================================
+     TRUE REST
+  ================================================================= */
+  .true{background:linear-gradient(180deg,#160b28,var(--dusk));}
+  .true-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  @media(max-width:900px){.true-grid{grid-template-columns:1fr;gap:44px;}}
+  .rests{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:520px){.rests{grid-template-columns:1fr;}}
+  .rest-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid var(--line);transition:background .3s;}
+  .rest-item:hover{background:rgba(89,227,208,.05);}
+  .rest-item .ic{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:rgba(89,227,208,.1);}
+  .rest-item b{display:block;color:#fff;font-family:var(--sans);font-size:.82rem;letter-spacing:.02em;margin-bottom:2px;}
+  .rest-item span{font-size:.84rem;color:var(--haze-dim);line-height:1.4;}
+
+  /* breathing ring */
+  .breath{position:relative;width:100%;max-width:360px;aspect-ratio:1/1;margin:0 auto;display:grid;place-items:center;}
+  .breath .halo{position:absolute;width:66%;height:66%;border-radius:50%;
+    background:radial-gradient(circle,rgba(89,227,208,.35),rgba(156,124,244,.08) 60%,transparent 72%);
+    animation:breathe-ring 11s ease-in-out infinite;}
+  .breath .ring{position:absolute;width:66%;height:66%;border-radius:50%;border:1.5px solid rgba(89,227,208,.5);animation:breathe-ring 11s ease-in-out infinite;}
+  .breath .ring.r2{width:78%;height:78%;border-color:rgba(156,124,244,.35);animation-delay:.4s;}
+  .breath .word{position:relative;z-index:2;font-family:var(--display);font-style:italic;font-size:1.5rem;color:#fff;}
+  .breath-cap{text-align:center;font-family:var(--sans);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--haze-dim);margin-top:18px;}
+
+  /* =================================================================
+     BIBLICAL / DAWN
+  ================================================================= */
+  .dawn-band{
+    position:relative;color:var(--ink);overflow:hidden;
+    background:
+      radial-gradient(1000px 520px at 50% 118%, #FFE7B0, transparent 60%),
+      linear-gradient(180deg,var(--dusk) 0%, #6A4E86 12%, #C67A86 38%, #FF9E77 62%, #FFCB6B 84%, #FBEBC8 100%);
+    padding-top:150px;
+  }
+  .sun{
+    position:absolute;left:50%;bottom:-160px;transform:translateX(-50%);
+    width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,#FFF6DE,#FFD98E 42%,#FF9E77 78%,rgba(255,158,119,0) 82%);
+    box-shadow:0 0 120px 40px rgba(255,205,110,.55);
+    animation:sunrise 12s ease-in-out infinite alternate;
+  }
+  .rays{position:absolute;left:50%;bottom:-160px;transform:translateX(-50%);width:520px;height:520px;pointer-events:none;opacity:.55;animation:spin 90s linear infinite;}
+  .dawn-inner{position:relative;z-index:5;}
+  .dawn-band .eyebrow{color:#B0532E;}
+  .dawn-band .eyebrow::before{background:#B0532E;}
+  .dawn-band h2{color:var(--ink);}
+  .dawn-band .band-head p{color:#5a3f4a;}
+
+  .scripture{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:10px;
+  }
+  @media(max-width:820px){.scripture{grid-template-columns:1fr;}}
+  .verse{
+    background:rgba(255,255,255,.5);border:1px solid rgba(120,70,40,.14);
+    border-radius:20px;padding:30px 30px 26px;backdrop-filter:blur(3px);
+    transition:transform .35s,box-shadow .35s;
+  }
+  .verse:hover{transform:translateY(-4px);box-shadow:0 20px 50px -20px rgba(120,60,30,.35);}
+  .verse .ref{font-family:var(--sans);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:#B0532E;display:flex;align-items:center;gap:.6em;}
+  .verse blockquote{font-family:var(--display);font-style:italic;font-weight:400;font-size:1.5rem;line-height:1.28;color:var(--ink);margin:16px 0 12px;}
+  .verse p{font-size:.98rem;color:#4d3742;margin:0;line-height:1.55;}
+
+  /* seven-day rhythm */
+  .sabbath{display:flex;align-items:flex-end;gap:12px;justify-content:center;margin:8px auto 0;flex-wrap:wrap;max-width:640px;}
+  .day{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .day .col{width:44px;border-radius:10px 10px 4px 4px;background:rgba(120,70,40,.18);}
+  .day .lab{font-family:var(--sans);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#7a5548;}
+  .day.rest .col{background:linear-gradient(180deg,#FFF0C4,var(--gold));box-shadow:0 0 26px rgba(255,203,107,.9);animation:glow-day 5s ease-in-out infinite;}
+  .day.rest .lab{color:#B0532E;font-weight:700;}
+
+  /* =================================================================
+     SYNTHESIS / CLOSE
+  ================================================================= */
+  .close{background:linear-gradient(180deg,#FBEBC8 0%,#F3D9A6 6%,var(--dusk) 40%,var(--void));padding:130px 0 90px;text-align:center;}
+  .close .braid-line{max-width:52ch;margin:0 auto 40px;}
+  .close .braid-line .row{display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:1.05rem;color:var(--haze);}
+  .close .braid-line .row:last-child{border:none;}
+  .close .braid-line b{font-family:var(--display);font-style:italic;font-weight:400;color:#fff;min-width:5.5ch;text-align:right;}
+  .close .braid-line .row .ic{width:26px;flex:none;}
+  .close h2{font-size:clamp(2.2rem,5.5vw,4.2rem);max-width:16ch;margin:0 auto .3em;}
+  .close .final{font-family:var(--display);font-style:italic;font-size:clamp(1.5rem,3.4vw,2.4rem);color:var(--gold);font-weight:400;line-height:1.25;max-width:24ch;margin:34px auto 0;}
+
+  footer{background:var(--void);padding:56px 0 70px;border-top:1px solid var(--line);}
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start;}
+  footer .brand{display:flex;align-items:center;gap:.6em;color:#fff;font-family:var(--sans);letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;}
+  footer .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);}
+  footer p{font-family:var(--sans);font-size:.74rem;color:var(--haze-dim);max-width:52ch;line-height:1.6;margin:14px 0 0;letter-spacing:.02em;}
+  footer .sources{font-size:.68rem;color:var(--haze-dim);max-width:60ch;}
+  footer .sources b{color:var(--haze);font-weight:600;}
+
+  /* =================================================================
+     KEYFRAMES
+  ================================================================= */
+  @keyframes twinkle{0%,100%{opacity:.25;}50%{opacity:.95;}}
+  @keyframes breathe{0%,100%{transform:scale(1);opacity:.9;}50%{transform:scale(1.09);opacity:1;}}
+  @keyframes breathe-ring{0%,100%{transform:scale(.72);opacity:.55;}45%{transform:scale(1.12);opacity:1;}55%{transform:scale(1.12);opacity:1;}}
+  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+  @keyframes sway{0%,100%{transform:translateX(-4%) scaleY(1);}50%{transform:translateX(6%) scaleY(1.15);}}
+  @keyframes spin{to{transform:translateX(-50%) rotate(360deg);}}
+  @keyframes sunrise{0%{transform:translateX(-50%) translateY(60px);opacity:.85;}100%{transform:translateX(-50%) translateY(-10px);opacity:1;}}
+  @keyframes fillup{0%{width:6%;}80%{width:100%;}100%{width:100%;}}
+  @keyframes drain{0%{width:88%;}100%{width:14%;}}
+  @keyframes pulse-np{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.5);opacity:1;}}
+  @keyframes glow-day{0%,100%{box-shadow:0 0 20px rgba(255,203,107,.6);}50%{box-shadow:0 0 40px rgba(255,203,107,1);}}
+  @keyframes dash{to{stroke-dashoffset:0;}}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="brand"><span class="dot"></span>Stillness</span>
+  <span class="links">
+    <a href="#braid">The braid</a>
+    <a href="#neuro">The science</a>
+    <a href="#fake">Counterfeits</a>
+    <a href="#true">True rest</a>
+    <a href="#dawn">Older wisdom</a>
+  </span>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <div class="stars" id="stars"></div>
+  <div class="aurora-ribbon ribbon-1"></div>
+  <div class="aurora-ribbon ribbon-2"></div>
+  <div class="moon">
+    <span class="crater" style="width:26px;height:26px;top:30%;left:24%;"></span>
+    <span class="crater" style="width:16px;height:16px;top:56%;left:52%;"></span>
+    <span class="crater" style="width:12px;height:12px;top:22%;left:60%;"></span>
+    <span class="crater" style="width:20px;height:20px;top:64%;left:26%;"></span>
+  </div>
+
+  <div class="wrap hero-content">
+    <span class="eyebrow">The science &amp; soul of rest</span>
+    <h1>Sleep, rest, and peace were <span class="soft">never three separate things.</span></h1>
+    <p class="lede">We broke them into a chore, a luxury, and a mood. This is the story of how the brain, the body, and far older wisdom keep saying the same thing — that you were built to be still, and that the dark was never the enemy.</p>
+    <div class="triad"><span>Sleep · the body's repair</span><span>Rest · the mind's return</span><span>Peace · the soul's stillness</span></div>
+    <a href="#braid" class="scrolldown">
+      <span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+      Begin in the dark
+    </a>
+  </div>
+</header>
+
+<!-- ============================ BRAID ============================ -->
+<section class="band braid" id="braid">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow">One thread, three names</span>
+      <h2>Pull one out, and the other two <em>fray.</em></h2>
+      <p class="lede">Sleep is what the body does. Rest is what the mind needs. Peace is the state they leave you in. They are not a hierarchy and not interchangeable — they are strands of a single rope. Cut one and the whole thing loosens.</p>
+    </div>
+
+    <div class="braid-grid">
+      <div class="braid-cards reveal">
+        <div class="braid-card">
+          <span class="ic">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </span>
+          <div>
+            <span class="tag">Physiology</span>
+            <h3>Sleep</h3>
+            <p>The non-negotiable maintenance shift. While you're offline, the body repairs tissue, files memories, balances hormones, and — as we now know — literally rinses the brain clean.</p>
+          </div>
+        </div>
+        <div class="braid-card">
+          <span class="ic">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.6"><path d="M3 12c3-4 6-4 9 0s6 4 9 0"/><path d="M3 18c3-4 6-4 9 0s6 4 9 0" opacity=".5"/></svg>
+          </span>
+          <div>
+            <span class="tag">Psychology</span>
+            <h3>Rest</h3>
+            <p>Not the same as sleep. It's the deliberate release of a system you've been running hot — attention, senses, emotion. You can sleep eight hours and still owe a rest you never took.</p>
+          </div>
+        </div>
+        <div class="braid-card">
+          <span class="ic">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.6"><path d="M12 3c-2 3-6 4-6 8a6 6 0 0 0 12 0c0-4-4-5-6-8z"/><path d="M12 21v-4" /></svg>
+          </span>
+          <div>
+            <span class="tag">Interior life</span>
+            <h3>Peace</h3>
+            <p>The felt result — a nervous system that has stopped bracing. It's the least measurable and the most sought-after, and it turns out to depend on the first two more than we admit.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="orbits reveal">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <radialGradient id="core" cx="50%" cy="50%">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="55%" stop-color="var(--gold)"/>
+              <stop offset="100%" stop-color="var(--dawn)"/>
+            </radialGradient>
+          </defs>
+          <!-- three tilted rings -->
+          <g fill="none" stroke-width="1.4">
+            <ellipse cx="100" cy="100" rx="78" ry="30" stroke="var(--violet)" opacity=".85" transform="rotate(0 100 100)">
+              <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="26s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="100" cy="100" rx="78" ry="30" stroke="var(--aurora)" opacity=".85" transform="rotate(60 100 100)">
+              <animateTransform attributeName="transform" type="rotate" from="60 100 100" to="420 100 100" dur="32s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="100" cy="100" rx="78" ry="30" stroke="var(--gold)" opacity=".85" transform="rotate(120 100 100)">
+              <animateTransform attributeName="transform" type="rotate" from="120 100 100" to="480 100 100" dur="38s" repeatCount="indefinite"/>
+            </ellipse>
+          </g>
+          <!-- travelling nodes -->
+          <circle r="4" fill="var(--violet)"><animateMotion dur="26s" repeatCount="indefinite" path="M22,100 a78,30 0 1,0 156,0 a78,30 0 1,0 -156,0"/></circle>
+          <circle r="4" fill="var(--aurora)"><animateMotion dur="32s" repeatCount="indefinite" rotate="auto" path="M100,100 m-70,-34 a78,30 0 1,0 140,68 a78,30 0 1,0 -140,-68"/></circle>
+          <circle cx="100" cy="100" r="16" fill="url(#core)">
+            <animate attributeName="r" values="15;18;15" dur="6s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ NEUROSCIENCE ============================ -->
+<section class="band neuro" id="neuro">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow">What the dark is doing</span>
+      <h2>Sleep isn't the brain switching <em>off.</em> It's the brain switching <em class="accent">tasks.</em></h2>
+      <p class="lede">For most of history we assumed sleep was a kind of nightly death — the lights going out. The last two decades rewrote that. Asleep, your brain runs some of its most intricate and expensive operations, on a schedule it will not let you skip.</p>
+    </div>
+
+    <!-- architecture + brainwaves -->
+    <div class="grid-2 wide" style="margin-bottom:34px;">
+      <div class="panel reveal">
+        <span class="kicker">Sleep architecture</span>
+        <h3>You climb down and up, four to six times a night.</h3>
+        <p>Sleep runs in ~90-minute cycles through light stages (N1, N2), deep slow-wave sleep (N3), and REM. Deep sleep dominates the early night — the body's repair window. REM surges toward morning, when the mind does its dreaming and emotional filing.</p>
+        <svg class="hypno" viewBox="0 0 520 170" preserveAspectRatio="none">
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="60" y1="20" x2="520" y2="20"/>
+            <line x1="60" y1="52" x2="520" y2="52"/>
+            <line x1="60" y1="84" x2="520" y2="84"/>
+            <line x1="60" y1="116" x2="520" y2="116"/>
+            <line x1="60" y1="148" x2="520" y2="148"/>
+          </g>
+          <text x="0" y="24">Awake</text>
+          <text x="0" y="56">REM</text>
+          <text x="0" y="88">N1</text>
+          <text x="0" y="120">N2</text>
+          <text x="0" y="152">N3</text>
+          <path id="hyp" d="M60,20 L110,84 L130,116 L150,148 L200,148 L210,52 L250,52 L270,116 L300,148 L340,148 L350,52 L390,52 L410,116 L430,84 L440,52 L490,52 L510,20"
+                fill="none" stroke="url(#hypgrad)" stroke-width="2.4"/>
+          <defs><linearGradient id="hypgrad" x1="0" x2="1"><stop offset="0" stop-color="var(--aurora)"/><stop offset="1" stop-color="var(--violet)"/></linearGradient></defs>
+          <circle r="5" fill="#fff"><animateMotion dur="9s" repeatCount="indefinite" rotate="auto"><mpath href="#hyp"/></animateMotion></circle>
+        </svg>
+      </div>
+
+      <div class="panel reveal">
+        <span class="kicker">Brainwaves</span>
+        <h3>As the waves slow, restoration rises.</h3>
+        <p>Awake, your cortex crackles with fast, low waves. Descending toward deep sleep, the rhythm slows and swells into long delta waves — the state where the deepest repair happens. Slower isn't emptier. It's the point.</p>
+        <div class="eeg-rows">
+          <div class="eeg-row"><span class="lab">Beta · awake</span><svg viewBox="0 0 300 34" preserveAspectRatio="none"><path d="M0,17 q3,-13 6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0 t6,0" fill="none" stroke="var(--rose)" stroke-width="1.6"/></svg><span class="hz">14–30&nbsp;Hz</span></div>
+          <div class="eeg-row"><span class="lab">Alpha · calm</span><svg viewBox="0 0 300 34" preserveAspectRatio="none"><path d="M0,17 q6,-11 12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0 t12,0" fill="none" stroke="var(--gold)" stroke-width="1.6"/></svg><span class="hz">8–13&nbsp;Hz</span></div>
+          <div class="eeg-row"><span class="lab">Theta · drifting</span><svg viewBox="0 0 300 34" preserveAspectRatio="none"><path d="M0,17 q12,-10 24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0 t24,0" fill="none" stroke="var(--aurora)" stroke-width="1.8"/></svg><span class="hz">4–7&nbsp;Hz</span></div>
+          <div class="eeg-row"><span class="lab">Delta · deep</span><svg viewBox="0 0 300 34" preserveAspectRatio="none"><path d="M0,17 q30,-11 60,0 t60,0 t60,0 t60,0 t60,0" fill="none" stroke="var(--violet)" stroke-width="2.2"/></svg><span class="hz">0.5–4&nbsp;Hz</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GLYMPHATIC — signature -->
+    <div class="panel feature reveal" style="margin-bottom:34px;">
+      <div class="wash-wrap">
+        <div class="brainstage">
+          <svg viewBox="0 0 320 260">
+            <defs>
+              <clipPath id="brainclip">
+                <path d="M90,60 C60,60 46,90 54,116 C40,128 44,158 66,166 C70,196 108,206 128,190 C150,206 186,206 204,188 C236,196 268,176 262,146 C284,132 280,96 252,90 C252,60 216,44 190,58 C170,44 130,44 112,60 C104,58 96,58 90,60 Z"/>
+              </clipPath>
+              <linearGradient id="csf" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="var(--aurora)"/>
+                <stop offset="100%" stop-color="var(--violet)"/>
+              </linearGradient>
+            </defs>
+            <!-- brain outline -->
+            <path d="M90,60 C60,60 46,90 54,116 C40,128 44,158 66,166 C70,196 108,206 128,190 C150,206 186,206 204,188 C236,196 268,176 262,146 C284,132 280,96 252,90 C252,60 216,44 190,58 C170,44 130,44 112,60 C104,58 96,58 90,60 Z"
+                  fill="rgba(156,124,244,.06)" stroke="var(--haze-dim)" stroke-width="1.4"/>
+            <!-- the wash: waves sweeping through -->
+            <g clip-path="url(#brainclip)">
+              <g opacity=".9">
+                <path d="M20,120 q40,-26 80,0 t80,0 t80,0 t80,0 t80,0" fill="none" stroke="url(#csf)" stroke-width="3">
+                  <animateTransform attributeName="transform" type="translate" from="0 90" to="0 -90" dur="4.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0;1;1;0" dur="4.5s" repeatCount="indefinite"/>
+                </path>
+                <path d="M20,120 q40,-26 80,0 t80,0 t80,0 t80,0 t80,0" fill="none" stroke="url(#csf)" stroke-width="3">
+                  <animateTransform attributeName="transform" type="translate" from="0 150" to="0 -30" dur="4.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0;1;1;0" dur="4.5s" repeatCount="indefinite"/>
+                </path>
+                <path d="M20,120 q40,-26 80,0 t80,0 t80,0 t80,0 t80,0" fill="none" stroke="url(#csf)" stroke-width="3">
+                  <animateTransform attributeName="transform" type="translate" from="0 210" to="0 30" dur="4.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0;1;1;0" dur="4.5s" repeatCount="indefinite"/>
+                </path>
+              </g>
+              <!-- waste particles being cleared -->
+              <g fill="var(--rose)">
+                <circle cx="120" cy="110" r="3"><animate attributeName="cy" values="110;70;110" dur="4.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="4.5s" repeatCount="indefinite"/></circle>
+                <circle cx="180" cy="140" r="2.5"><animate attributeName="cy" values="140;95;140" dur="5s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="5s" repeatCount="indefinite"/></circle>
+                <circle cx="150" cy="160" r="2.5"><animate attributeName="cy" values="160;120;160" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="4s" repeatCount="indefinite"/></circle>
+              </g>
+            </g>
+          </svg>
+          <div class="np-note"><span class="np-dot"></span> Norepinephrine pulse · roughly every 50 seconds</div>
+        </div>
+        <div>
+          <span class="kicker">The signature discovery — the glymphatic system</span>
+          <h3>In deep sleep, the brain rinses <em class="accent">itself.</em></h3>
+          <p>During the day, neurons leave metabolic litter behind. Only in deep, slow-wave sleep does the brain open its channels wide: cerebrospinal fluid pulses through the tissue and flushes the waste out — including amyloid-beta and tau, the sticky proteins tied to Alzheimer's. Sleep is when the mind takes out the trash.</p>
+          <p style="margin-top:14px;">In 2025, researchers found what pumps it. During deep sleep the brainstem releases norepinephrine in slow waves — roughly once every 50 seconds — squeezing blood vessels in a rhythm that drives the fluid through like a tide. A sleeping brain is not idle. It is being cleaned by its own quiet pulse.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- sleep pressure + emotion -->
+    <div class="grid-2">
+      <div class="panel reveal">
+        <span class="kicker">Sleep pressure &amp; the two-process model</span>
+        <h3>The debt is real. Caffeine only hides the invoice.</h3>
+        <p>Every waking hour, a molecule called adenosine accumulates and builds "sleep pressure." Caffeine doesn't erase it — it just plugs the receptor so you can't feel it. The adenosine keeps piling up behind the door. Meanwhile an internal 24-hour clock decides <em>when</em> that pressure is allowed to land.</p>
+        <div class="meter">
+          <div class="bar"><div class="fill"></div></div>
+          <div class="labels"><span>Waking · pressure builds</span><span>Sleep · it clears</span></div>
+        </div>
+        <div class="twoproc">
+          <span class="chip"><b>Process&nbsp;S</b> — adenosine / the debt</span>
+          <span class="chip"><b>Process&nbsp;C</b> — the circadian clock</span>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <span class="kicker">Emotion &amp; memory</span>
+        <h3>A night's sleep is overnight therapy.</h3>
+        <p>Lose a night and the amygdala — the brain's threat alarm — becomes far more reactive, while the prefrontal cortex that normally restrains it goes quiet. Small things feel like emergencies. REM sleep does the repair: it replays the day's emotional memories and strips the raw charge off them, so you wake able to remember what happened without re-living how it felt.</p>
+        <div class="bigstat"><span class="n">~60%</span><span class="u">jump in amygdala reactivity after a sleepless night</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ DISCOVERIES ============================ -->
+<section class="band discover">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow">The frontier</span>
+      <h2>What we've learned <em class="accent-v">lately</em>.</h2>
+      <p class="lede">Sleep science is having a decade. A few findings that have sharpened — and complicated — the picture, held to what the evidence actually supports.</p>
+    </div>
+    <div class="disc-grid">
+      <div class="disc reveal"><div class="glow"></div>
+        <span class="num">01</span>
+        <h3>The brain's night-shift plumbing has a driver.</h3>
+        <p>The slow norepinephrine waves that pace deep sleep were identified as the force that pumps cerebrospinal fluid through brain tissue to clear waste. The mechanism behind "brain-washing" is no longer a mystery — it's a rhythm.</p>
+        <span class="src">Hauglund et al., Cell · 2025 (mice)</span>
+      </div>
+      <div class="disc reveal"><div class="glow"></div>
+        <span class="num">02</span>
+        <h3>Sedation is not the same as restoration.</h3>
+        <p>The same study found that a common sleep aid (zolpidem) suppressed those cleansing waves — knocking the brain out without letting it clean. A powerful reminder: being unconscious and being genuinely rested are different states.</p>
+        <span class="src">Same study · emerging, not yet clinical guidance</span>
+      </div>
+      <div class="disc reveal"><div class="glow"></div>
+        <span class="num">03</span>
+        <h3>Poor sleep leaves the proteins of dementia behind.</h3>
+        <p>Because clearance happens mostly in deep sleep, short or fragmented sleep lets amyloid and tau accumulate. Human work is showing the brain moves these proteins into the bloodstream during sleep — and less so when sleep is cut short.</p>
+        <span class="src">Converging human &amp; animal evidence</span>
+      </div>
+      <div class="disc reveal"><div class="glow"></div>
+        <span class="num">04</span>
+        <h3>Daytime "deep rest" is real — within limits.</h3>
+        <p>Guided practices like yoga nidra / NSDR reliably shift you toward the parasympathetic "rest-and-digest" side: heart-rate variability rises, cortisol falls, stress eases.</p>
+        <div class="caveat">Honesty check: the famous "65% dopamine boost" comes from one small study of expert practitioners and hasn't been replicated at scale. Deep rest supplements sleep — it does not replace it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ COUNTERFEITS ============================ -->
+<section class="band fake" id="fake">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow">The counterfeits</span>
+      <h2>Rest that <em class="accent">isn't.</em></h2>
+      <p class="lede">Much of what we reach for at the end of a hard day feels like rest and taxes us like work. The tell is simple: real rest lowers your arousal. These raise it, or borrow the recovery from somewhere else.</p>
+    </div>
+
+    <div class="fake-grid">
+      <div class="fk reveal">
+        <div class="top">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></span>
+          <h3>Feed-scrolling</h3>
+        </div>
+        <span class="why">Looks like downtime</span>
+        <p>Variable-reward loops keep the nervous system on alert and low-grade cortisol elevated. It's rest for your thumbs, not your mind — stimulation dressed as a break.</p>
+        <div class="drain"><span>Perceived</span><div class="batt"><div class="lvl"></div></div><span>Actual</span></div>
+      </div>
+
+      <div class="fk reveal">
+        <div class="top">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.6"><path d="M8 2h8l-1 7a3 3 0 0 1-6 0z"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="9" y1="21" x2="15" y2="21"/></svg></span>
+          <h3>The nightcap</h3>
+        </div>
+        <span class="why">Feels like it helps you sleep</span>
+        <p>Alcohol sedates you fast, then fragments the night — suppressing REM, blunting deep sleep, and often waking you at 3&nbsp;a.m. as it wears off. Unconsciousness, not recovery.</p>
+        <div class="drain"><span>Perceived</span><div class="batt"><div class="lvl"></div></div><span>Actual</span></div>
+      </div>
+
+      <div class="fk reveal">
+        <div class="top">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.6"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></span>
+          <h3>Binge-watching</h3>
+        </div>
+        <span class="why">Passive, so it feels restful</span>
+        <p>Constant input isn't recovery, and autoplay quietly steals the decision to stop — pushing bedtime later and trading real sleep for one more episode.</p>
+        <div class="drain"><span>Perceived</span><div class="batt"><div class="lvl"></div></div><span>Actual</span></div>
+      </div>
+
+      <div class="fk reveal">
+        <div class="top">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3>Revenge bedtime</h3>
+        </div>
+        <span class="why">Stealing tonight back from a stolen day</span>
+        <p>Staying up to reclaim some freedom you didn't get is a real emotional need — met by borrowing rest from tomorrow. The freedom is genuine; so is the compounding cost.</p>
+        <div class="drain"><span>Perceived</span><div class="batt"><div class="lvl"></div></div><span>Actual</span></div>
+      </div>
+
+      <div class="fk reveal">
+        <div class="top">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.6"><path d="M9 11l3 3 8-8"/><path d="M20 12a8 8 0 1 1-4.6-7.2"/></svg></span>
+          <h3>"Productive" rest</h3>
+        </div>
+        <span class="why">A day off spent optimizing it</span>
+        <p>The body is horizontal but the sympathetic system never clocked out — still planning, still bracing. Rest with a to-do list attached isn't rest; it's low-intensity work.</p>
+        <div class="drain"><span>Perceived</span><div class="batt"><div class="lvl"></div></div><span>Actual</span></div>
+      </div>
+
+      <div class="fk reveal">
+        <div class="top">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="12" y1="12" x2="16" y2="10"/><line x1="12" y1="12" x2="9" y2="16"/></svg></span>
+          <h3>Social jetlag</h3>
+        </div>
+        <span class="why">Catching up on the weekend</span>
+        <p>Wildly different weekday and weekend sleep times let you recover hours while scrambling the clock that decides when those hours count. Monday feels like a flight you didn't take.</p>
+        <div class="drain"><span>Perceived</span><div class="batt"><div class="lvl"></div></div><span>Actual</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TRUE REST ============================ -->
+<section class="band true" id="true">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow">What actually restores</span>
+      <h2>You can be exhausted in a way <em class="accent">sleep won't fix.</em></h2>
+      <p class="lede">Rest isn't one thing you run out of; it's several, and you can be deep in surplus on one while bankrupt on another. Naming which kind you're missing is half the cure.</p>
+    </div>
+
+    <div class="true-grid">
+      <div class="reveal">
+        <div class="rests">
+          <div class="rest-item"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.7"><path d="M4 18v-6a8 8 0 0 1 16 0v6"/><path d="M2 18h20"/><path d="M8 12h.01"/></svg></span><div><b>Physical</b><span>Sleep and stillness — but also active recovery: a walk, a stretch, doing nothing on purpose.</span></div></div>
+          <div class="rest-item"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span><div><b>Mental</b><span>A brain that won't stop narrating. Relief is scheduled breaks, not more willpower.</span></div></div>
+          <div class="rest-item"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.7"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg></span><div><b>Sensory</b><span>Screens, noise, notifications. Cured by dimness and quiet, not another input.</span></div></div>
+          <div class="rest-item"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.7"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 21l-5-2.9 1-5.5-4-3.9 5.5-.8z"/></svg></span><div><b>Creative</b><span>Refilled by beauty and wonder — nature, art, awe — not by producing more.</span></div></div>
+          <div class="rest-item"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.7"><path d="M12 21C7 17 3 13 3 8.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 2.5C21 13 17 17 12 21z"/></svg></span><div><b>Emotional</b><span>The exhaustion of performing "fine." Rest is a place you can be honest.</span></div></div>
+          <div class="rest-item"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 7a3 3 0 0 1 0 6M21 20a6 6 0 0 0-4-5.6"/></svg></span><div><b>Social</b><span>Time with people who don't cost you energy — and space from those who do.</span></div></div>
+        </div>
+        <div class="rest-item" style="margin-top:14px;background:rgba(255,203,107,.06);border-color:rgba(255,203,107,.25);">
+          <span class="ic" style="background:rgba(255,203,107,.14);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M12 3c-2 3-6 4-6 8a6 6 0 0 0 12 0c0-4-4-5-6-8z"/></svg></span>
+          <div><b style="color:var(--gold);">Spiritual</b><span>The deepest and most neglected — a sense of belonging and meaning beyond the self. The next section is about this one.</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="breath">
+          <span class="halo"></span>
+          <span class="ring"></span>
+          <span class="ring r2"></span>
+          <span class="word" id="breathWord">Breathe in</span>
+        </div>
+        <p class="breath-cap">Slow, coherent breathing — about five to six breaths a minute — nudges the body toward calm on demand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BIBLICAL / DAWN ============================ -->
+<section class="band dawn-band" id="dawn">
+  <svg class="rays" viewBox="0 0 100 100"><g stroke="rgba(255,240,200,.5)" stroke-width="1.2">
+    <line x1="50" y1="50" x2="50" y2="-10"/><line x1="50" y1="50" x2="90" y2="10"/><line x1="50" y1="50" x2="110" y2="50"/><line x1="50" y1="50" x2="90" y2="90"/><line x1="50" y1="50" x2="50" y2="110"/><line x1="50" y1="50" x2="10" y2="90"/><line x1="50" y1="50" x2="-10" y2="50"/><line x1="50" y1="50" x2="10" y2="10"/><line x1="50" y1="50" x2="70" y2="-6"/><line x1="50" y1="50" x2="30" y2="-6"/><line x1="50" y1="50" x2="106" y2="70"/><line x1="50" y1="50" x2="106" y2="30"/>
+  </g></svg>
+  <div class="wrap dawn-inner">
+    <div class="band-head reveal" style="max-width:64ch;">
+      <span class="eyebrow">Older than the science</span>
+      <h2>Long before we could image a brain, we were told to <em>stop.</em></h2>
+      <p class="lede" style="color:#5a3f4a;">The findings above have a strange echo. Rest as something written into the design; sleep as an act of trust; peace as a state you can hold inside a storm rather than only after it. Read as literature or as scripture, the oldest text on rest keeps arriving at the same place.</p>
+    </div>
+
+    <div class="scripture">
+      <div class="verse reveal">
+        <span class="ref"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B0532E" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg> Genesis 2 · the Sabbath</span>
+        <blockquote>"And he rested on the seventh day... and hallowed it."</blockquote>
+        <p>Rest sits at the top of the story — even the Maker keeps it, and calls it holy. Not a reward for finishing, but a rhythm woven into the week before anyone had earned a thing. Six of making, one of stopping.</p>
+      </div>
+
+      <div class="verse reveal">
+        <span class="ref"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B0532E" stroke-width="1.7"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg> Psalm 4 · sleep as trust</span>
+        <blockquote>"I will both lay me down in peace, and sleep."</blockquote>
+        <p>To fall asleep is to admit the world goes on turning without you holding it. The psalm frames that surrender not as weakness but as trust — the same posture the science asks of anyone who won't let go of the day. "He gives to his beloved sleep" (Psalm 127).</p>
+      </div>
+
+      <div class="verse reveal">
+        <span class="ref"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B0532E" stroke-width="1.7"><path d="M12 3c-2 3-6 4-6 8a6 6 0 0 0 12 0c0-4-4-5-6-8z"/></svg> Matthew 11 · the invitation</span>
+        <blockquote>"Come unto me, all ye that labour... and I will give you rest."</blockquote>
+        <p>An invitation aimed exactly at the modern condition — heavy-laden, over-scheduled, running on borrowed sleep. The rest offered here is for the soul: the spiritual kind that eight hours can't reach, named at the very bottom of that list of rests.</p>
+      </div>
+
+      <div class="verse reveal">
+        <span class="ref"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B0532E" stroke-width="1.7"><path d="M3 12c3-4 6-4 9 0s6 4 9 0"/></svg> John 14 · Mark 4 · peace</span>
+        <blockquote>"Peace I leave with you... not as the world giveth."</blockquote>
+        <p>A peace defined by what it isn't: not the absence of storms. In Mark's gospel the boat is filling with water and Jesus is asleep on a cushion in the stern — the picture of rest held <em>inside</em> the storm, not waiting on the other side of it.</p>
+      </div>
+    </div>
+
+    <!-- seven-day rhythm -->
+    <div class="reveal" style="margin-top:64px;text-align:center;">
+      <span class="eyebrow" style="justify-content:center;">The oldest rhythm</span>
+      <div class="sabbath">
+        <div class="day"><div class="col" style="height:90px;"></div><span class="lab">Day 1</span></div>
+        <div class="day"><div class="col" style="height:110px;"></div><span class="lab">Day 2</span></div>
+        <div class="day"><div class="col" style="height:78px;"></div><span class="lab">Day 3</span></div>
+        <div class="day"><div class="col" style="height:124px;"></div><span class="lab">Day 4</span></div>
+        <div class="day"><div class="col" style="height:96px;"></div><span class="lab">Day 5</span></div>
+        <div class="day"><div class="col" style="height:112px;"></div><span class="lab">Day 6</span></div>
+        <div class="day rest"><div class="col" style="height:150px;"></div><span class="lab">Rest</span></div>
+      </div>
+      <p style="max-width:44ch;margin:26px auto 0;color:#5a3f4a;font-size:1.02rem;">Six days lean toward the seventh. The week was built to breathe — and the day it rests on is the one lit up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CLOSE ============================ -->
+<section class="close">
+  <div class="wrap">
+    <div class="braid-line reveal">
+      <div class="row"><b>Sleep</b><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span> repairs the body.</div>
+      <div class="row"><b>Rest</b><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--aurora)" stroke-width="1.6"><path d="M3 12c3-4 6-4 9 0s6 4 9 0"/></svg></span> returns the mind.</div>
+      <div class="row"><b>Peace</b><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.6"><path d="M12 3c-2 3-6 4-6 8a6 6 0 0 0 12 0c0-4-4-5-6-8z"/></svg></span> steadies the soul.</div>
+    </div>
+    <h2 class="reveal">Three strands of one rope.</h2>
+    <p class="final reveal">The dark was never the enemy.<br>It was the invitation.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <span class="brand"><span class="dot"></span>Stillness</span>
+      <p>An editorial essay on the science and soul of rest. Written to be read slowly — ideally somewhere dim, ideally not long before you close your eyes.</p>
+    </div>
+    <div class="sources">
+      <p><b>On the science:</b> glymphatic clearance and norepinephrine-driven vasomotion — Hauglund et&nbsp;al., <em>Cell</em> (2025); the two-process model of sleep regulation (Borbély); sleep, the amygdala and emotional memory (Walker and colleagues); non-sleep deep rest / yoga nidra reviews. Emerging findings are labelled as such, and figures like the dopamine effect are noted as single-study, not settled.</p>
+      <p style="margin-top:12px;"><b>On the scripture:</b> quotations follow the King James Version (public domain). This piece is reflection and reporting, not medical advice — if sleep is a persistent struggle, a clinician is the right next step.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // starfield
+  (function(){
+    var box = document.getElementById('stars');
+    if(!box) return;
+    var n = window.innerWidth < 640 ? 60 : 120;
+    var frag = document.createDocumentFragment();
+    for(var i=0;i<n;i++){
+      var s = document.createElement('span');
+      s.className='star';
+      var sz = Math.random()*2+0.6;
+      s.style.width=sz+'px'; s.style.height=sz+'px';
+      s.style.left=(Math.random()*100)+'%';
+      s.style.top=(Math.random()*72)+'%';
+      s.style.animationDelay=(Math.random()*4)+'s';
+      s.style.animationDuration=(3+Math.random()*4)+'s';
+      frag.appendChild(s);
+    }
+    box.appendChild(frag);
+  })();
+
+  // scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+
+  // breathing word cue (respects reduced motion)
+  (function(){
+    var w = document.getElementById('breathWord');
+    if(!w) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ w.textContent='Breathe'; return; }
+    var states=['Breathe in','Hold','Breathe out','Hold'];
+    var i=0;
+    // 11s cycle -> ~4 phases, but keep it gentle & non-clinical
+    setInterval(function(){ i=(i+1)%states.length; w.style.opacity=0; setTimeout(function(){ w.textContent=states[i]; w.style.opacity=1; },350); }, 2750);
+    w.style.transition='opacity .35s';
+  })();
+
+  // nav bg on scroll
+  (function(){
+    var nav=document.getElementById('nav');
+    window.addEventListener('scroll',function(){
+      if(window.scrollY>40){ nav.style.background='linear-gradient(to bottom,rgba(8,7,26,.94),rgba(8,7,26,.0))'; }
+      else { nav.style.background='linear-gradient(to bottom,rgba(8,7,26,.85),rgba(8,7,26,0))'; }
+    },{passive:true});
+  })();
+</script>
+</body>
+</html>
