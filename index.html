@@ -526,9 +526,24 @@
     animation: cardIn 0.26s ease both;
   }
 
+  /* Departing cards clear out before the survivors close the gaps. */
+  .bento-card.leaving {
+    opacity: 0;
+    transform: scale(0.97);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  /* Holds a card at its old position for one frame while the FLIP inverts it;
+     removing the class hands it back to the transform transition above. */
+  .bento-card.moving {
+    transition: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .bento-card.enter { animation: none; }
-    .bento-card { transition: none; }
+    .bento-card,
+    .bento-card.leaving { transition: none; }
   }
 
   /* Other projects — collapsed by default, below the main grid */
@@ -1439,32 +1454,7 @@
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
-        const filterVal = button.dataset.filter;
-
-        // Hide non-matches outright so the grid repacks around what's left,
-        // instead of holding their space and dimming them.
-        const filterItems = (cards) => {
-          cards.forEach(card => {
-            const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
-            const match = filterVal === 'all' || tags.includes(filterVal);
-            card.classList.toggle('is-filtered', !match);
-            card.classList.remove('enter');
-            if (match) {
-              // reading offsetWidth forces a reflow so the animation restarts
-              // on a card that was already visible under the previous filter
-              void card.offsetWidth;
-              card.classList.add('enter');
-            }
-          });
-        };
-
-        filterItems(bentoCards);
-
-        // A filter can select cards that live in the collapsed "Other projects"
-        // section. Open it when it has a match so the filter never appears to
-        // return nothing.
-        const stillVisible = [...otherCards].some(c => !c.classList.contains('is-filtered'));
-        if (filterVal !== 'all' && stillVisible) setOther(true);
+        applyFilter(button.dataset.filter);
       });
     });
 
@@ -1487,6 +1477,91 @@
         if (e.animationName === 'cardIn') card.classList.remove('enter');
       });
     });
+
+    /* ---- filtering (FLIP) --------------------------------------------------
+       Cards used to jump to their new slots the instant the grid repacked.
+       Instead: note where each surviving card sits, let the layout change,
+       then animate it from its old box to its new one. Transform and opacity
+       only — anything touching `filter` here re-triggers the compositor stall
+       described above .is-filtered. Offsets come from offsetLeft/offsetTop
+       rather than getBoundingClientRect so a shorter page (and the scroll
+       shift that causes) can't skew them. */
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let filterRun = 0;
+
+    const matches = (card, val) => {
+      const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
+      return val === 'all' || tags.includes(val);
+    };
+
+    const commit = (val) => {
+      bentoCards.forEach(card => {
+        card.classList.remove('leaving');
+        card.classList.toggle('is-filtered', !matches(card, val));
+      });
+    };
+
+    const revealDrawerIfNeeded = (val) => {
+      const hit = [...otherCards].some(c => !c.classList.contains('is-filtered'));
+      if (val !== 'all' && hit) setOther(true);
+    };
+
+    const applyFilter = (val) => {
+      const run = ++filterRun;
+
+      if (reduceMotion.matches) {
+        commit(val);
+        revealDrawerIfNeeded(val);
+        return;
+      }
+
+      const visible = [...bentoCards].filter(c => !c.classList.contains('is-filtered'));
+      const first = new Map(visible.map(c => [c, { x: c.offsetLeft, y: c.offsetTop }]));
+      const leaving = visible.filter(c => !matches(c, val));
+
+      const rearrange = () => {
+        if (run !== filterRun) return;   // a newer click already took over
+        commit(val);
+        revealDrawerIfNeeded(val);
+
+        // Pass 1 — pin every mover at the position it just came from.
+        const movers = [];
+        bentoCards.forEach(card => {
+          if (card.classList.contains('is-filtered')) return;
+          const prev = first.get(card);
+          if (!prev) { card.classList.add('enter'); return; }   // newly revealed
+
+          const dx = prev.x - card.offsetLeft;
+          const dy = prev.y - card.offsetTop;
+          if (!dx && !dy) return;
+
+          card.classList.add('moving');                        // suspends the transition
+          card.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+          movers.push(card);
+        });
+
+        // One forced reflow for the whole batch, so the inverted positions are
+        // real before we release them. Done synchronously rather than in a
+        // double rAF: if the frame callback is ever throttled or dropped, the
+        // cards would stay pinned at their old slots forever.
+        if (movers.length) {
+          void document.body.offsetHeight;
+          movers.forEach(card => {
+            card.classList.remove('moving');                   // transition back on
+            card.style.transform = '';                         // ...and glide home
+          });
+        }
+      };
+
+      // Let the departing cards clear out first, then close the gaps. Both at
+      // once reads as a jumble; sequenced, it reads as one movement.
+      if (leaving.length) {
+        leaving.forEach(c => c.classList.add('leaving'));
+        setTimeout(rearrange, 150);
+      } else {
+        rearrange();
+      }
+    };
 
     // Theme toggle. The head script already set data-theme before first paint;
     // this only handles the click and remembers the choice.
