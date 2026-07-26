@@ -200,7 +200,12 @@
     overflow: hidden;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Named properties, not `all`. With `all`, any class change here — including
+       the filter classes — animated every animatable property for 350ms. */
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
   }
 
   /* Card Spans */
@@ -353,24 +358,29 @@
   .span-2-2 .card-inside { gap: 12px; }
   .span-2-2 .card-inside li { font-size: 14px; }
 
+  /* 24px, not 28px: sitting beside 22px pills, the bigger circle read as
+     misaligned even though both are exactly centred on the footer's midline. */
   .card-arrow {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
+    flex: none;
     border-radius: 50%;
     background: var(--well);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     border: 1px solid var(--hair);
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .card-arrow svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
+    display: block;
     fill: none;
     stroke: var(--fg-dim);
     stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     transition: transform 0.3s ease;
   }
 
@@ -410,9 +420,10 @@
     border-color: var(--card-border-color);
   }
 
+  /* 2px inside a 24px circle looked like a centring bug rather than a nudge. */
   .bento-card:hover .card-arrow svg {
     stroke: var(--bg);
-    transform: translateX(2px);
+    transform: translateX(1px);
   }
 
 
@@ -493,10 +504,31 @@
 
 
   /* Fade Out Class for Filtering animation */
-  .fade-out {
-    opacity: 0.15;
-    pointer-events: none;
-    filter: blur(1px) grayscale(60%);
+  /* Filtering removes non-matching cards from flow so the grid repacks around
+     the matches, rather than leaving them in place dimmed.
+
+     This replaced `opacity + filter: blur(1px) grayscale(60%)`, which froze the
+     page: each card also carries backdrop-filter: blur(12px), so blurring up to
+     27 of them at once forced the compositor to re-rasterise 27 blurred
+     backdrops every frame — and `transition: all` animated it for 350ms. */
+  .is-filtered {
+    display: none !important;
+  }
+
+  /* Cheap enough to run on 28 cards at once: opacity only, no blur, and it
+     can't collide with the hover transform the way an animated transform would. */
+  @keyframes cardIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .bento-card.enter {
+    animation: cardIn 0.26s ease both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card.enter { animation: none; }
+    .bento-card { transition: none; }
   }
 
   /* Other projects — collapsed by default, below the main grid */
@@ -668,7 +700,6 @@
       <button class="filter-btn" data-filter="loops">Cognitive Loops</button>
       <button class="filter-btn" data-filter="spirit">Scripture & Spirit</button>
       <button class="filter-btn" data-filter="learning">Learning & Tools</button>
-      <button class="filter-btn" data-filter="design">Design Portfolio</button>
     </div>
   </header>
 
@@ -1410,13 +1441,19 @@
 
         const filterVal = button.dataset.filter;
 
+        // Hide non-matches outright so the grid repacks around what's left,
+        // instead of holding their space and dimming them.
         const filterItems = (cards) => {
           cards.forEach(card => {
             const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
-            if (filterVal === 'all' || tags.includes(filterVal)) {
-              card.classList.remove('fade-out');
-            } else {
-              card.classList.add('fade-out');
+            const match = filterVal === 'all' || tags.includes(filterVal);
+            card.classList.toggle('is-filtered', !match);
+            card.classList.remove('enter');
+            if (match) {
+              // reading offsetWidth forces a reflow so the animation restarts
+              // on a card that was already visible under the previous filter
+              void card.offsetWidth;
+              card.classList.add('enter');
             }
           });
         };
@@ -1424,9 +1461,9 @@
         filterItems(bentoCards);
 
         // A filter can select cards that live in the collapsed "Other projects"
-        // section (Torac is the only Design entry). Open it when it has a match
-        // so the filter never appears to return nothing.
-        const stillVisible = [...otherCards].some(c => !c.classList.contains('fade-out'));
+        // section. Open it when it has a match so the filter never appears to
+        // return nothing.
+        const stillVisible = [...otherCards].some(c => !c.classList.contains('is-filtered'));
         if (filterVal !== 'all' && stillVisible) setOther(true);
       });
     });
@@ -1443,6 +1480,12 @@
 
     otherToggle.addEventListener('click', () => {
       setOther(otherGrid.hidden);
+    });
+
+    bentoCards.forEach(card => {
+      card.addEventListener('animationend', (e) => {
+        if (e.animationName === 'cardIn') card.classList.remove('enter');
+      });
     });
 
     // Theme toggle. The head script already set data-theme before first paint;
