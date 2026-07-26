@@ -814,40 +814,10 @@ a:hover{color:var(--link-hover)}
 }
 
 
-/* Original presentation art — pixel-true, scaled to container */
-.orig-art{
-  width:100%;
-  max-width:min(100%, calc(var(--aw) * 1px));
-  margin-inline:auto;
-  position:relative;
-  aspect-ratio: var(--aw) / var(--ah);
-  container-type:inline-size;
-  flex-shrink:0;
-}
-.orig-art-stage{
-  width:calc(var(--aw) * 1px);
-  height:calc(var(--ah) * 1px);
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translateX(-50%) scale(calc(100cqi / var(--aw)));
-  transform-origin:top center;
-  pointer-events:none;
-}
-.orig-art-stage > div{ max-width:none; }
-.split-visual .orig-art{ margin-inline:auto; max-width:100%; }
-
-.split-visual .orig-art{
-  max-width: 100%;
-}
-.stress-split .orig-art{
-  max-width: 100%;
-}
 .stress-split .split-visual{
   min-width: 0;
 }
 
-.orig-art[data-full]{ max-width:min(100%, 660px); margin-left:0; }
 @media (min-width:901px){
   .stress-split{
     display:grid;
@@ -856,11 +826,6 @@ a:hover{color:var(--link-hover)}
     align-items:center;
     margin-top:1.75rem;
   }
-}
-
-@media (max-width:900px){
-  .orig-art{ max-width:min(100%, 420px); }
-  .panel.hero .orig-art{ max-width:min(92vw, 400px); }
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -895,20 +860,6 @@ body,.site-nav,.panel{
   transition: background-color .3s ease, color .3s ease;
 }
 
-/* Original art keeps dark stage in light mode so glows/SVGs stay true */
-html[data-theme="light"] .orig-art{
-  background: var(--art-surface);
-  border: 1px solid var(--art-border);
-  border-radius: 22px;
-  box-shadow: var(--art-shadow);
-  /* visible so scaled stage isn't clipped on small screens */
-  overflow: visible;
-}
-html[data-theme="light"] .split-visual .orig-art,
-html[data-theme="light"] .stress-split .orig-art{
-  /* contain glow inside the card without clipping the diagram */
-  overflow: hidden;
-}
 html[data-theme="light"] .title-stack .c-spirit{color:#C48A12}
 html[data-theme="light"] .title-stack .c-soul{color:#0A7FA6}
 html[data-theme="light"] .title-stack .c-body{color:#6B3FC9}
@@ -955,6 +906,767 @@ html[data-theme="light"] .site-footer{
   .reveal{opacity:1;transform:none}
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+   V2 — fluid diagrams, motion, everyday-life sections
+   Everything below reflows rather than scaling down.
+   ══════════════════════════════════════════════════════════════ */
+
+/* anchors must clear the fixed nav */
+[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
+
+/* ── Nav: keep the brand clear of the links at every width ── */
+.site-nav{gap:clamp(.85rem,3vw,1.75rem)}
+.nav-brand{flex-shrink:0}
+.nav-end{min-width:0}
+.nav-links{min-width:0}
+
+/* ── Nav: scrollable link strip on small screens ── */
+@media (max-width:720px){
+  :root{--nav-h:56px}
+  .nav-links{
+    overflow-x:auto;overflow-y:hidden;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);
+    gap:1rem;padding-inline:12px;margin-inline:-12px;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{font-size:.66rem;letter-spacing:.12em;white-space:nowrap;padding:1rem 0}
+  .nav-end{gap:.5rem;min-width:0}
+  .theme-toggle{width:40px;height:40px}
+}
+
+/* ── Figure shell ── */
+.fig{margin:0;width:100%;min-width:0}
+.fig figcaption{
+  margin-top:.85rem;text-align:center;
+  font-family:var(--mono);font-size:clamp(.6rem,1.5vw,.7rem);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fg-faint);
+  line-height:1.5;
+}
+
+/* ══ Rings — fluid, staggered, alive ══ */
+.rings{
+  --size:min(100%,440px);
+  width:var(--size);aspect-ratio:1;position:relative;margin-inline:auto;
+  container-type:inline-size;
+}
+.rings.lg{--size:min(100%,500px)}
+.rings.md{--size:min(100%,380px)}
+.rings.sm{--size:min(100%,300px)}
+.rings .ring{
+  position:absolute;inset:auto;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;border:1.5px solid transparent;
+}
+.rings .ring.outer{
+  width:100%;height:100%;
+  border-color:rgba(181,123,255,.6);
+  box-shadow:0 0 60px rgba(181,123,255,.18),inset 0 0 60px rgba(181,123,255,.06);
+}
+.rings .ring.mid{
+  width:65%;height:65%;
+  border-color:rgba(76,201,240,.65);
+  box-shadow:0 0 50px rgba(76,201,240,.16),inset 0 0 44px rgba(76,201,240,.06);
+}
+.rings .ring.core{
+  width:32%;height:32%;border:0;background:none;box-shadow:none;animation:none;
+}
+.rings .core-glow{
+  position:absolute;inset:0;border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 37%,rgba(255,255,255,.55),rgba(255,248,225,0) 42%),
+    radial-gradient(circle at 50% 52%,#FFF4D6 0%,#FFE09A 28%,#FFC24B 54%,rgba(250,182,72,.3) 72%,rgba(250,182,72,0) 86%);
+  box-shadow:0 0 40px 2px rgba(255,216,140,.45),0 0 110px 24px rgba(255,182,74,.24);
+  animation:corePulse 5.5s ease-in-out infinite;
+}
+@keyframes corePulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* dashed orbit + drifting sparks */
+.rings .orbit{
+  position:absolute;left:50%;top:50%;width:82%;height:82%;
+  transform:translate(-50%,-50%);border-radius:50%;
+  border:1px dashed var(--line);
+  animation:ringSpin 70s linear infinite;
+}
+.rings .spark{
+  position:absolute;left:50%;top:50%;border-radius:50%;
+  transform:translate(-50%,-50%);pointer-events:none;
+  width:82%;height:82%;animation:ringSpin 26s linear infinite;
+}
+.rings .spark::after{
+  content:"";position:absolute;top:-3px;left:50%;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--soul);box-shadow:0 0 14px var(--soul);
+}
+.rings .spark.s2{width:100%;height:100%;animation-duration:41s;animation-direction:reverse}
+.rings .spark.s2::after{background:var(--body);box-shadow:0 0 14px var(--body)}
+.rings .spark.s3{width:65%;height:65%;animation-duration:33s}
+.rings .spark.s3::after{background:var(--spirit);box-shadow:0 0 14px var(--spirit);width:5px;height:5px}
+@keyframes ringSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+.rings .ring-label{
+  position:absolute;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:clamp(.68rem,3cqi,.9rem);
+  letter-spacing:.2em;pointer-events:none;white-space:nowrap;
+}
+.rings .ring-label.body{top:2.5%;color:var(--body-soft)}
+.rings .ring-label.soul{top:19.5%;color:var(--soul-soft)}
+.rings .ring-label.spirit{
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  font-weight:700;color:#3A2A05;letter-spacing:.16em;
+  font-size:clamp(.6rem,2.6cqi,.8rem);
+}
+html[data-theme="light"] .rings .ring-label.body{color:#8B5FD6}
+html[data-theme="light"] .rings .ring-label.soul{color:#0A7FA6}
+
+/* entrance: outer → mid → core */
+.reveal .rings .ring.outer,
+.reveal .rings .ring.mid,
+.reveal .rings .ring.core,
+.reveal .rings .ring-label,
+.reveal .rings .orbit,
+.reveal .rings .spark{
+  opacity:0;transition:opacity .9s var(--ease),transform 1s var(--ease);
+}
+.reveal .rings .ring.outer,.reveal .rings .ring.mid,.reveal .rings .ring.core{
+  transform:translate(-50%,-50%) scale(.88);
+}
+.reveal.in .rings .ring.outer{opacity:1;transform:translate(-50%,-50%) scale(1);transition-delay:.05s}
+.reveal.in .rings .ring.mid{opacity:1;transform:translate(-50%,-50%) scale(1);transition-delay:.2s}
+.reveal.in .rings .ring.core{opacity:1;transform:translate(-50%,-50%) scale(1);transition-delay:.36s}
+.reveal.in .rings .ring-label.body{opacity:1;transition-delay:.3s}
+.reveal.in .rings .ring-label.soul{opacity:1;transition-delay:.42s}
+.reveal.in .rings .ring-label.spirit{opacity:1;transition-delay:.54s}
+.reveal.in .rings .orbit{opacity:1;transition-delay:.6s}
+.reveal.in .rings .spark{opacity:1;transition-delay:.75s}
+
+/* focus modes — light one layer, quiet the others */
+.rings.focus-body .ring.outer{border-width:2.5px;border-color:rgba(181,123,255,.95);box-shadow:0 0 90px rgba(181,123,255,.36),inset 0 0 70px rgba(181,123,255,.12)}
+.rings.focus-soul .ring.mid{border-width:2.5px;border-color:rgba(76,201,240,.95);box-shadow:0 0 80px rgba(76,201,240,.34),inset 0 0 60px rgba(76,201,240,.1)}
+.rings.focus-spirit .core-glow{box-shadow:0 0 56px 4px rgba(255,216,140,.6),0 0 170px 36px rgba(255,182,74,.34)}
+.reveal.in .rings.focus-body .ring.mid,
+.reveal.in .rings.focus-body .ring.core,
+.reveal.in .rings.focus-soul .ring.outer,
+.reveal.in .rings.focus-soul .ring.core,
+.reveal.in .rings.focus-spirit .ring.outer,
+.reveal.in .rings.focus-spirit .ring.mid{opacity:.3}
+.rings.focus-body .ring-label.soul,.rings.focus-body .ring-label.spirit,
+.rings.focus-soul .ring-label.body,.rings.focus-soul .ring-label.spirit,
+.rings.focus-spirit .ring-label.body,.rings.focus-spirit .ring-label.soul{color:var(--fg-faint)}
+.rings.focus-body .ring-label.body,
+.rings.focus-soul .ring-label.soul{font-weight:700}
+/* dimmed cores in body/soul focus render as a hollow outline */
+.rings.focus-body .core-glow,.rings.focus-soul .core-glow{
+  background:none;box-shadow:none;border:1.5px solid var(--line);animation:none;
+}
+
+/* ══ Interactive layer picker (hero) ══ */
+.layer-pick{
+  display:flex;gap:.5rem;margin-top:1.6rem;flex-wrap:wrap;
+}
+.layer-pick button{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:.7rem 1rem;border-radius:99px;cursor:pointer;
+  border:1px solid var(--card-border);background:var(--card);color:var(--fg-mute);
+  transition:color .25s,border-color .25s,background .25s,transform .2s var(--ease);
+}
+.layer-pick button:hover{transform:translateY(-1px);color:var(--fg)}
+.layer-pick button[aria-pressed="true"]{color:var(--fg);border-color:currentColor}
+.layer-pick button[data-layer="body"][aria-pressed="true"]{color:var(--body);background:rgba(181,123,255,.1)}
+.layer-pick button[data-layer="soul"][aria-pressed="true"]{color:var(--soul);background:rgba(76,201,240,.1)}
+.layer-pick button[data-layer="spirit"][aria-pressed="true"]{color:var(--spirit);background:rgba(255,194,75,.1)}
+.layer-note{
+  margin-top:1rem;min-height:3.4em;
+  font-size:clamp(.98rem,1.4vw,1.12rem);line-height:1.5;color:var(--fg-dim);
+  max-width:32rem;transition:opacity .3s ease;
+}
+.layer-note.swap{opacity:0}
+.layer-note b{color:var(--fg);font-weight:500}
+
+/* ══ Fluid chart (SVG geometry + HTML labels) ══ */
+.chart{
+  position:relative;width:100%;
+  aspect-ratio:var(--ar,16/10);
+  min-width:0;
+}
+.chart svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.chart .c-lab{
+  position:absolute;font-family:var(--mono);
+  font-size:clamp(.6rem,1.7vw,.78rem);letter-spacing:.1em;
+  color:var(--fg-mute);pointer-events:none;white-space:nowrap;
+}
+.chart .c-lab.base{left:6%;top:77%;color:var(--fg-faint)}
+.chart-axis{
+  font-family:var(--mono);font-size:clamp(.6rem,1.6vw,.74rem);
+  letter-spacing:.16em;text-transform:uppercase;color:var(--fg-faint);
+  text-align:center;margin-top:.6rem;
+}
+.chart-axis.top{text-align:left;margin:0 0 .7rem}
+/* the stress split stacks below 901px (the ≥901 rule makes it two columns) */
+@media (max-width:900px){
+  .stress-split{display:grid;gap:clamp(1.75rem,5vw,2.5rem);margin-top:1.75rem}
+}
+.chart-legend{
+  display:flex;flex-wrap:wrap;gap:.55rem 1.25rem;margin-top:1rem;
+  font-size:clamp(.85rem,1.2vw,.98rem);color:var(--fg-dim);
+}
+.chart-legend span{display:inline-flex;align-items:center;gap:.5rem}
+.chart-legend i{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+
+/* draw-on for chart strokes */
+.draw{stroke-dasharray:var(--len,1400);stroke-dashoffset:var(--len,1400)}
+.reveal.in .draw{
+  animation:drawLine 1.8s var(--ease) forwards;
+}
+.reveal.in .draw.d2{animation-delay:.5s}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+.fade-el{opacity:0;transition:opacity .7s ease .9s}
+.reveal.in .fade-el{opacity:1}
+
+/* ══ Gauge (amygdala) ══ */
+.gauge{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,5vw,3rem);
+  align-items:end;margin-top:1.5rem;
+}
+.gauge-col{display:flex;flex-direction:column;align-items:center;text-align:center}
+.gauge-val{
+  font-family:var(--mono);font-size:clamp(.85rem,2vw,1.05rem);
+  letter-spacing:.12em;margin-bottom:.6rem;
+}
+.gauge-bar{
+  width:100%;max-width:150px;border-radius:12px 12px 0 0;
+  height:var(--h);transition:height 1.1s var(--ease);
+}
+.reveal .gauge-bar{height:0}
+.reveal.in .gauge-bar{height:var(--h)}
+.gauge-col.hi .gauge-val{color:#F0776A}
+.gauge-col.hi .gauge-bar{background:linear-gradient(180deg,#F0776A,rgba(240,119,106,.22));box-shadow:0 0 40px rgba(240,119,106,.25)}
+.gauge-col.lo .gauge-val{color:var(--soul)}
+.gauge-col.lo .gauge-bar{background:linear-gradient(180deg,#4CC9F0,rgba(76,201,240,.22));box-shadow:0 0 40px rgba(76,201,240,.28);transition-delay:.25s}
+.gauge-cap{
+  margin-top:1rem;font-size:clamp(.9rem,1.3vw,1.05rem);color:var(--fg-soft);line-height:1.4;
+}
+.gauge-axis{
+  text-align:center;margin-top:.9rem;
+  font-family:var(--mono);font-size:clamp(.6rem,1.5vw,.72rem);
+  letter-spacing:.14em;color:var(--fg-faint);
+}
+.gauge-flow{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:.5rem .9rem;margin-top:1.5rem;padding-top:1.3rem;
+  border-top:1px solid var(--line-soft);
+  font-size:clamp(.95rem,1.5vw,1.15rem);color:var(--fg);
+}
+.gauge-flow .sep{color:var(--fg-faint)}
+.gauge-flow .end{color:var(--spirit-soft)}
+html[data-theme="light"] .gauge-flow .end{color:var(--spirit)}
+
+/* ══ Neural pathway ══ */
+.paths{display:flex;flex-direction:column;gap:1.5rem;margin-top:1.5rem}
+.pathrow .track{display:flex;align-items:center}
+.pathrow .node{
+  border-radius:50%;flex-shrink:0;background:#233047;
+  border:1.5px solid rgba(76,201,240,.5);
+  width:clamp(16px,4vw,22px);aspect-ratio:1;
+}
+.pathrow .wire{
+  flex:1;height:2px;background:rgba(76,201,240,.32);margin:0 -2px;
+  position:relative;overflow:hidden;border-radius:3px;
+}
+.pathrow .cap{
+  margin-top:.7rem;font-family:var(--mono);
+  font-size:clamp(.75rem,1.5vw,.9rem);color:var(--fg-mute);line-height:1.4;
+}
+.pathrow.p2 .node{width:clamp(20px,5vw,26px);border-width:2px;border-color:rgba(76,201,240,.8);background:#1c3346}
+.pathrow.p2 .wire{height:5px;background:rgba(76,201,240,.6)}
+.pathrow.p3 .node{
+  width:clamp(24px,6vw,32px);border:0;
+  background:radial-gradient(circle,#8FDDFF,#4CC9F0);
+  box-shadow:0 0 20px rgba(76,201,240,.7);
+}
+.pathrow.p3 .wire{
+  height:10px;background:linear-gradient(90deg,#4CC9F0,#8FDDFF,#4CC9F0);
+  box-shadow:0 0 18px rgba(76,201,240,.55);
+}
+.pathrow.p3 .cap{color:var(--soul-soft)}
+html[data-theme="light"] .pathrow.p3 .cap{color:var(--soul)}
+/* a signal travelling the strongest path */
+.pathrow.p3 .wire::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  width:34%;transform:translateX(-120%);
+  animation:signal 2.6s ease-in-out infinite;
+}
+@keyframes signal{0%{transform:translateX(-120%)}55%,100%{transform:translateX(320%)}}
+.reveal .pathrow{opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in .pathrow{opacity:1;transform:none}
+.reveal.in .pathrow.p2{transition-delay:.18s}
+.reveal.in .pathrow.p3{transition-delay:.36s}
+
+/* ══ DMN: wandering vs stillness ══ */
+.dmn{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(.6rem,2vw,1.1rem);align-items:center;margin-top:1.5rem}
+.dmn-card{
+  border:1px solid var(--card-border);border-radius:18px;
+  padding:clamp(1rem,3vw,1.4rem);background:var(--card);min-width:0;
+}
+.dmn-card.calm{border-color:var(--fruit-border);background:var(--fruit-bg)}
+.dmn-card h4{
+  margin:0 0 .7rem;text-align:center;font-weight:400;
+  font-family:var(--mono);font-size:clamp(.65rem,1.7vw,.8rem);
+  letter-spacing:.16em;color:var(--soul);
+}
+.dmn-card.calm h4{color:var(--spirit)}
+.dmn-card p{
+  margin:.7rem 0 0;text-align:center;
+  font-size:clamp(.82rem,1.6vw,.98rem);color:var(--fg-mute);line-height:1.4;
+}
+.dmn-card svg{width:100%;height:auto}
+.dmn-mid{
+  font-family:var(--mono);font-size:clamp(.6rem,1.4vw,.72rem);
+  letter-spacing:.1em;color:var(--fg-faint);text-align:center;line-height:1.5;
+}
+.dmn .node-busy{animation:twinkle 3.4s ease-in-out infinite}
+.dmn .node-busy:nth-child(2){animation-delay:.4s}
+.dmn .node-busy:nth-child(3){animation-delay:.9s}
+.dmn .node-busy:nth-child(4){animation-delay:1.3s}
+.dmn .node-busy:nth-child(5){animation-delay:1.8s}
+.dmn .node-busy:nth-child(6){animation-delay:2.2s}
+.dmn .node-busy:nth-child(7){animation-delay:2.7s}
+.dmn .node-busy:nth-child(8){animation-delay:3.1s}
+@keyframes twinkle{0%,100%{opacity:.45}50%{opacity:1}}
+.dmn .calm-core{animation:calmPulse 6s ease-in-out infinite;transform-origin:center}
+@keyframes calmPulse{0%,100%{opacity:.75}50%{opacity:1}}
+
+/* ══ Head · heart · gut ══ */
+.hhg{position:relative;margin-top:1.5rem;padding-left:clamp(0px,1vw,8px)}
+.hhg-spine{
+  position:absolute;left:clamp(15px,4.4vw,24px);top:12%;bottom:26%;width:2px;
+  background:linear-gradient(180deg,rgba(76,201,240,.6),rgba(255,194,75,.6),rgba(181,123,255,.6));
+  overflow:hidden;border-radius:2px;
+}
+.hhg-spine::after{
+  content:"";position:absolute;left:0;right:0;height:30%;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.75),transparent);
+  animation:vagus 3.4s ease-in-out infinite;
+}
+@keyframes vagus{0%{transform:translateY(320%)}100%{transform:translateY(-120%)}}
+.hhg-list{display:flex;flex-direction:column;gap:clamp(1.1rem,3vw,1.9rem);position:relative}
+.hhg-item{display:flex;align-items:center;gap:clamp(.9rem,3vw,1.7rem)}
+.hhg-item .orb{
+  width:clamp(38px,9vw,64px);aspect-ratio:1;border-radius:50%;flex-shrink:0;border:2px solid;
+}
+.hhg-item.head .orb{border-color:rgba(76,201,240,.85);background:radial-gradient(circle,rgba(76,201,240,.28),rgba(76,201,240,.04));box-shadow:0 0 34px rgba(76,201,240,.3)}
+.hhg-item.heart .orb{border-color:rgba(255,194,75,.85);background:radial-gradient(circle,rgba(255,194,75,.3),rgba(255,194,75,.04));box-shadow:0 0 34px rgba(255,194,75,.32);animation:heartBeat 2.6s ease-in-out infinite}
+.hhg-item.gut .orb{border-color:rgba(181,123,255,.85);background:radial-gradient(circle,rgba(181,123,255,.28),rgba(181,123,255,.04));box-shadow:0 0 34px rgba(181,123,255,.3)}
+@keyframes heartBeat{0%,100%{transform:scale(1)}12%{transform:scale(1.09)}24%{transform:scale(1)}36%{transform:scale(1.05)}48%{transform:scale(1)}}
+.hhg-item h4{margin:0;font-size:clamp(1.1rem,3vw,1.6rem);font-weight:600;color:var(--fg)}
+.hhg-item p{margin:.2rem 0 0;font-family:var(--mono);font-size:clamp(.72rem,1.9vw,.95rem);color:var(--fg-mute);line-height:1.4}
+.hhg-foot{
+  margin-top:1.4rem;padding-top:1rem;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:clamp(.7rem,1.7vw,.85rem);
+  letter-spacing:.06em;color:var(--fg-mute);line-height:1.6;
+}
+.hhg-foot b{color:var(--fg-soft);font-weight:400}
+
+/* ══ Venn — mind · will · emotion ══ */
+.venn{
+  --s:min(100%,400px);
+  width:var(--s);aspect-ratio:1.16;position:relative;margin-inline:auto;
+  container-type:inline-size;
+}
+.venn .c{
+  position:absolute;width:52%;aspect-ratio:1;border-radius:50%;
+  border:1.5px solid rgba(76,201,240,.5);background:rgba(76,201,240,.1);
+  transition:opacity .8s var(--ease),transform .9s var(--ease);
+}
+.venn .c1{left:24%;top:0}
+.venn .c2{left:0;bottom:8%}
+.venn .c3{right:0;bottom:8%}
+.reveal .venn .c{opacity:0;transform:scale(.85)}
+.reveal.in .venn .c{opacity:1;transform:scale(1)}
+.reveal.in .venn .c2{transition-delay:.15s}
+.reveal.in .venn .c3{transition-delay:.3s}
+.venn .vl{
+  position:absolute;text-align:center;line-height:1.15;
+  font-size:clamp(.95rem,6.5cqi,1.6rem);font-weight:600;color:var(--fg);
+}
+.venn .vl span{
+  display:block;font-family:var(--mono);font-size:.5em;font-weight:400;
+  letter-spacing:.16em;color:var(--soul);margin-top:.35em;
+}
+.venn .vl.m{left:50%;top:23%;transform:translate(-50%,-50%)}
+.venn .vl.w{left:26%;bottom:16%;transform:translate(-50%,0)}
+.venn .vl.e{right:26%;bottom:16%;transform:translate(50%,0)}
+.venn .self{
+  position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
+  font-family:var(--mono);font-size:clamp(.55rem,3cqi,.72rem);font-weight:700;
+  letter-spacing:.14em;text-align:center;color:var(--fg);line-height:1.3;
+  background:var(--bg);padding:.45rem .6rem;border-radius:8px;
+}
+
+/* ══ Scenario timeline — "one ordinary moment" ══ */
+.scene{
+  margin-top:clamp(1.5rem,4vw,2.25rem);
+  border:1px solid var(--card-border);border-radius:20px;
+  background:var(--card);padding:clamp(1.15rem,4vw,2rem);
+}
+.scene-set{
+  font-size:clamp(1.02rem,1.8vw,1.3rem);line-height:1.5;color:var(--fg);margin:0;
+}
+.scene-set .stamp{
+  display:inline-block;font-family:var(--mono);font-size:.72em;
+  letter-spacing:.14em;color:var(--fg-faint);margin-right:.6rem;
+}
+.beats{
+  display:flex;flex-direction:column;gap:0;
+  margin-top:clamp(1.4rem,4vw,2rem);position:relative;
+}
+.beat{
+  display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(.9rem,3vw,1.5rem);
+  padding-bottom:clamp(1.4rem,4vw,2rem);position:relative;
+}
+.beat:last-child{padding-bottom:0}
+.beat-rail{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.beat-dot{
+  width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:.35rem;
+  box-shadow:0 0 14px currentColor;
+}
+.beat-line{flex:1;width:2px;background:var(--line);border-radius:2px}
+.beat:last-child .beat-line{display:none}
+.beat[data-c="body"] .beat-dot{background:var(--body);color:var(--body)}
+.beat[data-c="soul"] .beat-dot{background:var(--soul);color:var(--soul)}
+.beat[data-c="spirit"] .beat-dot{background:var(--spirit);color:var(--spirit)}
+.beat-when{
+  font-family:var(--mono);font-size:clamp(.62rem,1.6vw,.72rem);
+  letter-spacing:.16em;text-transform:uppercase;color:var(--fg-faint);
+}
+.beat h3{
+  margin:.3rem 0 0;font-size:clamp(1.15rem,2.6vw,1.5rem);font-weight:700;letter-spacing:-.01em;
+}
+.beat[data-c="body"] h3{color:var(--body)}
+.beat[data-c="soul"] h3{color:var(--soul)}
+.beat[data-c="spirit"] h3{color:var(--spirit)}
+.beat p{margin:.5rem 0 0;font-size:clamp(.98rem,1.4vw,1.14rem);line-height:1.55;color:var(--fg-dim)}
+.beat p em{color:var(--fg);font-style:italic}
+.reveal .beat{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in .beat{opacity:1;transform:none}
+.reveal.in .beat:nth-child(2){transition-delay:.15s}
+.reveal.in .beat:nth-child(3){transition-delay:.3s}
+.scene-out{
+  margin-top:clamp(1.3rem,4vw,1.9rem);padding-top:1.3rem;
+  border-top:1px solid var(--line);
+  font-size:clamp(1.02rem,1.7vw,1.25rem);line-height:1.5;color:var(--fg-soft);
+}
+.scene-out b{color:var(--fg);font-weight:700}
+
+/* ══ House analogy ══ */
+.house{
+  --hs:min(100%,420px);
+  width:var(--hs);margin-inline:auto;position:relative;aspect-ratio:1;
+  container-type:inline-size;
+}
+.house .shell{
+  position:absolute;border-radius:clamp(12px,4cqi,22px);
+  border:1.5px solid;display:flex;align-items:flex-start;justify-content:center;
+  transition:opacity .8s var(--ease),transform .9s var(--ease);
+}
+.house .shell span{
+  font-family:var(--mono);font-size:clamp(.6rem,3cqi,.8rem);letter-spacing:.18em;
+  margin-top:.6em;
+}
+.house .h-body{
+  inset:0;border-color:rgba(181,123,255,.6);
+  background:rgba(181,123,255,.05);
+  box-shadow:0 0 60px rgba(181,123,255,.14),inset 0 0 50px rgba(181,123,255,.04);
+}
+.house .h-body span{color:var(--body-soft)}
+.house .h-soul{
+  inset:16%;border-color:rgba(76,201,240,.65);
+  background:rgba(76,201,240,.06);
+  box-shadow:0 0 50px rgba(76,201,240,.14);
+}
+.house .h-soul span{color:var(--soul-soft)}
+.house .h-spirit{
+  inset:37%;border-color:rgba(255,194,75,.7);
+  background:radial-gradient(circle at 50% 45%,rgba(255,224,154,.3),rgba(255,194,75,.07));
+  box-shadow:0 0 44px rgba(255,194,75,.28),inset 0 0 30px rgba(255,194,75,.12);
+  align-items:center;
+}
+.house .h-spirit span{color:var(--spirit);margin-top:0;font-weight:700}
+.house .window{
+  position:absolute;right:37%;top:41%;width:26%;height:2px;
+  background:linear-gradient(90deg,rgba(255,194,75,.9),rgba(255,194,75,0));
+  transform:translateY(-50%);overflow:visible;
+}
+.house .window::after{
+  content:"";position:absolute;right:-4px;top:-3px;width:8px;height:8px;
+  border-radius:50%;background:var(--spirit);box-shadow:0 0 16px var(--spirit);
+  animation:corePulse 4s ease-in-out infinite;
+}
+html[data-theme="light"] .house .h-body span{color:#8B5FD6}
+html[data-theme="light"] .house .h-soul span{color:#0A7FA6}
+.reveal .house .shell{opacity:0;transform:scale(.92)}
+.reveal.in .house .shell{opacity:1;transform:scale(1)}
+.reveal.in .house .h-soul{transition-delay:.18s}
+.reveal.in .house .h-spirit{transition-delay:.36s}
+.reveal .house .window{opacity:0;transition:opacity .8s ease .6s}
+.reveal.in .house .window{opacity:1}
+
+.house-notes{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.house-note{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1rem 1.15rem;border-radius:14px;
+  border:1px solid var(--card-border);background:var(--card);
+}
+.house-note .k{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
+  color:var(--fg-faint);padding-top:.2rem;white-space:nowrap;
+}
+.house-note p{margin:0;font-size:clamp(.95rem,1.35vw,1.08rem);line-height:1.5;color:var(--fg-dim)}
+.house-note p b{color:var(--fg);font-weight:500}
+
+/* ══ Everyday example strips ══ */
+.eg{
+  margin-top:clamp(1.5rem,4vw,2rem);
+  border-top:1px solid var(--line);padding-top:clamp(1.2rem,3vw,1.6rem);
+}
+.eg-head{
+  font-family:var(--mono);font-size:clamp(.65rem,1.6vw,.75rem);
+  letter-spacing:.2em;text-transform:uppercase;margin:0 0 1rem;
+}
+.eg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.eg-item{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:.75rem;align-items:start;
+  padding:.95rem 1.05rem;border-radius:14px;
+  border:1px solid var(--card-border);background:var(--card);
+  font-size:clamp(.92rem,1.3vw,1.03rem);line-height:1.45;color:var(--fg-dim);
+  transition:border-color .25s,transform .25s var(--ease);
+}
+.eg-item:hover{transform:translateY(-2px)}
+.eg-item .tick{
+  width:7px;height:7px;border-radius:50%;margin-top:.55em;flex-shrink:0;
+  box-shadow:0 0 10px currentColor;
+}
+.eg[data-c="body"] .eg-head{color:var(--body)}
+.eg[data-c="body"] .tick{background:var(--body);color:var(--body)}
+.eg[data-c="body"] .eg-item:hover{border-color:rgba(181,123,255,.4)}
+.eg[data-c="soul"] .eg-head{color:var(--soul)}
+.eg[data-c="soul"] .tick{background:var(--soul);color:var(--soul)}
+.eg[data-c="soul"] .eg-item:hover{border-color:rgba(76,201,240,.4)}
+.eg[data-c="spirit"] .eg-head{color:var(--spirit)}
+.eg[data-c="spirit"] .tick{background:var(--spirit);color:var(--spirit)}
+.eg[data-c="spirit"] .eg-item:hover{border-color:rgba(255,194,75,.4)}
+.eg-item b{color:var(--fg);font-weight:500}
+
+/* ══ "Which layer is this?" — expanding diagnostic cards ══ */
+.dx{display:flex;flex-direction:column;gap:.7rem;margin-top:clamp(1.5rem,4vw,2rem)}
+.dx-card{
+  border:1px solid var(--card-border);border-radius:16px;
+  background:var(--card);overflow:hidden;
+  transition:border-color .3s,background .3s;
+}
+.dx-card.open{border-color:var(--line);background:rgba(127,160,255,.03)}
+.dx-q{
+  width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:1rem;align-items:center;text-align:left;
+  padding:clamp(1rem,3vw,1.25rem) clamp(1.1rem,3vw,1.5rem);
+  background:none;border:0;cursor:pointer;color:var(--fg);
+  font-family:inherit;font-size:clamp(1rem,1.6vw,1.18rem);
+  font-weight:500;line-height:1.4;
+}
+.dx-q:hover{color:var(--link-hover)}
+.dx-q .plus{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;position:relative;
+  border:1px solid var(--card-border);transition:transform .35s var(--ease),border-color .3s;
+}
+.dx-q .plus::before,.dx-q .plus::after{
+  content:"";position:absolute;left:50%;top:50%;background:currentColor;
+  transform:translate(-50%,-50%);transition:opacity .3s;
+}
+.dx-q .plus::before{width:11px;height:1.5px}
+.dx-q .plus::after{width:1.5px;height:11px}
+.dx-card.open .dx-q .plus{transform:rotate(135deg);border-color:currentColor}
+.dx-a{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .4s var(--ease);
+}
+.dx-card.open .dx-a{grid-template-rows:1fr}
+.dx-a > div{overflow:hidden;min-height:0}
+.dx-body{padding:0 clamp(1.1rem,3vw,1.5rem) clamp(1.1rem,3vw,1.4rem)}
+.dx-line{
+  display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:.85rem;
+  padding:.65rem 0;border-top:1px solid var(--line-soft);
+  font-size:clamp(.94rem,1.3vw,1.06rem);line-height:1.5;color:var(--fg-dim);
+}
+.dx-line .lay{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;padding-top:.28em;
+}
+.dx-line[data-c="body"] .lay{color:var(--body)}
+.dx-line[data-c="soul"] .lay{color:var(--soul)}
+.dx-line[data-c="spirit"] .lay{color:var(--spirit)}
+.dx-note{
+  margin:1rem 0 0;padding:.85rem 1rem;border-radius:12px;
+  border:1px solid var(--one-author-border);background:var(--one-author-bg);
+  font-size:clamp(.92rem,1.3vw,1.04rem);line-height:1.5;color:var(--fg-soft);
+}
+.dx-note b{color:var(--spirit);font-weight:500}
+
+/* ══ Mix-up table (soul feeling vs spirit witness) ══ */
+.mix{
+  margin-top:clamp(1.5rem,4vw,2rem);
+  border:1px solid var(--card-border);border-radius:18px;overflow:hidden;
+}
+.mix-head,.mix-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(.75rem,2.5vw,1.5rem);
+  padding:clamp(.85rem,2.5vw,1.1rem) clamp(1rem,3vw,1.4rem);
+}
+.mix-head{
+  background:var(--card);border-bottom:1px solid var(--card-border);
+  font-family:var(--mono);font-size:clamp(.62rem,1.6vw,.74rem);
+  letter-spacing:.16em;text-transform:uppercase;
+}
+.mix-head div:first-child{color:var(--soul)}
+.mix-head div:last-child{color:var(--spirit)}
+.mix-row{border-top:1px solid var(--line-soft);font-size:clamp(.92rem,1.35vw,1.06rem);line-height:1.45}
+.mix-row:first-of-type{border-top:0}
+.mix-row div:first-child{color:var(--fg-mute)}
+.mix-row div:last-child{color:var(--fg)}
+.mix-foot{
+  padding:clamp(1rem,3vw,1.25rem) clamp(1rem,3vw,1.4rem);
+  border-top:1px solid var(--card-border);background:var(--card);
+  font-size:clamp(.94rem,1.35vw,1.08rem);line-height:1.5;color:var(--fg-soft);
+}
+.mix-foot b{color:var(--fg);font-weight:500}
+
+/* ══ Quick reference ══ */
+.qref{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem;margin-top:clamp(1.5rem,4vw,2rem)}
+.qref-card{
+  border:1px solid var(--card-border);border-radius:18px;
+  background:var(--card);padding:clamp(1.1rem,3vw,1.5rem);
+  display:flex;flex-direction:column;gap:.9rem;
+}
+.qref-card h3{
+  margin:0;font-family:var(--mono);font-size:clamp(.72rem,1.8vw,.85rem);
+  letter-spacing:.2em;font-weight:400;
+}
+.qref-card[data-c="body"]{border-top:2px solid var(--body)}
+.qref-card[data-c="body"] h3{color:var(--body)}
+.qref-card[data-c="soul"]{border-top:2px solid var(--soul)}
+.qref-card[data-c="soul"] h3{color:var(--soul)}
+.qref-card[data-c="spirit"]{border-top:2px solid var(--spirit)}
+.qref-card[data-c="spirit"] h3{color:var(--spirit)}
+.qref-row{display:flex;flex-direction:column;gap:.2rem}
+.qref-row .k{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fg-faint);
+}
+.qref-row .v{font-size:clamp(.94rem,1.3vw,1.05rem);line-height:1.4;color:var(--fg-soft)}
+
+/* ══ Ambient hero aurora ══ */
+.panel.hero::before{
+  content:"";position:absolute;inset:-20%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(38% 34% at 22% 28%,rgba(255,194,75,.16),transparent 70%),
+    radial-gradient(42% 38% at 74% 34%,rgba(76,201,240,.16),transparent 70%),
+    radial-gradient(40% 36% at 52% 76%,rgba(181,123,255,.16),transparent 70%);
+  filter:blur(22px);
+  animation:aurora 26s ease-in-out infinite alternate;
+}
+html[data-theme="light"] .panel.hero::before{opacity:.55}
+@keyframes aurora{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(2%,-2.5%,0) scale(1.08)}
+  100%{transform:translate3d(-2.5%,2%,0) scale(1.03)}
+}
+
+/* staggered children on reveal (works whether .stagger is a child of .reveal or the same node) */
+.reveal .stagger > *,.reveal.stagger > *{opacity:0;transform:translateY(12px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.in .stagger > *,.reveal.in.stagger > *{opacity:1;transform:none}
+.reveal.in.stagger > *:nth-child(1){transition-delay:.04s}
+.reveal.in.stagger > *:nth-child(2){transition-delay:.14s}
+.reveal.in.stagger > *:nth-child(3){transition-delay:.24s}
+.reveal.in .stagger > *:nth-child(1){transition-delay:.04s}
+.reveal.in .stagger > *:nth-child(2){transition-delay:.10s}
+.reveal.in .stagger > *:nth-child(3){transition-delay:.16s}
+.reveal.in .stagger > *:nth-child(4){transition-delay:.22s}
+.reveal.in .stagger > *:nth-child(5){transition-delay:.28s}
+.reveal.in .stagger > *:nth-child(6){transition-delay:.34s}
+.reveal.in .stagger > *:nth-child(7){transition-delay:.40s}
+.reveal.in .stagger > *:nth-child(8){transition-delay:.46s}
+.reveal.in .stagger > *:nth-child(n+9){transition-delay:.52s}
+
+/* ══ Responsive — v2 ══ */
+@media (max-width:900px){
+  .qref{grid-template-columns:1fr}
+  .house-notes{gap:.7rem}
+  .rings{--size:min(84vw,380px)}
+  .venn{--s:min(84vw,340px)}
+}
+@media (max-width:720px){
+  .dmn{grid-template-columns:1fr;gap:.7rem}
+  .dmn-mid{transform:none;padding:.2rem 0}
+  .dmn-mid br{display:none}
+  .eg-grid{grid-template-columns:1fr}
+  .mix-head,.mix-row{grid-template-columns:1fr;gap:.35rem}
+  .mix-head div:last-child,.mix-row div:last-child{padding-top:.35rem}
+  .mix-row div:first-child::before{content:"Soul — ";font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--soul);text-transform:uppercase}
+  .mix-row div:last-child::before{content:"Spirit — ";font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--spirit);text-transform:uppercase}
+  .mix-head{display:none}
+  .dx-line{grid-template-columns:1fr;gap:.15rem}
+  .dx-line .lay{padding-top:0}
+  .chart .c-lab.y{display:none}
+  .beat{grid-template-columns:auto minmax(0,1fr);gap:.85rem}
+}
+/* Legibility floor: nothing on a phone or tablet should render below ~11px.
+   The mono micro-labels were all sitting at 9.6–10.4px. Desktop keeps the
+   smaller label size the rest of the site family uses. */
+@media (max-width:1024px){
+  .foot-strip,.ref,.sci-tags span,.eg-head,.panel-label,.chip,
+  .dmn-card h4,.mix-head div,.beat-when,.house-note .k,.qref-row .k,
+  .dx-line .lay,.chart-axis,.gauge-axis,.dmn-mid,.fig figcaption,
+  .conv-row .side .ref,.rhythm .tag,.dim-row .tag,.book .lab,
+  .compare-card .lab,.tri-card .lab,.wh-row strong,.test .n,
+  .site-footer,.eyebrow{
+    font-size:.72rem;
+  }
+  .foot-strip{letter-spacing:.12em}
+  .nav-links a{font-size:.7rem;letter-spacing:.1em}
+  .rings .ring-label{font-size:clamp(.72rem,3.4cqi,.9rem)}
+  .rings .ring-label.spirit{font-size:clamp(.66rem,3cqi,.8rem)}
+  .house .shell span{font-size:clamp(.68rem,3.4cqi,.8rem)}
+  .venn .self{font-size:clamp(.7rem,3.6cqi,.78rem)}
+  .chart .c-lab{font-size:.72rem}
+  .venn .vl span{font-size:.55em}
+}
+@media (max-width:480px){
+  .rings{--size:min(88vw,320px)}
+  .venn{--s:min(90vw,300px)}
+  .gauge{gap:.9rem}
+  .layer-pick button{flex:1;padding:.75rem .4rem;font-size:.7rem;letter-spacing:.08em}
+  .house{--hs:min(88vw,320px)}
+  .hhg-item{gap:.8rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rings .orbit,.rings .spark,.rings .core-glow,
+  .pathrow.p3 .wire::after,.hhg-spine::after,.hhg-item.heart .orb,
+  .dmn .node-busy,.dmn .calm-core,.panel.hero::before,
+  .house .window::after{animation:none !important}
+  .reveal .rings .ring,.reveal .rings .ring-label,.reveal .rings .orbit,.reveal .rings .spark,
+  .reveal .beat,.reveal .pathrow,.reveal .stagger > *,.reveal .venn .c,
+  .reveal .house .shell,.reveal .house .window,.reveal .fade-el{
+    opacity:1 !important;transform:none !important;transition:none !important;
+  }
+  .reveal .rings .ring.outer,.reveal .rings .ring.mid,.reveal .rings .ring.core{
+    transform:translate(-50%,-50%) !important;
+  }
+  .reveal.in .draw{animation:none;stroke-dashoffset:0}
+  .reveal .gauge-bar{height:var(--h);transition:none}
+}
+
   </style>
 </head>
 <body>
@@ -966,9 +1678,11 @@ html[data-theme="light"] .site-footer{
     <div class="nav-end">
       <nav class="nav-links" aria-label="Primary">
         <a class="keep" href="#orientation">Start</a>
+        <a class="keep" href="#everyday">Everyday</a>
         <a data-c="body" href="#body">Body</a>
         <a data-c="soul" href="#soul">Soul</a>
         <a data-c="spirit" href="#spirit">Spirit</a>
+        <a class="keep" href="#diagnose">Diagnose</a>
         <a class="keep" href="#practice">Practice</a>
       </nav>
       <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode" title="Toggle theme">
@@ -1002,21 +1716,29 @@ html[data-theme="light"] .site-footer{
               <div class="rule"></div>
               <div class="ref">1 Thessalonians 5:23 · NIV</div>
             </div>
+            <div class="layer-pick" id="layerPick" role="group" aria-label="Explore each layer">
+              <button type="button" data-layer="body" aria-pressed="false">Body</button>
+              <button type="button" data-layer="soul" aria-pressed="false">Soul</button>
+              <button type="button" data-layer="spirit" aria-pressed="false">Spirit</button>
+            </div>
+            <p class="layer-note" id="layerNote" aria-live="polite">Tap a layer to see what it is — and what it sounds like on an ordinary day.</p>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:660;--ah:660" aria-label="Spirit soul body diagram">
-  <div class="orig-art-stage">
-<div style="position:relative;width:660px;height:660px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(181,123,255,0.5);box-shadow:0 0 70px rgba(181,123,255,0.22), inset 0 0 70px rgba(181,123,255,0.07)"><div style="position: absolute; left: 327px; top: 8px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: #B57BFF">BODY</div></div>
-    <div style="position:absolute;width:430px;height:430px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(76,201,240,0.55);box-shadow:0 0 60px rgba(76,201,240,0.18), inset 0 0 50px rgba(76,201,240,0.06)"><div style="position: absolute; left: 212px; top: 10px; transform: translateX(-50%); font-family: 'Space Mono',monospace; font-size: 17px; letter-spacing: 3px; color: #4CC9F0">SOUL</div></div>
-    <div style="position:absolute;width:210px;height:210px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 42px 2px rgba(255,216,140,0.45), 0 0 120px 26px rgba(255,182,74,0.26);animation:pulseGlow 5s ease-in-out infinite"></div>
-    
-    
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
-  </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings lg" id="heroRings" aria-label="Three concentric rings: body outermost, soul between, spirit at the centre">
+                <div class="orbit" aria-hidden="true"></div>
+                <div class="spark s2" aria-hidden="true"></div>
+                <div class="ring outer"></div>
+                <div class="spark" aria-hidden="true"></div>
+                <div class="ring mid"></div>
+                <div class="spark s3" aria-hidden="true"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -1040,21 +1762,20 @@ html[data-theme="light"] .site-footer{
             </div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:620;--ah:520" aria-label="Three dimensions diagram">
-  <div class="orig-art-stage">
-<div style="width:620px;height:520px;position:relative">
-      <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#9B8BC4;writing-mode:vertical-rl;rotate:180deg">← WORLD</div>
-      <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#C9A855;writing-mode:vertical-rl">GOD →</div>
-      <div style="position:absolute;width:490px;height:490px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(181,123,255,0.55);box-shadow:0 0 60px rgba(181,123,255,0.14), inset 0 0 60px rgba(181,123,255,0.05)"></div>
-      <div style="position:absolute;width:330px;height:330px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(76,201,240,0.6);box-shadow:0 0 50px rgba(76,201,240,0.12), inset 0 0 46px rgba(76,201,240,0.05)"></div>
-      <div style="position:absolute;width:170px;height:170px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 32px 2px rgba(255,216,140,0.42), 0 0 92px 18px rgba(255,182,74,0.22);animation:pulseGlow 6s ease-in-out infinite"></div>
-      <div style="position:absolute;left:50%;top:24px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:#B57BFF">BODY</div>
-      <div style="position:absolute;left:50%;top:106px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:16px;letter-spacing:3px;color:#4CC9F0">SOUL</div>
-      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:15px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
-    </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings" aria-label="Body faces the world outward; spirit faces God inward">
+                <div class="orbit" aria-hidden="true"></div>
+                <div class="ring outer"></div>
+                <div class="ring mid"></div>
+                <div class="spark s3" aria-hidden="true"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+              <figcaption>← world-facing &nbsp;·&nbsp; God-facing →</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
@@ -1098,23 +1819,114 @@ html[data-theme="light"] .site-footer{
             <div class="model-item"><span class="dot spirit"></span><div><h3>Spirit <span>— the core</span></h3><p>Where we commune with God. We'll move from outside in.</p></div></div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:600;--ah:600" aria-label="Three-part design diagram">
-  <div class="orig-art-stage">
-<div style="width:600px;height:600px;position:relative">
-      <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(181,123,255,0.5);box-shadow:0 0 70px rgba(181,123,255,0.20), inset 0 0 70px rgba(181,123,255,0.06)"></div>
-      <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(76,201,240,0.55);box-shadow:0 0 60px rgba(76,201,240,0.16), inset 0 0 50px rgba(76,201,240,0.05)"></div>
-      <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 40px 2px rgba(255,216,140,0.45), 0 0 110px 24px rgba(255,182,74,0.24);animation:pulseGlow 5s ease-in-out infinite"></div>
-      <div style="position:absolute;left:50%;top:16px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#B57BFF">BODY</div>
-      <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#4CC9F0">SOUL</div>
-      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;color:#2A1D05">SPIRIT</div>
-    </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings" aria-label="The three-part design, outermost to innermost">
+                <div class="orbit" aria-hidden="true"></div>
+                <div class="ring outer"></div>
+                <div class="ring mid"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+              <figcaption>We'll work from the outside in</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Outside → In</div>
+    </div>
+      </div>
+    </section>
+
+    <!-- 04b ONE ORDINARY MOMENT -->
+    <section class="panel" id="everyday" data-accent="mix">
+      <div class="panel-inner">
+        <div class="reveal">
+          <div class="eyebrow"><span class="pip soul"></span><span>In everyday life</span></div>
+          <h2 class="h2">One ordinary moment, three layers</h2>
+          <p class="lead">This isn't abstract. All three are running right now, in you, at the same time. Here's what that looks like on a Tuesday night.</p>
+        </div>
+        <div class="scene reveal">
+          <p class="scene-set"><span class="stamp">10:40 PM</span>A short email from your manager lands on your phone: <em>"Can we talk tomorrow morning."</em> No subject. No smiley. Nothing else.</p>
+          <div class="beats">
+            <div class="beat" data-c="body">
+              <div class="beat-rail"><span class="beat-dot"></span><span class="beat-line"></span></div>
+              <div>
+                <div class="beat-when">Within 2 seconds · Body</div>
+                <h3>The alarm fires first</h3>
+                <p>Your chest tightens. Jaw sets. Heart rate climbs. Adrenaline and cortisol are already moving before a single thought has finished forming. <em>Nobody chose this.</em> This is hardware doing exactly what it was built to do.</p>
+              </div>
+            </div>
+            <div class="beat" data-c="soul">
+              <div class="beat-rail"><span class="beat-dot"></span><span class="beat-line"></span></div>
+              <div>
+                <div class="beat-when">Seconds 3 to 300 · Soul</div>
+                <h3>The mind writes the story</h3>
+                <p>Now the scripts start. <em>What did I do? Is this about last week? Am I being managed out?</em> The emotions pile in behind the thoughts. And the will leans toward a defensive reply at 10:47pm — the one you'd delete by morning.</p>
+              </div>
+            </div>
+            <div class="beat" data-c="spirit">
+              <div class="beat-rail"><span class="beat-dot"></span></div>
+              <div>
+                <div class="beat-when">Underneath all of it · Spirit</div>
+                <h3>The quiet that doesn't argue</h3>
+                <p>And beneath the noise, something steadier: <em>you are not what this job says you are.</em> It isn't loud. It doesn't compete for airtime, and it never uses urgency. It simply holds still and waits to be listened to.</p>
+              </div>
+            </div>
+          </div>
+          <p class="scene-out">All three are you. None of them is the enemy. The question is never <em>which one is real</em> — it's <b>which one is driving.</b></p>
+        </div>
+        <div class="foot-strip">
+      <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
+      <div>Same moment · three layers</div>
+    </div>
+      </div>
+    </section>
+
+    <!-- 04c THE HOUSE -->
+    <section class="panel" data-accent="body">
+      <div class="panel-inner wide">
+        <div class="reveal">
+          <div class="eyebrow"><span class="pip body"></span><span>A picture for it</span></div>
+          <h2 class="h2">The house you live in</h2>
+        </div>
+        <div class="split reveal">
+          <div>
+            <p class="lead" style="margin-top:0">If the rings feel too abstract, try a house.</p>
+            <div class="house-notes">
+              <div class="house-note">
+                <span class="k">BODY</span>
+                <p><b>The house itself.</b> Walls, wiring, plumbing. It has real limits — it needs feeding, sleep, and maintenance, and it complains loudly when it doesn't get them.</p>
+              </div>
+              <div class="house-note">
+                <span class="k">SOUL</span>
+                <p><b>The person living in it.</b> How it's furnished, what music is playing, which rooms are a mess, who gets a key. Your tastes, moods, memories, decisions.</p>
+              </div>
+              <div class="house-note">
+                <span class="k">SPIRIT</span>
+                <p><b>The one room with a window facing out.</b> The only room in the house where you meet Someone who isn't you.</p>
+              </div>
+            </div>
+            <p class="body-copy" style="margin-top:1.5rem">Which is why the failures come in three shapes: a house left to rot until the resident can't think straight — a house redecorated forever with the window painted shut — or a person who sits in that room daily, and slowly starts keeping the whole house differently.</p>
+            <p class="body-copy" style="margin-top:1rem;color:var(--fg-soft)">You can't pray well on four hours' sleep, and you can't sleep your way to communion with God. <span class="em">Both are true at once.</span></p>
+          </div>
+          <div class="split-visual">
+            <figure class="fig">
+              <div class="house" aria-label="Three nested rooms: the body as the house, the soul as the living space, the spirit as the inner room with a window">
+                <div class="shell h-body"><span>THE HOUSE</span></div>
+                <div class="shell h-soul"><span>THE RESIDENT</span></div>
+                <div class="shell h-spirit"><span>ROOM</span></div>
+                <div class="window" aria-hidden="true"></div>
+              </div>
+              <figcaption>Only one room has a window</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="foot-strip">
+      <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
+      <div>House · Resident · Room</div>
     </div>
       </div>
     </section>
@@ -1273,19 +2085,18 @@ html[data-theme="light"] .site-footer{
             <div class="part-quote"><span class="bar"></span><span>"Your bodies are temples of the Holy Spirit" — 1 Cor 6:19</span></div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:600;--ah:600" aria-label="Body emphasis diagram">
-  <div class="orig-art-stage">
-<div style="position:relative;width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(181,123,255,0.9);box-shadow:0 0 90px rgba(181,123,255,0.4), inset 0 0 80px rgba(181,123,255,0.12)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.12)"></div>
-    <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.015)"></div>
-    <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#C6A3FF">BODY</div>
-    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">SOUL</div>
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:#59637A">SPIRIT</div>
-  </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings focus-body" aria-label="The outer ring — the body — lit">
+                <div class="spark s2" aria-hidden="true"></div>
+                <div class="ring outer"></div>
+                <div class="ring mid"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -1309,29 +2120,32 @@ html[data-theme="light"] .site-footer{
             </div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:660;--ah:430" aria-label="Cortisol stress chart" data-full="1">
-  <div class="orig-art-stage">
-<div style="width:660px;height:430px;position:relative">
-      <svg viewBox="0 0 660 430" style="width:100%;height:auto" data-om-raster="">
-        <defs>
-          <linearGradient id="acuteFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4CC9F0" stop-opacity="0.25"></stop><stop offset="1" stop-color="#4CC9F0" stop-opacity="0"></stop></linearGradient>
-        </defs>
-        <line x1="70" y1="40" x2="70" y2="360" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"></line>
-        <line x1="70" y1="360" x2="630" y2="360" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"></line>
-        <line x1="70" y1="300" x2="630" y2="300" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" stroke-dasharray="5 7"></line>
-        <text x="80" y="292" fill="#6B7488" font-family="'Space Mono',monospace" font-size="14">baseline</text>
-        <path d="M70 300 C 150 300, 175 90, 235 90 C 300 90, 330 300, 630 300" fill="url(#acuteFill)" stroke="none"></path>
-        <path d="M70 300 C 150 300, 175 90, 235 90 C 300 90, 330 300, 630 300" fill="none" stroke="#4CC9F0" stroke-width="4" stroke-linecap="round"></path>
-        <path d="M70 300 C 150 300, 190 150, 255 140 C 340 127, 360 150, 420 145 C 500 139, 540 158, 630 150" fill="none" stroke="#F0776A" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 0"></path>
-        <circle cx="235" cy="90" r="5" fill="#4CC9F0"></circle>
-        <text x="34" y="45" fill="#8A93A6" font-family="'Space Mono',monospace" font-size="14" transform="rotate(-90 34 200)" text-anchor="middle" style="letter-spacing:2px">CORTISOL</text>
-        <text x="350" y="392" fill="#8A93A6" font-family="'Space Mono',monospace" font-size="14" text-anchor="middle" style="letter-spacing:2px">TIME →</text>
-        <g><rect x="330" y="60" width="14" height="14" rx="3" fill="#4CC9F0"></rect><text x="352" y="72" fill="#CBD2E0" font-family="'Space Grotesk',sans-serif" font-size="19">Acute — spikes, then resets</text></g>
-        <g><rect x="330" y="92" width="14" height="14" rx="3" fill="#F0776A"></rect><text x="352" y="104" fill="#CBD2E0" font-family="'Space Grotesk',sans-serif" font-size="19">Chronic — stays elevated</text></g>
-      </svg>
-    </div>
-  </div>
-</div>
+            <figure class="fig">
+              <div class="chart-axis top">Cortisol ↑</div>
+              <div class="chart" style="--ar:640/340">
+                <svg viewBox="0 0 640 340" role="img" aria-label="Acute stress spikes then returns to baseline; chronic stress stays elevated">
+                  <defs>
+                    <linearGradient id="acuteFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#4CC9F0" stop-opacity="0.25"></stop>
+                      <stop offset="1" stop-color="#4CC9F0" stop-opacity="0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <line class="fade-el" x1="30" y1="16" x2="30" y2="312" stroke="currentColor" stroke-width="1.5" opacity=".2" vector-effect="non-scaling-stroke"></line>
+                  <line class="fade-el" x1="30" y1="312" x2="620" y2="312" stroke="currentColor" stroke-width="1.5" opacity=".2" vector-effect="non-scaling-stroke"></line>
+                  <line class="fade-el" x1="30" y1="252" x2="620" y2="252" stroke="currentColor" stroke-width="1.5" opacity=".16" stroke-dasharray="5 7" vector-effect="non-scaling-stroke"></line>
+                  <path class="fade-el" d="M30 252 C 115 252, 140 52, 200 52 C 268 52, 296 252, 620 252" fill="url(#acuteFill)" stroke="none"></path>
+                  <path class="draw" d="M30 252 C 115 252, 140 52, 200 52 C 268 52, 296 252, 620 252" fill="none" stroke="#4CC9F0" stroke-width="4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                  <path class="draw d2" d="M30 252 C 115 252, 155 105, 222 95 C 310 82, 330 105, 392 100 C 476 94, 516 113, 620 105" fill="none" stroke="#F0776A" stroke-width="4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                  <circle class="fade-el" cx="200" cy="52" r="5" fill="#4CC9F0"></circle>
+                </svg>
+                <span class="c-lab base">baseline</span>
+              </div>
+              <div class="chart-axis">Time →</div>
+              <div class="chart-legend">
+                <span><i style="background:#4CC9F0"></i>Acute — spikes, then resets</span>
+                <span><i style="background:#F0776A"></i>Chronic — never switches off</span>
+              </div>
+            </figure>
           </div>
         </div>
         <div class="foot-strip">
@@ -1392,6 +2206,18 @@ html[data-theme="light"] .site-footer{
           <div class="tri-card"><div class="lab">Movement</div><h3>Feeds the mind</h3><p>Exercise releases BDNF — "fertilizer" for new neural connections — and lifts mood.</p></div>
           <div class="tri-card"><div class="lab">Rhythm</div><h3>Over hustle</h3><p>Light, dark and a weekly Sabbath keep the body in time. Rest is trust made visible.</p></div>
         </div>
+        <div class="eg reveal" data-c="body">
+          <p class="eg-head">The body talking — you've felt all of these</p>
+          <div class="eg-grid stagger">
+            <div class="eg-item"><span class="tick"></span><span>The 4pm irritability that a sandwich completely fixes. <b>That wasn't a character flaw.</b></span></div>
+            <div class="eg-item"><span class="tick"></span><span>The argument that only happened because you were both running on five hours' sleep.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Dread that lifts about twenty minutes into a walk, before you've solved anything.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Sunday feeling holy and Monday feeling hollow — same faith, different rest.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>The 1am scroll that quietly makes tomorrow's temptation twice as strong.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Skipping lunch to "push through," then snapping at the person you love most.</span></div>
+          </div>
+          <p class="body-copy" style="margin-top:1.25rem;color:var(--fg-soft)">When Elijah wanted to die, God's first move wasn't a rebuke or a sermon. It was <span class="em">food and a nap</span> — twice — before a word of correction. <span class="ref">1 Kings 19:5–8</span></p>
+        </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Ps 127:2 · NIV</div>
@@ -1411,19 +2237,18 @@ html[data-theme="light"] .site-footer{
             <div class="part-quote"><span class="bar"></span><span>"Praise the Lord, my soul; all my inmost being" — Ps 103:1</span></div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:600;--ah:600" aria-label="Soul emphasis diagram">
-  <div class="orig-art-stage">
-<div style="position:relative;width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(76,201,240,0.9);box-shadow:0 0 80px rgba(76,201,240,0.34), inset 0 0 60px rgba(76,201,240,0.10)"></div>
-    <div style="position:absolute;width:190px;height:190px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.015)"></div>
-    <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">BODY</div>
-    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:3px;color:#8FDDFF">SOUL</div>
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:#59637A">SPIRIT</div>
-  </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings focus-soul" aria-label="The middle ring — the soul — lit">
+                <div class="spark s3" aria-hidden="true"></div>
+                <div class="ring outer"></div>
+                <div class="ring mid"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -1445,20 +2270,15 @@ html[data-theme="light"] .site-footer{
             </div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:580;--ah:500" aria-label="Mind will emotion diagram">
-  <div class="orig-art-stage">
-<div style="width:580px;height:500px;position:relative">
-      <div style="position:absolute;width:300px;height:300px;left:130px;top:0;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
-      <div style="position:absolute;width:300px;height:300px;left:30px;top:190px;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
-      <div style="position:absolute;width:300px;height:300px;left:230px;top:190px;border-radius:50%;background:rgba(76,201,240,0.13);border:1.5px solid rgba(76,201,240,0.5)"></div>
-      <div style="position:absolute;left:280px;top:128px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:36px;color:#EAF6FF">Mind</div><div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#6FD0EE;margin-top:6px">KNOW</div></div>
-      <div style="position:absolute;left:168px;top:362px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:36px;color:#EAF6FF">Will</div><div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#6FD0EE;margin-top:6px">CHOOSE</div></div>
-      <div style="position:absolute;left:392px;top:362px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:36px;color:#EAF6FF">Emotion</div><div style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#6FD0EE;margin-top:6px">FEEL</div></div>
-      <div style="position:absolute;left:280px;top:268px;transform:translate(-50%,-50%);text-align:center"><div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:2px;color:#8FDDFF;line-height:1.25">THE<br>SELF</div></div>
-    </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="venn" aria-label="Mind, will and emotion overlap at the self">
+                <span class="c c1"></span><span class="c c2"></span><span class="c c3"></span>
+                <div class="vl m">Mind<span>KNOW</span></div>
+                <div class="vl w">Will<span>CHOOSE</span></div>
+                <div class="vl e">Emotion<span>FEEL</span></div>
+                <div class="self">THE<br>SELF</div>
+              </div>
+            </figure>
           </div>
         </div>
         <div class="foot-strip">
@@ -1481,42 +2301,22 @@ html[data-theme="light"] .site-footer{
           <p class="lead">The adult brain isn't fixed — it's <span class="em">plastic</span>. Every repeated thought strengthens a neural pathway. The brain rewires around what we dwell on.</p>
           <p class="body-copy" style="margin-top:1rem">Renewal isn't only a feeling. What you rehearse, you become.</p>
         </div>
-        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:660;--ah:300" aria-label="Neural pathway diagram">
-  <div class="orig-art-stage">
-<div style="width:660px;height:300px;position:relative">
-      <div style="display:flex;flex-direction:column;gap:34px">
-        <div>
-          <div style="display:flex;align-items:center;gap:0">
-            <div style="width:20px;height:20px;border-radius:50%;background:#233047;border:1.5px solid rgba(76,201,240,0.5);flex-shrink:0"></div>
-            <div style="flex:1;height:2px;background:rgba(76,201,240,0.35);margin:0 -2px"></div>
-            <div style="width:20px;height:20px;border-radius:50%;background:#233047;border:1.5px solid rgba(76,201,240,0.5);flex-shrink:0"></div>
-          </div>
-          <div style="font-family:'Space Mono',monospace;font-size:16px;color:#7A8496;margin-top:10px">A thought, once — a faint trace</div>
+        <div class="reveal" style="margin-top:1.5rem">
+          <figure class="fig paths" aria-label="A pathway thickens the more a thought is rehearsed">
+            <div class="pathrow p1">
+              <div class="track"><span class="node"></span><span class="wire"></span><span class="node"></span></div>
+              <div class="cap">A thought, once — a faint trace</div>
+            </div>
+            <div class="pathrow p2">
+              <div class="track"><span class="node"></span><span class="wire"></span><span class="node"></span></div>
+              <div class="cap">Repeated — the pathway thickens</div>
+            </div>
+            <div class="pathrow p3">
+              <div class="track"><span class="node"></span><span class="wire"></span><span class="node"></span></div>
+              <div class="cap">Rehearsed — a strong, automatic path</div>
+            </div>
+          </figure>
         </div>
-        <div>
-          <div style="display:flex;align-items:center;gap:0">
-            <div style="width:24px;height:24px;border-radius:50%;background:#1c3346;border:2px solid rgba(76,201,240,0.8);flex-shrink:0"></div>
-            <div style="flex:1;height:5px;background:rgba(76,201,240,0.65);margin:0 -3px;border-radius:3px"></div>
-            <div style="width:24px;height:24px;border-radius:50%;background:#1c3346;border:2px solid rgba(76,201,240,0.8);flex-shrink:0"></div>
-          </div>
-          <div style="font-family:'Space Mono',monospace;font-size:16px;color:#7A8496;margin-top:10px">Repeated — the pathway thickens</div>
-        </div>
-        <div>
-          <div style="display:flex;align-items:center;gap:0">
-            <div style="width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#8FDDFF,#4CC9F0);box-shadow:0 0 20px rgba(76,201,240,0.7);flex-shrink:0"></div>
-            <div style="flex:1;height:10px;background:linear-gradient(90deg,#4CC9F0,#8FDDFF,#4CC9F0);box-shadow:0 0 18px rgba(76,201,240,0.6);margin:0 -4px;border-radius:5px"></div>
-            <div style="width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#8FDDFF,#4CC9F0);box-shadow:0 0 20px rgba(76,201,240,0.7);flex-shrink:0"></div>
-          </div>
-          <div style="font-family:'Space Mono',monospace;font-size:16px;color:#8FDDFF;margin-top:10px">Rehearsed — a strong, automatic path</div>
-        </div>
-      </div>
-      </div>
-  </div>
-</div>
-      
-    </div>
-  </div>
-</div></div>
         <p class="body-copy reveal" style="margin-top:1.5rem">London cabbies who memorize 25,000 streets grow larger hippocampi.</p>
         <p class="ref reveal" style="margin-top:.5rem">Maguire et al., UCL · 2000 · "Fire together, wire together" — Hebb, 1949</p>
         <div class="foot-strip">
@@ -1540,36 +2340,32 @@ html[data-theme="light"] .site-footer{
             <span class="ref">Psalm 46:10 · NIV</span>
           </div>
         </div>
-        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:670;--ah:300" aria-label="Mind wandering to stillness">
-  <div class="orig-art-stage">
-<div style="width:670px;height:280px;position:relative;display:flex;align-items:center;gap:16px">
-      <div style="flex:1;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px 18px 18px;background:rgba(255,255,255,0.02)">
-        <div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:#8FDDFF;text-align:center;margin-bottom:8px">MIND WANDERING</div>
-        <svg viewBox="0 0 240 200" style="width:100%;height:auto" data-om-raster="">
-          <g stroke="#4CC9F0" stroke-width="1.6" opacity="0.55">
-            <line x1="60" y1="40" x2="140" y2="32"></line><line x1="140" y1="32" x2="200" y2="70"></line><line x1="60" y1="40" x2="95" y2="95"></line><line x1="95" y1="95" x2="170" y2="120"></line><line x1="200" y1="70" x2="170" y2="120"></line><line x1="95" y1="95" x2="55" y2="150"></line><line x1="170" y1="120" x2="135" y2="165"></line><line x1="135" y1="165" x2="205" y2="150"></line><line x1="170" y1="120" x2="205" y2="150"></line><line x1="140" y1="32" x2="170" y2="120"></line><line x1="55" y1="150" x2="135" y2="165"></line>
-          </g>
-          <g fill="#4CC9F0" opacity="0.22"><circle cx="60" cy="40" r="12"></circle><circle cx="140" cy="32" r="12"></circle><circle cx="200" cy="70" r="12"></circle><circle cx="95" cy="95" r="12"></circle><circle cx="170" cy="120" r="12"></circle><circle cx="55" cy="150" r="12"></circle><circle cx="135" cy="165" r="12"></circle><circle cx="205" cy="150" r="12"></circle></g>
-          <g fill="#8FDDFF"><circle cx="60" cy="40" r="7"></circle><circle cx="140" cy="32" r="7"></circle><circle cx="200" cy="70" r="7"></circle><circle cx="95" cy="95" r="7"></circle><circle cx="170" cy="120" r="7"></circle><circle cx="55" cy="150" r="7"></circle><circle cx="135" cy="165" r="7"></circle><circle cx="205" cy="150" r="7"></circle></g>
-        </svg>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:#9AA3B5;text-align:center;margin-top:6px">self-referential loop</div>
-      </div>
-      <div style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:1px;color:#7A8496;text-align:center;flex-shrink:0;width:54px">QUIETS<br>→</div>
-      <div style="flex:1;border:1px solid rgba(255,194,75,0.25);border-radius:16px;padding:22px 18px 18px;background:rgba(255,194,75,0.03)">
-        <div style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:2px;color:#E8B45A;text-align:center;margin-bottom:8px">STILLNESS</div>
-        <svg viewBox="0 0 240 200" style="width:100%;height:auto" data-om-raster="">
-          <g stroke="#B7BFCE" stroke-width="1.2" opacity="0.12">
-            <line x1="60" y1="40" x2="140" y2="32"></line><line x1="140" y1="32" x2="200" y2="70"></line><line x1="60" y1="40" x2="95" y2="95"></line><line x1="95" y1="95" x2="170" y2="120"></line><line x1="95" y1="95" x2="55" y2="150"></line><line x1="170" y1="120" x2="135" y2="165"></line><line x1="135" y1="165" x2="205" y2="150"></line>
-          </g>
-          <g fill="#4A5568"><circle cx="60" cy="40" r="6"></circle><circle cx="140" cy="32" r="6"></circle><circle cx="200" cy="70" r="6"></circle><circle cx="170" cy="120" r="6"></circle><circle cx="55" cy="150" r="6"></circle><circle cx="135" cy="165" r="6"></circle><circle cx="205" cy="150" r="6"></circle></g>
-          <circle cx="95" cy="95" r="16" fill="#FFC24B" opacity="0.28"></circle>
-          <circle cx="95" cy="95" r="9" fill="#FFD98A"></circle>
-        </svg>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;color:#9AA3B5;text-align:center;margin-top:6px">the loop dims · attention frees</div>
-      </div>
-    </div>
-  </div>
-</div></div>
+        <div class="reveal dmn" style="margin-top:1.5rem">
+          <div class="dmn-card">
+            <h4>MIND WANDERING</h4>
+            <svg viewBox="0 0 240 200" role="img" aria-label="A dense, busy network of self-referential connections">
+              <g stroke="#4CC9F0" stroke-width="1.6" opacity="0.55">
+                <line x1="60" y1="40" x2="140" y2="32"></line><line x1="140" y1="32" x2="200" y2="70"></line><line x1="60" y1="40" x2="95" y2="95"></line><line x1="95" y1="95" x2="170" y2="120"></line><line x1="200" y1="70" x2="170" y2="120"></line><line x1="95" y1="95" x2="55" y2="150"></line><line x1="170" y1="120" x2="135" y2="165"></line><line x1="135" y1="165" x2="205" y2="150"></line><line x1="170" y1="120" x2="205" y2="150"></line><line x1="140" y1="32" x2="170" y2="120"></line><line x1="55" y1="150" x2="135" y2="165"></line>
+              </g>
+              <g fill="#4CC9F0" opacity="0.22"><circle cx="60" cy="40" r="12"></circle><circle cx="140" cy="32" r="12"></circle><circle cx="200" cy="70" r="12"></circle><circle cx="95" cy="95" r="12"></circle><circle cx="170" cy="120" r="12"></circle><circle cx="55" cy="150" r="12"></circle><circle cx="135" cy="165" r="12"></circle><circle cx="205" cy="150" r="12"></circle></g>
+              <g fill="#8FDDFF"><circle class="node-busy" cx="60" cy="40" r="7"></circle><circle class="node-busy" cx="140" cy="32" r="7"></circle><circle class="node-busy" cx="200" cy="70" r="7"></circle><circle class="node-busy" cx="95" cy="95" r="7"></circle><circle class="node-busy" cx="170" cy="120" r="7"></circle><circle class="node-busy" cx="55" cy="150" r="7"></circle><circle class="node-busy" cx="135" cy="165" r="7"></circle><circle class="node-busy" cx="205" cy="150" r="7"></circle></g>
+            </svg>
+            <p>self-referential loop</p>
+          </div>
+          <div class="dmn-mid">QUIETS<br>→</div>
+          <div class="dmn-card calm">
+            <h4>STILLNESS</h4>
+            <svg viewBox="0 0 240 200" role="img" aria-label="The same network, dimmed, with one steady point of light">
+              <g stroke="#B7BFCE" stroke-width="1.2" opacity="0.12">
+                <line x1="60" y1="40" x2="140" y2="32"></line><line x1="140" y1="32" x2="200" y2="70"></line><line x1="60" y1="40" x2="95" y2="95"></line><line x1="95" y1="95" x2="170" y2="120"></line><line x1="95" y1="95" x2="55" y2="150"></line><line x1="170" y1="120" x2="135" y2="165"></line><line x1="135" y1="165" x2="205" y2="150"></line>
+              </g>
+              <g fill="#4A5568"><circle cx="60" cy="40" r="6"></circle><circle cx="140" cy="32" r="6"></circle><circle cx="200" cy="70" r="6"></circle><circle cx="170" cy="120" r="6"></circle><circle cx="55" cy="150" r="6"></circle><circle cx="135" cy="165" r="6"></circle><circle cx="205" cy="150" r="6"></circle></g>
+              <circle class="calm-core" cx="95" cy="95" r="16" fill="#FFC24B" opacity="0.28"></circle>
+              <circle class="calm-core" cx="95" cy="95" r="9" fill="#FFD98A"></circle>
+            </svg>
+            <p>the loop dims · attention frees</p>
+          </div>
+        </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Ps 46:10 · NIV</div>
@@ -1591,32 +2387,42 @@ html[data-theme="light"] .site-footer{
           <p class="body-copy" style="margin-top:1rem">Not suppressed. Not in charge. Named — the way the psalms of lament name grief, then turn it Godward.</p>
           <div class="sci-tags"><span>Affect labeling · Lieberman, UCLA 2007</span></div>
         </div>
-        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:660;--ah:400" aria-label="Amygdala response chart">
-  <div class="orig-art-stage">
-<div style="width:660px;height:380px;position:relative">
-      <div style="display:flex;align-items:flex-end;gap:44px;height:300px;padding:0 30px">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end">
-          <div style="font-family:'Space Mono',monospace;font-size:20px;color:#F0776A;margin-bottom:12px">HIGH</div>
-          <div style="width:100%;max-width:150px;height:240px;border-radius:12px 12px 0 0;background:linear-gradient(180deg,#F0776A,rgba(240,119,106,0.25));box-shadow:0 0 40px rgba(240,119,106,0.25)"></div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:19px;color:#CBD2E0;margin-top:16px;text-align:center">Feeling <span style="color:#F0776A">unnamed</span></div>
+        <div class="reveal" style="margin-top:1.5rem">
+          <figure class="fig" aria-label="Amygdala response is high when a feeling is unnamed, low once it is put into words">
+            <div class="gauge">
+              <div class="gauge-col hi">
+                <div class="gauge-val">HIGH</div>
+                <div class="gauge-bar" style="--h:clamp(150px,34vw,240px)"></div>
+              </div>
+              <div class="gauge-col lo">
+                <div class="gauge-val">LOW</div>
+                <div class="gauge-bar" style="--h:clamp(60px,13.6vw,96px)"></div>
+              </div>
+            </div>
+            <div class="gauge" style="margin-top:0;align-items:start">
+              <div class="gauge-cap">Feeling <span style="color:#F0776A">unnamed</span></div>
+              <div class="gauge-cap">Feeling <span style="color:var(--soul)">named in words</span></div>
+            </div>
+            <div class="gauge-axis">AMYGDALA RESPONSE</div>
+            <div class="gauge-flow">
+              <span>Feel it</span><span class="sep">→</span>
+              <span>Name it</span><span class="sep">→</span>
+              <span class="end">Bring it to God</span>
+            </div>
+          </figure>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end">
-          <div style="font-family:'Space Mono',monospace;font-size:20px;color:#8FDDFF;margin-bottom:12px">LOW</div>
-          <div style="width:100%;max-width:150px;height:96px;border-radius:12px 12px 0 0;background:linear-gradient(180deg,#4CC9F0,rgba(76,201,240,0.25));box-shadow:0 0 40px rgba(76,201,240,0.3)"></div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:19px;color:#CBD2E0;margin-top:16px;text-align:center">Feeling <span style="color:#8FDDFF">named in words</span></div>
+        <div class="eg reveal" data-c="soul">
+          <p class="eg-head">The soul talking — mind, will and emotion at work</p>
+          <div class="eg-grid stagger">
+            <div class="eg-item"><span class="tick"></span><span>Rehearsing an argument in the shower — <b>four hours after it ended.</b></span></div>
+            <div class="eg-item"><span class="tick"></span><span>Reading a two-word text as an insult, then finding out they were just driving.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Knowing exactly what you should apologise for, and not wanting to.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>The pit in your stomach before you speak, that vanishes the second you start.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Scrolling someone's life at midnight and quietly resenting your own.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Agreeing to something you didn't want, because saying no felt too expensive.</span></div>
+          </div>
+          <p class="body-copy" style="margin-top:1.25rem;color:var(--fg-soft)">None of this is sin by itself — it's the self, working. It becomes trouble when one faculty grabs the wheel: <span class="em">feeling that drags the will, or a cold mind that loves nothing.</span></p>
         </div>
-      </div>
-      <div style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:1px;color:#6B7488;text-align:center;margin-top:8px">AMYGDALA RESPONSE</div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:26px;border-top:1px solid rgba(255,255,255,0.12);padding-top:22px">
-        <span style="font-family:'Space Grotesk',sans-serif;font-size:20px;color:#EEF1F8">Feel it</span>
-        <span style="color:#59637A">→</span>
-        <span style="font-family:'Space Grotesk',sans-serif;font-size:20px;color:#EEF1F8">Name it</span>
-        <span style="color:#59637A">→</span>
-        <span style="font-family:'Space Grotesk',sans-serif;font-size:20px;color:#FFD98A">Bring it to God</span>
-      </div>
-    </div>
-  </div>
-</div></div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Prov 4:23 · NIV</div>
@@ -1636,19 +2442,17 @@ html[data-theme="light"] .site-footer{
             <div class="part-quote"><span class="bar"></span><span>"The Spirit testifies with our spirit" — Rom 8:16</span></div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:600;--ah:600" aria-label="Spirit emphasis diagram">
-  <div class="orig-art-stage">
-<div style="position:relative;width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,0.11)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,0.12)"></div>
-    <div style="position:absolute;width:230px;height:230px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 50px 3px rgba(255,216,140,0.5), 0 0 160px 34px rgba(255,182,74,0.30);animation:pulseGlow 5s ease-in-out infinite"></div>
-    <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">BODY</div>
-    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:15px;letter-spacing:3px;color:#59637A">SOUL</div>
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:17px;font-weight:700;letter-spacing:3px;color:#3A2A05">SPIRIT</div>
-  </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings focus-spirit" aria-label="The core — the spirit — lit">
+                <div class="ring outer"></div>
+                <div class="ring mid"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -1681,6 +2485,18 @@ html[data-theme="light"] .site-footer{
             <div class="wh-row final"><strong>Whisper</strong><span>"And after the fire came a gentle whisper."</span></div>
           </div>
         </div>
+        <div class="eg reveal" data-c="spirit">
+          <p class="eg-head">The spirit talking — quieter, and easy to miss</p>
+          <div class="eg-grid stagger">
+            <div class="eg-item"><span class="tick"></span><span>The small check just before you send the message you'd regret. <b>You felt it. You sent it anyway.</b></span></div>
+            <div class="eg-item"><span class="tick"></span><span>Peace in a hospital corridor that makes no sense given the circumstances.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>One line in a sermon that wasn't about you, landing like it was written for you.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>The pull to call someone you hadn't thought about in months — and finding out why.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Getting exactly what you wanted and feeling strangely unfed by it.</span></div>
+            <div class="eg-item"><span class="tick"></span><span>Discomfort after a joke at someone's expense that everyone else laughed at.</span></div>
+          </div>
+          <p class="body-copy" style="margin-top:1.25rem;color:var(--fg-soft)">Notice the pattern: it rarely shouts, it never panics, and it doesn't need you to decide this second. <span class="em">Noise from the body and soul can drown it out entirely — which is why stillness isn't a luxury.</span></p>
+        </div>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>1 Kings 19 · NIV</div>
@@ -1699,32 +2515,48 @@ html[data-theme="light"] .site-footer{
           <div class="sci-tags"><span>Enteric nervous system · Gershon</span><span>Heart coherence · HeartMath</span></div>
           <p class="body-copy" style="margin-top:1.25rem">A gut feeling is <span class="em">real data</span> — but data, not a verdict. A signal to weigh, not a voice to obey.</p>
         </div>
-        <div class="reveal" style="margin-top:1.5rem"><div class="orig-art" style="--aw:540;--ah:460" aria-label="Head heart gut diagram">
-  <div class="orig-art-stage">
-<div style="width:540px;height:420px;position:relative;position:relative;padding:8px 0">
-      <div style="position:absolute;left:31px;top:56px;bottom:150px;width:2px;background:linear-gradient(180deg,rgba(76,201,240,0.6),rgba(255,194,75,0.6),rgba(181,123,255,0.6))"></div>
-      <div style="display:flex;flex-direction:column;gap:40px">
-        <div style="display:flex;align-items:center;gap:28px">
-          <div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(76,201,240,0.85);background:radial-gradient(circle,rgba(76,201,240,0.28),rgba(76,201,240,0.04));box-shadow:0 0 34px rgba(76,201,240,0.3);flex-shrink:0"></div>
-          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;color:#F1F4FA">Head</div><div style="font-family:'Space Mono',monospace;font-size:17px;color:#9AA3B5;margin-top:3px">~86 billion neurons</div></div>
+        <div class="reveal" style="margin-top:1.5rem">
+          <figure class="fig hhg" aria-label="Head, heart and gut each carry their own neural networks">
+            <div class="hhg-spine" aria-hidden="true"></div>
+            <div class="hhg-list stagger">
+              <div class="hhg-item head"><span class="orb"></span><div><h4>Head</h4><p>~86 billion neurons</p></div></div>
+              <div class="hhg-item heart"><span class="orb"></span><div><h4>Heart</h4><p>~40,000 neurons · a "little brain"</p></div></div>
+              <div class="hhg-item gut"><span class="orb"></span><div><h4>Gut</h4><p>~500 million neurons · the "second brain"</p></div></div>
+            </div>
+            <div class="hhg-foot">VAGUS NERVE ≈ 80% of fibres carry signal <b>↑ upward</b> (body → brain)</div>
+          </figure>
         </div>
-        <div style="display:flex;align-items:center;gap:28px">
-          <div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,194,75,0.85);background:radial-gradient(circle,rgba(255,194,75,0.3),rgba(255,194,75,0.04));box-shadow:0 0 34px rgba(255,194,75,0.32);flex-shrink:0"></div>
-          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;color:#F1F4FA">Heart</div><div style="font-family:'Space Mono',monospace;font-size:17px;color:#9AA3B5;margin-top:3px">~40,000 neurons · a "little brain"</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:28px">
-          <div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(181,123,255,0.85);background:radial-gradient(circle,rgba(181,123,255,0.28),rgba(181,123,255,0.04));box-shadow:0 0 34px rgba(181,123,255,0.3);flex-shrink:0"></div>
-          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;color:#F1F4FA">Gut</div><div style="font-family:'Space Mono',monospace;font-size:17px;color:#9AA3B5;margin-top:3px">~500 million neurons · the "second brain"</div></div>
-        </div>
-      </div>
-      <div style="margin-top:26px;border-top:1px solid rgba(255,255,255,0.12);padding-top:16px;font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px;color:#8A93A6">VAGUS NERVE ≈ 80% of fibers carry signal <span style="color:#DCE1EC">↑ upward</span> (body → brain)</div>
-    </div>
-  </div>
-</div></div>
         <p class="ref reveal" style="margin-top:1rem;display:none">Vagus nerve ≈ 80% of fibers carry signal ↑ upward (body → brain)</p>
         <div class="foot-strip">
       <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
       <div>Signal, not verdict</div>
+    </div>
+      </div>
+    </section>
+
+    <!-- 20b THE MIX-UP -->
+    <section class="panel" data-accent="mix">
+      <div class="panel-inner">
+        <div class="reveal">
+          <div class="eyebrow"><span class="pip soul"></span><span>The most common mix-up</span></div>
+          <h2 class="h2">Soul feeling, or Spirit witness?</h2>
+          <p class="lead">This is the confusion that costs people years — jobs taken, relationships started, money given, all on a strong feeling that turned out to be <span class="em">just a strong feeling</span>.</p>
+          <p class="body-copy" style="margin-top:1rem">Hebrews says the Word is sharp enough to divide <span class="em">soul and spirit</span> — which implies they look alike from the inside. They do. But over time they behave very differently.</p>
+        </div>
+        <div class="mix reveal">
+          <div class="mix-head"><div>Soul excitement</div><div>Spirit witness</div></div>
+          <div class="mix-row"><div>Loud, urgent — "now or never"</div><div>Quiet, patient — it survives a night's sleep</div></div>
+          <div class="mix-row"><div>Rises with a crowd, fades when you're alone</div><div>Steady whether or not anyone else agrees</div></div>
+          <div class="mix-row"><div>Needs to win the argument</div><div>Can stay silent and still be sure</div></div>
+          <div class="mix-row"><div>Feels wonderful, leaves you drained</div><div>May cost you something, leaves you settled</div></div>
+          <div class="mix-row"><div>Flatters you — you're the hero of it</div><div>Often corrects you first</div></div>
+          <div class="mix-row"><div>Can't stand being tested</div><div>Welcomes the test</div></div>
+          <div class="mix-foot"><b>The cheapest test in the world:</b> wait a week and tell one wise person. Soul excitement usually can't survive either. A genuine witness of the Spirit almost always can.</div>
+        </div>
+        <p class="body-copy reveal" style="margin-top:1.5rem">And note what this <span class="em">isn't</span> saying — emotion is not the enemy. God made it. Jesus wept, and was moved with compassion. The point isn't to feel less; it's to stop putting feelings in a chair they were never built to sit in.</p>
+        <div class="foot-strip">
+      <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
+      <div>Heb 4:12 · NIV</div>
     </div>
       </div>
     </section>
@@ -1814,6 +2646,118 @@ html[data-theme="light"] .site-footer{
       </div>
     </section>
 
+    <!-- 23b WHICH LAYER IS THIS? -->
+    <section class="panel" id="diagnose" data-accent="soul">
+      <div class="panel-inner">
+        <div class="reveal">
+          <div class="eyebrow"><span class="pip soul"></span><span>Try it on</span></div>
+          <h2 class="h2">"Which layer is this?"</h2>
+          <p class="lead">Here's where the model earns its keep. Six things people actually say — and the questions to ask in order, <span class="em">outside in</span>, before reaching for the spiritual answer.</p>
+          <p class="body-copy" style="margin-top:1rem">Tap any one to open it.</p>
+        </div>
+        <div class="dx reveal" id="dxList">
+          <div class="dx-card">
+            <button type="button" class="dx-q" aria-expanded="false">I feel far from God.<span class="plus" aria-hidden="true"></span></button>
+            <div class="dx-a"><div><div class="dx-body">
+              <div class="dx-line" data-c="body"><span class="lay">BODY</span><span>How much have you slept this week? Distance from God and sleep debt produce nearly identical symptoms — flatness, irritability, no appetite for prayer.</span></div>
+              <div class="dx-line" data-c="soul"><span class="lay">SOUL</span><span>Is there anger or grief you haven't named? Unprocessed emotion muffles everything, not just God.</span></div>
+              <div class="dx-line" data-c="spirit"><span class="lay">SPIRIT</span><span>Is there a yes you're avoiding? Sometimes the silence is the sound of a question you've stopped answering.</span></div>
+              <p class="dx-note"><b>Check in that order.</b> Sometimes the most spiritual thing available to you is going to bed.</p>
+            </div></div></div>
+          </div>
+          <div class="dx-card">
+            <button type="button" class="dx-q" aria-expanded="false">I can't stop worrying.<span class="plus" aria-hidden="true"></span></button>
+            <div class="dx-a"><div><div class="dx-body">
+              <div class="dx-line" data-c="body"><span class="lay">BODY</span><span>Caffeine, screens, no daylight, a threat system stuck in the "on" position. Worry has a chemistry, and you can change some of the inputs today.</span></div>
+              <div class="dx-line" data-c="soul"><span class="lay">SOUL</span><span>A story you keep rehearsing. Every replay deepens the groove — that's the same neuroplasticity that renews a mind, running in reverse.</span></div>
+              <div class="dx-line" data-c="spirit"><span class="lay">SPIRIT</span><span>"Cast it on him" is an action, not a mood. Say the specific thing out loud to God, by name.</span></div>
+              <p class="dx-note"><b>Note the overlap:</b> naming a worry to God is <em>also</em> affect labeling. One act, and every layer benefits.</p>
+            </div></div></div>
+          </div>
+          <div class="dx-card">
+            <button type="button" class="dx-q" aria-expanded="false">I was so sure — and I was wrong.<span class="plus" aria-hidden="true"></span></button>
+            <div class="dx-a"><div><div class="dx-body">
+              <div class="dx-line" data-c="soul"><span class="lay">SOUL</span><span>Certainty is a feeling, and feelings are soul. Strong conviction and strong emotion are indistinguishable in the moment — that's not a personal failing, it's the design.</span></div>
+              <div class="dx-line" data-c="spirit"><span class="lay">SPIRIT</span><span>A genuine witness doesn't evaporate when you slow down. Give it a week and a wise friend before you act on it.</span></div>
+              <p class="dx-note"><b>Being wrong about this doesn't mean you can't hear God.</b> It means you're a person with a soul — which is exactly why Scripture tells us to test things.</p>
+            </div></div></div>
+          </div>
+          <div class="dx-card">
+            <button type="button" class="dx-q" aria-expanded="false">I keep doing what I don't want to do.<span class="plus" aria-hidden="true"></span></button>
+            <div class="dx-a"><div><div class="dx-body">
+              <div class="dx-line" data-c="body"><span class="lay">BODY</span><span>Habit loops live in the body — cue, routine, reward. Willpower alone is a weak lever against a well-worn path. Change what's within reach, when you're tired, and where you are at 11pm.</span></div>
+              <div class="dx-line" data-c="soul"><span class="lay">SOUL</span><span>What is the behaviour actually giving you? Comfort, numbness, control, revenge? Name the payoff and it loses some of its grip.</span></div>
+              <div class="dx-line" data-c="spirit"><span class="lay">SPIRIT</span><span>Paul lands here in Romans 7 and doesn't end in self-hatred — he ends in rescue. Grace, then effort. Not effort in the hope of grace.</span></div>
+              <p class="dx-note"><b>Change the inputs, not just the intentions.</b> Both layers are real; only one of them responds to being scolded.</p>
+            </div></div></div>
+          </div>
+          <div class="dx-card">
+            <button type="button" class="dx-q" aria-expanded="false">I don't feel anything when I pray.<span class="plus" aria-hidden="true"></span></button>
+            <div class="dx-a"><div><div class="dx-body">
+              <div class="dx-line" data-c="soul"><span class="lay">SOUL</span><span>Feeling is soul. It runs on sleep, hormones, weather, and what happened at work — and it is a famously unreliable narrator of what's actually true.</span></div>
+              <div class="dx-line" data-c="spirit"><span class="lay">SPIRIT</span><span>Communion is spirit. The two run on different clocks. Plenty of faithful prayer has felt like nothing at all at the time.</span></div>
+              <p class="dx-note"><b>Don't measure the spirit with the soul's instruments.</b> Show up dry. It counts.</p>
+            </div></div></div>
+          </div>
+          <div class="dx-card">
+            <button type="button" class="dx-q" aria-expanded="false">Everything's fine, but I feel empty.<span class="plus" aria-hidden="true"></span></button>
+            <div class="dx-a"><div><div class="dx-body">
+              <div class="dx-line" data-c="body"><span class="lay">BODY</span><span>Comfortable and depleted is a real combination. Chronic low-grade stress doesn't need a crisis to wear you down.</span></div>
+              <div class="dx-line" data-c="soul"><span class="lay">SOUL</span><span>A life arranged around what you wanted at twenty-two, still running long after you changed.</span></div>
+              <div class="dx-line" data-c="spirit"><span class="lay">SPIRIT</span><span>The innermost room was built for Someone, and it stays hungry whether or not the rest of the house is comfortable. This is the ache nothing else fits.</span></div>
+              <p class="dx-note"><b>The hollowness at the top of the ladder</b> is not a malfunction. It's the one part of you that was never going to be satisfied by the climb.</p>
+            </div></div></div>
+          </div>
+        </div>
+        <div class="foot-strip">
+      <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
+      <div>Check outside → in</div>
+    </div>
+      </div>
+    </section>
+
+    <!-- 23c QUICK REFERENCE -->
+    <section class="panel" data-accent="mix">
+      <div class="panel-inner wide">
+        <div class="reveal">
+          <div class="eyebrow"><span class="pip spirit"></span><span>Keep this</span></div>
+          <h2 class="h2">The whole thing on one card</h2>
+          <p class="lead">If you remember nothing else from this study, remember this much.</p>
+        </div>
+        <div class="qref reveal stagger">
+          <div class="qref-card" data-c="body">
+            <h3>BODY</h3>
+            <div class="qref-row"><span class="k">What it is</span><span class="v">World-conscious. Senses, brain, nervous system.</span></div>
+            <div class="qref-row"><span class="k">What it sounds like</span><span class="v">"I can't cope." Said at 11pm, on no dinner.</span></div>
+            <div class="qref-row"><span class="k">What it needs</span><span class="v">Sleep, food, movement, daylight, Sabbath.</span></div>
+            <div class="qref-row"><span class="k">Goes wrong by</span><span class="v">Being worshipped, or being despised.</span></div>
+            <div class="qref-row"><span class="k">One verse</span><span class="v">"Your bodies are temples" — 1 Cor 6:19</span></div>
+          </div>
+          <div class="qref-card" data-c="soul">
+            <h3>SOUL</h3>
+            <div class="qref-row"><span class="k">What it is</span><span class="v">Self-conscious. Mind, will, emotion — the "you."</span></div>
+            <div class="qref-row"><span class="k">What it sounds like</span><span class="v">"I've thought about this all day." Usually loudly.</span></div>
+            <div class="qref-row"><span class="k">What it needs</span><span class="v">Truth rehearsed, feelings named, choices owned.</span></div>
+            <div class="qref-row"><span class="k">Goes wrong by</span><span class="v">Taking the wheel — and calling itself the Spirit.</span></div>
+            <div class="qref-row"><span class="k">One verse</span><span class="v">"Be transformed by the renewing of your mind" — Rom 12:2</span></div>
+          </div>
+          <div class="qref-card" data-c="spirit">
+            <h3>SPIRIT</h3>
+            <div class="qref-row"><span class="k">What it is</span><span class="v">God-conscious. The innermost core, made for communion.</span></div>
+            <div class="qref-row"><span class="k">What it sounds like</span><span class="v">Almost nothing. A whisper that waits.</span></div>
+            <div class="qref-row"><span class="k">What it needs</span><span class="v">Stillness, Scripture, obedience, time.</span></div>
+            <div class="qref-row"><span class="k">Goes wrong by</span><span class="v">Being drowned out — or counterfeited by feeling.</span></div>
+            <div class="qref-row"><span class="k">One verse</span><span class="v">"The Spirit testifies with our spirit" — Rom 8:16</span></div>
+          </div>
+        </div>
+        <p class="body-copy reveal" style="margin-top:1.75rem;text-align:center;color:var(--fg-soft)">Work <span class="em">outside in</span> when you're diagnosing. Live <span class="em">inside out</span> when you're growing.</p>
+        <div class="foot-strip">
+      <div class="brand"><span>SPIRIT</span> · <span>SOUL</span> · <span>BODY</span></div>
+      <div>The one card</div>
+    </div>
+      </div>
+    </section>
+
     <!-- 24 RHYTHMS -->
     <section class="panel" id="practice" data-accent="mix">
       <div class="panel-inner">
@@ -1857,19 +2801,21 @@ html[data-theme="light"] .site-footer{
             </div>
           </div>
           <div class="split-visual">
-<div class="orig-art" style="--aw:600;--ah:600" aria-label="Spirit soul body diagram">
-  <div class="orig-art-stage">
-<div style="position:relative;width:600px;height:600px">
-    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(181,123,255,0.75);box-shadow:0 0 80px rgba(181,123,255,0.28), inset 0 0 70px rgba(181,123,255,0.08)"></div>
-    <div style="position:absolute;width:392px;height:392px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(76,201,240,0.8);box-shadow:0 0 70px rgba(76,201,240,0.24), inset 0 0 55px rgba(76,201,240,0.08)"></div>
-    <div style="position:absolute;width:200px;height:200px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 37%, rgba(255,255,255,0.55), rgba(255,248,225,0) 42%), radial-gradient(circle at 50% 52%, #FFF4D6 0%, #FFE09A 28%, #FFC24B 54%, rgba(250,182,72,0.30) 72%, rgba(250,182,72,0) 86%);box-shadow:0 0 46px 3px rgba(255,216,140,0.48), 0 0 150px 30px rgba(255,182,74,0.28);animation:pulseGlow 5s ease-in-out infinite"></div>
-    <div style="position:absolute;left:50%;top:16px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#C6A3FF">BODY</div>
-    <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:17px;letter-spacing:3px;color:#8FDDFF">SOUL</div>
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;color:#3A2A05">SPIRIT</div>
-  </div>
-  </div>
-</div>
-</div>
+            <figure class="fig">
+              <div class="rings" aria-label="All three layers held together and lit">
+                <div class="orbit" aria-hidden="true"></div>
+                <div class="spark s2" aria-hidden="true"></div>
+                <div class="ring outer"></div>
+                <div class="spark" aria-hidden="true"></div>
+                <div class="ring mid"></div>
+                <div class="ring core"><i class="core-glow"></i></div>
+                <span class="ring-label body">BODY</span>
+                <span class="ring-label soul">SOUL</span>
+                <span class="ring-label spirit">SPIRIT</span>
+              </div>
+              <figcaption>Whole · and kept</figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -1910,12 +2856,61 @@ html[data-theme="light"] .site-footer{
       els.forEach(el => el.classList.add('in'));
     }
 
+    // Give each drawn chart stroke its true length so the draw-on lands exactly
+    document.querySelectorAll('svg path.draw').forEach(p => {
+      try { p.style.setProperty('--len', Math.ceil(p.getTotalLength())); } catch (e) {}
+    });
+
+    // Hero layer picker — light one ring, swap the caption
+    const NOTES = {
+      body: '<b>Body</b> — world-conscious. It reacts before you finish a thought: the tight chest, the short fuse at 4pm, the dread that lifts twenty minutes into a walk. It has real limits, and it announces them loudly.',
+      soul: '<b>Soul</b> — self-conscious. Mind, will and emotion. The argument you rehearse in the shower, the reply you nearly sent at 10:47pm, the story you keep telling yourself about what just happened.',
+      spirit: '<b>Spirit</b> — God-conscious. The quiet check before you send it. Peace that doesn\'t match the circumstances. It never shouts, and it never needs you to decide this second.'
+    };
+    const DEFAULT_NOTE = 'Tap a layer to see what it is — and what it sounds like on an ordinary day.';
+    const rings = document.getElementById('heroRings');
+    const pick = document.getElementById('layerPick');
+    const note = document.getElementById('layerNote');
+    if (rings && pick && note) {
+      const buttons = [...pick.querySelectorAll('button')];
+      const setNote = (html) => {
+        note.classList.add('swap');
+        setTimeout(() => { note.innerHTML = html; note.classList.remove('swap'); }, 180);
+      };
+      pick.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('button[data-layer]');
+        if (!btn) return;
+        const layer = btn.dataset.layer;
+        const wasOn = btn.getAttribute('aria-pressed') === 'true';
+        buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
+        rings.classList.remove('focus-body', 'focus-soul', 'focus-spirit');
+        if (wasOn) { setNote(DEFAULT_NOTE); return; }
+        btn.setAttribute('aria-pressed', 'true');
+        rings.classList.add('focus-' + layer);
+        setNote(NOTES[layer]);
+      });
+    }
+
+    // "Which layer is this?" — expanding cards
+    const dxList = document.getElementById('dxList');
+    if (dxList) {
+      dxList.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('.dx-q');
+        if (!btn) return;
+        const card = btn.closest('.dx-card');
+        const open = card.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
     // Active nav
     const sections = [
       ['orientation', null],
+      ['everyday', null],
       ['body', 'body'],
       ['soul', 'soul'],
       ['spirit', 'spirit'],
+      ['diagnose', null],
       ['practice', null],
     ];
     const links = [...document.querySelectorAll('.nav-links a')];
