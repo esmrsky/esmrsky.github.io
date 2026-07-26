@@ -295,12 +295,63 @@
     z-index: 2;
   }
 
-  .card-link-text {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--fg-faint);
-    letter-spacing: 0.05em;
+
+  /* Topic pills replace the URL that used to sit here. The URL told a visitor
+     nothing the title didn't; these say what's actually inside. Tinted from
+     --accent rather than neutral so the grid keeps its colour, but kept faint
+     so the one card-tag stays the brightest thing on the card. */
+  .card-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
   }
+
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 100px;
+    white-space: nowrap;
+    color: var(--fg-dim);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+
+  /* Big and tall cards had a lot of dead space between the description and the
+     footer — space-between pushed them apart. This fills it with substance
+     instead of padding it out. */
+  .card-inside {
+    list-style: none;
+    margin-top: 16px;
+    display: grid;
+    gap: 7px;
+  }
+
+  .card-inside li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--fg-dim);
+  }
+
+  .card-inside li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.44em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+  }
+
+  /* 2x2 cards are 532px tall; five items at this spacing leaves breathing room
+     rather than the 150px void that space-between used to open up. */
+  .span-2-2 .card-inside { gap: 12px; }
+  .span-2-2 .card-inside li { font-size: 14px; }
 
   .card-arrow {
     width: 28px;
@@ -364,9 +415,6 @@
     transform: translateX(2px);
   }
 
-  .bento-card:hover .card-link-text {
-    color: var(--fg);
-  }
 
   /* Themes */
   /* ---- Card accents -------------------------------------------------
@@ -587,6 +635,14 @@
     .span-2-2 .card-title {
       font-size: 22px;
     }
+    /* One column here, and rows are auto-height, so the card can just grow.
+       The desktop line-clamp was cutting descriptions mid-sentence with no
+       room to recover — let them run instead. */
+    .card-desc {
+      -webkit-line-clamp: unset;
+      display: block;
+      overflow: visible;
+    }
   }
 </style>
 </head>
@@ -618,30 +674,30 @@
 
   <!-- Bento Grid -->
   <main class="bento-grid">
-
-    <!-- FEATURED · Everything's Mid (Hero 2x2) -->
-    <a href="/everything-mid/" class="bento-card span-2-2 theme-everythingmid" data-tags="loops learning">
+    <!-- FEATURED · Out of the Spiral (Hero 2x2) -->
+    <a href="/the-return-new/" class="bento-card span-2-2 theme-return" data-tags="loops spirit">
       <div class="card-top">
         <div class="card-header">
           <div class="card-icon">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="2" y1="12" x2="22" y2="12" opacity="0.4"/>
-              <path d="M2 12 h6 l2 -4 l4 8 l2 -4 h6"/>
+              <path d="M12 2A10 10 0 0 0 2 12c0 2 .5 3.9 1.4 5.6L2.1 22l4.5-1.3c1.7.9 3.6 1.4 5.4 1.4a10 10 0 0 0 10-10C22 6.5 17.5 2 12 2z"/>
+              <path d="M12 18V8"/>
+              <path d="m15 11-3-3-3 3"/>
             </svg>
           </div>
-          <span class="card-tag">Visual Essay</span>
+          <span class="card-tag">Interactive Guide</span>
         </div>
-        <h2 class="card-title">Everything's Mid</h2>
-        <p class="card-desc">The internet flatlined. Everything’s pleasant, frictionless, and completely forgettable. How the algorithm optimized for “okay” — and why the only way out is a bit of friction.</p>
+        <h2 class="card-title">Out of the Spiral</h2>
+        <p class="card-desc">Why the mind spirals at 2 a.m., why forcing it quiet backfires, and six practiced moves out — from the lab and the desert. A beautifully rendered scrollytelling field guide to mindfulness and quiet contemplation.</p>
+      <ul class="card-inside"><li>The five stages of a spiral</li><li>Why &ldquo;just stop&rdquo; backfires</li><li>Six practiced ways out</li><li>Breath as an anchor</li><li>From the lab and the desert</li></ul>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/everything-mid</span>
+        <div class="card-pills"><span class="pill">Rumination</span><span class="pill">Breath prayer</span><span class="pill">Six exits</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- FEATURED · The Broken Cistern (Standard 1x1) -->
     <a href="/broken-cistern/" class="bento-card theme-cistern" data-tags="spirit">
       <div class="card-top">
@@ -657,13 +713,34 @@
         <p class="card-desc">One shape under many wells — the structure of leaky cisterns set against the living spring.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/broken-cistern</span>
+        <div class="card-pills"><span class="pill">Counterfeits</span><span class="pill">Living spring</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
+    <!-- FEATURED · Everything's Mid (Standard 1x1) -->
+    <a href="/everything-mid/" class="bento-card theme-everythingmid" data-tags="loops learning">
+      <div class="card-top">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="2" y1="12" x2="22" y2="12" opacity="0.4"/>
+              <path d="M2 12 h6 l2 -4 l4 8 l2 -4 h6"/>
+            </svg>
+          </div>
+          <span class="card-tag">Visual Essay</span>
+        </div>
+        <h3 class="card-title">Everything's Mid</h3>
+        <p class="card-desc">The internet flatlined into pleasant, frictionless, forgettable. Why the only way out is friction.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-pills"><span class="pill">Algorithms</span><span class="pill">Friction</span></div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
     <!-- FEATURED · Three Disguises (Wide 2x1) -->
     <a href="/measured/" class="bento-card span-2-1 theme-disguises" data-tags="loops spirit">
       <div class="card-top">
@@ -681,38 +758,77 @@
         <p class="card-desc">Comparison, rejection, and people-pleasing feel like three battles — but usually they're one: the fear your worth must be earned. What's happening, and how it loosens.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/measured</span>
+        <div class="card-pills"><span class="pill">Comparison</span><span class="pill">Rejection</span><span class="pill">People-pleasing</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
-    
-    <!-- The Return (Large 2x2) -->
-    <a href="/the-return-new/" class="bento-card span-2-2 theme-return" data-tags="loops spirit">
+    <!-- Get Uncooked (Standard 1x1) -->
+    <a href="/uncooked/" class="bento-card theme-uncooked" data-tags="loops">
       <div class="card-top">
         <div class="card-header">
           <div class="card-icon">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2A10 10 0 0 0 2 12c0 2 .5 3.9 1.4 5.6L2.1 22l4.5-1.3c1.7.9 3.6 1.4 5.4 1.4a10 10 0 0 0 10-10C22 6.5 17.5 2 12 2z"/>
-              <path d="M12 18V8"/>
-              <path d="m15 11-3-3-3 3"/>
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
           </div>
-          <span class="card-tag">Interactive Guide</span>
+          <span class="card-tag">Field Guide</span>
         </div>
-        <h2 class="card-title">The Return · Out of the Spiral</h2>
-        <p class="card-desc">Why the mind spirals at 2 a.m., why forcing it quiet backfires, and six practiced moves out — from the lab and the desert. A beautifully rendered scrollytelling field guide to mindfulness and quiet contemplation.</p>
+        <h3 class="card-title">Get Uncooked</h3>
+        <p class="card-desc">You're not broken, you're in a loop. Six patterns, the mechanics behind each, and a way out.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-return-new</span>
+        <div class="card-pills"><span class="pill">Six loops</span><span class="pill">First moves</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
+    <!-- Spirit Soul Body (Wide 2x1) -->
+    <a href="/spirit-soul-body/" class="bento-card span-2-1 theme-ssb" data-tags="spirit">
+      <div class="card-top">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5.5"/>
+              <circle cx="12" cy="12" r="2" fill="var(--icon-stroke)" stroke="none"/>
+            </svg>
+          </div>
+          <span class="card-tag">Bible Study</span>
+        </div>
+        <h2 class="card-title">Spirit · Soul · Body</h2>
+        <p class="card-desc">A responsive visual essay on the architecture of human design — Paul’s trichotomy, neuro-spiritual convergences, and practices that form body, soul, and spirit.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-pills"><span class="pill">Three dimensions</span><span class="pill">One ordinary moment</span></div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+    <!-- The Seeking Machine (Wide 2x1) -->
+    <a href="/the-seeking-machine/" class="bento-card span-2-1 theme-seeking" data-tags="loops learning">
+      <div class="card-top">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 15h3.4l2.4-8.6L11.4 20l2.8-10.4L16.4 15H22"/>
+            </svg>
+          </div>
+          <span class="card-tag">Evidence Guide</span>
+        </div>
+        <h2 class="card-title">The Seeking Machine</h2>
+        <p class="card-desc">Why nobody can sit still — four stacked mechanisms behind restlessness, from the prediction-error neuron to the crowd that tells you what to want. Every claim graded.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-pills"><span class="pill">Dopamine</span><span class="pill">Wanting vs liking</span><span class="pill">Variable reward</span></div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
     <!-- The Anatomy of Rest (Wide 2x1) -->
     <a href="/anatomy-of-rest/" class="bento-card span-2-1 theme-anatomyrest" data-tags="loops spirit">
       <div class="card-top">
@@ -728,13 +844,12 @@
         <p class="card-desc">Rest isn't one thing — it's two. A field guide to non-sleep deep rest, the brain's glymphatic 'night shift,' and where new neuroscience meets ancient Sabbath wisdom.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/anatomy-of-rest</span>
+        <div class="card-pills"><span class="pill">NSDR</span><span class="pill">Glymphatic</span><span class="pill">Sabbath</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Fixed Point (Wide 2x1) -->
     <a href="/the-fixed-point/" class="bento-card span-2-1 theme-fixedpoint" data-tags="loops spirit">
       <div class="card-top">
@@ -752,13 +867,12 @@
         <p class="card-desc">A brain built to measure change can never read "enough" on its own. Neuroscience and theology describing one problem — with an interactive gauge to feel it.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-fixed-point</span>
+        <div class="card-pills"><span class="pill">Adaptation</span><span class="pill">Calibration</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Watches of the Night (Wide 2x1) -->
     <a href="/the-watches-of-the-night/" class="bento-card span-2-1 theme-watches" data-tags="loops spirit">
       <div class="card-top">
@@ -775,13 +889,12 @@
         <p class="card-desc">An editorial descent from 21:00 to dawn — the brain's night shift, the architecture of sleep, the counterfeits of rest, and the older wisdom that told us to stop.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-watches-of-the-night</span>
+        <div class="card-pills"><span class="pill">Sleep stages</span><span class="pill">Memory</span><span class="pill">Immunity</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Weight of Rest (Wide 2x1) -->
     <a href="/the-weight-of-rest/" class="bento-card span-2-1 theme-weightrest" data-tags="loops spirit">
       <div class="card-top">
@@ -800,35 +913,12 @@
         <p class="card-desc">Sleep, rest, and peace were never three separate things. The science of the sleeping brain, braided with the soul of stillness — three strands of one rope.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-weight-of-rest</span>
+        <div class="card-pills"><span class="pill">Sleep</span><span class="pill">Rest</span><span class="pill">Peace</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
-    <!-- The Seeking Machine (Wide 2x1) -->
-    <a href="/the-seeking-machine/" class="bento-card span-2-1 theme-seeking" data-tags="loops learning">
-      <div class="card-top">
-        <div class="card-header">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 15h3.4l2.4-8.6L11.4 20l2.8-10.4L16.4 15H22"/>
-            </svg>
-          </div>
-          <span class="card-tag">Evidence Guide</span>
-        </div>
-        <h2 class="card-title">The Seeking Machine</h2>
-        <p class="card-desc">Why nobody can sit still — four stacked mechanisms behind restlessness, from the prediction-error neuron to the crowd that tells you what to want. Every claim graded.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-seeking-machine</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </div>
-    </a>
-
     <!-- The Loop (Wide 2x1) -->
     <a href="/the-loop/" class="bento-card span-2-1 theme-loop" data-tags="loops">
       <div class="card-top">
@@ -844,13 +934,12 @@
         <p class="card-desc">An interactive scroll journey detailing why you do the thing you hate — mapping the shame engine, desire loops, and the only structural exit.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-loop</span>
+        <div class="card-pills"><span class="pill">Escalation</span><span class="pill">Cutting the wire</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Predicting Mind (Wide 2x1) -->
     <a href="/predicting-mind/" class="bento-card span-2-1 theme-predictingmind" data-tags="loops learning">
       <div class="card-top">
@@ -867,13 +956,12 @@
         <p class="card-desc">An interactive field guide to your own head. Explore how the brain predicts, why feelings happen, and what to do next time you feel weird.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/predicting-mind</span>
+        <div class="card-pills"><span class="pill">Prediction</span><span class="pill">Two speeds</span><span class="pill">Interoception</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Thread (Wide 2x1) -->
     <a href="/the-thread/" class="bento-card span-2-1 theme-thread" data-tags="spirit">
       <div class="card-top">
@@ -889,13 +977,12 @@
         <p class="card-desc">A visual field manual to the Bible. Mapping structural codes, patterns, and thematic links that align the entire narrative around Jesus.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/the-thread</span>
+        <div class="card-pills"><span class="pill">Typology</span><span class="pill">Old to New</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- One Shape · Many Wells (Wide 2x1) -->
     <a href="/one-shape/" class="bento-card span-2-1 theme-oneshape" data-tags="loops spirit learning">
       <div class="card-top">
@@ -912,13 +999,12 @@
         <p class="card-desc">Understanding feelings, breaking the loop, and the way back. A unified guide detailing how a real need gets routed to a broken well, and how to return.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/one-shape</span>
+        <div class="card-pills"><span class="pill">One pattern</span><span class="pill">Four lenses</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Desire Master (Wide 2x1) -->
     <a href="/desire-master/" class="bento-card span-2-1 theme-desiremaster" data-tags="loops spirit">
       <div class="card-top">
@@ -935,37 +1021,12 @@
         <p class="card-desc">Just do whatever I feel like. It sounds like the most free a person could be. But it’s a training program. Learn what desire teaches the brain, why resistance fails, and the expulsive power of a new affection.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/desire-master</span>
+        <div class="card-pills"><span class="pill">Wanting vs liking</span><span class="pill">Baseline</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
-    <!-- Spirit Soul Body (Wide 2x1) -->
-    <a href="/spirit-soul-body/" class="bento-card span-2-1 theme-ssb" data-tags="spirit">
-      <div class="card-top">
-        <div class="card-header">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/>
-              <circle cx="12" cy="12" r="5.5"/>
-              <circle cx="12" cy="12" r="2" fill="var(--icon-stroke)" stroke="none"/>
-            </svg>
-          </div>
-          <span class="card-tag">Bible Study</span>
-        </div>
-        <h2 class="card-title">Spirit · Soul · Body</h2>
-        <p class="card-desc">A responsive visual essay on the architecture of human design — Paul’s trichotomy, neuro-spiritual convergences, and practices that form body, soul, and spirit.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/spirit-soul-body</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </div>
-    </a>
-
     <!-- Master Thread (Wide 2x1) -->
     <a href="/master-thread/" class="bento-card span-2-1 theme-masterthread" data-tags="spirit">
       <div class="card-top">
@@ -982,13 +1043,12 @@
         <p class="card-desc">Every book of the Bible carries a unique, structural fingerprint pointing to the same center. A complete catalog of the code aligning the entire narrative around Jesus.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/master-thread</span>
+        <div class="card-pills"><span class="pill">Four beats</span><span class="pill">The hunt</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Reconstruction Method (Tall 1x2) -->
     <a href="/how-to-teach/" class="bento-card span-1-2 theme-teach" data-tags="learning">
       <div class="card-top">
@@ -1002,15 +1062,15 @@
         </div>
         <h2 class="card-title">The Reconstruction Method</h2>
         <p class="card-desc" style="-webkit-line-clamp: 10;">A guide targeting teachers and learners. Investigates active recall, structured cognitive spacing, and the expert reverses. Uses clean, progressive enhancement CSS styles to ensure balanced readability across all content.</p>
+      <ul class="card-inside"><li>Six tactics that hold up</li><li>Four claims that don’t</li><li>Why a smile misleads</li></ul>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/how-to-teach</span>
+        <div class="card-pills"><span class="pill">Retrieval</span><span class="pill">Spacing</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Atlas V2 (Wide 2x1) -->
     <a href="/atlas-v2/" class="bento-card span-2-1 theme-atlasv2" data-tags="learning spirit">
       <div class="card-top">
@@ -1024,41 +1084,17 @@
           <span class="card-tag">Instrument</span>
         </div>
         <h2 class="card-title">Atlas V2</h2>
-        <p class="card-desc">Twelve tribal archetypes mapped end to end — callings, giftings, shadow struggles, and how they interconnect. Describe what you're wrestling with and the engine surfaces your wiring, then walk the arc: who you are, what goes wrong, the way out, and the men and women who ran the same wiring and got free.</p>
+        <p class="card-desc">Twelve tribal archetypes mapped end to end &mdash; callings, giftings, shadow struggles, and how they interconnect. Describe what you&rsquo;re wrestling with and the engine surfaces your wiring.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/atlas-v2</span>
+        <div class="card-pills"><span class="pill">APEST</span><span class="pill">Attack map</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
-    <!-- Convergence Atlas (Standard 1x1) -->
-    <a href="/the-atlas/" class="bento-card theme-atlas" data-tags="learning spirit">
-      <div class="card-top">
-        <div class="card-header">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-            </svg>
-          </div>
-          <span class="card-tag">Instrument</span>
-        </div>
-        <h3 class="card-title">Convergence Atlas</h3>
-        <p class="card-desc">Identify your calling direction and construct your map.</p>
-      </div>
-      <div class="card-footer">
-        <span class="card-link-text">/the-atlas</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </div>
-    </a>
-
     <!-- Fear of God (Standard 1x1) -->
-    <a href="/fear-of-god-ii/" class="bento-card theme-fog2" data-tags="spirit">
+    <a href="/fear-of-god-ii/" class="bento-card span-2-2 theme-fog2" data-tags="spirit">
       <div class="card-top">
         <div class="card-header">
           <div class="card-icon">
@@ -1068,17 +1104,17 @@
           </div>
           <span class="card-tag">Discussion Guide</span>
         </div>
-        <h3 class="card-title">Fear of God</h3>
-        <p class="card-desc">Sixteen questions, original languages, and interactive tools for group study and deep discussion.</p>
+        <h2 class="card-title">Fear of God</h2>
+        <p class="card-desc">The longest study on the site. What “the fear of God” actually means — the several Hebrew and Greek words all flattened into one English word, why Jesus quotes “fear the Lord” and says “worship,” and what changes when dread and reverence stop being confused.</p>
+      <ul class="card-inside"><li>Why one English word hides several originals</li><li>Whether fear splits into good and bad</li><li>What the text actually says</li><li>How Jesus handles the phrase</li><li>Dread and reverence, pulled apart</li></ul>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/fear-of-god-ii</span>
+        <div class="card-pills"><span class="pill">Yirah</span><span class="pill">Word study</span><span class="pill">Longest read</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Architecture of Desire (Large 2x2) -->
     <a href="/architecture-of-desire/" class="bento-card span-2-2 theme-architecture" data-tags="loops spirit learning">
       <div class="card-top">
@@ -1095,15 +1131,15 @@
         </div>
         <h2 class="card-title">Architecture of Desire</h2>
         <p class="card-desc">Why the things we want most satisfy us least. A comprehensive synthesis exploring the neuroscience of wanting vs. liking, the psychology of play, and the way to a life that actually satisfies.</p>
+      <ul class="card-inside"><li>The three nutrients</li><li>Wanting, liking, learning</li><li>Why wanting escalates</li><li>The flow channel</li><li>Where enjoyment actually lives</li><li>Foundations of flourishing</li></ul>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">esmrsky.github.io/architecture-of-desire</span>
+        <div class="card-pills"><span class="pill">Three nutrients</span><span class="pill">Flow channel</span><span class="pill">Escalation</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Living Spring (Standard 1x1) -->
     <a href="/be-filled/" class="bento-card theme-spring" data-tags="spirit">
       <div class="card-top">
@@ -1119,35 +1155,34 @@
         <p class="card-desc">A field guide mapping real delight and spiritual fullness.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/be-filled</span>
+        <div class="card-pills"><span class="pill">Source</span><span class="pill">Counterfeits</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
-    <!-- Uncooked (Standard 1x1) -->
-    <a href="/uncooked/" class="bento-card theme-uncooked" data-tags="loops">
+    <!-- Convergence Atlas (Standard 1x1) -->
+    <a href="/the-atlas/" class="bento-card theme-atlas" data-tags="learning spirit">
       <div class="card-top">
         <div class="card-header">
           <div class="card-icon">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
             </svg>
           </div>
-          <span class="card-tag">Field Guide</span>
+          <span class="card-tag">Instrument</span>
         </div>
-        <h3 class="card-title">Get Uncooked</h3>
-        <p class="card-desc">You’re not broken, you’re in a loop. Six patterns, the mechanics behind each, and a concrete way out.</p>
+        <h3 class="card-title">Convergence Atlas</h3>
+        <p class="card-desc">Identify your calling direction and construct your map.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/uncooked</span>
+        <div class="card-pills"><span class="pill">Calling</span><span class="pill">Self-assessment</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Loop Breaker Portal (Standard 1x1) -->
     <a href="/combo-stern-loop-love/" class="bento-card theme-loopportal" data-tags="loops">
       <div class="card-top">
@@ -1164,13 +1199,12 @@
         <p class="card-desc">A unified system mapping counterfeit loops, inner leaks, and the paths back to restoration.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/combo-stern-loop-love</span>
+        <div class="card-pills"><span class="pill">Seven stages</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Loop Atlas (Standard 1x1) -->
     <a href="/loop-atlas/" class="bento-card theme-loopatlas" data-tags="loops">
       <div class="card-top">
@@ -1187,13 +1221,12 @@
         <p class="card-desc">An interactive reference index of psychological habit loops and behavioral mechanics models.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/loop-atlas</span>
+        <div class="card-pills"><span class="pill">Model library</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Feedback Loops (Standard 1x1) -->
     <a href="/feedback-loops/" class="bento-card theme-feedback" data-tags="loops">
       <div class="card-top">
@@ -1206,16 +1239,15 @@
           <span class="card-tag">Guide</span>
         </div>
         <h3 class="card-title">Feedback Loops</h3>
-        <p class="card-desc">A field guide to the structure of motivational and emotional cycles — habits, drive, and the loops underneath.</p>
+        <p class="card-desc">Motivational and emotional cycles &mdash; habits, drive, and the loops underneath.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/feedback-loops</span>
+        <div class="card-pills"><span class="pill">Mechanisms</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- Loop Breaker Reference (Standard 1x1) -->
     <a href="/combo-stern/" class="bento-card theme-loopref" data-tags="loops">
       <div class="card-top">
@@ -1229,16 +1261,15 @@
           <span class="card-tag">Reference</span>
         </div>
         <h3 class="card-title">The Loop Breaker</h3>
-        <p class="card-desc">A field guide to wanting — compiling desire mechanics, systems theology, and behavioral models in one place.</p>
+        <p class="card-desc">Desire mechanics, systems theology, and behavioural models, compiled in one place.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/combo-stern</span>
+        <div class="card-pills"><span class="pill">Tech matrix</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
       </div>
     </a>
-
     <!-- The Counterfeit Loop (Standard 1x1) -->
     <a href="/Fake-Love/" class="bento-card theme-counterfeit" data-tags="loops">
       <div class="card-top">
@@ -1254,7 +1285,7 @@
         <p class="card-desc">Desire cycles reframed by literature — classical texts read against modern scrolling.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/Fake-Love</span>
+        <div class="card-pills"><span class="pill">Cathexis</span><span class="pill">Diagnostic</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -1286,7 +1317,7 @@
         <p class="card-desc">A premium winemaking interactive product landing page.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/quick-faraday</span>
+        <div class="card-pills"><span class="pill">Landing page</span><span class="pill">Product</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -1309,7 +1340,7 @@
         <p class="card-desc">Neuro-spiritual uncook protocol to escape mental ruts.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/happy-heisenberg</span>
+        <div class="card-pills"><span class="pill">Five loops</span><span class="pill">Protocol</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -1332,7 +1363,7 @@
         <p class="card-desc">What is worth learning in the age of generative AI models.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/code-school</span>
+        <div class="card-pills"><span class="pill">Skills map</span><span class="pill">Glossary</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -1350,11 +1381,11 @@
           </div>
           <span class="card-tag">Interactive</span>
         </div>
-        <h2 class="card-title">SoundLab Mixing Academy</h2>
-        <p class="card-desc">Learn vocal mixing, EQ shaping, dynamic compression, and limiters through an interactive browser DAW simulator.</p>
+        <h3 class="card-title">SoundLab Academy</h3>
+        <p class="card-desc">Vocal mixing, EQ, and compression in a browser DAW.</p>
       </div>
       <div class="card-footer">
-        <span class="card-link-text">/soundlab-mixing-academy</span>
+        <div class="card-pills"><span class="pill">EQ</span><span class="pill">Browser DAW</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
