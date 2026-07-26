@@ -8,20 +8,56 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080705'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23EAB308' stroke-width='3.5'/%3E%3Cpath d='M24 32h16M32 24v16' stroke='%23EAB308' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070A14'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%234C6FE7' stroke-width='3.5'/%3E%3Cpath d='M24 32h16M32 24v16' stroke='%234C6FE7' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<script>
+  /* Set the theme before first paint so a light-mode reload never flashes dark. */
+  (function () {
+    try {
+      var saved = localStorage.getItem('esmrsky-theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
 <style>
+  /* Cobalt is the one brand colour: header, active states, focus rings, glow.
+     The reds/yellows/oranges/greens live only on the cards, as per-project
+     accents — so the palette stays wide without the chrome getting noisy. */
   :root {
-    --bg: #080705;
-    --fg: #F7F4EB;
-    --fg-dim: rgba(247, 244, 235, 0.64);
-    --fg-faint: rgba(247, 244, 235, 0.38);
-    --panel: rgba(26, 24, 21, 0.6);
-    --panel-hover: rgba(36, 32, 28, 0.8);
-    --hair: rgba(247, 244, 235, 0.08);
-    --hair-hover: rgba(247, 244, 235, 0.18);
+    color-scheme: dark;
+    --cobalt: #4C6FE7;
+    --cobalt-soft: #6E8CF5;
+    --bg: #070A14;
+    --fg: #F2F5FC;
+    --fg-dim: rgba(242, 245, 252, 0.64);
+    --fg-faint: rgba(242, 245, 252, 0.38);
+    --panel: rgba(20, 26, 44, 0.6);
+    --panel-hover: rgba(29, 37, 62, 0.82);
+    --hair: rgba(242, 245, 252, 0.09);
+    --hair-hover: rgba(242, 245, 252, 0.2);
+    --well: rgba(242, 245, 252, 0.035);
+    --shadow: rgba(0, 0, 0, 0.4);
     --font-display: "Outfit", system-ui, sans-serif;
     --font-body: "Instrument Sans", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+    --cobalt: #2B4FD1;
+    --cobalt-soft: #1D62C6;
+    --bg: #F3F6FC;
+    --fg: #0C1226;
+    --fg-dim: rgba(12, 18, 38, 0.68);
+    --fg-faint: rgba(12, 18, 38, 0.45);
+    --panel: rgba(255, 255, 255, 0.74);
+    --panel-hover: rgba(255, 255, 255, 0.96);
+    --hair: rgba(12, 18, 38, 0.1);
+    --hair-hover: rgba(12, 18, 38, 0.22);
+    --well: rgba(12, 18, 38, 0.035);
+    --shadow: rgba(16, 24, 50, 0.14);
   }
 
   * {
@@ -38,9 +74,11 @@
     line-height: 1.5;
     min-height: 100vh;
     padding-bottom: 120px;
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(243, 101, 28, 0.03) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+    background-image:
+      radial-gradient(circle at 10% 20%, color-mix(in srgb, var(--cobalt) 9%, transparent) 0%, transparent 42%),
+      radial-gradient(circle at 90% 80%, color-mix(in srgb, var(--cobalt-soft) 7%, transparent) 0%, transparent 42%);
+    background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .container {
@@ -64,7 +102,7 @@
   }
 
   h1 span {
-    background: linear-gradient(135deg, #F3651C, #EAB308);
+    background: linear-gradient(135deg, var(--cobalt), var(--cobalt-soft));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -107,9 +145,18 @@
   }
 
   .filter-btn.active {
-    background: var(--fg);
-    border-color: var(--fg);
-    color: var(--bg);
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+    color: #FFF;
+  }
+
+  /* Keyboard focus has to survive both themes — cobalt reads on either. */
+  .filter-btn:focus-visible,
+  .other-toggle:focus-visible,
+  .theme-toggle:focus-visible,
+  .bento-card:focus-visible {
+    outline: 2px solid var(--cobalt);
+    outline-offset: 3px;
   }
 
   /* The pill computes to 33px tall — fine for a mouse, under the 44px touch
@@ -132,8 +179,9 @@
     grid-auto-rows: 256px;
     gap: 20px;
     /* Backfill holes left when a 2-wide card can't fit the remaining
-       columns of a row. Card areas total 44 cells over 4 columns, so
-       this packs to exactly 11 rows with no gaps. */
+       columns of a row. Card areas total 56 cells over 4 columns, so
+       this packs to exactly 14 rows with no gaps — keep any new card's
+       area a multiple of 4 (i.e. one 2x2) or the last row opens a hole. */
     grid-auto-flow: dense;
   }
 
@@ -191,7 +239,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(247, 244, 235, 0.03);
+    background: var(--well);
     border: 1px solid var(--hair);
     transition: transform 0.3s ease;
   }
@@ -258,7 +306,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: rgba(247, 244, 235, 0.04);
+    background: var(--well);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -294,7 +342,7 @@
     transform: translateY(-5px);
     background: var(--panel-hover);
     border-color: var(--card-border-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 30px var(--card-shadow-color);
+    box-shadow: 0 10px 30px var(--shadow), 0 0 30px var(--card-shadow-color);
   }
 
   .bento-card:hover::before {
@@ -321,432 +369,79 @@
   }
 
   /* Themes */
-  .theme-return {
-    --card-border-color: rgba(167, 203, 105, 0.3);
-    --card-shadow-color: rgba(167, 203, 105, 0.04);
-    --card-glow-color: rgba(167, 203, 105, 0.25);
-    --icon-stroke: #A7CB69;
-  }
-  .theme-return .card-tag {
-    color: #A7CB69;
-    background: rgba(167, 203, 105, 0.06);
-    border-color: rgba(167, 203, 105, 0.15);
+  /* ---- Card accents -------------------------------------------------
+     Each project sets one hue; every derived colour (border, glow, halo,
+     icon, tag) is mixed from it below. Adding a project is one line.
+
+     The derivations live in `.bento-card` and must stay ABOVE the per-project
+     rows: both are single-class selectors, so source order is the only thing
+     deciding the winner — put the default second and every card goes cobalt. */
+  .bento-card {
+    --accent: var(--cobalt);
+    --card-border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+    --card-shadow-color: color-mix(in srgb, var(--accent) 6%, transparent);
+    --card-glow-color: color-mix(in srgb, var(--accent) 26%, transparent);
+    --icon-stroke: var(--accent);
   }
 
-  .theme-anatomyrest {
-    --card-border-color: rgba(92, 124, 250, 0.3);
-    --card-shadow-color: rgba(92, 124, 250, 0.04);
-    --card-glow-color: rgba(92, 124, 250, 0.25);
-    --icon-stroke: #5C7CFA;
-  }
-  .theme-anatomyrest .card-tag {
-    color: #5C7CFA;
-    background: rgba(92, 124, 250, 0.06);
-    border-color: rgba(92, 124, 250, 0.15);
+  .theme-return         { --accent: #34C46A; }  /* green */
+  .theme-quietreturn    { --accent: #4EA8DE; }  /* azure */
+  .theme-anatomyrest    { --accent: #4C6FE7; }  /* cobalt */
+  .theme-disguises      { --accent: #8B5CF6; }  /* violet */
+  .theme-fixedpoint     { --accent: #EAB308; }  /* yellow */
+  .theme-watches        { --accent: #14B8A6; }  /* teal */
+  .theme-weightrest     { --accent: #FB8C4B; }  /* orange */
+  .theme-seeking        { --accent: #F43F5E; }  /* rose */
+  .theme-loop           { --accent: #F3651C; }  /* orange */
+  .theme-thread         { --accent: #D4A017; }  /* yellow */
+  .theme-teach          { --accent: #E4534F; }  /* red */
+  .theme-atlas          { --accent: #10B981; }  /* green */
+  .theme-atlasv2        { --accent: #DC2626; }  /* red */
+  .theme-loopportal     { --accent: #F59E0B; }  /* amber */
+  .theme-loopatlas      { --accent: #6366F1; }  /* indigo */
+  .theme-feedback       { --accent: #0EA5E9; }  /* azure */
+  .theme-loopref        { --accent: #14B8A6; }  /* teal */
+  .theme-cistern        { --accent: #3B82F6; }  /* cobalt */
+  .theme-counterfeit    { --accent: #F43F5E; }  /* rose */
+  .theme-yirah          { --accent: #8B5CF6; }  /* violet */
+  .theme-soundlab       { --accent: #06B6D4; }  /* cyan */
+  .theme-spring         { --accent: #22C55E; }  /* green */
+  .theme-metanoia       { --accent: #84CC16; }  /* lime */
+  .theme-uncooked       { --accent: #EF4444; }  /* red */
+  .theme-codeschool     { --accent: #F59E0B; }  /* amber */
+  .theme-torac          { --accent: #EAB308; }  /* yellow */
+  .theme-ssb            { --accent: #38BDF8; }  /* sky */
+  .theme-fog2           { --accent: #F3651C; }  /* orange */
+  .theme-oneshape       { --accent: #C98A3C; }  /* amber */
+  .theme-predictingmind { --accent: #4C6FE7; }  /* cobalt */
+  .theme-desiremaster   { --accent: #FB7185; }  /* rose */
+  .theme-masterthread   { --accent: #EAB308; }  /* yellow */
+  .theme-everythingmid  { --accent: #9B7FE0; }  /* violet */
+  .theme-architecture   { --accent: #1BAF7A; }  /* green */
+
+  /* Mirror of the light-mode problem: on near-black the deep accents (red
+     #DC2626, cobalt, indigo) land at ~4.1:1. Lifting the ink 15% toward the
+     page foreground clears AA for all 25 without visibly washing the hue. */
+  .card-tag {
+    color: color-mix(in srgb, var(--accent) 85%, var(--fg));
+    background: color-mix(in srgb, var(--accent) 9%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
-  .theme-disguises {
-    --card-border-color: rgba(110, 98, 230, 0.3);
-    --card-shadow-color: rgba(110, 98, 230, 0.04);
-    --card-glow-color: rgba(110, 98, 230, 0.25);
-    --icon-stroke: #8479F2;
-  }
-  .theme-disguises .card-tag {
-    color: #8479F2;
-    background: rgba(110, 98, 230, 0.06);
-    border-color: rgba(110, 98, 230, 0.15);
+  /* On white the lighter accents (yellow #EAB308, lime, amber) drop to ~3.5:1
+     as 10px text. Deepening only the ink keeps the hue while restoring
+     contrast; fills and borders stay at full chroma. 54% puts the worst
+     accent at 4.9:1 — measured across all 25, the floor for AA is 55%. */
+  [data-theme="light"] .card-tag {
+    color: color-mix(in srgb, var(--accent) 54%, #0A1024);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
-  .theme-fixedpoint {
-    --card-border-color: rgba(245, 183, 46, 0.3);
-    --card-shadow-color: rgba(245, 183, 46, 0.04);
-    --card-glow-color: rgba(245, 183, 46, 0.25);
-    --icon-stroke: #F5B72E;
-  }
-  .theme-fixedpoint .card-tag {
-    color: #F5B72E;
-    background: rgba(245, 183, 46, 0.06);
-    border-color: rgba(245, 183, 46, 0.15);
-  }
-
-  .theme-watches {
-    --card-border-color: rgba(45, 212, 191, 0.3);
-    --card-shadow-color: rgba(45, 212, 191, 0.04);
-    --card-glow-color: rgba(45, 212, 191, 0.25);
-    --icon-stroke: #2DD4BF;
-  }
-  .theme-watches .card-tag {
-    color: #2DD4BF;
-    background: rgba(45, 212, 191, 0.06);
-    border-color: rgba(45, 212, 191, 0.15);
-  }
-
-  .theme-weightrest {
-    --card-border-color: rgba(255, 158, 119, 0.3);
-    --card-shadow-color: rgba(255, 158, 119, 0.04);
-    --card-glow-color: rgba(255, 158, 119, 0.25);
-    --icon-stroke: #FF9E77;
-  }
-  .theme-weightrest .card-tag {
-    color: #FF9E77;
-    background: rgba(255, 158, 119, 0.06);
-    border-color: rgba(255, 158, 119, 0.15);
-  }
-
-  .theme-seeking {
-    --card-border-color: rgba(255, 61, 139, 0.3);
-    --card-shadow-color: rgba(255, 61, 139, 0.04);
-    --card-glow-color: rgba(255, 61, 139, 0.25);
-    --icon-stroke: #FF3D8B;
-  }
-  .theme-seeking .card-tag {
-    color: #FF3D8B;
-    background: rgba(255, 61, 139, 0.06);
-    border-color: rgba(255, 61, 139, 0.15);
-  }
-
-  .theme-loop {
-    --card-border-color: rgba(243, 101, 28, 0.3);
-    --card-shadow-color: rgba(243, 101, 28, 0.04);
-    --card-glow-color: rgba(243, 101, 28, 0.25);
-    --icon-stroke: #F3651C;
-  }
-  .theme-loop .card-tag {
-    color: #F3651C;
-    background: rgba(243, 101, 28, 0.06);
-    border-color: rgba(243, 101, 28, 0.15);
-  }
-
-  .theme-thread {
-    --card-border-color: rgba(212, 175, 55, 0.3);
-    --card-shadow-color: rgba(212, 175, 55, 0.04);
-    --card-glow-color: rgba(212, 175, 55, 0.25);
-    --icon-stroke: #D4AF37;
-  }
-  .theme-thread .card-tag {
-    color: #D4AF37;
-    background: rgba(212, 175, 55, 0.06);
-    border-color: rgba(212, 175, 55, 0.15);
-  }
-
-  .theme-teach {
-    --card-border-color: rgba(203, 96, 114, 0.35);
-    --card-shadow-color: rgba(203, 96, 114, 0.04);
-    --card-glow-color: rgba(203, 96, 114, 0.25);
-    --icon-stroke: #CB6072;
-  }
-  .theme-teach .card-tag {
-    color: #CB6072;
-    background: rgba(203, 96, 114, 0.06);
-    border-color: rgba(203, 96, 114, 0.15);
-  }
-
-  .theme-atlas {
-    --card-border-color: rgba(16, 185, 129, 0.3);
-    --card-shadow-color: rgba(16, 185, 129, 0.04);
-    --card-glow-color: rgba(16, 185, 129, 0.25);
-    --icon-stroke: #10B981;
-  }
-  .theme-atlas .card-tag {
-    color: #10B981;
-    background: rgba(16, 185, 129, 0.06);
-    border-color: rgba(16, 185, 129, 0.15);
-  }
-
-  .theme-atlasv2 {
-    --card-border-color: rgba(220, 38, 38, 0.3);
-    --card-shadow-color: rgba(220, 38, 38, 0.04);
-    --card-glow-color: rgba(220, 38, 38, 0.25);
-    --icon-stroke: #DC2626;
-  }
-  .theme-atlasv2 .card-tag {
-    color: #DC2626;
-    background: rgba(220, 38, 38, 0.06);
-    border-color: rgba(220, 38, 38, 0.15);
-  }
-
-  .theme-loopportal {
-    --card-border-color: rgba(245, 158, 11, 0.3);
-    --card-shadow-color: rgba(245, 158, 11, 0.04);
-    --card-glow-color: rgba(245, 158, 11, 0.25);
-    --icon-stroke: #F59E0B;
-  }
-  .theme-loopportal .card-tag {
-    color: #F59E0B;
-    background: rgba(245, 158, 11, 0.06);
-    border-color: rgba(245, 158, 11, 0.15);
-  }
-
-  .theme-loopatlas {
-    --card-border-color: rgba(99, 102, 241, 0.3);
-    --card-shadow-color: rgba(99, 102, 241, 0.04);
-    --card-glow-color: rgba(99, 102, 241, 0.25);
-    --icon-stroke: #6366F1;
-  }
-  .theme-loopatlas .card-tag {
-    color: #6366F1;
-    background: rgba(99, 102, 241, 0.06);
-    border-color: rgba(99, 102, 241, 0.15);
-  }
-
-  .theme-feedback {
-    --card-border-color: rgba(14, 165, 233, 0.3);
-    --card-shadow-color: rgba(14, 165, 233, 0.04);
-    --card-glow-color: rgba(14, 165, 233, 0.25);
-    --icon-stroke: #0EA5E9;
-  }
-  .theme-feedback .card-tag {
-    color: #0EA5E9;
-    background: rgba(14, 165, 233, 0.06);
-    border-color: rgba(14, 165, 233, 0.15);
-  }
-
-  .theme-loopref {
-    --card-border-color: rgba(20, 184, 166, 0.3);
-    --card-shadow-color: rgba(20, 184, 166, 0.04);
-    --card-glow-color: rgba(20, 184, 166, 0.25);
-    --icon-stroke: #14B8A6;
-  }
-  .theme-loopref .card-tag {
-    color: #14B8A6;
-    background: rgba(20, 184, 166, 0.06);
-    border-color: rgba(20, 184, 166, 0.15);
-  }
-
-  .theme-cistern {
-    --card-border-color: rgba(59, 130, 246, 0.3);
-    --card-shadow-color: rgba(59, 130, 246, 0.04);
-    --card-glow-color: rgba(59, 130, 246, 0.25);
-    --icon-stroke: #3B82F6;
-  }
-  .theme-cistern .card-tag {
-    color: #3B82F6;
-    background: rgba(59, 130, 246, 0.06);
-    border-color: rgba(59, 130, 246, 0.15);
-  }
-
-  .theme-counterfeit {
-    --card-border-color: rgba(244, 63, 94, 0.3);
-    --card-shadow-color: rgba(244, 63, 94, 0.04);
-    --card-glow-color: rgba(244, 63, 94, 0.25);
-    --icon-stroke: #F43F5E;
-  }
-  .theme-counterfeit .card-tag {
-    color: #F43F5E;
-    background: rgba(244, 63, 94, 0.06);
-    border-color: rgba(244, 63, 94, 0.15);
-  }
-
-  .theme-yirah {
-    --card-border-color: rgba(139, 92, 246, 0.3);
-    --card-shadow-color: rgba(139, 92, 246, 0.04);
-    --card-glow-color: rgba(139, 92, 246, 0.25);
-    --icon-stroke: #8B5CF6;
-  }
-  .theme-yirah .card-tag {
-    color: #8B5CF6;
-    background: rgba(139, 92, 246, 0.06);
-    border-color: rgba(139, 92, 246, 0.15);
-  }
-
-  .theme-soundlab {
-    --card-border-color: rgba(6, 182, 212, 0.3);
-    --card-shadow-color: rgba(6, 182, 212, 0.04);
-    --card-glow-color: rgba(6, 182, 212, 0.25);
-    --icon-stroke: #06B6D4;
-  }
-  .theme-soundlab .card-tag {
-    color: #06B6D4;
-    background: rgba(6, 182, 212, 0.06);
-    border-color: rgba(6, 182, 212, 0.15);
-  }
-
-  .theme-spring {
-    --card-border-color: rgba(14, 165, 233, 0.3);
-    --card-shadow-color: rgba(14, 165, 233, 0.04);
-    --card-glow-color: rgba(14, 165, 233, 0.25);
-    --icon-stroke: #0EA5E9;
-  }
-  .theme-spring .card-tag {
-    color: #0EA5E9;
-    background: rgba(14, 165, 233, 0.06);
-    border-color: rgba(14, 165, 233, 0.15);
-  }
-
-  .theme-metanoia {
-    --card-border-color: rgba(132, 204, 22, 0.3);
-    --card-shadow-color: rgba(132, 204, 22, 0.04);
-    --card-glow-color: rgba(132, 204, 22, 0.25);
-    --icon-stroke: #84CC16;
-  }
-  .theme-metanoia .card-tag {
-    color: #84CC16;
-    background: rgba(132, 204, 22, 0.06);
-    border-color: rgba(132, 204, 22, 0.15);
-  }
-
-  .theme-uncooked {
-    --card-border-color: rgba(244, 63, 94, 0.3);
-    --card-shadow-color: rgba(244, 63, 94, 0.04);
-    --card-glow-color: rgba(244, 63, 94, 0.25);
-    --icon-stroke: #F43F5E;
-  }
-  .theme-uncooked .card-tag {
-    color: #F43F5E;
-    background: rgba(244, 63, 94, 0.06);
-    border-color: rgba(244, 63, 94, 0.15);
-  }
-
-  .theme-codeschool {
-    --card-border-color: rgba(245, 158, 11, 0.3);
-    --card-shadow-color: rgba(245, 158, 11, 0.04);
-    --card-glow-color: rgba(245, 158, 11, 0.25);
-    --icon-stroke: #F59E0B;
-  }
-  .theme-codeschool .card-tag {
-    color: #F59E0B;
-    background: rgba(245, 158, 11, 0.06);
-    border-color: rgba(245, 158, 11, 0.15);
-  }
-
-  .theme-torac {
-    --card-border-color: rgba(234, 179, 8, 0.3);
-    --card-shadow-color: rgba(234, 179, 8, 0.04);
-    --card-glow-color: rgba(234, 179, 8, 0.25);
-    --icon-stroke: #EAB308;
-  }
-  .theme-torac .card-tag {
-    color: #EAB308;
-    background: rgba(234, 179, 8, 0.06);
-    border-color: rgba(234, 179, 8, 0.15);
-  }
-
-  .theme-ssb {
-    --card-border-color: rgba(76, 201, 240, 0.28);
-    --card-shadow-color: rgba(181, 123, 255, 0.05);
-    --card-glow-color: rgba(255, 194, 75, 0.18);
-    --icon-stroke: #4CC9F0;
-  }
-  .theme-ssb .card-tag {
-    color: #C6A3FF;
-    background: linear-gradient(90deg, rgba(255, 194, 75, 0.08), rgba(76, 201, 240, 0.08), rgba(181, 123, 255, 0.08));
-    border-color: rgba(181, 123, 255, 0.18);
-  }
-  .theme-ssb:hover {
-    --card-border-color: rgba(181, 123, 255, 0.4);
-    --card-glow-color: rgba(76, 201, 240, 0.22);
-  }
-
-  .theme-fog2 {
-    --card-border-color: rgba(243, 101, 28, 0.35);
-    --card-shadow-color: rgba(223, 203, 147, 0.05);
-    --card-glow-color: rgba(243, 101, 28, 0.2);
-    --icon-stroke: #F3651C;
-  }
-  .theme-fog2 .card-tag {
-    color: #DFCB93;
-    background: linear-gradient(90deg, rgba(243, 101, 28, 0.08), rgba(223, 203, 147, 0.08));
-    border-color: rgba(223, 203, 147, 0.25);
-  }
-  .theme-fog2:hover {
-    --card-border-color: rgba(223, 203, 147, 0.45);
-    --card-glow-color: rgba(243, 101, 28, 0.25);
-  }
-
-  .theme-oneshape {
-    --card-border-color: rgba(176, 125, 60, 0.35);
-    --card-shadow-color: rgba(176, 125, 60, 0.05);
-    --card-glow-color: rgba(176, 125, 60, 0.22);
-    --icon-stroke: #b07d3c;
-  }
-  .theme-oneshape .card-tag {
-    color: #e5b271;
-    background: rgba(176, 125, 60, 0.08);
-    border-color: rgba(176, 125, 60, 0.25);
-  }
-  .theme-oneshape:hover {
-    --card-border-color: rgba(229, 178, 113, 0.45);
-    --card-glow-color: rgba(176, 125, 60, 0.25);
-  }
-
-  .theme-predictingmind {
-    --card-border-color: rgba(243, 101, 28, 0.35);
-    --card-shadow-color: rgba(243, 101, 28, 0.05);
-    --card-glow-color: rgba(51, 194, 201, 0.22);
-    --icon-stroke: #F3651C;
-  }
-  .theme-predictingmind .card-tag {
-    color: #F3651C;
-    background: rgba(243, 101, 28, 0.08);
-    border-color: rgba(243, 101, 28, 0.25);
-  }
-  .theme-predictingmind:hover {
-    --card-border-color: rgba(51, 194, 201, 0.45);
-    --card-glow-color: rgba(243, 101, 28, 0.25);
-  }
-
-  .theme-desiremaster {
-    --card-border-color: rgba(243, 101, 28, 0.35);
-    --card-shadow-color: rgba(243, 101, 28, 0.05);
-    --card-glow-color: rgba(242, 235, 220, 0.18);
-    --icon-stroke: #F3651C;
-  }
-  .theme-desiremaster .card-tag {
-    color: #F3651C;
-    background: rgba(243, 101, 28, 0.08);
-    border-color: rgba(243, 101, 28, 0.25);
-  }
-  .theme-desiremaster:hover {
-    --card-border-color: rgba(242, 235, 220, 0.4);
-    --card-glow-color: rgba(243, 101, 28, 0.25);
-  }
-
-  .theme-masterthread {
-    --card-border-color: rgba(243, 101, 28, 0.35);
-    --card-shadow-color: rgba(243, 101, 28, 0.05);
-    --card-glow-color: rgba(212, 175, 55, 0.22);
-    --icon-stroke: #F3651C;
-  }
-  .theme-masterthread .card-tag {
-    color: #F3651C;
-    background: rgba(243, 101, 28, 0.08);
-    border-color: rgba(243, 101, 28, 0.25);
-  }
-  .theme-masterthread:hover {
-    --card-border-color: rgba(212, 175, 55, 0.45);
-    --card-glow-color: rgba(243, 101, 28, 0.25);
-  }
-
-  .theme-everythingmid {
-    --card-border-color: rgba(155, 127, 224, 0.35);
-    --card-shadow-color: rgba(155, 127, 224, 0.05);
-    --card-glow-color: rgba(243, 101, 28, 0.22);
-    --icon-stroke: #9B7FE0;
-  }
-  .theme-everythingmid .card-tag {
-    color: #9B7FE0;
-    background: rgba(155, 127, 224, 0.08);
-    border-color: rgba(155, 127, 224, 0.25);
-  }
-  .theme-everythingmid:hover {
-    --card-border-color: rgba(243, 101, 28, 0.45);
-    --card-glow-color: rgba(155, 127, 224, 0.25);
-  }
-
-  .theme-architecture {
-    --card-border-color: rgba(27, 175, 122, 0.35);
-    --card-shadow-color: rgba(27, 175, 122, 0.05);
-    --card-glow-color: rgba(235, 104, 52, 0.22);
-    --icon-stroke: #1baf7a;
-  }
-  .theme-architecture .card-tag {
-    color: #1baf7a;
-    background: rgba(27, 175, 122, 0.08);
-    border-color: rgba(27, 175, 122, 0.25);
-  }
-  .theme-architecture:hover {
-    --card-border-color: rgba(235, 104, 52, 0.45);
-    --card-glow-color: rgba(27, 175, 122, 0.25);
+  [data-theme="light"] .bento-card {
+    /* icons are non-text: 3:1 is the bar, so they can stay more saturated */
+    --icon-stroke: color-mix(in srgb, var(--accent) 66%, #0A1024);
+    --card-border-color: color-mix(in srgb, var(--accent) 42%, transparent);
   }
 
 
@@ -806,9 +501,58 @@
     margin-top: 20px;
   }
 
+  /* The drawer carries `hidden`, but the UA's `[hidden]{display:none}` is a
+     bare attribute selector and loses to `.bento-grid{display:grid}` above —
+     so the drawer rendered open and the toggle looked broken. Class +
+     attribute outranks the plain class and restores the attribute's meaning. */
+  .other-grid[hidden] {
+    display: none;
+  }
+
   @media (pointer: coarse) {
     .other-toggle { padding: 18px 22px; }
   }
+
+  /* Theme toggle — pinned top-right, out of the centred header's flow */
+  .theme-toggle {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 50;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    color: var(--fg-dim);
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--cobalt);
+    border-color: var(--cobalt);
+    transform: translateY(-1px);
+  }
+
+  .theme-toggle svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* One button, two glyphs: show the mode you'd switch *to*. */
+  .theme-toggle .icon-sun { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
   /* Responsive styling */
   @media (max-width: 1024px) {
@@ -824,7 +568,13 @@
 
   @media (max-width: 640px) {
     .container {
-      padding: 40px 16px;
+      /* clear the fixed theme toggle (18px inset + 44px button) — at 40px the
+         wrapped h1 ran under it */
+      padding: 76px 16px 40px;
+    }
+    .theme-toggle {
+      top: 14px;
+      right: 14px;
     }
     .bento-grid {
       grid-template-columns: 1fr;
@@ -842,6 +592,16 @@
 </style>
 </head>
 <body>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+  <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2"/>
+    <path d="M12 2.4v2.3M12 19.3v2.3M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.3M19.3 12h2.3M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/>
+  </svg>
+</button>
 
 <div class="container">
   <header>
@@ -948,6 +708,31 @@
       </div>
       <div class="card-footer">
         <span class="card-link-text">esmrsky.github.io/the-return-new</span>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- The Return · Quieting the Mind (Large 2x2) -->
+    <a href="/quiet-return/" class="bento-card span-2-2 theme-quietreturn" data-tags="loops spirit">
+      <div class="card-top">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--icon-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17c1.6 0 1.6-1.4 3.2-1.4S7.8 17 9.4 17s1.6-1.4 3.2-1.4S14.2 17 15.8 17s1.6-1.4 3.2-1.4S20.6 17 21 17"/>
+              <path d="M3 21c1.6 0 1.6-1.4 3.2-1.4S7.8 21 9.4 21s1.6-1.4 3.2-1.4S14.2 21 15.8 21s1.6-1.4 3.2-1.4S20.6 21 21 21" opacity=".5"/>
+              <circle cx="12" cy="7" r="3.2"/>
+              <path d="M12 10.2V12"/>
+            </svg>
+          </div>
+          <span class="card-tag">Field Guide</span>
+        </div>
+        <h2 class="card-title">The Return · Quieting the Mind</h2>
+        <p class="card-desc">Five moves for a mind that won't go still on command — lower the input, empty the well, loosen your grip, meet what rises, and reposition on God. Three ways of knowing kept deliberately apart: the brain data, the desert fathers, and Scripture.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-link-text">esmrsky.github.io/quiet-return</span>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -1653,6 +1438,23 @@
 
     otherToggle.addEventListener('click', () => {
       setOther(otherGrid.hidden);
+    });
+
+    // Theme toggle. The head script already set data-theme before first paint;
+    // this only handles the click and remembers the choice.
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+
+    themeToggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('esmrsky-theme', next); } catch (e) { /* private mode */ }
+    });
+
+    // Follow the OS only while the visitor hasn't picked a side themselves.
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      try { if (localStorage.getItem('esmrsky-theme')) return; } catch (err) { return; }
+      root.setAttribute('data-theme', e.matches ? 'light' : 'dark');
     });
   });
 </script>
