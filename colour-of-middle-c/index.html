@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>The Colour of Middle C — where colour, sound and number actually meet</title>
+<meta name="description" content="People have answered 'what colour is middle C' confidently for three hundred years, and they all disagree. The real science of colour, sound and number — and where the correspondences genuinely hold.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Colour of Middle C">
+<meta property="og:description" content="Newton invented the seven-colour rainbow to fit a musical scale. Everything downstream — chakra colours, healing frequencies — inherits that one aesthetic choice from 1704.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 20a9 9 0 0 1 18 0' fill='none' stroke='%236D3BF0' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M7 20a5 5 0 0 1 10 0' fill='none' stroke='%23E2650F' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<script>(function(){try{var s=localStorage.getItem('cmc-theme');document.documentElement.setAttribute('data-theme',s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#F6F4EE;
+  --card:#FFFFFF;
+  --sunk:#EFEDE5;
+  --ink:#100E1A;
+  --ink-2:#413E52;
+  --ink-3:#6D6982;
+  --rule:#DEDACE;
+  --rule-2:#EAE7DD;
+
+  --violet:#5B2BD6;
+  --blue:#1D4ED8;
+  --cyan:#00778C;
+  --green:#0B7A46;
+  --yellow:#8A6100;
+  --orange:#C2510B;
+  --red:#C0271F;
+
+  --accent:var(--violet);
+  --measure:63ch;
+  --wide:1140px;
+  --disp:"Instrument Serif",Georgia,serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+/* dark tokens — keep in sync with the media query below */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0B0A12;
+  --card:#141222;
+  --sunk:#100E1C;
+  --ink:#F2F0FA;
+  --ink-2:#B4AFC8;
+  --ink-3:#807B96;
+  --rule:#292539;
+  --rule-2:#1C1930;
+
+  --violet:#A98BFF;
+  --blue:#7EA0FF;
+  --cyan:#3BD3E8;
+  --green:#35D89A;
+  --yellow:#F2C044;
+  --orange:#FF9247;
+  --red:#FF6F63;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0B0A12; --card:#141222; --sunk:#100E1C;
+    --ink:#F2F0FA; --ink-2:#B4AFC8; --ink-3:#807B96;
+    --rule:#292539; --rule-2:#1C1930;
+    --violet:#A98BFF; --blue:#7EA0FF; --cyan:#3BD3E8;
+    --green:#35D89A; --yellow:#F2C044; --orange:#FF9247; --red:#FF6F63;
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:var(--wide);margin:0 auto;padding:0 clamp(18px,5vw,48px)}
+.col{max-width:var(--measure)}
+
+h1,h2,h3,.disp{font-family:var(--disp);font-weight:400;letter-spacing:-0.01em}
+h1{font-size:clamp(2.6rem,8vw,5.4rem);line-height:0.98;text-wrap:balance}
+h2{font-size:clamp(1.9rem,4.6vw,3.1rem);line-height:1.06;text-wrap:balance;margin-bottom:.6rem}
+h3{font-size:clamp(1.3rem,2.6vw,1.7rem);line-height:1.16;text-wrap:balance;margin-bottom:.4rem}
+p{margin-bottom:1.1rem;text-wrap:pretty}
+p:last-child{margin-bottom:0}
+strong{font-weight:700}
+em{font-style:italic}
+a{color:var(--accent);text-underline-offset:2px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;border-radius:4px
+}
+
+.eyebrow{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:1rem;display:block
+}
+.lede{font-size:clamp(1.1rem,2.3vw,1.35rem);line-height:1.5;color:var(--ink-2)}
+
+/* ---------- theme toggle ---------- */
+.theme{
+  position:fixed;top:16px;right:16px;z-index:60;width:44px;height:44px;
+  display:grid;place-items:center;border-radius:50%;
+  background:var(--card);border:1px solid var(--rule);color:var(--ink-2);
+  cursor:pointer;transition:color .2s,border-color .2s
+}
+.theme:hover{color:var(--accent);border-color:var(--accent)}
+.theme svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.theme .sun{display:none}
+:root[data-theme="dark"] .theme .sun{display:block}
+:root[data-theme="dark"] .theme .moon{display:none}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .theme .sun{display:block}
+  :root:not([data-theme="light"]) .theme .moon{display:none}
+}
+
+/* ---------- rail ---------- */
+.rail{
+  position:fixed;left:clamp(10px,2vw,22px);top:50%;transform:translateY(-50%);
+  z-index:50;display:flex;flex-direction:column;gap:13px
+}
+.rail a{width:8px;height:8px;border-radius:50%;background:var(--rule);
+  position:relative;transition:.3s;display:block}
+.rail a::after{content:"";position:absolute;inset:-8px;border-radius:50%}
+.rail a.on{background:var(--accent);transform:scale(1.35)}
+.rail a span{
+  position:absolute;left:18px;top:50%;transform:translateY(-50%) translateX(-4px);
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;opacity:0;pointer-events:none;transition:.25s
+}
+.rail a:hover span{opacity:1;transform:translateY(-50%)}
+@media (max-width:1180px){.rail{display:none}}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:14svh 0 8svh;position:relative}
+.hero h1 em{font-style:italic;
+  background:linear-gradient(96deg,var(--red),var(--orange),var(--yellow),var(--green),var(--cyan),var(--blue),var(--violet));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .lede{margin-top:1.6rem;max-width:54ch}
+.cue{margin-top:3.4rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:.8rem}
+.cue i{display:block;width:1px;height:2rem;background:linear-gradient(var(--ink-3),transparent)}
+
+/* ---------- sections ---------- */
+section{padding:clamp(4rem,11vh,8rem) 0;position:relative}
+.num{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--accent);
+  display:block;margin-bottom:.7rem}
+.body-text{color:var(--ink-2);margin-top:1.4rem}
+.body-text strong{color:var(--ink)}
+
+/* ---------- figures ---------- */
+figure{margin:2.4rem 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:16px;padding:clamp(1.1rem,3vw,1.9rem);overflow:hidden}
+figcaption{font-family:var(--mono);font-size:.68rem;line-height:1.6;color:var(--ink-3);
+  margin-top:1.1rem;letter-spacing:.02em}
+.fig-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:1rem;display:block}
+
+/* spectrum strip */
+.spectrum{height:74px;border-radius:9px;position:relative;overflow:hidden;
+  background:linear-gradient(90deg,#7300B7,#3E00E0,#0057F0,#00A6C4,#00B455,#CFD400,#FF8A00,#E8001C)}
+.spec-marks{position:absolute;inset:0;display:flex}
+.spec-marks div{flex:1;border-right:1px solid rgba(255,255,255,.55);position:relative}
+.spec-marks div:last-child{border-right:0}
+.spec-marks b{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.06em;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.65);font-weight:600;white-space:nowrap}
+.spec-marks div.inserted{background:repeating-linear-gradient(45deg,
+  rgba(255,255,255,.28) 0 5px,transparent 5px 10px)}
+.toggle-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.tbtn{font-family:var(--mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
+  padding:.5rem .9rem;border-radius:100px;border:1px solid var(--rule);background:transparent;
+  color:var(--ink-2);cursor:pointer;transition:.2s;min-height:36px}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tbtn.on{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+
+/* data table */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--card);margin:2rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px}
+th,td{text-align:left;padding:.75rem 1rem;border-bottom:1px solid var(--rule-2);vertical-align:top}
+th{font-family:var(--mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hit{color:var(--green);font-weight:700}
+.miss{color:var(--ink-3)}
+
+/* grade chips */
+.grade{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.58rem;
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;
+  white-space:nowrap;vertical-align:middle}
+.grade::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.g-strong{color:var(--green);background:color-mix(in srgb,var(--green) 13%,transparent)}
+.g-mod{color:var(--yellow);background:color-mix(in srgb,var(--yellow) 15%,transparent)}
+.g-weak{color:var(--red);background:color-mix(in srgb,var(--red) 13%,transparent)}
+
+/* callouts */
+.pull{font-family:var(--disp);font-size:clamp(1.5rem,3.6vw,2.3rem);line-height:1.2;
+  color:var(--ink);margin:2.4rem 0;padding-left:1.3rem;border-left:2px solid var(--accent);max-width:32ch}
+.note{border-left:2px solid var(--rule);padding:.2rem 0 .2rem 1.2rem;margin:1.8rem 0;
+  color:var(--ink-3);font-size:.94rem}
+.note b{color:var(--ink-2);font-weight:600}
+
+/* transposer */
+.trans-grid{display:grid;gap:1.4rem;grid-template-columns:1fr}
+@media(min-width:760px){.trans-grid{grid-template-columns:1fr 1fr;align-items:center}}
+.swatch{height:150px;border-radius:12px;border:1px solid var(--rule);transition:background .45s ease}
+.readout{display:grid;gap:.55rem;font-family:var(--mono);font-size:.8rem}
+.readout div{display:flex;justify-content:space-between;gap:1rem;
+  padding-bottom:.5rem;border-bottom:1px solid var(--rule-2)}
+.readout div:last-child{border-bottom:0}
+.readout b{font-weight:600;font-variant-numeric:tabular-nums}
+.ctrl{margin-bottom:1rem}
+.ctrl label{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.5rem}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+select{font-family:var(--mono);font-size:.78rem;padding:.5rem .7rem;border-radius:8px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);min-height:40px;width:100%}
+
+/* resolution compare */
+.compare{display:grid;gap:1.2rem;grid-template-columns:1fr}
+@media(min-width:700px){.compare{grid-template-columns:1fr 1fr}}
+.cbox{background:var(--sunk);border:1px solid var(--rule-2);border-radius:12px;padding:1.2rem}
+.cbox h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:.9rem;font-weight:500}
+.big-n{font-family:var(--disp);font-size:clamp(2.4rem,6vw,3.4rem);line-height:1;
+  font-variant-numeric:tabular-nums;display:block}
+.cbox p{font-size:.88rem;color:var(--ink-3);margin:.6rem 0 0}
+
+/* genealogy */
+.gene{display:grid;gap:0;margin:2.2rem 0;counter-reset:g}
+.gstep{display:grid;grid-template-columns:auto 1fr;gap:1.1rem;padding:1.2rem 0;
+  border-bottom:1px solid var(--rule-2)}
+.gstep:last-child{border-bottom:0}
+.gyear{font-family:var(--mono);font-size:.78rem;font-weight:600;color:var(--accent);
+  font-variant-numeric:tabular-nums;padding-top:.15rem}
+.gstep h4{font-size:1.02rem;font-weight:700;margin-bottom:.25rem}
+.gstep p{font-size:.93rem;color:var(--ink-2);margin:0}
+
+/* the plate is square, so the canvas is too — a wide box just adds dead margin */
+canvas{display:block;width:100%;max-width:460px;margin:0 auto;aspect-ratio:1;
+  border-radius:10px;background:var(--sunk)}
+
+/* sources */
+.srcs{font-size:.86rem;color:var(--ink-3);line-height:1.75}
+.srcs li{margin-bottom:.55rem;list-style:none;padding-left:1.1rem;position:relative}
+.srcs li::before{content:"→";position:absolute;left:0;color:var(--rule);font-family:var(--mono);font-size:.7rem}
+.srcs a{color:var(--ink-2)}
+
+footer{padding:5rem 0 7rem;border-top:1px solid var(--rule);margin-top:4rem}
+.sig{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.home{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-decoration:none}
+.home:hover{color:var(--accent)}
+
+/* 44px hit targets on touch, where these are the only way to drive the figures */
+@media (pointer:coarse){
+  select,.tbtn{min-height:44px}
+  input[type=range]{height:44px}
+}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  *{animation-duration:.001ms!important;transition-duration:.15s!important}
+}
+</style>
+</head>
+<body>
+
+<button class="theme" id="themeBtn" type="button" aria-label="Switch colour theme">
+  <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.3M12 19.3v2.3M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.3M19.3 12h2.3M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+  <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+</button>
+
+<nav class="rail" id="rail" aria-label="Section navigation"></nav>
+
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top" data-nav="Start">
+    <span class="eyebrow">Colour · Sound · Number</span>
+    <h1>What colour<br>is <em>middle C?</em></h1>
+    <p class="lede">People have answered this confidently for three hundred years. They all disagree — and the reason they disagree turns out to be the most interesting thing about the question.</p>
+    <div class="cue"><i></i> Scroll</div>
+  </header>
+
+  <!-- ============ 01 NEWTON ============ -->
+  <section id="newton" data-nav="Newton's rainbow">
+    <div class="col">
+      <span class="num">01 · The rainbow was tuned</span>
+      <h2>Newton put seven colours in the spectrum because a scale has seven notes.</h2>
+      <p class="body-text">In his <em>Optical Lectures</em> of 1670–72, Newton described the spectrum as <strong>five</strong> colours. By the time he published <em>Opticks</em> in 1704, there were <strong>seven</strong>. He had inserted <strong>orange</strong> and <strong>indigo</strong> — and he put them at the positions corresponding to the semitones of a diatonic scale, spacing the bands to a Dorian interval pattern.</p>
+      <p class="body-text">He was explicit about why. He was working in a Pythagorean tradition that held number and harmony to underlie the cosmos, and he drew the parallel to the seven known planets. It was an aesthetic and philosophical decision, not a measurement.</p>
+    </div>
+
+    <figure>
+      <span class="fig-label">Fig. 01 — the spectrum, before and after</span>
+      <div class="toggle-row">
+        <button class="tbtn on" data-spec="7" type="button">Opticks, 1704 — seven</button>
+        <button class="tbtn" data-spec="5" type="button">Optical Lectures, 1670 — five</button>
+      </div>
+      <div class="spectrum"><div class="spec-marks" id="specMarks"></div></div>
+      <figcaption id="specCap">Orange and indigo (hatched) are the two Newton added. Nothing in the physics of light marks a boundary at either point — the spectrum is continuous, and where one colour "ends" is a decision, not a discovery.</figcaption>
+    </figure>
+
+    <div class="col">
+      <p class="pull">The rainbow every child learns has seven colours because of a musical analogy from 1704.</p>
+      <p class="body-text">Hold onto that, because almost everything that follows — chakra colours, "the frequency of C", the whole architecture of seven-ness in wellness culture — inherits this one decision downstream.</p>
+    </div>
+  </section>
+
+  <!-- ============ 02 THE EAR ============ -->
+  <section id="ear" data-nav="The ear">
+    <div class="col">
+      <span class="num">02 · What the ear does</span>
+      <h2>Your ear really is a spectrum analyser.</h2>
+      <p class="body-text">The basilar membrane inside the cochlea is a mechanical frequency analyser. A gradient of stiffness and mass means each position along it resonates at its own characteristic frequency — high notes at the base, low notes at the apex. This is <strong>tonotopy</strong>, and it is a genuine physical decomposition of sound into its component frequencies.</p>
+      <p class="body-text">Roughly <strong>3,500 inner hair cells</strong> sample that map, each feeding around ten of some thirty thousand auditory nerve fibres. Above a few hundred hertz, place coding is joined by <strong>phase locking</strong> — neurons firing in step with the waveform itself. The result is that humans can tell two pitches apart when they differ by about <strong>0.2%</strong>.</p>
+      <p class="body-text">This is why two notes played together are <em>heard as two notes</em>. The frequency information survives as frequency information, all the way up.</p>
+    </div>
+  </section>
+
+  <!-- ============ 03 THE EYE ============ -->
+  <section id="eye" data-nav="The eye">
+    <div class="col">
+      <span class="num">03 · What the eye does</span>
+      <h2>Your eye is not. It has three numbers, and that's all.</h2>
+      <p class="body-text">Colour vision starts with three cone types — S, M and L, peaking near <strong>440, 535 and 565 nanometres</strong>. They are not narrow channels. Their sensitivity curves are broad and overlap heavily; the L and M peaks sit only twenty or thirty nanometres apart.</p>
+      <p class="body-text">Worse, a single cone cannot tell you anything about wavelength at all. Once a photon is absorbed, the cone's response is identical regardless of which photon it was. This is the <strong>principle of univariance</strong>, and it means the entire incoming spectrum — however complicated — gets collapsed into just <strong>three totals</strong>. Colour is what the brain computes by comparing them.</p>
+    </div>
+
+    <figure>
+      <span class="fig-label">Fig. 02 — the resolution gap</span>
+      <div class="compare">
+        <div class="cbox">
+          <h4>Cochlea</h4>
+          <span class="big-n" style="color:var(--cyan)">3,500</span>
+          <p>inner hair cells across a tonotopic map, resolving pitch differences of about 0.2%. True spectral analysis.</p>
+        </div>
+        <div class="cbox">
+          <h4>Retina</h4>
+          <span class="big-n" style="color:var(--orange)">3</span>
+          <p>broad, overlapping cone types. The whole spectrum, projected down to three numbers. No spectral analysis at all.</p>
+        </div>
+      </div>
+      <figcaption>This asymmetry is the entire answer to the question in the title. The two senses are not doing the same kind of thing to frequency, so an analogy between them cannot carry the weight people put on it.</figcaption>
+    </figure>
+
+    <div class="col">
+      <h3>The consequence is metamerism</h3>
+      <p class="body-text">Because the spectrum is squeezed into three numbers, wildly different mixtures of light can produce <em>identical</em> triplets — and therefore look exactly the same. A single pure wavelength at 580&nbsp;nm and a mixture of 540 and 620&nbsp;nm can be perceptually indistinguishable.</p>
+      <p class="body-text">This is not a curiosity. It is why screens and printing work at all: three primaries are enough to fake almost any colour, because your eye was never measuring the spectrum in the first place.</p>
+      <p class="body-text">It also means colour does something sound never does. Play two notes together and you hear two notes. Mix two wavelengths and you see <strong>one new colour</strong> — one that may be identical to some entirely unrelated single wavelength.</p>
+      <div class="note"><b>And some colours have no wavelength whatsoever.</b> Magenta is the clearest case: there is no such thing as magenta light. It only exists when short and long wavelengths arrive together with a gap in the middle, and the brain closes the spectrum into a loop that physics leaves open. Brown, pink and grey are similar — they need a context and a comparison to exist at all.</div>
+    </div>
+  </section>
+
+  <!-- ============ 04 THE TRANSPOSITION ============ -->
+  <section id="transpose" data-nav="The transposition">
+    <div class="col">
+      <span class="num">04 · Doing the arithmetic</span>
+      <h2>You can transpose a note up into light. The arithmetic is clean. It just doesn't mean anything.</h2>
+      <p class="body-text">Here is the honest version of the calculation, which is worth doing because it is the foundation of every "frequency of C" chart on the internet. Double a pitch enough times and you eventually reach the frequency of visible light. From A&nbsp;=&nbsp;440&nbsp;Hz, it takes about <strong>40 doublings</strong>.</p>
+    </div>
+
+    <figure>
+      <span class="fig-label">Fig. 03 — transpose a pitch into light</span>
+      <div class="trans-grid">
+        <div>
+          <div class="ctrl">
+            <label for="noteSel">Note</label>
+            <select id="noteSel"></select>
+          </div>
+          <div class="ctrl">
+            <label for="tuneSel">Tuning reference</label>
+            <select id="tuneSel">
+              <option value="440">A = 440 Hz (ISO 16, standard)</option>
+              <option value="432">A = 432 Hz (the "natural" claim)</option>
+              <option value="435">A = 435 Hz (Diapason normal, 1859)</option>
+            </select>
+          </div>
+          <div class="ctrl">
+            <label for="octSlider">Octaves up — <span id="octVal">40</span></label>
+            <input type="range" id="octSlider" min="37" max="43" value="40" step="1">
+          </div>
+        </div>
+        <div>
+          <div class="swatch" id="swatch"></div>
+          <div class="readout" style="margin-top:1rem">
+            <div><span>Pitch</span><b id="rPitch">—</b></div>
+            <div><span>After transposition</span><b id="rFreq">—</b></div>
+            <div><span>Wavelength</span><b id="rWave">—</b></div>
+            <div><span>Band</span><b id="rBand">—</b></div>
+          </div>
+        </div>
+      </div>
+      <figcaption id="transCap">Move the octave slider: for any given note, only one whole-number jump lands inside visible light — one step down is infrared, one step up is ultraviolet. Nothing in physics picks the number. Then change the note. Middle C needs <strong>41</strong> doublings to become visible, not 40, so even the octave count isn't fixed across the scale.</figcaption>
+    </figure>
+
+    <div class="col">
+      <h3>Two free choices, and the answer moves</h3>
+      <p class="body-text">The scheme has two parameters that physics does not constrain: <strong>how many octaves you jump</strong>, and <strong>what tuning you start from</strong>. Switch the reference from A&nbsp;=&nbsp;440 to A&nbsp;=&nbsp;432 — a difference of under two percent — and the resulting hue shifts by about <strong>11.5&nbsp;nanometres</strong>. That is a visible change, produced entirely by a preference.</p>
+      <p class="body-text">So it should not surprise you that the published schemes contradict each other outright. One popular system built on A&nbsp;=&nbsp;432 makes <strong>C green</strong>. Scriabin's own synaesthetic table made <strong>C red</strong>. Newton's spectrum division gives a third answer again. Three internally consistent, mutually incompatible results — the signature of a convention rather than a discovery.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Octaves up from A = 440 Hz</th><th>Frequency</th><th>Wavelength</th><th>Where it lands</th></tr></thead>
+        <tbody>
+          <tr><td class="n">× 2<sup>39</sup></td><td class="n">241.9 THz</td><td class="n">1239.4 nm</td><td class="miss">Infrared — invisible</td></tr>
+          <tr><td class="n">× 2<sup>40</sup></td><td class="n">483.8 THz</td><td class="n">619.7 nm</td><td class="hit">Visible — orange-red</td></tr>
+          <tr><td class="n">× 2<sup>41</sup></td><td class="n">967.6 THz</td><td class="n">309.8 nm</td><td class="miss">Ultraviolet — invisible</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col">
+      <h3>And the ranges don't match at all</h3>
+      <p class="body-text">Human hearing runs from roughly 20&nbsp;Hz to 20&nbsp;kHz. That is <strong>just under ten octaves</strong> — ten full doublings of frequency. Visible light runs from about 380 to 750&nbsp;nanometres, which is 789 down to 400&nbsp;terahertz. That is <strong>0.98 octaves</strong>: less than a single doubling.</p>
+      <p class="pull">Ten octaves of hearing, squeezed into less than one of sight. Any mapping has to throw away almost everything.</p>
+      <p class="body-text">There is one more thing colour cannot do. Pitch is <em>periodic</em> — a note and its octave genuinely sound like versions of the same thing, which is what makes octave equivalence meaningful. Colour has no such recurrence. There is no visual octave. Nothing in hue comes back around.</p>
+    </div>
+  </section>
+
+  <!-- ============ 05 CHLADNI ============ -->
+  <section id="cymatics" data-nav="Cymatics">
+    <div class="col">
+      <span class="num">05 · Sound made visible</span>
+      <h2>Cymatics is real, and genuinely beautiful. The mysticism attached to it is not.</h2>
+      <p class="body-text">Sprinkle sand on a metal plate and vibrate it, and the grains flee the moving regions and settle along the lines that stay still. Those <strong>nodal lines</strong> form intricate symmetrical figures, different for every frequency. Ernst Chladni demonstrated this in the eighteenth century; Hans Jenny extended it with oscillators and photography in the 1960s and 70s and named the field cymatics.</p>
+    </div>
+
+    <figure>
+      <span class="fig-label">Fig. 04 — Chladni figures on a square plate</span>
+      <canvas id="chladni" width="700" height="700" aria-label="Simulated Chladni nodal patterns"></canvas>
+      <div class="toggle-row" style="margin:1.1rem 0 0;justify-content:center">
+        <button class="tbtn on" data-mode="3,2" type="button">m3 n2</button>
+        <button class="tbtn" data-mode="4,3" type="button">m4 n3</button>
+        <button class="tbtn" data-mode="5,2" type="button">m5 n2</button>
+        <button class="tbtn" data-mode="6,5" type="button">m6 n5</button>
+        <button class="tbtn" data-mode="7,4" type="button">m7 n4</button>
+      </div>
+      <figcaption>Computed from the standing-wave equation for a square plate. The pattern is fully determined by the plate's geometry and the driving frequency — which is exactly why it is reproducible, and exactly why it is not a message.</figcaption>
+    </figure>
+
+    <div class="col">
+      <p class="body-text">The claim that these figures reveal sacred geometry, or that chanting a particular syllable produces a particular sacred diagram, does not follow. A Chladni figure is a nodal map fixed by the plate's shape, the material, and the frequency driving it. That it sometimes resembles a mandala tells you something about <strong>the limited repertoire of symmetries available in two dimensions</strong>, not about ancient acoustic knowledge.</p>
+      <p class="body-text">The real phenomenon does not need the embellishment. Standing waves make invisible physics visible, on a kitchen table, for anyone who wants to look.</p>
+    </div>
+  </section>
+
+  <!-- ============ 06 WHAT'S REAL ============ -->
+  <section id="real" data-nav="What is real">
+    <div class="col">
+      <span class="num">06 · The connections that hold</span>
+      <h2>Something does connect sound, light and the body. It is stranger than the myths.</h2>
+      <p class="body-text">Having taken away the frequency mysticism, it would be dishonest to leave the impression that nothing links these things. Several connections are real, well evidenced, and considerably weirder than anything in the wellness literature.</p>
+
+      <h3 style="margin-top:2.2rem">Light reaches you through a channel that has nothing to do with seeing <span class="grade g-strong">Strong</span></h3>
+      <p class="body-text">In 2002, two groups confirmed a class of retinal cells that are photosensitive in their own right — <strong>intrinsically photosensitive retinal ganglion cells</strong>, containing the pigment <strong>melanopsin</strong>, most sensitive around 480&nbsp;nm. They respond to light even when rods and cones are silenced, and they contribute nothing to the image you see. Their job is to run the clock: they project to the suprachiasmatic nucleus, suppress melatonin, and set your circadian phase. Light in the early biological night delays that clock; light in the late night advances it. A fifth photoreceptor, discovered in living memory, doing something other than vision.</p>
+
+      <h3 style="margin-top:2.2rem">Music moves dopamine, and we know it causally <span class="grade g-mod">Moderate</span></h3>
+      <p class="body-text">Salimpoor and colleagues showed in 2011 that intensely pleasurable music triggers endogenous dopamine release in the striatum, with a neat split — the caudate active during <em>anticipation</em>, the nucleus accumbens at the emotional <em>peak</em>. That was eight people, and it has never had a large direct replication. But a 2019 study went further and manipulated dopamine directly: levodopa increased musical pleasure, risperidone blunted it. That moves the claim from correlation to cause.</p>
+
+      <h3 style="margin-top:2.2rem">Rhythm can restore a walk <span class="grade g-mod">Moderate–strong</span></h3>
+      <p class="body-text">The strongest clinical finding in this whole area is unglamorous: a steady auditory beat measurably improves gait in Parkinson's disease. Meta-analyses across many trials find better gait speed and stride length and fewer freezing episodes. The mechanism is plausible — entrainment of basal ganglia timing circuits. It is graded cautiously only because you cannot blind someone to whether they can hear a metronome.</p>
+
+      <h3 style="margin-top:2.2rem">Some brains genuinely do see sound <span class="grade g-strong">Strong</span></h3>
+      <p class="body-text">Chromesthesia is real. For a minority of people, sounds reliably and involuntarily evoke colours, plausibly through cross-activation between neighbouring auditory and visual regions. But it is <strong>idiosyncratic</strong>: two synaesthetes rarely agree on what colour a note is. It is a fact about particular brains, not a law about notes.</p>
+      <p class="body-text">And the rest of us have a weaker version. <strong>Cross-modal correspondences</strong> are one of the most replicated findings in psychology: without any synaesthesia, people reliably match higher pitches to lighter, smaller, higher things. That is shared abstract magnitude coding — not frequency arithmetic.</p>
+    </div>
+  </section>
+
+  <!-- ============ 07 GENEALOGY ============ -->
+  <section id="genealogy" data-nav="Where seven came from">
+    <div class="col">
+      <span class="num">07 · A genealogy</span>
+      <h2>Where the modern claims actually come from.</h2>
+      <p class="body-text">The "seven colours, seven notes, seven centres" system is usually presented as ancient wisdom. Its paper trail is short, recent, and traceable.</p>
+    </div>
+
+    <div class="gene">
+      <div class="gstep"><div class="gyear">1704</div><div>
+        <h4>Newton fixes the spectrum at seven</h4>
+        <p>Inserts orange and indigo to match the diatonic scale, in service of a Pythagorean cosmology. Five colours become seven.</p></div></div>
+      <div class="gstep"><div class="gyear">1927</div><div>
+        <h4>Leadbeater colours the chakras</h4>
+        <p>The Theosophist C.&nbsp;W.&nbsp;Leadbeater maps Newton's rainbow onto the Indian subtle body. In the actual Tantric sources, from the 8th–12th centuries, the number of centres varies — four, five, six, seven, twelve — and there is <strong>no fixed colour sequence</strong>.</p></div></div>
+      <div class="gstep"><div class="gyear">1974</div><div>
+        <h4>Puleo derives the "Solfeggio" frequencies</h4>
+        <p>Joseph Puleo applies Pythagorean numerological reduction to numbers in the Book of Numbers and produces six frequencies. Leonard Horowitz adds three more and markets the set in <em>Healing Codes for the Biological Apocalypse</em> (1999).</p></div></div>
+      <div class="gstep"><div class="gyear">1977</div><div>
+        <h4>The package closes</h4>
+        <p>Christopher Hills completes the synthesis: seven chakras, seven colours, seven notes, one system. Barely fifty years old, and presented as immemorial.</p></div></div>
+    </div>
+
+    <div class="col">
+      <div class="note"><b>The Solfeggio names are borrowed, not inherited.</b> Guido d'Arezzo really did invent solfège in the 11th century, drawing syllables from the hymn <em>Ut queant laxis</em>. But it was a sight-singing aid, and it carried no frequencies — standardised pitch did not exist yet. The hertz values were attached in the 1970s and backdated.</div>
+
+      <h3 style="margin-top:2.4rem">The 432 Hz claim, specifically</h3>
+      <p class="body-text">The most repeated argument is that 432 aligns with the Earth's <strong>Schumann resonance</strong> of about 7.83&nbsp;Hz. Round that to 8, and 432 ÷ 8 = 54, a clean number. The trouble is immediate:</p>
+      <p class="pull">440 ÷ 8 = 55. The arithmetic works exactly as well for the number it is meant to discredit.</p>
+      <p class="body-text">There is also no mechanism by which a 7.83&nbsp;Hz electromagnetic cavity resonance between the Earth and the ionosphere would couple to audible pitch. And the popular history is wrong in a specific, checkable way: the story that <strong>Goebbels imposed A&nbsp;=&nbsp;440</strong> to make the world discordant is false. Germany had used 440 since a Stuttgart standard of <strong>1834</strong>, a century earlier. The conspiracy version was popularised in the 1980s by Lyndon LaRouche's Schiller Institute and amplified later with Rockefeller embellishments.</p>
+      <p class="body-text">Verdi did prefer something near 432 — for the practical comfort of singers, and he lost the argument in the 1880s. That is a real and rather human piece of history, and it does not need the mythology.</p>
+      <p class="body-text">As for the claim that <strong>528&nbsp;Hz repairs DNA</strong>: there is no peer-reviewed evidence for it and no plausible biophysical mechanism by which audible sound would alter the structure of a DNA molecule. The one real finding in the vicinity is a small study showing lower salivary cortisol after half an hour of listening — a modest stress effect, which pleasant music of any tuning would be expected to produce. <span class="grade g-weak">Weak</span></p>
+    </div>
+  </section>
+
+  <!-- ============ 08 SCRIPTURE ============ -->
+  <section id="scripture" data-nav="Scripture's numbers">
+    <div class="col">
+      <span class="num">08 · The other map</span>
+      <h2>Scripture is full of numbers. They are architecture, not measurement.</h2>
+      <p class="body-text">Biblical scholarship has a precise term for how number works in these texts: <strong>schematic</strong>. Numbers mark emphasis, closure and pattern. They are structural and rhetorical devices, not empirical counts — which is why the troop figures in Chronicles serve a rhetorical purpose rather than a demographic one.</p>
+      <p class="body-text">This is a genuinely different thing from numerology. Numerology holds that numbers carry power independent of context. Schematic reading is the opposite: the meaning comes entirely <em>from</em> the context — from how a number functions inside a particular text's literary and covenantal logic.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Number</th><th>What it carries</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td class="n">7</td><td>Completeness, consecration</td><td>The creation week; the Sabbath; Revelation's three cascading septets of seals, trumpets and bowls</td></tr>
+          <tr><td class="n">12</td><td>The covenant people, whole</td><td>Twelve tribes; twelve apostles as a new Israel</td></tr>
+          <tr><td class="n">40</td><td>Testing; a transitional span</td><td>The flood; the wilderness; Elijah's journey; the temptation</td></tr>
+          <tr><td class="n">7 × 7</td><td>Rest extended to land and debt</td><td>Jubilee — seven sabbatical years, then the fiftieth: debts released, slaves freed, land returned</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col">
+      <p class="body-text">Revelation's sevens are the clearest case. The seals, trumpets and bowls share a common shape — heavenly origin, an interlude between the sixth and seventh member, escalating intensity. That is a deliberate literary schema. Read as a countdown, it stops making sense; read as architecture, it works.</p>
+
+      <h3 style="margin-top:2.2rem">Where scholars will and won't go</h3>
+      <p class="body-text">There is one place where mainstream New Testament scholarship accepts deliberate number-coding by the author: <strong>Revelation 13:18</strong>. Transliterate "Nero Caesar" into Hebrew consonants and the values sum to 666; use the Latin spelling, dropping a letter, and you get <strong>616</strong> — which is an actual variant reading in the manuscripts. The convergence is elegant.</p>
+      <p class="body-text">But it is <em>contested</em>, and honestly so. Irenaeus, writing around 180&nbsp;CE and closely engaged with the text, does not list Nero among his candidates. The reading also assumes an audience fluent in Hebrew gematria for a Greek document written largely to Gentile churches. G.&nbsp;K.&nbsp;Beale prefers a symbolic reading: six falling short of seven, three times over. Best available solution, not a settled one.</p>
+      <div class="note"><b>The 153 fish of John 21 have no agreed explanation.</b> Jerome thought Greek zoologists had catalogued 153 species of fish. Augustine read it as a triangular number resolving to law plus Spirit. Richard Bauckham proposed a gematria. Raymond Brown's verdict in the Anchor Bible commentary is the honest one: such readings are possible, but we have no evidence any of them was intended.</div>
+      <p class="body-text">And one popular claim should be set aside cleanly. <strong>Golden-ratio geometry in Solomon's Temple is not a finding of biblical scholarship.</strong> It appears in fringe and self-published sources and nowhere in the peer-reviewed literature; like most golden-ratio claims, it depends on choosing your measurement points to suit. What <em>is</em> well supported is that the dimensions are schematic — cube-like proportions and repeated multiples, encoding graded holiness as you move inward: a cosmos in miniature. <span class="grade g-weak">Golden ratio: unfounded</span> <span class="grade g-strong">Schematic reading: settled</span></p>
+      <p class="body-text">Equidistant letter sequences — "Bible codes" — are not an open question either. The 1994 paper was rebutted in the same journal in 1999 by McKay, Bar-Natan, Bar-Hillel and Kalai, who showed the result depended on choices about which names and spellings to search rather than on anything in the text.</p>
+    </div>
+  </section>
+
+  <!-- ============ 09 LOST MUSIC ============ -->
+  <section id="lost" data-nav="The lost music">
+    <div class="col">
+      <span class="num">09 · What we don't have</span>
+      <h2>The most musical book in the world, and we cannot hear a note of it.</h2>
+      <p class="body-text">Scripture is saturated with music. The kinnor and nevel, the tof, the shofar and the silver trumpets, cymbals. In 1 Chronicles, David organises the Levitical musicians — the families of Asaph, Heman and Jeduthun — into twenty-four courses, and the text describes their music as a form of <em>prophesying</em>.</p>
+      <p class="body-text">And yet the sound is gone entirely.</p>
+      <p class="body-text">The Psalm superscriptions carry technical terms — <em>maskil</em>, <em>miktam</em>, <em>shiggaion</em> — whose meanings are genuinely lost. They may be genres, or notations, or performance directions; nobody knows. <strong>Selah</strong> appears around seventy-one times and no one can tell you what it means. A pause, an interlude, a change in dynamics, a cue to the congregation — most translations simply leave it untranslated, because certainty is not available.</p>
+      <p class="body-text">Even the cantillation marks are later than they look: the written system is medieval, from the Tiberian Masoretes of the ninth and tenth centuries. It very likely encodes a much older oral tradition, but what survives is a syntactic and accentual system — not a transcription. <strong>The melodies are unrecoverable.</strong></p>
+      <p class="pull">We have the architecture and we have the words. The music itself did not survive.</p>
+      <p class="body-text">There is something clarifying in that. A tradition this attentive to music did not think the frequencies were the point — or it would have found a way to write them down.</p>
+    </div>
+  </section>
+
+  <!-- ============ 10 CONVERGENCE ============ -->
+  <section id="convergence" data-nav="Where they meet">
+    <div class="col">
+      <span class="num">10 · The convergence</span>
+      <h2>Two maps, and they say the same thing from opposite directions.</h2>
+      <p class="body-text">Follow the science far enough and you arrive somewhere specific. Colour is not in the light; it is a three-number inference your brain constructs, and it invents hues like magenta that the spectrum does not contain. Pitch is real spectral analysis, but even octave equivalence — the one relationship that feels like bedrock — turns out not to be universal. When researchers asked the Tsimané of Bolivia to sing melodies back, octave relationships were largely irrelevant to them, though their raw pitch discrimination matched everyone else's. The same group rated consonant and dissonant chords <strong>equally pleasant</strong>. The preference is learned; the hearing is not.</p>
+      <p class="body-text">Even inside music theory, the perfect numbers fail. Stack twelve pure fifths and you should land seven octaves up. You overshoot, by 23.46 cents — the <strong>Pythagorean comma</strong>. Every piano you have ever heard is deliberately, audibly out of tune to hide it. The harmony of pure ratios does not close.</p>
+      <p class="body-text">Now follow the scripture. Its numbers are schematic — structure, pattern, theology. Seven is completeness because of what a week is and what rest means, not because of a wavelength. Jubilee's seven sevens are about land and debt and freedom. The meaning is carried by <em>proportion and relationship</em>, and it is meant to be read, not measured.</p>
+      <p class="pull">Both maps arrive at the same place: the correspondences are real, and they live in structure and meaning rather than in physics.</p>
+      <p class="body-text">Which is, in the end, a larger claim than the one it replaces — not a smaller one. "Everything vibrates at the same frequency" is a thin idea that happens to be false. That number, proportion and pattern genuinely organise both what we perceive and what we mean is a thicker idea, and it has the advantage of being true.</p>
+      <p class="body-text">Newton was not a fraud. He was a Pythagorean who believed number bound the cosmos together, and he arranged his rainbow to show it. The instinct was sound. He was simply reading a structure of meaning, and calling it a measurement — which is exactly the confusion this whole subject keeps making, three hundred years on.</p>
+      <p class="body-text" style="margin-top:2rem"><strong>So: what colour is middle C?</strong> There isn't one. But the reason there isn't one tells you something true about how you are built — that you hear the world in ten octaves and see it in three numbers, and that meaning was never hiding in the frequencies to begin with.</p>
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section id="sources" data-nav="Sources">
+    <div class="col">
+      <span class="num">Sources</span>
+      <h2>Where this comes from.</h2>
+      <p class="body-text">Claims on this page are graded. Where a finding is contested, it says so.</p>
+      <ul class="srcs" style="margin-top:1.6rem">
+        <li>Fong, Doyle et&nbsp;al., "Novel color via stimulation of individual photoreceptors at population scale," <em>Science Advances</em> (2025) — <a href="https://www.science.org/doi/10.1126/sciadv.adu1052">the "olo" experiment</a>. Note the dispute over whether it constitutes a new hue.</li>
+        <li>Berson, Dunn &amp; Takao; Hattar et&nbsp;al., <em>Science</em> (2002) — intrinsically photosensitive retinal ganglion cells and melanopsin.</li>
+        <li>Salimpoor et&nbsp;al., <em>Nature Neuroscience</em> (2011) — <a href="https://www.nature.com/articles/nn.2726">dopamine release and musical pleasure</a>; Ferreri et&nbsp;al., <em>PNAS</em> (2019) — causal manipulation.</li>
+        <li>McDermott, Schultz, Undurraga &amp; Godoy, <em>Nature</em> (2016) — <a href="https://www.nature.com/articles/nature18635">consonance preference among the Tsimané</a>; Jacoby &amp; McDermott, <em>Current Biology</em> (2019) — octave equivalence.</li>
+        <li>Plomp &amp; Levelt, <em>JASA</em> (1965) — tonal consonance and critical bandwidth.</li>
+        <li>McKay, Bar-Natan, Bar-Hillel &amp; Kalai, "Solving the Bible Code Puzzle," <em>Statistical Science</em> 14 (1999): 150–173.</li>
+        <li>Aune, <em>Revelation 6–16</em> (Word Biblical Commentary) on the structure of the septets; Beale on 666; Brown, <em>The Gospel According to John</em> (Anchor Bible) on the 153.</li>
+        <li>Leadbeater, <em>The Chakras</em> (1927); Hills (1977); Puleo &amp; Horowitz, <em>Healing Codes for the Biological Apocalypse</em> (1999).</li>
+        <li>On the A=440 history and the Goebbels claim: <a href="https://leadstories.com/hoax-alert/2022/10/fact-check-tuning-standard-of-a-440-hz-was-not-driven-by-nazi-and-rockefeller-desire-for-discord.html">Lead Stories fact check</a>; ISO 16 (1955).</li>
+        <li>Singh et&nbsp;al., <em>Cochrane Database</em> (2023) — blue-light filtering lenses; low-certainty, inconclusive.</li>
+        <li>Golden et&nbsp;al., <em>American Journal of Psychiatry</em> (2005) — light therapy for seasonal affective disorder.</li>
+        <li>Spence, "Crossmodal correspondences: a tutorial review" (2011).</li>
+        <li>Pietschnig, Voracek &amp; Formann, <em>Intelligence</em> (2010) — meta-analysis dismantling the Mozart effect.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="col">
+      <p class="sig">esmrsky · The Colour of Middle C</p>
+      <a class="home" href="/">← All projects</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme');
+    if(!cur){ cur = window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'; }
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('cmc-theme', next); }catch(e){}
+    drawChladni();
+  });
+
+  /* ---------- rail ---------- */
+  var secs = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+  var rail = document.getElementById('rail');
+  secs.forEach(function(s){
+    var a = document.createElement('a');
+    a.href = '#' + s.id;
+    a.innerHTML = '<span>' + s.dataset.nav + '</span>';
+    a.setAttribute('aria-label', s.dataset.nav);
+    rail.appendChild(a);
+  });
+  var dots = Array.prototype.slice.call(rail.children);
+  function spy(){
+    var best = 0, bestD = Infinity, mid = window.innerHeight * 0.4;
+    secs.forEach(function(s, i){
+      var d = Math.abs(s.getBoundingClientRect().top - mid);
+      if(d < bestD){ bestD = d; best = i; }
+    });
+    dots.forEach(function(d, i){ d.classList.toggle('on', i === best); });
+  }
+
+  /* ---------- reveal ---------- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('section > .col, figure, .tablewrap, .gene'));
+  reveals.forEach(function(el){ el.classList.add('reveal'); });
+  function showAll(){ reveals.forEach(function(el){ el.classList.add('in'); }); }
+  if(reduce){ showAll(); }
+  else if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:0.04});
+    reveals.forEach(function(el){ io.observe(el); });
+    /* belt and braces: anything already on screen at load */
+    setTimeout(function(){
+      reveals.forEach(function(el){
+        if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+      });
+    }, 60);
+  } else { showAll(); }
+
+  /* ---------- Fig 01: Newton's spectrum ---------- */
+  var SEVEN = [
+    {n:'Violet'},{n:'Indigo',ins:true},{n:'Blue'},{n:'Green'},
+    {n:'Yellow'},{n:'Orange',ins:true},{n:'Red'}
+  ];
+  var FIVE = [{n:'Violet'},{n:'Blue'},{n:'Green'},{n:'Yellow'},{n:'Red'}];
+  var marks = document.getElementById('specMarks');
+  var specCap = document.getElementById('specCap');
+  function drawSpec(which){
+    var set = which === '5' ? FIVE : SEVEN;
+    marks.innerHTML = '';
+    set.forEach(function(c){
+      var d = document.createElement('div');
+      if(c.ins) d.className = 'inserted';
+      d.innerHTML = '<b>' + c.n + '</b>';
+      marks.appendChild(d);
+    });
+    specCap.textContent = which === '5'
+      ? 'The five-colour spectrum of the Optical Lectures. This is what Newton reported before the musical analogy reshaped it.'
+      : 'Orange and indigo (hatched) are the two Newton added. Nothing in the physics of light marks a boundary at either point — the spectrum is continuous, and where one colour "ends" is a decision, not a discovery.';
+  }
+  drawSpec('7');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-spec]'), function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('[data-spec]').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      drawSpec(b.dataset.spec);
+    });
+  });
+
+  /* ---------- Fig 03: the transposer ---------- */
+  var C = 299792458;
+  var NOTES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  var noteSel = document.getElementById('noteSel');
+  NOTES.forEach(function(n, i){
+    var o = document.createElement('option');
+    o.value = i; o.textContent = n + (n === 'A' ? '  (the reference)' : '');
+    /* open on A, so the default view matches the table below and lands in
+       visible light. Switching to C is the discovery — it needs 41 octaves. */
+    if(n === 'A') o.selected = true;
+    noteSel.appendChild(o);
+  });
+
+  /* Approximate spectral colour for a wavelength in nm. Standard piecewise fit. */
+  function waveToRGB(nm){
+    var r=0,g=0,b=0,a=1;
+    if(nm>=380&&nm<440){ r=-(nm-440)/60; b=1; }
+    else if(nm<490){ g=(nm-440)/50; b=1; }
+    else if(nm<510){ g=1; b=-(nm-510)/20; }
+    else if(nm<580){ r=(nm-510)/70; g=1; }
+    else if(nm<645){ r=1; g=-(nm-645)/65; }
+    else if(nm<=780){ r=1; }
+    else { a=0; }
+    if(nm>700) a=0.3+0.7*(780-nm)/80;
+    else if(nm<420) a=0.3+0.7*(nm-380)/40;
+    var f=function(x){ return Math.round(255*Math.pow(Math.max(0,Math.min(1,x))*a,0.8)); };
+    return 'rgb(' + f(r) + ',' + f(g) + ',' + f(b) + ')';
+  }
+
+  var els = {
+    swatch:document.getElementById('swatch'), pitch:document.getElementById('rPitch'),
+    freq:document.getElementById('rFreq'), wave:document.getElementById('rWave'),
+    band:document.getElementById('rBand'), oct:document.getElementById('octSlider'),
+    octVal:document.getElementById('octVal'), tune:document.getElementById('tuneSel')
+  };
+  function updateTrans(){
+    var a = parseFloat(els.tune.value);
+    var semisFromA = parseInt(noteSel.value,10) - 9;      /* A is index 9 */
+    var pitch = a * Math.pow(2, semisFromA/12);
+    var n = parseInt(els.oct.value,10);
+    var f = pitch * Math.pow(2,n);
+    var nm = C / f * 1e9;
+    els.octVal.textContent = n;
+    els.pitch.textContent = pitch.toFixed(1) + ' Hz';
+    els.freq.textContent = (f/1e12).toFixed(1) + ' THz';
+    els.wave.textContent = nm.toFixed(1) + ' nm';
+    if(nm > 750){
+      els.band.textContent = 'Infrared — invisible';
+      els.band.style.color = 'var(--ink-3)';
+      els.swatch.style.background = 'repeating-linear-gradient(45deg,var(--sunk) 0 9px,var(--rule-2) 9px 18px)';
+    } else if(nm < 380){
+      els.band.textContent = 'Ultraviolet — invisible';
+      els.band.style.color = 'var(--ink-3)';
+      els.swatch.style.background = 'repeating-linear-gradient(45deg,var(--sunk) 0 9px,var(--rule-2) 9px 18px)';
+    } else {
+      els.band.textContent = 'Visible';
+      els.band.style.color = 'var(--green)';
+      els.swatch.style.background = waveToRGB(nm);
+    }
+  }
+  [noteSel, els.tune, els.oct].forEach(function(el){ el.addEventListener('input', updateTrans); });
+  updateTrans();
+
+  /* ---------- Fig 04: Chladni ---------- */
+  var cv = document.getElementById('chladni');
+  var mode = [3,2];
+  function drawChladni(){
+    if(!cv) return;
+    var ctx = cv.getContext('2d');
+    var W = cv.width, H = cv.height;
+    var cs = getComputedStyle(document.body);
+    var bg = cs.getPropertyValue('--sunk').trim() || '#eee';
+    var ink = cs.getPropertyValue('--ink').trim() || '#111';
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+    var m = mode[0], n = mode[1];
+    var size = Math.min(W,H) - 16;
+    var ox = (W-size)/2, oy = (H-size)/2;
+    var img = ctx.getImageData(ox, oy, size, size);
+    var d = img.data;
+    /* rgb of the ink colour, for the sand */
+    var tmp = document.createElement('canvas').getContext('2d');
+    tmp.fillStyle = ink; tmp.fillRect(0,0,1,1);
+    var ic = tmp.getImageData(0,0,1,1).data;
+    for(var y=0; y<size; y++){
+      for(var x=0; x<size; x++){
+        var u = x/size, v = y/size;
+        /* classic square-plate superposition */
+        var s = Math.cos(n*Math.PI*u)*Math.cos(m*Math.PI*v)
+              - Math.cos(m*Math.PI*u)*Math.cos(n*Math.PI*v);
+        /* sand collects where displacement is ~0 */
+        var a = Math.max(0, 1 - Math.abs(s)*7);
+        a = Math.pow(a, 1.5);
+        var i = (y*size + x)*4;
+        d[i]   = ic[0]; d[i+1] = ic[1]; d[i+2] = ic[2];
+        d[i+3] = Math.round(a*255);
+      }
+    }
+    ctx.putImageData(img, ox, oy);
+    ctx.strokeStyle = cs.getPropertyValue('--rule').trim() || '#ccc';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(ox+0.5, oy+0.5, size-1, size-1);
+  }
+  drawChladni();
+  Array.prototype.forEach.call(document.querySelectorAll('[data-mode]'), function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('[data-mode]').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      mode = b.dataset.mode.split(',').map(Number);
+      drawChladni();
+    });
+  });
+
+  /* ---------- scroll ---------- */
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function(){ spy(); ticking = false; });
+  }, {passive:true});
+  spy();
+})();
+</script>
+</body>
+</html>
