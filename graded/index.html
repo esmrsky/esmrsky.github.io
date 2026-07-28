@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graded — numerology, scripture, and the numbers that actually predict things</title>
+<meta name="description" content="Every claim about what numbers mean, colour-coded by how well it holds up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graded — numerology, scripture, and the numbers that actually predict things">
+<meta property="og:description" content="Every claim about what numbers mean, colour-coded by how well it holds up. Four grades: observed, tradition, contested, tested and failed.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='4' width='5' height='16' fill='%2300B57C'/%3E%3Crect x='8' y='9' width='5' height='11' fill='%233A3FFF'/%3E%3Crect x='14' y='12' width='4' height='8' fill='%23F0A400'/%3E%3Crect x='19' y='16' width='3' height='4' fill='%23FF1F5A'/%3E%3C/svg%3E">
+<style>
+/* back to the hub — every sibling page carries one */
+.hub-back{
+  position:fixed;left:14px;bottom:14px;z-index:99;
+  font-family:var(--f-m,var(--mono,ui-monospace,monospace));
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;padding:9px 13px;min-height:38px;
+  display:inline-flex;align-items:center;
+  background:#16141F;color:#fff;border:1px solid #16141F;
+  transition:background .15s,color .15s;
+}
+.hub-back:hover{background:#fff;color:#16141F}
+@media(max-width:560px){.hub-back{left:10px;bottom:10px;font-size:10px;padding:8px 11px}}
+
+/* ═══════════════════════════════════════════════
+   ONE SYSTEM: colour = evidence grade.
+   Four grades own the entire palette. Nothing else
+   on this page is coloured.
+   ═══════════════════════════════════════════════ */
+:root{
+  --ground:#F4F3F7;
+  --ink:#16141F;
+  --rule:rgba(22,20,31,.16);
+
+  /* bright — large type, rails, fills only */
+  --observed:#00B57C;
+  --tradition:#3A3FFF;
+  --contested:#F0A400;
+  --failed:#FF1F5A;
+
+  /* deep — small text, accessible on ground */
+  --observed-d:#00714E;
+  --tradition-d:#2A2FD6;
+  --contested-d:#9A6800;
+  --failed-d:#C80B41;
+
+  --f-d:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --f-b:'Newsreader',Georgia,'Times New Roman',serif;
+  --f-m:'Space Mono',ui-monospace,Menlo,monospace;
+
+  --pad:clamp(20px,5.2vw,90px);
+  --col:min(100%,720px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--f-b); font-size:clamp(17px,.42vw + 15.6px,19.5px);
+  line-height:1.62; overflow-x:hidden;
+}
+canvas,svg{display:block;max-width:100%}
+::selection{background:var(--ink);color:var(--ground)}
+:focus-visible{outline:3px solid var(--tradition);outline-offset:3px}
+
+/* ── type ── */
+.d{font-family:var(--f-d);font-variation-settings:'wdth' 92,'wght' 800}
+h1,h2,h3{font-family:var(--f-d);margin:0;text-wrap:balance}
+h1{
+  font-variation-settings:'wdth' 78,'wght' 800;
+  font-size:clamp(40px,7.4vw,88px); line-height:.94; letter-spacing:-.032em;
+}
+h2{
+  font-variation-settings:'wdth' 80,'wght' 800;
+  font-size:clamp(30px,4.6vw,54px); line-height:1; letter-spacing:-.028em;
+  margin:0 0 .5em;
+}
+h3{
+  font-variation-settings:'wdth' 100,'wght' 700;
+  font-size:clamp(19px,1.5vw,23px); line-height:1.22; letter-spacing:-.012em;
+  margin:0 0 .45em;
+}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+strong{font-weight:600}
+.mono{font-family:var(--f-m);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.scripture{font-style:italic;font-size:1.05em}
+.small{font-size:.87em;line-height:1.55;color:rgba(22,20,31,.7)}
+
+/* ── shell ── */
+.band{padding:clamp(52px,8vw,110px) var(--pad)}
+.col{max-width:var(--col);margin:0 auto}
+.wide{max-width:1080px;margin:0 auto}
+hr.rule{border:none;border-top:1px solid var(--rule);margin:0}
+
+/* ── header ── */
+.masthead{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:18px var(--pad);border-bottom:1px solid var(--rule);flex-wrap:wrap;
+}
+.masthead .name{font-family:var(--f-d);font-variation-settings:'wdth' 74,'wght' 800;font-size:17px;letter-spacing:-.01em}
+.masthead .mono{color:rgba(22,20,31,.55)}
+
+.hero{padding-top:clamp(46px,7vw,84px)}
+.hero .kicker{color:rgba(22,20,31,.55);margin-bottom:clamp(20px,3vw,34px)}
+.hero .deck{font-size:clamp(19px,1.5vw + 13px,25px);line-height:1.42;margin-top:1em;max-width:34ch}
+
+/* ═══ THE SIGNATURE: evidence profile ═══
+   A real stacked bar, counted from the page itself. */
+.profile{margin-top:clamp(34px,5vw,58px)}
+.profile .barwrap{display:flex;height:clamp(48px,6vw,66px);width:100%;overflow:hidden;border-radius:3px}
+.profile .seg{
+  display:flex;align-items:flex-end;padding:8px 10px;min-width:0;
+  font-family:var(--f-m);font-size:11px;font-weight:700;color:#fff;
+  transition:flex-grow .8s cubic-bezier(.3,.9,.3,1);
+}
+.seg-observed{background:var(--observed-d)}
+.seg-tradition{background:var(--tradition-d)}
+.seg-contested{background:var(--contested-d)}
+.seg-failed{background:var(--failed-d)}
+.profile .key{
+  display:grid;gap:0;margin-top:18px;
+  grid-template-columns:1fr;
+}
+@media(min-width:700px){ .profile .key{grid-template-columns:repeat(4,1fr);gap:0 22px} }
+.profile .key div{padding:13px 0;border-top:2px solid;font-size:.85em;line-height:1.45}
+.k-observed{border-color:var(--observed)}
+.k-tradition{border-color:var(--tradition)}
+.k-contested{border-color:var(--contested)}
+.k-failed{border-color:var(--failed)}
+.profile .key b{
+  display:block;font-family:var(--f-m);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:5px;
+}
+.k-observed b{color:var(--observed-d)}
+.k-tradition b{color:var(--tradition-d)}
+.k-contested b{color:var(--contested-d)}
+.k-failed b{color:var(--failed-d)}
+
+/* ── section heads ── */
+.shead{display:flex;align-items:flex-start;gap:clamp(16px,3vw,32px);margin-bottom:clamp(26px,3.6vw,46px)}
+.shead .fig{
+  font-family:var(--f-d);font-variation-settings:'wdth' 68,'wght' 800;
+  font-size:clamp(52px,8.6vw,116px);line-height:.78;letter-spacing:-.05em;
+  color:rgba(22,20,31,.13);flex:0 0 auto;
+}
+.shead .txt{flex:1 1 auto;padding-top:.35em}
+.shead .mono{color:rgba(22,20,31,.55);display:block;margin-bottom:.7em}
+
+/* ═══ CLAIM BLOCKS — the colour rail is the grade ═══ */
+.claim{
+  border-left:5px solid;padding:2px 0 2px clamp(16px,2.2vw,26px);
+  margin:0 0 clamp(26px,3.4vw,42px);
+}
+.claim > .grade{
+  font-family:var(--f-m);font-size:11px;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;display:block;margin-bottom:.75em;
+}
+.claim[data-grade="observed"]{border-color:var(--observed)}
+.claim[data-grade="observed"] > .grade{color:var(--observed-d)}
+.claim[data-grade="tradition"]{border-color:var(--tradition)}
+.claim[data-grade="tradition"] > .grade{color:var(--tradition-d)}
+.claim[data-grade="contested"]{border-color:var(--contested)}
+.claim[data-grade="contested"] > .grade{color:var(--contested-d)}
+.claim[data-grade="failed"]{border-color:var(--failed)}
+.claim[data-grade="failed"] > .grade{color:var(--failed-d)}
+
+/* pull number inside prose */
+.pull{
+  font-family:var(--f-d);font-variation-settings:'wdth' 70,'wght' 800;
+  font-size:1.02em;letter-spacing:-.01em;
+}
+
+/* ── inverted band (scripture + figures) ── */
+.dark{background:var(--ink);color:var(--ground)}
+.dark .shead .fig{color:rgba(244,243,247,.2)}
+.dark .shead .mono,.dark .masthead .mono{color:rgba(244,243,247,.55)}
+.dark .small{color:rgba(244,243,247,.66)}
+.dark .claim[data-grade="observed"] > .grade{color:var(--observed)}
+.dark .claim[data-grade="tradition"] > .grade{color:#8C90FF}
+.dark .claim[data-grade="contested"] > .grade{color:var(--contested)}
+.dark .claim[data-grade="failed"] > .grade{color:var(--failed)}
+.dark hr.rule{border-top-color:rgba(244,243,247,.18)}
+
+/* ═══ THE MACHINE ═══ */
+.machine{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:clamp(22px,3vw,34px) 0}
+.machine label{display:block;margin-bottom:10px}
+.machine input{
+  width:100%;background:transparent;border:none;border-bottom:2px solid var(--ink);
+  color:inherit;font-family:var(--f-d);font-variation-settings:'wdth' 84,'wght' 800;
+  font-size:clamp(26px,4.6vw,44px);letter-spacing:-.02em;padding:0 0 12px;
+  outline:none;text-transform:uppercase;
+}
+.machine input::placeholder{color:rgba(22,20,31,.25)}
+.results{display:grid;gap:0;margin-top:clamp(24px,3vw,36px);grid-template-columns:1fr}
+@media(min-width:720px){ .results{grid-template-columns:repeat(3,1fr)} }
+.res{padding:20px 0 22px;border-top:5px solid}
+@media(min-width:720px){ .res{padding:20px 22px 22px 0} }
+.res .val{
+  font-family:var(--f-d);font-variation-settings:'wdth' 66,'wght' 800;
+  font-size:clamp(64px,9vw,104px);line-height:.8;letter-spacing:-.05em;
+  font-variant-numeric:tabular-nums;margin:.12em 0 .22em;
+}
+.res .sys{font-family:var(--f-m);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.res .why{font-size:.86em;line-height:1.5;color:rgba(22,20,31,.72)}
+.r-1{border-color:var(--tradition)} .r-1 .sys{color:var(--tradition-d)}
+.r-2{border-color:var(--tradition)} .r-2 .sys{color:var(--tradition-d)}
+.r-3{border-color:var(--observed)} .r-3 .sys{color:var(--observed-d)}
+.verdict{margin-top:clamp(22px,3vw,32px)}
+
+/* ── figures ── */
+.figure{background:var(--ink);color:var(--ground);border-radius:4px;overflow:hidden;margin:clamp(24px,3.4vw,40px) 0}
+.figure .cap{
+  display:flex;justify-content:space-between;gap:14px;padding:12px 16px;
+  border-top:1px solid rgba(244,243,247,.2);
+  font-family:var(--f-m);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(244,243,247,.72);
+}
+.figure canvas{width:100%;height:auto}
+.bars{display:flex;align-items:flex-end;gap:clamp(4px,1vw,12px);height:min(40vw,250px);padding:22px 18px 0}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px;min-width:0}
+.bar i{width:100%;height:0;background:var(--observed);border-radius:2px 2px 0 0;transition:height .45s cubic-bezier(.3,.9,.3,1)}
+.bar em{font-family:var(--f-m);font-size:10px;font-style:normal;color:rgba(244,243,247,.6)}
+.bar b{font-family:var(--f-d);font-variation-settings:'wdth' 80,'wght' 700;font-size:14px;padding-bottom:10px}
+
+/* ── ledger ── */
+.ledger{display:grid;gap:clamp(20px,3vw,34px);grid-template-columns:1fr}
+@media(min-width:820px){ .ledger{grid-template-columns:repeat(2,1fr)} }
+.ledger ul{list-style:none;margin:.6em 0 0;padding:0}
+.ledger li{padding:.62em 0;border-top:1px solid var(--rule);font-size:.92em;line-height:1.45}
+.dark .ledger li{border-top-color:rgba(244,243,247,.18)}
+
+footer{padding:clamp(46px,6vw,80px) var(--pad) 60px;border-top:1px solid var(--rule)}
+footer a{color:var(--tradition-d)}
+.srcs{columns:250px;column-gap:34px;font-size:.84em;line-height:1.75;margin-top:1.2em}
+.srcs div{break-inside:avoid;margin-bottom:.55em}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <span class="name">GRADED</span>
+  <span class="mono">Numerology · Scripture · Mathematics</span>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="band hero">
+  <div class="wide">
+    <div class="mono kicker">A field guide in four grades of evidence</div>
+    <h1>The arithmetic is real.<br>The meaning is assigned.</h1>
+    <p class="deck">Every claim below is colour-coded by how much weight it actually holds. That coding is the only reason anything on this page is coloured.</p>
+
+    <div class="profile">
+      <div class="barwrap" id="bar" role="img" aria-label="Proportion of claims by evidence grade">
+        <div class="seg seg-observed"  style="flex-grow:1"><span id="n-observed"></span></div>
+        <div class="seg seg-tradition" style="flex-grow:1"><span id="n-tradition"></span></div>
+        <div class="seg seg-contested" style="flex-grow:1"><span id="n-contested"></span></div>
+        <div class="seg seg-failed"    style="flex-grow:1"><span id="n-failed"></span></div>
+      </div>
+      <div class="key">
+        <div class="k-observed"><b>Observed</b>Measured, proved, or plainly present in the documents. Would break if the next check disagreed.</div>
+        <div class="k-tradition"><b>Tradition</b>What a system says about itself. Internally coherent, externally unverifiable.</div>
+        <div class="k-contested"><b>Contested</b>Widely repeated, poorly supported. The evidence is thinner than the confidence.</div>
+        <div class="k-failed"><b>Tested &amp; failed</b>Someone made it falsifiable and checked. It did not survive.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ═══════════ 9 ═══════════ -->
+<section class="band">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">9</div>
+      <div class="txt">
+        <span class="mono">The mechanism</span>
+        <h2>It's a remainder, not a revelation.</h2>
+      </div>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>Adding digits until one is left is division wearing a costume</h3>
+      <p>Repeatedly summing a number's digits produces its <strong>digital root</strong> — and that root is exactly the remainder after dividing by nine, with nine standing in for a remainder of zero. The proof is one line: in base ten, every place value is one more than a multiple of nine, so a number and its digit-sum always carry the same remainder.</p>
+      <p>So the entire apparatus is a hash function. It takes any name or any birthdate and drops it into one of nine buckets.</p>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>Change the base and the destiny changes with it</h3>
+      <p>The reduction lands on nine only because we count in tens — an accident of having ten fingers. Count in twelves, as Babylon partly did, and the same arithmetic reduces modulo eleven instead. Same person, same name, same birth, different number, different personality.</p>
+      <p>A property that vanishes when you change notation was a property of the notation. You can test this yourself two sections down.</p>
+    </div>
+
+    <div class="claim" data-grade="contested">
+      <span class="grade">Contested</span>
+      <h3>Nine buckets for eight billion people</h3>
+      <p>Nine core numbers, plus two or three "master numbers" held back from reduction, sort humanity into roughly a dozen groups. Any description broad enough to fit a twelfth of everyone alive will feel accurate to most people who read it. That is a design property of the categories, not a finding about the person holding one.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ═══════════ 4 ═══════════ -->
+<section class="band">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">4</div>
+      <div class="txt">
+        <span class="mono">Four living systems</span>
+        <h2>If the numbers were real,<br>they would agree.</h2>
+      </div>
+    </div>
+
+    <div class="claim" data-grade="contested">
+      <span class="grade">Contested</span>
+      <h3>Pythagorean — the Western default</h3>
+      <p>Letters map to 1–9 in alphabetical order. This is the version in every app and horoscope column, and its lineage is routinely traced to Pythagoras. The modern rulebook was in fact assembled around the turn of the twentieth century, in the English alphabet — which Pythagoras never saw, and which did not exist for another millennium and a half.</p>
+    </div>
+
+    <div class="claim" data-grade="tradition">
+      <span class="grade">Tradition</span>
+      <h3>Chaldean — sound over spelling</h3>
+      <p>Uses only 1 through 8, treating nine as too sacred to assign, and values letters by how a name is spoken rather than how it appears on a birth certificate. For most people it returns a different number than the Pythagorean method does. Neither tradition has ever resolved which one is wrong.</p>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>Gematria and isopsephy — Hebrew and Greek</h3>
+      <p>Here the numbers are not an overlay. Hebrew and Greek had no separate digits, so the letters <em>were</em> the counting system, and reading a word's total is an ordinary property of the script rather than a hidden signal. Later Kabbalistic practice built interpretive layers on top of that fact — but that use is homiletic, aimed at illuminating a text, not at forecasting a life.</p>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>Chinese — homophony, no arithmetic at all</h3>
+      <p>Eight is auspicious because it sounds like the word for prosperity; four is avoided because it sounds like the word for death. No sums are involved — the mechanism is puns. The belief is unproven and its effects are undeniable: buildings skip the fourth floor, and registration plates crowded with eights sell at genuine premiums.</p>
+      <p class="small">The measurable thing here is human behaviour, not fortune. Both can be true at once.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ═══════════ THE MACHINE ═══════════ -->
+<section class="band">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">=</div>
+      <div class="txt">
+        <span class="mono">Run it yourself</span>
+        <h2>One name.<br>Three honest answers.</h2>
+      </div>
+    </div>
+
+    <p>The machine below runs the two dominant Western systems side by side, then reduces the same total in base twelve. All three calculations are performed correctly. They disagree because there was never anything to agree about.</p>
+
+    <div class="machine">
+      <label class="mono" for="nameIn">Enter a name</label>
+      <input id="nameIn" type="text" value="Ada Lovelace" maxlength="36" autocomplete="off" spellcheck="false" placeholder="Type here">
+      <div class="results">
+        <div class="res r-1">
+          <div class="sys">Pythagorean</div>
+          <div class="val" id="v1">—</div>
+          <div class="why" id="w1"></div>
+        </div>
+        <div class="res r-2">
+          <div class="sys">Chaldean</div>
+          <div class="val" id="v2">—</div>
+          <div class="why" id="w2"></div>
+        </div>
+        <div class="res r-3">
+          <div class="sys">Base twelve</div>
+          <div class="val" id="v3">—</div>
+          <div class="why" id="w3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="claim verdict" data-grade="tradition">
+      <span class="grade">Tradition</span>
+      <p>The sums are arithmetic and cannot be argued with. The sentence a practitioner would attach to each result — initiator, seeker, builder — is a twentieth-century convention with no source outside the tradition that invented it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 7 ═══════════ -->
+<section class="band dark">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">7</div>
+      <div class="txt">
+        <span class="mono">Scripture</span>
+        <h2>The Bible counts.<br>It does not divine.</h2>
+      </div>
+    </div>
+
+    <p>This is the distinction almost every popular article collapses, and it carries the entire argument.</p>
+
+    <div class="claim" data-grade="observed" style="margin-top:clamp(30px,4vw,44px)">
+      <span class="grade">Observed</span>
+      <h3>The numeric patterning is genuinely there</h3>
+      <p><span class="pull">Seven</span> runs through creation, sabbath, and the sevenfold structures of Revelation as a mark of completeness. <span class="pull">Forty</span> marks seasons of testing — the flood, the wilderness, the temptation. <span class="pull">Twelve</span> attaches to covenant order. <span class="pull">Three</span> carries divine fullness.</p>
+      <p>Letter-values appear directly too. Matthew arranges the genealogy of Jesus into three sets of fourteen, and the Hebrew letters of <em>David</em> total fourteen. Greek-reading Christians would have summed the letters of <em>Jesus</em> to 888. Revelation offers 666 explicitly as a puzzle for the wise. Augustine spent real effort on the 153 fish of John 21.</p>
+    </div>
+
+    <div class="claim" data-grade="tradition">
+      <span class="grade">Tradition</span>
+      <h3>None of which licenses fortune-telling</h3>
+      <p>Deuteronomy 18 lists divination among the practices Israel is told not to imitate, and no passage anywhere teaches reading a life from a birth number. Historic Christian teaching holds a hard line between <strong>symbolism</strong> — a number carrying meaning inside a text — and <strong>divination</strong>, a number extracted to predict a person. The Church Fathers wrote against the second while freely interpreting the first in Daniel and Revelation.</p>
+      <p class="small">Catholic, Protestant and Orthodox traditions differ on a great deal. On this they broadly converge.</p>
+    </div>
+
+    <div class="claim" data-grade="contested">
+      <span class="grade">Contested</span>
+      <h3>Irenaeus had already found the flaw</h3>
+      <p>Facing second-century attempts to decode 666 into a name, Irenaeus observed that a great many names can be made to total 666, so guessing is riskier than waiting. He identified the failure mode of every gematria argument since: with flexible spellings and flexible groupings, the method can reach almost any target chosen in advance.</p>
+      <p class="scripture">"The secret things belong to the LORD our God." — Deuteronomy 29:29</p>
+    </div>
+
+    <div class="claim" data-grade="failed">
+      <span class="grade">Tested &amp; failed</span>
+      <h3>The Bible code</h3>
+      <p>The 1990s claim that hidden names sit encoded at equal letter intervals in Genesis reached a statistics journal and then drew a direct rebuttal. Independent analysts showed the result depended on tunable choices about which names and which spellings were used, and that comparable "codes" surfaced in ordinary secular books run through the same procedure.</p>
+      <p>It remains the cleanest case study available, because it did what almost no numerological claim does: it made a falsifiable prediction and submitted to a check.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10^6 ═══════════ -->
+<section class="band">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">10⁶</div>
+      <div class="txt">
+        <span class="mono">Why an unsupported system still feels undeniable</span>
+        <h2>A miracle a month,<br>on schedule.</h2>
+      </div>
+    </div>
+
+    <p>The mathematician J. E. Littlewood put it sharply: counting roughly one event per second through a waking day, a one-in-a-million coincidence should reach you about every thirty-five days. Coincidence is not rare. It is a rate.</p>
+
+    <div class="claim" data-grade="observed" style="margin-top:clamp(30px,4vw,44px)">
+      <span class="grade">Observed</span>
+      <h3>Perception is tuned to over-detect structure</h3>
+      <p>A false alarm historically cost far less than a missed signal, so the machinery runs hot. Seeing a face in a cliff and seeing a message in a repeated number are the same reflex firing.</p>
+      <p>The 1948 demonstration everyone cites still holds: students handed an identical generic personality sketch rated it as strikingly accurate <em>about themselves</em>. Readings are written in exactly that register — specific enough to feel personal, loose enough to fit anyone.</p>
+    </div>
+
+    <div class="claim" data-grade="failed">
+      <span class="grade">Tested &amp; failed</span>
+      <h3>What happened when people checked</h3>
+      <p>Controlled tests are scarce, partly because the claims are usually framed so they cannot be contradicted — which is itself the diagnostic sign. The tests that exist came back empty: a UK study in the early nineties, and a 2012 Israeli study involving a professional numerologist and two hundred participants, both returned negative results.</p>
+      <p>A 2017 study took a different angle and asked whether the birth numbers of highly distinguished people deviated from chance. They did not. The distribution was statistically indistinguishable from random.</p>
+    </div>
+
+    <div class="claim" data-grade="contested">
+      <span class="grade">Contested</span>
+      <h3>Hits are remembered, misses evaporate</h3>
+      <p>Under those accounting rules no system can fail, which is precisely why the felt evidence is overwhelming and the measured evidence is nil. A reading that absorbs every outcome explains none of them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 137 ═══════════ -->
+<section class="band dark">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">137</div>
+      <div class="txt">
+        <span class="mono">Where numbers really do carry hidden structure</span>
+        <h2>Real magic numbers,<br>and what makes them different.</h2>
+      </div>
+    </div>
+
+    <p>Science has its own uncanny constants. The difference is not that they are less strange — it is that each one predicts something, and would be discarded if the prediction failed.</p>
+
+    <div class="claim" data-grade="observed" style="margin-top:clamp(30px,4vw,44px)">
+      <span class="grade">Observed</span>
+      <h3>The first digit is not random</h3>
+      <p>Across huge classes of real data — river lengths, populations, share prices, the Fibonacci numbers below — the leading digit is a 1 about thirty per cent of the time and a 9 barely five. Noticed in 1881, rediscovered in 1938, now standard in forensic accounting: invented figures tend to spread their first digits too evenly.</p>
+      <div class="figure">
+        <div class="bars" id="benford"></div>
+        <div class="cap"><span>Leading digit · Fibonacci sequence</span><span id="benfordN">n = 0</span></div>
+      </div>
+      <p class="small">The honest caveat: it flags anomalies, not guilt. Applied to data that never obeyed the law to begin with — narrow ranges, capped values — it manufactures accusations.</p>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>137.5° — the one angle that packs</h3>
+      <p>Plants space successive seeds and leaves by the golden angle, near 137.5°. Because that fraction of a turn is the hardest of all to approximate with a simple ratio, seeds never fall into wasteful spokes. Move the angle a fraction of a degree and the packing opens into gaps.</p>
+      <div class="figure">
+        <canvas id="phyllo" width="880" height="560"></canvas>
+        <div class="cap"><span>Divergence angle sweep</span><span id="phylloAng">137.500°</span></div>
+      </div>
+    </div>
+
+    <div class="claim" data-grade="contested">
+      <span class="grade">Contested</span>
+      <h3>The golden ratio everywhere else</h3>
+      <p>The famous claims about the Parthenon, the Mona Lisa and the nautilus shell do not survive measurement. Eighty nautilus shells measured from the Smithsonian collection averaged about 1.31, not 1.618. A 1992 paper showed the Parthenon can be measured many different ways, so its dimensions bend to whoever is holding the tape. The mathematician who set out to debunk these myths repeated the nautilus one himself before correcting the record.</p>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>1 / 137 — the constant nobody can derive</h3>
+      <p>The fine-structure constant, near 1/137.036, sets how strongly light couples to matter. It carries no units, so it is the same number for any physicist in any language, in any notation, on any planet. Unlike a life-path number it survives a change of base entirely. We measure it to twelve significant figures and still cannot say why it takes that value.</p>
+      <p class="small">Anecdote, not evidence: Wolfgang Pauli, who agonised over 137, died in hospital room 137. It is a very good story and it means nothing — and being able to say that out loud is the whole skill.</p>
+    </div>
+
+    <div class="claim" data-grade="observed">
+      <span class="grade">Observed</span>
+      <h3>The actual dividing line</h3>
+      <p>In science a number is a <strong>measurement</strong>. It carries units, an uncertainty, and a commitment about the next observation, and if that observation disagrees the number loses.</p>
+      <p>In numerology a number is a <strong>label</strong>. It arrives after the fact, carries no uncertainty, risks nothing, and cannot lose. Both feel like knowledge. Only one of them can be wrong — and that vulnerability is the entire source of its authority.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEDGER ═══════════ -->
+<section class="band">
+  <div class="col">
+    <div class="shead">
+      <div class="fig">Σ</div>
+      <div class="txt">
+        <span class="mono">The ledger</span>
+        <h2>Keep the wonder.<br>Drop the forecast.</h2>
+      </div>
+    </div>
+
+    <div class="ledger">
+      <div class="claim" data-grade="observed" data-summary style="margin:0">
+        <span class="grade">Holds up</span>
+        <ul>
+          <li>Digital roots are remainders modulo nine.</li>
+          <li>Hebrew and Greek letters genuinely were numerals.</li>
+          <li>Scripture uses numbers symbolically and deliberately.</li>
+          <li>Benford's law, prime structure, phyllotaxis, the fine-structure constant.</li>
+          <li>Number superstition moves real money and real architecture.</li>
+        </ul>
+      </div>
+      <div class="claim" data-grade="tradition" data-summary style="margin:0">
+        <span class="grade">Cultural, not factual</span>
+        <ul>
+          <li>The personalities attached to 1 through 9.</li>
+          <li>Master numbers 11, 22 and 33.</li>
+          <li>Chaldean sound-values and the sacredness of nine.</li>
+          <li>Lucky eight, unlucky four.</li>
+          <li>Gematria as devotional reading of a text.</li>
+        </ul>
+      </div>
+      <div class="claim" data-grade="contested" data-summary style="margin:0">
+        <span class="grade">Thinner than it sounds</span>
+        <ul>
+          <li>The ancient pedigree of Western numerology.</li>
+          <li>Gematria used as proof rather than commentary.</li>
+          <li>The golden ratio in art and architecture.</li>
+          <li>Any reading framed so it cannot come out wrong.</li>
+        </ul>
+      </div>
+      <div class="claim" data-grade="failed" data-summary style="margin:0">
+        <span class="grade">Did not survive testing</span>
+        <ul>
+          <li>Birth numbers predicting personality or achievement.</li>
+          <li>Name numbers predicting compatibility or fortune.</li>
+          <li>Equidistant letter codes in Genesis.</li>
+          <li>The nautilus shell as a golden spiral.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:clamp(34px,4.6vw,58px);font-size:clamp(21px,1.6vw + 14px,28px);line-height:1.35;max-width:26ch;font-family:var(--f-d);font-variation-settings:'wdth' 84,'wght' 700;letter-spacing:-.02em">Arithmetic is the same for everyone. Meaning is the part we bring.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wide">
+    <div class="mono" style="color:rgba(22,20,31,.55)">Sources</div>
+    <div class="srcs">
+      <div><a href="https://www.jasnh.com/pdf/Vol13-No2-article2.pdf">A Test of Numerology: Do Birth Numbers Predict Eminence?</a> — Journal of Articles in Support of the Null Hypothesis, 2017</div>
+      <div><a href="https://www.iflscience.com/numerology-how-to-tell-real-science-from-pseudoscience-67258">Numerology: How to Tell Real Science from Pseudoscience</a> — IFLScience</div>
+      <div><a href="https://africacheck.org/fact-checks/blog/pseudoscience-numerology-treating-predictions-facts">The pseudoscience of numerology</a> — Africa Check</div>
+      <div><a href="https://www.christianity.com/wiki/christian-terms/what-is-the-significance-of-biblical-numerology.html">Biblical numerology: meaning and significance of numbers</a> — Christianity.com</div>
+      <div><a href="https://www.gotquestions.org/gematria.html">What is gematria?</a> — includes Irenaeus on 666</div>
+      <div><a href="https://link.springer.com/article/10.1007/s00004-018-0419-3">Nautilus Spirals and the Meta-Golden Ratio Chi</a> — Nexus Network Journal</div>
+      <div><a href="https://eusci.org.uk/2020/07/29/myth-busting-the-golden-ratio/">Myth-busting the golden ratio</a> — University of Edinburgh, on Markowsky 1992</div>
+      <div><a href="https://nautil.us/math-as-myth-234301">Math as Myth</a> — Nautilus</div>
+    </div>
+    <p class="small" style="margin-top:2em;max-width:64ch">Scripture is cited by chapter and verse so you can read it in your own translation. Statistical claims name their study. Anything that is interpretation is graded as interpretation — including the interpretations on this page.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ── evidence profile: counted from the page itself ── */
+(function(){
+  var grades = ["observed","tradition","contested","failed"], counts = {};
+  grades.forEach(function(g){
+    counts[g] = document.querySelectorAll('.claim[data-grade="'+g+'"]:not([data-summary])').length;
+  });
+  var total = grades.reduce(function(a,g){ return a + counts[g]; }, 0);
+  grades.forEach(function(g){
+    var seg = document.querySelector(".seg-"+g);
+    seg.style.flexGrow = counts[g];
+    document.getElementById("n-"+g).textContent = counts[g];
+  });
+  document.getElementById("bar").setAttribute("aria-label",
+    total + " claims: " + grades.map(function(g){ return counts[g]+" "+g; }).join(", "));
+})();
+
+/* ── the machine ── */
+(function(){
+  var CHALDEAN = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,
+                  Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
+  var PYTH = {1:"the initiator",2:"the mediator",3:"the communicator",4:"the builder",
+              5:"the restless one",6:"the carer",7:"the seeker",8:"the operator",
+              9:"the humanitarian",11:"master number",22:"master number",33:"master number"};
+  var input = document.getElementById("nameIn");
+
+  function reduceTo(n, base, masters){
+    while (n > 9){
+      if (masters && (n === 11 || n === 22 || n === 33)) return n;
+      var s = 0, m = n;
+      while (m > 0){ s += m % base; m = Math.floor(m / base); }
+      n = s;
+    }
+    return n;
+  }
+  function set(i, val, why){
+    document.getElementById("v"+i).textContent = val;
+    document.getElementById("w"+i).textContent = why;
+  }
+  function run(){
+    var raw = (input.value || "").toUpperCase().replace(/[^A-Z]/g, "");
+    if (!raw){ set(1,"—",""); set(2,"—",""); set(3,"—",""); return; }
+    var p = 0, c = 0;
+    for (var i = 0; i < raw.length; i++){
+      p += ((raw.charCodeAt(i) - 65) % 9) + 1;
+      c += CHALDEAN[raw[i]] || 0;
+    }
+    var pr = reduceTo(p, 10, true), cr = reduceTo(c, 10, false), br = reduceTo(p, 12, false);
+    set(1, pr, "Letters valued 1–9 alphabetically. Sum " + p + ". Read as " + (PYTH[pr] || "—") + ".");
+    set(2, cr, "Letters valued by sound, 1–8, nine withheld. Sum " + c + ". A different tradition, a different person.");
+    set(3, br.toString(12).toUpperCase(), "The Pythagorean sum of " + p + ", reduced in base twelve instead of ten. Same name, same maths, different answer.");
+  }
+  input.addEventListener("input", run);
+  run();
+})();
+
+/* ── run rAF/interval only while on screen ── */
+function whenVisible(el, start, stop){
+  if (!("IntersectionObserver" in window)){ start(); return; }
+  new IntersectionObserver(function(en){
+    en.forEach(function(e){ e.isIntersecting ? start() : stop(); });
+  }, {threshold:.08}).observe(el);
+}
+
+/* ── Benford: leading digits of Fibonacci, accumulating ── */
+(function(){
+  var host = document.getElementById("benford"), lbl = document.getElementById("benfordN");
+  var fills = [], pcts = [];
+  for (var d = 1; d <= 9; d++){
+    var b = document.createElement("div"); b.className = "bar";
+    var em = document.createElement("em"); em.textContent = "—";
+    var i = document.createElement("i");
+    var s = document.createElement("b"); s.textContent = d;
+    b.appendChild(em); b.appendChild(i); b.appendChild(s); host.appendChild(b);
+    fills.push(i); pcts.push(em);
+  }
+  var LP = Math.log10((1 + Math.sqrt(5)) / 2), LS = Math.log10(Math.sqrt(5));
+  function lead(n){ var l = n * LP - LS; l -= Math.floor(l); return Math.floor(Math.pow(10, l)); }
+
+  var counts = new Array(9).fill(0), n = 2, timer = null;
+  function step(){
+    for (var k = 0; k < 5; k++){
+      var d = lead(n++);
+      if (d >= 1 && d <= 9) counts[d - 1]++;
+    }
+    var tot = counts.reduce(function(a, b){ return a + b; }, 0) || 1;
+    var max = Math.max.apply(null, counts) || 1;
+    for (var i = 0; i < 9; i++){
+      fills[i].style.height = (counts[i] / max * 100) + "%";
+      pcts[i].textContent = (counts[i] / tot * 100).toFixed(1);
+    }
+    lbl.textContent = "n = " + n;
+    if (n > 800){ counts = new Array(9).fill(0); n = 2; }
+  }
+  if (reduce){ for (var q = 0; q < 160; q++) step(); }
+  else whenVisible(host,
+    function(){ if (!timer) timer = setInterval(step, 95); },
+    function(){ if (timer){ clearInterval(timer); timer = null; } });
+})();
+
+/* ── phyllotaxis: sweeping divergence angle ── */
+(function(){
+  var cv = document.getElementById("phyllo"), ctx = cv.getContext("2d"),
+      lbl = document.getElementById("phylloAng"), raf = null, t = 0;
+  function draw(ang){
+    var w = cv.width, h = cv.height, cx = w / 2, cy = h / 2;
+    ctx.fillStyle = "#16141F"; ctx.fillRect(0, 0, w, h);
+    var N = 700, c = 10.6, rad = ang * Math.PI / 180;
+    for (var i = 0; i < N; i++){
+      var a = i * rad, r = c * Math.sqrt(i);
+      ctx.beginPath();
+      ctx.arc(cx + r * Math.cos(a), cy + r * Math.sin(a), 1.8 + 4 * (i / N), 0, 6.2832);
+      ctx.fillStyle = "#00B57C";
+      ctx.globalAlpha = 0.22 + 0.72 * (i / N);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop(){
+    t++;
+    var ang = 137.5 + Math.sin(t * 0.004) * 0.85;
+    draw(ang);
+    lbl.textContent = ang.toFixed(3) + "° · " + (Math.abs(ang - 137.507) < 0.04 ? "packed" : "gaps opening");
+    raf = requestAnimationFrame(loop);
+  }
+  if (reduce){ draw(137.507); lbl.textContent = "137.507° · packed"; }
+  else whenVisible(cv,
+    function(){ if (!raf) loop(); },
+    function(){ if (raf){ cancelAnimationFrame(raf); raf = null; } });
+})();
+
+})();
+</script>
+
+<a class="hub-back" href="/">&larr; All projects</a>
+</body>
+</html>
