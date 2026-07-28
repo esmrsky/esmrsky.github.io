@@ -5,27 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Graded — numerology, scripture, and the numbers that actually predict things</title>
 <meta name="description" content="Every claim about what numbers mean, colour-coded by how well it holds up.">
+<script>(function(){try{var s=localStorage.getItem('gr-theme');document.documentElement.setAttribute('data-theme',s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Graded — numerology, scripture, and the numbers that actually predict things">
 <meta property="og:description" content="Every claim about what numbers mean, colour-coded by how well it holds up. Four grades: observed, tradition, contested, tested and failed.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='4' width='5' height='16' fill='%2300B57C'/%3E%3Crect x='8' y='9' width='5' height='11' fill='%233A3FFF'/%3E%3Crect x='14' y='12' width='4' height='8' fill='%23F0A400'/%3E%3Crect x='19' y='16' width='3' height='4' fill='%23FF1F5A'/%3E%3C/svg%3E">
 <style>
-/* back to the hub — every sibling page carries one */
-.hub-back{
-  position:fixed;left:14px;bottom:14px;z-index:99;
-  font-family:var(--f-m,var(--mono,ui-monospace,monospace));
-  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  text-decoration:none;padding:9px 13px;min-height:38px;
-  display:inline-flex;align-items:center;
-  background:#16141F;color:#fff;border:1px solid #16141F;
-  transition:background .15s,color .15s;
-}
-.hub-back:hover{background:#fff;color:#16141F}
-@media(max-width:560px){.hub-back{left:10px;bottom:10px;font-size:10px;padding:8px 11px}}
 
 /* ═══════════════════════════════════════════════
    ONE SYSTEM: colour = evidence grade.
@@ -46,8 +35,8 @@
   /* deep — small text, accessible on ground */
   --observed-d:#00714E;
   --tradition-d:#2A2FD6;
-  --contested-d:#9A6800;
-  --failed-d:#C80B41;
+  --contested-d:#845800;
+  --failed-d:#A3002F;
 
   --f-d:'Archivo','Helvetica Neue',Arial,sans-serif;
   --f-b:'Newsreader',Georgia,'Times New Roman',serif;
@@ -104,10 +93,10 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:0}
   padding:18px var(--pad);border-bottom:1px solid var(--rule);flex-wrap:wrap;
 }
 .masthead .name{font-family:var(--f-d);font-variation-settings:'wdth' 74,'wght' 800;font-size:17px;letter-spacing:-.01em}
-.masthead .mono{color:rgba(22,20,31,.55)}
+.masthead .mono{color:rgba(22,20,31,.7)}
 
 .hero{padding-top:clamp(46px,7vw,84px)}
-.hero .kicker{color:rgba(22,20,31,.55);margin-bottom:clamp(20px,3vw,34px)}
+.hero .kicker{color:rgba(22,20,31,.7);margin-bottom:clamp(20px,3vw,34px)}
 .hero .deck{font-size:clamp(19px,1.5vw + 13px,25px);line-height:1.42;margin-top:1em;max-width:34ch}
 
 /* ═══ THE SIGNATURE: evidence profile ═══
@@ -150,7 +139,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:0}
   color:rgba(22,20,31,.13);flex:0 0 auto;
 }
 .shead .txt{flex:1 1 auto;padding-top:.35em}
-.shead .mono{color:rgba(22,20,31,.55);display:block;margin-bottom:.7em}
+.shead .mono{color:rgba(22,20,31,.7);display:block;margin-bottom:.7em}
 
 /* ═══ CLAIM BLOCKS — the colour rail is the grade ═══ */
 .claim{
@@ -237,15 +226,59 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:0}
 
 footer{padding:clamp(46px,6vw,80px) var(--pad) 60px;border-top:1px solid var(--rule)}
 footer a{color:var(--tradition-d)}
+.srcs-label{color:rgba(22,20,31,.7)}
+[data-theme="dark"] .srcs-label{color:rgba(242,240,248,.62)}
 .srcs{columns:250px;column-gap:34px;font-size:.84em;line-height:1.75;margin-top:1.2em}
 .srcs div{break-inside:avoid;margin-bottom:.55em}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
 }
+
+/* ---- theme toggle (shared shape across the family of pages) ---- */
+.theme-btn{
+  position:fixed;top:14px;right:14px;z-index:200;width:42px;height:42px;
+  display:grid;place-items:center;border-radius:50%;cursor:pointer;
+  background:var(--tb-bg);border:1.5px solid var(--tb-bd);color:var(--tb-fg);
+  transition:color .15s,border-color .15s,background .15s;
+}
+.theme-btn:hover{color:var(--tb-hov);border-color:var(--tb-hov)}
+.theme-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.theme-btn .sun{display:none}
+[data-theme="dark"] .theme-btn .sun{display:block}
+[data-theme="dark"] .theme-btn .moon{display:none}
+@media(max-width:560px){.theme-btn{top:10px;right:10px;width:38px;height:38px}}
+
+/* ---------- dark ---------- */
+:root{--tb-bg:#FFFFFF;--tb-bd:rgba(22,20,31,.16);--tb-fg:rgba(22,20,31,.55);--tb-hov:#2A2FD6}
+[data-theme="dark"]{
+  --ground:#100E18; --ink:#F2F0F8; --rule:rgba(242,240,248,.18);
+  /* the "-d" tokens exist for small text on a light ground; on a dark one
+     they have to go the other way or they disappear */
+  --observed-d:#2BE0A4; --tradition-d:#8C90FF;
+  --contested-d:#FFC44D; --failed-d:#FF6B90;
+  --tb-bg:#1B1826;--tb-bd:rgba(242,240,248,.18);--tb-fg:rgba(242,240,248,.55);--tb-hov:#8C90FF;
+}
+/* inverted bands are dark panels by design — keep them dark */
+[data-theme="dark"] .dark{background:#1B1826;color:var(--ink)}
+[data-theme="dark"] .figure{background:#1B1826;color:var(--ink)}
+[data-theme="dark"] .seg{color:#100E18}
+[data-theme="dark"] .small{color:rgba(242,240,248,.68)}
+[data-theme="dark"] .res .why{color:rgba(242,240,248,.7)}
+[data-theme="dark"] .masthead .mono,[data-theme="dark"] .hero .kicker,
+[data-theme="dark"] .shead .mono{color:rgba(242,240,248,.55)}
+[data-theme="dark"] .shead .fig{color:rgba(242,240,248,.16)}
+[data-theme="dark"] .machine input::placeholder{color:rgba(242,240,248,.28)}
+[data-theme="dark"] footer a{color:#8C90FF}
+[data-theme="dark"] .dark .shead .fig{color:rgba(242,240,248,.2)}
 </style>
 </head>
 <body>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">
+  <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
+  <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+</button>
+
 
 <div class="masthead">
   <span class="name">GRADED</span>
@@ -587,7 +620,7 @@ footer a{color:var(--tradition-d)}
 
 <footer>
   <div class="wide">
-    <div class="mono" style="color:rgba(22,20,31,.55)">Sources</div>
+    <div class="mono srcs-label">Sources</div>
     <div class="srcs">
       <div><a href="https://www.jasnh.com/pdf/Vol13-No2-article2.pdf">A Test of Numerology: Do Birth Numbers Predict Eminence?</a> — Journal of Articles in Support of the Null Hypothesis, 2017</div>
       <div><a href="https://www.iflscience.com/numerology-how-to-tell-real-science-from-pseudoscience-67258">Numerology: How to Tell Real Science from Pseudoscience</a> — IFLScience</div>
@@ -740,6 +773,18 @@ function whenVisible(el, start, stop){
 })();
 </script>
 
-<a class="hub-back" href="/">&larr; All projects</a>
+<script>
+(function(){
+  var root=document.documentElement, b=document.getElementById('themeBtn');
+  if(!b) return;
+  b.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme')||
+      (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('gr-theme',next);}catch(e){}
+  });
+})();
+</script>
 </body>
 </html>
