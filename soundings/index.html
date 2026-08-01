@@ -233,6 +233,12 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .leg.is-active b{color:var(--foam)}
 .dot{cursor:pointer}
 .dot:focus-visible{outline:2px solid var(--foam);outline-offset:1px}
+/* the band is the target; the wash and guide are decoration and must never
+   intercept, or the topmost sibling would swallow the pointer instead */
+.dot .hit{pointer-events:all}
+.dot .colwash,.dot .guide{pointer-events:none;opacity:0;transition:opacity .22s ease}
+.dot.is-active .colwash{opacity:.07}
+.dot.is-active .guide{opacity:.4}
 .dot .ring,.dot .pip{transform-box:fill-box;transform-origin:center}
 .dot .ring{opacity:0;transform:scale(.6);
   transition:opacity .22s ease,transform .28s cubic-bezier(.22,1,.36,1)}
@@ -1072,13 +1078,23 @@ function trace(idx){
       <text x="${W-R}" y="${T+2}" text-anchor="end" fill="var(--wall)" font-family="Martian Mono,monospace"
             font-size="7.5" letter-spacing="1.6">NEVER PASSES THROUGH</text>`;
   /* dots land in step with the line drawing past them, and each one is a control
-     paired with the numbered card below it */
+     paired with the numbered card below it. The hit area is the whole vertical
+     band the dot sits in, not the dot: the x axis is split at the midpoints
+     between neighbours so every column of the plot belongs to its nearest
+     moment, and you never have to find a 6px target. */
   const dots=pts.map((c,i)=>{
     const col=BANDS[bandFor(p.pts[i][0])][2];
     const delay=RM?0:Math.round(130+i*(820/Math.max(1,n-1)));
+    const bandL = i===0     ? 0 : (pts[i-1][0]+c[0])/2;
+    const bandR = i===n-1   ? W : (c[0]+pts[i+1][0])/2;
     return `<g class="dot" data-i="${i}" tabindex="0" role="button"
         aria-label="Moment ${i+1} of ${n}: ${esc(p.pts[i][1])}" style="animation-delay:${delay}ms">
-        <circle cx="${c[0]}" cy="${c[1]}" r="15" fill="transparent"/>
+        <rect class="hit" x="${bandL.toFixed(1)}" y="0" width="${(bandR-bandL).toFixed(1)}"
+              height="${H}" fill="transparent"/>
+        <rect class="colwash" x="${bandL.toFixed(1)}" y="0" width="${(bandR-bandL).toFixed(1)}"
+              height="${H}" fill="${col}"/>
+        <line class="guide" x1="${c[0]}" y1="${T-6}" x2="${c[0]}" y2="${H-B+8}"
+              stroke="${col}" stroke-width="1"/>
         <circle class="ring" cx="${c[0]}" cy="${c[1]}" r="6" fill="none" stroke="${col}" stroke-width="2"/>
         <circle class="pip" cx="${c[0]}" cy="${c[1]}" r="6" fill="${col}" stroke="#0D2733" stroke-width="2"/>
         <text x="${c[0]}" y="${H-B+22}" text-anchor="middle"
