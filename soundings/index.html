@@ -138,15 +138,26 @@ h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
 .cell{background:var(--panel);padding:clamp(18px,2.4vw,24px)}
 .cell h4{margin:0 0 13px;font-family:var(--mono);font-size:.56rem;letter-spacing:.17em;
   text-transform:uppercase;color:var(--dimmer);font-weight:400;display:flex;align-items:center;gap:8px}
-.cell h4 em{width:5px;height:5px;border-radius:50%;background:var(--accent);font-style:normal}
-.cell h4.no em{background:var(--wall)}
 ul{margin:0;padding:0;list-style:none}
 li{padding:7px 0 7px 20px;position:relative;font-size:.95rem;line-height:1.42}
 li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;background:var(--accent)}
-.no li::before{background:var(--wall)}
 .quotes li{font-family:var(--script);font-style:italic;font-size:1.02rem;color:var(--dim);line-height:1.38}
 .quotes li::before{content:"“";background:none;width:auto;height:auto;top:6px;
   color:var(--accent);font-size:1.4rem;font-family:var(--script)}
+
+/* Four lists that used to differ only by a 5px dot, so marks and needs read as
+   the same thing. Each now carries its own icon, rule and hue. The hues are
+   fixed rather than derived from --accent: s3/s4 measure 3.89:1 and 3.78:1 on
+   this panel and fail 4.5:1 at 9px, so a depth-following heading would go
+   illegible at waist and swim. s2/s0/s1/wall all pass. */
+.sect{--sc:var(--accent);border-left:2px solid color-mix(in srgb,var(--sc) 42%,transparent);
+  padding-left:14px}
+.sect + .sect{margin-top:24px}
+.sect h4{color:var(--sc)}
+.sect h4 svg{width:13px;height:13px;flex:none;stroke:var(--sc);fill:none;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.sect li::before{background:var(--sc)}
+.sect .quotes li::before{background:none;color:var(--sc)}
 .p-move{padding:clamp(18px,2.4vw,24px);border-top:1px solid var(--line);
   background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 13%,transparent),transparent);
   display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
@@ -453,20 +464,33 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
             </linearGradient>
             <clipPath id="box"><rect x="0" y="0" width="300" height="380"/></clipPath>
           </defs>
+          <!-- Rules sit on the figure's real landmarks: 3000 at the waist, 2000 at the
+               knee, 1000 just above the foot. The old marks were evenly spaced, so
+               "waist-deep" water arrived at the armpits and "knee-deep" mid-thigh. -->
           <g stroke="rgba(232,242,243,.16)" stroke-width="1">
-            <line x1="20" y1="70" x2="42" y2="70"/><line x1="20" y1="150" x2="42" y2="150"/>
-            <line x1="20" y1="215" x2="42" y2="215"/><line x1="20" y1="278" x2="42" y2="278"/>
-            <line x1="20" y1="330" x2="280" y2="330" stroke-dasharray="3 5"/>
+            <line x1="20" y1="44" x2="42" y2="44"/><line x1="20" y1="150" x2="42" y2="150"/>
+            <line x1="20" y1="240" x2="42" y2="240"/><line x1="20" y1="305" x2="42" y2="305"/>
+            <line x1="20" y1="332" x2="280" y2="332" stroke-dasharray="3 5"/>
           </g>
           <g fill="rgba(232,242,243,.35)" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1.4">
-            <text x="20" y="64">4000</text><text x="20" y="144">3000</text>
-            <text x="20" y="209">2000</text><text x="20" y="272">1000</text>
+            <text x="20" y="38">4000</text><text x="20" y="144">3000</text>
+            <text x="20" y="234">2000</text><text x="20" y="299">1000</text>
           </g>
-          <g id="figure" stroke="var(--foam)" stroke-width="2.2" fill="none" stroke-linecap="round"
+          <!-- Built from overlapping primitives in one fill rather than a single
+               outline path: same silhouette, but every landmark is a number I can
+               check against the rules above. -->
+          <g id="figure" fill="var(--foam)" stroke="var(--foam)" stroke-linecap="round"
+             stroke-linejoin="round"
              style="transition:transform .8s cubic-bezier(.22,1,.36,1)">
-            <circle cx="150" cy="72" r="17"/><line x1="150" y1="89" x2="150" y2="196"/>
-            <line x1="150" y1="112" x2="112" y2="158"/><line x1="150" y1="112" x2="188" y2="158"/>
-            <line x1="150" y1="196" x2="126" y2="330"/><line x1="150" y1="196" x2="174" y2="330"/>
+            <circle cx="150" cy="69" r="17.5" stroke="none"/>
+            <rect x="143.5" y="82" width="13" height="22" stroke="none"/>
+            <path d="M150 96C137 96 128 103 125 114L129 154L132 190L168 190L171 154L175 114C172 103 163 96 150 96Z" stroke="none"/>
+            <path d="M128 112L117 154L114 199" fill="none" stroke-width="11.5"/>
+            <path d="M172 112L183 154L186 199" fill="none" stroke-width="11.5"/>
+            <path d="M139 178L137 240L135 316" fill="none" stroke-width="17"/>
+            <path d="M161 178L163 240L165 316" fill="none" stroke-width="17"/>
+            <ellipse cx="133" cy="326" rx="13" ry="5.5" stroke="none"/>
+            <ellipse cx="167" cy="326" rx="13" ry="5.5" stroke="none"/>
           </g>
           <g clip-path="url(#box)">
             <g id="water" style="transition:transform 1s cubic-bezier(.22,1,.36,1)" transform="translate(0,278)">
@@ -697,12 +721,17 @@ const IC = {
   book:'<svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20"/></svg>',
   stage:'<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V9l6-5 6 5v12"/><path d="M10 21v-6h4v6"/></svg>',
   burn:'<svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-5-4-6-4-11 0 0-3 2-3 6 0-2-2-3-2-3s-5 3-5 8a7 7 0 0 0 7 7z"/></svg>',
-  alone:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><path d="M2 3l20 18" opacity=".55"/></svg>'
+  alone:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><path d="M2 3l20 18" opacity=".55"/></svg>',
+  /* one per panel section — four lists that used to be told apart only by a 5px dot */
+  eye:'<svg viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>',
+  quote:'<svg viewBox="0 0 24 24"><path d="M20.5 4.5h-17v11h4v4.2l5-4.2h8Z"/></svg>',
+  give:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 8v8M8 12h8"/></svg>',
+  stop:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M6.2 6.2l11.6 11.6"/></svg>'
 };
 
 /* ===== DEPTHS ===== */
 const D=[
- {key:"dry",num:"0 cubits",state:"dry ground",short:"Dry",color:"var(--s0)",level:330,lift:0,
+ {key:"dry",num:"0 cubits",state:"dry ground",short:"Dry",color:"var(--s0)",level:332,lift:0,
   greek:"psychikós — natural",name:"Dry ground",
   alt:"Warm toward Jesus, not surrendered. The gospel is still information rather than news.",
   marks:["Faith as positions held, not a person known","Jesus admired — teacher, ethic, inheritance","Church out of habit or someone else's ask","No felt need for rescue"],
@@ -710,7 +739,7 @@ const D=[
   needs:["One friendship that isn't a project","Room for hostile questions","The gospel once, clearly, from someone trusted","Time — a longer clock than the evangelist wants"],
   avoid:["Handing over a discipleship plan","Winning the argument","Treating questions as obstacles"],
   move:"From information to surrender. Through a relationship, under pressure, at a moment nobody scheduled."},
- {key:"ankle",num:"1000 cubits",state:"ankle-deep",short:"Ankles",color:"var(--s1)",level:278,lift:0,
+ {key:"ankle",num:"1000 cubits",state:"ankle-deep",short:"Ankles",color:"var(--s1)",level:305,lift:0,
   greek:"nḗpios — infant",name:"Ankle-deep",
   alt:"Something real happened. Nothing is furnished yet. Ignorance here is the accurate word, not an insult.",
   marks:["High emotion, zero habits","Beliefs mixed in from everywhere — karma, luck, the universe","Surprised it didn't fix the marriage or the money","Can't feed themselves yet","Often isolated by choice: just me and Jesus"],
@@ -718,7 +747,7 @@ const D=[
   needs:["A person, not a program","Habits installed by imitation","Milk, with no shame about milk","Warning that the feeling fades — and that it's normal"],
   avoid:["Stage time because the testimony is fresh","Correcting theology faster than building trust","Assuming physical age tracks spiritual age"],
   move:"From being fed to feeding yourself. The marker is concrete: the first time they open the Bible without being told."},
- {key:"knee",num:"2000 cubits",state:"knee-deep",short:"Knees",color:"var(--s2)",level:215,lift:0,
+ {key:"knee",num:"2000 cubits",state:"knee-deep",short:"Knees",color:"var(--s2)",level:240,lift:0,
   greek:"sarkikós — fleshly",name:"Knee-deep",
   alt:"The most populated depth and the most missed. The tell isn't knowledge — it's that the sentences run back toward the self.",
   marks:["Consumer posture, held sincerely and unconsciously","Highs and lows track circumstances","Obedience motivated by reward or trouble","Preferences held as convictions","Still fighting like everyone else — Paul's actual test","Attendance and giving may be excellent. Neither is the measurement"],
@@ -734,7 +763,7 @@ const D=[
   needs:["Equipping, then actual release — authority, not tasks","A rule of life: limits chosen before exhaustion chooses","Someone asking about their soul, not their output","Explicit permission to be limited"],
   avoid:["Using them — they say yes to everything","Promoting past their character","Treating capacity as maturity"],
   move:"Usually not upward. Through — the Wall stands here, and the passage is downward first."},
- {key:"swim",num:"4000 cubits",state:"over your head",short:"Swim",color:"var(--s4)",level:52,lift:-14,
+ {key:"swim",num:"4000 cubits",state:"over your head",short:"Swim",color:"var(--s4)",level:30,lift:-8,
   greek:"patḗr / téleios — father, mature",name:"Over your head",
   alt:"John describes this group twice and says only one thing: they know him who is from the beginning. No metric. Just knowing.",
   marks:["Makes disciples who make disciples, by name","Holds paradox without anxiety","Can be wronged without correcting the record","Unimpressed by their own gifts","Asks more than answers","Depends on God more visibly than ten years ago, not less"],
@@ -786,10 +815,18 @@ function select(i){const d=D[i];
       <span class="p-greek">${d.greek}</span></div><div class="p-title">${d.name}</div>
       <p class="p-alt">${d.alt}</p></div>
     <div class="p-grid">
-      <div class="cell"><h4><em></em>Marks</h4><ul>${d.marks.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
-      <div class="cell"><h4><em></em>What it sounds like</h4><ul class="quotes">${d.says.map(x=>'<li>'+x+'</li>').join('')}</ul>
-        <h4 style="margin-top:22px"><em></em>What they need</h4><ul>${d.needs.map(x=>'<li>'+x+'</li>').join('')}</ul>
-        <h4 class="no" style="margin-top:22px"><em></em>What not to do</h4><ul class="no">${d.avoid.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+      <div class="cell">
+        <div class="sect" style="--sc:var(--s2)"><h4>${IC.eye}Marks</h4>
+          <ul>${d.marks.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+      </div>
+      <div class="cell">
+        <div class="sect" style="--sc:var(--s0)"><h4>${IC.quote}What it sounds like</h4>
+          <ul class="quotes">${d.says.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+        <div class="sect" style="--sc:var(--s1)"><h4>${IC.give}What they need</h4>
+          <ul>${d.needs.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+        <div class="sect" style="--sc:var(--wall)"><h4>${IC.stop}What not to do</h4>
+          <ul>${d.avoid.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+      </div>
     </div>
     <div class="p-move">${IC.arrow}<div><b>The move</b><p>${d.move}</p></div></div>`;}
 select(1);
