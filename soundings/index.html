@@ -345,7 +345,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 @media(min-width:780px){.maps{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1180px){.maps{grid-template-columns:repeat(3,1fr)}}
 .map{position:relative;border-radius:16px;border:1px solid var(--line);background:var(--panel);
-  padding:20px;display:flex;flex-direction:column;gap:11px;overflow:hidden}
+  padding:20px;display:flex;flex-direction:column;gap:13px;overflow:hidden}
 .map::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--mc)}
 .map::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 10%,transparent),transparent 42%)}
@@ -362,9 +362,31 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
   color:var(--dim);margin-bottom:4px}
 .map dd{margin:0;font-size:.87rem;line-height:1.5;color:var(--dim)}
 .map dd b{color:var(--foam);font-weight:600}
-.map .nw{align-self:flex-start;margin-top:auto;font-family:var(--mono);font-size:.45rem;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--wall);
-  border:1px solid var(--wall);border-radius:3px;padding:3px 6px}
+.map-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:-2px}
+.kind{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:100px;
+  background:color-mix(in srgb,var(--mc) 15%,transparent);
+  border:1px solid color-mix(in srgb,var(--mc) 34%,transparent);
+  font-family:var(--mono);font-size:.45rem;letter-spacing:.13em;text-transform:uppercase;color:var(--foam)}
+.kind svg{width:12px;height:12px;flex:none;stroke:var(--mc);fill:none;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round}
+.map .nw{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.45rem;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--wall);
+  border:1px solid color-mix(in srgb,var(--wall) 55%,transparent);
+  background:rgba(255,92,59,.12);border-radius:100px;padding:4px 10px}
+
+/* the stages, so the sequence is visible rather than described */
+.stagewrap .slab{display:block;font-family:var(--mono);font-size:.46rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.stages{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.stages li{position:relative;padding:8px 11px 9px 32px;border-radius:9px;
+  border-left:2px solid transparent}
+.stages li i{position:absolute;left:11px;top:9px;font-style:normal;font-family:var(--mono);
+  font-size:.44rem;letter-spacing:.06em;color:var(--dim)}
+.stages li b{display:block;font-size:.83rem;font-weight:600;color:var(--foam);
+  letter-spacing:-.012em;line-height:1.25}
+.stages li span{display:block;font-size:.78rem;line-height:1.45;color:var(--dim);margin-top:3px}
+.stages li.wall{background:rgba(255,92,59,.13);border-left-color:var(--wall)}
+.stages li.wall b,.stages li.wall i{color:var(--wall)}
 
 .chart-intro{margin-top:clamp(48px,7vw,84px)}
 .chart-intro h3{font-size:clamp(1.5rem,3.6vw,2.5rem);margin-bottom:.4em;letter-spacing:-.03em;
@@ -1229,100 +1251,188 @@ trace(0);
 
 /* ===== THE THIRTEEN MAPS ===== */
 /* Same order as ROWS below, so a card and its row in the table are the same
-   index — the numbers on both are what make them navigable together. */
+   index. Colour comes from the kind, not from the individual map, so the five
+   families read as families. */
+const KIND={
+ scripture:{l:"Scripture",c:"var(--s0)",
+  i:'<svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>'},
+ church:{l:"Church practice",c:"var(--s1)",
+  i:'<svg viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><path d="M2.5 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M14.6 20a5 5 0 0 1 6.9-4.6"/></svg>'},
+ formation:{l:"Formation",c:"var(--s2)",
+  i:'<svg viewBox="0 0 24 24"><path d="M3 21V4h18v17"/><path d="M3 10h18"/><path d="M10 21v-7h4v7"/></svg>'},
+ research:{l:"Research",c:"var(--s3)",
+  i:'<svg viewBox="0 0 24 24"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg>'},
+ contemplative:{l:"Contemplative",c:"var(--s4)",
+  i:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.4"/><circle cx="12" cy="12" r="1.9"/></svg>'}
+};
 const MAPS=[
- {n:"1 John 2:12–14",yr:"c. AD 90",c:"var(--s2)",nw:1,
-  who:"The apostle John, writing to a church being picked apart by teachers who claimed to know more.",
+ {n:"1 John 2:12–14",yr:"c. AD 90",k:"scripture",nw:1,
+  who:"The apostle John, to a church being picked apart by teachers who claimed to know more.",
   axis:"What you know, and how long you have known it.",
-  how:"Three groups, each addressed twice: <b>children</b> — your sins are forgiven, you know the Father; <b>young men</b> — you are strong, the word abides in you, you have overcome the evil one; <b>fathers</b> — you know him who is from the beginning. That last line is repeated verbatim. It is the only thing said about the most mature group.",
+  how:"Three groups, each addressed twice. The only thing that changes between them is what they know — and what the oldest group knows is stated twice, identically, and left there.",
+  st:[["Children","Your sins are forgiven, and you know the Father."],
+      ["Young men","You are strong, the word abides in you, you have overcome the evil one."],
+      ["Fathers","You know him who is from the beginning. That is the whole description."]],
   use:"The oldest maturity map still in use, and the shortest. Six lines of text.",
-  watch:"Names groups, never movement. There is no method here and no category for a faith that stops working."},
- {n:"1 Corinthians 2–3 · Hebrews 5",yr:"c. AD 55–65",c:"var(--s1)",
+  watch:"Names groups, never movement. No method, and no category for a faith that stops working."},
+ {n:"1 Corinthians 2–3 · Hebrews 5",yr:"c. AD 55–65",k:"scripture",
   who:"Paul, to a church that thought it was advanced; and the writer to the Hebrews, to one that had gone backwards.",
   axis:"What you can digest, and what you do with conflict.",
-  how:"Natural → infant → fleshly → mature. Milk against solid food. Paul's test is not knowledge: it is whether <b>jealousy and quarrelling still run the room</b>. Hebrews adds the mechanism — mature senses are “trained by constant practice,” which makes maturity a function of reps, not years.",
+  how:"The test is not knowledge. It is whether jealousy and quarrelling still run the room — and Hebrews supplies the mechanism: senses trained by constant practice, which makes maturity a function of reps rather than years.",
+  st:[["Natural","Cannot receive the things of the Spirit; they are folly to him."],
+      ["Infant","On milk, because you were not ready for solid food."],
+      ["Fleshly","Still on milk, and the tell is the jealousy and the factions."],
+      ["Mature","Senses trained by practice to distinguish good from evil."]],
   use:"The sharpest diagnostic in Scripture, because it is behavioural rather than self-reported.",
-  watch:"Written as rebuke in a specific fight, not as a developmental scheme."},
- {n:"The threefold way · Teresa",yr:"4th c. · Castle 1577",c:"var(--s4)",
+  watch:"Written as rebuke inside a specific fight, not as a developmental scheme."},
+ {n:"The threefold way · Teresa",yr:"4th c. · Castle 1577",k:"contemplative",
   who:"The desert and monastic tradition, given its most detailed form in Teresa of Ávila's Interior Castle.",
   axis:"Prayer, and what happens to the self inside it.",
-  how:"<b>Purgative</b> — beginners, breaking with sin, consolation arrives easily. <b>Illuminative</b> — proficients, real light and real dryness together. <b>Unitive</b> — union, where the self stops being the subject. Teresa draws it as seven rooms of one castle and the movement is inward, not upward.",
-  use:"By far the richest account of the deep end, and the only tradition with a vocabulary for dryness that does not treat it as failure.",
+  how:"Teresa draws it as seven rooms of a single castle, and the movement is inward rather than upward. Dryness is not a fault in the method; past a point it is the method.",
+  st:[["Purgative","Beginners. Breaking with sin, and consolation still comes easily."],
+      ["Illuminative","Proficients. Real light and real dryness, at the same time."],
+      ["Unitive","Union. The self stops being the subject of its own prayer."]],
+  use:"By far the richest account of the deep end, and the only tradition with a vocabulary for dryness that does not read it as failure.",
   watch:"Written from inside enclosed religious life, and nearly silent on how anybody starts."},
- {n:"Putman · Real-Life Discipleship",yr:"2010",c:"var(--s1)",nw:1,
+ {n:"Putman · Real-Life Discipleship",yr:"2010",k:"church",nw:1,
   who:"Jim Putman, out of Real Life Ministries in Idaho.",
   axis:"Whether you reproduce.",
-  how:"Spiritually dead → infant → child → young adult → parent, borrowed from how families actually work. Each stage is identified by <b>the phrases people say</b> rather than by a test: “I don't know what the Bible says”; “nobody is feeding me”; “who can I help?”",
-  use:"The most immediately usable model here for a church trying to place real people. The phrase-based diagnosis is genuinely good and hard to fake.",
-  watch:"No Wall. A faith that works less well than it used to reads as regression, and the prescription is more of what caused it."},
- {n:"Hagberg &amp; Guelich",yr:"1989",c:"var(--s4)",
+  how:"Borrowed from how families actually work, and diagnosed by the phrases people say rather than by a test — which is what makes it hard to fake.",
+  slab:"The five stages, and what each one says",
+  st:[["Spiritually dead","“I don't believe” — or believes, and nothing follows from it."],
+      ["Infant","“I didn't know the Bible said that.”"],
+      ["Child","“Nobody is feeding me.”"],
+      ["Young adult","“Who can I help?”"],
+      ["Parent","“Who am I raising?”"]],
+  use:"The most immediately usable model here for a church trying to place real people.",
+  watch:"No Wall. A faith that works less well than it used to reads as regression, and the prescription is more of whatever caused it."},
+ {n:"Hagberg &amp; Guelich",yr:"1989",k:"formation",
   who:"Janet Hagberg and Robert Guelich, The Critical Journey.",
   axis:"Where your security actually comes from.",
-  how:"Six stages — recognition of God, the life of discipleship, the productive life, the journey inward, the outward journey, the life of love — with <b>the Wall</b> standing between three and four. The Wall is the place where what used to work stops working, and the only route through it is down rather than forward.",
-  use:"The best single book on this list, and the only one that treats the collapse as the doorway rather than as the failure.",
+  how:"Six stages with the Wall standing between the third and the fourth. It is the only model here whose central claim is that the route on is downward.",
+  st:[["1 · Recognition of God","Awe, and the first real sense that God is there."],
+      ["2 · The life of discipleship","Belonging, learning, someone to follow."],
+      ["3 · The productive life","You are useful — and your identity quietly moves into the usefulness."],
+      ["THE WALL","What used to work stops working. There is no route forward, only down.",1],
+      ["4 · The journey inward","You meet what you were avoiding, and meet God in it."],
+      ["5 · The outward journey","Back to the same work, with nothing left to prove."],
+      ["6 · The life of love","Rare. Other people notice it well before you do."]],
+  use:"The best single book on this list, and the only one that treats the collapse as the doorway rather than the failure.",
   watch:"Stage four can be read as permission to stay in deconstruction indefinitely, which is not what they wrote."},
- {n:"Fowler",yr:"1981",c:"var(--s3)",
+ {n:"Fowler",yr:"1981",k:"research",
   who:"James Fowler, Stages of Faith, built from roughly 600 long interviews.",
   axis:"<b>How</b> you hold beliefs — not what they are.",
-  how:"Six stages: intuitive-projective, mythic-literal, synthetic-conventional (belief held because your group holds it), individuative-reflective (you take ownership, usually by breaking something), conjunctive (you can hold paradox without anxiety), universalizing.",
+  how:"A structural account: the same content can be held in six quite different ways, and the move that matters is from believing what your group believes to owning it yourself.",
+  st:[["1 · Intuitive-projective","Childhood. Images and stories, absorbed whole."],
+      ["2 · Mythic-literal","The story is true because it is the story."],
+      ["3 · Synthetic-conventional","You believe what your group believes, and cannot see the frame."],
+      ["4 · Individuative-reflective","You take ownership — usually by breaking something first."],
+      ["5 · Conjunctive","You can hold paradox without needing it resolved."],
+      ["6 · Universalizing","Rare enough that Fowler struggled to find examples."]],
   use:"The foundational structural account, and the reason a doubting thirty-year-old may be advancing rather than falling away.",
   watch:"“Faith” here means meaning-making in general, so an atheist moves through the same stages. It says nothing about whether any of it is true."},
- {n:"Peck",yr:"1987",c:"var(--s3)",
+ {n:"Peck",yr:"1987",k:"research",
   who:"M. Scott Peck, The Different Drum and Further Along the Road Less Traveled.",
   axis:"Your relationship to rules, and to mystery.",
-  how:"Four stages: chaotic/antisocial; formal/institutional, which needs the structure and defends it; skeptic/individual, which rejects the structure and is often more principled than the stage before it; and mystical/communal, which holds mystery without needing it resolved.",
-  use:"Carries the one observation nobody forgets — <b>we are most threatened by people one stage ahead of us</b>. It explains church conflict better than the stated topics do.",
-  watch:"Four very wide stages. Useful as a lens, poor as a placement tool."},
- {n:"REVEAL",yr:"2007",c:"var(--s1)",nw:1,
+  how:"Four stages, and one observation nobody forgets: we are most threatened by the people one stage ahead of us. It explains church conflict better than the stated topics do.",
+  st:[["1 · Chaotic / antisocial","No governing principle but self-interest."],
+      ["2 · Formal / institutional","Needs the structure, and defends it hard."],
+      ["3 · Skeptic / individual","Rejects the structure — often on principle, and often more honestly."],
+      ["4 · Mystical / communal","Holds mystery without anxiety, and sees how things connect."]],
+  use:"The best available explanation of why two sincere people at different depths find each other intolerable.",
+  watch:"Four very wide stages. A lens, not a placement tool."},
+ {n:"REVEAL",yr:"2007",k:"research",nw:1,
   who:"Greg Hawkins and Cally Parkinson — Willow Creek auditing itself, then 250,000+ people across a thousand churches.",
   axis:"Self-reported love of God and love of others.",
-  how:"Four segments — exploring Christ, growing in Christ, close to Christ, Christ-centred — plus the finding that made it famous: <b>church activity does not drive movement</b>, and people stall hardest at “close to Christ,” one step short of the end.",
+  how:"Four segments, plus the finding that made it famous: church activity does not drive movement, and people stall hardest one step short of the end.",
+  slab:"The four segments",
+  st:[["Exploring Christ","Curious, not committed."],
+      ["Growing in Christ","Committed, and learning the practices."],
+      ["Close to Christ","Depends on him daily — and this is where the stall happens."],
+      ["Christ-centred","Identity is him, rather than the activity."]],
   use:"The stall it identified is real, and most pastors recognise it on sight.",
   watch:"Bradley Wright found the design and analysis weak and heavily over-interpreted. Self-reported throughout, and no Wall."},
- {n:"Spader · 4 Chairs",yr:"2014",c:"var(--s1)",nw:1,
+ {n:"Spader · 4 Chairs",yr:"2014",k:"church",nw:1,
   who:"Dann Spader, 4 Chair Discipling, drawn from the sequence of invitations Jesus actually issued.",
   axis:"What Jesus asked of a person at each point.",
-  how:"Four chairs, four invitations: <b>come and see</b>; <b>follow me</b>; <b>follow me and I will make you fishers of men</b>; <b>remain in me and bear fruit</b>. Each chair has its own next step, so the model tells you what to say as well as where someone is.",
-  use:"Extremely teachable. A volunteer can hold the whole thing after one sitting, which is why it spreads.",
-  watch:"No Wall. Built entirely to move people forward, with no category for someone whose faith is coming apart on purpose."},
- {n:"Scazzero · Emotionally Healthy",yr:"2006 / 2017",c:"var(--s4)",
-  who:"Peter Scazzero, after his own church and marriage nearly came apart while the ministry was growing.",
+  how:"Each chair carries its own invitation, so the model tells you what to say next as well as where somebody is.",
+  slab:"The four chairs, and the invitation at each",
+  st:[["Chair 1 · Come and see","Curious. The invitation is to look."],
+      ["Chair 2 · Follow me","Believing. The invitation is to imitate."],
+      ["Chair 3 · Fishers of men","Equipped. The invitation is to go and bring others."],
+      ["Chair 4 · Bear fruit","Reproducing. The invitation is to remain."]],
+  use:"Extremely teachable. A volunteer holds the whole thing after one sitting, which is why it spreads.",
+  watch:"No Wall. Built entirely to move people forward, with no category for a faith coming apart on purpose."},
+ {n:"Scazzero · Emotionally Healthy",yr:"2006 / 2017",k:"formation",
+  who:"Peter Scazzero, after his church and his marriage nearly came apart while the ministry was growing.",
   axis:"Whether your emotional age matches your spiritual claims.",
-  how:"Takes Hagberg's six stages and the Wall as the frame, then adds the diagnosis: <b>you cannot be spiritually mature and emotionally immature at the same time</b>. Names the specific symptoms — ignoring anger and sadness, dying to the wrong things, denying the past, living without limits.",
+  how:"Takes Hagberg's six stages and the Wall as the frame, then adds the claim underneath: you cannot be spiritually mature and emotionally immature at the same time. What it contributes is the list of symptoms.",
+  slab:"The symptoms it names",
+  st:[["Using God to run from God","Ministry as the most respectable available hiding place."],
+      ["Ignoring anger, sadness and fear","Treated as unspiritual, so they go underground and run things from there."],
+      ["Dying to the wrong things","Killing off what God gave you rather than what is actually in the way."],
+      ["Denying the past","Acting as though the family you came from has no vote in who you are now."],
+      ["Living without limits","No sabbath, no no, and a body that eventually says it for you."]],
   use:"The most practically useful account of the Wall for somebody standing in one right now.",
   watch:"Leans hard on family-systems language, which not everyone finds native."},
- {n:"Sonship",yr:"2002 onward",c:"var(--s2)",
+ {n:"Sonship",yr:"2002 onward",k:"formation",
   who:"Jack Frost, Paul Ellis and the wider sonship stream.",
   axis:"Identity — who you believe you are to God.",
-  how:"Orphan → slave → servant → friend → son. The Greek underneath is real: the New Testament moves between <b>nēpios</b>, an infant under guardians, and <b>huios</b>, a son who has come of age and can be trusted with the estate.",
+  how:"The Greek underneath is real: the New Testament moves between <b>nēpios</b>, an infant under guardians, and <b>huios</b>, a son come of age who can be trusted with the estate.",
+  st:[["Orphan","No father. Everything has to be secured for yourself."],
+      ["Slave","Works from fear, and for permission to stay."],
+      ["Servant","Works for approval. Closer in, and still earning."],
+      ["Friend","Trusted with what the father is actually doing."],
+      ["Son","Heir. The estate was already yours before you performed."]],
   use:"Gets at the engine under a great deal of religious behaviour — performing for a father you are not sure has accepted you.",
   watch:"The servant/son contrast gets pushed until “servant” becomes an insult, which Scripture does not support."},
- {n:"The Exodus pattern",yr:"the oldest of them",c:"var(--s2)",
+ {n:"The Exodus pattern",yr:"the oldest of them",k:"scripture",
   who:"Nobody built this one. It is the shape of the story, used as a map ever since.",
   axis:"Where you are in the journey out.",
-  how:"Egypt → deliverance → wilderness → testing → the land. The deliverance is quick and the wilderness is forty years, which means <b>the middle is not a delay in the journey; it is most of the journey</b>.",
+  how:"The deliverance takes a night and the wilderness takes forty years, which means the middle is not a delay in the journey. It is most of the journey.",
+  st:[["Egypt","Slavery, and it is all you have ever known."],
+      ["Deliverance","Fast, decisive, and not your doing."],
+      ["Wilderness","Provision without control. Bread that will not keep overnight."],
+      ["Testing","The same lesson coming back around until it lands."],
+      ["The land","Possessed slowly — and never by the generation that left."]],
   use:"The most pastorally honest thing on this list, because it makes the long middle normal rather than a sign something has gone wrong.",
-  watch:"An application of a narrative, not an exegesis of one. Read it as a shape, not a schedule."},
- {n:"Rohr · Falling Upward",yr:"2011",c:"var(--s4)",
+  watch:"An application of a narrative, not an exegesis of one. A shape, not a schedule."},
+ {n:"Rohr · Falling Upward",yr:"2011",k:"contemplative",
   who:"Richard Rohr, drawing on Jung as much as on the tradition.",
   axis:"Which half of life you are in.",
-  how:"Two halves and one passage. The first half <b>builds the container</b> — identity, boundaries, security, being right about things. The second half fills it. The passage between them is not a promotion: it is a failure, and it is meant to be. “We grow spiritually much more by doing it wrong than by doing it right.”",
+  how:"Two halves and one passage — and the passage is not a promotion. “We grow spiritually much more by doing it wrong than by doing it right.”",
+  slab:"Two halves, and what sits between them",
+  st:[["First half","Building the container: identity, boundaries, security, being right about things."],
+      ["The passage","A failure, and it is meant to be one. Nobody volunteers.",1],
+      ["Second half","Filling the container. Less certain, and considerably more use to anyone."]],
   use:"The clearest statement of why the descent is the mechanism rather than an interruption of it.",
   watch:"Two very wide categories, and Rohr's wider theology is contested — take the shape, argue the rest elsewhere."}
 ];
-document.getElementById('maps').innerHTML=MAPS.map((m,i)=>
- `<article class="map" style="--mc:${m.c}">
+document.getElementById('maps').innerHTML=MAPS.map((m,i)=>{
+  const kd=KIND[m.k];
+  const stages=m.st.map((st,j)=>{
+    const tint=(4+j*2.4).toFixed(1)+'%', edge=Math.min(88,30+j*12)+'%';
+    return st[2]
+      ? `<li class="wall"><i>${String(j+1).padStart(2,'0')}</i><b>${st[0]}</b><span>${st[1]}</span></li>`
+      : `<li style="background:color-mix(in srgb,var(--mc) ${tint},transparent);
+           border-left-color:color-mix(in srgb,var(--mc) ${edge},transparent)"
+          ><i>${String(j+1).padStart(2,'0')}</i><b>${st[0]}</b><span>${st[1]}</span></li>`;
+  }).join('');
+  return `<article class="map" style="--mc:${kd.c}">
     <div class="map-top"><span class="map-n">Map ${String(i+1).padStart(2,'0')}</span><span class="map-yr">${m.yr}</span></div>
     <h4>${m.n}</h4>
+    <div class="map-chips"><span class="kind">${kd.i}${kd.l}</span>${m.nw?'<span class="nw">No Wall</span>':''}</div>
     <p class="who">${m.who}</p>
     <dl>
       <div><dt>What it measures</dt><dd>${m.axis}</dd></div>
       <div><dt>How it works</dt><dd>${m.how}</dd></div>
+    </dl>
+    <div class="stagewrap"><span class="slab">${m.slab||'The stages'}</span><ol class="stages">${stages}</ol></div>
+    <dl>
       <div><dt>What it's good for</dt><dd>${m.use}</dd></div>
       <div><dt>Where it runs out</dt><dd>${m.watch}</dd></div>
     </dl>
-    ${m.nw?'<span class="nw">No Wall</span>':''}
-  </article>`).join('');
+  </article>`;}).join('');
 
 /* ===== FRAMEWORK CHART ===== */
 const COLS=["Dry ground","Ankles","Knees","Waist","Over your head"];
