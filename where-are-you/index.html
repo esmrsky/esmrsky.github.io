@@ -18,80 +18,88 @@ button,input,select,textarea{font:inherit;color:inherit}
 <body>
 <style>
 /* ==========================================================================
-   WHERE ARE YOU — risograph field map
-   Flat spot inks, overprint, halftone. Colour encodes position.
+   WHERE ARE YOU — flat Swiss field map
+
+   No drawn rules anywhere. Every edge on this page is the seam between two
+   colour fields, so any two blocks that touch MUST differ in hue or in value:
+
+     · position cards  — one hue per card (neighbours differ in hue), stepped
+                         7% / 16% / 26% down the card (rows differ in value)
+     · frames, sources,
+       stats, caveats  — a six-hue cycle stamped in DOM order. Six never
+                         collides with a 1-, 2- or 3-column grid, because
+                         neighbours sit ±1, ±2 or ±3 apart and none of those
+                         is ≡0 mod 6. Sources re-stamp on filter, since
+                         hiding cards changes who is adjacent to whom.
+     · sections        — alternate --paper / --paper-2, with the topbar, the
+                         Wall, the quiz bar and the footer inverted to --ink.
+
+   Add anything here and check what it touches. A new block that matches its
+   neighbour is not a subtle bug — the boundary simply vanishes.
    ========================================================================== */
 :root{
-  --paper:#F7F7F3;
-  --paper-2:#EDEDE7;
-  --ink:#16161A;
+  --paper:#FFFFFF;
+  --paper-2:#EFEFEB;
+  --paper-3:#E0E0DA;
+  --ink:#111114;
   --ink-2:#4A4A52;
   --ink-3:#7C7C86;
-  --rule:#16161A;
 
-  --pink:#FF3D93;
+  --pink:#FF2D87;
   --yellow:#FFC700;
   --green:#00A95C;
   --orange:#FF5C1F;
   --aqua:#00B0C7;
   --violet:#4A3AFF;
-  --void:#16161A;
+  --void:#111114;
 
-  --on-yellow:#16161A;
-  --on-green:#16161A;
-  --on-orange:#16161A;
-  --on-aqua:#16161A;
+  --on-yellow:#111114;
+  --on-green:#FFFFFF;
+  --on-orange:#111114;
+  --on-aqua:#111114;
   --on-violet:#FFFFFF;
-  --on-pink:#16161A;
-  --on-void:#F7F7F3;
-
-  --blend:multiply;
+  --on-pink:#FFFFFF;
+  --on-void:#FFFFFF;
 
   --sans:"Helvetica Neue",Helvetica,Arial,"Segoe UI",sans-serif;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Hoefler Text",Georgia,serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
 
-  --gutter:clamp(1rem,4vw,2.75rem);
-  --bw:2px;
+  --gutter:clamp(1rem,3.2vw,3rem);
+  --max:1760px;
 }
 
 @media (prefers-color-scheme: dark){
   :root{
-    --paper:#101014; --paper-2:#191920;
+    --paper:#0B0B0E; --paper-2:#17171C; --paper-3:#232329;
     --ink:#F4F4EF; --ink-2:#B4B4BE; --ink-3:#7E7E8C;
-    --rule:#F4F4EF;
     --pink:#FF57A2; --yellow:#FFD62E; --green:#1FC97A;
     --orange:#FF7440; --aqua:#28CCE2; --violet:#7A6DFF;
     --void:#F4F4EF;
-    --on-yellow:#101014; --on-green:#101014; --on-orange:#101014;
-    --on-aqua:#101014; --on-violet:#101014; --on-pink:#101014;
-    --on-void:#101014;
-    --blend:screen;
+    --on-yellow:#0B0B0E; --on-green:#0B0B0E; --on-orange:#0B0B0E;
+    --on-aqua:#0B0B0E; --on-violet:#0B0B0E; --on-pink:#0B0B0E;
+    --on-void:#0B0B0E;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#101014; --paper-2:#191920;
+  --paper:#0B0B0E; --paper-2:#17171C; --paper-3:#232329;
   --ink:#F4F4EF; --ink-2:#B4B4BE; --ink-3:#7E7E8C;
-  --rule:#F4F4EF;
   --pink:#FF57A2; --yellow:#FFD62E; --green:#1FC97A;
   --orange:#FF7440; --aqua:#28CCE2; --violet:#7A6DFF;
   --void:#F4F4EF;
-  --on-yellow:#101014; --on-green:#101014; --on-orange:#101014;
-  --on-aqua:#101014; --on-violet:#101014; --on-pink:#101014;
-  --on-void:#101014;
-  --blend:screen;
+  --on-yellow:#0B0B0E; --on-green:#0B0B0E; --on-orange:#0B0B0E;
+  --on-aqua:#0B0B0E; --on-violet:#0B0B0E; --on-pink:#0B0B0E;
+  --on-void:#0B0B0E;
 }
 :root[data-theme="light"]{
-  --paper:#F7F7F3; --paper-2:#EDEDE7;
-  --ink:#16161A; --ink-2:#4A4A52; --ink-3:#7C7C86;
-  --rule:#16161A;
-  --pink:#FF3D93; --yellow:#FFC700; --green:#00A95C;
+  --paper:#FFFFFF; --paper-2:#EFEFEB; --paper-3:#E0E0DA;
+  --ink:#111114; --ink-2:#4A4A52; --ink-3:#7C7C86;
+  --pink:#FF2D87; --yellow:#FFC700; --green:#00A95C;
   --orange:#FF5C1F; --aqua:#00B0C7; --violet:#4A3AFF;
-  --void:#16161A;
-  --on-yellow:#16161A; --on-green:#16161A; --on-orange:#16161A;
-  --on-aqua:#16161A; --on-violet:#FFFFFF; --on-pink:#16161A;
-  --on-void:#F7F7F3;
-  --blend:multiply;
+  --void:#111114;
+  --on-yellow:#111114; --on-green:#FFFFFF; --on-orange:#111114;
+  --on-aqua:#111114; --on-violet:#FFFFFF; --on-pink:#FFFFFF;
+  --on-void:#FFFFFF;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -107,22 +115,14 @@ body{
   overflow-x:hidden;
 }
 
-/* halftone tooth over everything */
-body::after{
-  content:"";
-  position:fixed; inset:0; z-index:200; pointer-events:none;
-  background-image:radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
-  background-size:4px 4px;
-  opacity:.045;
-}
-
 h1,h2,h3,h4,p,ul,ol,figure{margin:0}
 ul,ol{padding:0;list-style:none}
 button{font:inherit;color:inherit}
 a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 
-.shell{width:min(100% - var(--gutter)*2, 1220px);margin-inline:auto}
-.narrow{max-width:62ch}
+/* full-bleed: the shell is a gutter, not a column */
+.shell{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.narrow{max-width:66ch}
 
 .mono{font-family:var(--mono)}
 .tag{
@@ -131,111 +131,120 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 }
 
 /* --------------------------------------------------------------- topbar */
+/* inverted, so a sticky bar over scrolling paper always has an edge */
 .top{
   position:sticky;top:0;z-index:120;
   display:flex;align-items:center;justify-content:space-between;gap:.75rem;
   padding:.5rem var(--gutter);
-  background:var(--paper);
-  border-bottom:var(--bw) solid var(--rule);
+  background:var(--ink);color:var(--paper);
 }
-.top__id{display:flex;align-items:center;gap:.5rem;min-width:0}
+.top__id{display:flex;align-items:center;gap:.6rem;min-width:0}
 .top__dots{display:flex;flex:none}
-.top__dots i{width:10px;height:10px;border-radius:50%;display:block;margin-right:-3px;mix-blend-mode:var(--blend)}
+.top__dots i{width:12px;height:12px;display:block}
 .top__id b{
   font-weight:800;letter-spacing:-.03em;font-size:.9375rem;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.top__act{display:flex;gap:.4rem;flex:none}
+.top__act{display:flex;flex:none}
 
 .btn{
   font-family:var(--mono);font-size:.6875rem;font-weight:500;
   letter-spacing:.1em;text-transform:uppercase;
-  background:var(--paper);color:var(--ink);
-  border:var(--bw) solid var(--rule);
-  padding:0 .85rem;min-height:44px;
+  background:var(--ink);color:var(--paper);
+  border:0;
+  padding:0 .95rem;min-height:44px;
   display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
   cursor:pointer;
-  transition:background .14s ease, color .14s ease, border-color .14s ease;
+  transition:background .14s ease, color .14s ease;
 }
-.btn:hover{background:var(--ink);color:var(--paper)}
-.btn:active{background:var(--ink);color:var(--paper);opacity:.85}
+.btn:hover,.btn:active{background:var(--pink);color:var(--on-pink)}
 .btn--pink{background:var(--pink);color:var(--on-pink)}
+.btn--pink:hover,.btn--pink:active{background:var(--ink);color:var(--paper)}
 .btn--icon{width:44px;padding:0}
-.btn--lg{min-height:56px;font-size:.75rem;padding:0 1.5rem}
+.btn[hidden]{display:none}   /* display:inline-flex otherwise beats the UA [hidden] rule */
+.btn--lg{min-height:60px;font-size:.75rem;padding:0 1.7rem}
+.top .btn{background:var(--paper);color:var(--ink)}
+.top .btn:hover{background:var(--pink);color:var(--on-pink)}
+.top .btn--pink{background:var(--pink);color:var(--on-pink)}
+.top .btn--pink:hover{background:var(--paper);color:var(--ink)}
 :focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 
 /* --------------------------------------------------------------- hero */
-.hero{position:relative;border-bottom:var(--bw) solid var(--rule);overflow:hidden}
-#ink{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.hero__in{position:relative;z-index:2;padding-block:clamp(2.5rem,7vw,5rem) clamp(2rem,5vw,3.5rem)}
+.hero{background:var(--paper)}
+.hero__in{padding-block:clamp(2.5rem,7vw,5.5rem) clamp(2rem,5vw,3.5rem)}
 .hero__kicker{
   display:inline-flex;align-items:center;gap:.5rem;
   background:var(--ink);color:var(--paper);
-  padding:.4rem .7rem;margin-bottom:1.25rem;
+  padding:.45rem .75rem;margin-bottom:1.5rem;
 }
 .hero h1{
-  font-size:clamp(2.9rem,11vw,8.5rem);
-  line-height:.86;
-  letter-spacing:-.05em;
+  font-size:clamp(3.1rem,13.5vw,12rem);
+  line-height:.82;
+  letter-spacing:-.055em;
   font-weight:800;
-  text-wrap:balance;
-  margin-bottom:1.25rem;
+  /* .82 leading means the descender of "you" paints well outside the line box,
+     so the gap has to scale with the type, not with the viewport — a rem margin
+     that cleared it at 50px let it land on the subhead at 190px */
+  margin-bottom:.3em;
 }
 .hero h1 .q{color:var(--pink)}
 .hero__sub{
-  font-size:clamp(1.0625rem,2.2vw,1.375rem);
-  line-height:1.35;max-width:34ch;font-weight:500;
-  letter-spacing:-.015em;
-  margin-bottom:1.75rem;
+  font-size:clamp(1.0625rem,2vw,1.5rem);
+  line-height:1.3;max-width:38ch;font-weight:500;
+  letter-spacing:-.02em;
+  margin-bottom:1.9rem;
 }
-.hero__cta{display:flex;flex-wrap:wrap;gap:.6rem}
+/* stacked below 520px instead of left to wrap: the labels are mono and their
+   width varies with whichever mono the device has, so a wrapped row is two
+   ragged widths on one device and one line on the next. Stacked they are two
+   full-bleed blocks that butt vertically — pink then ink, still a seam. */
+.hero__cta{display:grid;grid-template-columns:1fr}
+@media (min-width:520px){
+  .hero__cta{display:flex;flex-wrap:wrap}
+  .hero__cta .btn{flex:0 1 auto;min-width:0}
+}
+
+/* six flat inks — and the boundary between the hero and the stats */
+.inkbar{display:grid;grid-template-columns:repeat(6,1fr);height:clamp(18px,3vw,34px)}
+.inkbar i{display:block}
 
 /* --------------------------------------------------------------- stats */
-.stats{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  border-bottom:var(--bw) solid var(--rule);
-}
-@media (min-width:820px){ .stats{grid-template-columns:repeat(4,1fr)} }
+.stats{display:grid;grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){ .stats{grid-template-columns:repeat(4,1fr)} }
 .stat{
-  padding:1.1rem var(--gutter) 1.25rem;
-  border-right:var(--bw) solid var(--rule);
-  border-top:var(--bw) solid var(--rule);
-  display:flex;flex-direction:column;gap:.25rem;
-}
-.stat:nth-child(2n){border-right:0}
-@media (min-width:820px){
-  .stat{border-top:0}
-  .stat:nth-child(2n){border-right:var(--bw) solid var(--rule)}
-  .stat:last-child{border-right:0}
+  padding:1.4rem var(--gutter) 1.5rem;
+  background:color-mix(in srgb, var(--fc) 12%, var(--paper));
+  display:flex;flex-direction:column;gap:.3rem;
 }
 .stat b{
-  font-size:clamp(2.1rem,5.5vw,3.4rem);font-weight:800;
+  font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;
   letter-spacing:-.055em;line-height:.9;
   font-variant-numeric:tabular-nums;
 }
-.stat span{font-size:.8125rem;line-height:1.35;color:var(--ink-2);max-width:26ch}
+.stat span{font-size:.8125rem;line-height:1.4;color:var(--ink-2);max-width:30ch}
 
 /* --------------------------------------------------------------- section */
-.sec{border-bottom:var(--bw) solid var(--rule);padding-block:clamp(2.5rem,6vw,4.5rem)}
-.sec__head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:1rem;margin-bottom:2rem}
+.sec{padding-block:clamp(2.5rem,6vw,5rem);background:var(--paper)}
+.sec--alt{background:var(--paper-2)}
+.sec__head{display:flex;flex-wrap:wrap;align-items:flex-start;gap:1rem 1.5rem;margin-bottom:2.25rem}
 .sec__n{
-  font-size:clamp(2.6rem,7vw,4.5rem);font-weight:800;letter-spacing:-.06em;
-  line-height:.8;color:var(--pink);
+  font-size:clamp(2.6rem,7vw,5rem);font-weight:800;letter-spacing:-.06em;
+  line-height:.78;color:var(--pink);flex:none;
 }
-.sec__t{flex:1 1 16ch}
+.sec__t{flex:1 1 22ch;min-width:0}
 .sec__t h2{
-  font-size:clamp(1.6rem,4.2vw,2.6rem);font-weight:800;
-  letter-spacing:-.04em;line-height:.98;text-wrap:balance;
+  font-size:clamp(1.75rem,4.4vw,3.1rem);font-weight:800;
+  letter-spacing:-.045em;line-height:.94;text-wrap:balance;
 }
-.sec__t p{font-size:.9375rem;color:var(--ink-2);margin-top:.5rem;max-width:52ch}
+.sec__t p{font-size:.9375rem;color:var(--ink-2);margin-top:.65rem;max-width:62ch}
 
 /* --------------------------------------------------------------- thesis */
 .thesis p{
-  font-size:clamp(1.25rem,3.2vw,2rem);
-  font-weight:600;letter-spacing:-.03em;line-height:1.15;
-  text-wrap:balance;max-width:22ch;
+  font-size:clamp(1.375rem,3.6vw,2.6rem);
+  font-weight:700;letter-spacing:-.035em;line-height:1.08;
+  text-wrap:balance;max-width:24ch;
 }
-.thesis p + p{margin-top:1rem}
+.thesis p + p{margin-top:1.1rem}
 .thesis .hl{
   background:var(--yellow);color:var(--on-yellow);
   padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
@@ -243,296 +252,306 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .thesis .hl--pink{background:var(--pink);color:var(--on-pink)}
 
 /* --------------------------------------------------------------- disclose */
-.disc{border:var(--bw) solid var(--rule);background:var(--paper);margin-top:1.75rem}
+/* paper → ink bar → paper-2 pad → paper. Three seams, no rules. */
+.disc{margin-top:2rem}
 .disc__btn{
-  width:100%;background:transparent;border:0;cursor:pointer;
+  width:100%;background:var(--ink);color:var(--paper);border:0;cursor:pointer;
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.9rem 1rem;min-height:52px;text-align:left;
+  padding:.9rem 1.1rem;min-height:56px;text-align:left;
   font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;
 }
-.disc__btn:hover{background:var(--paper-2)}
+.disc__btn:hover{background:var(--pink);color:var(--on-pink)}
 .disc__btn .pm{
   width:22px;height:22px;flex:none;position:relative;
-  border:var(--bw) solid var(--rule);background:var(--pink);
+  background:var(--pink);
 }
+.disc__btn:hover .pm{background:var(--paper)}
 .disc__btn .pm::before,.disc__btn .pm::after{
   content:"";position:absolute;background:var(--on-pink);
   left:50%;top:50%;transform:translate(-50%,-50%);
 }
+.disc__btn:hover .pm::before,.disc__btn:hover .pm::after{background:var(--ink)}
 .disc__btn .pm::before{width:10px;height:2px}
 .disc__btn .pm::after{width:2px;height:10px;transition:transform .22s ease}
 .disc__btn[aria-expanded="true"] .pm::after{transform:translate(-50%,-50%) scaleY(0)}
 .disc__wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .34s cubic-bezier(.22,1,.36,1)}
 .disc__btn[aria-expanded="true"] + .disc__wrap{grid-template-rows:1fr}
 .disc__inner{overflow:hidden}
-.disc__pad{padding:0 1rem 1.15rem;border-top:var(--bw) solid var(--rule)}
-.disc__pad > * + *{margin-top:.85rem}
-.disc__pad p{font-size:.9375rem;line-height:1.55;color:var(--ink-2);max-width:60ch}
+.disc__pad{padding:1.2rem 1.1rem 1.35rem;background:var(--paper-2)}
+.disc__pad > * + *{margin-top:.9rem}
+.disc__pad p{font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:70ch}
 .disc__pad strong{color:var(--ink)}
 
-/* --------------------------------------------------------------- map */
-.map{display:grid;gap:0;border:var(--bw) solid var(--rule)}
-@media (min-width:700px){ .map{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:1060px){ .map{grid-template-columns:repeat(3,1fr)} }
+/* --------------------------------------------------------------- the six positions
+
+   Each card is a subgrid spanning 8 tracks of .map — head, six facts, verse.
+   That is what makes "the tell" in card 01 sit on exactly the same baseline as
+   "the tell" in cards 02 and 03; re-nesting these rows inside a wrapper breaks
+   the subgrid chain and the alignment with it.
+   ------------------------------------------------------------------------ */
+.map{display:grid;grid-template-columns:1fr;align-content:start}
+@media (min-width:720px){ .map{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1120px){ .map{grid-template-columns:repeat(3,1fr)} }
 
 .pos{
   --c:var(--yellow); --on:var(--on-yellow);
-  border-right:var(--bw) solid var(--rule);
-  border-bottom:var(--bw) solid var(--rule);
-  display:flex;flex-direction:column;
-  background:var(--paper);
-  position:relative;
+  display:grid;grid-row:span 8;grid-template-rows:subgrid;
+  min-width:0;
 }
-@media (min-width:700px){ .pos:nth-child(2n){border-right:0} }
-@media (min-width:1060px){
-  .pos:nth-child(2n){border-right:var(--bw) solid var(--rule)}
-  .pos:nth-child(3n){border-right:0}
+@supports not (grid-template-rows:subgrid){
+  .pos{grid-row:auto;display:flex;flex-direction:column}
 }
-.pos__btn{
-  width:100%;background:var(--c);color:var(--on);
-  border:0;cursor:pointer;text-align:left;
-  padding:1.1rem 1.1rem 1.2rem;
-  display:flex;flex-direction:column;gap:.55rem;
-  transition:filter .15s ease;
-}
-.pos__btn:hover{filter:saturate(1.25) brightness(1.06)}
-.pos__top{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-.pos__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;font-weight:500;opacity:.75}
-.pos__ico{width:44px;height:44px;flex:none}
-.pos__ico svg{width:100%;height:100%;display:block}
-.pos h3{font-size:clamp(1.5rem,3.6vw,2rem);font-weight:800;letter-spacing:-.04em;line-height:.95}
-.pos__one{font-size:.875rem;line-height:1.4;font-weight:500;opacity:.85;max-width:34ch}
-.pos__more{
-  display:flex;align-items:center;gap:.4rem;margin-top:.15rem;
-  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
-}
-.pos__more .chev{transition:transform .25s ease;display:block}
-.pos__btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
-.pos__wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.22,1,.36,1)}
-.pos__btn[aria-expanded="true"] + .pos__wrap{grid-template-rows:1fr}
-.pos__inner{overflow:hidden}
-.pos__body{padding:1rem 1.1rem 1.25rem;border-top:var(--bw) solid var(--rule)}
 
-.fact{margin-bottom:.9rem}
-.fact:last-child{margin-bottom:0}
+.pos__head{
+  background:var(--c);color:var(--on);
+  padding:1.25rem 1.25rem 1.35rem;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.pos__top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.pos__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;font-weight:500;opacity:.72;padding-top:.5rem}
+.pos__ico{width:40px;height:40px;flex:none}
+.pos__ico svg{width:100%;height:100%;display:block}
+.pos__head h3{font-size:clamp(1.6rem,3vw,2.15rem);font-weight:800;letter-spacing:-.045em;line-height:.94}
+.pos__one{font-size:.875rem;line-height:1.45;font-weight:500;opacity:.9;margin-top:auto}
+
+.fact{
+  --fc:var(--c); --on-fc:var(--on);
+  padding:1rem 1.25rem 1.1rem;
+  display:flex;flex-direction:column;gap:.4rem;
+  min-width:0;
+}
+/* the value ramp: children 2,4,6 are facts 1,3,5 — 3,5,7 are facts 2,4,6 */
+.pos > .fact{background:color-mix(in srgb, var(--c) 7%, var(--paper))}
+.pos > .fact:nth-child(odd){background:color-mix(in srgb, var(--c) 16%, var(--paper))}
 .fact h4{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
-  display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem;color:var(--ink-3);
+  display:flex;align-items:center;gap:.5rem;color:var(--ink);
 }
-.fact h4::before{content:"";width:9px;height:9px;background:var(--c);flex:none;border:1px solid var(--rule)}
+.fact__i{
+  width:22px;height:22px;flex:none;
+  background:var(--fc);color:var(--on-fc);
+  display:grid;place-items:center;
+}
+.fact__i svg{width:13px;height:13px;display:block}
 .fact p{font-size:.875rem;line-height:1.5;color:var(--ink-2)}
-.fact--warn h4{color:var(--pink)}
-.fact--warn h4::before{background:var(--pink)}
-.fact--do h4::before{background:var(--green)}
+/* the do / don't signal lives in the chip only — putting it in the panel made
+   two neighbouring cards' warn rows the same pink, and the seam disappeared */
+.fact--warn{--fc:var(--pink);--on-fc:var(--on-pink)}
+.fact--do{--fc:var(--green);--on-fc:var(--on-green)}
 
 .verse{
   font-family:var(--serif);font-style:italic;
   font-size:.9375rem;line-height:1.45;
-  border-left:3px solid var(--c);
-  padding:.15rem 0 .15rem .75rem;
-  margin-top:.9rem;color:var(--ink);
+  background:color-mix(in srgb, var(--c) 26%, var(--paper));
+  padding:1.15rem 1.25rem 1.25rem;
+  color:var(--ink);
 }
 .verse cite{
   display:block;font-family:var(--mono);font-style:normal;
   font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-3);margin-top:.35rem;
+  color:var(--ink-3);margin-top:.45rem;
 }
 
 /* --------------------------------------------------------------- wall */
-.wall{background:var(--ink);color:var(--paper);position:relative;overflow:hidden;border-bottom:var(--bw) solid var(--rule)}
-#rift{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.wall__in{position:relative;z-index:2;padding-block:clamp(3rem,8vw,6rem)}
+.wall{background:var(--ink);color:var(--paper)}
+.wall__in{padding-block:clamp(3rem,7vw,6rem) 0}
+.wall__top{display:grid;gap:1.5rem 3rem;align-items:end;margin-bottom:2.5rem}
+@media (min-width:940px){ .wall__top{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
 .wall__tag{
   display:inline-block;background:var(--pink);color:var(--on-pink);
-  padding:.35rem .6rem;margin-bottom:1rem;
+  padding:.4rem .65rem;margin-bottom:1rem;
 }
 .wall h2{
-  font-size:clamp(3rem,13vw,10rem);font-weight:800;
-  letter-spacing:-.06em;line-height:.82;margin-bottom:1.1rem;
+  font-size:clamp(3.2rem,12vw,10rem);font-weight:800;
+  letter-spacing:-.06em;line-height:.8;
 }
 .wall__lede{
-  font-size:clamp(1.0625rem,2.4vw,1.5rem);font-weight:500;
-  letter-spacing:-.02em;line-height:1.3;max-width:36ch;
-  color:inherit;opacity:.82;
+  font-size:clamp(1.0625rem,1.7vw,1.375rem);font-weight:500;
+  letter-spacing:-.02em;line-height:1.35;max-width:46ch;
+  opacity:.85;
 }
 
-.exits{display:grid;gap:0;margin-top:2rem;border:var(--bw) solid var(--paper)}
-@media (min-width:760px){ .exits{grid-template-columns:1fr 1fr} }
-.exit{padding:1.1rem 1.15rem;border-bottom:var(--bw) solid var(--paper)}
-@media (min-width:760px){
-  .exit{border-bottom:0}
-  .exit:first-child{border-right:var(--bw) solid var(--paper)}
+/* six cells, alternating 9% / 18% of their accent into the ink. Checks out at
+   1, 2 and 3 columns: no two orthogonal neighbours land on the same value. */
+.wgrid{display:grid;grid-template-columns:1fr}
+@media (min-width:720px){ .wgrid{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1120px){ .wgrid{grid-template-columns:repeat(3,1fr)} }
+.wcell{
+  --wc:var(--paper);
+  background:color-mix(in srgb, var(--wc) 9%, var(--ink));
+  color:var(--paper);
+  padding:1.3rem 1.35rem 1.45rem;
+  display:flex;flex-direction:column;gap:.6rem;
+  min-width:0;
 }
-.exit h4{
+.wgrid > .wcell:nth-child(even){background:color-mix(in srgb, var(--wc) 20%, var(--ink))}
+.wcell h4{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--pink);margin-bottom:.4rem;
+  display:flex;align-items:center;gap:.5rem;color:var(--paper);
 }
-.exit p{font-size:.875rem;line-height:1.5;opacity:.82}
-
-.wall .disc{border-color:var(--paper);background:transparent;margin-top:1.5rem}
-.wall .disc__btn:hover{background:rgba(128,128,128,.18)}
-.wall .disc__pad{border-color:var(--paper)}
-.wall .disc__pad p{color:inherit;opacity:.85}
-.wall .disc__pad strong{color:var(--pink)}
-.wall .disc__btn .pm{border-color:var(--paper)}
+.wcell h4 i{width:22px;height:22px;flex:none;display:grid;place-items:center;background:var(--wc);color:var(--ink)}
+.wcell h4 i svg{width:13px;height:13px;display:block}
+.wcell p{font-size:.875rem;line-height:1.55;opacity:.86}
+.wcell--warn{--wc:var(--pink)}
+.wcell--do{--wc:var(--green)}
+.wcell--verse p{font-family:var(--serif);font-style:italic;font-size:.9375rem;opacity:.95}
 
 .siren{
-  display:flex;gap:.85rem;align-items:flex-start;
-  border:var(--bw) solid var(--pink);
-  background:var(--pink);color:var(--on-pink);
-  padding:1rem 1.1rem;margin-top:1.5rem;
+  display:flex;gap:1rem;align-items:flex-start;
+  background:color-mix(in srgb, var(--pink) 32%, var(--ink));
+  color:var(--paper);
+  padding:1.3rem 1.35rem 1.45rem;
 }
-.siren svg{flex:none;margin-top:.15rem}
-.siren p{font-size:.875rem;line-height:1.5;font-weight:500}
-.siren b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.siren svg{flex:none;margin-top:.1rem;color:var(--pink)}
+.siren p{font-size:.9375rem;line-height:1.55;max-width:88ch}
+.siren b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.35rem;color:var(--pink)}
 
 /* --------------------------------------------------------------- quiz */
-.inst{border:var(--bw) solid var(--rule)}
 .inst__bar{
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.6rem 1rem;border-bottom:var(--bw) solid var(--rule);
-  background:var(--paper-2);
+  padding:.75rem 1.1rem;
+  background:var(--ink);color:var(--paper);
 }
-.pips{display:flex;gap:4px}
-.pips i{width:18px;height:6px;background:transparent;border:1px solid var(--rule);display:block;transition:background .2s ease}
+.pips{display:flex}
+.pips i{width:22px;height:8px;background:color-mix(in srgb, var(--paper) 26%, var(--ink));display:block;margin-right:3px;transition:background .2s ease}
 .pips i[data-on="1"]{background:var(--pink)}
-.inst__body{padding:clamp(1.2rem,3.5vw,2.25rem)}
-.q__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--pink);display:block;margin-bottom:.6rem}
+.inst__body{padding:clamp(1.5rem,3.5vw,2.5rem) 0 0}
+.q__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--pink);display:block;margin-bottom:.7rem}
 .q__t{
-  font-size:clamp(1.375rem,3.6vw,2.125rem);font-weight:800;
-  letter-spacing:-.035em;line-height:1.02;margin-bottom:1.4rem;max-width:24ch;
+  font-size:clamp(1.5rem,3.4vw,2.5rem);font-weight:800;
+  letter-spacing:-.04em;line-height:1;margin-bottom:1.75rem;max-width:26ch;
 }
-.opts{display:flex;flex-direction:column;gap:.5rem}
+.opts{display:grid;grid-template-columns:1fr}
+@media (min-width:900px){ .opts{grid-template-columns:repeat(2,1fr)} }
 .opt{
-  display:flex;gap:.75rem;align-items:flex-start;
-  background:var(--paper);border:var(--bw) solid var(--rule);
-  text-align:left;width:100%;padding:.85rem 1rem;min-height:52px;
+  display:flex;gap:.85rem;align-items:flex-start;
+  background:var(--paper-2);border:0;
+  text-align:left;width:100%;padding:1.15rem 1.2rem;min-height:60px;
   font-size:.9375rem;line-height:1.4;font-weight:500;cursor:pointer;
   transition:background .14s ease, color .14s ease;
 }
-.opt:hover{background:var(--pink);color:var(--on-pink)}
-.opt:active{background:var(--pink);color:var(--on-pink);opacity:.85}
+/* stacked: plain parity. Two up: 1 and 4 deep, so the checkerboard holds on
+   both axes. One rule cannot serve both column counts — the four options are
+   vertical neighbours at 1fr and diagonal ones at 2fr. */
+.opts > .opt:nth-child(even){background:var(--paper-3)}
+@media (min-width:900px){
+  .opts > .opt:nth-child(even){background:var(--paper-2)}
+  .opts > .opt:nth-child(4n+1),.opts > .opt:nth-child(4n){background:var(--paper-3)}
+}
+.opt:hover,.opt:active{background:var(--pink);color:var(--on-pink)}
 .opt b{font-family:var(--mono);font-size:.6875rem;font-weight:500;padding-top:.2rem;flex:none;opacity:.6}
 
 .res{display:none}
 .res[data-on="1"]{display:block}
-.res__hero{padding:1.25rem 1.1rem;background:var(--c,var(--pink));color:var(--on,var(--on-pink));border:var(--bw) solid var(--rule);margin-bottom:1.25rem}
+.res__hero{padding:1.5rem 1.35rem;background:var(--c,var(--pink));color:var(--on,var(--on-pink))}
 .res__hero .tag{opacity:.75}
-.res__hero h3{font-size:clamp(2rem,6vw,3.25rem);font-weight:800;letter-spacing:-.05em;line-height:.9;margin-top:.35rem}
-.res__grid{display:grid;gap:1.25rem}
-@media (min-width:800px){ .res__grid{grid-template-columns:1fr 260px} }
-.res__say{font-size:1rem;line-height:1.55;color:var(--ink-2)}
-.res__second{margin-top:1rem;border:var(--bw) solid var(--pink);padding:.85rem 1rem}
-.res__second b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:.3rem}
+.res__hero h3{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:800;letter-spacing:-.05em;line-height:.9;margin-top:.4rem}
+.res__grid{display:grid;gap:1.75rem;margin-top:1.75rem}
+@media (min-width:900px){ .res__grid{grid-template-columns:minmax(0,1fr) 320px} }
+.res__say{font-size:1.0625rem;line-height:1.55;color:var(--ink-2)}
+.res__second{margin-top:1.25rem;background:color-mix(in srgb, var(--pink) 14%, var(--paper));padding:1.1rem 1.2rem}
+.res__second b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:.35rem}
 .res__second span{font-size:.875rem;line-height:1.5;color:var(--ink-2)}
-.plot{border:var(--bw) solid var(--rule);padding:.7rem}
-.plot__r{display:flex;align-items:center;gap:.5rem;padding:.25rem 0;font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;color:var(--ink-3)}
-.plot__r span:first-child{width:64px;flex:none}
-.plot__b{flex:1;height:10px;border:1px solid var(--rule);position:relative;overflow:hidden}
+.plot{background:var(--paper-2);padding:1rem}
+.plot__r{display:flex;align-items:center;gap:.6rem;padding:.3rem 0;font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;color:var(--ink-3)}
+.plot__r span:first-child{width:74px;flex:none}
+.plot__b{flex:1;height:14px;background:var(--paper);position:relative;overflow:hidden}
 .plot__b i{position:absolute;inset:0 auto 0 0;width:0;background:var(--pc);transition:width .8s cubic-bezier(.22,1,.36,1)}
 .plot__r[data-top="1"]{color:var(--ink);font-weight:700}
-.res__moves{display:grid;gap:0;border:var(--bw) solid var(--rule);margin-top:1.25rem}
-@media (min-width:760px){ .res__moves{grid-template-columns:1fr 1fr} }
-.res__moves .fact{padding:1rem 1.1rem;margin:0;border-bottom:var(--bw) solid var(--rule)}
-@media (min-width:760px){
-  .res__moves .fact{border-bottom:0}
-  .res__moves .fact:first-child{border-right:var(--bw) solid var(--rule)}
-}
+.res__moves{display:grid;margin-top:1.75rem}
+@media (min-width:820px){ .res__moves{grid-template-columns:1fr 1fr} }
+.res__moves .fact{padding:1.25rem 1.3rem 1.35rem}
+.res__moves .fact--do{background:color-mix(in srgb, var(--green) 13%, var(--paper))}
+.res__moves .fact--warn{background:color-mix(in srgb, var(--pink) 13%, var(--paper))}
 
-/* --------------------------------------------------------------- concordance */
-.fw{display:flex;flex-direction:column;border:var(--bw) solid var(--rule)}
-.fwr{border-bottom:var(--bw) solid var(--rule)}
-.fwr:last-child{border-bottom:0}
-.fwr__btn{
-  width:100%;background:var(--paper);border:0;cursor:pointer;text-align:left;
-  display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;min-height:56px;
-  transition:background .14s ease;
+/* --------------------------------------------------------------- frameworks */
+.frames{display:grid;grid-template-columns:1fr}
+@media (min-width:760px){ .frames{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1200px){ .frames{grid-template-columns:repeat(3,1fr)} }
+.frame{
+  background:color-mix(in srgb, var(--fc) 9%, var(--paper));
+  display:grid;grid-row:span 4;grid-template-rows:subgrid;
+  min-width:0;
 }
-.fwr__btn:hover{background:var(--paper-2)}
-.fwr__yr{font-family:var(--mono);font-size:.625rem;letter-spacing:.06em;color:var(--ink-3);width:66px;flex:none}
-.fwr__nm{font-weight:700;letter-spacing:-.02em;font-size:.9375rem;flex:1 1 auto;min-width:0}
-.fwr__dots{display:flex;gap:3px;flex:none}
-.fwr__dots i{width:11px;height:11px;border:1px solid var(--rule);display:block}
-.fwr__dots i[data-has="0"]{background:transparent;position:relative}
-.fwr__dots i[data-has="0"]::after{
-  content:"";position:absolute;inset:-1px;
-  background:linear-gradient(45deg,transparent 44%,var(--pink) 44%,var(--pink) 56%,transparent 56%);
+@supports not (grid-template-rows:subgrid){
+  .frame{grid-row:auto;display:flex;flex-direction:column}
 }
-.fwr__wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.22,1,.36,1)}
-.fwr__btn[aria-expanded="true"] + .fwr__wrap{grid-template-rows:1fr}
-.fwr__inner{overflow:hidden}
-.fwr__pad{padding:.9rem 1rem 1.4rem;border-top:1px solid var(--rule)}
-.fwr__note{font-size:.875rem;color:var(--ink-2);line-height:1.55;margin:0 0 1.1rem;max-width:64ch}
-/* Every row in 04 is open on load, so this grid is read as prose rather than
-   scanned as a table. Six 1fr columns left ~170px per cell — too narrow for a
-   sentence. Whitespace and one coloured rule per cell now do what a lattice of
-   1px borders was doing, and the cells are wide enough to read. */
-.cells{display:grid;gap:1rem 1.35rem}
-@media (min-width:640px){ .cells{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:1060px){ .cells{grid-template-columns:repeat(3,1fr)} }
-.cell{padding:.6rem 0 0;border-top:3px solid var(--c,var(--ink-3));min-width:0}
-.cell__h{font-family:var(--mono);font-size:.5625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--on);background:var(--c);padding:.15rem .34rem;display:inline-block;margin-bottom:.4rem}
-.cell p{font-size:.8125rem;line-height:1.5;color:var(--ink-2)}
-/* absence, marked rather than shouted — a solid pink fill on every gap made the
-   missing categories the loudest thing in the section */
-.cell--void{border-top-color:var(--pink)}
-.cell--void .cell__h{background:transparent;color:var(--pink);border:1px solid var(--pink)}
-.cell--void p{color:var(--pink);font-weight:600}
-
-.finding{
-  border:var(--bw) solid var(--rule);background:var(--yellow);color:var(--on-yellow);
-  padding:1.15rem 1.2rem;margin-top:1.5rem;
+.frame__k{
+  background:var(--fc);color:var(--on-fc);
+  padding:.7rem 1.3rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
 }
-.finding h4{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem}
-.finding p{font-size:.9375rem;line-height:1.5;max-width:62ch;font-weight:500}
+.frame__k b{font-weight:700;letter-spacing:.1em}
+.frame h3{
+  padding:1.2rem 1.3rem .5rem;
+  font-size:clamp(1.25rem,2vw,1.5rem);font-weight:800;
+  letter-spacing:-.035em;line-height:1.05;text-wrap:balance;
+}
+/* the tag takes ink, not --fc: yellow and aqua at 10px on paper are unreadable.
+   The colour link is carried by a solid swatch, where a low-luminance ink is
+   still perfectly legible as a block. */
+.frame__tag{
+  padding:0 1.3rem .95rem;
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);font-weight:500;
+  display:flex;align-items:center;gap:.45rem;
+}
+.frame__tag::before{content:"";width:10px;height:10px;flex:none;background:var(--fc)}
+.frame__note{padding:0 1.3rem 1.4rem;font-size:.875rem;line-height:1.55;color:var(--ink-2)}
 
 /* --------------------------------------------------------------- sources */
-.filters{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+/* each chip takes a tint of the kind it filters to, so a wrapping row of them
+   still has a colour change at every seam — parity would not survive the wrap */
+.filters{display:flex;flex-wrap:wrap;margin-bottom:1.75rem}
 .fchip{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
-  border:var(--bw) solid var(--rule);background:var(--paper);color:var(--ink);
-  padding:0 .75rem;min-height:44px;cursor:pointer;
-  display:inline-flex;align-items:center;gap:.4rem;
+  border:0;background:color-mix(in srgb, var(--kc,var(--ink)) 17%, var(--paper));color:var(--ink);
+  padding:0 1rem;min-height:44px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.45rem;
   transition:background .14s ease,color .14s ease;
 }
-.fchip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.fchip i{width:9px;height:9px;background:var(--fc,var(--pink));border:1px solid var(--rule);display:block}
+.fchip:hover{background:color-mix(in srgb, var(--kc,var(--ink)) 34%, var(--paper))}
+.fchip[aria-pressed="true"],.fchip[aria-pressed="true"]:hover{background:var(--ink);color:var(--paper)}
+.fchip i{width:11px;height:11px;background:var(--kc,var(--ink));display:block}
 
-.srcs{display:grid;gap:0;border:var(--bw) solid var(--rule)}
-@media (min-width:720px){ .srcs{grid-template-columns:1fr 1fr} }
-@media (min-width:1080px){ .srcs{grid-template-columns:repeat(3,1fr)} }
+.srcs{display:grid;grid-template-columns:1fr}
+@media (min-width:760px){ .srcs{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1200px){ .srcs{grid-template-columns:repeat(3,1fr)} }
 .src{
-  border-right:var(--bw) solid var(--rule);border-bottom:var(--bw) solid var(--rule);
-  padding:1rem 1.05rem 1.15rem;display:flex;flex-direction:column;gap:.4rem;
-  background:var(--paper);
+  padding:1.2rem 1.3rem 1.35rem;display:flex;flex-direction:column;gap:.45rem;
+  background:color-mix(in srgb, var(--fc) 9%, var(--paper));
+  min-width:0;
 }
 .src[hidden]{display:none}
 .src__k{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.1rem}
 .pill{
   font-family:var(--mono);font-size:.5625rem;letter-spacing:.12em;text-transform:uppercase;
-  padding:.15rem .4rem;border:1px solid var(--rule);background:var(--k);color:var(--on-k);font-weight:500;
+  padding:.2rem .45rem;background:var(--k);color:var(--on-k);font-weight:500;
 }
-.src h4{font-size:1.0625rem;font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.src h4{font-size:1.125rem;font-weight:800;letter-spacing:-.03em;line-height:1.12}
 .src__by{font-family:var(--mono);font-size:.625rem;color:var(--ink-3);letter-spacing:.04em}
-.src p{font-size:.8125rem;line-height:1.5;color:var(--ink-2)}
+.src p{font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
 .src p b{color:var(--ink)}
 .src__link{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
-  margin-top:auto;color:var(--pink);font-weight:500;
+  margin-top:auto;color:var(--ink);font-weight:700;
   display:inline-flex;align-items:flex-end;align-self:flex-start;
   min-height:44px;padding-top:.75rem;
-  text-decoration:underline;text-decoration-thickness:2px;
+  text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--pink);
 }
 
-.caveats{display:grid;gap:0;border:var(--bw) solid var(--rule);margin-top:2rem}
-@media (min-width:760px){ .caveats{grid-template-columns:repeat(2,1fr)} }
-.cav{padding:1rem 1.1rem;border-right:var(--bw) solid var(--rule);border-bottom:var(--bw) solid var(--rule)}
-.cav h4{font-size:1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.35rem}
-.cav p{font-size:.8125rem;line-height:1.5;color:var(--ink-2)}
-.cav__n{font-family:var(--mono);font-size:.625rem;color:var(--pink);letter-spacing:.14em;display:block;margin-bottom:.3rem}
+.caveats{display:grid;grid-template-columns:1fr;margin-top:2.5rem}
+@media (min-width:720px){ .caveats{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1200px){ .caveats{grid-template-columns:repeat(4,1fr)} }
+.cav{padding:1.2rem 1.3rem 1.35rem;background:color-mix(in srgb, var(--fc) 12%, var(--paper));min-width:0}
+.cav h4{font-size:1.0625rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem}
+.cav p{font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
+.cav__n{font-family:var(--mono);font-size:.625rem;color:var(--ink-2);letter-spacing:.14em;display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem}
+.cav__n::before{content:"";width:9px;height:9px;flex:none;background:var(--fc)}
 
-footer{padding-block:2rem 3rem}
-footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--ink-3);letter-spacing:.03em}
+footer{padding-block:2.5rem 3.5rem;background:var(--ink);color:var(--paper)}
+footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spacing:.03em;opacity:.7}
 
 /* --------------------------------------------------------------- motion */
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
@@ -546,13 +565,13 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
 .ico-dash{stroke-dasharray:5 3;animation:dash 1.6s linear infinite}
 .ico-grow{transform-origin:center bottom;animation:grow 2.8s ease-in-out infinite}
 
-.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
 .rv[data-in="1"]{opacity:1;transform:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition-duration:.001ms !important}
   .rv{opacity:1;transform:none}
-  .disc__wrap,.pos__wrap,.fwr__wrap{transition:none}
+  .disc__wrap{transition:none}
 }
 </style>
 
@@ -580,7 +599,6 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
 </header>
 
 <section class="hero">
-  <canvas id="ink" aria-hidden="true"></canvas>
   <div class="shell hero__in">
     <span class="hero__kicker tag">Field map · 11 frameworks · 1,900 years</span>
     <h1>Where are<br>you<span class="q">?</span></h1>
@@ -593,13 +611,21 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
       <button class="btn btn--lg" data-go="map">See the map</button>
     </div>
   </div>
+  <div class="inkbar" aria-hidden="true">
+    <i style="background:var(--yellow)"></i>
+    <i style="background:var(--green)"></i>
+    <i style="background:var(--orange)"></i>
+    <i style="background:var(--void)"></i>
+    <i style="background:var(--aqua)"></i>
+    <i style="background:var(--violet)"></i>
+  </div>
 </section>
 
 <div class="stats" id="stats">
-  <div class="stat"><b data-count="1900" data-suffix="">0</b><span>Years of maps, from the apostle John to last year's assessments</span></div>
-  <div class="stat"><b data-count="11" data-suffix="">0</b><span>Frameworks cross-referenced here, side by side</span></div>
-  <div class="stat"><b data-count="4" data-suffix="">0</b><span>Of them have <em>no category at all</em> for Position 04 — the hardest one</span></div>
-  <div class="stat"><b data-count="57" data-suffix="%">0</b><span>Of Gen Z &amp; Millennial churchgoers pick relationships over sermons <span class="mono" style="font-size:.625rem">(Barna)</span></span></div>
+  <div class="stat" style="--fc:var(--yellow)"><b data-count="1900" data-suffix="">0</b><span>Years of maps, from the apostle John to last year's assessments</span></div>
+  <div class="stat" style="--fc:var(--green)"><b data-count="11" data-suffix="">0</b><span>Frameworks summarised here, oldest to newest</span></div>
+  <div class="stat" style="--fc:var(--orange)"><b data-count="5" data-suffix="">0</b><span>Of them treat Position 04 — the wall — as <em>the</em> turning point of a life</span></div>
+  <div class="stat" style="--fc:var(--aqua)"><b data-count="57" data-suffix="%">0</b><span>Of Gen Z &amp; Millennial churchgoers pick relationships over sermons <span class="mono" style="font-size:.625rem">(Barna)</span></span></div>
 </div>
 
 <section class="sec">
@@ -624,13 +650,13 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
   </div>
 </section>
 
-<section class="sec" id="map">
+<section class="sec sec--alt" id="map">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n">02</span>
       <div class="sec__t">
         <h2>The six positions.</h2>
-        <p>Tap any card to open it. Each one has the tell, the trap, the way out, and what to do if you're walking with someone there.</p>
+        <p>Read across, not down. Every card carries the same six rows in the same order — the tell, what it feels like, where it goes wrong, the doorway out, and what to do and not do if you're walking with someone there.</p>
       </div>
     </div>
     <div class="map" id="mapGrid"></div>
@@ -638,43 +664,52 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
 </section>
 
 <section class="wall" id="wall">
-  <canvas id="rift" aria-hidden="true"></canvas>
   <div class="shell wall__in">
-    <span class="wall__tag tag">Position 04 · where the colour drains out</span>
-    <h2>The Wall</h2>
-    <p class="wall__lede">
-      The machinery stops. You can't tell from the inside whether you're losing your
-      faith or finally finding it. Five of the eleven frameworks here think this is the
-      most important thing that will ever happen to you.
-    </p>
+    <div class="wall__top">
+      <div>
+        <span class="wall__tag tag">Position 04</span>
+        <h2>The Wall</h2>
+      </div>
+      <p class="wall__lede">
+        The machinery stops. You can't tell from the inside whether you're losing your
+        faith or finally finding it. Five of the eleven frameworks here think this is the
+        most important thing that will ever happen to you.
+      </p>
+    </div>
 
-    <div class="exits">
-      <div class="exit">
-        <h4>Wrong exit 01 — bypass</h4>
+    <div class="wgrid">
+      <div class="wcell wcell--warn">
+        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></i>Wrong exit 01 — bypass</h4>
         <p>Sprint back to Position 03. More service, louder certainty, a new programme. Works for about eighteen months. The wall is still there, and it's taller.</p>
       </div>
-      <div class="exit">
-        <h4>Wrong exit 02 — walk out</h4>
+      <div class="wcell wcell--warn">
+        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></i>Wrong exit 02 — walk out</h4>
         <p>Decide the whole thing was a lie and take the bitterness with you. Understandable, frequently earned, and it costs you the one thing the wall was about to give you.</p>
+      </div>
+      <div class="wcell">
+        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2H3v12h6"/><path d="M11.6 5.6L14.4 8l-2.8 2.4M14 8H6.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>There's no technique, only a posture</h4>
+        <p>Stay in physical contact with a few people who aren't asking you for anything. Keep the body: show up to a table even when you can't sing. Tell exactly one person the unedited truth. Lower the bar on prayer until it fits — a psalm read aloud counts. Stop trying to resolve it on a deadline; the traditions that map this best measure it in years.</p>
+      </div>
+      <div class="wcell wcell--do">
+        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 8.4l3.4 3.4L13.5 4.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Walking with someone here — do</h4>
+        <p>Stay, and show up on a schedule they can predict without asking. Say “I don't know” out loud. Keep inviting them to things with no expectation that they come. Let them be furious in front of you without flinching.</p>
+      </div>
+      <div class="wcell wcell--warn">
+        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><path d="M4.2 11.8l7.6-7.6" stroke-linecap="round"/></svg></i>Walking with someone here — don't</h4>
+        <p>Don't fix it, quote at it, or interpret it as sin until they say it is. Never say “you just need to get back in the Word.” Don't treat their questions as rebellion — that's the response that turns a wall into an exit. And don't disappear because it makes you uncomfortable; your discomfort isn't the emergency.</p>
+      </div>
+      <div class="wcell wcell--verse">
+        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 3h4a2 2 0 012 2v8a1.6 1.6 0 00-1.6-1.6H2.5V3z"/><path d="M13.5 3h-4a2 2 0 00-2 2v8a1.6 1.6 0 011.6-1.6h4.4V3z"/></svg></i>Scripture for this position</h4>
+        <p>Psalm 88, the only psalm that ends in darkness with no turn · Job 23:8–9 · Matthew 27:46 · John 15:2, every branch that bears fruit he prunes · 1 Kings 19:4, Elijah right after the greatest success of his life.</p>
       </div>
     </div>
 
     <div class="siren">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M10 2L19 18H1L10 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
         <path d="M10 8v4.5M10 15v.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <p><b>Before you self-diagnose</b>The difference between a dark night and clinical depression is a medical question and you should not guess at it. They look identical from the inside and are treated completely differently. Spiritual direction and therapy aren't competitors here — get both, and tell each one you have the other.</p>
-    </div>
-
-    <div class="disc" data-disc>
-      <button class="disc__btn" aria-expanded="false"><span>The way through — and how to help someone here</span><span class="pm" aria-hidden="true"></span></button>
-      <div class="disc__wrap"><div class="disc__inner"><div class="disc__pad">
-        <p><strong>There's no technique, only a posture.</strong> Stay in physical contact with a few people who aren't asking you for anything. Keep the body: show up to a table even when you can't sing. Tell exactly one person the unedited truth. Lower the bar on prayer until it fits — a psalm read aloud counts. Stop trying to resolve it on a deadline; the traditions that map this best measure it in years.</p>
-        <p><strong>If you're walking with someone here — do:</strong> stay, and show up on a schedule they can predict without asking. Say "I don't know" out loud. Keep inviting them to things with no expectation that they come. Let them be furious in front of you without flinching.</p>
-        <p><strong>Don't:</strong> fix, quote, or interpret it as sin until they say it is. Never say "you just need to get back in the Word." Don't treat their questions as rebellion — that's the response that turns a wall into an exit. And don't disappear because it makes you uncomfortable; your discomfort isn't the emergency.</p>
-        <p><strong>Scripture:</strong> Psalm 88, the only psalm that ends in darkness with no turn · Job 23:8–9 · Matthew 27:46 · John 15:2, every branch that bears fruit he prunes · 1 Kings 19:4, Elijah right after the greatest success of his life.</p>
-      </div></div></div>
     </div>
   </div>
 </section>
@@ -713,8 +748,8 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
             <div class="plot" id="plot"></div>
           </div>
           <div class="res__moves">
-            <div class="fact fact--do"><h4>Your next move</h4><p id="resMove">—</p></div>
-            <div class="fact fact--warn"><h4>What you'll do instead</h4><p id="resTrap">—</p></div>
+            <div class="fact fact--do"><h4><span class="fact__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8.4l3.4 3.4L13.5 4.2"/></svg></span>Your next move</h4><p id="resMove">—</p></div>
+            <div class="fact fact--warn"><h4><span class="fact__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></span>What you'll do instead</h4><p id="resTrap">—</p></div>
           </div>
           <div style="margin-top:1.25rem;display:flex;gap:.5rem;flex-wrap:wrap">
             <button class="btn" id="again">Retake</button>
@@ -726,20 +761,16 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
   </div>
 </section>
 
-<section class="sec">
+<section class="sec sec--alt">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n">04</span>
       <div class="sec__t">
-        <h2>1,900 years, stacked up.</h2>
-        <p>Eleven frameworks against the same six positions. The dots show which positions each one actually names — a crossed dot means it has no category there at all.</p>
+        <h2>Eleven maps, oldest first.</h2>
+        <p>What each framework actually is, who made it, and what it's good for. Not a league table — they were built for different jobs, in different centuries, for different rooms.</p>
       </div>
     </div>
-    <div class="fw" id="fwList"></div>
-    <div class="finding">
-      <h4>The finding</h4>
-      <p>Four frameworks here have no category for Position 04 — and three of those four are the most widely used modern American models: REVEAL, Spader's 4 Chairs and the Navigators' Wheel. All three are excellent at moving people from 01 to 03, which is what they were built for. But none has a slot for a person whose faith works <em>less</em> well the more mature they get, so churches running them tend to read the wall as regression and prescribe more of Position 03. The contemplative traditions have the opposite problem: rich on 04 through 06, nearly silent on how anyone gets started. <em>(The fourth is 1 John itself — John names three groups and simply leaves the gap where the wall goes.)</em></p>
-    </div>
+    <div class="frames" id="fwList"></div>
   </div>
 </section>
 
@@ -756,10 +787,10 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.8;color:var(--
     <div class="srcs" id="srcList"></div>
 
     <div class="caveats">
-      <div class="cav"><span class="cav__n">Caveat 01</span><h4>Not a ranking of God's love</h4><p>Hagberg and Guelich are emphatic: later positions don't mean greater closeness to God, only a different experience of the same access.</p></div>
-      <div class="cav"><span class="cav__n">Caveat 02</span><h4>Not linear, and not once</h4><p>You'll cycle. Most people re-enter the wall two or three times in a life, and people move back and forth between positions rather than graduating out of them.</p></div>
-      <div class="cav"><span class="cav__n">Caveat 03</span><h4>Not uniform across your life</h4><p>It's very common to be at 05 in suffering and 02 in money, or 06 with strangers and 01 with your own family. Locate yourself per domain.</p></div>
-      <div class="cav"><span class="cav__n">Caveat 04</span><h4>Not a diagnosis of anybody else</h4><p>Used on another person without their invitation, this becomes a very efficient instrument of condescension.</p></div>
+      <div class="cav" style="--fc:var(--yellow)"><span class="cav__n">Caveat 01</span><h4>Not a ranking of God's love</h4><p>Hagberg and Guelich are emphatic: later positions don't mean greater closeness to God, only a different experience of the same access.</p></div>
+      <div class="cav" style="--fc:var(--green)"><span class="cav__n">Caveat 02</span><h4>Not linear, and not once</h4><p>You'll cycle. Most people re-enter the wall two or three times in a life, and people move back and forth between positions rather than graduating out of them.</p></div>
+      <div class="cav" style="--fc:var(--orange)"><span class="cav__n">Caveat 03</span><h4>Not uniform across your life</h4><p>It's very common to be at 05 in suffering and 02 in money, or 06 with strangers and 01 with your own family. Locate yourself per domain.</p></div>
+      <div class="cav" style="--fc:var(--aqua)"><span class="cav__n">Caveat 04</span><h4>Not a diagnosis of anybody else</h4><p>Used on another person without their invitation, this becomes a very efficient instrument of condescension.</p></div>
     </div>
   </div>
 </section>
@@ -790,6 +821,24 @@ var ICONS = {
   5:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 11c7 0 8 19 15 19s10-22 19-22"/><circle class="ico-pulse" cx="37" cy="8" r="3" fill="currentColor" stroke="none"/></svg>',
   6:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="20" cy="20" r="2.8" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="9"/><circle class="ico-spin" cx="20" cy="20" r="15.5" stroke-dasharray="4 5"/></svg>'
 };
+
+/* one icon per row of the card, so the six rows are scannable by shape as well
+   as by position. The chip behind each takes the card's ink, except the two
+   warn rows and the two do rows, which keep the pink/green signal. */
+var FACT_ICONS = {
+  tell:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 8s2.6-4.4 7-4.4S15 8 15 8s-2.6 4.4-7 4.4S1 8 1 8z"/><circle cx="8" cy="8" r="1.9"/></svg>',
+  feel:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h2.2l1.9-4.2L7.7 12l1.9-5 1.2 2.4H15"/></svg>',
+  warn:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg>',
+  door:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2H3v12h6"/><path d="M11.6 5.6L14.4 8l-2.8 2.4M14 8H6.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  do:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8.4l3.4 3.4L13.5 4.2"/></svg>',
+  dont:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><path d="M4.2 11.8l7.6-7.6" stroke-linecap="round"/></svg>'
+};
+function fact(mod, icon, label, body){
+  return '<div class="fact'+(mod ? ' fact--'+mod : '')+'">'+
+           '<h4><span class="fact__i" aria-hidden="true">'+FACT_ICONS[icon]+'</span>'+label+'</h4>'+
+           '<p>'+body+'</p>'+
+         '</div>';
+}
 
 var POS = [
   { n:1, key:"yellow", name:"The Threshold",
@@ -859,29 +908,31 @@ var POS = [
     verse:"You know him who is from the beginning.", ref:"1 John 2:13–14 · also 1 Corinthians 13:4–7" }
 ];
 
+/* Eleven overviews. No cross-comparison, no per-position cells — each entry
+   stands on its own: what it is, who made it, what it's good for. */
 var FW = [
-  { yr:"c. AD 90", nm:"1 John 2:12–14", note:"The oldest map here and still the tightest: three groups, defined by what they know rather than what they do. John has no category between “young men” and “fathers” — the gap is exactly where the wall sits.",
-    c:["—","“Little children” — sins forgiven, you know the Father","“Young men” — strong, the word abides, you have overcome",null,"—","“Fathers” — you know him who is from the beginning"] },
-  { yr:"3rd–16th c.", nm:"The Three Ways / Teresa's Interior Castle", note:"Purgative, illuminative, unitive — the classical spine of Western spirituality, mapped by Teresa onto seven mansions. Mansions 1–3 purgative, 4–6 illuminative, 7 unitive. Written by a woman running a reform movement under Inquisition surveillance, which is why it's far more practical than its reputation.",
-    c:["Awakening","Purgative · mansions 1–3","Purgative, active phase","Passive purification · mansions 4–5","Illuminative · mansion 6","Unitive · mansion 7"] },
-  { yr:"c. 1578", nm:"John of the Cross — Dark Night", note:"The original and still the most precise description of Position 04, written from a prison cell. Distinguishes the night of sense from the night of spirit — a distinction most modern deconstruction writing collapses into one thing.",
-    c:["—","Beginners · consolations","Proficients · active night","Night of sense, then night of spirit","Illumination after the night","Union"] },
-  { yr:"1930s", nm:"The Navigators' Wheel", note:"Christ the hub; Word, prayer, fellowship and witness the four spokes. Not a stage model at all — a maintenance diagram. Included because it is one of the most-used discipleship tools ever made and shows what a framework with no time axis looks like.",
-    c:["Contact","Establishing · the spokes","Equipping · multiplying",null,"—","—"] },
-  { yr:"1981", nm:"Fowler — Stages of Faith", note:"The academic standard: six structural-developmental stages, Piaget applied to belief. Useful for understanding how people hold faith rather than what they believe. Heavily criticised as too cognitive and too linear; critics argue for faith styles over stages.",
-    c:["2 · Mythic-literal","3 · Synthetic-conventional","3 → 4 transition","4 · Individuative-reflective","5 · Conjunctive","6 · Universalizing"] },
-  { yr:"1987", nm:"Peck — The Different Drum", note:"Four stages from a psychiatrist, not a theologian. The sharpest account of why Stage 2 people find Stage 3 people threatening — and why Stage 4 people look like Stage 2 people to everyone else.",
-    c:["1 · Chaotic / antisocial","2 · Formal / institutional","2 · Formal, high-functioning","3 · Skeptic / individual","3 → 4 transition","4 · Mystic / communal"] },
-  { yr:"1989", nm:"Hagberg & Guelich — The Critical Journey", note:"The spine of this map. Six stages plus the Wall, built from interviews rather than theory. Their own one-line summary is the best six words on the subject: stage one humbles us, two grounds us, three rewards us, four unsettles us, the wall unmasks us, five transforms us, six transcends us.",
-    c:["1 · Recognition of God","2 · Life of discipleship","3 · The productive life","THE WALL · 4 · Journey inward","5 · Journey outward","6 · The life of love"] },
-  { yr:"2006", nm:"Scazzero — Emotionally Healthy Spirituality", note:"Takes the Hagberg wall and builds a whole discipleship curriculum around it, adding the piece most formation models miss: emotional maturity and spiritual maturity are the same project. His charge is that most discipleship leaves deep parts of our lives untouched.",
-    c:["1 · Life-changing awareness of God","2 · Discipleship","3 · The active life","4 · The wall & journey inward","5 · Journey outward","6 · Transformed into love"] },
-  { yr:"2007", nm:"REVEAL — Willow Creek", note:"A survey of hundreds of thousands of churchgoers producing a four-point continuum. Its famous result — that church activity drives growth early and stops predicting it later — is the empirical backing for the Position 03 warning. Self-reported, single-tradition, and a marketing instrument as well as a study.",
-    c:["Exploring Christianity","Growing in Christ","Close to Christ",null,"Christ-centred","Christ-centred"] },
-  { yr:"2011", nm:"Rohr — Falling Upward", note:"Two halves of life: the first builds the container, the second discovers what it was for. The argument that the fall is necessary rather than incidental. Rohr is theologically contested and reads scripture loosely — take the structure, check the exegesis.",
-    c:["First half · seeking","First half · order","First half · achievement","The necessary fall","Second half · reorder","Second half · the contents"] },
-  { yr:"2014", nm:"Spader — 4 Chair Discipling", note:"Come and see → follow me → fish for men → go and bear fruit, traced through the four years of Jesus' ministry. The most actionable framework here and the best answer to “what do I do on Tuesday.” Mission-first and entirely upward — no category for the wall.",
-    c:["Chair 1 · Come and see","Chair 2 · Follow me","Chair 3 · Fish for men",null,"Chair 4 · Bear fruit","Chair 4 · Multiply"] }
+  { yr:"c. AD 90", nm:"1 John 2:12–14", tag:"The oldest map here",
+    note:"Three groups — little children, young men, fathers — defined by what they know rather than what they do. Still the tightest thing written on the subject: two verses, no diagram, no programme." },
+  { yr:"3rd–16th c.", nm:"The Three Ways · Teresa's Interior Castle", tag:"The classical spine",
+    note:"Purgative, illuminative, unitive — the backbone of Western spirituality, mapped by Teresa onto seven mansions. Written by a woman running a reform movement under Inquisition surveillance, which is why it is far more practical than its reputation." },
+  { yr:"c. 1578", nm:"John of the Cross — Dark Night", tag:"The night, precisely",
+    note:"Written from a prison cell, and still the most exact description of the place where the machinery stops. Separates the night of sense from the night of spirit — a distinction worth keeping, because they need different responses." },
+  { yr:"1930s", nm:"The Navigators' Wheel", tag:"A maintenance diagram",
+    note:"Christ the hub; Word, prayer, fellowship and witness the four spokes. Not a stage model at all — a picture of a balanced practice, with no time axis. One of the most-used discipleship tools ever made, and the fastest way to explain a rhythm to someone starting out." },
+  { yr:"1981", nm:"Fowler — Stages of Faith", tag:"The academic standard",
+    note:"Six structural-developmental stages, Piaget applied to belief. Describes how people hold faith rather than what they believe. Heavily criticised as too cognitive and too linear; read the critiques alongside it." },
+  { yr:"1987", nm:"Peck — The Different Drum", tag:"From a psychiatrist",
+    note:"Four stages, written by a clinician rather than a theologian. The sharpest account of why people at different stages find each other threatening — and why the furthest-along can look, from outside, exactly like the earliest." },
+  { yr:"1989", nm:"Hagberg & Guelich — The Critical Journey", tag:"The spine of this map",
+    note:"Six stages plus the Wall, built from interviews rather than theory. Their own one-line summary is the best six words on the subject: stage one humbles us, two grounds us, three rewards us, four unsettles us, the wall unmasks us, five transforms us, six transcends us." },
+  { yr:"2006", nm:"Scazzero — Emotionally Healthy Spirituality", tag:"Formation as curriculum",
+    note:"A whole discipleship course built around the piece most formation models leave out: emotional maturity and spiritual maturity are the same project. His charge is that ordinary discipleship leaves deep parts of a life untouched." },
+  { yr:"2007", nm:"REVEAL — Willow Creek", tag:"The survey data",
+    note:"A four-point continuum drawn from hundreds of thousands of churchgoers. Its famous result is that church activity drives growth early and stops predicting it later. Self-reported, single-tradition, and a marketing instrument as well as a study — read it as evidence, not verdict." },
+  { yr:"2011", nm:"Rohr — Falling Upward", tag:"Two halves of a life",
+    note:"The first half builds the container; the second discovers what it was for. The best short account of why failure is load-bearing rather than incidental. Theologically contested and loose with texts — take the structure, check the exegesis." },
+  { yr:"2014", nm:"Spader — 4 Chair Discipling", tag:"What to do on Tuesday",
+    note:"Come and see → follow me → fish for men → go and bear fruit, traced through the four years of Jesus' ministry. The most actionable framework here, and the best answer if what you want is a next step rather than a diagnosis." }
 ];
 
 var SRC = [
@@ -969,20 +1020,14 @@ document.getElementById("theme").addEventListener("click", function(){
   var sys = matchMedia("(prefers-color-scheme: dark)").matches;
   var cur = root.getAttribute("data-theme") || (sys ? "dark" : "light");
   root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
-  readInks();
 });
 
-var INK = {};
-function readInks(){
-  var s = getComputedStyle(root);
-  ["--pink","--yellow","--green","--orange","--aqua","--violet","--ink","--paper"].forEach(function(k){
-    INK[k] = s.getPropertyValue(k).trim();
-  });
-}
-readInks();
-matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
+/* ---------------------------------------------------------------- map cards
 
-/* ---------------------------------------------------------------- map cards */
+   Eight flat children per card, no disclosure wrapper. The wrapper is what used
+   to break the subgrid chain and let each card's rows drift out of line with its
+   neighbours' — every row here is a direct child, so .pos can be a subgrid and
+   "the tell" sits on one baseline right across the row band. */
 (function(){
   var grid = document.getElementById("mapGrid");
   POS.forEach(function(p){
@@ -991,84 +1036,42 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
     card.style.setProperty("--on","var(--on-"+p.key+")");
     card.id = "pos-" + p.n;
 
-    var id = "posbody-" + p.n;
-    var btn = el("button","pos__btn");
-    btn.type = "button";
-    /* open on load — the six positions are the substance of the page, not a
-       progressive disclosure. Setting this before the node is inserted means the
-       grid-template-rows transition has no start state to animate from. */
-    btn.setAttribute("aria-expanded","true");
-    btn.setAttribute("aria-controls", id);
-    btn.innerHTML =
-      '<span class="pos__top"><span class="pos__n">Position 0'+p.n+'</span>'+
-      '<span class="pos__ico" aria-hidden="true">'+ICONS[p.n]+'</span></span>'+
-      '<h3>'+p.name+'</h3>'+
-      '<span class="pos__one">'+p.one+'</span>'+
-      '<span class="pos__more"><span class="pos__lbl">Collapse</span><svg class="chev" width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="2"/></svg></span>';
+    card.innerHTML =
+      '<div class="pos__head">'+
+        '<div class="pos__top"><span class="pos__n">Position 0'+p.n+'</span>'+
+        '<span class="pos__ico" aria-hidden="true">'+ICONS[p.n]+'</span></div>'+
+        '<h3>'+p.name+'</h3>'+
+        '<p class="pos__one">'+p.one+'</p>'+
+      '</div>'+
+      fact("",     "tell", "The tell", p.tell)+
+      fact("",     "feel", "What it feels like", p.feel)+
+      fact("warn", "warn", "Where it goes wrong", p.trap)+
+      fact("do",   "door", "The doorway out", p.door)+
+      fact("do",   "do",   "Helping someone here — do", p.help)+
+      fact("warn", "dont", "Helping someone here — don’t", p.harm)+
+      '<blockquote class="verse">“'+p.verse+'”<cite>'+p.ref+'</cite></blockquote>';
 
-    var wrap = el("div","pos__wrap");
-    wrap.id = id;
-    wrap.innerHTML =
-      '<div class="pos__inner"><div class="pos__body">'+
-        '<div class="fact"><h4>The tell</h4><p>'+p.tell+'</p></div>'+
-        '<div class="fact"><h4>What it feels like</h4><p>'+p.feel+'</p></div>'+
-        '<div class="fact fact--warn"><h4>Where it goes wrong</h4><p>'+p.trap+'</p></div>'+
-        '<div class="fact fact--do"><h4>The doorway out</h4><p>'+p.door+'</p></div>'+
-        '<div class="fact fact--do"><h4>Helping someone here — do</h4><p>'+p.help+'</p></div>'+
-        '<div class="fact fact--warn"><h4>Helping someone here — don’t</h4><p>'+p.harm+'</p></div>'+
-        '<blockquote class="verse">“'+p.verse+'”<cite>'+p.ref+'</cite></blockquote>'+
-      '</div></div>';
-
-    btn.addEventListener("click", function(){
-      var open = btn.getAttribute("aria-expanded") !== "true";
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.querySelector(".pos__lbl").textContent = open ? "Collapse" : "Read this position";
-    });
-
-    card.appendChild(btn);
-    card.appendChild(wrap);
     grid.appendChild(card);
   });
 })();
 
-/* ---------------------------------------------------------------- concordance */
+/* ---------------------------------------------------------------- frameworks */
 (function(){
   var list = document.getElementById("fwList");
+  /* the palette cycles for rhythm only — a card's colour carries no claim about
+     which positions that framework covers. This section stopped comparing. */
+  var INKS = ["yellow","green","orange","aqua","violet","pink"];
   FW.forEach(function(f, i){
-    var row = el("div","fwr");
-    var id = "fw-" + i;
-    var dots = f.c.map(function(cell, j){
-      return '<i data-has="'+(cell === null ? 0 : 1)+'" style="background:'+
-        (cell === null ? "transparent" : "var(--"+POS[j].key+")")+'"></i>';
-    }).join("");
-
-    var btn = el("button","fwr__btn");
-    btn.type = "button";
-    btn.setAttribute("aria-expanded","true");
-    btn.setAttribute("aria-controls", id);
-    btn.innerHTML = '<span class="fwr__yr">'+f.yr+'</span>'+
-                    '<span class="fwr__nm">'+f.nm+'</span>'+
-                    '<span class="fwr__dots" aria-hidden="true">'+dots+'</span>';
-
-    var cells = f.c.map(function(cell, j){
-      var p = POS[j];
-      if(cell === null){
-        return '<div class="cell cell--void"><span class="cell__h">0'+p.n+'</span><p>No category</p></div>';
-      }
-      return '<div class="cell" style="--c:var(--'+p.key+');--on:var(--on-'+p.key+')">'+
-             '<span class="cell__h">0'+p.n+'</span><p>'+cell+'</p></div>';
-    }).join("");
-
-    var wrap = el("div","fwr__wrap");
-    wrap.id = id;
-    wrap.innerHTML = '<div class="fwr__inner"><div class="fwr__pad">'+
-      '<p class="fwr__note">'+f.note+'</p><div class="cells">'+cells+'</div></div></div>';
-
-    btn.addEventListener("click", function(){
-      btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") === "true" ? "false" : "true");
-    });
-
-    row.appendChild(btn); row.appendChild(wrap); list.appendChild(row);
+    var k = INKS[i % INKS.length];
+    var card = el("article","frame");
+    card.style.setProperty("--fc","var(--"+k+")");
+    card.style.setProperty("--on-fc","var(--on-"+k+")");
+    card.innerHTML =
+      '<div class="frame__k"><b>'+f.yr+'</b><span>'+String(i+1).padStart(2,"0")+' / 11</span></div>'+
+      '<h3>'+f.nm+'</h3>'+
+      '<p class="frame__tag">'+f.tag+'</p>'+
+      '<p class="frame__note">'+f.note+'</p>';
+    list.appendChild(card);
   });
 })();
 
@@ -1085,7 +1088,8 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
   KINDS.forEach(function(k){
     var b = el("button","fchip");
     b.type="button"; b.setAttribute("aria-pressed","false"); b.dataset.k = k.id;
-    b.innerHTML = '<i style="--fc:'+k.c+'"></i>' + k.label;
+    b.style.setProperty("--kc", k.c);
+    b.innerHTML = '<i></i>' + k.label;
     filters.appendChild(b);
   });
 
@@ -1102,6 +1106,21 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
     wrap.appendChild(card);
   });
 
+  /* The tint is the only thing separating one card from the next, so it has to
+     be recomputed over the *visible* set — filter to "Podcasts" and cards that
+     were three apart become neighbours. A six-hue cycle never repeats across a
+     1-, 2- or 3-column grid, because neighbours sit ±1, ±2 or ±3 apart. */
+  var INKS = ["yellow","green","orange","aqua","violet","pink"];
+  function paint(){
+    var n = 0;
+    wrap.querySelectorAll(".src").forEach(function(c){
+      if(c.hidden) return;
+      c.style.setProperty("--fc","var(--"+INKS[n % INKS.length]+")");
+      n++;
+    });
+  }
+  paint();
+
   filters.addEventListener("click", function(e){
     var b = e.target.closest(".fchip"); if(!b) return;
     var k = b.dataset.k;
@@ -1111,6 +1130,7 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
     wrap.querySelectorAll(".src").forEach(function(c){
       c.hidden = (k !== "all" && c.dataset.k !== k);
     });
+    paint();
   });
 })();
 
@@ -1149,132 +1169,6 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
     });
   }, {rootMargin:"0px 0px -8% 0px", threshold:.02});
   document.querySelectorAll(".rv").forEach(function(e){ io.observe(e); });
-})();
-
-/* ---------------------------------------------------------------- hero ink */
-(function(){
-  var cv = document.getElementById("ink");
-  var ctx = cv.getContext("2d");
-  var W=0,H=0,raf,t=0;
-
-  var blobs = [
-    {k:"--yellow", r:.42, ox:.16, oy:.34, sx:.9,  sy:.6,  ph:0},
-    {k:"--green",  r:.36, ox:.34, oy:.66, sx:.7,  sy:.9,  ph:1.7},
-    {k:"--orange", r:.40, ox:.56, oy:.30, sx:1.1, sy:.7,  ph:3.1},
-    {k:"--aqua",   r:.34, ox:.74, oy:.62, sx:.8,  sy:1.0, ph:4.6},
-    {k:"--violet", r:.38, ox:.88, oy:.32, sx:.6,  sy:.8,  ph:2.4},
-    {k:"--pink",   r:.26, ox:.66, oy:.78, sx:1.3, sy:1.2, ph:5.5}
-  ];
-
-  function size(){
-    var r = cv.getBoundingClientRect();
-    var d = Math.min(devicePixelRatio || 1, 2);
-    W = Math.max(1, r.width); H = Math.max(1, r.height);
-    cv.width = W*d; cv.height = H*d;
-    ctx.setTransform(d,0,0,d,0,0);
-  }
-
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = 1;
-    var mode = getComputedStyle(root).getPropertyValue("--blend").trim();
-    ctx.globalCompositeOperation = (mode === "screen") ? "screen" : "multiply";
-    var base = Math.max(W,H);
-
-    blobs.forEach(function(b){
-      var x = W*b.ox + Math.sin(t*0.16*b.sx + b.ph)*W*0.07;
-      var y = H*b.oy + Math.cos(t*0.13*b.sy + b.ph)*H*0.13;
-      var rr = base*b.r*0.52 * (1 + Math.sin(t*0.2 + b.ph)*0.05);
-      ctx.beginPath();
-      ctx.arc(x, y, rr, 0, Math.PI*2);
-      ctx.fillStyle = INK[b.k];
-      ctx.globalAlpha = 0.5;
-      ctx.fill();
-    });
-
-    ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = 1;
-    t += 0.016;
-    if(!reduce) raf = requestAnimationFrame(frame);
-  }
-
-  function boot(){ size(); cancelAnimationFrame(raf); frame(); }
-  var rt; addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(boot, 150); });
-  boot();
-  document.getElementById("theme").addEventListener("click", function(){ setTimeout(boot, 30); });
-})();
-
-/* ---------------------------------------------------------------- wall rift */
-(function(){
-  var cv = document.getElementById("rift");
-  var ctx = cv.getContext("2d");
-  var W=0,H=0,raf,t=0,vis=false;
-
-  function size(){
-    var r = cv.getBoundingClientRect();
-    var d = Math.min(devicePixelRatio || 1, 2);
-    W = Math.max(1,r.width); H = Math.max(1,r.height);
-    cv.width = W*d; cv.height = H*d;
-    ctx.setTransform(d,0,0,d,0,0);
-  }
-
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    var fx = W*0.58;
-    var gap = 26;
-    var rows = Math.ceil(H/gap)+2;
-    var faint = getComputedStyle(root).getPropertyValue("--paper").trim();
-
-    for(var i=0;i<rows;i++){
-      var y = i*gap - gap;
-      var drift = Math.sin(t*0.3 + i*0.45)*4;
-      var drop  = 30 + Math.sin(t*0.2 + i*0.28)*9;
-
-      ctx.globalAlpha = 0.16;
-      ctx.strokeStyle = faint;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      for(var x=0;x<=fx-18;x+=8){
-        var yy = y + drift + Math.sin(x*0.014 + t*0.25 + i)*2.5;
-        if(x===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy);
-      }
-      ctx.stroke();
-
-      ctx.globalAlpha = 0.09;
-      ctx.beginPath();
-      for(var x2=fx+18;x2<=W;x2+=8){
-        var y2 = y + drop - drift + Math.sin(x2*0.014 - t*0.25 + i)*2.5;
-        if(x2===fx+18) ctx.moveTo(x2,y2); else ctx.lineTo(x2,y2);
-      }
-      ctx.stroke();
-    }
-
-    ctx.globalAlpha = 1;
-    var scan = (t*0.11) % 1.4 - 0.2;
-    var g = ctx.createLinearGradient(0, H*scan - 200, 0, H*scan + 200);
-    g.addColorStop(0,"rgba(255,61,147,0)");
-    g.addColorStop(.5, INK["--pink"]);
-    g.addColorStop(1,"rgba(255,61,147,0)");
-    ctx.strokeStyle = g; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(fx,0); ctx.lineTo(fx,H); ctx.stroke();
-
-    t += 0.016;
-    if(!reduce && vis) raf = requestAnimationFrame(frame);
-  }
-
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      vis = e.isIntersecting;
-      cancelAnimationFrame(raf);
-      if(vis) frame();
-    });
-  }, {rootMargin:"250px"});
-
-  function boot(){ size(); cancelAnimationFrame(raf); if(vis || reduce) frame(); }
-  var rt; addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(boot,150); });
-  size();
-  io.observe(document.getElementById("wall"));
 })();
 
 /* ---------------------------------------------------------------- instrument */
@@ -1436,10 +1330,7 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readInks);
   });
   document.getElementById("jump").addEventListener("click", function(){
     var card = document.getElementById("pos-"+finalPos);
-    if(!card) return;
-    var btn = card.querySelector(".pos__btn");
-    if(btn && btn.getAttribute("aria-expanded") !== "true") btn.click();
-    card.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+    if(card) card.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
   });
 
   render();
