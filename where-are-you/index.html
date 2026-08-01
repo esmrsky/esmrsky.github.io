@@ -466,17 +466,19 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .res__moves .fact{color:var(--on)}
 
 /* --------------------------------------------------------------- frameworks */
-.frames{display:grid;grid-template-columns:1fr}
-@media (min-width:760px){ .frames{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:1200px){ .frames{grid-template-columns:repeat(3,1fr)} }
-.frame{
-  background:color-mix(in srgb, var(--fc) 9%, var(--paper));
-  display:grid;grid-row:span 5;grid-template-rows:subgrid;
-  min-width:0;
-}
-@supports not (grid-template-rows:subgrid){
-  .frame{grid-row:auto;display:flex;flex-direction:column}
-}
+/* Masonry, because a grid row is only as short as its tallest card and these
+   carry 3 to 7 stages each — the shortfall showed as dead space inside the
+   card. `grid-template-rows:masonry` is not shippable yet and align-items:start
+   leaves real holes, so the columns are packed shortest-first in JS. The last
+   card in each column grows, so the bottom edge is flush rather than ragged.
+   The cost is that the stage maps no longer align across cards; packing tight
+   and aligning rows are the same trade in opposite directions. */
+.masonry{--cols:1;display:flex;align-items:stretch}
+@media (min-width:760px){ .masonry{--cols:2} }
+@media (min-width:1200px){ .masonry{--cols:3} }
+.masonry__col{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
+.masonry__col > :last-child{flex:1 1 auto}
+.frame{background:color-mix(in srgb, var(--fc) 9%, var(--paper));min-width:0}
 .frame__k{
   background:var(--fc);color:var(--on-fc);
   padding:.7rem var(--gutter);
@@ -537,15 +539,13 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .fchip[aria-pressed="true"],.fchip[aria-pressed="true"]:hover{background:var(--ink);color:var(--paper)}
 .fchip i{width:11px;height:11px;background:var(--kc,var(--ink));display:block}
 
-.srcs{display:grid;grid-template-columns:1fr}
-@media (min-width:760px){ .srcs{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:1200px){ .srcs{grid-template-columns:repeat(3,1fr)} }
 .src{
   padding:1.2rem var(--gutter) 1.35rem;display:flex;flex-direction:column;gap:.45rem;
   background:color-mix(in srgb, var(--fc) 9%, var(--paper));
   min-width:0;
 }
 .src[hidden]{display:none}
+.masonry__col:empty{display:none}
 .src__k{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.1rem}
 .pill{
   font-family:var(--mono);font-size:.5625rem;letter-spacing:.12em;text-transform:uppercase;
@@ -581,22 +581,25 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
    visibly stepped. transform-box:fill-box makes each shape scale about its own
    box rather than the SVG origin. */
 @keyframes ic-float{0%,100%{transform:translateY(1.5px)}50%{transform:translateY(-2.5px)}}
+@keyframes ic-cross{0%{transform:translate(-13px,2px);opacity:0}16%{opacity:1}
+  58%,80%{transform:translate(0,0);opacity:1}100%{transform:translate(0,0);opacity:0}}
 @keyframes ic-wave{0%{transform:scale(.5);opacity:0}28%{opacity:1}100%{transform:scale(1.18);opacity:0}}
-@keyframes ic-bar{0%,100%{transform:scaleY(.74)}50%{transform:scaleY(1)}}
-@keyframes ic-driftL{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.6px,-1px)}}
-@keyframes ic-driftR{0%,100%{transform:translate(0,0)}50%{transform:translate(1.6px,1px)}}
+@keyframes ic-bar{0%,100%{transform:scaleY(.3)}18%{transform:scaleY(.86)}50%{transform:scaleY(1)}}
+@keyframes ic-driftL{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.8px,1.4px)}}
+@keyframes ic-driftR{0%,100%{transform:translate(0,0)}50%{transform:translate(1.8px,-1.4px)}}
 @keyframes ic-fault{to{stroke-dashoffset:-15}}
 @keyframes ic-trace{0%{stroke-dashoffset:71}100%{stroke-dashoffset:-71}}
 @keyframes ic-ring{0%{transform:scale(.45);opacity:0}26%{opacity:.9}100%{transform:scale(1.3);opacity:0}}
 
 .pos__ico svg [class^="ic-"]{transform-box:fill-box}
 .ic-float{transform-origin:center;animation:ic-float 3.6s ease-in-out infinite}
+.ic-cross{animation:ic-cross 4s cubic-bezier(.4,0,.2,1) infinite}
 .ic-wave{transform-origin:center bottom;animation:ic-wave 3.4s cubic-bezier(.33,0,.2,1) infinite;opacity:0}
 .ic-w2{animation-delay:0s}
 .ic-w3{animation-delay:.62s}
-.ic-bar{transform-origin:center bottom;animation:ic-bar 3.2s cubic-bezier(.4,0,.3,1) infinite}
-.ic-b2{animation-delay:.2s}
-.ic-b3{animation-delay:.4s}
+.ic-bar{transform-origin:center bottom;animation:ic-bar 3.4s cubic-bezier(.34,1.3,.5,1) infinite}
+.ic-b2{animation-delay:.28s}
+.ic-b3{animation-delay:.56s}
 .ic-slabL{animation:ic-driftL 5.2s ease-in-out infinite}
 .ic-slabR{animation:ic-driftR 5.2s ease-in-out infinite}
 .ic-fault{animation:ic-fault 2.4s linear infinite}
@@ -815,7 +818,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
   </div>
-    <div class="frames" id="fwList"></div>
+    <div class="frames masonry" id="fwList"></div>
 </section>
 
 <section class="sec">
@@ -829,7 +832,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
     <div class="filters" id="filters"></div>
   </div>
-    <div class="srcs" id="srcList"></div>
+    <div class="srcs masonry" id="srcList"></div>
 
     <div class="caveats">
       <div class="cav" style="--fc:var(--yellow)"><span class="cav__n">Caveat 01</span><h4>Not a ranking of God's love</h4><p>Hagberg and Guelich are emphatic: later positions don't mean greater closeness to God, only a different experience of the same access.</p></div>
@@ -863,8 +866,9 @@ var root = document.documentElement;
    position's idea rather than decorating it. */
 var ICONS = {
   1:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+
-      '<path d="M11 35V14a9 9 0 0 1 18 0v21"/><path d="M4 35h32"/>'+
-      '<circle class="ic-float" cx="20" cy="24" r="3.1" fill="currentColor" stroke="none"/>'+
+      '<path d="M12 32V17a8 8 0 0 1 16 0v15"/>'+
+      '<path d="M6.5 32h27" stroke-width="3.4"/>'+
+      '<circle class="ic-cross" cx="20" cy="24.5" r="3.1" fill="currentColor" stroke="none"/>'+
     '</svg>',
   2:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
       '<circle cx="20" cy="31" r="2.6" fill="currentColor" stroke="none"/>'+
@@ -879,8 +883,8 @@ var ICONS = {
       '<rect class="ic-bar ic-b3" x="25.4" y="9" width="6.5" height="24" fill="currentColor" stroke="none"/>'+
     '</svg>',
   4:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
-      '<g class="ic-slabL"><path d="M4 12h12M4 20h12M4 28h12"/></g>'+
-      '<g class="ic-slabR"><path d="M24 15h12M24 23h12M24 31h12"/></g>'+
+      '<g class="ic-slabL"><path d="M4 15h12M4 23h12M4 31h12"/></g>'+
+      '<g class="ic-slabR"><path d="M24 12h12M24 20h12M24 28h12"/></g>'+
       '<path class="ic-fault" d="M20 4v32" stroke-dasharray="3 4.5"/>'+
     '</svg>',
   5:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
@@ -889,9 +893,9 @@ var ICONS = {
     '</svg>',
   6:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2">'+
       '<circle cx="20" cy="20" r="2.9" fill="currentColor" stroke="none"/>'+
-      '<circle cx="20" cy="20" r="8"/>'+
-      '<circle class="ic-ring ic-g2" cx="20" cy="20" r="13"/>'+
-      '<circle class="ic-ring ic-g3" cx="20" cy="20" r="18"/>'+
+      '<circle cx="20" cy="20" r="7"/>'+
+      '<circle class="ic-ring ic-g2" cx="20" cy="20" r="10.5"/>'+
+      '<circle class="ic-ring ic-g3" cx="20" cy="20" r="14"/>'+
     '</svg>'
 };
 
@@ -1201,6 +1205,75 @@ document.addEventListener("click", function(e){
   if(b) go(b.getAttribute("data-go"));
 });
 
+/* ------------------------------------------------------------- masonry */
+var INKS = ["yellow","green","orange","aqua","violet","pink"];
+
+function packColumns(host, items){
+  var cols = parseInt(getComputedStyle(host).getPropertyValue("--cols"), 10) || 1;
+  host.textContent = "";
+  var colEls = [], h = [];
+  for(var i=0;i<cols;i++){
+    var d = el("div","masonry__col");
+    host.appendChild(d); colEls.push(d); h.push(0);
+  }
+  items.forEach(function(it){
+    var k = 0;
+    for(var i=1;i<cols;i++) if(h[i] < h[k]) k = i;
+    colEls[k].appendChild(it);
+    h[k] += it.offsetHeight;   /* measured in place, at its real column width */
+  });
+}
+
+/* Masonry makes horizontal adjacency unpredictable — which card ends up beside
+   which depends on the heights above it — so the hue cycle cannot be stamped in
+   DOM order any more. Assign it from the laid-out geometry instead: greedily
+   give each card the lowest-numbered ink not already used by a card it touches.
+   With six inks and at most a handful of neighbours this always resolves. */
+function paintByGeometry(items){
+  var placed = [];
+  items.forEach(function(it){
+    var r = it.getBoundingClientRect(), used = {};
+    placed.forEach(function(q){
+      var a = r, b = q.r, t = 2.5;
+      var hO = Math.min(a.right,b.right) - Math.max(a.left,b.left) > 4;
+      var vO = Math.min(a.bottom,b.bottom) - Math.max(a.top,b.top) > 4;
+      var meets = (hO && (Math.abs(a.bottom-b.top) < t || Math.abs(b.bottom-a.top) < t)) ||
+                  (vO && (Math.abs(a.right-b.left) < t || Math.abs(b.right-a.left) < t));
+      if(meets) used[q.k] = 1;
+    });
+    var k = 0; while(used[k] && k < INKS.length) k++;
+    if(k >= INKS.length) k = 0;   /* unreachable in this layout; never leave --fc unset */
+    it.style.setProperty("--fc","var(--"+INKS[k]+")");
+    it.style.setProperty("--on-fc","var(--on-"+INKS[k]+")");
+    placed.push({r:r, k:k});
+  });
+}
+
+function layout(host, items){
+  packColumns(host, items);
+  paintByGeometry(items);
+}
+
+/* The first layout is synchronous and unconditional: these cards live only in
+   the JS array until packColumns inserts them, so hanging that on an observer
+   callback means the whole section renders empty anywhere the callback does not
+   arrive. ResizeObserver is then a pure enhancement for later width changes —
+   preferred over a window resize listener because the container can change
+   width on its own (a scrollbar appearing, a zoom, a font swap). Guarded on
+   width, since repacking changes the host's height and reacting to that would
+   re-enter forever. */
+function observeWidth(host, getItems){
+  layout(host, getItems());
+  if(typeof ResizeObserver !== "function") return;
+  var last = host.clientWidth;
+  new ResizeObserver(function(){
+    var w = host.clientWidth;
+    if(w === last) return;
+    last = w;
+    layout(host, getItems());
+  }).observe(host);
+}
+
 /* ---------------------------------------------------------------- theme */
 document.getElementById("theme").addEventListener("click", function(){
   var sys = matchMedia("(prefers-color-scheme: dark)").matches;
@@ -1244,14 +1317,10 @@ document.getElementById("theme").addEventListener("click", function(){
 /* ---------------------------------------------------------------- frameworks */
 (function(){
   var list = document.getElementById("fwList");
-  /* the palette cycles for rhythm only — a card's colour carries no claim about
-     which positions that framework covers. This section stopped comparing. */
-  var INKS = ["yellow","green","orange","aqua","violet","pink"];
+  var cards = [];
   FW.forEach(function(f, i){
-    var k = INKS[i % INKS.length];
     var card = el("article","frame");
-    card.style.setProperty("--fc","var(--"+k+")");
-    card.style.setProperty("--on-fc","var(--on-"+k+")");
+    cards.push(card);
     card.innerHTML =
       '<div class="frame__k"><span class="frame__id"><span class="frame__ico" aria-hidden="true">'+
         FW_ICONS[i]+'</span><b>'+f.yr+'</b></span>'+
@@ -1265,8 +1334,8 @@ document.getElementById("theme").addEventListener("click", function(){
                  '<span class="frame__st"><b>'+st[0]+'</b><i>'+st[1]+'</i></span></li>';
         }).join('')+
       '</ol></div>';
-    list.appendChild(card);
   });
+  observeWidth(list, function(){ return cards; });
 })();
 
 /* ---------------------------------------------------------------- sources */
@@ -1287,9 +1356,11 @@ document.getElementById("theme").addEventListener("click", function(){
     filters.appendChild(b);
   });
 
+  var cards = [];
   SRC.forEach(function(s){
     var kind = KINDS.filter(function(k){ return k.id === s.k; })[0];
     var card = el("article","src");
+    cards.push(card);
     card.dataset.k = s.k;
     card.innerHTML =
       '<div class="src__k"><span class="pill" style="--k:'+kind.c+';--on-k:'+kind.on+'">'+kind.label.replace(/s$/,"")+'</span></div>'+
@@ -1297,23 +1368,14 @@ document.getElementById("theme").addEventListener("click", function(){
       '<span class="src__by">'+s.by+'</span>'+
       '<p>'+s.d+'</p>'+
       (s.u ? '<a class="src__link" href="'+s.u+'" target="_blank" rel="noopener noreferrer">Open ↗</a>' : '');
-    wrap.appendChild(card);
   });
 
-  /* The tint is the only thing separating one card from the next, so it has to
-     be recomputed over the *visible* set — filter to "Podcasts" and cards that
-     were three apart become neighbours. A six-hue cycle never repeats across a
-     1-, 2- or 3-column grid, because neighbours sit ±1, ±2 or ±3 apart. */
-  var INKS = ["yellow","green","orange","aqua","violet","pink"];
-  function paint(){
-    var n = 0;
-    wrap.querySelectorAll(".src").forEach(function(c){
-      if(c.hidden) return;
-      c.style.setProperty("--fc","var(--"+INKS[n % INKS.length]+")");
-      n++;
-    });
-  }
-  paint();
+  /* Re-pack over the *visible* set: filtering to Podcasts makes cards that were
+     three apart into neighbours, and it changes the column heights, so both the
+     packing and the hue assignment have to be redone. */
+  function visible(){ return cards.filter(function(c){ return !c.hidden; }); }
+  function draw(){ layout(wrap, visible()); }
+  observeWidth(wrap, visible);
 
   filters.addEventListener("click", function(e){
     var b = e.target.closest(".fchip"); if(!b) return;
@@ -1321,10 +1383,8 @@ document.getElementById("theme").addEventListener("click", function(){
     filters.querySelectorAll(".fchip").forEach(function(c){
       c.setAttribute("aria-pressed", c === b ? "true" : "false");
     });
-    wrap.querySelectorAll(".src").forEach(function(c){
-      c.hidden = (k !== "all" && c.dataset.k !== k);
-    });
-    paint();
+    cards.forEach(function(c){ c.hidden = (k !== "all" && c.dataset.k !== k); });
+    draw();
   });
 })();
 
