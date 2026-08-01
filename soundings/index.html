@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Soundings — where are you in the water?</title>
-<meta name="description" content="A visual field guide to Christian maturity. Five depths, the words people actually use, eight biblical journeys, thirteen frameworks compared, and the one thing it's all measuring.">
+<meta name="description" content="A visual field guide to Christian maturity. Five depths, the words people actually use, thirteen biblical journeys, thirteen frameworks compared, and the one thing it's all measuring.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,300..800;1,75..125,300..700&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,300..600,0..100&family=Martian+Mono:wght@300..600&display=swap" rel="stylesheet">
@@ -262,9 +262,18 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .chart-head div{padding:12px 10px;font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;
   text-transform:uppercase;color:var(--dimmer)}
 .chart-head div+div{text-align:center}
-.chart-head div:nth-child(2){color:var(--s0)}.chart-head div:nth-child(3){color:var(--s1)}
-.chart-head div:nth-child(4){color:var(--s2)}.chart-head div:nth-child(5){color:var(--s3)}
-.chart-head div:nth-child(6){color:var(--s4)}
+/* depth headers are buttons: click one to read that depth down every framework */
+.colh{font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;text-transform:uppercase;
+  padding:12px 10px;text-align:center;background:transparent;border:0;cursor:pointer;
+  line-height:1.5;min-height:44px;transition:background .18s ease,box-shadow .18s ease}
+.colh:hover{background:rgba(232,242,243,.07)}
+.colh:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+.colh[aria-pressed="true"]{background:color-mix(in srgb,currentColor 22%,transparent);
+  box-shadow:inset 0 -2px 0 currentColor}
+.band .seg{transition:opacity .22s ease}
+.band.dim .seg{opacity:.13}
+.chart-focus{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dimmer);margin-top:12px}
 .row{border-bottom:1px solid rgba(232,242,243,.07)}
 .row:last-child{border-bottom:0}
 .row>.rn{padding:14px 10px;font-family:var(--mono);font-size:.52rem;letter-spacing:.08em;
@@ -390,7 +399,7 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
   <div class="wrap">
     <div class="hero-top">
       <span class="pill">Ezekiel 47 · 1 John 2 · Hebrews 5</span>
-      <span class="pill">5 depths · 8 journeys · 1 measure</span>
+      <span class="pill">5 depths · 13 journeys · 1 measure</span>
     </div>
     <h1>Soundings</h1>
     <p class="hero-sub">Where you are in the water, what it takes to move, and <b>the one thing it's all measuring.</b></p>
@@ -497,7 +506,7 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
   <div class="wrap rv">
     <span class="tag" style="--accent:var(--s4)"><i></i><span class="mono">Case studies</span></span>
     <h2>Nobody in the Bible<br>moved in a straight line.</h2>
-    <p class="sec-lede">Eight traces plotted on the same scale. Higher is deeper water. Notice how many of them regress after their best moment — and that almost every passage into real depth runs through a failure rather than a success.</p>
+    <p class="sec-lede">Thirteen traces plotted on the same scale — eight men, five women. Higher is deeper water. Notice how many of them regress after their best moment, and that almost every passage into real depth runs through a failure rather than a success.</p>
     <div class="people" role="tablist" aria-label="Choose a person" id="people"></div>
     <div class="tracebox" id="tracebox"></div>
 
@@ -555,6 +564,7 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
     <p class="sec-lede">Fowler measures how you hold beliefs. Teresa describes prayer. Putman asks whether you reproduce. Rough latitudes, not equivalents.</p>
     <div class="scroller"><div class="chart" id="chart"></div></div>
     <p class="hint">Scroll sideways →</p>
+    <p class="chart-focus" id="chartFocus" aria-live="polite">Tap a depth to read it straight down all thirteen.</p>
     <div class="tiles" style="margin-top:34px">
       <div class="tile"><h4 style="color:var(--s3)">Sharpest disagreement: doubt</h4><ul style="--accent:var(--s3)">
         <li>Putman: questioning is usually childishness</li>
@@ -838,6 +848,17 @@ const J=[
    [3.6,"Pentecost, then Cornelius' house","The man terrified of exclusion becomes the one who opens the door."],
    [3.3,"Rebuked by Paul at Antioch","Still correctable, decades in. Nobody graduates."],
    [4.2,"\u201cClothe yourselves with humility\u201d","The impulsive one writes the letter on submission and suffering."]]},
+ {n:"Mary Magdalene",c:"var(--s1)",wall:4,
+  sum:"Delivered of seven demons and named first in every list of the women who followed. She is also the only person in the Gospels recorded standing in front of the resurrection and failing to recognise it.",
+  pts:[
+   [1.2,"Seven demons cast out","Luke names the number without explaining it. She starts lower than anyone else on this page."],
+   [2.4,"Follows, and funds it herself","Out of her own means. Not a beneficiary of the ministry — a patron of it."],
+   [3.6,"At the cross after the men have gone","Named at Golgotha in three of the four Gospels. She does not leave."],
+   [3.4,"Watches where they lay the body","Stays for the burial too. This is why she knows which tomb to return to."],
+   [2.5,"Weeping, she takes him for the gardener","Standing in front of the answer, asking where the body went. Grief is not unbelief, but it blinds the same way."],
+   [4.0,"“Mary.” — “Rabboni.”","Recognition comes through her name, not through an argument."],
+   [4.3,"“Do not cling to me. Go to my brothers.”","Given him back, then immediately asked to let go of the form she wanted him in."],
+   [4.2,"First to announce it","The first preacher of the resurrection, to the men who were not there."]]},
  {n:"Moses",c:"var(--s3)",wall:1,
   sum:"Forty years learning he was somebody, forty learning he was nobody, forty learning what God can do with a nobody.",
   pts:[
@@ -848,6 +869,17 @@ const J=[
    [4.2,"\u201cBlot me out of your book instead\u201d","Intercession that costs him everything. This is the summit."],
    [4.3,"\u201cShow me your glory\u201d","Still asking for more of God after all of it."],
    [3.4,"Strikes the rock in anger","Loses the land. Depth is not immunity."]]},
+ {n:"Hannah",c:"var(--s4)",wall:2,
+  sum:"The clearest case on this page of depth arriving through a prayer God did not answer for years — and of peace arriving before the circumstances did.",
+  pts:[
+   [2.2,"Devout, loved, and childless","Goes up to Shiloh year after year. The faithfulness is never the problem."],
+   [1.4,"Provoked by Peninnah until she can't eat","The rival wife has children and uses them. Year after year, the text says."],
+   [0.9,"“The Lord had closed her womb”","Scripture says it twice, and lays it directly at God's door. No explanation is offered to her."],
+   [1.6,"Prays so bitterly the priest thinks she's drunk","Eli, who should recognise prayer, misreads it as drunkenness and rebukes her."],
+   [2.4,"The vow: if you give him, I give him back","She asks for the one thing she wants, and surrenders it in the same sentence."],
+   [3.0,"“Her face was no longer sad” — before anything changed","Nothing external has moved yet. This verse is the whole turn."],
+   [3.6,"Weans him and walks him to Shiloh","Hands over the child she begged for, to be raised by the priest who misjudged her."],
+   [4.2,"“My heart exults in the Lord”","The song Mary will echo almost line for line a thousand years later."]]},
  {n:"David",c:"var(--s1)",wall:3,
   sum:"Deep early, catastrophic in the middle, deeper after. The clearest evidence in Scripture that competence and character run on separate clocks.",
   pts:[
@@ -858,6 +890,17 @@ const J=[
    [2.6,"Psalm 51","No excuses, no blame, no management of the story."],
    [4.0,"Flees Absalom barefoot","Won't use the ark as insurance: \u201cif he has no delight in me, here I am.\u201d"],
    [3.2,"The census, and the plague","Regression, late, after everything. Still not a straight line."]]},
+ {n:"Miriam",c:"var(--s3)",wall:4,
+  sum:"Prophetess, and the first person in Scripture to lead worship. She is also the sharpest illustration on this page that the fall comes after the peak, not before it.",
+  pts:[
+   [2.0,"Watches the basket and speaks to Pharaoh's daughter","A child, thinking fast, and the reason Moses lives. Nerve long before depth."],
+   [3.4,"Leads Israel in the song at the sea","Takes the tambourine and leads the nation in worship. The high point of her life."],
+   [3.2,"Named a prophetess, and a leader of the people","Micah lists her with Moses and Aaron as the three God sent. Not a supporting role."],
+   [1.0,"“Has the Lord spoken only through Moses?”","Complains about her brother's wife, then reaches for her own standing. The collapse begins at the summit."],
+   [0.6,"Struck leprous, shut outside the camp","Seven days outside, in front of everyone. The consequence is public because the challenge was."],
+   [1.8,"Moses cries out for her","Healed through the intercession of the brother whose authority she resented."],
+   [2.4,"The nation does not move until she returns","Two million people wait a week for her. Whatever she had done, they would not go on without her."],
+   [2.6,"Remembered as one of the three","Centuries later the prophets still name her alongside Moses and Aaron, not in spite of this."]]},
  {n:"Joseph",c:"var(--s4)",wall:3,
   sum:"The rare trace with no recorded regression — and the cost is thirteen years in places he didn't choose.",
   pts:[
@@ -867,6 +910,17 @@ const J=[
    [1.6,"Prison; forgotten for two years","The cupbearer walks free and doesn't mention him. This is the Wall."],
    [3.6,"Before Pharaoh","\u201cIt is not in me. God will give the answer.\u201d Gift without ownership."],
    [4.3,"\u201cYou meant evil; God meant good\u201d","Weeps, feeds them, keeps no ledger. Power with nothing to prove."]]},
+ {n:"Naomi",c:"var(--s0)",wall:2,
+  sum:"The only person in Scripture who renames herself after her grief. Her restoration arrives entirely through the daughter-in-law she spent a chapter trying to send away.",
+  pts:[
+   [2.4,"Bethlehem to Moab in the famine","Leaves the land of promise to survive. A reasonable decision that costs her everything."],
+   [1.2,"Her husband dies, then both sons","Three funerals and no explanation. In the ancient world this is destitution as well as grief."],
+   [0.7,"“Call me Mara — the Almighty has dealt bitterly with me”","She changes her own name to match her circumstances, and lays them at God's door by name."],
+   [1.0,"“Go back, my daughters”","Tries three times to send away the only two people left to her. Grief argues for isolation."],
+   [1.8,"Ruth clings; they walk back together","She does not choose this. It is done to her by someone who refuses to be sent away."],
+   [2.6,"Starts scheming for Ruth's redemption","The first thing she does with returning strength is spend it on somebody else's future."],
+   [3.4,"“Blessed be the Lord, who has not left you without a redeemer”","The women of the town say it over her. She had said the opposite about herself."],
+   [3.8,"Obed on her lap — “a son has been born to Naomi”","Not her son. The town names him hers anyway, and he is David's grandfather."]]},
  {n:"John",c:"var(--s0)",wall:2,
   sum:"Son of Thunder to apostle of love. If you want one life that proves the whole thesis of this page, it's this one.",
   pts:[
@@ -876,6 +930,17 @@ const J=[
    [3.4,"Runs to the empty tomb","Sees the cloths and believes before understanding."],
    [4.0,"Exiled to Patmos","Old, sidelined, still receiving."],
    [4.4,"\u201cBeloved, let us love one another\u201d","The man who wanted fire spends a whole letter on love."]]},
+ {n:"Mary of Nazareth",c:"var(--s2)",wall:5,
+  sum:"Said yes to the whole thing at the start and still spent thirty years not understanding it. The Gospels are unusually honest that she was among those who thought he had lost his mind.",
+  pts:[
+   [2.6,"“Let it be to me according to your word”","Young, and agrees to something that will cost her reputation before it costs her anything else."],
+   [3.4,"The Magnificat","Dense with Scripture and openly political. She knows exactly what she is singing."],
+   [2.8,"Egypt, and the sword Simeon promised","Told at the dedication that a sword would pierce her own soul. No timeline given."],
+   [2.0,"Three days looking for him — “why were you searching?”","Luke says plainly that they did not understand what he told them. Twelve years in, she is lost."],
+   [2.4,"“They have no wine.” — “Woman, my hour has not yet come.”","Gently refused in public, and still tells the servants to do whatever he says."],
+   [1.4,"Comes with his brothers to take him home","Mark says the family went to seize him because people were saying he was out of his mind. She is in that group."],
+   [3.6,"At the cross — “Woman, behold your son”","Of all the people who left, she is not one. The sword lands here."],
+   [4.0,"In the upper room, praying with the rest","Acts names her among the disciples, not above them. She ends as one of the congregation."]]},
  {n:"Paul",c:"var(--s2)",wall:4,
   sum:"Religiously advanced and spiritually dry at the same time — which is the most uncomfortable data point on this page.",
   pts:[
@@ -979,14 +1044,33 @@ const ROWS=[
  {n:"Exodus pattern",c:["Egypt","Deliverance","Wilderness","Wilderness — testing","Promised land"]},
  {n:"Rohr (2011)",c:["First half — building the container","First half","First half","Second half — filling it","Second half"]}
 ];
-document.getElementById('chart').innerHTML=
- '<div class="chart-head"><div>Framework</div>'+COLS.map(c=>'<div>'+c+'</div>').join('')+'</div>'+
+const chartEl=document.getElementById('chart');
+chartEl.innerHTML=
+ '<div class="chart-head"><div>Framework</div>'+
+   COLS.map((c,i)=>'<button type="button" class="colh" data-col="'+i+'" aria-pressed="false" '+
+     'style="color:'+CV[i]+'">'+c+'</button>').join('')+'</div>'+
  ROWS.map(r=>'<div class="row"><div class="rn">'+r.n+(r.nw?'<em title="This framework has no category for the Wall">no wall</em>':'')+'</div>'+
   r.c.map((cell,i)=>{
-    if(!cell) return '<div class="band"><span class="seg ghost">—</span></div>';
+    if(!cell) return '<div class="band" data-col="'+i+'"><span class="seg ghost">—</span></div>';
     const bg=/WALL/.test(cell)?'var(--wall)':CV[i];
-    return '<div class="band"><span class="seg" style="background:'+bg+'">'+cell+'</span></div>';
+    return '<div class="band" data-col="'+i+'"><span class="seg" style="background:'+bg+'">'+cell+'</span></div>';
   }).join('')+'</div>').join('');
+
+/* Read one depth straight down the thirteen frameworks. Click, not hover — the
+   chart lives in a horizontal scroller on a phone, where hover doesn't exist. */
+let focusCol=null;
+const bands=[...chartEl.querySelectorAll('.band')],
+      colhs=[...chartEl.querySelectorAll('.colh')],
+      focusNote=document.getElementById('chartFocus');
+function setFocus(i){
+  focusCol = (focusCol===i) ? null : i;
+  bands.forEach(b=>b.classList.toggle('dim', focusCol!==null && +b.dataset.col!==focusCol));
+  colhs.forEach(h=>h.setAttribute('aria-pressed',String(focusCol!==null && +h.dataset.col===focusCol)));
+  focusNote.textContent = focusCol===null
+    ? 'Tap a depth to read it straight down all thirteen.'
+    : 'Showing “'+COLS[focusCol]+'” only — tap it again to bring the rest back.';
+}
+colhs.forEach(h=>h.addEventListener('click',()=>setFocus(+h.dataset.col)));
 
 /* ===== TRIAGE ===== */
 const T=[
