@@ -55,6 +55,7 @@ h2{font-size:clamp(2rem,5.4vw,3.9rem);margin-bottom:.35em}
   text-transform:uppercase;color:var(--dim)}
 h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
   font-variation-settings:"wdth" 118,"wght" 700;
+  padding:.14em 0 .12em;margin-block:-.14em -.12em;
   background:linear-gradient(96deg,#E0A63C,#4FD6C0 26%,#25AEDA 50%,#3D7BEE 74%,#8A63F0);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   background-size:200% 100%;animation:hue 14s ease-in-out infinite}
@@ -88,7 +89,8 @@ h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
 .big{font-size:clamp(2.1rem,6.6vw,5rem);letter-spacing:-.045em;line-height:.98;
   font-variation-settings:"wdth" 110,"wght" 600;max-width:16ch;margin:0 auto}
 .big em{font-style:normal;background:linear-gradient(96deg,#4FD6C0,#25AEDA,#8A63F0);
-  -webkit-background-clip:text;background-clip:text;color:transparent}
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  padding:.14em 0 .12em}
 .one-sub{max-width:56ch;margin:clamp(22px,3.5vw,34px) auto 0;color:var(--dim);
   font-size:clamp(1rem,1.35vw,1.15rem);line-height:1.55}
 .refs{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:30px}
@@ -102,7 +104,7 @@ h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
 
 /* ============ DEPTH DIAGRAM ============ */
 .rig{display:grid;gap:clamp(24px,3vw,44px);margin-top:44px;align-items:start}
-@media(min-width:940px){.rig{grid-template-columns:400px 1fr}}
+@media(min-width:940px){.rig{grid-template-columns:minmax(320px,400px) minmax(0,1fr)}}
 .figbox{position:sticky;top:24px;border-radius:20px;overflow:hidden;border:1px solid var(--line);
   background:linear-gradient(180deg,#0B1E28,#071720)}
 @media(max-width:939px){.figbox{position:relative;top:0}}
@@ -112,12 +114,13 @@ h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
 .fig-foot b{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--accent);font-weight:500}
 .fig-foot span{font-family:var(--mono);font-size:.53rem;letter-spacing:.15em;
   text-transform:uppercase;color:var(--dimmer)}
-.picker{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
-.pick{flex:1 1 auto;min-width:90px;padding:11px 8px 12px;border-radius:12px;cursor:pointer;
+.picker{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:22px}
+.pick{min-width:0;padding:11px 4px 12px;border-radius:12px;cursor:pointer;
   border:1px solid var(--line);background:rgba(232,242,243,.03);color:var(--dim);
   display:flex;flex-direction:column;align-items:center;gap:7px;transition:.22s ease;
-  font-family:var(--mono);font-size:.5rem;letter-spacing:.11em;text-transform:uppercase}
-.pick svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.4;
+  font-family:var(--mono);font-size:clamp(.42rem,1.5vw,.5rem);letter-spacing:.08em;
+  text-transform:uppercase;text-align:center;overflow-wrap:anywhere}
+.pick svg{width:clamp(18px,5.4vw,24px);height:clamp(18px,5.4vw,24px);stroke:currentColor;fill:none;stroke-width:1.4;
   stroke-linecap:round;stroke-linejoin:round}
 .pick:hover{color:var(--foam);border-color:rgba(232,242,243,.3)}
 .pick[aria-selected="true"]{color:#07161D;background:var(--pc);border-color:var(--pc);font-weight:500}
@@ -382,6 +385,11 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
   border-left:2px solid transparent}
 .stages li i{position:absolute;left:11px;top:9px;font-style:normal;font-family:var(--mono);
   font-size:.44rem;letter-spacing:.06em;color:var(--dim)}
+/* the global li::before bullet leaks in here. Keep it as a tick, but centre it on
+   the number (whose box centre is 14px, not the bullet's default 15px), shorten
+   it, and key it to the card's own colour instead of the page accent — which
+   moves with the depth picker three sections up. */
+.stages li::before{left:2px;top:14px;width:5px;background:var(--mc)}
 .stages li b{display:block;font-size:.83rem;font-weight:600;color:var(--foam);
   letter-spacing:-.012em;line-height:1.25}
 .stages li span{display:block;font-size:.78rem;line-height:1.45;color:var(--dim);margin-top:3px}
