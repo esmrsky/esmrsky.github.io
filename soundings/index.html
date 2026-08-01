@@ -215,13 +215,42 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .trace-svg svg{display:block;width:100%;height:auto}
 .legs{display:grid;gap:1px;background:var(--line);border-top:1px solid var(--line)}
 @media(min-width:760px){.legs{grid-template-columns:repeat(2,1fr)}}
-.leg{background:var(--panel);padding:15px 18px;display:flex;gap:13px;align-items:flex-start}
-.leg b{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;color:var(--lc);flex:none;padding-top:3px}
-.leg div{flex:1}
+.leg{background:var(--panel);padding:15px 18px;display:flex;gap:13px;align-items:flex-start;
+  width:100%;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer;
+  transition:background .2s ease,box-shadow .2s ease}
+.leg b{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;color:var(--lc);flex:none;
+  padding-top:3px;transition:color .2s ease}
+.leg .leg-txt{flex:1;display:block}
 .leg strong{display:block;font-weight:600;font-size:.95rem;letter-spacing:-.015em;margin-bottom:3px}
-.leg span{color:var(--dim);font-size:.87rem;line-height:1.42}
+.leg .leg-note{display:block;color:var(--dim);font-size:.87rem;line-height:1.42}
 .leg.wallpoint{background:rgba(255,92,59,.07)}
 .leg.wallpoint b{color:var(--wall)}
+.leg:focus-visible{outline:2px solid var(--foam);outline-offset:-3px}
+
+/* a moment and its card are the same thing in two places — light both at once */
+.leg.is-active{background:color-mix(in srgb,var(--lc) 15%,var(--panel));
+  box-shadow:inset 3px 0 0 var(--lc)}
+.leg.is-active b{color:var(--foam)}
+.dot{cursor:pointer}
+.dot:focus-visible{outline:2px solid var(--foam);outline-offset:1px}
+.dot .ring,.dot .pip{transform-box:fill-box;transform-origin:center}
+.dot .ring{opacity:0;transform:scale(.6);
+  transition:opacity .22s ease,transform .28s cubic-bezier(.22,1,.36,1)}
+.dot .pip{transition:transform .28s cubic-bezier(.22,1,.36,1)}
+.dot text{fill:rgba(232,242,243,.4);transition:fill .2s ease}
+.dot.is-active .ring{opacity:.5;transform:scale(2.2)}
+.dot.is-active .pip{transform:scale(1.35)}
+.dot.is-active text{fill:var(--foam)}
+/* once something is pinned, everything else steps back */
+.tracebox.has-lock .leg:not(.is-active){opacity:.45}
+.tracebox.has-lock .dot:not(.is-active) .pip{opacity:.4}
+
+/* cycling names: the head and the cards arrive rather than snapping */
+@keyframes traceIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes dotIn{from{opacity:0}to{opacity:1}}
+.tracebox .trace-head{animation:traceIn .45s cubic-bezier(.22,1,.36,1) both}
+.tracebox .leg{animation:traceIn .5s cubic-bezier(.22,1,.36,1) both}
+.tracebox .dot{animation:dotIn .4s ease both}
 .callout{margin-top:32px;border-radius:18px;border:1px solid rgba(138,99,240,.32);
   background:linear-gradient(120deg,rgba(138,99,240,.10),transparent);padding:26px}
 .callout h4{margin:0 0 8px;font-size:1.15rem;letter-spacing:-.025em;
@@ -380,6 +409,7 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
   .brick,.swim,.scrollcue .ln,h1,.braid path,.wave{animation:none!important}
+  .tracebox .trace-head,.tracebox .leg,.tracebox .dot{animation:none!important}
 }
 ::selection{background:var(--s2);color:#06141C}
 
@@ -1018,8 +1048,10 @@ J.forEach((p,i)=>{const b=document.createElement('button');
   b.style.setProperty('--pc',p.c);b.textContent=p.n;
   b.addEventListener('click',()=>trace(i));peoHost.appendChild(b);});
 
+const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function trace(idx){
   const p=J[idx];
+  lockI=null;
   document.querySelectorAll('.per').forEach((b,j)=>b.setAttribute('aria-selected',String(j===idx)));
   const W=900,H=300,L=54,R=26,T=26,B=42;
   const n=p.pts.length;
@@ -1040,10 +1072,19 @@ function trace(idx){
             font-size="7.5" letter-spacing="1.6">THE WALL</text>` : `
       <text x="${W-R}" y="${T+2}" text-anchor="end" fill="var(--wall)" font-family="Martian Mono,monospace"
             font-size="7.5" letter-spacing="1.6">NEVER PASSES THROUGH</text>`;
-  const dots=pts.map((c,i)=>`<circle cx="${c[0]}" cy="${c[1]}" r="6" fill="${BANDS[bandFor(p.pts[i][0])][2]}"
-      stroke="#0D2733" stroke-width="2"/>
-      <text x="${c[0]}" y="${H-B+22}" text-anchor="middle" fill="rgba(232,242,243,.4)"
-            font-family="Martian Mono,monospace" font-size="7.5">${String(i+1).padStart(2,'0')}</text>`).join('');
+  /* dots land in step with the line drawing past them, and each one is a control
+     paired with the numbered card below it */
+  const dots=pts.map((c,i)=>{
+    const col=BANDS[bandFor(p.pts[i][0])][2];
+    const delay=RM?0:Math.round(130+i*(820/Math.max(1,n-1)));
+    return `<g class="dot" data-i="${i}" tabindex="0" role="button"
+        aria-label="Moment ${i+1} of ${n}: ${esc(p.pts[i][1])}" style="animation-delay:${delay}ms">
+        <circle cx="${c[0]}" cy="${c[1]}" r="15" fill="transparent"/>
+        <circle class="ring" cx="${c[0]}" cy="${c[1]}" r="6" fill="none" stroke="${col}" stroke-width="2"/>
+        <circle class="pip" cx="${c[0]}" cy="${c[1]}" r="6" fill="${col}" stroke="#0D2733" stroke-width="2"/>
+        <text x="${c[0]}" y="${H-B+22}" text-anchor="middle"
+              font-family="Martian Mono,monospace" font-size="7.5">${String(i+1).padStart(2,'0')}</text>
+      </g>`;}).join('');
 
   tbox.style.setProperty('--accent',p.c);
   tbox.innerHTML=`
@@ -1057,10 +1098,12 @@ function trace(idx){
       </svg>
     </div>
     <div class="legs">${p.pts.map((pt,i)=>`
-      <div class="leg ${p.wall===i?'wallpoint':''}" style="--lc:${BANDS[bandFor(pt[0])][2]}">
+      <button type="button" class="leg ${p.wall===i?'wallpoint':''}" data-i="${i}"
+        style="--lc:${BANDS[bandFor(pt[0])][2]};animation-delay:${RM?0:Math.round(100+i*36)}ms">
         <b>${String(i+1).padStart(2,'0')}</b>
-        <div><strong>${pt[1]}</strong><span>${pt[2]}</span></div>
-      </div>`).join('')}</div>`;
+        <span class="leg-txt"><strong>${pt[1]}</strong><span class="leg-note">${pt[2]}</span></span>
+      </button>`).join('')}</div>`;
+  markTrace(null);
   const ln=document.getElementById('tline');
   if(ln && !RM){const len=ln.getTotalLength();
     ln.style.strokeDasharray=len;ln.style.strokeDashoffset=len;
@@ -1068,6 +1111,31 @@ function trace(idx){
     ln.style.transition='stroke-dashoffset 1.15s cubic-bezier(.4,0,.2,1)';
     ln.style.strokeDashoffset=0;}
 }
+/* dot <-> card pairing. Delegated on the box, so it survives trace() replacing
+   its innerHTML. Hover previews, click locks — click is the real mechanism, since
+   the dots have to work on a phone. */
+let lockI=null;
+function markTrace(i){
+  tbox.querySelectorAll('.dot,.leg').forEach(el=>
+    el.classList.toggle('is-active', i!==null && +el.dataset.i===i));
+  tbox.classList.toggle('has-lock', lockI!==null);
+}
+tbox.addEventListener('pointerover',e=>{
+  const t=e.target.closest('.dot,.leg'); if(t && lockI===null) markTrace(+t.dataset.i);});
+tbox.addEventListener('pointerleave',()=>{ if(lockI===null) markTrace(null); });
+tbox.addEventListener('focusin',e=>{
+  const t=e.target.closest('.dot,.leg'); if(t && lockI===null) markTrace(+t.dataset.i);});
+tbox.addEventListener('click',e=>{
+  const t=e.target.closest('.dot,.leg'); if(!t) return;
+  const i=+t.dataset.i;
+  lockI = (lockI===i) ? null : i;
+  markTrace(lockI===null ? null : i);});
+/* a <g> is focusable via tabindex but never fires click from the keyboard */
+tbox.addEventListener('keydown',e=>{
+  const t=e.target.closest('.dot'); if(!t) return;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();
+    t.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
+
 trace(0);
 
 /* ===== FRAMEWORK CHART ===== */
