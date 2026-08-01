@@ -135,7 +135,7 @@
 
   .term-list{padding:10px;display:flex;flex-direction:column;gap:7px;}
   .term{border:1px solid var(--line);background:var(--tbg,#fff);cursor:pointer;
-    transition:border-color .14s,background .14s;}
+    transition:border-color .14s,background .14s,border-left-width .3s cubic-bezier(.2,.7,.3,1);}
   .term:hover{border-color:var(--fc);}
   .term.open{border-color:var(--fc);border-left-width:4px;}
   .term:focus-visible{outline:2px solid var(--fc);outline-offset:2px;}
@@ -145,15 +145,45 @@
   .term-want{font-family:"Space Mono",monospace;font-size:9.5px;letter-spacing:.04em;
     margin-left:auto;white-space:nowrap;}
   .term-tell{font-size:.86rem;line-height:1.4;color:#2C2745;padding:0 11px 10px;margin:0;}
-  .term-body{display:none;padding:0 11px 12px;border-top:1px dashed var(--line);margin-top:2px;}
-  .term.open .term-body{display:block;}
-  .term-body dl{margin:10px 0 0;display:grid;grid-template-columns:74px 1fr;gap:6px 12px;}
+
+  /* The body opens by animating a grid row from 0fr to 1fr. This is the only way
+     to transition to an *unknown* content height without measuring it in JS —
+     display:none can't be transitioned and a max-height guess makes long terms
+     snap and short ones lag. The inner wrapper must keep min-height:0 and
+     overflow:hidden or the row refuses to collapse. */
+  .term-body{display:grid;grid-template-rows:0fr;
+    transition:grid-template-rows .34s cubic-bezier(.22,.75,.28,1);}
+  .term.open .term-body{grid-template-rows:1fr;}
+  .term-body-in{overflow:hidden;min-height:0;}
+  /* the dashed rule lives on the dl, not the wrapper — a border on the wrapper
+     would still paint a 1px line while the row is collapsed to zero */
+  .term-body dl{margin:2px 0 0;padding:10px 11px 12px;
+    border-top:1px dashed var(--line);
+    display:grid;grid-template-columns:74px 1fr;gap:6px 12px;
+    opacity:0;transform:translateY(-5px);
+    transition:opacity .2s ease,transform .3s cubic-bezier(.22,.75,.28,1);}
+  .term.open .term-body dl{opacity:1;transform:none;transition-delay:.05s;}
   .term-body dt{font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.11em;
     text-transform:uppercase;color:var(--muted);padding-top:3px;}
   .term-body dd{margin:0;font-size:.88rem;line-height:1.45;}
   .term-body dd em{color:#2C2745;}
   @media(max-width:560px){.term-body dl{grid-template-columns:1fr;gap:1px 0;}
     .term-body dt{padding-top:8px;}}
+
+  /* real-world examples */
+  .wild{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;}
+  .wild li{position:relative;padding-left:15px;font-size:.86rem;line-height:1.45;color:#2C2745;}
+  .wild li::before{content:"";position:absolute;left:2px;top:.58em;width:5px;height:5px;
+    border-radius:50%;background:var(--fc);opacity:.75;}
+  [data-theme="dark"] .wild li{color:#B9B2CE;}
+
+  /* caret — the only always-visible signal that a term opens at all */
+  .term-caret{align-self:center;display:inline-flex;margin-left:2px;color:var(--fct);
+    opacity:.5;transition:transform .34s cubic-bezier(.22,.75,.28,1),opacity .18s;}
+  .term-caret svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;
+    stroke-linecap:round;stroke-linejoin:round;}
+  .term:hover .term-caret{opacity:.85;}
+  .term.open .term-caret{transform:rotate(180deg);opacity:1;}
   .flagchip{font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.06em;
     border:1px solid;padding:1px 5px;display:inline-block;}
 
@@ -486,6 +516,165 @@ const T = [
  note:"Sits between access seeking and intimate control \u2014 presence without contact.",flag:1}
 ];
 
+/* Three worked examples per term, kept apart from T so the term rows stay
+   readable. Deliberately spread across settings — online, work, family, dating —
+   because most of these change name depending on who the target is. */
+const EX = {
+  pickme:[
+    "A new hire tells the team in week one that she “just gets on better with men, less drama.”",
+    "In the bridesmaid group chat, she calls the others high-maintenance while volunteering to be the easy one.",
+    "Under a makeup tutorial: “I could never spend two hours on this, I literally roll out of bed.”"],
+  niceguy:[
+    "He drives her home from every night out for a year, then calls her ungrateful when she starts seeing someone.",
+    "A long message itemising everything he's done for her, ending “I guess women don't want a decent man.”",
+    "He reminds her he listened through her breakup — offered as the reason she owes him a date."],
+  humblebrag:[
+    "“So awkward being recognised at the airport again, I never know what to do with my face.”",
+    "A post about how draining it is to keep turning recruiters down.",
+    "“My weakness? I probably care too much about the work” — in an interview."],
+  virtue:[
+    "A statement post at the peak of a news cycle, quietly archived once the cycle moves on.",
+    "A brand adds a rainbow logo in the markets where it's safe, and leaves it off in the ones where it isn't.",
+    "Someone announces in a meeting they'd never have taken that client — after the contract has already ended."],
+  vice:[
+    "A founder brags about four hours' sleep to a room that treats burnout as proof of seriousness.",
+    "Telling a table of food people that he mostly eats petrol-station hot dogs.",
+    "A politician staging a fast-food photo op to signal he isn't one of the elites."],
+  aura:[
+    "The slow walk away from the camera, sunglasses already on, filmed on the fourth take.",
+    "A footballer's deadpan celebration — rehearsed all week, staged to look like nothing.",
+    "Replying to a big compliment with a single full stop."],
+  flex:[
+    "The watch angled into the corner of a gym selfie that is nominally about the gym.",
+    "Posting the offer letter “for salary transparency,” with the number uncropped.",
+    "A story of the boarding pass, seat number 2A clearly legible."],
+  maincharacter:[
+    "Filming a dance routine on a busy platform while commuters step around the tripod.",
+    "Narrating his own day out loud at a shared desk, to nobody in particular.",
+    "Turning a friend's engagement dinner into an update on his own difficult year."],
+
+  sadfishing:[
+    "“some people really show you who they are” — no name, no context, forty comments asking what happened.",
+    "A hospital-corridor selfie captioned “don't want to talk about it,” posted to everyone she knows.",
+    "Lyrics about being unwanted at 1am, then “it's nothing, honestly” to each person who checks in."],
+  pitybait:[
+    "A creator opens every upload with a fresh crisis, and the merch link is pinned in the description.",
+    "Fundraiser updates that arrive whenever donations dip, rather than whenever something happens.",
+    "The same illness anecdote, retold verbatim to each new set of colleagues."],
+  fishing:[
+    "“I look genuinely terrible in this” — posted anyway, unfiltered, at 7pm.",
+    "“My presentation was probably a mess”, said only to the person who watched it go well.",
+    "Sending a selfie with “be honest, I look rough, right?”"],
+  victim:[
+    "Asked to stop arriving late, he spends the rest of the meeting on how he's always singled out.",
+    "A parent answers a boundary with “I suppose I was just a terrible mother, then.”",
+    "Confronted about a cruel remark, she cries until the other person is comforting her."],
+  traumadump:[
+    "A first date opens with forty minutes on a custody battle, before the drinks arrive.",
+    "“How was your weekend?” answered with a full account of a family assault, at a work lunch.",
+    "A 2am message with a crisis history, sent to an acquaintance who was never asked if that was okay."],
+  guilttrip:[
+    "“No, go, enjoy yourself. I'll just sit here with the ankle.”",
+    "“I paid for that degree, but sure, move to another country.”",
+    "“Don't worry about ringing. I know you've got your own life now.”"],
+  darvo:[
+    "Confronted about going through her phone, he ends the conversation asking why she doesn't trust him.",
+    "A manager accused of shouting responds that the complainant is creating a hostile environment.",
+    "“I can't believe you'd accuse me of that — after everything you've put me through.”"],
+
+  ragebait:[
+    "A pasta video that adds ketchup at the end, with the angriest comment pinned to the top.",
+    "A take pitched at eleven out of ten because the accurate version wouldn't travel.",
+    "“Unpopular opinion: tipping should be abolished” from an account that posts nothing else."],
+  clickbait:[
+    "“Doctors hate this one trick”, over a page that never names the trick.",
+    "A shocked-face thumbnail with a red arrow pointing at nothing that appears in the video.",
+    "A headline posed as a question, answered “no” in the ninth paragraph."],
+  engagementbait:[
+    "“Type YES if you agree” under a photograph of a soldier.",
+    "“Only 1% can spot the hidden animal” on a picture where the animal is the main subject.",
+    "“Tag someone who needs to hear this” on a generic quote graphic."],
+  cringebait:[
+    "A cooking video that rinses raw chicken in the sink — edited, captioned and framed to be reposted in horror.",
+    "An outfit video assembled badly enough that the quote-tweets write themselves.",
+    "A “how I met my boyfriend” story with an obvious plot hole left in on purpose."],
+  clipfarm:[
+    "Starting a row with a shop assistant while a friend films from a flattering angle.",
+    "A podcast guest saving the wildest claim for the moment he knows will be cut into shorts.",
+    "An airport-queue prank that exists only because the reaction shot cuts well."],
+  thirsttrap:[
+    "A gym mirror photo captioned “consistency is a mindset.”",
+    "“Just back from the beach”, where the beach is not the subject of the photograph.",
+    "A get-ready-with-me video in which the routine takes three seconds and the mirror takes the rest."],
+  clout:[
+    "A long, grieving tribute to a musician he stood next to in a queue once.",
+    "Filming himself handing money to a homeless man.",
+    "Tagging a well-known founder into threads she has never once replied to."],
+
+  sealion:[
+    "A stranger asks for a source, then a better source, then a peer-reviewed source, for six hours, always politely.",
+    "“Can you define what you mean by that?” — seven times, each answer producing a fresh definition request.",
+    "Courteously asking someone to substantiate their own lived experience with a citation."],
+  concerntroll:[
+    "“As a lifelong supporter, I just worry this protest is losing us the middle ground.”",
+    "In a union meeting, the person urging restraint turns out to be relaying management's position.",
+    "“I'm only asking as a friend — do you think that dress is really you?”"],
+  jaq:[
+    "“I'm not saying it was rigged. I'm just asking why they counted overnight.”",
+    "“No accusations. Genuinely curious why he was at that address.”",
+    "A thread of twelve questions with no claims, whose only shared answer is a conspiracy."],
+  astroturf:[
+    "Two hundred five-star reviews for a new restaurant, all posted the same afternoon, all forty words long.",
+    "A “residents' campaign” against a bike lane, funded by a single car-park operator.",
+    "Letters to the local paper from a dozen names, in one person's phrasing."],
+  whatabout:[
+    "Asked about a missed deadline, he lists three the other team missed last quarter.",
+    "A question about one government's prisons answered with a different government's prisons.",
+    "“You're on at me about the dishes when you left the car unlocked in March?”"],
+
+  lovebomb:[
+    "Week two: daily flowers, a nickname, a plan to meet his parents. Week six: four days of silence, unexplained.",
+    "A new manager calls you the best hire in years, then drops you from a project without a word.",
+    "A group gives a newcomer total attention, and cools sharply the first time she disagrees with anything."],
+  negging:[
+    "“You're actually really funny — for someone who looks like you do.”",
+    "“I love that you just don't care what you wear.”",
+    "“You're the smartest person on this team. Considering.”"],
+  breadcrumb:[
+    "A reaction to your story every couple of weeks, for a year, and no reply to a single message.",
+    "“We should definitely get that drink” every third month, never once attached to a date.",
+    "A recruiter who checks in each quarter to keep you warm for a role that never opens."],
+  futurefake:[
+    "The move-in-together conversation resurfaces every time she starts viewing flats on her own.",
+    "A promotion that is “next cycle” for five consecutive cycles.",
+    "“After this project we'll take that trip” — said before every project, for four years."],
+  gaslight:[
+    "“I never said that” about a message he deletes later the same evening.",
+    "Money keeps going missing from the account, and she's told she's forgetting where she put it.",
+    "After a shouting match: “You're remembering it wrong. You've not been well lately.”"],
+  weapinc:[
+    "He folds the laundry so badly, so consistently, that she stops asking him to.",
+    "A colleague can never work out the expenses system, but files his own reimbursements in four minutes.",
+    "“You're just better at booking things than me” — about every appointment, for six years."],
+
+  simp:[
+    "Rent money into a streamer's donation goal, for a username read aloud once.",
+    "Driving ninety minutes to fix a friend's laptop after she has said, clearly, that she isn't interested.",
+    "Defending an influencer in every comment section she will never read."],
+  invite:[
+    "“That sounds amazing. I'm around all weekend, no plans at all.”",
+    "Mentioning twice, to the person who made the booking, how much he'd love that restaurant.",
+    "“Oh, is that this Friday? Funny — I was going to be in the area anyway.”"],
+  brownnose:[
+    "He laughs hardest at the jokes of whoever writes his review, and not at anyone else's.",
+    "Copying the director into a two-line favour that needed no audience.",
+    "Warm and instantly available for the partner; unreachable for the intern."],
+  orbit:[
+    "Ghosted for five months, and first to view every story within ten minutes of posting.",
+    "He likes her gym posts reliably, and has answered none of her messages.",
+    "An ex who watches every close-friends story and has never once replied to one."]
+};
+
 const BRIDGES = [
   ["pickme","virtue"],["pickme","negging"],["humblebrag","fishing"],["aura","clout"],
   ["maincharacter","traumadump"],["victim","darvo"],["darvo","gaslight"],["darvo","whatabout"],
@@ -551,6 +740,12 @@ T.forEach(t => {
 
 /* ---------- readout ---------- */
 const readout = document.getElementById("readout");
+function closeAllTerms(){
+  document.querySelectorAll(".term.open").forEach(r => {
+    r.classList.remove("open");
+    r.setAttribute("aria-expanded","false");
+  });
+}
 function select(id, scrollRow){
   const t = T.find(x=>x.id===id); const f = FAM[t.fam];
   document.querySelectorAll(".node").forEach(n=>n.classList.toggle("on", n.dataset.id===id));
@@ -563,8 +758,9 @@ function select(id, scrollRow){
     ' &nbsp;·&nbsp; Origin: '+t.origin+'</p>';
   const row = document.querySelector('[data-row="'+id+'"]');
   if(row){
-    document.querySelectorAll(".term").forEach(r=>r.classList.remove("open"));
+    closeAllTerms();
     row.classList.add("open");
+    row.setAttribute("aria-expanded","true");
     if(scrollRow) row.scrollIntoView({behavior:"smooth",block:"center"});
   }
 }
@@ -595,20 +791,25 @@ function renderFamilies(){
       d.setAttribute("role","button");
       /* a wash of the family colour, so a term always reads as belonging */
       d.style.setProperty("--tbg", hexToRGBA(f.hex, 0.055));
+      d.setAttribute("aria-expanded","false");
+      const wild = (EX[t.id] || []).map(x => '<li>' + x + '</li>').join("");
       d.innerHTML =
         '<div class="term-top"><span class="term-name">' + t.term + '</span>' +
-        '<span class="term-want">' + t.want + '</span></div>' +
+        '<span class="term-want">' + t.want + '</span>' +
+        '<span class="term-caret" aria-hidden="true"><svg viewBox="0 0 12 12">' +
+          '<path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span></div>' +
         '<p class="term-tell">' + t.tell + '</p>' +
-        '<div class="term-body"><dl>' +
+        '<div class="term-body"><div class="term-body-in"><dl>' +
           '<dt>Aimed at</dt><dd>' + t.aim + '</dd>' +
           '<dt>Origin</dt><dd>' + t.origin + '</dd>' +
           '<dt>Sounds like</dt><dd><em>' + t.ex + '</em></dd>' +
+          (wild ? '<dt>In the wild</dt><dd><ul class="wild">' + wild + '</ul></dd>' : '') +
           '<dt>Note</dt><dd>' + t.note + (t.flag ? ' <span class="flagchip">contested</span>' : '') + '</dd>' +
-        '</dl></div>';
+        '</dl></div></div>';
       const toggle = () => {
         const was = d.classList.contains("open");
-        document.querySelectorAll(".term").forEach(r => r.classList.remove("open"));
-        if(!was){ d.classList.add("open"); select(t.id, false); }
+        closeAllTerms();
+        if(!was){ d.classList.add("open"); d.setAttribute("aria-expanded","true"); select(t.id, false); }
         else document.querySelectorAll(".node").forEach(n => n.classList.remove("on"));
       };
       d.addEventListener("click", toggle);
