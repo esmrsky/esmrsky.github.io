@@ -53,12 +53,13 @@ button,input,select,textarea{font:inherit;color:inherit}
   --violet:#4A3AFF;
   --void:#111114;
 
+
   --on-yellow:#111114;
-  --on-green:#FFFFFF;
+  --on-green:#111114;
   --on-orange:#111114;
   --on-aqua:#111114;
   --on-violet:#FFFFFF;
-  --on-pink:#FFFFFF;
+  --on-pink:#111114;
   --on-void:#FFFFFF;
 
   --sans:"Helvetica Neue",Helvetica,Arial,"Segoe UI",sans-serif;
@@ -97,8 +98,8 @@ button,input,select,textarea{font:inherit;color:inherit}
   --pink:#FF2D87; --yellow:#FFC700; --green:#00A95C;
   --orange:#FF5C1F; --aqua:#00B0C7; --violet:#4A3AFF;
   --void:#111114;
-  --on-yellow:#111114; --on-green:#FFFFFF; --on-orange:#111114;
-  --on-aqua:#111114; --on-violet:#FFFFFF; --on-pink:#FFFFFF;
+  --on-yellow:#111114; --on-green:#111114; --on-orange:#111114;
+  --on-aqua:#111114; --on-violet:#FFFFFF; --on-pink:#111114;
   --on-void:#FFFFFF;
 }
 
@@ -115,7 +116,7 @@ body{
   overflow-x:hidden;
 }
 
-h1,h2,h3,h4,p,ul,ol,figure{margin:0}
+h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
 ul,ol{padding:0;list-style:none}
 button{font:inherit;color:inherit}
 a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
@@ -238,49 +239,46 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 }
 .sec__t p{font-size:.9375rem;color:var(--ink-2);margin-top:.65rem;max-width:62ch}
 
-/* --------------------------------------------------------------- thesis */
-.thesis p{
-  font-size:clamp(1.375rem,3.6vw,2.6rem);
-  font-weight:700;letter-spacing:-.035em;line-height:1.08;
-  text-wrap:balance;max-width:24ch;
+/* --------------------------------------------------------------- opener */
+/* 01 was a 60ch column stranded in a full-bleed page with the substance folded
+   away behind a toggle. Both halves are now visible at once and the band runs
+   the width: thesis inverted on ink, the long read alongside it on paper-2. */
+.opener{display:grid;grid-template-columns:1fr}
+@media (min-width:940px){ .opener{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)} }
+.opener__a{
+  background:var(--ink);color:var(--paper);
+  padding:clamp(1.5rem,3vw,2.5rem) var(--gutter) clamp(1.75rem,3.5vw,3rem);
+  display:flex;flex-direction:column;justify-content:center;gap:1.1rem;
 }
-.thesis p + p{margin-top:1.1rem}
-.thesis .hl{
+.opener__a p{
+  font-size:clamp(1.375rem,2.6vw,2.35rem);
+  font-weight:700;letter-spacing:-.035em;line-height:1.08;
+  text-wrap:balance;
+}
+.hl{
   background:var(--yellow);color:var(--on-yellow);
   padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
 }
-.thesis .hl--pink{background:var(--pink);color:var(--on-pink)}
+.hl--pink{background:var(--pink);color:var(--on-pink)}
 
-/* --------------------------------------------------------------- disclose */
-/* paper → ink bar → paper-2 pad → paper. Three seams, no rules. */
-.disc{margin-top:2rem}
-.disc__btn{
-  width:100%;background:var(--ink);color:var(--paper);border:0;cursor:pointer;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.9rem 1.1rem;min-height:56px;text-align:left;
-  font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;
+.opener__b{
+  background:var(--paper-2);
+  padding:clamp(1.5rem,3vw,2.5rem) var(--gutter);
 }
-.disc__btn:hover{background:var(--pink);color:var(--on-pink)}
-.disc__btn .pm{
-  width:22px;height:22px;flex:none;position:relative;
-  background:var(--pink);
+.opener__b h3{
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.45rem;
 }
-.disc__btn:hover .pm{background:var(--paper)}
-.disc__btn .pm::before,.disc__btn .pm::after{
-  content:"";position:absolute;background:var(--on-pink);
-  left:50%;top:50%;transform:translate(-50%,-50%);
+.opener__b h3::before{content:"";width:10px;height:10px;flex:none;background:var(--pink)}
+.opener__cols > * + *{margin-top:.9rem}
+@media (min-width:1280px){
+  .opener__cols{columns:2;column-gap:2.25rem}
+  .opener__cols > *{break-inside:avoid}
+  .opener__cols > * + *{margin-top:0;padding-top:.9rem}
 }
-.disc__btn:hover .pm::before,.disc__btn:hover .pm::after{background:var(--ink)}
-.disc__btn .pm::before{width:10px;height:2px}
-.disc__btn .pm::after{width:2px;height:10px;transition:transform .22s ease}
-.disc__btn[aria-expanded="true"] .pm::after{transform:translate(-50%,-50%) scaleY(0)}
-.disc__wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .34s cubic-bezier(.22,1,.36,1)}
-.disc__btn[aria-expanded="true"] + .disc__wrap{grid-template-rows:1fr}
-.disc__inner{overflow:hidden}
-.disc__pad{padding:1.2rem 1.1rem 1.35rem;background:var(--paper-2)}
-.disc__pad > * + *{margin-top:.9rem}
-.disc__pad p{font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:70ch}
-.disc__pad strong{color:var(--ink)}
+.opener__b p{font-size:.9375rem;line-height:1.6;color:var(--ink-2)}
+.opener__b strong{color:var(--ink)}
 
 /* --------------------------------------------------------------- the six positions
 
@@ -296,60 +294,62 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .pos{
   --c:var(--yellow); --on:var(--on-yellow);
   display:grid;grid-row:span 8;grid-template-rows:subgrid;
+  color:var(--on);
   min-width:0;
 }
 @supports not (grid-template-rows:subgrid){
   .pos{grid-row:auto;display:flex;flex-direction:column}
 }
-
-.pos__head{
-  background:var(--c);color:var(--on);
-  padding:1.25rem 1.25rem 1.35rem;
-  display:flex;flex-direction:column;gap:.6rem;
+/* one flat colour for the whole card. With no shade change between rows the
+   separation is an explicit divider, inset to --gutter so it starts and ends
+   exactly where the text does. */
+.pos > *{background:var(--c);position:relative}
+.pos > * + *::before{
+  content:"";position:absolute;top:0;left:var(--gutter);right:var(--gutter);
+  height:2px;background:var(--on);opacity:.26;
 }
+
+.pos__head{padding:1.35rem var(--gutter) 1.4rem;display:flex;flex-direction:column;gap:.65rem}
 .pos__top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
-.pos__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;font-weight:500;opacity:.72;padding-top:.5rem}
+.pos__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;font-weight:500;opacity:.7;padding-top:.5rem}
 .pos__ico{width:40px;height:40px;flex:none}
 .pos__ico svg{width:100%;height:100%;display:block}
-.pos__head h3{font-size:clamp(1.6rem,3vw,2.15rem);font-weight:800;letter-spacing:-.045em;line-height:.94}
-.pos__one{font-size:.875rem;line-height:1.45;font-weight:500;opacity:.9;margin-top:auto}
+.pos__head h3{font-size:clamp(1.7rem,3.1vw,2.3rem);font-weight:800;letter-spacing:-.045em;line-height:.94}
+.pos__one{font-size:.9375rem;line-height:1.4;font-weight:600;margin-top:auto}
 
 .fact{
-  --fc:var(--c); --on-fc:var(--on);
-  padding:1rem 1.25rem 1.1rem;
-  display:flex;flex-direction:column;gap:.4rem;
+  padding:1rem var(--gutter) 1.15rem;
+  display:flex;flex-direction:column;gap:.45rem;
   min-width:0;
 }
-/* the value ramp: children 2,4,6 are facts 1,3,5 — 3,5,7 are facts 2,4,6 */
-.pos > .fact{background:color-mix(in srgb, var(--c) 7%, var(--paper))}
-.pos > .fact:nth-child(odd){background:color-mix(in srgb, var(--c) 16%, var(--paper))}
 .fact h4{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
-  display:flex;align-items:center;gap:.5rem;color:var(--ink);
+  display:flex;align-items:center;gap:.55rem;
 }
+/* the chip inverts against the card rather than taking pink/green: on a
+   saturated ground a pink chip on the green card sits at 1.2:1 and vanishes.
+   The glyphs — check, no-entry, warning — carry the do/don't instead. */
 .fact__i{
-  width:22px;height:22px;flex:none;
-  background:var(--fc);color:var(--on-fc);
+  width:24px;height:24px;flex:none;
+  background:var(--on);color:var(--c);
   display:grid;place-items:center;
 }
-.fact__i svg{width:13px;height:13px;display:block}
-.fact p{font-size:.875rem;line-height:1.5;color:var(--ink-2)}
-/* the do / don't signal lives in the chip only — putting it in the panel made
-   two neighbouring cards' warn rows the same pink, and the seam disappeared */
-.fact--warn{--fc:var(--pink);--on-fc:var(--on-pink)}
-.fact--do{--fc:var(--green);--on-fc:var(--on-green)}
+.fact__i svg{width:14px;height:14px;display:block}
+.fact p{font-size:.875rem;line-height:1.5;opacity:.92}
 
-.verse{
-  font-family:var(--serif);font-style:italic;
-  font-size:.9375rem;line-height:1.45;
-  background:color-mix(in srgb, var(--c) 26%, var(--paper));
-  padding:1.15rem 1.25rem 1.25rem;
-  color:var(--ink);
+.verse{padding:1.25rem var(--gutter) 1.35rem;font-size:1rem;line-height:1.5}
+/* a highlight, not a footnote: the quote takes a hard inverted block, the way
+   .hl does in 01. Inverting against --on rather than --ink keeps it
+   working on the void card, whose ink IS --ink. */
+.verse q{
+  quotes:none;font-weight:700;letter-spacing:-.02em;
+  background:var(--on);color:var(--c);
+  padding:.1em .3em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
 }
 .verse cite{
   display:block;font-family:var(--mono);font-style:normal;
   font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-3);margin-top:.45rem;
+  opacity:.72;margin-top:.7rem;
 }
 
 /* --------------------------------------------------------------- wall */
@@ -380,7 +380,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   --wc:var(--paper);
   background:color-mix(in srgb, var(--wc) 9%, var(--ink));
   color:var(--paper);
-  padding:1.3rem 1.35rem 1.45rem;
+  padding:1.3rem var(--gutter) 1.45rem;
   display:flex;flex-direction:column;gap:.6rem;
   min-width:0;
 }
@@ -400,7 +400,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   display:flex;gap:1rem;align-items:flex-start;
   background:color-mix(in srgb, var(--pink) 32%, var(--ink));
   color:var(--paper);
-  padding:1.3rem 1.35rem 1.45rem;
+  padding:1.3rem var(--gutter) 1.45rem;
 }
 .siren svg{flex:none;margin-top:.1rem;color:var(--pink)}
 .siren p{font-size:.9375rem;line-height:1.55;max-width:88ch}
@@ -460,9 +460,10 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .plot__r[data-top="1"]{color:var(--ink);font-weight:700}
 .res__moves{display:grid;margin-top:1.75rem}
 @media (min-width:820px){ .res__moves{grid-template-columns:1fr 1fr} }
-.res__moves .fact{padding:1.25rem 1.3rem 1.35rem}
-.res__moves .fact--do{background:color-mix(in srgb, var(--green) 13%, var(--paper))}
-.res__moves .fact--warn{background:color-mix(in srgb, var(--pink) 13%, var(--paper))}
+.res__moves .fact{padding:1.25rem 1.3rem 1.35rem;color:var(--ink)}
+.res__moves .fact--do{--c:var(--green);--on:var(--on-green);background:var(--green)}
+.res__moves .fact--warn{--c:var(--pink);--on:var(--on-pink);background:var(--pink)}
+.res__moves .fact{color:var(--on)}
 
 /* --------------------------------------------------------------- frameworks */
 .frames{display:grid;grid-template-columns:1fr}
@@ -470,7 +471,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 @media (min-width:1200px){ .frames{grid-template-columns:repeat(3,1fr)} }
 .frame{
   background:color-mix(in srgb, var(--fc) 9%, var(--paper));
-  display:grid;grid-row:span 4;grid-template-rows:subgrid;
+  display:grid;grid-row:span 5;grid-template-rows:subgrid;
   min-width:0;
 }
 @supports not (grid-template-rows:subgrid){
@@ -478,13 +479,16 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 }
 .frame__k{
   background:var(--fc);color:var(--on-fc);
-  padding:.7rem 1.3rem;
+  padding:.7rem var(--gutter);
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
   font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
 }
 .frame__k b{font-weight:700;letter-spacing:.1em}
+.frame__id{display:flex;align-items:center;gap:.6rem;min-width:0}
+.frame__ico{width:20px;height:20px;flex:none;display:block}
+.frame__ico svg{width:100%;height:100%;display:block}
 .frame h3{
-  padding:1.2rem 1.3rem .5rem;
+  padding:1.2rem var(--gutter) .5rem;
   font-size:clamp(1.25rem,2vw,1.5rem);font-weight:800;
   letter-spacing:-.035em;line-height:1.05;text-wrap:balance;
 }
@@ -492,13 +496,31 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
    The colour link is carried by a solid swatch, where a low-luminance ink is
    still perfectly legible as a block. */
 .frame__tag{
-  padding:0 1.3rem .95rem;
+  padding:0 var(--gutter) .95rem;
   font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink);font-weight:500;
   display:flex;align-items:center;gap:.45rem;
 }
 .frame__tag::before{content:"";width:10px;height:10px;flex:none;background:var(--fc)}
-.frame__note{padding:0 1.3rem 1.4rem;font-size:.875rem;line-height:1.55;color:var(--ink-2)}
+.frame__note{padding:0 var(--gutter) 1.4rem;font-size:.875rem;line-height:1.55;color:var(--ink-2)}
+/* each framework's own map, in its own vocabulary and its own count — the
+   whole reason the shared six-position axis came out. One value step deeper
+   than the card so the seam holds without a rule. */
+.frame__map{background:color-mix(in srgb, var(--fc) 22%, var(--paper));padding:1rem var(--gutter) 1.2rem}
+.frame__map h4{
+  font-family:var(--mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;
+}
+.frame__map h4::before{content:"";width:8px;height:8px;flex:none;background:var(--fc)}
+.frame__map ol{display:flex;flex-direction:column;gap:.7rem}
+.frame__map li{display:flex;gap:.65rem;align-items:baseline}
+.frame__no{
+  font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;
+  color:var(--ink);opacity:.45;flex:none;
+}
+.frame__st{min-width:0}
+.frame__st b{display:block;font-size:.875rem;line-height:1.3;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+.frame__st i{display:block;font-style:normal;font-size:.8125rem;line-height:1.45;color:var(--ink-2);margin-top:.15rem}
 
 /* --------------------------------------------------------------- sources */
 /* each chip takes a tint of the kind it filters to, so a wrapping row of them
@@ -519,7 +541,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 @media (min-width:760px){ .srcs{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:1200px){ .srcs{grid-template-columns:repeat(3,1fr)} }
 .src{
-  padding:1.2rem 1.3rem 1.35rem;display:flex;flex-direction:column;gap:.45rem;
+  padding:1.2rem var(--gutter) 1.35rem;display:flex;flex-direction:column;gap:.45rem;
   background:color-mix(in srgb, var(--fc) 9%, var(--paper));
   min-width:0;
 }
@@ -544,7 +566,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .caveats{display:grid;grid-template-columns:1fr;margin-top:2.5rem}
 @media (min-width:720px){ .caveats{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:1200px){ .caveats{grid-template-columns:repeat(4,1fr)} }
-.cav{padding:1.2rem 1.3rem 1.35rem;background:color-mix(in srgb, var(--fc) 12%, var(--paper));min-width:0}
+.cav{padding:1.2rem var(--gutter) 1.35rem;background:color-mix(in srgb, var(--fc) 12%, var(--paper));min-width:0}
 .cav h4{font-size:1.0625rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem}
 .cav p{font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
 .cav__n{font-family:var(--mono);font-size:.625rem;color:var(--ink-2);letter-spacing:.14em;display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem}
@@ -554,16 +576,34 @@ footer{padding-block:2.5rem 3.5rem;background:var(--ink);color:var(--paper)}
 footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spacing:.03em;opacity:.7}
 
 /* --------------------------------------------------------------- motion */
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{opacity:1;r:2.4}50%{opacity:.35;r:4}}
-@keyframes dash{to{stroke-dashoffset:-24}}
-@keyframes grow{0%,100%{transform:scaleY(.7)}50%{transform:scaleY(1)}}
-.ico-rise{animation:bob 3.2s ease-in-out infinite}
-.ico-spin{transform-origin:center;animation:spin 14s linear infinite}
-.ico-pulse{animation:pulse 2.6s ease-in-out infinite}
-.ico-dash{stroke-dasharray:5 3;animation:dash 1.6s linear infinite}
-.ico-grow{transform-origin:center bottom;animation:grow 2.8s ease-in-out infinite}
+/* Only transform, opacity and stroke-dashoffset are animated. The previous set
+   animated the SVG `r` attribute, which the compositor cannot take — at 40px it
+   visibly stepped. transform-box:fill-box makes each shape scale about its own
+   box rather than the SVG origin. */
+@keyframes ic-float{0%,100%{transform:translateY(1.5px)}50%{transform:translateY(-2.5px)}}
+@keyframes ic-wave{0%{transform:scale(.5);opacity:0}28%{opacity:1}100%{transform:scale(1.18);opacity:0}}
+@keyframes ic-bar{0%,100%{transform:scaleY(.74)}50%{transform:scaleY(1)}}
+@keyframes ic-driftL{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.6px,-1px)}}
+@keyframes ic-driftR{0%,100%{transform:translate(0,0)}50%{transform:translate(1.6px,1px)}}
+@keyframes ic-fault{to{stroke-dashoffset:-15}}
+@keyframes ic-trace{0%{stroke-dashoffset:71}100%{stroke-dashoffset:-71}}
+@keyframes ic-ring{0%{transform:scale(.45);opacity:0}26%{opacity:.9}100%{transform:scale(1.3);opacity:0}}
+
+.pos__ico svg [class^="ic-"]{transform-box:fill-box}
+.ic-float{transform-origin:center;animation:ic-float 3.6s ease-in-out infinite}
+.ic-wave{transform-origin:center bottom;animation:ic-wave 3.4s cubic-bezier(.33,0,.2,1) infinite;opacity:0}
+.ic-w2{animation-delay:0s}
+.ic-w3{animation-delay:.62s}
+.ic-bar{transform-origin:center bottom;animation:ic-bar 3.2s cubic-bezier(.4,0,.3,1) infinite}
+.ic-b2{animation-delay:.2s}
+.ic-b3{animation-delay:.4s}
+.ic-slabL{animation:ic-driftL 5.2s ease-in-out infinite}
+.ic-slabR{animation:ic-driftR 5.2s ease-in-out infinite}
+.ic-fault{animation:ic-fault 2.4s linear infinite}
+.ic-trace{animation:ic-trace 4.4s cubic-bezier(.5,0,.5,1) infinite}
+.ic-ring{transform-origin:center;animation:ic-ring 3.8s cubic-bezier(.33,0,.2,1) infinite;opacity:0}
+.ic-g2{animation-delay:0s}
+.ic-g3{animation-delay:.7s}
 
 .rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
 .rv[data-in="1"]{opacity:1;transform:none}
@@ -571,7 +611,9 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition-duration:.001ms !important}
   .rv{opacity:1;transform:none}
-  .disc__wrap{transition:none}
+  /* the ripples idle at opacity:0 and are revealed by their animation — with
+     animation:none they would simply never appear */
+  .ic-wave,.ic-ring{opacity:1;transform:none}
 }
 </style>
 
@@ -634,20 +676,22 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       <span class="sec__n">01</span>
       <div class="sec__t"><h2>Maturity isn't a ladder.</h2></div>
     </div>
-    <div class="thesis narrow">
-      <p>Most church maps go <span class="hl">up</span>. Learn more, serve more, lead more.</p>
-      <p>But every framework that lasted had to add a room for the part where it all <span class="hl hl--pink">stops working</span> — and that room is where maturity actually happens.</p>
-    </div>
-    <div class="disc narrow" data-disc>
-      <button class="disc__btn" aria-expanded="false"><span>Read the longer version</span><span class="pm" aria-hidden="true"></span></button>
-      <div class="disc__wrap"><div class="disc__inner"><div class="disc__pad">
-        <p>Scripture does sometimes talk like a ladder — Peter stacks eight rungs in three verses. Churches love that, because a ladder is teachable, printable and measurable.</p>
-        <p>The trouble is what happens around year fifteen. A mature, obedient, genuinely converted person finds the practices that worked for a decade have stopped working. Prayer flattens. Certainty drains. Nothing obviously sinful has happened, and yet the machinery has stopped.</p>
-        <p><strong>Every tradition that lasted built a room for this.</strong> John of the Cross called it the dark night. Hagberg and Guelich drew it as a literal wall. Teresa put it in the middle of the castle, not outside it. Rohr calls the fall necessary. Scazzero built a whole discipleship model around it.</p>
-        <p>Most churches have no name for it, so they reach for the nearest one they've got: <strong>backsliding</strong>. That single mislabel is one of the most reliable ways to lose a person who was about to grow.</p>
-      </div></div></div>
-    </div>
   </div>
+    <div class="opener">
+      <div class="opener__a">
+        <p>Most church maps go <span class="hl">up</span>. Learn more, serve more, lead more.</p>
+        <p>But every framework that lasted had to add a room for the part where it all <span class="hl hl--pink">stops working</span> — and that room is where maturity actually happens.</p>
+      </div>
+      <div class="opener__b">
+        <h3>The longer version</h3>
+        <div class="opener__cols">
+          <p>Scripture does sometimes talk like a ladder — Peter stacks eight rungs in three verses. Churches love that, because a ladder is teachable, printable and measurable.</p>
+          <p>The trouble is what happens around year fifteen. A mature, obedient, genuinely converted person finds the practices that worked for a decade have stopped working. Prayer flattens. Certainty drains. Nothing obviously sinful has happened, and yet the machinery has stopped.</p>
+          <p><strong>Every tradition that lasted built a room for this.</strong> John of the Cross called it the dark night. Hagberg and Guelich drew it as a literal wall. Teresa put it in the middle of the castle, not outside it. Rohr calls the fall necessary. Scazzero built a whole discipleship model around it.</p>
+          <p>Most churches have no name for it, so they reach for the nearest one they've got: <strong>backsliding</strong>. That single mislabel is one of the most reliable ways to lose a person who was about to grow.</p>
+        </div>
+      </div>
+    </div>
 </section>
 
 <section class="sec sec--alt" id="map">
@@ -659,8 +703,8 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
         <p>Read across, not down. Every card carries the same six rows in the same order — the tell, what it feels like, where it goes wrong, the doorway out, and what to do and not do if you're walking with someone there.</p>
       </div>
     </div>
-    <div class="map" id="mapGrid"></div>
   </div>
+    <div class="map" id="mapGrid"></div>
 </section>
 
 <section class="wall" id="wall">
@@ -677,6 +721,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </p>
     </div>
 
+  </div>
     <div class="wgrid">
       <div class="wcell wcell--warn">
         <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></i>Wrong exit 01 — bypass</h4>
@@ -711,7 +756,6 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </svg>
       <p><b>Before you self-diagnose</b>The difference between a dark night and clinical depression is a medical question and you should not guess at it. They look identical from the inside and are treated completely differently. Spiritual direction and therapy aren't competitors here — get both, and tell each one you have the other.</p>
     </div>
-  </div>
 </section>
 
 <section class="sec" id="instrument">
@@ -770,8 +814,8 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
         <p>What each framework actually is, who made it, and what it's good for. Not a league table — they were built for different jobs, in different centuries, for different rooms.</p>
       </div>
     </div>
-    <div class="frames" id="fwList"></div>
   </div>
+    <div class="frames" id="fwList"></div>
 </section>
 
 <section class="sec">
@@ -784,6 +828,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
     <div class="filters" id="filters"></div>
+  </div>
     <div class="srcs" id="srcList"></div>
 
     <div class="caveats">
@@ -792,7 +837,6 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       <div class="cav" style="--fc:var(--orange)"><span class="cav__n">Caveat 03</span><h4>Not uniform across your life</h4><p>It's very common to be at 05 in suffering and 02 in money, or 06 with strangers and 01 with your own family. Locate yourself per domain.</p></div>
       <div class="cav" style="--fc:var(--aqua)"><span class="cav__n">Caveat 04</span><h4>Not a diagnosis of anybody else</h4><p>Used on another person without their invitation, this becomes a very efficient instrument of condescension.</p></div>
     </div>
-  </div>
 </section>
 
 <footer>
@@ -813,14 +857,70 @@ var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 var root = document.documentElement;
 
 /* ---------------------------------------------------------------- data */
+/* Position marks. All motion is transform/opacity or stroke-dashoffset — no
+   animating of SVG geometry attributes (r, width, y), which the compositor
+   cannot take and which visibly steps at these sizes. Each mark states the
+   position's idea rather than decorating it. */
 var ICONS = {
-  1:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 28h11M26 28h11"/><circle class="ico-rise" cx="20" cy="16" r="4.5"/><path class="ico-dash" d="M20 24v10" stroke-linecap="round"/></svg>',
-  2:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 31a16 16 0 0132 0"/><path d="M12 31a8 8 0 0116 0"/><circle class="ico-pulse" cx="20" cy="31" r="2.6" fill="currentColor" stroke="none"/></svg>',
-  3:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 34V8M33 34V17M7 17h26M7 25h26M3 34h34"/><rect class="ico-grow" x="11" y="10" width="7" height="5" fill="currentColor" stroke="none"/></svg>',
-  4:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 12h13M24 17h13M3 21h13M24 26h13M3 30h13M24 35h13"/><path class="ico-dash" d="M20 4v32" stroke-linecap="round"/></svg>',
-  5:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 11c7 0 8 19 15 19s10-22 19-22"/><circle class="ico-pulse" cx="37" cy="8" r="3" fill="currentColor" stroke="none"/></svg>',
-  6:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="20" cy="20" r="2.8" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="9"/><circle class="ico-spin" cx="20" cy="20" r="15.5" stroke-dasharray="4 5"/></svg>'
+  1:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+
+      '<path d="M11 35V14a9 9 0 0 1 18 0v21"/><path d="M4 35h32"/>'+
+      '<circle class="ic-float" cx="20" cy="24" r="3.1" fill="currentColor" stroke="none"/>'+
+    '</svg>',
+  2:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<circle cx="20" cy="31" r="2.6" fill="currentColor" stroke="none"/>'+
+      '<path d="M12 31a8 8 0 0 1 16 0"/>'+
+      '<path class="ic-wave ic-w2" d="M6.5 31a13.5 13.5 0 0 1 27 0"/>'+
+      '<path class="ic-wave ic-w3" d="M2 31a18 18 0 0 1 36 0"/>'+
+    '</svg>',
+  3:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<path d="M4 35h32"/>'+
+      '<rect class="ic-bar ic-b1" x="8" y="21" width="6.5" height="12" fill="currentColor" stroke="none"/>'+
+      '<rect class="ic-bar ic-b2" x="16.7" y="15" width="6.5" height="18" fill="currentColor" stroke="none"/>'+
+      '<rect class="ic-bar ic-b3" x="25.4" y="9" width="6.5" height="24" fill="currentColor" stroke="none"/>'+
+    '</svg>',
+  4:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<g class="ic-slabL"><path d="M4 12h12M4 20h12M4 28h12"/></g>'+
+      '<g class="ic-slabR"><path d="M24 15h12M24 23h12M24 31h12"/></g>'+
+      '<path class="ic-fault" d="M20 4v32" stroke-dasharray="3 4.5"/>'+
+    '</svg>',
+  5:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<path d="M4 13c6.5 0 5 19 16 19s9.5-19 16-19" opacity=".38"/>'+
+      '<path class="ic-trace" d="M4 13c6.5 0 5 19 16 19s9.5-19 16-19" stroke-dasharray="9 62"/>'+
+    '</svg>',
+  6:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2">'+
+      '<circle cx="20" cy="20" r="2.9" fill="currentColor" stroke="none"/>'+
+      '<circle cx="20" cy="20" r="8"/>'+
+      '<circle class="ic-ring ic-g2" cx="20" cy="20" r="13"/>'+
+      '<circle class="ic-ring ic-g3" cx="20" cy="20" r="18"/>'+
+    '</svg>'
 };
+
+/* One mark per framework — static. Eleven animating marks in a reference grid
+   would be noise; these are identifiers, not focal points. */
+var FW_ICONS = [
+  /* 1 John — three groups */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+  /* Teresa — nested mansions */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19"/><rect x="6.5" y="6.5" width="11" height="11"/><rect x="10.3" y="10.3" width="3.4" height="3.4" fill="currentColor" stroke="none"/></svg>',
+  /* John of the Cross — the night */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 10.2 3.2a6.8 6.8 0 0 0 9.8 11.3z"/></svg>',
+  /* Navigators — hub and spokes */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9.2"/><path d="M12 2.8v18.4M2.8 12h18.4"/><circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"/></svg>',
+  /* Fowler — six steps */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h4v-4h4v-4h4V9h4V5h4"/></svg>',
+  /* Peck — four stages */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" fill="currentColor" stroke="none"/></svg>',
+  /* Hagberg — a path stopped by a wall */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2 19h8"/><path d="M14 19h8"/><path d="M12 3v18"/></svg>',
+  /* Scazzero — two joined loops */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="8.5" cy="12" r="5.8"/><circle cx="15.5" cy="12" r="5.8"/></svg>',
+  /* REVEAL — survey data */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 21h18"/><path d="M6.5 21v-7M12 21V6M17.5 21v-11"/></svg>',
+  /* Rohr — the fall and the turn */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2.5 7c4 0 3 11 9.5 11s5.5-11 9.5-11"/></svg>',
+  /* Spader — four chairs, the last one released */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 20v-5M9 20v-7M15 20v-9M21 20v-11"/><path d="M2 20h20" opacity=".45"/></svg>'
+];
 
 /* one icon per row of the card, so the six rows are scannable by shape as well
    as by position. The chip behind each takes the card's ink, except the two
@@ -908,31 +1008,127 @@ var POS = [
     verse:"You know him who is from the beginning.", ref:"1 John 2:13–14 · also 1 Corinthians 13:4–7" }
 ];
 
-/* Eleven overviews. No cross-comparison, no per-position cells — each entry
-   stands on its own: what it is, who made it, what it's good for. */
+/* Eleven overviews. No cross-comparison and no shared axis — `stages` is each
+   framework's OWN map, in its own vocabulary and its own count (three groups,
+   four chairs, five nights, six stages, seven mansions). They don't line up,
+   which is the point; forcing them onto one grid is what got cut. Each stage
+   carries a gloss, because a bare stage name teaches nobody anything. */
 var FW = [
   { yr:"c. AD 90", nm:"1 John 2:12–14", tag:"The oldest map here",
-    note:"Three groups — little children, young men, fathers — defined by what they know rather than what they do. Still the tightest thing written on the subject: two verses, no diagram, no programme." },
+    note:"Three groups — little children, young men, fathers — defined by what they know rather than what they do. Still the tightest thing written on the subject: two verses, no diagram, no programme.",
+    unit:"Three groups",
+    stages:[
+      ["“Little children”","Sins forgiven; you know the Father. The relationship is settled before anything has been achieved."],
+      ["“Young men”","Strong, the word abides in you, you have overcome the evil one. Conviction that now holds under pressure."],
+      ["“Fathers”","You know him who is from the beginning. John says it twice and adds nothing — no list of achievements follows."]
+    ] },
+
   { yr:"3rd–16th c.", nm:"The Three Ways · Teresa's Interior Castle", tag:"The classical spine",
-    note:"Purgative, illuminative, unitive — the backbone of Western spirituality, mapped by Teresa onto seven mansions. Written by a woman running a reform movement under Inquisition surveillance, which is why it is far more practical than its reputation." },
+    note:"Purgative, illuminative, unitive — the backbone of Western spirituality, mapped by Teresa onto seven mansions. Written by a woman running a reform movement under Inquisition surveillance, which is why it is far more practical than its reputation.",
+    unit:"Three ways · seven mansions",
+    stages:[
+      ["Purgative — mansions 1–3","Turning from sin and disordered attachment. Effort, discipline, and a great deal of self-management."],
+      ["Illuminative — mansions 4–6","Prayer stops being something you do and becomes something done to you. The passive purifications sit here."],
+      ["Unitive — mansion 7","Settled union. Teresa is blunt that it is given rather than earned, and that it is not a rank."]
+    ] },
+
   { yr:"c. 1578", nm:"John of the Cross — Dark Night", tag:"The night, precisely",
-    note:"Written from a prison cell, and still the most exact description of the place where the machinery stops. Separates the night of sense from the night of spirit — a distinction worth keeping, because they need different responses." },
+    note:"Written from a prison cell, and still the most exact description of the place where the machinery stops. Separates the night of sense from the night of spirit — a distinction worth keeping, because they need different responses.",
+    unit:"Beginners to union",
+    stages:[
+      ["Beginners — consolations","God is felt. Prayer is sweet, and the sweetness is doing a good deal of the work."],
+      ["The night of sense","The consolation is withdrawn. What felt like devotion turns out to have been partly appetite."],
+      ["Proficients — the active night","Deliberate stripping of the things you reach for instead of God."],
+      ["The night of spirit","The deeper and rarer one. The self that was doing the believing comes apart."],
+      ["Union","Not an experience but a settled state, described mostly by what is no longer in the way."]
+    ] },
+
   { yr:"1930s", nm:"The Navigators' Wheel", tag:"A maintenance diagram",
-    note:"Christ the hub; Word, prayer, fellowship and witness the four spokes. Not a stage model at all — a picture of a balanced practice, with no time axis. One of the most-used discipleship tools ever made, and the fastest way to explain a rhythm to someone starting out." },
+    note:"Christ the hub; Word, prayer, fellowship and witness the four spokes. Not a stage model at all — a picture of a balanced practice, with no time axis. One of the most-used discipleship tools ever made, and the fastest way to explain a rhythm to someone starting out.",
+    unit:"A hub and four spokes",
+    stages:[
+      ["Christ — the hub","Not a stage. Everything else is a spoke, and spokes carry no load without the centre."],
+      ["The Word","Intake and obedience — hearing, reading, studying, memorising, meditating."],
+      ["Prayer","Direct address, in both directions."],
+      ["Fellowship","The other Christians who actually know you, rather than the ones you sit near."],
+      ["Witness","The life and the word, aimed outward."]
+    ] },
+
   { yr:"1981", nm:"Fowler — Stages of Faith", tag:"The academic standard",
-    note:"Six structural-developmental stages, Piaget applied to belief. Describes how people hold faith rather than what they believe. Heavily criticised as too cognitive and too linear; read the critiques alongside it." },
+    note:"Six structural-developmental stages, Piaget applied to belief. Describes how people hold faith rather than what they believe. Heavily criticised as too cognitive and too linear; read the critiques alongside it.",
+    unit:"Six stages",
+    stages:[
+      ["1 · Intuitive-projective","Early childhood. Faith is images, stories and feeling, not yet logic."],
+      ["2 · Mythic-literal","Stories are taken literally and fairness is the organising rule."],
+      ["3 · Synthetic-conventional","Faith held the way the group holds it. Most adults stay here, and it works until something challenges it."],
+      ["4 · Individuative-reflective","You take responsibility for your own beliefs. Costly, often lonely, and where a lot of deconstruction sits."],
+      ["5 · Conjunctive","You can hold paradox, and take other traditions seriously without losing your own."],
+      ["6 · Universalizing","Rare. A life ordered by a universal compassion, usually at considerable personal cost."]
+    ] },
+
   { yr:"1987", nm:"Peck — The Different Drum", tag:"From a psychiatrist",
-    note:"Four stages, written by a clinician rather than a theologian. The sharpest account of why people at different stages find each other threatening — and why the furthest-along can look, from outside, exactly like the earliest." },
+    note:"Four stages, written by a clinician rather than a theologian. The sharpest account of why people at different stages find each other threatening — and why the furthest-along can look, from outside, exactly like the earliest.",
+    unit:"Four stages",
+    stages:[
+      ["1 · Chaotic, antisocial","No governing principle beyond self-interest. Peck's observation is that movement out of this is often sudden."],
+      ["2 · Formal, institutional","Rules, form and the institution. Stability comes from the structure, so threats to the structure feel like threats to faith."],
+      ["3 · Skeptic, individual","Questioning, often leaving. Peck insists this is forward movement rather than decline."],
+      ["4 · Mystic, communal","At ease with mystery, and drawn back to the community it once left. Looks like stage 2 from outside, and is not."]
+    ] },
+
   { yr:"1989", nm:"Hagberg & Guelich — The Critical Journey", tag:"The spine of this map",
-    note:"Six stages plus the Wall, built from interviews rather than theory. Their own one-line summary is the best six words on the subject: stage one humbles us, two grounds us, three rewards us, four unsettles us, the wall unmasks us, five transforms us, six transcends us." },
+    note:"Six stages plus the Wall, built from interviews rather than theory. Their own one-line summary is the best six words on the subject: stage one humbles us, two grounds us, three rewards us, four unsettles us, the wall unmasks us, five transforms us, six transcends us.",
+    unit:"Six stages, and the Wall",
+    stages:[
+      ["1 · Recognition of God","Awe, and the beginning of a relationship. Sometimes conversion, sometimes long before it."],
+      ["2 · The life of discipleship","Learning, belonging, a leader and a community. Security comes from the group."],
+      ["3 · The productive life","Doing the work. Gifts find their shape, responsibility is taken, and identity quietly fuses to output."],
+      ["THE WALL","Not a stage but a passage, cutting across 3 into 4. Your will meets God's will and the machinery stops."],
+      ["4 · The journey inward","Facing what you actually are. Slow, disorienting, and measured in years rather than weeks."],
+      ["5 · The journey outward","The same service, no longer needed to hold you up."],
+      ["6 · The life of love","Reflecting God to others almost without noticing. Rare, and never self-described."]
+    ] },
+
   { yr:"2006", nm:"Scazzero — Emotionally Healthy Spirituality", tag:"Formation as curriculum",
-    note:"A whole discipleship course built around the piece most formation models leave out: emotional maturity and spiritual maturity are the same project. His charge is that ordinary discipleship leaves deep parts of a life untouched." },
+    note:"A whole discipleship course built around the piece most formation models leave out: emotional maturity and spiritual maturity are the same project. His charge is that ordinary discipleship leaves deep parts of a life untouched.",
+    unit:"Six stages",
+    stages:[
+      ["1 · Life-changing awareness of God","God becomes real rather than notional."],
+      ["2 · Discipleship","Learning the practices and the vocabulary of a community."],
+      ["3 · The active life","Serving and leading — with the emotional life usually left untouched underneath."],
+      ["4 · The wall and the journey inward","The crisis that forces the interior work, plus a rule of life sturdy enough to survive it."],
+      ["5 · The journey outward","Ministry out of a settled interior rather than out of need."],
+      ["6 · Transformed into love","Depth of love as the measure, in place of output."]
+    ] },
+
   { yr:"2007", nm:"REVEAL — Willow Creek", tag:"The survey data",
-    note:"A four-point continuum drawn from hundreds of thousands of churchgoers. Its famous result is that church activity drives growth early and stops predicting it later. Self-reported, single-tradition, and a marketing instrument as well as a study — read it as evidence, not verdict." },
+    note:"A four-point continuum drawn from hundreds of thousands of churchgoers. Its famous result is that church activity drives growth early and stops predicting it later. Self-reported, single-tradition, and a marketing instrument as well as a study — read it as evidence, not verdict.",
+    unit:"A four-point continuum",
+    stages:[
+      ["Exploring Christianity","Believes in God; not yet committed to Christ."],
+      ["Growing in Christ","Committed, and dependent on the church to supply the growth."],
+      ["Close to Christ","Depends on Christ daily. Church activity is still central."],
+      ["Christ-centred","Christ is the organising centre. Here church activity stops predicting movement and personal practice starts."]
+    ] },
+
   { yr:"2011", nm:"Rohr — Falling Upward", tag:"Two halves of a life",
-    note:"The first half builds the container; the second discovers what it was for. The best short account of why failure is load-bearing rather than incidental. Theologically contested and loose with texts — take the structure, check the exegesis." },
+    note:"The first half builds the container; the second discovers what it was for. The best short account of why failure is load-bearing rather than incidental. Theologically contested and loose with texts — take the structure, check the exegesis.",
+    unit:"Two halves, and the turn",
+    stages:[
+      ["First half — building the container","Identity, boundaries, security, achievement. Necessary work, and not the point of the work."],
+      ["The necessary fall","A failure, loss or disillusion the container cannot absorb."],
+      ["Second half — the contents","The same life, differently held. Less certainty, more capacity."]
+    ] },
+
   { yr:"2014", nm:"Spader — 4 Chair Discipling", tag:"What to do on Tuesday",
-    note:"Come and see → follow me → fish for men → go and bear fruit, traced through the four years of Jesus' ministry. The most actionable framework here, and the best answer if what you want is a next step rather than a diagnosis." }
+    note:"Come and see → follow me → fish for men → go and bear fruit, traced through the four years of Jesus' ministry. The most actionable framework here, and the best answer if what you want is a next step rather than a diagnosis.",
+    unit:"Four chairs",
+    stages:[
+      ["Chair 1 · Come and see","Curious and watching. The invitation is proximity, not commitment."],
+      ["Chair 2 · Follow me","Committed and being taught — rails, habits, and a person to follow."],
+      ["Chair 3 · Fish for men","Trained to serve and to bring others, working alongside the teacher rather than under them."],
+      ["Chair 4 · Go and bear fruit","Released to lead and to reproduce, which includes making other leaders."]
+    ] }
 ];
 
 var SRC = [
@@ -1005,16 +1201,6 @@ document.addEventListener("click", function(e){
   if(b) go(b.getAttribute("data-go"));
 });
 
-/* generic disclosure wiring */
-function wireDisc(scope){
-  (scope || document).querySelectorAll("[data-disc] .disc__btn").forEach(function(b){
-    b.addEventListener("click", function(){
-      b.setAttribute("aria-expanded", b.getAttribute("aria-expanded") === "true" ? "false" : "true");
-    });
-  });
-}
-wireDisc();
-
 /* ---------------------------------------------------------------- theme */
 document.getElementById("theme").addEventListener("click", function(){
   var sys = matchMedia("(prefers-color-scheme: dark)").matches;
@@ -1049,7 +1235,7 @@ document.getElementById("theme").addEventListener("click", function(){
       fact("do",   "door", "The doorway out", p.door)+
       fact("do",   "do",   "Helping someone here — do", p.help)+
       fact("warn", "dont", "Helping someone here — don’t", p.harm)+
-      '<blockquote class="verse">“'+p.verse+'”<cite>'+p.ref+'</cite></blockquote>';
+      '<blockquote class="verse"><q>'+p.verse+'</q><cite>'+p.ref+'</cite></blockquote>';
 
     grid.appendChild(card);
   });
@@ -1067,10 +1253,18 @@ document.getElementById("theme").addEventListener("click", function(){
     card.style.setProperty("--fc","var(--"+k+")");
     card.style.setProperty("--on-fc","var(--on-"+k+")");
     card.innerHTML =
-      '<div class="frame__k"><b>'+f.yr+'</b><span>'+String(i+1).padStart(2,"0")+' / 11</span></div>'+
+      '<div class="frame__k"><span class="frame__id"><span class="frame__ico" aria-hidden="true">'+
+        FW_ICONS[i]+'</span><b>'+f.yr+'</b></span>'+
+        '<span>'+String(i+1).padStart(2,"0")+' / 11</span></div>'+
       '<h3>'+f.nm+'</h3>'+
       '<p class="frame__tag">'+f.tag+'</p>'+
-      '<p class="frame__note">'+f.note+'</p>';
+      '<p class="frame__note">'+f.note+'</p>'+
+      '<div class="frame__map"><h4>'+f.unit+'</h4><ol>'+
+        f.stages.map(function(st,n){
+          return '<li><span class="frame__no">'+String(n+1).padStart(2,"0")+'</span>'+
+                 '<span class="frame__st"><b>'+st[0]+'</b><i>'+st[1]+'</i></span></li>';
+        }).join('')+
+      '</ol></div>';
     list.appendChild(card);
   });
 })();
