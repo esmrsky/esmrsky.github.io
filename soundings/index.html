@@ -504,16 +504,15 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
           <g stroke="rgba(232,242,243,.16)" stroke-width="1">
             <line x1="20" y1="128" x2="42" y2="128"/><line x1="20" y1="208" x2="42" y2="208"/>
             <line x1="20" y1="287" x2="42" y2="287"/><line x1="20" y1="315" x2="42" y2="315"/>
+            <line x1="20" y1="331" x2="280" y2="331" stroke-dasharray="3 5"/>
           </g>
           <!-- The bed is sand, and it is always drawn. Dry ground shows no water at
                all, so without it the figure reads as floating in an empty box; and
                because the water is translucent the sand carries through every other
                depth, which is what makes the river look shallow at the ankles. It is
-               keyed to --s0 rather than --accent so it stays sand as the accent moves. -->
+               keyed to --s0 rather than --accent so it stays sand as the accent moves.
+               The surface is the dashed rule above, same as every other depth mark. -->
           <rect x="0" y="331" width="300" height="49" fill="url(#sand)"/>
-          <line x1="0" y1="331" x2="300" y2="331" stroke="var(--s0)" stroke-opacity=".62" stroke-width="1.5"/>
-          <!-- grit, so the bed reads as sand rather than a flat band -->
-          <g fill="var(--s0)" opacity=".2"><ellipse cx="18" cy="345" rx="3.2" ry="1.3"/><ellipse cx="47" cy="338" rx="2.4" ry="1.0"/><ellipse cx="75" cy="353" rx="3.6" ry="1.4"/><ellipse cx="104" cy="342" rx="2.0" ry="0.9"/><ellipse cx="132" cy="362" rx="3.0" ry="1.2"/><ellipse cx="159" cy="347" rx="2.6" ry="1.1"/><ellipse cx="187" cy="339" rx="3.4" ry="1.3"/><ellipse cx="213" cy="358" rx="2.2" ry="1.0"/><ellipse cx="241" cy="344" rx="3.1" ry="1.2"/><ellipse cx="269" cy="351" rx="2.5" ry="1.1"/><ellipse cx="289" cy="367" rx="3.3" ry="1.3"/><ellipse cx="61" cy="372" rx="2.8" ry="1.1"/><ellipse cx="123" cy="375" rx="3.5" ry="1.4"/><ellipse cx="197" cy="370" rx="2.3" ry="1.0"/><ellipse cx="255" cy="377" rx="3.0" ry="1.2"/><ellipse cx="9" cy="361" rx="2.7" ry="1.1"/></g>
           <g fill="rgba(232,242,243,.35)" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1.4">
             <text x="20" y="122">4000</text><text x="20" y="202">3000</text>
             <text x="20" y="281">2000</text><text x="20" y="309">1000</text>
@@ -1051,7 +1050,7 @@ J.forEach((p,i)=>{const b=document.createElement('button');
 const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function trace(idx){
   const p=J[idx];
-  lockI=null;
+  lockI=null; hoverI=null;
   document.querySelectorAll('.per').forEach((b,j)=>b.setAttribute('aria-selected',String(j===idx)));
   const W=900,H=300,L=54,R=26,T=26,B=42;
   const n=p.pts.length;
@@ -1103,7 +1102,7 @@ function trace(idx){
         <b>${String(i+1).padStart(2,'0')}</b>
         <span class="leg-txt"><strong>${pt[1]}</strong><span class="leg-note">${pt[2]}</span></span>
       </button>`).join('')}</div>`;
-  markTrace(null);
+  paintTrace();
   const ln=document.getElementById('tline');
   if(ln && !RM){const len=ln.getTotalLength();
     ln.style.strokeDasharray=len;ln.style.strokeDashoffset=len;
@@ -1112,24 +1111,30 @@ function trace(idx){
     ln.style.strokeDashoffset=0;}
 }
 /* dot <-> card pairing. Delegated on the box, so it survives trace() replacing
-   its innerHTML. Hover previews, click locks — click is the real mechanism, since
-   the dots have to work on a phone. */
-let lockI=null;
-function markTrace(i){
+   its innerHTML. Hover always answers — an earlier version froze it out whenever
+   something was pinned, which read as hover being broken. Click still pins, so
+   the pairing works on a phone; leaving falls back to the pin, not to nothing. */
+let lockI=null, hoverI=null;
+function paintTrace(){
+  const i = hoverI!==null ? hoverI : lockI;
   tbox.querySelectorAll('.dot,.leg').forEach(el=>
     el.classList.toggle('is-active', i!==null && +el.dataset.i===i));
   tbox.classList.toggle('has-lock', lockI!==null);
 }
-tbox.addEventListener('pointerover',e=>{
-  const t=e.target.closest('.dot,.leg'); if(t && lockI===null) markTrace(+t.dataset.i);});
-tbox.addEventListener('pointerleave',()=>{ if(lockI===null) markTrace(null); });
-tbox.addEventListener('focusin',e=>{
-  const t=e.target.closest('.dot,.leg'); if(t && lockI===null) markTrace(+t.dataset.i);});
+const overTrace = e => {
+  const t=e.target.closest('.dot,.leg'); if(!t) return;
+  hoverI=+t.dataset.i; paintTrace();
+};
+tbox.addEventListener('pointerover',overTrace);
+tbox.addEventListener('focusin',overTrace);
+tbox.addEventListener('pointerleave',()=>{ hoverI=null; paintTrace(); });
+tbox.addEventListener('focusout',e=>{
+  if(!tbox.contains(e.relatedTarget)){ hoverI=null; paintTrace(); }});
 tbox.addEventListener('click',e=>{
   const t=e.target.closest('.dot,.leg'); if(!t) return;
   const i=+t.dataset.i;
   lockI = (lockI===i) ? null : i;
-  markTrace(lockI===null ? null : i);});
+  paintTrace();});
 /* a <g> is focusable via tabindex but never fires click from the keyboard */
 tbox.addEventListener('keydown',e=>{
   const t=e.target.closest('.dot'); if(!t) return;
