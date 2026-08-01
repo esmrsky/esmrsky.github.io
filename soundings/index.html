@@ -462,6 +462,10 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
               <stop offset="0%" stop-color="var(--accent)" stop-opacity=".55"/>
               <stop offset="100%" stop-color="var(--accent)" stop-opacity=".22"/>
             </linearGradient>
+            <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--s0)" stop-opacity=".44"/>
+              <stop offset="100%" stop-color="var(--s0)" stop-opacity=".12"/>
+            </linearGradient>
             <clipPath id="box"><rect x="0" y="0" width="300" height="380"/></clipPath>
           </defs>
           <!-- Rules sit on the figure's real landmarks: 3000 at the waist, 2000 at the
@@ -470,12 +474,16 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
           <g stroke="rgba(232,242,243,.16)" stroke-width="1">
             <line x1="20" y1="128" x2="42" y2="128"/><line x1="20" y1="208" x2="42" y2="208"/>
             <line x1="20" y1="287" x2="42" y2="287"/><line x1="20" y1="315" x2="42" y2="315"/>
-            <line x1="20" y1="331" x2="280" y2="331" stroke-dasharray="3 5"/>
           </g>
-          <!-- the bed itself, always drawn. Dry ground shows no water at all, so
-               without this the figure reads as floating in an empty box. The water
-               is translucent, so it still shows faintly through at every other depth. -->
-          <rect x="0" y="331" width="300" height="49" fill="rgba(232,242,243,.07)"/>
+          <!-- The bed is sand, and it is always drawn. Dry ground shows no water at
+               all, so without it the figure reads as floating in an empty box; and
+               because the water is translucent the sand carries through every other
+               depth, which is what makes the river look shallow at the ankles. It is
+               keyed to --s0 rather than --accent so it stays sand as the accent moves. -->
+          <rect x="0" y="331" width="300" height="49" fill="url(#sand)"/>
+          <line x1="0" y1="331" x2="300" y2="331" stroke="var(--s0)" stroke-opacity=".62" stroke-width="1.5"/>
+          <!-- grit, so the bed reads as sand rather than a flat band -->
+          <g fill="var(--s0)" opacity=".2"><ellipse cx="18" cy="345" rx="3.2" ry="1.3"/><ellipse cx="47" cy="338" rx="2.4" ry="1.0"/><ellipse cx="75" cy="353" rx="3.6" ry="1.4"/><ellipse cx="104" cy="342" rx="2.0" ry="0.9"/><ellipse cx="132" cy="362" rx="3.0" ry="1.2"/><ellipse cx="159" cy="347" rx="2.6" ry="1.1"/><ellipse cx="187" cy="339" rx="3.4" ry="1.3"/><ellipse cx="213" cy="358" rx="2.2" ry="1.0"/><ellipse cx="241" cy="344" rx="3.1" ry="1.2"/><ellipse cx="269" cy="351" rx="2.5" ry="1.1"/><ellipse cx="289" cy="367" rx="3.3" ry="1.3"/><ellipse cx="61" cy="372" rx="2.8" ry="1.1"/><ellipse cx="123" cy="375" rx="3.5" ry="1.4"/><ellipse cx="197" cy="370" rx="2.3" ry="1.0"/><ellipse cx="255" cy="377" rx="3.0" ry="1.2"/><ellipse cx="9" cy="361" rx="2.7" ry="1.1"/></g>
           <g fill="rgba(232,242,243,.35)" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1.4">
             <text x="20" y="122">4000</text><text x="20" y="202">3000</text>
             <text x="20" y="281">2000</text><text x="20" y="309">1000</text>
@@ -502,7 +510,7 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
           <style>.wave{animation:flowx 7s linear infinite}
             @keyframes flowx{from{transform:translateX(0)}to{transform:translateX(-300px)}}</style>
         </svg>
-        <div class="fig-foot"><b id="figDepth">1000 cubits</b><span id="figState">ankle-deep</span></div>
+        <div class="fig-foot"><b id="figDepth">0 cubits</b><span id="figState">dry ground</span></div>
       </div>
       <div>
         <div class="picker" role="tablist" aria-label="Choose a depth" id="picker"></div>
@@ -800,7 +808,7 @@ const picker=document.getElementById('picker'),panel=document.getElementById('pa
       water=document.getElementById('water'),figure=document.getElementById('figure'),
       figD=document.getElementById('figDepth'),figS=document.getElementById('figState');
 D.forEach((d,i)=>{const b=document.createElement('button');
-  b.className='pick';b.setAttribute('role','tab');b.setAttribute('aria-selected',i===1?'true':'false');
+  b.className='pick';b.setAttribute('role','tab');b.setAttribute('aria-selected',i===0?'true':'false');
   b.style.setProperty('--pc',d.color);b.innerHTML=IC[d.key]+'<span>'+d.short+'</span>';
   b.addEventListener('click',()=>select(i));picker.appendChild(b);});
 function select(i){const d=D[i];
@@ -827,7 +835,7 @@ function select(i){const d=D[i];
       </div>
     </div>
     <div class="p-move">${IC.arrow}<div><b>The move</b><p>${d.move}</p></div></div>`;}
-select(1);
+select(0);
 
 /* ===== VERNACULAR ===== */
 const CV=["var(--s0)","var(--s1)","var(--s2)","var(--s3)","var(--s4)"];
