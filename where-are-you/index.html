@@ -30,9 +30,12 @@ button,input,select,textarea{font:inherit;color:inherit}
                          collides with a 1-, 2- or 3-column grid, because
                          neighbours sit ±1, ±2 or ±3 apart and none of those
                          is ≡0 mod 6. Sources re-stamp on filter, since
-                         hiding cards changes who is adjacent to whom.
+                         filtering changes each card's index.
      · sections        — alternate --paper / --paper-2, with the topbar, the
                          Wall, the quiz bar and the footer inverted to --ink.
+                         Sections carry NO bottom padding: the space between
+                         two of them is one field in the incoming colour, so
+                         there is one edge there and not two. See .sec.
 
    Add anything here and check what it touches. A new block that matches its
    neighbour is not a subtle bug — the boundary simply vanishes.
@@ -225,7 +228,16 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .stat span{font-size:.8125rem;line-height:1.4;color:var(--ink-2);max-width:30ch}
 
 /* --------------------------------------------------------------- section */
-.sec{padding-block:clamp(2.5rem,6vw,5rem);background:var(--paper)}
+/* Top padding only. A section that ends in a full-bleed band used to put its own
+   paper under that band and the next section put a *different* paper under that
+   — two edges 77px apart, which reads as a stray stripe rather than as a seam.
+   With no bottom pad the space between two sections is one field in the incoming
+   section's colour, and the outgoing band butts it directly.
+   .sec--tail opts back in for a section that ends in contained content: there the
+   padding is the same colour as the content's own ground, so it makes no edge,
+   and without it the last element sits 16px off the next section's colour. */
+.sec{padding-block:clamp(2.5rem,6vw,5rem) 0;background:var(--paper)}
+.sec--tail{padding-bottom:clamp(2.5rem,6vw,5rem)}
 .sec--alt{background:var(--paper-2)}
 .sec__head{display:flex;flex-wrap:wrap;align-items:flex-start;gap:1rem 1.5rem;margin-bottom:2.25rem}
 .sec__n{
@@ -261,8 +273,10 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 }
 .hl--pink{background:var(--pink);color:var(--on-pink)}
 
+/* paper-3, not paper-2: this block now butts section 02's paper-2 top band
+   directly, and paper-2 on paper-2 is not a seam, it is a vanished edge. */
 .opener__b{
-  background:var(--paper-2);
+  background:var(--paper-3);
   padding:clamp(1.5rem,3vw,2.5rem) var(--gutter);
 }
 .opener__b h3{
@@ -337,7 +351,16 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .fact__i svg{width:14px;height:14px;display:block}
 .fact p{font-size:.875rem;line-height:1.5;opacity:.92}
 
-.verse{padding:1.25rem var(--gutter) 1.35rem;font-size:1rem;line-height:1.5}
+/* three verses, not one: an anchor text and two that come at the position from a
+   different angle. The first stays at 1rem so the row still has a head; the deep
+   bottom pad is what stops a stack of hard-inverted quote blocks from crowding
+   the card edge. */
+.verse{
+  padding:1.25rem var(--gutter) clamp(2.1rem,3.4vw,3.1rem);
+  display:flex;flex-direction:column;gap:1.05rem;
+}
+.verse__v{font-size:.9375rem;line-height:1.5}
+.verse__v:first-child{font-size:1rem}
 /* a highlight, not a footnote: the quote takes a hard inverted block, the way
    .hl does in 01. Inverting against --on rather than --ink keeps it
    working on the void card, whose ink IS --ink. */
@@ -349,7 +372,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .verse cite{
   display:block;font-family:var(--mono);font-style:normal;
   font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
-  opacity:.72;margin-top:.7rem;
+  opacity:.72;margin-top:.55rem;
 }
 
 /* --------------------------------------------------------------- wall */
@@ -465,20 +488,93 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .res__moves .fact--warn{--c:var(--pink);--on:var(--on-pink);background:var(--pink)}
 .res__moves .fact{color:var(--on)}
 
-/* --------------------------------------------------------------- frameworks */
-/* Masonry, because a grid row is only as short as its tallest card and these
-   carry 3 to 7 stages each — the shortfall showed as dead space inside the
-   card. `grid-template-rows:masonry` is not shippable yet and align-items:start
-   leaves real holes, so the columns are packed shortest-first in JS. The last
-   card in each column grows, so the bottom edge is flush rather than ragged.
-   The cost is that the stage maps no longer align across cards; packing tight
-   and aligning rows are the same trade in opposite directions. */
-.masonry{--cols:1;display:flex;align-items:stretch}
-@media (min-width:760px){ .masonry{--cols:2} }
-@media (min-width:1200px){ .masonry{--cols:3} }
-.masonry__col{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
-.masonry__col > :last-child{flex:1 1 auto}
-.frame{background:color-mix(in srgb, var(--fc) 9%, var(--paper));min-width:0}
+/* --------------------------------------------------------------- relational
+
+   The ledger is laid out in PAIRS in DOM order — a, b, a, b — not as two
+   stacked lists. At two columns that makes each pair a grid row, so the two
+   halves of a claim sit on one baseline without a subgrid; at one column it
+   collapses to statement, counter-statement, statement, which is the right
+   reading order on a phone and the wrong one for two lists. Cells stay flat
+   colour, so the divider is explicit and inset — and only at two columns,
+   where vertical neighbours share a hue. Stacked, the a/b alternation is
+   already a seam and a rule there would be a drawn line for nothing. */
+.ledger{display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .ledger{grid-template-columns:repeat(2,1fr)} }
+.ledger > *{
+  --c:var(--aqua); --on:var(--on-aqua);
+  background:var(--c);color:var(--on);
+  padding:1.1rem var(--gutter) 1.25rem;
+  position:relative;min-width:0;
+  display:flex;align-items:flex-start;gap:.8rem;
+}
+.ledger > .led--b{--c:var(--pink); --on:var(--on-pink)}
+@media (min-width:820px){
+  .ledger > :nth-child(n+3)::before{
+    content:"";position:absolute;top:0;left:var(--gutter);right:var(--gutter);
+    height:2px;background:var(--on);opacity:.26;
+  }
+}
+.led__i{
+  width:24px;height:24px;flex:none;margin-top:.15rem;
+  background:var(--on);color:var(--c);display:grid;place-items:center;
+}
+.led__i svg{width:14px;height:14px;display:block}
+.led p{font-size:clamp(1.0625rem,1.7vw,1.375rem);font-weight:700;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+/* compound, so it beats `.ledger > *` on specificity rather than on source
+   order — the house rule after the padding-shorthand collisions elsewhere */
+.ledger > .led__k{padding-block:.85rem}
+.led__k h3{
+  font-family:var(--mono);font-size:.625rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+}
+
+.trio{display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .trio{grid-template-columns:repeat(3,1fr)} }
+.tri{
+  --c:var(--yellow); --on:var(--on-yellow);
+  background:var(--c);color:var(--on);
+  padding:1.4rem var(--gutter) 1.6rem;
+  display:flex;flex-direction:column;gap:.55rem;min-width:0;
+}
+.tri__n{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
+.tri h3{font-size:clamp(1.25rem,2.2vw,1.65rem);font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.tri p{font-size:.9375rem;line-height:1.55;opacity:.92}
+
+/* --------------------------------------------------------------- gridset
+   A plain grid, not masonry. The JS masonry packed columns shortest-first and
+   let the last card in each grow to the column's full height — which on the
+   frameworks set left one card stretched over 670px of flat 9% tint. That does
+   not read as a card, it reads as a hole, and it reintroduced the very ragged
+   edge it was there to remove.
+
+   Here rows are as tall as their tallest card and each card absorbs the
+   difference inside its own bottom block (.frame__map, which is a deeper tint
+   than the card), so the field stays solid, nothing is left blank, and the rows
+   line up across cards again.
+
+   The trailing row is filled by span rather than left short: where the item
+   count doesn't divide by the column count, the last card takes the remainder.
+   The count is read straight off the DOM with :last-child:nth-child(), so the
+   filtered source list must have its hidden cards REMOVED, not [hidden] —
+   :nth-child counts hidden children. See draw() in the sources block. */
+.gridset{display:grid;grid-template-columns:1fr}
+@media (min-width:760px){
+  .gridset{grid-template-columns:repeat(2,1fr)}
+  .gridset > :last-child:nth-child(2n+1){grid-column:span 2}
+}
+@media (min-width:1200px){
+  .gridset{grid-template-columns:repeat(3,1fr)}
+  /* the 2-col span rule above still matches at this width; this reset has the
+     same specificity and comes later, so it lands. The two rules under it are
+     equally specific and later again, so they re-win wherever they apply. */
+  .gridset > :last-child:nth-child(2n+1){grid-column:auto}
+  .gridset > :last-child:nth-child(3n+1){grid-column:span 3}
+  .gridset > :last-child:nth-child(3n+2){grid-column:span 2}
+}
+.frame{
+  background:color-mix(in srgb, var(--fc) 9%, var(--paper));min-width:0;
+  display:flex;flex-direction:column;
+}
 .frame__k{
   background:var(--fc);color:var(--on-fc);
   padding:.7rem var(--gutter);
@@ -504,17 +600,28 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   display:flex;align-items:center;gap:.45rem;
 }
 .frame__tag::before{content:"";width:10px;height:10px;flex:none;background:var(--fc)}
-.frame__note{padding:0 var(--gutter) 1.4rem;font-size:.875rem;line-height:1.55;color:var(--ink-2)}
+/* capped: the last card in the set spans two or three columns to close the
+   trailing row, and an uncapped measure there would run to 1100px */
+.frame__note{padding:0 var(--gutter) 1.4rem;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:78ch}
 /* each framework's own map, in its own vocabulary and its own count — the
    whole reason the shared six-position axis came out. One value step deeper
-   than the card so the seam holds without a rule. */
-.frame__map{background:color-mix(in srgb, var(--fc) 22%, var(--paper));padding:1rem var(--gutter) 1.2rem}
+   than the card so the seam holds without a rule. It also carries the row's
+   height difference: flex:1 means the tint runs to the card's bottom edge
+   rather than leaving a paler strip of .frame under it. */
+.frame__map{background:color-mix(in srgb, var(--fc) 22%, var(--paper));padding:1rem var(--gutter) 1.2rem;flex:1 1 auto}
 .frame__map h4{
   font-family:var(--mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;
 }
 .frame__map h4::before{content:"";width:8px;height:8px;flex:none;background:var(--fc)}
-.frame__map ol{display:flex;flex-direction:column;gap:.7rem}
+/* auto-fill rather than a fixed count: at a normal card width 340px admits one
+   track, and on the wide card that closes the trailing row it admits two, so
+   the stage list reflows into the extra width instead of running down it as one
+   thin ribbon. No span-awareness needed — it reads the width it was given. */
+.frame__map ol{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));
+  gap:.75rem 2rem;align-content:start;
+}
 .frame__map li{display:flex;gap:.65rem;align-items:baseline}
 .frame__no{
   font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;
@@ -544,8 +651,6 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   background:color-mix(in srgb, var(--fc) 9%, var(--paper));
   min-width:0;
 }
-.src[hidden]{display:none}
-.masonry__col:empty{display:none}
 .src__k{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.1rem}
 .pill{
   font-family:var(--mono);font-size:.5625rem;letter-spacing:.12em;text-transform:uppercase;
@@ -553,7 +658,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 }
 .src h4{font-size:1.125rem;font-weight:800;letter-spacing:-.03em;line-height:1.12}
 .src__by{font-family:var(--mono);font-size:.625rem;color:var(--ink-3);letter-spacing:.04em}
-.src p{font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
+.src p{font-size:.8125rem;line-height:1.55;color:var(--ink-2);max-width:82ch}
 .src p b{color:var(--ink)}
 .src__link{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
@@ -563,10 +668,16 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--pink);
 }
 
-.caveats{display:grid;grid-template-columns:1fr;margin-top:2.5rem}
+/* flush against the sources above it — a 2.5rem paper margin here made exactly
+   the stray stripe the section paddings used to make, two edges close together
+   in the middle of a field of cards. Flush costs the seam unless the value
+   moves, so the caveats go to 24%: deep enough to hold against .src at 9%
+   whatever hue lands above them, and a fair signal that this row is a different
+   kind of block from the twenty-two it follows. */
+.caveats{display:grid;grid-template-columns:1fr}
 @media (min-width:720px){ .caveats{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:1200px){ .caveats{grid-template-columns:repeat(4,1fr)} }
-.cav{padding:1.2rem var(--gutter) 1.35rem;background:color-mix(in srgb, var(--fc) 12%, var(--paper));min-width:0}
+.cav{padding:1.4rem var(--gutter) 1.55rem;background:color-mix(in srgb, var(--fc) 24%, var(--paper));min-width:0}
 .cav h4{font-size:1.0625rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem}
 .cav p{font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
 .cav__n{font-family:var(--mono);font-size:.625rem;color:var(--ink-2);letter-spacing:.14em;display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem}
@@ -764,7 +875,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
 </section>
 
-<section class="sec" id="instrument">
+<section class="sec sec--tail" id="instrument">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n">03</span>
@@ -811,23 +922,84 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
   </div>
 </section>
 
-<section class="sec sec--alt">
+<section class="sec sec--alt" id="relational">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n">04</span>
+      <div class="sec__t">
+        <h2>It's a person, not a programme.</h2>
+        <p>Asked to choose between a thought-provoking sermon and building strong relationships with other Christians, 57% of Gen Z and Millennial churchgoers pick the relationships. Across all Christians it's closer — 48% to 42%, with 10% unsure. Every framework on this page arrives somewhere near the same place from a different direction, and almost none of what they describe can be delivered from a stage.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="ledger">
+      <div class="led__k"><h3>What a room can do</h3></div>
+      <div class="led__k led--b"><h3>What only a person can do</h3></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Teach you the vocabulary.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Notice which words you've quietly stopped using.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Hand you the framework.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Tell you which part of it you're avoiding.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Say that everybody struggles.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Say that you, specifically, are not alright.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Be excellent every single week.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Be there on the week you can't come.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Describe the wall from outside it.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Sit down inside it, and stay.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Reach a thousand people.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Let one of them change you.</p></div>
+    </div>
+
+    <div class="trio">
+      <div class="tri" style="--c:var(--yellow);--on:var(--on-yellow)">
+        <span class="tri__n">Who, specifically · 01</span>
+        <h3>Someone half a step ahead</h3>
+        <p>Not a mentor assigned by a programme. Someone close enough to your situation to answer a second question, and unimpressive enough that you'll actually ask it. Spader's four chairs make this the entire engine — you learn it working <em>alongside</em> the teacher before you're ever released to do it without them.</p>
+      </div>
+      <div class="tri" style="--c:var(--orange);--on:var(--on-orange)">
+        <span class="tri__n">Who, specifically · 02</span>
+        <h3>Someone level with you</h3>
+        <p>One person who gets the unedited version — not the version with the ending already attached to make it bearable to say. Hagberg and Guelich built their six stages out of interviews rather than theory, which is to say out of people who had somewhere to say the unflattering part out loud.</p>
+      </div>
+      <div class="tri" style="--c:var(--violet);--on:var(--on-violet)">
+        <span class="tri__n">Who, specifically · 03</span>
+        <h3>Someone behind you</h3>
+        <p>The fastest way to find out what you actually believe is to be asked by somebody who started last month. It's also the standing correction to Position 05's occupational hazard — contempt for the stage you have just come out of, which is the reliable proof you haven't.</p>
+      </div>
+    </div>
+
+    <div class="siren">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2L19 18H1L10 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M10 8v4.5M10 15v.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <p><b>How this gets ruined</b>The moment a church accepts that relationships matter, it builds a programme called Relationships — assigned partners, group placement, a term of hospitality events — and gets the shape of the thing without the thing. What the number describes isn't an activity you can schedule on somebody else's behalf. It's a small number of people with standing to say hard things and the patience to still be there in a year. REVEAL's awkward finding is the invoice for getting this backwards: past the early stages, more church activity stopped predicting growth.</p>
+    </div>
+</section>
+
+<section class="sec sec--alt">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n">05</span>
       <div class="sec__t">
         <h2>Eleven maps, oldest first.</h2>
         <p>What each framework actually is, who made it, and what it's good for. Not a league table — they were built for different jobs, in different centuries, for different rooms.</p>
       </div>
     </div>
   </div>
-    <div class="frames masonry" id="fwList"></div>
+    <div class="frames gridset" id="fwList"></div>
 </section>
 
 <section class="sec">
   <div class="shell">
     <div class="sec__head">
-      <span class="sec__n">05</span>
+      <span class="sec__n">06</span>
       <div class="sec__t">
         <h2>Where to go next.</h2>
         <p>Twenty-two sources, each with its bias named. Filter by what you actually want.</p>
@@ -835,7 +1007,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
     <div class="filters" id="filters"></div>
   </div>
-    <div class="srcs masonry" id="srcList"></div>
+    <div class="srcs gridset" id="srcList"></div>
 
     <div class="caveats">
       <div class="cav" style="--fc:var(--yellow)"><span class="cav__n">Caveat 01</span><h4>Not a ranking of God's love</h4><p>Hagberg and Guelich are emphatic: later positions don't mean greater closeness to God, only a different experience of the same access.</p></div>
@@ -960,7 +1132,11 @@ var POS = [
     door:"One act you can't take back, with a witness. Baptism. A named church rather than a streaming habit. One person given standing permission to ask you hard questions.",
     help:"Give proximity before curriculum — a table, a Tuesday, an ordinary week of your life. Answer the question they asked, not the one you wish they'd asked.",
     harm:"Handing them a reading list. Rushing a decision. Requiring a certainty they don't have — manufactured certainty here becomes a crisis at Position 04.",
-    verse:"Come and see.", ref:"John 1:39 · also Matthew 13:3–9, the seed on the path" },
+    verses:[
+      ["Come and see.", "John 1:39 · the whole invitation, and no more than that"],
+      ["Seek the LORD while he may be found; call upon him while he is near.", "Isaiah 55:6 · the window is open, and it is not open forever"],
+      ["Taste and see that the LORD is good.", "Psalm 34:8 · first-hand, not second-hand — the one thing nobody can do for you"]
+    ] },
 
   { n:2, key:"green", name:"The Apprentice",
     alias:"“Little children” · Milk · Discipleship · Growing in Christ",
@@ -971,7 +1147,11 @@ var POS = [
     door:"Own one conviction against resistance. Study something your teacher gets wrong. Serve somewhere nobody who knows you will ever see it.",
     help:"Give structure generously — they need rails, and rails aren't legalism here. Teach them to read for themselves rather than to quote you.",
     harm:"Becoming their mediator. If your name appears in their testimony more than Christ's, you've stalled them, and the correction will hurt you both.",
-    verse:"Your sins are forgiven… you know the Father.", ref:"1 John 2:12 · also Hebrews 5:12–13, you need milk" },
+    verses:[
+      ["Your sins are forgiven… you know the Father.", "1 John 2:12 · settled before anything has been achieved"],
+      ["Like newborn infants, long for the pure spiritual milk, that by it you may grow up.", "1 Peter 2:2 · also Hebrews 5:12–13 — milk is the right food here, and only here"],
+      ["They devoted themselves to the apostles' teaching and the fellowship, to the breaking of bread and the prayers.", "Acts 2:42 · the four rails, in the order they were laid"]
+    ] },
 
   { n:3, key:"orange", name:"The Builder",
     alias:"“You are strong” · The productive life · Fisher of men",
@@ -982,7 +1162,11 @@ var POS = [
     door:"Subtract. Take a sabbath you actually keep. Do one significant thing anonymously. Let your name come off something you built and watch what that does to you.",
     help:"Refuse to pay them only in responsibility. Ask about their interior life before their ministry, and keep asking after they deflect the first time.",
     harm:"Promoting them again. REVEAL found exactly this — past the early stages, more church activity stopped predicting growth.",
-    verse:"You are strong, and the word of God abides in you.", ref:"1 John 2:14 · also Luke 10:38–42, Martha, distracted with much serving" },
+    verses:[
+      ["You are strong, and the word of God abides in you.", "1 John 2:14 · John means it as praise. Read the trap row anyway"],
+      ["Martha, Martha, you are anxious and troubled about many things, but one thing is necessary.", "Luke 10:41–42 · the rebuke is not of the serving, it is of what the serving had become"],
+      ["Unless the LORD builds the house, those who build it labour in vain.", "Psalm 127:1 · the position's whole question, in one line"]
+    ] },
 
   { n:4, key:"void", name:"The Wall",
     alias:"Dark night · Journey inward · The fall · Deconstruction",
@@ -993,7 +1177,11 @@ var POS = [
     door:"No technique, only a posture. Lower the bar until it fits. Tell one person the unedited truth. Keep showing up to a table even when you can't sing. And get it checked medically as well as spiritually.",
     help:"Stay, on a schedule they can predict without asking. Say “I don't know” out loud. Let them be furious in front of you without flinching.",
     harm:"Fixing, quoting, or calling it sin before they do. “You just need to get back in the Word” is the sentence that turns a wall into an exit.",
-    verse:"My God, my God, why have you forsaken me?", ref:"Matthew 27:46 · also Psalm 88, the only psalm that ends in darkness" },
+    verses:[
+      ["My God, my God, why have you forsaken me?", "Matthew 27:46 · the sentence is in the book, and it is Christ's"],
+      ["You have taken from me friend and neighbour — darkness is my closest friend.", "Psalm 88:18 · the only psalm that ends in the dark, with no turn"],
+      ["Behold, I go forward, but he is not there, and backward, but I do not perceive him.", "Job 23:8 · looking in every direction is not the same as unbelief"]
+    ] },
 
   { n:5, key:"aqua", name:"The Return",
     alias:"Journey outward · Second half of life · Illuminative way",
@@ -1004,7 +1192,11 @@ var POS = [
     door:"Go back for one person — specifically, someone at the stage you're now embarrassed to have occupied. The wall wasn't for you.",
     help:"Give them room to work without a title. Take their slowness seriously as judgement rather than decline. Ask what they've stopped doing.",
     harm:"Asking them to run the machine again on the old terms. If your only offer is the job that took them to the wall, they'll say no — and they'll be right.",
-    verse:"When you have turned again, strengthen your brothers.", ref:"Luke 22:32 · also 2 Corinthians 1:4" },
+    verses:[
+      ["When you have turned again, strengthen your brothers.", "Luke 22:32 · said to Peter before the failure, not after it"],
+      ["He comforts us in all our affliction, so that we may be able to comfort those who are in any affliction.", "2 Corinthians 1:4 · the wall was not given to you for you"],
+      ["My grace is sufficient for you, for my power is made perfect in weakness.", "2 Corinthians 12:9 · the thorn stayed. That is the point of the verse"]
+    ] },
 
   { n:6, key:"violet", name:"The Life of Love",
     alias:"“Fathers” · Unitive way · Seventh mansion",
@@ -1015,7 +1207,11 @@ var POS = [
     door:"There isn't one you can walk through on purpose. Which is the point.",
     help:"Ask for their time, not their platform. Sit under them without recording it. Notice what they do with interruptions.",
     harm:"Making them a brand. Treating this as an attainment is the surest way to miss it.",
-    verse:"You know him who is from the beginning.", ref:"1 John 2:13–14 · also 1 Corinthians 13:4–7" }
+    verses:[
+      ["You know him who is from the beginning.", "1 John 2:13–14 · John says it twice and adds nothing"],
+      ["Love is patient and kind… it does not insist on its own way.", "1 Corinthians 13:4–5 · a description of a person, not a list of attainments"],
+      ["He must increase, but I must decrease.", "John 3:30 · the direction of travel, stated by someone already at the end of it"]
+    ] }
 ];
 
 /* Eleven overviews. No cross-comparison and no shared axis — `stages` is each
@@ -1211,74 +1407,50 @@ document.addEventListener("click", function(e){
   if(b) go(b.getAttribute("data-go"));
 });
 
-/* ------------------------------------------------------------- masonry */
+/* ------------------------------------------------------------- gridset */
 var INKS = ["yellow","green","orange","aqua","violet","pink"];
 
-function packColumns(host, items){
-  var cols = parseInt(getComputedStyle(host).getPropertyValue("--cols"), 10) || 1;
+/* The set is rebuilt rather than filtered in place. The trailing-row span rule
+   in the CSS counts children with :last-child:nth-child(), which does not skip
+   [hidden] ones, so a hidden card would still be read as the last item and the
+   visible last card would never take the remainder of its row. */
+function fill(host, items){
   host.textContent = "";
-  var colEls = [], h = [];
-  for(var i=0;i<cols;i++){
-    var d = el("div","masonry__col");
-    host.appendChild(d); colEls.push(d); h.push(0);
-  }
-  items.forEach(function(it){
-    var k = 0;
-    for(var i=1;i<cols;i++) if(h[i] < h[k]) k = i;
-    colEls[k].appendChild(it);
-    h[k] += it.offsetHeight;   /* measured in place, at its real column width */
-  });
+  items.forEach(function(it){ host.appendChild(it); });
 }
 
-/* Masonry makes horizontal adjacency unpredictable — which card ends up beside
-   which depends on the heights above it — so the hue cycle cannot be stamped in
-   DOM order any more. Assign it from the laid-out geometry instead: greedily
-   give each card the lowest-numbered ink not already used by a card it touches.
-   With six inks and at most a handful of neighbours this always resolves. */
-function paintByGeometry(items){
-  var placed = [];
-  items.forEach(function(it){
-    var r = it.getBoundingClientRect(), used = {};
-    placed.forEach(function(q){
-      var a = r, b = q.r, t = 2.5;
-      var hO = Math.min(a.right,b.right) - Math.max(a.left,b.left) > 4;
-      var vO = Math.min(a.bottom,b.bottom) - Math.max(a.top,b.top) > 4;
-      var meets = (hO && (Math.abs(a.bottom-b.top) < t || Math.abs(b.bottom-a.top) < t)) ||
-                  (vO && (Math.abs(a.right-b.left) < t || Math.abs(b.right-a.left) < t));
-      if(meets) used[q.k] = 1;
-    });
-    var k = 0; while(used[k] && k < INKS.length) k++;
-    if(k >= INKS.length) k = 0;   /* unreachable in this layout; never leave --fc unset */
+/* Back to the six-hue cycle stamped in DOM order, which a regular grid makes
+   valid again: horizontal neighbours sit 1 apart and vertical neighbours sit
+   1, 2 or 3 apart, and none of those is ≡0 mod 6. The last card spanning the
+   rest of its row doesn't break it either — its left neighbour is still 1 away
+   and the two cells above it are C and C−1 away.
+
+   This replaces a paint that measured getBoundingClientRect() and gave each
+   card the lowest ink no card it touched was using. That was needed only
+   because masonry made adjacency unpredictable, and it was fragile in exactly
+   the way measured layout always is: run it before the grid has its real
+   widths — a zero-width container, an early call — and nothing touches
+   anything, so every card silently takes ink 0. It did. Index arithmetic
+   cannot be early. */
+function paintInOrder(items){
+  items.forEach(function(it, n){
+    var k = n % INKS.length;
     it.style.setProperty("--fc","var(--"+INKS[k]+")");
     it.style.setProperty("--on-fc","var(--on-"+INKS[k]+")");
-    placed.push({r:r, k:k});
   });
 }
 
 function layout(host, items){
-  packColumns(host, items);
-  paintByGeometry(items);
+  fill(host, items);
+  paintInOrder(items);
 }
 
-/* The first layout is synchronous and unconditional: these cards live only in
-   the JS array until packColumns inserts them, so hanging that on an observer
-   callback means the whole section renders empty anywhere the callback does not
-   arrive. ResizeObserver is then a pure enhancement for later width changes —
-   preferred over a window resize listener because the container can change
-   width on its own (a scrollbar appearing, a zoom, a font swap). Guarded on
-   width, since repacking changes the host's height and reacting to that would
-   re-enter forever. */
-function observeWidth(host, getItems){
-  layout(host, getItems());
-  if(typeof ResizeObserver !== "function") return;
-  var last = host.clientWidth;
-  new ResizeObserver(function(){
-    var w = host.clientWidth;
-    if(w === last) return;
-    last = w;
-    layout(host, getItems());
-  }).observe(host);
-}
+/* One synchronous, unconditional call is now the whole story. These cards live
+   only in the JS array until fill() inserts them, so this can never be deferred
+   to a callback — but nothing here reads a measurement any more either, so the
+   ResizeObserver that used to repack and repaint on every width change is gone.
+   Column count, row height and the trailing span are all the stylesheet's job,
+   and it re-solves them at every width on its own. */
 
 /* ---------------------------------------------------------------- theme */
 document.getElementById("theme").addEventListener("click", function(){
@@ -1314,7 +1486,13 @@ document.getElementById("theme").addEventListener("click", function(){
       fact("do",   "door", "The doorway out", p.door)+
       fact("do",   "do",   "Helping someone here — do", p.help)+
       fact("warn", "dont", "Helping someone here — don’t", p.harm)+
-      '<blockquote class="verse"><q>'+p.verse+'</q><cite>'+p.ref+'</cite></blockquote>';
+      /* still ONE child, so .pos keeps its eight subgrid rows and "the tell"
+         stays on one baseline across the row band */
+      '<div class="verse">'+
+        p.verses.map(function(v){
+          return '<blockquote class="verse__v"><q>'+v[0]+'</q><cite>'+v[1]+'</cite></blockquote>';
+        }).join('')+
+      '</div>';
 
     grid.appendChild(card);
   });
@@ -1341,7 +1519,7 @@ document.getElementById("theme").addEventListener("click", function(){
         }).join('')+
       '</ol></div>';
   });
-  observeWidth(list, function(){ return cards; });
+  layout(list, cards);
 })();
 
 /* ---------------------------------------------------------------- sources */
@@ -1376,20 +1554,24 @@ document.getElementById("theme").addEventListener("click", function(){
       (s.u ? '<a class="src__link" href="'+s.u+'" target="_blank" rel="noopener noreferrer">Open ↗</a>' : '');
   });
 
-  /* Re-pack over the *visible* set: filtering to Podcasts makes cards that were
-     three apart into neighbours, and it changes the column heights, so both the
-     packing and the hue assignment have to be redone. */
-  function visible(){ return cards.filter(function(c){ return !c.hidden; }); }
+  /* Rebuild over the *visible* set: filtering to Podcasts makes cards that were
+     three apart into neighbours, it changes how many rows there are, and it
+     changes which card has to span to close the last one — so both the fill and
+     the hue assignment have to be redone. The filtered-out cards are left out of
+     the DOM entirely rather than hidden, because the span rule counts children. */
+  var kind = "all";
+  function visible(){
+    return cards.filter(function(c){ return kind === "all" || c.dataset.k === kind; });
+  }
   function draw(){ layout(wrap, visible()); }
-  observeWidth(wrap, visible);
+  draw();
 
   filters.addEventListener("click", function(e){
     var b = e.target.closest(".fchip"); if(!b) return;
-    var k = b.dataset.k;
+    kind = b.dataset.k;
     filters.querySelectorAll(".fchip").forEach(function(c){
       c.setAttribute("aria-pressed", c === b ? "true" : "false");
     });
-    cards.forEach(function(c){ c.hidden = (k !== "all" && c.dataset.k !== k); });
     draw();
   });
 })();
