@@ -571,9 +571,23 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   .gridset > :last-child:nth-child(3n+1){grid-column:span 3}
   .gridset > :last-child:nth-child(3n+2){grid-column:span 2}
 }
-.frame{
+/* Subgrid over the five rows every framework card has — year bar, name, tag,
+   note, stage map — so the tinted .frame__map starts on ONE line across each
+   row band. Stretching the card to the row height was not enough on its own:
+   the notes wrap to three, four or five lines depending on the card, so the
+   tint began at a different height in every column and the band read as
+   ragged. With subgrid the note row takes the tallest note in the band and the
+   shorter ones carry the slack above the tint instead of pushing it down.
+   Same mechanism as .pos in section 02, and the same warning applies — these
+   five must stay DIRECT children. Re-nest them in a wrapper and the subgrid
+   chain breaks and the tint goes ragged again. */
+.frames > .frame{
+  display:grid;grid-row:span 5;grid-template-rows:subgrid;
   background:color-mix(in srgb, var(--fc) 9%, var(--paper));min-width:0;
-  display:flex;flex-direction:column;
+}
+@supports not (grid-template-rows:subgrid){
+  .frames > .frame{grid-row:auto;display:flex;flex-direction:column}
+  .frames > .frame .frame__map{flex:1 1 auto}
 }
 .frame__k{
   background:var(--fc);color:var(--on-fc);
@@ -605,10 +619,12 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .frame__note{padding:0 var(--gutter) 1.4rem;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:78ch}
 /* each framework's own map, in its own vocabulary and its own count — the
    whole reason the shared six-position axis came out. One value step deeper
-   than the card so the seam holds without a rule. It also carries the row's
-   height difference: flex:1 means the tint runs to the card's bottom edge
-   rather than leaving a paler strip of .frame under it. */
-.frame__map{background:color-mix(in srgb, var(--fc) 22%, var(--paper));padding:1rem var(--gutter) 1.2rem;flex:1 1 auto}
+   than the card so the seam holds without a rule. It is the last subgrid row
+   and grid items stretch by default, so it carries the band's height
+   difference on its own — the tint runs to the card's bottom edge instead of
+   leaving a paler strip of .frame under it. (The flex:1 that used to do this
+   now lives only in the no-subgrid fallback.) */
+.frame__map{background:color-mix(in srgb, var(--fc) 22%, var(--paper));padding:1rem var(--gutter) 1.2rem}
 .frame__map h4{
   font-family:var(--mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;
