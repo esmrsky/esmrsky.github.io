@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Soundings — where are you in the water?</title>
-<meta name="description" content="A visual field guide to Christian maturity. Five depths, the words people actually use, thirteen biblical journeys, thirteen frameworks compared, and the one thing it's all measuring.">
+<meta name="description" content="A visual field guide to Christian maturity. Five depths, eight marshes people get stuck in, the words people actually use, thirteen biblical journeys, thirteen frameworks compared, and the one thing it's all measuring.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,300..800;1,75..125,300..700&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,300..600,0..100&family=Martian+Mono:wght@300..600&display=swap" rel="stylesheet">
@@ -15,6 +15,9 @@
   --line:rgba(232,242,243,.13);
   --s0:#E0A63C; --s1:#4FD6C0; --s2:#25AEDA; --s3:#3D7BEE; --s4:#8A63F0;
   --wall:#FF5C3B;
+  /* the marshes: off-channel, still. Deliberately outside the depth ramp, and
+     desaturated, so a marsh can never read as one of the five. 6.2:1 on --panel. */
+  --marsh:#93A99B;
   --disp:"Archivo",system-ui,sans-serif;
   --mono:"Martian Mono",ui-monospace,monospace;
   --script:"Fraunces",Georgia,serif;
@@ -181,17 +184,37 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .phrases{display:grid;gap:10px}
 @media(min-width:640px){.phrases{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1040px){.phrases{grid-template-columns:repeat(3,1fr)}}
-.ph{border-radius:14px;border:1px solid var(--line);background:var(--panel);padding:18px;
-  display:flex;flex-direction:column;gap:9px;border-left:3px solid var(--c);transition:.22s}
-.ph:hover{transform:translateY(-2px);border-color:rgba(232,242,243,.26);border-left-color:var(--c)}
+/* The left edge was the only thing carrying the depth, so eighteen cards read as
+   one grey field with a stripe. The tint now bleeds off that edge and is gone by
+   62%, which keeps the body copy over near-plain panel: at the strongest point
+   (s0 amber) .means still measures 4.9:1, and most of the line sits well above
+   that. Border and foot rule follow the same hue so the card reads as one piece.
+   The verdict chips deliberately do NOT follow — fair/loaded/misused is a
+   separate axis from depth and must not blend into it. */
+.ph{border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:9px;
+  background:linear-gradient(96deg,
+      color-mix(in srgb,var(--c) 16%,transparent) 0%,
+      color-mix(in srgb,var(--c) 6%,transparent) 34%,
+      transparent 62%),var(--panel);
+  border:1px solid color-mix(in srgb,var(--c) 26%,var(--line));
+  border-left:3px solid var(--c);transition:.22s}
+.ph:hover{transform:translateY(-2px);
+  border-color:color-mix(in srgb,var(--c) 52%,var(--line));border-left-color:var(--c)}
 .ph.hide{display:none}
 .ph q{quotes:none;font-family:var(--script);font-style:italic;font-size:1.18rem;line-height:1.2;
   color:var(--foam)}
 .ph q::before{content:"“"}.ph q::after{content:"”"}
 .ph .means{color:var(--dim);font-size:.88rem;line-height:1.45}
-.ph .foot{margin-top:auto;padding-top:10px;border-top:1px solid var(--line);
+.ph .foot{margin-top:auto;padding-top:10px;
+  border-top:1px solid color-mix(in srgb,var(--c) 22%,var(--line));
   display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.ph .maps{font-family:var(--mono);font-size:.48rem;letter-spacing:.13em;text-transform:uppercase;color:var(--c)}
+/* Name collision: the thirteen framework cards further down claim `.maps` as a
+   grid container (`.maps{display:grid}`), and that generic rule was winning here
+   because this one never set `display`. The span became a full-width block, so
+   "over your head" broke across two lines and shoved the verdict chip onto a
+   third. Pin the display and it behaves like the span it is. */
+.ph .maps{display:inline-block;font-family:var(--mono);font-size:.48rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--c);white-space:nowrap}
 .verdict{padding:3px 9px;border-radius:100px;font-family:var(--mono);font-size:.45rem;
   letter-spacing:.15em;text-transform:uppercase}
 .v-fair{background:rgba(79,214,192,.16);color:#8DEEDD}
@@ -315,6 +338,172 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
   color:var(--wall);font-variation-settings:"wdth" 115,"wght" 700;margin-bottom:10px}
 .stat.blue b{color:var(--s3)}
 .stat p{margin:0;color:var(--dim);font-size:.94rem;line-height:1.45}
+
+/* ============ THE MARSHES ============ */
+/* Every other section on this page is keyed to a depth colour, because every
+   other section measures height. This one measures current, so it sits off the
+   ramp entirely — flat wash rather than the radial glows used elsewhere, because
+   the whole point is that nothing here is moving. */
+/* the two ends of the depth ramp, echoing the figure's left-to-right run */
+#marshes{background:
+  radial-gradient(66% 42% at 10% 2%,rgba(224,166,60,.075),transparent 62%),
+  radial-gradient(66% 48% at 90% 10%,rgba(138,99,240,.10),transparent 62%),
+  linear-gradient(180deg,rgba(147,169,155,.05),transparent 46%),var(--bg)}
+
+/* ---- figure motion. The channel moves; the pools do not. That contrast IS the
+   argument, so nothing below the spurs is ever allowed an animation. ---- */
+.mr-flow{stroke-dasharray:24 30;animation:mrflow 3.6s linear infinite}
+@keyframes mrflow{to{stroke-dashoffset:-54}}
+.mr-chev{animation:mrchev 3s ease-in-out infinite}
+@keyframes mrchev{0%,100%{opacity:.3}42%{opacity:1}}
+.mr-spur{animation:mrdrip 2.8s linear infinite}
+@keyframes mrdrip{to{stroke-dashoffset:-8}}
+.mr-band{animation:mrband 16s ease-in-out infinite}
+@keyframes mrband{0%,100%{opacity:.88}50%{opacity:1}}
+.verse{margin:34px 0 0;max-width:60ch;
+  border-left:2px solid color-mix(in srgb,var(--marsh) 55%,transparent);
+  padding-left:clamp(16px,2.4vw,26px)}
+.verse q{quotes:none;display:block;font-family:var(--script);font-style:italic;
+  font-size:clamp(1.25rem,2.6vw,1.75rem);line-height:1.28;letter-spacing:-.01em;color:var(--foam)}
+.verse cite{display:block;margin-top:12px;font-family:var(--mono);font-size:.52rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--marsh);font-style:normal}
+.verse p{margin:14px 0 0;color:var(--dim);font-size:.95rem;line-height:1.55}
+
+/* the two questions, stated as a pair. This is the whole idea of the section and
+   it was previously buried in the lede, so it gets its own object. */
+.axis{display:grid;gap:14px;margin-top:clamp(30px,4vw,46px)}
+@media(min-width:760px){.axis{grid-template-columns:repeat(2,1fr)}}
+.axcell{border-radius:18px;border:1px solid var(--line);background:var(--panel);
+  padding:clamp(22px,2.4vw,30px)}
+.axcell.now{border-color:color-mix(in srgb,var(--marsh) 42%,transparent);
+  background:linear-gradient(150deg,rgba(147,169,155,.11),var(--panel) 62%)}
+.axcell span{display:block;margin-bottom:15px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--dimmer)}
+.axcell.now span{color:var(--marsh)}
+.axcell b{display:block;margin-bottom:14px;font-size:clamp(1.45rem,2.7vw,2.05rem);
+  letter-spacing:-.035em;line-height:1.02;font-variation-settings:"wdth" 108,"wght" 600}
+.axcell p{margin:0;font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);line-height:1.8}
+
+.marshfig{margin:clamp(30px,4vw,46px) 0 0;border-radius:20px;border:1px solid var(--line);
+  background:linear-gradient(180deg,#0B1E28,#071720);overflow:hidden}
+.marshfig svg{display:block;width:100%;min-width:760px;height:auto}
+.mfig-foot{display:grid;gap:6px 22px;padding:clamp(18px,2.2vw,24px);
+  border-top:1px solid var(--line);background:rgba(147,169,155,.05)}
+@media(min-width:820px){.mfig-foot{grid-template-columns:190px minmax(0,1fr)}}
+.mfig-foot span{font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--marsh);line-height:1.7}
+.mfig-foot p{margin:0;max-width:72ch;color:var(--dim);font-size:.93rem;line-height:1.55}
+.mfig-foot b{color:var(--foam);font-weight:600}
+/* the svg needs 760px of content box; .wrap eats 9vw of the viewport below the
+   54px padding cap, so the figure stops scrolling at ~837px, not at 780. Hiding
+   the hint any earlier leaves a band where it scrolls with nothing saying so. */
+@media(min-width:850px){.hint.fig{display:none}}
+
+.mrule{margin:clamp(30px,4vw,46px) 0 0;border-radius:18px;padding:clamp(22px,2.4vw,30px);
+  border:1px solid color-mix(in srgb,var(--marsh) 38%,transparent);
+  background:rgba(147,169,155,.07)}
+.mrule b{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--marsh);margin-bottom:11px}
+.mrule p{margin:0;max-width:72ch;color:var(--dim);font-size:.95rem;line-height:1.6}
+.mrule p+p{margin-top:12px}
+.mrule em{font-style:normal;color:var(--foam)}
+
+/* Wide two-column cards carrying dense prose: the triage grid reads airy at the
+   same 12px gap only because its columns are 269px. At 550px the identical gap
+   and padding read as a slab, so both go up here rather than site-wide. */
+/* without this an open card stretches its row-mate into a tall empty slab */
+.mkey{margin:clamp(26px,3.4vw,38px) 0 0;max-width:74ch;color:var(--dim);
+  font-size:.92rem;line-height:1.6}
+.mkey span{display:block;margin-bottom:8px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--marsh)}
+.marshgrid{display:grid;gap:18px;margin-top:clamp(20px,2.6vw,28px);align-items:start}
+@media(min-width:820px){.marshgrid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1180px){.marshgrid{gap:20px}}
+.marsh{position:relative;border-radius:18px;overflow:hidden;transition:border-color .22s ease;
+  /* --mk is the depth this marsh counterfeits; --mkt is its text-safe lift. s3 and
+     s4 measure 3.9:1 and 3.8:1 on this panel and fail at the 9px mono sizes used
+     for the chip and the dt labels, so every label reads --mkt, never --mk. */
+  --mkt:color-mix(in srgb,var(--mk) 55%,var(--foam));
+  background:linear-gradient(150deg,color-mix(in srgb,var(--mk) 11%,transparent),transparent 54%),
+    var(--panel);
+  border:1px solid color-mix(in srgb,var(--mk) 24%,var(--line))}
+.marsh::before{content:"";position:absolute;inset:0 0 auto;height:3px;z-index:2;background:var(--mk)}
+/* still water, as a texture: flat parallel levels, fading out. The channel in the
+   figure above is the only thing on this page allowed to look like it moves. */
+.marsh::after{content:"";position:absolute;right:0;top:0;width:210px;height:130px;
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(147,169,155,.17) 0 1px,transparent 1px 9px);
+  -webkit-mask-image:radial-gradient(125% 105% at 100% 0%,#000,transparent 72%);
+          mask-image:radial-gradient(125% 105% at 100% 0%,#000,transparent 72%)}
+.marsh.is-open{border-color:color-mix(in srgb,var(--mk) 50%,var(--line))}
+.m-head{position:relative;z-index:1;display:block;width:100%;text-align:left;
+  background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;
+  padding:clamp(28px,2.6vw,32px) clamp(24px,2.4vw,30px) clamp(24px,2.4vw,30px);
+  transition:background .18s ease}
+.m-head:hover{background:rgba(232,242,243,.035)}
+.m-head:focus-visible{outline:2px solid var(--mkt);outline-offset:-3px}
+.m-ix{display:block;margin-bottom:18px;font-family:var(--mono);font-size:.48rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--dimmer)}
+.m-head svg{display:block;width:34px;height:34px;margin-bottom:18px;
+  fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;
+  stroke:var(--mkt)}
+.m-head b{display:block;margin-bottom:13px;font-size:1.24rem;letter-spacing:-.03em;
+  line-height:1.12;font-variation-settings:"wdth" 104,"wght" 600}
+.m-as{display:inline-block;margin-bottom:15px;padding:5px 11px;border-radius:100px;
+  background:color-mix(in srgb,var(--mk) 15%,transparent);
+  border:1px solid color-mix(in srgb,var(--mk) 40%,transparent);
+  font-family:var(--mono);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mkt)}
+.m-head .mech{margin:0;color:var(--dim);font-size:.92rem;line-height:1.6}
+.m-more{display:inline-flex;align-items:center;gap:10px;margin-top:20px;
+  font-family:var(--mono);font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mkt)}
+.m-more i{position:relative;display:inline-block;width:13px;height:13px;font-style:normal;flex:none}
+.m-more i::before,.m-more i::after{content:"";position:absolute;background:var(--mkt);
+  transition:transform .22s ease}
+.m-more i::before{left:0;right:0;top:6px;height:1px}
+.m-more i::after{top:0;bottom:0;left:6px;width:1px}
+.marsh.is-open .m-more i::after{transform:scaleY(0)}
+.m-body{position:relative;z-index:1;padding:clamp(22px,2.4vw,28px) clamp(24px,2.4vw,30px)
+  clamp(24px,2.4vw,30px);background:rgba(4,14,20,.40);
+  border-top:1px solid color-mix(in srgb,var(--mk) 26%,var(--line))}
+.m-body dl{margin:0;display:grid;gap:22px}
+.m-body dt{margin-bottom:9px;padding-left:11px;position:relative;font-family:var(--mono);
+  font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mkt)}
+.m-body dt::before{content:"";position:absolute;left:0;top:1px;bottom:1px;width:2px;
+  border-radius:2px;background:var(--mk)}
+.m-body dd{margin:0;color:var(--dim);font-size:.92rem;line-height:1.6}
+.m-body dd b{color:var(--foam);font-weight:600}
+.m-ref{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--line);
+  font-family:var(--script);font-style:italic;color:var(--dim);font-size:.95rem;line-height:1.5}
+.m-ref span{display:block;margin-bottom:8px;font-family:var(--mono);font-style:normal;
+  font-size:.46rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dimmer)}
+
+.saltgrid{display:grid;gap:18px;margin-top:clamp(36px,5vw,58px)}
+@media(min-width:860px){.saltgrid{grid-template-columns:repeat(2,1fr)}}
+.saltcell{border-radius:20px;padding:clamp(24px,2.7vw,34px);
+  border:1px solid color-mix(in srgb,var(--marsh) 34%,transparent);
+  background:linear-gradient(150deg,rgba(147,169,155,.11),transparent 66%)}
+.saltcell h4{margin:0 0 14px;font-size:1.22rem;letter-spacing:-.03em;line-height:1.15;
+  font-variation-settings:"wdth" 106,"wght" 600}
+.saltcell p{margin:0;color:var(--dim);font-size:.96rem;line-height:1.6}
+.saltcell p+p{margin-top:13px}
+.saltcell em{font-style:normal;color:var(--foam)}
+.saltend{margin:clamp(30px,4vw,46px) 0 0;text-align:center;line-height:1;
+  font-size:clamp(1.7rem,4.6vw,3.1rem);letter-spacing:-.045em;
+  font-variation-settings:"wdth" 110,"wght" 600;color:var(--foam)}
+.saltend small{display:block;margin-top:16px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--marsh);font-weight:400;
+  font-variation-settings:normal;line-height:1.7}
+/* the instrument's own blind spot, stated where the reading appears */
+.res-marsh{padding:20px 24px;background:rgba(147,169,155,.07);
+  border-top:1px solid color-mix(in srgb,var(--marsh) 34%,transparent)}
+.res-marsh b{display:block;margin-bottom:8px;font-family:var(--mono);font-size:.53rem;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--marsh)}
+.res-marsh p{margin:0;color:var(--dim);font-size:.94rem;line-height:1.5}
+.res-marsh a{display:inline-block;padding:4px 0;color:var(--foam);
+  text-decoration:underline;text-underline-offset:3px}
 
 /* ============ CHART ============ */
 .chart{margin-top:38px;border-radius:18px;border:1px solid var(--line);overflow:hidden;background:var(--panel)}
@@ -494,6 +683,7 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
   .brick,.swim,.scrollcue .ln,h1,.braid path,.wave{animation:none!important}
+  .mr-flow,.mr-chev,.mr-spur,.mr-band{animation:none!important}
   .tracebox .trace-head,.tracebox .leg,.tracebox .dot{animation:none!important}
 }
 ::selection{background:var(--s2);color:#06141C}
@@ -718,6 +908,173 @@ h1, h2, h3 { text-wrap: balance; }
   </div>
 </section>
 
+<!-- MARSHES -->
+<section id="marshes">
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--marsh)"><i></i><span class="mono">Ezekiel 47:11 — the verse nobody quotes</span></span>
+    <h2>Some water touches you<br>and never becomes fresh.</h2>
+    <p class="sec-lede">Everything above this measures how deep you are. Nothing above it can tell whether you're moving. Those are different questions, and the second one is where people actually get stuck.</p>
+
+    <div class="verse">
+      <q>But its swamps and marshes will not become fresh; they are to be left for salt.</q>
+      <cite>Ezekiel 47:11</cite>
+      <p>The river heals a dead sea eleven verses running — and then the vision stops to say that some water it reaches doesn't heal. Standing water. Cut off from the current, salting slowly, in the same landscape and fed by the same source.</p>
+    </div>
+
+    <div class="axis">
+      <div class="axcell">
+        <span>Sections one to five ask</span>
+        <b>How deep are you?</b>
+        <p>Height · a position on the ramp<br>Measurable · thirteen frameworks agree it exists</p>
+      </div>
+      <div class="axcell now">
+        <span>This one asks</span>
+        <b>Is any of it still moving?</b>
+        <p>Current · nothing to do with depth<br>Invisible from outside · no framework has a category</p>
+      </div>
+    </div>
+
+    <div class="marshfig">
+      <div class="scroller">
+      <svg viewBox="0 0 900 410" role="img" aria-label="A diagram: the river channel deepening from left to right with the current running through it, and below it five still pools, one hanging off each depth by a dotted spur. The pool under over-your-head is marked as the hardest to see.">
+        <defs>
+          <linearGradient id="mrflow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#E0A63C" stop-opacity=".40"/>
+            <stop offset=".25" stop-color="#4FD6C0" stop-opacity=".40"/>
+            <stop offset=".5" stop-color="#25AEDA" stop-opacity=".40"/>
+            <stop offset=".75" stop-color="#3D7BEE" stop-opacity=".40"/>
+            <stop offset="1" stop-color="#8A63F0" stop-opacity=".40"/>
+          </linearGradient>
+          <linearGradient id="mrpool" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#93A99B" stop-opacity=".28"/>
+            <stop offset="1" stop-color="#93A99B" stop-opacity=".06"/>
+          </linearGradient>
+          <clipPath id="mrclip"><path d="M60 132 L840 96 L840 204 L60 168 Z"/></clipPath>
+        </defs>
+
+        <g font-family="Martian Mono, ui-monospace, monospace" letter-spacing="1.7">
+          <text x="60" y="34" font-size="12" fill="rgba(232,242,243,.62)">THE CHANNEL</text>
+          <text x="185" y="34" font-size="12" fill="rgba(232,242,243,.34)">— IT IS MOVING, AND IT GETS DEEPER</text>
+          <g font-size="11.5" fill="rgba(232,242,243,.60)" text-anchor="middle">
+            <text x="122" y="72">DRY GROUND</text>
+            <text x="296" y="72">ANKLES</text>
+            <text x="470" y="72">KNEES</text>
+            <text x="644" y="72">WAIST</text>
+            <text x="790" y="72">OVER YOUR HEAD</text>
+          </g>
+        </g>
+        <g stroke="rgba(232,242,243,.20)" stroke-width="1">
+          <path d="M122 82V134.1M296 82V125.9M470 82V117.9M644 82V109.8M790 82V103"/>
+        </g>
+
+        <path class="mr-band" d="M60 132 L840 96 L840 204 L60 168 Z" fill="url(#mrflow)"/>
+        <g clip-path="url(#mrclip)" fill="none" stroke="#E8F2F3" stroke-opacity=".24" stroke-width="1.3">
+          <path class="mr-flow" d="M60 146c60-9 120 9 180 0s120-18 180-9 120 18 180 9 120-18 240-27"/>
+          <path class="mr-flow" style="animation-duration:4.6s;animation-delay:-1.2s"
+                d="M60 156c60 9 120-9 180 0s120 22 180 13 120-22 180-13 120 22 240 13"/>
+        </g>
+        <g clip-path="url(#mrclip)" fill="none" stroke="#E8F2F3" stroke-opacity=".72"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path class="mr-chev" style="animation-delay:0.00s" d="M150 144l8 6-8 6"/>
+          <path class="mr-chev" style="animation-delay:-0.26s" d="M245 143l8 7-8 7"/>
+          <path class="mr-chev" style="animation-delay:-0.52s" d="M340 142l8 8-8 8"/>
+          <path class="mr-chev" style="animation-delay:-0.78s" d="M435 141l8 9-8 9"/>
+          <path class="mr-chev" style="animation-delay:-1.04s" d="M530 140l8 10-8 10"/>
+          <path class="mr-chev" style="animation-delay:-1.30s" d="M625 139l8 11-8 11"/>
+          <path class="mr-chev" style="animation-delay:-1.56s" d="M720 138l9 12-9 12"/>
+          <path class="mr-chev" style="animation-delay:-1.82s" d="M812 137l9 13-9 13"/>
+        </g>
+
+        <g stroke-width="1.2" stroke-dasharray="2 6">
+          <path class="mr-spur" style="animation-delay:0.00s" stroke="#E0A63C" stroke-opacity=".55" d="M122 164V274"/>
+          <path class="mr-spur" style="animation-delay:-0.34s" stroke="#4FD6C0" stroke-opacity=".55" d="M296 172V274"/>
+          <path class="mr-spur" style="animation-delay:-0.68s" stroke="#25AEDA" stroke-opacity=".55" d="M470 180V274"/>
+          <path class="mr-spur" style="animation-delay:-1.02s" stroke="#3D7BEE" stroke-opacity=".55" d="M644 188V274"/>
+          <path class="mr-spur" style="animation-delay:-1.36s" stroke="#8A63F0" stroke-opacity=".55" d="M790 194V270"/>
+        </g>
+
+        <!-- still: nothing in this group animates, by design -->
+        <g class="mr-still">
+          <ellipse cx="122" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="122" cy="300" rx="55" ry="20" fill="#E0A63C" fill-opacity=".20"
+                   stroke="#E0A63C" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M96 294h52M88 300h68M102 307h40"/>
+          </g>
+          <ellipse cx="296" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="296" cy="300" rx="55" ry="20" fill="#4FD6C0" fill-opacity=".20"
+                   stroke="#4FD6C0" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M270 294h52M262 300h68M276 307h40"/>
+          </g>
+          <ellipse cx="470" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="470" cy="300" rx="55" ry="20" fill="#25AEDA" fill-opacity=".20"
+                   stroke="#25AEDA" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M444 294h52M436 300h68M450 307h40"/>
+          </g>
+          <ellipse cx="644" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="644" cy="300" rx="55" ry="20" fill="#3D7BEE" fill-opacity=".20"
+                   stroke="#3D7BEE" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M618 294h52M610 300h68M624 307h40"/>
+          </g>
+          <ellipse cx="790" cy="300" rx="72" ry="30" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="790" cy="300" rx="62" ry="23" fill="#8A63F0" fill-opacity=".26"
+                   stroke="#8A63F0" stroke-opacity=".82" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".78" stroke-width="1.5" stroke-linecap="round">
+            <path d="M764 294h52M756 300h68M770 307h40"/>
+          </g>
+        </g>
+        <path d="M790 330v9" stroke="#93A99B" stroke-opacity=".75" stroke-width="1.2"/>
+
+        <g font-family="Martian Mono, ui-monospace, monospace" letter-spacing="1.6">
+          <text x="790" y="354" font-size="10.5" fill="#93A99B" text-anchor="middle">THE HARDEST TO SEE</text>
+          <text x="60" y="386" font-size="12" fill="#93A99B">THE MARSHES</text>
+          <text x="185" y="386" font-size="12" fill="rgba(147,169,155,.55)">— SAME SOURCE, NO CURRENT, LEFT FOR SALT</text>
+        </g>
+      </svg>
+      </div>
+      <div class="mfig-foot">
+        <span>Read the diagram</span>
+        <p><b>A marsh is not a sixth depth.</b> It hangs off the side of whichever depth you are already at — which is why the last pool on that row is real. Someone genuinely over their head can be sitting in still water, and by that point almost nobody left has the standing to mention it. Depth is the horizontal axis. Nothing on this page except this figure measures the vertical one.</p>
+      </div>
+    </div>
+    <p class="hint fig">Scroll sideways →</p>
+
+    <div class="mrule">
+      <b>Read this before the eight</b>
+      <p>These describe one person: <em>you</em>. Every one of them is invisible from outside — that is the definition, not a caveat — so using them to read somebody else is guaranteed to be wrong and free to be cruel. It is the single most misusable thing on this page.</p>
+      <p>Limit 02 bites hardest right here: you are the worst available judge of your own depth, <em>and</em> you are the only person with access to this. Both are true. So treat anything you recognise as a hypothesis about yourself, take it to one person who actually knows you, and let them disagree.</p>
+    </div>
+
+    <p class="mkey"><span>How to read the colour</span>Each card is tinted with the depth it
+      counterfeits, on the same ramp as the figure above. Four of the eight come out waist-deep —
+      which is exactly where the Wall stands, and no accident: waist-deep is the first place you
+      have enough working competence to cover for everything that isn't.</p>
+    <div class="marshgrid" id="marshgrid"></div>
+
+    <div class="saltgrid">
+      <div class="saltcell">
+        <h4>What all eight have in common</h4>
+        <p>Stillness. In every one of them something built to keep moving has stopped — repentance, dependence, or being known — while everything visible carries straight on.</p>
+        <p>That is exactly why none of the thirteen frameworks has a category for this, and why the instrument below cannot detect it: <em>every measure on this page reads height, and a marsh is a failure of current.</em> You can be over your head and completely stagnant. Those two facts have never once contradicted each other.</p>
+      </div>
+      <div class="saltcell">
+        <h4>Which leaves exactly one exit</h4>
+        <p>The same one, eight times over: something has to start moving again. Almost never information — by this point you already have the information. That is the sixth marsh.</p>
+        <p>Nearly always <em>one person with standing to say the true sentence out loud</em>, and your prior permission for them to say it. Ezekiel leaves the marshes to salt because a marsh has no way back to the channel under its own power.</p>
+      </div>
+    </div>
+    <p class="saltend">You are not a geography.<small>The marshes have no way back · you do</small></p>
+  </div>
+</section>
+
 <!-- CHART -->
 <section id="frameworks">
   <div class="wrap rv">
@@ -783,6 +1140,7 @@ h1, h2, h3 { text-wrap: balance; }
         <div class="second" id="secondWrap" hidden><dt>Second reading</dt><dd id="resSecond"></dd></div>
       </dl>
       <div class="adv" id="adv"><b>Current advisory</b><p id="advText"></p></div>
+      <div class="res-marsh"><b>What this reading cannot see</b><p>Twelve questions measure height. They measure nothing about current, so a person can read <em>over your head</em> here and be entirely stuck — and the marshes that read as maturity are the ones this instrument is least able to catch. Take the number, then go back through <a href="#marshes">the eight marshes</a> and see whether any of them is describing you.</p></div>
     </div>
   </div>
 </section>
@@ -1262,6 +1620,112 @@ tbox.addEventListener('keydown',e=>{
     t.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 
 trace(0);
+
+/* ===== THE EIGHT MARSHES ===== */
+/* Ordered as an arc rather than by frequency: the two most recognisable first,
+   then the three interior ones, then the three that read as maturity. The last
+   three are the point of the section — everything else on the page already has
+   language for the first five. Each card carries a `guard`, because without the
+   false-positive line these become an accusation generator. */
+const M=[
+ {as:"Reads as waist-deep",n:"The ledger",d:3,
+  mech:"Grace is the doctrine and performance is the operating system. Your standing before God moves with the week's record — which means it is never actually received, only re-earned every Monday.",
+  tell:"A flicker of relief when someone more visible than you fails. You don't act on it and you would never say it. It's still information.",
+  guard:"Conviction over an actual sin. That has an object and an end — you repent and it lifts. The ledger has neither. It just resets.",
+  out:"Say the specific thing out loud to one person with no stake in your reputation. The ledger survives on privacy, not on the sin.",
+  ref:"Luke 18:11",quote:"God, I thank thee, that I am not as other men. The Pharisee's prayer is a comparison — and he addresses it to God."},
+
+ {as:"Reads as reverence",n:"Fear as the operating system",d:2,
+  mech:"Obedience running on dread of God's mood rather than confidence in his character. It produces excellent behaviour, which is precisely why nobody ever interrupts it.",
+  tell:"You can describe what God requires of you in detail, and you cannot say without hedging that he likes you.",
+  guard:"The fear of the Lord, which is awe and produces rest, not vigilance. And not clinical anxiety or scrupulosity — if the checking is compulsive or it is costing you sleep, this is a doctor's question as well as a pastor's. Treating an anxiety disorder as a faith problem is its own kind of harm.",
+  out:"Read 1 John slowly, with someone else. It is the same letter the five depths come from, and it treats the fear itself as the diagnosis — not whatever you are afraid of.",
+  ref:"1 John 4:18",quote:"There is no fear in love; but perfect love casteth out fear: because fear hath torment."},
+
+ {as:"Reads as devotion",n:"False altars",d:2,
+  mech:"You seek God sincerely while something else quietly holds the veto. Not a rival religion — a good thing promoted to load-bearing: a child's outcome, a marriage, a reputation, being right, the ministry itself.",
+  tell:"Finish the sentence: I could accept almost anything from God except ___. Most people have their answer inside five seconds. That speed is the finding.",
+  guard:"Loving something deeply. Love is not the tell, the veto is. You can love your child enormously without having made their outcome the condition of your trust.",
+  out:"Name it to God as an altar, in those words. Ezekiel's charge against the elders isn't that they had idols — it's that they came to inquire while carrying them, and said nothing.",
+  ref:"Ezekiel 14:3",quote:"These men have set up their idols in their heart… should I be enquired of at all by them?"},
+
+ {as:"Reads as discernment",n:"Counterfeit voices",d:3,
+  mech:"Impulse, anxiety, ambition and other people's expectations, all filed under “the Lord told me.” The label is unfalsifiable, so nothing ever corrects it.",
+  tell:"Run the last year back. If the voice consistently told you what you already wanted — or consistently accused you and never once comforted — you have located the source, and it isn't the Spirit.",
+  guard:"Actually being led. Real guidance survives being checked; it is content to be tested against scripture and against people who know you. The counterfeit is the one that treats the question as disloyalty.",
+  out:"Give two people standing to say “I don't think that was God,” and let them say it without penalty. Guidance that can't be checked isn't guidance. It's cover.",
+  ref:"1 John 4:1",quote:"Believe not every spirit, but try the spirits whether they are of God."},
+
+ {as:"Reads as standing for truth",n:"Bitterness in a doctrinal jacket",d:3,
+  mech:"An injury nobody ever dealt with, converted into a position. The position may well be correct — that is what makes it so durable. It is being held for a different reason than it appears, and it is doing different work.",
+  tell:"There is a face attached. If naming the doctrine also brings up a person, the doctrine is not why you hold it that hard.",
+  guard:"Being right about a real wrong. Some things should be opposed, and grief over what someone did is not bitterness. The tell is the heat, not the position.",
+  out:"Deal with the person — forgiveness, or a real conversation, or grief properly done — and then see whether the position still stands on its own. Usually it does. It just stops costing everyone near you.",
+  ref:"Hebrews 12:15",quote:"Lest any root of bitterness springing up trouble you, and thereby many be defiled. Note the many. It never stays personal."},
+
+ {as:"Reads as over your head",n:"Knowledge instead of surrender",d:4,
+  mech:"Reading about the thing as a substitute for doing it. The vocabulary of depth is unusually easy to acquire, and from the inside it feels identical to depth.",
+  tell:"You can name your stage, your Wall, your attachment style and your enneagram number, and nobody who lives with you has noticed a change in eighteen months.",
+  guard:"Learning. Study is how most people get anywhere at all. The marsh is study that stopped producing obedience and started producing commentary.",
+  out:"Take the one thing on this page you already knew was true about you and do something about it this week — with a date, and a person. Then stop reading for a while.",
+  ref:"1 Corinthians 8:1",quote:"Knowledge puffeth up, but charity edifieth. This page is the likeliest thing on it to become a marsh; a maturity framework is exactly the sort of interesting that substitutes for the thing."},
+
+ {as:"Reads as waist-deep, nearly over",n:"Ministry as identity",d:3,
+  mech:"Service that is genuinely useful to other people and is doing something else for you. It medicates. Which is why stopping is unthinkable — not because the work would fail, but because there would be nothing underneath.",
+  tell:"Picture the role gone tomorrow, nobody's fault, honourably. Grief you can name is fine. A blankness about who you would then be is the marsh.",
+  guard:"Loving your work, or being genuinely needed. Vocation isn't the problem. The question is only whether your standing survives the role being removed.",
+  out:"A sabbath you actually keep, and one relationship where you contribute nothing. Both will feel wildly disproportionate in difficulty. That is the confirmation.",
+  ref:"Luke 10:20",quote:"Rejoice not, that the spirits are subject unto you; but rather rejoice, because your names are written in heaven."},
+
+ {as:"Reads as depth, hard-won",n:"Camping at the Wall",d:4,
+  mech:"The Wall was real, the passage genuinely started, and then not-believing-naively hardened into a permanent address. Deconstruction that stopped being a passage and became somewhere to live.",
+  tell:"You can say precisely what you no longer believe and almost nothing about what you now do. Ask how many years the sentence has been the same sentence.",
+  guard:"The Wall itself, which takes years and is supposed to. And not honest doubt — this page's whole position is that doubt is the engine of the most important transition there is. The marsh is the stall, never the passage.",
+  out:"Hagberg's answer is not more argument. It is practice without certainty: keep showing up, keep serving, in company, while it is still dark. The far side gets entered by walking, not by resolving.",
+  ref:"Psalm 42:5",quote:"Why art thou cast down, O my soul?… hope thou in God. A man arguing with himself, and choosing anyway."}
+];
+/* One glyph each, so eight prose cards stop reading as one wall of text. Same
+   line-art vocabulary as the triage icons above. */
+const MI=[
+ '<path d="M12 5v14M7 19h10M4 9h16M4 9l-2 4.4a3 3 0 0 0 4 0zM20 9l-2 4.4a3 3 0 0 0 4 0z"/>',
+ '<path d="M12 20.5S4.6 16 4.6 11a3.9 3.9 0 0 1 7.4-2.5A3.9 3.9 0 0 1 19.4 11c0 5-7.4 9.5-7.4 9.5z"/><path d="M12 9.6v3.1M12 15.6h.01"/>',
+ '<path d="M4.5 20.5h15M7 20.5v-7h10v7M12 13c0-2 2.1-2.7 2.1-4.6A3.1 3.1 0 0 0 12 5.4a3.1 3.1 0 0 0-2.1 3c0 1.9 2.1 2.6 2.1 4.6z"/>',
+ '<path d="M3 6.4A2 2 0 0 1 5 4.4h8.6a2 2 0 0 1 2 2v4.4a2 2 0 0 1-2 2H8.4L5 15.6v-2.8a2 2 0 0 1-2-2z"/><path d="M18.4 8.6a2 2 0 0 1 2.6 2v4.5a2 2 0 0 1-2 2v2.8l-3.2-2.8h-2.6"/>',
+ '<path d="M2.8 9.6h18.4"/><path d="M12 9.6v11.2M12 13.4c-1.9 1.1-3.3 2.6-4 4.6M12 16.2c1.7 1 2.8 2.3 3.4 3.8"/><path d="M12 9.6V4.4"/>',
+ '<path d="M12 7.2v13.2M12 7.2C10 5 6.8 4.4 3 4.9v12.4c3.8-.5 7 .1 9 2.1M12 7.2c2-2.2 5.2-2.8 9-2.3v12.4c-3.8-.5-7 .1-9 2.1"/>',
+ '<path d="M9.4 3h5.2v3.2H9.4zM7 6.2h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8.2a2 2 0 0 1 2-2z"/><path d="M8.6 11.6h6.8M8.6 15.4h4.4"/>',
+ '<path d="M12 3.4 2.8 20.6h18.4zM12 20.6l-3.6-6M12 20.6l3.6-6"/>'
+];
+(function(){
+  const host=document.getElementById('marshgrid'); if(!host) return;
+  host.innerHTML=M.map((m,i)=>{
+    const id='mp'+i, bid='mb'+i, n=String(i+1).padStart(2,'0');
+    return `<article class="marsh" style="--mk:${CV[m.d]}">
+      <button type="button" class="m-head" id="${bid}" aria-expanded="false" aria-controls="${id}">
+        <span class="m-ix">${n} / marsh</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">${MI[i]}</svg>
+        <b>${m.n}</b>
+        <span class="m-as">${m.as}</span>
+        <p class="mech">${m.mech}</p>
+        <span class="m-more">The tell · the guard · the way out <i></i></span>
+      </button>
+      <div class="m-body" id="${id}" role="region" aria-labelledby="${bid}" hidden>
+        <dl>
+          <div><dt>The tell</dt><dd>${m.tell}</dd></div>
+          <div><dt>Not this</dt><dd>${m.guard}</dd></div>
+          <div><dt>The way out</dt><dd>${m.out}</dd></div>
+        </dl>
+        <p class="m-ref"><span>${m.ref}</span>${m.quote}</p>
+      </div>
+    </article>`;}).join('');
+  host.addEventListener('click',e=>{
+    const b=e.target.closest('.m-head'); if(!b) return;
+    const open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open));
+    document.getElementById(b.getAttribute('aria-controls')).hidden=open;
+    b.closest('.marsh').classList.toggle('is-open',!open);
+  });
+})();
 
 /* ===== THE THIRTEEN MAPS ===== */
 /* Same order as ROWS below, so a card and its row in the table are the same
