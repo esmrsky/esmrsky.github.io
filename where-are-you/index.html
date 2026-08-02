@@ -127,12 +127,15 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .shell{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
 .narrow{max-width:66ch}
 
-/* Every colour band takes the same column as .shell. They used to bleed to the
-   viewport while the section headings were capped and centred, so past --max
-   the page had two different left edges — the headings on one, the cards on
-   another. The SECTION backgrounds still bleed; it is the content column that
-   is capped, which is why the paper / paper-2 alternation still runs edge to
-   edge and the seam system is untouched. Below --max this changes nothing. */
+/* Full bleed is still the default — the shell is a gutter, not a column, and
+   the grids of cards run to the viewport edge.
+
+   .band is the deliberate exception, and it is used in exactly two places: the
+   Wall and section 04. Pulling those two onto the .shell column makes them read
+   as set pieces rather than as two more bands in the run, which is the whole
+   point of them. Applying it to every band instead just letterboxed the page
+   and lost the full-bleed language. The section background still bleeds either
+   way; it is only the content that comes in. */
 .band{max-width:var(--max);margin-inline:auto}
 
 .mono{font-family:var(--mono)}
@@ -279,7 +282,16 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   font-size:clamp(3.4rem,10vw,8.5rem);font-weight:800;letter-spacing:-.06em;
   line-height:.78;color:var(--pink);flex:none;
   overflow:hidden;
-  padding-block:.16em .14em;margin-block:-.16em -.14em;
+  /* Headroom on all four sides, because overflow:hidden clips both axes and
+     this box is tight on both. Vertically the .78 line box is far shorter than
+     the font's ink. Horizontally, letter-spacing is applied after the LAST
+     character as well, so a -.06em tracking pulls the advance box in by .06em
+     while the final figure's ink still overhangs it — measured at 5.3–6.0px of
+     right overhang and 2.9px of left, at a 136px size. 01 was the only number
+     that survived, because 1 is narrow. Margins hand it all back to the layout
+     so the head's position is unchanged. */
+  padding:.16em .08em .14em .05em;
+  margin:-.16em -.08em -.14em -.05em;
 }
 .sec__t{flex:1 1 22ch;min-width:0}
 .sec__t h2{
@@ -887,7 +899,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
   </div>
 </section>
 
-<div class="stats band stagger" id="stats">
+<div class="stats stagger" id="stats">
   <div class="stat" style="--fc:var(--yellow)"><b data-count="1900" data-suffix="">0</b><span>Years of maps, from the apostle John to last year's assessments</span></div>
   <div class="stat" style="--fc:var(--green)"><b data-count="11" data-suffix="">0</b><span>Frameworks summarised here, oldest to newest</span></div>
   <div class="stat" style="--fc:var(--void)"><b data-count="5" data-suffix="">0</b><span>Of them treat Position 04 — the wall — as <em>the</em> turning point of a life</span></div>
@@ -901,7 +913,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       <div class="sec__t"><h2>Maturity isn't a ladder.</h2></div>
     </div>
   </div>
-    <div class="opener band stagger">
+    <div class="opener stagger">
       <div class="opener__a">
         <p>Most church maps go <span class="hl">up</span>. Learn more, serve more, lead more.</p>
         <p>But every framework that lasted had to add a room for the part where it all <span class="hl hl--pink">stops working</span> — and that room is where maturity actually happens.</p>
@@ -928,7 +940,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
   </div>
-    <div class="map band stagger" id="mapGrid"></div>
+    <div class="map stagger" id="mapGrid"></div>
 </section>
 
 <section class="wall" id="wall">
@@ -1100,7 +1112,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
   </div>
-    <div class="frames band gridset stagger" id="fwList"></div>
+    <div class="frames gridset stagger" id="fwList"></div>
 </section>
 
 <section class="sec sec--flip">
@@ -1114,9 +1126,9 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
     <div class="filters" id="filters"></div>
   </div>
-    <div class="srcs band gridset stagger" id="srcList"></div>
+    <div class="srcs gridset stagger" id="srcList"></div>
 
-    <div class="caveats band stagger">
+    <div class="caveats stagger">
       <div class="cav" style="--fc:var(--yellow)"><span class="cav__n">Caveat 01</span><h4>Not a ranking of God's love</h4><p>Hagberg and Guelich are emphatic: later positions don't mean greater closeness to God, only a different experience of the same access.</p></div>
       <div class="cav" style="--fc:var(--green)"><span class="cav__n">Caveat 02</span><h4>Not linear, and not once</h4><p>You'll cycle. Most people re-enter the wall two or three times in a life, and people move back and forth between positions rather than graduating out of them.</p></div>
       <div class="cav" style="--fc:var(--orange)"><span class="cav__n">Caveat 03</span><h4>Not uniform across your life</h4><p>It's very common to be at 05 in suffering and 02 in money, or 06 with strangers and 01 with your own family. Locate yourself per domain.</p></div>
