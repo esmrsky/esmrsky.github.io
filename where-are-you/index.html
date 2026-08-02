@@ -124,9 +124,16 @@ ul,ol{padding:0;list-style:none}
 button{font:inherit;color:inherit}
 a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 
-/* full-bleed: the shell is a gutter, not a column */
 .shell{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
 .narrow{max-width:66ch}
+
+/* Every colour band takes the same column as .shell. They used to bleed to the
+   viewport while the section headings were capped and centred, so past --max
+   the page had two different left edges — the headings on one, the cards on
+   another. The SECTION backgrounds still bleed; it is the content column that
+   is capped, which is why the paper / paper-2 alternation still runs edge to
+   edge and the seam system is untouched. Below --max this changes nothing. */
+.band{max-width:var(--max);margin-inline:auto}
 
 .mono{font-family:var(--mono)}
 .tag{
@@ -139,7 +146,11 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .top{
   position:sticky;top:0;z-index:120;
   display:flex;align-items:center;justify-content:space-between;gap:.75rem;
-  padding:.5rem var(--gutter);
+  /* the ink still spans the viewport — a sticky bar that stops at --max leaves
+     content scrolling past beside it, which reads as broken. It is the bar's
+     CONTENTS that are pulled onto the content column. */
+  padding-block:.5rem;
+  padding-inline:max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
   background:var(--ink);color:var(--paper);
 }
 .top__id{display:flex;align-items:center;gap:.6rem;min-width:0}
@@ -208,18 +219,24 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   .hero__cta .btn{flex:0 1 auto;min-width:0}
 }
 
-/* six flat inks — and the boundary between the hero and the stats */
-.inkbar{display:grid;grid-template-columns:repeat(6,1fr);height:clamp(18px,3vw,34px)}
-.inkbar i{display:block}
-
 /* --------------------------------------------------------------- stats */
+/* The colour block is each stat's own cap rather than a separate six-cell bar
+   above them. Six inks over four stats put a seam every 1/6 above a seam every
+   1/4, and only the midpoint ever agreed — the two bands read as two unrelated
+   things stacked. As a ::before inside the cell it cannot drift: it is the same
+   element box, so it aligns at four columns, at two, and at one without a rule
+   per breakpoint. Position 04's stat takes --void, so the black is still in the
+   set and now it is on the stat that is actually about the Wall. */
 .stats{display:grid;grid-template-columns:repeat(2,1fr)}
 @media (min-width:900px){ .stats{grid-template-columns:repeat(4,1fr)} }
 .stat{
-  padding:1.9rem var(--gutter) 2rem;
+  --cap:clamp(18px,3vw,34px);
+  position:relative;
+  padding:calc(1.9rem + var(--cap)) var(--gutter) 2rem;
   background:color-mix(in srgb, var(--fc) 12%, var(--paper));
   display:flex;flex-direction:column;gap:.3rem;
 }
+.stat::before{content:"";position:absolute;inset:0 0 auto 0;height:var(--cap);background:var(--fc)}
 .stat b{
   font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;
   letter-spacing:-.055em;line-height:.9;
@@ -240,14 +257,29 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .sec--tail{padding-bottom:clamp(4rem,9vw,9rem)}
 .sec--alt{background:var(--paper-2)}
 .sec__head{display:flex;flex-wrap:wrap;align-items:flex-start;gap:1rem 2rem;margin-bottom:clamp(2.5rem,5vw,4.5rem)}
-/* masked, so the number rises out of its own box rather than fading in place —
-   see the motion block. Digits have no descenders, which is why overflow can
-   be clipped here and not on the headings; the padding-top is for the tops of
-   the figures, which sit above the .78 line box. */
+/* Alternating composition, so six section openings are not one opening printed
+   six times: even sections put the number on the far right and the title takes
+   the left. Only above 900px — flex-wrap plus row-reverse stacks the number
+   above the title when it wraps, which reads as a mistake rather than a
+   variation. The text stays left-aligned either way; the number moving is the
+   whole change. */
+@media (min-width:900px){
+  .sec--flip .sec__head{flex-direction:row-reverse;justify-content:space-between}
+}
+/* Masked, so the number rises out of its own box rather than fading in place —
+   see the motion block. The padding is the mask's headroom and it is needed on
+   BOTH sides: at line-height .78 the .78em content box is far shorter than the
+   font's ~1.15em ink box, so the figures overhang it top and bottom. "No
+   descenders" is not the same as "nothing below the baseline" — round figures
+   overshoot it, and a bottom padding of 0 sliced the base off every 0 and 2.
+   The negative margins give the headroom back to the layout so the head's
+   vertical rhythm is unchanged. Measured, not guessed: see the ink-bounds
+   check in the verification notes. */
 .sec__n{
   font-size:clamp(3.4rem,10vw,8.5rem);font-weight:800;letter-spacing:-.06em;
   line-height:.78;color:var(--pink);flex:none;
-  overflow:hidden;padding-top:.12em;margin-top:-.12em;
+  overflow:hidden;
+  padding-block:.16em .14em;margin-block:-.16em -.14em;
 }
 .sec__t{flex:1 1 22ch;min-width:0}
 .sec__t h2{
@@ -264,19 +296,31 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 @media (min-width:940px){ .opener{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)} }
 .opener__a{
   background:var(--ink);color:var(--paper);
-  padding:clamp(1.5rem,3vw,2.5rem) var(--gutter) clamp(1.75rem,3.5vw,3rem);
-  display:flex;flex-direction:column;justify-content:center;gap:1.1rem;
+  padding:clamp(1.75rem,3.4vw,3rem) var(--gutter) clamp(2rem,4vw,3.5rem);
+  display:flex;flex-direction:column;justify-content:center;gap:1.6rem;
 }
+/* 1.24, not 1.08. At 1.08 the highlight block on one line came within a couple
+   of pixels of the block on the line above, which is what made this read as
+   crammed however much padding sat around it. */
 .opener__a p{
   font-size:clamp(1.375rem,2.6vw,2.35rem);
-  font-weight:700;letter-spacing:-.035em;line-height:1.08;
+  font-weight:700;letter-spacing:-.035em;line-height:1.24;
   text-wrap:balance;
 }
+/* Drawn as a bottom-anchored gradient rather than a background colour. An
+   inline background fills the font's whole content box — ascent plus descent,
+   about 1.15em — while cap height is only .72em, so roughly a fifth of an em
+   of empty colour sat above every capital. It read as a mis-set block, and at
+   the opener's tight leading the box on one line nearly touched the line above.
+   Anchoring .95em to the bottom keeps descenders covered and takes the slack
+   off the top, which is the only side that had any. */
 .hl{
-  background:var(--yellow);color:var(--on-yellow);
+  --hlc:var(--yellow);
+  background:linear-gradient(var(--hlc),var(--hlc)) 0 100%/100% .95em no-repeat;
+  color:var(--on-yellow);
   padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
 }
-.hl--pink{background:var(--pink);color:var(--on-pink)}
+.hl--pink{--hlc:var(--pink);color:var(--on-pink)}
 
 /* paper-3, not paper-2: this block now butts section 02's paper-2 top band
    directly, and paper-2 on paper-2 is not a seam, it is a vanished edge. */
@@ -334,11 +378,11 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .pos__ico{width:40px;height:40px;flex:none}
 .pos__ico svg{width:100%;height:100%;display:block}
 .pos__head h3{font-size:clamp(1.7rem,3.1vw,2.3rem);font-weight:800;letter-spacing:-.045em;line-height:.94}
-.pos__one{font-size:.9375rem;line-height:1.4;font-weight:600;margin-top:auto}
+.pos__one{font-size:1.0625rem;line-height:1.45;font-weight:600;margin-top:auto}
 
 .fact{
   padding:1.3rem var(--gutter) 1.45rem;
-  display:flex;flex-direction:column;gap:.45rem;
+  display:flex;flex-direction:column;gap:.6rem;
   min-width:0;
 }
 .fact h4{
@@ -354,7 +398,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   display:grid;place-items:center;
 }
 .fact__i svg{width:14px;height:14px;display:block}
-.fact p{font-size:.875rem;line-height:1.5;opacity:.92}
+.fact p{font-size:.875rem;line-height:1.6;opacity:.9}
 
 /* three verses, not one: an anchor text and two that come at the position from a
    different angle. The first stays at 1rem so the row still has a head; the deep
@@ -431,7 +475,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   padding:1.65rem var(--gutter) 1.8rem;
 }
 .siren svg{flex:none;margin-top:.1rem;color:var(--pink)}
-.siren p{font-size:.9375rem;line-height:1.55;max-width:88ch}
+.siren p{font-size:.9375rem;line-height:1.55;max-width:64ch}
 .siren b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.35rem;color:var(--pink)}
 
 /* --------------------------------------------------------------- quiz */
@@ -633,7 +677,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .frame__tag::before{content:"";width:10px;height:10px;flex:none;background:var(--fc)}
 /* capped: the last card in the set spans two or three columns to close the
    trailing row, and an uncapped measure there would run to 1100px */
-.frame__note{padding:0 var(--gutter) 1.75rem;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:78ch}
+.frame__note{padding:0 var(--gutter) 1.75rem;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:66ch}
 /* each framework's own map, in its own vocabulary and its own count — the
    whole reason the shared six-position axis came out. One value step deeper
    than the card so the seam holds without a rule. It is the last subgrid row
@@ -691,7 +735,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 }
 .src h4{font-size:1.125rem;font-weight:800;letter-spacing:-.03em;line-height:1.12}
 .src__by{font-family:var(--mono);font-size:.625rem;color:var(--ink-3);letter-spacing:.04em}
-.src p{font-size:.8125rem;line-height:1.55;color:var(--ink-2);max-width:82ch}
+.src p{font-size:.8125rem;line-height:1.55;color:var(--ink-2);max-width:66ch}
 .src p b{color:var(--ink)}
 .src__link{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
@@ -717,7 +761,7 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .cav__n::before{content:"";width:9px;height:9px;flex:none;background:var(--fc)}
 
 footer{padding-block:2.5rem 3.5rem;background:var(--ink);color:var(--paper)}
-footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spacing:.03em;opacity:.7}
+footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spacing:.03em;opacity:.7;max-width:74ch}
 
 /* --------------------------------------------------------------- motion */
 /* Only transform, opacity and stroke-dashoffset are animated. The previous set
@@ -764,7 +808,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
    nothing re-animates on the way back up, which is the difference between a
    reveal and a gimmick. */
 .rise, .stagger > *, .sec__head .sec__t > *{
-  opacity:0;transform:translateY(22px);
+  opacity:0;transform:translateY(30px);
   transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
 }
 .rise[data-in="1"], .stagger[data-in="1"] > *, .sec__head[data-in="1"] .sec__t > *{
@@ -773,15 +817,21 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
 /* index stamped in JS, capped at 7 — an 11-card band at 60ms a step would run
    for two thirds of a second and the last cards would still be arriving after
    you had read the first */
-.stagger > *{transition-delay:calc(min(var(--d,0), 7) * 60ms)}
-.sec__head .sec__t > * + *{transition-delay:.1s}
+.stagger > *{transition-delay:calc(min(var(--d,0), 9) * 85ms)}
+/* the head arrives in three beats — number, then title, then lede — so the eye
+   is led down it rather than handed all of it at once */
+.sec__head .sec__t > *{transition-delay:.16s}
+.sec__head .sec__t > * + *{transition-delay:.3s}
 
 /* the number is masked rather than faded — it rises out of its own box. This
    is the one place a reveal on this page can be graphic rather than apologetic,
    and it is safe here only because digits have no descenders. */
+/* 145%, not 108%: the mask is now .78em of line box plus .30em of padding, and
+   108% of the line box no longer clears the padded box — it left a few pixels
+   of pink showing above the fold before the reveal ran. */
 .sec__n > i{
   display:block;font-style:normal;
-  transform:translateY(108%);
+  transform:translateY(145%);
   transition:transform .85s cubic-bezier(.22,1,.36,1);
 }
 .sec__head[data-in="1"] .sec__n > i{transform:none}
@@ -827,7 +877,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     <span class="hero__kicker tag">Field map · 11 frameworks · 1,900 years</span>
     <h1>Where are<br>you<span class="q">?</span></h1>
     <p class="hero__sub">
-      Six positions in Christian maturity — how to tell which one you're in,
+      Six positions in Christian maturity — how to tell <span class="hl">which one you're in</span>,
       what gets you to the next, and what to do for someone stuck in one.
     </p>
     <div class="hero__cta">
@@ -835,20 +885,12 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       <button class="btn btn--lg" data-go="map">See the map</button>
     </div>
   </div>
-  <div class="inkbar" aria-hidden="true">
-    <i style="background:var(--yellow)"></i>
-    <i style="background:var(--green)"></i>
-    <i style="background:var(--orange)"></i>
-    <i style="background:var(--void)"></i>
-    <i style="background:var(--aqua)"></i>
-    <i style="background:var(--violet)"></i>
-  </div>
 </section>
 
-<div class="stats stagger" id="stats">
+<div class="stats band stagger" id="stats">
   <div class="stat" style="--fc:var(--yellow)"><b data-count="1900" data-suffix="">0</b><span>Years of maps, from the apostle John to last year's assessments</span></div>
   <div class="stat" style="--fc:var(--green)"><b data-count="11" data-suffix="">0</b><span>Frameworks summarised here, oldest to newest</span></div>
-  <div class="stat" style="--fc:var(--orange)"><b data-count="5" data-suffix="">0</b><span>Of them treat Position 04 — the wall — as <em>the</em> turning point of a life</span></div>
+  <div class="stat" style="--fc:var(--void)"><b data-count="5" data-suffix="">0</b><span>Of them treat Position 04 — the wall — as <em>the</em> turning point of a life</span></div>
   <div class="stat" style="--fc:var(--aqua)"><b data-count="57" data-suffix="%">0</b><span>Of Gen Z &amp; Millennial churchgoers pick relationships over sermons <span class="mono" style="font-size:.625rem">(Barna)</span></span></div>
 </div>
 
@@ -859,7 +901,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       <div class="sec__t"><h2>Maturity isn't a ladder.</h2></div>
     </div>
   </div>
-    <div class="opener stagger">
+    <div class="opener band stagger">
       <div class="opener__a">
         <p>Most church maps go <span class="hl">up</span>. Learn more, serve more, lead more.</p>
         <p>But every framework that lasted had to add a room for the part where it all <span class="hl hl--pink">stops working</span> — and that room is where maturity actually happens.</p>
@@ -876,7 +918,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
 </section>
 
-<section class="sec sec--alt" id="map">
+<section class="sec sec--alt sec--flip" id="map">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n"><i>02</i></span>
@@ -886,7 +928,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
   </div>
-    <div class="map stagger" id="mapGrid"></div>
+    <div class="map band stagger" id="mapGrid"></div>
 </section>
 
 <section class="wall" id="wall">
@@ -898,13 +940,13 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
       <p class="wall__lede">
         The machinery stops. You can't tell from the inside whether you're losing your
-        faith or finally finding it. Five of the eleven frameworks here think this is the
+        faith or <span class="hl">finally finding it</span>. Five of the eleven frameworks here think this is the
         most important thing that will ever happen to you.
       </p>
     </div>
 
   </div>
-    <div class="wgrid stagger">
+    <div class="wgrid band stagger">
       <div class="wcell wcell--warn">
         <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></i>Wrong exit 01 — bypass</h4>
         <p>Sprint back to Position 03. More service, louder certainty, a new programme. Works for about eighteen months. The wall is still there, and it's taller.</p>
@@ -931,7 +973,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
 
-    <div class="siren rise">
+    <div class="siren band rise">
       <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M10 2L19 18H1L10 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
         <path d="M10 8v4.5M10 15v.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -987,18 +1029,18 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
   </div>
 </section>
 
-<section class="sec sec--alt" id="relational">
+<section class="sec sec--alt sec--flip" id="relational">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n"><i>04</i></span>
       <div class="sec__t">
         <h2>It's a person, not a programme.</h2>
-        <p>Asked to choose between a thought-provoking sermon and building strong relationships with other Christians, 57% of Gen Z and Millennial churchgoers pick the relationships. Across all Christians it's closer — 48% to 42%, with 10% unsure. Every framework on this page arrives somewhere near the same place from a different direction, and almost none of what they describe can be delivered from a stage.</p>
+        <p>Asked to choose between a thought-provoking sermon and building strong relationships with other Christians, <span class="hl hl--pink">57%</span> of Gen Z and Millennial churchgoers pick the relationships. Across all Christians it's closer — 48% to 42%, with 10% unsure. Every framework on this page arrives somewhere near the same place from a different direction, and almost none of what they describe can be delivered from a stage.</p>
       </div>
     </div>
   </div>
 
-    <div class="ledger stagger">
+    <div class="ledger band stagger">
       <div class="led__k"><h3>What a room can do</h3></div>
       <div class="led__k led--b"><h3>What only a person can do</h3></div>
 
@@ -1021,7 +1063,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Let one of them change you.</p></div>
     </div>
 
-    <div class="trio stagger">
+    <div class="trio band stagger">
       <div class="tri" style="--c:var(--yellow);--on:var(--on-yellow)">
         <span class="tri__n">Who, specifically · 01</span>
         <h3>Someone half a step ahead</h3>
@@ -1039,7 +1081,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
 
-    <div class="siren rise">
+    <div class="siren band rise">
       <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M10 2L19 18H1L10 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
         <path d="M10 8v4.5M10 15v.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -1058,10 +1100,10 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
       </div>
     </div>
   </div>
-    <div class="frames gridset stagger" id="fwList"></div>
+    <div class="frames band gridset stagger" id="fwList"></div>
 </section>
 
-<section class="sec">
+<section class="sec sec--flip">
   <div class="shell">
     <div class="sec__head">
       <span class="sec__n"><i>06</i></span>
@@ -1072,9 +1114,9 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
     <div class="filters" id="filters"></div>
   </div>
-    <div class="srcs gridset stagger" id="srcList"></div>
+    <div class="srcs band gridset stagger" id="srcList"></div>
 
-    <div class="caveats stagger">
+    <div class="caveats band stagger">
       <div class="cav" style="--fc:var(--yellow)"><span class="cav__n">Caveat 01</span><h4>Not a ranking of God's love</h4><p>Hagberg and Guelich are emphatic: later positions don't mean greater closeness to God, only a different experience of the same access.</p></div>
       <div class="cav" style="--fc:var(--green)"><span class="cav__n">Caveat 02</span><h4>Not linear, and not once</h4><p>You'll cycle. Most people re-enter the wall two or three times in a life, and people move back and forth between positions rather than graduating out of them.</p></div>
       <div class="cav" style="--fc:var(--orange)"><span class="cav__n">Caveat 03</span><h4>Not uniform across your life</h4><p>It's very common to be at 05 in suffering and 02 in money, or 06 with strangers and 01 with your own family. Locate yourself per domain.</p></div>
