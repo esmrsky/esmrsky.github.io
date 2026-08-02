@@ -1240,9 +1240,11 @@ html[data-theme="light"] .pathrow.p3 .cap{color:var(--soul)}
 @keyframes calmPulse{0%,100%{opacity:.75}50%{opacity:1}}
 
 /* ══ Head · heart · gut ══ */
-.hhg{position:relative;margin-top:1.5rem;padding-left:clamp(0px,1vw,8px)}
+/* --orb drives both the circles and the spine that threads them, so the line
+   always lands on their centres instead of guessing at a second clamp */
+.hhg{--orb:clamp(38px,9vw,64px);position:relative;margin-top:1.5rem;padding-left:clamp(0px,1vw,8px)}
 .hhg-spine{
-  position:absolute;left:clamp(15px,4.4vw,24px);top:12%;bottom:26%;width:2px;
+  position:absolute;left:calc(var(--orb) / 2 - 1px);top:calc(var(--orb) / 2);bottom:calc(var(--orb) / 2);width:2px;
   background:linear-gradient(180deg,rgba(76,201,240,.6),rgba(255,194,75,.6),rgba(181,123,255,.6));
   overflow:hidden;border-radius:2px;
 }
@@ -1253,9 +1255,12 @@ html[data-theme="light"] .pathrow.p3 .cap{color:var(--soul)}
 }
 @keyframes vagus{0%{transform:translateY(320%)}100%{transform:translateY(-120%)}}
 .hhg-list{display:flex;flex-direction:column;gap:clamp(1.1rem,3vw,1.9rem);position:relative}
-.hhg-item{display:flex;align-items:center;gap:clamp(.9rem,3vw,1.7rem)}
+/* the spine now sits after the items in the DOM, so state the layering rather
+   than letting document order decide: it threads behind the orbs, as before */
+.hhg-spine{z-index:0}
+.hhg-item{display:flex;align-items:center;gap:clamp(.9rem,3vw,1.7rem);position:relative;z-index:1}
 .hhg-item .orb{
-  width:clamp(38px,9vw,64px);aspect-ratio:1;border-radius:50%;flex-shrink:0;border:2px solid;
+  width:var(--orb);aspect-ratio:1;border-radius:50%;flex-shrink:0;border:2px solid;
 }
 .hhg-item.head .orb{border-color:rgba(76,201,240,.85);background:radial-gradient(circle,rgba(76,201,240,.28),rgba(76,201,240,.04));box-shadow:0 0 34px rgba(76,201,240,.3)}
 .hhg-item.heart .orb{border-color:rgba(255,194,75,.85);background:radial-gradient(circle,rgba(255,194,75,.3),rgba(255,194,75,.04));box-shadow:0 0 34px rgba(255,194,75,.32);animation:heartBeat 2.6s ease-in-out infinite}
@@ -1595,6 +1600,10 @@ html[data-theme="light"] .panel.hero::before{opacity:.55}
 .reveal.in .stagger > *:nth-child(5){transition-delay:.28s}
 .reveal.in .stagger > *:nth-child(6){transition-delay:.34s}
 .reveal.in .stagger > *:nth-child(7){transition-delay:.40s}
+/* the spine lives inside .hhg-list so its ends can key off the orb size — it is
+   decoration, not a list item, so keep it out of the stagger. Declared here, after
+   the rules it overrides: equal specificity means source order decides. */
+.reveal .hhg-list > .hhg-spine,.reveal.in .hhg-list > .hhg-spine{opacity:1;transform:none;transition:none;transition-delay:0s}
 .reveal.in .stagger > *:nth-child(8){transition-delay:.46s}
 .reveal.in .stagger > *:nth-child(n+9){transition-delay:.52s}
 
@@ -2520,11 +2529,11 @@ html[data-theme="light"] .panel.hero::before{opacity:.55}
         </div>
         <div class="reveal" style="margin-top:1.5rem">
           <figure class="fig hhg" aria-label="Head, heart and gut each carry their own neural networks">
-            <div class="hhg-spine" aria-hidden="true"></div>
             <div class="hhg-list stagger">
               <div class="hhg-item head"><span class="orb"></span><div><h4>Head</h4><p>~86 billion neurons</p></div></div>
               <div class="hhg-item heart"><span class="orb"></span><div><h4>Heart</h4><p>~40,000 neurons · a "little brain"</p></div></div>
               <div class="hhg-item gut"><span class="orb"></span><div><h4>Gut</h4><p>~500 million neurons · the "second brain"</p></div></div>
+              <div class="hhg-spine" aria-hidden="true"></div>
             </div>
             <div class="hhg-foot">VAGUS NERVE ≈ 80% of fibres carry signal <b>↑ upward</b> (body → brain)</div>
           </figure>
