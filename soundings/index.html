@@ -417,10 +417,14 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
   font-size:.92rem;line-height:1.6}
 .mkey span{display:block;margin-bottom:8px;font-family:var(--mono);font-size:.5rem;
   letter-spacing:.16em;text-transform:uppercase;color:var(--marsh)}
-.marshgrid{display:grid;gap:18px;margin-top:clamp(20px,2.6vw,28px);align-items:start}
+/* Cards are open by default, so rows stretch to the tallest card and the
+   scripture line is pushed to the foot with margin-top:auto. Slack then collects
+   in one place at the bottom of a card instead of scattering as ragged gaps. */
+.marshgrid{display:grid;gap:18px;margin-top:clamp(20px,2.6vw,28px)}
 @media(min-width:820px){.marshgrid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1180px){.marshgrid{gap:20px}}
-.marsh{position:relative;border-radius:18px;overflow:hidden;transition:border-color .22s ease;
+.marsh{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;
+  transition:border-color .22s ease;
   /* --mk is the depth this marsh counterfeits; --mkt is its text-safe lift. s3 and
      s4 measure 3.9:1 and 3.8:1 on this panel and fail at the 9px mono sizes used
      for the chip and the dt labels, so every label reads --mkt, never --mk. */
@@ -465,8 +469,9 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .m-more i::before{left:0;right:0;top:6px;height:1px}
 .m-more i::after{top:0;bottom:0;left:6px;width:1px}
 .marsh.is-open .m-more i::after{transform:scaleY(0)}
-.m-body{position:relative;z-index:1;padding:clamp(22px,2.4vw,28px) clamp(24px,2.4vw,30px)
-  clamp(24px,2.4vw,30px);background:rgba(4,14,20,.40);
+.m-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
+  padding:clamp(22px,2.4vw,28px) clamp(24px,2.4vw,30px) clamp(24px,2.4vw,30px);
+  background:rgba(4,14,20,.40);
   border-top:1px solid color-mix(in srgb,var(--mk) 26%,var(--line))}
 .m-body dl{margin:0;display:grid;gap:22px}
 .m-body dt{margin-bottom:9px;padding-left:11px;position:relative;font-family:var(--mono);
@@ -475,7 +480,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
   border-radius:2px;background:var(--mk)}
 .m-body dd{margin:0;color:var(--dim);font-size:.92rem;line-height:1.6}
 .m-body dd b{color:var(--foam);font-weight:600}
-.m-ref{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--line);
+.m-ref{margin:24px 0 0 0;margin-top:auto;padding-top:18px;border-top:1px solid var(--line);
   font-family:var(--script);font-style:italic;color:var(--dim);font-size:.95rem;line-height:1.5}
 .m-ref span{display:block;margin-bottom:8px;font-family:var(--mono);font-style:normal;
   font-size:.46rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dimmer)}
@@ -1700,8 +1705,8 @@ const MI=[
   const host=document.getElementById('marshgrid'); if(!host) return;
   host.innerHTML=M.map((m,i)=>{
     const id='mp'+i, bid='mb'+i, n=String(i+1).padStart(2,'0');
-    return `<article class="marsh" style="--mk:${CV[m.d]}">
-      <button type="button" class="m-head" id="${bid}" aria-expanded="false" aria-controls="${id}">
+    return `<article class="marsh is-open" style="--mk:${CV[m.d]}">
+      <button type="button" class="m-head" id="${bid}" aria-expanded="true" aria-controls="${id}">
         <span class="m-ix">${n} / marsh</span>
         <svg viewBox="0 0 24 24" aria-hidden="true">${MI[i]}</svg>
         <b>${m.n}</b>
@@ -1709,7 +1714,7 @@ const MI=[
         <p class="mech">${m.mech}</p>
         <span class="m-more">The tell · the guard · the way out <i></i></span>
       </button>
-      <div class="m-body" id="${id}" role="region" aria-labelledby="${bid}" hidden>
+      <div class="m-body" id="${id}" role="region" aria-labelledby="${bid}">
         <dl>
           <div><dt>The tell</dt><dd>${m.tell}</dd></div>
           <div><dt>Not this</dt><dd>${m.guard}</dd></div>
