@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Way Back v3 — Real Needs, False Sources, True Repair</title>
+<meta name="description" content="A solution-first, expandable guide for identifying counterfeit loops and choosing the real meal." />
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#0d100e;
+  --bg-soft:#141814;
+  --surface:#181e19;
+  --surface-2:#202720;
+  --paper:#f8f1e6;
+  --paper-soft:#eee2d1;
+  --ink:#171613;
+  --muted:#b7ad9d;
+  --gold:#d7ad61;
+  --gold-soft:#f0d6a4;
+  --green:#91b482;
+  --green-soft:#dce9d4;
+  --rust:#bd7254;
+  --red:#c8665b;
+  --blue:#8db9c2;
+  --line:rgba(248,241,230,.14);
+  --line-strong:rgba(248,241,230,.22);
+  --dark-line:rgba(23,22,19,.13);
+  --shadow:0 24px 80px rgba(0,0,0,.32);
+  --radius-xl:30px;
+  --radius-lg:22px;
+  --radius-md:16px;
+  --max:1240px;
+  --serif:ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --sans:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --step--1:clamp(.82rem,.78rem + .12vw,.9rem);
+  --step-0:clamp(1rem,.96rem + .18vw,1.08rem);
+  --step-1:clamp(1.18rem,1.08rem + .4vw,1.42rem);
+  --step-2:clamp(1.42rem,1.24rem + .82vw,1.9rem);
+  --step-3:clamp(2rem,1.58rem + 2vw,3.2rem);
+  --step-4:clamp(3.3rem,2.18rem + 5vw,6.75rem);
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  font-family:var(--sans);
+  font-size:var(--step-0);
+  color:var(--paper);
+  background:
+    radial-gradient(circle at 12% -8%, rgba(145,180,130,.23), transparent 34rem),
+    radial-gradient(circle at 86% 8%, rgba(215,173,97,.16), transparent 32rem),
+    linear-gradient(180deg,#090b09 0%,var(--bg) 44%,#171911 100%);
+  line-height:1.56;
+}
+body:before {
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.052;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+}
+.wrap { width:min(var(--max), calc(100vw - 40px)); margin:0 auto; position:relative; z-index:1; }
+a { color:inherit; text-decoration:none; }
+button,input,select,textarea { font:inherit; }
+:focus-visible { outline:3px solid rgba(215,173,97,.75); outline-offset:3px; }
+.skip {
+  position:absolute; left:-999px; top:12px; z-index:20;
+  background:var(--paper); color:var(--ink); padding:10px 14px; border-radius:999px;
+}
+.skip:focus { left:12px; }
+
+.site-nav {
+  position:sticky; top:0; z-index:10;
+  background:rgba(13,16,14,.78);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+.brand { display:flex; align-items:center; gap:12px; font-size:.78rem; font-weight:950; letter-spacing:.08em; text-transform:uppercase; }
+.mark {
+  width:38px; height:38px; border-radius:999px; display:grid; place-items:center;
+  border:1px solid rgba(248,241,230,.24); color:var(--gold);
+  background:radial-gradient(circle at 50% 10%, rgba(215,173,97,.22), rgba(248,241,230,.04));
+}
+.nav-links { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-links a { color:rgba(248,241,230,.68); padding:8px 10px; border-radius:999px; font-size:.76rem; font-weight:760; }
+.nav-links a:hover { background:rgba(248,241,230,.08); color:var(--paper); }
+
+.hero { padding:86px 0 54px; }
+.hero-grid { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr); gap:48px; align-items:center; }
+.eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px;
+  border:1px solid rgba(215,173,97,.34);
+  background:rgba(215,173,97,.09); color:var(--gold-soft);
+  font-size:.75rem; font-weight:950; letter-spacing:.11em; text-transform:uppercase;
+}
+h1,h2,h3,p { margin-top:0; }
+h1 {
+  font-family:var(--serif);
+  font-size:var(--step-4);
+  line-height:.9;
+  letter-spacing:-.058em;
+  font-weight:500;
+  margin:22px 0 24px;
+  max-width:1050px;
+}
+.lead { font-size:var(--step-1); line-height:1.42; color:rgba(248,241,230,.76); max-width:800px; }
+.actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+.btn {
+  border:1px solid rgba(248,241,230,.20);
+  background:rgba(248,241,230,.06);
+  color:var(--paper);
+  border-radius:999px;
+  padding:12px 16px;
+  font-weight:900;
+  cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform .16s ease, background .16s ease, border-color .16s ease;
+}
+.btn:hover { transform:translateY(-1px); background:rgba(248,241,230,.10); border-color:rgba(248,241,230,.28); }
+.btn.primary { background:var(--paper); color:var(--ink); border-color:var(--paper); }
+.btn.gold { background:rgba(215,173,97,.14); border-color:rgba(215,173,97,.38); color:var(--gold-soft); }
+
+.hero-panel {
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(145,180,130,.13), transparent 55%),
+    linear-gradient(180deg,rgba(248,241,230,.078),rgba(248,241,230,.032));
+  box-shadow:var(--shadow);
+  padding:24px;
+}
+.hero-panel .big { font-family:var(--serif); font-size:clamp(2rem,4vw,3.6rem); letter-spacing:-.045em; line-height:1; }
+.kicker { color:var(--gold); font-size:.75rem; letter-spacing:.13em; text-transform:uppercase; font-weight:950; margin-bottom:10px; }
+.flow { display:grid; gap:9px; margin-top:24px; }
+.flow-row {
+  display:grid; grid-template-columns:122px minmax(0,1fr); gap:12px;
+  padding:13px 14px; border:1px solid var(--line); border-radius:var(--radius-md);
+  background:rgba(0,0,0,.20);
+}
+.flow-row b { color:var(--gold); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; }
+.flow-row span { color:rgba(248,241,230,.70); }
+
+section { padding:64px 0; }
+.cream {
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(215,173,97,.14), transparent 28rem),
+    var(--paper);
+  border-top:1px solid rgba(248,241,230,.12);
+  border-bottom:1px solid rgba(248,241,230,.12);
+}
+.section-head { display:grid; grid-template-columns:.74fr 1fr; gap:42px; align-items:end; margin-bottom:26px; }
+.cream .kicker { color:#806337; }
+h2 {
+  font-family:var(--serif);
+  font-size:var(--step-3);
+  line-height:.95;
+  letter-spacing:-.045em;
+  font-weight:500;
+  margin:0;
+}
+.section-head p { color:rgba(248,241,230,.68); font-size:1.05rem; max-width:760px; margin:0; }
+.cream .section-head p { color:rgba(23,22,19,.66); }
+
+.panel {
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  background:linear-gradient(180deg,rgba(248,241,230,.07),rgba(248,241,230,.032));
+  box-shadow:0 20px 70px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.cream .panel { border-color:var(--dark-line); background:rgba(255,255,255,.42); box-shadow:0 20px 60px rgba(65,45,25,.08); }
+.card {
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:rgba(248,241,230,.055);
+  padding:22px;
+  min-height:100%;
+}
+.cream .card { border-color:var(--dark-line); background:rgba(255,255,255,.48); }
+.card h3 { font-size:1.28rem; line-height:1.1; letter-spacing:-.025em; margin-bottom:8px; }
+.card p { color:rgba(248,241,230,.67); margin:0; }
+.cream .card p { color:rgba(23,22,19,.65); }
+.small { display:block; color:var(--gold); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; font-weight:950; margin-bottom:8px; }
+.cream .small { color:#806337; }
+
+.grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+
+.quick-panel { padding:24px; }
+.quick-grid { display:grid; grid-template-columns:minmax(300px,.95fr) minmax(0,1.05fr); gap:18px; }
+label { display:block; color:var(--gold); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; font-weight:950; margin:12px 0 7px; }
+input,select,textarea {
+  width:100%;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.24);
+  color:var(--paper);
+  border-radius:var(--radius-md);
+  padding:12px 13px;
+  outline:none;
+}
+textarea { min-height:76px; resize:vertical; }
+.cream input,.cream select,.cream textarea { border-color:var(--dark-line); background:rgba(255,255,255,.72); color:var(--ink); }
+.output {
+  font-family:var(--mono);
+  white-space:pre-wrap;
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:#080a08;
+  color:#efe5d7;
+  padding:18px;
+  min-height:430px;
+  font-size:.86rem;
+  line-height:1.55;
+}
+
+.solution-path { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+.solution-step {
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  background:rgba(0,0,0,.18);
+}
+.solution-step b { display:block; font-family:var(--serif); font-size:1.45rem; font-weight:500; margin-bottom:6px; }
+.solution-step span { color:rgba(248,241,230,.66); font-size:.9rem; }
+
+details {
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:rgba(248,241,230,.045);
+  overflow:hidden;
+}
+.cream details { border-color:var(--dark-line); background:rgba(255,255,255,.38); }
+summary {
+  cursor:pointer;
+  list-style:none;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:center;
+  font-weight:950;
+}
+summary::-webkit-details-marker { display:none; }
+summary:after {
+  content:"+";
+  width:28px; height:28px;
+  flex:0 0 auto;
+  border-radius:999px;
+  display:grid; place-items:center;
+  border:1px solid currentColor;
+  opacity:.5;
+}
+details[open] summary:after { content:"–"; }
+.detail-body { padding:0 20px 20px; color:rgba(248,241,230,.72); }
+.cream .detail-body { color:rgba(23,22,19,.70); }
+
+.toolrow {
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  padding:16px; border-bottom:1px solid var(--line); background:rgba(0,0,0,.12);
+}
+.cream .toolrow { border-color:var(--dark-line); background:rgba(255,255,255,.30); }
+.search { min-width:min(100%,420px); flex:1; border-radius:999px; }
+.count { color:rgba(248,241,230,.56); font-size:.86rem; }
+.cream .count { color:rgba(23,22,19,.54); }
+
+.feel-list { display:grid; gap:12px; }
+.feel-card { border:1px solid var(--dark-line); border-radius:var(--radius-lg); background:rgba(255,255,255,.50); overflow:hidden; }
+.feel-top { display:grid; grid-template-columns:230px minmax(0,1fr); border-bottom:1px solid var(--dark-line); }
+.feel-name { padding:20px; background:rgba(23,22,19,.045); }
+.feel-name h3 { font-family:var(--serif); font-size:2.1rem; line-height:.96; font-weight:500; margin-bottom:8px; }
+.feel-name p { margin:0; color:rgba(23,22,19,.60); }
+.feel-cell { padding:16px; }
+.feel-cell b { display:block; color:#806337; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
+.feel-cell span { color:rgba(23,22,19,.68); }
+.feel-cells { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--dark-line); }
+.feel-cells .feel-cell { border-right:1px solid var(--dark-line); }
+.feel-cells .feel-cell:last-child { border-right:0; }
+
+.library-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.library-card { position:relative; }
+.library-card .tag {
+  display:inline-flex; padding:5px 8px; border-radius:999px; border:1px solid rgba(128,99,55,.24); background:rgba(215,173,97,.12);
+  color:#806337; font-size:.72rem; font-weight:950; letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px;
+}
+.library-card h3 { font-family:var(--serif); font-size:1.55rem; font-weight:500; line-height:1; }
+.library-card dl { margin:14px 0 0; display:grid; gap:10px; }
+.library-card dt { color:#806337; font-size:.72rem; font-weight:950; letter-spacing:.1em; text-transform:uppercase; }
+.library-card dd { margin:4px 0 0; color:rgba(23,22,19,.68); }
+
+.table-wrap { overflow:auto; max-height:78vh; }
+table { width:100%; min-width:1360px; border-collapse:collapse; }
+th { position:sticky; top:0; z-index:2; text-align:left; padding:14px; background:#151812; border-bottom:1px solid var(--line); color:var(--gold); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; }
+.cream th { background:#eee4d5; color:#806337; border-bottom:1px solid var(--dark-line); }
+td { vertical-align:top; padding:14px; border-bottom:1px solid var(--line); color:rgba(248,241,230,.75); }
+.cream td { border-bottom:1px solid var(--dark-line); color:rgba(23,22,19,.72); }
+td:nth-child(2), .cream td:nth-child(2) { font-weight:900; color:inherit; }
+.pill { display:inline-flex; border:1px solid rgba(215,173,97,.3); background:rgba(215,173,97,.1); color:#ecd4a6; padding:5px 8px; border-radius:999px; font-size:.72rem; font-weight:900; }
+.cream .pill { color:#806337; }
+
+.scripture-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.scripture-card p { font-family:var(--serif); font-size:1.5rem; line-height:1.08; color:var(--paper); margin:12px 0 0; }
+.audit-list { display:grid; gap:12px; }
+.audit-item { display:grid; grid-template-columns:170px 1fr; gap:16px; padding:16px; border:1px solid var(--dark-line); border-radius:18px; background:rgba(255,255,255,.44); }
+.audit-item b { color:#806337; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; }
+.audit-item span { color:rgba(23,22,19,.68); }
+
+footer { padding:36px 0 54px; color:rgba(248,241,230,.52); font-size:.86rem; }
+
+@media(max-width:1080px) {
+  .hero-grid,.section-head,.quick-grid { grid-template-columns:1fr; }
+  .solution-path,.grid-4 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .grid-3,.library-grid,.scripture-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .nav-links { display:none; }
+  .hero { padding-top:58px; }
+}
+@media(max-width:720px) {
+  .wrap { width:min(var(--max), calc(100vw - 24px)); }
+  .nav-inner { min-height:64px; }
+  .hero { padding:46px 0 32px; }
+  h1 { font-size:clamp(3rem,15vw,4.6rem); }
+  section { padding:44px 0; }
+  .grid-2,.grid-3,.grid-4,.library-grid,.solution-path,.scripture-grid { grid-template-columns:1fr; }
+  .flow-row { grid-template-columns:1fr; }
+  .feel-top,.feel-cells { grid-template-columns:1fr; }
+  .feel-cells .feel-cell { border-right:0; border-bottom:1px solid var(--dark-line); }
+  .feel-cells .feel-cell:last-child { border-bottom:0; }
+  .audit-item { grid-template-columns:1fr; }
+  table { min-width:1220px; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="site-nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><span class="mark">✦</span><span>The Way Back v3</span></a>
+    <div class="nav-links">
+      <a href="#quick">Quick Help</a>
+      <a href="#path">Solution Path</a>
+      <a href="#feel">When I Feel</a>
+      <a href="#library">Everyday Examples</a>
+      <a href="#deep">Deep Table</a>
+      <a href="#framework">Framework</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Polished v3 · solution first · expandable depth</div>
+      <h1>Bring the real need to the real meal.</h1>
+      <p class="lead">
+        A cleaner, more practical guide for identifying counterfeit loops without getting stuck in self-analysis. Start with a next faithful move, then expand deeper only when the diagnosis needs more precision.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#quick">I need help now</a>
+        <a class="btn gold" href="#library">Everyday examples</a>
+        <a class="btn" href="#framework">Dig deeper</a>
+      </div>
+    </div>
+    <aside class="hero-panel" aria-label="Core framework">
+      <div class="kicker">Core distinction</div>
+      <div class="big">The counterfeit gives the feeling of the thing without the fruit of the thing.</div>
+      <div class="flow">
+        <div class="flow-row"><b>Need</b><span>A real hunger wakes up.</span></div>
+        <div class="flow-row"><b>Counterfeit</b><span>A fast substitute promises relief.</span></div>
+        <div class="flow-row"><b>Near-miss</b><span>It works enough to be remembered.</span></div>
+        <div class="flow-row"><b>Dependence</b><span>The body learns to return there.</span></div>
+        <div class="flow-row"><b>Return</b><span>The need goes to the true Source through proper means.</span></div>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<main id="main">
+<section id="quick">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Start here</div><h2>Quick help before deep diagnosis.</h2></div>
+      <p>Pick what you feel. The site gives a likely real need, a counterfeit pattern, and a first faithful move. This is intentionally direct.</p>
+    </div>
+    <div class="panel quick-panel">
+      <div class="quick-grid">
+        <div>
+          <label for="quickFeel">What are you feeling?</label>
+          <select id="quickFeel"></select>
+          <label for="quickBehavior">What are you tempted to run to?</label>
+          <input id="quickBehavior" placeholder="optional: scrolling, anger, food, work, control..." />
+          <label for="quickContext">What happened right before this?</label>
+          <textarea id="quickContext" placeholder="optional: a text, silence, criticism, tiredness, conflict..."></textarea>
+          <div class="actions">
+            <button class="btn primary" id="makeQuick" type="button">Generate next step</button>
+            <button class="btn" id="copyQuick" type="button">Copy</button>
+          </div>
+        </div>
+        <div><div class="output" id="quickOutput">Choose a feeling, then generate a short re-source plan.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">The solution path</div><h2>Five moves that keep it practical.</h2></div>
+      <p>Everything else on the site expands one of these five moves. This is the operating system.</p>
+    </div>
+    <div class="solution-path">
+      <div class="solution-step"><b>Name</b><span>Name the feeling and the real need under it.</span></div>
+      <div class="solution-step"><b>Regulate</b><span>Settle the body enough to choose instead of react.</span></div>
+      <div class="solution-step"><b>Receive</b><span>Anchor identity/source before action.</span></div>
+      <div class="solution-step"><b>Replace</b><span>Give the cue a real meal, not an empty deletion.</span></div>
+      <div class="solution-step"><b>Repair</b><span>Confess specific harm and make the next thing right.</span></div>
+    </div>
+    <div class="grid-2" style="margin-top:16px">
+      <details>
+        <summary>Why “just stop” is usually too shallow</summary>
+        <div class="detail-body"><p>“Just stop” attacks the behavior while leaving the need alive. If the person is still hungry, lonely, afraid, ashamed, exhausted, or seeking worth, the empty space will usually refill with the same counterfeit or a new one.</p></div>
+      </details>
+      <details>
+        <summary>The two analogies</summary>
+        <div class="detail-body"><p><strong>Chips when you need a meal:</strong> the counterfeit gives quick taste but not nourishment.</p><p><strong>Cheap knockoff that breaks:</strong> the substitute looks cheaper upfront but costs more when it fails.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="feel" class="cream">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Practical diagnostic</div><h2>When I feel…</h2></div>
+      <p>Use this for fast pattern recognition. Each card gives a next move first, then lets people expand for deeper diagnosis.</p>
+    </div>
+    <div class="toolrow" style="border:1px solid var(--dark-line); border-radius:22px; margin-bottom:16px">
+      <input class="search" id="feelSearch" placeholder="Search feelings, needs, old pathways..." />
+      <select id="feelCategory"><option value="">All categories</option></select>
+      <span class="count" id="feelCount"></span>
+    </div>
+    <div class="feel-list" id="feelList"></div>
+  </div>
+</section>
+
+<section id="core" class="cream">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">The map</div><h2>The eight core needs.</h2></div>
+      <p>Most specific loops trace back to one or two of these. The cards stay compact; expand each one for the real meal.</p>
+    </div>
+    <div class="grid-4" id="coreGrid"></div>
+  </div>
+</section>
+
+<section id="library" class="cream">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Everyday counterfeits</div><h2>Apps, hobbies, services, techniques.</h2></div>
+      <p>Everyday things are not automatically bad. The question is whether they are being used as tools, gifts, or false sources.</p>
+    </div>
+    <div class="toolrow" style="border:1px solid var(--dark-line); border-radius:22px; margin-bottom:16px">
+      <input class="search" id="librarySearch" placeholder="Search apps, services, hobbies, techniques..." />
+      <select id="libraryType"><option value="">All types</option></select>
+      <span class="count" id="libraryCount"></span>
+    </div>
+    <div class="library-grid" id="libraryGrid"></div>
+  </div>
+</section>
+
+<section id="deep" class="cream">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Deep diagnosis</div><h2>Expanded real need table.</h2></div>
+      <p>The full table is collapsed by default because it is dense. Open it when someone wants the mechanics.</p>
+    </div>
+    <details>
+      <summary>Open the full table: Real need · Counterfeit · What it gives · What it cannot give</summary>
+      <div class="detail-body" style="padding:0">
+        <div class="toolrow">
+          <input class="search" id="tableSearch" placeholder="Search need, counterfeit, cost, real meal..." />
+          <select id="needsCategory"><option value="">All categories</option></select>
+          <span class="count" id="tableCount"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Category</th><th>Real need</th><th>Felt signal</th><th>Counterfeit</th><th>What it gives</th><th>What it cannot give</th><th>Why it hooks</th><th>Long-term cost</th><th>Real meal / proper means</th><th>Source anchor</th><th>First faithful move</th></tr></thead>
+            <tbody id="needsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="framework">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Expandable framework</div><h2>For people who want the deeper “why.”</h2></div>
+      <p>Solution-first does not mean shallow. The deeper theology and mechanics are available without overwhelming the primary path.</p>
+    </div>
+    <div class="grid-2">
+      <details open>
+        <summary>Source vs. means</summary>
+        <div class="detail-body"><p>God is the ultimate source of life, worth, mercy, safety, and belonging. Created things are proper means when received as gifts. A counterfeit is often a good means treated like an ultimate source.</p></div>
+      </details>
+      <details>
+        <summary>Sin as source-swap</summary>
+        <div class="detail-body"><p>Sin is not merely bad behavior. It is misdirected trust, worship, desire, and obedience. A real desire becomes a ruling demand; the heart turns to a false source; the body obeys through a counterfeit behavior.</p></div>
+      </details>
+      <details>
+        <summary>Dependence mechanics</summary>
+        <div class="detail-body"><p>The counterfeit creates dependence because it gives relief without resolution. The need remains, shame or anxiety gets added, and the counterfeit becomes more attractive next time.</p></div>
+      </details>
+      <details>
+        <summary>Guardrails</summary>
+        <div class="detail-body"><p>Sometimes you are just tired. Grace does not cancel sleep, therapy, medicine, accountability, or practical safety. Do not weaponize the lens against others. Actual danger needs actual protection.</p></div>
+      </details>
+    </div>
+
+    <details style="margin-top:16px">
+      <summary>Scripture spine: source, idolatry, slavery, freedom</summary>
+      <div class="detail-body"><div class="scripture-grid" id="scriptureGrid"></div></div>
+    </details>
+  </div>
+</section>
+
+<section id="workbook">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Workbook</div><h2>Build a re-source plan.</h2></div>
+      <p>Use this when you know the loop and need a concrete plan.</p>
+    </div>
+    <div class="panel quick-panel">
+      <div class="quick-grid">
+        <div>
+          <label for="wbBehavior">Surface behavior</label><input id="wbBehavior" placeholder="e.g. yelling, scrolling, overworking, numbing" />
+          <label for="wbNeed">Real need</label><input id="wbNeed" placeholder="e.g. safety, belonging, rest, worth, comfort" />
+          <label for="wbCounterfeit">Counterfeit source</label><input id="wbCounterfeit" placeholder="e.g. control, approval, productivity, food, phone" />
+          <label for="wbGives">What it gives briefly</label><textarea id="wbGives"></textarea>
+          <label for="wbCannot">What it cannot give</label><textarea id="wbCannot"></textarea>
+          <label for="wbReal">Real meal / proper means</label><textarea id="wbReal"></textarea>
+          <label for="wbRepair">Repair step</label><textarea id="wbRepair"></textarea>
+          <div class="actions"><button class="btn primary" id="makePlan" type="button">Generate plan</button><button class="btn" id="copyPlan" type="button">Copy</button></div>
+        </div>
+        <div><div class="output" id="planOutput">Fill the fields and generate your plan.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cream" id="audit">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="kicker">Design audit built in</div><h2>What changed in v3.</h2></div>
+      <p>This is a quick summary of the layout and CSS improvements made in this version.</p>
+    </div>
+    <div class="audit-list">
+      <div class="audit-item"><b>Hierarchy</b><span>Reduced competing sections at the top. The user now sees one primary action: quick help, then optional deeper diagnosis.</span></div>
+      <div class="audit-item"><b>Spacing</b><span>Standardized section rhythm, card padding, grid gaps, and radii so the page feels calmer and less patchworked.</span></div>
+      <div class="audit-item"><b>Typography</b><span>Added a fluid type scale, tighter hero letterspacing, readable body line-height, and clearer serif/sans roles.</span></div>
+      <div class="audit-item"><b>Responsiveness</b><span>Changed dense grids to 2-column tablet and 1-column mobile. Tables stay horizontally scrollable instead of crushing content.</span></div>
+      <div class="audit-item"><b>Accessibility</b><span>Added skip link, focus-visible states, reduced-motion handling, labels, semantic main/nav/section structure, and stronger contrast checks.</span></div>
+      <div class="audit-item"><b>Content strategy</b><span>Kept solution-focused content visible. Moved dense mechanics into expandable details so readers can dig without being overwhelmed.</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">The Way Back v3 · solution-first expandable guide · theological/behavioral aid, not medical or mental-health diagnosis.</div>
+</footer>
+
+<script>
+const DATA = {"feel": [{"feel": "Lonely", "signal": "Ache, checking your phone, wanting to be noticed", "need": "Connection / belonging", "old": "Scrolling, texting loops, parasocial content, checking views", "real": "Embodied contact: one honest message, one call, one meal, one confession", "move": "Text one safe person: “Can we talk this week? I’ve been feeling disconnected.”", "category": "Belonging"}, {"feel": "Rejected", "signal": "Scanning tone, panic after silence, wanting to fix tension", "need": "Secure acceptance", "old": "Fawning, over-apologizing, over-explaining, image management", "real": "God’s acceptance plus truthful, non-panicked repair", "move": "Pause before replying. Say: “I hear you. I want to respond honestly, not reactively.”", "category": "Belonging"}, {"feel": "Powerless", "signal": "Tension, urgency, clenched body, need to force movement", "need": "Safety / agency", "old": "Anger, micromanaging, ultimatums, frantic planning", "real": "Boundaried action: control what is yours, release what is not", "move": "Name one controllable action and one uncontrollable outcome. Act only on the first.", "category": "Safety"}, {"feel": "Disrespected", "signal": "Heat, defensiveness, urge to punish or prove dignity", "need": "Worth / justice", "old": "Sarcasm, contempt, shouting, withdrawal, revenge fantasy", "real": "Truth with restraint: dignity that does not need rage to exist", "move": "Say: “That felt disrespectful. I want to talk about it without attacking.”", "category": "Justice"}, {"feel": "Worthless", "signal": "Feeling behind, exposed, not enough, needing proof", "need": "Worth / justification", "old": "Overworking, perfectionism, achievements, credentials", "real": "Worth received before performance; work becomes fruit, not source", "move": "Do one faithful task imperfectly, then stop without adding another proof-task.", "category": "Worth"}, {"feel": "Ashamed", "signal": "Hiding, self-attack, dread of being seen clearly", "need": "Forgiveness / restored dignity", "old": "Numbing, secrecy, self-condemnation, religious striving", "real": "Confession, mercy, repentance, repair; truth brought into light", "move": "Confess the specific thing to God and, if needed, one safe person without dramatic self-hatred.", "category": "Mercy"}, {"feel": "Anxious", "signal": "Racing thoughts, threat scanning, needing more certainty", "need": "Safety / peace", "old": "Checking, doomscrolling, reassurance seeking, research spirals", "real": "Limited wisdom plus embodied trust under uncertainty", "move": "Set a 10-minute research limit, write the next action, then stop.", "category": "Safety"}, {"feel": "Uncertain", "signal": "Indecision, fear of choosing wrong, obsessive pros/cons", "need": "Clarity / guidance", "old": "Endless research, asking everyone, refreshing, avoiding decisions", "real": "Wise counsel, prayer, enough information, then faithful movement", "move": "Decide what “enough information” means, then choose the next reversible step.", "category": "Agency"}, {"feel": "Exhausted", "signal": "Heavy body, foggy mind, craving escape", "need": "Rest / restoration", "old": "Late-night scrolling, binge watching, gaming, caffeine loops", "real": "Sleep, Sabbath, quiet, body care, low-stimulation recovery", "move": "Put the phone across the room and choose 20 minutes of real rest.", "category": "Rest"}, {"feel": "Emotionally numb", "signal": "Flatness, avoidance, needing noise or stimulation", "need": "Comfort / emotional presence", "old": "Noise, busyness, substances, food, entertainment, compulsive work", "real": "Gentle presence: name one feeling, include God, include the body", "move": "Ask: “What am I avoiding feeling?” Name it in one sentence.", "category": "Comfort"}, {"feel": "Grieved", "signal": "Heaviness, loss, wanting to move on too fast", "need": "Comfort / lament", "old": "Forced positivity, numbing, work, shopping, food", "real": "Lament, tears, companionship, hope without denial", "move": "Pray or write: “This hurt because…” then tell one safe person.", "category": "Comfort"}, {"feel": "Bored", "signal": "Restlessness, flatness, craving novelty", "need": "Joy / play / meaning / rest", "old": "Scrolling, snacking, shopping, novelty chasing", "real": "A slower good: music, walk, craft, reading, prayer, play", "move": "Do one analog thing for 10 minutes before picking up the phone.", "category": "Joy"}, {"feel": "Hungry", "signal": "Empty stomach, irritability, craving something fast", "need": "Nourishment", "old": "Chips, sweets, grazing, caffeine, skipping real meals", "real": "A real meal that feeds the body, not just the mouth", "move": "Drink water and eat protein/real food before snacks.", "category": "Provision"}, {"feel": "Empty", "signal": "Ache, craving intensity, wanting something to fill the hole", "need": "Comfort / meaning / worship", "old": "Shopping, porn, food, entertainment, fantasy, endless planning", "real": "Name the ache and bring it to God plus one concrete proper means", "move": "Say: “I feel empty, and I’m tempted to fill it with ___.” Then choose one real meal.", "category": "Meaning"}, {"feel": "Invisible", "signal": "Feeling overlooked, small, forgotten, needing proof you matter", "need": "Significance / being seen", "old": "Posting for validation, self-branding, comparison, name-dropping", "real": "Being seen by God and loved locally; hidden faithfulness", "move": "Do one useful act where credit is impossible.", "category": "Worth"}, {"feel": "Intimacy-starved", "signal": "Longing for closeness, tenderness, and being known", "need": "Intimacy", "old": "Porn, fantasy, emotional affairs, oversharing online", "real": "Vulnerability, covenant love, confession, safe friendship, prayer", "move": "Name the intimacy need without feeding fantasy; move toward honest connection.", "category": "Intimacy"}, {"feel": "Behind", "signal": "Comparison, panic, urge to catch up immediately", "need": "Agency / worth", "old": "Panic productivity, courses/tools, overplanning, comparison", "real": "One faithful next step inside your actual assignment", "move": "Pick one next task and remove one fake productivity input.", "category": "Agency"}, {"feel": "Resentful", "signal": "Feeling unseen, overburdened, silently demanding appreciation", "need": "Validation / support / boundaries", "old": "Martyrdom, passive aggression, over-serving, withdrawal", "real": "Truthful request, boundary, receiving love before serving", "move": "Say clearly: “I need help with ___ by ___.”", "category": "Belonging"}, {"feel": "Angry", "signal": "Heat, threat, wanting to force the situation", "need": "Safety / justice / dignity", "old": "Outburst, contempt, control, punishment, shutdown", "real": "Firmness without rage; truth under God’s authority", "move": "Lower volume, slow down, and state the boundary without threat.", "category": "Safety"}, {"feel": "Tempted to compare", "signal": "Self-rating, envy, pride, despair after seeing someone else", "need": "Worth / significance", "old": "Social media, status-checking, competitive striving", "real": "Received worth and assigned faithfulness, not borrowed identity", "move": "Bless the person you envy, then return to your next faithful task.", "category": "Worth"}, {"feel": "Unsafe", "signal": "Threat, fear, danger, appeasement or freezing", "need": "Actual safety", "old": "Denial, appeasement, rage, freezing, over-control", "real": "God as refuge through wise protection: boundaries, help, distance, authorities if needed", "move": "Move toward safety. Contact help. Leave danger when needed.", "category": "Safety"}, {"feel": "Spiritually dry", "signal": "Flat prayer, craving a spiritual high, self-condemnation", "need": "Communion with God", "old": "Chasing experiences, endless sermons, aesthetic spirituality", "real": "Ordinary means: prayer, Scripture, worship, silence, obedience, community", "move": "Pray simply for five minutes without trying to manufacture a feeling.", "category": "Transcendence"}, {"feel": "Tempted to quit", "signal": "Flooded, trapped, desperate to escape", "need": "Freedom / hope / rest", "old": "Avoidance, impulsive quitting, fantasy life, sabotage", "real": "Discerned boundaries, rest, counsel, wise change instead of escape", "move": "Do not decide while flooded. Rest, then ask: “What needs to change, not just disappear?”", "category": "Freedom"}, {"feel": "Guilty after failure", "signal": "Despair, self-punishment, urge to keep spiraling", "need": "Forgiveness / repair", "old": "Bingeing, hiding, doubling down, despair, self-punishment", "real": "No condemnation, confession, repair, restart immediately", "move": "Stop the spiral within one step. Say what happened plainly and repair the next thing.", "category": "Mercy"}, {"feel": "Overwhelmed", "signal": "Too many open loops, scattered thoughts, shutdown", "need": "Order / help / peace", "old": "Shutdown, frantic multitasking, control, complaining, avoidance", "real": "Small faithful order, asking for help, accepting creaturely limits", "move": "Write every open loop down. Circle only the next one.", "category": "Agency"}], "needs": [{"category": "Body / Provision", "need": "Hunger / nourishment", "signal": "Empty stomach, irritability, low energy, craving something fast", "counterfeit": "Chips, sweets, grazing, caffeine instead of food", "gives": "Taste, salt, crunch, stimulation, quick fullness", "cannot": "Deep nourishment, stable energy, actual bodily care", "hook": "It answers the mouth faster than a real meal answers the body.", "cost": "Still hungry, unstable energy, more cravings, less body trust", "real": "Protein, water, balanced meal, eating slowly, planning food", "anchor": "God gives daily bread through ordinary embodied means.", "move": "Drink water and eat real food before snack-stimulation."}, {"category": "Body / Provision", "need": "Thirst / refreshment", "signal": "Dryness, fatigue, headache, craving flavor or stimulation", "counterfeit": "Soda, extra coffee, alcohol, sugary drinks", "gives": "Flavor, ritual, stimulation, a small reward", "cannot": "Hydration, restoration, bodily balance", "hook": "The ritual feels like refreshment while the body still needs water.", "cost": "More dehydration, caffeine crashes, more stimulation dependence", "real": "Water, electrolytes, less caffeine, actual rest", "anchor": "Created means are gifts; the body is not an enemy.", "move": "Drink water first, then decide if you still want the other drink."}, {"category": "Rest / Comfort", "need": "Exhaustion / restoration", "signal": "Heavy body, foggy mind, irritability, wanting escape", "counterfeit": "Late-night scrolling, binge watching, gaming, caffeine loops", "gives": "Distraction, passive escape, feeling off-duty", "cannot": "Sleep, nervous-system repair, true Sabbath rest", "hook": "It feels like rest because you are not working, but it still stimulates you.", "cost": "Less sleep, lower resilience, more exhaustion tomorrow", "real": "Sleep, nap, Sabbath, silence, low-stimulation recovery", "anchor": "Rest is a gift, not a reward you earn after proving enough.", "move": "Put the phone across the room and choose 20 minutes of real rest."}, {"category": "Connection", "need": "Loneliness / connection", "signal": "Ache, emptiness, checking phone, wanting to be noticed", "counterfeit": "Social media, texting loops, parasocial content, checking views", "gives": "Faces, novelty, updates, simulated presence", "cannot": "Being known, heard, held, loved, and received", "hook": "It gives the feeling of people without the vulnerability of relationship.", "cost": "More comparison, more isolation, weaker courage for real connection", "real": "Call a friend, confession, shared meal, church/community presence", "anchor": "God receives the real you and teaches you to be known by others.", "move": "Send one honest message to a safe person."}, {"category": "Connection", "need": "Belonging / acceptance", "signal": "Fear of disapproval, scanning tone, wanting to fix tension", "counterfeit": "People-pleasing, fawning, over-explaining, image management", "gives": "Temporary approval, reduced rejection fear, relational control", "cannot": "Secure love, honest belonging, freedom to tell the truth", "hook": "Approval feels like love when belonging feels uncertain.", "cost": "Resentment, dishonesty, identity shaped by everyone’s mood", "real": "Secure acceptance, honest no, vulnerable truth, safe friendship", "anchor": "Belonging is received before you perform for the room.", "move": "Pause before replying and tell one clean truth without over-explaining."}, {"category": "Identity", "need": "Worth / justification", "signal": "Feeling behind, exposed, not enough, needing proof", "counterfeit": "Overworking, perfectionism, achievements, credentials", "gives": "Proof, praise, measurable value, visible competence", "cannot": "Secure identity, rest from proving, non-contingent worth", "hook": "Metrics feel objective, so they seem safer than received worth.", "cost": "Burnout, comparison, fragile identity, daily reset of the worth-meter", "real": "Grace, adoption, Sabbath, secret service, faithful work from rest", "anchor": "Worth is not the prize at the end of performance; it is the ground under obedience.", "move": "Do one faithful task imperfectly, then stop without adding a proof-task."}, {"category": "Identity", "need": "Significance / being seen", "signal": "Feeling invisible, overlooked, small, forgotten", "counterfeit": "Posting for validation, comparison, self-branding, name-dropping", "gives": "Visibility, likes, recognition, measurable attention", "cannot": "Being truly known, loved, and significant apart from the crowd", "hook": "Attention feels like significance when hiddenness feels like death.", "cost": "Dependence on audience response, performative living, envy", "real": "Hidden faithfulness, local love, service without credit, being seen by God", "anchor": "Your life is hidden with Christ before it is measured by the crowd.", "move": "Do one useful act where credit is impossible."}, {"category": "Safety", "need": "Fear / safety", "signal": "Tension, urgency, racing thoughts, threat scanning", "counterfeit": "Control, anger, checking, doomscrolling, micromanaging", "gives": "Sense of power, certainty, preparedness, movement", "cannot": "Deep safety, trust, peace under uncertainty", "hook": "Control gives immediate body relief, even when it increases real chaos.", "cost": "Hypervigilance, damaged trust, more anxiety, less surrender", "real": "Prayer, wise plan, boundary, help, grounding, leaving danger if needed", "anchor": "God is refuge; you are responsible, not sovereign.", "move": "Name one controllable action and release one uncontrollable outcome."}, {"category": "Safety", "need": "Certainty / clarity", "signal": "Indecision, obsessive thinking, fear of choosing wrong", "counterfeit": "Research spirals, reassurance seeking, obsessive checking", "gives": "Temporary confidence, feeling prepared, illusion of risk removal", "cannot": "Peace when some things remain unknown", "hook": "More information feels like obedience, but can become fear in disguise.", "cost": "Paralysis, more doubt, weaker decision muscles", "real": "Wise counsel, limited research, prayer, decision, trust", "anchor": "You can act faithfully without being omniscient.", "move": "Define enough information, then take the next reversible step."}, {"category": "Safety / Justice", "need": "Justice / things made right", "signal": "Heat, outrage, moral injury, wanting someone to pay", "counterfeit": "Rage, revenge, contempt, cancellation, bitterness", "gives": "Moral superiority, power, a feeling of control", "cannot": "True justice, peace, reconciliation, judgment entrusted to God", "hook": "Rage feels righteous because it borrows energy from a real concern for justice.", "cost": "Bitterness, escalation, loss of clarity, becoming what you oppose", "real": "Truth-telling, boundaries, advocacy, lament, forgiveness, wise authority", "anchor": "God’s justice frees you to act firmly without becoming ruled by hatred.", "move": "Name the wrong clearly without adding contempt."}, {"category": "Comfort", "need": "Comfort / emotional soothing", "signal": "Ache, stress, sadness, craving warmth or escape", "counterfeit": "Food, porn, shopping, substances, endless entertainment", "gives": "Warmth, pleasure, anesthesia, temporary relief", "cannot": "Real comfort, grief held, pain processed, healing", "hook": "It turns pain down quickly without asking you to face it.", "cost": "Unprocessed pain, more shame, stronger urge next time", "real": "Prayer, tears, trusted person, therapy, beauty, rest", "anchor": "God comforts without requiring you to deny the wound.", "move": "Ask, “What am I trying not to feel?” and name it in one sentence."}, {"category": "Comfort", "need": "Grief / lament", "signal": "Sadness, heaviness, loss, numbness, wanting to move on fast", "counterfeit": "Forced positivity, numbing, work, shopping, food", "gives": "Avoidance, distraction, control over the feeling", "cannot": "Being held in sorrow, honest lament, hope that does not deny pain", "hook": "Avoidance feels like strength when grief feels too vulnerable.", "cost": "Delayed grief, emotional shutdown, pressure leaking elsewhere", "real": "Lament, tears, companionship, prayer, time, honest memory", "anchor": "God meets people in the valley, not only after they exit it.", "move": "Pray or write: “This hurt because…”"}, {"category": "Intimacy", "need": "Intimacy / being deeply known", "signal": "Longing, sexual desire, ache for closeness, tenderness hunger", "counterfeit": "Porn, fantasy, emotional affairs, oversharing online", "gives": "Intensity, pleasure, illusion of closeness, control without risk", "cannot": "Covenant love, vulnerability, mutual knowing, faithful presence", "hook": "It imitates intimacy while removing vulnerability and responsibility.", "cost": "Less capacity for embodied love, secrecy, shame, objectification", "real": "Covenant intimacy, confession, friendship, prayer, patient vulnerability", "anchor": "Being known by God frees you to pursue intimacy without consumption.", "move": "Name the intimacy need without feeding fantasy; move toward honest connection."}, {"category": "Meaning", "need": "Meaning / purpose", "signal": "Drift, boredom, emptiness, urgency to matter", "counterfeit": "Workaholism, ideology, status projects, constant goals", "gives": "Direction, importance, urgency, a role to play", "cannot": "Calling, peace, lasting purpose, communion with God", "hook": "Urgency feels like meaning when stillness feels empty.", "cost": "Burnout, identity fusion with projects, inability to rest", "real": "Vocation, service, worship, family, mission, local faithfulness", "anchor": "Your life matters because it belongs to God’s story before it becomes impressive.", "move": "Choose one faithful assignment today instead of redesigning your whole life."}, {"category": "Joy", "need": "Joy / delight", "signal": "Boredom, flatness, craving novelty, wanting a spark", "counterfeit": "Novelty chasing, entertainment binge, thrill seeking", "gives": "Excitement, stimulation, escape from boredom", "cannot": "Deep gladness, gratitude, contentment, durable joy", "hook": "Novelty mimics joy because it wakes the system up.", "cost": "Restlessness, lower tolerance for quiet goods, constant need for more", "real": "Music, nature, worship, play, celebration, gratitude", "anchor": "Joy is received as gift, not extracted as a drug.", "move": "Choose one slow delight without multitasking."}, {"category": "Agency", "need": "Agency / mastery", "signal": "Feeling stuck, weak, behind, incapable, trapped", "counterfeit": "Productivity obsession, domination, hustle, self-sufficiency", "gives": "Motion, capability, power, sense of progress", "cannot": "Peaceful agency within creaturely limits", "hook": "Motion feels like freedom even when it is frantic.", "cost": "Scattered energy, pride, burnout, refusal to receive help", "real": "Skill-building, boundaries, asking help, one faithful next step", "anchor": "You are called to act, not to be sovereign.", "move": "Take the next faithful step and ask for one piece of help."}, {"category": "Freedom", "need": "Freedom / spaciousness", "signal": "Feeling trapped, suffocated, resentful, desperate to escape", "counterfeit": "Escape fantasies, impulsive quitting, avoidance, sabotage", "gives": "Instant spaciousness, relief, fantasy of a new self", "cannot": "Real freedom with responsibility, healed patterns, wise change", "hook": "Escape feels like freedom when responsibility feels like prison.", "cost": "Unrepaired patterns follow you, trust erodes, decisions become reactive", "real": "Boundaries, simplification, counsel, rest, truthful decisions", "anchor": "Freedom is not merely absence of limits; it is life rightly ordered.", "move": "Do not decide while flooded. Rest, then ask what must change."}, {"category": "Peace", "need": "Peace / inner quiet", "signal": "Restlessness, dread of silence, constant need for noise", "counterfeit": "Busyness, podcasts, caffeine, scrolling, background noise", "gives": "Avoidance of silence, stimulation, sense of being accompanied", "cannot": "Actual stillness, settledness, communion, attention", "hook": "Noise protects you from hearing what is unresolved.", "cost": "Fragmented attention, spiritual dryness, inability to be present", "real": "Silence, prayer, slow walk, Scripture, breathing", "anchor": "Stillness is possible because God remains God when you stop performing.", "move": "Sit quietly for three minutes and let one sentence of truth remain."}, {"category": "Transcendence", "need": "Transcendence / worship", "signal": "Awe hunger, desire for glory, wanting something bigger", "counterfeit": "Politics-as-religion, celebrity worship, spiritual highs, aesthetics", "gives": "Awe, identity, belonging to something big, emotional intensity", "cannot": "God Himself, true glory, eternal orientation", "hook": "The heart is made for worship, so it will worship something.", "cost": "Idolatry, tribalism, disillusionment, dependence on spectacle", "real": "Worship, prayer, Scripture, communion, awe, obedience", "anchor": "Only God can bear the weight of ultimate glory.", "move": "Return attention to God without trying to manufacture a high."}, {"category": "Hope", "need": "Hope / future security", "signal": "Fear of future, despair, craving rescue, fantasy planning", "counterfeit": "Fantasizing, gambling, get-rich schemes, compulsive planning", "gives": "Possibility, excitement, imagined rescue, future control", "cannot": "Patient hope, endurance, grounded trust", "hook": "Imagined rescue gives the emotional reward before faithful action.", "cost": "Disappointment, avoidance of today, risk-taking, passivity", "real": "Prayer, planning, saving, community help, daily obedience", "anchor": "Hope entrusts the future to God while living faithfully today.", "move": "Do one grounded action today before indulging the fantasy."}], "everyday": [{"type": "App", "example": "Instagram / TikTok / YouTube Shorts", "need": "Connection, joy, rest, significance", "counterfeit_use": "Opening whenever a lull appears, chasing novelty or validation", "healthy_use": "Intentional inspiration, learning, posting without identity dependence", "signal": "You feel worse, lonelier, or more restless after closing it", "real_meal": "Call someone, go outside, make something, worship, sleep"}, {"type": "App", "example": "Reddit / X / news feeds", "need": "Clarity, belonging, control, justice", "counterfeit_use": "Doomscrolling to feel informed or morally armed", "healthy_use": "Time-bounded research or community participation", "signal": "More information increases threat, anger, or contempt", "real_meal": "Limited research, prayer, wise action, embodied presence"}, {"type": "Work tool", "example": "Slack / Teams / email badges", "need": "Belonging, worth, control, contribution", "counterfeit_use": "Instant replies to prove value or reduce anxiety", "healthy_use": "Clear work communication within boundaries", "signal": "You feel guilty resting or not replying immediately", "real_meal": "Work blocks, offline boundaries, received worth, honest expectations"}, {"type": "Metric", "example": "Apple Rings / Whoop / fitness trackers", "need": "Health, agency, mastery", "counterfeit_use": "Closing rings to feel morally okay", "healthy_use": "Feedback for wise body stewardship", "signal": "Rest feels like failure", "real_meal": "Movement for joy, sleep, recovery, body as gift"}, {"type": "Learning app", "example": "Duolingo / streak systems / courses", "need": "Mastery, growth, agency", "counterfeit_use": "Protecting streaks while avoiding real learning", "healthy_use": "Practice that serves real skill and humility", "signal": "The number matters more than the craft", "real_meal": "Slow skill-building, practice, failure tolerance"}, {"type": "Productivity system", "example": "Notion templates / planners / habit trackers", "need": "Order, agency, clarity", "counterfeit_use": "Redesigning the system instead of doing the next faithful task", "healthy_use": "Simple structure that supports action", "signal": "Planning gives relief but produces no obedience", "real_meal": "One task, one boundary, one done thing"}, {"type": "Shopping service", "example": "Amazon / Target / Temu / carts", "need": "Comfort, agency, freshness, status", "counterfeit_use": "Browsing or buying to feel new, powerful, or okay", "healthy_use": "Buying what is actually needed with gratitude", "signal": "The wanting feels better than the having", "real_meal": "Name the ache, budget, gratitude, beauty without bingeing"}, {"type": "Food service", "example": "DoorDash / Uber Eats / fast food", "need": "Nourishment, comfort, convenience", "counterfeit_use": "Using food delivery to numb stress or avoid care", "healthy_use": "Occasional practical help or hospitality", "signal": "You are full but not restored", "real_meal": "Real meal, rest, shared table, emotional honesty"}, {"type": "Search habit", "example": "Google / Perplexity / YouTube research spirals", "need": "Certainty, control, competence", "counterfeit_use": "Researching past the point of actionable wisdom", "healthy_use": "Finding enough information for the next faithful step", "signal": "Every answer creates three new anxieties", "real_meal": "Decision, counsel, prayer, action under uncertainty"}, {"type": "Housing app", "example": "Zillow / Redfin browsing", "need": "Security, hope, future, status", "counterfeit_use": "Fantasy life planning to escape today", "healthy_use": "Practical research for a real move or financial plan", "signal": "You feel discontent with actual life afterward", "real_meal": "Gratitude, wise planning, stewardship, local faithfulness"}, {"type": "Dating app", "example": "Hinge / Bumble / Tinder", "need": "Intimacy, belonging, being chosen", "counterfeit_use": "Swiping for validation or fantasy without vulnerability", "healthy_use": "Intentional dating with honesty and boundaries", "signal": "Matches become worth-metrics", "real_meal": "Embodied community, honest dating, patience, identity in God"}, {"type": "Entertainment", "example": "Netflix / gaming / streaming binges", "need": "Rest, joy, escape, play", "counterfeit_use": "Using passive entertainment to avoid pain or sleep", "healthy_use": "Enjoyed as play within limits", "signal": "You are more tired after “resting”", "real_meal": "Sleep, play, friendship, beauty, Sabbath"}, {"type": "Hobby", "example": "Photography / music / design / gardening", "need": "Beauty, mastery, joy, agency", "counterfeit_use": "Turning a good gift into proof of worth or public validation", "healthy_use": "Receiving and cultivating a gift with gratitude", "signal": "The hobby becomes performance pressure", "real_meal": "Create without posting, practice slowly, share locally"}, {"type": "Technique", "example": "Breathwork / cold plunge / sauna / optimization", "need": "Regulation, agency, healing", "counterfeit_use": "Treating techniques as salvation or control over every state", "healthy_use": "Embodied support that helps you return to God and reality", "signal": "You panic when the technique is unavailable", "real_meal": "Regulation plus prayer, counsel, sleep, relational repair"}, {"type": "Spiritual content", "example": "Sermons / podcasts / worship playlists", "need": "Transcendence, truth, comfort", "counterfeit_use": "Consuming spiritual content instead of prayer, repentance, or obedience", "healthy_use": "Formation that leads to communion and faithful action", "signal": "More content, less obedience", "real_meal": "Prayer, Scripture, confession, worship, one act of obedience"}, {"type": "Finance tool", "example": "Bank apps / crypto charts / stock apps", "need": "Provision, safety, future security", "counterfeit_use": "Refreshing balances to feel safe", "healthy_use": "Budgeting, saving, stewardship, wise counsel", "signal": "Checking creates more fear, not more wisdom", "real_meal": "Plan, give, save, ask for help, trust daily bread"}, {"type": "Status space", "example": "LinkedIn / portfolio / personal brand", "need": "Worth, significance, contribution", "counterfeit_use": "Curating identity to outrank others", "healthy_use": "Clear communication of useful work", "signal": "Someone else’s success feels like your failure", "real_meal": "Hidden faithfulness, celebration of others, work from received worth"}, {"type": "Relational tactic", "example": "Over-explaining / long texts / apology spirals", "need": "Acceptance, repair, safety", "counterfeit_use": "Trying to control someone’s perception through language", "healthy_use": "Clear ownership and honest communication", "signal": "You keep adding words to force relief", "real_meal": "Specific apology, boundary, patience, letting truth stand"}, {"type": "Relational tactic", "example": "Silent treatment / withdrawal", "need": "Safety, dignity, control", "counterfeit_use": "Punishing or controlling by absence", "healthy_use": "Taking space to regulate before repair", "signal": "Distance is used as leverage", "real_meal": "Timed pause, clear return, honest conversation"}, {"type": "Religious technique", "example": "Rule-stacking / vows / self-punishment", "need": "Cleansing, control, assurance", "counterfeit_use": "Trying to become worthy enough to return to God", "healthy_use": "Concrete repentance and wise boundaries", "signal": "The rule becomes a savior", "real_meal": "No condemnation, confession, accountability, repair"}], "core": [{"name": "Provision", "q": "Will I have enough?", "bad": "Greed, hoarding, panic spending, scarcity obsession", "good": "Daily bread received through wise work, help, food, shelter, and generosity."}, {"name": "Safety", "q": "Am I okay?", "bad": "Control, anger, anxiety loops, checking", "good": "God as refuge plus boundaries, planning, protection, and embodied calm."}, {"name": "Belonging", "q": "Am I loved?", "bad": "People-pleasing, codependency, approval addiction", "good": "Secure love that allows honesty, confession, and real community."}, {"name": "Worth", "q": "Am I acceptable?", "bad": "Overwork, perfectionism, comparison", "good": "Justification, adoption, dignity, and action from received identity."}, {"name": "Agency", "q": "Can I act?", "bad": "Domination, productivity obsession, self-sufficiency", "good": "Faithful action inside limits: build, ask, learn, choose, repair."}, {"name": "Comfort / Rest", "q": "Can I be held and restored?", "bad": "Numbing, food, porn, substances, entertainment", "good": "Real comfort, sleep, Sabbath, grief held, beauty received."}, {"name": "Meaning", "q": "Does my life matter?", "bad": "Status projects, ideology, legacy panic", "good": "Calling, service, worship, local faithfulness, participation in God’s story."}, {"name": "Transcendence", "q": "What is ultimate?", "bad": "Idolatry, spectacle, politics, celebrity, spiritual counterfeits", "good": "God Himself: worship, awe, prayer, Scripture, communion, glory."}], "scripture": [{"ref": "Jeremiah 2:13", "theme": "Source vs. broken wells", "note": "God is the fountain; false sources are broken cisterns."}, {"ref": "John 4:14", "theme": "Living water", "note": "Jesus offers a spring, not another leaky container."}, {"ref": "Romans 1:25", "theme": "Idolatry", "note": "Created things become enslaving when served in place of the Creator."}, {"ref": "Romans 6:16", "theme": "Slavery", "note": "Whatever you obey becomes your master."}, {"ref": "John 8:36", "theme": "Freedom", "note": "The Son sets slaves free."}, {"ref": "Romans 8:1", "theme": "No condemnation", "note": "Grace removes shame as the engine of change."}, {"ref": "James 1:14–15", "theme": "Desire becoming master", "note": "Desire conceives and gives birth when it rules."}, {"ref": "1 Timothy 4:4", "theme": "Gifts are good", "note": "Created things are good when received rightly."}, {"ref": "Galatians 5:1", "theme": "Do not return to slavery", "note": "Freedom must not be traded for another yoke."}]};
+
+function esc(s) { return String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+function norm(s) { return String(s ?? '').toLowerCase(); }
+function match(row,q) { return !q || Object.values(row).some(v => norm(v).includes(q)); }
+
+function initSelect(id, values) {
+  const el = document.getElementById(id);
+  const first = el.querySelector('option')?.outerHTML || '<option value="">All</option>';
+  el.innerHTML = first + values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
+}
+
+function initQuick() {
+  const sel = document.getElementById('quickFeel');
+  sel.innerHTML = DATA.feel.map((r,i)=>`<option value="${i}">${esc(r.feel)}</option>`).join('');
+  makeQuick();
+}
+function makeQuick() {
+  const r = DATA.feel[Number(document.getElementById('quickFeel').value || 0)];
+  const behavior = document.getElementById('quickBehavior').value.trim();
+  const context = document.getElementById('quickContext').value.trim();
+  const old = behavior || r.old;
+  const ctx = context ? `\nWhat happened before:\n${context}\n` : '';
+  document.getElementById('quickOutput').textContent =
+`QUICK RE-SOURCE PLAN
+
+Feeling:
+${r.feel}
+
+Felt signal:
+${r.signal}
+
+What my body may be asking for:
+${r.need}
+${ctx}
+Old pathway / counterfeit:
+${old}
+
+Real meal / proper means:
+${r.real}
+
+First faithful move:
+${r.move}
+
+Short prayer:
+Father, I bring the real need to You instead of demanding life from a false source. Help me choose the next faithful move without shame or denial.`;
+}
+document.getElementById('quickFeel').addEventListener('change', makeQuick);
+document.getElementById('makeQuick').addEventListener('click', makeQuick);
+document.getElementById('copyQuick').addEventListener('click', async ()=> {
+  try { await navigator.clipboard.writeText(document.getElementById('quickOutput').textContent); } catch(e) {}
+});
+
+function renderFeel() {
+  const q = norm(document.getElementById('feelSearch').value);
+  const cat = document.getElementById('feelCategory').value;
+  const rows = DATA.feel.filter(r => (!cat || r.category === cat) && match(r,q));
+  document.getElementById('feelCount').textContent = `${rows.length} / ${DATA.feel.length} pathways`;
+  document.getElementById('feelList').innerHTML = rows.map(r => `
+    <article class="feel-card">
+      <div class="feel-top">
+        <div class="feel-name"><h3>${esc(r.feel)}</h3><p>${esc(r.signal)}</p></div>
+        <div class="feel-cell"><b>First faithful move</b><span>${esc(r.move)}</span></div>
+      </div>
+      <details style="border:0;border-radius:0;background:transparent">
+        <summary>Diagnose this feeling more deeply</summary>
+        <div class="feel-cells">
+          <div class="feel-cell"><b>Old pathway</b><span>${esc(r.old)}</span></div>
+          <div class="feel-cell"><b>Real need</b><span>${esc(r.need)}</span></div>
+          <div class="feel-cell"><b>Real meal</b><span>${esc(r.real)}</span></div>
+          <div class="feel-cell"><b>Freedom marker</b><span>You can feel the need without obeying the false source.</span></div>
+        </div>
+      </details>
+    </article>
+  `).join('');
+}
+
+function renderCore() {
+  document.getElementById('coreGrid').innerHTML = DATA.core.map(c => `
+    <div class="card">
+      <span class="small">${esc(c.q)}</span>
+      <h3>${esc(c.name)}</h3>
+      <p><strong>Counterfeits:</strong> ${esc(c.bad)}</p>
+      <details style="margin-top:14px"><summary>Real meal</summary><div class="detail-body">${esc(c.good)}</div></details>
+    </div>
+  `).join('');
+}
+
+function renderLibrary() {
+  const q = norm(document.getElementById('librarySearch').value);
+  const type = document.getElementById('libraryType').value;
+  const rows = DATA.everyday.filter(r => (!type || r.type === type) && match(r,q));
+  document.getElementById('libraryCount').textContent = `${rows.length} / ${DATA.everyday.length} examples`;
+  document.getElementById('libraryGrid').innerHTML = rows.map(r => `
+    <article class="card library-card">
+      <span class="tag">${esc(r.type)}</span>
+      <h3>${esc(r.example)}</h3>
+      <dl>
+        <div><dt>Need it often touches</dt><dd>${esc(r.need)}</dd></div>
+        <div><dt>Counterfeit use</dt><dd>${esc(r.counterfeit_use)}</dd></div>
+        <div><dt>Healthy use</dt><dd>${esc(r.healthy_use)}</dd></div>
+        <div><dt>Warning signal</dt><dd>${esc(r.signal)}</dd></div>
+        <div><dt>Real meal</dt><dd>${esc(r.real_meal)}</dd></div>
+      </dl>
+    </article>
+  `).join('');
+}
+
+function renderTable() {
+  const q = norm(document.getElementById('tableSearch').value);
+  const cat = document.getElementById('needsCategory').value;
+  const rows = DATA.needs.filter(r => (!cat || r.category === cat) && match(r,q));
+  document.getElementById('tableCount').textContent = `${rows.length} / ${DATA.needs.length} rows`;
+  document.getElementById('needsBody').innerHTML = rows.map(r => `
+    <tr>
+      <td><span class="pill">${esc(r.category)}</span></td>
+      <td>${esc(r.need)}</td>
+      <td>${esc(r.signal)}</td>
+      <td>${esc(r.counterfeit)}</td>
+      <td>${esc(r.gives)}</td>
+      <td>${esc(r.cannot)}</td>
+      <td>${esc(r.hook)}</td>
+      <td>${esc(r.cost)}</td>
+      <td>${esc(r.real)}</td>
+      <td>${esc(r.anchor)}</td>
+      <td>${esc(r.move)}</td>
+    </tr>
+  `).join('');
+}
+
+function renderScripture() {
+  document.getElementById('scriptureGrid').innerHTML = DATA.scripture.map(s => `
+    <div class="card scripture-card"><span class="small">${esc(s.ref)} · ${esc(s.theme)}</span><p>${esc(s.note)}</p></div>
+  `).join('');
+}
+
+function planVal(id) { return document.getElementById(id).value.trim() || '—'; }
+function makePlan() {
+  document.getElementById('planOutput').textContent =
+`RE-SOURCE PLAN
+
+Surface behavior:
+${planVal('wbBehavior')}
+
+Real need:
+${planVal('wbNeed')}
+
+Counterfeit source:
+${planVal('wbCounterfeit')}
+
+What it gives briefly:
+${planVal('wbGives')}
+
+What it cannot give:
+${planVal('wbCannot')}
+
+Real meal / proper means:
+${planVal('wbReal')}
+
+Repair step:
+${planVal('wbRepair')}
+
+Diagnostic line:
+When I feel this need, I usually run to the counterfeit because it gives temporary relief. But it cannot satisfy the real need. I will bring the real need to the true Source through the proper means and take the first faithful repair step.`;
+}
+document.getElementById('makePlan').addEventListener('click', makePlan);
+document.getElementById('copyPlan').addEventListener('click', async ()=> {
+  try { await navigator.clipboard.writeText(document.getElementById('planOutput').textContent); } catch(e) {}
+});
+
+initQuick();
+initSelect('feelCategory', [...new Set(DATA.feel.map(r => r.category))].sort());
+initSelect('libraryType', [...new Set(DATA.everyday.map(r => r.type))].sort());
+initSelect('needsCategory', [...new Set(DATA.needs.map(r => r.category))].sort());
+document.getElementById('feelSearch').addEventListener('input', renderFeel);
+document.getElementById('feelCategory').addEventListener('change', renderFeel);
+document.getElementById('librarySearch').addEventListener('input', renderLibrary);
+document.getElementById('libraryType').addEventListener('change', renderLibrary);
+document.getElementById('tableSearch').addEventListener('input', renderTable);
+document.getElementById('needsCategory').addEventListener('change', renderTable);
+renderFeel();
+renderCore();
+renderLibrary();
+renderTable();
+renderScripture();
+</script>
+</body>
+</html>
