@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultimate Guide 2026 — Claude Code, Codex &amp; Coding Agents</title>
+  <meta name="description" content="One guide to Anthropic Claude Code and OpenAI Codex in 2026: models, effort, workflows, what still matters, what’s fading, and skills to build next." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #090b10;
+      --surface: #12151c;
+      --surface-2: #1a1e28;
+      --border: #2a3040;
+      --text: #eef1f6;
+      --muted: #94a3b8;
+      --accent: #a78bfa;
+      --accent-soft: rgba(167,139,250,0.12);
+      --claude: #d97757;
+      --openai: #38bdf8;
+      --green: #4ade80;
+      --yellow: #fbbf24;
+      --pink: #f472b6;
+      --sonnet: #34d399;
+      --opus: #60a5fa;
+      --fable: #f472b6;
+      --sol: #f59e0b;
+      --terra: #34d399;
+      --luna: #a78bfa;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.4rem 5rem; }
+    header {
+      padding: 2rem 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-soft);
+      padding: 0.28rem 0.65rem; border-radius: 999px; margin-bottom: 0.9rem;
+    }
+    h1 {
+      font-size: clamp(1.65rem, 4.2vw, 2.25rem);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.2;
+      margin-bottom: 0.7rem;
+    }
+    .lead { font-size: 1.08rem; color: var(--muted); max-width: 44rem; }
+    h2 {
+      font-size: 1.32rem; font-weight: 650; letter-spacing: -0.02em;
+      margin: 2.6rem 0 0.95rem; padding-top: 0.3rem;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 1.35rem 0 0.5rem; color: var(--text); }
+    p { margin-bottom: 0.95rem; color: var(--muted); }
+    p strong { color: var(--text); }
+    ul, ol { margin: 0.55rem 0 1.1rem 1.25rem; color: var(--muted); }
+    li { margin-bottom: 0.32rem; }
+    li strong { color: var(--text); }
+    .ico { margin-right: 0.35rem; }
+    .toc {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.35rem; margin: 1.4rem 0 1.75rem;
+    }
+    .toc h3 {
+      margin: 0 0 0.4rem; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--muted);
+    }
+    .toc ol { margin: 0; padding-left: 1.15rem; columns: 1; }
+    @media (min-width: 640px) { .toc ol { columns: 2; column-gap: 1.5rem; } }
+    .toc li { break-inside: avoid; }
+    .toc a { color: var(--muted); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+
+    .grid2, .grid3 { display: grid; gap: 0.9rem; margin: 1.15rem 0; }
+    @media (min-width: 640px) {
+      .grid2 { grid-template-columns: 1fr 1fr; }
+      .grid3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.2rem;
+    }
+    .model {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.05rem; position: relative; overflow: hidden;
+    }
+    .model::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .model.sonnet::before { background: var(--sonnet); }
+    .model.opus::before { background: var(--opus); }
+    .model.fable::before { background: var(--fable); }
+    .model.sol::before { background: var(--sol); }
+    .model.terra::before { background: var(--terra); }
+    .model.luna::before { background: var(--luna); }
+    .model.sonnet { background: linear-gradient(180deg, rgba(52,211,153,0.07), transparent 40%); }
+    .model.opus { background: linear-gradient(180deg, rgba(96,165,250,0.08), transparent 40%); }
+    .model.fable { background: linear-gradient(180deg, rgba(244,114,182,0.08), transparent 40%); }
+    .model.sol { background: linear-gradient(180deg, rgba(245,158,11,0.08), transparent 40%); }
+    .model.terra { background: linear-gradient(180deg, rgba(52,211,153,0.07), transparent 40%); }
+    .model.luna { background: linear-gradient(180deg, rgba(167,139,250,0.09), transparent 40%); }
+    .model h3 { margin: 0.25rem 0 0.2rem; font-size: 0.98rem; }
+    .model .meta {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.74rem;
+      color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .tag {
+      font-size: 0.64rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; padding: 0.1rem 0.38rem; border-radius: 4px;
+    }
+    .tag.claude { background: rgba(217,119,87,0.15); color: var(--claude); }
+    .tag.openai { background: rgba(56,189,248,0.15); color: var(--openai); }
+    .tag.keep { background: rgba(74,222,128,0.15); color: var(--green); }
+    .tag.fade { background: rgba(148,163,184,0.15); color: #94a3b8; }
+    .tag.warn { background: rgba(251,191,36,0.15); color: var(--yellow); }
+
+    table {
+      width: 100%; border-collapse: collapse; font-size: 0.86rem;
+      margin: 1rem 0 1.4rem;
+    }
+    th, td {
+      text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th {
+      font-weight: 600; color: var(--text); background: var(--surface);
+      font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.03em;
+    }
+    td { color: var(--muted); }
+    td strong { color: var(--text); }
+
+    .tip {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.15rem; margin: 0.75rem 0;
+      border-left: 3px solid var(--accent);
+    }
+    .tip h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text); }
+    .tip p { margin-bottom: 0.28rem; font-size: 0.92rem; }
+    .tip.keep { border-left-color: var(--green); }
+    .tip.fade { border-left-color: #64748b; }
+    .tip.claude { border-left-color: var(--claude); }
+    .tip.openai { border-left-color: var(--openai); }
+    .tip.warn { border-left-color: var(--yellow); }
+
+    .callout {
+      background: var(--accent-soft); border: 1px solid rgba(167,139,250,0.25);
+      border-radius: var(--radius); padding: 0.9rem 1.1rem; margin: 1.25rem 0;
+    }
+    .callout p { margin: 0; color: var(--text); font-size: 0.92rem; }
+    .warnbox {
+      background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25);
+      border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.15rem 0;
+    }
+    .warnbox p { margin: 0 0 0.45rem; color: var(--text); }
+    .warnbox p:last-child { margin: 0; }
+
+    .timeline {
+      position: relative; margin: 1.4rem 0 1.8rem; padding-left: 1.35rem;
+      border-left: 2px solid var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 1.35rem; padding-left: 0.85rem; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -1.48rem; top: 0.4rem;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .tl-item.past::before { background: #64748b; }
+    .tl-item.now::before { background: var(--green); box-shadow: 0 0 0 3px rgba(74,222,128,0.25); }
+    .tl-item.future::before { background: var(--openai); }
+    .tl-when {
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .tl-title { font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+
+    .decision {
+      background: var(--surface-2); border-left: 3px solid var(--accent);
+      padding: 1rem 1.15rem; margin: 1.25rem 0;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .decision p { margin: 0; color: var(--text); }
+    code {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.84em;
+      background: var(--surface-2); padding: 0.1em 0.32em; border-radius: 4px;
+    }
+    pre {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.85rem 1rem; overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      line-height: 1.55; margin: 0.75rem 0 1.2rem; color: #e2e8f0;
+    }
+    .two-col-label {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem;
+    }
+    .pill {
+      font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem;
+      border-radius: 999px; border: 1px solid var(--border);
+    }
+    .pill.claude { color: var(--claude); border-color: rgba(217,119,87,0.4); }
+    .pill.openai { color: var(--openai); border-color: rgba(56,189,248,0.4); }
+    footer {
+      margin-top: 3rem; padding-top: 1.35rem; border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--muted);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  
+    .cmd {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 0.95rem 1.05rem; margin-bottom: 0.55rem;
+    }
+    .cmd-header { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; margin-bottom: 0.28rem; }
+    .cmd-name { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; font-weight: 600; color: #f0f1f3; }
+    .badge-high { font-size: 0.65rem; font-weight: 600; color: var(--green); background: rgba(74,222,128,0.12); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .badge-medium { font-size: 0.65rem; font-weight: 600; color: var(--openai); background: rgba(56,189,248,0.12); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .badge-low { font-size: 0.65rem; font-weight: 600; color: var(--muted); background: rgba(148,163,184,0.12); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .badge-skip { font-size: 0.65rem; font-weight: 600; color: #64748b; background: rgba(100,116,139,0.15); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .cmd .desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.35rem; }
+    .cmd .detail { color: var(--muted); font-size: 0.84rem; margin-bottom: 0.2rem; }
+    .cmd .detail span { color: var(--text); font-weight: 500; }
+    .cmd .example {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.45rem 0.65rem; margin: 0.35rem 0; color: #cbd5e1; border-left: none;
+    }
+    .desktop-note {
+      font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem;
+      padding: 0.45rem 0.6rem; background: rgba(56,189,248,0.06); border-radius: 6px;
+    }
+    .section-title { font-size: 1.05rem; font-weight: 600; margin: 1.6rem 0 0.75rem; color: var(--claude); }
+    .note {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 0.85rem 1rem; margin: 1rem 0 1.25rem; font-size: 0.9rem; color: var(--muted);
+    }
+    .note strong { color: var(--text); }
+    table.compare th, table.compare td { font-size: 0.82rem; }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">August 2026 · Living playbook</div>
+      <h1><span class="ico">🚀</span> Ultimate Guide: Claude Code, Codex &amp; Coding Agents</h1>
+      <p class="lead">
+        One place for Anthropic’s Claude 5 line + Claude Code, OpenAI’s GPT-5.6 line + Codex, what still compounds, what’s fading, workflows for website work, and the skills worth building next.
+      </p>
+    </header>
+
+    <nav class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#map">Map of the landscape</a></li>
+        <li><a href="#claude-models">Claude 5 models</a></li>
+        <li><a href="#openai-models">GPT-5.6 models</a></li>
+        <li><a href="#effort">Effort &amp; modes</a></li>
+        <li><a href="#apps">Coding apps compared</a></li>
+        <li><a href="#boris">Boris Cherny (YC + field)</a></li>
+        <li><a href="#field">Nick Saraev &amp; practitioners</a></li>
+        <li><a href="#slash">Claude Code slash commands</a></li>
+        <li><a href="#keep">Still compounds</a></li>
+        <li><a href="#fade">Fading / cargo-cult</a></li>
+        <li><a href="#workflows">Website workflows</a></li>
+        <li><a href="#timeline">Timeline &amp; forecast</a></li>
+        <li><a href="#skills">Skills to develop</a></li>
+        <li><a href="#decision">Decision cheat sheet</a></li>
+      </ol>
+    </nav>
+
+    <!-- MAP -->
+    <section id="map">
+      <h2><span class="ico">🗺️</span> Map of the landscape</h2>
+      <div class="grid2">
+        <div class="card">
+          <div class="two-col-label"><span class="pill claude">Anthropic</span></div>
+          <h3 style="margin-top:0">Claude Code</h3>
+          <p style="margin-bottom:0.4rem">Agentic coding app (Desktop + CLI). Models: <strong>Sonnet 5</strong>, <strong>Opus 5</strong>, <strong>Fable 5</strong>.</p>
+          <p style="margin:0;font-size:0.9rem">Memory: <code>CLAUDE.md</code> · Plan mode · Subagents · Worktrees · Skills/hooks · /goal /compact</p>
+        </div>
+        <div class="card">
+          <div class="two-col-label"><span class="pill openai">OpenAI</span></div>
+          <h3 style="margin-top:0">Codex</h3>
+          <p style="margin-bottom:0.4rem">Agentic coding in CLI, IDE, app (merged with ChatGPT Work). Models: <strong>GPT-5.6 Sol / Terra / Luna</strong>.</p>
+          <p style="margin:0;font-size:0.9rem">Memory: <code>AGENTS.md</code> · Effort ladder + <strong>Ultra</strong> · Goals · Parallel agents</p>
+        </div>
+      </div>
+      <div class="callout">
+        <p>Both tools solved “can write code.” The game now is <strong>routing</strong> (which model/effort), <strong>verification</strong> (does it actually work), and <strong>orchestration</strong> (parallel sessions, skills, long runs) — not more magic prompts.</p>
+      </div>
+    </section>
+
+    <!-- CLAUDE MODELS -->
+    <section id="claude-models">
+      <h2><span class="ico">🟣</span> Claude 5 models <span class="tag claude">Claude Code</span></h2>
+      <div class="grid3">
+        <div class="model sonnet">
+          <span class="tag" style="background:rgba(52,211,153,0.15);color:var(--sonnet)">Execution</span>
+          <h3>Sonnet 5</h3>
+          <p class="meta">Fast generalist · volume</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Build sections, components, responsive passes, high-volume revisions, subagent workers.</p>
+        </div>
+        <div class="model opus">
+          <span class="tag" style="background:rgba(96,165,250,0.15);color:var(--opus)">Judgment</span>
+          <h3>Opus 5</h3>
+          <p class="meta">Daily expert · practical ceiling</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Architecture, design direction, hard bugs, final consistency. Default “smart” choice for most site work.</p>
+        </div>
+        <div class="model fable">
+          <span class="tag" style="background:rgba(244,114,182,0.15);color:var(--fable)">Frontier</span>
+          <h3>Fable 5</h3>
+          <p class="meta">Long-horizon · hardest 5–10%</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Escalate when Opus still misses taste or long autonomous runs. Quota-heavy — not a default.</p>
+        </div>
+      </div>
+      <p><strong>Claude Code habits that still pay:</strong> lean <code>CLAUDE.md</code> as mistake log · press-delete every ~6 months · verification (preview/screenshots) · parallel worktrees · outcome + exit criteria, not step lists · /compact with focus instructions.</p>
+    </section>
+
+    <!-- OPENAI MODELS -->
+    <section id="openai-models">
+      <h2><span class="ico">🔵</span> GPT-5.6 models <span class="tag openai">Codex</span></h2>
+      <div class="grid3">
+        <div class="model sol">
+          <span class="tag" style="background:rgba(245,158,11,0.15);color:var(--sol)">Flagship</span>
+          <h3>Sol</h3>
+          <p class="meta">API ~$5/$30 (check current) · deepest agentic</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Ambiguous multi-file work, hard diagnosis, high-stakes review, long tool chains. Strong terminal/agent scores.</p>
+        </div>
+        <div class="model terra">
+          <span class="tag" style="background:rgba(52,211,153,0.15);color:var(--terra)">Balanced</span>
+          <h3>Terra</h3>
+          <p class="meta">API ~$2.50/$15 (check current) · everyday default</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Most implementation after direction is locked. Scoped multi-file changes. Free/Go often land here.</p>
+        </div>
+        <div class="model luna">
+          <span class="tag" style="background:rgba(167,139,250,0.15);color:var(--luna)">Volume</span>
+          <h3>Luna</h3>
+          <p class="meta">API ~$1/$6 (check current) · fast &amp; cheap</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Boilerplate, transforms, bulk variants, mechanical polish, subagent workers.</p>
+        </div>
+      </div>
+      <p><strong>Codex habits that still pay:</strong> <code>AGENTS.md</code> · task-shaped routing (not always Sol) · Extra High only after failed gates · Ultra only when work partitions · verification loops · prompts that look like GitHub issues (goal, paths, definition of done).</p>
+    </section>
+
+    <!-- EFFORT -->
+    <section id="effort">
+      <h2><span class="ico">🎚️</span> Effort &amp; modes (both sides)</h2>
+      <table>
+        <thead>
+          <tr><th>Level</th><th>Claude Code (typical)</th><th>Codex (typical)</th><th>When</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Low / Light</strong></td><td>Fast, scoped</td><td>Light / Low</td><td>Mechanical, clear transforms</td></tr>
+          <tr><td><strong>Medium</strong></td><td>Default build</td><td>Default many flows</td><td>Standard features &amp; sections</td></tr>
+          <tr><td><strong>High</strong></td><td>Judgment work</td><td>Multi-step / bugs</td><td>Non-obvious changes</td></tr>
+          <tr><td><strong>Extra High / xhigh</strong></td><td>Hard single-pass</td><td>Deep single-pass</td><td>After Medium/High still fails gate</td></tr>
+          <tr><td><strong>Max</strong></td><td>Quality-first ceiling</td><td>Max</td><td>Hardest single-agent jobs</td></tr>
+          <tr><td><strong>Ultra</strong></td><td>—</td><td>~4 parallel agents</td><td>Only if work splits cleanly</td></tr>
+        </tbody>
+      </table>
+      <div class="warnbox">
+        <p><strong>Shared trap:</strong> “Always max / always Extra High / always strongest model.”</p>
+        <p>Effort multiplies cost (often ~3–5× from Low to Extra High). UI polish rarely needs frontier reasoning every turn. Escalate on <em>failed acceptance criteria</em>, not on anxiety.</p>
+      </div>
+    </section>
+
+    <!-- APPS -->
+    <section id="apps">
+      <h2><span class="ico">💻</span> Coding apps compared</h2>
+      <table>
+        <thead>
+          <tr><th></th><th>Claude Code</th><th>Codex</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Surfaces</strong></td><td>Desktop app, CLI</td><td>CLI, IDE, app / ChatGPT Work</td></tr>
+          <tr><td><strong>Project brain</strong></td><td><code>CLAUDE.md</code></td><td><code>AGENTS.md</code></td></tr>
+          <tr><td><strong>Parallelism</strong></td><td>Worktrees, subagents, multi-session</td><td>Ultra, subagents, multi-session</td></tr>
+          <tr><td><strong>Long runs</strong></td><td>/goal, /loop, strong autonomy on Opus/Fable</td><td>Goals, long-horizon Sol, Ultra</td></tr>
+          <tr><td><strong>Strength bias</strong></td><td>Taste / structured refactors; often stronger on SWE-style correctness benches</td><td>Terminal/agent throughput; multi-agent fan-out (Ultra) — often leads agentic terminal benches</td></tr>
+          <tr><td><strong>Website sweet spot</strong></td><td>Direction + polish with Opus/Sonnet phase routing</td><td>Build volume with Terra/Luna; Sol for hard gates</td></tr>
+        </tbody>
+      </table>
+      <p>Many practitioners keep <strong>both</strong>: Codex for agentic terminal speed and parallel fan-out; Claude Code when visual judgment and careful multi-file consistency feel stronger. For one-page brand sites, either wins if you phase models and verify in the browser.</p>
+    </section>
+
+    
+    <!-- BORIS -->
+    <section id="boris">
+      <h2><span class="ico">📌</span> From Boris Cherny, Anthropic &amp; recent practitioner tips</h2>
+      <p>
+        Sourced from Boris’s YC Startup School 2026 talk (day after Opus 5), his public threads, Anthropic docs, and high-signal X/Reddit for website work. Left out advice that only applied to weaker models.
+      </p>
+
+      <div class="tip keep">
+        <h4><span class="ico">✅</span> 1. Verification is the #1 lever (2–3× quality)</h4>
+        <p>Claude stops when the work <em>looks</em> done. Without a pass/fail check, you become the verification loop. Give it something it can run itself.</p>
+        <p><strong>For websites:</strong> local preview, Chrome/DevTools, screenshots of key breakpoints, visual compare to a reference, Lighthouse, “don’t stop until the hero matches this brief on mobile and desktop.” Write success criteria into the prompt.</p>
+        <p style="font-size:0.88rem">Boris (YC): verification is “probably the single most important thing that people do not get right.”</p>
+      </div>
+
+      <div class="tip warn">
+        <h4><span class="ico">🗑️</span> 2. Press delete every ~6 months</h4>
+        <p>From the YC talk, almost verbatim: every six months, <strong>delete your CLAUDE.md, skills, and hooks</strong>. See what the model does without them. Re-add only what still fails repeatedly.</p>
+        <p>Anthropic did this internally for Opus 5 / Fable 5 — ablation deleted ~80% of Claude Code’s system prompt with no eval loss. Old instructions written for weaker models often hobble stronger ones.</p>
+        <p style="font-size:0.88rem">Practical size target: ~150–200 lines. Put only what Claude cannot infer from the code.</p>
+      </div>
+
+      <div class="tip claude">
+        <h4><span class="ico">🔥</span> 3. Harder problems + short prompts — let it cook</h4>
+        <p>Stop march-order prompts (“do 1, then 2, then 3”). Describe destination, guardrails, and exit criteria. Give a task that feels slightly too hard, then step back.</p>
+        <p>Boris’s YC example: a ~3-sentence job that ran <strong>14–15 days</strong> — rewrite Electron app in Swift, run both in a Mac VM, screenshot, pixel-compare, don’t stop until done.</p>
+        <p style="font-size:0.88rem">For sites: “Ship a one-page brand site that matches this reference on mobile/desktop; open the preview and iterate until hero and type scale match.” Not a 20-step script.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">🌳</span> 4. Parallel sessions / worktrees (still the biggest unlock)</h4>
+        <p>Boris’s long-standing #1 productivity tip — still what practitioners repeat: 3–5 isolated Claudes (git worktrees or Desktop sessions). One homepage direction, one secondary page, one responsive pass — clean context each.</p>
+        <pre>claude --worktree feature-hero
+claude --worktree page-about
+claude --worktree responsive-pass</pre>
+        <p style="font-size:0.88rem">One coherent goal per session; don’t stuff three client tasks into one chat.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">📝</span> 5. CLAUDE.md as mistake log + /init, then prune</h4>
+        <p>After every correction: “Update CLAUDE.md so you don’t make that mistake again.” Run <code>/init</code> for a first draft, then cut hard. Nested CLAUDE.md files beat one giant root file.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">⚙️</span> 6. Skills / commands for anything you do daily</h4>
+        <p>If it happens more than once a day (a11y pass, OG check, brand type scale, deploy checklist), make a skill or slash command and commit it. Subagents for research/verify keep the main window clean.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">🧹</span> 7. Fresh session per coherent task</h4>
+        <p>Long messy threads degrade. Pattern that keeps showing up on X/Reddit: one goal → one session → <code>/clear</code> or new session when the goal changes. Use <code>/compact</code> with focus instructions mid-session.</p>
+      </div>
+
+      <div class="callout">
+        <p><strong>Unhobbling, not more instructions.</strong> Product overhang = capability the model already has that your setup isn’t eliciting. Hobbling = your prompts/config getting in the way. With v5 models the default move is fewer crutches, harder tasks, and a verification loop — not a thicker CLAUDE.md.</p>
+      </div>
+      <div class="callout">
+        <p><strong>What not to cargo-cult:</strong> “Always start in plan mode” and “always use the strongest model for everything” were truer on older models. Boris has moved toward more auto mode and less mandatory planning on strong models.</p>
+      </div>
+    </section>
+
+    <!-- FIELD / SARAEV -->
+    <section id="field">
+      <h2><span class="ico">🧰</span> Nick Saraev-style field tips &amp; practitioners</h2>
+      <p>
+        Durable habits from Nick Saraev’s Claude Code courses and other practitioners. No recent Claude-5-only masterclass from Nick — these pieces still hold for website / client work.
+      </p>
+      <div class="tip claude">
+        <h4><span class="ico">🗂️</span> 1. Separate client vs personal workspaces</h4>
+        <p>One client’s brand rules should not bleed into another. Separate folders, sessions, and project-local <code>CLAUDE.md</code> / <code>CLAUDE.local.md</code>. Agency rule: one session = one client goal.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">🌐</span> 2. Browser / DevTools verification as default for UI</h4>
+        <p>For marketing sites, “tests pass” is not enough. Open local preview, screenshot breakpoints, or drive Chrome/DevTools MCP until hero, type, and mobile match the brief. Put this loop in a skill.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">📎</span> 3. Verification lives in skills — not a fat root memory file</h4>
+        <p>Progressive disclosure: root memory stays lean (stack, gotchas, pointers). Detailed verify steps, a11y, OG, brand-scale rules live in skills that load when needed.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">📖</span> 4. Docs-first for unfamiliar APIs</h4>
+        <p>Forms, analytics, CMS, payments: tell the agent to read official docs before inventing integration code. Cuts confident-but-wrong API usage.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">🧾</span> 5. Mistakes → memory file; daily workflows → skills</h4>
+        <p>Same loop as Boris’s points 5–6: permanent rules go in memory; anything you repeat daily becomes a skill — don’t re-explain brand or deploy steps in chat.</p>
+      </div>
+    </section>
+
+    <!-- SLASH COMMANDS -->
+    <section id="slash">
+      <h2><span class="ico">⌨️</span> Claude Code Desktop — Slash commands</h2>
+      <div class="note">
+        <strong>How this is organized:</strong> Highest-ROI commands first, then autonomous work (<code>/goal</code>, <code>/loop</code>), then the rest. <code>/plan</code> is situational (multi-file / risky changes) — not mandatory for every task on strong models. Model and effort switches live in the Desktop UI, so those slash commands are marked skip. Type <code>/</code> in the input to see what your current version supports.
+      </div>
+
+      <h3 class="section-title"><span class="ico">⭐</span> Highest ROI (use these)</h3>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/compact [instructions]</span>
+          <span class="badge-high">High value</span>
+        </div>
+        <p class="desc">Summarizes the conversation history and frees context while trying to keep the important parts.</p>
+        <p class="detail"><span>When:</span> Usage indicator is climbing (roughly 50–70%), or right after finishing a clear chunk of work before starting the next phase.</p>
+        <p class="detail"><span>Why it matters:</span> Long sessions re-send a lot of history every turn. Still the single best way to stay efficient in Desktop.</p>
+        <p class="detail"><span>Tip:</span> Always give focus instructions. A bare <code>/compact</code> is weaker.</p>
+        <div class="example">/compact keep the current plan, the files we’ve been editing, and any unresolved errors</div>
+        <div class="example">/compact focus on the auth refactor and the remaining test failures</div>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/clear</span>
+          <span class="badge-high">High value</span>
+        </div>
+        <p class="desc">Starts a completely fresh conversation. The previous one stays available in the session sidebar.</p>
+        <p class="detail"><span>When:</span> Switching to a completely unrelated task.</p>
+        <p class="detail"><span>Why:</span> Leaving multiple unrelated jobs in one session burns tokens and degrades quality.</p>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/plan [description]</span>
+          <span class="badge-medium">Useful</span>
+        </div>
+        <p class="desc">Enters plan mode (read-only analysis) before making changes. You can pass a description to start immediately.</p>
+        <p class="detail"><span>When:</span> Multi-file change, refactor, or anything where jumping straight into edits is risky.</p>
+        <div class="example">/plan fix the auth bug without changing the public API</div>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🔁</span> Letting Claude keep working (/goal vs /loop)</h3>
+      <p style="margin-bottom:0.75rem">These two are different tools. Use the right one.</p>
+      <table class="compare">
+        <tr><th></th><th>/goal</th><th>/loop</th></tr>
+        <tr><td>Next turn starts when</td><td>Previous turn finishes</td><td>A time interval elapses</td></tr>
+        <tr><td>Stops when</td><td>Condition is met (checked by a small evaluator model)</td><td>You stop it, or Claude decides the work is done</td></tr>
+        <tr><td>Best for</td><td>Getting something finished (tests pass, build succeeds)</td><td>Polling / monitoring (CI, deploy, PR comments)</td></tr>
+      </table>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/goal [condition]</span>
+          <span class="badge-medium">Useful</span>
+        </div>
+        <p class="desc">Sets a completion condition. Claude keeps working across turns until a separate evaluator model confirms the condition is true. One goal active per session.</p>
+        <p class="detail"><span>When:</span> Clear, checkable finish line and you don’t want to keep typing “keep going.”</p>
+        <p class="detail"><span>Tip:</span> Make the condition measurable. Add a turn cap if you want a safety limit.</p>
+        <div class="example">/goal all tests in test/auth pass and the lint step is clean</div>
+        <div class="example">/goal npm test exits 0 and git status is clean, or stop after 15 turns</div>
+        <div class="example">/goal clear</div>
+        <p class="detail" style="margin-top:0.4rem"><span>Status:</span> Type <code>/goal</code> with no argument to see current goal, turns, and tokens used.</p>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/loop [interval] [prompt]</span>
+          <span class="badge-medium">Useful</span>
+        </div>
+        <p class="desc">Re-runs a prompt on a schedule while the session stays open. Omit the interval and Claude self-paces.</p>
+        <p class="detail"><span>When:</span> Periodic checks (deploy status, CI, open PRs) rather than continuous work until a condition is met.</p>
+        <div class="example">/loop 5m check if the deploy finished and report any failures</div>
+        <div class="example">/loop 10m check my open PRs and address review comments</div>
+        <div class="desktop-note">Note: <code>/loop</code> runs on your machine while the session is open. For longer-lived recurring work, Desktop also has Scheduled tasks in the sidebar.</div>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/batch &lt;instruction&gt;</span>
+          <span class="badge-low">Situational</span>
+        </div>
+        <p class="desc">Researches the codebase, breaks a large change into independent units, then (after you approve) runs them in parallel using isolated git worktrees.</p>
+        <p class="detail"><span>When:</span> Big refactors or migrations that can be split. Overkill for small tasks.</p>
+        <div class="example">/batch migrate the remaining components from pages/ to the new app router</div>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🔍</span> Review and recovery</h3>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/code-review [level] [--fix]</span><span class="badge-medium">Useful</span></div>
+        <p class="desc">Reviews the current diff for bugs and cleanups. Can auto-apply with <code>--fix</code>.</p>
+        <p class="detail"><span>When:</span> Before accepting a larger set of changes.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/diff</span><span class="badge-medium">Useful</span></div>
+        <p class="desc">Shows recent / uncommitted changes and per-turn diffs.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/rewind</span><span class="badge-medium">Useful</span></div>
+        <p class="desc">Rolls back conversation and/or code to an earlier point.</p>
+        <p class="detail"><span>When:</span> Claude went down a bad path and you want a clean undo.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/branch · /fork · /resume</span><span class="badge-low">Situational</span></div>
+        <p class="desc"><code>/branch</code> forks the conversation for experiments. <code>/fork</code> can send work to a background session. <code>/resume</code> returns to a previous session.</p>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🧠</span> Project setup &amp; memory</h3>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/init</span><span class="badge-medium">Useful once</span></div>
+        <p class="desc">Generates a starter <code>CLAUDE.md</code> by scanning the project. Then edit it down — keep it short.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/memory</span><span class="badge-low">Situational</span></div>
+        <p class="desc">Edit <code>CLAUDE.md</code> / memory files. Prefer keeping the file lean.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/agents</span><span class="badge-low">Situational</span></div>
+        <p class="desc">Create and manage custom subagents (researcher, tester, etc.).</p>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🖥️</span> Mostly covered by the Desktop UI</h3>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/context · /usage</span><span class="badge-skip">Usually skip</span></div>
+        <p class="desc">Detailed context breakdown or plan usage.</p>
+        <div class="desktop-note">Desktop alternative: click the usage indicator at the top of the session.</div>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/btw</span><span class="badge-skip">Usually skip</span></div>
+        <p class="desc">Side question without adding it to the main history.</p>
+        <div class="desktop-note">Desktop alternative: Side Chat (<code>⌘ + ;</code> or <code>Ctrl + ;</code>).</div>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/model · /effort</span><span class="badge-skip">Skip</span></div>
+        <p class="desc">Switch model or reasoning effort.</p>
+        <div class="desktop-note">You already do this in the Desktop UI.</div>
+      </div>
+
+      <h3 class="section-title"><span class="ico">📦</span> A simple practical stack</h3>
+      <div class="cmd">
+        <p class="desc" style="margin-bottom:0.5rem">You don’t need all of the above. For most Desktop users this is enough:</p>
+        <p class="detail">1. <code>/compact</code> with instructions when the usage bar rises</p>
+        <p class="detail">2. <code>/clear</code> (or new session) when switching tasks</p>
+        <p class="detail">3. <code>/plan</code> before bigger changes</p>
+        <p class="detail">4. <code>/goal</code> when you have a clear finish line</p>
+        <p class="detail">5. <code>/loop</code> only when you need periodic checks</p>
+        <p class="detail" style="margin-top:0.45rem">Everything else is optional. Highest consistent ROI remains <code>/compact</code>.</p>
+      </div>
+      <p style="font-size:0.82rem;margin-top:1rem">Commands and availability can change between versions — type <code>/</code> or <code>/help</code> for the live list.</p>
+    </section>
+
+
+    <!-- KEEP -->
+    <section id="keep">
+      <h2><span class="ico">✅</span> Still compounds in 2026</h2>
+      <p>These are the same principles across Claude Code and Codex. Detail lives in the Boris / field sections above — this is the short cross-stack checklist.</p>
+      <ul>
+        <li><strong>Verification loops</strong> — tests, preview, screenshots; agent stops when it <em>looks</em> done unless you give a gate</li>
+        <li><strong>Lean memory as a mistake log</strong> — <code>CLAUDE.md</code> / <code>AGENTS.md</code> for gotchas only (~150–200 lines); procedures → skills</li>
+        <li><strong>Outcome + exit criteria</strong> — destination and done-ness, not step lists</li>
+        <li><strong>Parallel isolation</strong> — worktrees / sessions / Ultra only when work partitions</li>
+        <li><strong>Phase routing</strong> — judgment model → volume model; escalate on failed gates only</li>
+        <li><strong>Skills for daily repetition</strong> — progressive disclosure over fat system prompts</li>
+        <li><strong>Periodic delete</strong> — every ~6 months, drop config that assumed weaker models</li>
+      </ul>
+    </section>
+
+    <!-- FADE -->
+    <section id="fade">
+      <h2><span class="ico">🌫️</span> Fading / often irrelevant now</h2>
+      <div class="tip fade">
+        <h4>Always use the strongest model at max effort</h4>
+        <p>Was more true when mid-tier models were weak. Today it burns quota, slows iteration, and adds overthinking on UI polish. Escalate on evidence.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Mandatory plan mode for every task</h4>
+        <p>Critical for ambiguous creative work; optional for “add this card component.” Boris publicly moved toward more auto mode on strong models.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Huge CLAUDE.md / AGENTS.md as a wiki</h4>
+        <p>Models load judgment better; giant instruction piles dilute signal. Keep gotchas; move procedures to skills.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Step-by-step “do 1 then 2 then 3” prompts</h4>
+        <p>Legacy of weaker models. Prefer goal, constraints, verification. Let the agent choose the path.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Prompt-engineering folklore as the main skill</h4>
+        <p>Waves of “prompt eng” → “context eng” age fast. Durable skills: hard tasks, verification design, routing, taste, orchestration.</p>
+      </div>
+      <div class="tip fade">
+        <h4>One endless mega-session</h4>
+        <p>Context rot is real. Fresh session per coherent goal; compact with instructions mid-flight.</p>
+      </div>
+    </section>
+
+    <!-- WORKFLOWS -->
+    <section id="workflows">
+      <h2><span class="ico">🔄</span> Website workflows that work on both</h2>
+      <div class="tip claude">
+        <h4>Claude Code — brand / marketing sites</h4>
+        <p><strong>Direction:</strong> Opus 5 high or Extra · 2–3 aesthetic directions + IA + exit criteria.</p>
+        <p><strong>Build:</strong> Sonnet 5 high for sections, components, mobile.</p>
+        <p><strong>Polish:</strong> Opus again if consistency or taste still slips.</p>
+        <p><strong>Fable:</strong> only when Opus still fails after a focused attempt + compact.</p>
+      </div>
+      <div class="tip openai">
+        <h4>Codex — same job, GPT-5.6</h4>
+        <p><strong>Direction:</strong> Sol Medium–High.</p>
+        <p><strong>Build:</strong> Terra Medium (Luna for pure volume).</p>
+        <p><strong>Hard QA:</strong> Sol High + visual gates.</p>
+        <p><strong>Ultra:</strong> only when pages/components are independent workstreams.</p>
+      </div>
+      <div class="tip keep">
+        <h4>Shared pattern (copy this)</h4>
+        <pre>1. Write definition of done (mobile + desktop, which sections, brand constraints)
+2. Judgment model plans / proposes directions
+3. Approve or narrow
+4. Volume model implements
+5. Verify in browser (screenshots / preview) — not “looks done”
+6. Escalate model or effort only if the gate fails
+7. Log permanent mistakes into CLAUDE.md / AGENTS.md</pre>
+      </div>
+
+      <h3>Quick routing by website task</h3>
+      <table>
+        <thead>
+          <tr><th>Task</th><th>Claude Code</th><th>Codex</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Hero / type / IA from a rough brief</td><td><strong>Opus 5</strong> High–Extra</td><td><strong>Sol</strong> Medium–High</td></tr>
+          <tr><td>Build sections after design is locked</td><td><strong>Sonnet 5</strong> Medium–High</td><td><strong>Terra</strong> Medium</td></tr>
+          <tr><td>Bulk variants, mechanical mobile, transforms</td><td>Sonnet Low–Medium</td><td><strong>Luna</strong> Low–Medium</td></tr>
+          <tr><td>Hard bug / cross-page consistency / final QA</td><td>Opus High (Fable if stuck)</td><td>Sol High + visual gates</td></tr>
+          <tr><td>Independent pages in parallel</td><td>Worktrees / multi-session</td><td>Ultra <em>or</em> multi-session</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.88rem">Escalate only when the acceptance gate fails — not because a stronger model “might” be better.</p>
+
+      <div class="tip warn">
+        <h4>Client agency hygiene</h4>
+        <p>Separate sessions (or repos) per client so brand rules don’t bleed. Project-local memory files. Browser verification as default for UI — not optional.</p>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <h2><span class="ico">📅</span> Timeline &amp; forecast</h2>
+      <div class="timeline">
+        <div class="tl-item past">
+          <div class="tl-when">2024 – early 2025</div>
+          <div class="tl-title">Autocomplete → chat coding</div>
+          <p style="margin:0;font-size:0.9rem">Prompt craft mattered a lot. Models needed heavy guardrails and step lists. “Vibe coding” emerges.</p>
+        </div>
+        <div class="tl-item past">
+          <div class="tl-when">Mid 2025 – early 2026</div>
+          <div class="tl-title">Agentic coding tools go mainstream</div>
+          <p style="margin:0;font-size:0.9rem">Claude Code &amp; Codex mature. Plan mode, memory files, worktrees, long runs. Teams learn verification and parallel sessions.</p>
+        </div>
+        <div class="tl-item now">
+          <div class="tl-when">Now — mid/late 2026</div>
+          <div class="tl-title">Tiered models + less scaffolding</div>
+          <p style="margin:0;font-size:0.9rem">Claude 5 + GPT-5.6 Sol/Terra/Luna. Labs delete large chunks of system prompts. Coding is “largely solved” for well-specified work; bottleneck shifts to taste, product judgment, orchestration, and trust (review, security, verification).</p>
+        </div>
+        <div class="tl-item future">
+          <div class="tl-when">Next 6–12 months</div>
+          <div class="tl-title">Longer autonomy + multi-agent default</div>
+          <p style="margin:0;font-size:0.9rem">Directional forecast: multi-day runs become more routine; multi-agent more native; IDE/cloud loops tighter. Config written for weaker models will keep rotting — schedule deletes.</p>
+        </div>
+        <div class="tl-item future">
+          <div class="tl-when">12–24 months</div>
+          <div class="tl-title">Orchestrator role solidifies</div>
+          <p style="margin:0;font-size:0.9rem">Likely edge: specifying outcomes, designing verification, routing fleets of agents, holding the quality bar, and owning product/brand decisions models still approximate poorly. Treat as a bet, not a guarantee.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2><span class="ico">🧠</span> Skills to develop (and de-emphasize)</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--green)">Invest here</h3>
+          <ul style="margin-bottom:0">
+            <li><strong>Specification &amp; acceptance criteria</strong> — clear done-ness</li>
+            <li><strong>Verification design</strong> — tests, visual gates, browser loops</li>
+            <li><strong>Model routing</strong> — tier + effort by task shape</li>
+            <li><strong>Orchestration</strong> — parallel sessions, skills, long goals</li>
+            <li><strong>Taste &amp; brand judgment</strong> — especially for client sites</li>
+            <li><strong>Repo legibility for agents</strong> — lean memory files, good structure</li>
+            <li><strong>Review discipline</strong> — same bar for AI code as human code</li>
+            <li><strong>Config hygiene</strong> — periodic delete &amp; rebuild</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--muted)">De-emphasize</h3>
+          <ul style="margin-bottom:0">
+            <li>Memorizing brittle prompt templates</li>
+            <li>Hoarding ever-longer system prompts</li>
+            <li>Hand-typing every line “to stay sharp” as the main skill</li>
+            <li>Tool tribalism (only Claude / only Codex)</li>
+            <li>Assuming last year’s best practice still applies after a frontier jump</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>For website / agency work specifically:</strong> double down on visual verification, client isolation, design-system tokens as source of truth, and phase routing (judgment model → volume model). That’s where quality and margin live.</p>
+      </div>
+    </section>
+
+    <!-- DECISION -->
+    <section id="decision">
+      <h2><span class="ico">🎯</span> Decision cheat sheet</h2>
+      <div class="decision">
+        <p>
+          <strong>Ambiguous design / architecture / hard bug?</strong><br>
+          Claude: Opus 5 (Fable if still stuck) · Codex: Sol<br><br>
+          <strong>Implement locked design, volume revisions?</strong><br>
+          Claude: Sonnet 5 · Codex: Terra (Luna for pure bulk)<br><br>
+          <strong>Always attach:</strong> definition of done + verification<br><br>
+          <strong>Escalate:</strong> only when the gate fails — not because the model “might be smarter”<br><br>
+          <strong>Parallelize:</strong> isolated sessions / worktrees / Ultra-with-partitions<br><br>
+          <strong>After mistakes:</strong> write the rule into CLAUDE.md or AGENTS.md<br><br>
+          <strong>Every ~6 months:</strong> press delete on bloated config; see what the new models need
+        </p>
+      </div>
+      <div class="decision">
+        <p>
+          <strong>One line:</strong> Stronger models need fewer crutches, clearer goals, and better verification — not thicker prompts and permanent max effort.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Ultimate Coding Agents Guide · August 2026 · Claude Code (Claude 5) + Codex (GPT-5.6).</p>
+      <p style="margin-top:0.45rem">Synthesized from Anthropic docs &amp; Boris Cherny (YC Startup School 2026 + threads), Nick Saraev course patterns, OpenAI GPT-5.6 / Codex docs &amp; best practices, Claude Code slash-command reference, and practitioner reports on X/Reddit. API prices shown are approximate mid-2026 list rates and change; plan gates and defaults also move — recheck official sources before locking team policy.</p>
+      <p style="margin-top:0.45rem">Companion deep-dives: Claude-only and Codex-only guides in sibling folders if you want more detail on one stack.</p>
+    </footer>
+  </div>
+</body>
+</html>
