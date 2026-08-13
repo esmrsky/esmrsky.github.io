@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ECCLESIA — The Assembly of Jesus</title>
-<meta name="description" content="A visual Bible study tracing ekklesia from Israel's assembly to Jesus, Acts, Paul, Peter, Hebrews, and Revelation." />
+<title data-ru="ЭККЛЕСИЯ — собрание Иисуса">ECCLESIA — The Assembly of Jesus</title>
+<meta name="description" content="A visual Bible study tracing ekklesia from Israel's assembly to Jesus, Acts, Paul, Peter, Hebrews, and Revelation." data-ru-content="Визуальное изучение Библии: слово ekklesia — от собрания Израиля до Иисуса, Деяний, Павла, Петра, Евреям и Откровения." />
 <meta name="theme-color" id="theme-color" content="#090812" />
 <script>
   document.documentElement.classList.add('js');
@@ -15,6 +15,18 @@
       document.documentElement.dataset.theme = theme;
     } catch (error) {
       document.documentElement.dataset.theme = 'dark';
+    }
+  })();
+</script>
+<script>
+  /* Language before first paint, so a returning Russian reader never sees the
+     toggle flash EN. The actual text swap happens in the script at the foot. */
+  (function () {
+    try {
+      document.documentElement.setAttribute('data-lang',
+        localStorage.getItem('esmrsky-lang') === 'ru' ? 'ru' : 'en');
+    } catch (e) {
+      document.documentElement.setAttribute('data-lang', 'en');
     }
   })();
 </script>
@@ -78,6 +90,10 @@
   .navlinks a:hover{background:var(--panel2);color:var(--ink)}
   .toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:12px;padding:9px 12px;cursor:pointer;font-weight:750;min-height:40px}
   .toggle:hover{border-color:color-mix(in srgb,var(--gold) 58%,var(--line));background:color-mix(in srgb,var(--gold) 8%,var(--panel2))}
+  .nav-controls{display:flex;align-items:center;gap:8px}
+  .lang-toggle{gap:3px;padding:9px 11px;font-size:12px;letter-spacing:.06em;color:var(--muted)}
+  .lang-toggle .lang-sep{opacity:.4}
+  [data-lang="en"] .lang-toggle [data-lang-en],[data-lang="ru"] .lang-toggle [data-lang-ru]{color:var(--gold)}
   .hero{min-height:92vh;display:grid;align-items:center;padding:88px 0 54px;position:relative}
   .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:50px;align-items:end}
   .kicker{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
@@ -290,15 +306,18 @@
 </style>
 </head>
 <body>
-<a class="skip-link" href="#study">Skip to study</a>
+<a class="skip-link" href="#study" data-ru="Перейти к разбору">Skip to study</a>
 <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
-<nav class="nav" aria-label="Study navigation">
-  <a class="brand" href="/" aria-label="Back to esmrsky projects"><span class="brand-dot"></span> ECCLESIA <span class="brand-home">Projects ↗</span></a>
+<nav class="nav" aria-label="Study navigation" data-ru-aria-label="Навигация по разбору">
+  <a class="brand" href="/" aria-label="Back to esmrsky projects" data-ru-aria-label="Назад к проектам esmrsky" data-ru="<span class=&quot;brand-dot&quot;></span> ЭККЛЕСИЯ <span class=&quot;brand-home&quot;>Проекты ↗</span>"><span class="brand-dot"></span> ECCLESIA <span class="brand-home">Projects ↗</span></a>
   <div class="navlinks">
-    <a href="#word">The word</a><a href="#arc">The arc</a><a href="#images">Images</a>
-    <a href="#practice">Practice</a><a href="#kingdom">Kingdom</a><a href="#tensions">Tensions</a><a href="#scripture">NIV texts</a>
+    <a href="#word" data-ru="Слово">The word</a><a href="#arc" data-ru="Дуга">The arc</a><a href="#images" data-ru="Образы">Images</a>
+    <a href="#practice" data-ru="Практика">Practice</a><a href="#kingdom" data-ru="Царство">Kingdom</a><a href="#tensions" data-ru="Спорное">Tensions</a><a href="#scripture" data-ru="Тексты Писания">NIV texts</a>
   </div>
-  <button class="toggle" id="theme" type="button"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light</span></button>
+  <div class="nav-controls">
+    <button class="toggle lang-toggle" id="langToggle" type="button" aria-label="Переключить на русский"><span class="lang-code" data-lang-en>EN</span><span class="lang-sep">/</span><span class="lang-code" data-lang-ru>RU</span></button>
+    <button class="toggle" id="theme" type="button"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light</span></button>
+  </div>
 </nav>
 
 <main id="study">
@@ -306,35 +325,35 @@
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="kicker">A visual Bible study</div>
-        <h1>ECCLESIA <span class="greek">ἐκκλησία</span></h1>
-        <div class="lede">Not a sacred building. Not a brand. Not merely a weekly event. <strong>The assembly Jesus calls “mine”</strong>—a people gathered around the King, formed by the Spirit, built into one body, and sent as a witness.</div>
+        <div class="kicker" data-ru="Визуальное изучение Библии">A visual Bible study</div>
+        <h1 data-ru="ЭККЛЕСИЯ <span class=&quot;greek&quot;>ἐκκλησία</span>">ECCLESIA <span class="greek">ἐκκλησία</span></h1>
+        <div class="lede" data-ru="Не священное здание. Не бренд. И не просто еженедельное мероприятие. <strong>Собрание, которое Иисус называет «Моим»</strong> — люди, собранные вокруг Царя, сформированные Духом, соединённые в одно тело и посланные быть свидетелями.">Not a sacred building. Not a brand. Not merely a weekly event. <strong>The assembly Jesus calls “mine”</strong>—a people gathered around the King, formed by the Spirit, built into one body, and sent as a witness.</div>
       </div>
       <aside class="hero-side">
         <div class="assembly-mark" aria-hidden="true">
-          <b>Christ</b>
+          <b data-ru="Христос">Christ</b>
           <i style="--angle:0deg;--dot:var(--gold)"></i><i style="--angle:45deg;--dot:var(--blue)"></i>
           <i style="--angle:90deg;--dot:var(--green)"></i><i style="--angle:135deg;--dot:var(--violet)"></i>
           <i style="--angle:180deg;--dot:var(--coral)"></i><i style="--angle:225deg;--dot:var(--blue)"></i>
           <i style="--angle:270deg;--dot:var(--green)"></i><i style="--angle:315deg;--dot:var(--red)"></i>
         </div>
-        <p>The word itself is ordinary Greek. The New Testament claim is extraordinary because of the One who possesses, builds, inhabits, leads, loves, disciplines and sends this assembly.</p>
+        <p data-ru="Само слово — обычное греческое. Необычно то, что говорит о нём Новый Завет, и необычен Тот, кому это собрание принадлежит: Он его строит, в нём обитает, ведёт его, любит, вразумляет и посылает.">The word itself is ordinary Greek. The New Testament claim is extraordinary because of the One who possesses, builds, inhabits, leads, loves, disciplines and sends this assembly.</p>
         <div class="signal">
-          <span class="pill">Assembly</span><span class="pill">People</span><span class="pill">Body</span><span class="pill">Temple</span><span class="pill">Bride</span><span class="pill">Priesthood</span>
+          <span class="pill" data-ru="Собрание">Assembly</span><span class="pill" data-ru="Народ">People</span><span class="pill" data-ru="Тело">Body</span><span class="pill" data-ru="Храм">Temple</span><span class="pill" data-ru="Невеста">Bride</span><span class="pill" data-ru="Священство">Priesthood</span>
         </div>
       </aside>
     </div>
     <div class="hero-foot">
-      <div class="hero-step"><span>01 · Source</span><b>Christ builds</b></div>
-      <div class="hero-step"><span>02 · Center</span><b>Christ is head</b></div>
-      <div class="hero-step"><span>03 · Life</span><b>Spirit indwells</b></div>
-      <div class="hero-step"><span>04 · Shape</span><b>Members build</b></div>
-      <div class="hero-step"><span>05 · Direction</span><b>Witness goes out</b></div>
+      <div class="hero-step"><span data-ru="01 · Источник">01 · Source</span><b data-ru="Христос строит">Christ builds</b></div>
+      <div class="hero-step"><span data-ru="02 · Центр">02 · Center</span><b data-ru="Христос — глава">Christ is head</b></div>
+      <div class="hero-step"><span data-ru="03 · Жизнь">03 · Life</span><b data-ru="Дух обитает">Spirit indwells</b></div>
+      <div class="hero-step"><span data-ru="04 · Форма">04 · Shape</span><b data-ru="Члены созидают">Members build</b></div>
+      <div class="hero-step"><span data-ru="05 · Направление">05 · Direction</span><b data-ru="Свидетельство выходит наружу">Witness goes out</b></div>
     </div>
-    <div class="evidence-strip" aria-label="How claims are handled">
-      <div class="evidence-item"><b>Text</b><span>Direct wording and recurring patterns in the passages.</span></div>
-      <div class="evidence-item"><b>Synthesis</b><span>Connections drawn across the canon, clearly named as synthesis.</span></div>
-      <div class="evidence-item"><b>Debate</b><span>Tradition-level conclusions kept distinct where Christians differ.</span></div>
+    <div class="evidence-strip" aria-label="How claims are handled" data-ru-aria-label="Как устроены утверждения">
+      <div class="evidence-item"><b data-ru="Текст">Text</b><span data-ru="Прямые формулировки и повторяющиеся закономерности в самих отрывках.">Direct wording and recurring patterns in the passages.</span></div>
+      <div class="evidence-item"><b data-ru="Синтез">Synthesis</b><span data-ru="Связи, проведённые через весь канон, — и прямо названные синтезом.">Connections drawn across the canon, clearly named as synthesis.</span></div>
+      <div class="evidence-item"><b data-ru="Спор">Debate</b><span data-ru="Выводы уровня традиции, отделённые там, где христиане расходятся.">Tradition-level conclusions kept distinct where Christians differ.</span></div>
     </div>
   </div>
 </section>
@@ -342,27 +361,27 @@
 <section id="word">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">01 · The word</div></div>
-      <div><h2>Strip away the mythology.</h2><p class="intro">Start with how the word actually functions. In wider Greek usage, <em>ekklesia</em> is an assembly or meeting. That is why Acts can use the same noun for both Christian congregations and a confused civic gathering in Ephesus.</p></div>
+      <div><div class="eyebrow" data-ru="01 · Слово">01 · The word</div></div>
+      <div><h2 data-ru="Уберём мифологию.">Strip away the mythology.</h2><p class="intro" data-ru="Начнём с того, как слово реально работает. В обычном греческом <em>ekklesia</em> — это собрание, сходка. Именно поэтому в Деяниях одно и то же существительное обозначает и христианские общины, и бестолковую городскую сходку в Эфесе.">Start with how the word actually functions. In wider Greek usage, <em>ekklesia</em> is an assembly or meeting. That is why Acts can use the same noun for both Christian congregations and a confused civic gathering in Ephesus.</p></div>
     </div>
     <div class="wordlab">
       <article class="word-card card reveal">
         <div class="kicker">ἐκκλησία · ekklēsia</div>
-        <div class="huge">assembly.</div>
-        <div class="definition">A gathered <em>people</em>. Context tells you which people, whose people, and why they are assembled.</div>
+        <div class="huge" data-ru="собрание.">assembly.</div>
+        <div class="definition" data-ru="Собравшиеся <em>люди</em>. А кто эти люди, чьи они и зачем собрались — говорит уже контекст.">A gathered <em>people</em>. Context tells you which people, whose people, and why they are assembled.</div>
         <div class="lex">
-          <div><span>Classical Greek</span><b>public / civic assembly</b></div>
-          <div><span>Greek OT</span><b>assembly of Israel</b></div>
-          <div><span>New Testament</span><b>Christian congregation</b></div>
+          <div><span data-ru="Классический греческий">Classical Greek</span><b data-ru="народное, городское собрание">public / civic assembly</b></div>
+          <div><span data-ru="Греческий Ветхий Завет">Greek OT</span><b data-ru="собрание Израиля">assembly of Israel</b></div>
+          <div><span data-ru="Новый Завет">New Testament</span><b data-ru="христианская община">Christian congregation</b></div>
         </div>
       </article>
       <article class="myth-card card reveal">
         <div>
-          <span class="myth-badge">Common overreach</span>
-          <h3>“Ekklesia literally means called-out ones.”</h3>
-          <p>The word is historically related to <em>ek</em> (“out”) and <em>kaleō</em> (“call”), but word meaning is determined by usage—not by breaking a word into roots. The normal lexical sense is “assembly / congregation.”</p>
+          <span class="myth-badge" data-ru="Частый перегиб">Common overreach</span>
+          <h3 data-ru="«Экклесия буквально значит „вызванные из мира“».">“Ekklesia literally means called-out ones.”</h3>
+          <p data-ru="Исторически слово действительно связано с <em>ek</em> («из») и <em>kaleō</em> («звать»), но значение слова задаёт употребление, а не разбор на корни. Обычное словарное значение — «собрание, община».">The word is historically related to <em>ek</em> (“out”) and <em>kaleō</em> (“call”), but word meaning is determined by usage—not by breaking a word into roots. The normal lexical sense is “assembly / congregation.”</p>
         </div>
-        <div class="proof"><b>Reality check:</b> Acts 19:32, 39, 41 calls the Ephesian crowd / lawful civic meeting an <em>ekklesia</em>. The word itself does not automatically mean “redeemed people.”</div>
+        <div class="proof" data-ru="<b>Проверка фактом:</b> в Деян. 19:32, 39, 41 словом <em>ekklesia</em> названы и эфесская толпа, и законное городское собрание. Само слово не означает автоматически «искупленный народ»."><b>Reality check:</b> Acts 19:32, 39, 41 calls the Ephesian crowd / lawful civic meeting an <em>ekklesia</em>. The word itself does not automatically mean “redeemed people.”</div>
       </article>
     </div>
   </div>
@@ -371,19 +390,19 @@
 <section id="arc">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">02 · The canonical arc</div></div>
-      <div><h2>One assembly thread. Seven movements.</h2><p class="intro">The New Testament does not drop <em>ekklesia</em> into a vacuum. Greek-speaking readers already knew the word from Israel’s Scriptures, where it often names the covenant assembly before God.</p></div>
+      <div><div class="eyebrow" data-ru="02 · Канонический сюжет">02 · The canonical arc</div></div>
+      <div><h2 data-ru="Одна нить собрания. Семь движений.">One assembly thread. Seven movements.</h2><p class="intro" data-ru="Новый Завет не роняет <em>ekklesia</em> в пустоту. Грекоязычные читатели уже знали это слово по Писаниям Израиля, где им часто назван заветный народ, стоящий перед Богом.">The New Testament does not drop <em>ekklesia</em> into a vacuum. Greek-speaking readers already knew the word from Israel’s Scriptures, where it often names the covenant assembly before God.</p></div>
     </div>
     <div class="arc">
       <div class="arc-line"></div>
       <div class="arc-grid">
-        <article class="node reveal"><div class="n">01</div><div><h3>Sinai<br>Assembly</h3><p>Israel stands before YHWH, hears his words, and is constituted as a covenant people.</p></div><div class="ref">Deut 4:10 · 9:10 · 18:16</div></article>
-        <article class="node reveal"><div class="n">02</div><div><h3>Praise in the<br>Assembly</h3><p>The Psalms imagine testimony and worship “in the midst of the assembly,” language later echoed in Hebrews.</p></div><div class="ref">Ps 22:22 · Heb 2:12</div></article>
-        <article class="node reveal"><div class="n">03</div><div><h3>“My<br>Ekklesia”</h3><p>Jesus takes possession-language: “I will build my church.” The builder and owner become the center.</p></div><div class="ref">Matt 16:18–19</div></article>
-        <article class="node reveal"><div class="n">04</div><div><h3>An accountable<br>Assembly</h3><p>Jesus gives the gathered community a role in reconciliation, discipline, binding and loosing.</p></div><div class="ref">Matt 18:15–20</div></article>
-        <article class="node reveal"><div class="n">05</div><div><h3>Spirit-formed<br>Community</h3><p>Teaching, fellowship, table, prayer, generosity, witness and shared life become visible habits.</p></div><div class="ref">Acts 2:42–47</div></article>
-        <article class="node reveal"><div class="n">06</div><div><h3>Body · Temple<br>· Bride</h3><p>Paul stacks metaphors to show a reality too large for one image: organic, architectural, relational.</p></div><div class="ref">1 Cor 12 · Eph 2 · Eph 5</div></article>
-        <article class="node reveal"><div class="n">07</div><div><h3>Heavenly<br>Assembly</h3><p>Hebrews widens the horizon to the festal assembly of the firstborn, enrolled in heaven.</p></div><div class="ref">Heb 12:22–24</div></article>
+        <article class="node reveal"><div class="n">01</div><div><h3 data-ru="Собрание<br>у Синая">Sinai<br>Assembly</h3><p data-ru="Израиль стоит перед ЯХВЕ, слышит Его слова и становится народом завета.">Israel stands before YHWH, hears his words, and is constituted as a covenant people.</p></div><div class="ref">Deut 4:10 · 9:10 · 18:16</div></article>
+        <article class="node reveal"><div class="n">02</div><div><h3 data-ru="Хвала<br>в собрании">Praise in the<br>Assembly</h3><p data-ru="Псалмы говорят о свидетельстве и хвале «посреди собрания» — этот язык позже подхватывает Послание к Евреям.">The Psalms imagine testimony and worship “in the midst of the assembly,” language later echoed in Hebrews.</p></div><div class="ref">Ps 22:22 · Heb 2:12</div></article>
+        <article class="node reveal"><div class="n">03</div><div><h3 data-ru="„Моя<br>экклесия“">“My<br>Ekklesia”</h3><p data-ru="Иисус говорит языком принадлежности: «Я создам Церковь Мою». В центре оказывается Тот, кто строит и кому она принадлежит.">Jesus takes possession-language: “I will build my church.” The builder and owner become the center.</p></div><div class="ref">Matt 16:18–19</div></article>
+        <article class="node reveal"><div class="n">04</div><div><h3 data-ru="Собрание,<br>несущее ответственность">An accountable<br>Assembly</h3><p data-ru="Иисус даёт собравшейся общине роль в примирении, вразумлении, связывании и разрешении.">Jesus gives the gathered community a role in reconciliation, discipline, binding and loosing.</p></div><div class="ref">Matt 18:15–20</div></article>
+        <article class="node reveal"><div class="n">05</div><div><h3 data-ru="Община,<br>сформированная Духом">Spirit-formed<br>Community</h3><p data-ru="Учение, общение, общий стол, молитва, щедрость, свидетельство и общая жизнь становятся видимыми привычками.">Teaching, fellowship, table, prayer, generosity, witness and shared life become visible habits.</p></div><div class="ref">Acts 2:42–47</div></article>
+        <article class="node reveal"><div class="n">06</div><div><h3 data-ru="Тело · Храм<br>· Невеста">Body · Temple<br>· Bride</h3><p data-ru="Павел ставит метафоры одну на другую: реальность слишком велика для одного образа — она и органическая, и архитектурная, и отношенческая.">Paul stacks metaphors to show a reality too large for one image: organic, architectural, relational.</p></div><div class="ref">1 Cor 12 · Eph 2 · Eph 5</div></article>
+        <article class="node reveal"><div class="n">07</div><div><h3 data-ru="Небесное<br>собрание">Heavenly<br>Assembly</h3><p data-ru="Послание к Евреям раздвигает горизонт до торжествующего собора первенцев, записанных на небесах.">Hebrews widens the horizon to the festal assembly of the firstborn, enrolled in heaven.</p></div><div class="ref">Heb 12:22–24</div></article>
       </div>
     </div>
   </div>
@@ -392,17 +411,17 @@
 <section id="images">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">03 · Seven images</div></div>
-      <div><h2>The church is not one metaphor.</h2><p class="intro">Each image corrects the others. “Body” prevents institutional coldness. “Temple” prevents casual individualism. “Bride” prevents functionalism. “Priesthood” gives vocation. “Family” gives belonging. “Flock” gives shepherding. “Lampstand” gives public witness.</p></div>
+      <div><div class="eyebrow" data-ru="03 · Семь образов">03 · Seven images</div></div>
+      <div><h2 data-ru="Церковь — это не одна метафора.">The church is not one metaphor.</h2><p class="intro" data-ru="Каждый образ поправляет остальные. «Тело» не даёт скатиться в институциональную холодность. «Храм» — в лёгкий индивидуализм. «Невеста» — в функционализм. «Священство» даёт призвание. «Семья» — принадлежность. «Стадо» — заботу пастыря. «Светильник» — открытое свидетельство.">Each image corrects the others. “Body” prevents institutional coldness. “Temple” prevents casual individualism. “Bride” prevents functionalism. “Priesthood” gives vocation. “Family” gives belonging. “Flock” gives shepherding. “Lampstand” gives public witness.</p></div>
     </div>
     <div class="metas">
-      <article class="meta card reveal"><div class="icon">◉</div><h3>Body</h3><p>Many members, one Spirit, differentiated gifts, mutual dependence. Christ is the head; maturity is corporate, not merely individual.</p><span class="ref">1 Cor 12:12–27 · Eph 4:11–16 · Col 1:18</span></article>
-      <article class="meta card reveal"><div class="icon">◇</div><h3>Temple</h3><p>People—not masonry—are being joined into a dwelling place for God by the Spirit.</p><span class="ref">Eph 2:19–22 · 1 Cor 3:16</span></article>
-      <article class="meta card reveal"><div class="icon">♡</div><h3>Bride</h3><p>Christ’s relationship to the church is covenantal, sacrificial and purifying—not merely managerial.</p><span class="ref">Eph 5:25–32 · Rev 19:7–9</span></article>
-      <article class="meta card reveal"><div class="icon">⌂</div><h3>Household</h3><p>Believers become members of God’s household: belonging carries obligations of care, honor and fidelity.</p><span class="ref">Eph 2:19 · 1 Tim 3:15</span></article>
-      <article class="meta card reveal"><div class="icon">♜</div><h3>Royal priesthood</h3><p>Sinai vocation reappears in Christ: a holy people whose life and speech declare God’s excellencies.</p><span class="ref">Ex 19:5–6 · 1 Pet 2:4–10</span></article>
-      <article class="meta card reveal"><div class="icon">⌁</div><h3>Flock</h3><p>Leadership is pictured as shepherding under the Chief Shepherd—care, protection and example rather than ownership.</p><span class="ref">Acts 20:28 · 1 Pet 5:1–4</span></article>
-      <article class="meta card reveal"><div class="icon">✦</div><h3>Lampstand</h3><p>In Revelation, local churches are lampstands. Their existence is visible and accountable to the risen Jesus who walks among them.</p><span class="ref">Rev 1:12–20 · 2–3</span></article>
+      <article class="meta card reveal"><div class="icon">◉</div><h3 data-ru="Тело">Body</h3><p data-ru="Много членов, один Дух, разные дары, взаимная зависимость. Глава — Христос; зрелость здесь общая, а не только личная.">Many members, one Spirit, differentiated gifts, mutual dependence. Christ is the head; maturity is corporate, not merely individual.</p><span class="ref">1 Cor 12:12–27 · Eph 4:11–16 · Col 1:18</span></article>
+      <article class="meta card reveal"><div class="icon">◇</div><h3 data-ru="Храм">Temple</h3><p data-ru="В жилище для Бога Дух соединяет людей, а не каменную кладку.">People—not masonry—are being joined into a dwelling place for God by the Spirit.</p><span class="ref">Eph 2:19–22 · 1 Cor 3:16</span></article>
+      <article class="meta card reveal"><div class="icon">♡</div><h3 data-ru="Невеста">Bride</h3><p data-ru="Отношение Христа к церкви — заветное, жертвенное и очищающее, а вовсе не управленческое.">Christ’s relationship to the church is covenantal, sacrificial and purifying—not merely managerial.</p><span class="ref">Eph 5:25–32 · Rev 19:7–9</span></article>
+      <article class="meta card reveal"><div class="icon">⌂</div><h3 data-ru="Дом">Household</h3><p data-ru="Верующие становятся домашними Божьими: принадлежность несёт с собой обязанности заботы, чести и верности.">Believers become members of God’s household: belonging carries obligations of care, honor and fidelity.</p><span class="ref">Eph 2:19 · 1 Tim 3:15</span></article>
+      <article class="meta card reveal"><div class="icon">♜</div><h3 data-ru="Царственное священство">Royal priesthood</h3><p data-ru="Синайское призвание возвращается во Христе: святой народ, чья жизнь и речь возвещают совершенства Бога.">Sinai vocation reappears in Christ: a holy people whose life and speech declare God’s excellencies.</p><span class="ref">Ex 19:5–6 · 1 Pet 2:4–10</span></article>
+      <article class="meta card reveal"><div class="icon">⌁</div><h3 data-ru="Стадо">Flock</h3><p data-ru="Руководство описано как пастырство под началом Пастыреначальника: забота, защита и пример, а не владение.">Leadership is pictured as shepherding under the Chief Shepherd—care, protection and example rather than ownership.</p><span class="ref">Acts 20:28 · 1 Pet 5:1–4</span></article>
+      <article class="meta card reveal"><div class="icon">✦</div><h3 data-ru="Светильник">Lampstand</h3><p data-ru="В Откровении поместные церкви — светильники. Их существование видимо и подотчётно воскресшему Иисусу, который ходит посреди них.">In Revelation, local churches are lampstands. Their existence is visible and accountable to the risen Jesus who walks among them.</p><span class="ref">Rev 1:12–20 · 2–3</span></article>
     </div>
   </div>
 </section>
@@ -410,40 +429,40 @@
 <section id="practice">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">04 · The assembly in motion</div></div>
-      <div><h2>What does an ecclesia actually do?</h2><p class="intro">The New Testament gives a pattern, not one frozen service order. These recurring practices show a community being formed around Jesus and for one another.</p></div>
+      <div><div class="eyebrow" data-ru="04 · Собрание в движении">04 · The assembly in motion</div></div>
+      <div><h2 data-ru="Чем экклесия занимается на самом деле?">What does an ecclesia actually do?</h2><p class="intro" data-ru="Новый Завет даёт образец, а не один застывший порядок служения. Эти повторяющиеся практики показывают общину, которая формируется вокруг Иисуса и друг для друга.">The New Testament gives a pattern, not one frozen service order. These recurring practices show a community being formed around Jesus and for one another.</p></div>
     </div>
     <div class="flow">
-      <article class="flow-item reveal"><h3>Receive the Word</h3><p>Apostolic teaching, reading, exhortation, doctrine and remembrance shape the common mind.</p></article>
-      <article class="flow-item reveal"><h3>Pray together</h3><p>The assembly asks, thanks, intercedes, listens and acts in dependence on God.</p></article>
-      <article class="flow-item reveal"><h3>Break bread</h3><p>Table fellowship and the Lord’s Supper enact communion with Christ and with one another.</p></article>
-      <article class="flow-item reveal"><h3>Build one another</h3><p>Gifts are distributed across the body so that “each part” participates in growth.</p></article>
-      <article class="flow-item reveal"><h3>Share materially</h3><p>Need becomes a community concern; generosity makes belonging tangible.</p></article>
-      <article class="flow-item reveal"><h3>Discern together</h3><p>Acts shows communities testing disputes, doctrine, mission and leadership in shared processes.</p></article>
-      <article class="flow-item reveal"><h3>Restore & correct</h3><p>Love is not indifference. Jesus gives the assembly a role in truth, reconciliation and accountability.</p></article>
-      <article class="flow-item reveal"><h3>Send & witness</h3><p>The gathered church does not terminate on itself; worship becomes mission, mercy and public faithfulness.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Принимать Слово">Receive the Word</h3><p data-ru="Апостольское учение, чтение, увещание, вероучение и памятование формируют общий ум.">Apostolic teaching, reading, exhortation, doctrine and remembrance shape the common mind.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Молиться вместе">Pray together</h3><p data-ru="Собрание просит, благодарит, ходатайствует, слушает и действует в зависимости от Бога.">The assembly asks, thanks, intercedes, listens and acts in dependence on God.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Преломлять хлеб">Break bread</h3><p data-ru="Общий стол и Вечеря Господня воплощают общение со Христом и друг с другом.">Table fellowship and the Lord’s Supper enact communion with Christ and with one another.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Созидать друг друга">Build one another</h3><p data-ru="Дары распределены по всему телу, чтобы в росте участвовала «каждая часть».">Gifts are distributed across the body so that “each part” participates in growth.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Делиться материально">Share materially</h3><p data-ru="Нужда становится делом всей общины; щедрость делает принадлежность осязаемой.">Need becomes a community concern; generosity makes belonging tangible.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Различать сообща">Discern together</h3><p data-ru="В Деяниях общины разбирают споры, вероучение, миссию и вопросы руководства сообща.">Acts shows communities testing disputes, doctrine, mission and leadership in shared processes.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Восстанавливать и поправлять">Restore & correct</h3><p data-ru="Любовь — это не безразличие. Иисус даёт собранию роль в истине, примирении и ответственности.">Love is not indifference. Jesus gives the assembly a role in truth, reconciliation and accountability.</p></article>
+      <article class="flow-item reveal"><h3 data-ru="Посылать и свидетельствовать">Send & witness</h3><p data-ru="Собравшаяся церковь не замыкается на себе: поклонение переходит в миссию, милосердие и открытую верность.">The gathered church does not terminate on itself; worship becomes mission, mercy and public faithfulness.</p></article>
     </div>
 
     <div style="height:18px"></div>
     <div class="scale">
       <article class="scale-card card reveal">
-        <div class="kicker">Local</div>
-        <h3>A real people in a real place.</h3>
-        <p>Paul can address “the church of God in Corinth,” individual house churches, and “the churches of Galatia.” <em>Ekklesia</em> is concrete enough to name an accountable community that can gather, correct, give, appoint, send and suffer together.</p>
+        <div class="kicker" data-ru="Поместная">Local</div>
+        <h3 data-ru="Реальные люди в реальном месте.">A real people in a real place.</h3>
+        <p data-ru="Павел обращается и к «церкви Божией в Коринфе», и к отдельным домашним церквам, и к «церквам Галатийским». <em>Ekklesia</em> достаточно конкретна, чтобы назвать общину, которая собирается, поправляет, жертвует, поставляет служителей, посылает и страдает вместе — и за всё это отвечает.">Paul can address “the church of God in Corinth,” individual house churches, and “the churches of Galatia.” <em>Ekklesia</em> is concrete enough to name an accountable community that can gather, correct, give, appoint, send and suffer together.</p>
         <div class="mini-list">
-          <div class="mini"><span>Church in Corinth</span><span>1 Cor 1:2</span></div>
-          <div class="mini"><span>Church in a house</span><span>Rom 16:5</span></div>
-          <div class="mini"><span>Churches of Galatia</span><span>Gal 1:2</span></div>
+          <div class="mini"><span data-ru="Церковь в Коринфе">Church in Corinth</span><span>1 Cor 1:2</span></div>
+          <div class="mini"><span data-ru="Домашняя церковь">Church in a house</span><span>Rom 16:5</span></div>
+          <div class="mini"><span data-ru="Церкви Галатии">Churches of Galatia</span><span>Gal 1:2</span></div>
         </div>
       </article>
       <article class="scale-card card reveal">
-        <div class="kicker">Universal / translocal</div>
-        <h3>One body beyond one room.</h3>
-        <p>The same New Testament can speak of Christ as head of “the church” and of the church as his body and bride. The local assembly is not the whole reality, yet it is meant to embody that larger reality rather than replace it with an abstraction.</p>
+        <div class="kicker" data-ru="Вселенская">Universal / translocal</div>
+        <h3 data-ru="Одно тело — шире одной комнаты.">One body beyond one room.</h3>
+        <p data-ru="Тот же Новый Завет говорит о Христе как о главе «церкви» и о церкви как о Его теле и невесте. Поместное собрание — не вся реальность целиком, но оно призвано воплощать эту бо́льшую реальность, а не подменять её абстракцией.">The same New Testament can speak of Christ as head of “the church” and of the church as his body and bride. The local assembly is not the whole reality, yet it is meant to embody that larger reality rather than replace it with an abstraction.</p>
         <div class="mini-list">
-          <div class="mini"><span>Christ, head of the church</span><span>Col 1:18</span></div>
-          <div class="mini"><span>Church, his body</span><span>Eph 1:22–23</span></div>
-          <div class="mini"><span>Christ loved the church</span><span>Eph 5:25</span></div>
+          <div class="mini"><span data-ru="Христос — глава церкви">Christ, head of the church</span><span>Col 1:18</span></div>
+          <div class="mini"><span data-ru="Церковь — Его тело">Church, his body</span><span>Eph 1:22–23</span></div>
+          <div class="mini"><span data-ru="Христос возлюбил церковь">Christ loved the church</span><span>Eph 5:25</span></div>
         </div>
       </article>
     </div>
@@ -453,30 +472,30 @@
 <section id="kingdom">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">05 · Kingdom & ecclesia</div></div>
-      <div><h2>Related. Not identical.</h2><p class="intro">A useful distinction: the kingdom is God’s reign; the ecclesia is the people gathered under the King. Different Christian traditions draw the boundaries differently, but collapsing the two too quickly creates confusion.</p></div>
+      <div><div class="eyebrow" data-ru="05 · Царство и экклесия">05 · Kingdom & ecclesia</div></div>
+      <div><h2 data-ru="Связаны. Но не одно и то же.">Related. Not identical.</h2><p class="intro" data-ru="Полезное различение: Царство — это Божье правление, а экклесия — люди, собранные под властью Царя. Разные христианские традиции проводят границу по-разному, но слишком быстрое слияние этих двух понятий рождает путаницу.">A useful distinction: the kingdom is God’s reign; the ecclesia is the people gathered under the King. Different Christian traditions draw the boundaries differently, but collapsing the two too quickly creates confusion.</p></div>
     </div>
     <div class="kingdom">
       <figure class="relation-map reveal" aria-labelledby="relationship-caption">
         <article class="relation-card kingdom-card">
-          <div class="map-index"><span>01</span> Reign</div>
-          <h3>Kingdom</h3>
-          <p class="map-definition">God’s active rule</p>
-          <ul class="map-list"><li>Authority</li><li>Saving rule</li><li>Coming renewal</li></ul>
+          <div class="map-index" data-ru="<span>01</span> Правление"><span>01</span> Reign</div>
+          <h3 data-ru="Царство">Kingdom</h3>
+          <p class="map-definition" data-ru="Действующая власть Бога">God’s active rule</p>
+          <ul class="map-list" data-ru="<li>Власть</li><li>Спасающее правление</li><li>Грядущее обновление</li>"><li>Authority</li><li>Saving rule</li><li>Coming renewal</li></ul>
         </article>
-        <div class="king-node" aria-label="Jesus the King"><span>One center</span><strong>Jesus</strong><small>the King</small></div>
+        <div class="king-node" aria-label="Jesus the King" data-ru-aria-label="Иисус — Царь" data-ru="<span>Один центр</span><strong>Иисус</strong><small>Царь</small>"><span>One center</span><strong>Jesus</strong><small>the King</small></div>
         <article class="relation-card ecclesia-card">
-          <div class="map-index"><span>02</span> People</div>
-          <h3>Ecclesia</h3>
-          <p class="map-definition">The people under the King</p>
-          <ul class="map-list"><li>Gathered</li><li>Formed</li><li>Ordered &amp; sent</li></ul>
+          <div class="map-index" data-ru="<span>02</span> Народ"><span>02</span> People</div>
+          <h3 data-ru="Экклесия">Ecclesia</h3>
+          <p class="map-definition" data-ru="Люди под властью Царя">The people under the King</p>
+          <ul class="map-list" data-ru="<li>Собраны</li><li>Сформированы</li><li>Устроены и посланы</li>"><li>Gathered</li><li>Formed</li><li>Ordered &amp; sent</li></ul>
         </article>
-        <figcaption class="relation-note" id="relationship-caption"><strong>Distinct, inseparable.</strong> The King reigns; the assembly gathers beneath his rule and witnesses to it.</figcaption>
+        <figcaption class="relation-note" id="relationship-caption" data-ru="<strong>Различимы, но неразделимы.</strong> Царь царствует; собрание собирается под Его властью и свидетельствует о ней."><strong>Distinct, inseparable.</strong> The King reigns; the assembly gathers beneath his rule and witnesses to it.</figcaption>
       </figure>
       <div class="king-copy reveal">
-        <h3>The assembly is political in allegiance before it is partisan in program.</h3>
-        <p>Calling Jesus “Lord,” confessing one body across status and ethnicity, practicing economic generosity, refusing rival worship and embodying a different social order all have public implications.</p>
-        <div class="callout"><b>Caution:</b> the New Testament does not simply turn the church into a nation-state or hand it the coercive machinery of civil government. Its primary weapons are truth, holiness, prayer, service, suffering love and witness.</div>
+        <h3 data-ru="Собрание политично в своей верности задолго до того, как становится партийным в своей программе.">The assembly is political in allegiance before it is partisan in program.</h3>
+        <p data-ru="Называть Иисуса Господом, исповедовать одно тело поверх сословий и этносов, жить экономической щедростью, отказываться от чужого поклонения и воплощать другой общественный порядок — всё это имеет публичные последствия.">Calling Jesus “Lord,” confessing one body across status and ethnicity, practicing economic generosity, refusing rival worship and embodying a different social order all have public implications.</p>
+        <div class="callout" data-ru="<b>Осторожно:</b> Новый Завет не превращает церковь в государство и не вручает ей принудительный аппарат гражданской власти. Её главное оружие — истина, святость, молитва, служение, страдающая любовь и свидетельство."><b>Caution:</b> the New Testament does not simply turn the church into a nation-state or hand it the coercive machinery of civil government. Its primary weapons are truth, holiness, prayer, service, suffering love and witness.</div>
       </div>
     </div>
   </div>
@@ -485,33 +504,33 @@
 <section id="tensions">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">06 · Authority & tensions</div></div>
-      <div><h2>Where the text is clear—and where Christians differ.</h2><p class="intro">The best ecclesiology distinguishes direct textual claims from theological systems built from them.</p></div>
+      <div><div class="eyebrow" data-ru="06 · Власть и напряжения">06 · Authority & tensions</div></div>
+      <div><h2 data-ru="Где текст говорит ясно — и где христиане расходятся.">Where the text is clear—and where Christians differ.</h2><p class="intro" data-ru="Хорошая экклезиология отличает то, что прямо сказано в тексте, от богословских систем, надстроенных над ним.">The best ecclesiology distinguishes direct textual claims from theological systems built from them.</p></div>
     </div>
 
     <div class="authority">
       <article class="auth-card card reveal">
-        <h3>Keys · binding · loosing</h3>
-        <p>Matthew 16 links the church to the keys of the kingdom in Jesus’ words to Peter; Matthew 18 uses binding and loosing in a community discipline context. The texts plainly involve real authority and accountability.</p>
+        <h3 data-ru="Ключи · связывать · разрешать">Keys · binding · loosing</h3>
+        <p data-ru="В Мф. 16 слова Иисуса Петру связывают церковь с ключами Царства; в Мф. 18 связывание и разрешение стоят в контексте общинного вразумления. Тексты явно говорят о настоящей власти и настоящей ответственности.">Matthew 16 links the church to the keys of the kingdom in Jesus’ words to Peter; Matthew 18 uses binding and loosing in a community discipline context. The texts plainly involve real authority and accountability.</p>
         <div class="refs"><span class="refchip">Matt 16:18–19</span><span class="refchip">Matt 18:15–20</span><span class="refchip">John 20:21–23</span></div>
       </article>
       <article class="auth-card card reveal">
-        <h3>Leadership · equipping · service</h3>
-        <p>Elders/overseers shepherd; gifted leaders equip; the saints do the work of ministry; every part supplies. New Testament leadership is substantial, but the body is not imagined as a passive audience.</p>
+        <h3 data-ru="Руководство · снаряжение · служение">Leadership · equipping · service</h3>
+        <p data-ru="Пресвитеры и епископы пасут; одарённые служители снаряжают; святые делают дело служения; каждая часть вносит своё. Руководство в Новом Завете весомо, но тело при этом не мыслится как пассивная публика.">Elders/overseers shepherd; gifted leaders equip; the saints do the work of ministry; every part supplies. New Testament leadership is substantial, but the body is not imagined as a passive audience.</p>
         <div class="refs"><span class="refchip">Acts 20:28</span><span class="refchip">Eph 4:11–16</span><span class="refchip">1 Pet 5:1–4</span></div>
       </article>
     </div>
 
     <div class="debate reveal">
-      <h3>Interpretive fault line: Peter, office and succession</h3>
-      <p>Roman Catholic, Eastern Orthodox and Protestant traditions read Matthew 16 and the later shape of church authority differently. The site does not pretend that the dispute disappears through a Greek word study. What can be said without flattening the traditions: Jesus is the builder; Peter has a prominent role; confession of Jesus is central; the church receives real responsibility; and the New Testament later depicts multiple elders/overseers and the wider body exercising ministry.</p>
+      <h3 data-ru="Линия разлома в толковании: Пётр, служение и преемство">Interpretive fault line: Peter, office and succession</h3>
+      <p data-ru="Католическая, православная и протестантская традиции читают Мф. 16 и дальнейшую форму церковной власти по-разному. Этот разбор не делает вид, что спор растворяется от одного разбора греческого слова. Что можно сказать, не сплющивая традиции: строит Иисус; у Петра выдающаяся роль; исповедание Иисуса — в центре; церковь получает настоящую ответственность; и дальше Новый Завет описывает нескольких пресвитеров-епископов и всё тело, участвующее в служении.">Roman Catholic, Eastern Orthodox and Protestant traditions read Matthew 16 and the later shape of church authority differently. The site does not pretend that the dispute disappears through a Greek word study. What can be said without flattening the traditions: Jesus is the builder; Peter has a prominent role; confession of Jesus is central; the church receives real responsibility; and the New Testament later depicts multiple elders/overseers and the wider body exercising ministry.</p>
     </div>
 
     <div style="height:18px"></div>
     <div class="perspective">
-      <article class="persp reveal"><div class="tag">Continuity emphasis</div><h3>Israel → Church</h3><p>Highlights how the Greek OT already calls Israel an <em>ekklesia</em>, and how 1 Peter reuses Exodus 19 covenant language for Christ’s people.</p></article>
-      <article class="persp reveal"><div class="tag">Distinction emphasis</div><h3>Israel & Church</h3><p>Stresses that “assembly” is a flexible word and that shared vocabulary does not by itself settle every promise, covenant or eschatological question about ethnic/national Israel.</p></article>
-      <article class="persp reveal"><div class="tag">Shared ground</div><h3>Christ at the center</h3><p>Across major traditions, the New Testament clearly presents Gentiles as brought near in Christ, reconciled with Jewish believers in one body, and built together as God’s dwelling.</p></article>
+      <article class="persp reveal"><div class="tag" data-ru="Акцент на преемственности">Continuity emphasis</div><h3 data-ru="Израиль → Церковь">Israel → Church</h3><p data-ru="Подчёркивает, что греческий Ветхий Завет уже называет Израиль <em>ekklesia</em>, а Первое послание Петра переносит заветный язык Исхода 19 на народ Христа.">Highlights how the Greek OT already calls Israel an <em>ekklesia</em>, and how 1 Peter reuses Exodus 19 covenant language for Christ’s people.</p></article>
+      <article class="persp reveal"><div class="tag" data-ru="Акцент на различии">Distinction emphasis</div><h3 data-ru="Израиль и Церковь">Israel & Church</h3><p data-ru="Настаивает, что «собрание» — гибкое слово и что общая лексика сама по себе не решает вопросов об обетованиях, заветах и эсхатологии применительно к этническому Израилю.">Stresses that “assembly” is a flexible word and that shared vocabulary does not by itself settle every promise, covenant or eschatological question about ethnic/national Israel.</p></article>
+      <article class="persp reveal"><div class="tag" data-ru="Общая почва">Shared ground</div><h3 data-ru="Христос в центре">Christ at the center</h3><p data-ru="Во всех крупных традициях Новый Завет говорит ясно: язычники приближены во Христе, примирены с верующими из иудеев в одном теле и вместе строятся в жилище Божие.">Across major traditions, the New Testament clearly presents Gentiles as brought near in Christ, reconciled with Jewish believers in one body, and built together as God’s dwelling.</p></article>
     </div>
   </div>
 </section>
@@ -519,16 +538,16 @@
 <section>
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">07 · Pressure test</div></div>
-      <div><h2>Six reductions that make ecclesia smaller.</h2><p class="intro">These are not claims that buildings, sermons, organizations or leaders are bad. They become distortions when one part is mistaken for the whole.</p></div>
+      <div><div class="eyebrow" data-ru="07 · Проверка на прочность">07 · Pressure test</div></div>
+      <div><h2 data-ru="Шесть упрощений, которые делают экклесию меньше.">Six reductions that make ecclesia smaller.</h2><p class="intro" data-ru="Речь не о том, что здания, проповеди, организации или лидеры — это плохо. Искажение начинается там, где часть принимают за целое.">These are not claims that buildings, sermons, organizations or leaders are bad. They become distortions when one part is mistaken for the whole.</p></div>
     </div>
     <div class="anti">
-      <article class="anti-card reveal"><div class="x">×</div><h3>Church = building</h3><p>The assembly can meet in a house. The people themselves are also described as God’s temple.</p></article>
-      <article class="anti-card reveal"><div class="x">×</div><h3>Church = event</h3><p>Gathering matters, but Acts and the epistles describe an ongoing shared life, not only a weekly program.</p></article>
-      <article class="anti-card reveal"><div class="x">×</div><h3>Church = audience</h3><p>Ephesians expects “each part” to work; 1 Corinthians distributes gifts throughout the body.</p></article>
-      <article class="anti-card reveal"><div class="x">×</div><h3>Church = leader</h3><p>Leaders shepherd and equip; Christ alone is head of the body.</p></article>
-      <article class="anti-card reveal"><div class="x">×</div><h3>Church = private spirituality</h3><p>Baptism into one body creates mutual obligations that cannot be reduced to isolated belief.</p></article>
-      <article class="anti-card reveal"><div class="x">×</div><h3>Church = political machine</h3><p>The assembly has public allegiance and public witness, but its New Testament mission cannot be reduced to partisan power.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3 data-ru="Церковь = здание">Church = building</h3><p data-ru="Собрание может встречаться и в доме. А сами люди в Писании названы храмом Божьим.">The assembly can meet in a house. The people themselves are also described as God’s temple.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3 data-ru="Церковь = мероприятие">Church = event</h3><p data-ru="Совместная встреча важна, но Деяния и послания описывают непрерывную общую жизнь, а не только еженедельную программу.">Gathering matters, but Acts and the epistles describe an ongoing shared life, not only a weekly program.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3 data-ru="Церковь = публика">Church = audience</h3><p data-ru="Послание к Ефесянам ждёт работы от «каждой части»; Первое Коринфянам раздаёт дары по всему телу.">Ephesians expects “each part” to work; 1 Corinthians distributes gifts throughout the body.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3 data-ru="Церковь = лидер">Church = leader</h3><p data-ru="Лидеры пасут и снаряжают; глава тела — только Христос.">Leaders shepherd and equip; Christ alone is head of the body.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3 data-ru="Церковь = личная духовность">Church = private spirituality</h3><p data-ru="Крещение в одно тело создаёт взаимные обязательства, которые не свести к вере наедине с собой.">Baptism into one body creates mutual obligations that cannot be reduced to isolated belief.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3 data-ru="Церковь = политическая машина">Church = political machine</h3><p data-ru="У собрания есть публичная верность и публичное свидетельство, но его новозаветная миссия не сводится к партийной силе.">The assembly has public allegiance and public witness, but its New Testament mission cannot be reduced to partisan power.</p></article>
     </div>
   </div>
 </section>
@@ -536,67 +555,67 @@
 <section id="scripture">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="eyebrow">08 · Read the texts</div></div>
-      <div><h2>Keep the words in view.</h2><p class="intro">Ten load-bearing passages from the study, written out in the New International Version. Reference labels throughout the page also open directly in the NIV for wider context.</p></div>
+      <div><div class="eyebrow" data-ru="08 · Читай сами тексты">08 · Read the texts</div></div>
+      <div><h2 data-ru="Пусть слова остаются перед глазами.">Keep the words in view.</h2><p class="intro" data-ru="Десять несущих отрывков этого разбора, выписанных целиком по Синодальному переводу. Ссылки на места Писания по всей странице тоже открываются в Синодальном переводе — чтобы посмотреть контекст пошире.">Ten load-bearing passages from the study, written out in the New International Version. Reference labels throughout the page also open directly in the NIV for wider context.</p></div>
     </div>
     <div class="scripture-shell reveal">
       <div class="scripture-top">
-        <div><div class="kicker">A compact canonical reader</div><h3>Assembly becomes identity.</h3></div>
-        <span class="translation-badge">NIV® · 2011 text</span>
+        <div><div class="kicker" data-ru="Компактная канонная хрестоматия">A compact canonical reader</div><h3 data-ru="Собрание становится идентичностью.">Assembly becomes identity.</h3></div>
+        <span class="translation-badge" data-ru="Синодальный перевод">NIV® · 2011 text</span>
       </div>
       <div class="scripture-grid">
         <article class="verse-card">
-          <span class="verse-stage">Israel assembled</span>
-          <blockquote><sup>10</sup>Remember the day you stood before the Lord your God at Horeb, when he said to me, “Assemble the people before me to hear my words so that they may learn to revere me as long as they live in the land and may teach them to their children.”</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Deuteronomy%204%3A10&amp;version=NIV" target="_blank" rel="noreferrer"><span>Deuteronomy 4:10 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Израиль собран">Israel assembled</span>
+          <blockquote data-ru="<sup>10</sup>о том дне, когда ты стоял пред Господом, Богом твоим, при Хориве, и когда сказал Господь мне: собери ко Мне народ, и Я возвещу им слова Мои, из которых они научатся бояться Меня во все дни жизни своей на земле и научат сыновей своих."><sup>10</sup>Remember the day you stood before the Lord your God at Horeb, when he said to me, “Assemble the people before me to hear my words so that they may learn to revere me as long as they live in the land and may teach them to their children.”</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Deuteronomy%204%3A10&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Deuteronomy%204%3A10&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Втор. 4:10 · СП">Deuteronomy 4:10 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">Praise in the assembly</span>
-          <blockquote><sup>22</sup>I will declare your name to my people;<br>in the assembly I will praise you.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Psalm%2022%3A22&amp;version=NIV" target="_blank" rel="noreferrer"><span>Psalm 22:22 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Хвала в собрании">Praise in the assembly</span>
+          <blockquote data-ru="<sup>23</sup>Буду возвещать имя Твое братьям моим,<br>посреди собрания восхвалять Тебя."><sup>22</sup>I will declare your name to my people;<br>in the assembly I will praise you.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Psalm%2022%3A22&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Psalm%2021%3A23&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Пс. 21:23 · СП">Psalm 22:22 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">Jesus claims the assembly</span>
-          <blockquote><sup>18</sup>And I tell you that you are Peter, and on this rock I will build my church, and the gates of Hades will not overcome it.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Matthew%2016%3A18&amp;version=NIV" target="_blank" rel="noreferrer"><span>Matthew 16:18 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Иисус называет собрание Своим">Jesus claims the assembly</span>
+          <blockquote data-ru="<sup>18</sup>и Я говорю тебе: ты — Петр, и на сем камне Я создам Церковь Мою, и врата ада не одолеют ее."><sup>18</sup>And I tell you that you are Peter, and on this rock I will build my church, and the gates of Hades will not overcome it.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Matthew%2016%3A18&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Matthew%2016%3A18&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Мф. 16:18 · СП">Matthew 16:18 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">The word stays ordinary</span>
-          <blockquote><sup>32</sup>The assembly was in confusion: Some were shouting one thing, some another. Most of the people did not even know why they were there.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%2019%3A32&amp;version=NIV" target="_blank" rel="noreferrer"><span>Acts 19:32 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Слово остаётся обычным">The word stays ordinary</span>
+          <blockquote data-ru="<sup>32</sup>Между тем одни кричали одно, а другие другое, ибо собрание было беспорядочное, и большая часть собравшихся не знали, зачем собрались."><sup>32</sup>The assembly was in confusion: Some were shouting one thing, some another. Most of the people did not even know why they were there.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%2019%3A32&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Acts%2019%3A32&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Деян. 19:32 · СП">Acts 19:32 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">A shared way of life</span>
-          <blockquote><sup>42</sup>They devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%202%3A42&amp;version=NIV" target="_blank" rel="noreferrer"><span>Acts 2:42 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Общий уклад жизни">A shared way of life</span>
+          <blockquote data-ru="<sup>42</sup>И они постоянно пребывали в учении Апостолов, в общении и преломлении хлеба и в молитвах."><sup>42</sup>They devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%202%3A42&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Acts%202%3A42&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Деян. 2:42 · СП">Acts 2:42 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">One body, many members</span>
-          <blockquote><sup>27</sup>Now you are the body of Christ, and each one of you is a part of it.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2012%3A27&amp;version=NIV" target="_blank" rel="noreferrer"><span>1 Corinthians 12:27 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Одно тело, много членов">One body, many members</span>
+          <blockquote data-ru="<sup>27</sup>И вы — тело Христово, а порознь — члены."><sup>27</sup>Now you are the body of Christ, and each one of you is a part of it.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2012%3A27&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2012%3A27&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="1 Кор. 12:27 · СП">1 Corinthians 12:27 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">Household and temple</span>
-          <blockquote><sup>19</sup>Consequently, you are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household, <sup>20</sup>built on the foundation of the apostles and prophets, with Christ Jesus himself as the chief cornerstone. <sup>21</sup>In him the whole building is joined together and rises to become a holy temple in the Lord. <sup>22</sup>And in him you too are being built together to become a dwelling in which God lives by his Spirit.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Ephesians%202%3A19-22&amp;version=NIV" target="_blank" rel="noreferrer"><span>Ephesians 2:19–22 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Дом и храм">Household and temple</span>
+          <blockquote data-ru="<sup>19</sup>Итак вы уже не чужие и не пришельцы, но сограждане святым и свои Богу, <sup>20</sup>быв утверждены на основании Апостолов и пророков, имея Самого Иисуса Христа краеугольным камнем, <sup>21</sup>на котором все здание, слагаясь стройно, возрастает в святый храм в Господе, <sup>22</sup>на котором и вы устрояетесь в жилище Божие Духом."><sup>19</sup>Consequently, you are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household, <sup>20</sup>built on the foundation of the apostles and prophets, with Christ Jesus himself as the chief cornerstone. <sup>21</sup>In him the whole building is joined together and rises to become a holy temple in the Lord. <sup>22</sup>And in him you too are being built together to become a dwelling in which God lives by his Spirit.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Ephesians%202%3A19-22&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Ephesians%202%3A19-22&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Еф. 2:19–22 · СП">Ephesians 2:19–22 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">A priestly people</span>
-          <blockquote><sup>9</sup>But you are a chosen people, a royal priesthood, a holy nation, God’s special possession, that you may declare the praises of him who called you out of darkness into his wonderful light.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Peter%202%3A9&amp;version=NIV" target="_blank" rel="noreferrer"><span>1 Peter 2:9 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Священнический народ">A priestly people</span>
+          <blockquote data-ru="<sup>9</sup>Но вы — род избранный, царственное священство, народ святой, люди, взятые в удел, дабы возвещать совершенства Призвавшего вас из тьмы в чудный Свой свет."><sup>9</sup>But you are a chosen people, a royal priesthood, a holy nation, God’s special possession, that you may declare the praises of him who called you out of darkness into his wonderful light.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Peter%202%3A9&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=1%20Peter%202%3A9&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="1 Пет. 2:9 · СП">1 Peter 2:9 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">The heavenly horizon</span>
-          <blockquote><sup>22</sup>But you have come to Mount Zion, to the city of the living God, the heavenly Jerusalem. You have come to thousands upon thousands of angels in joyful assembly, <sup>23</sup>to the church of the firstborn, whose names are written in heaven. You have come to God, the Judge of all, to the spirits of the righteous made perfect, <sup>24</sup>to Jesus the mediator of a new covenant, and to the sprinkled blood that speaks a better word than the blood of Abel.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Hebrews%2012%3A22-24&amp;version=NIV" target="_blank" rel="noreferrer"><span>Hebrews 12:22–24 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Небесный горизонт">The heavenly horizon</span>
+          <blockquote data-ru="<sup>22</sup>Но вы приступили к горе Сиону и ко граду Бога живаго, к небесному Иерусалиму и тьмам Ангелов, <sup>23</sup>к торжествующему собору и церкви первенцев, написанных на небесах, и к Судии всех Богу, и к духам праведников, достигших совершенства, <sup>24</sup>и к Ходатаю нового завета Иисусу, и к Крови кропления, говорящей лучше, нежели Авелева."><sup>22</sup>But you have come to Mount Zion, to the city of the living God, the heavenly Jerusalem. You have come to thousands upon thousands of angels in joyful assembly, <sup>23</sup>to the church of the firstborn, whose names are written in heaven. You have come to God, the Judge of all, to the spirits of the righteous made perfect, <sup>24</sup>to Jesus the mediator of a new covenant, and to the sprinkled blood that speaks a better word than the blood of Abel.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Hebrews%2012%3A22-24&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Hebrews%2012%3A22-24&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Евр. 12:22–24 · СП">Hebrews 12:22–24 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="verse-card">
-          <span class="verse-stage">Visible and accountable</span>
-          <blockquote><sup>20</sup>The mystery of the seven stars that you saw in my right hand and of the seven golden lampstands is this: The seven stars are the angels of the seven churches, and the seven lampstands are the seven churches.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Revelation%201%3A20&amp;version=NIV" target="_blank" rel="noreferrer"><span>Revelation 1:20 · NIV®</span><span aria-hidden="true">↗</span></a>
+          <span class="verse-stage" data-ru="Видима и подотчётна">Visible and accountable</span>
+          <blockquote data-ru="<sup>20</sup>Тайна семи звезд, которые ты видел в деснице Моей, и семи золотых светильников есть сия: семь звезд суть Ангелы семи церквей; а семь светильников, которые ты видел, суть семь церквей."><sup>20</sup>The mystery of the seven stars that you saw in my right hand and of the seven golden lampstands is this: The seven stars are the angels of the seven churches, and the seven lampstands are the seven churches.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Revelation%201%3A20&amp;version=NIV" data-ru-href="https://www.biblegateway.com/passage/?search=Revelation%201%3A20&amp;version=SYNO" target="_blank" rel="noreferrer"><span data-ru="Откр. 1:20 · СП">Revelation 1:20 · NIV®</span><span aria-hidden="true">↗</span></a>
         </article>
       </div>
-      <p class="translation-note">Scripture taken from the Holy Bible, NEW INTERNATIONAL VERSION®, NIV® Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.® Used by permission. All rights reserved worldwide. <a href="https://www.biblica.com/permissions/" target="_blank" rel="noreferrer">NIV permissions ↗</a></p>
+      <p class="translation-note" data-ru="Русский текст Писания приводится по Синодальному переводу — он находится в общественном достоянии. Английская сторона страницы цитирует NIV® по разрешению Biblica, Inc.®">Scripture taken from the Holy Bible, NEW INTERNATIONAL VERSION®, NIV® Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.® Used by permission. All rights reserved worldwide. <a href="https://www.biblica.com/permissions/" target="_blank" rel="noreferrer">NIV permissions ↗</a></p>
     </div>
   </div>
 </section>
@@ -604,14 +623,14 @@
 <section>
   <div class="wrap">
     <div class="summary reveal">
-      <div class="kicker">The whole thing, compressed</div>
-      <div class="big">Ecclesia is the <em>people of Jesus</em>, assembled under his lordship, inhabited by his Spirit, shaped by his Word, joined to one another, and sent into the world as a living sign of his kingdom.</div>
-      <p>That sentence is a synthesis, not a dictionary definition. The dictionary gives you “assembly.” The canon fills the assembly with its identity, architecture, practices, authority, hope and mission.</p>
+      <div class="kicker" data-ru="Всё это, сжато">The whole thing, compressed</div>
+      <div class="big" data-ru="Экклесия — это <em>народ Иисуса</em>: собранный под Его господством, населённый Его Духом, сформированный Его Словом, соединённый друг с другом и посланный в мир как живой знак Его Царства.">Ecclesia is the <em>people of Jesus</em>, assembled under his lordship, inhabited by his Spirit, shaped by his Word, joined to one another, and sent into the world as a living sign of his kingdom.</div>
+      <p data-ru="Эта фраза — синтез, а не словарная статья. Словарь даёт «собрание». Канон наполняет это собрание идентичностью, устройством, практиками, властью, надеждой и миссией.">That sentence is a synthesis, not a dictionary definition. The dictionary gives you “assembly.” The canon fills the assembly with its identity, architecture, practices, authority, hope and mission.</p>
       <div class="readmap">
-        <div class="read"><b>Start with the word</b><span>Acts 19:32–41 · Acts 7:38</span></div>
-        <div class="read"><b>See Jesus define it</b><span>Matthew 16:13–20 · 18:15–20</span></div>
-        <div class="read"><b>Watch it form</b><span>Acts 2:37–47 · 4:23–35 · 13:1–3</span></div>
-        <div class="read"><b>Learn its anatomy</b><span>1 Cor 12–14 · Eph 2–5 · 1 Pet 2</span></div>
+        <div class="read"><b data-ru="Начни со слова">Start with the word</b><span>Acts 19:32–41 · Acts 7:38</span></div>
+        <div class="read"><b data-ru="Посмотри, как его определяет Иисус">See Jesus define it</b><span>Matthew 16:13–20 · 18:15–20</span></div>
+        <div class="read"><b data-ru="Посмотри, как оно обретает форму">Watch it form</b><span>Acts 2:37–47 · 4:23–35 · 13:1–3</span></div>
+        <div class="read"><b data-ru="Изучи его анатомию">Learn its anatomy</b><span>1 Cor 12–14 · Eph 2–5 · 1 Pet 2</span></div>
       </div>
     </div>
   </div>
@@ -620,21 +639,21 @@
 <section class="sources">
   <div class="wrap">
     <div class="section-head">
-      <div><div class="eyebrow">Research notes</div></div>
-      <div><h2 style="font-size:46px">Sources & interpretive guardrails.</h2><p class="intro">Primary biblical references do most of the work. Lexical and Septuagint sources are used to keep the word study honest.</p></div>
+      <div><div class="eyebrow" data-ru="Заметки об источниках">Research notes</div></div>
+      <div><h2 style="font-size:46px" data-ru="Источники и ограничители толкования.">Sources & interpretive guardrails.</h2><p class="intro" data-ru="Основную работу делают сами библейские тексты. Словарные источники и Септуагинта нужны, чтобы разбор слова оставался честным.">Primary biblical references do most of the work. Lexical and Septuagint sources are used to keep the word study honest.</p></div>
     </div>
-    <details open><summary>Greek usage</summary><p>Scaife’s lexical data gives the classical sense as an assembly of citizens regularly summoned. That is the usage baseline; theology comes from the assembly’s context and owner, not from splitting the noun into roots. <a href="https://atlas.perseus.tufts.edu/dictionaries/headword/%E1%BC%90%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1/" target="_blank" rel="noreferrer">Open the lexical entries ↗</a></p></details>
-    <details><summary>Septuagint connection</summary><p>Deuteronomy 4:10 in the Greek Old Testament uses <em>ekklēsias</em> for the people assembled before God at Horeb. Related “day of the assembly” texts occur in Deuteronomy 9:10 and 18:16. <a href="https://www.studylight.org/interlinear-study-bible/greek/deuteronomy/4-10.html" target="_blank" rel="noreferrer">Inspect Deuteronomy 4:10 ↗</a></p></details>
-    <details><summary>Key New Testament controls</summary><p>The SBL Greek New Testament confirms <em>ekklēsia</em> three times in Acts 19:32, 39 and 41 for the Ephesian gathering, including a “lawful assembly.” Matthew 16:18 records Jesus’ “my church”; Acts 7:38 uses the word of the wilderness assembly; 1 Corinthians 12, Ephesians 2–5 and 1 Peter 2 supply major ecclesial images and practices. <a href="https://www.sbl-site.org/resources/digital-texts/sbl-greek-new-testament/" target="_blank" rel="noreferrer">Open the SBLGNT ↗</a></p></details>
-    <details><summary>Guardrail: Israel / church</summary><p>The LXX connection is strong evidence for conceptual continuity of “assembly of God’s people,” but it does not by itself resolve every theological system concerning Israel, the covenants, land promises or eschatology. Those questions require broader exegesis than the word <em>ekklesia</em> alone can provide.</p></details>
-    <details><summary>NIV quotation standard</summary><p>Biblica permits up to 500 NIV verses without express written permission when the quotations do not reproduce a complete biblical book, remain under 25% of the work, and carry the required acknowledgment. This reader uses ten passages and includes the full notice above. <a href="https://www.biblica.com/permissions/" target="_blank" rel="noreferrer">Review Biblica’s guidelines ↗</a></p></details>
+    <details open><summary data-ru="Греческое употребление">Greek usage</summary><p data-ru="Лексические данные проекта Scaife дают классическое значение: собрание граждан, созываемое регулярно. Это базовая точка употребления; богословие приходит из контекста собрания и из того, кому оно принадлежит, а не из разбора существительного на корни. <a href="https://atlas.perseus.tufts.edu/dictionaries/headword/%E1%BC%90%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1/" target="_blank" rel="noreferrer">Открыть словарные статьи ↗</a>">Scaife’s lexical data gives the classical sense as an assembly of citizens regularly summoned. That is the usage baseline; theology comes from the assembly’s context and owner, not from splitting the noun into roots. <a href="https://atlas.perseus.tufts.edu/dictionaries/headword/%E1%BC%90%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1/" target="_blank" rel="noreferrer">Open the lexical entries ↗</a></p></details>
+    <details><summary data-ru="Связь с Септуагинтой">Septuagint connection</summary><p data-ru="Во Второзаконии 4:10 греческий Ветхий Завет употребляет <em>ekklēsias</em> о народе, собранном перед Богом у Хорива. Родственные тексты про «день собрания» — Втор. 9:10 и 18:16. <a href="https://www.studylight.org/interlinear-study-bible/greek/deuteronomy/4-10.html" target="_blank" rel="noreferrer">Посмотреть Втор. 4:10 ↗</a>">Deuteronomy 4:10 in the Greek Old Testament uses <em>ekklēsias</em> for the people assembled before God at Horeb. Related “day of the assembly” texts occur in Deuteronomy 9:10 and 18:16. <a href="https://www.studylight.org/interlinear-study-bible/greek/deuteronomy/4-10.html" target="_blank" rel="noreferrer">Inspect Deuteronomy 4:10 ↗</a></p></details>
+    <details><summary data-ru="Ключевые новозаветные проверки">Key New Testament controls</summary><p data-ru="Греческий Новый Завет SBL подтверждает <em>ekklēsia</em> трижды в Деян. 19:32, 39 и 41 применительно к эфесскому сборищу, включая «законное собрание». Мф. 16:18 фиксирует слова Иисуса «Церковь Мою»; Деян. 7:38 применяет слово к собранию в пустыне; 1 Кор. 12, Еф. 2–5 и 1 Пет. 2 дают основные церковные образы и практики. <a href="https://www.sbl-site.org/resources/digital-texts/sbl-greek-new-testament/" target="_blank" rel="noreferrer">Открыть SBLGNT ↗</a>">The SBL Greek New Testament confirms <em>ekklēsia</em> three times in Acts 19:32, 39 and 41 for the Ephesian gathering, including a “lawful assembly.” Matthew 16:18 records Jesus’ “my church”; Acts 7:38 uses the word of the wilderness assembly; 1 Corinthians 12, Ephesians 2–5 and 1 Peter 2 supply major ecclesial images and practices. <a href="https://www.sbl-site.org/resources/digital-texts/sbl-greek-new-testament/" target="_blank" rel="noreferrer">Open the SBLGNT ↗</a></p></details>
+    <details><summary data-ru="Ограничитель: Израиль и церковь">Guardrail: Israel / church</summary><p data-ru="Связь с Септуагинтой — сильный довод в пользу понятийной преемственности «собрания народа Божьего», но сама по себе она не решает ни одной богословской системы касательно Израиля, заветов, обетований о земле или эсхатологии. Эти вопросы требуют куда более широкой экзегезы, чем может дать одно слово <em>ekklesia</em>.">The LXX connection is strong evidence for conceptual continuity of “assembly of God’s people,” but it does not by itself resolve every theological system concerning Israel, the covenants, land promises or eschatology. Those questions require broader exegesis than the word <em>ekklesia</em> alone can provide.</p></details>
+    <details><summary data-ru="О переводах цитат">NIV quotation standard</summary><p data-ru="На английской стороне страницы цитаты приводятся по NIV: Biblica разрешает использовать до 500 стихов без отдельного письменного разрешения, если цитаты не воспроизводят целую книгу Библии, занимают менее 25% работы и сопровождаются требуемым уведомлением. Русская сторона использует Синодальный перевод — он в общественном достоянии, и никакого разрешения не требуется. <a href="https://www.biblica.com/permissions/" target="_blank" rel="noreferrer">Правила Biblica ↗</a>">Biblica permits up to 500 NIV verses without express written permission when the quotations do not reproduce a complete biblical book, remain under 25% of the work, and carry the required acknowledgment. This reader uses ten passages and includes the full notice above. <a href="https://www.biblica.com/permissions/" target="_blank" rel="noreferrer">Review Biblica’s guidelines ↗</a></p></details>
   </div>
 </section>
 </main>
 
 <footer class="wrap">
-  <span>ECCLESIA · A visual canonical study</span>
-  <span>Designed for exploration · Read each passage in its wider context.</span>
+  <span data-ru="ЭККЛЕСИЯ · Визуальный канонический разбор">ECCLESIA · A visual canonical study</span>
+  <span data-ru="Сделано для исследования · Читай каждый отрывок в его более широком контексте.">Designed for exploration · Read each passage in its wider context.</span>
 </footer>
 
 <script>
@@ -644,13 +663,20 @@
   const themeLabel = btn.querySelector('.theme-label');
   const themeColor = document.getElementById('theme-color');
 
+  const isRu = () => root.getAttribute('data-lang') === 'ru';
+
   const syncThemeControl = () => {
     const isLight = root.dataset.theme === 'light';
     const next = isLight ? 'dark' : 'light';
     themeIcon.textContent = isLight ? '◐' : '☼';
-    themeLabel.textContent = isLight ? 'Dark' : 'Light';
-    btn.setAttribute('aria-label', `Switch to ${next} mode`);
-    btn.title = `Switch to ${next} mode`;
+    themeLabel.textContent = isRu()
+      ? (isLight ? 'Тёмная' : 'Светлая')
+      : (isLight ? 'Dark' : 'Light');
+    const label = isRu()
+      ? `Переключить на ${next === 'dark' ? 'тёмную' : 'светлую'} тему`
+      : `Switch to ${next} mode`;
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
     themeColor.content = isLight ? '#f5f0e6' : '#090812';
   };
 
@@ -682,17 +708,40 @@
     revealItems.forEach(element => element.classList.add('visible'));
   }
 
-  document.querySelectorAll('.node .ref, .meta .ref, .refchip, .mini span:last-child, .read span').forEach(element => {
-    const reference = element.textContent.trim();
-    const link = document.createElement('a');
-    link.className = 'scripture-ref-link';
-    link.href = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(reference.replace(/·/g, ';'))}&version=NIV`;
-    link.target = '_blank';
-    link.rel = 'noreferrer';
-    link.textContent = reference;
-    link.setAttribute('aria-label', `Read ${reference} in the NIV`);
-    element.replaceChildren(link);
-  });
+  /* Book abbreviations, longest first so "Matthew" is not eaten by "Matt".
+     The English reference is what the Bible Gateway URL is built from; only
+     the visible label is localised. */
+  const REF_BOOKS = [
+    ['Matthew', 'Мф.'], ['Deuteronomy', 'Втор.'], ['Deut', 'Втор.'],
+    ['1 Cor', '1 Кор.'], ['1 Pet', '1 Пет.'], ['1 Tim', '1 Тим.'],
+    ['Matt', 'Мф.'], ['Acts', 'Деян.'], ['John', 'Ин.'], ['Rom', 'Рим.'],
+    ['Gal', 'Гал.'], ['Eph', 'Еф.'], ['Col', 'Кол.'], ['Heb', 'Евр.'],
+    ['Rev', 'Откр.'], ['Ps', 'Пс.'], ['Ex', 'Исх.']
+  ];
+  const ruRef = text => REF_BOOKS.reduce((out, [en, ru]) => out.split(en).join(ru), text);
+
+  const refHosts = document.querySelectorAll('.node .ref, .meta .ref, .refchip, .mini span:last-child, .read span');
+  refHosts.forEach(element => { element.dataset.refEn = element.textContent.trim(); });
+
+  const paintRefs = () => {
+    refHosts.forEach(element => {
+      const reference = element.dataset.refEn;
+      const version = isRu() ? 'SYNO' : 'NIV';
+      const link = document.createElement('a');
+      link.className = 'scripture-ref-link';
+      link.href = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(reference.replace(/·/g, ';'))}&version=${version}`;
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      link.textContent = isRu() ? ruRef(reference) : reference;
+      link.setAttribute('aria-label', isRu()
+        ? `Читать ${ruRef(reference)} в Синодальном переводе`
+        : `Read ${reference} in the NIV`);
+      element.replaceChildren(link);
+    });
+  };
+  paintRefs();
+
+  document.addEventListener('esmrsky:lang', () => { paintRefs(); syncThemeControl(); });
 
   const progress = document.getElementById('scroll-progress');
   let progressFrame = 0;
@@ -706,6 +755,60 @@
   }, { passive: true });
   addEventListener('resize', updateProgress);
   updateProgress();
+</script>
+
+<script>
+/* ---- EN/RU ------------------------------------------------------------
+   Shared across esmrsky.github.io. Every translatable element carries
+   data-ru; the English original stays in the markup and is captured into
+   data-en on load, so nothing is duplicated by hand. Attributes translate
+   via data-ru-<attr>. The choice is remembered in localStorage. */
+(function () {
+  var KEY = 'esmrsky-lang';
+  var ATTRS = ['title', 'aria-label', 'placeholder', 'alt', 'content', 'href'];
+  var root = document.documentElement;
+  var btn = document.getElementById('langToggle');
+
+  var nodes = [].slice.call(document.querySelectorAll('[data-ru]'));
+  nodes.forEach(function (el) {
+    if (!el.hasAttribute('data-en')) el.setAttribute('data-en', el.innerHTML);
+  });
+
+  var attrNodes = [];
+  ATTRS.forEach(function (a) {
+    [].slice.call(document.querySelectorAll('[data-ru-' + a + ']')).forEach(function (el) {
+      if (!el.hasAttribute('data-en-' + a)) el.setAttribute('data-en-' + a, el.getAttribute(a) || '');
+      attrNodes.push([el, a]);
+    });
+  });
+
+  function apply(lang) {
+    var key = lang === 'ru' ? 'data-ru' : 'data-en';
+    nodes.forEach(function (el) {
+      var v = el.getAttribute(key);
+      if (v !== null && el.innerHTML !== v) el.innerHTML = v;
+    });
+    attrNodes.forEach(function (p) {
+      var v = p[0].getAttribute(key + '-' + p[1]);
+      if (v !== null) p[0].setAttribute(p[1], v);
+    });
+    root.setAttribute('lang', lang);
+    root.setAttribute('data-lang', lang);
+    if (btn) btn.setAttribute('aria-label', lang === 'ru' ? 'Switch to English' : 'Переключить на русский');
+    window.esmrskyLang = lang;
+    document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: lang } }));
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved === 'ru' ? 'ru' : 'en');
+
+  if (btn) btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-lang') === 'ru' ? 'en' : 'ru';
+    apply(next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
 </script>
 </body>
 </html>
