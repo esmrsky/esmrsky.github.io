@@ -58,7 +58,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `anatomy-of-rest` | not started | 9 scripture refs. |
 | `colour-of-middle-c` | not started | |
 | `graded` | not started | |
-| `measured` | not started | Three Disguises. |
+| `measured` | **done** | Three Disguises. References scripture but never quotes it, so only the reference names needed localising (2 Cor 10:12, John 21:22, Eph 1:6, Prov 29:25, Zeph 3:17). SVG diagram labels translate. |
 | `combo-stern` | not started | |
 | `combo-stern-loop-love` | not started | Two HTML files + `app.js` + `glossary-data.js`. |
 | `desire-master` | not started | |
@@ -72,8 +72,8 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `bait-constellation` | not started | 37 glossary terms. |
 | `everything-mid` | not started | |
 | `coding-agents-guide` | not started | |
-| `the-return` | not started | Redirect stub only, two sentences. |
-| `the-return.html`, `index-old-return-backup.html` | not started | Root-level redirect stubs. |
+| `the-return` | **done** | Redirect stub. No toggle button (the page redirects immediately) — it just follows the language chosen elsewhere. Note its target `/the-return-new/` does not exist in this repo. |
+| `the-return.html`, `index-old-return-backup.html` | **done** | Same treatment as above. |
 
 ## Decisions log
 
