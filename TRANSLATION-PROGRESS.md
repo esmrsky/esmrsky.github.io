@@ -18,7 +18,9 @@ how these sites are already built:
    The English original **stays in the markup** and is captured into `data-en`
    at load, so nothing is duplicated by hand and EN is always the source of
    truth. Attributes translate through `data-ru-title`, `data-ru-aria-label`,
-   `data-ru-placeholder`, `data-ru-alt`, `data-ru-content`.
+   `data-ru-placeholder`, `data-ru-alt`, `data-ru-content`, `data-ru-href`.
+   Nodes in the SVG namespace are swapped through `textContent` instead, so
+   labels inside diagrams translate as well.
 5. `<title>` and `<meta name="description">` are translated too.
 6. The script fires a `esmrsky:lang` event on `document` and sets
    `window.esmrskyLang`, so a site whose own JS renders strings can re-render
@@ -35,9 +37,8 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 - Theological pages sit a little more measured than the psychology ones, but
   still contemporary, not archaic.
 - **Quoted Bible verses are never translated by hand.** They come from a real
-  published Russian translation: НРП (Новый русский перевод) where available,
-  Синодальный перевод as the fallback, cited inline as `(Ин. 1:1, НРП)` /
-  `(Ин. 1:1, СП)`.
+  published Russian translation, cited inline (`· СП`). See the decision below
+  for why every quotation in this branch is Синодальный rather than НРП.
 
 ## Status
 
@@ -75,6 +76,17 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `the-return` | **done** | Redirect stub. No toggle button (the page redirects immediately) — it just follows the language chosen elsewhere. Note its target `/the-return-new/` does not exist in this repo. |
 | `the-return.html`, `index-old-return-backup.html` | **done** | Same treatment as above. |
 
+## Picking this up in a future session
+
+1. `python3` + the pattern above is all it takes; there is no build step.
+2. The fastest safe way to edit a page is a small script that asserts each
+   English source string exists exactly once before inserting its `data-ru`,
+   so a silent miss is impossible. That is how every page here was done.
+3. Test each page before committing: serve the repo (`python3 -m http.server`),
+   open it, click EN/RU, confirm the Russian shows, confirm toggling back is
+   byte-identical to the original, check the console, and check 390px width.
+4. Commit one page per commit and update the table above in the same commit.
+
 ## Decisions log
 
 - **Toggle placement.** Left of the existing theme toggle where one exists, so
@@ -94,6 +106,15 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 - **Psalm numbering.** Russian Bibles follow the Septuagint numbering, so
   NIV Psalm 22:22 is Пс. 21:23. Citations and links on the Russian side use
   the Russian numbering.
+- **Register varies by page on purpose.** `everything-mid` is written entirely
+  in lowercase, very online; its Russian matches that, including lowercase
+  headings. `measured` is looser and more spoken. `ecclesia` and `the-word` are
+  measured but still contemporary — not archaic, except inside the quotations.
+- **Where a page's own JS owns a string**, the JS was changed rather than the
+  markup: `ecclesia` localises its scripture-reference chips and swaps Bible
+  Gateway between NIV and SYNO; `the-word` grew a parallel `scenariosRu`
+  payload for the practice lab; theme-toggle labels on four pages now follow
+  the language.
 - **Pre-existing, untouched:** the hub links to 12 paths that have no folder in
   this repo (`/the-thread/`, `/the-loop/`, `/uncooked/`, `/broken-cistern/`,
   `/be-filled/`, `/the-atlas/`, `/loop-atlas/`, `/feedback-loops/`,
