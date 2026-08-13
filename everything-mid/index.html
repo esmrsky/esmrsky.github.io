@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>why is everything mid now?</title>
+<title data-ru="почему всё стало таким никаким?">why is everything mid now?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  /* Language before first paint, so a returning Russian reader never sees the
+     toggle flash EN. The actual text swap happens in the script at the foot. */
+  (function () {
+    try {
+      document.documentElement.setAttribute('data-lang',
+        localStorage.getItem('esmrsky-lang') === 'ru' ? 'ru' : 'en');
+    } catch (e) {
+      document.documentElement.setAttribute('data-lang', 'en');
+    }
+  })();
+</script>
 <style>
   :root{
     color-scheme:dark;
@@ -211,6 +223,16 @@
   .theme-toggle:hover{border-color:var(--orange)}
   .theme-toggle:active{transform:scale(.95)}
   .theme-toggle .ti{font-size:13px;line-height:1}
+  /* EN/RU pill, same chrome as the theme button, parked to its left. */
+  .lang-toggle{position:fixed;top:14px;right:96px;z-index:100;font-family:"JetBrains Mono",monospace;
+    font-size:11.5px;letter-spacing:.08em;color:var(--cream-dim);background:var(--ink-soft);
+    border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:3px;transition:transform .12s ease,border-color .2s ease}
+  .lang-toggle:hover{border-color:var(--orange)}
+  .lang-toggle:active{transform:scale(.95)}
+  .lang-toggle .lang-sep{opacity:.4}
+  [data-lang="en"] .lang-toggle [data-lang-en],
+  [data-lang="ru"] .lang-toggle [data-lang-ru]{color:var(--orange)}
 
   /* reading comfort: balance display text */
   h1, h2, h3 { text-wrap: balance; }
@@ -218,7 +240,11 @@
 </head>
 <body>
 
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark mode"><span class="ti" id="themeIcon">🌙</span><span id="themeLabel">dark</span></button>
+<button class="lang-toggle" id="langToggle" type="button" aria-label="Переключить на русский">
+  <span class="lang-code" data-lang-en>EN</span><span class="lang-sep">/</span><span class="lang-code" data-lang-ru>RU</span>
+</button>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark mode" data-ru-aria-label="Переключить светлую или тёмную тему"><span class="ti" id="themeIcon">🌙</span><span id="themeLabel">dark</span></button>
 
 <!-- HERO -->
 <header class="hero">
@@ -226,21 +252,21 @@
     <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
   </div>
   <div class="wrap">
-    <div class="kicker">a map of the loop · and the way out</div>
-    <h1>why is <em>everything</em><br>mid now?</h1>
-    <p class="sub">you used to feel things. now it's all <b>meh</b>. here's exactly what happened to your brain — and how to get it back.</p>
+    <div class="kicker" data-ru="карта петли · и выход из неё">a map of the loop · and the way out</div>
+    <h1 data-ru="почему <em>всё</em><br>стало никаким?">why is <em>everything</em><br>mid now?</h1>
+    <p class="sub" data-ru="раньше ты что-то чувствовал. теперь всё какое-то <b>ну такое</b>. вот что именно случилось с твоим мозгом — и как это вернуть.">you used to feel things. now it's all <b>meh</b>. here's exactly what happened to your brain — and how to get it back.</p>
   </div>
-  <div class="scroll-cue"><span class="dot"></span> scroll</div>
+  <div class="scroll-cue" data-ru="<span class=&quot;dot&quot;></span> листай"><span class="dot"></span> scroll</div>
 </header>
 
 <!-- 0 EASY MODE -->
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--teal)"></div>
-    <div class="eyebrow"><span class="emoji">🍽️</span><span class="num">00 — tutorial mode</span></div>
-    <h2 style="color:var(--teal)">you come pre-installed with the basics.</h2>
-    <p class="lead">hungry → eat. tired → sleep. bored → scroll. these run themselves, no thinking required.</p>
-    <p class="dim">for a while, being a person is basically easy difficulty. the game plays itself.</p>
+    <div class="eyebrow"><span class="emoji">🍽️</span><span class="num" data-ru="00 — режим обучения">00 — tutorial mode</span></div>
+    <h2 style="color:var(--teal)" data-ru="базовое в тебя уже предустановлено.">you come pre-installed with the basics.</h2>
+    <p class="lead" data-ru="голоден → поешь. устал → поспи. скучно → полистай. это работает само, думать не надо.">hungry → eat. tired → sleep. bored → scroll. these run themselves, no thinking required.</p>
+    <p class="dim" data-ru="какое-то время быть человеком — это лёгкий уровень сложности. игра играет сама в себя.">for a while, being a person is basically easy difficulty. the game plays itself.</p>
   </div>
 </section>
 
@@ -248,11 +274,11 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--violet)"></div>
-    <div class="eyebrow"><span class="emoji">🕳️</span><span class="num">01 — the hole</span></div>
-    <h2 style="color:var(--violet)">then you clock there's stuff underneath the basics.</h2>
-    <p>you want to be <strong>known</strong>. to <strong>matter</strong>. to feel close to people. to be building toward something instead of feeling like an NPC in your own life.</p>
-    <p>and here's the problem: <strong>nobody hands you the manual for those.</strong> snacks don't fix loneliness. eight hours of sleep doesn't fix feeling invisible. so you do the most human thing possible — you reach for whatever's <em>closest</em> that feels like it might work.</p>
-    <p class="verse">📖 <b>"there's a way that seems right to a person… but it ends in death."</b> — Proverbs 14:12. tag this verse. it comes back.</p>
+    <div class="eyebrow"><span class="emoji">🕳️</span><span class="num" data-ru="01 — дыра">01 — the hole</span></div>
+    <h2 style="color:var(--violet)" data-ru="потом до тебя доходит, что под базовым есть ещё кое-что.">then you clock there's stuff underneath the basics.</h2>
+    <p data-ru="ты хочешь, чтобы тебя <strong>знали</strong>. чтобы ты <strong>что-то значил</strong>. чувствовать близость с людьми. строить что-то, а не ощущать себя нпс в собственной жизни.">you want to be <strong>known</strong>. to <strong>matter</strong>. to feel close to people. to be building toward something instead of feeling like an NPC in your own life.</p>
+    <p data-ru="и вот проблема: <strong>инструкции к этому никто не выдаёт.</strong> снеки не лечат одиночество. восемь часов сна не лечат ощущение, что тебя не видно. и ты делаешь самую человеческую вещь на свете — хватаешься за то, что <em>ближе всего</em> лежит и вроде бы может сработать.">and here's the problem: <strong>nobody hands you the manual for those.</strong> snacks don't fix loneliness. eight hours of sleep doesn't fix feeling invisible. so you do the most human thing possible — you reach for whatever's <em>closest</em> that feels like it might work.</p>
+    <p class="verse" data-ru="📖 <b>«Есть пути, которые кажутся человеку прямыми; но конец их — путь к смерти».</b> — Притчи 14:12, Синодальный перевод. запомни этот стих. он ещё вернётся.">📖 <b>"there's a way that seems right to a person… but it ends in death."</b> — Proverbs 14:12. tag this verse. it comes back.</p>
   </div>
 </section>
 
@@ -260,11 +286,11 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--orange)"></div>
-    <div class="eyebrow"><span class="emoji">🪤</span><span class="num">02 — the substitute</span></div>
-    <h2 style="color:var(--orange)">the swap nobody notices they're making.</h2>
-    <p>the hole says <em>"connection."</em> you hear <em>"open the app."</em><br>the hole says <em>"rest."</em> you hear <em>"one more episode."</em></p>
-    <p>the substitute is always faster, closer, and cheaper than the real thing. and at first? <strong>it kinda works.</strong></p>
-    <p class="pq">that's the whole trap. it works just enough to keep you coming back.</p>
+    <div class="eyebrow"><span class="emoji">🪤</span><span class="num" data-ru="02 — подмена">02 — the substitute</span></div>
+    <h2 style="color:var(--orange)" data-ru="подмена, которую никто не замечает.">the swap nobody notices they're making.</h2>
+    <p data-ru="дыра говорит <em>«близость»</em>. ты слышишь <em>«открой приложение»</em>.<br>дыра говорит <em>«отдых»</em>. ты слышишь <em>«ещё одну серию»</em>.">the hole says <em>"connection."</em> you hear <em>"open the app."</em><br>the hole says <em>"rest."</em> you hear <em>"one more episode."</em></p>
+    <p data-ru="подмена всегда быстрее, ближе и дешевле настоящего. и поначалу? <strong>вроде даже работает.</strong>">the substitute is always faster, closer, and cheaper than the real thing. and at first? <strong>it kinda works.</strong></p>
+    <p class="pq" data-ru="вот и вся ловушка. работает ровно настолько, чтобы ты возвращался.">that's the whole trap. it works just enough to keep you coming back.</p>
   </div>
 </section>
 
@@ -272,41 +298,41 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--orange)"></div>
-    <div class="eyebrow"><span class="emoji">🌀</span><span class="num">03 — the part everyone gets wrong</span></div>
-    <h2>getting hooked isn't "it feels too good." it's the opposite.</h2>
+    <div class="eyebrow"><span class="emoji">🌀</span><span class="num" data-ru="03 — то, в чём все ошибаются">03 — the part everyone gets wrong</span></div>
+    <h2 data-ru="подсесть — это не «слишком кайфово». всё ровно наоборот.">getting hooked isn't "it feels too good." it's the opposite.</h2>
     <div class="mech-intro">
-      <p>most people think compulsion = too much pleasure. nope. what's actually happening is <strong>three separate glitches</strong>, and naming them apart is the entire game — because each one has a different exit.</p>
+      <p data-ru="большинство думает: зависимость = слишком много удовольствия. нет. на самом деле там <strong>три отдельных сбоя</strong>, и вся игра в том, чтобы их различать, — потому что у каждого свой выход.">most people think compulsion = too much pleasure. nope. what's actually happening is <strong>three separate glitches</strong>, and naming them apart is the entire game — because each one has a different exit.</p>
     </div>
 
     <div class="cards">
       <!-- split -->
       <div class="card reveal" style="--accent:var(--orange)">
-        <div class="tag" style="color:var(--orange)"><span>🧲</span> glitch 01</div>
-        <h3>the split</h3>
-        <div class="mech-name">wanting ≠ liking</div>
+        <div class="tag" style="color:var(--orange)" data-ru="<span>🧲</span> сбой 01"><span>🧲</span> glitch 01</div>
+        <h3 data-ru="расщепление">the split</h3>
+        <div class="mech-name" data-ru="хотеть ≠ нравиться">wanting ≠ liking</div>
         <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
           <line x1="0" y1="27" x2="300" y2="27" stroke="var(--line)" stroke-width="1"/>
           <circle class="v-want" cx="150" cy="27" r="7" fill="var(--orange)"/>
           <circle class="v-like" cx="150" cy="27" r="7" fill="none" stroke="var(--cream-dim)" stroke-width="2"/>
-          <text x="44" y="50" fill="var(--orange)" font-family="JetBrains Mono" font-size="9">WANT</text>
-          <text x="228" y="50" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="9">LIKE</text>
+          <text x="44" y="50" fill="var(--orange)" font-family="JetBrains Mono" font-size="9" data-ru="ХОЧУ">WANT</text>
+          <text x="228" y="50" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="9" data-ru="НРАВИТСЯ">LIKE</text>
         </svg>
-        <p>your brain runs two systems: one that <strong>wants</strong> and one that <strong>likes</strong>. they're supposed to move together. in the loop, they divorce. the wanting stays loud. the liking goes quiet.</p>
+        <p data-ru="в мозге работают две системы: одна <strong>хочет</strong>, другая <strong>получает удовольствие</strong>. по идее они идут вместе. в петле они разводятся. хотение остаётся громким. удовольствие затихает.">your brain runs two systems: one that <strong>wants</strong> and one that <strong>likes</strong>. they're supposed to move together. in the loop, they divorce. the wanting stays loud. the liking goes quiet.</p>
         <div class="examples">
-          <span class="chip">refreshing a feed with <b>nothing new</b> on it</span>
-          <span class="chip">opening the app you <b>just closed</b></span>
-          <span class="chip">the "wyd" text you don't even want a <b>reply</b> to</span>
-          <span class="chip">doomscrolling stuff you're <b>not even reading</b></span>
-          <span class="chip">finally buying it → feeling <b>nothing</b> when it ships</span>
+          <span class="chip" data-ru="обновляешь ленту, где <b>ничего нового</b> нет">refreshing a feed with <b>nothing new</b> on it</span>
+          <span class="chip" data-ru="открываешь приложение, которое <b>только что закрыл</b>">opening the app you <b>just closed</b></span>
+          <span class="chip" data-ru="пишешь «чё делаешь», хотя <b>ответ</b> тебе и не нужен">the "wyd" text you don't even want a <b>reply</b> to</span>
+          <span class="chip" data-ru="листаешь то, что <b>даже не читаешь</b>">doomscrolling stuff you're <b>not even reading</b></span>
+          <span class="chip" data-ru="наконец купил → и <b>ничего</b> не чувствуешь, когда оно приходит">finally buying it → feeling <b>nothing</b> when it ships</span>
         </div>
-        <p class="punch">the chase outlives the payoff.</p>
+        <p class="punch" data-ru="погоня переживает награду.">the chase outlives the payoff.</p>
       </div>
 
       <!-- fade -->
       <div class="card reveal" style="--accent:var(--amber)">
-        <div class="tag" style="color:var(--amber)"><span>📉</span> glitch 02</div>
-        <h3>the fade</h3>
-        <div class="mech-name">tolerance</div>
+        <div class="tag" style="color:var(--amber)" data-ru="<span>📉</span> сбой 02"><span>📉</span> glitch 02</div>
+        <h3 data-ru="выцветание">the fade</h3>
+        <div class="mech-name" data-ru="толерантность">tolerance</div>
         <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
           <rect class="v-bar" style="animation-delay:0s"   x="10"  y="20" width="40" height="26" rx="3" fill="var(--amber)" opacity="1"/>
           <rect class="v-bar" style="animation-delay:.16s" x="70"  y="25" width="40" height="21" rx="3" fill="var(--amber)" opacity=".82"/>
@@ -314,38 +340,38 @@
           <rect class="v-bar" style="animation-delay:.48s" x="190" y="35" width="40" height="11" rx="3" fill="var(--amber)" opacity=".42"/>
           <rect class="v-bar" style="animation-delay:.64s" x="250" y="40" width="40" height="6"  rx="3" fill="var(--amber)" opacity=".26"/>
         </svg>
-        <p>same hit stops landing. you need <strong>more</strong> to feel the <strong>same</strong> — and "the same" keeps getting more expensive.</p>
+        <p data-ru="та же доза перестаёт заходить. нужно <strong>больше</strong>, чтобы почувствовать <strong>то же самое</strong>, — и «то же самое» дорожает.">same hit stops landing. you need <strong>more</strong> to feel the <strong>same</strong> — and "the same" keeps getting more expensive.</p>
         <div class="examples">
-          <span class="chip">the show that used to slap is now <b>background noise</b></span>
-          <span class="chip">watching at <b>2x</b> because 1x is unbearable</span>
-          <span class="chip">the song that gave you chills is just <b>sound</b> now</span>
-          <span class="chip">memes that used to send you → a <b>nose-exhale</b></span>
-          <span class="chip">needing a <b>"crazy" night</b> just to feel a normal one</span>
+          <span class="chip" data-ru="сериал, который раньше заходил, теперь <b>фоновый шум</b>">the show that used to slap is now <b>background noise</b></span>
+          <span class="chip" data-ru="смотришь на <b>двойной скорости</b>, потому что обычную не вытерпеть">watching at <b>2x</b> because 1x is unbearable</span>
+          <span class="chip" data-ru="песня, от которой были мурашки, теперь просто <b>звук</b>">the song that gave you chills is just <b>sound</b> now</span>
+          <span class="chip" data-ru="мемы, от которых ты умирал → теперь <b>выдох носом</b>">memes that used to send you → a <b>nose-exhale</b></span>
+          <span class="chip" data-ru="нужен <b>«безумный» вечер</b>, чтобы почувствовать обычный">needing a <b>"crazy" night</b> just to feel a normal one</span>
         </div>
-        <p class="punch">the dose creeps. the payoff shrinks.</p>
+        <p class="punch" data-ru="доза растёт. отдача падает.">the dose creeps. the payoff shrinks.</p>
       </div>
 
       <!-- reset -->
       <div class="card reveal" style="--accent:var(--red)">
-        <div class="tag" style="color:var(--red)"><span>🚨</span> glitch 03 · boss level</div>
-        <h3>the reset</h3>
-        <div class="mech-name">your baseline drops</div>
+        <div class="tag" style="color:var(--red)" data-ru="<span>🚨</span> сбой 03 · босс уровня"><span>🚨</span> glitch 03 · boss level</div>
+        <h3 data-ru="обнуление">the reset</h3>
+        <div class="mech-name" data-ru="твой базовый уровень падает">your baseline drops</div>
         <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
           <line class="v-dash" x1="0" y1="16" x2="150" y2="16" stroke="var(--cream-dim)" stroke-width="1.5" stroke-dasharray="4 4"/>
-          <text x="6" y="12" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="8">old normal</text>
+          <text x="6" y="12" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="8" data-ru="старая норма">old normal</text>
           <path d="M150 16 C 175 16, 175 40, 200 40 L300 40" stroke="var(--red)" stroke-width="2" fill="none"/>
-          <text x="210" y="52" fill="var(--red)" font-family="JetBrains Mono" font-size="8">new normal</text>
+          <text x="210" y="52" fill="var(--red)" font-family="JetBrains Mono" font-size="8" data-ru="новая норма">new normal</text>
           <circle class="v-drop" cx="150" cy="40" r="5" fill="var(--red)"/>
         </svg>
-        <p>this is the one that gets you. your baseline shifts <strong>down</strong>. now you're not chasing a high — you're chasing <strong>normal</strong>. putting the phone down doesn't feel like freedom, it feels <em>itchy. wrong.</em></p>
+        <p data-ru="вот этот тебя и добивает. базовый уровень уезжает <strong>вниз</strong>. теперь ты гонишься не за кайфом — ты гонишься за <strong>нормой</strong>. отложить телефон ощущается не как свобода, а как <em>зуд. как будто что-то не так.</em>">this is the one that gets you. your baseline shifts <strong>down</strong>. now you're not chasing a high — you're chasing <strong>normal</strong>. putting the phone down doesn't feel like freedom, it feels <em>itchy. wrong.</em></p>
         <div class="examples">
-          <span class="chip">silence suddenly feels <b>loud</b></span>
-          <span class="chip">3-second gap → hand reaches for <b>phone</b> on its own</span>
-          <span class="chip">not doing it feels like <b>withdrawal</b>, not missing out</span>
-          <span class="chip">reaching for your phone <b>before your eyes focus</b> at 7am</span>
-          <span class="chip">a day with nothing planned feels <b>stressful</b>, not restful</span>
+          <span class="chip" data-ru="тишина вдруг стала <b>громкой</b>">silence suddenly feels <b>loud</b></span>
+          <span class="chip" data-ru="пауза в 3 секунды → рука сама тянется к <b>телефону</b>">3-second gap → hand reaches for <b>phone</b> on its own</span>
+          <span class="chip" data-ru="не делать этого ощущается как <b>ломка</b>, а не как «что-то упустил»">not doing it feels like <b>withdrawal</b>, not missing out</span>
+          <span class="chip" data-ru="берёшь телефон в 7 утра <b>раньше, чем сфокусировались глаза</b>">reaching for your phone <b>before your eyes focus</b> at 7am</span>
+          <span class="chip" data-ru="день без планов ощущается <b>стрессом</b>, а не отдыхом">a day with nothing planned feels <b>stressful</b>, not restful</span>
         </div>
-        <p class="punch">"I do this for fun" quietly becomes "I do this so I don't feel bad."</p>
+        <p class="punch" data-ru="«я делаю это для удовольствия» незаметно превращается в «я делаю это, чтобы не было плохо».">"I do this for fun" quietly becomes "I do this so I don't feel bad."</p>
       </div>
     </div>
   </div>
@@ -355,11 +381,11 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--grey)"></div>
-    <div class="eyebrow"><span class="emoji">⚪</span><span class="num">04 — the flatline</span></div>
-    <h2 style="color:var(--grey)">stack all that up and you land here: everything's mid.</h2>
-    <p>nothing hits. you've trained your brain so hard on the spikes that <strong>normal life now reads as boring.</strong> so you need bigger: a trip, a festival, a new situationship, a hobby haul you'll abandon in three weeks.</p>
-    <p>you can't enjoy <em>today</em>, so you over-plan <em>later</em> — because at least the planning gives you a hit. you end up <strong>permanently bored on purpose</strong>… except you never chose it. your brain is just trying to balance the books.</p>
-    <p class="dim">(and real quick — it is <strong>not</strong> actually permanent. "bored while you're in the loop" ≠ "broken forever." hold that. it's the whole point of the back half.)</p>
+    <div class="eyebrow"><span class="emoji">⚪</span><span class="num" data-ru="04 — ровная линия">04 — the flatline</span></div>
+    <h2 style="color:var(--grey)" data-ru="сложи всё это вместе — и вот результат: всё какое-то никакое.">stack all that up and you land here: everything's mid.</h2>
+    <p data-ru="ничего не заходит. ты так натренировал мозг на пиках, что <strong>обычная жизнь теперь читается как скука.</strong> и нужно что-то покрупнее: поездка, фестиваль, новая непонятная влюблённость, закупка снаряги для хобби, которое ты бросишь через три недели.">nothing hits. you've trained your brain so hard on the spikes that <strong>normal life now reads as boring.</strong> so you need bigger: a trip, a festival, a new situationship, a hobby haul you'll abandon in three weeks.</p>
+    <p data-ru="ты не можешь получать удовольствие от <em>сегодня</em>, поэтому перепланировываешь <em>потом</em> — потому что хотя бы планирование даёт приход. и получается <strong>вечная скука по собственному желанию</strong>… только ты этого не выбирал. мозг просто пытается свести баланс.">you can't enjoy <em>today</em>, so you over-plan <em>later</em> — because at least the planning gives you a hit. you end up <strong>permanently bored on purpose</strong>… except you never chose it. your brain is just trying to balance the books.</p>
+    <p class="dim" data-ru="(и быстро уточню — это <strong>не</strong> навсегда. «скучно, пока ты в петле» ≠ «сломан навсегда». держи это в голове, вторая половина текста ровно про это.)">(and real quick — it is <strong>not</strong> actually permanent. "bored while you're in the loop" ≠ "broken forever." hold that. it's the whole point of the back half.)</p>
   </div>
 </section>
 
@@ -367,16 +393,16 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--wine)"></div>
-    <div class="eyebrow"><span class="emoji">🔥</span><span class="num">05 — the shame engine</span></div>
-    <h2 style="color:var(--wine)">the real warning sign isn't "you forgot why you walked into a room."</h2>
-    <p class="dim">everyone does that. that's just brains. that one's a myth. the actual tell is this 👇</p>
-    <p>you slip <strong>once</strong>. and instead of "ok, one slip," your brain goes:</p>
-    <p class="pq alt" style="color:var(--wine)">"well, I already broke the streak — might as well."</p>
-    <p>broke the no-scroll rule at 11am? <em>"guess today's cooked."</em> skipped the gym Monday? <em>"this whole week's a wash."</em> one crack becomes a flood. <span class="dim">(psych name: the <strong>abstinence violation effect</strong> — one lapse → "I've ruined it" → full send.)</span></p>
-    <p>and then it mutates. watch the slide:</p>
-    <p class="pq alt" style="color:var(--wine)">"I did something bad" → "I <em>am</em> bad" → "I'm just like this."</p>
-    <p>that slide is everything. <strong>guilt</strong> can actually help you — it's about a thing you <em>did</em>, and you can fix a thing. <strong>shame</strong> just rots you from the inside, and — plot twist — makes you relapse <em>more</em>. because why would someone worthless bother trying?</p>
-    <p class="punch" style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:var(--hi)">the loop doesn't just cause shame as a side effect. shame is the fuel it runs on.</p>
+    <div class="eyebrow"><span class="emoji">🔥</span><span class="num" data-ru="05 — двигатель стыда">05 — the shame engine</span></div>
+    <h2 style="color:var(--wine)" data-ru="настоящий тревожный звоночек — не «забыл, зачем зашёл в комнату».">the real warning sign isn't "you forgot why you walked into a room."</h2>
+    <p class="dim" data-ru="так бывает у всех. это просто мозг. это миф. настоящий признак вот 👇">everyone does that. that's just brains. that one's a myth. the actual tell is this 👇</p>
+    <p data-ru="ты срываешься <strong>один раз</strong>. и вместо «ну ладно, один срыв» мозг выдаёт:">you slip <strong>once</strong>. and instead of "ok, one slip," your brain goes:</p>
+    <p class="pq alt" style="color:var(--wine)" data-ru="«ну я уже сломал серию — так чего уж».">"well, I already broke the streak — might as well."</p>
+    <p data-ru="нарушил правило «не листать» в одиннадцать утра? <em>«ну всё, день слит»</em>. пропустил зал в понедельник? <em>«неделя коту под хвост»</em>. одна трещина превращается в потоп. <span class=&quot;dim&quot;>(в психологии это называется <strong>эффект нарушения воздержания</strong>: один срыв → «я всё испортил» → пошло-поехало.)</span>">broke the no-scroll rule at 11am? <em>"guess today's cooked."</em> skipped the gym Monday? <em>"this whole week's a wash."</em> one crack becomes a flood. <span class="dim">(psych name: the <strong>abstinence violation effect</strong> — one lapse → "I've ruined it" → full send.)</span></p>
+    <p data-ru="а потом оно мутирует. смотри, как съезжает:">and then it mutates. watch the slide:</p>
+    <p class="pq alt" style="color:var(--wine)" data-ru="«я сделал плохое» → «я <em>плохой</em>» → «я просто такой».">"I did something bad" → "I <em>am</em> bad" → "I'm just like this."</p>
+    <p data-ru="этот съезд решает всё. <strong>вина</strong> реально может помочь: она про то, что ты <em>сделал</em>, а сделанное можно исправить. <strong>стыд</strong> просто гниёт внутри и — сюрприз — заставляет срываться <em>чаще</em>. ну а зачем ничтожеству вообще стараться?">that slide is everything. <strong>guilt</strong> can actually help you — it's about a thing you <em>did</em>, and you can fix a thing. <strong>shame</strong> just rots you from the inside, and — plot twist — makes you relapse <em>more</em>. because why would someone worthless bother trying?</p>
+    <p class="punch" style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:var(--hi)" data-ru="стыд — это не побочный эффект петли. стыд — это топливо, на котором она едет.">the loop doesn't just cause shame as a side effect. shame is the fuel it runs on.</p>
   </div>
 </section>
 
@@ -384,14 +410,14 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--toxic)"></div>
-    <div class="eyebrow"><span class="emoji">🎭</span><span class="num">06 — the fake exit</span></div>
-    <h2 style="color:var(--toxic)">there's an escape hatch everyone reaches for first. it's a trap.</h2>
-    <p>you're cooked, you want out, and the brain offers a shortcut:</p>
-    <p class="pq alt" style="color:var(--toxic)">"what if I just… stop caring? delete the rules. redefine 'messing up' so nothing counts as messing up — then I can't break it, right? no standard, no guilt, problem solved."</p>
-    <p>and ngl, it <em>feels</em> like freedom.</p>
-    <p><strong>it's not. it's the loop wearing a fit.</strong></p>
-    <p>you didn't fix anything. you ripped the smoke alarm off the wall and called it <em>"no more fires."</em> the hunger's still there. the hole's still there. you just deleted the part of you that noticed.</p>
-    <p class="verse">📖 remember <b>Proverbs 14:12</b> — "a way that <i>seems</i> right"? this is it. this is the verse. lowering the bar until you can't fail isn't winning. it's the same loop, just quieter.</p>
+    <div class="eyebrow"><span class="emoji">🎭</span><span class="num" data-ru="06 — фальшивый выход">06 — the fake exit</span></div>
+    <h2 style="color:var(--toxic)" data-ru="есть люк, к которому все тянутся первым делом. это ловушка.">there's an escape hatch everyone reaches for first. it's a trap.</h2>
+    <p data-ru="ты выжат, хочешь выбраться, и мозг предлагает короткий путь:">you're cooked, you want out, and the brain offers a shortcut:</p>
+    <p class="pq alt" style="color:var(--toxic)" data-ru="«а что если просто… перестать париться? снести правила. переопределить «облажаться» так, чтобы облажаться было нельзя, — тогда я и не сломаю ничего, да? нет планки — нет вины, проблема решена».">"what if I just… stop caring? delete the rules. redefine 'messing up' so nothing counts as messing up — then I can't break it, right? no standard, no guilt, problem solved."</p>
+    <p data-ru="и честно — это <em>ощущается</em> свободой.">and ngl, it <em>feels</em> like freedom.</p>
+    <p data-ru="<strong>это не свобода. это та же петля, просто приоделась.</strong>"><strong>it's not. it's the loop wearing a fit.</strong></p>
+    <p data-ru="ты ничего не починил. ты сорвал со стены датчик дыма и назвал это <em>«пожаров больше нет»</em>. голод на месте. дыра на месте. ты просто удалил ту часть себя, которая это замечала.">you didn't fix anything. you ripped the smoke alarm off the wall and called it <em>"no more fires."</em> the hunger's still there. the hole's still there. you just deleted the part of you that noticed.</p>
+    <p class="verse" data-ru="📖 помнишь <b>Притчи 14:12</b> — путь, который <i>кажется</i> прямым? вот это он и есть. опустить планку так, чтобы нельзя было провалиться, — это не победа. это та же петля, просто тише.">📖 remember <b>Proverbs 14:12</b> — "a way that <i>seems</i> right"? this is it. this is the verse. lowering the bar until you can't fail isn't winning. it's the same loop, just quieter.</p>
   </div>
 </section>
 
@@ -399,28 +425,28 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--water)"></div>
-    <div class="eyebrow"><span class="emoji">🌊</span><span class="num">07 — the real exit</span></div>
-    <h2 style="color:var(--water)">the actual way out is harder. but it's real. three moves.</h2>
+    <div class="eyebrow"><span class="emoji">🌊</span><span class="num" data-ru="07 — настоящий выход">07 — the real exit</span></div>
+    <h2 style="color:var(--water)" data-ru="настоящий выход тяжелее. но он настоящий. три хода.">the actual way out is harder. but it's real. three moves.</h2>
 
     <div class="move reveal">
       <div class="n">1</div>
       <div class="body">
-        <h4>🚦 keep the signal — don't kill it.</h4>
-        <p>your guilt, your "this isn't working" feeling — that's not the enemy. that's the dashboard light. don't smash the dashboard. the goal isn't to stop <em>feeling</em> the gap. it's to actually <em>close</em> it.</p>
+        <h4 data-ru="🚦 не глуши сигнал.">🚦 keep the signal — don't kill it.</h4>
+        <p data-ru="твоя вина, твоё ощущение «так не работает» — это не враг. это лампочка на панели. не разбивай панель. цель не в том, чтобы перестать <em>чувствовать</em> разрыв, а в том, чтобы его <em>закрыть</em>.">your guilt, your "this isn't working" feeling — that's not the enemy. that's the dashboard light. don't smash the dashboard. the goal isn't to stop <em>feeling</em> the gap. it's to actually <em>close</em> it.</p>
       </div>
     </div>
 
     <div class="move reveal">
       <div class="n">2</div>
       <div class="body">
-        <h4>🏄 surf the urge.</h4>
-        <p>the craving feels like a <em>command</em>. it's not. it's a <strong>wave</strong>. it builds, it peaks — usually in a couple minutes — and if you don't feed it, it <strong>crashes</strong>. you don't have to white-knuckle it. you just have to outlast it. watch one rise and fall below 👇</p>
+        <h4 data-ru="🏄 серфи тягу.">🏄 surf the urge.</h4>
+        <p data-ru="тяга ощущается как <em>приказ</em>. это не приказ. это <strong>волна</strong>. она нарастает, доходит до пика — обычно за пару минут — и если её не кормить, она <strong>рушится</strong>. не нужно стискивать зубы. нужно просто её пересидеть. посмотри, как одна поднимается и падает 👇">the craving feels like a <em>command</em>. it's not. it's a <strong>wave</strong>. it builds, it peaks — usually in a couple minutes — and if you don't feed it, it <strong>crashes</strong>. you don't have to white-knuckle it. you just have to outlast it. watch one rise and fall below 👇</p>
       </div>
     </div>
 
     <!-- WAVE MODULE -->
     <div class="wave-mod reveal">
-      <div class="wlabel"><span>🌊</span> urge surfing</div>
+      <div class="wlabel" data-ru="<span>🌊</span> серфинг по тяге"><span>🌊</span> urge surfing</div>
       <div class="wave-canvas">
         <svg id="wave" viewBox="0 0 320 150" preserveAspectRatio="none" aria-hidden="true">
           <defs>
@@ -443,19 +469,19 @@
         <div id="surfer" class="surfer"></div>
       </div>
       <ul class="phases" id="phases">
-        <li style="--pc:var(--teal)"><b>🌱 it shows up</b> — a craving pings out of nowhere</li>
-        <li style="--pc:var(--amber)"><b>📈 it builds</b> — feels urgent, feels permanent, like you <em>have</em> to</li>
-        <li style="--pc:var(--red)"><b>⛰️ peak</b> — the hardest few seconds; your whole body says give in</li>
-        <li style="--pc:var(--water)"><b>🌊 it crashes</b> — you didn't feed it, so it just drops</li>
-        <li style="--pc:var(--teal)"><b>✓ gone</b> — it passed on its own. it always does.</li>
+        <li style="--pc:var(--teal)" data-ru="<b>🌱 появляется</b> — тяга прилетает из ниоткуда"><b>🌱 it shows up</b> — a craving pings out of nowhere</li>
+        <li style="--pc:var(--amber)" data-ru="<b>📈 нарастает</b> — кажется срочной, кажется вечной, как будто ты <em>обязан</em>"><b>📈 it builds</b> — feels urgent, feels permanent, like you <em>have</em> to</li>
+        <li style="--pc:var(--red)" data-ru="<b>⛰️ пик</b> — самые тяжёлые несколько секунд; всё тело говорит сдаться"><b>⛰️ peak</b> — the hardest few seconds; your whole body says give in</li>
+        <li style="--pc:var(--water)" data-ru="<b>🌊 рушится</b> — ты её не покормил, и она просто падает"><b>🌊 it crashes</b> — you didn't feed it, so it just drops</li>
+        <li style="--pc:var(--teal)" data-ru="<b>✓ прошла</b> — сама. она всегда проходит."><b>✓ gone</b> — it passed on its own. it always does.</li>
       </ul>
       <div class="surf-uses">
-        <div class="uses-label">🏄 the wild part — you already do this all day:</div>
+        <div class="uses-label" data-ru="🏄 самое смешное — ты и так делаешь это весь день:">🏄 the wild part — you already do this all day:</div>
         <div class="examples" style="--accent:var(--water)">
-          <span class="chip">🍔 starving at 11am → you <b>wait</b> for lunch</span>
-          <span class="chip">🚽 gotta go mid-meeting → you <b>hold it</b></span>
-          <span class="chip">😴 dead tired at 3pm → you <b>push</b> to bedtime</span>
-          <span class="chip">😤 wanna snap at someone → you <b>bite your tongue</b></span>
+          <span class="chip" data-ru="🍔 умираешь с голоду в 11 → и <b>ждёшь</b> обеда">🍔 starving at 11am → you <b>wait</b> for lunch</span>
+          <span class="chip" data-ru="🚽 приспичило посреди созвона → и <b>терпишь</b>">🚽 gotta go mid-meeting → you <b>hold it</b></span>
+          <span class="chip" data-ru="😴 вырубает в три дня → и <b>дотягиваешь</b> до ночи">😴 dead tired at 3pm → you <b>push</b> to bedtime</span>
+          <span class="chip" data-ru="😤 хочется сорваться → и <b>прикусываешь язык</b>">😤 wanna snap at someone → you <b>bite your tongue</b></span>
         </div>
       </div>
     </div>
@@ -463,9 +489,9 @@
     <div class="move reveal" style="margin-top:28px">
       <div class="n">3</div>
       <div class="body">
-        <h4>🩵 fill the actual hole — with something that doesn't have a tolerance curve.</h4>
-        <p>here's the part nobody tells you: <strong>every counterfeit runs on tolerance.</strong> the scroll, the substance, the situationship, the new shoes — all of it has a fade built in. so the real question was never "how do I get a better hit." it's: <em>is there anything that doesn't fade?</em></p>
-        <p style="margin-top:14px">there's an old line about water — that whoever drinks regular water gets thirsty again, but there's a kind of water where you <strong>"never thirst again."</strong> <span class="verse" style="display:inline">(John 4.)</span> that's the whole claim here: the deepest hunger — to be known, to matter, to be loved without earning it — was never getting filled by something on a tolerance curve. it needs a source that doesn't run dry.</p>
+        <h4 data-ru="🩵 заполни настоящую дыру — тем, у чего нет кривой привыкания.">🩵 fill the actual hole — with something that doesn't have a tolerance curve.</h4>
+        <p data-ru="вот чего никто не говорит: <strong>любая подделка работает на привыкании.</strong> лента, вещество, непонятные отношения, новые кроссовки — во всём этом выцветание уже встроено. так что настоящий вопрос был не «как получить приход получше», а: <em>есть ли вообще что-то, что не выцветает?</em>">here's the part nobody tells you: <strong>every counterfeit runs on tolerance.</strong> the scroll, the substance, the situationship, the new shoes — all of it has a fade built in. so the real question was never "how do I get a better hit." it's: <em>is there anything that doesn't fade?</em></p>
+        <p style="margin-top:14px" data-ru="есть старая фраза про воду: кто пьёт обычную воду, тот снова захочет пить, но есть вода, после которой <strong>«не будет жаждать вовек»</strong>. <span class=&quot;verse&quot; style=&quot;display:inline&quot;>(Ин. 4:14, Синодальный перевод.)</span> вот и всё утверждение: самый глубокий голод — быть узнанным, что-то значить, быть любимым без заслуг — никогда и не мог насытиться чем-то с кривой привыкания. ему нужен источник, который не пересыхает.">there's an old line about water — that whoever drinks regular water gets thirsty again, but there's a kind of water where you <strong>"never thirst again."</strong> <span class="verse" style="display:inline">(John 4.)</span> that's the whole claim here: the deepest hunger — to be known, to matter, to be loved without earning it — was never getting filled by something on a tolerance curve. it needs a source that doesn't run dry.</p>
       </div>
     </div>
   </div>
@@ -475,24 +501,24 @@
 <section class="step reveal">
   <div class="wrap">
     <div class="accent-bar" style="background:var(--cream)"></div>
-    <div class="eyebrow"><span class="emoji">🏗️</span><span class="num">08 — then go build</span></div>
-    <h2>and once you're not starving — the good part.</h2>
-    <p>not parched. not refreshing the feed of your own life looking for the next hit. you get your <strong>attention</strong> back. your wants line up with what you actually do. the fog lifts.</p>
-    <p>and you can finally start the thing you've been too foggy to start. <strong>build something. join something. become someone.</strong> not to fill the hole — the hole's handled — but because you're free to.</p>
+    <div class="eyebrow"><span class="emoji">🏗️</span><span class="num" data-ru="08 — а потом иди строй">08 — then go build</span></div>
+    <h2 data-ru="а когда ты уже не голодаешь — начинается хорошее.">and once you're not starving — the good part.</h2>
+    <p data-ru="не сушняк. не обновление ленты собственной жизни в поисках следующего прихода. к тебе возвращается <strong>внимание</strong>. желания совпадают с тем, что ты реально делаешь. туман расходится.">not parched. not refreshing the feed of your own life looking for the next hit. you get your <strong>attention</strong> back. your wants line up with what you actually do. the fog lifts.</p>
+    <p data-ru="и можно наконец начать то, что ты не начинал из-за тумана. <strong>построй что-нибудь. присоединись к чему-нибудь. стань кем-нибудь.</strong> не чтобы заполнить дыру — с дырой уже разобрались, — а просто потому, что теперь можно.">and you can finally start the thing you've been too foggy to start. <strong>build something. join something. become someone.</strong> not to fill the hole — the hole's handled — but because you're free to.</p>
   </div>
 </section>
 
 <!-- TL;DR -->
 <section class="tldr wrap reveal">
-  <div class="eyebrow"><span class="emoji">⚡</span><span class="num">tl;dr</span></div>
+  <div class="eyebrow"><span class="emoji">⚡</span><span class="num" data-ru="если коротко">tl;dr</span></div>
   <div class="grid">
     <div class="box loop">
-      <h5>🌀 the loop</h5>
-      <p>chase what you don't even enjoy → need more for less → baseline drops → everything goes mid → slip → shame → "might as well" → repeat. lowering the bar doesn't escape it. it just makes it quiet.</p>
+      <h5 data-ru="🌀 петля">🌀 the loop</h5>
+      <p data-ru="гонишься за тем, что тебе даже не нравится → нужно больше ради меньшего → базовый уровень падает → всё становится никаким → срыв → стыд → «да чего уж» → по кругу. опустить планку — не выход. это просто делает петлю тише.">chase what you don't even enjoy → need more for less → baseline drops → everything goes mid → slip → shame → "might as well" → repeat. lowering the bar doesn't escape it. it just makes it quiet.</p>
     </div>
     <div class="box out">
-      <h5>🌊 the way out</h5>
-      <p>keep the signal. surf the urge instead of feeding it. fill the real hunger with the one thing that doesn't run on tolerance. then go build the life you were too foggy to start.</p>
+      <h5 data-ru="🌊 выход">🌊 the way out</h5>
+      <p data-ru="не глуши сигнал. серфи тягу вместо того, чтобы её кормить. насыть настоящий голод тем единственным, что не работает на привыкании. а потом иди строй ту жизнь, которую не начинал из-за тумана.">keep the signal. surf the urge instead of feeding it. fill the real hunger with the one thing that doesn't run on tolerance. then go build the life you were too foggy to start.</p>
     </div>
   </div>
 </section>
@@ -500,8 +526,8 @@
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <p class="closer">stop living <em>starving.</em></p>
-    <p class="src">grounded in: wanting vs. liking (Berridge &amp; Robinson) · tolerance &amp; the dopamine setpoint (Koob; Lembke) · hedonic adaptation · the abstinence violation effect (Marlatt) · guilt vs. shame (Tangney) · urge surfing (MBRP) · Proverbs 14:12 &amp; John 4.</p>
+    <p class="closer" data-ru="хватит жить <em>голодным.</em>">stop living <em>starving.</em></p>
+    <p class="src" data-ru="опирается на: «хотеть» против «нравиться» (Berridge и Robinson) · толерантность и дофаминовая точка равновесия (Koob; Lembke) · гедонистическая адаптация · эффект нарушения воздержания (Marlatt) · вина против стыда (Tangney) · серфинг по тяге (MBRP) · Притчи 14:12 и Ин. 4. библейские цитаты — Синодальный перевод.">grounded in: wanting vs. liking (Berridge &amp; Robinson) · tolerance &amp; the dopamine setpoint (Koob; Lembke) · hedonic adaptation · the abstinence violation effect (Marlatt) · guilt vs. shame (Tangney) · urge surfing (MBRP) · Proverbs 14:12 &amp; John 4.</p>
   </div>
 </footer>
 
@@ -586,12 +612,76 @@
   var tBtn  = document.getElementById('themeToggle');
   var tIcon = document.getElementById('themeIcon');
   var tLab  = document.getElementById('themeLabel');
+  var ru = function(){ return root.getAttribute('data-lang')==='ru'; };
   function setTheme(mode){
-    if(mode==='light'){ root.setAttribute('data-theme','light'); tIcon.textContent='☀️'; tLab.textContent='light'; }
-    else { root.removeAttribute('data-theme'); tIcon.textContent='🌙'; tLab.textContent='dark'; }
+    if(mode==='light'){ root.setAttribute('data-theme','light'); tIcon.textContent='☀️'; tLab.textContent=ru()?'день':'light'; }
+    else { root.removeAttribute('data-theme'); tIcon.textContent='🌙'; tLab.textContent=ru()?'ночь':'dark'; }
   }
+  document.addEventListener('esmrsky:lang', function(){
+    setTheme(root.getAttribute('data-theme')==='light' ? 'light' : 'dark');
+  });
   tBtn.addEventListener('click', function(){
     setTheme(root.getAttribute('data-theme')==='light' ? 'dark' : 'light');
+  });
+})();
+</script>
+
+<script>
+/* ---- EN/RU ------------------------------------------------------------
+   Shared across esmrsky.github.io. Every translatable element carries
+   data-ru; the English original stays in the markup and is captured into
+   data-en on load, so nothing is duplicated by hand. Attributes translate
+   via data-ru-<attr>. The choice is remembered in localStorage. */
+(function () {
+  var KEY = 'esmrsky-lang';
+  var ATTRS = ['title', 'aria-label', 'placeholder', 'alt', 'content', 'href'];
+  var root = document.documentElement;
+  var btn = document.getElementById('langToggle');
+
+  /* SVG elements have no usable innerHTML in every engine, so text nodes
+     inside a drawing are swapped through textContent instead. */
+  var SVG = 'http://www.w3.org/2000/svg';
+  function read(el) { return el.namespaceURI === SVG ? el.textContent : el.innerHTML; }
+  function write(el, v) { if (el.namespaceURI === SVG) el.textContent = v; else el.innerHTML = v; }
+
+  var nodes = [].slice.call(document.querySelectorAll('[data-ru]'));
+  nodes.forEach(function (el) {
+    if (!el.hasAttribute('data-en')) el.setAttribute('data-en', read(el));
+  });
+
+  var attrNodes = [];
+  ATTRS.forEach(function (a) {
+    [].slice.call(document.querySelectorAll('[data-ru-' + a + ']')).forEach(function (el) {
+      if (!el.hasAttribute('data-en-' + a)) el.setAttribute('data-en-' + a, el.getAttribute(a) || '');
+      attrNodes.push([el, a]);
+    });
+  });
+
+  function apply(lang) {
+    var key = lang === 'ru' ? 'data-ru' : 'data-en';
+    nodes.forEach(function (el) {
+      var v = el.getAttribute(key);
+      if (v !== null && read(el) !== v) write(el, v);
+    });
+    attrNodes.forEach(function (p) {
+      var v = p[0].getAttribute(key + '-' + p[1]);
+      if (v !== null) p[0].setAttribute(p[1], v);
+    });
+    root.setAttribute('lang', lang);
+    root.setAttribute('data-lang', lang);
+    if (btn) btn.setAttribute('aria-label', lang === 'ru' ? 'Switch to English' : 'Переключить на русский');
+    window.esmrskyLang = lang;
+    document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: lang } }));
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved === 'ru' ? 'ru' : 'en');
+
+  if (btn) btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-lang') === 'ru' ? 'en' : 'ru';
+    apply(next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
   });
 })();
 </script>

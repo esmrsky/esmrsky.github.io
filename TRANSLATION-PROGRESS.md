@@ -70,7 +70,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `the-weight-of-rest` | not started | |
 | `two-hundred-milliseconds` | not started | |
 | `bait-constellation` | not started | 37 glossary terms. |
-| `everything-mid` | not started | |
+| `everything-mid` | **done** | Written entirely in lowercase, very online; the Russian keeps that register (lowercase headings, everyday internet Russian) — except the two quoted scriptures, which are Синодальный (Притчи 14:12, Ин. 4:14). Theme-button label localised to «ночь»/«день» so the two pills do not collide on narrow screens. |
 | `coding-agents-guide` | not started | |
 | `the-return` | **done** | Redirect stub. No toggle button (the page redirects immediately) — it just follows the language chosen elsewhere. Note its target `/the-return-new/` does not exist in this repo. |
 | `the-return.html`, `index-old-return-backup.html` | **done** | Same treatment as above. |
