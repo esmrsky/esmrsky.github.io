@@ -769,9 +769,15 @@
   var root = document.documentElement;
   var btn = document.getElementById('langToggle');
 
+  /* SVG elements have no usable innerHTML in every engine, so text nodes
+     inside a drawing are swapped through textContent instead. */
+  var SVG = 'http://www.w3.org/2000/svg';
+  function read(el) { return el.namespaceURI === SVG ? el.textContent : el.innerHTML; }
+  function write(el, v) { if (el.namespaceURI === SVG) el.textContent = v; else el.innerHTML = v; }
+
   var nodes = [].slice.call(document.querySelectorAll('[data-ru]'));
   nodes.forEach(function (el) {
-    if (!el.hasAttribute('data-en')) el.setAttribute('data-en', el.innerHTML);
+    if (!el.hasAttribute('data-en')) el.setAttribute('data-en', read(el));
   });
 
   var attrNodes = [];
@@ -786,7 +792,7 @@
     var key = lang === 'ru' ? 'data-ru' : 'data-en';
     nodes.forEach(function (el) {
       var v = el.getAttribute(key);
-      if (v !== null && el.innerHTML !== v) el.innerHTML = v;
+      if (v !== null && read(el) !== v) write(el, v);
     });
     attrNodes.forEach(function (p) {
       var v = p[0].getAttribute(key + '-' + p[1]);

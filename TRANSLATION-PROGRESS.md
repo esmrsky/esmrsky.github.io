@@ -45,8 +45,8 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 |---|---|---|
 | `/` (hub `index.html`) | **done** | 42 cards, filters, drawer. Titles localised (`Soundings` → «Промеры глубины», `Graded` → «Оценено», `Everything's Mid` → «Всё какое-то никакое», `Get Uncooked` → «Расклиниться»). Brand names left as-is. |
 | `the-word` | not started | 11 scripture refs. Site already switches verses between NIV / NASB 2020 / TPT — RU side needs НРП. |
-| `ecclesia` | not started | 19 scripture refs, NIV on the English side. |
-| `master-thread` | not started | |
+| `ecclesia` | **done** | 10 quoted passages → Синодальный перевод (cited «· СП»). Ps 22:22 NIV = Пс. 21:23 SYNO — Russian citation and link use the Synodal reference. Ref chips are JS-rendered, so that JS now localises book abbreviations and switches Bible Gateway between NIV and SYNO. |
+| `master-thread` | **done** | No scripture at all despite the hub card — the page is about epistemic restlessness. SVG diagram labels translate too (the shared script swaps `textContent` for SVG nodes). |
 | `spirit-soul-body` | not started | 21 scripture refs. |
 | `fear-of-god-ii` | not started | 79 scripture refs — longest study on the site. |
 | `three-territories` | not started | 15 scripture refs. |
@@ -83,6 +83,17 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
   so picking RU on the hub carries into every sub-site.
 - **Brand/product names are not translated**: `esmrsky`, `Torac Champagne`,
   `Claude Code`, `Codex`, `APEST`, `NSDR`, `200MS`, `SoundLab`, `DAW`.
+- **НРП could not be used.** The task preferred Новый русский перевод. Every
+  Bible host — biblegateway.com, bible.com, only.bible, bibleserver.com,
+  bible.by, azbyka.ru, allbible.info — is blocked by this environment's egress
+  proxy, so no НРП rendering could be verified against a primary source.
+  Rather than paraphrase scripture, quoted verses use the **Синодальный
+  перевод**, which is public domain and was corroborated phrase-by-phrase
+  through search результатов before use. Citations read «· СП». If the owner
+  wants НРП, the quotes are all in one place per page and easy to swap.
+- **Psalm numbering.** Russian Bibles follow the Septuagint numbering, so
+  NIV Psalm 22:22 is Пс. 21:23. Citations and links on the Russian side use
+  the Russian numbering.
 - **Pre-existing, untouched:** the hub links to 12 paths that have no folder in
   this repo (`/the-thread/`, `/the-loop/`, `/uncooked/`, `/broken-cistern/`,
   `/be-filled/`, `/the-atlas/`, `/loop-atlas/`, `/feedback-loops/`,
