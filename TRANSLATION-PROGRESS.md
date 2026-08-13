@@ -44,7 +44,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | Site | Status | Notes |
 |---|---|---|
 | `/` (hub `index.html`) | **done** | 42 cards, filters, drawer. Titles localised (`Soundings` → «Промеры глубины», `Graded` → «Оценено», `Everything's Mid` → «Всё какое-то никакое», `Get Uncooked` → «Расклиниться»). Brand names left as-is. |
-| `the-word` | not started | 11 scripture refs. Site already switches verses between NIV / NASB 2020 / TPT — RU side needs НРП. |
+| `the-word` | **done** | 8 quoted passages → Синодальный перевод. The NIV / NASB 2020 / TPT switcher has nothing to switch between in Russian, so on the RU side it collapses to a single «Синодальный» button (the other two are hidden by CSS) and the version note explains why. The five practice-lab scenarios are JS-rendered, so they got a parallel `scenariosRu` payload and re-render on `esmrsky:lang`. Psalm 119 → Пс. 118 and Psalm 77:11–12 → Пс. 76:12–13 for Synodal numbering. |
 | `ecclesia` | **done** | 10 quoted passages → Синодальный перевод (cited «· СП»). Ps 22:22 NIV = Пс. 21:23 SYNO — Russian citation and link use the Synodal reference. Ref chips are JS-rendered, so that JS now localises book abbreviations and switches Bible Gateway between NIV and SYNO. |
 | `master-thread` | **done** | No scripture at all despite the hub card — the page is about epistemic restlessness. SVG diagram labels translate too (the shared script swaps `textContent` for SVG nodes). |
 | `spirit-soul-body` | not started | 21 scripture refs. |
@@ -89,7 +89,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
   proxy, so no НРП rendering could be verified against a primary source.
   Rather than paraphrase scripture, quoted verses use the **Синодальный
   перевод**, which is public domain and was corroborated phrase-by-phrase
-  through search результатов before use. Citations read «· СП». If the owner
+  via exact-phrase search corroboration before use. Citations read «· СП». If the owner
   wants НРП, the quotes are all in one place per page and easy to swap.
 - **Psalm numbering.** Russian Bibles follow the Septuagint numbering, so
   NIV Psalm 22:22 is Пс. 21:23. Citations and links on the Russian side use
