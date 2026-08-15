@@ -584,10 +584,13 @@ def urls_for(rel: str) -> tuple[str, str, str]:
     return en, ru, out
 
 
-def build(pages: list[str], check: bool) -> int:
+def build(pages: list[str], check: bool, known: list[str] | None = None) -> int:
+    # Link rewriting must know about every page that has a Russian copy, not
+    # just the ones being rebuilt — otherwise `build-ru.py ecclesia` would
+    # emit different links than a full rebuild.
     ru_dirs = set()
     by_dir: dict[str, set[str]] = {}
-    for rel in pages:
+    for rel in (known if known is not None else pages):
         d, name = os.path.split(rel)
         ru_dirs.add(d)
         by_dir.setdefault(d, set()).add(name)
@@ -641,17 +644,18 @@ def main() -> int:
                     help="report what would change without writing")
     args = ap.parse_args()
 
-    pages = discover()
+    known = discover()
+    pages = known
     if args.sites:
         wanted = {s.strip("/") for s in args.sites}
-        pages = [p for p in pages
+        pages = [p for p in known
                  if p in wanted or os.path.dirname(p) in wanted
                  or (not os.path.dirname(p) and "" in wanted)]
         if not pages:
             print("nothing matched", file=sys.stderr)
             return 1
 
-    changed = build(pages, args.check)
+    changed = build(pages, args.check, known)
     print(f"{len(pages)} page(s), {changed} file(s) "
           f"{'would change' if args.check else 'written'}")
     return 0

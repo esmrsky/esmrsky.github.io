@@ -77,8 +77,8 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `spirit-soul-body` | **done** | `/spirit-soul-body/ru/`. 510 translation units. ~20 quoted passages → Синодальный (cited «· СП»); Septuagint numbering throughout (Пс. 19→18, 46→45, 103→102, 127→126, 139→138) and 1 Kings → 3 Цар. Gal 5:22–23 and 5:19–21 use the Synodal word lists item for item. The hero layer-picker captions and the theme aria-label live in the page's JS, so that JS grew a parallel Russian payload keyed off `data-lang`. Relative font paths (`assets/fonts/*.woff2`, inside `url()` in a `<style>` block) are rewritten to `../` by the generator. |
 | `fear-of-god-ii` | **done** | `/fear-of-god-ii/ru/`. 339 translation units. The English page offers NIV / NLT / NASB / TPT behind pills; Russian has one published translation in play, so the RU side collapses to a single «СП» pill (the other three hidden by CSS, as on `the-word`), the NIV slot carries the Синодальный text, and every footnote that discussed what NLT or TPT do with a word was rewritten to discuss what Синодальный does. The 47 scripture popovers are JS-rendered from a reference table keyed on English reference strings, so the RU side got a parallel `REFDATA_RU` with Russian abbreviations, Septuagint psalm numbering and Synodal text. Ис. 11:2 is a gift to this page: Синодальный follows the LXX and renders the first «страх Господень» as «благочестие» — the same word-swap the study is about, made by the translation itself. |
 | `three-territories` | **done** | `/three-territories/ru/`. 336 translation units. Scripture is mostly referenced rather than quoted; the quoted phrases (1 Ин. 2:12–14, Евр. 5:14, Тит. 1:15, Еф. 4:14) are Синодальный, and Ps 51:6 becomes Пс. 50:8 in Synodal numbering. SVG map labels translate. The theme button writes its own label, so that JS follows `data-lang`. Two relative links to `.md` research reports are rewritten to `../` by the generator. |
-| `soundings` | not started | 15 scripture refs. |
-| `where-are-you` | not started | 19 scripture refs. |
+| `soundings` | not started | **Read this before starting.** Only ~170 units live in the markup; the page renders almost everything from a ~76 KB JS data payload (`D` depths, `P` people, `J` journeys, `M` marshes, `MI`, `MAPS`, `ROWS`, `T`, `Q`, `READ`, plus label arrays `DL`, `FL`, `CV`, `VERD`, `SCALE`). Two `aria-label`s are built from template literals. So this one is mostly a JS job: give each array a parallel Russian payload selected by `data-lang`, per the rule of thumb above. Budget it like a page three times its markup size. |
+| `where-are-you` | not started | Next in the queue after `soundings`. Not yet surveyed for JS-owned strings. |
 | `atlas-v3` | not started | 90 scripture refs, ~105 KB. |
 | `atlas-v2` | not started | 38 scripture refs, ~225 KB — largest page in the repo. |
 | `one-shape` | not started | Multi-file (`js/`, `css/`, `data/`). |
@@ -113,8 +113,14 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 3. Test each page before committing: serve the repo (`python3 -m http.server`),
    load both the EN and the `/ru` URL, check the console is clean, check there
    is no horizontal overflow at 390px, and check that internal links from a
-   `/ru` page land on other `/ru` pages.
-4. Commit one page per commit and update the table above in the same commit.
+   `/ru` page land on other `/ru` pages. Test overflow by asking whether the
+   page *can* be scrolled sideways, not by comparing `scrollWidth` —
+   `three-territories` has a clipped marquee that inflates `scrollWidth` by
+   32px while `body{overflow-x:hidden}` means nothing actually scrolls.
+4. Rerun `python3 tools/build-ru.py` with no arguments at the end and check the
+   tree is clean. Adding a new site changes the hub's Russian links, so a
+   whole-repo rebuild is part of finishing.
+5. Commit one page per commit and update the table above in the same commit.
 
 ## Decisions log
 
