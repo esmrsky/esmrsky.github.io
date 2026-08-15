@@ -626,9 +626,10 @@ def build(pages: list[str], check: bool) -> int:
                 os.makedirs(os.path.dirname(out_path), exist_ok=True)
                 with open(out_path, "w", encoding="utf-8") as fh:
                     fh.write(doc)
-        if "data-ru=" in doc or "data-ru-" in doc:
-            print(f"  !!  {out}: data-ru survived into the output",
-                  file=sys.stderr)
+        leftover = re.search(r'\sdata-ru(-[a-z-]+)?=', doc)
+        if leftover:
+            print(f"  !!  {out}: {leftover.group(0).strip()} survived into "
+                  f"the output", file=sys.stderr)
     return changed
 
 
