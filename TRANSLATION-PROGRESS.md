@@ -1,30 +1,56 @@
 # RU translation — progress
 
-Adding a working EN/RU toggle to every page on esmrsky.github.io and translating
-the human-readable content into Russian. English stays the default; RU is an
-overlay on the same markup, same layout, same design.
+Translating esmrsky.github.io into Russian. English stays the default and the
+source of truth; Russian is a **generated static page at its own URL**, same
+markup, same layout, same design.
 
-## The mechanism (one pattern, used everywhere)
+## The mechanism
 
-Every page gets, inlined and self-contained — no shared file, no CDN, matching
-how these sites are already built:
+Russian lives in `data-ru` / `data-ru-<attr>` attributes on the English markup.
+`tools/build-ru.py` bakes those attributes into a real page:
 
-1. `<html lang="en" data-lang="en">`
-2. A tiny head script that reads `localStorage['esmrsky-lang']` before first
-   paint (same shape as the existing `esmrsky-theme` script).
-3. An `EN / RU` pill button (`#langToggle`), styled from each site's own tokens
-   and parked next to that site's theme toggle if it has one.
-4. A ~40-line foot script that swaps `innerHTML` on every `[data-ru]` element.
-   The English original **stays in the markup** and is captured into `data-en`
-   at load, so nothing is duplicated by hand and EN is always the source of
-   truth. Attributes translate through `data-ru-title`, `data-ru-aria-label`,
-   `data-ru-placeholder`, `data-ru-alt`, `data-ru-content`, `data-ru-href`.
-   Nodes in the SVG namespace are swapped through `textContent` instead, so
-   labels inside diagrams translate as well.
-5. `<title>` and `<meta name="description">` are translated too.
-6. The script fires a `esmrsky:lang` event on `document` and sets
-   `window.esmrskyLang`, so a site whose own JS renders strings can re-render
-   in the right language instead of being swapped behind its back.
+    index.html            ->  ru/index.html            (/  ->  /ru/)
+    ecclesia/index.html   ->  ecclesia/ru/index.html    (/ecclesia/ -> /ecclesia/ru/)
+
+Run it with no arguments to rebuild everything, with a site name to rebuild one
+(`python3 tools/build-ru.py ecclesia`), or `--check` to see drift without
+writing. It is idempotent: a clean tree means the committed output matches the
+English source.
+
+What the generator does to each page:
+
+1. Applies every `data-ru` to that element's inner HTML and every
+   `data-ru-<attr>` to that attribute, then drops the `data-ru*` attributes.
+   Nesting follows the browser: an outer `data-ru` wins over one inside it.
+   Nodes in the SVG namespace are written as text, so diagram labels translate
+   but markup characters stay escaped.
+2. Drops the EN/RU toggle and both halves of the old i18n script, leaving a
+   two-line stub that sets `window.esmrskyLang` and fires `esmrsky:lang`, so a
+   page whose own JS renders strings still renders them in Russian.
+3. Sets `<html lang="ru" data-lang="ru">`. `lang` is the real signal;
+   `data-lang` stays because several pages hang CSS off it.
+4. Rewrites internal links so Russian stays in Russian — `/` → `/ru/`,
+   `/foo/` → `/foo/ru/` — but **only where a Russian page exists**. A link to a
+   site not translated yet keeps pointing at the English one; a language switch
+   beats a 404. A link the author spelled out by hand (`data-ru-href`) is left
+   alone.
+5. Rewrites *relative* asset paths to `../`, since the page moved down a level.
+   This covers `href`/`src`/`srcset`/`poster`/… and `url()` inside `<style>`
+   blocks and `style=""` attributes. Deliberately **not** `<base href>`: that
+   would send every in-page `#anchor` to the base URL.
+6. Adds the `<link rel="alternate" hreflang>` pair (plus `x-default`) to both
+   sides, and points each generated page's `<link rel="canonical">` at itself.
+
+The English page carries a plain text link — «Русский» — in that site's own nav
+or footer; the Russian page carries the mirror, "English". Both are authored
+once, in the English source, as
+
+    <a class="lang-alt" href="/foo/ru/" lang="ru" hreflang="ru"
+       data-ru="English" data-ru-href="/foo/" data-ru-lang="en"
+       data-ru-hreflang="en">Русский</a>
+
+so the generator produces the mirror for free. There is **no** redirect based on
+`navigator.language`: the reader picks, and the URL remembers.
 
 Rule of thumb: never put `data-ru` on an element whose content the page's own
 JS rewrites — give the JS data object a parallel `ru` field instead.
@@ -44,10 +70,10 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 
 | Site | Status | Notes |
 |---|---|---|
-| `/` (hub `index.html`) | **done** | 42 cards, filters, drawer. Titles localised (`Soundings` → «Промеры глубины», `Graded` → «Оценено», `Everything's Mid` → «Всё какое-то никакое», `Get Uncooked` → «Расклиниться»). Brand names left as-is. |
-| `the-word` | **done** | 8 quoted passages → Синодальный перевод. The NIV / NASB 2020 / TPT switcher has nothing to switch between in Russian, so on the RU side it collapses to a single «Синодальный» button (the other two are hidden by CSS) and the version note explains why. The five practice-lab scenarios are JS-rendered, so they got a parallel `scenariosRu` payload and re-render on `esmrsky:lang`. Psalm 119 → Пс. 118 and Psalm 77:11–12 → Пс. 76:12–13 for Synodal numbering. |
-| `ecclesia` | **done** | 10 quoted passages → Синодальный перевод (cited «· СП»). Ps 22:22 NIV = Пс. 21:23 SYNO — Russian citation and link use the Synodal reference. Ref chips are JS-rendered, so that JS now localises book abbreviations and switches Bible Gateway between NIV and SYNO. |
-| `master-thread` | **done** | No scripture at all despite the hub card — the page is about epistemic restlessness. SVG diagram labels translate too (the shared script swaps `textContent` for SVG nodes). |
+| `/` (hub `index.html`) | **done** | `/ru/`. 42 cards, filters, drawer. Titles localised (`Soundings` → «Промеры глубины», `Graded` → «Оценено», `Everything's Mid` → «Всё какое-то никакое», `Get Uncooked` → «Расклиниться»). Brand names left as-is. |
+| `the-word` | **done** | `/the-word/ru/`. 8 quoted passages → Синодальный перевод. The NIV / NASB 2020 / TPT switcher has nothing to switch between in Russian, so on the RU side it collapses to a single «Синодальный» button (the other two are hidden by CSS) and the version note explains why. The five practice-lab scenarios are JS-rendered, so they got a parallel `scenariosRu` payload and re-render on `esmrsky:lang`. Psalm 119 → Пс. 118 and Psalm 77:11–12 → Пс. 76:12–13 for Synodal numbering. |
+| `ecclesia` | **done** | `/ecclesia/ru/`. 10 quoted passages → Синодальный перевод (cited «· СП»). Ps 22:22 NIV = Пс. 21:23 SYNO — Russian citation and link use the Synodal reference. Ref chips are JS-rendered, so that JS now localises book abbreviations, renumbers the psalm, and switches Bible Gateway between NIV and SYNO. |
+| `master-thread` | **done** | `/master-thread/ru/`. No scripture at all despite the hub card — the page is about epistemic restlessness. SVG diagram labels translate too (the shared script swaps `textContent` for SVG nodes). |
 | `spirit-soul-body` | not started | 21 scripture refs. |
 | `fear-of-god-ii` | not started | 79 scripture refs — longest study on the site. |
 | `three-territories` | not started | 15 scripture refs. |
@@ -59,7 +85,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `anatomy-of-rest` | not started | 9 scripture refs. |
 | `colour-of-middle-c` | not started | |
 | `graded` | not started | |
-| `measured` | **done** | Three Disguises. References scripture but never quotes it, so only the reference names needed localising (2 Cor 10:12, John 21:22, Eph 1:6, Prov 29:25, Zeph 3:17). SVG diagram labels translate. |
+| `measured` | **done** | `/measured/ru/`. Three Disguises. References scripture but never quotes it, so only the reference names needed localising (2 Cor 10:12, John 21:22, Eph 1:6, Prov 29:25, Zeph 3:17). SVG diagram labels translate. |
 | `combo-stern` | not started | |
 | `combo-stern-loop-love` | not started | Two HTML files + `app.js` + `glossary-data.js`. |
 | `desire-master` | not started | |
@@ -71,34 +97,49 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `the-weight-of-rest` | not started | |
 | `two-hundred-milliseconds` | not started | |
 | `bait-constellation` | not started | 37 glossary terms. |
-| `everything-mid` | **done** | Written entirely in lowercase, very online; the Russian keeps that register (lowercase headings, everyday internet Russian) — except the two quoted scriptures, which are Синодальный (Притчи 14:12, Ин. 4:14). Theme-button label localised to «ночь»/«день» so the two pills do not collide on narrow screens. |
+| `everything-mid` | **done** | `/everything-mid/ru/`. Written entirely in lowercase, very online; the Russian keeps that register (lowercase headings, everyday internet Russian) — except the two quoted scriptures, which are Синодальный (Притчи 14:12, Ин. 4:14). Theme-button label localised to «ночь»/«день». |
 | `coding-agents-guide` | not started | |
-| `the-return` | **done** | Redirect stub. No toggle button (the page redirects immediately) — it just follows the language chosen elsewhere. Note its target `/the-return-new/` does not exist in this repo. |
-| `the-return.html`, `index-old-return-backup.html` | **done** | Same treatment as above. |
+| `the-return` | **n/a** | Redirect stub: it bounces before paint, so a `/ru/` copy would be a URL nobody can reach. The generator skips it by name. Note its target `/the-return-new/` does not exist in this repo. |
+| `the-return.html`, `index-old-return-backup.html` | **n/a** | Same as above — skipped. |
 
 ## Picking this up in a future session
 
-1. `python3` + the pattern above is all it takes; there is no build step.
+1. Add `data-ru` to the English source — that file stays the source of truth —
+   then run `python3 tools/build-ru.py <site>` to emit its `/ru` page. Commit
+   both together.
 2. The fastest safe way to edit a page is a small script that asserts each
    English source string exists exactly once before inserting its `data-ru`,
    so a silent miss is impossible. That is how every page here was done.
 3. Test each page before committing: serve the repo (`python3 -m http.server`),
-   open it, click EN/RU, confirm the Russian shows, confirm toggling back is
-   byte-identical to the original, check the console, and check 390px width.
+   load both the EN and the `/ru` URL, check the console is clean, check there
+   is no horizontal overflow at 390px, and check that internal links from a
+   `/ru` page land on other `/ru` pages.
 4. Commit one page per commit and update the table above in the same commit.
 
 ## Decisions log
 
-- **Toggle placement.** Left of the existing theme toggle where one exists, so
-  the two read as one control cluster; otherwise top-right on its own.
-- **Persistence** is shared across the whole domain (one `esmrsky-lang` key),
-  so picking RU on the hub carries into every sub-site.
+- **Russian has real URLs.** The floating EN/RU pill and its `localStorage`
+  key are gone. Russian is `/<site>/ru/`, generated and committed, so it can be
+  linked, shared, bookmarked and indexed. The pill also read as clutter on
+  every page it floated over.
+- **The link, not a pill.** One small text link in each site's existing nav or
+  footer — «Русский» on the English side, "English" on the Russian side.
+- **No `navigator.language` redirect.** A reader who asked for a URL gets that
+  URL.
+- **Links to untranslated sites stay English.** The generator only rewrites a
+  link when the Russian target actually exists, so `/ru/` never links into a
+  404. Those links start pointing at Russian automatically as each site lands.
+- **Relative assets, not `<base href>`.** `<base>` would have been one line,
+  but it retargets in-page `#anchor` links too, which every one of these pages
+  depends on.
 - **Brand/product names are not translated**: `esmrsky`, `Torac Champagne`,
   `Claude Code`, `Codex`, `APEST`, `NSDR`, `200MS`, `SoundLab`, `DAW`.
-- **НРП could not be used.** The task preferred Новый русский перевод. Every
-  Bible host — biblegateway.com, bible.com, only.bible, bibleserver.com,
+- **НРП still could not be used.** The task preferred Новый русский перевод.
+  Every Bible host — biblegateway.com, bible.com, only.bible, bibleserver.com,
   bible.by, azbyka.ru, allbible.info — is blocked by this environment's egress
   proxy, so no НРП rendering could be verified against a primary source.
+  Re-tested at the start of this session; still blocked, so quotations stay
+  Синодальный.
   Rather than paraphrase scripture, quoted verses use the **Синодальный
   перевод**, which is public domain and was corroborated phrase-by-phrase
   via exact-phrase search corroboration before use. Citations read «· СП». If the owner

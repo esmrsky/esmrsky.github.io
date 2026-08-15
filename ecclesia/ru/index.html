@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/ecclesia/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/ecclesia/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/ecclesia/">
+<!-- lang-alt:end -->
+<title>ЭККЛЕСИЯ — собрание Иисуса</title>
+<meta name="description" content="Визуальное изучение Библии: слово ekklesia — от собрания Израиля до Иисуса, Деяний, Павла, Петра, Евреям и Откровения."/>
+<meta name="theme-color" id="theme-color" content="#090812" />
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    try {
+      const saved = localStorage.getItem('ecclesia-theme');
+      const theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme;
+    } catch (error) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  })();
+</script>
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#090812; --panel:#121019; --panel2:#191622; --ink:#f8f3e8; --muted:#b5adba;
+    --line:#302a3c; --gold:#f6bf4b; --red:#ff7163; --blue:#75b7ff; --green:#6fdaa5; --violet:#b69cff; --coral:#ff9a6e;
+    --nav-bg:rgba(18,16,25,.82);
+    --shadow: 0 20px 80px rgba(0,0,0,.32);
+    --radius:28px;
+  }
+  [data-theme="light"]{
+    color-scheme:light;
+    --bg:#f5f0e6; --panel:#fffaf0; --panel2:#fffdf8; --ink:#1a1721; --muted:#655e6b;
+    --line:#d8cebc; --gold:#946000; --red:#b83f35; --blue:#2466b0; --green:#177650; --violet:#6949ad; --coral:#b64f2f;
+    --nav-bg:rgba(255,250,240,.86);
+    --shadow: 0 20px 70px rgba(55,42,13,.11);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.5; overflow-x:hidden; transition:background-color .25s ease,color .25s ease;
+  }
+  body:before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:-2;
+    background:
+      radial-gradient(circle at 18% 14%, color-mix(in srgb,var(--gold) 15%, transparent), transparent 28rem),
+      radial-gradient(circle at 82% 34%, color-mix(in srgb,var(--blue) 13%, transparent), transparent 32rem),
+      radial-gradient(circle at 48% 74%, color-mix(in srgb,var(--violet) 8%, transparent), transparent 34rem),
+      linear-gradient(var(--bg),var(--bg));
+  }
+  body:after{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.34;
+    background-image:linear-gradient(color-mix(in srgb,var(--ink) 4%,transparent) 1px,transparent 1px),
+    linear-gradient(90deg,color-mix(in srgb,var(--ink) 4%,transparent) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:linear-gradient(to bottom,#000,transparent 85%);
+  }
+  a{color:inherit}
+  ::selection{background:var(--gold);color:var(--bg)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+  .skip-link{position:fixed;left:18px;top:12px;z-index:100;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:850;text-decoration:none;transform:translateY(-180%);transition:transform .2s ease}
+  .skip-link:focus{transform:none}
+  .scroll-progress{position:fixed;z-index:60;inset:0 0 auto;height:3px;background:transparent;pointer-events:none}
+  .scroll-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--gold),var(--coral),var(--violet));box-shadow:0 0 16px color-mix(in srgb,var(--gold) 70%,transparent)}
+  .wrap{width:min(1240px,calc(100% - 42px));margin:auto}
+  .nav{
+    position:sticky;top:16px;z-index:20;margin:16px auto 0;width:min(1240px,calc(100% - 42px));
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    background:var(--nav-bg); backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--line); border-radius:20px; padding:10px 12px 10px 18px; box-shadow:var(--shadow)
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:.12em;font-size:13px;text-decoration:none}
+  .brand-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 20px var(--gold)}
+  .brand-home{color:var(--muted);font-size:10px;letter-spacing:.08em;border-left:1px solid var(--line);padding-left:10px}
+  .navlinks{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+  .navlinks a{font-size:12px;text-decoration:none;color:var(--muted);padding:9px 11px;border-radius:12px}
+  .navlinks a:hover{background:var(--panel2);color:var(--ink)}
+  .toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:12px;padding:9px 12px;cursor:pointer;font-weight:750;min-height:40px}
+  .toggle:hover{border-color:color-mix(in srgb,var(--gold) 58%,var(--line));background:color-mix(in srgb,var(--gold) 8%,var(--panel2))}
+  .nav-controls{display:flex;align-items:center;gap:8px}
+  /* The other language: a plain text link, deliberately not a control. */
+  .lang-alt{font-size:12px;letter-spacing:.06em;color:var(--muted);text-decoration:none;
+    padding:9px 4px;border-bottom:1px solid transparent}
+  .lang-alt:hover{color:var(--gold);border-bottom-color:currentColor}
+  .hero{min-height:92vh;display:grid;align-items:center;padding:88px 0 54px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:50px;align-items:end}
+  .kicker{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  h1{
+    font-size:clamp(56px,14vw,196px);line-height:.76;margin:18px 0 28px;letter-spacing:-.075em;
+    font-weight:900; text-wrap:balance;
+  }
+  h1 .greek{display:block;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;font-size:.44em;letter-spacing:-.04em;color:var(--muted);margin-left:.07em;margin-top:.22em}
+  .lede{font-size:clamp(20px,2.2vw,32px);line-height:1.17;max-width:830px;letter-spacing:-.025em}
+  .lede strong{color:var(--gold)}
+  .hero-side{border-left:1px solid var(--line);padding-left:28px;padding-bottom:8px}
+  .hero-side p{color:var(--muted);font-size:14px;margin:0 0 22px}
+  .assembly-mark{width:min(100%,290px);aspect-ratio:1;margin:0 0 30px auto;border:1px solid var(--line);border-radius:50%;position:relative;background:radial-gradient(circle at center,color-mix(in srgb,var(--gold) 15%,var(--panel)) 0 17%,transparent 18%),conic-gradient(from 12deg,color-mix(in srgb,var(--gold) 20%,transparent),color-mix(in srgb,var(--blue) 20%,transparent),color-mix(in srgb,var(--violet) 20%,transparent),color-mix(in srgb,var(--green) 20%,transparent),color-mix(in srgb,var(--gold) 20%,transparent));box-shadow:inset 0 0 0 38px var(--panel),inset 0 0 0 39px var(--line),var(--shadow)}
+  .assembly-mark:before,.assembly-mark:after{content:"";position:absolute;inset:18%;border:1px dashed color-mix(in srgb,var(--gold) 55%,var(--line));border-radius:50%}
+  .assembly-mark:after{inset:34%;border-style:solid;background:var(--gold);box-shadow:0 0 34px color-mix(in srgb,var(--gold) 55%,transparent)}
+  .assembly-mark b{position:absolute;inset:40%;display:grid;place-items:center;z-index:2;color:var(--bg);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+  .assembly-mark i{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;background:var(--dot,var(--blue));box-shadow:0 0 18px color-mix(in srgb,var(--dot,var(--blue)) 70%,transparent);transform:rotate(var(--angle)) translateY(-118px)}
+  .assembly-mark i:nth-of-type(2n){width:12px;height:12px;margin:-6px;transform:rotate(var(--angle)) translateY(-118px)}
+  .signal{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{border:1px solid var(--line);padding:8px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--panel)}
+  .hero-foot{margin-top:70px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .hero-step{border-top:1px solid var(--line);padding-top:16px;position:relative}
+  .hero-step:before{content:"";position:absolute;top:-3px;left:0;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  .hero-step span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+  .hero-step b{font-size:16px}
+  .evidence-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:38px}
+  .evidence-item{padding:15px 16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel) 72%,transparent)}
+  .evidence-item b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+  .evidence-item span{display:block;color:var(--muted);font-size:12px}
+  .evidence-item:nth-child(1) b{color:var(--green)}.evidence-item:nth-child(2) b{color:var(--blue)}.evidence-item:nth-child(3) b{color:var(--violet)}
+  section{padding:100px 0;scroll-margin-top:86px}
+  .section-head{display:grid;grid-template-columns:.42fr 1fr;gap:42px;align-items:start;margin-bottom:46px}
+  .section-head h2{font-size:clamp(42px,6vw,84px);line-height:.93;letter-spacing:-.055em;margin:0;text-wrap:balance}
+  .section-head .intro{font-size:19px;color:var(--muted);max-width:690px;margin:10px 0 0}
+  .eyebrow{display:flex;align-items:center;gap:8px;color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;margin-bottom:12px}
+  .eyebrow:before{content:"";width:26px;height:1px;background:currentColor}
+  .card{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .wordlab{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  .word-card{padding:34px;min-height:390px;position:relative;overflow:hidden}
+  .word-card .huge{font-family:Georgia,serif;font-size:clamp(54px,8vw,112px);line-height:.9;letter-spacing:-.06em;margin:18px 0}
+  .definition{font-size:22px;max-width:620px}
+  .definition em{color:var(--gold);font-style:normal}
+  .lex{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:34px}
+  .lex div{padding:14px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--bg) 55%,transparent)}
+  .lex span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.12em}
+  .lex b{font-size:14px}
+  .myth-card{padding:34px;display:flex;flex-direction:column;justify-content:space-between}
+  .myth-badge{display:inline-flex;align-self:flex-start;color:var(--red);border:1px solid color-mix(in srgb,var(--red) 42%,var(--line));background:color-mix(in srgb,var(--red) 8%,transparent);border-radius:999px;padding:7px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900}
+  .myth-card h3{font-size:31px;letter-spacing:-.035em;margin:20px 0 10px}
+  .myth-card p{color:var(--muted);font-size:16px}
+  .myth-card .proof{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;font-size:13px}
+  .proof b{color:var(--blue)}
+  .arc{position:relative;padding:18px 0}
+  .arc-line{position:absolute;top:50%;left:3%;right:3%;height:1px;background:var(--line)}
+  .arc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;position:relative}
+  .node{--node-accent:var(--gold);min-height:285px;padding:20px;border:1px solid var(--line);border-top-color:color-mix(in srgb,var(--node-accent) 62%,var(--line));border-radius:22px;background:linear-gradient(155deg,color-mix(in srgb,var(--node-accent) 8%,var(--panel2)),var(--panel) 55%);display:flex;flex-direction:column;justify-content:space-between;transition:.25s transform,.25s border-color,.25s box-shadow}
+  .node:hover{transform:translateY(-8px);border-color:color-mix(in srgb,var(--gold) 65%,var(--line))}
+  .node:nth-child(2){--node-accent:var(--coral)}.node:nth-child(3){--node-accent:var(--blue)}.node:nth-child(4){--node-accent:var(--violet)}.node:nth-child(5){--node-accent:var(--green)}.node:nth-child(6){--node-accent:var(--red)}.node:nth-child(7){--node-accent:var(--gold)}
+  .node .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);background:var(--bg);font-size:11px;font-weight:900}
+  .node h3{font-size:20px;line-height:1.05;margin:22px 0 10px}
+  .node p{font-size:12px;color:var(--muted)}
+  .node .ref{font-size:11px;color:var(--gold);font-weight:850}
+  .metas{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .meta{--meta-accent:var(--gold);padding:28px;min-height:260px;position:relative;overflow:hidden}
+  .meta:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--meta-accent),transparent 72%)}
+  .meta:nth-child(1){grid-column:span 5}.meta:nth-child(2){grid-column:span 3}.meta:nth-child(3){grid-column:span 4}
+  .meta:nth-child(4){grid-column:span 3}.meta:nth-child(5){grid-column:span 4}.meta:nth-child(6){grid-column:span 5}
+  .meta:nth-child(7){grid-column:span 12;min-height:210px}
+  .meta:nth-child(2){--meta-accent:var(--blue)}.meta:nth-child(3){--meta-accent:var(--red)}.meta:nth-child(4){--meta-accent:var(--violet)}.meta:nth-child(5){--meta-accent:var(--gold)}.meta:nth-child(6){--meta-accent:var(--green)}.meta:nth-child(7){--meta-accent:var(--coral)}
+  .meta .icon{font-size:40px;line-height:1;margin-bottom:30px;color:var(--meta-accent);filter:drop-shadow(0 0 16px color-mix(in srgb,var(--meta-accent) 32%,transparent))}
+  .meta h3{font-size:28px;letter-spacing:-.04em;margin:0 0 8px}
+  .meta p{margin:0;color:var(--muted);max-width:520px}
+  .meta .ref{position:absolute;bottom:22px;right:24px;color:var(--gold);font-size:11px;font-weight:850}
+  .flow{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+    counter-reset:step
+  }
+  .flow-item{padding:24px;min-height:185px;border:1px solid var(--line);border-radius:22px;background:var(--panel);position:relative}
+  .flow-item:before{counter-increment:step;content:"0" counter(step);font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.1em}
+  .flow-item h3{font-size:20px;margin:35px 0 7px}.flow-item p{font-size:13px;color:var(--muted);margin:0}
+  .flow-item:nth-child(1),.flow-item:nth-child(5){border-top-color:var(--gold)}
+  .flow-item:nth-child(2),.flow-item:nth-child(6){border-top-color:var(--blue)}
+  .flow-item:nth-child(3),.flow-item:nth-child(7){border-top-color:var(--green)}
+  .flow-item:nth-child(4),.flow-item:nth-child(8){border-top-color:var(--violet)}
+  .flow-item:nth-child(1),.flow-item:nth-child(5){background:linear-gradient(150deg,color-mix(in srgb,var(--gold) 7%,var(--panel2)),var(--panel))}
+  .flow-item:nth-child(2),.flow-item:nth-child(6){background:linear-gradient(150deg,color-mix(in srgb,var(--blue) 7%,var(--panel2)),var(--panel))}
+  .flow-item:nth-child(3),.flow-item:nth-child(7){background:linear-gradient(150deg,color-mix(in srgb,var(--green) 7%,var(--panel2)),var(--panel))}
+  .flow-item:nth-child(4),.flow-item:nth-child(8){background:linear-gradient(150deg,color-mix(in srgb,var(--violet) 7%,var(--panel2)),var(--panel))}
+  .scale{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .scale-card{padding:34px;min-height:360px}
+  .scale-card h3{font-size:38px;letter-spacing:-.04em;margin:10px 0}
+  .scale-card p{color:var(--muted)}
+  .mini-list{margin-top:28px;display:grid;gap:10px}
+  .mini{border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;gap:18px;font-size:13px}
+  .mini span:last-child{color:var(--gold);white-space:nowrap}
+  .kingdom{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}
+  .relation-map{
+    position:relative;isolation:isolate;overflow:hidden;margin:0;min-height:460px;padding:28px;
+    display:grid;grid-template-columns:minmax(0,1fr) 108px minmax(0,1fr);grid-template-rows:1fr auto;gap:22px 12px;align-items:center;
+    border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);
+    background:
+      linear-gradient(color-mix(in srgb,var(--ink) 3.5%,transparent) 1px,transparent 1px),
+      linear-gradient(90deg,color-mix(in srgb,var(--ink) 3.5%,transparent) 1px,transparent 1px),
+      radial-gradient(circle at 8% 12%,color-mix(in srgb,var(--blue) 18%,transparent),transparent 42%),
+      radial-gradient(circle at 92% 82%,color-mix(in srgb,var(--gold) 18%,transparent),transparent 42%),
+      linear-gradient(145deg,var(--panel2),var(--panel));
+    background-size:32px 32px,32px 32px,auto,auto,auto
+  }
+  .relation-map:after{content:"";position:absolute;z-index:0;left:22%;right:22%;top:45%;height:2px;background:linear-gradient(90deg,var(--blue),var(--violet) 50%,var(--gold));box-shadow:0 0 20px color-mix(in srgb,var(--violet) 55%,transparent)}
+  .relation-card{--map-accent:var(--blue);position:relative;z-index:1;min-width:0;min-height:310px;padding:22px;display:flex;flex-direction:column;border:1px solid color-mix(in srgb,var(--map-accent) 34%,var(--line));border-top:3px solid var(--map-accent);border-radius:22px;background:color-mix(in srgb,var(--bg) 66%,var(--panel));box-shadow:0 18px 45px color-mix(in srgb,var(--bg) 30%,transparent)}
+  .relation-card.ecclesia-card{--map-accent:var(--gold)}
+  .map-index{display:flex;align-items:center;gap:8px;color:var(--map-accent);font-size:9px;font-weight:950;letter-spacing:.16em;text-transform:uppercase}
+  .map-index span{display:grid;place-items:center;width:25px;height:25px;border:1px solid color-mix(in srgb,var(--map-accent) 45%,var(--line));border-radius:50%;background:color-mix(in srgb,var(--map-accent) 9%,transparent);letter-spacing:0}
+  .relation-card h3{margin:32px 0 3px;font-size:clamp(28px,3vw,38px);line-height:.95;letter-spacing:-.055em;text-transform:uppercase}
+  .map-definition{margin:0;color:var(--muted);font-family:Georgia,"Times New Roman",serif;font-size:16px;font-style:italic}
+  .map-list{list-style:none;padding:0;margin:auto 0 0;display:grid;gap:0}
+  .map-list li{display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid var(--line);font-size:11px;font-weight:800;letter-spacing:.02em}
+  .map-list li:before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--map-accent);box-shadow:0 0 12px color-mix(in srgb,var(--map-accent) 70%,transparent)}
+  .king-node{position:relative;z-index:3;width:108px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;justify-self:center;border:1px solid color-mix(in srgb,var(--ink) 68%,var(--line));border-radius:50%;background:var(--ink);color:var(--bg);text-align:center;box-shadow:0 0 0 9px color-mix(in srgb,var(--violet) 12%,var(--panel)),0 18px 45px color-mix(in srgb,var(--bg) 38%,transparent)}
+  .king-node span{font-size:7px;font-weight:950;letter-spacing:.15em;text-transform:uppercase;opacity:.68}
+  .king-node strong{font-size:19px;line-height:1.05;letter-spacing:-.04em}
+  .king-node small{font-size:10px;font-weight:850}
+  .relation-note{position:relative;z-index:1;grid-column:1/-1;margin:0;padding:13px 16px;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--bg) 55%,transparent);color:var(--muted);font-size:11px;line-height:1.55;text-align:center}
+  .relation-note strong{color:var(--ink)}
+  .king-copy h3{font-size:46px;line-height:.96;letter-spacing:-.05em;margin:0 0 20px}
+  .king-copy p{color:var(--muted);font-size:17px}
+  .callout{border-left:3px solid var(--gold);padding:4px 0 4px 20px;margin-top:28px;font-size:15px}
+  .authority{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .auth-card{padding:34px}
+  .auth-card h3{font-size:30px;margin:0 0 12px;letter-spacing:-.035em}
+  .auth-card p{color:var(--muted)}
+  .refs{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+  .refchip{font-size:10px;padding:7px 9px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-weight:850}
+  .debate{margin-top:18px;padding:30px;border:1px dashed color-mix(in srgb,var(--violet) 60%,var(--line));border-radius:22px;background:color-mix(in srgb,var(--violet) 5%,transparent)}
+  .debate h3{margin:0 0 12px;font-size:22px}.debate p{color:var(--muted);margin:0}
+  .perspective{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .persp{padding:26px;border:1px solid var(--line);border-radius:22px;background:var(--panel)}
+  .persp h3{font-size:18px}.persp p{font-size:13px;color:var(--muted)}
+  .persp .tag{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:var(--violet)}
+  .anti{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .anti-card{padding:25px;border-radius:20px;border:1px solid var(--line);background:var(--panel);min-height:200px}
+  .anti-card .x{color:var(--red);font-size:22px;font-weight:900}.anti-card h3{margin:26px 0 7px}.anti-card p{font-size:13px;color:var(--muted)}
+  .scripture-shell{position:relative;padding:clamp(28px,5vw,54px);border:1px solid var(--line);border-radius:36px;background:linear-gradient(145deg,color-mix(in srgb,var(--violet) 8%,var(--panel2)),var(--panel));box-shadow:var(--shadow);overflow:hidden}
+  .scripture-shell:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-210px;top:-230px;background:radial-gradient(circle,color-mix(in srgb,var(--gold) 22%,transparent),transparent 68%);pointer-events:none}
+  .scripture-top{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:28px;position:relative}
+  .scripture-top h3{font-size:clamp(34px,5vw,64px);line-height:.95;letter-spacing:-.05em;margin:8px 0 0;max-width:720px}
+  .translation-badge{flex:none;padding:9px 12px;border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));border-radius:999px;color:var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+  .scripture-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;position:relative}
+  .verse-card{--verse-accent:var(--gold);padding:25px;border:1px solid var(--line);border-top-color:color-mix(in srgb,var(--verse-accent) 68%,var(--line));border-radius:22px;background:color-mix(in srgb,var(--bg) 54%,transparent);display:flex;flex-direction:column;min-height:235px}
+  .verse-card:nth-child(2),.verse-card:nth-child(7){--verse-accent:var(--coral)}.verse-card:nth-child(3),.verse-card:nth-child(8){--verse-accent:var(--blue)}.verse-card:nth-child(4),.verse-card:nth-child(9){--verse-accent:var(--green)}.verse-card:nth-child(5),.verse-card:nth-child(10){--verse-accent:var(--violet)}
+  .verse-stage{color:var(--verse-accent);font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:900}
+  .verse-card blockquote{font-family:Georgia,"Times New Roman",serif;font-size:clamp(18px,2vw,22px);line-height:1.42;margin:20px 0 24px;letter-spacing:-.012em;text-wrap:pretty}
+  .verse-card blockquote sup{font-family:Inter,ui-sans-serif,sans-serif;color:var(--verse-accent);font-size:.55em;font-weight:900;margin-right:3px}
+  .verse-link{margin-top:auto;display:flex;justify-content:space-between;gap:14px;align-items:center;padding-top:15px;border-top:1px solid var(--line);font-size:11px;font-weight:900;letter-spacing:.06em;text-decoration:none;color:var(--verse-accent)}
+  .verse-link span:last-child{font-size:15px;transition:transform .2s ease}
+  .verse-link:hover span:last-child{transform:translateX(3px)}
+  .translation-note{position:relative;margin:18px 2px 0;color:var(--muted);font-size:11px;line-height:1.55}
+  .translation-note a{color:var(--gold)}
+  .scripture-ref-link{text-decoration:none}
+  .scripture-ref-link:hover{text-decoration:underline;text-underline-offset:3px}
+  .summary{
+    padding:65px;border-radius:36px;border:1px solid var(--line);position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 80% 20%,color-mix(in srgb,var(--gold) 18%,transparent),transparent 30%),
+      linear-gradient(145deg,var(--panel2),var(--panel));
+  }
+  .summary .big{font-size:clamp(42px,6vw,86px);line-height:.96;letter-spacing:-.055em;max-width:1050px;font-weight:850}
+  .summary .big em{font-family:Georgia,serif;color:var(--gold);font-weight:400}
+  .summary p{max-width:740px;color:var(--muted);font-size:18px;margin-top:24px}
+  .readmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
+  .read{padding:18px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--bg) 55%,transparent)}
+  .read b{display:block}.read span{font-size:11px;color:var(--muted)}
+  .sources{font-size:13px;color:var(--muted)}
+  .sources details{border-top:1px solid var(--line);padding:16px 0}
+  .sources summary{cursor:pointer;color:var(--ink);font-weight:800}
+  .sources a{color:var(--gold);text-decoration:none}.sources a:hover{text-decoration:underline;text-underline-offset:3px}
+  footer{padding:42px 0 60px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px}
+  .reveal{opacity:1;transform:none}.js .reveal{opacity:0;transform:translateY(14px);transition:.6s ease}.js .reveal.visible{opacity:1;transform:none}
+  .reveal.visible{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}.node,.verse-link span:last-child{transition:none}.node:hover{transform:none}}
+  @media(max-width:980px){
+    .navlinks{display:none}.hero-grid,.section-head,.wordlab,.kingdom,.authority{grid-template-columns:1fr}
+    .hero-side{border-left:0;border-top:1px solid var(--line);padding:24px 0 0}
+    .assembly-mark{margin:0 auto 28px}
+    .hero-foot{grid-template-columns:repeat(2,1fr)}
+    .arc-line{display:none}.arc-grid{grid-template-columns:repeat(2,1fr)}
+    .metas{grid-template-columns:1fr}.meta:nth-child(n){grid-column:span 1}
+    .flow{grid-template-columns:repeat(2,1fr)}
+    .scale,.perspective,.anti{grid-template-columns:1fr}
+    .relation-map{width:100%;max-width:720px;margin-inline:auto}
+    .readmap{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:760px){.scripture-grid,.evidence-strip{grid-template-columns:1fr}.scripture-top{align-items:start;flex-direction:column}.scripture-top .translation-badge{order:-1}}
+  @media(max-width:620px){
+    .wrap,.nav{width:min(100% - 24px,1240px)}
+    .brand-home{display:none}.toggle .theme-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .hero{padding-top:60px}.hero-foot,.flow,.arc-grid,.readmap,.lex{grid-template-columns:1fr}
+    section{padding:72px 0}.section-head{gap:16px}.word-card,.myth-card,.scale-card,.auth-card{padding:24px}
+    .summary{padding:34px 24px}
+    .relation-map{max-width:360px;min-height:0;padding:18px;grid-template-columns:1fr;grid-template-rows:auto 94px auto auto;gap:0;border-radius:26px;background-size:28px 28px,28px 28px,auto,auto,auto}
+    .relation-map:after{left:50%;right:auto;top:15%;bottom:22%;width:2px;height:auto;transform:translateX(-50%);background:linear-gradient(180deg,var(--blue),var(--violet) 50%,var(--gold))}
+    .relation-card{min-height:235px;padding:22px}
+    .relation-card h3{margin-top:25px;font-size:34px}
+    .kingdom-card{grid-column:1;grid-row:1}.king-node{grid-column:1;grid-row:2;width:94px}.ecclesia-card{grid-column:1;grid-row:3}
+    .relation-note{grid-column:1;grid-row:4;margin-top:18px;padding:12px 14px}
+    .scripture-shell{border-radius:26px;padding:24px 18px}.verse-card{padding:21px;min-height:0}
+    footer{flex-direction:column;padding-top:28px}.assembly-mark{width:235px}.assembly-mark i{transform:rotate(var(--angle)) translateY(-95px)}.assembly-mark i:nth-of-type(2n){transform:rotate(var(--angle)) translateY(-95px)}
+  }
+  @media(max-width:390px){h1{font-size:51px}.lede{font-size:19px}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#study">Перейти к разбору</a>
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
+<nav class="nav" aria-label="Навигация по разбору">
+  <a class="brand" href="/" aria-label="Назад к проектам esmrsky"><span class="brand-dot"></span> ЭККЛЕСИЯ <span class="brand-home">Проекты ↗</span></a>
+  <div class="navlinks">
+    <a href="#word">Слово</a><a href="#arc">Дуга</a><a href="#images">Образы</a>
+    <a href="#practice">Практика</a><a href="#kingdom">Царство</a><a href="#tensions">Спорное</a><a href="#scripture">Тексты Писания</a>
+  </div>
+  <div class="nav-controls">
+    <a class="lang-alt" href="/ecclesia/" lang="en" hreflang="en">English</a>
+    <button class="toggle" id="theme" type="button"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light</span></button>
+  </div>
+</nav>
+
+<main id="study">
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Визуальное изучение Библии</div>
+        <h1>ЭККЛЕСИЯ <span class="greek">ἐκκλησία</span></h1>
+        <div class="lede">Не священное здание. Не бренд. И не просто еженедельное мероприятие. <strong>Собрание, которое Иисус называет «Моим»</strong> — люди, собранные вокруг Царя, сформированные Духом, соединённые в одно тело и посланные быть свидетелями.</div>
+      </div>
+      <aside class="hero-side">
+        <div class="assembly-mark" aria-hidden="true">
+          <b>Христос</b>
+          <i style="--angle:0deg;--dot:var(--gold)"></i><i style="--angle:45deg;--dot:var(--blue)"></i>
+          <i style="--angle:90deg;--dot:var(--green)"></i><i style="--angle:135deg;--dot:var(--violet)"></i>
+          <i style="--angle:180deg;--dot:var(--coral)"></i><i style="--angle:225deg;--dot:var(--blue)"></i>
+          <i style="--angle:270deg;--dot:var(--green)"></i><i style="--angle:315deg;--dot:var(--red)"></i>
+        </div>
+        <p>Само слово — обычное греческое. Необычно то, что говорит о нём Новый Завет, и необычен Тот, кому это собрание принадлежит: Он его строит, в нём обитает, ведёт его, любит, вразумляет и посылает.</p>
+        <div class="signal">
+          <span class="pill">Собрание</span><span class="pill">Народ</span><span class="pill">Тело</span><span class="pill">Храм</span><span class="pill">Невеста</span><span class="pill">Священство</span>
+        </div>
+      </aside>
+    </div>
+    <div class="hero-foot">
+      <div class="hero-step"><span>01 · Источник</span><b>Христос строит</b></div>
+      <div class="hero-step"><span>02 · Центр</span><b>Христос — глава</b></div>
+      <div class="hero-step"><span>03 · Жизнь</span><b>Дух обитает</b></div>
+      <div class="hero-step"><span>04 · Форма</span><b>Члены созидают</b></div>
+      <div class="hero-step"><span>05 · Направление</span><b>Свидетельство выходит наружу</b></div>
+    </div>
+    <div class="evidence-strip" aria-label="Как устроены утверждения">
+      <div class="evidence-item"><b>Текст</b><span>Прямые формулировки и повторяющиеся закономерности в самих отрывках.</span></div>
+      <div class="evidence-item"><b>Синтез</b><span>Связи, проведённые через весь канон, — и прямо названные синтезом.</span></div>
+      <div class="evidence-item"><b>Спор</b><span>Выводы уровня традиции, отделённые там, где христиане расходятся.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="word">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">01 · Слово</div></div>
+      <div><h2>Уберём мифологию.</h2><p class="intro">Начнём с того, как слово реально работает. В обычном греческом <em>ekklesia</em> — это собрание, сходка. Именно поэтому в Деяниях одно и то же существительное обозначает и христианские общины, и бестолковую городскую сходку в Эфесе.</p></div>
+    </div>
+    <div class="wordlab">
+      <article class="word-card card reveal">
+        <div class="kicker">ἐκκλησία · ekklēsia</div>
+        <div class="huge">собрание.</div>
+        <div class="definition">Собравшиеся <em>люди</em>. А кто эти люди, чьи они и зачем собрались — говорит уже контекст.</div>
+        <div class="lex">
+          <div><span>Классический греческий</span><b>народное, городское собрание</b></div>
+          <div><span>Греческий Ветхий Завет</span><b>собрание Израиля</b></div>
+          <div><span>Новый Завет</span><b>христианская община</b></div>
+        </div>
+      </article>
+      <article class="myth-card card reveal">
+        <div>
+          <span class="myth-badge">Частый перегиб</span>
+          <h3>«Экклесия буквально значит „вызванные из мира“».</h3>
+          <p>Исторически слово действительно связано с <em>ek</em> («из») и <em>kaleō</em> («звать»), но значение слова задаёт употребление, а не разбор на корни. Обычное словарное значение — «собрание, община».</p>
+        </div>
+        <div class="proof"><b>Проверка фактом:</b> в Деян. 19:32, 39, 41 словом <em>ekklesia</em> названы и эфесская толпа, и законное городское собрание. Само слово не означает автоматически «искупленный народ».</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="arc">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">02 · Канонический сюжет</div></div>
+      <div><h2>Одна нить собрания. Семь движений.</h2><p class="intro">Новый Завет не роняет <em>ekklesia</em> в пустоту. Грекоязычные читатели уже знали это слово по Писаниям Израиля, где им часто назван заветный народ, стоящий перед Богом.</p></div>
+    </div>
+    <div class="arc">
+      <div class="arc-line"></div>
+      <div class="arc-grid">
+        <article class="node reveal"><div class="n">01</div><div><h3>Собрание<br>у Синая</h3><p>Израиль стоит перед ЯХВЕ, слышит Его слова и становится народом завета.</p></div><div class="ref">Deut 4:10 · 9:10 · 18:16</div></article>
+        <article class="node reveal"><div class="n">02</div><div><h3>Хвала<br>в собрании</h3><p>Псалмы говорят о свидетельстве и хвале «посреди собрания» — этот язык позже подхватывает Послание к Евреям.</p></div><div class="ref">Ps 22:22 · Heb 2:12</div></article>
+        <article class="node reveal"><div class="n">03</div><div><h3>„Моя<br>экклесия“</h3><p>Иисус говорит языком принадлежности: «Я создам Церковь Мою». В центре оказывается Тот, кто строит и кому она принадлежит.</p></div><div class="ref">Matt 16:18–19</div></article>
+        <article class="node reveal"><div class="n">04</div><div><h3>Собрание,<br>несущее ответственность</h3><p>Иисус даёт собравшейся общине роль в примирении, вразумлении, связывании и разрешении.</p></div><div class="ref">Matt 18:15–20</div></article>
+        <article class="node reveal"><div class="n">05</div><div><h3>Община,<br>сформированная Духом</h3><p>Учение, общение, общий стол, молитва, щедрость, свидетельство и общая жизнь становятся видимыми привычками.</p></div><div class="ref">Acts 2:42–47</div></article>
+        <article class="node reveal"><div class="n">06</div><div><h3>Тело · Храм<br>· Невеста</h3><p>Павел ставит метафоры одну на другую: реальность слишком велика для одного образа — она и органическая, и архитектурная, и отношенческая.</p></div><div class="ref">1 Cor 12 · Eph 2 · Eph 5</div></article>
+        <article class="node reveal"><div class="n">07</div><div><h3>Небесное<br>собрание</h3><p>Послание к Евреям раздвигает горизонт до торжествующего собора первенцев, записанных на небесах.</p></div><div class="ref">Heb 12:22–24</div></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="images">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">03 · Семь образов</div></div>
+      <div><h2>Церковь — это не одна метафора.</h2><p class="intro">Каждый образ поправляет остальные. «Тело» не даёт скатиться в институциональную холодность. «Храм» — в лёгкий индивидуализм. «Невеста» — в функционализм. «Священство» даёт призвание. «Семья» — принадлежность. «Стадо» — заботу пастыря. «Светильник» — открытое свидетельство.</p></div>
+    </div>
+    <div class="metas">
+      <article class="meta card reveal"><div class="icon">◉</div><h3>Тело</h3><p>Много членов, один Дух, разные дары, взаимная зависимость. Глава — Христос; зрелость здесь общая, а не только личная.</p><span class="ref">1 Cor 12:12–27 · Eph 4:11–16 · Col 1:18</span></article>
+      <article class="meta card reveal"><div class="icon">◇</div><h3>Храм</h3><p>В жилище для Бога Дух соединяет людей, а не каменную кладку.</p><span class="ref">Eph 2:19–22 · 1 Cor 3:16</span></article>
+      <article class="meta card reveal"><div class="icon">♡</div><h3>Невеста</h3><p>Отношение Христа к церкви — заветное, жертвенное и очищающее, а вовсе не управленческое.</p><span class="ref">Eph 5:25–32 · Rev 19:7–9</span></article>
+      <article class="meta card reveal"><div class="icon">⌂</div><h3>Дом</h3><p>Верующие становятся домашними Божьими: принадлежность несёт с собой обязанности заботы, чести и верности.</p><span class="ref">Eph 2:19 · 1 Tim 3:15</span></article>
+      <article class="meta card reveal"><div class="icon">♜</div><h3>Царственное священство</h3><p>Синайское призвание возвращается во Христе: святой народ, чья жизнь и речь возвещают совершенства Бога.</p><span class="ref">Ex 19:5–6 · 1 Pet 2:4–10</span></article>
+      <article class="meta card reveal"><div class="icon">⌁</div><h3>Стадо</h3><p>Руководство описано как пастырство под началом Пастыреначальника: забота, защита и пример, а не владение.</p><span class="ref">Acts 20:28 · 1 Pet 5:1–4</span></article>
+      <article class="meta card reveal"><div class="icon">✦</div><h3>Светильник</h3><p>В Откровении поместные церкви — светильники. Их существование видимо и подотчётно воскресшему Иисусу, который ходит посреди них.</p><span class="ref">Rev 1:12–20 · 2–3</span></article>
+    </div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">04 · Собрание в движении</div></div>
+      <div><h2>Чем экклесия занимается на самом деле?</h2><p class="intro">Новый Завет даёт образец, а не один застывший порядок служения. Эти повторяющиеся практики показывают общину, которая формируется вокруг Иисуса и друг для друга.</p></div>
+    </div>
+    <div class="flow">
+      <article class="flow-item reveal"><h3>Принимать Слово</h3><p>Апостольское учение, чтение, увещание, вероучение и памятование формируют общий ум.</p></article>
+      <article class="flow-item reveal"><h3>Молиться вместе</h3><p>Собрание просит, благодарит, ходатайствует, слушает и действует в зависимости от Бога.</p></article>
+      <article class="flow-item reveal"><h3>Преломлять хлеб</h3><p>Общий стол и Вечеря Господня воплощают общение со Христом и друг с другом.</p></article>
+      <article class="flow-item reveal"><h3>Созидать друг друга</h3><p>Дары распределены по всему телу, чтобы в росте участвовала «каждая часть».</p></article>
+      <article class="flow-item reveal"><h3>Делиться материально</h3><p>Нужда становится делом всей общины; щедрость делает принадлежность осязаемой.</p></article>
+      <article class="flow-item reveal"><h3>Различать сообща</h3><p>В Деяниях общины разбирают споры, вероучение, миссию и вопросы руководства сообща.</p></article>
+      <article class="flow-item reveal"><h3>Восстанавливать и поправлять</h3><p>Любовь — это не безразличие. Иисус даёт собранию роль в истине, примирении и ответственности.</p></article>
+      <article class="flow-item reveal"><h3>Посылать и свидетельствовать</h3><p>Собравшаяся церковь не замыкается на себе: поклонение переходит в миссию, милосердие и открытую верность.</p></article>
+    </div>
+
+    <div style="height:18px"></div>
+    <div class="scale">
+      <article class="scale-card card reveal">
+        <div class="kicker">Поместная</div>
+        <h3>Реальные люди в реальном месте.</h3>
+        <p>Павел обращается и к «церкви Божией в Коринфе», и к отдельным домашним церквам, и к «церквам Галатийским». <em>Ekklesia</em> достаточно конкретна, чтобы назвать общину, которая собирается, поправляет, жертвует, поставляет служителей, посылает и страдает вместе — и за всё это отвечает.</p>
+        <div class="mini-list">
+          <div class="mini"><span>Церковь в Коринфе</span><span>1 Cor 1:2</span></div>
+          <div class="mini"><span>Домашняя церковь</span><span>Rom 16:5</span></div>
+          <div class="mini"><span>Церкви Галатии</span><span>Gal 1:2</span></div>
+        </div>
+      </article>
+      <article class="scale-card card reveal">
+        <div class="kicker">Вселенская</div>
+        <h3>Одно тело — шире одной комнаты.</h3>
+        <p>Тот же Новый Завет говорит о Христе как о главе «церкви» и о церкви как о Его теле и невесте. Поместное собрание — не вся реальность целиком, но оно призвано воплощать эту бо́льшую реальность, а не подменять её абстракцией.</p>
+        <div class="mini-list">
+          <div class="mini"><span>Христос — глава церкви</span><span>Col 1:18</span></div>
+          <div class="mini"><span>Церковь — Его тело</span><span>Eph 1:22–23</span></div>
+          <div class="mini"><span>Христос возлюбил церковь</span><span>Eph 5:25</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="kingdom">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">05 · Царство и экклесия</div></div>
+      <div><h2>Связаны. Но не одно и то же.</h2><p class="intro">Полезное различение: Царство — это Божье правление, а экклесия — люди, собранные под властью Царя. Разные христианские традиции проводят границу по-разному, но слишком быстрое слияние этих двух понятий рождает путаницу.</p></div>
+    </div>
+    <div class="kingdom">
+      <figure class="relation-map reveal" aria-labelledby="relationship-caption">
+        <article class="relation-card kingdom-card">
+          <div class="map-index"><span>01</span> Правление</div>
+          <h3>Царство</h3>
+          <p class="map-definition">Действующая власть Бога</p>
+          <ul class="map-list"><li>Власть</li><li>Спасающее правление</li><li>Грядущее обновление</li></ul>
+        </article>
+        <div class="king-node" aria-label="Иисус — Царь"><span>Один центр</span><strong>Иисус</strong><small>Царь</small></div>
+        <article class="relation-card ecclesia-card">
+          <div class="map-index"><span>02</span> Народ</div>
+          <h3>Экклесия</h3>
+          <p class="map-definition">Люди под властью Царя</p>
+          <ul class="map-list"><li>Собраны</li><li>Сформированы</li><li>Устроены и посланы</li></ul>
+        </article>
+        <figcaption class="relation-note" id="relationship-caption"><strong>Различимы, но неразделимы.</strong> Царь царствует; собрание собирается под Его властью и свидетельствует о ней.</figcaption>
+      </figure>
+      <div class="king-copy reveal">
+        <h3>Собрание политично в своей верности задолго до того, как становится партийным в своей программе.</h3>
+        <p>Называть Иисуса Господом, исповедовать одно тело поверх сословий и этносов, жить экономической щедростью, отказываться от чужого поклонения и воплощать другой общественный порядок — всё это имеет публичные последствия.</p>
+        <div class="callout"><b>Осторожно:</b> Новый Завет не превращает церковь в государство и не вручает ей принудительный аппарат гражданской власти. Её главное оружие — истина, святость, молитва, служение, страдающая любовь и свидетельство.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tensions">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">06 · Власть и напряжения</div></div>
+      <div><h2>Где текст говорит ясно — и где христиане расходятся.</h2><p class="intro">Хорошая экклезиология отличает то, что прямо сказано в тексте, от богословских систем, надстроенных над ним.</p></div>
+    </div>
+
+    <div class="authority">
+      <article class="auth-card card reveal">
+        <h3>Ключи · связывать · разрешать</h3>
+        <p>В Мф. 16 слова Иисуса Петру связывают церковь с ключами Царства; в Мф. 18 связывание и разрешение стоят в контексте общинного вразумления. Тексты явно говорят о настоящей власти и настоящей ответственности.</p>
+        <div class="refs"><span class="refchip">Matt 16:18–19</span><span class="refchip">Matt 18:15–20</span><span class="refchip">John 20:21–23</span></div>
+      </article>
+      <article class="auth-card card reveal">
+        <h3>Руководство · снаряжение · служение</h3>
+        <p>Пресвитеры и епископы пасут; одарённые служители снаряжают; святые делают дело служения; каждая часть вносит своё. Руководство в Новом Завете весомо, но тело при этом не мыслится как пассивная публика.</p>
+        <div class="refs"><span class="refchip">Acts 20:28</span><span class="refchip">Eph 4:11–16</span><span class="refchip">1 Pet 5:1–4</span></div>
+      </article>
+    </div>
+
+    <div class="debate reveal">
+      <h3>Линия разлома в толковании: Пётр, служение и преемство</h3>
+      <p>Католическая, православная и протестантская традиции читают Мф. 16 и дальнейшую форму церковной власти по-разному. Этот разбор не делает вид, что спор растворяется от одного разбора греческого слова. Что можно сказать, не сплющивая традиции: строит Иисус; у Петра выдающаяся роль; исповедание Иисуса — в центре; церковь получает настоящую ответственность; и дальше Новый Завет описывает нескольких пресвитеров-епископов и всё тело, участвующее в служении.</p>
+    </div>
+
+    <div style="height:18px"></div>
+    <div class="perspective">
+      <article class="persp reveal"><div class="tag">Акцент на преемственности</div><h3>Израиль → Церковь</h3><p>Подчёркивает, что греческий Ветхий Завет уже называет Израиль <em>ekklesia</em>, а Первое послание Петра переносит заветный язык Исхода 19 на народ Христа.</p></article>
+      <article class="persp reveal"><div class="tag">Акцент на различии</div><h3>Израиль и Церковь</h3><p>Настаивает, что «собрание» — гибкое слово и что общая лексика сама по себе не решает вопросов об обетованиях, заветах и эсхатологии применительно к этническому Израилю.</p></article>
+      <article class="persp reveal"><div class="tag">Общая почва</div><h3>Христос в центре</h3><p>Во всех крупных традициях Новый Завет говорит ясно: язычники приближены во Христе, примирены с верующими из иудеев в одном теле и вместе строятся в жилище Божие.</p></article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">07 · Проверка на прочность</div></div>
+      <div><h2>Шесть упрощений, которые делают экклесию меньше.</h2><p class="intro">Речь не о том, что здания, проповеди, организации или лидеры — это плохо. Искажение начинается там, где часть принимают за целое.</p></div>
+    </div>
+    <div class="anti">
+      <article class="anti-card reveal"><div class="x">×</div><h3>Церковь = здание</h3><p>Собрание может встречаться и в доме. А сами люди в Писании названы храмом Божьим.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3>Церковь = мероприятие</h3><p>Совместная встреча важна, но Деяния и послания описывают непрерывную общую жизнь, а не только еженедельную программу.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3>Церковь = публика</h3><p>Послание к Ефесянам ждёт работы от «каждой части»; Первое Коринфянам раздаёт дары по всему телу.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3>Церковь = лидер</h3><p>Лидеры пасут и снаряжают; глава тела — только Христос.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3>Церковь = личная духовность</h3><p>Крещение в одно тело создаёт взаимные обязательства, которые не свести к вере наедине с собой.</p></article>
+      <article class="anti-card reveal"><div class="x">×</div><h3>Церковь = политическая машина</h3><p>У собрания есть публичная верность и публичное свидетельство, но его новозаветная миссия не сводится к партийной силе.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="scripture">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><div class="eyebrow">08 · Читай сами тексты</div></div>
+      <div><h2>Пусть слова остаются перед глазами.</h2><p class="intro">Десять несущих отрывков этого разбора, выписанных целиком по Синодальному переводу. Ссылки на места Писания по всей странице тоже открываются в Синодальном переводе — чтобы посмотреть контекст пошире.</p></div>
+    </div>
+    <div class="scripture-shell reveal">
+      <div class="scripture-top">
+        <div><div class="kicker">Компактная канонная хрестоматия</div><h3>Собрание становится идентичностью.</h3></div>
+        <span class="translation-badge">Синодальный перевод</span>
+      </div>
+      <div class="scripture-grid">
+        <article class="verse-card">
+          <span class="verse-stage">Израиль собран</span>
+          <blockquote><sup>10</sup>о том дне, когда ты стоял пред Господом, Богом твоим, при Хориве, и когда сказал Господь мне: собери ко Мне народ, и Я возвещу им слова Мои, из которых они научатся бояться Меня во все дни жизни своей на земле и научат сыновей своих.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Deuteronomy%204%3A10&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Втор. 4:10 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Хвала в собрании</span>
+          <blockquote><sup>23</sup>Буду возвещать имя Твое братьям моим,<br>посреди собрания восхвалять Тебя.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Psalm%2021%3A23&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Пс. 21:23 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Иисус называет собрание Своим</span>
+          <blockquote><sup>18</sup>и Я говорю тебе: ты — Петр, и на сем камне Я создам Церковь Мою, и врата ада не одолеют ее.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Matthew%2016%3A18&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Мф. 16:18 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Слово остаётся обычным</span>
+          <blockquote><sup>32</sup>Между тем одни кричали одно, а другие другое, ибо собрание было беспорядочное, и большая часть собравшихся не знали, зачем собрались.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%2019%3A32&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Деян. 19:32 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Общий уклад жизни</span>
+          <blockquote><sup>42</sup>И они постоянно пребывали в учении Апостолов, в общении и преломлении хлеба и в молитвах.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%202%3A42&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Деян. 2:42 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Одно тело, много членов</span>
+          <blockquote><sup>27</sup>И вы — тело Христово, а порознь — члены.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2012%3A27&amp;version=SYNO" target="_blank" rel="noreferrer"><span>1 Кор. 12:27 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Дом и храм</span>
+          <blockquote><sup>19</sup>Итак вы уже не чужие и не пришельцы, но сограждане святым и свои Богу, <sup>20</sup>быв утверждены на основании Апостолов и пророков, имея Самого Иисуса Христа краеугольным камнем, <sup>21</sup>на котором все здание, слагаясь стройно, возрастает в святый храм в Господе, <sup>22</sup>на котором и вы устрояетесь в жилище Божие Духом.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Ephesians%202%3A19-22&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Еф. 2:19–22 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Священнический народ</span>
+          <blockquote><sup>9</sup>Но вы — род избранный, царственное священство, народ святой, люди, взятые в удел, дабы возвещать совершенства Призвавшего вас из тьмы в чудный Свой свет.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Peter%202%3A9&amp;version=SYNO" target="_blank" rel="noreferrer"><span>1 Пет. 2:9 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Небесный горизонт</span>
+          <blockquote><sup>22</sup>Но вы приступили к горе Сиону и ко граду Бога живаго, к небесному Иерусалиму и тьмам Ангелов, <sup>23</sup>к торжествующему собору и церкви первенцев, написанных на небесах, и к Судии всех Богу, и к духам праведников, достигших совершенства, <sup>24</sup>и к Ходатаю нового завета Иисусу, и к Крови кропления, говорящей лучше, нежели Авелева.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Hebrews%2012%3A22-24&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Евр. 12:22–24 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="verse-card">
+          <span class="verse-stage">Видима и подотчётна</span>
+          <blockquote><sup>20</sup>Тайна семи звезд, которые ты видел в деснице Моей, и семи золотых светильников есть сия: семь звезд суть Ангелы семи церквей; а семь светильников, которые ты видел, суть семь церквей.</blockquote>
+          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Revelation%201%3A20&amp;version=SYNO" target="_blank" rel="noreferrer"><span>Откр. 1:20 · СП</span><span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <p class="translation-note">Русский текст Писания приводится по Синодальному переводу — он находится в общественном достоянии. Английская сторона страницы цитирует NIV® по разрешению Biblica, Inc.®</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="summary reveal">
+      <div class="kicker">Всё это, сжато</div>
+      <div class="big">Экклесия — это <em>народ Иисуса</em>: собранный под Его господством, населённый Его Духом, сформированный Его Словом, соединённый друг с другом и посланный в мир как живой знак Его Царства.</div>
+      <p>Эта фраза — синтез, а не словарная статья. Словарь даёт «собрание». Канон наполняет это собрание идентичностью, устройством, практиками, властью, надеждой и миссией.</p>
+      <div class="readmap">
+        <div class="read"><b>Начни со слова</b><span>Acts 19:32–41 · Acts 7:38</span></div>
+        <div class="read"><b>Посмотри, как его определяет Иисус</b><span>Matthew 16:13–20 · 18:15–20</span></div>
+        <div class="read"><b>Посмотри, как оно обретает форму</b><span>Acts 2:37–47 · 4:23–35 · 13:1–3</span></div>
+        <div class="read"><b>Изучи его анатомию</b><span>1 Cor 12–14 · Eph 2–5 · 1 Pet 2</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sources">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="eyebrow">Заметки об источниках</div></div>
+      <div><h2 style="font-size:46px">Источники и ограничители толкования.</h2><p class="intro">Основную работу делают сами библейские тексты. Словарные источники и Септуагинта нужны, чтобы разбор слова оставался честным.</p></div>
+    </div>
+    <details open><summary>Греческое употребление</summary><p https://atlas.perseus.tufts.edu/dictionaries/headword/%E1%BC%90%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1/" target="_blank" rel="noreferrer">Лексические данные проекта Scaife дают классическое значение: собрание граждан, созываемое регулярно. Это базовая точка употребления; богословие приходит из контекста собрания и из того, кому оно принадлежит, а не из разбора существительного на корни. <a href=../</p></details>
+    <details><summary>Связь с Септуагинтой</summary><p https://www.studylight.org/interlinear-study-bible/greek/deuteronomy/4-10.html" target="_blank" rel="noreferrer">Во Второзаконии 4:10 греческий Ветхий Завет употребляет <em>ekklēsias</em> о народе, собранном перед Богом у Хорива. Родственные тексты про «день собрания» — Втор. 9:10 и 18:16. <a href=../</p></details>
+    <details><summary>Ключевые новозаветные проверки</summary><p https://www.sbl-site.org/resources/digital-texts/sbl-greek-new-testament/" target="_blank" rel="noreferrer">Греческий Новый Завет SBL подтверждает <em>ekklēsia</em> трижды в Деян. 19:32, 39 и 41 применительно к эфесскому сборищу, включая «законное собрание». Мф. 16:18 фиксирует слова Иисуса «Церковь Мою»; Деян. 7:38 применяет слово к собранию в пустыне; 1 Кор. 12, Еф. 2–5 и 1 Пет. 2 дают основные церковные образы и практики. <a href=../</p></details>
+    <details><summary>Ограничитель: Израиль и церковь</summary><p>Связь с Септуагинтой — сильный довод в пользу понятийной преемственности «собрания народа Божьего», но сама по себе она не решает ни одной богословской системы касательно Израиля, заветов, обетований о земле или эсхатологии. Эти вопросы требуют куда более широкой экзегезы, чем может дать одно слово <em>ekklesia</em>.</p></details>
+    <details><summary>О переводах цитат</summary><p https://www.biblica.com/permissions/" target="_blank" rel="noreferrer">На английской стороне страницы цитаты приводятся по NIV: Biblica разрешает использовать до 500 стихов без отдельного письменного разрешения, если цитаты не воспроизводят целую книгу Библии, занимают менее 25% работы и сопровождаются требуемым уведомлением. Русская сторона использует Синодальный перевод — он в общественном достоянии, и никакого разрешения не требуется. <a href=../</p></details>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <span>ЭККЛЕСИЯ · Визуальный канонический разбор</span>
+  <span>Сделано для исследования · Читай каждый отрывок в его более широком контексте.</span>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const btn = document.getElementById('theme');
+  const themeIcon = btn.querySelector('.theme-icon');
+  const themeLabel = btn.querySelector('.theme-label');
+  const themeColor = document.getElementById('theme-color');
+
+  const isRu = () => root.getAttribute('data-lang') === 'ru';
+
+  const syncThemeControl = () => {
+    const isLight = root.dataset.theme === 'light';
+    const next = isLight ? 'dark' : 'light';
+    themeIcon.textContent = isLight ? '◐' : '☼';
+    themeLabel.textContent = isRu()
+      ? (isLight ? 'Тёмная' : 'Светлая')
+      : (isLight ? 'Dark' : 'Light');
+    const label = isRu()
+      ? `Переключить на ${next === 'dark' ? 'тёмную' : 'светлую'} тему`
+      : `Switch to ${next} mode`;
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+    themeColor.content = isLight ? '#f5f0e6' : '#090812';
+  };
+
+  btn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('ecclesia-theme', root.dataset.theme); } catch (error) { /* storage can be unavailable */ }
+    syncThemeControl();
+  });
+
+  const systemTheme = matchMedia('(prefers-color-scheme: light)');
+  const handleSystemTheme = event => {
+    try { if (localStorage.getItem('ecclesia-theme')) return; } catch (error) { return; }
+    root.dataset.theme = event.matches ? 'light' : 'dark';
+    syncThemeControl();
+  };
+  if (systemTheme.addEventListener) systemTheme.addEventListener('change', handleSystemTheme);
+  else systemTheme.addListener(handleSystemTheme);
+  syncThemeControl();
+
+  const revealItems = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }), { threshold: .08, rootMargin: '0px 0px -3% 0px' });
+    revealItems.forEach(element => observer.observe(element));
+  } else {
+    revealItems.forEach(element => element.classList.add('visible'));
+  }
+
+  /* Book abbreviations, longest first so "Matthew" is not eaten by "Matt".
+     The English reference is what the Bible Gateway URL is built from; only
+     the visible label is localised. */
+  const REF_BOOKS = [
+    ['Matthew', 'Мф.'], ['Deuteronomy', 'Втор.'], ['Deut', 'Втор.'],
+    ['1 Cor', '1 Кор.'], ['1 Pet', '1 Пет.'], ['1 Tim', '1 Тим.'],
+    ['Matt', 'Мф.'], ['Acts', 'Деян.'], ['John', 'Ин.'], ['Rom', 'Рим.'],
+    ['Gal', 'Гал.'], ['Eph', 'Еф.'], ['Col', 'Кол.'], ['Heb', 'Евр.'],
+    ['Rev', 'Откр.'], ['Ps', 'Пс.'], ['Ex', 'Исх.']
+  ];
+  const ruRef = text => REF_BOOKS.reduce((out, [en, ru]) => out.split(en).join(ru), text);
+
+  /* Russian Bibles number the psalms the Septuagint way, so a psalm has to be
+     renumbered before it is either shown or looked up. Only the psalms this
+     page actually cites are listed. */
+  const RU_PSALMS = [['Ps 22:22', 'Ps 21:23']];
+  const ruPsalm = text => RU_PSALMS.reduce((out, [en, ru]) => out.split(en).join(ru), text);
+
+  const refHosts = document.querySelectorAll('.node .ref, .meta .ref, .refchip, .mini span:last-child, .read span');
+  refHosts.forEach(element => { element.dataset.refEn = element.textContent.trim(); });
+
+  const paintRefs = () => {
+    refHosts.forEach(element => {
+      const reference = element.dataset.refEn;
+      const version = isRu() ? 'SYNO' : 'NIV';
+      const target = isRu() ? ruPsalm(reference) : reference;
+      const link = document.createElement('a');
+      link.className = 'scripture-ref-link';
+      link.href = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(target.replace(/·/g, ';'))}&version=${version}`;
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      link.textContent = isRu() ? ruRef(target) : reference;
+      link.setAttribute('aria-label', isRu()
+        ? `Читать ${ruRef(target)} в Синодальном переводе`
+        : `Read ${reference} in the NIV`);
+      element.replaceChildren(link);
+    });
+  };
+  paintRefs();
+
+  document.addEventListener('esmrsky:lang', () => { paintRefs(); syncThemeControl(); });
+
+  const progress = document.getElementById('scroll-progress');
+  let progressFrame = 0;
+  const updateProgress = () => {
+    progressFrame = 0;
+    const distance = document.documentElement.scrollHeight - innerHeight;
+    progress.style.width = `${distance > 0 ? Math.min(100, scrollY / distance * 100) : 0}%`;
+  };
+  addEventListener('scroll', () => {
+    if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
+  }, { passive: true });
+  addEventListener('resize', updateProgress);
+  updateProgress();
+</script>
+
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
