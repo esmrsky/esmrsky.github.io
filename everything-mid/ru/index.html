@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/everything-mid/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/everything-mid/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/everything-mid/">
+<!-- lang-alt:end -->
+<title>почему всё стало таким никаким?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:dark;
+    --ink:#0E0D0B;
+    --ink-soft:#16140F;
+    --cream:#F2EBDC;
+    --cream-dim:#A39C8C;
+    --orange:#F3651C;
+    --line:rgba(242,235,220,.10); /* hairlines / card borders */
+    --hi:#ffffff;                 /* high-emphasis text */
+
+    /* meaning-coded stage palette */
+    --teal:#4FB6A8;     /* easy mode  */
+    --violet:#9B7FE0;   /* the hole   */
+    --amber:#E0A92E;    /* the fade   */
+    --red:#E5564B;      /* the reset  */
+    --grey:#807A6E;     /* flatline   */
+    --wine:#C6477E;     /* shame      */
+    --toxic:#86A84B;    /* fake exit  */
+    --water:#46A0E0;    /* real exit  */
+
+    --maxw:720px;
+  }
+
+  /* ---- LIGHT MODE: neutrals flip; washed-out accents darken for paper ---- */
+  :root[data-theme="light"]{
+    color-scheme:light;
+    --ink:#EAE3D2;        /* page background (warm paper) */
+    --ink-soft:#F5F0E4;   /* raised surfaces / cards      */
+    --cream:#17150F;      /* body text (near-black)        */
+    --cream-dim:#5E574C;  /* muted text                    */
+    --line:rgba(20,18,12,.16);
+    --hi:#0B0A08;         /* high-emphasis text            */
+    --orange:#D9540F;
+    --teal:#2F8E80;
+    --violet:#7657C9;
+    --amber:#9A6B0E;      /* yellow dies on cream -> deep goldenrod */
+    --red:#CC3C30;
+    --grey:#5C554A;       /* still reads "dead", now legible */
+    --wine:#AE2F66;
+    --toxic:#5E7A2A;      /* sickly green -> darker olive    */
+    --water:#2C7FC4;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:"Instrument Sans",system-ui,sans-serif;
+    font-size:18px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    text-wrap:pretty;
+  }
+  ::selection{background:var(--orange);color:#0E0D0B}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 60px;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:.30;mix-blend-mode:screen;will-change:transform}
+  .blob.b1{width:44vmax;height:44vmax;max-width:460px;max-height:460px;background:var(--orange);top:-14%;left:-8%;animation:drift1 26s ease-in-out infinite}
+  .blob.b2{width:38vmax;height:38vmax;max-width:420px;max-height:420px;background:var(--water);bottom:-16%;right:-6%;animation:drift2 31s ease-in-out infinite}
+  .blob.b3{width:34vmax;height:34vmax;max-width:380px;max-height:380px;background:var(--violet);top:28%;left:54%;animation:drift3 28s ease-in-out infinite}
+  .blob.b4{width:28vmax;height:28vmax;max-width:320px;max-height:320px;background:var(--teal);bottom:6%;left:4%;animation:drift4 34s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(9%,7%) scale(1.18)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8%,-5%) scale(1.12)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-7%,8%) scale(.88)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8%,-7%) scale(1.16)}}
+  .particle{position:absolute;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;opacity:0;will-change:transform,opacity;animation:floatUp linear infinite}
+  @keyframes floatUp{0%{transform:translateY(24px) scale(.6);opacity:0}18%{opacity:.65}82%{opacity:.65}100%{transform:translateY(-70px) scale(1);opacity:0}}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:26px}
+  .hero .wrap{position:relative;z-index:2}
+  .hero h1{
+    font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:800;line-height:.9;letter-spacing:-.035em;
+    font-size:clamp(48px,12.5vw,114px);
+    margin-bottom:30px;text-wrap:balance;
+  }
+  .hero h1 em{font-family:"Fraunces",serif;font-style:italic;font-weight:600;letter-spacing:-.01em;color:var(--orange)}
+  .hero .sub{font-size:clamp(18px,4.5vw,23px);color:var(--cream);max-width:30ch;line-height:1.45}
+  .hero .sub b{color:var(--orange);font-weight:600}
+  .scroll-cue{position:absolute;bottom:30px;left:22px;z-index:2;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-dim);display:flex;align-items:center;gap:10px}
+  .scroll-cue .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* ---------- SECTIONS ---------- */
+  section.step{padding:62px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow .emoji{font-size:21px;filter:saturate(1.1)}
+  .eyebrow .num{color:var(--cream-dim)}
+  .step h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(30px,7vw,46px);line-height:1.04;letter-spacing:-.015em;margin-bottom:22px;text-wrap:balance}
+  .step p{margin-bottom:18px;max-width:62ch}
+  .step p:last-child{margin-bottom:0}
+  .lead{font-size:21px;line-height:1.5}
+  .dim{color:var(--cream-dim)}
+  strong{font-weight:600;color:var(--hi)}
+
+  .accent-bar{width:46px;height:4px;border-radius:3px;margin-bottom:24px}
+
+  /* example chips */
+  .examples{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 4px}
+  .chip{font-size:15.5px;line-height:1.3;padding:9px 14px;border-radius:13px;background:var(--ink-soft);background:color-mix(in srgb,var(--accent,var(--cream-dim)) 9%,var(--ink-soft));border:1px solid var(--line);border:1px solid color-mix(in srgb,var(--accent,transparent) 32%,var(--line))}
+  .chip b{color:var(--accent,var(--cream));font-weight:600}
+
+  /* pull quote */
+  .pq{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:clamp(22px,5.2vw,29px);line-height:1.32;margin:48px 0 16px;padding:18px 22px;border-left:4px solid var(--orange);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--orange) 7%,transparent);color:var(--hi);text-wrap:pretty}
+  .pq.alt{border-left-color:currentColor;background:color-mix(in srgb,currentColor 8%,transparent)}
+
+  /* scripture tag */
+  .verse{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.02em;color:var(--cream-dim);margin-top:8px}
+  .verse b{color:var(--cream)}
+
+  /* ---------- MECHANISM CARDS ---------- */
+  .mech-intro{margin-bottom:34px}
+  .cards{display:grid;grid-template-columns:1fr;gap:16px}
+  .card{background:var(--ink-soft);border:1px solid var(--line);border-radius:18px;padding:24px 22px;position:relative;overflow:hidden}
+  .card .tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:13px}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:25px;line-height:1.05;margin-bottom:6px;text-wrap:balance}
+  .card .mech-name{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--cream-dim);margin-bottom:14px}
+  .card p{font-size:16.5px;margin-bottom:12px;max-width:none}
+  .card .punch{font-family:"Fraunces",serif;font-style:italic;font-size:18px;color:var(--hi);margin:26px 0 0}
+  .card svg.viz{width:100%;height:54px;margin:6px 0 16px;display:block}
+
+  /* glitch viz animations (CSS so reduced-motion can disable them) */
+  .v-want{transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 6px var(--orange));animation:vSplitWant 4.2s ease-in-out infinite}
+  .v-like{transform-box:fill-box;transform-origin:center;animation:vSplitLike 4.2s ease-in-out infinite}
+  @keyframes vSplitWant{0%,100%{transform:translateX(0)}50%{transform:translateX(-64px)}}
+  @keyframes vSplitLike{0%,100%{transform:translateX(0);opacity:1}50%{transform:translateX(80px);opacity:.12}}
+  .v-dash{animation:vDash .8s linear infinite}
+  @keyframes vDash{to{stroke-dashoffset:-16}}
+  .v-bar{transform-box:fill-box;transform-origin:bottom;animation:vFade 3s ease-in-out infinite}
+  @keyframes vFade{0%,60%,100%{transform:scaleY(.6)}16%{transform:scaleY(1.55)}}
+  .v-drop{transform-box:fill-box;animation:vDrop 3.6s ease-in-out infinite}
+  @keyframes vDrop{0%{transform:translateY(-22px);opacity:0}12%{opacity:1}68%{transform:translateY(0);opacity:1}86%{transform:translateY(0);opacity:0}100%{transform:translateY(-22px);opacity:0}}
+
+  /* ---------- WAVE MODULE ---------- */
+  .wave-mod{background:color-mix(in srgb,var(--phase,var(--water)) 9%,transparent);border:1px solid color-mix(in srgb,var(--phase,var(--water)) 36%,var(--line));border-radius:20px;padding:26px 22px 28px;margin:8px 0 4px;transition:background .5s ease,border-color .5s ease}
+  .wave-mod .wlabel{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--water);margin-bottom:16px;display:flex;align-items:center;gap:9px}
+  .phases{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .phases li{font-family:"Instrument Sans",sans-serif;font-size:15px;line-height:1.3;color:var(--cream);opacity:.3;transform:translateX(0);transition:opacity .45s ease,color .45s ease,transform .45s ease}
+  .phases li.active{opacity:1;color:var(--pc,var(--water));font-weight:600;transform:translateX(5px)}
+  svg#wave{width:100%;height:150px;display:block}
+  .wave-canvas{position:relative}
+  .surfer{position:absolute;left:0;top:120px;width:15px;height:15px;border-radius:50%;background:var(--dotc,var(--water));transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 0 5px color-mix(in srgb,var(--dotc,var(--water)) 18%,transparent),0 0 16px 3px color-mix(in srgb,var(--dotc,var(--water)) 42%,transparent);transition:background .4s ease,box-shadow .4s ease}
+  .surf-uses{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+  .surf-uses .uses-label{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--water);margin-bottom:12px}
+  .surf-uses .examples{margin:0}
+
+  /* moves list in real exit */
+  .move{display:flex;gap:16px;margin-bottom:26px;align-items:flex-start}
+  .move .n{font-family:"Fraunces",serif;font-weight:900;font-size:40px;line-height:.8;color:var(--water);flex:0 0 auto;width:42px}
+  .move .body h4{font-family:"Fraunces",serif;font-weight:600;font-size:21px;margin-bottom:6px}
+  .move .body p{font-size:16.5px;margin-bottom:0;max-width:54ch}
+
+  /* ---------- TL;DR ---------- */
+  /* longhand, not shorthand: this section carries .wrap too, and a `padding`
+     shorthand here would zero out .wrap's 22px gutter and flush it to the edge. */
+  .tldr{padding-top:60px;padding-bottom:30px}
+  .tldr .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .tldr .box{border-radius:16px;padding:20px 18px;border:1px solid var(--line)}
+  .tldr .box.loop{background:rgba(229,86,75,.07);border-color:rgba(229,86,75,.3)}
+  .tldr .box.out{background:rgba(70,160,224,.07);border-color:rgba(70,160,224,.3)}
+  .tldr .box h5{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .tldr .box.loop h5{color:var(--red)}
+  .tldr .box.out h5{color:var(--water)}
+  .tldr .box p{font-size:15px;line-height:1.45;color:var(--cream)}
+  .tldr .box.loop p{color:var(--cream-dim)}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:50px 0 70px;border-top:1px solid var(--line);text-align:center}
+  footer .closer{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(26px,6vw,38px);line-height:1.05;letter-spacing:-.015em;margin-bottom:22px;text-wrap:balance}
+  footer .closer em{font-style:italic;color:var(--water)}
+  footer .src{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:var(--cream-dim);line-height:1.7;max-width:54ch;margin:0 auto}
+
+  /* reveal anim */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:600px){
+    body{font-size:17px}
+    .step{padding:50px 0}
+    .tldr .grid{grid-template-columns:1fr}
+    .move .n{font-size:34px;width:34px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .scroll-cue .dot{animation:none}
+    .v-want,.v-like,.v-bar,.v-drop,.v-dash{animation:none}
+    .v-want{transform:translateX(-50px)}
+    .v-like{transform:translateX(64px);opacity:.4}
+    .blob,.particle{animation:none}
+  }
+  /* keyboard focus */
+  a:focus-visible,button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+  /* theme toggle */
+  .theme-toggle{position:fixed;top:14px;right:14px;z-index:100;font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.04em;color:var(--cream);background:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease,border-color .2s ease}
+  .theme-toggle:hover{border-color:var(--orange)}
+  .theme-toggle:active{transform:scale(.95)}
+  .theme-toggle .ti{font-size:13px;line-height:1}
+  /* the other language: a text link in the footer, not a floating pill. */
+  .lang-alt{display:inline-block;margin-top:20px;font-family:"JetBrains Mono",monospace;
+    font-size:11.5px;letter-spacing:.08em;color:var(--cream-dim);text-decoration:none;
+    border-bottom:1px solid transparent;transition:color .2s ease,border-color .2s ease}
+  .lang-alt:hover{color:var(--orange);border-bottom-color:currentColor}
+
+  /* reading comfort: balance display text */
+  h1, h2, h3 { text-wrap: balance; }
+</style>
+</head>
+<body>
+
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить светлую или тёмную тему"><span class="ti" id="themeIcon">🌙</span><span id="themeLabel">dark</span></button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg" id="heroBg">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  </div>
+  <div class="wrap">
+    <div class="kicker">карта петли · и выход из неё</div>
+    <h1>почему <em>всё</em><br>стало никаким?</h1>
+    <p class="sub">раньше ты что-то чувствовал. теперь всё какое-то <b>ну такое</b>. вот что именно случилось с твоим мозгом — и как это вернуть.</p>
+  </div>
+  <div class="scroll-cue"><span class="dot"></span> листай</div>
+</header>
+
+<!-- 0 EASY MODE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--teal)"></div>
+    <div class="eyebrow"><span class="emoji">🍽️</span><span class="num">00 — режим обучения</span></div>
+    <h2 style="color:var(--teal)">базовое в тебя уже предустановлено.</h2>
+    <p class="lead">голоден → поешь. устал → поспи. скучно → полистай. это работает само, думать не надо.</p>
+    <p class="dim">какое-то время быть человеком — это лёгкий уровень сложности. игра играет сама в себя.</p>
+  </div>
+</section>
+
+<!-- 1 THE HOLE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--violet)"></div>
+    <div class="eyebrow"><span class="emoji">🕳️</span><span class="num">01 — дыра</span></div>
+    <h2 style="color:var(--violet)">потом до тебя доходит, что под базовым есть ещё кое-что.</h2>
+    <p>ты хочешь, чтобы тебя <strong>знали</strong>. чтобы ты <strong>что-то значил</strong>. чувствовать близость с людьми. строить что-то, а не ощущать себя нпс в собственной жизни.</p>
+    <p>и вот проблема: <strong>инструкции к этому никто не выдаёт.</strong> снеки не лечат одиночество. восемь часов сна не лечат ощущение, что тебя не видно. и ты делаешь самую человеческую вещь на свете — хватаешься за то, что <em>ближе всего</em> лежит и вроде бы может сработать.</p>
+    <p class="verse">📖 <b>«Есть пути, которые кажутся человеку прямыми; но конец их — путь к смерти».</b> — Притчи 14:12, Синодальный перевод. запомни этот стих. он ещё вернётся.</p>
+  </div>
+</section>
+
+<!-- 2 THE SUBSTITUTE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--orange)"></div>
+    <div class="eyebrow"><span class="emoji">🪤</span><span class="num">02 — подмена</span></div>
+    <h2 style="color:var(--orange)">подмена, которую никто не замечает.</h2>
+    <p>дыра говорит <em>«близость»</em>. ты слышишь <em>«открой приложение»</em>.<br>дыра говорит <em>«отдых»</em>. ты слышишь <em>«ещё одну серию»</em>.</p>
+    <p>подмена всегда быстрее, ближе и дешевле настоящего. и поначалу? <strong>вроде даже работает.</strong></p>
+    <p class="pq">вот и вся ловушка. работает ровно настолько, чтобы ты возвращался.</p>
+  </div>
+</section>
+
+<!-- 3 LOOP MECHANICS -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--orange)"></div>
+    <div class="eyebrow"><span class="emoji">🌀</span><span class="num">03 — то, в чём все ошибаются</span></div>
+    <h2>подсесть — это не «слишком кайфово». всё ровно наоборот.</h2>
+    <div class="mech-intro">
+      <p>большинство думает: зависимость = слишком много удовольствия. нет. на самом деле там <strong>три отдельных сбоя</strong>, и вся игра в том, чтобы их различать, — потому что у каждого свой выход.</p>
+    </div>
+
+    <div class="cards">
+      <!-- split -->
+      <div class="card reveal" style="--accent:var(--orange)">
+        <div class="tag" style="color:var(--orange)"><span>🧲</span> сбой 01</div>
+        <h3>расщепление</h3>
+        <div class="mech-name">хотеть ≠ нравиться</div>
+        <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
+          <line x1="0" y1="27" x2="300" y2="27" stroke="var(--line)" stroke-width="1"/>
+          <circle class="v-want" cx="150" cy="27" r="7" fill="var(--orange)"/>
+          <circle class="v-like" cx="150" cy="27" r="7" fill="none" stroke="var(--cream-dim)" stroke-width="2"/>
+          <text x="44" y="50" fill="var(--orange)" font-family="JetBrains Mono" font-size="9">ХОЧУ</text>
+          <text x="228" y="50" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="9">НРАВИТСЯ</text>
+        </svg>
+        <p>в мозге работают две системы: одна <strong>хочет</strong>, другая <strong>получает удовольствие</strong>. по идее они идут вместе. в петле они разводятся. хотение остаётся громким. удовольствие затихает.</p>
+        <div class="examples">
+          <span class="chip">обновляешь ленту, где <b>ничего нового</b> нет</span>
+          <span class="chip">открываешь приложение, которое <b>только что закрыл</b></span>
+          <span class="chip">пишешь «чё делаешь», хотя <b>ответ</b> тебе и не нужен</span>
+          <span class="chip">листаешь то, что <b>даже не читаешь</b></span>
+          <span class="chip">наконец купил → и <b>ничего</b> не чувствуешь, когда оно приходит</span>
+        </div>
+        <p class="punch">погоня переживает награду.</p>
+      </div>
+
+      <!-- fade -->
+      <div class="card reveal" style="--accent:var(--amber)">
+        <div class="tag" style="color:var(--amber)"><span>📉</span> сбой 02</div>
+        <h3>выцветание</h3>
+        <div class="mech-name">толерантность</div>
+        <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
+          <rect class="v-bar" style="animation-delay:0s"   x="10"  y="20" width="40" height="26" rx="3" fill="var(--amber)" opacity="1"/>
+          <rect class="v-bar" style="animation-delay:.16s" x="70"  y="25" width="40" height="21" rx="3" fill="var(--amber)" opacity=".82"/>
+          <rect class="v-bar" style="animation-delay:.32s" x="130" y="30" width="40" height="16" rx="3" fill="var(--amber)" opacity=".62"/>
+          <rect class="v-bar" style="animation-delay:.48s" x="190" y="35" width="40" height="11" rx="3" fill="var(--amber)" opacity=".42"/>
+          <rect class="v-bar" style="animation-delay:.64s" x="250" y="40" width="40" height="6"  rx="3" fill="var(--amber)" opacity=".26"/>
+        </svg>
+        <p>та же доза перестаёт заходить. нужно <strong>больше</strong>, чтобы почувствовать <strong>то же самое</strong>, — и «то же самое» дорожает.</p>
+        <div class="examples">
+          <span class="chip">сериал, который раньше заходил, теперь <b>фоновый шум</b></span>
+          <span class="chip">смотришь на <b>двойной скорости</b>, потому что обычную не вытерпеть</span>
+          <span class="chip">песня, от которой были мурашки, теперь просто <b>звук</b></span>
+          <span class="chip">мемы, от которых ты умирал → теперь <b>выдох носом</b></span>
+          <span class="chip">нужен <b>«безумный» вечер</b>, чтобы почувствовать обычный</span>
+        </div>
+        <p class="punch">доза растёт. отдача падает.</p>
+      </div>
+
+      <!-- reset -->
+      <div class="card reveal" style="--accent:var(--red)">
+        <div class="tag" style="color:var(--red)"><span>🚨</span> сбой 03 · босс уровня</div>
+        <h3>обнуление</h3>
+        <div class="mech-name">твой базовый уровень падает</div>
+        <svg class="viz" viewBox="0 0 300 54" aria-hidden="true">
+          <line class="v-dash" x1="0" y1="16" x2="150" y2="16" stroke="var(--cream-dim)" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="6" y="12" fill="var(--cream-dim)" font-family="JetBrains Mono" font-size="8">старая норма</text>
+          <path d="M150 16 C 175 16, 175 40, 200 40 L300 40" stroke="var(--red)" stroke-width="2" fill="none"/>
+          <text x="210" y="52" fill="var(--red)" font-family="JetBrains Mono" font-size="8">новая норма</text>
+          <circle class="v-drop" cx="150" cy="40" r="5" fill="var(--red)"/>
+        </svg>
+        <p>вот этот тебя и добивает. базовый уровень уезжает <strong>вниз</strong>. теперь ты гонишься не за кайфом — ты гонишься за <strong>нормой</strong>. отложить телефон ощущается не как свобода, а как <em>зуд. как будто что-то не так.</em></p>
+        <div class="examples">
+          <span class="chip">тишина вдруг стала <b>громкой</b></span>
+          <span class="chip">пауза в 3 секунды → рука сама тянется к <b>телефону</b></span>
+          <span class="chip">не делать этого ощущается как <b>ломка</b>, а не как «что-то упустил»</span>
+          <span class="chip">берёшь телефон в 7 утра <b>раньше, чем сфокусировались глаза</b></span>
+          <span class="chip">день без планов ощущается <b>стрессом</b>, а не отдыхом</span>
+        </div>
+        <p class="punch">«я делаю это для удовольствия» незаметно превращается в «я делаю это, чтобы не было плохо».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 FLATLINE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--grey)"></div>
+    <div class="eyebrow"><span class="emoji">⚪</span><span class="num">04 — ровная линия</span></div>
+    <h2 style="color:var(--grey)">сложи всё это вместе — и вот результат: всё какое-то никакое.</h2>
+    <p>ничего не заходит. ты так натренировал мозг на пиках, что <strong>обычная жизнь теперь читается как скука.</strong> и нужно что-то покрупнее: поездка, фестиваль, новая непонятная влюблённость, закупка снаряги для хобби, которое ты бросишь через три недели.</p>
+    <p>ты не можешь получать удовольствие от <em>сегодня</em>, поэтому перепланировываешь <em>потом</em> — потому что хотя бы планирование даёт приход. и получается <strong>вечная скука по собственному желанию</strong>… только ты этого не выбирал. мозг просто пытается свести баланс.</p>
+    <p class="dim">(и быстро уточню — это <strong>не</strong> навсегда. «скучно, пока ты в петле» ≠ «сломан навсегда». держи это в голове, вторая половина текста ровно про это.)</p>
+  </div>
+</section>
+
+<!-- 5 SHAME ENGINE -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--wine)"></div>
+    <div class="eyebrow"><span class="emoji">🔥</span><span class="num">05 — двигатель стыда</span></div>
+    <h2 style="color:var(--wine)">настоящий тревожный звоночек — не «забыл, зачем зашёл в комнату».</h2>
+    <p class="dim">так бывает у всех. это просто мозг. это миф. настоящий признак вот 👇</p>
+    <p>ты срываешься <strong>один раз</strong>. и вместо «ну ладно, один срыв» мозг выдаёт:</p>
+    <p class="pq alt" style="color:var(--wine)">«ну я уже сломал серию — так чего уж».</p>
+    <p>нарушил правило «не листать» в одиннадцать утра? <em>«ну всё, день слит»</em>. пропустил зал в понедельник? <em>«неделя коту под хвост»</em>. одна трещина превращается в потоп. <span class="dim">(в психологии это называется <strong>эффект нарушения воздержания</strong>: один срыв → «я всё испортил» → пошло-поехало.)</span></p>
+    <p>а потом оно мутирует. смотри, как съезжает:</p>
+    <p class="pq alt" style="color:var(--wine)">«я сделал плохое» → «я <em>плохой</em>» → «я просто такой».</p>
+    <p>этот съезд решает всё. <strong>вина</strong> реально может помочь: она про то, что ты <em>сделал</em>, а сделанное можно исправить. <strong>стыд</strong> просто гниёт внутри и — сюрприз — заставляет срываться <em>чаще</em>. ну а зачем ничтожеству вообще стараться?</p>
+    <p class="punch" style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:var(--hi)">стыд — это не побочный эффект петли. стыд — это топливо, на котором она едет.</p>
+  </div>
+</section>
+
+<!-- 6 FAKE EXIT -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--toxic)"></div>
+    <div class="eyebrow"><span class="emoji">🎭</span><span class="num">06 — фальшивый выход</span></div>
+    <h2 style="color:var(--toxic)">есть люк, к которому все тянутся первым делом. это ловушка.</h2>
+    <p>ты выжат, хочешь выбраться, и мозг предлагает короткий путь:</p>
+    <p class="pq alt" style="color:var(--toxic)">«а что если просто… перестать париться? снести правила. переопределить «облажаться» так, чтобы облажаться было нельзя, — тогда я и не сломаю ничего, да? нет планки — нет вины, проблема решена».</p>
+    <p>и честно — это <em>ощущается</em> свободой.</p>
+    <p><strong>это не свобода. это та же петля, просто приоделась.</strong></p>
+    <p>ты ничего не починил. ты сорвал со стены датчик дыма и назвал это <em>«пожаров больше нет»</em>. голод на месте. дыра на месте. ты просто удалил ту часть себя, которая это замечала.</p>
+    <p class="verse">📖 помнишь <b>Притчи 14:12</b> — путь, который <i>кажется</i> прямым? вот это он и есть. опустить планку так, чтобы нельзя было провалиться, — это не победа. это та же петля, просто тише.</p>
+  </div>
+</section>
+
+<!-- 7 REAL EXIT -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--water)"></div>
+    <div class="eyebrow"><span class="emoji">🌊</span><span class="num">07 — настоящий выход</span></div>
+    <h2 style="color:var(--water)">настоящий выход тяжелее. но он настоящий. три хода.</h2>
+
+    <div class="move reveal">
+      <div class="n">1</div>
+      <div class="body">
+        <h4>🚦 не глуши сигнал.</h4>
+        <p>твоя вина, твоё ощущение «так не работает» — это не враг. это лампочка на панели. не разбивай панель. цель не в том, чтобы перестать <em>чувствовать</em> разрыв, а в том, чтобы его <em>закрыть</em>.</p>
+      </div>
+    </div>
+
+    <div class="move reveal">
+      <div class="n">2</div>
+      <div class="body">
+        <h4>🏄 серфи тягу.</h4>
+        <p>тяга ощущается как <em>приказ</em>. это не приказ. это <strong>волна</strong>. она нарастает, доходит до пика — обычно за пару минут — и если её не кормить, она <strong>рушится</strong>. не нужно стискивать зубы. нужно просто её пересидеть. посмотри, как одна поднимается и падает 👇</p>
+      </div>
+    </div>
+
+    <!-- WAVE MODULE -->
+    <div class="wave-mod reveal">
+      <div class="wlabel"><span>🌊</span> серфинг по тяге</div>
+      <div class="wave-canvas">
+        <svg id="wave" viewBox="0 0 320 150" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="waveGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="320" y2="0">
+              <stop offset="0"    style="stop-color:var(--teal)"/>
+              <stop offset="0.09" style="stop-color:var(--teal)"/>
+              <stop offset="0.18" style="stop-color:var(--amber)"/>
+              <stop offset="0.40" style="stop-color:var(--amber)"/>
+              <stop offset="0.47" style="stop-color:var(--red)"/>
+              <stop offset="0.55" style="stop-color:var(--water)"/>
+              <stop offset="0.86" style="stop-color:var(--water)"/>
+              <stop offset="0.94" style="stop-color:var(--teal)"/>
+              <stop offset="1"    style="stop-color:var(--teal)"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="120" x2="320" y2="120" stroke="var(--line)" stroke-width="1"/>
+          <path id="waveFill" d="M0,120 C60,120 90,40 150,38 C210,40 255,120 320,120 L320,150 L0,150 Z" fill="url(#waveGrad)" opacity="0.14"/>
+          <path id="wavePath" d="M0,120 C60,120 90,40 150,38 C210,40 255,120 320,120" fill="none" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div id="surfer" class="surfer"></div>
+      </div>
+      <ul class="phases" id="phases">
+        <li style="--pc:var(--teal)"><b>🌱 появляется</b> — тяга прилетает из ниоткуда</li>
+        <li style="--pc:var(--amber)"><b>📈 нарастает</b> — кажется срочной, кажется вечной, как будто ты <em>обязан</em></li>
+        <li style="--pc:var(--red)"><b>⛰️ пик</b> — самые тяжёлые несколько секунд; всё тело говорит сдаться</li>
+        <li style="--pc:var(--water)"><b>🌊 рушится</b> — ты её не покормил, и она просто падает</li>
+        <li style="--pc:var(--teal)"><b>✓ прошла</b> — сама. она всегда проходит.</li>
+      </ul>
+      <div class="surf-uses">
+        <div class="uses-label">🏄 самое смешное — ты и так делаешь это весь день:</div>
+        <div class="examples" style="--accent:var(--water)">
+          <span class="chip">🍔 умираешь с голоду в 11 → и <b>ждёшь</b> обеда</span>
+          <span class="chip">🚽 приспичило посреди созвона → и <b>терпишь</b></span>
+          <span class="chip">😴 вырубает в три дня → и <b>дотягиваешь</b> до ночи</span>
+          <span class="chip">😤 хочется сорваться → и <b>прикусываешь язык</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="move reveal" style="margin-top:28px">
+      <div class="n">3</div>
+      <div class="body">
+        <h4>🩵 заполни настоящую дыру — тем, у чего нет кривой привыкания.</h4>
+        <p>вот чего никто не говорит: <strong>любая подделка работает на привыкании.</strong> лента, вещество, непонятные отношения, новые кроссовки — во всём этом выцветание уже встроено. так что настоящий вопрос был не «как получить приход получше», а: <em>есть ли вообще что-то, что не выцветает?</em></p>
+        <p style="margin-top:14px">есть старая фраза про воду: кто пьёт обычную воду, тот снова захочет пить, но есть вода, после которой <strong>«не будет жаждать вовек»</strong>. <span class="verse" style="display:inline">(Ин. 4:14, Синодальный перевод.)</span> вот и всё утверждение: самый глубокий голод — быть узнанным, что-то значить, быть любимым без заслуг — никогда и не мог насытиться чем-то с кривой привыкания. ему нужен источник, который не пересыхает.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 BUILD -->
+<section class="step reveal">
+  <div class="wrap">
+    <div class="accent-bar" style="background:var(--cream)"></div>
+    <div class="eyebrow"><span class="emoji">🏗️</span><span class="num">08 — а потом иди строй</span></div>
+    <h2>а когда ты уже не голодаешь — начинается хорошее.</h2>
+    <p>не сушняк. не обновление ленты собственной жизни в поисках следующего прихода. к тебе возвращается <strong>внимание</strong>. желания совпадают с тем, что ты реально делаешь. туман расходится.</p>
+    <p>и можно наконец начать то, что ты не начинал из-за тумана. <strong>построй что-нибудь. присоединись к чему-нибудь. стань кем-нибудь.</strong> не чтобы заполнить дыру — с дырой уже разобрались, — а просто потому, что теперь можно.</p>
+  </div>
+</section>
+
+<!-- TL;DR -->
+<section class="tldr wrap reveal">
+  <div class="eyebrow"><span class="emoji">⚡</span><span class="num">если коротко</span></div>
+  <div class="grid">
+    <div class="box loop">
+      <h5>🌀 петля</h5>
+      <p>гонишься за тем, что тебе даже не нравится → нужно больше ради меньшего → базовый уровень падает → всё становится никаким → срыв → стыд → «да чего уж» → по кругу. опустить планку — не выход. это просто делает петлю тише.</p>
+    </div>
+    <div class="box out">
+      <h5>🌊 выход</h5>
+      <p>не глуши сигнал. серфи тягу вместо того, чтобы её кормить. насыть настоящий голод тем единственным, что не работает на привыкании. а потом иди строй ту жизнь, которую не начинал из-за тумана.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p class="closer">хватит жить <em>голодным.</em></p>
+    <p class="src">опирается на: «хотеть» против «нравиться» (Berridge и Robinson) · толерантность и дофаминовая точка равновесия (Koob; Lembke) · гедонистическая адаптация · эффект нарушения воздержания (Marlatt) · вина против стыда (Tangney) · серфинг по тяге (MBRP) · Притчи 14:12 и Ин. 4. библейские цитаты — Синодальный перевод.</p>
+    <a class="lang-alt" href="/everything-mid/" lang="en" hreflang="en">English</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- scroll reveals ----
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    els.forEach(function(e){e.classList.add('in');});
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  }
+
+  // ---- hero drifting particles ----
+  var heroBg = document.getElementById('heroBg');
+  if(heroBg && !reduce){
+    var pcolors=['var(--orange)','var(--teal)','var(--violet)','var(--water)','var(--cream)'];
+    for(var pi=0; pi<16; pi++){
+      var d=document.createElement('div');
+      d.className='particle';
+      var sz=(2+Math.random()*4).toFixed(1);
+      d.style.width=sz+'px'; d.style.height=sz+'px';
+      d.style.left=(Math.random()*100).toFixed(1)+'%';
+      d.style.top=(Math.random()*100).toFixed(1)+'%';
+      d.style.color=pcolors[Math.floor(Math.random()*pcolors.length)];
+      d.style.animationDuration=(7+Math.random()*11).toFixed(1)+'s';
+      d.style.animationDelay=(-Math.random()*12).toFixed(1)+'s';
+      heroBg.appendChild(d);
+    }
+  }
+
+  // ---- urge-surf wave: round HTML dot rides a fixed curve; color-coded by phase ----
+  var wave     = document.getElementById('wave');
+  var wavePath = document.getElementById('wavePath');
+  var surfer   = document.getElementById('surfer');
+  var phaseEls = document.querySelectorAll('#phases li');
+  var waveMod  = document.querySelector('.wave-mod');
+  var PHASE_COLORS = ['var(--teal)','var(--amber)','var(--red)','var(--water)','var(--teal)'];
+  var PERIOD=15000, startT=null, totalLen=0;
+
+  function highlight(idx){
+    for(var i=0;i<phaseEls.length;i++){ phaseEls[i].classList.toggle('active', i===idx); }
+  }
+  function place(p){
+    if(!totalLen) totalLen=wavePath.getTotalLength();
+    var pt=wavePath.getPointAtLength(p*totalLen);
+    var r=wave.getBoundingClientRect();
+    // map user space (320x150, stretched to fill) -> pixels, so the dot sits on the curve
+    surfer.style.left=((pt.x/320)*r.width ).toFixed(1)+'px';
+    surfer.style.top =((pt.y/150)*r.height).toFixed(1)+'px';
+    var op = p<0.04 ? p/0.04 : (p>0.96 ? (1-p)/0.04 : 1); // fade at the loop seam
+    surfer.style.opacity=Math.max(0,op).toFixed(2);
+    // phase by x-position, aligned to the wave gradient (rise=amber, peak=red, fall=blue)
+    var xf=pt.x/320;
+    var idx = xf<0.10 ? 0 : xf<0.42 ? 1 : xf<0.53 ? 2 : xf<0.90 ? 3 : 4;
+    surfer.style.setProperty('--dotc', PHASE_COLORS[idx]);
+    if(waveMod) waveMod.style.setProperty('--phase', PHASE_COLORS[idx]);
+    highlight(idx);
+  }
+  // dwell on the peak — it gets the biggest share of the cycle (it's the hard part)
+  function progress(phi){            // phi: linear time 0..1  ->  p: arc-length 0..1
+    if(phi<0.30) return (phi/0.30)*0.40;                 // rise:  p 0    -> 0.40
+    if(phi<0.75) return 0.40 + ((phi-0.30)/0.45)*0.16;   // peak:  p 0.40 -> 0.56 (slow)
+    return 0.56 + ((phi-0.75)/0.25)*0.44;                // fall:  p 0.56 -> 1.0
+  }
+  function loop(ts){
+    if(startT===null) startT=ts;
+    place(progress(((ts-startT)%PERIOD)/PERIOD));
+    requestAnimationFrame(loop);
+  }
+  if(reduce){ place(0.5); }                 // static: dot at crest, "peak" lit
+  else { requestAnimationFrame(loop); }
+
+  // ---- theme toggle (in-memory; default dark = brand) ----
+  var root  = document.documentElement;
+  var tBtn  = document.getElementById('themeToggle');
+  var tIcon = document.getElementById('themeIcon');
+  var tLab  = document.getElementById('themeLabel');
+  var ru = function(){ return root.getAttribute('data-lang')==='ru'; };
+  function setTheme(mode){
+    if(mode==='light'){ root.setAttribute('data-theme','light'); tIcon.textContent='☀️'; tLab.textContent=ru()?'день':'light'; }
+    else { root.removeAttribute('data-theme'); tIcon.textContent='🌙'; tLab.textContent=ru()?'ночь':'dark'; }
+  }
+  document.addEventListener('esmrsky:lang', function(){
+    setTheme(root.getAttribute('data-theme')==='light' ? 'light' : 'dark');
+  });
+  tBtn.addEventListener('click', function(){
+    setTheme(root.getAttribute('data-theme')==='light' ? 'dark' : 'light');
+  });
+})();
+</script>
+
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>

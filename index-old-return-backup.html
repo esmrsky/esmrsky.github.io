@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moved &middot; esmrsky</title>
+<title data-ru="Переехало &middot; esmrsky">Moved &middot; esmrsky</title>
 <link rel="canonical" href="https://esmrsky.github.io/">
 <meta name="robots" content="noindex">
 <meta http-equiv="refresh" content="0; url=/">
 <script>location.replace('/' + location.hash);</script>
+<script>
+  /* Language before first paint, so a returning Russian reader never sees the
+     toggle flash EN. The actual text swap happens in the script at the foot. */
+  (function () {
+    try {
+      document.documentElement.setAttribute('data-lang',
+        localStorage.getItem('esmrsky-lang') === 'ru' ? 'ru' : 'en');
+    } catch (e) {
+      document.documentElement.setAttribute('data-lang', 'en');
+    }
+  })();
+</script>
 <style>
   :root { color-scheme: dark; }
   body {
@@ -23,8 +35,68 @@
 </head>
 <body>
   <div>
-    <p>This page was an old homepage backup.</p>
-    <p><a href="/">esmrsky &middot; Projects &rarr;</a></p>
+    <p data-ru="Это была старая резервная копия главной страницы.">This page was an old homepage backup.</p>
+    <p><a href="/" data-ru="esmrsky &middot; Проекты &rarr;">esmrsky &middot; Projects &rarr;</a></p>
   </div>
+
+<script>
+/* ---- EN/RU ------------------------------------------------------------
+   Shared across esmrsky.github.io. Every translatable element carries
+   data-ru; the English original stays in the markup and is captured into
+   data-en on load, so nothing is duplicated by hand. Attributes translate
+   via data-ru-<attr>. The choice is remembered in localStorage. */
+(function () {
+  var KEY = 'esmrsky-lang';
+  var ATTRS = ['title', 'aria-label', 'placeholder', 'alt', 'content', 'href'];
+  var root = document.documentElement;
+  var btn = document.getElementById('langToggle');
+
+  /* SVG elements have no usable innerHTML in every engine, so text nodes
+     inside a drawing are swapped through textContent instead. */
+  var SVG = 'http://www.w3.org/2000/svg';
+  function read(el) { return el.namespaceURI === SVG ? el.textContent : el.innerHTML; }
+  function write(el, v) { if (el.namespaceURI === SVG) el.textContent = v; else el.innerHTML = v; }
+
+  var nodes = [].slice.call(document.querySelectorAll('[data-ru]'));
+  nodes.forEach(function (el) {
+    if (!el.hasAttribute('data-en')) el.setAttribute('data-en', read(el));
+  });
+
+  var attrNodes = [];
+  ATTRS.forEach(function (a) {
+    [].slice.call(document.querySelectorAll('[data-ru-' + a + ']')).forEach(function (el) {
+      if (!el.hasAttribute('data-en-' + a)) el.setAttribute('data-en-' + a, el.getAttribute(a) || '');
+      attrNodes.push([el, a]);
+    });
+  });
+
+  function apply(lang) {
+    var key = lang === 'ru' ? 'data-ru' : 'data-en';
+    nodes.forEach(function (el) {
+      var v = el.getAttribute(key);
+      if (v !== null && read(el) !== v) write(el, v);
+    });
+    attrNodes.forEach(function (p) {
+      var v = p[0].getAttribute(key + '-' + p[1]);
+      if (v !== null) p[0].setAttribute(p[1], v);
+    });
+    root.setAttribute('lang', lang);
+    root.setAttribute('data-lang', lang);
+    if (btn) btn.setAttribute('aria-label', lang === 'ru' ? 'Switch to English' : 'Переключить на русский');
+    window.esmrskyLang = lang;
+    document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: lang } }));
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved === 'ru' ? 'ru' : 'en');
+
+  if (btn) btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-lang') === 'ru' ? 'en' : 'ru';
+    apply(next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>
