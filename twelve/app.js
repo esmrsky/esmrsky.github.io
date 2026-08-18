@@ -449,6 +449,16 @@
           <p class="section-kicker">Core frequency · interpretive map</p>
           <h3>${tribe.frequency}</h3>
           <p>${tribe.calling}</p>
+          <div class="profile-snapshot" aria-label="Strengths and pressure patterns">
+            <div class="snapshot-group snapshot-strengths">
+              <p class="snapshot-heading"><span aria-hidden="true"></span>Strengths</p>
+              <div class="snapshot-chips">${tribe.strengths.map(item => `<span>${item}</span>`).join('')}</div>
+            </div>
+            <div class="snapshot-group snapshot-pressures">
+              <p class="snapshot-heading"><span aria-hidden="true"></span>Under pressure</p>
+              <div class="snapshot-chips">${tribe.pressures.map(item => `<span>${item}</span>`).join('')}</div>
+            </div>
+          </div>
         </article>
       </div>
 
