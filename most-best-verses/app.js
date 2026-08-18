@@ -1017,7 +1017,20 @@ function versionPassages(key) {
 
 function currentPassage(item) {
   const translated = versionPassages(selectedVersionKey).get(item.number);
-  return translated || {
+  if (translated) return translated;
+
+  const nivFallback = selectedVersionKey === 'TPT'
+    ? versionPassages('NIV').get(item.number)
+    : null;
+  if (nivFallback) {
+    return {
+      ...nivFallback,
+      source: 'NIV fallback · YouVersion',
+      isFallback: true
+    };
+  }
+
+  return {
     text: item.text,
     source: 'WEB · public domain',
     isFallback: true
@@ -1028,6 +1041,35 @@ function cardSize(text) {
   if (text.length > 520) return 'is-long';
   if (text.length > 270) return 'is-medium';
   return '';
+}
+
+function desktopCardSpans(items) {
+  const spans = [];
+
+  for (let index = 0; index < items.length;) {
+    const currentText = currentPassage(items[index]).text;
+    const nextItem = items[index + 1];
+
+    if (cardSize(currentText) === 'is-long' || !nextItem) {
+      spans.push(12);
+      index += 1;
+      continue;
+    }
+
+    const nextText = currentPassage(nextItem).text;
+    if (cardSize(nextText) === 'is-long') {
+      spans.push(12);
+      index += 1;
+      continue;
+    }
+
+    const currentShare = currentText.length / (currentText.length + nextText.length);
+    const currentSpan = currentShare < .46 ? 5 : currentShare > .54 ? 7 : 6;
+    spans.push(currentSpan, 12 - currentSpan);
+    index += 2;
+  }
+
+  return spans;
 }
 
 function categoryValue(category) {
@@ -1052,12 +1094,13 @@ function render() {
   const filtered = activeCategory === 'All'
     ? VERSES
     : VERSES.filter(item => item.theme === categoryValue(activeCategory));
+  const cardSpans = desktopCardSpans(filtered);
 
-  cards.innerHTML = filtered.map(item => {
+  cards.innerHTML = filtered.map((item, index) => {
     const passage = currentPassage(item);
     const themeSlug = item.theme.toLowerCase();
     const isLoading = loadingVersionKey === selectedVersionKey && passage.isFallback;
-    return `<article class="card ${cardSize(passage.text)}${isLoading ? ' is-loading' : ''}" data-passage="${item.number}" style="--card-accent:var(--tone-${themeSlug});--card-surface:var(--card-bg-${themeSlug})">
+    return `<article class="card ${cardSize(passage.text)}${isLoading ? ' is-loading' : ''}" data-passage="${item.number}" style="--card-span:${cardSpans[index]};--card-accent:var(--tone-${themeSlug});--card-surface:var(--card-bg-${themeSlug})">
       <div class="card-top">
         <div class="card-kicker">
           <span class="number">${String(item.number).padStart(2, '0')}</span>
@@ -1120,6 +1163,83 @@ function setStatus(message) {
   translationStatus.textContent = message;
 }
 
+function fallbackCounts(key) {
+  const selectedPassages = versionPassages(key);
+  const nivPassages = versionPassages('NIV');
+  let niv = 0;
+  let web = 0;
+
+  VERSES.forEach(item => {
+    if (selectedPassages.has(item.number)) return;
+    if (key === 'TPT' && nivPassages.has(item.number)) niv += 1;
+    else web += 1;
+  });
+
+  return { niv, web };
+}
+
+function fallbackStatus(base, counts) {
+  return [
+    base,
+    counts.niv ? `${counts.niv} shown in NIV` : '',
+    counts.web ? `${counts.web} shown in WEB` : ''
+  ].filter(Boolean).join(' · ');
+}
+
+function fallbackCredits(counts) {
+  return [
+    counts.niv ? 'NIV fallback text supplied by YouVersion.' : '',
+    counts.web ? 'World English Bible fallback text is public domain.' : ''
+  ].filter(Boolean);
+}
+
+async function hydrateNivFallback(token, items, knownVersions = null) {
+  if (!items.length || selectedVersionKey !== 'TPT' || !scriptureApi.configured || typeof scriptureApi.getPassage !== 'function') return;
+
+  let versions = knownVersions;
+  if (!versions) {
+    try {
+      versions = await scriptureApi.getVersions();
+    } catch (error) {
+      return;
+    }
+  }
+
+  if (token !== activeLoadToken) return;
+  const availableNiv = findAvailableVersion(versions, BIBLE_VERSIONS.NIV);
+  if (!availableNiv) return;
+
+  const nivPassages = versionPassages('NIV');
+  const pending = items.filter(item => !nivPassages.has(item.number));
+  let completed = items.length - pending.length;
+  const batchSize = 8;
+
+  for (let index = 0; index < pending.length; index += batchSize) {
+    const batch = pending.slice(index, index + batchSize);
+    const results = await Promise.allSettled(batch.map(item => {
+      const usfm = referenceToUsfm(item.reference);
+      return usfm
+        ? scriptureApi.getPassage(availableNiv.id, usfm)
+        : Promise.reject(new Error('Unsupported Scripture reference.'));
+    }));
+
+    if (token !== activeLoadToken) return;
+    results.forEach((result, resultIndex) => {
+      if (result.status !== 'fulfilled' || !result.value.content) return;
+      const item = batch[resultIndex];
+      nivPassages.set(item.number, {
+        text: String(result.value.content).trim(),
+        source: 'NIV · YouVersion',
+        isFallback: false
+      });
+      completed += 1;
+    });
+
+    setStatus(`Loading NIV fallback · ${completed} of ${items.length}`);
+    render();
+  }
+}
+
 async function hydrateNltFromBolls(token, passages, expected) {
   loadingVersionKey = 'NLT';
   setStatus('Connecting to NLT…');
@@ -1154,14 +1274,19 @@ async function hydrateNltFromBolls(token, passages, expected) {
   }
 
   if (token !== activeLoadToken) return;
+  const missing = VERSES.filter(item => !passages.has(item.number));
+  await hydrateNivFallback(token, missing);
+  if (token !== activeLoadToken) return;
+
   loadingVersionKey = null;
-  const fallbackCount = VERSES.length - passages.size;
-  setStatus(fallbackCount
-    ? `${passages.size} passages in NLT · ${fallbackCount} shown in WEB`
-    : `All ${VERSES.length} passages in NLT`);
+  const counts = fallbackCounts('NLT');
+  setStatus(fallbackStatus(
+    passages.size === VERSES.length ? `All ${VERSES.length} passages in NLT` : `${passages.size} passages in NLT`,
+    counts
+  ));
   translationCredit.textContent = [
     `${expected.abbreviation} · New Living Translation. Scripture text supplied by Bolls.life.`,
-    (failed || fallbackCount) ? 'World English Bible fallback text is public domain.' : ''
+    ...fallbackCredits(counts)
   ].filter(Boolean).join(' ');
   render();
 }
@@ -1204,9 +1329,12 @@ async function hydrateSelectedVersion() {
   if (token !== activeLoadToken) return;
   const available = findAvailableVersion(availableVersions, expected);
   if (!available) {
+    await hydrateNivFallback(token, VERSES.filter(item => !passages.has(item.number)), availableVersions);
+    if (token !== activeLoadToken) return;
     loadingVersionKey = null;
-    setStatus(`${expected.abbreviation} is not available to the shared Scripture service · showing WEB`);
-    translationCredit.textContent = 'World English Bible (WEB). Public domain.';
+    const counts = fallbackCounts(key);
+    setStatus(fallbackStatus(`${expected.abbreviation} is not available to the shared Scripture service`, counts));
+    translationCredit.textContent = fallbackCredits(counts).join(' ');
     render();
     return;
   }
@@ -1245,14 +1373,20 @@ async function hydrateSelectedVersion() {
   }
 
   if (token !== activeLoadToken) return;
+  await hydrateNivFallback(token, VERSES.filter(item => !passages.has(item.number)), availableVersions);
+  if (token !== activeLoadToken) return;
+
   loadingVersionKey = null;
-  const fallbackCount = VERSES.length - passages.size;
-  setStatus(fallbackCount
-    ? `${passages.size} passages in ${expected.abbreviation} · ${fallbackCount} shown in WEB`
-    : `All ${VERSES.length} passages in ${expected.abbreviation}`);
+  const counts = fallbackCounts(key);
+  setStatus(fallbackStatus(
+    passages.size === VERSES.length
+      ? `All ${VERSES.length} passages in ${expected.abbreviation}`
+      : `${passages.size} passages in ${expected.abbreviation}`,
+    counts
+  ));
   translationCredit.textContent = [
     available.copyright || `${available.title || expected.abbreviation}. Supplied by YouVersion.`,
-    (failed || fallbackCount) ? 'World English Bible fallback text is public domain.' : ''
+    ...fallbackCredits(counts)
   ].filter(Boolean).join(' ');
   render();
 }
