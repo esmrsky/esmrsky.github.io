@@ -908,15 +908,21 @@ const categoryFilters = document.querySelector('#categoryFilters');
 const visibleCount = document.querySelector('#visibleCount');
 const translationStatus = document.querySelector('#translationStatus');
 const translationCredit = document.querySelector('#translationCredit');
+const copyVisibilityButton = document.querySelector('#copyVisibilityButton');
 const versionPicker = document.querySelector('#versionPicker');
 const versionTrigger = document.querySelector('#versionTrigger');
 const versionMenu = document.querySelector('#versionMenu');
+const topbar = document.querySelector('.topbar');
+const mobileSettingsTrigger = document.querySelector('#mobileSettingsTrigger');
 const selectedVersionLabel = document.querySelector('#selectedVersionLabel');
 const versionOptions = Array.from(document.querySelectorAll('[data-version-option]'));
 let selectedVersionKey = loadVersionKey();
 let activeCategory = 'All';
 let activeLoadToken = 0;
 let loadingVersionKey = null;
+let lastScrollY = window.scrollY;
+let scrollFramePending = false;
+const mobileSettingsMedia = window.matchMedia('(max-width: 680px)');
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, character => ({
@@ -1262,6 +1268,14 @@ function syncThemeButtons() {
   document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f3f0e7' : '#121612';
 }
 
+function setMobileSettingsOpen(open) {
+  topbar.classList.toggle('is-mobile-open', open);
+  if (open) topbar.classList.remove('is-mobile-hidden');
+  mobileSettingsTrigger.setAttribute('aria-expanded', String(open));
+  mobileSettingsTrigger.setAttribute('aria-label', `${open ? 'Close' : 'Open'} reader settings`);
+  if (!open) setVersionMenuOpen(false);
+}
+
 function setVersionMenuOpen(open, focusSelection = false) {
   versionMenu.hidden = !open;
   versionTrigger.setAttribute('aria-expanded', String(open));
@@ -1310,6 +1324,28 @@ document.querySelectorAll('[data-theme-option]').forEach(button => {
   });
 });
 
+mobileSettingsTrigger.addEventListener('click', () => {
+  setMobileSettingsOpen(!topbar.classList.contains('is-mobile-open'));
+});
+
+window.addEventListener('scroll', () => {
+  if (scrollFramePending) return;
+  scrollFramePending = true;
+  window.requestAnimationFrame(() => {
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY;
+
+    if (!mobileSettingsMedia.matches || currentScrollY <= 32 || scrollDelta < -2) {
+      topbar.classList.remove('is-mobile-hidden');
+    } else if (scrollDelta > 2 && !topbar.classList.contains('is-mobile-open')) {
+      topbar.classList.add('is-mobile-hidden');
+    }
+
+    lastScrollY = currentScrollY;
+    scrollFramePending = false;
+  });
+}, { passive: true });
+
 categoryFilters.addEventListener('click', event => {
   const button = event.target.closest('[data-category]');
   if (!button) return;
@@ -1321,6 +1357,12 @@ cards.addEventListener('click', event => {
   const button = event.target.closest('[data-copy-passage]');
   if (!button) return;
   copyPassage(Number(button.dataset.copyPassage), button);
+});
+
+copyVisibilityButton.addEventListener('click', () => {
+  const visible = document.body.classList.toggle('copy-buttons-visible');
+  copyVisibilityButton.textContent = `${visible ? 'Hide' : 'Show'} verse copy button`;
+  copyVisibilityButton.setAttribute('aria-pressed', String(visible));
 });
 
 versionTrigger.addEventListener('click', () => {
@@ -1360,12 +1402,16 @@ versionMenu.addEventListener('keydown', event => {
 
 document.addEventListener('click', event => {
   if (!versionMenu.hidden && !versionPicker.contains(event.target)) setVersionMenuOpen(false);
+  if (topbar.classList.contains('is-mobile-open') && !topbar.contains(event.target)) setMobileSettingsOpen(false);
 });
 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !versionMenu.hidden) {
     setVersionMenuOpen(false);
     versionTrigger.focus();
+  } else if (event.key === 'Escape' && topbar.classList.contains('is-mobile-open')) {
+    setMobileSettingsOpen(false);
+    mobileSettingsTrigger.focus();
   }
 });
 
