@@ -968,6 +968,14 @@ function referenceToBolls(reference) {
   };
 }
 
+function normalizePassageText(value) {
+  return String(value || '')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/¶/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 async function getBollsChapter(bookId, chapter) {
   const key = `${bookId}:${chapter}`;
   if (!bollsChapterCache.has(key)) {
@@ -994,7 +1002,7 @@ async function getBollsPassage(reference) {
   const chapter = await getBollsChapter(parts.bookId, parts.chapter);
   const text = chapter
     .filter(verse => Number(verse.verse) >= parts.verseStart && Number(verse.verse) <= parts.verseEnd)
-    .map(verse => String(verse.text || '').trim())
+    .map(verse => normalizePassageText(verse.text))
     .filter(Boolean)
     .join(' ');
   if (!text) throw new Error('NLT passage was not found.');
@@ -1228,7 +1236,7 @@ async function hydrateNivFallback(token, items, knownVersions = null) {
       if (result.status !== 'fulfilled' || !result.value.content) return;
       const item = batch[resultIndex];
       nivPassages.set(item.number, {
-        text: String(result.value.content).trim(),
+        text: normalizePassageText(result.value.content),
         source: 'NIV · YouVersion',
         isFallback: false
       });
@@ -1358,7 +1366,7 @@ async function hydrateSelectedVersion() {
       const item = batch[resultIndex];
       if (result.status === 'fulfilled' && result.value.content) {
         passages.set(item.number, {
-          text: String(result.value.content).trim(),
+          text: normalizePassageText(result.value.content),
           source: `${expected.abbreviation} · YouVersion`,
           isFallback: false
         });
