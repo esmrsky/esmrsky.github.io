@@ -29,6 +29,36 @@
     { id: 1849, abbreviation: 'TPT', title: 'The Passion Translation', copyright: '', deepLink: 'https://www.bible.com/versions/1849' }
   ];
 
+  const REAL_WORLD_EXAMPLES = {
+    asher: ['You notice one disappointed face and abandon the whole room to repair it.', 'You make a home, team, or church feel safe—but quietly absorb everyone’s emotional bill.'],
+    gad: ['A crisis ends, but your body keeps working as if the alarm is still sounding.', 'You redo delegated work because trusting the process feels more dangerous than exhaustion.'],
+    reuben: ['A strong beginning loses oxygen in the repetitive middle.', 'When depleted, one immediate appetite suddenly feels more real than the future you said you wanted.'],
+    naphtali: ['A hard conversation makes disappearing feel like freedom.', 'Your testimony gives others courage, but durable structure can feel like a cage.'],
+    judah: ['You can set direction quickly, then experience honest correction as disloyalty.', 'A room borrows your confidence; under pressure, you may begin borrowing its applause.'],
+    joseph: ['You turn chaos into a system, then hide vulnerable feelings behind competence.', 'Betrayal makes control feel safer than relationship—even after the danger is gone.'],
+    benjamin: ['You protect your people fiercely and can turn a disagreement into a loyalty test.', 'Intensity creates movement, but suspicion can keep your nervous system permanently armed.'],
+    simeon: ['You see the injustice before everyone else and want action before process.', 'A true concern becomes punishment when anger is allowed to choose the method.'],
+    zebulun: ['You naturally see networks, leverage, and the resource nobody else is using.', 'Metrics begin as stewardship and quietly become the price tag you place on people.'],
+    levi: ['You protect doctrine, process, or sacred space and can mistake precision for transformation.', 'People trust your guidance, but perfectionism can make grace feel procedurally unsafe.'],
+    issachar: ['You can see three downstream consequences before a room makes its first decision.', 'Research keeps getting better while the moment for faithful action keeps moving away.'],
+    dan: ['You locate the flaw everyone else missed and feel responsible to name it.', 'Discernment becomes corrosive when the verdict arrives without a path to restoration.']
+  };
+
+  const ADDITIONAL_WITNESSES = {
+    asher: { name: 'Lydia', ref: 'Acts 16:14–15', type: 'resonance', note: 'Her opened heart becomes an opened home. Hospitality supplies durable infrastructure for the new church without the text assigning her to Asher.' },
+    gad: { name: 'Moses under Jethro’s counsel', ref: 'Exodus 18:13–24', type: 'resonance', note: 'Moses carries every dispute until Jethro names the system as unsustainable. Shared authority turns heroic exhaustion into covenant order.' },
+    reuben: { name: 'John Mark', ref: 'Acts 13:13; 2 Timothy 4:11', type: 'resonance', note: 'He leaves an early mission, later receives Barnabas’s patient investment, and eventually becomes “useful” again—a picture of unfinished zeal becoming durable service.' },
+    naphtali: { name: 'Mary Magdalene', ref: 'John 20:11–18', type: 'resonance', note: 'A liberated life becomes a liberating witness. Grief does not get the final word; encounter turns her into the first resurrection messenger.' },
+    judah: { name: 'King Josiah', ref: '2 Kings 22:11–13', type: 'lineage', note: 'A king from David’s line receives correction, tears his clothes, and reforms the nation. Authority stays fruitful because it remains correctable.' },
+    joseph: { name: 'Daniel the administrator', ref: 'Daniel 6:1–5', type: 'resonance', note: 'Daniel builds an excellent public record inside a hostile system. Competence, integrity, and resilient stewardship mirror Joseph without establishing tribal lineage.' },
+    benjamin: { name: 'Jonathan', ref: '1 Samuel 23:16–18', type: 'lineage', note: 'A Benjamite prince strengthens David in God and releases his own claim to the throne. Fierce loyalty matures into covenant surrender rather than possession.' },
+    simeon: { name: 'James and John', ref: 'Luke 9:51–56', type: 'resonance', note: 'They correctly perceive rejection and choose the wrong remedy: fire. Jesus rebukes zeal that protects truth by destroying the people truth came to save.' },
+    zebulun: { name: 'Lydia the merchant', ref: 'Acts 16:14–15', type: 'resonance', note: 'Commerce, household leadership, and hospitality converge into a mission platform. Resources become an open door instead of a private fortress.' },
+    levi: { name: 'John the Baptist', ref: 'Luke 1:5–17', type: 'lineage', note: 'Born through a priestly household, John carries truth outside the center of religious prestige and prepares people for encounter rather than dependence on his role.' },
+    issachar: { name: 'The Bereans', ref: 'Acts 17:10–12', type: 'resonance', note: 'They examine Scripture carefully and then move toward belief. Discernment serves action instead of becoming an endless postponement of commitment.' },
+    dan: { name: 'Nathan before David', ref: '2 Samuel 12:1–13', type: 'resonance', note: 'Nathan exposes hidden corruption through a story that reaches the conscience, then names the truth directly. The verdict opens a door to repentance.' }
+  };
+
   const ICONS = {
     host: `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 21c2.5-7 17.5-7 20 0v4H6v-4Z"/><path d="M9 17c0-5 3-9 7-9s7 4 7 9"/><path d="M16 8V4M12.5 9 10 6M19.5 9 22 6"/></svg>`,
     shield: `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28S7 24 7 16V7l9-3 9 3v9c0 8-9 12-9 12Z"/><path d="m11 20 10-10M17 10h4v4"/></svg>`,
@@ -56,6 +86,9 @@
   const profileTribe = document.getElementById('profileTribe');
   const profileTitle = document.getElementById('profileTitle');
   const profileBody = document.getElementById('profileBody');
+  const headerVersionMenu = document.getElementById('headerVersionMenu');
+  const expandAllProfile = document.getElementById('expandAllProfile');
+  const versePopover = document.getElementById('versePopover');
   const diagnosticBox = document.getElementById('diagnosticBox');
   const diagnosticResult = document.getElementById('diagnosticResult');
   let currentView = 'calling';
@@ -67,6 +100,11 @@
   let selectedBibleVersionId = loadBibleVersionId() || '111';
   let bibleVersionsState = scriptureApi.configured ? 'loading' : 'local';
   let scriptureLoadToken = 0;
+  let viewSwitchToken = 0;
+  let headerVersionAnimation = null;
+  let versePopoverToken = 0;
+  let activeVerseTarget = null;
+  let versePopoverHideTimer = 0;
 
   function icon(name) {
     return ICONS[name] || ICONS.scroll;
@@ -116,7 +154,7 @@
   }
 
   function referenceBadge(reference) {
-    return `<span class="reference-badge">${escapeHtml(reference)}</span>`;
+    return `<span class="reference-badge" role="button" tabindex="0" data-verse-reference="${escapeHtml(reference)}" aria-label="Preview ${escapeHtml(reference)}">${escapeHtml(reference)}</span>`;
   }
 
   function inlineVerses(entry) {
@@ -140,9 +178,17 @@
   }
 
   function referenceToUsfm(reference) {
-    const match = String(reference).match(/^(.+?) (\d+):(\d+)(?:[–-](\d+))?$/);
+    const firstPassage = String(reference).split(';')[0].trim();
+    const match = firstPassage.match(/^(.+?) (\d+):(\d+)(?:[–-](\d+))?$/);
     if (!match || !BOOK_USFM[match[1]]) return '';
     return `${BOOK_USFM[match[1]]}.${match[2]}.${match[3]}${match[4] ? `-${match[4]}` : ''}`;
+  }
+
+  function cleanScriptureText(value) {
+    return String(value || '')
+      .replace(/[\u00b6\u2029]/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
   }
 
   function selectedBibleVersion() {
@@ -168,6 +214,122 @@
     document.querySelectorAll('[data-version-options]').forEach(container => {
       container.innerHTML = bibleVersionButtons();
     });
+  }
+
+  function setHeaderVersionMenu(shouldOpen) {
+    if (!headerVersionMenu) return;
+    const options = headerVersionMenu.querySelector('.header-version-options');
+    if (!options || prefersReducedMotion() || typeof options.animate !== 'function') {
+      headerVersionMenu.open = shouldOpen;
+      return;
+    }
+
+    if (headerVersionAnimation) headerVersionAnimation.cancel();
+    if (shouldOpen) headerVersionMenu.open = true;
+    else if (!headerVersionMenu.open) return;
+
+    headerVersionMenu.classList.toggle('is-closing', !shouldOpen);
+    headerVersionAnimation = options.animate(
+      shouldOpen
+        ? [{ opacity: 0, transform: 'translateY(-7px) scale(.97)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }]
+        : [{ opacity: 1, transform: 'translateY(0) scale(1)' }, { opacity: 0, transform: 'translateY(-6px) scale(.98)' }],
+      { duration: shouldOpen ? 210 : 160, easing: shouldOpen ? 'cubic-bezier(.2,.8,.2,1)' : 'cubic-bezier(.4,0,1,1)', fill: 'both' }
+    );
+    headerVersionAnimation.onfinish = () => {
+      if (!shouldOpen) headerVersionMenu.open = false;
+      headerVersionMenu.classList.remove('is-closing');
+      headerVersionAnimation = null;
+    };
+  }
+
+  function localWebPassage(reference) {
+    const firstReference = String(reference).split(';')[0].trim();
+    for (const tribe of tribes) {
+      const entry = (tribe.scriptureVault || []).find(item => item.ref === reference || item.ref === firstReference);
+      if (entry) return entry.verses.map(verse => `${verse.number} ${verse.text}`).join(' ');
+    }
+    return '';
+  }
+
+  async function passagePreview(reference) {
+    const selected = selectedBibleVersion();
+    const usfm = referenceToUsfm(reference);
+    if (!usfm) throw new Error('This combined reference opens best inside its profile.');
+
+    if (selected.id !== 'web' && scriptureApi.configured && typeof scriptureApi.getPassage === 'function') {
+      try {
+        const result = await scriptureApi.getPassage(selected.id, usfm);
+        if (result && result.content) return { text: cleanScriptureText(result.content), version: shortVersionName(selected) };
+      } catch (error) {
+        // Continue through the normal NIV → WEB fallback order.
+      }
+    }
+
+    const niv = bibleVersions.find(version => String(version.abbreviation).toUpperCase() === 'NIV');
+    if (selected.id !== 'web' && niv && String(niv.id) !== String(selected.id) && scriptureApi.configured) {
+      try {
+        const result = await scriptureApi.getPassage(niv.id, usfm);
+        if (result && result.content) return { text: cleanScriptureText(result.content), version: 'NIV · fallback' };
+      } catch (error) {
+        // WEB remains the final fallback.
+      }
+    }
+
+    const webText = localWebPassage(reference);
+    if (webText) return { text: webText, version: selected.id === 'web' ? 'WEB' : 'WEB · fallback' };
+    throw new Error(selected.id === 'web' ? 'This WEB passage is available inside its full tribe profile.' : 'Passage preview is temporarily unavailable.');
+  }
+
+  function positionVersePopover(target) {
+    if (!versePopover || versePopover.hidden || !target) return;
+    const rect = target.getBoundingClientRect();
+    const margin = 12;
+    const width = Math.min(380, window.innerWidth - margin * 2);
+    versePopover.style.width = `${width}px`;
+    const popoverHeight = versePopover.offsetHeight;
+    const left = Math.min(Math.max(margin, rect.left + rect.width / 2 - width / 2), window.innerWidth - width - margin);
+    const fitsAbove = rect.top > popoverHeight + margin * 2;
+    const top = fitsAbove ? rect.top - popoverHeight - 9 : rect.bottom + 9;
+    versePopover.style.left = `${left}px`;
+    versePopover.style.top = `${Math.max(margin, Math.min(top, window.innerHeight - popoverHeight - margin))}px`;
+    versePopover.classList.toggle('below', !fitsAbove);
+  }
+
+  async function showVersePopover(target) {
+    if (!versePopover || !target) return;
+    if (versePopoverHideTimer) window.clearTimeout(versePopoverHideTimer);
+    activeVerseTarget = target;
+    const token = ++versePopoverToken;
+    const reference = target.dataset.verseReference;
+    versePopover.querySelector('[data-popover-reference]').textContent = reference;
+    versePopover.querySelector('[data-popover-version]').textContent = shortVersionName(selectedBibleVersion());
+    versePopover.querySelector('[data-popover-content]').textContent = 'Loading passage…';
+    versePopover.hidden = false;
+    window.requestAnimationFrame(() => versePopover.classList.add('is-visible'));
+    positionVersePopover(target);
+    try {
+      const preview = await passagePreview(reference);
+      if (token !== versePopoverToken || activeVerseTarget !== target) return;
+      versePopover.querySelector('[data-popover-version]').textContent = preview.version;
+      versePopover.querySelector('[data-popover-content]').textContent = preview.text;
+    } catch (error) {
+      if (token !== versePopoverToken || activeVerseTarget !== target) return;
+      versePopover.querySelector('[data-popover-content]').textContent = error.message;
+    }
+    positionVersePopover(target);
+  }
+
+  function hideVersePopover(delay = 90) {
+    if (!versePopover || versePopover.hidden) return;
+    if (versePopoverHideTimer) window.clearTimeout(versePopoverHideTimer);
+    versePopoverHideTimer = window.setTimeout(() => {
+      activeVerseTarget = null;
+      versePopoverToken += 1;
+      versePopover.classList.remove('is-visible');
+      window.setTimeout(() => {
+        if (!versePopover.classList.contains('is-visible')) versePopover.hidden = true;
+      }, 170);
+    }, delay);
   }
 
   function bibleVersionStatus() {
@@ -206,10 +368,7 @@
   }
 
   function cardMarkup(tribe, index) {
-    const pressureView = currentView === 'pressure';
-    const title = pressureView ? tribe.pressures.join(' · ') : tribe.frequency;
-    const copy = pressureView ? tribe.spiral : tribe.calling;
-    const chips = pressureView ? tribe.pressures : tribe.strengths.slice(0, 3);
+    const { pressureView, title, copy, chips } = cardViewValues(tribe);
     return `
       <button class="tribe-card" type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color};--i:${index}" aria-label="Open ${tribe.tribe}, ${tribe.name} profile">
         <span class="card-topline">
@@ -228,6 +387,25 @@
         <span class="card-chips">${chips.map(item => `<span class="card-chip">${item}</span>`).join('')}</span>
         <span class="card-open">Open field guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </button>`;
+  }
+
+  function cardViewValues(tribe) {
+    const pressureView = currentView === 'pressure';
+    return {
+      pressureView,
+      title: pressureView ? tribe.pressures.join(' · ') : tribe.frequency,
+      copy: pressureView ? tribe.spiral : tribe.calling,
+      chips: pressureView ? tribe.pressures : tribe.strengths.slice(0, 3)
+    };
+  }
+
+  function applyCardView(card, tribe) {
+    const { pressureView, title, copy, chips } = cardViewValues(tribe);
+    card.querySelector('.mode-label').textContent = pressureView ? 'The repeated bend' : 'Core frequency';
+    card.querySelector('.mode-title').textContent = title;
+    card.querySelector('.mode-copy').textContent = copy;
+    card.querySelector('.card-chips').innerHTML = chips.map(item => `<span class="card-chip">${escapeHtml(item)}</span>`).join('');
+    card.dataset.viewState = currentView;
   }
 
   function renderCards() {
@@ -250,16 +428,17 @@
     return labels[type] || 'Pattern resonance';
   }
 
+  function drawerHeading(iconName, kicker, title) {
+    return `<span class="drawer-summary-main"><span class="drawer-icon" aria-hidden="true">${icon(iconName)}</span><span><small>${kicker}</small>${title}</span></span>`;
+  }
+
   function profileMarkup(tribe) {
-    const journeyLabels = ['Bondage', 'Training', 'Fruit'];
+    const journeyLabels = ['Egypt · bondage', 'Wilderness · formation', 'Promised land · fruitful stewardship'];
     const scriptureVault = tribe.scriptureVault || [];
     const anchor = scriptureVault[0];
+    const additionalWitness = ADDITIONAL_WITNESSES[tribe.id];
+    const realWorldExamples = REAL_WORLD_EXAMPLES[tribe.id] || [];
     return `
-      <div class="profile-version-bar">
-        <span>Translation</span>
-        <div class="profile-version-pills" data-version-options role="group" aria-label="Bible translations">${bibleVersionButtons()}</div>
-      </div>
-
       <div class="profile-intro">
         <article class="profile-block verse-block">
           <span class="evidence-badge" data-translation-badge>${escapeHtml(selectedBibleVersion().abbreviation)}</span>
@@ -275,7 +454,7 @@
 
       <details class="profile-drawer talent-drawer" open>
         <summary>
-          <span><small>Capacity map</small>Talents and tradeoffs</span>
+          ${drawerHeading('lamp', 'Capacity map', 'Talents and tradeoffs')}
           <span class="drawer-prompt">Open profile layer</span>
         </summary>
         <div class="drawer-content talent-grid">
@@ -293,13 +472,17 @@
             <p class="section-kicker">Where it often shows up today</p>
             <h4>Familiar roles, not fixed job titles</h4>
             <div class="role-list">${tribe.roles.map(item => `<span>${item}</span>`).join('')}</div>
+            <div class="real-world-examples">
+              <p class="section-kicker">You may recognize it when…</p>
+              ${realWorldExamples.map(item => `<p><i aria-hidden="true"></i>${item}</p>`).join('')}
+            </div>
           </article>
         </div>
       </details>
 
       <details class="profile-drawer burnout-drawer">
         <summary>
-          <span><small>Pressure diagnostic</small>Burnout vector</span>
+          ${drawerHeading('shield', 'Pressure diagnostic', 'Burnout vector')}
           <span class="drawer-prompt">See the warning signals</span>
         </summary>
         <div class="drawer-content burnout-grid">
@@ -320,7 +503,7 @@
 
       <details class="profile-drawer framework-drawer">
         <summary>
-          <span><small>Cross-framework translation</small>How this connects to other maps</span>
+          ${drawerHeading('scales', 'Cross-framework translation', 'How this connects to other maps')}
           <span class="drawer-prompt">APEST, gifts, and modern roles</span>
         </summary>
         <div class="drawer-content framework-content">
@@ -329,12 +512,12 @@
             <article class="framework-tile">
               <span>Fivefold / APEST</span>
               <strong>${tribe.fivefold.length ? tribe.fivefold.map(item => item.name).join(' + ') : 'No clean mapping'}</strong>
-              <p>${tribe.fivefold.length ? tribe.fivefold.map(item => confidenceBadge(item.confidence, 'Partial')).join(' ') : confidenceBadge('none', 'No clean map')}</p>
+              <p>${tribe.fivefold.length ? tribe.fivefold.map(item => confidenceBadge(item.confidence, 'Partial')).join(' ') : confidenceBadge('none', 'No clean map')} Equipping function in Ephesians 4; it describes ministry contribution, not temperament.</p>
             </article>
             <article class="framework-tile">
               <span>Romans 12 gift lens</span>
               <strong>${tribe.gift.name}</strong>
-              <p>${confidenceBadge(tribe.gift.confidence, 'Interpretive')} The nearest redemptive-gift expression in this framework.</p>
+              <p>${confidenceBadge(tribe.gift.confidence, 'Interpretive')} The nearest service-and-motivation expression in the Romans 12 gift vocabulary.</p>
             </article>
             <article class="framework-tile">
               <span>Core spiritual axis</span>
@@ -344,7 +527,7 @@
             <article class="framework-tile">
               <span>Modern archetype translation</span>
               <strong>${tribe.secular.label}</strong>
-              <p>${confidenceBadge(tribe.secular.confidence, 'Interpretive')} ${tribe.secular.pearson}</p>
+              <p>${confidenceBadge(tribe.secular.confidence, 'Interpretive')} ${tribe.secular.pearson}. Familiar workplace language for recognition, never a biblical identity claim.</p>
             </article>
             <article class="framework-tile framework-wide">
               <span>Primary blueprint case</span>
@@ -357,7 +540,7 @@
 
       <details class="profile-drawer scripture-drawer">
         <summary>
-          <span><small>Seven movements · full text</small>Read the pattern in Scripture</span>
+          ${drawerHeading('scroll', 'Seven movements · full text', 'Read the pattern in Scripture')}
           <span class="drawer-prompt" data-scripture-drawer-label>Read inline · ${escapeHtml(selectedBibleVersion().abbreviation)}</span>
         </summary>
         <div class="drawer-content">
@@ -376,7 +559,7 @@
 
       <details class="profile-drawer related-drawer">
         <summary>
-          <span><small>Shared strengths and friction</small>Related patterns</span>
+          ${drawerHeading('deer', 'Shared strengths and friction', 'Related patterns')}
           <span class="drawer-prompt">See the productive tension</span>
         </summary>
         <div class="drawer-content relation-card">
@@ -424,10 +607,11 @@
         </div>
       </section>
 
-      <section class="profile-section">
+      <section class="profile-section journey-section">
         <div class="section-title-row">
-          <div><p class="section-kicker">The testimony arc</p><h3>From bondage to fruit</h3></div>
+          <div><p class="section-kicker">The testimony arc</p><h3>Egypt, wilderness, and promised-land fruit</h3></div>
         </div>
+        <p class="journey-theology">This uses Israel’s Exodus pattern as a theological analogy: Egypt names the enslaving pattern, wilderness names God’s formation and unlearning, and promised land names fruitful stewardship. It is not a claim that every hardship means someone is literally in one fixed stage.</p>
         <div class="journey-line">
           ${tribe.journey.map((item, index) => `
             <article class="journey-card">
@@ -472,6 +656,16 @@
               </div>
             </details>`).join('')}
         </div>
+        ${additionalWitness ? `
+          <article class="additional-witness">
+            <span class="additional-witness-icon" aria-hidden="true">${icon('scroll')}</span>
+            <div>
+              <p class="section-kicker">One more guided comparison</p>
+              <h4>${additionalWitness.name}</h4>
+              <p>${additionalWitness.note}</p>
+            </div>
+            <div class="additional-witness-evidence">${referenceBadge(additionalWitness.ref)}<span class="witness-badge ${additionalWitness.type}">${witnessBadge(additionalWitness.type)}</span></div>
+          </article>` : ''}
       </section>`;
   }
 
@@ -564,11 +758,12 @@
         return;
       }
       primaryLoaded += 1;
+      const passageText = cleanScriptureText(result.value.content);
       const target = profileBody.querySelector(`[data-scripture-index="${index}"]`);
-      if (target) target.textContent = result.value.content;
+      if (target) target.textContent = passageText;
       if (index === 0) {
         const anchor = profileBody.querySelector('[data-scripture-anchor]');
-        if (anchor) anchor.textContent = result.value.content;
+        if (anchor) anchor.textContent = passageText;
       }
     });
 
@@ -585,11 +780,12 @@
         if (result.status !== 'fulfilled' || !result.value.content) return;
         const index = missingIndexes[resultIndex];
         nivLoaded += 1;
+        const passageText = cleanScriptureText(result.value.content);
         const target = profileBody.querySelector(`[data-scripture-index="${index}"]`);
-        if (target) target.textContent = result.value.content;
+        if (target) target.textContent = passageText;
         if (index === 0) {
           const anchor = profileBody.querySelector('[data-scripture-anchor]');
-          if (anchor) anchor.textContent = result.value.content;
+          if (anchor) anchor.textContent = passageText;
         }
       });
     }
@@ -639,9 +835,12 @@
     if (!target) return;
     target.innerHTML = ultimate.axes.map((axis, index) => `
       <article class="axis-card axis-${axis.id}" style="--i:${index}">
-        <div class="axis-topline"><span>Axis 0${axis.id}</span>${confidenceBadge('strong', 'Strong')}</div>
+        <div class="axis-topline"><span class="axis-icon" aria-hidden="true">${icon(axis.icon || 'scales')}</span><span>Axis 0${axis.id}</span>${confidenceBadge('strong', 'Strong')}</div>
         <h4>${axis.name}</h4>
         <p>${axis.principle}</p>
+        <div class="axis-polarity"><span>${axis.core}</span><i aria-hidden="true">⇄</i><span>${axis.inverse}</span></div>
+        <div class="axis-in-life"><span>In ordinary life</span><p>${axis.today}</p></div>
+        <p class="axis-question"><b>Practice question</b>${axis.practice}</p>
         <div class="axis-tribes">
           ${axis.tribes.map(id => {
             const tribe = tribes.find(item => item.id === id);
@@ -923,6 +1122,7 @@
 
     if (prefersReducedMotion() || typeof details.animate !== 'function') {
       details.open = shouldOpen;
+      syncExpandAllProfile();
       return;
     }
 
@@ -944,7 +1144,8 @@
       { height: [`${startHeight}px`, `${endHeight}px`] },
       {
         duration: shouldOpen ? 380 : 280,
-        easing: shouldOpen ? 'cubic-bezier(.2,.8,.2,1)' : 'cubic-bezier(.4,0,.2,1)'
+        easing: shouldOpen ? 'cubic-bezier(.2,.8,.2,1)' : 'cubic-bezier(.4,0,.2,1)',
+        fill: 'both'
       }
     );
     detailAnimations.set(details, { animation, target: shouldOpen ? 'open' : 'closed' });
@@ -955,7 +1156,27 @@
       details.style.removeProperty('overflow');
       details.classList.remove('is-expanding', 'is-collapsing');
       detailAnimations.delete(details);
+      syncExpandAllProfile();
     };
+  }
+
+  function syncExpandAllProfile() {
+    if (!expandAllProfile) return;
+    const details = Array.from(profileBody.querySelectorAll('.profile-drawer, .case-file'));
+    const allOpen = details.length > 0 && details.every(item => item.open);
+    expandAllProfile.textContent = allOpen ? 'Collapse all' : 'Expand all';
+    expandAllProfile.setAttribute('aria-expanded', String(allOpen));
+  }
+
+  function toggleAllProfileDetails() {
+    const details = Array.from(profileBody.querySelectorAll('.profile-drawer, .case-file'));
+    const shouldOpen = details.some(item => !item.open);
+    details.forEach((item, index) => {
+      if (item.open === shouldOpen) return;
+      window.setTimeout(() => animateDetails(item), prefersReducedMotion() ? 0 : Math.min(index * 18, 120));
+    });
+    expandAllProfile.textContent = shouldOpen ? 'Collapse all' : 'Expand all';
+    expandAllProfile.setAttribute('aria-expanded', String(shouldOpen));
   }
 
   function setupReveals() {
@@ -988,11 +1209,19 @@
     profileTribe.textContent = `Tribe of ${tribe.tribe} · ${tribe.number} of 12`;
     profileTitle.textContent = tribe.name;
     profileBody.innerHTML = profileMarkup(tribe);
+    syncBibleVersionControls();
+    syncExpandAllProfile();
     hydrateProfileScripture(tribe);
     clearDialogCloseMotion();
     dialog.classList.remove('is-closing');
     if (!dialog.open) dialog.showModal();
     dialog.querySelector('.dialog-shell').scrollTop = 0;
+    if (!prefersReducedMotion() && typeof profileBody.animate === 'function') {
+      profileBody.animate(
+        [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' }
+      );
+    }
     document.body.style.overflow = 'hidden';
   }
 
@@ -1010,6 +1239,7 @@
 
   function closeProfile() {
     if (!dialog.open || dialog.classList.contains('is-closing')) return;
+    hideVersePopover(0);
     if (prefersReducedMotion()) {
       dialog.close();
       return;
@@ -1042,14 +1272,43 @@
     });
   }
 
-  function setView(view) {
+  async function setView(view) {
+    if (view === currentView) return;
+    const token = ++viewSwitchToken;
+    const preservedScrollY = window.scrollY;
     currentView = view;
     viewButtons.forEach(button => {
       const active = button.dataset.view === view;
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', String(active));
     });
-    renderCards();
+
+    const cards = Array.from(grid.querySelectorAll('.tribe-card'));
+    if (prefersReducedMotion() || typeof Element.prototype.animate !== 'function') {
+      cards.forEach(card => {
+        const tribe = tribes.find(item => item.id === card.dataset.tribe);
+        if (tribe) applyCardView(card, tribe);
+      });
+      return;
+    }
+
+    const regions = cards.flatMap(card => Array.from(card.querySelectorAll('.card-mode, .card-chips')));
+    regions.forEach(region => region.getAnimations().forEach(animation => animation.cancel()));
+    await Promise.all(regions.map(region => region.animate(
+      [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-7px)' }],
+      { duration: 130, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' }
+    ).finished.catch(() => {})));
+    if (token !== viewSwitchToken) return;
+
+    cards.forEach(card => {
+      const tribe = tribes.find(item => item.id === card.dataset.tribe);
+      if (tribe) applyCardView(card, tribe);
+    });
+    window.scrollTo(0, preservedScrollY);
+    regions.forEach((region, index) => region.animate(
+      [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }],
+      { duration: 260, delay: Math.min(index % 6, 3) * 18, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }
+    ));
   }
 
   document.addEventListener('click', event => {
@@ -1058,14 +1317,28 @@
       selectedBibleVersionId = versionButton.dataset.bibleVersionId;
       saveBibleVersionId(selectedBibleVersionId);
       syncBibleVersionControls();
-      document.getElementById('headerVersionMenu')?.removeAttribute('open');
+      setHeaderVersionMenu(false);
       const tribe = tribes.find(item => item.id === currentProfileId);
       if (tribe) hydrateProfileScripture(tribe);
+      if (activeVerseTarget) showVersePopover(activeVerseTarget);
+      return;
+    }
+
+    const verseReference = event.target.closest('[data-verse-reference]');
+    if (verseReference) {
+      event.preventDefault();
+      event.stopPropagation();
+      showVersePopover(verseReference);
       return;
     }
 
     const summary = event.target.closest('summary');
     const interactiveChild = event.target.closest('a, button');
+    if (summary && summary.parentElement === headerVersionMenu) {
+      event.preventDefault();
+      setHeaderVersionMenu(!headerVersionMenu.open);
+      return;
+    }
     if (summary && summary.parentElement && summary.parentElement.tagName === 'DETAILS' && !summary.parentElement.hasAttribute('data-native-details') && !interactiveChild) {
       event.preventDefault();
       animateDetails(summary.parentElement);
@@ -1077,13 +1350,48 @@
     if (answerButton) answerDiagnostic(answerButton.dataset.diagnosticAnswer);
     const actionButton = event.target.closest('[data-diagnostic-action]');
     if (actionButton) handleDiagnosticAction(actionButton.dataset.diagnosticAction);
-    const versionMenu = document.getElementById('headerVersionMenu');
-    if (versionMenu?.open && !versionMenu.contains(event.target)) versionMenu.removeAttribute('open');
+    if (headerVersionMenu?.open && !headerVersionMenu.contains(event.target)) setHeaderVersionMenu(false);
   });
 
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') document.getElementById('headerVersionMenu')?.removeAttribute('open');
+    const verseReference = event.target.closest && event.target.closest('[data-verse-reference]');
+    if (verseReference && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      showVersePopover(verseReference);
+      return;
+    }
+    if (event.key === 'Escape') {
+      setHeaderVersionMenu(false);
+      hideVersePopover(0);
+    }
   });
+
+  document.addEventListener('pointerover', event => {
+    const target = event.target.closest('[data-verse-reference]');
+    if (target) showVersePopover(target);
+  });
+  document.addEventListener('pointerout', event => {
+    const target = event.target.closest('[data-verse-reference]');
+    if (target && !target.contains(event.relatedTarget)) hideVersePopover();
+  });
+  document.addEventListener('focusin', event => {
+    const target = event.target.closest('[data-verse-reference]');
+    if (target) showVersePopover(target);
+  });
+  document.addEventListener('focusout', event => {
+    const target = event.target.closest('[data-verse-reference]');
+    if (target && !target.contains(event.relatedTarget)) hideVersePopover();
+  });
+  document.addEventListener('scroll', () => {
+    if (activeVerseTarget) positionVersePopover(activeVerseTarget);
+  }, { passive: true, capture: true });
+
+  if (versePopover) {
+    versePopover.addEventListener('pointerenter', () => {
+      if (versePopoverHideTimer) window.clearTimeout(versePopoverHideTimer);
+    });
+    versePopover.addEventListener('pointerleave', () => hideVersePopover());
+  }
 
   const patternTools = document.querySelector('.pattern-tools');
   const patternsSection = document.getElementById('patterns');
@@ -1118,6 +1426,7 @@
   });
 
   document.getElementById('dialogClose').addEventListener('click', closeProfile);
+  expandAllProfile.addEventListener('click', toggleAllProfileDetails);
   dialog.addEventListener('click', event => {
     if (event.target === dialog) closeProfile();
   });

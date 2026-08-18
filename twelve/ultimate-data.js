@@ -7,6 +7,9 @@
       inverse: "Rejection",
       tribes: ["asher"],
       principle: "The calling creates belonging from received love. The pressure insists that belonging must be continually earned.",
+      icon: "host",
+      today: "A caregiver, pastor, parent, or culture-builder reads one person’s disappointment as proof the whole room is unsafe.",
+      practice: "Can love remain present without volunteering to control the other person’s response?",
       references: ["Mark 1:11", "1 John 4:18", "Galatians 1:10"]
     },
     {
@@ -16,6 +19,9 @@
       inverse: "Anxiety",
       tribes: ["gad", "reuben"],
       principle: "The calling holds steady under weight. The pressure treats personal control or immediate relief as the last line of defense.",
+      icon: "shield",
+      today: "One person grips every responsibility; another escapes the strain through impulse. Both nervous systems are trying to manufacture peace.",
+      practice: "What would steady trust do here—put something down, or stay through the ordinary middle?",
       references: ["Isaiah 26:3", "Philippians 4:6–7", "Hebrews 4:9–11"]
     },
     {
@@ -25,6 +31,9 @@
       inverse: "Heaviness",
       tribes: ["naphtali"],
       principle: "The calling translates suffering into liberation. The pressure makes escape—or the wound itself—feel safer than durable healing.",
+      icon: "deer",
+      today: "A gifted storyteller can turn pain into freedom for others while privately avoiding the structure that would make their own healing durable.",
+      practice: "Is this movement genuine freedom, or a graceful-looking exit from necessary formation?",
       references: ["Nehemiah 8:10", "Psalm 42:5", "Isaiah 61:3", "John 15:11"]
     },
     {
@@ -34,6 +43,9 @@
       inverse: "Intimidation",
       tribes: ["judah", "joseph", "benjamin", "simeon"],
       principle: "The calling carries authority for the protection of others. The pressure turns authority into self-protection, fear, or force.",
+      icon: "lion",
+      today: "Leaders, executives, protectors, and reformers all move a room; the pressure question is whether power covers people or defends the self.",
+      practice: "Does this use of strength increase another person’s agency, safety, and capacity to tell the truth?",
       references: ["Psalm 72:12–14", "Luke 22:25–27", "1 Peter 5:2–3", "2 Timothy 1:7"]
     },
     {
@@ -43,6 +55,9 @@
       inverse: "Scarcity",
       tribes: ["zebulun"],
       principle: "The calling multiplies entrusted resources with open hands. The pressure prices relationships and treats increase as personal security.",
+      icon: "bull",
+      today: "An entrepreneur sees opportunity everywhere; scarcity begins when every friendship, hour, or idea is evaluated only by measurable return.",
+      practice: "What resource can be stewarded generously before it proves its value back to you?",
       references: ["Proverbs 11:24–25", "Matthew 6:24", "2 Corinthians 9:6–11", "Philippians 4:19"]
     },
     {
@@ -52,6 +67,9 @@
       inverse: "Deception & Religion",
       tribes: ["levi", "issachar", "dan"],
       principle: "The calling sees, tests, teaches, and restores. The pressure hides behind certainty, delay, or an accurate verdict delivered without love.",
+      icon: "scroll",
+      today: "A teacher guards doctrine, a strategist keeps researching, and an auditor names the flaw. Each gift bends when truth stops serving embodied obedience and repair.",
+      practice: "What faithful action, compassionate delivery, or honest uncertainty must accompany the accurate insight?",
       references: ["John 8:31–32", "Ephesians 4:15", "James 3:13–18", "2 Timothy 4:3–4"]
     }
   ];
