@@ -1886,19 +1886,24 @@
       });
     });
 
-    // Other projects toggle
+    /* Other projects toggle. The generated Russian page lists only the sites
+       that have been translated, and collapses the drawer into the main grid
+       when few enough are left, so nothing below may assume it is there. */
     const otherToggle = document.getElementById('otherToggle');
     const otherGrid = document.getElementById('otherGrid');
-    const otherCards = otherGrid.querySelectorAll('.bento-card');
+    const otherCards = otherGrid ? [...otherGrid.querySelectorAll('.bento-card')] : [];
 
     const setOther = (open) => {
+      if (!otherGrid || !otherToggle) return;
       otherGrid.hidden = !open;
       otherToggle.setAttribute('aria-expanded', String(open));
     };
 
-    otherToggle.addEventListener('click', () => {
-      setOther(otherGrid.hidden);
-    });
+    if (otherToggle && otherGrid) {
+      otherToggle.addEventListener('click', () => {
+        setOther(otherGrid.hidden);
+      });
+    }
 
     bentoCards.forEach(card => {
       card.addEventListener('animationend', (e) => {
