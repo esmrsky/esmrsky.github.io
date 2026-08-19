@@ -102,6 +102,26 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `the-return` | **n/a** | Redirect stub: it bounces before paint, so a `/ru/` copy would be a URL nobody can reach. The generator skips it by name. Note its target `/the-return-new/` does not exist in this repo. |
 | `the-return.html`, `index-old-return-backup.html` | **n/a** | Same as above — skipped. |
 
+## Where the 2026-08-19 cloud run left things
+
+Phase 0 (mechanism) is **done**: the two drifted hub cards carry `data-ru`,
+the `.lang-alt` anchor is gone from all nine English sources and therefore
+from both sides, and `tools/build-ru.py` now filters the Russian grid.
+
+Six pages landed: `desire-master`, `colour-of-middle-c`,
+`the-seeking-machine`, `the-fixed-point`, `predicting-mind`,
+`two-hundred-milliseconds`. Fourteen cards now show on `/ru/`.
+
+Two things a future run should know:
+
+- **The work is on `claude/jolly-goodall-o7vr82`, not `main`.** The session
+  was constrained to that branch, so none of it is published yet — GitHub
+  Pages builds from `main`. Merging the branch is what makes it live.
+- **Live URLs could not be verified from the sandbox.** `esmrsky.github.io`
+  is blocked by the same egress proxy as bolls. Instead every generated page
+  was verified by comparing its pushed git blob SHA against the local one —
+  all matched. `.nojekyll` is present at the root and untouched.
+
 ## Picking this up in a future session
 
 1. Add `data-ru` to the English source — that file stays the source of truth —
@@ -140,6 +160,48 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
   depends on.
 - **Brand/product names are not translated**: `esmrsky`, `Torac Champagne`,
   `Claude Code`, `Codex`, `APEST`, `NSDR`, `200MS`, `SoundLab`, `DAW`.
+- **НРП blocked again, 2026-08-19 (cloud run).** bolls.life was probed three
+  times from the cloud sandbox — at the start of the run, mid-run, and once
+  more on request — and failed identically every time:
+
+      $ curl -s --max-time 25 https://bolls.life/get-text/NRT/43/3/
+      curl: (56) CONNECT tunnel failed, response 403
+
+  The proxy's own log records it as `connect_rejected · gateway answered 403
+  to CONNECT`, i.e. a policy denial, not a transient failure.
+  `https://bolls.life/get-books/NRT/` fails the same way, and so does
+  `https://esmrsky.github.io/` itself. bolls is reachable from the owner's
+  Mac, so **Phase 1 and every scripture-quoting page are waiting on a run
+  executed somewhere with egress to bolls** — not on any further design work.
+  No verse was fetched, and none was written from memory.
+
+- **Which pages are blocked on НРП, established this run.** Surveyed properly
+  so the next run does not have to re-derive it. A page counts as blocked if
+  it quotes verse *text*; pages that only cite references are fine.
+  - Blocked: `twelve` (42 KB `scripture-data.js`), `atlas-v3`, `atlas-v2`,
+    `most-best-verses` (the whole page), `architecture-of-desire` (a
+    `SCRIPTURE` array with a `q:` field), `one-shape`
+    (`<div class="scripture">`), `anatomy-of-rest`, `soundings` (one verse,
+    Иез. 47:11, in a `<q>`), `graded` (Втор. 29:29), `combo-stern` and
+    `combo-stern-loop-love` (Иер. 2:13), `the-watches-of-the-night` (a
+    `.verse-grid` of six KJV passages), `the-weight-of-rest`
+    (`class="scripture"`).
+  - `where-are-you` is blocked on **three words**: «Little children / Young
+    men / Fathers» from 1 Ин. 2:12–14, in its `FW` payload. Everything else
+    on it is ordinary prose. If the owner is willing to leave those three
+    terms in English with a note, the page unblocks immediately; otherwise it
+    waits for bolls. It is also a large job — a ~55 KB JS payload, like
+    `soundings`.
+  - Still clear and unblocked: **`bait-constellation`** (22 markup units plus
+    a 37-term JS glossary) and **`coding-agents-guide`** (322 markup units).
+    These are the two obvious next targets for a run without bolls.
+
+- **Detecting quoted scripture.** Grepping for `<q>`, `<blockquote>`,
+  `<cite>` and `class="scripture"` is **not** sufficient — it missed
+  `the-watches-of-the-night`, which marks verses with `class="verse"` and
+  `class="ref"`. Screen for a book-and-chapter reference sitting within a few
+  hundred characters of a long quoted run, and read the hits.
+
 - **НРП still could not be used.** The task preferred Новый русский перевод.
   Every Bible host — biblegateway.com, bible.com, only.bible, bibleserver.com,
   bible.by, azbyka.ru, allbible.info — is blocked by this environment's egress
