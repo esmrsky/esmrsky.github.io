@@ -189,7 +189,6 @@
   /* Keyboard focus has to survive both themes — cobalt reads on either. */
   .filter-btn:focus-visible,
   .other-toggle:focus-visible,
-  .lang-alt:focus-visible,
   .theme-toggle:focus-visible,
   .bento-card:focus-visible {
     outline: 2px solid var(--cobalt);
@@ -672,28 +671,6 @@
     .other-toggle { padding: 18px 22px; }
   }
 
-  /* The other language. A plain text link, sitting in the header where a
-     reader is already reading, rather than a pill competing with the
-     theme button. */
-  .lang-line {
-    margin: 18px 0 0;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-  }
-
-  .lang-alt {
-    color: var(--fg-faint);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-
-  .lang-alt:hover {
-    color: var(--cobalt-soft);
-    border-bottom-color: currentColor;
-  }
-
   /* Theme toggle — pinned top-right, out of the centred header's flow */
   .theme-toggle {
     position: fixed;
@@ -805,7 +782,6 @@
   <header>
     <h1 data-ru="<span>esmrsky</span> · Проекты"><span>esmrsky</span> · Projects</h1>
     <p class="subtitle" data-ru="Библиотека интерактивных скроллителлинг-путеводителей, визуальных эссе, разборов Писания и небольших инструментов.">A library of interactive scrollytelling field guides, visual essays, scriptural deep-dives, and tools.</p>
-    <p class="lang-line"><a class="lang-alt" href="/ru/" lang="ru" hreflang="ru" data-ru="English" data-ru-href="/" data-ru-lang="en" data-ru-hreflang="en">Русский</a></p>
 
     <div class="filters">
       <button class="filter-btn active" data-filter="all" data-ru="Все проекты">All Projects</button>
@@ -1218,13 +1194,13 @@
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
             </svg>
           </div>
-          <span class="card-tag">Scripture collection</span>
+          <span class="card-tag" data-ru="Собрание отрывков">Scripture collection</span>
         </div>
-        <h2 class="card-title">The Most Best Verses</h2>
-        <p class="card-desc">Ninety-six favorite Scripture passages in a clean, readable collection. Filter by theme, switch Bible versions, and copy any verse ready to share.</p>
+        <h2 class="card-title" data-ru="Самые наилучшие стихи">The Most Best Verses</h2>
+        <p class="card-desc" data-ru="Девяносто шесть любимых отрывков Писания в чистом, удобном для чтения собрании. Фильтруй по темам, переключай переводы и копируй любой стих, чтобы поделиться.">Ninety-six favorite Scripture passages in a clean, readable collection. Filter by theme, switch Bible versions, and copy any verse ready to share.</p>
       </div>
       <div class="card-footer">
-        <div class="card-pills"><span class="pill">96 passages</span><span class="pill">4 versions</span><span class="pill">Light &amp; dark</span></div>
+        <div class="card-pills"><span class="pill" data-ru="96 отрывков">96 passages</span><span class="pill" data-ru="4 перевода">4 versions</span><span class="pill" data-ru="Светлая и тёмная тема">Light &amp; dark</span></div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
@@ -1902,10 +1878,10 @@
               <circle cx="12" cy="15" r="2"/>
             </svg>
           </div>
-          <span class="card-tag">Playbook</span>
+          <span class="card-tag" data-ru="Практическое пособие">Playbook</span>
         </div>
-        <h3 class="card-title">App Founder Playbook</h3>
-        <p class="card-desc">Problem, folder, video. Six case files and 36 labeled tips for shipping without a second builder.</p>
+        <h3 class="card-title" data-ru="Пособие основателя приложения">App Founder Playbook</h3>
+        <p class="card-desc" data-ru="Проблема, папка, видео. Шесть разборов и 36 размеченных советов о том, как выпускать продукт без второго разработчика.">Problem, folder, video. Six case files and 36 labeled tips for shipping without a second builder.</p>
       </div>
       <div class="card-footer">
         <div class="card-pills"><span class="pill">Cal AI</span><span class="pill">Claude Code</span><span class="pill">2026</span></div>
@@ -1935,19 +1911,24 @@
       });
     });
 
-    // Other projects toggle
+    /* Other projects toggle. The generated Russian page lists only the sites
+       that have been translated, and collapses the drawer into the main grid
+       when few enough are left, so nothing below may assume it is there. */
     const otherToggle = document.getElementById('otherToggle');
     const otherGrid = document.getElementById('otherGrid');
-    const otherCards = otherGrid.querySelectorAll('.bento-card');
+    const otherCards = otherGrid ? [...otherGrid.querySelectorAll('.bento-card')] : [];
 
     const setOther = (open) => {
+      if (!otherGrid || !otherToggle) return;
       otherGrid.hidden = !open;
       otherToggle.setAttribute('aria-expanded', String(open));
     };
 
-    otherToggle.addEventListener('click', () => {
-      setOther(otherGrid.hidden);
-    });
+    if (otherToggle && otherGrid) {
+      otherToggle.addEventListener('click', () => {
+        setOther(otherGrid.hidden);
+      });
+    }
 
     bentoCards.forEach(card => {
       card.addEventListener('animationend', (e) => {

@@ -31,6 +31,12 @@ What it does to each page, in order:
     inside `<style>` blocks and `style=""` attributes. Deliberately not
     `<base href>`: that would send every in-page `#anchor` to the base URL.
 6.  Adds the `<link rel="alternate" hreflang>` pair to both sides.
+7.  On the homepage only, drops every project card whose Russian page does
+    not exist yet, repacks the grid so the survivors leave no holes, folds
+    the "Other projects" drawer into the main grid once few enough cards are
+    left, and removes any filter button nothing matches any more. Which
+    cards survive is derived from the pages being generated, so it can never
+    go stale.
 
 The English sources are edited in place only to carry that hreflang pair.
 
@@ -519,6 +525,253 @@ def rewrite_css_urls(block: str) -> str:
 
 
 # --------------------------------------------------------------------------
+# The Russian homepage grid
+#
+# The hub lists every project. Most of them have no Russian page yet, and a
+# Russian grid full of cards that open in English is worse than a shorter
+# grid — so the Russian homepage lists only what is actually translated.
+#
+# Which cards those are is worked out here, at build time, from the set of
+# pages the generator is emitting. A hand-kept list would be stale the first
+# time a page landed.
+#
+# Dropping cards leaves holes: the grid is four columns of mixed 2x2 / 2x1 /
+# 1x1 / 3x1 tiles, packed by CSS grid's own sparse auto-placement. So after
+# filtering, the placement is simulated, and any card sitting immediately
+# left of a hole is widened to swallow it.
+# --------------------------------------------------------------------------
+
+GRID_COLS = 4
+
+# Below this many surviving cards the "Other projects" drawer is not worth a
+# disclosure control — everything fits in one grid.
+DRAWER_MIN = 12
+
+CARD_RE = re.compile(r'<a href="([^"]*)" class="bento-card([^"]*)"[^>]*>')
+SPAN_RE = re.compile(r"\bspan-(\d+)-(\d+)\b")
+
+
+class Card:
+    __slots__ = ("href", "start", "end", "w", "h", "tags", "cls_span")
+
+    def __init__(self, href, start, end, w, h, tags, cls_span):
+        self.href = href
+        self.start = start          # includes the leading <!-- label --> comment
+        self.end = end              # just past </a>
+        self.w = w
+        self.h = h
+        self.tags = tags
+        self.cls_span = cls_span    # the span-N-M substring, or "" for 1x1
+
+
+def _card_start(src: str, at: int) -> int:
+    """Extend a card's span backwards over the comment that labels it."""
+    i = at
+    while i > 0 and src[i - 1] in " \t":
+        i -= 1
+    if i > 0 and src[i - 1] == "\n":
+        line_end = i - 1
+        j = src.rfind("\n", 0, line_end)
+        line = src[j + 1:line_end].strip()
+        if line.startswith("<!--") and line.endswith("-->"):
+            return j + 1
+    return at
+
+
+def find_cards(src: str, lo: int, hi: int) -> list[Card]:
+    cards = []
+    for m in CARD_RE.finditer(src, lo, hi):
+        end = src.index("</a>", m.end()) + len("</a>")
+        cls = m.group(2)
+        sm = SPAN_RE.search(cls)
+        w, h = (int(sm.group(1)), int(sm.group(2))) if sm else (1, 1)
+        tm = re.search(r'data-tags="([^"]*)"', src[m.start():m.end()])
+        tags = tm.group(1).split() if tm else []
+        cards.append(Card(m.group(1), _card_start(src, m.start()), end,
+                          w, h, tags, sm.group(0) if sm else ""))
+    return cards
+
+
+def place(boxes: list[tuple[int, int]]) -> tuple[list[tuple[int, int]], int]:
+    """CSS grid's sparse auto-placement: a cursor that never moves backwards.
+
+    Returns each box's (row, col) and the number of rows used."""
+    occupied: set[tuple[int, int]] = set()
+    pos = []
+    cur_r, cur_c = 0, 0
+    for w, h in boxes:
+        w = min(w, GRID_COLS)
+        r, c = cur_r, cur_c
+        while True:
+            if c + w > GRID_COLS:
+                r, c = r + 1, 0
+                continue
+            if any((r + dr, c + dc) in occupied
+                   for dr in range(h) for dc in range(w)):
+                c += 1
+                continue
+            break
+        for dr in range(h):
+            for dc in range(w):
+                occupied.add((r + dr, c + dc))
+        pos.append((r, c))
+        cur_r, cur_c = r, c + w
+    rows = 1 + max((r + h - 1 for (r, _), (_, h) in zip(pos, boxes)), default=-1)
+    return pos, rows
+
+
+def owner_rows(pos, boxes, row: int) -> list[int]:
+    """Indices of the cards that reach into `row`."""
+    return [i for i, ((r, _), (_, h)) in enumerate(zip(pos, boxes))
+            if r <= row < r + h]
+
+
+def rebalance(cards: list[Card], allowed: set[tuple[int, int]]) -> None:
+    """Widen cards into the holes their dropped neighbours left behind.
+
+    `allowed` is the set of (w, h) the page's own stylesheet has a rule for,
+    so this never invents a span class that would not lay out."""
+    for _ in range(40):
+        boxes = [(c.w, c.h) for c in cards]
+        pos, rows = place(boxes)
+        occupied = set()
+        owner = {}
+        for i, ((r, c), (w, h)) in enumerate(zip(pos, boxes)):
+            for dr in range(h):
+                for dc in range(min(w, GRID_COLS)):
+                    occupied.add((r + dr, c + dc))
+                    owner[(r + dr, c + dc)] = i
+
+        hole = next(((r, c) for r in range(rows) for c in range(GRID_COLS)
+                     if (r, c) not in occupied), None)
+        if hole is None:
+            return
+        hr, hc = hole
+        run = 0
+        while hc + run < GRID_COLS and (hr, hc + run) not in occupied:
+            run += 1
+
+        # First move: the card that ends where the hole begins grows into it.
+        left = owner.get((hr, hc - 1)) if hc else None
+        if left is not None:
+            card = cards[left]
+            for extra in range(run, 0, -1):
+                if (card.w + extra, card.h) in allowed:
+                    card.w += extra
+                    break
+            else:
+                left = None
+        if left is not None:
+            continue
+
+        # Second move: a hole in the last row usually means one tall card is
+        # hanging into a row nothing else reaches. Shortening it removes the
+        # row instead of leaving a gap under it — the only other lever, since
+        # widening is capped by the span classes the page actually defines.
+        if hr != rows - 1:
+            return
+        shrunk = False
+        for i in sorted(owner_rows(pos, boxes, hr), reverse=True):
+            card = cards[i]
+            if card.h > 1 and (card.w, card.h - 1) in allowed:
+                card.h -= 1
+                shrunk = True
+                break
+        if not shrunk:
+            return
+
+
+def allowed_spans(src: str) -> set[tuple[int, int]]:
+    spans = {(1, 1)}
+    for m in re.finditer(r"\.bento-card\.span-(\d+)-(\d+)\b", src):
+        spans.add((int(m.group(1)), int(m.group(2))))
+    return spans
+
+
+def apply_span(src_block: str, card: Card) -> str:
+    """Rewrite a card's span class to its rebalanced width."""
+    want = "" if (card.w, card.h) == (1, 1) else "span-%d-%d" % (card.w, card.h)
+    if want == card.cls_span:
+        return src_block
+    if card.cls_span:
+        if want:
+            return src_block.replace(card.cls_span, want, 1)
+        return re.sub(r"\s*\b" + re.escape(card.cls_span) + r"\b", "",
+                      src_block, count=1)
+    return src_block.replace('class="bento-card', 'class="bento-card ' + want, 1)
+
+
+def filter_ru_grid(src: str, ru_dirs: set[str]) -> str:
+    """Keep only the cards whose Russian page exists, then repack the grid."""
+    main_open = src.find('<main class="bento-grid">')
+    if main_open < 0:
+        return src
+    main_lo = main_open + len('<main class="bento-grid">')
+    main_hi = src.index("</main>", main_lo)
+
+    sec_lo = src.find('<section class="other-projects"')
+    if sec_lo >= 0:
+        drawer_lo = src.index('id="otherGrid"', sec_lo)
+        drawer_lo = src.index(">", drawer_lo) + 1
+        sec_hi = src.index("</section>", drawer_lo) + len("</section>")
+        drawer_hi = src.rindex("</div>", drawer_lo, sec_hi)
+    else:
+        drawer_lo = drawer_hi = sec_hi = -1
+
+    def translated(card: Card) -> bool:
+        m = re.fullmatch(r"/([^/]+)/", card.href)
+        return bool(m) and m.group(1) in ru_dirs
+
+    main_cards = find_cards(src, main_lo, main_hi)
+    drawer_cards = find_cards(src, drawer_lo, drawer_hi) if sec_lo >= 0 else []
+    keep_main = [c for c in main_cards if translated(c)]
+    keep_drawer = [c for c in drawer_cards if translated(c)]
+
+    collapse = sec_lo >= 0 and len(keep_main) + len(keep_drawer) < DRAWER_MIN
+    if collapse:
+        keep_main += keep_drawer
+        keep_drawer = []
+
+    allowed = allowed_spans(src)
+    rebalance(keep_main, allowed)
+
+    # Rebuild the two grids from the cards that survived. Working on source
+    # slices keeps every card byte-for-byte what the English page had, minus
+    # its span class.
+    main_html = "\n".join(apply_span(src[c.start:c.end], c) for c in keep_main)
+    edits = [(main_lo, main_hi, "\n" + main_html + "\n  " if main_html else "\n  ")]
+
+    if sec_lo >= 0:
+        if not keep_drawer:
+            # Take the blank line that separated it from the grid with it.
+            lo = sec_lo
+            while lo > 0 and src[lo - 1] in " \t":
+                lo -= 1
+            edits.append((lo, eat_blank(src, sec_hi), ""))
+        else:
+            rebalance(keep_drawer, allowed)
+            drawer_html = "\n".join(
+                apply_span(src[c.start:c.end], c) for c in keep_drawer)
+            edits.append((drawer_lo, drawer_hi, "\n" + drawer_html + "\n    "))
+            cm = re.search(r'(<span class="other-count">)(\d+)(</span>)',
+                           src[sec_lo:drawer_lo])
+            if cm:
+                edits.append((sec_lo + cm.start(2), sec_lo + cm.end(2),
+                              str(len(keep_drawer))))
+
+    src = splice(src, sorted(edits))
+
+    # A filter button with nothing left to filter is a dead control.
+    live = {t for c in keep_main + keep_drawer for t in c.tags}
+    def drop_button(m):
+        val = m.group(1)
+        return "" if val != "all" and val not in live else m.group(0)
+    src = re.sub(r'[ \t]*<button class="filter-btn[^"]*" data-filter="([^"]*)"'
+                 r'[^>]*>.*?</button>\n', drop_button, src)
+    return src
+
+
+# --------------------------------------------------------------------------
 # hreflang
 # --------------------------------------------------------------------------
 
@@ -612,6 +865,10 @@ def build(pages: list[str], check: bool, known: list[str] | None = None) -> int:
             print(f"  en  {rel}")
 
         doc = apply_translation(patched)
+        if rel == "index.html":
+            # Before the URLs are rewritten: the filter reads each card's
+            # English href to decide whether a Russian page exists for it.
+            doc = filter_ru_grid(doc, ru_dirs)
         doc = strip_toggle_and_scripts(doc)
         doc = set_html_lang(doc)
         doc = rewrite_urls(doc, ru_dirs, by_dir.get(d, set()))

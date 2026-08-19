@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/two-hundred-milliseconds/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/two-hundred-milliseconds/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/two-hundred-milliseconds/">
+<!-- lang-alt:end -->
+<title>200MS — искусство и наука разговора</title>
+<meta name="description" content="What talk actually does, what it doesn't, and the measured gap where connection lives.">
+<script>(function(){try{var s=localStorage.getItem('ms-theme');document.documentElement.setAttribute('data-theme',s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="200MS — the art and science of talking">
+<meta property="og:description" content="The pause between your last word and my first one lands near 200 milliseconds in every language measured. You can fake the words. You cannot fake the timing.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h4l2-6 3 12 2-6h7' fill='none' stroke='%232440E8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+
+:root{
+  --paper:#EDEEE9;
+  --paper-2:#E3E5DE;
+  --ink:#101318;
+
+  --blue:#2440E8;      /* measured / timing */
+  --flame:#FF4A1C;     /* risk / failure */
+  --acid:#C9F227;      /* reception / listening */
+  --graphite:#5C6057;
+  /* text-on-paper variants — must be dark enough to read */
+  --blue-text:#2440E8; --flame-text:#AC300B;
+  /* fills that carry white text — deliberately fixed across themes */
+  --blue-fill:#2440E8; --flame-fill:#C2380F;
+  --rule:#C6C9BF;
+
+  --display:"Archivo",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+
+  --gut:clamp(1.5rem,5vw,4.5rem);
+  --spine:9.5rem;
+  --max:80rem;
+}
+
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);
+  font-size:clamp(1rem,.96rem + .2vw,1.1rem);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--blue);color:#fff}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+/* ---------- shell ----------
+   .band uses padding-block ONLY, so it can never clobber the
+   horizontal gutter set by .wrap when both are on one element. */
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.band{padding-block:clamp(4rem,9vw,8rem)}
+.hr{border:0;border-top:2px solid var(--ink);margin:0}
+
+.spine{display:grid;grid-template-columns:var(--spine) minmax(0,1fr);gap:0 clamp(1.5rem,4vw,3.5rem);align-items:start}
+.spine>.mark{font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite);padding-top:.7rem;line-height:1.6}
+.spine>.mark b{display:block;font-family:var(--display);font-size:2.75rem;font-weight:900;font-stretch:125%;line-height:.85;letter-spacing:-.04em;color:var(--blue);margin-bottom:.4rem}
+@media(max-width:860px){
+  .spine{grid-template-columns:minmax(0,1fr)}
+  .spine>.mark{padding-top:0;margin-bottom:1.25rem;display:flex;align-items:baseline;gap:.75rem}
+  .spine>.mark b{font-size:1.75rem;margin-bottom:0}
+}
+
+/* ---------- type ---------- */
+.eyebrow{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--graphite);margin:0 0 1.1rem}
+.eyebrow.b{color:var(--blue-text)}
+.eyebrow.f{color:var(--flame-text)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;font-weight:900;font-stretch:118%}
+h1{font-size:clamp(3.4rem,15vw,11rem);line-height:.8;letter-spacing:-.05em;text-transform:uppercase}
+h2{font-size:clamp(2rem,5.4vw,4.2rem);line-height:.92;letter-spacing:-.038em;margin-bottom:1.4rem}
+h3{font-size:clamp(1.3rem,2.5vw,1.9rem);line-height:1.05;letter-spacing:-.028em;font-stretch:110%}
+.lede{font-size:clamp(1.15rem,1.02rem + .7vw,1.6rem);line-height:1.34;letter-spacing:-.017em;max-width:34ch;font-weight:500}
+p{margin:0 0 1.1em;max-width:60ch}
+p:last-child{margin-bottom:0}
+.drop{color:#4A4E54}
+.b{color:var(--blue-text)}.f{color:var(--flame-text)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500}
+mark{background:var(--acid);color:var(--ink);padding:.05em .2em}
+
+/* ---------- masthead ---------- */
+.top{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--graphite);padding-block:1.1rem;border-bottom:2px solid var(--ink)}
+.top .dot{display:inline-block;width:.5rem;height:.5rem;background:var(--flame);border-radius:50%;margin-right:.5rem}
+.masthead{padding-block:clamp(2.5rem,7vw,5rem) clamp(2rem,5vw,3.5rem)}
+h1 .l2{display:block;color:var(--blue)}
+h1 .l3{display:block;-webkit-text-stroke:2px var(--ink);color:transparent}
+.deck{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.5rem clamp(1.5rem,4vw,3rem);margin-top:clamp(2rem,5vw,3rem);padding-top:1.5rem;border-top:1px solid var(--rule)}
+.deck .k{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--graphite);margin-bottom:.5rem}
+
+/* ---------- hero waveform ---------- */
+.wave{margin-top:clamp(2rem,5vw,3rem);border:2px solid var(--ink);background:var(--paper-2);padding:clamp(1rem,3vw,1.75rem);overflow:hidden}
+.wave-head{display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;font-family:var(--mono);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:var(--graphite);margin-bottom:1rem}
+.wave-head i{font-style:normal;display:inline-block;width:.65rem;height:.65rem;margin-right:.35rem;vertical-align:-1px}
+.bars{display:flex;align-items:flex-end;gap:2px;height:clamp(64px,16vw,120px)}
+.bar{flex:1 1 0;background:var(--blue);transform-origin:bottom;transform:scaleY(0)}
+.bar.b2{background:var(--flame)}
+.bar.gap{background:transparent;position:relative;transform:none}
+.bar.gap.hot::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--acid)}
+.wave.play .bar{animation:rise .3s cubic-bezier(.2,.9,.3,1) forwards}
+@keyframes rise{to{transform:scaleY(1)}}
+.wave-foot{display:flex;justify-content:space-between;gap:.5rem;font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite);margin-top:.75rem;padding-top:.6rem;border-top:1px solid var(--rule)}
+
+/* ---------- hero exchange ---------- */
+.exchange{margin-top:clamp(2rem,5vw,3rem);max-width:50rem}
+.turn{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:0 1rem;align-items:baseline;padding:.5rem 0;opacity:0;transform:translateY(.4rem)}
+.turn.on{opacity:1;transform:none;transition:opacity .35s ease,transform .35s ease}
+.turn .who{font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite)}
+.turn .said{font-family:var(--display);font-weight:800;font-stretch:105%;font-size:clamp(1.2rem,3.2vw,2rem);line-height:1.12;letter-spacing:-.028em}
+.gapline{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:0 1rem;align-items:center;height:1.75rem}
+.gapline .who{font-family:var(--mono);font-size:.6875rem;color:var(--blue);letter-spacing:.1em}
+.track{position:relative;height:3px;background:var(--rule)}
+.fill{position:absolute;inset:0 auto 0 0;width:0;height:3px;background:var(--blue)}
+@media(max-width:560px){.turn,.gapline{grid-template-columns:3rem minmax(0,1fr);gap:0 .6rem}}
+
+.btn{background:var(--ink);border:2px solid var(--ink);color:var(--paper);font-family:var(--mono);font-weight:500;font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;padding:.7rem 1.2rem;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.btn:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn--ghost{background:none;color:var(--ink)}
+.btn--ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.5rem}
+
+/* ---------- instrument ---------- */
+.instrument{border:2px solid var(--ink);background:var(--ink);color:var(--paper);margin-top:2.5rem}
+.inst-head{display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;font-family:var(--mono);font-size:.625rem;letter-spacing:.13em;text-transform:uppercase;color:#8B8F87;padding:1rem clamp(1.1rem,3vw,2rem);border-bottom:1px solid #2A2E36}
+.inst-body{padding:clamp(1.25rem,3.5vw,2.25rem)}
+.readout{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:clamp(3rem,13vw,7rem);line-height:.82;letter-spacing:-.055em;color:#7B93FF;font-variant-numeric:tabular-nums;transition:color .25s}
+.readout small{font-family:var(--mono);font-weight:400;font-size:.16em;letter-spacing:.2em;color:#8B8F87;margin-left:.35em;vertical-align:.9em}
+.stage{margin:1.5rem 0;padding-block:1.25rem;border-top:1px solid #2A2E36;border-bottom:1px solid #2A2E36}
+.st{display:grid;grid-template-columns:3.75rem minmax(0,1fr);gap:0 .9rem;align-items:baseline;padding:.35rem 0}
+.st .who{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:#8B8F87}
+.st .said{font-family:var(--display);font-weight:800;font-stretch:105%;font-size:clamp(1.05rem,2.6vw,1.45rem);line-height:1.15;letter-spacing:-.02em}
+.st.pending .said{color:#3A3F48}
+.stg{display:grid;grid-template-columns:3.75rem minmax(0,1fr);gap:0 .9rem;align-items:center;height:1.5rem}
+.stg .who{font-family:var(--mono);font-size:.625rem;color:#7B93FF}
+.stg .track{background:#2A2E36}
+@media(max-width:560px){.st,.stg{grid-template-columns:2.75rem minmax(0,1fr);gap:0 .6rem}}
+.sl-label{font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:#8B8F87;display:block;margin-bottom:.7rem}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;background:transparent;margin:0;cursor:grab}
+input[type=range]:active{cursor:grabbing}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:#2A2E36}
+input[type=range]::-moz-range-track{height:3px;background:#2A2E36}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:32px;background:var(--acid);border:none;border-radius:0;margin-top:-15px}
+input[type=range]::-moz-range-thumb{width:14px;height:32px;background:var(--acid);border:none;border-radius:0}
+.scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.5625rem;color:#9BA093;letter-spacing:.08em;margin-top:.5rem}
+.verdict{margin-top:1.5rem;border-left:4px solid var(--blue);padding-left:1rem;transition:border-color .25s}
+.v-label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acid);display:block;margin-bottom:.4rem}
+.v-text{font-family:var(--display);font-weight:700;font-stretch:105%;font-size:clamp(1.05rem,2.4vw,1.4rem);line-height:1.22;letter-spacing:-.018em;max-width:40ch;display:block}
+.inst-foot{font-family:var(--mono);font-size:.6875rem;line-height:1.7;color:#8B8F87;max-width:56ch;margin-top:1.75rem;padding-top:1.1rem;border-top:1px solid #2A2E36}
+.inst-foot b{color:var(--acid);font-weight:500}
+.instrument .btn{background:var(--acid);border-color:var(--acid);color:var(--ink)}
+.instrument .btn:hover{background:#fff;border-color:#fff;color:var(--ink)}
+.instrument .btn--ghost{background:none;border-color:#4A4E54;color:var(--paper)}
+.instrument .btn--ghost:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+
+/* ---------- layout bits ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:clamp(1.75rem,4vw,3.25rem);margin-top:2.25rem}
+.pull{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:clamp(1.5rem,4vw,2.9rem);line-height:1.02;letter-spacing:-.035em;max-width:22ch;padding-left:1.25rem;border-left:6px solid var(--flame)}
+.card{border:2px solid var(--ink);padding:clamp(1.25rem,3vw,1.85rem)}
+.card--flame{border-color:var(--flame)}
+.card--flame h3{color:var(--flame-text)}
+.card--blue{border-color:var(--blue);background:var(--blue);color:#fff}
+.card--blue h3{color:#fff;max-width:20ch}
+.badge{display:inline-block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .55rem;margin-bottom:.9rem}
+.badge--flame{background:var(--flame-fill);color:#fff}
+.badge--acid{background:var(--acid);color:#101318}
+
+/* ---------- chart ---------- */
+.chart{border:2px solid var(--ink);margin-top:2.5rem;background:var(--paper-2)}
+.chart-head{padding:1rem clamp(1.1rem,3vw,1.75rem);border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:.625rem;letter-spacing:.13em;text-transform:uppercase;color:var(--graphite);display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.chart-body{padding:clamp(1.25rem,3vw,2rem)}
+.row{margin-bottom:1.35rem}
+.row:last-child{margin-bottom:0}
+.row-top{display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;flex-wrap:wrap;margin-bottom:.4rem}
+.row-label{font-family:var(--display);font-weight:800;font-stretch:108%;font-size:clamp(.95rem,2.2vw,1.15rem);letter-spacing:-.015em}
+.row-val{font-family:var(--mono);font-size:.625rem;letter-spacing:.11em;text-transform:uppercase;color:var(--graphite)}
+.row-track{height:22px;background:#D5D8CF}
+.row-fill{height:100%;width:0;background:var(--blue);transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.chart.in .row-fill{width:var(--w)}
+.row-fill.none{background:repeating-linear-gradient(45deg,var(--flame) 0 6px,transparent 6px 12px);outline:2px solid var(--flame);outline-offset:-2px}
+.chart-foot{padding:1rem clamp(1.1rem,3vw,1.75rem);border-top:1px solid var(--rule);font-family:var(--mono);font-size:.6875rem;line-height:1.7;color:var(--graphite)}
+
+/* ---------- moves ---------- */
+.moves{margin-top:2rem;border-top:2px solid var(--ink)}
+.move{display:grid;grid-template-columns:minmax(0,1fr);gap:1.5rem;padding-block:clamp(1.75rem,4vw,2.75rem);border-bottom:1px solid var(--rule)}
+@media(min-width:900px){.move{grid-template-columns:1fr 1.05fr;gap:clamp(2rem,5vw,4rem);align-items:start}}
+.move-tag{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:.75rem}
+.move h3{margin-bottom:.8rem}
+.script{background:var(--paper-2);border-left:6px solid var(--ink);padding:clamp(1rem,2.5vw,1.5rem)}
+.line{display:grid;grid-template-columns:2.75rem minmax(0,1fr);gap:0 .8rem;padding:.4rem 0;align-items:baseline}
+.line .who{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite)}
+.line .said{font-size:.95rem;line-height:1.4}
+.line--bad .said{color:var(--graphite);text-decoration:line-through;text-decoration-color:var(--flame);text-decoration-thickness:2px}
+.line--good .said{font-weight:600;box-shadow:inset 0 -.55em 0 rgba(201,242,39,.75)}
+.note{font-family:var(--mono);font-size:.6875rem;line-height:1.7;color:var(--graphite);margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--rule);max-width:48ch}
+
+/* ---------- dark ---------- */
+.dark{background:var(--ink);color:var(--paper)}
+.dark .eyebrow,.dark .note,.dark .drop{color:#8B8F87}
+.dark h2 em{font-style:normal;color:var(--acid)}
+.dark .pull{border-left-color:var(--acid);color:var(--paper)}
+.dark .spine>.mark{color:#8B8F87}
+.dark .spine>.mark b{color:var(--acid)}
+.dark ::selection{background:var(--acid);color:var(--ink)}
+.dark .note{border-top-color:#2A2E36}
+.dark strong{color:var(--paper)}
+
+.meter{display:grid;gap:.5rem;margin-top:2.5rem;border:2px solid #2A2E36;padding:clamp(1.1rem,3vw,1.75rem)}
+.meter-row{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:0 1rem;align-items:center}
+.meter-row .k{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:#8B8F87}
+.meter-bars{display:flex;gap:2px;height:26px;align-items:flex-end}
+.mb{flex:1 1 0;background:#2A2E36}
+.mb.on{background:var(--acid)}
+.mb.dim{background:#3A3F48}
+@media(max-width:560px){.meter-row{grid-template-columns:4rem minmax(0,1fr);gap:0 .6rem}}
+
+/* ---------- practice ---------- */
+.ol{margin-top:2rem}
+.ol-item{display:grid;grid-template-columns:3.25rem minmax(0,1fr);gap:0 1.1rem;padding-block:1.5rem;border-top:1px solid var(--rule);align-items:start}
+.ol-item:first-child{border-top:2px solid var(--ink)}
+.ol-num{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:1.9rem;line-height:.9;letter-spacing:-.05em;color:var(--flame-text)}
+.ol-item h3{font-size:clamp(1.1rem,2.1vw,1.4rem);margin-bottom:.4rem}
+.ol-item p{font-size:.95rem}
+@media(max-width:560px){.ol-item{grid-template-columns:2.5rem minmax(0,1fr);gap:0 .8rem}.ol-num{font-size:1.5rem}}
+
+/* ---------- sources ---------- */
+.src{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:0 1.25rem;padding-block:1.1rem;border-top:1px solid var(--rule)}
+@media(max-width:700px){.src{grid-template-columns:minmax(0,1fr);gap:.5rem}}
+.grade{font-family:var(--mono);font-size:.625rem;letter-spacing:.11em;text-transform:uppercase;align-self:start;padding:.28rem .5rem;justify-self:start}
+.g-solid{background:var(--blue-fill);color:#fff}
+.g-single{background:var(--flame-fill);color:#fff}
+.g-frame{background:var(--rule);color:var(--ink)}
+.src p{font-family:var(--mono);font-size:.75rem;line-height:1.75;color:var(--graphite);max-width:64ch;margin:0}
+.src p b{color:var(--ink);font-weight:700;font-family:var(--body)}
+
+.colophon{padding-block:clamp(2.5rem,6vw,4rem);border-top:2px solid var(--ink);font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(1.1rem)}
+.rv.in{opacity:1;transform:none;transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1)}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv,.turn{opacity:1!important;transform:none!important}
+  .bar{transform:scaleY(1)!important}
+  .row-fill{width:var(--w)!important}
+}
+
+/* ---- theme toggle (shared shape across the family of pages) ---- */
+.theme-btn{
+  position:fixed;top:14px;right:14px;z-index:200;width:42px;height:42px;
+  display:grid;place-items:center;border-radius:50%;cursor:pointer;
+  background:var(--tb-bg);border:1.5px solid var(--tb-bd);color:var(--tb-fg);
+  transition:color .15s,border-color .15s,background .15s;
+}
+.theme-btn:hover{color:var(--tb-hov);border-color:var(--tb-hov)}
+.theme-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.theme-btn .sun{display:none}
+[data-theme="dark"] .theme-btn .sun{display:block}
+[data-theme="dark"] .theme-btn .moon{display:none}
+@media(max-width:560px){.theme-btn{top:10px;right:10px;width:38px;height:38px}}
+
+/* ---------- dark ---------- */
+:root{--tb-bg:#E3E5DE;--tb-bd:#C6C9BF;--tb-fg:#6E7269;--tb-hov:#2440E8}
+[data-theme="dark"]{
+  --paper:#0E1014; --paper-2:#171A20; --ink:#EDEEE9;
+  --rule:#2B2F37; --graphite:#8F948B;
+  --blue:#7B93FF; --flame:#FF7A55; --acid:#D6F84A;
+  --tb-bg:#171A20;--tb-bd:#2B2F37;--tb-fg:#8F948B;--tb-hov:#7B93FF;
+  --blue-text:#8FA5FF; --flame-text:#FF9573;
+}
+/* these two are dark panels by design — keep them dark rather than letting
+   them invert into light blocks when the page itself goes dark */
+[data-theme="dark"] .dark{background:#181B22;color:var(--ink)}
+[data-theme="dark"] .instrument{background:#14171D;color:var(--ink);border-color:#2B2F37}
+[data-theme="dark"] .row-track{background:#252A32}
+[data-theme="dark"] .card--blue{color:#0E1014}
+[data-theme="dark"] .card--blue h3{color:#0E1014}
+[data-theme="dark"] .btn{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+[data-theme="dark"] .btn:hover{background:var(--blue);border-color:var(--blue);color:#0E1014}
+[data-theme="dark"] .btn--ghost{background:none;color:var(--ink)}
+[data-theme="dark"] .drop{color:#A8ACA3}
+[data-theme="dark"] mark{color:#0E1014}
+[data-theme="dark"] .line--good .said{box-shadow:inset 0 -.55em 0 rgba(214,248,74,.35)}
+[data-theme="dark"] .g-frame{background:#2B2F37;color:var(--ink)}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Переключить тему">
+  <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
+  <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+</button>
+
+
+<!-- ============ MASTHEAD ============ -->
+<header class="wrap">
+  <div class="top">
+    <span><span class="dot"></span>Эссе о разговоре</span>
+    <span>Искусство и наука разговора</span>
+  </div>
+
+  <div class="masthead">
+    <h1>Двести<span class="l2">милли</span><span class="l3">секунд</span></h1>
+
+    <div class="deck">
+      <div>
+        <div class="k">Пауза</div>
+        <p class="lede" style="font-size:clamp(1.05rem,.98rem + .5vw,1.35rem)">Промежуток между твоим последним словом и моим первым. На всех языках, где это измеряли, он держится около двухсот миллисекунд.</p>
+      </div>
+      <div>
+        <div class="k">Почему это важно</div>
+        <p class="drop">Быстрее, чем ты успеваешь что-либо решить, — именно поэтому это невозможно подделать. Это наименьшая честная единица разговора, и именно её люди считывают, когда говорят, что собеседник их «понимает».</p>
+      </div>
+    </div>
+
+    <div class="wave" id="wave">
+      <div class="wave-head">
+        <span><i style="background:#2440E8"></i>Говорящий A</span>
+        <span><i style="background:#FF4A1C"></i>Говорящий Б</span>
+        <span><i style="background:#C9F227"></i>Пауза</span>
+      </div>
+      <div class="bars" id="bars" aria-hidden="true"></div>
+      <div class="wave-foot"><span>0,0 с</span><span>Одна минута обычного разговора</span><span>60,0 с</span></div>
+    </div>
+
+    <div class="exchange" id="hero-x">
+      <div class="turn" data-turn>
+        <span class="who">A</span>
+        <span class="said">Так о чём ты людям не рассказываешь?</span>
+      </div>
+      <div class="gapline">
+        <span class="who">(0,2)</span>
+        <span class="track"><span class="fill" data-fill></span></span>
+      </div>
+      <div class="turn" data-turn>
+        <span class="who">Б</span>
+        <span class="said">Ладно. Дай мне секунду.</span>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn btn--ghost" id="replay" type="button">Проиграть заново</button></div>
+  </div>
+</header>
+
+<hr class="hr">
+
+<!-- ============ 01 ============ -->
+<section class="wrap band">
+  <div class="spine">
+    <div class="mark"><b>01</b>Пауза</div>
+    <div>
+      <p class="eyebrow b">Измерено на десяти языках</p>
+      <h2>Наименьшая единица «меня услышали»</h2>
+
+      <div class="cols">
+        <div>
+          <p>Датский. Цельталь. Японский. ǂĀkhoe Haiǁom. Исследователи замерили передачу хода в обычном разговоре на десяти языках и везде нашли одну и ту же форму: большинство ответов укладывается в первые <span class="num b">200</span> миллисекунд. Культуры различаются — но лишь на пару сотен миллисекунд вокруг того же среднего.</p>
+          <p>А вот почему это число странное. Спланировать фразу дольше, чем <span class="num b">200 мс</span>. Значит, к моменту, когда ты договорил, я уже собрал бо́льшую часть своего ответа. <strong>Я начал его составлять, пока ты ещё говорил.</strong></p>
+        </div>
+        <div>
+          <p>А это значит, что быстрый ответ — не доказательство, что я слушал. Это доказательство, что я <em>предсказывал</em>: держал в голове живую модель того, куда ты идёшь и что тебе понадобится. Такое работает, только если я слежу за тобой очень внимательно.</p>
+          <p>Отдельное исследование показало, что скорость ответа предсказывает, насколько связанными чувствуют себя двое — и у незнакомцев, и у старых друзей, — и что это слышно даже стороннему наблюдателю. Меньше <span class="num b">250 мс</span> — слишком быстро, чтобы разыграть сознательно. <mark>Слова подделать можно. Тайминг — нет.</mark></p>
+        </div>
+      </div>
+
+      <div class="instrument rv">
+        <div class="inst-head"><span>Инструмент — одна фраза, пять задержек</span><span>Потяни, потом проиграй</span></div>
+        <div class="inst-body">
+          <div class="readout" id="readout"><span id="ms-out">200</span><small>МС</small></div>
+
+          <div class="stage">
+            <div class="st"><span class="who">Она</span><span class="said">Хочешь пойти со мной?</span></div>
+            <div class="stg"><span class="who" id="gap-label">(0,2)</span><span class="track"><span class="fill" id="inst-fill"></span></span></div>
+            <div class="st pending" id="reply"><span class="who">Он</span><span class="said">Да. С удовольствием.</span></div>
+          </div>
+
+          <label for="gapslider" class="sl-label">Задержка ответа</label>
+          <input type="range" id="gapslider" min="0" max="2000" step="50" value="200" aria-label="Задержка ответа в миллисекундах">
+          <div class="scale"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000 МС</span></div>
+
+          <div class="verdict" id="verdict">
+            <span class="v-label" id="v-label">Вовремя</span>
+            <span class="v-text" id="v-text">Обычная передача хода. Ничего не взвешивается — ответ уже был готов.</span>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" id="play" type="button">Проиграть обмен</button>
+            <button class="btn btn--ghost" id="reset" type="button">Вернуть к 200</button>
+          </div>
+
+          <p class="inst-foot"><b>О надёжности:</b> тайминги — измеренные находки. Толкования под ними — интерпретация, моя, а не литературы. Что значит задержка, зависит от обстановки, вопроса и человека. Долгая пауза перед трудным ответом — это забота. Та же пауза перед лёгким — уже что-то другое.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ 02 ============ -->
+<section class="wrap band">
+  <div class="spine">
+    <div class="mark"><b>02</b>Посылка</div>
+    <div>
+      <p class="eyebrow f">Поправка</p>
+      <h2>Болтовня ни о чём — не проблема</h2>
+
+      <div class="cols">
+        <div>
+          <p class="lede" style="margin-bottom:1.4rem">Привычная версия: болтовня ни о чём пустая, а глубокий разговор настоящий. Данные говорят кое-что поинтереснее.</p>
+          <p>Исследователи повесили диктофоны почти на пятьсот человек, нарезали их дни на фрагменты и разметили каждый разговор как болтовню или содержательный. Содержательный разговор шёл вместе с удовлетворённостью жизнью. Болтовня — <em>ни с чем</em>. Она не поднимала показатель. И не опускала.</p>
+          <p>Собственный вывод ведущего исследователя: между ними нет никакого внутреннего противоречия. Болтовня — не враг настоящего разговора. Это дверь в него.</p>
+        </div>
+        <div>
+          <p>Сто лет назад антрополог назвал то, что болтовня делает на самом деле: она не передаёт информацию, она держит канал открытым. <em>Холодно сегодня. Длинная неделя?</em> В этих фразах нет груза. Это рукопожатие двух систем, подтверждение, что связь есть и выдержит вес, если вес отправят.</p>
+          <p>Значит, режим отказа — не в пустячности. Полно пустячных разговоров, которые несут нагрузку. Отказ — это <strong class="f">разговор, в котором ничем не рискуют и никто не принимает.</strong></p>
+        </div>
+      </div>
+
+      <div class="chart">
+        <div class="chart-head"><span>Связь с удовлетворённостью жизнью</span><span>Milek et al. 2018 · N=486</span></div>
+        <div class="chart-body">
+          <div class="row">
+            <div class="row-top"><span class="row-label">Содержательный разговор</span><span class="row-val">Умеренная +</span></div>
+            <div class="row-track"><div class="row-fill" style="--w:72%"></div></div>
+          </div>
+          <div class="row">
+            <div class="row-top"><span class="row-label">Общее время в разговоре</span><span class="row-val">Умеренная +</span></div>
+            <div class="row-track"><div class="row-fill" style="--w:64%"></div></div>
+          </div>
+          <div class="row">
+            <div class="row-top"><span class="row-label">Время наедине с собой</span><span class="row-val">Умеренная −</span></div>
+            <div class="row-track"><div class="row-fill" style="--w:58%"></div></div>
+          </div>
+          <div class="row">
+            <div class="row-top"><span class="row-label f">Болтовня ни о чём</span><span class="row-val f">Надёжной связи нет</span></div>
+            <div class="row-track"><div class="row-fill none" style="--w:100%"></div></div>
+          </div>
+        </div>
+        <div class="chart-foot"><strong style="color:var(--flame-text)">Схема, не в масштабе.</strong> Длина столбиков показывает только направление и грубый порядок величины — исследование даёт байесовские оценки, а не проценты. Заштрихованный столбик означает, что эффект неотличим от нуля в обе стороны.</div>
+      </div>
+
+      <div style="margin-top:clamp(2.5rem,6vw,4rem)">
+        <div class="pull">Разговор не даёт ничего, когда в нём нет риска или нет принимающего на другом конце. Обычно нет и того и другого.</div>
+      </div>
+
+      <div class="cols" style="margin-top:clamp(2.5rem,6vw,4rem)">
+        <div class="card card--flame">
+          <span class="badge badge--flame">Отказ первый</span>
+          <h3>Вещание</h3>
+          <p class="drop" style="margin-top:.75rem">Передатчик без приёмника. Двое по очереди выдают заготовленный материал, и ни один не меняется от другого. Чередование реплик на месте, передачи нет. Так можно провести час и уйти ровно с тем, с чем пришёл.</p>
+        </div>
+        <div class="card card--flame">
+          <span class="badge badge--flame">Отказ второй</span>
+          <h3>Ритуал без риска</h3>
+          <p class="drop" style="margin-top:.75rem">Оба по-настоящему присутствуют, и на стол никогда не кладётся ничего, что можно уронить. Тепло, приятно, повторяемо до бесконечности. Вот этот отказ поймать труднее всего, потому что он ощущается как близость. Это форма близости без содержания.</p>
+        </div>
+      </div>
+
+      <p class="note" style="max-width:60ch">Оговорка, на которой настаивают сами исследователи: это корреляция. Никто не показал, что если прописать людям более глубокие разговоры, они станут счастливее. Возможно, всё работает в другую сторону: счастливые люди просто так и разговаривают.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ 03 ============ -->
+<section class="wrap band">
+  <div class="spine">
+    <div class="mark"><b>03</b>Ходы</div>
+    <div>
+      <p class="eyebrow b">Четыре механики, которые решают всё</p>
+      <h2>Что на самом деле делают хорошие собеседники</h2>
+      <p class="lede">Ничего из этого не харизма. Всё это — выбор, который делается примерно за секунду, снова и снова.</p>
+
+      <div class="moves">
+
+        <article class="move rv">
+          <div>
+            <p class="move-tag">Ход 01 — тип отклика</p>
+            <h3>Перехватить или поддержать</h3>
+            <p class="drop">Каждый раз, когда тебе что-то рассказывают, у тебя два варианта: повернуть тему к себе или повернуть её глубже в собеседника. Изнутри оба ощущаются как участие. Участие только одно из них.</p>
+            <p class="drop">Перехватывающий отклик редко бывает эгоистичным нарочно. Обычно это попытка солидарности — <em>я тоже через это проходил.</em> Но он сдвигает свет с говорящего ровно в тот момент, когда тот собирался сказать главное.</p>
+          </div>
+          <div class="script">
+            <div class="line"><span class="who">A</span><span class="said">Меня последнее время как-то напрягает возвращаться домой.</span></div>
+            <div class="line line--bad"><span class="who">Б</span><span class="said">О, у меня та же фигня, дома вообще бардак</span></div>
+            <div class="line line--good"><span class="who">Б</span><span class="said">Напрягает — это как?</span></div>
+            <p class="note">Два слова. Весь разговор развилкой расходится здесь.</p>
+          </div>
+        </article>
+
+        <article class="move rv">
+          <div>
+            <p class="move-tag">Ход 02 — второй вопрос</p>
+            <h3>Уточняющий</h3>
+            <p class="drop">Задать вопрос может любой. Второй вопрос доказывает, что ты услышал ответ на первый: его можно построить только из того, что тебе только что сказали, поэтому его нельзя заготовить — и вы оба это знаете.</p>
+            <p class="drop">Поэтому же советы убивают разговор. Совет — это выход. Он объявляет, что ты услышал достаточно, чтобы решить задачу, а значит, перестал собирать.</p>
+          </div>
+          <div class="script">
+            <div class="line"><span class="who">A</span><span class="said">С работой нормально. Загружен.</span></div>
+            <div class="line line--bad"><span class="who">Б</span><span class="said">Здорово. А как семья?</span></div>
+            <div class="line line--good"><span class="who">Б</span><span class="said">Загружен в хорошем смысле или в плохом?</span></div>
+            <p class="note">«Нормально» почти никогда не ответ. Это проверка, примешь ли ты такой ответ.</p>
+          </div>
+        </article>
+
+        <article class="move rv">
+          <div>
+            <p class="move-tag">Ход 03 — починка</p>
+            <h3>Сказать, что не понял</h3>
+            <p class="drop">Специалисты по анализу разговора называют это починкой: остановить поток, чтобы залатать разрыв. <em>Прости, что? Погоди, вернись назад.</em> Они есть в каждом изученном языке и работают непрерывно под обычной речью.</p>
+            <p class="drop">Большинство считает такой вопрос маленьким унижением и оставляет неясность как есть. Но непочиненное недопонимание маленьким не остаётся. Оно тихо накапливается следующие двадцать минут, и в итоге вы двое ведёте разные разговоры.</p>
+          </div>
+          <div class="script">
+            <div class="line"><span class="who">A</span><span class="said">Мне просто кажется, что оно того больше не стоит.</span></div>
+            <div class="line line--bad"><span class="who">Б</span><span class="said">Да, полностью согласен.</span></div>
+            <div class="line line--good"><span class="who">Б</span><span class="said">Работа — или всё вообще?</span></div>
+            <p class="note">Починка — не помеха разговору. Это разговор, который остаётся живым.</p>
+          </div>
+        </article>
+
+        <article class="move rv">
+          <div>
+            <p class="move-tag">Ход 04 — намеренная задержка</p>
+            <h3>Пауза, которую держишь нарочно</h3>
+            <p class="drop">Двести миллисекунд — это по умолчанию. Иногда правильный ход — сломать их: дать тишине продлиться за пределы комфорта, потому что фраза после долгой паузы почти никогда не совпадает с той, что пошла бы после короткой.</p>
+            <p class="drop">Дисциплина в том, чтобы её не заполнять. Большинство пауз закрывает тот, кто тревожнее, и вместе с паузой закрывается всё, что в ней складывалось.</p>
+          </div>
+          <div class="script">
+            <div class="line"><span class="who">A</span><span class="said">Не знаю. Странный был год.</span></div>
+            <div class="line line--bad"><span class="who">Б</span><span class="said">Да у всех год какой-то странный, если честно —</span></div>
+            <div class="line line--good"><span class="who">Б</span><span class="said">(3,0)</span></div>
+            <div class="line"><span class="who">A</span><span class="said">…у меня папа заболел в марте.</span></div>
+            <p class="note">Работу сделали эти три секунды. Никто в них ничего не сказал.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 DARK ============ -->
+<section class="dark">
+  <div class="wrap band">
+    <div class="spine">
+      <div class="mark"><b>04</b>Приём</div>
+      <div>
+        <p class="eyebrow">Переворот</p>
+        <h2>Разговор, который тебя изменил, — тот, где ты <em>почти не говорил</em></h2>
+
+        <div class="cols">
+          <div>
+            <p class="lede" style="margin-bottom:1.4rem">Мы считаем навыком говорение, а слушание — его отсутствием. Всё наоборот.</p>
+            <p class="drop">Есть небольшая, но устойчивая линия исследований: когда человека слушают хорошо — безраздельное внимание, настоящий интерес, без осуждения, — меняется <em>говорящий</em>. Он меньше защищает собственные позиции. Его мышление становится сложнее. Он вслух противоречит себе и замечает это.</p>
+            <p class="drop">Ничего не доказывали. Ничего не поправляли. Слушающий создал условия, а говорящий внутри них сам переставил свой ум.</p>
+          </div>
+          <div>
+            <p class="drop">Вот эта часть и отвечает, какой разговор формирует жизнь. Не тот, где тебе сказали правильную вещь. А тот, где кто-то сделал достаточно безопасно, чтобы ты услышал, как сам произносишь то, вокруг чего ходил кругами целый год.</p>
+            <p class="drop"><strong>То есть ход с наибольшим рычагом в разговоре — не фраза.</strong> Это качество внимания, которое ты приносишь; собеседник считывает его примерно за пятую долю секунды, и подделывать его дольше четырёх минут невозможно.</p>
+          </div>
+        </div>
+
+        <div class="meter rv">
+          <div class="meter-row"><span class="k">Ты говоришь</span><span class="meter-bars" data-meter="talk"></span></div>
+          <div class="meter-row"><span class="k">Ты принимаешь</span><span class="meter-bars" data-meter="listen"></span></div>
+          <div class="meter-row"><span class="k">Они открываются</span><span class="meter-bars" data-meter="open"></span></div>
+        </div>
+        <p class="note" style="max-width:52ch">Схема. Утверждение не измерялось в этой шкале — это форма эффекта, который описывают исследования слушания.</p>
+
+        <div style="margin-top:clamp(2.5rem,6vw,4rem)">
+          <div class="pull">Ты не решаешь, что из сказанного тобой попадёт. Ты решаешь только, насколько полно принимаешь.</div>
+        </div>
+
+        <p class="note" style="margin-top:clamp(2.5rem,5vw,3.5rem);max-width:60ch">Замечание о надёжности: находки о слушании идут из одной исследовательской программы со скромными выборками, а не из широкой воспроизведённой литературы. Многообещающе, но не решено.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="wrap band">
+  <div class="spine">
+    <div class="mark"><b>05</b>Барьер</div>
+    <div>
+      <p class="eyebrow f">Почему мы по умолчанию сползаем вниз</p>
+      <h2>Все хотят разговора поглубже и все уверены, что другой — не хочет</h2>
+
+      <div class="cols">
+        <div>
+          <p>В длинной серии экспериментов исследователи давали незнакомцам обсуждать либо поверхностные вопросы, либо по-настоящему близкие, и заранее спрашивали, как всё пройдёт. Люди стабильно предсказывали, что глубокий разговор будет неловким. Он таким не был. Он оказывался менее неловким, чем ожидали, и давал больше близости и больше радости, чем ожидали.</p>
+          <p>Конкретная ошибка: <strong>мы недооцениваем, насколько другим важны наши настоящие ответы.</strong> Мы представляем, что на откровенность нам ответят пустым взглядом. А потом нет — потому что люди почти автоматически отвечают взаимностью.</p>
+        </div>
+        <div>
+          <p>Оба в комнате хотят одного и того же разговора. Оба ждут признака, что он уместен. Никто не двигается, и всё оседает на уровне погоды и логистики — навсегда, на годы.</p>
+          <p>Исследователи осторожны: ожидания были не дико неверными, а <em>устойчиво</em> неверными в одну сторону. Ровный маленький сдвиг, приложенный к каждому твоему разговору, складывается в жизнь, полную бесед, так и не прошедших дальше двери, у которой они стояли.</p>
+        </div>
+      </div>
+
+      <div class="card card--blue" style="margin-top:2.5rem">
+        <span class="badge badge--acid">Ход</span>
+        <h3>Кто-то должен пойти первым. И это почти всегда дешевле, чем кажется.</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ 06 ============ -->
+<section class="wrap band">
+  <div class="spine">
+    <div class="mark"><b>06</b>Практика</div>
+    <div>
+      <p class="eyebrow b">Небольшое, проверяемое, сегодня вечером</p>
+      <h2>Пять вещей, которые правда можно сделать</h2>
+
+      <div class="ol">
+        <div class="ol-item"><span class="ol-num">01</span><div><h3>Задай второй вопрос</h3><p class="drop">Не новую тему, а более глубокий срез той, что тебе только что дали. Если из их точных слов вопрос не строится — значит, ты не слушал их точные слова.</p></div></div>
+        <div class="ol-item"><span class="ol-num">02</span><div><h3>Замечай перехват до того, как его сделаешь</h3><p class="drop">В ту секунду, когда всплывает «о, это напоминает мне, как я…», ты стоишь на развилке. Иногда твоя история — правильный подарок. Обычно она на три минуты раньше времени.</p></div></div>
+        <div class="ol-item"><span class="ol-num">03</span><div><h3>Говори, когда не уловил</h3><p class="drop">«Погоди — повтори, пожалуйста» стоит двух секунд достоинства и покупает весь остаток разговора. Непочиненные недопонимания маленькими не остаются.</p></div></div>
+        <div class="ol-item"><span class="ol-num">04</span><div><h3>Дай одной тишине продлиться</h3><p class="drop">Одной за разговор. Досчитай до трёх после того, как человек закончил. Посмотри, что придёт в промежуток, который ты не заполнил.</p></div></div>
+        <div class="ol-item"><span class="ol-num">05</span><div><h3>Один раз пойди первым</h3><p class="drop">Ответь на один вопрос честно, а не гладко. Не исповедь — просто настоящая версия чего-то небольшого. Дальше работает взаимность, надёжнее, чем ты думаешь.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ============ 07 ============ -->
+<section class="wrap band">
+  <div class="spine">
+    <div class="mark"><b>07</b>Аппарат</div>
+    <div>
+      <p class="eyebrow">Каждое утверждение размечено</p>
+      <h2>Источники и надёжность</h2>
+      <p class="lede" style="margin-bottom:2rem">Три оценки. <span class="b">Прочно</span> — воспроизведено или большое межкультурное. <span class="f">Одно исследование</span> — одна хорошая статья. <span style="color:var(--graphite)">Рамка</span> — полезная линза, а не измеренная находка.</p>
+
+      <div>
+        <div class="src"><span class="grade g-solid">Прочно</span><p><b>Пауза в 200 мс.</b> Stivers et al., PNAS 2009 — десять языков, модальное смещение ответа 0–200 мс, межъязыковые средние внутри полосы в 250 мс. Одна из самых устойчивых межкультурных находок в изучении разговора.</p></div>
+        <div class="src"><span class="grade g-single">Одно исследование</span><p><b>Быстрый ответ сигналит о связи.</b> Templeton et al., PNAS 2022 — скорость ответа предсказывала ощущение связи у незнакомцев и у друзей, и это улавливали посторонние. Ответы быстрее 250 мс опережают сознательный контроль. Хорошо спланировано; широкой репликации пока нет.</p></div>
+        <div class="src"><span class="grade g-solid">Прочно</span><p><b>Болтовня нейтральна.</b> Milek et al., Psychological Science 2018 — объединённая репликация на четырёх выборках (N=486) работы Mehl et al. 2010. Содержательный разговор и общее время в разговоре связаны с удовлетворённостью жизнью; у болтовни надёжной связи не нашлось ни в одну сторону. Оценка «прочно», потому что это репликация.</p></div>
+        <div class="src"><span class="grade g-frame">Рамка</span><p><b>Корреляция, а не причина.</b> Авторы прямо пишут, что направление не установлено: содержательный разговор может порождать удовлетворённость, а могут просто удовлетворённые люди так разговаривать. Ни один эксперимент это не решил.</p></div>
+        <div class="src"><span class="grade g-solid">Прочно</span><p><b>Мы недооцениваем глубокий разговор.</b> Kardas, Kumar &amp;amp; Epley, JPSP 2022 — больше двенадцати экспериментов. Глубокие разговоры оказывались менее неловкими и более сближающими, чем предсказывали участники; ошибка шла из недооценки чужого интереса к твоей откровенности.</p></div>
+        <div class="src"><span class="grade g-frame">Рамка</span><p><b>Фатическое общение.</b> Малиновский, 1923 — идея, что часть речи поддерживает социальный канал, а не переносит информацию. Антропологическое понятие, до сих пор полезное, но никогда не бывшее измеренной находкой.</p></div>
+        <div class="src"><span class="grade g-frame">Рамка</span><p><b>Перехват против поддержки.</b> Социологическое описание разговорного внимания у Чарльза Дербера. Описательная линза из наблюдения, а не экспериментальные данные. Здесь она потому, что проясняет, а не потому, что доказана.</p></div>
+        <div class="src"><span class="grade g-single">Одно исследование</span><p><b>Слушание меняет говорящего.</b> Исследовательская программа Ицхакова и Клюгера — снижение защитной реакции говорящего, рост сложности установок при качественном слушании. Одна команда, скромные выборки. Многообещающе, не решено.</p></div>
+        <div class="src"><span class="grade g-frame">Рамка</span><p><b>Починка.</b> Анализ разговора (Schegloff, Jefferson, Sacks; позже межъязыковые работы Dingemanse с коллегами) описывает починку как универсальную черту речи. Само описание установлено. А вот утверждение, что уклонение от починки накапливается по ходу разговора, — мой вывод.</p></div>
+        <div class="src"><span class="grade g-frame">Рамка</span><p><b>Все толкования задержек и оба графика.</b> Интерпретация и схема. Шкала времени настоящая; что означает конкретная пауза — литература не назначает, и ни один столбик на этой странице не кодирует опубликованный размер эффекта.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap colophon">
+  <span>Archivo · Instrument Sans · JetBrains Mono</span>
+  <span>Нотация заимствована из анализа разговора</span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function clear(list){ list.forEach(clearTimeout); list.length = 0; }
+
+  /* ---------- hero waveform: a conversation, drawn ---------- */
+  var barsEl = document.getElementById("bars");
+  var waveEl = document.getElementById("wave");
+  var script = [[1,9],[0,1],[2,6],[0,1],[1,4],[0,2],[2,11],[0,1],[1,3],[0,1],[2,5],[0,3],[1,8],[0,1],[2,4],[0,1],[1,6],[0,1],[2,7],[0,1],[1,5]];
+  var seed = 7;
+  function rnd(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  var idx = 0, frag = document.createDocumentFragment();
+  script.forEach(function(t){
+    var who = t[0], n = t[1];
+    for (var i = 0; i < n; i++){
+      var b = document.createElement("span");
+      if (who === 0){
+        b.className = "bar gap" + (n >= 2 ? " hot" : "");
+      } else {
+        b.className = "bar" + (who === 2 ? " b2" : "");
+        b.style.height = (28 + rnd() * 72) + "%";
+      }
+      b.style.animationDelay = (idx * 22) + "ms";
+      frag.appendChild(b);
+      idx++;
+    }
+  });
+  barsEl.appendChild(frag);
+
+  /* ---------- hero exchange ---------- */
+  var hero = document.getElementById("hero-x");
+  var turns = hero.querySelectorAll("[data-turn]");
+  var fill = hero.querySelector("[data-fill]");
+  var heroT = [];
+
+  function playHero(){
+    clear(heroT);
+    turns.forEach(function(t){ t.classList.remove("on"); });
+    fill.style.transition = "none";
+    fill.style.width = "0%";
+    if (reduced){
+      turns.forEach(function(t){ t.classList.add("on"); });
+      fill.style.width = "100%";
+      return;
+    }
+    heroT.push(setTimeout(function(){ turns[0].classList.add("on"); }, 300));
+    heroT.push(setTimeout(function(){
+      fill.style.transition = "width 200ms linear";
+      fill.style.width = "100%";
+    }, 1450));
+    heroT.push(setTimeout(function(){ turns[1].classList.add("on"); }, 1650));
+  }
+  document.getElementById("replay").addEventListener("click", function(){
+    waveEl.classList.remove("play");
+    void waveEl.offsetWidth;
+    waveEl.classList.add("play");
+    playHero();
+  });
+  waveEl.classList.add("play");
+  playHero();
+
+  /* ---------- instrument ---------- */
+  var slider = document.getElementById("gapslider"),
+      msOut = document.getElementById("ms-out"),
+      gapLabel = document.getElementById("gap-label"),
+      instFill = document.getElementById("inst-fill"),
+      reply = document.getElementById("reply"),
+      vLabel = document.getElementById("v-label"),
+      vText = document.getElementById("v-text"),
+      readout = document.getElementById("readout"),
+      verdict = document.getElementById("verdict"),
+      instT = [];
+
+
+  /* Strings the reading meter writes itself, out of reach of data-ru.
+     The generated Russian page carries data-lang="ru". */
+  var IS_RU = document.documentElement.getAttribute('data-lang') === 'ru';
+  var TR = {
+    "Latched": "С захлёстом",
+    "Answered before you finished. Either they were desperate to say it, or they weren't waiting to hear the rest.": "Ответили ещё до того, как ты закончил. Либо им очень надо было это сказать, либо они не собирались дослушивать.",
+    "On time": "Вовремя",
+    "A standard handoff. Nothing is being weighed — the answer was already there.": "Обычная передача хода. Ничего не взвешивается — ответ уже был готов.",
+    "Considered": "Обдуманно",
+    "Long enough to notice. Something got checked before it was said.": "Достаточно долго, чтобы заметить. Что-то проверили, прежде чем сказать.",
+    "Reluctant": "Неохотно",
+    "The words say yes. The gap already said something else, and both of you heard it.": "Слова говорят «да». Пауза уже сказала другое, и вы оба это услышали.",
+    "The gap answers": "Отвечает пауза",
+    "At this length the pause is the reply. Whatever follows is management.": "На такой длине ответом становится сама пауза. Всё, что за ней, — уже управление ситуацией."
+  };
+  function TXT(s){ return IS_RU && TR[s] ? TR[s] : s; }
+
+  var readings = [
+    { max:150,  label:"Latched",         color:"#D6F84A", text:"Answered before you finished. Either they were desperate to say it, or they weren't waiting to hear the rest." },
+    { max:350,  label:"On time",         color:"#7B93FF", text:"A standard handoff. Nothing is being weighed — the answer was already there." },
+    { max:700,  label:"Considered",      color:"#7B93FF", text:"Long enough to notice. Something got checked before it was said." },
+    { max:1200, label:"Reluctant",       color:"#FF8A63", text:"The words say yes. The gap already said something else, and both of you heard it." },
+    { max:2001, label:"The gap answers", color:"#FF8A63", text:"At this length the pause is the reply. Whatever follows is management." }
+  ];
+  function reading(ms){
+    for (var i=0;i<readings.length;i++){ if (ms < readings[i].max) return readings[i]; }
+    return readings[readings.length-1];
+  }
+  function render(){
+    var ms = parseInt(slider.value,10);
+    msOut.textContent = ms;
+    gapLabel.textContent = "(" + (ms/1000).toFixed(1) + ")";
+    var r = reading(ms);
+    vLabel.textContent = TXT(r.label);
+    vText.textContent = TXT(r.text);
+    readout.style.color = r.color;
+    verdict.style.borderLeftColor = r.color;
+    instFill.style.background = r.color;
+  }
+  function playInst(){
+    clear(instT);
+    var ms = parseInt(slider.value,10);
+    reply.classList.add("pending");
+    instFill.style.transition = "none";
+    instFill.style.width = "0%";
+    if (reduced){ reply.classList.remove("pending"); instFill.style.width = "100%"; return; }
+    instT.push(setTimeout(function(){
+      instFill.style.transition = "width " + ms + "ms linear";
+      instFill.style.width = "100%";
+    }, 60));
+    instT.push(setTimeout(function(){ reply.classList.remove("pending"); }, ms + 60));
+  }
+  slider.addEventListener("input", render);
+  slider.addEventListener("change", playInst);
+  document.getElementById("play").addEventListener("click", playInst);
+  document.getElementById("reset").addEventListener("click", function(){
+    slider.value = 200; render(); playInst();
+  });
+  render();
+
+  /* ---------- attention meter ---------- */
+  var meterMap = {
+    talk:   [1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,1],
+    listen: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    open:   [0,0,0,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  };
+  Array.prototype.forEach.call(document.querySelectorAll("[data-meter]"), function(el){
+    var key = el.getAttribute("data-meter"), arr = meterMap[key];
+    arr.forEach(function(v,i){
+      var b = document.createElement("span");
+      b.className = "mb " + (v ? (key === "talk" ? "dim" : "on") : "");
+      b.style.height = (key === "open" ? (30 + i * 3) : (55 + ((i*37)%45))) + "%";
+      el.appendChild(b);
+    });
+  });
+
+  /* ---------- reveal ---------- */
+  var rv = document.querySelectorAll(".rv, .chart");
+  if (reduced || !("IntersectionObserver" in window)){
+    Array.prototype.forEach.call(rv, function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold:0.12, rootMargin:"0px 0px -40px 0px" });
+    Array.prototype.forEach.call(rv, function(el){ io.observe(el); });
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.documentElement, b=document.getElementById('themeBtn');
+  if(!b) return;
+  b.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme')||
+      (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('ms-theme',next);}catch(e){}
+  });
+})();
+</script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
