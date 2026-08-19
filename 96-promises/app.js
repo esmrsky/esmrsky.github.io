@@ -3,11 +3,11 @@
  * 
  * Features:
  * 1. Pure Verse-First Bento Cards with category tints.
- * 2. Mobile & Desktop Typography Settings Flyout Drawer with Live Font Family, Font Size & Line Height controls.
+ * 2. Mobile & Desktop Typography Settings Flyout Drawer with Live Font Family, Font Size & Line Height controls (Translucent Live Site Preview).
  * 3. Conditional TPT Revelatory Notes (only visible when notes exist for the passage).
- * 4. Dynamic Multi-Translation Context Flow with inline highlighted & underlined target verse.
+ * 4. Dynamic Multi-Translation Context Flow with inline highlighted target verse.
  * 5. Interlinear Greek & Hebrew Lexicon with Strong's concordance cards.
- * 6. Fullscreen Edge-to-Edge Stories Mode with 16 distinct styles (including Lora, Merriweather, Syne, Unbounded), 6-tier auto-fitting, and word effects.
+ * 6. Fullscreen Edge-to-Edge Stories Mode with 16 modern styles (including Lora, Merriweather, Outfit, Sora), left-aligned long verses, previous history navigation, and direct heart bookmarking.
  * 7. Resilient event delegation on sticky header, drawers, and modal overlays.
  */
 
@@ -34,7 +34,10 @@
     isStoriesMode: false,
     hasTappedStoryOnce: false,
     storyShufflePool: [],
+    storyHistory: [],
     storyCurrentVerse: null,
+    storyCurrentVer: 'NIV',
+    storyCurrentStyle: 'story-style-swiss',
     storyTypographyStyles: [
       'story-style-swiss',
       'story-style-neobrutalism',
@@ -42,9 +45,9 @@
       'story-style-dm-serif',
       'story-style-fraunces',
       'story-style-bricolage',
-      'story-style-unbounded',
+      'story-style-outfit',
       'story-style-kinetic',
-      'story-style-cinzel',
+      'story-style-sora',
       'story-style-anton',
       'story-style-lora',
       'story-style-newsreader',
@@ -52,8 +55,7 @@
       'story-style-epilogue',
       'story-style-merriweather',
       'story-style-instrument-serif'
-    ],
-    storyCurrentStyle: 'story-style-swiss'
+    ]
   };
 
   // --- DOM References ---
@@ -61,22 +63,17 @@
     html: document.documentElement,
     stickyHeader: document.getElementById('stickyHeader'),
     heroOverview: document.getElementById('heroOverview'),
+    btnHeroOpenStories: document.getElementById('btnHeroOpenStories'),
     bentoContainer: document.getElementById('bentoContainer'),
     categoryChips: document.getElementById('categoryChips'),
     favoritesFilterBtn: document.getElementById('favoritesFilterBtn'),
     favoritesCount: document.getElementById('favoritesCount'),
-    totalCountBadge: document.getElementById('totalCountBadge'),
     statDisplayedCount: document.getElementById('statDisplayedCount'),
     statBookmarksCount: document.getElementById('statBookmarksCount'),
     activeVersionLabel: document.getElementById('activeVersionLabel'),
     noResults: document.getElementById('noResults'),
     resetFiltersBtn: document.getElementById('resetFiltersBtn'),
-    btnViewToggle: document.getElementById('btnViewToggle'),
-    viewToggleIcon: document.getElementById('viewToggleIcon'),
-    btnFontDecrease: document.getElementById('btnFontDecrease'),
-    btnFontIncrease: document.getElementById('btnFontIncrease'),
     scrollToTopBtn: document.getElementById('scrollToTopBtn'),
-    btnOpenStories: document.getElementById('btnOpenStories'),
     btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
 
     // Typography & Reading Settings Flyout Drawer DOM
@@ -130,6 +127,9 @@
     storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
     storyCloseBtn: document.getElementById('storyCloseBtn'),
     storyTapToast: document.getElementById('storyTapToast'),
+    btnStoryPrev: document.getElementById('btnStoryPrev'),
+    btnStoryHeart: document.getElementById('btnStoryHeart'),
+    storyHeartIcon: document.getElementById('storyHeartIcon'),
 
     // Shortcuts Modal & Toast Container
     shortcutsModal: document.getElementById('shortcutsModal'),
@@ -189,7 +189,7 @@
   }
 
   // ==========================================================================
-  // FILTERING & RENDERING (BENTO & LIST)
+  // FILTERING & RENDERING (BENTO GRID)
   // ==========================================================================
   function updateCategoryCounts() {
     const counts = {
@@ -338,7 +338,7 @@
       serif: 'Serif (Lora)',
       sans: 'Sans (Jakarta)',
       editorial: 'Editorial (Newsreader)',
-      display: 'Display (DM Serif)',
+      display: 'Display (DM Serif & Outfit)',
       mono: 'Mono (JetBrains)'
     };
     if (elements.settingsActiveFontBadge) {
@@ -386,11 +386,6 @@
     if (elements.heroOverview) elements.heroOverview.style.display = 'flex';
     if (elements.bentoContainer) elements.bentoContainer.style.display = 'grid';
     document.body.classList.toggle('view-list', mode === 'list');
-
-    if (elements.viewToggleIcon) {
-      elements.viewToggleIcon.setAttribute('data-lucide', mode === 'list' ? 'layout-list' : 'layout-grid');
-      refreshIcons();
-    }
   }
 
   function setBibleVersion(ver) {
@@ -413,19 +408,15 @@
   }
 
   // ==========================================================================
-  // TYPOGRAPHY SETTINGS FLYOUT DRAWER (MOBILE & DESKTOP)
+  // TYPOGRAPHY SETTINGS FLYOUT DRAWER (TRANSLUCENT LIVE PREVIEW)
   // ==========================================================================
   function openTypeSettings() {
     if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.add('active');
-    document.body.style.overflow = 'hidden';
     refreshIcons();
   }
 
   function closeTypeSettings() {
     if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.remove('active');
-    if (!state.isStoriesMode && (!elements.readerLightbox || !elements.readerLightbox.classList.contains('active'))) {
-      document.body.style.overflow = '';
-    }
   }
 
   function resetTypeSettingsToDefault() {
@@ -662,7 +653,7 @@
   }
 
   // ==========================================================================
-  // FULLSCREEN ENDLESS STORIES MODE (16 DYNAMIC STYLES & 6-TIER AUTO-FITTING)
+  // FULLSCREEN ENDLESS STORIES MODE (16 DYNAMIC STYLES & HISTORY / BOOKMARKS)
   // ==========================================================================
   function resetStoriesShufflePool() {
     state.storyShufflePool = [...BIBLE_VERSES].sort(() => Math.random() - 0.5);
@@ -671,6 +662,7 @@
   function openStoriesMode(specificVerseId = null) {
     state.isStoriesMode = true;
     state.hasTappedStoryOnce = false;
+    state.storyHistory = [];
     resetStoriesShufflePool();
 
     let targetVerse = null;
@@ -682,7 +674,7 @@
     if (elements.storyOverlay) elements.storyOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
 
-    renderNextStorySlide(targetVerse);
+    renderNextStorySlide(targetVerse, false);
 
     // Auto dismiss tap toast after 3 seconds
     setTimeout(() => {
@@ -714,15 +706,13 @@
     let formattedWords = words.map(w => {
       const cleanW = w.toLowerCase().replace(/[^a-z]/g, '');
       if (powerWords.includes(cleanW)) {
-        if (styleName === 'story-style-cinzel') {
-          return `<span class="fx-roman">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-spacemono') {
+        if (styleName === 'story-style-spacemono') {
           return `<span class="fx-mono-glow">${escapeHtml(w)}</span>`;
         } else if (styleName === 'story-style-lora' || styleName === 'story-style-newsreader' || styleName === 'story-style-merriweather' || styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif' || styleName === 'story-style-instrument-serif') {
           return `<span class="fx-italic">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-unbounded' || styleName === 'story-style-kinetic') {
+        } else if (styleName === 'story-style-kinetic') {
           return `<span class="fx-gradient">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-swiss' || styleName === 'story-style-neobrutalism' || styleName === 'story-style-bricolage' || styleName === 'story-style-epilogue' || styleName === 'story-style-condensed' || styleName === 'story-style-anton') {
+        } else if (styleName === 'story-style-swiss' || styleName === 'story-style-neobrutalism' || styleName === 'story-style-bricolage' || styleName === 'story-style-epilogue' || styleName === 'story-style-condensed' || styleName === 'story-style-anton' || styleName === 'story-style-outfit' || styleName === 'story-style-sora') {
           return `<span class="fx-accent">${escapeHtml(w)}</span>`;
         } else {
           return `<span class="fx-scale">${escapeHtml(w)}</span>`;
@@ -744,7 +734,14 @@
     return 'story-size-dense';
   }
 
-  function renderNextStorySlide(forcedVerse = null) {
+  function updateStoryHeartButton(verseId) {
+    const isFav = state.favorites.has(verseId);
+    if (elements.btnStoryHeart) {
+      elements.btnStoryHeart.classList.toggle('favorite-active', isFav);
+    }
+  }
+
+  function renderNextStorySlide(forcedVerse = null, addToHistory = true) {
     if (!state.storyShufflePool.length) {
       resetStoriesShufflePool();
     }
@@ -754,22 +751,52 @@
       if (elements.storyTapToast) elements.storyTapToast.classList.add('dismissed');
     }
 
+    // Save previous to history
+    if (addToHistory && state.storyCurrentVerse) {
+      state.storyHistory.push({
+        verse: state.storyCurrentVerse,
+        ver: state.storyCurrentVer,
+        style: state.storyCurrentStyle
+      });
+    }
+
     const verse = forcedVerse || state.storyShufflePool.pop();
     state.storyCurrentVerse = verse;
 
     // Pick dynamic randomized version for endless storytelling
     const versions = ['TPT', 'NIV', 'NLT', 'NASB'];
     const chosenVer = versions[Math.floor(Math.random() * versions.length)];
+    state.storyCurrentVer = chosenVer;
+
     const textToDisplay = verse.translations[chosenVer] || verse.translations.NIV;
 
     // Pick a random style from the 16 unique styles
     const nextStyle = state.storyTypographyStyles[Math.floor(Math.random() * state.storyTypographyStyles.length)];
     state.storyCurrentStyle = nextStyle;
 
+    applyStorySlideVisuals(verse, chosenVer, nextStyle, textToDisplay);
+  }
+
+  function renderPreviousStorySlide() {
+    if (!state.storyHistory.length) {
+      showToast('At the beginning of story history');
+      return;
+    }
+
+    const prevItem = state.storyHistory.pop();
+    state.storyCurrentVerse = prevItem.verse;
+    state.storyCurrentVer = prevItem.ver;
+    state.storyCurrentStyle = prevItem.style;
+
+    const textToDisplay = prevItem.verse.translations[prevItem.ver] || prevItem.verse.translations.NIV;
+    applyStorySlideVisuals(prevItem.verse, prevItem.ver, prevItem.style, textToDisplay);
+  }
+
+  function applyStorySlideVisuals(verse, ver, styleName, textToDisplay) {
     const sizeClass = calculateStoryFontSizeClass(textToDisplay.length);
 
     if (elements.storyContainer) {
-      elements.storyContainer.className = `story-container ${nextStyle} ${sizeClass}`;
+      elements.storyContainer.className = `story-container ${styleName} ${sizeClass}`;
     }
 
     const categoryGradients = {
@@ -797,9 +824,11 @@
     const gradientMap = state.theme === 'dark' ? darkCategoryGradients : categoryGradients;
     if (elements.storyBackdrop) elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
 
-    if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, nextStyle);
+    if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, styleName);
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
-    if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = chosenVer;
+    if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
+
+    updateStoryHeartButton(verse.id);
 
     if (elements.storyContentWrapper) {
       elements.storyContentWrapper.style.animation = 'none';
@@ -835,7 +864,7 @@
   // ==========================================================================
   function setupEventListeners() {
 
-    // 1. Resilient Sticky Header Event Delegation (Version, Theme, Font, Size, Type Drawer, Story, View Toggle)
+    // 1. Resilient Header Event Delegation
     if (elements.stickyHeader) {
       elements.stickyHeader.addEventListener('click', (e) => {
         // Translation Picker
@@ -846,55 +875,22 @@
           return;
         }
 
-        // Theme Picker
-        const themeBtn = e.target.closest('.theme-picker .segmented-btn');
-        if (themeBtn) {
-          const themeVal = themeBtn.getAttribute('data-theme-val');
-          if (themeVal) applyTheme(themeVal);
-          return;
-        }
-
-        // Font Style Picker
-        const fontBtn = e.target.closest('.font-style-picker .segmented-btn');
-        if (fontBtn) {
-          const font = fontBtn.getAttribute('data-font');
-          if (font) applyFontStyle(font);
-          return;
-        }
-
-        // Font Size Adjusters
-        if (e.target.closest('#btnFontDecrease')) {
-          const newSize = Math.max(0.95, state.fontSize - 0.08);
-          applyFontSize(newSize);
-          return;
-        }
-        if (e.target.closest('#btnFontIncrease')) {
-          const newSize = Math.min(1.85, state.fontSize + 0.08);
-          applyFontSize(newSize);
-          return;
-        }
-
         // Open Type Settings Drawer
         if (e.target.closest('#btnOpenTypeSettings')) {
           openTypeSettings();
           return;
         }
-
-        // Stories Mode Button
-        if (e.target.closest('#btnOpenStories')) {
-          openStoriesMode();
-          return;
-        }
-
-        // View Mode Toggle (Grid / List)
-        if (e.target.closest('#btnViewToggle')) {
-          applyViewMode(state.viewMode === 'bento' ? 'list' : 'bento');
-          return;
-        }
       });
     }
 
-    // 2. Typography Settings Drawer Event Listeners
+    // 2. Hero Story Launch Button
+    if (elements.btnHeroOpenStories) {
+      elements.btnHeroOpenStories.addEventListener('click', () => {
+        openStoriesMode();
+      });
+    }
+
+    // 3. Typography Settings Drawer Event Listeners
     if (elements.btnCloseTypeSettings) {
       elements.btnCloseTypeSettings.addEventListener('click', closeTypeSettings);
     }
@@ -977,7 +973,7 @@
       elements.btnResetTypeSettings.addEventListener('click', resetTypeSettingsToDefault);
     }
 
-    // 3. Category Filter Chips (Event Delegation)
+    // 4. Category Filter Chips (Event Delegation)
     if (elements.categoryChips) {
       elements.categoryChips.addEventListener('click', (e) => {
         const btn = e.target.closest('.chip-btn');
@@ -986,10 +982,21 @@
         if (btn.id === 'favoritesFilterBtn') {
           state.favoritesOnly = !state.favoritesOnly;
           btn.classList.toggle('active', state.favoritesOnly);
+          if (state.favoritesOnly) {
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              if (b.id !== 'favoritesFilterBtn') b.classList.remove('active');
+            });
+          } else {
+            const allBtn = document.querySelector('#categoryChips .chip-btn[data-category="all"]');
+            if (allBtn) allBtn.classList.add('active');
+            state.category = 'all';
+          }
         } else {
           const cat = btn.getAttribute('data-category');
           if (!cat) return;
           state.category = cat;
+          state.favoritesOnly = false;
+          if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
 
           document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
             if (b.id !== 'favoritesFilterBtn') b.classList.remove('active');
@@ -1001,7 +1008,7 @@
       });
     }
 
-    // 4. Reset Filters Button
+    // 5. Reset Filters Button
     if (elements.resetFiltersBtn) {
       elements.resetFiltersBtn.addEventListener('click', () => {
         state.category = 'all';
@@ -1015,7 +1022,7 @@
       });
     }
 
-    // 5. Bento Card Clicks (Open Reader Lightbox, Favorite, Story)
+    // 6. Bento Card Clicks (Open Reader Lightbox, Favorite, Story)
     if (elements.bentoContainer) {
       elements.bentoContainer.addEventListener('click', (e) => {
         const favBtn = e.target.closest('.btn-favorite');
@@ -1042,10 +1049,10 @@
       });
     }
 
-    // 6. Fullscreen Endless Stories Mode Listeners
+    // 7. Fullscreen Endless Stories Mode Listeners
     if (elements.storyOverlay) {
       elements.storyOverlay.addEventListener('click', (e) => {
-        if (e.target.closest('#storyCloseBtn')) return;
+        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryHeart')) return;
         renderNextStorySlide();
       });
     }
@@ -1057,7 +1064,23 @@
       });
     }
 
-    // 7. Reader Lightbox Listeners
+    if (elements.btnStoryPrev) {
+      elements.btnStoryPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        renderPreviousStorySlide();
+      });
+    }
+
+    if (elements.btnStoryHeart) {
+      elements.btnStoryHeart.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (state.storyCurrentVerse) {
+          toggleFavorite(state.storyCurrentVerse.id);
+        }
+      });
+    }
+
+    // 8. Reader Lightbox Listeners
     if (elements.readerCloseBtn) elements.readerCloseBtn.addEventListener('click', closeReaderLightbox);
     if (elements.readerLightbox) {
       elements.readerLightbox.addEventListener('click', (e) => {
@@ -1131,14 +1154,14 @@
       });
     }
 
-    // 8. Scroll to top
+    // 9. Scroll to top
     if (elements.scrollToTopBtn) {
       elements.scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
 
-    // 9. Shortcuts Modal
+    // 10. Shortcuts Modal
     if (elements.shortcutsCloseBtn) {
       elements.shortcutsCloseBtn.addEventListener('click', () => {
         if (elements.shortcutsModal) elements.shortcutsModal.classList.remove('active');
@@ -1151,7 +1174,7 @@
       });
     }
 
-    // 10. Global Keyboard Shortcuts
+    // 11. Global Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
       // Escape closes modals and drawers
       if (e.key === 'Escape') {
@@ -1178,6 +1201,9 @@
         if (e.key === ' ' || e.key === 'ArrowRight') {
           e.preventDefault();
           renderNextStorySlide();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          renderPreviousStorySlide();
         }
         return;
       }
@@ -1219,6 +1245,7 @@
     if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
     if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
 
+    updateStoryHeartButton(verseId);
     render();
   }
 

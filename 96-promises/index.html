@@ -23,78 +23,38 @@
     <div class="header-inner">
       <div class="top-bar">
         
-        <!-- Brand Title & Counter -->
-        <div class="brand-section">
-          <div class="brand-icon">
-            <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
-          </div>
-          <div class="brand-titles">
-            <h1>
-              96 Promises
-              <span class="badge-count" id="totalCountBadge">96</span>
-            </h1>
-            <p>Living Scripture &amp; Grace Concordance</p>
-          </div>
+        <!-- Translation Picker (NIV / TPT / NLT / NASB) -->
+        <div class="segmented-control version-picker" role="group" aria-label="Bible Version">
+          <button class="segmented-btn active" data-version="NIV" title="New International Version">NIV</button>
+          <button class="segmented-btn" data-version="TPT" title="The Passion Translation">TPT</button>
+          <button class="segmented-btn" data-version="NLT" title="New Living Translation">NLT</button>
+          <button class="segmented-btn" data-version="NASB" title="New American Standard Bible">NASB</button>
         </div>
 
-        <!-- Controls Cluster -->
-        <div class="header-controls">
-          
-          <!-- Translation Picker -->
-          <div class="segmented-control version-picker" role="group" aria-label="Bible Version">
-            <button class="segmented-btn active" data-version="NIV" title="New International Version">NIV</button>
-            <button class="segmented-btn" data-version="TPT" title="The Passion Translation">TPT</button>
-            <button class="segmented-btn" data-version="NLT" title="New Living Translation">NLT</button>
-            <button class="segmented-btn" data-version="NASB" title="New American Standard Bible">NASB</button>
-          </div>
+        <!-- Typography & Reading Settings Button (Aa / Sliders) -->
+        <button class="icon-btn btn-type-settings" id="btnOpenTypeSettings" title="Typography, Theme &amp; Reading Settings (Aa)">
+          <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
+        </button>
 
-          <!-- Theme Picker: Light, Mud, Dark -->
-          <div class="segmented-control theme-picker" role="group" aria-label="Theme Mode">
-            <button class="segmented-btn active" data-theme-val="light" title="☀️ Clean Studio Light">☀️</button>
-            <button class="segmented-btn" data-theme-val="mud" title="🍂 Warm Mud &amp; Sand">🍂</button>
-            <button class="segmented-btn" data-theme-val="dark" title="🌙 Obsidian Midnight">🌙</button>
-          </div>
-
-          <!-- Typography Style Picker -->
-          <div class="segmented-control font-style-picker" role="group" aria-label="Font Style">
-            <button class="segmented-btn active" data-font="serif" title="Lora &amp; Merriweather">Serif</button>
-            <button class="segmented-btn" data-font="sans" title="Plus Jakarta Sans">Sans</button>
-            <button class="segmented-btn" data-font="editorial" title="Newsreader &amp; Fraunces">Editorial</button>
-            <button class="segmented-btn" data-font="display" title="DM Serif Display &amp; Cinzel">Display</button>
-            <button class="segmented-btn" data-font="mono" title="JetBrains Mono">Mono</button>
-          </div>
-
-          <!-- Font Size Adjusters -->
-          <div class="segmented-control font-size-controls" role="group" aria-label="Text Size">
-            <button class="segmented-btn" id="btnFontDecrease" title="Decrease Font Size (A-)">A-</button>
-            <button class="segmented-btn" id="btnFontIncrease" title="Increase Font Size (A+)">A+</button>
-          </div>
-
-          <!-- Type & Reading Settings Button (Flyout for Mobile & Desktop) -->
-          <button class="icon-btn btn-type-settings" id="btnOpenTypeSettings" title="Typography &amp; Reading Settings (Aa)">
-            <i data-lucide="sliders-horizontal" style="width: 15px; height: 15px;"></i>
-          </button>
-
-          <!-- View Mode & Action Buttons -->
-          <button class="story-mode-btn" id="btnOpenStories" title="Launch Endless Stories Mode (S)">
-            <i data-lucide="play" style="width: 14px; height: 14px;"></i>
-            <span>Stories</span>
-          </button>
-
-          <button class="icon-btn" id="btnViewToggle" title="Toggle Bento / Compact List View">
-            <i data-lucide="layout-grid" id="viewToggleIcon" style="width: 16px; height: 16px;"></i>
-          </button>
-
-        </div>
       </div>
 
-      <!-- Category Filters (Horizontal Scrollable Pill Bar) -->
+      <!-- Category Filters (Horizontal Scrollable Pill Bar — Bookmarks is FIRST) -->
       <div class="filter-bar">
         <div class="category-chips" id="categoryChips">
+          
+          <!-- Bookmarks Filter is FIRST -->
+          <button class="chip-btn chip-bookmarks" id="favoritesFilterBtn" title="Show Bookmarked Verses">
+            <i data-lucide="bookmark" style="width: 12px; height: 12px;"></i>
+            <span>Bookmarks</span>
+            <span class="chip-count" id="favoritesCount">0</span>
+          </button>
+
+          <!-- All Promises -->
           <button class="chip-btn active" data-category="all">
             <span>All Promises</span>
             <span class="chip-count" id="count-all">96</span>
           </button>
+
           <button class="chip-btn" data-category="joy-presence">
             <i data-lucide="sun" style="width: 12px; height: 12px;"></i>
             <span>Joy &amp; Presence</span>
@@ -136,11 +96,6 @@
             <span class="chip-count" id="count-healing-renewal">12</span>
           </button>
 
-          <button class="chip-btn" id="favoritesFilterBtn">
-            <i data-lucide="bookmark" style="width: 12px; height: 12px;"></i>
-            <span>Bookmarks</span>
-            <span class="chip-count" id="favoritesCount">0</span>
-          </button>
         </div>
       </div>
     </div>
@@ -155,9 +110,36 @@
         <h2>96 Living Promises &amp; Covenant Truths</h2>
         <p>A pure typographical scripture library across NIV, TPT, NLT, and NASB. Click any card to open the chapter context flow, original Greek &amp; Hebrew word lexicons, and Paul Ellis grace commentary.</p>
       </div>
+
+      <!-- Big Prominent Full-Width Story Mode Button -->
+      <button class="hero-story-launch-btn" id="btnHeroOpenStories" title="Launch Immersive Fullscreen Stories Mode (S)">
+        <div class="hero-story-btn-left">
+          <div class="hero-story-play-icon">
+            <i data-lucide="play" style="width: 18px; height: 18px; fill: currentColor;"></i>
+          </div>
+          <div class="hero-story-btn-text">
+            <strong>Launch Fullscreen Stories Mode</strong>
+            <span>Tap to immerse in dynamic typographic scripture</span>
+          </div>
+        </div>
+        <i data-lucide="arrow-right" class="hero-story-arrow" style="width: 20px; height: 20px;"></i>
+      </button>
+
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-number" id="statDisplayedCount">96</div>
+          <div class="stat-label">Displayed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="statBookmarksCount">0</div>
+          <div class="stat-label">Bookmarks</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="activeVersionLabel">NIV</div>
+          <div class="stat-label">Version</div>
+        </div>
+      </div>
+    </section>
           <div class="stat-label">Displayed</div>
         </div>
         <div class="stat-item">
@@ -357,9 +339,18 @@
         </blockquote>
       </div>
 
-      <!-- Bottom Pinned Corners: Left = Reference, Right = Version -->
+      <!-- Bottom Pinned Controls: Reference on Left, Prev & Bookmark Center/Right, Version on Far Right -->
       <div class="story-bottom-bar">
         <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
+        <div class="story-bottom-center-actions">
+          <button class="story-nav-btn story-prev-btn" id="btnStoryPrev" title="Go back to previous verse">
+            <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
+            <span>Previous</span>
+          </button>
+          <button class="story-nav-btn story-heart-btn" id="btnStoryHeart" title="Bookmark this verse">
+            <i data-lucide="heart" id="storyHeartIcon" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
         <div class="story-version-pill" id="storyActiveVerBadge">NIV</div>
       </div>
     </div>
@@ -417,7 +408,7 @@
               <span class="font-card-preview" style="font-family: var(--font-dm-serif);">Aa</span>
               <div class="font-card-meta">
                 <span class="font-card-name">Display</span>
-                <span class="font-card-sub">DM Serif &amp; Cinzel</span>
+                <span class="font-card-sub">DM Serif &amp; Outfit</span>
               </div>
             </button>
             <button class="font-card-btn" data-font="mono">
