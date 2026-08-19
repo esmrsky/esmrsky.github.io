@@ -620,6 +620,12 @@ def place(boxes: list[tuple[int, int]]) -> tuple[list[tuple[int, int]], int]:
     return pos, rows
 
 
+def owner_rows(pos, boxes, row: int) -> list[int]:
+    """Indices of the cards that reach into `row`."""
+    return [i for i, ((r, _), (_, h)) in enumerate(zip(pos, boxes))
+            if r <= row < r + h]
+
+
 def rebalance(cards: list[Card], allowed: set[tuple[int, int]]) -> None:
     """Widen cards into the holes their dropped neighbours left behind.
 
@@ -644,18 +650,34 @@ def rebalance(cards: list[Card], allowed: set[tuple[int, int]]) -> None:
         run = 0
         while hc + run < GRID_COLS and (hr, hc + run) not in occupied:
             run += 1
-        # The card that ends where the hole begins is the one that can grow.
+
+        # First move: the card that ends where the hole begins grows into it.
         left = owner.get((hr, hc - 1)) if hc else None
-        if left is None:
+        if left is not None:
+            card = cards[left]
+            for extra in range(run, 0, -1):
+                if (card.w + extra, card.h) in allowed:
+                    card.w += extra
+                    break
+            else:
+                left = None
+        if left is not None:
+            continue
+
+        # Second move: a hole in the last row usually means one tall card is
+        # hanging into a row nothing else reaches. Shortening it removes the
+        # row instead of leaving a gap under it — the only other lever, since
+        # widening is capped by the span classes the page actually defines.
+        if hr != rows - 1:
             return
-        card = cards[left]
-        grew = False
-        for extra in range(run, 0, -1):
-            if (card.w + extra, card.h) in allowed:
-                card.w += extra
-                grew = True
+        shrunk = False
+        for i in sorted(owner_rows(pos, boxes, hr), reverse=True):
+            card = cards[i]
+            if card.h > 1 and (card.w, card.h - 1) in allowed:
+                card.h -= 1
+                shrunk = True
                 break
-        if not grew:
+        if not shrunk:
             return
 
 
