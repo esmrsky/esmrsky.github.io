@@ -95,20 +95,16 @@ h1 i{font-style:italic;font-weight:500;color:var(--gold)}
 
 /* ---------- sections ---------- */
 section{
-  position:relative;isolation:isolate;
+  position:relative;
   padding:52px 38px 56px;margin:26px 0;border-radius:22px;scroll-margin-top:84px;
   background:
+    linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 22%,transparent) 76%) top left / 100% 3px no-repeat,
     linear-gradient(178deg,
       color-mix(in srgb, var(--acc) 15%, transparent) 0,
       color-mix(in srgb, var(--acc) 5%, transparent) 260px,
-      color-mix(in srgb, var(--acc) 2%, transparent) 620px),
+      color-mix(in srgb, var(--acc) 2%, transparent) 620px) no-repeat,
     var(--bg);
   border:1px solid color-mix(in srgb, var(--acc) 24%, var(--line));
-}
-section::before{
-  content:"";position:absolute;inset:-1px -1px auto;height:3px;z-index:-1;
-  border-radius:22px 22px 0 0;
-  background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 18%,transparent) 72%);
 }
 #stories{--acc:var(--coral)}
 #loop{--acc:var(--gold)}
@@ -168,11 +164,16 @@ h2{
 .detail.on{display:block;animation:rise .4s var(--ease)}
 .detail .kicker{color:var(--acc)}
 .detail ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.detail ul{container-type:inline-size}
 .detail li{
-  display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:baseline;
-  padding:12px 14px;color:var(--soft);background:var(--inset);border:1px solid var(--line);border-radius:11px;font-size:.98rem;
+  padding:12px 14px;color:var(--soft);background:var(--inset);
+  border:1px solid var(--line);border-radius:11px;font-size:.98rem;
 }
-.detail li .lm{display:flex;gap:6px;flex-wrap:wrap}
+.detail li .lm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+@container (min-width:30rem){
+  .detail li{display:grid;grid-template-columns:auto minmax(22ch,1fr);gap:12px;align-items:baseline}
+  .detail li .lm{margin-bottom:0}
+}
 .detail .src{margin-top:16px;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
 
 /* ---------- loop steps ---------- */

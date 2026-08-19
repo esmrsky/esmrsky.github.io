@@ -601,7 +601,7 @@
             <article class="framework-tile">
               <span>Fivefold / APEST</span>
               <strong>${tribe.fivefold.length ? tribe.fivefold.map(item => item.name).join(' + ') : 'No clean mapping'}</strong>
-              <p>${tribe.fivefold.length ? tribe.fivefold.map(item => confidenceBadge(item.confidence, 'Partial')).join(' ') : confidenceBadge('none', 'No clean map')} Equipping function in Ephesians 4; it describes ministry contribution, not temperament.</p>
+              <p>${tribe.fivefold.length ? tribe.fivefold.map(item => confidenceBadge(item.confidence, 'Partial')).join(' ') : ''}Equipping function in Ephesians 4; it describes ministry contribution, not temperament.</p>
             </article>
             <article class="framework-tile">
               <span>Romans 12 gift lens</span>
@@ -966,7 +966,7 @@
         </button>
         <dl>
           <div><dt>Axis</dt><dd>${tribe.axis}${confidenceBadge(tribe.axisConfidence, tribe.axisConfidence === 'strong' ? 'Strong' : 'Partial')}</dd></div>
-          <div><dt>Fivefold / APEST</dt><dd>${tribe.fivefold.length ? tribe.fivefold.map(item => item.name).join(' + ') : 'No clean mapping'}${tribe.fivefold.length ? confidenceBadge('partial', 'Partial') : confidenceBadge('none', 'No clean map')}</dd></div>
+          <div><dt>Fivefold / APEST</dt><dd>${tribe.fivefold.length ? `${tribe.fivefold.map(item => item.name).join(' + ')}${confidenceBadge('partial', 'Partial')}` : confidenceBadge('none', 'No clean map')}</dd></div>
           <div><dt>Romans 12 lens</dt><dd>${tribe.gift.name}${confidenceBadge('inference', 'Interpretive')}</dd></div>
           <div><dt>Modern translation</dt><dd>${tribe.secular.label} · ${tribe.secular.pearson}${confidenceBadge('inference', 'Interpretive')}</dd></div>
           <div><dt>Blueprint case</dt><dd>${tribe.blueprint.figure}${confidenceBadge(tribe.blueprint.evidence === 'genealogical' ? 'strong' : 'inference', tribe.blueprint.evidence === 'genealogical' ? 'Named lineage' : 'Story resonance')}${referenceBadge(tribe.blueprint.references[0])}</dd></div>
