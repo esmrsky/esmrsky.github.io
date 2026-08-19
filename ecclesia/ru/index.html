@@ -137,8 +137,7 @@
   .myth-card .proof{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;font-size:13px}
   .proof b{color:var(--blue)}
   .arc{position:relative;padding:18px 0}
-  .arc-line{position:absolute;top:50%;left:3%;right:3%;height:1px;background:var(--line)}
-  .arc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;position:relative}
+  .arc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative}
   .node{--node-accent:var(--gold);min-height:285px;padding:20px;border:1px solid var(--line);border-top-color:color-mix(in srgb,var(--node-accent) 62%,var(--line));border-radius:22px;background:linear-gradient(155deg,color-mix(in srgb,var(--node-accent) 8%,var(--panel2)),var(--panel) 55%);display:flex;flex-direction:column;justify-content:space-between;transition:.25s transform,.25s border-color,.25s box-shadow}
   .node:hover{transform:translateY(-8px);border-color:color-mix(in srgb,var(--gold) 65%,var(--line))}
   .node:nth-child(2){--node-accent:var(--coral)}.node:nth-child(3){--node-accent:var(--blue)}.node:nth-child(4){--node-accent:var(--violet)}.node:nth-child(5){--node-accent:var(--green)}.node:nth-child(6){--node-accent:var(--red)}.node:nth-child(7){--node-accent:var(--gold)}
@@ -237,13 +236,13 @@
   .verse-stage{color:var(--verse-accent);font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:900}
   .verse-card blockquote{font-family:Georgia,"Times New Roman",serif;font-size:clamp(18px,2vw,22px);line-height:1.42;margin:20px 0 24px;letter-spacing:-.012em;text-wrap:pretty}
   .verse-card blockquote sup{font-family:Inter,ui-sans-serif,sans-serif;color:var(--verse-accent);font-size:.55em;font-weight:900;margin-right:3px}
-  .verse-link{margin-top:auto;display:flex;justify-content:space-between;gap:14px;align-items:center;padding-top:15px;border-top:1px solid var(--line);font-size:11px;font-weight:900;letter-spacing:.06em;text-decoration:none;color:var(--verse-accent)}
-  .verse-link span:last-child{font-size:15px;transition:transform .2s ease}
-  .verse-link:hover span:last-child{transform:translateX(3px)}
+  .verse-link{margin-top:auto;display:flex;justify-content:space-between;gap:14px;align-items:center;padding-top:15px;border-top:1px solid var(--line);font-size:11px;font-weight:900;letter-spacing:.06em;color:var(--verse-accent)}
+  .verse-link-tail{display:flex;align-items:center;gap:9px;flex:none}
+  .verse-link-version{color:var(--muted);font-size:10px;letter-spacing:.09em}
+  .verse-link-out{display:grid;place-items:center;width:44px;height:44px;margin:-13px -8px -13px 0;border-radius:50%;color:var(--verse-accent);font-size:15px;text-decoration:none;transition:transform .2s ease,background .2s ease}
+  .verse-link-out:hover{background:color-mix(in srgb,var(--verse-accent) 14%,transparent);transform:translateX(2px)}
   .translation-note{position:relative;margin:18px 2px 0;color:var(--muted);font-size:11px;line-height:1.55}
   .translation-note a{color:var(--gold)}
-  .scripture-ref-link{text-decoration:none}
-  .scripture-ref-link:hover{text-decoration:underline;text-underline-offset:3px}
   .summary{
     padding:65px;border-radius:36px;border:1px solid var(--line);position:relative;overflow:hidden;
     background:
@@ -269,14 +268,14 @@
     .hero-side{border-left:0;border-top:1px solid var(--line);padding:24px 0 0}
     .assembly-mark{margin:0 auto 28px}
     .hero-foot{grid-template-columns:repeat(2,1fr)}
-    .arc-line{display:none}.arc-grid{grid-template-columns:repeat(2,1fr)}
+    .arc-line{display:none}.arc-grid{grid-template-columns:repeat(3,1fr)}
     .metas{grid-template-columns:1fr}.meta:nth-child(n){grid-column:span 1}
     .flow{grid-template-columns:repeat(2,1fr)}
     .scale,.perspective,.anti{grid-template-columns:1fr}
     .relation-map{width:100%;max-width:720px;margin-inline:auto}
     .readmap{grid-template-columns:repeat(2,1fr)}
   }
-  @media(max-width:760px){.scripture-grid,.evidence-strip{grid-template-columns:1fr}.scripture-top{align-items:start;flex-direction:column}.scripture-top .translation-badge{order:-1}}
+  @media(max-width:760px){.scripture-grid,.evidence-strip{grid-template-columns:1fr}.arc-grid{grid-template-columns:repeat(2,1fr)}.scripture-top{align-items:start;flex-direction:column}.scripture-top .translation-badge{order:-1}}
   @media(max-width:620px){
     .wrap,.nav{width:min(100% - 24px,1240px)}
     .brand-home{display:none}.toggle .theme-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -293,6 +292,206 @@
     footer{flex-direction:column;padding-top:28px}.assembly-mark{width:235px}.assembly-mark i{transform:rotate(var(--angle)) translateY(-95px)}.assembly-mark i:nth-of-type(2n){transform:rotate(var(--angle)) translateY(-95px)}
   }
   @media(max-width:390px){h1{font-size:51px}.lede{font-size:19px}}
+  /* ══ scripture layer ═════════════════════════════════════════════════════
+     Pop-up verses, the translation picker and the context dialog. The shared
+     engine in /assets/scripture-popover.js ships no colours of its own, so
+     everything it renders is dressed here in this page's gold-on-ink palette.
+     Both themes are stated outright: this page defines its dark values
+     directly, so light cannot simply inherit them. */
+  .esv-ref{
+    color:inherit;
+    cursor:pointer;
+    /* The rule has to follow the words, not the box: the hit area is grown to 44px
+       below, and a border-bottom would be drawn at the foot of that box instead of
+       under the text. */
+    text-decoration:underline;
+    text-decoration-style:dotted;
+    text-decoration-color:color-mix(in srgb,currentColor 48%,transparent);
+    text-decoration-thickness:1px;
+    text-underline-offset:3px;
+    /* a reference must never wrap: half of it would be untappable */
+    white-space:nowrap;
+  }
+  .esv-ref:hover,.esv-ref:focus-visible{color:var(--gold);text-decoration-color:var(--gold)}
+  .verse-link-ref .esv-ref{text-decoration-color:color-mix(in srgb,var(--verse-accent) 55%,transparent)}
+  .verse-link-ref .esv-ref:hover{color:var(--verse-accent);text-decoration-color:var(--verse-accent)}
+  blockquote[data-verse]{transition:opacity .15s ease}
+  blockquote[data-verse].is-loading{opacity:.42}
+
+  /* ── translation picker ── */
+  .esv-pick{position:relative;flex:none}
+  .esv-pick-btn{
+    display:flex;align-items:center;gap:7px;
+    min-height:44px;padding:9px 14px 9px 12px;
+    border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));
+    border-radius:999px;
+    background:color-mix(in srgb,var(--gold) 8%,transparent);
+    color:var(--gold);
+    font-size:11px;font-weight:900;letter-spacing:.07em;
+    cursor:pointer;
+    transition:background .16s ease,border-color .16s ease;
+  }
+  .esv-pick-btn:hover{background:color-mix(in srgb,var(--gold) 15%,transparent)}
+  .esv-pick.open .esv-pick-btn{background:color-mix(in srgb,var(--gold) 16%,transparent);border-color:var(--gold)}
+  .esv-pick-ic{width:15px;height:15px;flex:none}
+  .esv-pick-caret{width:13px;height:13px;opacity:.75;transition:transform .18s ease}
+  .esv-pick.open .esv-pick-caret{transform:rotate(180deg)}
+  .esv-pick-menu{
+    position:absolute;top:calc(100% + 9px);right:0;z-index:70;
+    min-width:270px;max-height:min(58dvh,420px);overflow-y:auto;overscroll-behavior:contain;
+    padding:7px;
+    border:1px solid var(--line);border-radius:22px;
+    background:var(--panel);
+    box-shadow:var(--shadow);
+  }
+  .esv-pick-head{
+    display:block;padding:8px 11px 9px;margin-bottom:5px;
+    border-bottom:1px dashed var(--line);
+    color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .esv-pick-opt{
+    display:flex;align-items:baseline;gap:11px;width:100%;
+    min-height:44px;padding:9px 11px;
+    border:0;border-radius:13px;background:none;
+    color:var(--muted);text-align:left;cursor:pointer;
+  }
+  .esv-pick-opt .code{flex:none;width:44px;color:var(--ink);font-size:10px;font-weight:900;letter-spacing:.09em}
+  .esv-pick-opt .full{font-size:12.5px;line-height:1.35;font-weight:500}
+  .esv-pick-opt:hover,.esv-pick-opt.cursor{background:var(--panel2);color:var(--ink)}
+  .esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--gold) 13%,transparent)}
+  .esv-pick-opt[aria-selected="true"] .code{color:var(--gold)}
+  #translationPicker{padding:0;border:0;background:none}
+
+  /* ── hover / tap pop-up ── */
+  .esv-tip{
+    position:absolute;z-index:130;
+    display:none;max-width:360px;
+    padding:17px 19px;
+    border:1px solid color-mix(in srgb,var(--gold) 26%,var(--line));
+    border-radius:22px;
+    background:color-mix(in srgb,var(--panel) 95%,transparent);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:var(--shadow);
+    color:var(--ink);
+    font-size:15px;line-height:1.6;
+    opacity:0;transition:opacity .16s ease;
+  }
+  .esv-tip.open{display:block;opacity:1}
+  .esv-tip-ref{display:block;margin-bottom:9px;color:var(--gold);font-size:9.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+  .esv-tip-text{
+    font-family:Georgia,"Times New Roman",serif;
+    /* the cleaner turns <br> into a real newline, so poetry keeps its break */
+    white-space:pre-line;
+    min-height:3em;
+    transition:opacity .15s ease;
+  }
+  /* Waiting for a verse dims the words rather than collapsing the box. */
+  .esv-tip-text.is-loading{opacity:.42}
+  .esv-note{display:block;margin-top:8px;color:var(--muted);font-family:Inter,ui-sans-serif,sans-serif;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase}
+  .esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+  .esv-tip-ctx,.esv-tip-out{
+    display:inline-flex;align-items:center;min-height:38px;
+    padding:9px 14px;border-radius:999px;
+    border:1px solid color-mix(in srgb,var(--gold) 38%,var(--line));
+    background:color-mix(in srgb,var(--gold) 10%,transparent);
+    color:var(--gold);
+    font-family:Inter,ui-sans-serif,sans-serif;
+    font-size:9.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    text-decoration:none;cursor:pointer;
+  }
+  .esv-tip-out{border-color:var(--line);background:none;color:var(--muted)}
+  .esv-tip-ctx:hover{background:color-mix(in srgb,var(--gold) 18%,transparent)}
+  .esv-tip-out:hover{color:var(--ink)}
+
+  /* ── context dialog ── */
+  .esv-ctx{
+    width:min(940px,calc(100% - 26px));max-height:min(84dvh,780px);
+    padding:0;border:1px solid var(--line);border-radius:30px;
+    background:var(--panel);color:var(--ink);
+    box-shadow:0 34px 110px rgba(0,0,0,.5);
+    overflow:hidden;
+  }
+  .esv-ctx::backdrop{background:rgba(6,5,12,.74);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+  .esv-ctx:focus{outline:none}
+  .esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+  .esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:23px 25px 17px;border-bottom:1px solid var(--line)}
+  .esv-ctx-label{display:block;margin-bottom:6px;color:var(--gold);font-size:9.5px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+  .esv-ctx-head h3{margin:0;font-size:clamp(22px,3.4vw,32px);line-height:1;letter-spacing:-.04em}
+  .esv-ctx-actions{display:flex;align-items:center;gap:9px;flex:none}
+  .esv-ctx-close{
+    width:44px;height:44px;flex:none;display:grid;place-items:center;
+    border:1px solid var(--line);border-radius:50%;
+    background:var(--panel2);color:var(--muted);
+    font-size:19px;line-height:1;cursor:pointer;
+  }
+  .esv-ctx-close:hover{color:var(--ink)}
+  .esv-ctx-body{
+    flex:1 1 auto;min-height:0;padding:21px 25px 27px;
+    overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+    scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--gold) 45%,var(--line)) transparent;
+    transition:opacity .18s ease;
+  }
+  /* Swapping translation used to blank the body and collapse the box. The old
+     passage now stays put and dims, so the height never jumps. */
+  .esv-ctx-body.is-refreshing{opacity:.4}
+  .esv-ctx-body::-webkit-scrollbar{width:8px}
+  .esv-ctx-body::-webkit-scrollbar-track{background:transparent}
+  .esv-ctx-body::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--gold) 40%,var(--line));border:2px solid transparent;border-radius:999px;background-clip:padding-box}
+  .esv-ctx-loading{margin:0;color:var(--muted);font-size:14px}
+  .esv-ctx-passage{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.95;color:var(--muted);white-space:pre-line}
+  .esv-ctx-note{margin:14px 0 0}
+  .esv-ctx-verse{display:inline}
+  .esv-ctx-verse + .esv-ctx-verse::before{content:" "}
+  .esv-ctx-num{margin-right:.32em;color:color-mix(in srgb,var(--muted) 72%,transparent);font-family:Inter,ui-sans-serif,sans-serif;font-size:9.5px;font-weight:800}
+  .esv-ctx-verse.is-selected .esv-ctx-t{
+    padding:.08em .16em;border-radius:4px;
+    color:var(--ink);
+    background:color-mix(in srgb,var(--gold) 18%,transparent);
+    text-decoration:underline;text-decoration-color:var(--gold);
+    text-decoration-thickness:1.6px;text-underline-offset:4px;
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  }
+  .esv-ctx-foot{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:15px 20px 17px;border-top:1px solid var(--line);background:var(--panel2)}
+  .esv-ctx-more,.esv-ctx-out{
+    display:inline-flex;align-items:center;min-height:44px;padding:11px 18px;border-radius:999px;
+    border:1px solid color-mix(in srgb,var(--gold) 40%,var(--line));
+    background:color-mix(in srgb,var(--gold) 10%,transparent);
+    color:var(--gold);
+    font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    text-decoration:none;cursor:pointer;
+  }
+  .esv-ctx-out{border-color:var(--line);background:none;color:var(--muted)}
+  .esv-ctx-more:hover{background:color-mix(in srgb,var(--gold) 17%,transparent)}
+  .esv-ctx-out:hover{color:var(--ink)}
+  .esv-ctx-more:disabled{cursor:wait;opacity:.55}
+
+  [data-theme="light"] .esv-ctx{box-shadow:0 34px 110px rgba(55,42,13,.2)}
+  [data-theme="light"] .esv-ctx::backdrop{background:rgba(70,60,40,.4)}
+  [data-theme="light"] .esv-pick-menu,[data-theme="light"] .esv-tip{box-shadow:0 24px 70px rgba(55,42,13,.18)}
+
+  @media (max-width:760px){
+    .esv-tip{max-width:calc(100vw - 26px)}
+    .esv-ctx-head,.esv-ctx-body{padding-left:17px;padding-right:17px}
+    .esv-pick-menu{min-width:min(270px,calc(100vw - 52px))}
+    .esv-ctx-passage{font-size:16px;line-height:1.85}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .esv-tip,.esv-ctx-body,.esv-pick-caret{transition:none}
+  }
+  /* ── tap targets ──────────────────────────────────────────────────────────
+     Standalone controls take a real 44px. Reference links cannot: growing their
+     own box pushed the dotted rule to the foot of it, well below the words, and
+     making the row a flex container stripped the spaces around its separators.
+     So the hit area is an invisible overlay instead — 44px tall, centred on the
+     link, and completely outside layout. */
+  .nav-links a,.brand,.toggle,.skip-link,.brand-home{min-height:44px;display:inline-flex;align-items:center}
+  .nav-links a{padding-top:10px;padding-bottom:10px}
+  .esv-ref,.translation-note a{position:relative}
+  .esv-ref::after,.translation-note a::after{
+    content:"";position:absolute;left:0;right:0;top:50%;
+    transform:translateY(-50%);height:44px;
+  }
+  .refchip{padding:11px 13px}
 </style>
 </head>
 <body>
@@ -385,13 +584,13 @@
     <div class="arc">
       <div class="arc-line"></div>
       <div class="arc-grid">
-        <article class="node reveal"><div class="n">01</div><div><h3>Собрание<br>у Синая</h3><p>Израиль стоит перед ЯХВЕ, слышит Его слова и становится народом завета.</p></div><div class="ref">Deut 4:10 · 9:10 · 18:16</div></article>
-        <article class="node reveal"><div class="n">02</div><div><h3>Хвала<br>в собрании</h3><p>Псалмы говорят о свидетельстве и хвале «посреди собрания» — этот язык позже подхватывает Послание к Евреям.</p></div><div class="ref">Ps 22:22 · Heb 2:12</div></article>
-        <article class="node reveal"><div class="n">03</div><div><h3>„Моя<br>экклесия“</h3><p>Иисус говорит языком принадлежности: «Я создам Церковь Мою». В центре оказывается Тот, кто строит и кому она принадлежит.</p></div><div class="ref">Matt 16:18–19</div></article>
-        <article class="node reveal"><div class="n">04</div><div><h3>Собрание,<br>несущее ответственность</h3><p>Иисус даёт собравшейся общине роль в примирении, вразумлении, связывании и разрешении.</p></div><div class="ref">Matt 18:15–20</div></article>
-        <article class="node reveal"><div class="n">05</div><div><h3>Община,<br>сформированная Духом</h3><p>Учение, общение, общий стол, молитва, щедрость, свидетельство и общая жизнь становятся видимыми привычками.</p></div><div class="ref">Acts 2:42–47</div></article>
-        <article class="node reveal"><div class="n">06</div><div><h3>Тело · Храм<br>· Невеста</h3><p>Павел ставит метафоры одну на другую: реальность слишком велика для одного образа — она и органическая, и архитектурная, и отношенческая.</p></div><div class="ref">1 Cor 12 · Eph 2 · Eph 5</div></article>
-        <article class="node reveal"><div class="n">07</div><div><h3>Небесное<br>собрание</h3><p>Послание к Евреям раздвигает горизонт до торжествующего собора первенцев, записанных на небесах.</p></div><div class="ref">Heb 12:22–24</div></article>
+        <article class="node reveal"><div class="n">01</div><div><h3>Собрание<br>у Синая</h3><p>Израиль стоит перед ЯХВЕ, слышит Его слова и становится народом завета.</p></div><div class="ref">Втор. 4:10 · 9:10 · 18:16</div></article>
+        <article class="node reveal"><div class="n">02</div><div><h3>Хвала<br>в собрании</h3><p>Псалмы говорят о свидетельстве и хвале «посреди собрания» — этот язык позже подхватывает Послание к Евреям.</p></div><div class="ref">Пс. 21:23 · Евр. 2:12</div></article>
+        <article class="node reveal"><div class="n">03</div><div><h3>„Моя<br>экклесия“</h3><p>Иисус говорит языком принадлежности: «Я создам Церковь Мою». В центре оказывается Тот, кто строит и кому она принадлежит.</p></div><div class="ref">Мф. 16:18–19</div></article>
+        <article class="node reveal"><div class="n">04</div><div><h3>Собрание,<br>несущее ответственность</h3><p>Иисус даёт собравшейся общине роль в примирении, вразумлении, связывании и разрешении.</p></div><div class="ref">Мф. 18:15–20</div></article>
+        <article class="node reveal"><div class="n">05</div><div><h3>Община,<br>сформированная Духом</h3><p>Учение, общение, общий стол, молитва, щедрость, свидетельство и общая жизнь становятся видимыми привычками.</p></div><div class="ref">Деян. 2:42–47</div></article>
+        <article class="node reveal"><div class="n">06</div><div><h3>Тело · Храм<br>· Невеста</h3><p>Павел ставит метафоры одну на другую: реальность слишком велика для одного образа — она и органическая, и архитектурная, и отношенческая.</p></div><div class="ref">1 Кор. 12 · Еф. 2 · Еф. 5</div></article>
+        <article class="node reveal"><div class="n">07</div><div><h3>Небесное<br>собрание</h3><p>Послание к Евреям раздвигает горизонт до торжествующего собора первенцев, записанных на небесах.</p></div><div class="ref">Евр. 12:22–24</div></article>
       </div>
     </div>
   </div>
@@ -404,13 +603,13 @@
       <div><h2>Церковь — это не одна метафора.</h2><p class="intro">Каждый образ поправляет остальные. «Тело» не даёт скатиться в институциональную холодность. «Храм» — в лёгкий индивидуализм. «Невеста» — в функционализм. «Священство» даёт призвание. «Семья» — принадлежность. «Стадо» — заботу пастыря. «Светильник» — открытое свидетельство.</p></div>
     </div>
     <div class="metas">
-      <article class="meta card reveal"><div class="icon">◉</div><h3>Тело</h3><p>Много членов, один Дух, разные дары, взаимная зависимость. Глава — Христос; зрелость здесь общая, а не только личная.</p><span class="ref">1 Cor 12:12–27 · Eph 4:11–16 · Col 1:18</span></article>
-      <article class="meta card reveal"><div class="icon">◇</div><h3>Храм</h3><p>В жилище для Бога Дух соединяет людей, а не каменную кладку.</p><span class="ref">Eph 2:19–22 · 1 Cor 3:16</span></article>
-      <article class="meta card reveal"><div class="icon">♡</div><h3>Невеста</h3><p>Отношение Христа к церкви — заветное, жертвенное и очищающее, а вовсе не управленческое.</p><span class="ref">Eph 5:25–32 · Rev 19:7–9</span></article>
-      <article class="meta card reveal"><div class="icon">⌂</div><h3>Дом</h3><p>Верующие становятся домашними Божьими: принадлежность несёт с собой обязанности заботы, чести и верности.</p><span class="ref">Eph 2:19 · 1 Tim 3:15</span></article>
-      <article class="meta card reveal"><div class="icon">♜</div><h3>Царственное священство</h3><p>Синайское призвание возвращается во Христе: святой народ, чья жизнь и речь возвещают совершенства Бога.</p><span class="ref">Ex 19:5–6 · 1 Pet 2:4–10</span></article>
-      <article class="meta card reveal"><div class="icon">⌁</div><h3>Стадо</h3><p>Руководство описано как пастырство под началом Пастыреначальника: забота, защита и пример, а не владение.</p><span class="ref">Acts 20:28 · 1 Pet 5:1–4</span></article>
-      <article class="meta card reveal"><div class="icon">✦</div><h3>Светильник</h3><p>В Откровении поместные церкви — светильники. Их существование видимо и подотчётно воскресшему Иисусу, который ходит посреди них.</p><span class="ref">Rev 1:12–20 · 2–3</span></article>
+      <article class="meta card reveal"><div class="icon">◉</div><h3>Тело</h3><p>Много членов, один Дух, разные дары, взаимная зависимость. Глава — Христос; зрелость здесь общая, а не только личная.</p><span class="ref">1 Кор. 12:12–27 · Еф. 4:11–16 · Кол. 1:18</span></article>
+      <article class="meta card reveal"><div class="icon">◇</div><h3>Храм</h3><p>В жилище для Бога Дух соединяет людей, а не каменную кладку.</p><span class="ref">Еф. 2:19–22 · 1 Кор. 3:16</span></article>
+      <article class="meta card reveal"><div class="icon">♡</div><h3>Невеста</h3><p>Отношение Христа к церкви — заветное, жертвенное и очищающее, а вовсе не управленческое.</p><span class="ref">Еф. 5:25–32 · Откр. 19:7–9</span></article>
+      <article class="meta card reveal"><div class="icon">⌂</div><h3>Дом</h3><p>Верующие становятся домашними Божьими: принадлежность несёт с собой обязанности заботы, чести и верности.</p><span class="ref">Еф. 2:19 · 1 Тим. 3:15</span></article>
+      <article class="meta card reveal"><div class="icon">♜</div><h3>Царственное священство</h3><p>Синайское призвание возвращается во Христе: святой народ, чья жизнь и речь возвещают совершенства Бога.</p><span class="ref">Исх. 19:5–6 · 1 Пет. 2:4–10</span></article>
+      <article class="meta card reveal"><div class="icon">⌁</div><h3>Стадо</h3><p>Руководство описано как пастырство под началом Пастыреначальника: забота, защита и пример, а не владение.</p><span class="ref">Деян. 20:28 · 1 Пет. 5:1–4</span></article>
+      <article class="meta card reveal"><div class="icon">✦</div><h3>Светильник</h3><p>В Откровении поместные церкви — светильники. Их существование видимо и подотчётно воскресшему Иисусу, который ходит посреди них.</p><span class="ref">Откр. 1:12–20 · 2–3</span></article>
     </div>
   </div>
 </section>
@@ -439,9 +638,9 @@
         <h3>Реальные люди в реальном месте.</h3>
         <p>Павел обращается и к «церкви Божией в Коринфе», и к отдельным домашним церквам, и к «церквам Галатийским». <em>Ekklesia</em> достаточно конкретна, чтобы назвать общину, которая собирается, поправляет, жертвует, поставляет служителей, посылает и страдает вместе — и за всё это отвечает.</p>
         <div class="mini-list">
-          <div class="mini"><span>Церковь в Коринфе</span><span>1 Cor 1:2</span></div>
-          <div class="mini"><span>Домашняя церковь</span><span>Rom 16:5</span></div>
-          <div class="mini"><span>Церкви Галатии</span><span>Gal 1:2</span></div>
+          <div class="mini"><span>Церковь в Коринфе</span><span>1 Кор. 1:2</span></div>
+          <div class="mini"><span>Домашняя церковь</span><span>Рим. 16:5</span></div>
+          <div class="mini"><span>Церкви Галатии</span><span>Гал. 1:2</span></div>
         </div>
       </article>
       <article class="scale-card card reveal">
@@ -449,9 +648,9 @@
         <h3>Одно тело — шире одной комнаты.</h3>
         <p>Тот же Новый Завет говорит о Христе как о главе «церкви» и о церкви как о Его теле и невесте. Поместное собрание — не вся реальность целиком, но оно призвано воплощать эту бо́льшую реальность, а не подменять её абстракцией.</p>
         <div class="mini-list">
-          <div class="mini"><span>Христос — глава церкви</span><span>Col 1:18</span></div>
-          <div class="mini"><span>Церковь — Его тело</span><span>Eph 1:22–23</span></div>
-          <div class="mini"><span>Христос возлюбил церковь</span><span>Eph 5:25</span></div>
+          <div class="mini"><span>Христос — глава церкви</span><span>Кол. 1:18</span></div>
+          <div class="mini"><span>Церковь — Его тело</span><span>Еф. 1:22–23</span></div>
+          <div class="mini"><span>Христос возлюбил церковь</span><span>Еф. 5:25</span></div>
         </div>
       </article>
     </div>
@@ -501,12 +700,12 @@
       <article class="auth-card card reveal">
         <h3>Ключи · связывать · разрешать</h3>
         <p>В Мф. 16 слова Иисуса Петру связывают церковь с ключами Царства; в Мф. 18 связывание и разрешение стоят в контексте общинного вразумления. Тексты явно говорят о настоящей власти и настоящей ответственности.</p>
-        <div class="refs"><span class="refchip">Matt 16:18–19</span><span class="refchip">Matt 18:15–20</span><span class="refchip">John 20:21–23</span></div>
+        <div class="refs"><span class="refchip">Мф. 16:18–19</span><span class="refchip">Мф. 18:15–20</span><span class="refchip">Ин. 20:21–23</span></div>
       </article>
       <article class="auth-card card reveal">
         <h3>Руководство · снаряжение · служение</h3>
         <p>Пресвитеры и епископы пасут; одарённые служители снаряжают; святые делают дело служения; каждая часть вносит своё. Руководство в Новом Завете весомо, но тело при этом не мыслится как пассивная публика.</p>
-        <div class="refs"><span class="refchip">Acts 20:28</span><span class="refchip">Eph 4:11–16</span><span class="refchip">1 Pet 5:1–4</span></div>
+        <div class="refs"><span class="refchip">Деян. 20:28</span><span class="refchip">Еф. 4:11–16</span><span class="refchip">1 Пет. 5:1–4</span></div>
       </article>
     </div>
 
@@ -545,63 +744,63 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div><div class="eyebrow">08 · Читай сами тексты</div></div>
-      <div><h2>Пусть слова остаются перед глазами.</h2><p class="intro">Десять несущих отрывков этого разбора, выписанных целиком по Новому русскому переводу. Ссылки на места Писания по всей странице тоже открываются в Новом русском переводе — чтобы посмотреть контекст пошире.</p></div>
+      <div><h2>Пусть слова остаются перед глазами.</h2><p class="intro">Десять несущих отрывков этого разбора, выписанных целиком по Новому русскому переводу. Наведи на любую ссылку по всей странице — и увидишь текст прямо на месте, с контекстом вокруг.</p></div>
     </div>
     <div class="scripture-shell reveal">
       <div class="scripture-top">
         <div><div class="kicker">Компактная канонная хрестоматия</div><h3>Собрание становится идентичностью.</h3></div>
-        <span class="translation-badge">Новый русский перевод</span>
+        <div class="translation-badge" id="translationPicker"></div>
       </div>
       <div class="scripture-grid">
         <article class="verse-card">
           <span class="verse-stage">Израиль собран</span>
-          <blockquote><sup>10</sup>Помни тот день, когда ты стоял перед Господом, твоим Богом, у Хорива и когда Он сказал мне: «Собери народ предо Мною, Я возвещу им Свои слова, чтобы они научились чтить Меня всю свою жизнь на земле и научили этому своих детей».</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Deuteronomy%204%3A10&amp;version=NRT" target="_blank" rel="noreferrer"><span>Втор. 4:10 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Deuteronomy 4:10" data-verse-ru="Втор. 4:10"><sup>10</sup>Помни тот день, когда ты стоял перед Господом, твоим Богом, у Хорива и когда Он сказал мне: «Собери народ предо Мною, Я возвещу им Свои слова, чтобы они научились чтить Меня всю свою жизнь на земле и научили этому своих детей».</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Втор. 4:10</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Deuteronomy%204%3A10&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Втор. 4:10 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Хвала в собрании</span>
-          <blockquote><sup>23</sup>Я возвещу Твое имя братьям моим<br>и посреди собрания Тебя восхвалю.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Psalm%2021%3A23&amp;version=NRT" target="_blank" rel="noreferrer"><span>Пс. 21:23 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Psalm 22:22" data-verse-ru="Пс. 21:23"><sup>23</sup>Я возвещу Твое имя братьям моим<br>и посреди собрания Тебя восхвалю.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Пс. 21:23</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Psalm%2021%3A23&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Пс. 21:23 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Иисус называет собрание Своим</span>
-          <blockquote><sup>18</sup>И Я говорю тебе: ты — Петр, и на этой скале Я построю Мою Церковь, и врата ада не одолеют ее.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Matthew%2016%3A18&amp;version=NRT" target="_blank" rel="noreferrer"><span>Мф. 16:18 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Matthew 16:18" data-verse-ru="Мф. 16:18"><sup>18</sup>И Я говорю тебе: ты — Петр, и на этой скале Я построю Мою Церковь, и врата ада не одолеют ее.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Мф. 16:18</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Matthew%2016%3A18&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Мф. 16:18 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Слово остаётся обычным</span>
-          <blockquote><sup>32</sup>Собравшиеся были в замешательстве, потому что одни кричали одно, другие другое. Большинство же вообще не знали, зачем пришли.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%2019%3A32&amp;version=NRT" target="_blank" rel="noreferrer"><span>Деян. 19:32 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Acts 19:32" data-verse-ru="Деян. 19:32"><sup>32</sup>Собравшиеся были в замешательстве, потому что одни кричали одно, другие другое. Большинство же вообще не знали, зачем пришли.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Деян. 19:32</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Acts%2019%3A32&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Деян. 19:32 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Общий уклад жизни</span>
-          <blockquote><sup>42</sup>Они твердо держались учения апостолов, всегда пребывая в общении, в преломлении хлеба и в молитвах.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Acts%202%3A42&amp;version=NRT" target="_blank" rel="noreferrer"><span>Деян. 2:42 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Acts 2:42" data-verse-ru="Деян. 2:42"><sup>42</sup>Они твердо держались учения апостолов, всегда пребывая в общении, в преломлении хлеба и в молитвах.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Деян. 2:42</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Acts%202%3A42&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Деян. 2:42 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Одно тело, много членов</span>
-          <blockquote><sup>27</sup>Итак, вы — тело Христа, и каждый из вас — орган в Его теле.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2012%3A27&amp;version=NRT" target="_blank" rel="noreferrer"><span>1 Кор. 12:27 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="1 Corinthians 12:27" data-verse-ru="1 Кор. 12:27"><sup>27</sup>Итак, вы — тело Христа, и каждый из вас — орган в Его теле.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">1 Кор. 12:27</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2012%3A27&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="1 Кор. 12:27 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Дом и храм</span>
-          <blockquote><sup>19</sup>Поэтому вы уже не чужие и не инородцы; вы сограждане святому народу Божьему и члены Его семьи. <sup>20</sup>Вы воздвигнуты на основании, которым являются апостолы и пророки, а его краеугольный Камень — Иисус Христос. <sup>21</sup>На Нем крепится все здание, поднимающееся все выше и становящееся святым храмом в Господе. <sup>22</sup>В Нем и вы созидаетесь вместе, чтобы стать жилищем, в котором Бог живет Своим Духом.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Ephesians%202%3A19-22&amp;version=NRT" target="_blank" rel="noreferrer"><span>Еф. 2:19–22 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Ephesians 2:19–22" data-verse-ru="Еф. 2:19–22"><sup>19</sup>Поэтому вы уже не чужие и не инородцы; вы сограждане святому народу Божьему и члены Его семьи. <sup>20</sup>Вы воздвигнуты на основании, которым являются апостолы и пророки, а его краеугольный Камень — Иисус Христос. <sup>21</sup>На Нем крепится все здание, поднимающееся все выше и становящееся святым храмом в Господе. <sup>22</sup>В Нем и вы созидаетесь вместе, чтобы стать жилищем, в котором Бог живет Своим Духом.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Еф. 2:19–22</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Ephesians%202%3A19-22&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Еф. 2:19–22 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Священнический народ</span>
-          <blockquote><sup>9</sup>А вы — род избранный, царственное священство, святой народ, люди, принадлежащие Богу, призванные возвещать о Его великих делах. Он призвал вас из тьмы в Свой чудесный свет.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=1%20Peter%202%3A9&amp;version=NRT" target="_blank" rel="noreferrer"><span>1 Пет. 2:9 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="1 Peter 2:9" data-verse-ru="1 Пет. 2:9"><sup>9</sup>А вы — род избранный, царственное священство, святой народ, люди, принадлежащие Богу, призванные возвещать о Его великих делах. Он призвал вас из тьмы в Свой чудесный свет.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">1 Пет. 2:9</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=1%20Peter%202%3A9&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="1 Пет. 2:9 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Небесный горизонт</span>
-          <blockquote><sup>22</sup>Нет! Вы пришли к горе Сион, к городу живого Бога, к Небесному Иерусалиму. Вы пришли к тысячам ангелов, собранным на радостное торжество. <sup>23</sup>Вы пришли в собрание первенцев, чьи имена записаны на небесах. Вы пришли к Богу, Судье всех людей, и к духам праведников, ставших совершенными. <sup>24</sup>Вы пришли к Иисусу, посреднику нового завета, и к окропляющей крови, которая говорит лучше крови Авеля.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Hebrews%2012%3A22-24&amp;version=NRT" target="_blank" rel="noreferrer"><span>Евр. 12:22–24 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Hebrews 12:22–24" data-verse-ru="Евр. 12:22–24"><sup>22</sup>Нет! Вы пришли к горе Сион, к городу живого Бога, к Небесному Иерусалиму. Вы пришли к тысячам ангелов, собранным на радостное торжество. <sup>23</sup>Вы пришли в собрание первенцев, чьи имена записаны на небесах. Вы пришли к Богу, Судье всех людей, и к духам праведников, ставших совершенными. <sup>24</sup>Вы пришли к Иисусу, посреднику нового завета, и к окропляющей крови, которая говорит лучше крови Авеля.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Евр. 12:22–24</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Hebrews%2012%3A22-24&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Евр. 12:22–24 — Bible Gateway">↗</a></span></div>
         </article>
         <article class="verse-card">
           <span class="verse-stage">Видима и подотчётна</span>
-          <blockquote><sup>20</sup>Тайна семи звезд, которые ты видел в Моей правой руке, и семи золотых светильников такова: семь звезд — это ангелы семи церквей, а семь светильников — это сами семь церквей.</blockquote>
-          <a class="verse-link" href="https://www.biblegateway.com/passage/?search=Revelation%201%3A20&amp;version=NRT" target="_blank" rel="noreferrer"><span>Откр. 1:20 · НРП</span><span aria-hidden="true">↗</span></a>
+          <blockquote data-verse="Revelation 1:20" data-verse-ru="Откр. 1:20"><sup>20</sup>Тайна семи звезд, которые ты видел в Моей правой руке, и семи золотых светильников такова: семь звезд — это ангелы семи церквей, а семь светильников — это сами семь церквей.</blockquote>
+          <div class="verse-link"><span class="verse-link-ref">Откр. 1:20</span><span class="verse-link-tail"><span class="verse-link-version">НРП</span><a class="verse-link-out" href="https://www.biblegateway.com/passage/?search=Revelation%201%3A20&amp;version=NRT" target="_blank" rel="noreferrer" aria-label="Откр. 1:20 — Bible Gateway">↗</a></span></div>
         </article>
       </div>
       <p class="translation-note">Русский текст Писания приводится по Новому русскому переводу (НРП®) © Biblica, Inc.® Английская сторона страницы цитирует NIV® — тоже по разрешению Biblica, Inc.®</p>
@@ -616,10 +815,10 @@
       <div class="big">Экклесия — это <em>народ Иисуса</em>: собранный под Его господством, населённый Его Духом, сформированный Его Словом, соединённый друг с другом и посланный в мир как живой знак Его Царства.</div>
       <p>Эта фраза — синтез, а не словарная статья. Словарь даёт «собрание». Канон наполняет это собрание идентичностью, устройством, практиками, властью, надеждой и миссией.</p>
       <div class="readmap">
-        <div class="read"><b>Начни со слова</b><span>Acts 19:32–41 · Acts 7:38</span></div>
-        <div class="read"><b>Посмотри, как его определяет Иисус</b><span>Matthew 16:13–20 · 18:15–20</span></div>
-        <div class="read"><b>Посмотри, как оно обретает форму</b><span>Acts 2:37–47 · 4:23–35 · 13:1–3</span></div>
-        <div class="read"><b>Изучи его анатомию</b><span>1 Cor 12–14 · Eph 2–5 · 1 Pet 2</span></div>
+        <div class="read"><b>Начни со слова</b><span>Деян. 19:32–41 · Деян. 7:38</span></div>
+        <div class="read"><b>Посмотри, как его определяет Иисус</b><span>Мф. 16:13–20 · 18:15–20</span></div>
+        <div class="read"><b>Посмотри, как оно обретает форму</b><span>Деян. 2:37–47 · 4:23–35 · 13:1–3</span></div>
+        <div class="read"><b>Изучи его анатомию</b><span>1 Кор. 12–14 · Еф. 2–5 · 1 Пет. 2</span></div>
       </div>
     </div>
   </div>
@@ -645,6 +844,7 @@
   <span>Сделано для исследования · Читай каждый отрывок в его более широком контексте.</span>
 </footer>
 
+<script src="../../assets/scripture-popover.js"></script>
 <script>
   const root = document.documentElement;
   const btn = document.getElementById('theme');
@@ -697,47 +897,47 @@
     revealItems.forEach(element => element.classList.add('visible'));
   }
 
-  /* Book abbreviations, longest first so "Matthew" is not eaten by "Matt".
-     The English reference is what the Bible Gateway URL is built from; only
-     the visible label is localised. */
-  const REF_BOOKS = [
-    ['Matthew', 'Мф.'], ['Deuteronomy', 'Втор.'], ['Deut', 'Втор.'],
-    ['1 Cor', '1 Кор.'], ['1 Pet', '1 Пет.'], ['1 Tim', '1 Тим.'],
-    ['Matt', 'Мф.'], ['Acts', 'Деян.'], ['John', 'Ин.'], ['Rom', 'Рим.'],
-    ['Gal', 'Гал.'], ['Eph', 'Еф.'], ['Col', 'Кол.'], ['Heb', 'Евр.'],
-    ['Rev', 'Откр.'], ['Ps', 'Пс.'], ['Ex', 'Исх.']
-  ];
-  const ruRef = text => REF_BOOKS.reduce((out, [en, ru]) => out.split(en).join(ru), text);
+  /* Reference labels used to be nothing but a link out to Bible Gateway. They now
+     open the verse in place — hover on a pointer, tap to pin — with the surrounding
+     passage a click away. The shared engine handles the parsing and the fetching;
+     the Russian pages resolve their own abbreviations and read НРП. */
+  EsmrskyScripture.init({
+    key: 'ecclesia',
+    scan: '.node .ref, .meta .ref, .refchip, .mini span:last-child, .read span, .verse-link-ref, .tension-card p, .reduction-card p, .kingdom-card p'
+  });
 
-  /* Russian Bibles number the psalms the Septuagint way, so a psalm has to be
-     renumbered before it is either shown or looked up. Only the psalms this
-     page actually cites are listed. */
-  const RU_PSALMS = [['Ps 22:22', 'Ps 21:23']];
-  const ruPsalm = text => RU_PSALMS.reduce((out, [en, ru]) => out.split(en).join(ru), text);
+  const picker = document.getElementById('translationPicker');
+  picker.innerHTML = EsmrskyScripture.pickerHtml(isRu() ? 'Перевод Библии' : 'Bible translation');
+  EsmrskyScripture.wirePicker(picker.querySelector('.esv-pick'),
+    isRu() ? 'Читать эти отрывки в' : 'Read these passages in');
 
-  const refHosts = document.querySelectorAll('.node .ref, .meta .ref, .refchip, .mini span:last-child, .read span');
-  refHosts.forEach(element => { element.dataset.refEn = element.textContent.trim(); });
+  /* Each card ships with its NIV text, so the ten passages are readable before any
+     request lands and stay readable if the scripture service cannot be reached. */
+  const passages = [...document.querySelectorAll('blockquote[data-verse]')];
+  passages.forEach(block => { block.dataset.baseline = block.innerHTML; });
 
-  const paintRefs = () => {
-    refHosts.forEach(element => {
-      const reference = element.dataset.refEn;
-      const version = isRu() ? 'NRT' : 'NIV';
-      const target = isRu() ? ruPsalm(reference) : reference;
-      const link = document.createElement('a');
-      link.className = 'scripture-ref-link';
-      link.href = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(target.replace(/·/g, ';'))}&version=${version}`;
-      link.target = '_blank';
-      link.rel = 'noreferrer';
-      link.textContent = isRu() ? ruRef(target) : reference;
-      link.setAttribute('aria-label', isRu()
-        ? `Читать ${ruRef(target)} в Новом русском переводе`
-        : `Read ${reference} in the NIV`);
-      element.replaceChildren(link);
+  const paintPassages = version => {
+    passages.forEach(block => {
+      if (isRu() || version === 'NIV') { block.innerHTML = block.dataset.baseline; return; }
+      block.classList.add('is-loading');
+      EsmrskyScripture.loadVerse(block.dataset.verse, version).then(text => {
+        if (EsmrskyScripture.getVersion() !== version) return;
+        block.classList.remove('is-loading');
+        block.innerHTML = text;
+      }).catch(() => {
+        block.classList.remove('is-loading');
+        block.innerHTML = block.dataset.baseline;
+      });
+    });
+    /* The card's own footer link names the translation it is showing. */
+    document.querySelectorAll('.verse-link .verse-link-version').forEach(el => {
+      el.textContent = isRu() ? 'НРП' : version;
     });
   };
-  paintRefs();
+  EsmrskyScripture.onChange(paintPassages);
+  paintPassages(EsmrskyScripture.getVersion());
 
-  document.addEventListener('esmrsky:lang', () => { paintRefs(); syncThemeControl(); });
+  document.addEventListener('esmrsky:lang', () => { syncThemeControl(); });
 
   const progress = document.getElementById('scroll-progress');
   let progressFrame = 0;
