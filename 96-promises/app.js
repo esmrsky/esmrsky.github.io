@@ -8,6 +8,7 @@
  * 4. Interlinear Greek & Hebrew Lexicon with interactive highlighted phrase tags & Strong's concordance.
  * 5. Fullscreen Edge-to-Edge Stories Mode with 16 distinct typography styles, 6-tier adaptive text sizing, rich theological word effects, and corner metadata.
  * 6. Rich Historical Case Studies & Paul Ellis Gospel of Grace Commentaries for all 96 promises.
+ * 7. Resilient event delegation on header and modals ensuring 100% click responsiveness.
  */
 
 (() => {
@@ -58,6 +59,7 @@
   // --- DOM References ---
   const elements = {
     html: document.documentElement,
+    stickyHeader: document.getElementById('stickyHeader'),
     heroOverview: document.getElementById('heroOverview'),
     bentoContainer: document.getElementById('bentoContainer'),
     categoryChips: document.getElementById('categoryChips'),
@@ -193,7 +195,7 @@
       if (el) el.textContent = counts[cat];
     });
 
-    elements.favoritesCount.textContent = state.favorites.size;
+    if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
   }
 
   function getFilteredVerses() {
@@ -208,60 +210,62 @@
   function render() {
     const filtered = getFilteredVerses();
 
-    elements.statDisplayedCount.textContent = filtered.length;
-    elements.statBookmarksCount.textContent = state.favorites.size;
-    elements.favoritesCount.textContent = state.favorites.size;
-    elements.activeVersionLabel.textContent = state.version;
+    if (elements.statDisplayedCount) elements.statDisplayedCount.textContent = filtered.length;
+    if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
+    if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
+    if (elements.activeVersionLabel) elements.activeVersionLabel.textContent = state.version;
 
     if (filtered.length === 0) {
-      elements.bentoContainer.style.display = 'none';
-      elements.noResults.style.display = 'flex';
+      if (elements.bentoContainer) elements.bentoContainer.style.display = 'none';
+      if (elements.noResults) elements.noResults.style.display = 'flex';
       refreshIcons();
       return;
     } else {
-      elements.bentoContainer.style.display = 'grid';
-      elements.noResults.style.display = 'none';
+      if (elements.bentoContainer) elements.bentoContainer.style.display = 'grid';
+      if (elements.noResults) elements.noResults.style.display = 'none';
     }
 
-    elements.bentoContainer.innerHTML = filtered.map(verse => {
-      const isFav = state.favorites.has(verse.id);
-      const currentText = verse.translations[state.version] || verse.translations.NIV;
-      const spanClass = `bento-${verse.bentoSpan || 'standard'}`;
-      const catClass = `cat-${verse.themeColor || 'amber'}`;
+    if (elements.bentoContainer) {
+      elements.bentoContainer.innerHTML = filtered.map(verse => {
+        const isFav = state.favorites.has(verse.id);
+        const currentText = verse.translations[state.version] || verse.translations.NIV;
+        const spanClass = `bento-${verse.bentoSpan || 'standard'}`;
+        const catClass = `cat-${verse.themeColor || 'amber'}`;
 
-      return `
-        <article class="bento-card ${spanClass} ${catClass}" id="verse-card-${verse.id}" data-id="${verse.id}" data-category="${verse.category}" title="Click to open chapter context & deep grace study">
-          
-          <!-- Pure Main Scripture Text -->
-          <div class="card-verse-first">
-            <blockquote class="scripture-text" id="verse-text-${verse.id}">
-              "${escapeHtml(currentText)}"
-            </blockquote>
-          </div>
-
-          <!-- Small Meta Row at Bottom: Reference, Category & Actions -->
-          <div class="card-meta-bottom">
-            <div class="meta-left">
-              <span class="card-ref-badge">${verse.id}. ${verse.ref}</span>
-              <span class="category-tag">
-                <i data-lucide="${verse.icon || 'bookmark'}" style="width: 11px; height: 11px;"></i>
-                ${verse.categoryLabel}
-              </span>
+        return `
+          <article class="bento-card ${spanClass} ${catClass}" id="verse-card-${verse.id}" data-id="${verse.id}" data-category="${verse.category}" title="Click to open chapter context & deep grace study">
+            
+            <!-- Pure Main Scripture Text -->
+            <div class="card-verse-first">
+              <blockquote class="scripture-text" id="verse-text-${verse.id}">
+                "${escapeHtml(currentText)}"
+              </blockquote>
             </div>
 
-            <div class="card-actions-row">
-              <button class="card-action-btn btn-story-single" data-id="${verse.id}" title="View in Fullscreen Stories Mode">
-                <i data-lucide="play" style="width: 13px; height: 13px;"></i>
-              </button>
-              <button class="card-action-btn btn-favorite ${isFav ? 'favorite-active' : ''}" data-id="${verse.id}" title="${isFav ? 'Remove Bookmark' : 'Bookmark Verse'}">
-                <i data-lucide="bookmark" style="width: 13px; height: 13px; ${isFav ? 'fill: currentColor;' : ''}"></i>
-              </button>
-            </div>
-          </div>
+            <!-- Small Meta Row at Bottom: Reference, Category & Actions -->
+            <div class="card-meta-bottom">
+              <div class="meta-left">
+                <span class="card-ref-badge">${verse.id}. ${verse.ref}</span>
+                <span class="category-tag">
+                  <i data-lucide="${verse.icon || 'bookmark'}" style="width: 11px; height: 11px;"></i>
+                  ${verse.categoryLabel}
+                </span>
+              </div>
 
-        </article>
-      `;
-    }).join('');
+              <div class="card-actions-row">
+                <button class="card-action-btn btn-story-single" data-id="${verse.id}" title="View in Fullscreen Stories Mode">
+                  <i data-lucide="play" style="width: 13px; height: 13px;"></i>
+                </button>
+                <button class="card-action-btn btn-favorite ${isFav ? 'favorite-active' : ''}" data-id="${verse.id}" title="${isFav ? 'Remove Bookmark' : 'Bookmark Verse'}">
+                  <i data-lucide="bookmark" style="width: 13px; height: 13px; ${isFav ? 'fill: currentColor;' : ''}"></i>
+                </button>
+              </div>
+            </div>
+
+          </article>
+        `;
+      }).join('');
+    }
 
     refreshIcons();
   }
@@ -316,8 +320,8 @@
     state.viewMode = mode;
     localStorage.setItem('agy_view_mode', mode);
 
-    elements.heroOverview.style.display = 'flex';
-    elements.bentoContainer.style.display = 'grid';
+    if (elements.heroOverview) elements.heroOverview.style.display = 'flex';
+    if (elements.bentoContainer) elements.bentoContainer.style.display = 'grid';
     document.body.classList.toggle('view-list', mode === 'list');
 
     if (elements.viewToggleIcon) {
@@ -351,8 +355,8 @@
     state.activeReaderVersion = state.version;
 
     // Header metadata
-    elements.readerTitle.textContent = `${verse.id}. ${verse.ref}`;
-    elements.readerCategoryBadge.textContent = verse.categoryLabel;
+    if (elements.readerTitle) elements.readerTitle.textContent = `${verse.id}. ${verse.ref}`;
+    if (elements.readerCategoryBadge) elements.readerCategoryBadge.textContent = verse.categoryLabel;
 
     // Render components
     renderReaderContext(verse, state.activeReaderVersion);
@@ -366,7 +370,7 @@
     updateReaderVersionPickerButtons(state.activeReaderVersion);
 
     // Show Lightbox Modal
-    elements.readerLightbox.classList.add('active');
+    if (elements.readerLightbox) elements.readerLightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
 
     // Deep link hash
@@ -375,7 +379,7 @@
   }
 
   function closeReaderLightbox() {
-    elements.readerLightbox.classList.remove('active');
+    if (elements.readerLightbox) elements.readerLightbox.classList.remove('active');
     document.body.style.overflow = '';
     if (window.location.hash.startsWith('#verse=') || window.location.hash.startsWith('#study=')) {
       history.replaceState(null, null, ' ');
@@ -386,7 +390,7 @@
     document.querySelectorAll('#readerVersionPicker .segmented-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-ver') === ver);
     });
-    elements.readerActiveVerBadge.textContent = ver;
+    if (elements.readerActiveVerBadge) elements.readerActiveVerBadge.textContent = ver;
   }
 
   function switchReaderVersion(ver) {
@@ -409,11 +413,10 @@
     const ctx = verse.dynamicContext;
     if (!ctx) return;
 
-    elements.readerChapterTitle.textContent = ctx.chapterTitle;
-    elements.readerChapterSummary.textContent = ctx.chapterSummary;
+    if (elements.readerChapterTitle) elements.readerChapterTitle.textContent = ctx.chapterTitle;
+    if (elements.readerChapterSummary) elements.readerChapterSummary.textContent = ctx.chapterSummary;
 
     const verData = ctx.versions[ver] || ctx.versions['NIV'];
-
     let html = '';
 
     // Verses Before
@@ -433,7 +436,7 @@
       });
     }
 
-    elements.readerInlinePassage.innerHTML = html;
+    if (elements.readerInlinePassage) elements.readerInlinePassage.innerHTML = html;
   }
 
   function renderReaderTranslations(verse) {
@@ -445,35 +448,37 @@
       NASB: 'New American Standard'
     };
 
-    elements.readerTranslationsGrid.innerHTML = trans.map(t => {
-      const text = verse.translations[t] || '';
-      return `
-        <div class="trans-card" data-ver="${t}">
-          <div class="trans-card-header">
-            <div>
-              <span class="trans-card-name">${t}</span>
-              <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.35rem;">${names[t]}</span>
+    if (elements.readerTranslationsGrid) {
+      elements.readerTranslationsGrid.innerHTML = trans.map(t => {
+        const text = verse.translations[t] || '';
+        return `
+          <div class="trans-card" data-ver="${t}">
+            <div class="trans-card-header">
+              <div>
+                <span class="trans-card-name">${t}</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.35rem;">${names[t]}</span>
+              </div>
+              <button class="trans-copy-btn" data-ver="${t}" title="Set as Active Context Version" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
+                Select
+              </button>
             </div>
-            <button class="trans-copy-btn" data-ver="${t}" title="Set as Active Context Version" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
-              Select
-            </button>
+            <p class="trans-card-text">"${escapeHtml(text)}"</p>
           </div>
-          <p class="trans-card-text">"${escapeHtml(text)}"</p>
-        </div>
-      `;
-    }).join('');
+        `;
+      }).join('');
+    }
   }
 
   function renderReaderGraceInsight(verse) {
     if (verse.paulEllisInsight) {
-      elements.readerGraceTheme.textContent = verse.paulEllisInsight.theme;
-      elements.readerGraceQuote.textContent = `"${verse.paulEllisInsight.quote}"`;
-      elements.readerGraceTakeaway.textContent = verse.paulEllisInsight.graceTakeaway;
+      if (elements.readerGraceTheme) elements.readerGraceTheme.textContent = verse.paulEllisInsight.theme;
+      if (elements.readerGraceQuote) elements.readerGraceQuote.textContent = `"${verse.paulEllisInsight.quote}"`;
+      if (elements.readerGraceTakeaway) elements.readerGraceTakeaway.textContent = verse.paulEllisInsight.graceTakeaway;
     }
   }
 
   function renderReaderCaseStudies(verse) {
-    if (verse.caseStudiesList && verse.caseStudiesList.length) {
+    if (verse.caseStudiesList && verse.caseStudiesList.length && elements.readerCaseStudiesGrid) {
       elements.readerCaseStudiesGrid.innerHTML = verse.caseStudiesList.map(cs => `
         <div class="case-study-card">
           <div class="case-study-era">${escapeHtml(cs.era)}</div>
@@ -491,10 +496,12 @@
     const lex = verse.lexicon;
     if (!lex) return;
 
-    elements.readerLexiconLang.innerHTML = `
-      <i data-lucide="book-marked" style="width: 13px; height: 13px;"></i>
-      ${escapeHtml(lex.originalLanguage)}
-    `;
+    if (elements.readerLexiconLang) {
+      elements.readerLexiconLang.innerHTML = `
+        <i data-lucide="book-marked" style="width: 13px; height: 13px;"></i>
+        ${escapeHtml(lex.originalLanguage)}
+      `;
+    }
 
     // 1. Render Interlinear Highlighted Verse Template
     let interlinearHtml = '';
@@ -509,10 +516,10 @@
       interlinearHtml = `"${escapeHtml(rawText)}"`;
     }
 
-    elements.readerInterlinearText.innerHTML = interlinearHtml;
+    if (elements.readerInterlinearText) elements.readerInterlinearText.innerHTML = interlinearHtml;
 
     // 2. Render Key Term Cards
-    if (lex.keyTerms && lex.keyTerms.length) {
+    if (lex.keyTerms && lex.keyTerms.length && elements.readerLexiconGrid) {
       elements.readerLexiconGrid.innerHTML = lex.keyTerms.map(term => `
         <div class="lexicon-term-card" id="lex-card-${term.strongs.replace(/[^a-zA-Z0-9]/g, '')}">
           <div class="lexicon-term-header">
@@ -531,11 +538,11 @@
     }
 
     // 3. Theological Summary
-    elements.readerLexiconSummary.textContent = lex.theologicalSummary || '';
+    if (elements.readerLexiconSummary) elements.readerLexiconSummary.textContent = lex.theologicalSummary || '';
   }
 
   function renderReaderCrossRefs(verse) {
-    if (verse.crossReferencesList && verse.crossReferencesList.length) {
+    if (verse.crossReferencesList && verse.crossReferencesList.length && elements.readerCrossRefsGrid) {
       elements.readerCrossRefsGrid.innerHTML = verse.crossReferencesList.map(cr => `
         <div class="cross-ref-card" data-linked-id="${cr.linkedVerseId}">
           <div class="cross-ref-title">
@@ -566,7 +573,7 @@
     }
     
     if (elements.storyTapToast) elements.storyTapToast.classList.remove('dismissed');
-    elements.storyOverlay.classList.add('active');
+    if (elements.storyOverlay) elements.storyOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
 
     renderNextStorySlide(targetVerse);
@@ -579,7 +586,7 @@
 
   function closeStoriesMode() {
     state.isStoriesMode = false;
-    elements.storyOverlay.classList.remove('active');
+    if (elements.storyOverlay) elements.storyOverlay.classList.remove('active');
     document.body.style.overflow = '';
     if (window.location.hash.startsWith('#story')) history.replaceState(null, null, ' ');
   }
@@ -655,7 +662,9 @@
 
     const sizeClass = calculateStoryFontSizeClass(textToDisplay.length);
 
-    elements.storyContainer.className = `story-container ${nextStyle} ${sizeClass}`;
+    if (elements.storyContainer) {
+      elements.storyContainer.className = `story-container ${nextStyle} ${sizeClass}`;
+    }
 
     const categoryGradients = {
       'joy-presence': 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fce7f3 100%)',
@@ -680,20 +689,23 @@
     };
 
     const gradientMap = state.theme === 'dark' ? darkCategoryGradients : categoryGradients;
-    elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
+    if (elements.storyBackdrop) elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
 
-    elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, nextStyle);
-    elements.storyPassageRef.textContent = verse.ref;
-    elements.storyActiveVerBadge.textContent = chosenVer;
+    if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, nextStyle);
+    if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
+    if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = chosenVer;
 
-    elements.storyContentWrapper.style.animation = 'none';
-    elements.storyContentWrapper.offsetHeight;
-    elements.storyContentWrapper.style.animation = 'storySlideEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    if (elements.storyContentWrapper) {
+      elements.storyContentWrapper.style.animation = 'none';
+      elements.storyContentWrapper.offsetHeight;
+      elements.storyContentWrapper.style.animation = 'storySlideEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    }
 
     refreshIcons();
   }
 
   function showToast(message, isError = false) {
+    if (!elements.toastContainer) return;
     const toast = document.createElement('div');
     toast.className = 'toast';
     if (isError) toast.style.background = '#ef4444';
@@ -717,189 +729,238 @@
   // ==========================================================================
   function setupEventListeners() {
 
-    // 1. Fullscreen Endless Stories Mode Launch & Tap Anywhere
-    elements.btnOpenStories.addEventListener('click', () => openStoriesMode());
-    
-    elements.storyOverlay.addEventListener('click', (e) => {
-      if (e.target.closest('#storyCloseBtn')) return;
-      renderNextStorySlide();
-    });
-
-    elements.storyCloseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeStoriesMode();
-    });
-
-    // 2. Bento Card Clicks (Open Reader Lightbox)
-    elements.bentoContainer.addEventListener('click', (e) => {
-      const favBtn = e.target.closest('.btn-favorite');
-      if (favBtn) {
-        e.stopPropagation();
-        const id = parseInt(favBtn.getAttribute('data-id'), 10);
-        toggleFavorite(id);
-        return;
-      }
-
-      const storyBtn = e.target.closest('.btn-story-single');
-      if (storyBtn) {
-        e.stopPropagation();
-        const id = parseInt(storyBtn.getAttribute('data-id'), 10);
-        openStoriesMode(id);
-        return;
-      }
-
-      const card = e.target.closest('.bento-card');
-      if (card) {
-        const id = parseInt(card.getAttribute('data-id'), 10);
-        openReaderLightbox(id);
-      }
-    });
-
-    // 3. Reader Lightbox Listeners
-    elements.readerCloseBtn.addEventListener('click', closeReaderLightbox);
-    elements.readerLightbox.addEventListener('click', (e) => {
-      if (e.target === elements.readerLightbox) closeReaderLightbox();
-    });
-
-    // Translation switcher inside Reader Lightbox
-    document.querySelectorAll('#readerVersionPicker .segmented-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ver = btn.getAttribute('data-ver');
-        switchReaderVersion(ver);
-      });
-    });
-
-    // Select version from translation cards
-    elements.readerTranslationsGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.trans-copy-btn');
-      if (btn) {
-        const ver = btn.getAttribute('data-ver');
-        switchReaderVersion(ver);
-        showToast(`Switched context to ${ver}`);
-      }
-    });
-
-    // Interlinear Word Tag Click (Scrolls and Highlights Strong's Lexicon Card)
-    elements.readerInterlinearText.addEventListener('click', (e) => {
-      const mark = e.target.closest('.lexicon-word-tag');
-      if (mark) {
-        const strongs = mark.getAttribute('data-strongs');
-        const cleanId = `lex-card-${strongs.replace(/[^a-zA-Z0-9]/g, '')}`;
-        const card = document.getElementById(cleanId);
-        if (card) {
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          card.classList.add('highlight-lex');
-          setTimeout(() => card.classList.remove('highlight-lex'), 2000);
+    // 1. Resilient Sticky Header Event Delegation (Version, Theme, Font, Size, Story, View Toggle)
+    if (elements.stickyHeader) {
+      elements.stickyHeader.addEventListener('click', (e) => {
+        // Translation Picker
+        const verBtn = e.target.closest('.version-picker .segmented-btn');
+        if (verBtn) {
+          const ver = verBtn.getAttribute('data-version');
+          if (ver) setBibleVersion(ver);
+          return;
         }
-      }
-    });
 
-    // Cross-References Click (Jump to linked verse in reader)
-    elements.readerCrossRefsGrid.addEventListener('click', (e) => {
-      const card = e.target.closest('.cross-ref-card');
-      if (card) {
-        const linkedId = parseInt(card.getAttribute('data-linked-id'), 10);
-        if (linkedId) openReaderLightbox(linkedId);
-      }
-    });
+        // Theme Picker
+        const themeBtn = e.target.closest('.theme-picker .segmented-btn');
+        if (themeBtn) {
+          const themeVal = themeBtn.getAttribute('data-theme-val');
+          if (themeVal) applyTheme(themeVal);
+          return;
+        }
 
-    // Prev / Next Navigation in Reader
-    elements.btnReaderPrev.addEventListener('click', () => {
-      let prevId = state.activeReaderVerseId - 1;
-      if (prevId < 1) prevId = BIBLE_VERSES.length;
-      openReaderLightbox(prevId);
-    });
+        // Font Style Picker
+        const fontBtn = e.target.closest('.font-style-picker .segmented-btn');
+        if (fontBtn) {
+          const font = fontBtn.getAttribute('data-font');
+          if (font) applyFontStyle(font);
+          return;
+        }
 
-    elements.btnReaderNext.addEventListener('click', () => {
-      let nextId = state.activeReaderVerseId + 1;
-      if (nextId > BIBLE_VERSES.length) nextId = 1;
-      openReaderLightbox(nextId);
-    });
+        // Font Size Adjusters
+        if (e.target.closest('#btnFontDecrease')) {
+          const newSize = Math.max(0.95, state.fontSize - 0.08);
+          applyFontSize(newSize);
+          return;
+        }
+        if (e.target.closest('#btnFontIncrease')) {
+          const newSize = Math.min(1.85, state.fontSize + 0.08);
+          applyFontSize(newSize);
+          return;
+        }
 
-    // Launch Story from Reader
-    elements.btnOpenStoryFromReader.addEventListener('click', () => {
-      const currId = state.activeReaderVerseId;
-      closeReaderLightbox();
-      openStoriesMode(currId);
-    });
+        // Stories Mode Button
+        if (e.target.closest('#btnOpenStories')) {
+          openStoriesMode();
+          return;
+        }
 
-    // 4. Header Translation Picker
-    document.querySelectorAll('.version-picker .segmented-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ver = btn.getAttribute('data-version');
-        setBibleVersion(ver);
+        // View Mode Toggle (Grid / List)
+        if (e.target.closest('#btnViewToggle')) {
+          applyViewMode(state.viewMode === 'bento' ? 'list' : 'bento');
+          return;
+        }
       });
-    });
+    }
 
-    // 5. Theme Picker
-    document.querySelectorAll('.theme-picker .segmented-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyTheme(btn.getAttribute('data-theme-val')));
-    });
+    // 2. Category Filter Chips (Event Delegation)
+    if (elements.categoryChips) {
+      elements.categoryChips.addEventListener('click', (e) => {
+        const btn = e.target.closest('.chip-btn');
+        if (!btn) return;
 
-    // 6. Font Style Picker
-    document.querySelectorAll('.font-style-picker .segmented-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyFontStyle(btn.getAttribute('data-font')));
-    });
+        if (btn.id === 'favoritesFilterBtn') {
+          state.favoritesOnly = !state.favoritesOnly;
+          btn.classList.toggle('active', state.favoritesOnly);
+        } else {
+          const cat = btn.getAttribute('data-category');
+          if (!cat) return;
+          state.category = cat;
 
-    // 7. Font Size Controls
-    elements.btnFontDecrease.addEventListener('click', () => {
-      const newSize = Math.max(0.95, state.fontSize - 0.08);
-      applyFontSize(newSize);
-    });
+          document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+            if (b.id !== 'favoritesFilterBtn') b.classList.remove('active');
+          });
+          btn.classList.add('active');
+        }
 
-    elements.btnFontIncrease.addEventListener('click', () => {
-      const newSize = Math.min(1.85, state.fontSize + 0.08);
-      applyFontSize(newSize);
-    });
+        render();
+      });
+    }
 
-    // 8. View Toggle (Grid / List)
-    elements.btnViewToggle.addEventListener('click', () => {
-      applyViewMode(state.viewMode === 'bento' ? 'list' : 'bento');
-    });
-
-    // 9. Category Filter Chips
-    elements.categoryChips.addEventListener('click', (e) => {
-      const btn = e.target.closest('.chip-btn');
-      if (!btn) return;
-
-      if (btn.id === 'favoritesFilterBtn') {
-        state.favoritesOnly = !state.favoritesOnly;
-        btn.classList.toggle('active', state.favoritesOnly);
-      } else {
-        const cat = btn.getAttribute('data-category');
-        if (!cat) return;
-        state.category = cat;
+    // 3. Reset Filters Button
+    if (elements.resetFiltersBtn) {
+      elements.resetFiltersBtn.addEventListener('click', () => {
+        state.category = 'all';
+        state.favoritesOnly = false;
 
         document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
-          if (b.id !== 'favoritesFilterBtn') b.classList.remove('active');
+          b.classList.toggle('active', b.getAttribute('data-category') === 'all');
         });
-        btn.classList.add('active');
-      }
 
-      render();
-    });
-
-    // 10. Reset Filters Button
-    elements.resetFiltersBtn.addEventListener('click', () => {
-      state.category = 'all';
-      state.favoritesOnly = false;
-
-      document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-category') === 'all');
+        render();
       });
+    }
 
-      render();
-    });
+    // 4. Bento Card Clicks (Open Reader Lightbox, Favorite, Story)
+    if (elements.bentoContainer) {
+      elements.bentoContainer.addEventListener('click', (e) => {
+        const favBtn = e.target.closest('.btn-favorite');
+        if (favBtn) {
+          e.stopPropagation();
+          const id = parseInt(favBtn.getAttribute('data-id'), 10);
+          toggleFavorite(id);
+          return;
+        }
 
-    // 11. Scroll to top
-    elements.scrollToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+        const storyBtn = e.target.closest('.btn-story-single');
+        if (storyBtn) {
+          e.stopPropagation();
+          const id = parseInt(storyBtn.getAttribute('data-id'), 10);
+          openStoriesMode(id);
+          return;
+        }
 
-    // 12. Shortcuts Modal
+        const card = e.target.closest('.bento-card');
+        if (card) {
+          const id = parseInt(card.getAttribute('data-id'), 10);
+          openReaderLightbox(id);
+        }
+      });
+    }
+
+    // 5. Fullscreen Endless Stories Mode Listeners
+    if (elements.storyOverlay) {
+      elements.storyOverlay.addEventListener('click', (e) => {
+        if (e.target.closest('#storyCloseBtn')) return;
+        renderNextStorySlide();
+      });
+    }
+
+    if (elements.storyCloseBtn) {
+      elements.storyCloseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeStoriesMode();
+      });
+    }
+
+    // 6. Reader Lightbox Listeners
+    if (elements.readerCloseBtn) elements.readerCloseBtn.addEventListener('click', closeReaderLightbox);
+    if (elements.readerLightbox) {
+      elements.readerLightbox.addEventListener('click', (e) => {
+        if (e.target === elements.readerLightbox) closeReaderLightbox();
+      });
+    }
+
+    // Translation switcher inside Reader Lightbox
+    const readerVersionPicker = document.getElementById('readerVersionPicker');
+    if (readerVersionPicker) {
+      readerVersionPicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const ver = btn.getAttribute('data-ver');
+          if (ver) switchReaderVersion(ver);
+        }
+      });
+    }
+
+    // Select version from translation cards
+    if (elements.readerTranslationsGrid) {
+      elements.readerTranslationsGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.trans-copy-btn');
+        if (btn) {
+          const ver = btn.getAttribute('data-ver');
+          if (ver) {
+            switchReaderVersion(ver);
+            showToast(`Switched context to ${ver}`);
+          }
+        }
+      });
+    }
+
+    // Interlinear Word Tag Click (Scrolls and Highlights Strong's Lexicon Card)
+    if (elements.readerInterlinearText) {
+      elements.readerInterlinearText.addEventListener('click', (e) => {
+        const mark = e.target.closest('.lexicon-word-tag');
+        if (mark) {
+          const strongs = mark.getAttribute('data-strongs');
+          const cleanId = `lex-card-${strongs.replace(/[^a-zA-Z0-9]/g, '')}`;
+          const card = document.getElementById(cleanId);
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('highlight-lex');
+            setTimeout(() => card.classList.remove('highlight-lex'), 2000);
+          }
+        }
+      });
+    }
+
+    // Cross-References Click (Jump to linked verse in reader)
+    if (elements.readerCrossRefsGrid) {
+      elements.readerCrossRefsGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.cross-ref-card');
+        if (card) {
+          const linkedId = parseInt(card.getAttribute('data-linked-id'), 10);
+          if (linkedId) openReaderLightbox(linkedId);
+        }
+      });
+    }
+
+    // Prev / Next Navigation in Reader
+    if (elements.btnReaderPrev) {
+      elements.btnReaderPrev.addEventListener('click', () => {
+        let prevId = state.activeReaderVerseId - 1;
+        if (prevId < 1) prevId = BIBLE_VERSES.length;
+        openReaderLightbox(prevId);
+      });
+    }
+
+    if (elements.btnReaderNext) {
+      elements.btnReaderNext.addEventListener('click', () => {
+        let nextId = state.activeReaderVerseId + 1;
+        if (nextId > BIBLE_VERSES.length) nextId = 1;
+        openReaderLightbox(nextId);
+      });
+    }
+
+    // Launch Story from Reader
+    if (elements.btnOpenStoryFromReader) {
+      elements.btnOpenStoryFromReader.addEventListener('click', () => {
+        const currId = state.activeReaderVerseId;
+        closeReaderLightbox();
+        openStoriesMode(currId);
+      });
+    }
+
+    // 7. Scroll to top
+    if (elements.scrollToTopBtn) {
+      elements.scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 8. Shortcuts Modal
     if (elements.shortcutsCloseBtn) {
       elements.shortcutsCloseBtn.addEventListener('click', () => {
-        elements.shortcutsModal.classList.remove('active');
+        if (elements.shortcutsModal) elements.shortcutsModal.classList.remove('active');
       });
     }
 
@@ -909,7 +970,7 @@
       });
     }
 
-    // 13. Global Keyboard Shortcuts
+    // 9. Global Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
       // Escape closes modals
       if (e.key === 'Escape') {
@@ -917,11 +978,11 @@
           closeStoriesMode();
           return;
         }
-        if (elements.readerLightbox.classList.contains('active')) {
+        if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
           closeReaderLightbox();
           return;
         }
-        if (elements.shortcutsModal.classList.contains('active')) {
+        if (elements.shortcutsModal && elements.shortcutsModal.classList.contains('active')) {
           elements.shortcutsModal.classList.remove('active');
           return;
         }
@@ -937,9 +998,9 @@
       }
 
       // Reader Modal Navigation
-      if (elements.readerLightbox.classList.contains('active')) {
-        if (e.key === 'ArrowLeft') elements.btnReaderPrev.click();
-        else if (e.key === 'ArrowRight') elements.btnReaderNext.click();
+      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+        if (e.key === 'ArrowLeft' && elements.btnReaderPrev) elements.btnReaderPrev.click();
+        else if (e.key === 'ArrowRight' && elements.btnReaderNext) elements.btnReaderNext.click();
         return;
       }
 
@@ -955,7 +1016,7 @@
         setBibleVersion(nextVer);
       }
       else if (e.key === '?') {
-        elements.shortcutsModal.classList.toggle('active');
+        if (elements.shortcutsModal) elements.shortcutsModal.classList.toggle('active');
       }
     });
   }
@@ -970,8 +1031,8 @@
     }
 
     localStorage.setItem('agy_bible_favs', JSON.stringify([...state.favorites]));
-    elements.favoritesCount.textContent = state.favorites.size;
-    elements.statBookmarksCount.textContent = state.favorites.size;
+    if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
+    if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
 
     render();
   }
