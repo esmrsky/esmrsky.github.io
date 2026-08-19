@@ -2,45 +2,45 @@
 <html lang="en" data-theme="light" class="font-serif">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>96 Promises & Truths — Unified Scripture Reader, Deep Study & Dynamic Stories</title>
-  <meta name="description" content="All 96 scripture passages written out in full with NIV, TPT, NLT, and NASB translations, inline chapter context, Paul Ellis grace commentary, Greek/Hebrew word lexicons, and endless dynamic stories.">
-  
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>96 Promises & Truths — Elevated Scripture Reference</title>
+  <meta name="description" content="An elevated Scripture reference & study experience featuring 96 foundational promises across NIV, TPT, NLT, and NASB.">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="96 Promises & Truths — Scripture Reference & Deep Study">
+  <meta property="og:description" content="96 covenant promises in NIV, TPT, NLT, NASB with chapter context, Greek/Hebrew lexicons, and endless stories.">
+  <meta property="og:type" content="website">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Sticky Top Header -->
-  <header class="header-wrapper">
+  <!-- Sticky Compact Header -->
+  <header class="header-wrapper" id="stickyHeader">
     <div class="header-inner">
-      <!-- Top Row: Brand, Mode Switchers, Theme, Layout -->
       <div class="top-bar">
+        
+        <!-- Brand Title & Counter -->
         <div class="brand-section">
           <div class="brand-icon">
-            <i data-lucide="book-open-check"></i>
+            <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
           </div>
           <div class="brand-titles">
-            <h1>96 Promises & Truths <span class="badge-count" id="totalCountBadge">96 Passages</span></h1>
-            <p>Elevating God's living Word with inline chapter flow & deep grace lexicons</p>
+            <h1>
+              96 Promises
+              <span class="badge-count" id="totalCountBadge">96</span>
+            </h1>
+            <p>Living Scripture &amp; Grace Concordance</p>
           </div>
         </div>
 
+        <!-- Controls Cluster -->
         <div class="header-controls">
-          <!-- Constellation View Button -->
-          <button class="constellation-btn" id="btnOpenConstellation" title="Explore Interactive Constellation Map (Press 'C')">
-            <i data-lucide="orbit" style="width: 15px; height: 15px;"></i> Constellation
-          </button>
-
-          <!-- Endless Stories Mode Button -->
-          <button class="story-mode-btn" id="btnOpenStories" title="Enter Endless Stories Mode (Press 'S')">
-            <i data-lucide="sparkles" style="width: 15px; height: 15px;"></i> Stories Mode
-          </button>
-
-          <!-- Bible Version Selector -->
+          
+          <!-- Translation Picker -->
           <div class="segmented-control version-picker" role="group" aria-label="Bible Version">
             <button class="segmented-btn active" data-version="NIV" title="New International Version">NIV</button>
             <button class="segmented-btn" data-version="TPT" title="The Passion Translation">TPT</button>
@@ -48,117 +48,106 @@
             <button class="segmented-btn" data-version="NASB" title="New American Standard Bible">NASB</button>
           </div>
 
-          <!-- Theme Mode Switcher: Light, Mud, Dark -->
+          <!-- Theme Picker: Light, Mud, Dark -->
           <div class="segmented-control theme-picker" role="group" aria-label="Theme Mode">
-            <button class="segmented-btn active" data-theme-val="light" title="Light Mode">
-              <i data-lucide="sun" style="width: 14px; height: 14px;"></i> Light
-            </button>
-            <button class="segmented-btn theme-pill-mud" data-theme-val="mud" title="Mud Mode (Warm Earth & Clay)">
-              <i data-lucide="coffee" style="width: 14px; height: 14px;"></i> Mud
-            </button>
-            <button class="segmented-btn" data-theme-val="dark" title="Dark Mode (Midnight)">
-              <i data-lucide="moon" style="width: 14px; height: 14px;"></i> Dark
-            </button>
+            <button class="segmented-btn active" data-theme-val="light" title="☀️ Clean Studio Light">☀️</button>
+            <button class="segmented-btn" data-theme-val="mud" title="🍂 Warm Mud &amp; Sand">🍂</button>
+            <button class="segmented-btn" data-theme-val="dark" title="🌙 Obsidian Midnight">🌙</button>
           </div>
 
-          <!-- Expanded Font Options -->
+          <!-- Typography Style Picker -->
           <div class="segmented-control font-style-picker" role="group" aria-label="Font Style">
-            <button class="segmented-btn active" data-font="serif" title="Cormorant Garamond">Serif</button>
+            <button class="segmented-btn active" data-font="serif" title="Instrument Serif &amp; Garamond">Serif</button>
             <button class="segmented-btn" data-font="sans" title="Plus Jakarta Sans">Sans</button>
-            <button class="segmented-btn" data-font="display" title="Playfair Display">Display</button>
-            <button class="segmented-btn" data-font="cinzel" title="Classical Cinzel">Classic</button>
+            <button class="segmented-btn" data-font="editorial" title="Fraunces &amp; Newsreader">Editorial</button>
             <button class="segmented-btn" data-font="mono" title="JetBrains Mono">Mono</button>
           </div>
 
-          <!-- Line Height Options -->
-          <div class="segmented-control line-height-picker" role="group" aria-label="Line Spacing">
-            <button class="segmented-btn" data-lh="1.45" title="Compact Line Spacing">Tight</button>
-            <button class="segmented-btn active" data-lh="1.7" title="Normal Line Spacing">Normal</button>
-            <button class="segmented-btn" data-lh="2.0" title="Spacious Line Spacing">Spacious</button>
+          <!-- Font Size Adjusters -->
+          <div class="segmented-control font-size-controls" role="group" aria-label="Text Size">
+            <button class="segmented-btn" id="btnFontDecrease" title="Decrease Font Size (A-)">A-</button>
+            <button class="segmented-btn" id="btnFontIncrease" title="Increase Font Size (A+)">A+</button>
           </div>
 
-          <!-- Font Sizing Buttons -->
-          <div class="segmented-control font-size-picker" role="group" aria-label="Font Size">
-            <button class="segmented-btn" id="btnFontDecrease" title="Decrease Text Size">A-</button>
-            <button class="segmented-btn" id="btnFontIncrease" title="Increase Text Size">A+</button>
-          </div>
-
-          <!-- Layout Switcher: Bento Grid vs List -->
-          <button class="icon-btn" id="btnViewToggle" title="Toggle Bento Grid / Streamlined List View">
-            <i data-lucide="layout-grid" id="viewToggleIcon"></i>
+          <!-- View Mode & Action Buttons -->
+          <button class="story-mode-btn" id="btnOpenStories" title="Launch Endless Stories Mode (S)">
+            <i data-lucide="play" style="width: 14px; height: 14px;"></i>
+            <span>Stories</span>
           </button>
 
-          <!-- Random Verse Picker -->
-          <button class="icon-btn" id="btnRandomVerse" title="Verse of the Moment (Random)">
-            <i data-lucide="shuffle"></i>
+          <button class="icon-btn" id="btnViewToggle" title="Toggle Bento / Compact List View">
+            <i data-lucide="layout-grid" id="viewToggleIcon" style="width: 16px; height: 16px;"></i>
           </button>
+
         </div>
       </div>
 
-      <!-- Filter & Search Toolbar -->
+      <!-- Category Filters (Horizontal Scrollable Pill Bar) -->
       <div class="filter-bar">
-        <div class="search-box">
-          <i data-lucide="search" style="width: 17px; height: 17px;"></i>
-          <input 
-            type="text" 
-            id="searchInput" 
-            class="search-input" 
-            placeholder="Search reference, promise, character, or Greek/Hebrew root... (Press '/' to search)"
-            autocomplete="off"
-          >
-          <button id="searchClearBtn" class="search-clear" title="Clear Search">
-            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
-          </button>
-        </div>
-
-        <!-- Category Filter Chips -->
         <div class="category-chips" id="categoryChips">
           <button class="chip-btn active" data-category="all">
-            <i data-lucide="layers" style="width: 14px; height: 14px;"></i> All <span class="chip-count">96</span>
+            <span>All Promises</span>
+            <span class="chip-count" id="count-all">96</span>
           </button>
           <button class="chip-btn" data-category="joy-presence">
-            <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Joy & Presence <span class="chip-count" id="count-joy-presence">0</span>
+            <i data-lucide="sun" style="width: 12px; height: 12px;"></i>
+            <span>Joy &amp; Presence</span>
+            <span class="chip-count" id="count-joy-presence">12</span>
           </button>
           <button class="chip-btn" data-category="provision-abundance">
-            <i data-lucide="wheat" style="width: 14px; height: 14px;"></i> Faith & Provision <span class="chip-count" id="count-provision-abundance">0</span>
+            <i data-lucide="sprout" style="width: 12px; height: 12px;"></i>
+            <span>Provision &amp; Supply</span>
+            <span class="chip-count" id="count-provision-abundance">12</span>
           </button>
           <button class="chip-btn" data-category="courage-protection">
-            <i data-lucide="shield" style="width: 14px; height: 14px;"></i> Strength & Protection <span class="chip-count" id="count-courage-protection">0</span>
+            <i data-lucide="shield" style="width: 12px; height: 12px;"></i>
+            <span>Courage &amp; Defense</span>
+            <span class="chip-count" id="count-courage-protection">12</span>
           </button>
           <button class="chip-btn" data-category="peace-rest">
-            <i data-lucide="wind" style="width: 14px; height: 14px;"></i> Peace & Rest <span class="chip-count" id="count-peace-rest">0</span>
+            <i data-lucide="moon" style="width: 12px; height: 12px;"></i>
+            <span>Peace &amp; Rest</span>
+            <span class="chip-count" id="count-peace-rest">12</span>
           </button>
           <button class="chip-btn" data-category="identity-grace">
-            <i data-lucide="crown" style="width: 14px; height: 14px;"></i> Identity & Grace <span class="chip-count" id="count-identity-grace">0</span>
+            <i data-lucide="award" style="width: 12px; height: 12px;"></i>
+            <span>Identity &amp; Grace</span>
+            <span class="chip-count" id="count-identity-grace">12</span>
           </button>
           <button class="chip-btn" data-category="wisdom-word">
-            <i data-lucide="compass" style="width: 14px; height: 14px;"></i> Wisdom & Truth <span class="chip-count" id="count-wisdom-word">0</span>
+            <i data-lucide="book-open" style="width: 12px; height: 12px;"></i>
+            <span>Wisdom &amp; Word</span>
+            <span class="chip-count" id="count-wisdom-word">12</span>
           </button>
           <button class="chip-btn" data-category="faith-prayer">
-            <i data-lucide="flame" style="width: 14px; height: 14px;"></i> Faith & Authority <span class="chip-count" id="count-faith-prayer">0</span>
+            <i data-lucide="flame" style="width: 12px; height: 12px;"></i>
+            <span>Faith &amp; Prayer</span>
+            <span class="chip-count" id="count-faith-prayer">12</span>
           </button>
           <button class="chip-btn" data-category="healing-renewal">
-            <i data-lucide="droplet" style="width: 14px; height: 14px;"></i> Healing & Renewal <span class="chip-count" id="count-healing-renewal">0</span>
+            <i data-lucide="heart-pulse" style="width: 12px; height: 12px;"></i>
+            <span>Healing &amp; Renewal</span>
+            <span class="chip-count" id="count-healing-renewal">12</span>
           </button>
-          <button class="chip-btn" data-filter="favorites" id="favoritesFilterBtn">
-            <i data-lucide="heart" style="width: 14px; height: 14px; color: #f59e0b;"></i> Bookmarks <span class="chip-count" id="favoritesCount">0</span>
+
+          <button class="chip-btn" id="favoritesFilterBtn">
+            <i data-lucide="bookmark" style="width: 12px; height: 12px;"></i>
+            <span>Bookmarks</span>
+            <span class="chip-count" id="favoritesCount">0</span>
           </button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main App Container -->
+  <!-- Main Application Container -->
   <main class="app-container">
 
     <!-- Hero Overview Banner -->
     <section class="hero-overview" id="heroOverview">
       <div class="hero-text">
-        <h2 id="heroHeading">All 96 Scripture Passages</h2>
-        <p id="heroDescription">
-          Written out in full with instant translation switching (<span id="activeVersionLabel">NIV</span>), 
-          pure verse-first Bento cards, continuous inline context reader, Greek/Hebrew lexicons, and Paul Ellis grace studies.
-        </p>
+        <h2>96 Living Promises &amp; Covenant Truths</h2>
+        <p>A pure typographical scripture library across NIV, TPT, NLT, and NASB. Click any card to open the chapter context flow, original Greek &amp; Hebrew word lexicons, and Paul Ellis grace commentary.</p>
       </div>
       <div class="hero-stats">
         <div class="stat-item">
@@ -167,77 +156,54 @@
         </div>
         <div class="stat-item">
           <div class="stat-number" id="statBookmarksCount">0</div>
-          <div class="stat-label">Bookmarked</div>
+          <div class="stat-label">Bookmarks</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="activeVersionLabel">NIV</div>
+          <div class="stat-label">Version</div>
         </div>
       </div>
     </section>
 
-    <!-- ==========================================================================
-         INTERACTIVE CONSTELLATION GALAXY VIEW
-         ========================================================================== -->
-    <section class="constellation-wrapper" id="constellationWrapper">
-      <canvas id="constellationCanvas"></canvas>
-      
-      <div class="constellation-controls">
-        <button class="btn-secondary" id="btnConstellationReset" style="font-size: 0.76rem; padding: 0.25rem 0.65rem;">
-          <i data-lucide="refresh-cw" style="width: 13px; height: 13px;"></i> Reset View
-        </button>
-        <button class="btn-secondary" id="btnCloseConstellation" style="font-size: 0.76rem; padding: 0.25rem 0.65rem;">
-          <i data-lucide="layout-grid" style="width: 13px; height: 13px;"></i> Back to Bento Grid
-        </button>
-      </div>
+    <!-- Bento Grid Container (Pure Verse-First Hierarchy) -->
+    <section class="bento-grid" id="bentoContainer" aria-label="Bible Verse Cards"></section>
 
-      <div class="constellation-legend">
-        <h4><i data-lucide="sparkles" style="width: 14px; height: 14px; color: #f59e0b;"></i> Sacred Constellation of Truth</h4>
-        <p>Hover over stars to reveal promises and connection lines. Click any node to open its full surrounding context and case studies.</p>
-      </div>
-
-      <div class="constellation-tooltip" id="constellationTooltip">
-        <h5 id="tooltipRef">Psalm 16:11</h5>
-        <p id="tooltipText">In your presence there is fullness of joy</p>
-      </div>
-    </section>
-
-    <!-- Bento Grid Container (Verse-First) -->
-    <section class="bento-grid" id="bentoContainer" aria-label="Scripture Bento Cards">
-      <!-- Dynamically rendered by app.js -->
-    </section>
-
-    <!-- No Results Placeholder -->
+    <!-- No Results State -->
     <div class="no-results" id="noResults" style="display: none;">
-      <i data-lucide="search-x" style="width: 48px; height: 48px;"></i>
-      <h3>No Scriptures Found</h3>
-      <p>Try searching for a different keyword or clearing your category filters.</p>
-      <button class="btn-secondary" id="resetFiltersBtn">Reset All Filters</button>
+      <i data-lucide="bookmark-x" style="width: 48px; height: 48px;"></i>
+      <h3>No promises in this filter</h3>
+      <p>Clear your category filter or bookmarks to view all 96 promises.</p>
+      <button class="btn-secondary" id="resetFiltersBtn">View All Promises</button>
     </div>
 
-    <!-- Site Footer -->
-    <footer class="site-footer">
-      <div>
-        <strong>96 Promises & Truths</strong> — Interactive Scripture Reference, Constellation Map & Deep Grace Lexicons.
-      </div>
-      <div class="footer-nav">
-        <button id="scrollToTopBtn">Back to Top ↑</button>
-      </div>
-    </footer>
-
   </main>
+
+  <!-- Floating Footer -->
+  <footer class="site-footer">
+    <div>96 Promises &amp; Truths • Continuous Covenant Concordance</div>
+    <div class="footer-nav">
+      <button id="scrollToTopBtn" title="Scroll to top">Back to top ↑</button>
+    </div>
+  </footer>
 
   <!-- ==========================================================================
        UNIFIED SINGLE SCRIPTURE READER & DEEP STUDY LIGHTBOX
        ========================================================================== -->
-  <div class="reader-lightbox-backdrop" id="readerLightbox" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+  <div class="reader-lightbox-backdrop" id="readerLightbox" role="dialog" aria-modal="true" aria-label="Scripture Reader & Deep Study">
     <div class="reader-lightbox-dialog">
       
-      <!-- Clean, Non-Squished Pinned Header -->
+      <!-- Pinned Compact Top Header -->
       <div class="reader-sticky-header">
         <div class="reader-header-left">
           <h3 id="readerTitle">1. Psalm 16:11</h3>
-          <span id="readerCategoryBadge" class="category-tag cat-amber">Joy & Presence</span>
+          <span class="category-tag cat-amber" id="readerCategoryBadge">
+            <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
+            Joy &amp; Presence
+          </span>
         </div>
 
         <div class="reader-header-actions">
-          <!-- Translation Switcher Pills -->
+          <!-- Translation Switcher Pills inside Lightbox -->
           <div class="segmented-control" style="padding: 2px;">
             <button class="segmented-btn reader-ver-btn active" data-ver="NIV">NIV</button>
             <button class="segmented-btn reader-ver-btn" data-ver="TPT">TPT</button>
@@ -245,52 +211,44 @@
             <button class="segmented-btn reader-ver-btn" data-ver="NASB">NASB</button>
           </div>
 
-          <button class="btn-secondary" id="readerCopyAllBtn" style="font-size: 0.78rem; padding: 0.35rem 0.75rem;">
-            <i data-lucide="copy" style="width: 14px; height: 14px;"></i> Copy All
-          </button>
-
-          <button class="modal-close-btn" id="readerCloseBtn" aria-label="Close Lightbox">
-            <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+          <button class="icon-btn" id="readerCloseBtn" title="Close Lightbox (Esc)">
+            <i data-lucide="x" style="width: 17px; height: 17px;"></i>
           </button>
         </div>
       </div>
 
-      <!-- Continuous Scrolling Reader Body -->
-      <div class="reader-body" id="readerBody">
+      <!-- Continuous Scrolling Study Body -->
+      <div class="reader-body">
 
-        <!-- 1. Inline Flowing Context Scripture Reader -->
+        <!-- 1. Flowing Inline Chapter Context -->
         <section class="inline-context-section" id="sec-inline-context">
           <div class="inline-chapter-banner">
             <div>
-              <strong id="readerChapterTitle">Psalm 16 — David's Psalm of Inheritance & Resurrection Hope</strong>
-              <div id="readerChapterSummary" style="font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem;">
-                David rejoices in the Lord as his supreme portion and cup...
-              </div>
+              <strong id="readerChapterTitle">Psalm 16 — David's Miktam of Inheritance</strong>
+              <div id="readerChapterSummary" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;"></div>
             </div>
-            <span class="version-badge" id="readerActiveVerBadge" style="font-size: 0.75rem;">NIV</span>
+            <span class="story-version-pill" id="readerActiveVerBadge">NIV</span>
           </div>
 
-          <!-- Flowing Inline Passage Paragraph with Target Verse Highlighted & Underlined -->
-          <div class="inline-passage-block" id="readerInlinePassage">
-            <!-- Dynamically populated as a natural inline paragraph with superscript verse numbers -->
-          </div>
+          <!-- Flowing Inline Text Paragraph with Highlighted & Underlined Target Verse -->
+          <div class="inline-passage-block" id="readerInlinePassage"></div>
         </section>
 
-        <!-- 2. 4 Scripture Translations Side-by-Side -->
+        <!-- 2. 4 Translations Comparison -->
         <section class="study-sub-section" id="sec-translations">
           <h4 class="study-sub-heading">
-            <i data-lucide="split" style="width: 17px; height: 17px; color: #6366f1;"></i> 4 Translations Comparison
+            <i data-lucide="git-compare" style="width: 17px; height: 17px; color: #6366f1;"></i> 4 Translations Comparison
           </h4>
           <div class="translations-comparison-grid" id="readerTranslationsGrid"></div>
         </section>
 
         <!-- 3. Gospel of Radical Grace — Paul Ellis Commentary -->
-        <section class="study-sub-section" id="sec-grace-commentary">
+        <section class="study-sub-section" id="sec-grace-study">
           <h4 class="study-sub-heading">
             <i data-lucide="heart-handshake" style="width: 17px; height: 17px; color: #ec4899;"></i> Gospel of Radical Grace — Paul Ellis Commentary
           </h4>
           <div class="grace-commentary-box">
-            <h4 id="readerGraceTheme">The Finished Work of Christ & Unconditional Favor</h4>
+            <h4 id="readerGraceTheme">The Finished Work of Christ &amp; Unconditional Favor</h4>
             <blockquote class="grace-quote" id="readerGraceQuote"></blockquote>
             <p id="readerGraceTakeaway" style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;"></p>
           </div>
@@ -299,7 +257,7 @@
         <!-- 4. Biblical Case Studies & Real Demonstrations -->
         <section class="study-sub-section" id="sec-case-studies">
           <h4 class="study-sub-heading">
-            <i data-lucide="landmark" style="width: 17px; height: 17px; color: #f59e0b;"></i> Real Biblical Demonstrations & Case Studies
+            <i data-lucide="landmark" style="width: 17px; height: 17px; color: #f59e0b;"></i> Real Biblical Demonstrations &amp; Case Studies
           </h4>
           <div class="case-studies-grid" id="readerCaseStudiesGrid"></div>
         </section>
@@ -307,7 +265,7 @@
         <!-- 5. Original Greek & Hebrew Word Lexicon & Strong's Numbers -->
         <section class="study-sub-section" id="sec-greek-hebrew">
           <h4 class="study-sub-heading">
-            <i data-lucide="languages" style="width: 17px; height: 17px; color: #10b981;"></i> Original Language Word Lexicon & Strong's Concordance
+            <i data-lucide="languages" style="width: 17px; height: 17px; color: #10b981;"></i> Original Language Word Lexicon &amp; Strong's Concordance
           </h4>
           <div class="lexicon-container">
             <div class="lexicon-lang-badge" id="readerLexiconLang">
@@ -319,14 +277,12 @@
               <div class="lexicon-interlinear-title">
                 <i data-lucide="highlighter" style="width: 14px; height: 14px;"></i> Translated Scripture Root Breakdown (Click any word to inspect)
               </div>
-              <div class="lexicon-interlinear-text" id="readerInterlinearText">
-                <!-- Dynamically populated with interactive <mark class="lexicon-word-tag"> tags -->
-              </div>
+              <div class="lexicon-interlinear-text" id="readerInterlinearText"></div>
             </div>
 
             <div class="lexicon-terms-grid" id="readerLexiconGrid"></div>
             <div class="depth-box" style="margin-top: 0.5rem;">
-              <h5 style="font-size: 0.95rem; font-weight: 800; color: #10b981;">Theological Synthesis & Grace Depth</h5>
+              <h5 style="font-size: 0.95rem; font-weight: 800; color: #10b981;">Theological Synthesis &amp; Grace Depth</h5>
               <p id="readerLexiconSummary" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;"></p>
             </div>
           </div>
@@ -345,7 +301,7 @@
         <!-- 7. Connected Scripture Cross-References -->
         <section class="study-sub-section" id="sec-cross-refs">
           <h4 class="study-sub-heading">
-            <i data-lucide="link-2" style="width: 17px; height: 17px; color: #06b6d4;"></i> Interconnected Scriptures & Covenant Witnesses
+            <i data-lucide="link-2" style="width: 17px; height: 17px; color: #06b6d4;"></i> Interconnected Scriptures &amp; Covenant Witnesses
           </h4>
           <div class="cross-refs-rich-grid" id="readerCrossRefsGrid"></div>
         </section>
@@ -355,7 +311,7 @@
   </div>
 
   <!-- ==========================================================================
-       ENDLESS INSTAGRAM STORIES STYLE IMMERSIVE MODE (TAP ANYWHERE TO ADVANCE)
+       FULL SCREEN IMMERSIVE STORIES MODE (TAP ANYWHERE TO ADVANCE)
        ========================================================================== -->
   <div class="story-overlay" id="storyOverlay" role="dialog" aria-modal="true" aria-label="Endless Scripture Stories">
     <div class="story-backdrop" id="storyBackdrop"></div>
@@ -363,26 +319,17 @@
     <div class="story-orb story-orb-2" id="storyOrb2"></div>
     <div class="story-orb story-orb-3" id="storyOrb3"></div>
 
-    <!-- Floating Translation & Close Pill Bar -->
-    <div class="story-top-floating-bar" id="storyTopBar">
-      <div class="segmented-control" style="padding: 2px; background: transparent; border: none; box-shadow: none;">
-        <button class="segmented-btn story-ver-btn active" data-ver="MIX" title="Dynamic Mixed Translations">✨ Mix</button>
-        <button class="segmented-btn story-ver-btn" data-ver="NIV">NIV</button>
-        <button class="segmented-btn story-ver-btn" data-ver="TPT">TPT</button>
-        <button class="segmented-btn story-ver-btn" data-ver="NLT">NLT</button>
-        <button class="segmented-btn story-ver-btn" data-ver="NASB">NASB</button>
-      </div>
-      <button class="story-close-pill-btn" id="storyCloseBtn" title="Exit Stories Mode (Esc)">
-        <i data-lucide="x" style="width: 16px; height: 16px;"></i>
-      </button>
-    </div>
+    <!-- Floating Top-Right Close Button Only (No version picker) -->
+    <button class="story-close-fixed-btn" id="storyCloseBtn" title="Exit Stories Mode (Esc)">
+      <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+    </button>
 
     <!-- Temporary Auto-Dismissing Tap Hint Toast -->
     <div class="story-tap-toast" id="storyTapToast">
       <i data-lucide="pointer" style="width: 14px; height: 14px;"></i> Tap anywhere for next scripture
     </div>
 
-    <!-- Story Card with 6 Unique Styles, Corner Ref (Left) & Version Pill (Right) -->
+    <!-- Full-Screen Edge-to-Edge Story Monolith -->
     <div class="story-container" id="storyContainer">
       <div class="story-content-wrapper" id="storyContentWrapper">
         <blockquote class="story-passage-text" id="storyPassageText">

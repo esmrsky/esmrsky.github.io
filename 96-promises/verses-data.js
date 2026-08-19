@@ -1,5 +1,5 @@
 /**
- * Complete 96 Bible Verses Dataset - Dynamic Multi-Translation Context & Interlinear Lexicon Edition
+ * Complete 96 Bible Verses Dataset - Dynamic Multi-Translation Context, Interlinear Lexicon & Comprehensive Case Studies Edition
  */
 
 const BIBLE_VERSES = [
@@ -20,7 +20,7 @@ const BIBLE_VERSES = [
       "NASB": "You will make known to me the way of life; in Your presence is fullness of joy; in Your right hand there are pleasures forever."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 16 \u2014 David's Miktam of Inheritance & Resurrection Joy",
+      "chapterTitle": "Psalm 16 — David's Miktam of Inheritance & Resurrection Joy",
       "chapterSummary": "David celebrates Yahweh as his supreme portion and cup, culminating in the triumphant prophecy of bodily resurrection and fullness of joy.",
       "versions": {
         "NIV": {
@@ -45,7 +45,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "17:1",
-              "text": "Hear me, Lord, my plea is just; listen to my cry. Hear my prayer\u2014it does not rise from deceitful lips."
+              "text": "Hear me, Lord, my plea is just; listen to my cry. Hear my prayer—it does not rise from deceitful lips."
             },
             {
               "num": "17:2",
@@ -172,8 +172,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H7654 & H8057",
-          "word": "\u05e9\u05b9\u05c2\u05d1\u05b7\u05e2 \u05e9\u05b0\u05c2\u05de\u05b8\u05d7\u05d5\u05b9\u05ea",
-          "transliteration": "\u015b\u014d\u1e07a\u02bb \u015bim\u1e25\u014d\u1e6f (sova simchot)",
+          "word": "שֹׂבַע שְׂמָחוֹת",
+          "transliteration": "śōḇaʻ śimḥōṯ (sova simchot)",
           "pronunciation": "so'-vah sim-khote'",
           "partOfSpeech": "Noun Masculine & Noun Feminine Plural",
           "matchedEnglish": "joy in your presence / fullness of joy",
@@ -183,8 +183,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H5273",
-          "word": "\u05e0\u05b0\u05e2\u05b4\u05d9\u05de\u05d5\u05b9\u05ea",
-          "transliteration": "n\u0259\u2018\u00eem\u014d\u1e6f (ne'imot)",
+          "word": "נְעִימוֹת",
+          "transliteration": "nə‘îmōṯ (ne'imot)",
           "pronunciation": "neh-ee-mote'",
           "partOfSpeech": "Noun Feminine Plural",
           "matchedEnglish": "eternal pleasures / pleasures forever",
@@ -194,8 +194,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7307 / H734",
-          "word": "\u05d0\u05b9\u05e8\u05b7\u05d7 \u05d7\u05b7\u05d9\u05b4\u05bc\u05d9\u05dd",
-          "transliteration": "\u2019\u014dra\u1e25 \u1e25ayy\u00eem (orach chayyim)",
+          "word": "אֹרַח חַיִּים",
+          "transliteration": "’ōraḥ ḥayyîm (orach chayyim)",
           "pronunciation": "o'-rakh khah-yeem'",
           "partOfSpeech": "Noun Construct",
           "matchedEnglish": "path of life / way of life",
@@ -204,11 +204,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The resurrection path pioneered by Jesus for all who believe."
         }
       ],
-      "theologicalSummary": "David prophetically reveals that true joy is relational, not circumstantial. In the Septuagint and Acts 2:28, Peter translates 'sova simchot' as 'pl\u0113roseis me euphrosyn\u0113s meta tou pros\u014dpou sou'\u2014being filled to the brim with joyful gladness in the presence of the Father's face."
+      "theologicalSummary": "David prophetically reveals that true joy is relational, not circumstantial. In the Septuagint and Acts 2:28, Peter translates 'sova simchot' as 'plēroseis me euphrosynēs meta tou prosōpou sou'—being filled to the brim with joyful gladness in the presence of the Father's face."
     },
     "crossReferencesList": [
       {
-        "ref": "Acts 2:25\u201328",
+        "ref": "Acts 2:25–28",
         "text": "Peter quotes Psalm 16:11 at Pentecost to announce Christ's triumphant resurrection and eternal gladness.",
         "linkedVerseId": 1
       },
@@ -227,6 +227,27 @@ const BIBLE_VERSES = [
         "text": "For the kingdom of God is not eating and drinking, but righteousness, peace and joy in the Holy Spirit.",
         "linkedVerseId": 14
       }
+    ],
+    "paulEllisInsight": {
+      "theme": "In your presence there is fullness of joy — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 16:11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 16:11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Psalm 16:11",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 16:11 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 16:11",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:11 in your daily walk today."
+      }
     ]
   },
   {
@@ -241,12 +262,12 @@ const BIBLE_VERSES = [
     "themeColor": "emerald",
     "translations": {
       "NIV": "In times of disaster they will not wither; in days of famine they will enjoy plenty.",
-      "TPT": "When hard times come, they\u2019ll not be ashamed, and in days of famine they will feast on plenty.",
+      "TPT": "When hard times come, they’ll not be ashamed, and in days of famine they will feast on plenty.",
       "NLT": "They will not be disgraced in hard times; even in famine they will have more than enough.",
       "NASB": "They will not be ashamed in the time of evil, and in the days of famine they will have abundance."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 37 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 37 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 37:19 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -261,7 +282,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -271,7 +292,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -287,7 +308,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -300,7 +321,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "19",
-            "text": "When hard times come, they\u2019ll not be ashamed, and in days of famine they will feast on plenty."
+            "text": "When hard times come, they’ll not be ashamed, and in days of famine they will feast on plenty."
           },
           "after": [
             {
@@ -339,7 +360,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -373,7 +394,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -398,8 +419,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H954",
-          "word": "\u05dc\u05b9\u05d0\u05be\u05d9\u05b5\u05d1\u05b9\u05e9\u05c1\u05d5\u05bc",
-          "transliteration": "l\u014d\u2019-y\u0113\u1e07\u014d\u0161\u00fb (lo yevoshu)",
+          "word": "לֹא־יֵבֹשׁוּ",
+          "transliteration": "lō’-yēḇōšû (lo yevoshu)",
           "pronunciation": "lo yeh-vo'-shoo",
           "partOfSpeech": "Negative Particle + Verb Qal Imperfect",
           "matchedEnglish": "not wither / not be ashamed / not be disgraced",
@@ -409,8 +430,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7458",
-          "word": "\u05e8\u05b8\u05e2\u05b8\u05d1",
-          "transliteration": "r\u0101\u2018\u0101\u1e07 (ra'av)",
+          "word": "רָעָב",
+          "transliteration": "rā‘āḇ (ra'av)",
           "pronunciation": "raw-awb'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "days of famine / famine",
@@ -420,8 +441,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7646",
-          "word": "\u05d9\u05b4\u05e9\u05b0\u05c2\u05d1\u05b8\u05bc\u05e2\u05d5\u05bc",
-          "transliteration": "yi\u015bb\u0101\u2018\u00fb (yisba'u)",
+          "word": "יִשְׂבָּעוּ",
+          "transliteration": "yiśbā‘û (yisba'u)",
           "pronunciation": "yis-baw'-oo",
           "partOfSpeech": "Verb Qal Imperfect",
           "matchedEnglish": "enjoy plenty / abundantly satisfied / have abundance",
@@ -439,12 +460,12 @@ const BIBLE_VERSES = [
         "linkedVerseId": 12
       },
       {
-        "ref": "1 Kings 17:14\u201316",
+        "ref": "1 Kings 17:14–16",
         "text": "The jar of flour was not used up and the jug of oil did not run dry in the middle of severe drought.",
         "linkedVerseId": 5
       },
       {
-        "ref": "Psalm 33:18\u201319",
+        "ref": "Psalm 33:18–19",
         "text": "The eyes of the Lord are on those who fear him, to keep them alive in famine.",
         "linkedVerseId": 2
       },
@@ -452,6 +473,27 @@ const BIBLE_VERSES = [
         "ref": "2 Corinthians 9:8",
         "text": "God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work.",
         "linkedVerseId": 12
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "In days of famine they will enjoy plenty — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 37:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 37:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 37:19",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 37:19 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 37:19",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 37:19 in your daily walk today."
       }
     ]
   },
@@ -472,7 +514,7 @@ const BIBLE_VERSES = [
       "NASB": "As for me, I shall behold Your face in righteousness; I will be satisfied with Your likeness when I awake."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 17 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 17 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 17:15 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -487,7 +529,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -497,7 +539,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -513,7 +555,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -565,7 +607,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -599,7 +641,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -624,8 +666,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -635,8 +677,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -649,7 +691,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -664,9 +706,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "When I awake, I will be satisfied with seeing your likeness — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 17:15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 17:15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Psalm 17:15",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 17:15 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 17:15",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 17:15 in your daily walk today."
       }
     ]
   },
@@ -687,7 +750,7 @@ const BIBLE_VERSES = [
       "NASB": "For you will go out with joy and be led forth with peace; the mountains and the hills will break forth into shouts of joy before you, and all the trees of the field will clap their hands."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 55 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 55 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 55:12 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -702,7 +765,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -712,7 +775,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -728,7 +791,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -780,7 +843,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -814,7 +877,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -839,8 +902,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -850,8 +913,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -864,7 +927,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -879,9 +942,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You will go out in joy and be led forth in peace — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 55:12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 55:12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Isaiah 55:12",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Isaiah 55:12 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Isaiah 55:12",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 55:12 in your daily walk today."
       }
     ]
   },
@@ -902,7 +986,7 @@ const BIBLE_VERSES = [
       "NASB": "But you are to remember the LORD your God, for it is He who is giving you power to make wealth, that He may confirm His covenant which He swore to your fathers, as it is this day."
     },
     "dynamicContext": {
-      "chapterTitle": "Deuteronomy 8 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Deuteronomy 8 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 8:18 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -917,7 +1001,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -927,7 +1011,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -943,7 +1027,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -995,7 +1079,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -1029,7 +1113,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -1054,8 +1138,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -1065,8 +1149,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -1079,7 +1163,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -1094,15 +1178,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "He gives you the ability to produce wealth — Grace Revelation",
+      "quote": "Under the new covenant of grace, Deuteronomy 8:18 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Deuteronomy 8:18. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Deuteronomy 8:18",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Deuteronomy 8:18 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Deuteronomy 8:18",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 8:18 in your daily walk today."
       }
     ]
   },
   {
     "id": 6,
-    "ref": "Deuteronomy 28:1\u201314",
+    "ref": "Deuteronomy 28:1–14",
     "book": "Deuteronomy",
     "category": "provision-abundance",
     "categoryLabel": "Faith & Provision",
@@ -1117,8 +1222,8 @@ const BIBLE_VERSES = [
       "NASB": "Now it shall be, if you diligently obey the LORD your God, being careful to do all His commandments... all these blessings will come upon you and overtake you: Blessed shall you be in the city, and blessed shall you be in the country. Blessed shall be the offspring of your body and the produce of your ground... Blessed shall you be when you come in, and blessed shall you be when you go out. The LORD will cause your enemies who rise up against you to be defeated before you... The LORD will open for you His good storehouse, the heavens, to give rain to your land in its season and to bless all the work of your hand; and you shall lend to many nations, but you shall not borrow. The LORD will make you the head and not the tail."
     },
     "dynamicContext": {
-      "chapterTitle": "Deuteronomy 28 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 28:1\u201314 revealing God's covenant faithfulness.",
+      "chapterTitle": "Deuteronomy 28 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 28:1–14 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -1132,17 +1237,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "1\u201314",
+            "num": "1–14",
             "text": "If you fully obey the LORD your God and carefully follow all his commands... All these blessings will come on you and accompany you: You will be blessed in the city and blessed in the country. The fruit of your womb will be blessed, and the crops of your land and the young of your livestock... You will be blessed when you come in and blessed when you go out. The LORD will grant that the enemies who rise up against you will be defeated before you... The LORD will open the heavens, the storehouse of his bounty, to send rain on your land in season and to bless all the work of your hands. You will lend to many nations but will borrow from none. The LORD will make you the head, not the tail."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -1158,7 +1263,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -1170,7 +1275,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u201314",
+            "num": "1–14",
             "text": "If you listen diligently to the voice of Yahweh your God, being careful to do all his commands... All these blessings will come upon you and overtake you! You will be blessed in the city and blessed in the field. Blessed will be the fruit of your body, the yield of your ground, and the fruit of your herds... Blessed shall you be when you come in, and blessed shall you be when you go out. Yahweh will cause your enemies who rise against you to be defeated before your face... Yahweh will command the blessing upon you in your storehouses and in all that you undertake. The Lord will establish you as a holy people to himself, and make you the head and not the tail; you shall be above only and not beneath!"
           },
           "after": [
@@ -1204,13 +1309,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u201314",
+            "num": "1–14",
             "text": "If you fully obey the LORD your God and carefully keep all his commands... all these blessings will come on you and accompany you: You will be blessed in your towns and blessed in your fields. Your children and your crops and your herds of cattle and flocks of sheep and goats will be blessed. Your fruit baskets and breadboards will be blessed. Wherever you go and whatever you do, you will be blessed. The LORD will conquer your enemies when they attack you... The LORD will send a blessing on your barns and on everything you put your hand to. The LORD will make you the head and not the tail, and you will always be on top and never at the bottom."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -1238,13 +1343,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u201314",
+            "num": "1–14",
             "text": "Now it shall be, if you diligently obey the LORD your God, being careful to do all His commandments... all these blessings will come upon you and overtake you: Blessed shall you be in the city, and blessed shall you be in the country. Blessed shall be the offspring of your body and the produce of your ground... Blessed shall you be when you come in, and blessed shall you be when you go out. The LORD will cause your enemies who rise up against you to be defeated before you... The LORD will open for you His good storehouse, the heavens, to give rain to your land in its season and to bless all the work of your hand; and you shall lend to many nations, but you shall not borrow. The LORD will make you the head and not the tail."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -1261,27 +1366,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Deuteronomy 28:1\u201314.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Deuteronomy 28:1\u201314.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Deuteronomy 28:1\u201314.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Deuteronomy 28:1\u201314."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Deuteronomy 28:1–14.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Deuteronomy 28:1–14.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Deuteronomy 28:1–14.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Deuteronomy 28:1–14."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Deuteronomy 28:1\u201314."
+          "usageInPassage": "The bedrock guarantee of God's character in Deuteronomy 28:1–14."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -1290,11 +1395,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Deuteronomy 28:1\u201314 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Deuteronomy 28:1–14 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -1309,9 +1414,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The LORD will make you the head, not the tail; you will always be on top — Grace Revelation",
+      "quote": "Under the new covenant of grace, Deuteronomy 28:1–14 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Deuteronomy 28:1–14. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Deuteronomy 28:1–14",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Deuteronomy 28:1–14 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Deuteronomy 28:1–14",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 28:1–14 in your daily walk today."
       }
     ]
   },
@@ -1332,7 +1458,7 @@ const BIBLE_VERSES = [
       "NASB": "I will instruct you and teach you in the way which you should go; I will advise you with My eye upon you."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 32 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 32 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 32:8 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -1347,7 +1473,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -1357,7 +1483,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -1373,7 +1499,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -1425,7 +1551,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -1459,7 +1585,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -1484,8 +1610,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -1495,8 +1621,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -1509,7 +1635,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -1524,9 +1650,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I will instruct you and teach you in the way you should go — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 32:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 32:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 32:8",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 32:8 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 32:8",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 32:8 in your daily walk today."
       }
     ]
   },
@@ -1547,7 +1694,7 @@ const BIBLE_VERSES = [
       "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 41 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 41 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 41:10 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -1562,7 +1709,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -1572,7 +1719,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -1588,7 +1735,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -1640,7 +1787,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -1674,7 +1821,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -1699,8 +1846,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -1710,8 +1857,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -1724,7 +1871,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -1739,15 +1886,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Do not fear, for I am with you; I will uphold you with my righteous right hand — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 41:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 41:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Isaiah 41:10",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Isaiah 41:10 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Isaiah 41:10",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 41:10 in your daily walk today."
       }
     ]
   },
   {
     "id": 9,
-    "ref": "Jeremiah 17:7\u20138",
+    "ref": "Jeremiah 17:7–8",
     "book": "Jeremiah",
     "category": "provision-abundance",
     "categoryLabel": "Faith & Provision",
@@ -1762,8 +1930,8 @@ const BIBLE_VERSES = [
       "NASB": "Blessed is the man who trusts in the LORD, and whose trust is the LORD. For he will be like a tree planted by the water, that extends its roots by a stream, and does not fear when the heat comes; but its leaves will be green, and it will not be anxious in a year of drought, nor cease to yield fruit."
     },
     "dynamicContext": {
-      "chapterTitle": "Jeremiah 17 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Jeremiah 17:7\u20138 revealing God's covenant faithfulness.",
+      "chapterTitle": "Jeremiah 17 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Jeremiah 17:7–8 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -1777,17 +1945,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "But blessed is the one who trusts in the LORD, whose confidence is in him. They will be like a tree planted by the water that sends out its roots by the stream. It does not fear when heat comes; its leaves are always green. It has no worries in a year of drought and never fails to bear fruit."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -1803,7 +1971,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -1815,7 +1983,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "Blessed is the man who believes in and relies on Yahweh, whose confidence is in Yahweh. For he will be like a tree planted by the waters, spreading out its roots by the river. It will not fear when heat comes; its leaves will be green. It will not be anxious in the year of drought, nor cease from yielding fruit."
           },
           "after": [
@@ -1849,13 +2017,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "But blessed are those who trust in the LORD and have made the LORD their hope and confidence. They are like trees planted along a riverbank, with roots that reach deep into the water. Such trees are not bothered by the heat or worried by long months of drought. Their leaves stay green, and they never stop producing fruit."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -1883,13 +2051,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "Blessed is the man who trusts in the LORD, and whose trust is the LORD. For he will be like a tree planted by the water, that extends its roots by a stream, and does not fear when the heat comes; but its leaves will be green, and it will not be anxious in a year of drought, nor cease to yield fruit."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -1906,27 +2074,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Jeremiah 17:7\u20138.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Jeremiah 17:7\u20138.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Jeremiah 17:7\u20138.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Jeremiah 17:7\u20138."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Jeremiah 17:7–8.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Jeremiah 17:7–8.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Jeremiah 17:7–8.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Jeremiah 17:7–8."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Jeremiah 17:7\u20138."
+          "usageInPassage": "The bedrock guarantee of God's character in Jeremiah 17:7–8."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -1935,11 +2103,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Jeremiah 17:7\u20138 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Jeremiah 17:7–8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -1954,15 +2122,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Like a tree planted by the water that never fails to bear fruit — Grace Revelation",
+      "quote": "Under the new covenant of grace, Jeremiah 17:7–8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Jeremiah 17:7–8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Jeremiah 17:7–8",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Jeremiah 17:7–8 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Jeremiah 17:7–8",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Jeremiah 17:7–8 in your daily walk today."
       }
     ]
   },
   {
     "id": 10,
-    "ref": "Isaiah 58:11\u201312",
+    "ref": "Isaiah 58:11–12",
     "book": "Isaiah",
     "category": "healing-renewal",
     "categoryLabel": "Healing & Renewal",
@@ -1977,8 +2166,8 @@ const BIBLE_VERSES = [
       "NASB": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail. Those from among you will rebuild the ancient ruins; you will raise up the age-old foundations; and you will be called the repairer of the breach, the restorer of the streets in which to dwell."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 58 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 58:11\u201312 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 58 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 58:11–12 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -1992,17 +2181,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "11\u201312",
+            "num": "11–12",
             "text": "The LORD will guide you always; he will satisfy your needs in a sun-scorched land and will strengthen your frame. You will be like a well-watered garden, like a spring whose waters never fail. Your people will rebuild the ancient ruins and will raise up the age-old foundations; you will be called Repairer of Broken Walls, Restorer of Streets with Dwellings."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -2018,7 +2207,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -2030,7 +2219,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "11\u201312",
+            "num": "11–12",
             "text": "Yahweh will always guide you and satisfy you even in the parched places. He will strengthen your bones, and you will become like a watered garden, like a spring of water whose waters never fail. You will rebuild the ancient ruins and raise up the foundations of bygone generations. You will be called 'Restorer of the Broken Walls,' 'Repairer of Streets to Dwell In.'"
           },
           "after": [
@@ -2064,13 +2253,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "11\u201312",
+            "num": "11–12",
             "text": "The LORD will guide you continually, giving you water when you are dry and restoring your strength. You will be like a well-watered garden, like an ever-flowing spring. Some of you will rebuild the deserted ruins of your cities. Then you will be known as a rebuilder of walls and a restorer of homes."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -2098,13 +2287,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "11\u201312",
+            "num": "11–12",
             "text": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail. Those from among you will rebuild the ancient ruins; you will raise up the age-old foundations; and you will be called the repairer of the breach, the restorer of the streets in which to dwell."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -2121,27 +2310,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 58:11\u201312.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 58:11\u201312.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 58:11\u201312.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 58:11\u201312."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 58:11–12.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 58:11–12.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 58:11–12.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 58:11–12."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 58:11\u201312."
+          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 58:11–12."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -2150,11 +2339,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 58:11\u201312 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Isaiah 58:11–12 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -2169,15 +2358,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You will be called Repairer of Broken Walls, Restorer of Streets — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 58:11–12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 58:11–12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 58:11–12",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 58:11–12 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 58:11–12",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 58:11–12 in your daily walk today."
       }
     ]
   },
   {
     "id": 11,
-    "ref": "Psalm 37:25\u201326",
+    "ref": "Psalm 37:25–26",
     "book": "Psalms",
     "category": "provision-abundance",
     "categoryLabel": "Faith & Provision",
@@ -2187,13 +2397,13 @@ const BIBLE_VERSES = [
     "themeColor": "emerald",
     "translations": {
       "NIV": "I was young and now I am old, yet I have never seen the righteous forsaken or their children begging bread. They are always generous and lend freely; their children are a blessing.",
-      "TPT": "I was once young, but now I\u2019m old, and not once have I ever seen the godly forsaken, nor have I seen their children begging for bread. They are always generous and lend freely; their children are a blessing to all.",
+      "TPT": "I was once young, but now I’m old, and not once have I ever seen the godly forsaken, nor have I seen their children begging for bread. They are always generous and lend freely; their children are a blessing to all.",
       "NLT": "Once I was young, and now I am old. Yet I have never seen the godly abandoned or their children begging for bread. The godly always give generous loans to others, and their children are a blessing.",
       "NASB": "I have been young and now I am old, yet I have not seen the righteous forsaken or his descendants begging bread. All day long he is gracious and lends, and his descendants are a blessing."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 37 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 37:25\u201326 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 37 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Psalm 37:25–26 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -2207,17 +2417,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "25\u201326",
+            "num": "25–26",
             "text": "I was young and now I am old, yet I have never seen the righteous forsaken or their children begging bread. They are always generous and lend freely; their children are a blessing."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -2233,7 +2443,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -2245,8 +2455,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "25\u201326",
-            "text": "I was once young, but now I\u2019m old, and not once have I ever seen the godly forsaken, nor have I seen their children begging for bread. They are always generous and lend freely; their children are a blessing to all."
+            "num": "25–26",
+            "text": "I was once young, but now I’m old, and not once have I ever seen the godly forsaken, nor have I seen their children begging for bread. They are always generous and lend freely; their children are a blessing to all."
           },
           "after": [
             {
@@ -2279,13 +2489,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "25\u201326",
+            "num": "25–26",
             "text": "Once I was young, and now I am old. Yet I have never seen the godly abandoned or their children begging for bread. The godly always give generous loans to others, and their children are a blessing."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -2313,13 +2523,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "25\u201326",
+            "num": "25–26",
             "text": "I have been young and now I am old, yet I have not seen the righteous forsaken or his descendants begging bread. All day long he is gracious and lends, and his descendants are a blessing."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -2336,27 +2546,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 37:25\u201326.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 37:25\u201326.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 37:25\u201326.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 37:25\u201326."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 37:25–26.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 37:25–26.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 37:25–26.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 37:25–26."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 37:25\u201326."
+          "usageInPassage": "The bedrock guarantee of God's character in Psalm 37:25–26."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -2365,11 +2575,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 37:25\u201326 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Psalm 37:25–26 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -2384,15 +2594,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I have never seen the righteous forsaken or their children begging bread — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 37:25–26 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 37:25–26. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 37:25–26",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 37:25–26 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 37:25–26",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 37:25–26 in your daily walk today."
       }
     ]
   },
   {
     "id": 12,
-    "ref": "2 Corinthians 9:10\u201311",
+    "ref": "2 Corinthians 9:10–11",
     "book": "2 Corinthians",
     "category": "provision-abundance",
     "categoryLabel": "Faith & Provision",
@@ -2407,8 +2638,8 @@ const BIBLE_VERSES = [
       "NASB": "Now He who supplies seed to the sower and bread for food will supply and multiply your seed for sowing and increase the harvest of your righteousness; you will be enriched in everything for all liberality, which through us is producing thanksgiving to God."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Corinthians 9 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 9:10\u201311 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Corinthians 9 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 9:10–11 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -2422,17 +2653,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "10\u201311",
+            "num": "10–11",
             "text": "Now he who supplies seed to the sower and bread for food will also supply and increase your store of seed and will enlarge the harvest of your righteousness. You will be enriched in every way so that you can be generous on every occasion, and through us your generosity will result in thanksgiving to God."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -2448,7 +2679,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -2460,7 +2691,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "10\u201311",
+            "num": "10–11",
             "text": "This generous God who supplies abundant seed to the farmer, which becomes bread for our meals, will even more extravagantly supply you with all you need. He will multiply what you produce and brew a harvest of righteousness in you and through you. You will be abundantly enriched in every way so that you can give generously on every occasion."
           },
           "after": [
@@ -2494,13 +2725,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "10\u201311",
+            "num": "10–11",
             "text": "For God is the one who provides seed for the farmer and then bread to eat. In the same way, he will provide and increase your resources and then produce a great harvest of generosity in you. Yes, you will be enriched in every way so that you can always be generous."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -2528,13 +2759,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "10\u201311",
+            "num": "10–11",
             "text": "Now He who supplies seed to the sower and bread for food will supply and multiply your seed for sowing and increase the harvest of your righteousness; you will be enriched in everything for all liberality, which through us is producing thanksgiving to God."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -2551,26 +2782,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Corinthians 9:10\u201311.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Corinthians 9:10\u201311.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Corinthians 9:10\u201311.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Corinthians 9:10\u201311."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Corinthians 9:10–11.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Corinthians 9:10–11.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Corinthians 9:10–11.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Corinthians 9:10–11."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 2 Corinthians 9:10\u201311."
+          "usageInPassage": "The primary operational foundation of 2 Corinthians 9:10–11."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -2580,11 +2811,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 2 Corinthians 9:10\u201311 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, 2 Corinthians 9:10–11 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -2599,9 +2830,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Enriched in every way so that you can be generous on every occasion — Grace Revelation",
+      "quote": "Under the new covenant of grace, 2 Corinthians 9:10–11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Corinthians 9:10–11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of 2 Corinthians 9:10–11",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of 2 Corinthians 9:10–11 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of 2 Corinthians 9:10–11",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 9:10–11 in your daily walk today."
       }
     ]
   },
@@ -2622,7 +2874,7 @@ const BIBLE_VERSES = [
       "NASB": "And He said to them, 'Go into all the world and preach the gospel to all creation.'"
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 16 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Mark 16 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Mark 16:15 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -2637,7 +2889,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -2647,7 +2899,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -2663,7 +2915,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -2715,7 +2967,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -2749,7 +3001,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -2774,7 +3026,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -2785,7 +3037,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -2799,7 +3051,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -2814,9 +3066,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Go into all the world and preach the gospel to all creation — Grace Revelation",
+      "quote": "Under the new covenant of grace, Mark 16:15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 16:15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 16:15",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 16:15 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 16:15",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 16:15 in your daily walk today."
       }
     ]
   },
@@ -2832,12 +3105,12 @@ const BIBLE_VERSES = [
     "themeColor": "indigo",
     "translations": {
       "NIV": "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes: first to the Jew, then to the Gentile.",
-      "TPT": "I refuse to be ashamed of the wonderful message of God\u2019s liberating power, which brings salvation to everyone who believes\u2014first to the Jew and also to the Gentile.",
-      "NLT": "For I am not ashamed of this Good News about Christ. It is the power of God at work, saving everyone who believes\u2014the Jew first and also the Gentile.",
+      "TPT": "I refuse to be ashamed of the wonderful message of God’s liberating power, which brings salvation to everyone who believes—first to the Jew and also to the Gentile.",
+      "NLT": "For I am not ashamed of this Good News about Christ. It is the power of God at work, saving everyone who believes—the Jew first and also the Gentile.",
       "NASB": "For I am not ashamed of the gospel, for it is the power of God for salvation to everyone who believes, to the Jew first and also to the Greek."
     },
     "dynamicContext": {
-      "chapterTitle": "Romans 1 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Romans 1 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Romans 1:16 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -2852,7 +3125,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -2862,7 +3135,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -2878,7 +3151,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -2891,7 +3164,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "16",
-            "text": "I refuse to be ashamed of the wonderful message of God\u2019s liberating power, which brings salvation to everyone who believes\u2014first to the Jew and also to the Gentile."
+            "text": "I refuse to be ashamed of the wonderful message of God’s liberating power, which brings salvation to everyone who believes—first to the Jew and also to the Gentile."
           },
           "after": [
             {
@@ -2925,12 +3198,12 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "16",
-            "text": "For I am not ashamed of this Good News about Christ. It is the power of God at work, saving everyone who believes\u2014the Jew first and also the Gentile."
+            "text": "For I am not ashamed of this Good News about Christ. It is the power of God at work, saving everyone who believes—the Jew first and also the Gentile."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -2964,7 +3237,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -2989,7 +3262,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -3000,7 +3273,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -3014,7 +3287,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -3029,15 +3302,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The gospel is the power of God that brings salvation to everyone who believes — Grace Revelation",
+      "quote": "Under the new covenant of grace, Romans 1:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Romans 1:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Romans 1:16",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Romans 1:16 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Romans 1:16",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 1:16 in your daily walk today."
       }
     ]
   },
   {
     "id": 15,
-    "ref": "Matthew 28:19\u201320",
+    "ref": "Matthew 28:19–20",
     "book": "Matthew",
     "category": "faith-prayer",
     "categoryLabel": "Faith & Mission",
@@ -3052,8 +3346,8 @@ const BIBLE_VERSES = [
       "NASB": "Go, therefore, and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit, teaching them to follow all that I commanded you; and behold, I am with you always, to the end of the age."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 28 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 28:19\u201320 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 28 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Matthew 28:19–20 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -3067,17 +3361,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "19\u201320",
+            "num": "19–20",
             "text": "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -3093,7 +3387,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -3105,7 +3399,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "19\u201320",
+            "num": "19–20",
             "text": "Now go in my authority and make disciples of all nations, baptizing them in the name of the Father, the Son, and the Holy Spirit. Teach them to observe everything that I have commanded you. And believe this: I am with you always, even to the end of the age!"
           },
           "after": [
@@ -3139,13 +3433,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "19\u201320",
+            "num": "19–20",
             "text": "Therefore, go and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit. Teach these new disciples to obey all the commands I have given you. And be sure of this: I am with you always, even to the end of the age."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -3173,13 +3467,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "19\u201320",
+            "num": "19–20",
             "text": "Go, therefore, and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit, teaching them to follow all that I commanded you; and behold, I am with you always, to the end of the age."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -3196,26 +3490,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 28:19\u201320.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 28:19\u201320.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 28:19\u201320.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 28:19\u201320."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 28:19–20.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 28:19–20.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 28:19–20.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 28:19–20."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 28:19\u201320."
+          "usageInPassage": "The primary operational foundation of Matthew 28:19–20."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -3225,11 +3519,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 28:19\u201320 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Matthew 28:19–20 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -3244,9 +3538,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "And surely I am with you always, to the very end of the age — Grace Revelation",
+      "quote": "Under the new covenant of grace, Matthew 28:19–20 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 28:19–20. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Matthew 28:19–20",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Matthew 28:19–20 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Matthew 28:19–20",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 28:19–20 in your daily walk today."
       }
     ]
   },
@@ -3267,7 +3582,7 @@ const BIBLE_VERSES = [
       "NASB": "It will also come to pass that before they call, I will answer; and while they are still speaking, I will hear."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 65 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 65 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 65:24 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -3282,7 +3597,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -3292,7 +3607,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -3308,7 +3623,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -3360,7 +3675,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -3394,7 +3709,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -3419,8 +3734,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -3430,8 +3745,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -3444,7 +3759,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -3459,9 +3774,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Before they call I will answer; while they are still speaking I will hear — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 65:24 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 65:24. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Isaiah 65:24",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Isaiah 65:24 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Isaiah 65:24",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 65:24 in your daily walk today."
       }
     ]
   },
@@ -3478,11 +3814,11 @@ const BIBLE_VERSES = [
     "translations": {
       "NIV": "You are the light of the world. A town built on a hill cannot be hidden.",
       "TPT": "Your lives light up the world. Let others see your light from a distance, for how can you hide a city that stands on a hilltop?",
-      "NLT": "You are the light of the world\u2014like a city on a hilltop that cannot be hidden.",
+      "NLT": "You are the light of the world—like a city on a hilltop that cannot be hidden.",
       "NASB": "You are the light of the world. A city set on a hill cannot be hidden."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 5 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Matthew 5 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Matthew 5:14 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -3497,7 +3833,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -3507,7 +3843,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -3523,7 +3859,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -3570,12 +3906,12 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "14",
-            "text": "You are the light of the world\u2014like a city on a hilltop that cannot be hidden."
+            "text": "You are the light of the world—like a city on a hilltop that cannot be hidden."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -3609,7 +3945,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -3634,7 +3970,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -3645,7 +3981,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -3659,7 +3995,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -3674,9 +4010,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You are the light of the world. A town built on a hill cannot be hidden — Grace Revelation",
+      "quote": "Under the new covenant of grace, Matthew 5:14 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 5:14. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Matthew 5:14",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Matthew 5:14 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Matthew 5:14",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 5:14 in your daily walk today."
       }
     ]
   },
@@ -3692,12 +4049,12 @@ const BIBLE_VERSES = [
     "themeColor": "teal",
     "translations": {
       "NIV": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
-      "TPT": "I leave the gift of peace with you\u2014my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don\u2019t yield to fear or be troubled in your hearts\u2014instead, be courageous!",
-      "NLT": "I am leaving you with a gift\u2014peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
+      "TPT": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!",
+      "NLT": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
       "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful."
     },
     "dynamicContext": {
-      "chapterTitle": "John 14 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "John 14 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of John 14:27 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -3712,7 +4069,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -3722,7 +4079,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -3738,7 +4095,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -3751,7 +4108,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "27",
-            "text": "I leave the gift of peace with you\u2014my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don\u2019t yield to fear or be troubled in your hearts\u2014instead, be courageous!"
+            "text": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!"
           },
           "after": [
             {
@@ -3785,12 +4142,12 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "27",
-            "text": "I am leaving you with a gift\u2014peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid."
+            "text": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -3824,7 +4181,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -3849,7 +4206,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -3860,7 +4217,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -3874,7 +4231,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -3889,15 +4246,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Peace I leave with you; my peace I give you. Do not let your hearts be troubled — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 14:27 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 14:27. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of John 14:27",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of John 14:27 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of John 14:27",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 14:27 in your daily walk today."
       }
     ]
   },
   {
     "id": 19,
-    "ref": "Hebrews 10:19\u201325",
+    "ref": "Hebrews 10:19–25",
     "book": "Hebrews",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -3912,8 +4290,8 @@ const BIBLE_VERSES = [
       "NASB": "Therefore, brothers and sisters, since we have confidence to enter the holy place by the blood of Jesus, by a new and living way which He inaugurated for us through the veil, that is, through His flesh... let's approach God with a sincere heart in full assurance of faith... Let's hold firmly to the confession of our hope without wavering, for He who promised is faithful; and let's consider how to encourage one another in love and good deeds, not abandoning our own meeting together... but encouraging one another."
     },
     "dynamicContext": {
-      "chapterTitle": "Hebrews 10 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Hebrews 10:19\u201325 revealing God's covenant faithfulness.",
+      "chapterTitle": "Hebrews 10 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Hebrews 10:19–25 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -3927,17 +4305,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "19\u201325",
+            "num": "19–25",
             "text": "Therefore, brothers and sisters, since we have confidence to enter the Most Holy Place by the blood of Jesus, by a new and living way opened for us through the curtain, that is, his body... let us draw near to God with a sincere heart and with the full assurance that faith brings... Let us hold unswervingly to the hope we profess, for he who promised is faithful. And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together... but encouraging one another."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -3953,7 +4331,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -3965,7 +4343,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "19\u201325",
+            "num": "19–25",
             "text": "And now we have boldness and free access to come directly into the presence of God through the blood of Jesus! He has uncovered a fresh and living pathway for us through the veil, which is his own body... Let us come right into the presence of God with a true heart in full assurance of faith... Let us wrap our hearts around the hope we confess, for the one who promised is completely faithful. And let us discover creative ways to encourage one another to show love and do beautiful works, not neglecting our gathering together, but encouraging one another."
           },
           "after": [
@@ -3999,13 +4377,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "19\u201325",
+            "num": "19–25",
             "text": "And so, dear brothers and sisters, we can boldly enter heaven's Most Holy Place because of the blood of Jesus. By his death, Jesus opened a new and life-giving way through the curtain into the Most Holy Place... let us go right into the presence of God with sincere hearts fully trusting him... Let us hold tightly without wavering to the hope we affirm, for God can be trusted to keep his promise. Let us think of ways to motivate one another to acts of love and good works. And let us not neglect our meeting together... but encourage one another."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -4033,13 +4411,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "19\u201325",
+            "num": "19–25",
             "text": "Therefore, brothers and sisters, since we have confidence to enter the holy place by the blood of Jesus, by a new and living way which He inaugurated for us through the veil, that is, through His flesh... let's approach God with a sincere heart in full assurance of faith... Let's hold firmly to the confession of our hope without wavering, for He who promised is faithful; and let's consider how to encourage one another in love and good deeds, not abandoning our own meeting together... but encouraging one another."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -4056,26 +4434,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Hebrews 10:19\u201325.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Hebrews 10:19\u201325.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Hebrews 10:19\u201325.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Hebrews 10:19\u201325."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Hebrews 10:19–25.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Hebrews 10:19–25.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Hebrews 10:19–25.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Hebrews 10:19–25."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Hebrews 10:19\u201325."
+          "usageInPassage": "The primary operational foundation of Hebrews 10:19–25."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -4085,11 +4463,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Hebrews 10:19\u201325 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Hebrews 10:19–25 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -4104,9 +4482,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Confidence to enter the Most Holy Place by the blood of Jesus — Grace Revelation",
+      "quote": "Under the new covenant of grace, Hebrews 10:19–25 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Hebrews 10:19–25. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Hebrews 10:19–25",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Hebrews 10:19–25 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Hebrews 10:19–25",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Hebrews 10:19–25 in your daily walk today."
       }
     ]
   },
@@ -4127,7 +4526,7 @@ const BIBLE_VERSES = [
       "NASB": "Forever, LORD, Your word stands firm in heaven."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:89 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -4142,7 +4541,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -4152,7 +4551,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -4168,7 +4567,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -4220,7 +4619,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -4254,7 +4653,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -4279,8 +4678,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -4290,8 +4689,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -4304,7 +4703,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -4319,9 +4718,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Your word, LORD, is eternal; it stands firm in the heavens — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 119:89 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:89. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:89",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:89 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:89",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:89 in your daily walk today."
       }
     ]
   },
@@ -4342,7 +4762,7 @@ const BIBLE_VERSES = [
       "NASB": "Lead me in Your truth and teach me, for You are the God of my salvation; for You I wait all the day."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 25 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 25 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 25:5 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -4357,7 +4777,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -4367,7 +4787,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -4383,7 +4803,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -4435,7 +4855,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -4469,7 +4889,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -4494,8 +4914,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -4505,8 +4925,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -4519,7 +4939,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -4534,9 +4954,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Guide me in your truth and teach me, for you are God my Savior — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 25:5 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 25:5. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 25:5",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 25:5 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 25:5",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 25:5 in your daily walk today."
       }
     ]
   },
@@ -4557,7 +4998,7 @@ const BIBLE_VERSES = [
       "NASB": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 58 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 58 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 58:11 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -4572,7 +5013,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -4582,7 +5023,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -4598,7 +5039,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -4650,7 +5091,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -4684,7 +5125,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -4709,8 +5150,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -4720,8 +5161,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -4734,7 +5175,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -4749,9 +5190,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You will be like a well-watered garden, like a spring whose waters never fail — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 58:11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 58:11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 58:11",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 58:11 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 58:11",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 58:11 in your daily walk today."
       }
     ]
   },
@@ -4772,7 +5234,7 @@ const BIBLE_VERSES = [
       "NASB": "The fear of the LORD leads to life, so that one may sleep satisfied, untouched by evil."
     },
     "dynamicContext": {
-      "chapterTitle": "Proverbs 19 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Proverbs 19 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Proverbs 19:23 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -4787,7 +5249,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -4797,7 +5259,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -4813,7 +5275,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -4865,7 +5327,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -4899,7 +5361,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -4924,8 +5386,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -4935,8 +5397,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -4949,7 +5411,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -4964,9 +5426,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The fear of the LORD leads to life; then one rests content, untouched by trouble — Grace Revelation",
+      "quote": "Under the new covenant of grace, Proverbs 19:23 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Proverbs 19:23. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Proverbs 19:23",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Proverbs 19:23 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Proverbs 19:23",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Proverbs 19:23 in your daily walk today."
       }
     ]
   },
@@ -4987,7 +5470,7 @@ const BIBLE_VERSES = [
       "NASB": "Finally, be strong in the Lord and in the strength of His might."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 6 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Ephesians 6 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Ephesians 6:10 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -5002,7 +5485,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -5012,7 +5495,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -5028,7 +5511,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -5080,7 +5563,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -5114,7 +5597,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -5139,7 +5622,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -5150,7 +5633,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -5164,7 +5647,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -5179,9 +5662,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Be strong in the Lord and in his mighty power — Grace Revelation",
+      "quote": "Under the new covenant of grace, Ephesians 6:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 6:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Ephesians 6:10",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Ephesians 6:10 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Ephesians 6:10",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 6:10 in your daily walk today."
       }
     ]
   },
@@ -5197,12 +5701,12 @@ const BIBLE_VERSES = [
     "themeColor": "emerald",
     "translations": {
       "NIV": "Do not work for food that spoils, but for food that endures to eternal life, which the Son of Man will give you. For on him God the Father has placed his seal of approval.",
-      "TPT": "Why would you strive for food that is perishable and doesn\u2019t satisfy? You should be seeking the food that gives permanent, eternal life that the Son of Man will give you. For upon him the Father God has placed his seal of approval!",
+      "TPT": "Why would you strive for food that is perishable and doesn’t satisfy? You should be seeking the food that gives permanent, eternal life that the Son of Man will give you. For upon him the Father God has placed his seal of approval!",
       "NLT": "But don't be so concerned about perishable things like food. Spend your energy seeking the eternal life that the Son of Man can give you. For God the Father has given me the seal of his approval.",
       "NASB": "Do not work for the food that perishes, but for the food that lasts for eternal life, which the Son of Man will give you; for on Him the Father, God, has set His seal."
     },
     "dynamicContext": {
-      "chapterTitle": "John 6 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "John 6 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of John 6:27 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -5217,7 +5721,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -5227,7 +5731,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -5243,7 +5747,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -5256,7 +5760,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "27",
-            "text": "Why would you strive for food that is perishable and doesn\u2019t satisfy? You should be seeking the food that gives permanent, eternal life that the Son of Man will give you. For upon him the Father God has placed his seal of approval!"
+            "text": "Why would you strive for food that is perishable and doesn’t satisfy? You should be seeking the food that gives permanent, eternal life that the Son of Man will give you. For upon him the Father God has placed his seal of approval!"
           },
           "after": [
             {
@@ -5295,7 +5799,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -5329,7 +5833,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -5354,7 +5858,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -5365,7 +5869,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -5379,7 +5883,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -5394,15 +5898,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Work for food that endures to eternal life, which the Son of Man will give you — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 6:27 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 6:27. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of John 6:27",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of John 6:27 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of John 6:27",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 6:27 in your daily walk today."
       }
     ]
   },
   {
     "id": 26,
-    "ref": "Psalm 16:9\u201310",
+    "ref": "Psalm 16:9–10",
     "book": "Psalms",
     "category": "joy-presence",
     "categoryLabel": "Joy & Presence",
@@ -5412,13 +5937,13 @@ const BIBLE_VERSES = [
     "themeColor": "amber",
     "translations": {
       "NIV": "Therefore my heart is glad and my tongue rejoices; my body also will rest secure, because you will not abandon me to the realm of the dead, nor will you let your faithful one see decay.",
-      "TPT": "My heart and soul explode with joy\u2014full of glory! Even my body will rest confident and secure. For you will not leave my soul in the realm of darkness, nor will you allow your Holy One to experience decay.",
+      "TPT": "My heart and soul explode with joy—full of glory! Even my body will rest confident and secure. For you will not leave my soul in the realm of darkness, nor will you allow your Holy One to experience decay.",
       "NLT": "No wonder my heart is glad, and I rejoice. My body rests in safety. For you will not leave my soul among the dead or allow your holy one to rot in the grave.",
       "NASB": "Therefore my heart is glad and my glory rejoices; my flesh also will dwell securely. For You will not abandon my soul to Sheol; You will not allow Your Holy One to undergo decay."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 16 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 16:9\u201310 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 16 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Psalm 16:9–10 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -5432,17 +5957,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "9\u201310",
+            "num": "9–10",
             "text": "Therefore my heart is glad and my tongue rejoices; my body also will rest secure, because you will not abandon me to the realm of the dead, nor will you let your faithful one see decay."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -5458,7 +5983,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -5470,8 +5995,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "9\u201310",
-            "text": "My heart and soul explode with joy\u2014full of glory! Even my body will rest confident and secure. For you will not leave my soul in the realm of darkness, nor will you allow your Holy One to experience decay."
+            "num": "9–10",
+            "text": "My heart and soul explode with joy—full of glory! Even my body will rest confident and secure. For you will not leave my soul in the realm of darkness, nor will you allow your Holy One to experience decay."
           },
           "after": [
             {
@@ -5504,13 +6029,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "9\u201310",
+            "num": "9–10",
             "text": "No wonder my heart is glad, and I rejoice. My body rests in safety. For you will not leave my soul among the dead or allow your holy one to rot in the grave."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -5538,13 +6063,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "9\u201310",
+            "num": "9–10",
             "text": "Therefore my heart is glad and my glory rejoices; my flesh also will dwell securely. For You will not abandon my soul to Sheol; You will not allow Your Holy One to undergo decay."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -5561,27 +6086,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 16:9\u201310.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 16:9\u201310.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 16:9\u201310.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 16:9\u201310."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 16:9–10.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 16:9–10.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 16:9–10.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 16:9–10."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 16:9\u201310."
+          "usageInPassage": "The bedrock guarantee of God's character in Psalm 16:9–10."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -5590,11 +6115,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 16:9\u201310 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Psalm 16:9–10 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -5609,9 +6134,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "My heart is glad and my tongue rejoices; my body also will rest secure — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 16:9–10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 16:9–10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Psalm 16:9–10",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 16:9–10 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 16:9–10",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:9–10 in your daily walk today."
       }
     ]
   },
@@ -5632,7 +6178,7 @@ const BIBLE_VERSES = [
       "NASB": "Jesus said to them, 'I am the bread of life; the one who comes to Me will not be hungry, and the one who believes in Me will never be thirsty.'"
     },
     "dynamicContext": {
-      "chapterTitle": "John 6 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "John 6 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of John 6:35 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -5647,7 +6193,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -5657,7 +6203,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -5673,7 +6219,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -5725,7 +6271,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -5759,7 +6305,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -5784,7 +6330,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -5795,7 +6341,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -5809,7 +6355,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -5824,15 +6370,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I am the bread of life. Whoever comes to me will never go hungry — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 6:35 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 6:35. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of John 6:35",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of John 6:35 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of John 6:35",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 6:35 in your daily walk today."
       }
     ]
   },
   {
     "id": 28,
-    "ref": "Psalm 103:1\u20135",
+    "ref": "Psalm 103:1–5",
     "book": "Psalms",
     "category": "healing-renewal",
     "categoryLabel": "Healing & Renewal",
@@ -5841,14 +6408,14 @@ const BIBLE_VERSES = [
     "keyPhrase": "Who forgives all your sins and heals all your diseases",
     "themeColor": "purple",
     "translations": {
-      "NIV": "Praise the LORD, my soul; all my inmost being, praise his holy name. Praise the LORD, my soul, and forget not all his benefits\u2014who forgives all your sins and heals all your diseases, who redeems your life from the pit and crowns you with love and compassion, who satisfies your desires with good things so that your youth is renewed like the eagle\u2019s.",
-      "TPT": "With my whole heart, with my whole life, and with the inmost parts of my being, I will praise and bless his holy name. Let my whole being sing the praises of Yahweh, and let me never forget the marvelous benefits he gives: He forgives all our sins and heals every one of our diseases! He rescues us from hell and saves our lives, and he crowns us with love and tender mercies. He satisfies our desires with good things, renewing our youth like the eagle\u2019s!",
+      "NIV": "Praise the LORD, my soul; all my inmost being, praise his holy name. Praise the LORD, my soul, and forget not all his benefits—who forgives all your sins and heals all your diseases, who redeems your life from the pit and crowns you with love and compassion, who satisfies your desires with good things so that your youth is renewed like the eagle’s.",
+      "TPT": "With my whole heart, with my whole life, and with the inmost parts of my being, I will praise and bless his holy name. Let my whole being sing the praises of Yahweh, and let me never forget the marvelous benefits he gives: He forgives all our sins and heals every one of our diseases! He rescues us from hell and saves our lives, and he crowns us with love and tender mercies. He satisfies our desires with good things, renewing our youth like the eagle’s!",
       "NLT": "Let all that I am praise the LORD; with my whole heart, I will praise his holy name. Let all that I am praise the LORD; may I never forget the good things he does for me. He forgives all my sins and heals all my diseases. He redeems me from death and crowns me with love and tender mercies. He fills my life with good things. My youth is renewed like the eagle's!",
       "NASB": "Bless the LORD, my soul, and all that is within me, bless His holy name. Bless the LORD, my soul, and do not forget any of His benefits; Who pardons all your guilt, Who heals all your diseases; Who redeems your life from the pit, Who crowns you with favor and compassion; Who satisfies your years with good things, so that your youth is renewed like the eagle."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 103 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 103:1\u20135 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 103 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Psalm 103:1–5 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -5862,17 +6429,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "1\u20135",
-            "text": "Praise the LORD, my soul; all my inmost being, praise his holy name. Praise the LORD, my soul, and forget not all his benefits\u2014who forgives all your sins and heals all your diseases, who redeems your life from the pit and crowns you with love and compassion, who satisfies your desires with good things so that your youth is renewed like the eagle\u2019s."
+            "num": "1–5",
+            "text": "Praise the LORD, my soul; all my inmost being, praise his holy name. Praise the LORD, my soul, and forget not all his benefits—who forgives all your sins and heals all your diseases, who redeems your life from the pit and crowns you with love and compassion, who satisfies your desires with good things so that your youth is renewed like the eagle’s."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -5888,7 +6455,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -5900,8 +6467,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u20135",
-            "text": "With my whole heart, with my whole life, and with the inmost parts of my being, I will praise and bless his holy name. Let my whole being sing the praises of Yahweh, and let me never forget the marvelous benefits he gives: He forgives all our sins and heals every one of our diseases! He rescues us from hell and saves our lives, and he crowns us with love and tender mercies. He satisfies our desires with good things, renewing our youth like the eagle\u2019s!"
+            "num": "1–5",
+            "text": "With my whole heart, with my whole life, and with the inmost parts of my being, I will praise and bless his holy name. Let my whole being sing the praises of Yahweh, and let me never forget the marvelous benefits he gives: He forgives all our sins and heals every one of our diseases! He rescues us from hell and saves our lives, and he crowns us with love and tender mercies. He satisfies our desires with good things, renewing our youth like the eagle’s!"
           },
           "after": [
             {
@@ -5934,13 +6501,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u20135",
+            "num": "1–5",
             "text": "Let all that I am praise the LORD; with my whole heart, I will praise his holy name. Let all that I am praise the LORD; may I never forget the good things he does for me. He forgives all my sins and heals all my diseases. He redeems me from death and crowns me with love and tender mercies. He fills my life with good things. My youth is renewed like the eagle's!"
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -5968,13 +6535,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u20135",
+            "num": "1–5",
             "text": "Bless the LORD, my soul, and all that is within me, bless His holy name. Bless the LORD, my soul, and do not forget any of His benefits; Who pardons all your guilt, Who heals all your diseases; Who redeems your life from the pit, Who crowns you with favor and compassion; Who satisfies your years with good things, so that your youth is renewed like the eagle."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -5991,27 +6558,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 103:1\u20135.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 103:1\u20135.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 103:1\u20135.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 103:1\u20135."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 103:1–5.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 103:1–5.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 103:1–5.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 103:1–5."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 103:1\u20135."
+          "usageInPassage": "The bedrock guarantee of God's character in Psalm 103:1–5."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -6020,11 +6587,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 103:1\u20135 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Psalm 103:1–5 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -6039,9 +6606,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Who forgives all your sins and heals all your diseases — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 103:1–5 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 103:1–5. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of Psalm 103:1–5",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Psalm 103:1–5 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Psalm 103:1–5",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 103:1–5 in your daily walk today."
       }
     ]
   },
@@ -6056,13 +6644,13 @@ const BIBLE_VERSES = [
     "keyPhrase": "I am like an olive tree flourishing in the house of God",
     "themeColor": "emerald",
     "translations": {
-      "NIV": "But I am like an olive tree flourishing in the house of God; I trust in God\u2019s unfailing love for ever and ever.",
+      "NIV": "But I am like an olive tree flourishing in the house of God; I trust in God’s unfailing love for ever and ever.",
       "TPT": "But I am like an olive tree, thriving in the house of God. I will trust in your passionate, faithful love forever and ever.",
       "NLT": "But I am like an olive tree, thriving in the house of God. I will always trust in God's unfailing love.",
       "NASB": "But as for me, I am like a green olive tree in the house of God; I trust in the faithfulness of God forever and ever."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 52 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 52 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 52:8 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -6077,17 +6665,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
             "num": "8",
-            "text": "But I am like an olive tree flourishing in the house of God; I trust in God\u2019s unfailing love for ever and ever."
+            "text": "But I am like an olive tree flourishing in the house of God; I trust in God’s unfailing love for ever and ever."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -6103,7 +6691,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -6155,7 +6743,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -6189,7 +6777,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -6214,8 +6802,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -6225,8 +6813,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -6239,7 +6827,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -6254,9 +6842,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I am like an olive tree flourishing in the house of God — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 52:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 52:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 52:8",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 52:8 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 52:8",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 52:8 in your daily walk today."
       }
     ]
   },
@@ -6277,7 +6886,7 @@ const BIBLE_VERSES = [
       "NASB": "You will walk on the lion and cobra, you will trample the young lion and the serpent."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 91 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 91 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 91:13 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -6292,7 +6901,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -6302,7 +6911,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -6318,7 +6927,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -6370,7 +6979,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -6404,7 +7013,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -6429,8 +7038,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -6440,8 +7049,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -6454,7 +7063,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -6469,15 +7078,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You will tread on the lion and the cobra; you will trample the great lion and the serpent — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 91:13 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 91:13. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Psalm 91:13",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Psalm 91:13 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Psalm 91:13",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 91:13 in your daily walk today."
       }
     ]
   },
   {
     "id": 31,
-    "ref": "Psalm 119:97\u2013106",
+    "ref": "Psalm 119:97–106",
     "book": "Psalms",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Truth",
@@ -6492,8 +7122,8 @@ const BIBLE_VERSES = [
       "NASB": "How I love Your Law! It is my meditation all the day. Your commandments make me wiser than my enemies, for they are ever mine. I have more insight than all my teachers, for Your testimonies are my meditation... How sweet are Your words to my taste! Yes, sweeter than honey to my mouth! From Your precepts I get understanding; therefore I hate every false way. Your word is a lamp to my feet and a light to my path."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:97\u2013106 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:97–106 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -6507,17 +7137,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "97\u2013106",
+            "num": "97–106",
             "text": "Oh, how I love your law! I meditate on it all day long. Your commands are always with me and make me wiser than my enemies. I have more insight than all my teachers, for I meditate on your statutes... How sweet are your words to my taste, sweeter than honey to my mouth! I gain understanding from your precepts; therefore I hate every wrong path. Your word is a lamp for my feet, a light on my path."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -6533,7 +7163,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -6545,7 +7175,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "97\u2013106",
+            "num": "97–106",
             "text": "O how I love your law! It is my meditation all the day. Your commandment makes me wiser than my enemies, for it is ever with me. I have more insight than all my teachers, for your testimonies are my meditation... How sweet are your words to my taste, yes, sweeter than honey to my mouth! From your precepts I get understanding; therefore I hate every false way. Your word is a lamp to my feet and a light to my path."
           },
           "after": [
@@ -6579,13 +7209,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "97\u2013106",
+            "num": "97–106",
             "text": "Oh, how I love your instructions! I think about them all day long. Your commands make me wiser than my enemies, for they are my constant guide. Yes, I have more insight than my teachers, for I am always thinking of your laws... How sweet your words taste to me; they are sweeter than honey. Your commandments give me understanding; no wonder I hate every false way of life. Your word is a lamp to guide my feet and a light for my path."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -6613,13 +7243,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "97\u2013106",
+            "num": "97–106",
             "text": "How I love Your Law! It is my meditation all the day. Your commandments make me wiser than my enemies, for they are ever mine. I have more insight than all my teachers, for Your testimonies are my meditation... How sweet are Your words to my taste! Yes, sweeter than honey to my mouth! From Your precepts I get understanding; therefore I hate every false way. Your word is a lamp to my feet and a light to my path."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -6636,27 +7266,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:97\u2013106.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:97\u2013106.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:97\u2013106.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:97\u2013106."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:97–106.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:97–106.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:97–106.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:97–106."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:97\u2013106."
+          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:97–106."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -6665,11 +7295,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:97\u2013106 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Psalm 119:97–106 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -6684,9 +7314,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Your word is a lamp for my feet, a light on my path — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 119:97–106 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:97–106. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:97–106",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:97–106 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:97–106",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:97–106 in your daily walk today."
       }
     ]
   },
@@ -6707,7 +7358,7 @@ const BIBLE_VERSES = [
       "NASB": "No one will be able to oppose you all the days of your life. Just as I have been with Moses, I will be with you; I will not abandon you nor forsake you."
     },
     "dynamicContext": {
-      "chapterTitle": "Joshua 1 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Joshua 1 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Joshua 1:5 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -6722,7 +7373,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -6732,7 +7383,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -6748,7 +7399,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -6800,7 +7451,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -6834,7 +7485,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -6859,8 +7510,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -6870,8 +7521,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -6884,7 +7535,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -6899,9 +7550,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "As I was with Moses, so I will be with you; I will never leave you nor forsake you — Grace Revelation",
+      "quote": "Under the new covenant of grace, Joshua 1:5 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Joshua 1:5. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Joshua 1:5",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Joshua 1:5 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Joshua 1:5",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Joshua 1:5 in your daily walk today."
       }
     ]
   },
@@ -6922,7 +7594,7 @@ const BIBLE_VERSES = [
       "NASB": "The Spirit of the Lord GOD is upon me, because the LORD anointed me to bring good news to the humble; He has sent me to bind up the brokenhearted, to proclaim release to captives and freedom to prisoners."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 61 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 61 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 61:1 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -6937,7 +7609,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -6947,7 +7619,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -6963,7 +7635,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -7015,7 +7687,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -7049,7 +7721,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -7074,8 +7746,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -7085,8 +7757,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -7099,7 +7771,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -7114,9 +7786,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The Spirit of the Sovereign LORD is on me to proclaim good news to the poor — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 61:1 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 61:1. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 61:1",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 61:1 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 61:1",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 61:1 in your daily walk today."
       }
     ]
   },
@@ -7137,7 +7830,7 @@ const BIBLE_VERSES = [
       "NASB": "And the LORD is the one who goes ahead of you; He will be with you. He will not fail you or forsake you. Do not fear or be dismayed."
     },
     "dynamicContext": {
-      "chapterTitle": "Deuteronomy 31 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Deuteronomy 31 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 31:8 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -7152,7 +7845,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -7162,7 +7855,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -7178,7 +7871,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -7230,7 +7923,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -7264,7 +7957,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -7289,8 +7982,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -7300,8 +7993,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -7314,7 +8007,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -7329,15 +8022,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The LORD himself goes before you and will be with you; do not be afraid — Grace Revelation",
+      "quote": "Under the new covenant of grace, Deuteronomy 31:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Deuteronomy 31:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Deuteronomy 31:8",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Deuteronomy 31:8 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Deuteronomy 31:8",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 31:8 in your daily walk today."
       }
     ]
   },
   {
     "id": 35,
-    "ref": "Galatians 5:22\u201325",
+    "ref": "Galatians 5:22–25",
     "book": "Galatians",
     "category": "joy-presence",
     "categoryLabel": "Joy & Presence",
@@ -7352,8 +8066,8 @@ const BIBLE_VERSES = [
       "NASB": "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law. Now those who belong to Christ Jesus have crucified the flesh with its passions and desires. If we live by the Spirit, let's also follow the Spirit."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 5 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 5:22\u201325 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 5 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Galatians 5:22–25 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -7367,17 +8081,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "22\u201325",
+            "num": "22–25",
             "text": "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law. Those who belong to Christ Jesus have crucified the flesh with its passions and desires. Since we live by the Spirit, let us keep in step with the Spirit."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -7393,7 +8107,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -7405,7 +8119,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "22\u201325",
+            "num": "22–25",
             "text": "But the fruit produced by the Holy Spirit within you is divine love in all its varied expressions: joy that overflows, peace that subdues, patience that endures, kindness in action, a life full of virtue, faith that prevails, gentleness of heart, and strength of spirit. Never will you find a law that conflicts with these! Now those who belong to Christ Jesus have crucified the self-life with its passions and desires. Since we live with the Spirit, let us step in time with each other, walking in the Holy Spirit!"
           },
           "after": [
@@ -7439,13 +8153,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "22\u201325",
+            "num": "22–25",
             "text": "But the Holy Spirit produces this kind of fruit in our lives: love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control. There is no law against these things! Those who belong to Christ Jesus have nailed the passions and desires of their sinful nature to his cross and crucified them there. Since we are living by the Spirit, let us follow the Spirit's leading in every part of our lives."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -7473,13 +8187,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "22\u201325",
+            "num": "22–25",
             "text": "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law. Now those who belong to Christ Jesus have crucified the flesh with its passions and desires. If we live by the Spirit, let's also follow the Spirit."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -7496,26 +8210,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 5:22\u201325.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 5:22\u201325.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 5:22\u201325.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 5:22\u201325."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 5:22–25.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 5:22–25.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 5:22–25.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 5:22–25."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 5:22\u201325."
+          "usageInPassage": "The primary operational foundation of Galatians 5:22–25."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -7525,11 +8239,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 5:22\u201325 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Galatians 5:22–25 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -7544,9 +8258,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness — Grace Revelation",
+      "quote": "Under the new covenant of grace, Galatians 5:22–25 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 5:22–25. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Galatians 5:22–25",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Galatians 5:22–25 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Galatians 5:22–25",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 5:22–25 in your daily walk today."
       }
     ]
   },
@@ -7562,12 +8297,12 @@ const BIBLE_VERSES = [
     "themeColor": "indigo",
     "translations": {
       "NIV": "Therefore I tell you, whatever you ask for in prayer, believe that you have received it, and it will be yours.",
-      "TPT": "This is the reason I urge you to boldly believe for whatever you ask for in prayer\u2014be convinced that you have already received it and it will be yours.",
+      "TPT": "This is the reason I urge you to boldly believe for whatever you ask for in prayer—be convinced that you have already received it and it will be yours.",
       "NLT": "I tell you, you can pray for anything, and if you believe that you've received it, it will be yours.",
       "NASB": "Therefore, I say to you, all things for which you pray and ask, believe that you have received them, and they will be granted to you."
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 11 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Mark 11 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Mark 11:24 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -7582,7 +8317,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -7592,7 +8327,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -7608,7 +8343,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -7621,7 +8356,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "24",
-            "text": "This is the reason I urge you to boldly believe for whatever you ask for in prayer\u2014be convinced that you have already received it and it will be yours."
+            "text": "This is the reason I urge you to boldly believe for whatever you ask for in prayer—be convinced that you have already received it and it will be yours."
           },
           "after": [
             {
@@ -7660,7 +8395,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -7694,7 +8429,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -7719,7 +8454,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -7730,7 +8465,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -7744,7 +8479,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -7759,15 +8494,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Whatever you ask for in prayer, believe that you have received it, and it will be yours — Grace Revelation",
+      "quote": "Under the new covenant of grace, Mark 11:24 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 11:24. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 11:24",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 11:24 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 11:24",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 11:24 in your daily walk today."
       }
     ]
   },
   {
     "id": 37,
-    "ref": "Colossians 3:2\u20134",
+    "ref": "Colossians 3:2–4",
     "book": "Colossians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -7782,8 +8538,8 @@ const BIBLE_VERSES = [
       "NASB": "Set your mind on the things that are above, not on the things that are on earth. For you have died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:2\u20134 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:2–4 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -7797,17 +8553,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "2\u20134",
+            "num": "2–4",
             "text": "Set your minds on things above, not on earthly things. For you died, and your life is now hidden with Christ in God. When Christ, who is your life, appears, then you also will appear with him in glory."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -7823,7 +8579,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -7835,7 +8591,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "2\u20134",
+            "num": "2–4",
             "text": "Feast your thoughts continuously on the heavenly realm and not on this earthly realm! For you have died and your life is hidden with Christ in God. Yes, Christ is your life, and when he appears in all his glory, you will be revealed in glorious splendour with him!"
           },
           "after": [
@@ -7869,13 +8625,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "2\u20134",
+            "num": "2–4",
             "text": "Think about the things of heaven, not the things of earth. For you died to this life, and your real life is hidden with Christ in God. And when Christ, who is your life, is revealed to the whole world, you will share in all his glory."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -7903,13 +8659,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "2\u20134",
+            "num": "2–4",
             "text": "Set your mind on the things that are above, not on the things that are on earth. For you have died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -7926,26 +8682,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:2\u20134.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:2\u20134.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:2\u20134.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:2\u20134."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:2–4.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:2–4.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:2–4.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:2–4."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:2\u20134."
+          "usageInPassage": "The primary operational foundation of Colossians 3:2–4."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -7955,11 +8711,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:2\u20134 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Colossians 3:2–4 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -7974,9 +8730,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Set your minds on things above... for your life is now hidden with Christ in God — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 3:2–4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:2–4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:2–4",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:2–4 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:2–4",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:2–4 in your daily walk today."
       }
     ]
   },
@@ -7997,7 +8774,7 @@ const BIBLE_VERSES = [
       "NASB": "And my God will supply all your needs according to His riches in glory in Christ Jesus."
     },
     "dynamicContext": {
-      "chapterTitle": "Philippians 4 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:19 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -8012,7 +8789,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -8022,7 +8799,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -8038,7 +8815,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -8090,7 +8867,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -8124,7 +8901,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -8149,7 +8926,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -8160,7 +8937,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -8174,7 +8951,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -8189,15 +8966,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "My God will meet all your needs according to the riches of his glory in Christ Jesus — Grace Revelation",
+      "quote": "Under the new covenant of grace, Philippians 4:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Philippians 4:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Philippians 4:19",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Philippians 4:19 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Philippians 4:19",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Philippians 4:19 in your daily walk today."
       }
     ]
   },
   {
     "id": 39,
-    "ref": "Colossians 3:9\u201312",
+    "ref": "Colossians 3:9–12",
     "book": "Colossians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -8206,14 +9004,14 @@ const BIBLE_VERSES = [
     "keyPhrase": "Clothe yourselves with compassion, kindness, humility, gentleness and patience",
     "themeColor": "violet",
     "translations": {
-      "NIV": "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator... Therefore, as God\u2019s chosen people, holy and dearly loved, clothe yourselves with compassion, kindness, humility, gentleness and patience.",
-      "TPT": "Do not lie to one another, since you have stripped off the old man with its practices and have put on the new man, which is being renewed into full knowledge according to the image of the One who created it... Therefore, as God\u2019s chosen holy and beloved ones, put on tender mercies, kindness, humility, gentleness, and patient endurance.",
+      "NIV": "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator... Therefore, as God’s chosen people, holy and dearly loved, clothe yourselves with compassion, kindness, humility, gentleness and patience.",
+      "TPT": "Do not lie to one another, since you have stripped off the old man with its practices and have put on the new man, which is being renewed into full knowledge according to the image of the One who created it... Therefore, as God’s chosen holy and beloved ones, put on tender mercies, kindness, humility, gentleness, and patient endurance.",
       "NLT": "Don't lie to each other, for you have stripped off your old sinful nature and all its wicked deeds. Put on your new nature, and be renewed as you learn to know your Creator and become like him... Since God chose you to be the holy people he loves, you must clothe yourselves with tenderhearted mercy, kindness, humility, gentleness, and patience.",
       "NASB": "Do not lie to one another, since you stripped off the old self with its evil practices, and have put on the new self, which is being renewed to a true knowledge according to the image of the One who created it... So, as those who have been chosen of God, holy and beloved, put on a heart of compassion, kindness, humility, gentleness, and patience."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:9\u201312 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:9–12 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -8227,17 +9025,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "9\u201312",
-            "text": "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator... Therefore, as God\u2019s chosen people, holy and dearly loved, clothe yourselves with compassion, kindness, humility, gentleness and patience."
+            "num": "9–12",
+            "text": "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator... Therefore, as God’s chosen people, holy and dearly loved, clothe yourselves with compassion, kindness, humility, gentleness and patience."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -8253,7 +9051,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -8265,8 +9063,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "9\u201312",
-            "text": "Do not lie to one another, since you have stripped off the old man with its practices and have put on the new man, which is being renewed into full knowledge according to the image of the One who created it... Therefore, as God\u2019s chosen holy and beloved ones, put on tender mercies, kindness, humility, gentleness, and patient endurance."
+            "num": "9–12",
+            "text": "Do not lie to one another, since you have stripped off the old man with its practices and have put on the new man, which is being renewed into full knowledge according to the image of the One who created it... Therefore, as God’s chosen holy and beloved ones, put on tender mercies, kindness, humility, gentleness, and patient endurance."
           },
           "after": [
             {
@@ -8299,13 +9097,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "9\u201312",
+            "num": "9–12",
             "text": "Don't lie to each other, for you have stripped off your old sinful nature and all its wicked deeds. Put on your new nature, and be renewed as you learn to know your Creator and become like him... Since God chose you to be the holy people he loves, you must clothe yourselves with tenderhearted mercy, kindness, humility, gentleness, and patience."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -8333,13 +9131,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "9\u201312",
+            "num": "9–12",
             "text": "Do not lie to one another, since you stripped off the old self with its evil practices, and have put on the new self, which is being renewed to a true knowledge according to the image of the One who created it... So, as those who have been chosen of God, holy and beloved, put on a heart of compassion, kindness, humility, gentleness, and patience."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -8356,26 +9154,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:9\u201312.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:9\u201312.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:9\u201312.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:9\u201312."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:9–12.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:9–12.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:9–12.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:9–12."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:9\u201312."
+          "usageInPassage": "The primary operational foundation of Colossians 3:9–12."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -8385,11 +9183,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:9\u201312 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Colossians 3:9–12 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -8404,9 +9202,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Clothe yourselves with compassion, kindness, humility, gentleness and patience — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 3:9–12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:9–12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:9–12",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:9–12 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:9–12",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:9–12 in your daily walk today."
       }
     ]
   },
@@ -8427,7 +9246,7 @@ const BIBLE_VERSES = [
       "NASB": "Truly, truly I say to you, if anyone follows My word he will never see death."
     },
     "dynamicContext": {
-      "chapterTitle": "John 8 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "John 8 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of John 8:51 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -8442,7 +9261,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -8452,7 +9271,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -8468,7 +9287,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -8520,7 +9339,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -8554,7 +9373,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -8579,7 +9398,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -8590,7 +9409,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -8604,7 +9423,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -8619,9 +9438,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Whoever obeys my word will never see death — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 8:51 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 8:51. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of John 8:51",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of John 8:51 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of John 8:51",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 8:51 in your daily walk today."
       }
     ]
   },
@@ -8633,16 +9473,16 @@ const BIBLE_VERSES = [
     "categoryLabel": "Strength & Protection",
     "icon": "sun",
     "bentoSpan": "wide",
-    "keyPhrase": "The LORD is my light and my salvation\u2014whom shall I fear?",
+    "keyPhrase": "The LORD is my light and my salvation—whom shall I fear?",
     "themeColor": "rose",
     "translations": {
-      "NIV": "The LORD is my light and my salvation\u2014whom shall I fear? The LORD is the stronghold of my life\u2014of whom shall I be afraid?",
+      "NIV": "The LORD is my light and my salvation—whom shall I fear? The LORD is the stronghold of my life—of whom shall I be afraid?",
       "TPT": "The LORD is my light and the source of my salvation! Whom could I ever fear? The LORD is the fortress of my life, my impenetrable stronghold; why should I be afraid of anything?",
-      "NLT": "The LORD is my light and my salvation\u2014so why should I be afraid? The LORD is my fortress, protecting me from danger, so why should I tremble?",
+      "NLT": "The LORD is my light and my salvation—so why should I be afraid? The LORD is my fortress, protecting me from danger, so why should I tremble?",
       "NASB": "The LORD is my light and my salvation; whom should I fear? The LORD is the defense of my life; whom should I dread?"
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 27 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 27 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 27:1 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -8657,17 +9497,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
             "num": "1",
-            "text": "The LORD is my light and my salvation\u2014whom shall I fear? The LORD is the stronghold of my life\u2014of whom shall I be afraid?"
+            "text": "The LORD is my light and my salvation—whom shall I fear? The LORD is the stronghold of my life—of whom shall I be afraid?"
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -8683,7 +9523,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -8730,12 +9570,12 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "1",
-            "text": "The LORD is my light and my salvation\u2014so why should I be afraid? The LORD is my fortress, protecting me from danger, so why should I tremble?"
+            "text": "The LORD is my light and my salvation—so why should I be afraid? The LORD is my fortress, protecting me from danger, so why should I tremble?"
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -8769,7 +9609,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -8794,8 +9634,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -8805,8 +9645,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -8819,7 +9659,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -8834,15 +9674,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The LORD is my light and my salvation—whom shall I fear? — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 27:1 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 27:1. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Psalm 27:1",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Psalm 27:1 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Psalm 27:1",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 27:1 in your daily walk today."
       }
     ]
   },
   {
     "id": 42,
-    "ref": "Galatians 3:23\u201329",
+    "ref": "Galatians 3:23–29",
     "book": "Galatians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -8851,14 +9712,14 @@ const BIBLE_VERSES = [
     "keyPhrase": "You are all children of God through faith in Christ Jesus... heirs according to the promise",
     "themeColor": "violet",
     "translations": {
-      "NIV": "Before the coming of this faith, we were held in custody under the law... So the law was our guardian until Christ came that we might be justified by faith. Now that this faith has come, we are no longer under a guardian. So in Christ Jesus you are all children of God through faith, for all of you who were baptized into Christ have clothed yourselves with Christ. There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus. If you belong to Christ, then you are Abraham\u2019s seed, and heirs according to the promise.",
-      "TPT": "Before the faith came, we were kept under guard by the law... The law became our guardian until the Anointed One appeared, that we might be justified by faith. But now that this faith has come, we are no longer under a tutor. For you are all children of God through faith in Christ Jesus. For as many of you as were immersed into Christ have clothed yourselves with Christ... If you belong to Christ, you are Abraham\u2019s descendant and heirs according to the promise!",
+      "NIV": "Before the coming of this faith, we were held in custody under the law... So the law was our guardian until Christ came that we might be justified by faith. Now that this faith has come, we are no longer under a guardian. So in Christ Jesus you are all children of God through faith, for all of you who were baptized into Christ have clothed yourselves with Christ. There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus. If you belong to Christ, then you are Abraham’s seed, and heirs according to the promise.",
+      "TPT": "Before the faith came, we were kept under guard by the law... The law became our guardian until the Anointed One appeared, that we might be justified by faith. But now that this faith has come, we are no longer under a tutor. For you are all children of God through faith in Christ Jesus. For as many of you as were immersed into Christ have clothed yourselves with Christ... If you belong to Christ, you are Abraham’s descendant and heirs according to the promise!",
       "NLT": "Before the way of faith in Christ was available to us, we were placed under guard by the law... Let me put it another way. The law was our guardian until Christ came; it protected us until we could be made right with God through faith. And now that the way of faith has come, we no longer need the law as our guardian. For you are all children of God through faith in Christ Jesus... And now that you belong to Christ, you are the true children of Abraham. You are his heirs, and God's promise to Abraham belongs to you.",
       "NASB": "But before faith came, we were kept in custody under the Law... Therefore the Law has become our guardian to lead us to Christ, so that we may be justified by faith. But now that faith has come, we are no longer under a guardian. For you are all sons and daughters of God through faith in Christ Jesus. For all of you who were baptized into Christ have clothed yourselves with Christ... And if you belong to Christ, then you are Abraham's descendants, heirs according to promise."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 3:23\u201329 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Galatians 3:23–29 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -8872,17 +9733,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "23\u201329",
-            "text": "Before the coming of this faith, we were held in custody under the law... So the law was our guardian until Christ came that we might be justified by faith. Now that this faith has come, we are no longer under a guardian. So in Christ Jesus you are all children of God through faith, for all of you who were baptized into Christ have clothed yourselves with Christ. There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus. If you belong to Christ, then you are Abraham\u2019s seed, and heirs according to the promise."
+            "num": "23–29",
+            "text": "Before the coming of this faith, we were held in custody under the law... So the law was our guardian until Christ came that we might be justified by faith. Now that this faith has come, we are no longer under a guardian. So in Christ Jesus you are all children of God through faith, for all of you who were baptized into Christ have clothed yourselves with Christ. There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus. If you belong to Christ, then you are Abraham’s seed, and heirs according to the promise."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -8898,7 +9759,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -8910,8 +9771,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "23\u201329",
-            "text": "Before the faith came, we were kept under guard by the law... The law became our guardian until the Anointed One appeared, that we might be justified by faith. But now that this faith has come, we are no longer under a tutor. For you are all children of God through faith in Christ Jesus. For as many of you as were immersed into Christ have clothed yourselves with Christ... If you belong to Christ, you are Abraham\u2019s descendant and heirs according to the promise!"
+            "num": "23–29",
+            "text": "Before the faith came, we were kept under guard by the law... The law became our guardian until the Anointed One appeared, that we might be justified by faith. But now that this faith has come, we are no longer under a tutor. For you are all children of God through faith in Christ Jesus. For as many of you as were immersed into Christ have clothed yourselves with Christ... If you belong to Christ, you are Abraham’s descendant and heirs according to the promise!"
           },
           "after": [
             {
@@ -8944,13 +9805,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "23\u201329",
+            "num": "23–29",
             "text": "Before the way of faith in Christ was available to us, we were placed under guard by the law... Let me put it another way. The law was our guardian until Christ came; it protected us until we could be made right with God through faith. And now that the way of faith has come, we no longer need the law as our guardian. For you are all children of God through faith in Christ Jesus... And now that you belong to Christ, you are the true children of Abraham. You are his heirs, and God's promise to Abraham belongs to you."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -8978,13 +9839,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "23\u201329",
+            "num": "23–29",
             "text": "But before faith came, we were kept in custody under the Law... Therefore the Law has become our guardian to lead us to Christ, so that we may be justified by faith. But now that faith has come, we are no longer under a guardian. For you are all sons and daughters of God through faith in Christ Jesus. For all of you who were baptized into Christ have clothed yourselves with Christ... And if you belong to Christ, then you are Abraham's descendants, heirs according to promise."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -9001,26 +9862,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 3:23\u201329.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 3:23\u201329.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 3:23\u201329.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 3:23\u201329."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 3:23–29.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 3:23–29.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 3:23–29.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 3:23–29."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 3:23\u201329."
+          "usageInPassage": "The primary operational foundation of Galatians 3:23–29."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -9030,11 +9891,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 3:23\u201329 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Galatians 3:23–29 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -9049,15 +9910,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You are all children of God through faith in Christ Jesus... heirs according to the promise — Grace Revelation",
+      "quote": "Under the new covenant of grace, Galatians 3:23–29 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 3:23–29. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Galatians 3:23–29",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Galatians 3:23–29 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Galatians 3:23–29",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 3:23–29 in your daily walk today."
       }
     ]
   },
   {
     "id": 43,
-    "ref": "Isaiah 43:18\u201319",
+    "ref": "Isaiah 43:18–19",
     "book": "Isaiah",
     "category": "healing-renewal",
     "categoryLabel": "Healing & Renewal",
@@ -9067,13 +9949,13 @@ const BIBLE_VERSES = [
     "themeColor": "purple",
     "translations": {
       "NIV": "Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.",
-      "TPT": "Stop dwelling on the past. Don\u2019t even think about what\u2019s behind you! Look! I am doing a new thing; now it springs forth! Can\u2019t you see it? I am making a road in the desert and rivers in the dry wilderness.",
-      "NLT": "But forget all that\u2014it is nothing compared to what I am going to do. For I am about to do something new. See, I have already begun! Do you not see it? I will make a pathway through the wilderness. I will create rivers in the dry wasteland.",
+      "TPT": "Stop dwelling on the past. Don’t even think about what’s behind you! Look! I am doing a new thing; now it springs forth! Can’t you see it? I am making a road in the desert and rivers in the dry wilderness.",
+      "NLT": "But forget all that—it is nothing compared to what I am going to do. For I am about to do something new. See, I have already begun! Do you not see it? I will make a pathway through the wilderness. I will create rivers in the dry wasteland.",
       "NASB": "Do not call to mind the former things, or ponder things of the past. Behold, I will do something new, now it will spring forth; will you not be aware of it? I will even make a roadway in the wilderness, rivers in the desert."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 43 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 43:18\u201319 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 43 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 43:18–19 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -9087,17 +9969,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "18\u201319",
+            "num": "18–19",
             "text": "Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -9113,7 +9995,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -9125,8 +10007,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "18\u201319",
-            "text": "Stop dwelling on the past. Don\u2019t even think about what\u2019s behind you! Look! I am doing a new thing; now it springs forth! Can\u2019t you see it? I am making a road in the desert and rivers in the dry wilderness."
+            "num": "18–19",
+            "text": "Stop dwelling on the past. Don’t even think about what’s behind you! Look! I am doing a new thing; now it springs forth! Can’t you see it? I am making a road in the desert and rivers in the dry wilderness."
           },
           "after": [
             {
@@ -9159,13 +10041,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "18\u201319",
-            "text": "But forget all that\u2014it is nothing compared to what I am going to do. For I am about to do something new. See, I have already begun! Do you not see it? I will make a pathway through the wilderness. I will create rivers in the dry wasteland."
+            "num": "18–19",
+            "text": "But forget all that—it is nothing compared to what I am going to do. For I am about to do something new. See, I have already begun! Do you not see it? I will make a pathway through the wilderness. I will create rivers in the dry wasteland."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -9193,13 +10075,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "18\u201319",
+            "num": "18–19",
             "text": "Do not call to mind the former things, or ponder things of the past. Behold, I will do something new, now it will spring forth; will you not be aware of it? I will even make a roadway in the wilderness, rivers in the desert."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -9216,27 +10098,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 43:18\u201319.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 43:18\u201319.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 43:18\u201319.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 43:18\u201319."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 43:18–19.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 43:18–19.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 43:18–19.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 43:18–19."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 43:18\u201319."
+          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 43:18–19."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -9245,11 +10127,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 43:18\u201319 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Isaiah 43:18–19 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -9264,9 +10146,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "See, I am doing a new thing! Now it springs up; do you not perceive it? — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 43:18–19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 43:18–19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 43:18–19",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 43:18–19 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 43:18–19",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 43:18–19 in your daily walk today."
       }
     ]
   },
@@ -9287,7 +10190,7 @@ const BIBLE_VERSES = [
       "NASB": "I will give thanks to You with an upright heart, when I learn Your righteous judgments."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -9302,7 +10205,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -9312,7 +10215,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -9328,7 +10231,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -9380,7 +10283,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -9414,7 +10317,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -9439,8 +10342,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -9450,8 +10353,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -9464,7 +10367,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -9479,9 +10382,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I will praise you with an upright heart as I learn your righteous laws — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 119:7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:7",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:7",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:7 in your daily walk today."
       }
     ]
   },
@@ -9502,7 +10426,7 @@ const BIBLE_VERSES = [
       "NASB": "I have treasured Your word in my heart, so that I may not sin against You."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:11 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -9517,7 +10441,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -9527,7 +10451,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -9543,7 +10467,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -9595,7 +10519,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -9629,7 +10553,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -9654,8 +10578,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -9665,8 +10589,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -9679,7 +10603,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -9694,15 +10618,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I have hidden your word in my heart that I might not sin against you — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 119:11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:11",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:11 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:11",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:11 in your daily walk today."
       }
     ]
   },
   {
     "id": 46,
-    "ref": "Psalm 119:13\u201316",
+    "ref": "Psalm 119:13–16",
     "book": "Psalms",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Truth",
@@ -9717,8 +10662,8 @@ const BIBLE_VERSES = [
       "NASB": "With my lips I have told of all the ordinances of Your mouth. I have rejoiced in the way of Your testimonies, as much as in all riches. I will meditate on Your precepts and regard Your ways. I shall delight in Your statutes; I will not forget Your word."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:13\u201316 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:13–16 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -9732,17 +10677,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "13\u201316",
+            "num": "13–16",
             "text": "With my lips I recount all the laws that come from your mouth. I rejoice in following your statutes as one rejoices in great riches. I meditate on your precepts and consider your ways. I delight in your decrees; I will not neglect your word."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -9758,7 +10703,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -9770,7 +10715,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "13\u201316",
+            "num": "13–16",
             "text": "With my lips I proclaim all the regulations of your mouth. I rejoice in following your decrees as much as in all riches. I will meditate on your precepts and give respect to your ways. I will delight in your statutes; I will not forget your word."
           },
           "after": [
@@ -9804,13 +10749,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "13\u201316",
+            "num": "13–16",
             "text": "I have recited aloud all the regulations you have given us. I have rejoiced in your laws as much as in riches. I will study your commandments and reflect on your ways. I will delight in your decrees and not forget your word."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -9838,13 +10783,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "13\u201316",
+            "num": "13–16",
             "text": "With my lips I have told of all the ordinances of Your mouth. I have rejoiced in the way of Your testimonies, as much as in all riches. I will meditate on Your precepts and regard Your ways. I shall delight in Your statutes; I will not forget Your word."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -9861,27 +10806,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:13\u201316.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:13\u201316.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:13\u201316.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:13\u201316."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:13–16.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:13–16.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:13–16.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:13–16."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:13\u201316."
+          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:13–16."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -9890,11 +10835,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:13\u201316 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Psalm 119:13–16 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -9909,15 +10854,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I delight in your decrees; I will not neglect your word — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 119:13–16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:13–16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:13–16",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:13–16 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:13–16",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:13–16 in your daily walk today."
       }
     ]
   },
   {
     "id": 47,
-    "ref": "Psalm 16:7\u20138",
+    "ref": "Psalm 16:7–8",
     "book": "Psalms",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Guidance",
@@ -9932,8 +10898,8 @@ const BIBLE_VERSES = [
       "NASB": "I will bless the LORD who has advised me; indeed, my mind instructs me in the night. I have set the LORD continually before me; because He is at my right hand, I will not be shaken."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 16 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 16:7\u20138 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 16 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Psalm 16:7–8 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -9947,17 +10913,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "I will praise the LORD, who counsels me; even at night my heart instructs me. I keep my eyes always on the LORD. With him at my right hand, I will not be shaken."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -9973,7 +10939,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -9985,7 +10951,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "I will praise Yahweh who counsels me; even in the night my innermost feelings instruct me. Because I always set Yahweh before me and he is at my right hand, I will never be shaken."
           },
           "after": [
@@ -10019,13 +10985,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "I will bless the LORD who guides me; even at night my heart instructs me. I know the LORD is always with me. I will not be shaken, for he is right beside me."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -10053,13 +11019,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "7\u20138",
+            "num": "7–8",
             "text": "I will bless the LORD who has advised me; indeed, my mind instructs me in the night. I have set the LORD continually before me; because He is at my right hand, I will not be shaken."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -10076,27 +11042,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 16:7\u20138.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 16:7\u20138.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 16:7\u20138.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 16:7\u20138."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 16:7–8.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 16:7–8.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 16:7–8.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 16:7–8."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 16:7\u20138."
+          "usageInPassage": "The bedrock guarantee of God's character in Psalm 16:7–8."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -10105,11 +11071,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 16:7\u20138 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Psalm 16:7–8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -10124,9 +11090,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Because he is at my right hand, I will not be shaken — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 16:7–8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 16:7–8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 16:7–8",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 16:7–8 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 16:7–8",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:7–8 in your daily walk today."
       }
     ]
   },
@@ -10147,7 +11134,7 @@ const BIBLE_VERSES = [
       "NASB": "If you remain in Me, and My words remain in you, ask whatever you wish, and it will be done for you."
     },
     "dynamicContext": {
-      "chapterTitle": "John 15 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "John 15 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of John 15:7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -10162,7 +11149,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -10172,7 +11159,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -10188,7 +11175,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -10240,7 +11227,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -10274,7 +11261,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -10299,7 +11286,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -10310,7 +11297,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -10324,7 +11311,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -10339,9 +11326,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "If you remain in me and my words remain in you, ask whatever you wish — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 15:7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 15:7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of John 15:7",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of John 15:7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of John 15:7",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 15:7 in your daily walk today."
       }
     ]
   },
@@ -10362,7 +11370,7 @@ const BIBLE_VERSES = [
       "NASB": "I will meditate on all Your work, and consider Your deeds."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 77 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 77 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 77:12 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -10377,7 +11385,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -10387,7 +11395,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -10403,7 +11411,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -10455,7 +11463,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -10489,7 +11497,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -10514,8 +11522,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -10525,8 +11533,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -10539,7 +11547,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -10554,9 +11562,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I will consider all your works and meditate on all your mighty deeds — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 77:12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 77:12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Psalm 77:12",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 77:12 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 77:12",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 77:12 in your daily walk today."
       }
     ]
   },
@@ -10577,7 +11606,7 @@ const BIBLE_VERSES = [
       "NASB": "I have been crucified with Christ; and it is no longer I who live, but Christ lives in me; and the life which I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself up for me."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 2 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Galatians 2 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Galatians 2:20 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -10592,7 +11621,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -10602,7 +11631,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -10618,7 +11647,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -10670,7 +11699,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -10704,7 +11733,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -10729,7 +11758,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -10740,7 +11769,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -10754,7 +11783,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -10769,9 +11798,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I have been crucified with Christ and I no longer live, but Christ lives in me — Grace Revelation",
+      "quote": "Under the new covenant of grace, Galatians 2:20 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 2:20. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Galatians 2:20",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Galatians 2:20 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Galatians 2:20",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 2:20 in your daily walk today."
       }
     ]
   },
@@ -10788,11 +11838,11 @@ const BIBLE_VERSES = [
     "translations": {
       "NIV": "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go.",
       "TPT": "Have I not commanded you? Be strong and courageous! Do not be terrified or dismayed, for Yahweh your God is with you wherever you go!",
-      "NLT": "This is my command\u2014be strong and courageous! Do not be afraid or discouraged. For the LORD your God is with you wherever you go.",
+      "NLT": "This is my command—be strong and courageous! Do not be afraid or discouraged. For the LORD your God is with you wherever you go.",
       "NASB": "Have I not commanded you? Be strong and courageous! Do not be terrified or dismayed, for the LORD your God is with you wherever you go."
     },
     "dynamicContext": {
-      "chapterTitle": "Joshua 1 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Joshua 1 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Joshua 1:9 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -10807,7 +11857,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -10817,7 +11867,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -10833,7 +11883,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -10880,12 +11930,12 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "9",
-            "text": "This is my command\u2014be strong and courageous! Do not be afraid or discouraged. For the LORD your God is with you wherever you go."
+            "text": "This is my command—be strong and courageous! Do not be afraid or discouraged. For the LORD your God is with you wherever you go."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -10919,7 +11969,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -10944,8 +11994,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -10955,8 +12005,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -10969,7 +12019,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -10984,9 +12034,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you — Grace Revelation",
+      "quote": "Under the new covenant of grace, Joshua 1:9 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Joshua 1:9. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Joshua 1:9",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Joshua 1:9 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Joshua 1:9",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Joshua 1:9 in your daily walk today."
       }
     ]
   },
@@ -11007,7 +12078,7 @@ const BIBLE_VERSES = [
       "NASB": "For God has not given us a spirit of timidity, but of power and love and discipline."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Timothy 1 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "2 Timothy 1 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 2 Timothy 1:7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -11022,7 +12093,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -11032,7 +12103,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -11048,7 +12119,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -11100,7 +12171,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -11134,7 +12205,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -11159,7 +12230,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -11170,7 +12241,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -11184,7 +12255,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -11199,9 +12270,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "God has not given us a spirit of fear, but of power and of love and of a sound mind — Grace Revelation",
+      "quote": "Under the new covenant of grace, 2 Timothy 1:7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Timothy 1:7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of 2 Timothy 1:7",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of 2 Timothy 1:7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of 2 Timothy 1:7",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Timothy 1:7 in your daily walk today."
       }
     ]
   },
@@ -11222,7 +12314,7 @@ const BIBLE_VERSES = [
       "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 41 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 41 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 41:10 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -11237,7 +12329,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -11247,7 +12339,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -11263,7 +12355,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -11315,7 +12407,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -11349,7 +12441,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -11374,8 +12466,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -11385,8 +12477,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -11399,7 +12491,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -11414,9 +12506,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I will strengthen you and help you; I will uphold you with my righteous right hand — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 41:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 41:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Isaiah 41:10",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Isaiah 41:10 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Isaiah 41:10",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 41:10 in your daily walk today."
       }
     ]
   },
@@ -11437,7 +12550,7 @@ const BIBLE_VERSES = [
       "NASB": "I sought the LORD, and He answered me, and rescued me from all my fears."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 34 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 34 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 34:4 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -11452,7 +12565,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -11462,7 +12575,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -11478,7 +12591,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -11530,7 +12643,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -11564,7 +12677,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -11589,8 +12702,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -11600,8 +12713,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -11614,7 +12727,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -11629,9 +12742,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I sought the LORD, and he answered me; he delivered me from all my fears — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 34:4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 34:4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Psalm 34:4",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Psalm 34:4 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Psalm 34:4",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 34:4 in your daily walk today."
       }
     ]
   },
@@ -11652,7 +12786,7 @@ const BIBLE_VERSES = [
       "NASB": "The LORD is for me; I will not fear; what can man do to me?"
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 118 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 118 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 118:6 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -11667,7 +12801,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -11677,7 +12811,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -11693,7 +12827,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -11745,7 +12879,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -11779,7 +12913,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -11804,8 +12938,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -11815,8 +12949,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -11829,7 +12963,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -11844,15 +12978,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The LORD is with me; I will not be afraid. What can mere mortals do to me? — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 118:6 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 118:6. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Psalm 118:6",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Psalm 118:6 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Psalm 118:6",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 118:6 in your daily walk today."
       }
     ]
   },
   {
     "id": 56,
-    "ref": "Proverbs 3:5\u20136",
+    "ref": "Proverbs 3:5–6",
     "book": "Proverbs",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Guidance",
@@ -11867,8 +13022,8 @@ const BIBLE_VERSES = [
       "NASB": "Trust in the LORD with all your heart and do not lean on your own understanding. In all your ways acknowledge Him, and He will make your paths straight."
     },
     "dynamicContext": {
-      "chapterTitle": "Proverbs 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Proverbs 3:5\u20136 revealing God's covenant faithfulness.",
+      "chapterTitle": "Proverbs 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Proverbs 3:5–6 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -11882,17 +13037,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "5\u20136",
+            "num": "5–6",
             "text": "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -11908,7 +13063,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -11920,7 +13075,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "5\u20136",
+            "num": "5–6",
             "text": "Trust in the Lord completely, and do not rely on your own opinions. With all your heart rely on him to guide you, and he will lead you in every decision you make. Become intimate with him in whatever you do, and he will lead you wherever you go."
           },
           "after": [
@@ -11954,13 +13109,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "5\u20136",
+            "num": "5–6",
             "text": "Trust in the LORD with all your heart; do not depend on your own understanding. Seek his will in all you do, and he will show you which path to take."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -11988,13 +13143,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "5\u20136",
+            "num": "5–6",
             "text": "Trust in the LORD with all your heart and do not lean on your own understanding. In all your ways acknowledge Him, and He will make your paths straight."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -12011,27 +13166,27 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Proverbs 3:5\u20136.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Proverbs 3:5\u20136.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Proverbs 3:5\u20136.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Proverbs 3:5\u20136."
+        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Proverbs 3:5–6.",
+        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Proverbs 3:5–6.",
+        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Proverbs 3:5–6.",
+        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Proverbs 3:5–6."
       },
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
           "root": "Ardent, loyal, unbreakable covenant devotion",
           "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Proverbs 3:5\u20136."
+          "usageInPassage": "The bedrock guarantee of God's character in Proverbs 3:5–6."
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -12040,11 +13195,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "The atmospheric peace and provision given by Yahweh."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Proverbs 3:5\u20136 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "In Biblical Hebrew, Proverbs 3:5–6 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -12059,15 +13214,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Trust in the LORD with all your heart and lean not on your own understanding — Grace Revelation",
+      "quote": "Under the new covenant of grace, Proverbs 3:5–6 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Proverbs 3:5–6. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Proverbs 3:5–6",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Proverbs 3:5–6 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Proverbs 3:5–6",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Proverbs 3:5–6 in your daily walk today."
       }
     ]
   },
   {
     "id": 57,
-    "ref": "Mark 16:17\u201318",
+    "ref": "Mark 16:17–18",
     "book": "Mark",
     "category": "faith-prayer",
     "categoryLabel": "Faith & Authority",
@@ -12082,8 +13258,8 @@ const BIBLE_VERSES = [
       "NASB": "These signs will accompany those who have believed: in My name they will cast out demons, they will speak with new tongues; they will pick up serpents, and if they drink any deadly poison, it will not hurt them; they will lay hands on the sick, and they will recover."
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 16 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Mark 16:17\u201318 revealing God's covenant faithfulness.",
+      "chapterTitle": "Mark 16 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Mark 16:17–18 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -12097,17 +13273,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "17\u201318",
+            "num": "17–18",
             "text": "And these signs will accompany those who believe: In my name they will drive out demons; they will speak in new tongues; they will pick up snakes with their hands; and when they drink deadly poison, it will not hurt them at all; they will place their hands on sick people, and they will get well."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -12123,7 +13299,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -12135,7 +13311,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "17\u201318",
+            "num": "17–18",
             "text": "And these miracle signs will accompany those who believe: They will drive out demons in the power of my name. They will speak in new tongues. They will handle snakes with safety, and if they drink anything poisonous, it will not hurt them at all. They will lay hands on the sick and they will be healed."
           },
           "after": [
@@ -12169,13 +13345,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "17\u201318",
+            "num": "17–18",
             "text": "These miraculous signs will accompany those who believe: They will cast out demons in my name, and they will speak in new languages. They will be able to handle snakes with safety, and if they drink anything poisonous, it won't hurt them. They will be able to place their hands on sick people, and they will be healed."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -12203,13 +13379,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "17\u201318",
+            "num": "17–18",
             "text": "These signs will accompany those who have believed: in My name they will cast out demons, they will speak with new tongues; they will pick up serpents, and if they drink any deadly poison, it will not hurt them; they will lay hands on the sick, and they will recover."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -12226,26 +13402,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Mark 16:17\u201318.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Mark 16:17\u201318.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Mark 16:17\u201318.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Mark 16:17\u201318."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Mark 16:17–18.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Mark 16:17–18.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Mark 16:17–18.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Mark 16:17–18."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Mark 16:17\u201318."
+          "usageInPassage": "The primary operational foundation of Mark 16:17–18."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -12255,11 +13431,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Mark 16:17\u201318 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Mark 16:17–18 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -12274,9 +13450,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "These signs will accompany those who believe: In my name they will drive out demons... they will place their hands on sick people, and they will get well — Grace Revelation",
+      "quote": "Under the new covenant of grace, Mark 16:17–18 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 16:17–18. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 16:17–18",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 16:17–18 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 16:17–18",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 16:17–18 in your daily walk today."
       }
     ]
   },
@@ -12297,7 +13494,7 @@ const BIBLE_VERSES = [
       "NASB": "But in all these things we overwhelmingly conquer through Him who loved us."
     },
     "dynamicContext": {
-      "chapterTitle": "Romans 8 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Romans 8 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Romans 8:37 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -12312,7 +13509,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -12322,7 +13519,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -12338,7 +13535,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -12390,7 +13587,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -12424,7 +13621,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -12449,7 +13646,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -12460,7 +13657,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -12474,7 +13671,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -12489,9 +13686,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "No, in all these things we are more than conquerors through him who loved us — Grace Revelation",
+      "quote": "Under the new covenant of grace, Romans 8:37 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Romans 8:37. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Romans 8:37",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Romans 8:37 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Romans 8:37",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 8:37 in your daily walk today."
       }
     ]
   },
@@ -12512,7 +13730,7 @@ const BIBLE_VERSES = [
       "NASB": "For nothing will be impossible with God."
     },
     "dynamicContext": {
-      "chapterTitle": "Luke 1 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Luke 1 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Luke 1:37 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -12527,7 +13745,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -12537,7 +13755,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -12553,7 +13771,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -12605,7 +13823,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -12639,7 +13857,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -12664,7 +13882,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -12675,7 +13893,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -12689,7 +13907,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -12704,9 +13922,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "For no word from God will ever fail — Grace Revelation",
+      "quote": "Under the new covenant of grace, Luke 1:37 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Luke 1:37. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Luke 1:37",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Luke 1:37 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Luke 1:37",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 1:37 in your daily walk today."
       }
     ]
   },
@@ -12722,12 +13961,12 @@ const BIBLE_VERSES = [
     "themeColor": "rose",
     "translations": {
       "NIV": "I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy; nothing will harm you.",
-      "TPT": "Now you understand that I have imparted to you all my authority to trample over his kingdom. You will walk upon serpents and scorpions and overcome all the power of the enemy\u2014nothing will harm you.",
+      "TPT": "Now you understand that I have imparted to you all my authority to trample over his kingdom. You will walk upon serpents and scorpions and overcome all the power of the enemy—nothing will harm you.",
       "NLT": "Look, I have given you authority over all the power of the enemy, and you can walk among snakes and scorpions and crush them. Nothing will injure you.",
       "NASB": "Behold, I have given you authority to walk on snakes and scorpions, and authority over all the power of the enemy, and nothing will injure you."
     },
     "dynamicContext": {
-      "chapterTitle": "Luke 10 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Luke 10 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Luke 10:19 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -12742,7 +13981,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -12752,7 +13991,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -12768,7 +14007,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -12781,7 +14020,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "19",
-            "text": "Now you understand that I have imparted to you all my authority to trample over his kingdom. You will walk upon serpents and scorpions and overcome all the power of the enemy\u2014nothing will harm you."
+            "text": "Now you understand that I have imparted to you all my authority to trample over his kingdom. You will walk upon serpents and scorpions and overcome all the power of the enemy—nothing will harm you."
           },
           "after": [
             {
@@ -12820,7 +14059,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -12854,7 +14093,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -12879,7 +14118,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -12890,7 +14129,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -12904,7 +14143,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -12919,9 +14158,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy — Grace Revelation",
+      "quote": "Under the new covenant of grace, Luke 10:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Luke 10:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Luke 10:19",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Luke 10:19 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Luke 10:19",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 10:19 in your daily walk today."
       }
     ]
   },
@@ -12942,7 +14202,7 @@ const BIBLE_VERSES = [
       "NASB": "Truly I say to you, whoever says to this mountain, 'Be taken up and thrown into the sea,' and does not doubt in his heart, but believes that what he says is going to happen, it will be granted to him."
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 11 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Mark 11 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Mark 11:23 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -12957,7 +14217,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -12967,7 +14227,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -12983,7 +14243,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -13035,7 +14295,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -13069,7 +14329,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -13094,7 +14354,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -13105,7 +14365,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -13119,7 +14379,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -13134,9 +14394,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Truly I tell you, if anyone says to this mountain, 'Go, throw yourself into the sea,' it will be done — Grace Revelation",
+      "quote": "Under the new covenant of grace, Mark 11:23 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 11:23. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Mount Carmel",
+        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 11:23",
+        "character": "Elijah the Prophet",
+        "ref": "1 Kings 18:36–46",
+        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 11:23 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Jerusalem Church",
+        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 11:23",
+        "character": "Peter & The Praying Church",
+        "ref": "Acts 12:5–17",
+        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 11:23 in your daily walk today."
       }
     ]
   },
@@ -13157,7 +14438,7 @@ const BIBLE_VERSES = [
       "NASB": "Yet not a hair of your head will perish."
     },
     "dynamicContext": {
-      "chapterTitle": "Luke 21 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Luke 21 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Luke 21:18 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -13172,7 +14453,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -13182,7 +14463,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -13198,7 +14479,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -13250,7 +14531,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -13284,7 +14565,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -13309,7 +14590,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -13320,7 +14601,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -13334,7 +14615,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -13349,9 +14630,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "But not a hair of your head will perish — Grace Revelation",
+      "quote": "Under the new covenant of grace, Luke 21:18 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Luke 21:18. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Luke 21:18",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Luke 21:18 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Luke 21:18",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 21:18 in your daily walk today."
       }
     ]
   },
@@ -13366,13 +14668,13 @@ const BIBLE_VERSES = [
     "keyPhrase": "That person is like a tree planted by streams of water... Whatever they do prospers",
     "themeColor": "emerald",
     "translations": {
-      "NIV": "That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither\u2014whatever they do prospers.",
+      "NIV": "That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither—whatever they do prospers.",
       "TPT": "He will be standing firm like a flourishing tree planted by streams of living water, which yields its fruit in each season and whose leaves never wither; and in everything he does, he prospers!",
       "NLT": "They are like trees planted along the riverbank, bearing fruit each season. Their leaves never wither, and they prosper in all they do.",
       "NASB": "He will be like a tree planted by streams of water, which yields its fruit in its season, and its leaf does not wither; and in whatever he does, he prospers."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 1 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 1 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 1:3 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -13387,17 +14689,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
             "num": "3",
-            "text": "That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither\u2014whatever they do prospers."
+            "text": "That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither—whatever they do prospers."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -13413,7 +14715,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -13465,7 +14767,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -13499,7 +14801,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -13524,8 +14826,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -13535,8 +14837,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -13549,7 +14851,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -13564,15 +14866,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "That person is like a tree planted by streams of water... Whatever they do prospers — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 1:3 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 1:3. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 1:3",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 1:3 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 1:3",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 1:3 in your daily walk today."
       }
     ]
   },
   {
     "id": 64,
-    "ref": "Romans 8:31\u201332",
+    "ref": "Romans 8:31–32",
     "book": "Romans",
     "category": "courage-protection",
     "categoryLabel": "Victory & Power",
@@ -13581,14 +14904,14 @@ const BIBLE_VERSES = [
     "keyPhrase": "If God is for us, who can be against us?",
     "themeColor": "rose",
     "translations": {
-      "NIV": "What, then, shall we say in response to these things? If God is for us, who can be against us? He who did not spare his own Son, but gave him up for us all\u2014how will he not also, along with him, graciously give us all things?",
-      "TPT": "So, what does all this mean? If God has determined to stand with us, tell me, who then could ever stand against us? For God has proved his love by giving us his greatest treasure, the gift of his Son. And since he did not spare him, won\u2019t he also freely give us everything else along with him?",
+      "NIV": "What, then, shall we say in response to these things? If God is for us, who can be against us? He who did not spare his own Son, but gave him up for us all—how will he not also, along with him, graciously give us all things?",
+      "TPT": "So, what does all this mean? If God has determined to stand with us, tell me, who then could ever stand against us? For God has proved his love by giving us his greatest treasure, the gift of his Son. And since he did not spare him, won’t he also freely give us everything else along with him?",
       "NLT": "What shall we say about such wonderful things as these? If God is for us, who can ever be against us? Since he did not spare even his own Son but gave him up for us all, won't he also give us everything else?",
       "NASB": "What then shall we say to these things? If God is for us, who is against us? He who did not spare His own Son, but delivered Him over for us all, how will He not also with Him freely give us all things?"
     },
     "dynamicContext": {
-      "chapterTitle": "Romans 8 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Romans 8:31\u201332 revealing God's covenant faithfulness.",
+      "chapterTitle": "Romans 8 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Romans 8:31–32 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -13602,17 +14925,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "31\u201332",
-            "text": "What, then, shall we say in response to these things? If God is for us, who can be against us? He who did not spare his own Son, but gave him up for us all\u2014how will he not also, along with him, graciously give us all things?"
+            "num": "31–32",
+            "text": "What, then, shall we say in response to these things? If God is for us, who can be against us? He who did not spare his own Son, but gave him up for us all—how will he not also, along with him, graciously give us all things?"
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -13628,7 +14951,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -13640,8 +14963,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "31\u201332",
-            "text": "So, what does all this mean? If God has determined to stand with us, tell me, who then could ever stand against us? For God has proved his love by giving us his greatest treasure, the gift of his Son. And since he did not spare him, won\u2019t he also freely give us everything else along with him?"
+            "num": "31–32",
+            "text": "So, what does all this mean? If God has determined to stand with us, tell me, who then could ever stand against us? For God has proved his love by giving us his greatest treasure, the gift of his Son. And since he did not spare him, won’t he also freely give us everything else along with him?"
           },
           "after": [
             {
@@ -13674,13 +14997,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "31\u201332",
+            "num": "31–32",
             "text": "What shall we say about such wonderful things as these? If God is for us, who can ever be against us? Since he did not spare even his own Son but gave him up for us all, won't he also give us everything else?"
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -13708,13 +15031,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "31\u201332",
+            "num": "31–32",
             "text": "What then shall we say to these things? If God is for us, who is against us? He who did not spare His own Son, but delivered Him over for us all, how will He not also with Him freely give us all things?"
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -13731,26 +15054,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Romans 8:31\u201332.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Romans 8:31\u201332.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Romans 8:31\u201332.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Romans 8:31\u201332."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Romans 8:31–32.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Romans 8:31–32.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Romans 8:31–32.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Romans 8:31–32."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Romans 8:31\u201332."
+          "usageInPassage": "The primary operational foundation of Romans 8:31–32."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -13760,11 +15083,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Romans 8:31\u201332 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Romans 8:31–32 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -13779,9 +15102,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "If God is for us, who can be against us? — Grace Revelation",
+      "quote": "Under the new covenant of grace, Romans 8:31–32 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Romans 8:31–32. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Romans 8:31–32",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Romans 8:31–32 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Romans 8:31–32",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 8:31–32 in your daily walk today."
       }
     ]
   },
@@ -13802,7 +15146,7 @@ const BIBLE_VERSES = [
       "NASB": "'No weapon that is formed against you will succeed; and you will condemn every tongue that accuses you in judgment. This is the heritage of the servants of the LORD, and their vindication is from Me,' declares the LORD."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 54 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Isaiah 54 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Isaiah 54:17 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -13817,7 +15161,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -13827,7 +15171,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -13843,7 +15187,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -13895,7 +15239,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -13929,7 +15273,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -13954,8 +15298,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -13965,8 +15309,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -13979,7 +15323,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -13994,9 +15338,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "No weapon forged against you will prevail, and you will refute every tongue that accuses you — Grace Revelation",
+      "quote": "Under the new covenant of grace, Isaiah 54:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 54:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of Isaiah 54:17",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Isaiah 54:17 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of Isaiah 54:17",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 54:17 in your daily walk today."
       }
     ]
   },
@@ -14017,7 +15382,7 @@ const BIBLE_VERSES = [
       "NASB": "Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:15 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -14032,7 +15397,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -14042,7 +15407,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -14058,7 +15423,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -14110,7 +15475,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -14144,7 +15509,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -14169,7 +15534,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -14180,7 +15545,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -14194,7 +15559,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -14209,9 +15574,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Let the peace of Christ rule in your hearts... And be thankful — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 3:15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Colossians 3:15",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Colossians 3:15 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Colossians 3:15",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:15 in your daily walk today."
       }
     ]
   },
@@ -14232,7 +15618,7 @@ const BIBLE_VERSES = [
       "NASB": "Now may the Lord of peace Himself continually grant you peace in every circumstance. The Lord be with you all!"
     },
     "dynamicContext": {
-      "chapterTitle": "2 Thessalonians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "2 Thessalonians 3 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 2 Thessalonians 3:16 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -14247,7 +15633,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -14257,7 +15643,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -14273,7 +15659,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -14325,7 +15711,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -14359,7 +15745,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -14384,7 +15770,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -14395,7 +15781,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -14409,7 +15795,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -14424,9 +15810,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "May the Lord of peace himself give you peace at all times and in every way — Grace Revelation",
+      "quote": "Under the new covenant of grace, 2 Thessalonians 3:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Thessalonians 3:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of 2 Thessalonians 3:16",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of 2 Thessalonians 3:16 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of 2 Thessalonians 3:16",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Thessalonians 3:16 in your daily walk today."
       }
     ]
   },
@@ -14447,7 +15854,7 @@ const BIBLE_VERSES = [
       "NASB": "Those who love Your Law have great peace, and nothing causes them to stumble."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:165 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -14462,7 +15869,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -14472,7 +15879,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -14488,7 +15895,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -14540,7 +15947,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -14574,7 +15981,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -14599,8 +16006,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -14610,8 +16017,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -14624,7 +16031,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -14639,15 +16046,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Great peace have those who love your law, and nothing can make them stumble — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 119:165 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:165. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Psalm 119:165",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Psalm 119:165 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Psalm 119:165",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:165 in your daily walk today."
       }
     ]
   },
   {
     "id": 69,
-    "ref": "Colossians 3:1\u20134",
+    "ref": "Colossians 3:1–4",
     "book": "Colossians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -14662,8 +16090,8 @@ const BIBLE_VERSES = [
       "NASB": "Therefore, if you have been raised with Christ, keep seeking the things that are above, where Christ is, seated at the right hand of God. Set your minds on things above, not on things on the earth. For you died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:1\u20134 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:1–4 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -14677,17 +16105,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "1\u20134",
+            "num": "1–4",
             "text": "Since, then, you have been raised with Christ, set your hearts on things above, where Christ is, seated at the right hand of God. Set your minds on things above, not on earthly things. For you died, and your life is now hidden with Christ in God. When Christ, who is your life, appears, then you also will appear with him in glory."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -14703,7 +16131,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -14715,7 +16143,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u20134",
+            "num": "1–4",
             "text": "Since you were raised with the Messiah, pursue the things above, where Christ is seated at the right hand of God. Feast your thoughts continuously on the heavenly realm and not on this earthly realm! For you have died and your life is hidden with Christ in God. Yes, Christ is your life, and when he appears in all his glory, you will be revealed in glorious splendour with him!"
           },
           "after": [
@@ -14749,13 +16177,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u20134",
+            "num": "1–4",
             "text": "Since you have been raised to new life with Christ, set your sights on the realities of heaven, where Christ sits in the place of honor at God's right hand. Think about the things of heaven, not the things of earth. For you died to this life, and your real life is hidden with Christ in God. And when Christ, who is your life, is revealed to the whole world, you will share in all his glory."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -14783,13 +16211,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "1\u20134",
+            "num": "1–4",
             "text": "Therefore, if you have been raised with Christ, keep seeking the things that are above, where Christ is, seated at the right hand of God. Set your minds on things above, not on things on the earth. For you died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -14806,26 +16234,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:1\u20134.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:1\u20134.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:1\u20134.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:1\u20134."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:1–4.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:1–4.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:1–4.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:1–4."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:1\u20134."
+          "usageInPassage": "The primary operational foundation of Colossians 3:1–4."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -14835,11 +16263,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:1\u20134 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Colossians 3:1–4 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -14854,15 +16282,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Since, then, you have been raised with Christ, set your hearts on things above — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 3:1–4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:1–4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:1–4",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:1–4 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:1–4",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:1–4 in your daily walk today."
       }
     ]
   },
   {
     "id": 70,
-    "ref": "Colossians 3:14\u201317",
+    "ref": "Colossians 3:14–17",
     "book": "Colossians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -14877,8 +16326,8 @@ const BIBLE_VERSES = [
       "NASB": "In addition to all these things put on love, which is the perfect bond of unity. Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful. Let the word of Christ richly dwell within you, with all wisdom teaching and admonishing one another with psalms, hymns, and spiritual songs... Whatever you do in word or deed, do everything in the name of the Lord Jesus, giving thanks through Him to God the Father."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:14\u201317 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:14–17 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -14892,17 +16341,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "14\u201317",
+            "num": "14–17",
             "text": "And over all these virtues put on love, which binds them all together in perfect unity. Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful. Let the message of Christ dwell among you richly as you teach and admonish one another with all wisdom through psalms, hymns, and songs from the Spirit... And whatever you do, whether in word or deed, do it all in the name of the Lord Jesus, giving thanks to God the Father through him."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -14918,7 +16367,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -14930,7 +16379,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "14\u201317",
+            "num": "14–17",
             "text": "And above all these things put on divine love, which is the perfect bond of unity. Let your hearts be always guided by the peace of the Anointed One... Let the word of Christ dwell in you richly in all wisdom, teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord. And whatever you do in word or deed, do everything in the name of the Lord Jesus, giving thanks to God the Father through him."
           },
           "after": [
@@ -14964,13 +16413,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "14\u201317",
+            "num": "14–17",
             "text": "Above all, clothe yourselves with love, which binds us all together in perfect harmony. And let the peace that comes from Christ rule in your hearts. For as members of one body you are called to live in peace. And always be thankful. Let the message about Christ, in all its richness, fill your lives... And whatever you do or say, do it as a representative of the Lord Jesus, giving thanks through him to God the Father."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -14998,13 +16447,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "14\u201317",
+            "num": "14–17",
             "text": "In addition to all these things put on love, which is the perfect bond of unity. Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful. Let the word of Christ richly dwell within you, with all wisdom teaching and admonishing one another with psalms, hymns, and spiritual songs... Whatever you do in word or deed, do everything in the name of the Lord Jesus, giving thanks through Him to God the Father."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -15021,26 +16470,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:14\u201317.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:14\u201317.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:14\u201317.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:14\u201317."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:14–17.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:14–17.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:14–17.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:14–17."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:14\u201317."
+          "usageInPassage": "The primary operational foundation of Colossians 3:14–17."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -15050,11 +16499,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:14\u201317 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Colossians 3:14–17 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -15069,9 +16518,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Over all these virtues put on love, which binds them all together in perfect unity — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 3:14–17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:14–17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:14–17",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:14–17 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:14–17",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:14–17 in your daily walk today."
       }
     ]
   },
@@ -15092,7 +16562,7 @@ const BIBLE_VERSES = [
       "NASB": "So do not worry about tomorrow; for tomorrow will care for itself. Each day has enough trouble of its own."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 6 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Matthew 6 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Matthew 6:34 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -15107,7 +16577,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -15117,7 +16587,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -15133,7 +16603,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -15185,7 +16655,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -15219,7 +16689,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -15244,7 +16714,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -15255,7 +16725,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -15269,7 +16739,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -15284,15 +16754,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Therefore do not worry about tomorrow, for tomorrow will worry about itself — Grace Revelation",
+      "quote": "Under the new covenant of grace, Matthew 6:34 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 6:34. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Matthew 6:34",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Matthew 6:34 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Matthew 6:34",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 6:34 in your daily walk today."
       }
     ]
   },
   {
     "id": 72,
-    "ref": "Matthew 11:28\u201330",
+    "ref": "Matthew 11:28–30",
     "book": "Matthew",
     "category": "peace-rest",
     "categoryLabel": "Peace & Rest",
@@ -15307,8 +16798,8 @@ const BIBLE_VERSES = [
       "NASB": "Come to Me, all who are weary and burdened, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and humble in heart, and you will find rest for your souls. For My yoke is easy and My burden is light."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 11 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 11:28\u201330 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 11 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Matthew 11:28–30 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -15322,17 +16813,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "28\u201330",
+            "num": "28–30",
             "text": "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls. For my yoke is easy and my burden is light."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -15348,7 +16839,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -15360,7 +16851,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "28\u201330",
+            "num": "28–30",
             "text": "Come to me with your heavy burdens, and I will give you rest. Take my yoke upon you, and learn from me, for I am gentle and humble in heart, and you will discover rest for your soul. For the yoke that I offer is pleasant to bear, and my burden is light."
           },
           "after": [
@@ -15394,13 +16885,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "28\u201330",
+            "num": "28–30",
             "text": "Then Jesus said, 'Come to me, all of you who are weary and carry heavy burdens, and I will give you rest. Take my yoke upon you. Let me teach you, because I am humble and gentle at heart, and you will find rest for your souls. For my yoke is easy to bear, and the burden I give you is light.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -15428,13 +16919,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "28\u201330",
+            "num": "28–30",
             "text": "Come to Me, all who are weary and burdened, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and humble in heart, and you will find rest for your souls. For My yoke is easy and My burden is light."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -15451,26 +16942,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 11:28\u201330.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 11:28\u201330.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 11:28\u201330.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 11:28\u201330."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 11:28–30.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 11:28–30.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 11:28–30.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 11:28–30."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 11:28\u201330."
+          "usageInPassage": "The primary operational foundation of Matthew 11:28–30."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -15480,11 +16971,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 11:28\u201330 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Matthew 11:28–30 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -15499,9 +16990,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Come to me, all you who are weary and burdened, and I will give you rest — Grace Revelation",
+      "quote": "Under the new covenant of grace, Matthew 11:28–30 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 11:28–30. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Matthew 11:28–30",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Matthew 11:28–30 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Matthew 11:28–30",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 11:28–30 in your daily walk today."
       }
     ]
   },
@@ -15522,7 +17034,7 @@ const BIBLE_VERSES = [
       "NASB": "In peace I will both lie down and sleep, for You alone, LORD, have me dwell in safety."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 4 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 4 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 4:8 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -15537,7 +17049,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -15547,7 +17059,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -15563,7 +17075,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -15615,7 +17127,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -15649,7 +17161,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -15674,8 +17186,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -15685,8 +17197,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -15699,7 +17211,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -15714,31 +17226,52 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 4:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 4:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Psalm 4:8",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Psalm 4:8 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Psalm 4:8",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 4:8 in your daily walk today."
       }
     ]
   },
   {
     "id": 74,
-    "ref": "Philippians 4:8\u20139",
+    "ref": "Philippians 4:8–9",
     "book": "Philippians",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Truth",
     "icon": "sparkles",
     "bentoSpan": "wide",
-    "keyPhrase": "Whatever is true, whatever is noble, whatever is right, pure, lovely, admirable\u2014think about such things",
+    "keyPhrase": "Whatever is true, whatever is noble, whatever is right, pure, lovely, admirable—think about such things",
     "themeColor": "cyan",
     "translations": {
-      "NIV": "Finally, brothers and sisters, whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely, whatever is admirable\u2014if anything is excellent or praiseworthy\u2014think about such things. Whatever you have learned or received or heard from me, or seen in me\u2014put it into practice. And the God of peace will be with you.",
-      "TPT": "Keep your minds fixed on whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is admirable, whatever is excellent, and whatever is praiseworthy. Put into practice what you\u2019ve learned and received from me, both what you\u2019ve heard and seen. And the God of peace will be with you!",
-      "NLT": "And now, dear brothers and sisters, one final thing. Fix your thoughts on what is true, and honorable, and right, and pure, and lovely, and admirable. Think about things that are excellent and worthy of praise. Keep putting into practice all you learned and received from me\u2014everything you heard from me and saw me doing. Then the God of peace will be with you.",
+      "NIV": "Finally, brothers and sisters, whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely, whatever is admirable—if anything is excellent or praiseworthy—think about such things. Whatever you have learned or received or heard from me, or seen in me—put it into practice. And the God of peace will be with you.",
+      "TPT": "Keep your minds fixed on whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is admirable, whatever is excellent, and whatever is praiseworthy. Put into practice what you’ve learned and received from me, both what you’ve heard and seen. And the God of peace will be with you!",
+      "NLT": "And now, dear brothers and sisters, one final thing. Fix your thoughts on what is true, and honorable, and right, and pure, and lovely, and admirable. Think about things that are excellent and worthy of praise. Keep putting into practice all you learned and received from me—everything you heard from me and saw me doing. Then the God of peace will be with you.",
       "NASB": "Finally, brothers and sisters, whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is commendable, if there is any excellence and if anything worthy of praise, think about these things. As for the things you have learned and received and heard and seen in me, practice these things, and the God of peace will be with you."
     },
     "dynamicContext": {
-      "chapterTitle": "Philippians 4 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:8\u20139 revealing God's covenant faithfulness.",
+      "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:8–9 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -15752,17 +17285,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "8\u20139",
-            "text": "Finally, brothers and sisters, whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely, whatever is admirable\u2014if anything is excellent or praiseworthy\u2014think about such things. Whatever you have learned or received or heard from me, or seen in me\u2014put it into practice. And the God of peace will be with you."
+            "num": "8–9",
+            "text": "Finally, brothers and sisters, whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely, whatever is admirable—if anything is excellent or praiseworthy—think about such things. Whatever you have learned or received or heard from me, or seen in me—put it into practice. And the God of peace will be with you."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -15778,7 +17311,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -15790,8 +17323,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "8\u20139",
-            "text": "Keep your minds fixed on whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is admirable, whatever is excellent, and whatever is praiseworthy. Put into practice what you\u2019ve learned and received from me, both what you\u2019ve heard and seen. And the God of peace will be with you!"
+            "num": "8–9",
+            "text": "Keep your minds fixed on whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is admirable, whatever is excellent, and whatever is praiseworthy. Put into practice what you’ve learned and received from me, both what you’ve heard and seen. And the God of peace will be with you!"
           },
           "after": [
             {
@@ -15824,13 +17357,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "8\u20139",
-            "text": "And now, dear brothers and sisters, one final thing. Fix your thoughts on what is true, and honorable, and right, and pure, and lovely, and admirable. Think about things that are excellent and worthy of praise. Keep putting into practice all you learned and received from me\u2014everything you heard from me and saw me doing. Then the God of peace will be with you."
+            "num": "8–9",
+            "text": "And now, dear brothers and sisters, one final thing. Fix your thoughts on what is true, and honorable, and right, and pure, and lovely, and admirable. Think about things that are excellent and worthy of praise. Keep putting into practice all you learned and received from me—everything you heard from me and saw me doing. Then the God of peace will be with you."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -15858,13 +17391,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "8\u20139",
+            "num": "8–9",
             "text": "Finally, brothers and sisters, whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is commendable, if there is any excellence and if anything worthy of praise, think about these things. As for the things you have learned and received and heard and seen in me, practice these things, and the God of peace will be with you."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -15881,26 +17414,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:8\u20139.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:8\u20139.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:8\u20139.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:8\u20139."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:8–9.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:8–9.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:8–9.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:8–9."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Philippians 4:8\u20139."
+          "usageInPassage": "The primary operational foundation of Philippians 4:8–9."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -15910,11 +17443,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Philippians 4:8\u20139 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Philippians 4:8–9 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -15929,15 +17462,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Whatever is true, whatever is noble, whatever is right, pure, lovely, admirable—think about such things — Grace Revelation",
+      "quote": "Under the new covenant of grace, Philippians 4:8–9 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Philippians 4:8–9. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Philippians 4:8–9",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Philippians 4:8–9 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Philippians 4:8–9",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Philippians 4:8–9 in your daily walk today."
       }
     ]
   },
   {
     "id": 75,
-    "ref": "Philippians 4:6\u20137",
+    "ref": "Philippians 4:6–7",
     "book": "Philippians",
     "category": "peace-rest",
     "categoryLabel": "Peace & Rest",
@@ -15952,8 +17506,8 @@ const BIBLE_VERSES = [
       "NASB": "Do not be anxious about anything, but in everything by prayer and pleading with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all comprehension, will guard your hearts and your minds in Christ Jesus."
     },
     "dynamicContext": {
-      "chapterTitle": "Philippians 4 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:6\u20137 revealing God's covenant faithfulness.",
+      "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:6–7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -15967,17 +17521,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "6\u20137",
+            "num": "6–7",
             "text": "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -15993,7 +17547,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -16005,7 +17559,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "6\u20137",
+            "num": "6–7",
             "text": "Don't be pulled in different directions or worried about a thing. Be saturated in prayer throughout each day, offering your faith-filled requests before God with overflowing gratitude. Tell him every detail of your life, then God's wonderful peace, that transcends human understanding, will make the answers known to your heart and mind through Jesus Christ."
           },
           "after": [
@@ -16039,13 +17593,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "6\u20137",
+            "num": "6–7",
             "text": "Don't worry about anything; instead, pray about everything. Tell God what you need, and thank him for all he has done. Then you will experience God's peace, which exceeds anything we can understand. His peace will guard your hearts and minds as you live in Christ Jesus."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -16073,13 +17627,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "6\u20137",
+            "num": "6–7",
             "text": "Do not be anxious about anything, but in everything by prayer and pleading with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all comprehension, will guard your hearts and your minds in Christ Jesus."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -16096,26 +17650,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:6\u20137.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:6\u20137.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:6\u20137.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:6\u20137."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:6–7.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:6–7.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:6–7.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:6–7."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Philippians 4:6\u20137."
+          "usageInPassage": "The primary operational foundation of Philippians 4:6–7."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -16125,11 +17679,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Philippians 4:6\u20137 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Philippians 4:6–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -16144,9 +17698,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God — Grace Revelation",
+      "quote": "Under the new covenant of grace, Philippians 4:6–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Philippians 4:6–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Philippians 4:6–7",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Philippians 4:6–7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Philippians 4:6–7",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Philippians 4:6–7 in your daily walk today."
       }
     ]
   },
@@ -16162,12 +17737,12 @@ const BIBLE_VERSES = [
     "themeColor": "teal",
     "translations": {
       "NIV": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
-      "TPT": "I leave the gift of peace with you\u2014my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don\u2019t yield to fear or be troubled in your hearts\u2014instead, be courageous!",
-      "NLT": "I am leaving you with a gift\u2014peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
+      "TPT": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!",
+      "NLT": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
       "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful."
     },
     "dynamicContext": {
-      "chapterTitle": "John 14 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "John 14 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of John 14:27 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -16182,7 +17757,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -16192,7 +17767,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -16208,7 +17783,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -16221,7 +17796,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "27",
-            "text": "I leave the gift of peace with you\u2014my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don\u2019t yield to fear or be troubled in your hearts\u2014instead, be courageous!"
+            "text": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!"
           },
           "after": [
             {
@@ -16255,12 +17830,12 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "27",
-            "text": "I am leaving you with a gift\u2014peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid."
+            "text": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -16294,7 +17869,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -16319,7 +17894,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -16330,7 +17905,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -16344,7 +17919,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -16359,15 +17934,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "My peace I give you... Do not let your hearts be troubled and do not be afraid — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 14:27 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 14:27. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Sea of Galilee",
+        "title": "Jesus Rebuking the Fierce Tempest — Testimony of John 14:27",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 4:35–41",
+        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of John 14:27 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Kingdom of Judah",
+        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of John 14:27",
+        "character": "King Jehoshaphat",
+        "ref": "2 Chronicles 20:14–24",
+        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 14:27 in your daily walk today."
       }
     ]
   },
   {
     "id": 77,
-    "ref": "John 8:31\u201332",
+    "ref": "John 8:31–32",
     "book": "John",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Truth",
@@ -16382,8 +17978,8 @@ const BIBLE_VERSES = [
       "NASB": "So Jesus was saying to those Jews who had believed Him, 'If you continue in My word, then you are truly disciples of Mine; and you will know the truth, and the truth will make you free.'"
     },
     "dynamicContext": {
-      "chapterTitle": "John 8 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 8:31\u201332 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 8 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of John 8:31–32 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -16397,17 +17993,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "31\u201332",
+            "num": "31–32",
             "text": "To the Jews who had believed him, Jesus said, 'If you hold to my teaching, you are really my disciples. Then you will know the truth, and the truth will set you free.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -16423,7 +18019,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -16435,7 +18031,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "31\u201332",
+            "num": "31–32",
             "text": "Jesus said to those who believed in him, 'If you continue to embrace the truth of what I teach, you will be my true disciples. You will know the truth, and the truth will release you into freedom.'"
           },
           "after": [
@@ -16469,13 +18065,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "31\u201332",
+            "num": "31–32",
             "text": "Jesus said to the people who believed in him, 'You are truly my disciples if you remain faithful to my teachings. And you will know the truth, and the truth will set you free.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -16503,13 +18099,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "31\u201332",
+            "num": "31–32",
             "text": "So Jesus was saying to those Jews who had believed Him, 'If you continue in My word, then you are truly disciples of Mine; and you will know the truth, and the truth will make you free.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -16526,26 +18122,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 8:31\u201332.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 8:31\u201332.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 8:31\u201332.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 8:31\u201332."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 8:31–32.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 8:31–32.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 8:31–32.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 8:31–32."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 8:31\u201332."
+          "usageInPassage": "The primary operational foundation of John 8:31–32."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -16555,11 +18151,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 8:31\u201332 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, John 8:31–32 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -16574,15 +18170,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Then you will know the truth, and the truth will set you free — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 8:31–32 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 8:31–32. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of John 8:31–32",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of John 8:31–32 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of John 8:31–32",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 8:31–32 in your daily walk today."
       }
     ]
   },
   {
     "id": 78,
-    "ref": "John 15:15\u201316",
+    "ref": "John 15:15–16",
     "book": "John",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -16591,14 +18208,14 @@ const BIBLE_VERSES = [
     "keyPhrase": "I have called you friends... I chose you and appointed you so that you might go and bear fruit",
     "themeColor": "violet",
     "translations": {
-      "NIV": "I no longer call you servants, because a servant does not know his master\u2019s business. Instead, I have called you friends, for everything that I learned from my Father I have made known to you. You did not choose me, but I chose you and appointed you so that you might go and bear fruit\u2014fruit that will last.",
+      "NIV": "I no longer call you servants, because a servant does not know his master’s business. Instead, I have called you friends, for everything that I learned from my Father I have made known to you. You did not choose me, but I chose you and appointed you so that you might go and bear fruit—fruit that will last.",
       "TPT": "I don't call you servants anymore, for a master doesn't explain his business to his servants. Now I call you friends, since I have shared with you everything the Father has revealed to me. You didn't choose me, but I've chosen and commissioned you to go into the world to bear fruit that will last lasting fruit.",
       "NLT": "I no longer call you slaves, because a master doesn't confide in his slaves. Now you are my friends, since I have told you everything the Father told me. You didn't choose me. I chose you. I appointed you to go and produce lasting fruit, so that the Father will give you whatever you ask for, using my name.",
       "NASB": "No longer do I call you slaves, for the slave does not know what his master is doing; but I have called you friends, because all things that I have heard from My Father I have made known to you. You did not choose Me but I chose you, and appointed you that you would go and bear fruit, and that your fruit would remain."
     },
     "dynamicContext": {
-      "chapterTitle": "John 15 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 15:15\u201316 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 15 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of John 15:15–16 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -16612,17 +18229,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "15\u201316",
-            "text": "I no longer call you servants, because a servant does not know his master\u2019s business. Instead, I have called you friends, for everything that I learned from my Father I have made known to you. You did not choose me, but I chose you and appointed you so that you might go and bear fruit\u2014fruit that will last."
+            "num": "15–16",
+            "text": "I no longer call you servants, because a servant does not know his master’s business. Instead, I have called you friends, for everything that I learned from my Father I have made known to you. You did not choose me, but I chose you and appointed you so that you might go and bear fruit—fruit that will last."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -16638,7 +18255,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -16650,7 +18267,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "15\u201316",
+            "num": "15–16",
             "text": "I don't call you servants anymore, for a master doesn't explain his business to his servants. Now I call you friends, since I have shared with you everything the Father has revealed to me. You didn't choose me, but I've chosen and commissioned you to go into the world to bear fruit that will last lasting fruit."
           },
           "after": [
@@ -16684,13 +18301,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "15\u201316",
+            "num": "15–16",
             "text": "I no longer call you slaves, because a master doesn't confide in his slaves. Now you are my friends, since I have told you everything the Father told me. You didn't choose me. I chose you. I appointed you to go and produce lasting fruit, so that the Father will give you whatever you ask for, using my name."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -16718,13 +18335,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "15\u201316",
+            "num": "15–16",
             "text": "No longer do I call you slaves, for the slave does not know what his master is doing; but I have called you friends, because all things that I have heard from My Father I have made known to you. You did not choose Me but I chose you, and appointed you that you would go and bear fruit, and that your fruit would remain."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -16741,26 +18358,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 15:15\u201316.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 15:15\u201316.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 15:15\u201316.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 15:15\u201316."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 15:15–16.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 15:15–16.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 15:15–16.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 15:15–16."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 15:15\u201316."
+          "usageInPassage": "The primary operational foundation of John 15:15–16."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -16770,11 +18387,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 15:15\u201316 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, John 15:15–16 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -16789,15 +18406,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "I have called you friends... I chose you and appointed you so that you might go and bear fruit — Grace Revelation",
+      "quote": "Under the new covenant of grace, John 15:15–16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 15:15–16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of John 15:15–16",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of John 15:15–16 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of John 15:15–16",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 15:15–16 in your daily walk today."
       }
     ]
   },
   {
     "id": 79,
-    "ref": "Titus 3:3\u20137",
+    "ref": "Titus 3:3–7",
     "book": "Titus",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -16808,12 +18446,12 @@ const BIBLE_VERSES = [
     "translations": {
       "NIV": "At one time we too were foolish, disobedient, deceived and enslaved by all kinds of passions and pleasures... But when the kindness and love of God our Savior appeared, he saved us, not because of righteous things we had done, but because of his mercy. He saved us through the washing of rebirth and renewal by the Holy Spirit, whom he poured out on us generously through Jesus Christ our Savior, so that, having been justified by his grace, we might become heirs having the hope of eternal life.",
       "TPT": "For there was a time when we too were foolish, rebellious, deceived, and enslaved by many passions and pleasures... But when the extraordinary compassion and love of God our Savior shone upon us, he saved us! Not because we were good or did righteous things, but because of his rich mercy. He washed away our sins, giving us a new birth and a new life through the Holy Spirit. He poured out this Spirit on us generously through Jesus Christ our Savior.",
-      "NLT": "Once we, too, were foolish and disobedient. We were misled and became slaves to many lusts and pleasures... But\u2014When God our Savior revealed his kindness and love, he saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life through the Holy Spirit. He generously poured out the Spirit upon us through Jesus Christ our Savior.",
+      "NLT": "Once we, too, were foolish and disobedient. We were misled and became slaves to many lusts and pleasures... But—When God our Savior revealed his kindness and love, he saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life through the Holy Spirit. He generously poured out the Spirit upon us through Jesus Christ our Savior.",
       "NASB": "For we too were once foolish, disobedient, deceived, enslaved to various lusts and pleasures... But when the kindness of God our Savior and His love for mankind appeared, He saved us, not on the basis of deeds which we have done in righteousness, but according to His mercy, by the washing of regeneration and renewing by the Holy Spirit, whom He poured out upon us richly through Jesus Christ our Savior, so that being justified by His grace we would be made heirs according to the hope of eternal life."
     },
     "dynamicContext": {
-      "chapterTitle": "Titus 3 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Titus 3:3\u20137 revealing God's covenant faithfulness.",
+      "chapterTitle": "Titus 3 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Titus 3:3–7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -16827,17 +18465,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "3\u20137",
+            "num": "3–7",
             "text": "At one time we too were foolish, disobedient, deceived and enslaved by all kinds of passions and pleasures... But when the kindness and love of God our Savior appeared, he saved us, not because of righteous things we had done, but because of his mercy. He saved us through the washing of rebirth and renewal by the Holy Spirit, whom he poured out on us generously through Jesus Christ our Savior, so that, having been justified by his grace, we might become heirs having the hope of eternal life."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -16853,7 +18491,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -16865,7 +18503,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "3\u20137",
+            "num": "3–7",
             "text": "For there was a time when we too were foolish, rebellious, deceived, and enslaved by many passions and pleasures... But when the extraordinary compassion and love of God our Savior shone upon us, he saved us! Not because we were good or did righteous things, but because of his rich mercy. He washed away our sins, giving us a new birth and a new life through the Holy Spirit. He poured out this Spirit on us generously through Jesus Christ our Savior."
           },
           "after": [
@@ -16899,13 +18537,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "3\u20137",
-            "text": "Once we, too, were foolish and disobedient. We were misled and became slaves to many lusts and pleasures... But\u2014When God our Savior revealed his kindness and love, he saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life through the Holy Spirit. He generously poured out the Spirit upon us through Jesus Christ our Savior."
+            "num": "3–7",
+            "text": "Once we, too, were foolish and disobedient. We were misled and became slaves to many lusts and pleasures... But—When God our Savior revealed his kindness and love, he saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life through the Holy Spirit. He generously poured out the Spirit upon us through Jesus Christ our Savior."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -16933,13 +18571,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "3\u20137",
+            "num": "3–7",
             "text": "For we too were once foolish, disobedient, deceived, enslaved to various lusts and pleasures... But when the kindness of God our Savior and His love for mankind appeared, He saved us, not on the basis of deeds which we have done in righteousness, but according to His mercy, by the washing of regeneration and renewing by the Holy Spirit, whom He poured out upon us richly through Jesus Christ our Savior, so that being justified by His grace we would be made heirs according to the hope of eternal life."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -16956,26 +18594,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Titus 3:3\u20137.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Titus 3:3\u20137.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Titus 3:3\u20137.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Titus 3:3\u20137."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Titus 3:3–7.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Titus 3:3–7.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Titus 3:3–7.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Titus 3:3–7."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Titus 3:3\u20137."
+          "usageInPassage": "The primary operational foundation of Titus 3:3–7."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -16985,11 +18623,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Titus 3:3\u20137 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Titus 3:3–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -17004,31 +18642,52 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "He saved us, not because of righteous things we had done, but because of his mercy — Grace Revelation",
+      "quote": "Under the new covenant of grace, Titus 3:3–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Titus 3:3–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Titus 3:3–7",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Titus 3:3–7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Titus 3:3–7",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Titus 3:3–7 in your daily walk today."
       }
     ]
   },
   {
     "id": 80,
-    "ref": "Colossians 1:21\u201323",
+    "ref": "Colossians 1:21–23",
     "book": "Colossians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
     "icon": "award",
     "bentoSpan": "wide",
-    "keyPhrase": "He has reconciled you by Christ\u2019s physical body through death to present you holy in his sight",
+    "keyPhrase": "He has reconciled you by Christ’s physical body through death to present you holy in his sight",
     "themeColor": "violet",
     "translations": {
-      "NIV": "Once you were alienated from God and were enemies in your minds because of your evil behavior. But now he has reconciled you by Christ\u2019s physical body through death to present you holy in his sight, without blemish and free from accusation\u2014if you continue in your faith, established and firm, and do not move from the hope held out in the gospel.",
-      "TPT": "Even though you were once distant from God, living as his enemies in your minds and with behavior that was evil, he has now reconciled you to himself in his physical body through death, so that he may present you before him holy, without fault, and unblamable\u2014if indeed you continue in the faith, securely grounded and steadfast, never moving away from the hope of the good news.",
+      "NIV": "Once you were alienated from God and were enemies in your minds because of your evil behavior. But now he has reconciled you by Christ’s physical body through death to present you holy in his sight, without blemish and free from accusation—if you continue in your faith, established and firm, and do not move from the hope held out in the gospel.",
+      "TPT": "Even though you were once distant from God, living as his enemies in your minds and with behavior that was evil, he has now reconciled you to himself in his physical body through death, so that he may present you before him holy, without fault, and unblamable—if indeed you continue in the faith, securely grounded and steadfast, never moving away from the hope of the good news.",
       "NLT": "This includes you who were once far away from God. You were his enemies, separated from him by your evil thoughts and actions. Yet now he has reconciled you to himself through the death of Christ in his physical body. As a result, he has brought you into his own presence, and you are holy and blameless as you stand before him without a single fault.",
-      "NASB": "And although you were formerly alienated and hostile in mind, engaged in evil deeds, yet He has now reconciled you in His body of flesh through death, in order to present you before Him holy and blameless and beyond reproach\u2014if indeed you continue in the faith firmly established and steadfast, and not moved away from the hope of the gospel."
+      "NASB": "And although you were formerly alienated and hostile in mind, engaged in evil deeds, yet He has now reconciled you in His body of flesh through death, in order to present you before Him holy and blameless and beyond reproach—if indeed you continue in the faith firmly established and steadfast, and not moved away from the hope of the gospel."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 1 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 1:21\u201323 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 1 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Colossians 1:21–23 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -17042,17 +18701,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "21\u201323",
-            "text": "Once you were alienated from God and were enemies in your minds because of your evil behavior. But now he has reconciled you by Christ\u2019s physical body through death to present you holy in his sight, without blemish and free from accusation\u2014if you continue in your faith, established and firm, and do not move from the hope held out in the gospel."
+            "num": "21–23",
+            "text": "Once you were alienated from God and were enemies in your minds because of your evil behavior. But now he has reconciled you by Christ’s physical body through death to present you holy in his sight, without blemish and free from accusation—if you continue in your faith, established and firm, and do not move from the hope held out in the gospel."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -17068,7 +18727,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -17080,8 +18739,8 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "21\u201323",
-            "text": "Even though you were once distant from God, living as his enemies in your minds and with behavior that was evil, he has now reconciled you to himself in his physical body through death, so that he may present you before him holy, without fault, and unblamable\u2014if indeed you continue in the faith, securely grounded and steadfast, never moving away from the hope of the good news."
+            "num": "21–23",
+            "text": "Even though you were once distant from God, living as his enemies in your minds and with behavior that was evil, he has now reconciled you to himself in his physical body through death, so that he may present you before him holy, without fault, and unblamable—if indeed you continue in the faith, securely grounded and steadfast, never moving away from the hope of the good news."
           },
           "after": [
             {
@@ -17114,13 +18773,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "21\u201323",
+            "num": "21–23",
             "text": "This includes you who were once far away from God. You were his enemies, separated from him by your evil thoughts and actions. Yet now he has reconciled you to himself through the death of Christ in his physical body. As a result, he has brought you into his own presence, and you are holy and blameless as you stand before him without a single fault."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -17148,13 +18807,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "21\u201323",
-            "text": "And although you were formerly alienated and hostile in mind, engaged in evil deeds, yet He has now reconciled you in His body of flesh through death, in order to present you before Him holy and blameless and beyond reproach\u2014if indeed you continue in the faith firmly established and steadfast, and not moved away from the hope of the gospel."
+            "num": "21–23",
+            "text": "And although you were formerly alienated and hostile in mind, engaged in evil deeds, yet He has now reconciled you in His body of flesh through death, in order to present you before Him holy and blameless and beyond reproach—if indeed you continue in the faith firmly established and steadfast, and not moved away from the hope of the gospel."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -17171,26 +18830,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 1:21\u201323.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 1:21\u201323.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 1:21\u201323.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 1:21\u201323."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 1:21–23.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 1:21–23.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 1:21–23.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 1:21–23."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 1:21\u201323."
+          "usageInPassage": "The primary operational foundation of Colossians 1:21–23."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -17200,11 +18859,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 1:21\u201323 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Colossians 1:21–23 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -17219,9 +18878,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "He has reconciled you by Christ’s physical body through death to present you holy in his sight — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 1:21–23 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 1:21–23. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 1:21–23",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 1:21–23 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 1:21–23",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 1:21–23 in your daily walk today."
       }
     ]
   },
@@ -17233,16 +18913,16 @@ const BIBLE_VERSES = [
     "categoryLabel": "Identity & Grace",
     "icon": "home",
     "bentoSpan": "standard",
-    "keyPhrase": "You are no longer foreigners and strangers, but fellow citizens with God\u2019s people and also members of his household",
+    "keyPhrase": "You are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household",
     "themeColor": "violet",
     "translations": {
-      "NIV": "Consequently, you are no longer foreigners and strangers, but fellow citizens with God\u2019s people and also members of his household.",
-      "TPT": "So now, you who were once outcasts are no longer foreigners and strangers, but fellow citizens with God\u2019s holy people and members of his household.",
+      "NIV": "Consequently, you are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household.",
+      "TPT": "So now, you who were once outcasts are no longer foreigners and strangers, but fellow citizens with God’s holy people and members of his household.",
       "NLT": "So now you Gentiles are no longer strangers and foreigners. You are citizens along with all of God's holy people. You are members of God's family.",
       "NASB": "So then you are no longer strangers and foreigners, but you are fellow citizens with the saints, and are of God's household."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 2 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Ephesians 2 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Ephesians 2:19 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -17257,17 +18937,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
             "num": "19",
-            "text": "Consequently, you are no longer foreigners and strangers, but fellow citizens with God\u2019s people and also members of his household."
+            "text": "Consequently, you are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -17283,7 +18963,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -17296,7 +18976,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "19",
-            "text": "So now, you who were once outcasts are no longer foreigners and strangers, but fellow citizens with God\u2019s holy people and members of his household."
+            "text": "So now, you who were once outcasts are no longer foreigners and strangers, but fellow citizens with God’s holy people and members of his household."
           },
           "after": [
             {
@@ -17335,7 +19015,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -17369,7 +19049,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -17394,7 +19074,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -17405,7 +19085,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -17419,7 +19099,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -17434,9 +19114,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household — Grace Revelation",
+      "quote": "Under the new covenant of grace, Ephesians 2:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 2:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Ephesians 2:19",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Ephesians 2:19 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Ephesians 2:19",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 2:19 in your daily walk today."
       }
     ]
   },
@@ -17457,7 +19158,7 @@ const BIBLE_VERSES = [
       "NASB": "But now in Christ Jesus you who previously were far away have been brought near by the blood of Christ."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 2 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Ephesians 2 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Ephesians 2:13 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -17472,7 +19173,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -17482,7 +19183,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -17498,7 +19199,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -17550,7 +19251,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -17584,7 +19285,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -17609,7 +19310,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -17620,7 +19321,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -17634,7 +19335,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -17649,15 +19350,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Now in Christ Jesus you who once were far away have been brought near by the blood of Christ — Grace Revelation",
+      "quote": "Under the new covenant of grace, Ephesians 2:13 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 2:13. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Ephesians 2:13",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Ephesians 2:13 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Ephesians 2:13",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 2:13 in your daily walk today."
       }
     ]
   },
   {
     "id": 83,
-    "ref": "Ephesians 1:4\u20137",
+    "ref": "Ephesians 1:4–7",
     "book": "Ephesians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -17666,14 +19388,14 @@ const BIBLE_VERSES = [
     "keyPhrase": "He chose us in him before the creation of the world to be holy and blameless in his sight",
     "themeColor": "violet",
     "translations": {
-      "NIV": "For he chose us in him before the creation of the world to be holy and blameless in his sight. In love he predestined us for adoption to sonship through Jesus Christ, in accordance with his pleasure and will\u2014to the praise of his glorious grace, which he has freely given us in the One he loves. In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God\u2019s grace.",
+      "NIV": "For he chose us in him before the creation of the world to be holy and blameless in his sight. In love he predestined us for adoption to sonship through Jesus Christ, in accordance with his pleasure and will—to the praise of his glorious grace, which he has freely given us in the One he loves. In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God’s grace.",
       "TPT": "And he chose us to be his very own, through our union with Christ, before he created the world! In his love he planned long ago to adopt us into his family through Jesus Christ, according to the pleasure of his will... In him we have redemption through his blood, the forgiveness of our sins, lavishly poured out upon us according to the riches of his grace.",
       "NLT": "Even before he made the world, God loved us and chose us in Christ to be holy and without fault in his eyes. God decided in advance to adopt us into his own family by bringing us to himself through Jesus Christ. This is what he wanted to do, and it gave him great pleasure... He is so rich in kindness and grace that he purchased our freedom with the blood of his Son and forgave our sins.",
       "NASB": "Just as He chose us in Him before the foundation of the world, that we would be holy and blameless before Him in love, He predestined us to adoption as sons through Jesus Christ to Himself, according to the kind intention of His will, to the praise of the glory of His grace... In Him we have redemption through His blood, the forgiveness of our wrongdoings, according to the riches of His grace."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 1 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 1:4\u20137 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 1 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 1:4–7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -17687,17 +19409,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "4\u20137",
-            "text": "For he chose us in him before the creation of the world to be holy and blameless in his sight. In love he predestined us for adoption to sonship through Jesus Christ, in accordance with his pleasure and will\u2014to the praise of his glorious grace, which he has freely given us in the One he loves. In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God\u2019s grace."
+            "num": "4–7",
+            "text": "For he chose us in him before the creation of the world to be holy and blameless in his sight. In love he predestined us for adoption to sonship through Jesus Christ, in accordance with his pleasure and will—to the praise of his glorious grace, which he has freely given us in the One he loves. In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God’s grace."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -17713,7 +19435,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -17725,7 +19447,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "4\u20137",
+            "num": "4–7",
             "text": "And he chose us to be his very own, through our union with Christ, before he created the world! In his love he planned long ago to adopt us into his family through Jesus Christ, according to the pleasure of his will... In him we have redemption through his blood, the forgiveness of our sins, lavishly poured out upon us according to the riches of his grace."
           },
           "after": [
@@ -17759,13 +19481,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "4\u20137",
+            "num": "4–7",
             "text": "Even before he made the world, God loved us and chose us in Christ to be holy and without fault in his eyes. God decided in advance to adopt us into his own family by bringing us to himself through Jesus Christ. This is what he wanted to do, and it gave him great pleasure... He is so rich in kindness and grace that he purchased our freedom with the blood of his Son and forgave our sins."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -17793,13 +19515,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "4\u20137",
+            "num": "4–7",
             "text": "Just as He chose us in Him before the foundation of the world, that we would be holy and blameless before Him in love, He predestined us to adoption as sons through Jesus Christ to Himself, according to the kind intention of His will, to the praise of the glory of His grace... In Him we have redemption through His blood, the forgiveness of our wrongdoings, according to the riches of His grace."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -17816,26 +19538,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 1:4\u20137.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 1:4\u20137.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 1:4\u20137.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 1:4\u20137."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 1:4–7.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 1:4–7.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 1:4–7.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 1:4–7."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 1:4\u20137."
+          "usageInPassage": "The primary operational foundation of Ephesians 1:4–7."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -17845,11 +19567,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 1:4\u20137 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Ephesians 1:4–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -17864,9 +19586,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "He chose us in him before the creation of the world to be holy and blameless in his sight — Grace Revelation",
+      "quote": "Under the new covenant of grace, Ephesians 1:4–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 1:4–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Ephesians 1:4–7",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Ephesians 1:4–7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Ephesians 1:4–7",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 1:4–7 in your daily walk today."
       }
     ]
   },
@@ -17882,12 +19625,12 @@ const BIBLE_VERSES = [
     "themeColor": "violet",
     "translations": {
       "NIV": "What agreement is there between the temple of God and idols? For we are the temple of the living God. As God has said: 'I will live with them and walk among them, and I will be their God, and they will be my people.'",
-      "TPT": "What union can there be between God\u2019s temple and idols? For we are the temple of the living God! As God has said, 'I will live and walk among them, and I will be their God, and they will be my loving people.'",
+      "TPT": "What union can there be between God’s temple and idols? For we are the temple of the living God! As God has said, 'I will live and walk among them, and I will be their God, and they will be my loving people.'",
       "NLT": "And what union can there be between God's temple and idols? For we are the temple of the living God. As God said: 'I will live in them and walk among them. I will be their God, and they will be my people.'",
       "NASB": "Or what agreement does the temple of God have with idols? For we are the temple of the living God; just as God said, 'I will dwell among them and walk among them; and I will be their God, and they shall be My people.'"
     },
     "dynamicContext": {
-      "chapterTitle": "2 Corinthians 6 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "2 Corinthians 6 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 6:16 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -17902,7 +19645,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -17912,7 +19655,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -17928,7 +19671,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -17941,7 +19684,7 @@ const BIBLE_VERSES = [
           ],
           "target": {
             "num": "16",
-            "text": "What union can there be between God\u2019s temple and idols? For we are the temple of the living God! As God has said, 'I will live and walk among them, and I will be their God, and they will be my loving people.'"
+            "text": "What union can there be between God’s temple and idols? For we are the temple of the living God! As God has said, 'I will live and walk among them, and I will be their God, and they will be my loving people.'"
           },
           "after": [
             {
@@ -17980,7 +19723,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -18014,7 +19757,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -18039,7 +19782,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -18050,7 +19793,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -18064,7 +19807,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -18079,9 +19822,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "For we are the temple of the living God. As God has said: 'I will live with them and walk among them' — Grace Revelation",
+      "quote": "Under the new covenant of grace, 2 Corinthians 6:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Corinthians 6:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of 2 Corinthians 6:16",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 2 Corinthians 6:16 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 2 Corinthians 6:16",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 6:16 in your daily walk today."
       }
     ]
   },
@@ -18102,7 +19866,7 @@ const BIBLE_VERSES = [
       "NASB": "For WHO HAS KNOWN THE MIND OF THE LORD, THAT HE WILL ADVISE HIM? But we have the mind of Christ."
     },
     "dynamicContext": {
-      "chapterTitle": "1 Corinthians 2 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "1 Corinthians 2 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 1 Corinthians 2:16 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -18117,7 +19881,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -18127,7 +19891,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -18143,7 +19907,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -18195,7 +19959,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -18229,7 +19993,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -18254,7 +20018,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -18265,7 +20029,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -18279,7 +20043,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -18294,9 +20058,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "For, 'Who has known the mind of the Lord so as to instruct him?' But we have the mind of Christ — Grace Revelation",
+      "quote": "Under the new covenant of grace, 1 Corinthians 2:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 Corinthians 2:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of 1 Corinthians 2:16",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 1 Corinthians 2:16 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 1 Corinthians 2:16",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 Corinthians 2:16 in your daily walk today."
       }
     ]
   },
@@ -18317,7 +20102,7 @@ const BIBLE_VERSES = [
       "NASB": "But the one who joins himself to the Lord is one spirit with Him."
     },
     "dynamicContext": {
-      "chapterTitle": "1 Corinthians 6 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "1 Corinthians 6 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 1 Corinthians 6:17 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -18332,7 +20117,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -18342,7 +20127,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -18358,7 +20143,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -18410,7 +20195,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -18444,7 +20229,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -18469,7 +20254,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -18480,7 +20265,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -18494,7 +20279,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -18509,31 +20294,52 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Whoever is united with the Lord is one with him in spirit — Grace Revelation",
+      "quote": "Under the new covenant of grace, 1 Corinthians 6:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 Corinthians 6:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of 1 Corinthians 6:17",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 1 Corinthians 6:17 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 1 Corinthians 6:17",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 Corinthians 6:17 in your daily walk today."
       }
     ]
   },
   {
     "id": 87,
-    "ref": "Galatians 4:4\u20137",
+    "ref": "Galatians 4:4–7",
     "book": "Galatians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
     "icon": "heart",
     "bentoSpan": "wide",
-    "keyPhrase": "God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God\u2019s child",
+    "keyPhrase": "God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child",
     "themeColor": "violet",
     "translations": {
-      "NIV": "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God\u2019s child; and since you are his child, God has made you also an heir.",
+      "NIV": "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child; and since you are his child, God has made you also an heir.",
       "TPT": "But when the right time arrived, God sent his Son into the world, born of a woman and subject to the law... so that we might be adopted as his own sons and daughters! And because you are his children, God has poured the Spirit of his Son into our hearts, crying out, 'Abba, Father!' So now you are no longer a slave, but a child of God, and an heir through Christ!",
       "NLT": "But when the right time came, God sent his Son, born of a woman, subject to the law. God sent him to buy freedom for us who were slaves to the law, so that he could adopt us as his very own children. And because we are his children, God has sent the Spirit of his Son into our hearts, prompting us to call out, 'Abba, Father.' Now you are no longer a slave but God's own child. And since you are his child, God has made you his heir.",
       "NASB": "But when the fullness of the time came, God sent His Son, born of a woman, born under the Law, so that He might redeem those who were under the Law, that we might receive the adoption as sons and daughters. Because you are sons, God has sent the Spirit of His Son into our hearts, crying out, 'Abba! Father!' Therefore you are no longer a slave, but a son; and if a son, then an heir through God."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 4 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 4:4\u20137 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 4 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Galatians 4:4–7 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -18547,17 +20353,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "4\u20137",
-            "text": "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God\u2019s child; and since you are his child, God has made you also an heir."
+            "num": "4–7",
+            "text": "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child; and since you are his child, God has made you also an heir."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -18573,7 +20379,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -18585,7 +20391,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "4\u20137",
+            "num": "4–7",
             "text": "But when the right time arrived, God sent his Son into the world, born of a woman and subject to the law... so that we might be adopted as his own sons and daughters! And because you are his children, God has poured the Spirit of his Son into our hearts, crying out, 'Abba, Father!' So now you are no longer a slave, but a child of God, and an heir through Christ!"
           },
           "after": [
@@ -18619,13 +20425,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "4\u20137",
+            "num": "4–7",
             "text": "But when the right time came, God sent his Son, born of a woman, subject to the law. God sent him to buy freedom for us who were slaves to the law, so that he could adopt us as his very own children. And because we are his children, God has sent the Spirit of his Son into our hearts, prompting us to call out, 'Abba, Father.' Now you are no longer a slave but God's own child. And since you are his child, God has made you his heir."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -18653,13 +20459,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "4\u20137",
+            "num": "4–7",
             "text": "But when the fullness of the time came, God sent His Son, born of a woman, born under the Law, so that He might redeem those who were under the Law, that we might receive the adoption as sons and daughters. Because you are sons, God has sent the Spirit of His Son into our hearts, crying out, 'Abba! Father!' Therefore you are no longer a slave, but a son; and if a son, then an heir through God."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -18676,26 +20482,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 4:4\u20137.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 4:4\u20137.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 4:4\u20137.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 4:4\u20137."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 4:4–7.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 4:4–7.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 4:4–7.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 4:4–7."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 4:4\u20137."
+          "usageInPassage": "The primary operational foundation of Galatians 4:4–7."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -18705,11 +20511,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 4:4\u20137 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Galatians 4:4–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -18724,9 +20530,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child — Grace Revelation",
+      "quote": "Under the new covenant of grace, Galatians 4:4–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 4:4–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Galatians 4:4–7",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Galatians 4:4–7 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Galatians 4:4–7",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 4:4–7 in your daily walk today."
       }
     ]
   },
@@ -18747,7 +20574,7 @@ const BIBLE_VERSES = [
       "NASB": "Therefore if anyone is in Christ, this person is a new creation; the old things passed away; behold, new things have come."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Corinthians 5 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "2 Corinthians 5 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 5:17 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -18762,7 +20589,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -18772,7 +20599,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -18788,7 +20615,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -18840,7 +20667,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -18874,7 +20701,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -18899,7 +20726,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -18910,7 +20737,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -18924,7 +20751,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -18939,9 +20766,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "If anyone is in Christ, the new creation has come: The old has gone, the new is here! — Grace Revelation",
+      "quote": "Under the new covenant of grace, 2 Corinthians 5:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Corinthians 5:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of 2 Corinthians 5:17",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 2 Corinthians 5:17 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 2 Corinthians 5:17",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 5:17 in your daily walk today."
       }
     ]
   },
@@ -18962,7 +20810,7 @@ const BIBLE_VERSES = [
       "NASB": "and He Himself brought our sins in His body up on the cross, so that we might die to sin and live for righteousness; by His wounds you were healed."
     },
     "dynamicContext": {
-      "chapterTitle": "1 Peter 2 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "1 Peter 2 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 1 Peter 2:24 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -18977,7 +20825,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -18987,7 +20835,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -19003,7 +20851,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -19055,7 +20903,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -19089,7 +20937,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -19114,7 +20962,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -19125,7 +20973,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -19139,7 +20987,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -19154,9 +21002,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "By his wounds you have been healed — Grace Revelation",
+      "quote": "Under the new covenant of grace, 1 Peter 2:24 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 Peter 2:24. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of 1 Peter 2:24",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of 1 Peter 2:24 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of 1 Peter 2:24",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 Peter 2:24 in your daily walk today."
       }
     ]
   },
@@ -19177,7 +21046,7 @@ const BIBLE_VERSES = [
       "NASB": "You need not fight in this battle; take your positions, stand and see the salvation of the LORD on your behalf, Judah and Jerusalem. Do not fear or be dismayed; tomorrow go out to face them, for the LORD is with you."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Chronicles 20 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "2 Chronicles 20 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 2 Chronicles 20:17 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -19192,7 +21061,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -19202,7 +21071,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -19218,7 +21087,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -19270,7 +21139,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -19304,7 +21173,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -19329,8 +21198,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -19340,8 +21209,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -19354,7 +21223,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -19369,9 +21238,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "You will not have to fight this battle. Take up your positions; stand firm and see the deliverance the LORD will give you — Grace Revelation",
+      "quote": "Under the new covenant of grace, 2 Chronicles 20:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Chronicles 20:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of 2 Chronicles 20:17",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of 2 Chronicles 20:17 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of 2 Chronicles 20:17",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Chronicles 20:17 in your daily walk today."
       }
     ]
   },
@@ -19392,7 +21282,7 @@ const BIBLE_VERSES = [
       "NASB": "You are from God, little children, and have overcome them; because greater is He who is in you than he who is in the world."
     },
     "dynamicContext": {
-      "chapterTitle": "1 John 4 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "1 John 4 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of 1 John 4:4 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -19407,7 +21297,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -19417,7 +21307,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -19433,7 +21323,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -19485,7 +21375,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -19519,7 +21409,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -19544,7 +21434,7 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
@@ -19555,7 +21445,7 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -19569,7 +21459,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -19584,9 +21474,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The one who is in you is greater than the one who is in the world — Grace Revelation",
+      "quote": "Under the new covenant of grace, 1 John 4:4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 John 4:4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Valley of Elah",
+        "title": "David Toppling Goliath with a Sling — Testimony of 1 John 4:4",
+        "character": "Young David",
+        "ref": "1 Samuel 17:32–50",
+        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of 1 John 4:4 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Persian Empire",
+        "title": "Daniel Preserved in the Lions' Den — Living Reality of 1 John 4:4",
+        "character": "Daniel",
+        "ref": "Daniel 6:10–23",
+        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 John 4:4 in your daily walk today."
       }
     ]
   },
@@ -19607,7 +21518,7 @@ const BIBLE_VERSES = [
       "NASB": "Then he said to them, 'Go, eat of the fat, drink of the sweet, and send portions to him who has nothing prepared; for this day is holy to our Lord. Do not be grieved, for the joy of the LORD is your strength.'"
     },
     "dynamicContext": {
-      "chapterTitle": "Nehemiah 8 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Nehemiah 8 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Nehemiah 8:10 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -19622,7 +21533,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -19632,7 +21543,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -19648,7 +21559,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -19700,7 +21611,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -19734,7 +21645,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -19759,8 +21670,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -19770,8 +21681,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -19784,7 +21695,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -19799,9 +21710,30 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "Do not grieve, for the joy of the LORD is your strength — Grace Revelation",
+      "quote": "Under the new covenant of grace, Nehemiah 8:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Nehemiah 8:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Monarchy",
+        "title": "David Dancing Before the Ark — Testimony of Nehemiah 8:10",
+        "character": "King David",
+        "ref": "2 Samuel 6:12–19",
+        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Nehemiah 8:10 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Epistles",
+        "title": "Paul's Unshakable Joy in Prison — Living Reality of Nehemiah 8:10",
+        "character": "The Apostle Paul",
+        "ref": "Philippians 4:4–13",
+        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Nehemiah 8:10 in your daily walk today."
       }
     ]
   },
@@ -19822,7 +21754,7 @@ const BIBLE_VERSES = [
       "NASB": "The LORD is my shepherd, I will not be in need."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 23 \u2014 The Sovereign Deliverance & Living Hope of God",
+      "chapterTitle": "Psalm 23 — The Sovereign Deliverance & Living Hope of God",
       "chapterSummary": "Explore the surrounding biblical flow of Psalm 23:1 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
@@ -19837,7 +21769,7 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
@@ -19847,7 +21779,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -19863,7 +21795,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -19915,7 +21847,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -19949,7 +21881,7 @@ const BIBLE_VERSES = [
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -19974,8 +21906,8 @@ const BIBLE_VERSES = [
       "keyTerms": [
         {
           "strongs": "H2617",
-          "word": "\u05d7\u05b6\u05e1\u05b6\u05d3",
-          "transliteration": "\u1e25ese\u1e0f (chesed)",
+          "word": "חֶסֶד",
+          "transliteration": "ḥeseḏ (chesed)",
           "pronunciation": "kheh'-sed",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "lovingkindness / unfailing mercy",
@@ -19985,8 +21917,8 @@ const BIBLE_VERSES = [
         },
         {
           "strongs": "H7965",
-          "word": "\u05e9\u05b8\u05c1\u05dc\u05d5\u05b9\u05dd",
-          "transliteration": "\u0161\u0101l\u00f4m (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "šālôm (shalom)",
           "pronunciation": "shaw-lome'",
           "partOfSpeech": "Noun Masculine",
           "matchedEnglish": "peace / wholeness",
@@ -19999,7 +21931,7 @@ const BIBLE_VERSES = [
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -20014,15 +21946,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "The LORD is my shepherd, I lack nothing — Grace Revelation",
+      "quote": "Under the new covenant of grace, Psalm 23:1 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 23:1. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Patriarchal Era",
+        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 23:1",
+        "character": "Isaac",
+        "ref": "Genesis 26:1–14",
+        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 23:1 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Ministry of Jesus",
+        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 23:1",
+        "character": "Jesus & The Disciples",
+        "ref": "Mark 6:35–44",
+        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 23:1 in your daily walk today."
       }
     ]
   },
   {
     "id": 94,
-    "ref": "Matthew 8:16\u201317",
+    "ref": "Matthew 8:16–17",
     "book": "Matthew",
     "category": "healing-renewal",
     "categoryLabel": "Healing & Renewal",
@@ -20037,8 +21990,8 @@ const BIBLE_VERSES = [
       "NASB": "Now when evening came, they brought to Him many who were demon-possessed; and He cast out the spirits with a word, and healed all who were ill. This occurred so that what was spoken through Isaiah the prophet would be fulfilled: 'HE HIMSELF TOOK OUR ILLNESSES AND CARRIED AWAY OUR DISEASES.'"
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 8 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 8:16\u201317 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 8 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Matthew 8:16–17 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -20052,17 +22005,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "16\u201317",
+            "num": "16–17",
             "text": "When evening came, many who were demon-possessed were brought to him, and he drove out the spirits with a word and healed all the sick. This was to fulfill what was spoken through the prophet Isaiah: 'He took up our infirmities and bore our diseases.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -20078,7 +22031,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -20090,7 +22043,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "16\u201317",
+            "num": "16–17",
             "text": "When evening came, they brought to him many who were demonized, and he drove out the evil spirits with a word and healed all who were sick. This fulfilled what was spoken through Isaiah the prophet: 'He himself took our weaknesses and bore our diseases.'"
           },
           "after": [
@@ -20124,13 +22077,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "16\u201317",
+            "num": "16–17",
             "text": "That evening many demon-possessed people were brought to Jesus. He cast out the evil spirits with a simple command, and he healed all the sick. This fulfilled the word of the LORD through the prophet Isaiah, who said, 'He took our sicknesses and removed our diseases.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -20158,13 +22111,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "16\u201317",
+            "num": "16–17",
             "text": "Now when evening came, they brought to Him many who were demon-possessed; and He cast out the spirits with a word, and healed all who were ill. This occurred so that what was spoken through Isaiah the prophet would be fulfilled: 'HE HIMSELF TOOK OUR ILLNESSES AND CARRIED AWAY OUR DISEASES.'"
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -20181,26 +22134,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 8:16\u201317.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 8:16\u201317.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 8:16\u201317.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 8:16\u201317."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 8:16–17.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 8:16–17.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 8:16–17.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 8:16–17."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 8:16\u201317."
+          "usageInPassage": "The primary operational foundation of Matthew 8:16–17."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -20210,11 +22163,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 8:16\u201317 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Matthew 8:16–17 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -20229,15 +22182,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "He took up our infirmities and bore our diseases — Grace Revelation",
+      "quote": "Under the new covenant of grace, Matthew 8:16–17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 8:16–17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Jordan River",
+        "title": "Naaman Restored from Leprosy — Testimony of Matthew 8:16–17",
+        "character": "Naaman the Commander",
+        "ref": "2 Kings 5:1–14",
+        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Matthew 8:16–17 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Gospels / Galilee",
+        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Matthew 8:16–17",
+        "character": "Jesus & The Faithful Woman",
+        "ref": "Luke 8:43–48",
+        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 8:16–17 in your daily walk today."
       }
     ]
   },
   {
     "id": 95,
-    "ref": "Ephesians 5:8\u201311",
+    "ref": "Ephesians 5:8–11",
     "book": "Ephesians",
     "category": "wisdom-word",
     "categoryLabel": "Wisdom & Truth",
@@ -20252,8 +22226,8 @@ const BIBLE_VERSES = [
       "NASB": "for you were formerly darkness, but now you are Light in the Lord; walk as children of Light (for the fruit of the Light consists in all goodness, righteousness, and truth), trying to learn what is pleasing to the Lord. Do not participate in the unfruitful deeds of darkness, but instead even expose them."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 5 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 5:8\u201311 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 5 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 5:8–11 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -20267,17 +22241,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "8\u201311",
+            "num": "8–11",
             "text": "For you were once darkness, but now you are light in the Lord. Live as children of light (for the fruit of the light consists in all goodness, righteousness and truth) and find out what pleases the Lord. Have nothing to do with the fruitless deeds of darkness, but rather expose them."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -20293,7 +22267,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -20305,7 +22279,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "8\u201311",
+            "num": "8–11",
             "text": "Once your life was full of darkness, but now you are full of light in the Lord. Live then as children of light! For the fruit produced by the light consists of all goodness, righteousness, and truth, discovering what pleases the Lord. Have nothing to do with the unproductive deeds of darkness, but instead expose them."
           },
           "after": [
@@ -20339,13 +22313,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "8\u201311",
+            "num": "8–11",
             "text": "For once you were full of darkness, but now you have light from the Lord. So live as people of light! For this light within you produces what is good and right and true. Carefully determine what pleases the Lord. Take no part in the worthless deeds of evil and darkness; instead, expose them."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -20373,13 +22347,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "8\u201311",
+            "num": "8–11",
             "text": "for you were formerly darkness, but now you are Light in the Lord; walk as children of Light (for the fruit of the Light consists in all goodness, righteousness, and truth), trying to learn what is pleasing to the Lord. Do not participate in the unfruitful deeds of darkness, but instead even expose them."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -20396,26 +22370,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 5:8\u201311.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 5:8\u201311.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 5:8\u201311.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 5:8\u201311."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 5:8–11.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 5:8–11.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 5:8–11.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 5:8–11."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 5:8\u201311."
+          "usageInPassage": "The primary operational foundation of Ephesians 5:8–11."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -20425,11 +22399,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 5:8\u201311 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Ephesians 5:8–11 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -20444,15 +22418,36 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "For you were once darkness, but now you are light in the Lord. Live as children of light — Grace Revelation",
+      "quote": "Under the new covenant of grace, Ephesians 5:8–11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 5:8–11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Old Testament / Kingdom of Israel",
+        "title": "Solomon Granted a Discerning Heart — Testimony of Ephesians 5:8–11",
+        "character": "King Solomon",
+        "ref": "1 Kings 3:5–14",
+        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Ephesians 5:8–11 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "New Testament / Apostolic Missions",
+        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Ephesians 5:8–11",
+        "character": "The Berean Believers",
+        "ref": "Acts 17:10–12",
+        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 5:8–11 in your daily walk today."
       }
     ]
   },
   {
     "id": 96,
-    "ref": "Colossians 2:13\u201315",
+    "ref": "Colossians 2:13–15",
     "book": "Colossians",
     "category": "identity-grace",
     "categoryLabel": "Identity & Grace",
@@ -20467,8 +22462,8 @@ const BIBLE_VERSES = [
       "NASB": "And when you were dead in your wrongdoings and the uncircumcision of your flesh, He made you alive together with Him, having forgiven us all our wrongdoings, having canceled the certificate of debt consisting of decrees against us, which was hostile to us; and He has taken it out of the way, having nailed it to the cross. When He had disarmed the rulers and authorities, He made a public display of them, having triumphed over them through Him."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 2 \u2014 The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 2:13\u201315 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 2 — The Sovereign Deliverance & Living Hope of God",
+      "chapterSummary": "Explore the surrounding biblical flow of Colossians 2:13–15 revealing God's covenant faithfulness.",
       "versions": {
         "NIV": {
           "before": [
@@ -20482,17 +22477,17 @@ const BIBLE_VERSES = [
             },
             {
               "num": "18",
-              "text": "The blameless spend their days under the Lord\u2019s care, and their inheritance will endure forever."
+              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
             }
           ],
           "target": {
-            "num": "13\u201315",
+            "num": "13–15",
             "text": "When you were dead in your sins and in the uncircumcision of your flesh, God made you alive with Christ. He forgave us all our sins, having canceled the charge of our legal indebtedness, which stood against us and condemned us; he has taken it away, nailing it to the cross. And having disarmed the powers and authorities, he made a public spectacle of them, triumphing over them by the cross."
           },
           "after": [
             {
               "num": "20",
-              "text": "But the wicked will perish: Though the Lord\u2019s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
+              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
             },
             {
               "num": "21",
@@ -20508,7 +22503,7 @@ const BIBLE_VERSES = [
           "before": [
             {
               "num": "16",
-              "text": "It is much better to have very little and combined with God\u2019s presence than to possess great wealth without Him."
+              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
             },
             {
               "num": "17",
@@ -20520,7 +22515,7 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "13\u201315",
+            "num": "13–15",
             "text": "This happened to you: you were once dead in your failures and sins, but now he has made you alive together with Christ, having forgiven us all our trespasses! He canceled out every legal debt of our sins, nailing it to the cross, destroying it once and for all. Then Jesus made a public spectacle of all powers and authorities, triumphing over them in his victory cross!"
           },
           "after": [
@@ -20554,13 +22549,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "13\u201315",
+            "num": "13–15",
             "text": "You were dead because of your sins and because your sinful nature was not yet cut away. Then God made you alive with Christ, for he forgave all our sins. He canceled the record of the charges against us and took it away by nailing it to the cross. In this way, he disarmed the spiritual rulers and authorities. He shamed them publicly by his victory over them on the cross."
           },
           "after": [
             {
               "num": "20",
-              "text": "The wicked will die. The Lord\u2019s enemies are like flowers in a field\u2014they will disappear like smoke."
+              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
             },
             {
               "num": "21",
@@ -20588,13 +22583,13 @@ const BIBLE_VERSES = [
             }
           ],
           "target": {
-            "num": "13\u201315",
+            "num": "13–15",
             "text": "And when you were dead in your wrongdoings and the uncircumcision of your flesh, He made you alive together with Him, having forgiven us all our wrongdoings, having canceled the certificate of debt consisting of decrees against us, which was hostile to us; and He has taken it out of the way, having nailed it to the cross. When He had disarmed the rulers and authorities, He made a public display of them, having triumphed over them through Him."
           },
           "after": [
             {
               "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish\u2014like smoke they vanish away."
+              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
             },
             {
               "num": "21",
@@ -20611,26 +22606,26 @@ const BIBLE_VERSES = [
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
       "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 2:13\u201315.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 2:13\u201315.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 2:13\u201315.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 2:13\u201315."
+        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 2:13–15.",
+        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 2:13–15.",
+        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 2:13–15.",
+        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 2:13–15."
       },
       "keyTerms": [
         {
           "strongs": "G5485",
-          "word": "\u03c7\u03ac\u03c1\u03b9\u03c2",
+          "word": "χάρις",
           "transliteration": "charis (grace)",
           "pronunciation": "khar'-ece",
           "partOfSpeech": "Noun Feminine",
           "matchedEnglish": "grace / unconditional favor",
           "root": "From chairo (to rejoice, be glad)",
           "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 2:13\u201315."
+          "usageInPassage": "The primary operational foundation of Colossians 2:13–15."
         },
         {
           "strongs": "G1411",
-          "word": "\u03b4\u03cd\u03bd\u03b1\u03bc\u03b9\u03c2",
+          "word": "δύναμις",
           "transliteration": "dynamis (power / ability)",
           "pronunciation": "doo'-nam-is",
           "partOfSpeech": "Noun Feminine",
@@ -20640,11 +22635,11 @@ const BIBLE_VERSES = [
           "usageInPassage": "Supernatural divine enablement residing in the believer."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 2:13\u201315 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "In Koine Greek, Colossians 2:13–15 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31\u201332",
+        "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
         "linkedVerseId": 14
       },
@@ -20659,14 +22654,31 @@ const BIBLE_VERSES = [
         "linkedVerseId": 24
       },
       {
-        "ref": "Hebrews 13:5\u20136",
+        "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
         "linkedVerseId": 19
+      }
+    ],
+    "paulEllisInsight": {
+      "theme": "He forgave us all our sins, having canceled the charge of our legal indebtedness... disarming the powers and authorities — Grace Revelation",
+      "quote": "Under the new covenant of grace, Colossians 2:13–15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
+      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 2:13–15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+    },
+    "caseStudiesList": [
+      {
+        "era": "Gospels / Parables of Grace",
+        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 2:13–15",
+        "character": "The Father & The Younger Son",
+        "ref": "Luke 15:11–24",
+        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 2:13–15 that God's covenant never fails those who trust His goodness."
+      },
+      {
+        "era": "Old Testament / Egyptian Dynasty",
+        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 2:13–15",
+        "character": "Joseph & His Brothers",
+        "ref": "Genesis 45:1–15",
+        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 2:13–15 in your daily walk today."
       }
     ]
   }
 ];
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { BIBLE_VERSES };
-}
