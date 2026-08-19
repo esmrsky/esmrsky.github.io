@@ -3,11 +3,11 @@
  * 
  * Features:
  * 1. Pure Verse-First Bento Cards with category tints.
- * 2. Mobile & Desktop Typography Settings Flyout Drawer with Live Font Family, Font Size & Line Height controls (Translucent Live Site Preview).
+ * 2. Mobile & Desktop Typography Settings Flyout Drawer with Live Translation, Font Family, Font Size & Line Height controls (Transparent live site preview, elevated container per theme).
  * 3. Conditional TPT Revelatory Notes (only visible when notes exist for the passage).
  * 4. Dynamic Multi-Translation Context Flow with inline highlighted target verse.
  * 5. Interlinear Greek & Hebrew Lexicon with Strong's concordance cards.
- * 6. Fullscreen Edge-to-Edge Stories Mode with 16 modern styles (including Lora, Merriweather, Outfit, Sora), left-aligned long verses, previous history navigation, and direct heart bookmarking.
+ * 6. Fullscreen Edge-to-Edge Stories Mode with 16 modern styles, Dynamic Auto-Fit (zero cut-off/clipping), left-aligned long verses, previous history navigation, and direct heart bookmarking.
  * 7. Resilient event delegation on sticky header, drawers, and modal overlays.
  */
 
@@ -83,11 +83,8 @@
     drawerFontCards: document.getElementById('drawerFontCards'),
     settingsFontSizeBadge: document.getElementById('settingsFontSizeBadge'),
     drawerFontSizeSlider: document.getElementById('drawerFontSizeSlider'),
-    drawerFontDecrease: document.getElementById('drawerFontDecrease'),
-    drawerFontIncrease: document.getElementById('drawerFontIncrease'),
     settingsLineHeightBadge: document.getElementById('settingsLineHeightBadge'),
     drawerLineHeightSlider: document.getElementById('drawerLineHeightSlider'),
-    drawerLineHeightPresets: document.getElementById('drawerLineHeightPresets'),
     drawerThemePicker: document.getElementById('drawerThemePicker'),
     drawerVersionPicker: document.getElementById('drawerVersionPicker'),
     btnResetTypeSettings: document.getElementById('btnResetTypeSettings'),
@@ -156,6 +153,13 @@
     // Deep Link Navigation
     handleHashNavigation();
     window.addEventListener('hashchange', handleHashNavigation);
+
+    // Global resize handler for dynamic story auto-fitting
+    window.addEventListener('resize', () => {
+      if (state.isStoriesMode) {
+        autoFitStoryText();
+      }
+    });
   }
 
   function handleHashNavigation() {
@@ -323,13 +327,8 @@
     elements.html.classList.add(`font-${style}`);
     localStorage.setItem('agy_font_style', style);
 
-    // Header buttons
-    document.querySelectorAll('.font-style-picker .segmented-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-font') === style);
-    });
-
-    // Drawer cards
-    document.querySelectorAll('#drawerFontCards .font-card-btn').forEach(btn => {
+    // Drawer font buttons
+    document.querySelectorAll('#drawerFontCards .font-pill-btn, #drawerFontCards .font-card-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-font') === style);
     });
 
@@ -358,11 +357,6 @@
     if (elements.drawerLineHeightSlider) {
       elements.drawerLineHeightSlider.value = num;
     }
-
-    document.querySelectorAll('#drawerLineHeightPresets .segmented-btn').forEach(btn => {
-      const p = parseFloat(btn.getAttribute('data-lh'));
-      btn.classList.toggle('active', Math.abs(p - num) < 0.05);
-    });
   }
 
   function applyFontSize(size) {
@@ -408,7 +402,7 @@
   }
 
   // ==========================================================================
-  // TYPOGRAPHY SETTINGS FLYOUT DRAWER (TRANSLUCENT LIVE PREVIEW)
+  // TYPOGRAPHY SETTINGS FLYOUT DRAWER (TRANSPARENT NO-BLUR LIVE PREVIEW)
   // ==========================================================================
   function openTypeSettings() {
     if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.add('active');
@@ -653,7 +647,7 @@
   }
 
   // ==========================================================================
-  // FULLSCREEN ENDLESS STORIES MODE (16 DYNAMIC STYLES & HISTORY / BOOKMARKS)
+  // FULLSCREEN ENDLESS STORIES MODE (16 DYNAMIC STYLES & DYNAMIC AUTO-FIT)
   // ==========================================================================
   function resetStoriesShufflePool() {
     state.storyShufflePool = [...BIBLE_VERSES].sort(() => Math.random() - 0.5);
@@ -724,14 +718,45 @@
     return `"${formattedWords.join(' ')}"`;
   }
 
-  // 6-Tier Adaptive Font Sizing based on character length
+  // 6-Tier Adaptive Base Font Sizing based on character length
   function calculateStoryFontSizeClass(textLength) {
     if (textLength < 70) return 'story-size-hero';
-    if (textLength < 150) return 'story-size-large';
-    if (textLength < 250) return 'story-size-medium';
-    if (textLength < 400) return 'story-size-compact';
-    if (textLength < 550) return 'story-size-mini';
+    if (textLength < 140) return 'story-size-large';
+    if (textLength < 240) return 'story-size-medium';
+    if (textLength < 380) return 'story-size-compact';
+    if (textLength < 520) return 'story-size-mini';
     return 'story-size-dense';
+  }
+
+  // Dynamic Auto-Fit Loop: Scales down text dynamically if it exceeds wrapper height or width
+  function autoFitStoryText() {
+    const wrapper = elements.storyContentWrapper;
+    const passage = elements.storyPassageText;
+    if (!wrapper || !passage) return;
+
+    // Reset inline font size so CSS tier sets the initial large font size
+    passage.style.fontSize = '';
+    passage.style.lineHeight = '';
+
+    // Safety margin to prevent edge touching
+    const maxAllowedHeight = wrapper.clientHeight - 16;
+    const maxAllowedWidth = wrapper.clientWidth - 12;
+    if (maxAllowedHeight <= 40 || maxAllowedWidth <= 40) return;
+
+    let computedSize = parseFloat(window.getComputedStyle(passage).fontSize);
+    if (!computedSize || isNaN(computedSize)) computedSize = 32;
+
+    // Dynamic shrink loop with safe bound
+    let iterations = 0;
+    while (
+      (passage.scrollHeight > maxAllowedHeight || passage.scrollWidth > maxAllowedWidth) &&
+      computedSize > 12 &&
+      iterations < 50
+    ) {
+      computedSize *= 0.94; // shrink by 6%
+      passage.style.fontSize = `${computedSize}px`;
+      iterations++;
+    }
   }
 
   function updateStoryHeartButton(verseId) {
@@ -830,6 +855,12 @@
 
     updateStoryHeartButton(verse.id);
 
+    // Run dynamic auto-fitting to guarantee no cut-off/clipping
+    autoFitStoryText();
+    requestAnimationFrame(() => {
+      autoFitStoryText();
+    });
+
     if (elements.storyContentWrapper) {
       elements.storyContentWrapper.style.animation = 'none';
       elements.storyContentWrapper.offsetHeight;
@@ -900,10 +931,21 @@
       });
     }
 
-    // Drawer Font Aesthetic Cards
+    // Drawer Translation Version Picker (First in list)
+    if (elements.drawerVersionPicker) {
+      elements.drawerVersionPicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const ver = btn.getAttribute('data-version');
+          if (ver) setBibleVersion(ver);
+        }
+      });
+    }
+
+    // Drawer Font Aesthetic Inline Buttons
     if (elements.drawerFontCards) {
       elements.drawerFontCards.addEventListener('click', (e) => {
-        const btn = e.target.closest('.font-card-btn');
+        const btn = e.target.closest('.font-pill-btn') || e.target.closest('.font-card-btn');
         if (btn) {
           const font = btn.getAttribute('data-font');
           if (font) applyFontStyle(font);
@@ -911,38 +953,17 @@
       });
     }
 
-    // Drawer Font Size Slider & Step Buttons
+    // Drawer Text Size Slider
     if (elements.drawerFontSizeSlider) {
       elements.drawerFontSizeSlider.addEventListener('input', (e) => {
         applyFontSize(parseFloat(e.target.value));
       });
     }
-    if (elements.drawerFontDecrease) {
-      elements.drawerFontDecrease.addEventListener('click', () => {
-        const newSize = Math.max(0.95, state.fontSize - 0.08);
-        applyFontSize(newSize);
-      });
-    }
-    if (elements.drawerFontIncrease) {
-      elements.drawerFontIncrease.addEventListener('click', () => {
-        const newSize = Math.min(1.85, state.fontSize + 0.08);
-        applyFontSize(newSize);
-      });
-    }
 
-    // Drawer Line Height Slider & Presets
+    // Drawer Line Height Slider
     if (elements.drawerLineHeightSlider) {
       elements.drawerLineHeightSlider.addEventListener('input', (e) => {
         applyLineHeight(parseFloat(e.target.value));
-      });
-    }
-    if (elements.drawerLineHeightPresets) {
-      elements.drawerLineHeightPresets.addEventListener('click', (e) => {
-        const btn = e.target.closest('.segmented-btn');
-        if (btn) {
-          const lh = btn.getAttribute('data-lh');
-          if (lh) applyLineHeight(lh);
-        }
       });
     }
 
@@ -953,17 +974,6 @@
         if (btn) {
           const themeVal = btn.getAttribute('data-theme-val');
           if (themeVal) applyTheme(themeVal);
-        }
-      });
-    }
-
-    // Drawer Bible Version Picker
-    if (elements.drawerVersionPicker) {
-      elements.drawerVersionPicker.addEventListener('click', (e) => {
-        const btn = e.target.closest('.segmented-btn');
-        if (btn) {
-          const ver = btn.getAttribute('data-version');
-          if (ver) setBibleVersion(ver);
         }
       });
     }
