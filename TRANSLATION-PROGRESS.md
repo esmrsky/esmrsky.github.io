@@ -88,7 +88,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `measured` | **done** | `/measured/ru/`. Three Disguises. References scripture but never quotes it, so only the reference names needed localising (2 Cor 10:12, John 21:22, Eph 1:6, Prov 29:25, Zeph 3:17). SVG diagram labels translate. |
 | `combo-stern` | not started | |
 | `combo-stern-loop-love` | not started | Two HTML files + `app.js` + `glossary-data.js`. |
-| `desire-master` | not started | |
+| `desire-master` | **done** | `/desire-master/ru/`. 84 translation units, all of them in the markup: the page's own JS only toggles classes and ARIA state, so nothing needed a parallel Russian payload. No scripture anywhere on the page, which is why it could be done while bolls was blocked. Register is the informal «ты» the essay's English second person asks for. Chalmers' phrase is given as «вытесняющая сила новой привязанности»; Chalmers and Keller keep their names. The mechanism switch, the five example tabs and all 35 scroll reveals were re-tested on the Russian page. |
 | `architecture-of-desire` | not started | |
 | `the-seeking-machine` | not started | |
 | `the-fixed-point` | not started | |
