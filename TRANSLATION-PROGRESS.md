@@ -83,7 +83,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `atlas-v2` | not started | 38 scripture refs, ~225 KB — largest page in the repo. |
 | `one-shape` | not started | Multi-file (`js/`, `css/`, `data/`). |
 | `anatomy-of-rest` | not started | 9 scripture refs. |
-| `colour-of-middle-c` | not started | |
+| `colour-of-middle-c` | **done** | `/colour-of-middle-c/ru/`. 219 markup units, 13 `data-nav` rail labels and 7 `aria-label`s. The page discusses Scripture's use of number but never quotes a verse — only references (Откр. 13:18, Ин. 21, 1 Пар.) — which is why it could be done while bolls was blocked. Its own JS writes a further ~25 strings that `data-ru` cannot reach: Newton's colour names, the two Fig. 01 captions, the transposition readout and its Гц/ТГц/нм units, the «✕ расходятся» column, the tuning-system row labels, and the canvas axis labels on Figs. 02 and 08. Those go through a `TR` table and an `L()` helper that is a no-op unless `data-lang="ru"`. Musical terms follow Russian convention (middle C → «до первой октавы», A=440 → «ля = 440»); researcher names and journal titles stay in Latin script, as Russian academic citation does. |
 | `graded` | not started | |
 | `measured` | **done** | `/measured/ru/`. Three Disguises. References scripture but never quotes it, so only the reference names needed localising (2 Cor 10:12, John 21:22, Eph 1:6, Prov 29:25, Zeph 3:17). SVG diagram labels translate. |
 | `combo-stern` | not started | |
