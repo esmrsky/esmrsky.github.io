@@ -370,6 +370,32 @@
     throw new Error(selected.id === 'web' ? 'This WEB passage is available inside its full tribe profile.' : 'Passage preview is temporarily unavailable.');
   }
 
+  // showModal() puts the profile dialog in the top layer, where it paints over every
+  // position:fixed element in the document — the popover was rendering correctly and
+  // was simply never visible inside a profile. Joining the top layer fixes the paint
+  // order, and it also hands the popover the viewport as its containing block, which
+  // the dialog's own transform would otherwise take over.
+  function revealVersePopoverLayer() {
+    versePopover.hidden = false;
+    if (typeof versePopover.showPopover !== 'function') return;
+    try {
+      if (!versePopover.matches(':popover-open')) versePopover.showPopover();
+    } catch (error) {
+      // Already in the top layer.
+    }
+  }
+
+  function dismissVersePopoverLayer() {
+    if (typeof versePopover.hidePopover === 'function') {
+      try {
+        if (versePopover.matches(':popover-open')) versePopover.hidePopover();
+      } catch (error) {
+        // Already dismissed.
+      }
+    }
+    versePopover.hidden = true;
+  }
+
   function positionVersePopover(target) {
     if (!versePopover || versePopover.hidden || !target) return;
     const rect = target.getBoundingClientRect();
@@ -387,6 +413,9 @@
 
   async function showVersePopover(target) {
     if (!versePopover || !target) return;
+    // Inside the seven-movements list the passage is already printed under the badge,
+    // so a popover would cover the very text it repeats.
+    if (target.closest('.scripture-entry')) return;
     if (versePopoverHideTimer) window.clearTimeout(versePopoverHideTimer);
     activeVerseTarget = target;
     const token = ++versePopoverToken;
@@ -394,7 +423,7 @@
     versePopover.querySelector('[data-popover-reference]').textContent = reference;
     versePopover.querySelector('[data-popover-version]').textContent = shortVersionName(selectedBibleVersion());
     versePopover.querySelector('[data-popover-content]').textContent = 'Loading passage…';
-    versePopover.hidden = false;
+    revealVersePopoverLayer();
     window.requestAnimationFrame(() => versePopover.classList.add('is-visible'));
     positionVersePopover(target);
     try {
@@ -417,7 +446,7 @@
       versePopoverToken += 1;
       versePopover.classList.remove('is-visible');
       window.setTimeout(() => {
-        if (!versePopover.classList.contains('is-visible')) versePopover.hidden = true;
+        if (!versePopover.classList.contains('is-visible')) dismissVersePopoverLayer();
       }, 170);
     }, delay);
   }
