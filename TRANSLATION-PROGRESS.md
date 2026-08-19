@@ -75,7 +75,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `ecclesia` | **done** | `/ecclesia/ru/`. 10 quoted passages → **НРП** (cited «· НРП»), retrofitted from Синодальный 2026-08-19. Ps 22:22 NIV = Пс. 21:23 — НРП keeps Septuagint psalm numbering on both bolls and Bible Gateway, so the renumbering already in place stayed correct. Ref chips are JS-rendered, so that JS localises book abbreviations, renumbers the psalm, and switches Bible Gateway between NIV and **NRT**. The licensing prose had to change with the text: Синодальный is public domain, НРП is Biblica's, so both sides now cite under the same permission. |
 | `master-thread` | **done** | `/master-thread/ru/`. No scripture at all despite the hub card — the page is about epistemic restlessness. SVG diagram labels translate too (the shared script swaps `textContent` for SVG nodes). |
 | `spirit-soul-body` | **done** | `/spirit-soul-body/ru/`. 510 translation units. 23 quoted passages → **НРП** (cited «· НРП», retrofitted 2026-08-19); Septuagint numbering throughout (Пс. 19→18, 46→45, 103→102, 127→126, 139→138) and 1 Kings → 3 Цар. Gal 5:22–23 and 5:19–21 use the Synodal word lists item for item. The hero layer-picker captions and the theme aria-label live in the page's JS, so that JS grew a parallel Russian payload keyed off `data-lang`. Relative font paths (`assets/fonts/*.woff2`, inside `url()` in a `<style>` block) are rewritten to `../` by the generator. |
-| `fear-of-god-ii` | **done** | `/fear-of-god-ii/ru/`. 339 translation units. The English page offers NIV / NLT / NASB / TPT behind pills; Russian has one published translation in play, so the RU side collapses to a single «СП» pill (the other three hidden by CSS, as on `the-word`), the NIV slot carries the Синодальный text, and every footnote that discussed what NLT or TPT do with a word was rewritten to discuss what Синодальный does. The 47 scripture popovers are JS-rendered from a reference table keyed on English reference strings, so the RU side got a parallel `REFDATA_RU` with Russian abbreviations, Septuagint psalm numbering and Synodal text. Ис. 11:2 is a gift to this page: Синодальный follows the LXX and renders the first «страх Господень» as «благочестие» — the same word-swap the study is about, made by the translation itself. |
+| `fear-of-god-ii` | **done** | `/fear-of-god-ii/ru/`. 339 translation units. **Stays on Синодальный on purpose** — see the decision log; its footnotes argue about Синодальный's own word choices. The English page offers NIV / NLT / NASB / TPT behind pills; Russian has one published translation in play, so the RU side collapses to a single «СП» pill (the other three hidden by CSS, as on `the-word`), the NIV slot carries the Синодальный text, and every footnote that discussed what NLT or TPT do with a word was rewritten to discuss what Синодальный does. The 47 scripture popovers are JS-rendered from a reference table keyed on English reference strings, so the RU side got a parallel `REFDATA_RU` with Russian abbreviations, Septuagint psalm numbering and Synodal text. Ис. 11:2 is a gift to this page: Синодальный follows the LXX and renders the first «страх Господень» as «благочестие» — the same word-swap the study is about, made by the translation itself. |
 | `three-territories` | **done** | `/three-territories/ru/`. 336 translation units. Scripture is mostly referenced rather than quoted; the quoted phrases (1 Ин. 2:12–14, Евр. 5:14, Тит. 1:15, Еф. 4:14) are **НРП** (retrofitted 2026-08-19), and Ps 51:6 becomes Пс. 50:8 — НРП keeps the Septuagint numbering, so the reference was already right. Two of the four phrases are word-for-word identical in both translations and were left untouched. SVG map labels translate. The theme button writes its own label, so that JS follows `data-lang`. Two relative links to `.md` research reports are rewritten to `../` by the generator. |
 | `soundings` | not started | **Read this before starting.** Only ~170 units live in the markup; the page renders almost everything from a ~76 KB JS data payload (`D` depths, `P` people, `J` journeys, `M` marshes, `MI`, `MAPS`, `ROWS`, `T`, `Q`, `READ`, plus label arrays `DL`, `FL`, `CV`, `VERD`, `SCALE`). Two `aria-label`s are built from template literals. So this one is mostly a JS job: give each array a parallel Russian payload selected by `data-lang`, per the rule of thumb above. Budget it like a page three times its markup size. |
 | `where-are-you` | not started | Next in the queue after `soundings`. Not yet surveyed for JS-owned strings. |
@@ -201,6 +201,32 @@ Two things a future run should know:
   `the-watches-of-the-night`, which marks verses with `class="verse"` and
   `class="ref"`. Screen for a book-and-chapter reference sitting within a few
   hundred characters of a long quoted run, and read the hits.
+
+- **НРП is now in use — from the Mac only, 2026-08-19.** bolls.life serves
+  `NRT` and is reachable from the owner's machine, so five of the six
+  scripture-quoting pages were retrofitted from Синодальный to the Новый
+  русский перевод: `everything-mid`, `three-territories`, `ecclesia`,
+  `spirit-soul-body`, `the-word`. Two findings that save a future run time:
+  - **НРП uses Septuagint psalm numbering**, on bolls *and* on Bible Gateway
+    (`NRT/19/22` and `?search=Psalm+22&version=NRT` both return the shepherd
+    psalm). Every Russian reference already in place was therefore correct, and
+    no citation number changed. Bible Gateway links just move `SYNO` → `NRT`.
+  - **НРП is Biblica's, not public domain.** Синодальный is, and `ecclesia`
+    and `the-word` both said so in prose. That had to change with the text.
+  Formatting quirks in the bolls payload, all handled in the fetcher: a leading
+  space on most verses; `<i>` around translator-supplied words; `<b>` around
+  psalm superscriptions; and — the one that bites — dialogue set on its own
+  line in НРП arrives with the break *removed*, giving `сказал:— Не бойтесь`.
+
+- **`fear-of-god-ii` stays on Синодальный, deliberately.** It is a study of how
+  translations render one word, and three of its footnotes are arguments about
+  choices only Синодальный makes. Ис. 11:2 is the clearest: following the
+  Septuagint it renders the first «страх Господень» as «благочестие» and leaves
+  the second as fear — the exact swap the study is about. НРП reads «Дух знания
+  и страха Господня» and makes no swap, so the argument would have nothing to
+  point at. Пс. 129:4 («да благоговеют» → НРП «пусть боятся») and 2 Тим. 1:7
+  («боязнь» → НРП «страх») break the same way. The page now says on its face
+  why it differs from its siblings. **Don't "fix" this for consistency.**
 
 - **НРП still could not be used.** The task preferred Новый русский перевод.
   Every Bible host — biblegateway.com, bible.com, only.bible, bibleserver.com,
