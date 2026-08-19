@@ -454,13 +454,8 @@
         return `
           <div class="trans-card" data-ver="${t}">
             <div class="trans-card-header">
-              <div>
-                <span class="trans-card-name">${t}</span>
-                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.35rem;">${names[t]}</span>
-              </div>
-              <button class="trans-copy-btn" data-ver="${t}" title="Set as Active Context Version" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
-                Select
-              </button>
+              <span class="trans-card-name">${t}</span>
+              <span class="trans-card-fullname">${names[t]}</span>
             </div>
             <p class="trans-card-text">"${escapeHtml(text)}"</p>
           </div>
@@ -878,20 +873,6 @@
         if (btn) {
           const ver = btn.getAttribute('data-ver');
           if (ver) switchReaderVersion(ver);
-        }
-      });
-    }
-
-    // Select version from translation cards
-    if (elements.readerTranslationsGrid) {
-      elements.readerTranslationsGrid.addEventListener('click', (e) => {
-        const btn = e.target.closest('.trans-copy-btn');
-        if (btn) {
-          const ver = btn.getAttribute('data-ver');
-          if (ver) {
-            switchReaderVersion(ver);
-            showToast(`Switched context to ${ver}`);
-          }
         }
       });
     }
