@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Problem · Folder · Video</title>
+<meta name="description" content="A colorful field guide: case studies from Brett Malinowski’s tape, plus the loop for shipping an app with an agent you already have.">
+<link rel="canonical" href="https://esmrsky.github.io/app-playbook/">
+<meta property="og:title" content="Problem · Folder · Video">
+<meta property="og:description" content="A field guide for shipping an app with an agent you already have. Six case files, 36 labeled tips.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://esmrsky.github.io/app-playbook/">
+<meta property="og:image" content="https://esmrsky.github.io/app-playbook/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230b0d14' width='32' height='32' rx='8'/%3E%3Ccircle cx='10' cy='16' r='4' fill='%23ff6b4a'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23f5c542'/%3E%3Ccircle cx='22' cy='16' r='4' fill='%232ec4b6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111318; --panel:#1c2028; --ink:#f0ece5; --mute:#a8adb8;
+  --inset:#14171e;
+  --coral:#d85a3a; --gold:#c9a227; --teal:#2a9d8f; --violet:#6d5cae;
+  --pink:#c45b7a; --lime:#8fa85a;
+  --line:rgba(236,232,225,.12);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --space:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font:18px/1.65 "Source Sans 3",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit} button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+h1,h2,h3,.case h3,.stn h3,.step h3,.keep h3,.skip h3,.row .ttl{text-wrap:balance}
+.lede,.intro,.what,.lesson,.why,.do,.body,.quote .take,.fine,p,li{text-wrap:pretty;overflow-wrap:break-word}
+
+.wrap{max-width:1400px;margin:0 auto;padding:0 48px}
+
+nav{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 0 16px;background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:-.01em}
+.logo svg{width:22px;height:22px}
+.navlinks{display:flex;gap:2px;flex-wrap:wrap}
+.navlinks a{
+  text-decoration:none;font-size:14px;padding:8px 13px;color:var(--mute);border-radius:8px;
+  transition:color .2s var(--ease), background .2s var(--ease);
+}
+.navlinks a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+
+.hero{padding:72px 0 28px;max-width:58rem}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:8px}
+.kicker svg{width:16px;height:16px;flex:none}
+h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(2.6rem,4.8vw,3.7rem);line-height:1.12;letter-spacing:-.025em;font-weight:600;margin:14px 0 16px}
+h1 i{font-style:italic;font-weight:500}
+.lede{color:var(--mute);font-size:1.22rem;max-width:62ch}
+.lede b{color:var(--ink);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:20px 32px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.pill{font-size:15px;color:var(--mute)}
+.pill b{display:block;color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:1.75rem;font-weight:600;line-height:1.1;margin-bottom:2px}
+
+section{padding:64px 36px;scroll-margin-top:76px;border-radius:16px;margin:20px 0}
+h2{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(1.75rem,2.7vw,2.3rem);letter-spacing:-.02em;font-weight:600;margin:10px 0 14px}
+.intro{color:var(--mute);max-width:62ch;font-size:1.1rem}
+#stories{background:rgba(216,90,58,.07);border:1px solid rgba(216,90,58,.16)}
+#loop{background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.16)}
+#ship{background:rgba(42,157,143,.07);border:1px solid rgba(42,157,143,.16)}
+#course{background:rgba(109,92,174,.07);border:1px solid rgba(109,92,174,.16)}
+#gold{background:rgba(196,91,122,.07);border:1px solid rgba(196,91,122,.16)}
+#book{background:rgba(143,168,90,.07);border:1px solid rgba(143,168,90,.16)}
+
+.tape{margin:14px 0 18px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;color:var(--mute)}
+
+.tl-scroll{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;overflow:visible}
+.case{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:24px;display:flex;flex-direction:column;min-height:0;gap:4px;
+  transition:transform .28s var(--ease), box-shadow .28s var(--ease), border-color .28s var(--ease);
+}
+.case:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.28);border-color:color-mix(in srgb, var(--acc) 45%, var(--line))}
+.case .ic{
+  width:36px;height:36px;border-radius:8px;background:var(--acc);color:#111318;
+  display:grid;place-items:center;margin-bottom:14px;
+}
+.case .ic svg{width:18px;height:18px}
+.case .yr{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);letter-spacing:.06em}
+.case h3{font-family:"Source Serif 4",Georgia,serif;font-size:1.5rem;font-weight:600;margin:4px 0 6px}
+.case .hook{font-weight:600;margin:4px 0 10px;font-size:1.08rem}
+.inset{
+  background:var(--inset);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;font-size:1rem;line-height:1.55;
+}
+.case .what{color:var(--mute);flex:1}
+.case .lesson{margin-top:8px;color:var(--ink);font-size:.98rem}
+.case button{
+  margin-top:16px;background:transparent;border:1px solid var(--line);border-radius:8px;
+  padding:8px 14px;cursor:pointer;font-size:14px;align-self:flex-start;color:var(--mute);
+  transition:color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.case button:hover{color:var(--ink);border-color:var(--mute);background:rgba(255,255,255,.04)}
+
+.detail{display:none;margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px}
+.detail.on{display:block;animation:rise .4s var(--ease)}
+.detail ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.detail li{padding:12px 14px;color:#d8d4cc;background:var(--inset);border:1px solid var(--line);border-radius:10px}
+.detail .src{margin-top:16px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute)}
+
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:28px}
+.step{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;
+  transition:transform .28s var(--ease), box-shadow .28s var(--ease);
+}
+.step:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.step .num{
+  width:28px;height:28px;border-radius:6px;display:grid;place-items:center;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:#111318;margin-bottom:12px;
+}
+.step h3{font-family:"Source Serif 4",Georgia,serif;font-size:1.22rem;font-weight:600;margin-bottom:6px}
+.step p{color:var(--mute);font-size:1rem}
+
+.stations{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px}
+.stn{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}
+.stn .ln{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:8px}
+.stn .ln svg{width:15px;height:15px}
+.stn h3{font-family:"Source Serif 4",Georgia,serif;font-size:1.35rem;font-weight:600;margin:4px 0 8px}
+.do{border-left:3px solid var(--gold);margin-bottom:10px}
+.why{color:var(--mute);font-size:1rem}
+.related{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+
+.row{background:var(--inset);border:1px solid var(--line);border-radius:12px;transition:border-color .2s var(--ease), box-shadow .2s var(--ease)}
+.row:hover{border-color:rgba(236,232,225,.22)}
+.row.open{border-color:rgba(201,162,39,.35);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.row > button{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 18px 16px;display:grid;grid-template-columns:4.6rem 1fr auto;gap:14px;align-items:start}
+.row .tid{
+  font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;letter-spacing:.04em;
+  color:#111318;background:var(--gold);border-radius:6px;padding:6px 0;text-align:center;line-height:1.2;
+}
+.tid.p-problem{background:var(--coral);color:#fff}
+.tid.p-product{background:var(--violet);color:#fff}
+.tid.p-build{background:var(--teal);color:#111}
+.tid.p-distribution{background:var(--gold);color:#111}
+.tid.p-pricing{background:var(--lime);color:#111}
+.tid.p-team{background:var(--pink);color:#fff}
+.tid.p-reps{background:#e0b84a;color:#111}
+.tid.p-mindset{background:#5a6d8c;color:#fff}
+.row .ttl{display:block;font-weight:600;font-size:1.12rem;line-height:1.3}
+.row .one{display:block;color:var(--mute);font-size:1.02rem;margin-top:4px;line-height:1.45}
+.marks{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.dot{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--line);border-radius:4px;padding:4px 8px;color:var(--mute)}
+.ev-verified{color:#6ec4b8;border-color:rgba(42,157,143,.45);background:rgba(42,157,143,.1)}
+.ev-self{color:#d4b04a;border-color:rgba(201,162,39,.4);background:rgba(201,162,39,.1)}
+.ev-opinion{color:#b8b3a8;background:rgba(255,255,255,.04)}
+.ev-pattern{color:#b3a6d9;border-color:rgba(109,92,174,.4);background:rgba(109,92,174,.1)}
+.vl-strong{color:#a3b86a;background:rgba(143,168,90,.1)}
+.vl-conditional{color:#d4b04a}
+.vl-decaying{color:var(--coral);background:rgba(216,90,58,.1)}
+.vl-survivorship{color:var(--pink);background:rgba(196,91,122,.1)}
+.body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s var(--ease)}
+.row.open .body{grid-template-rows:1fr}
+.body-in{overflow:hidden}
+.body-card{margin:0 18px 18px 5.8rem;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:#ddd9d1;font-size:1.06rem;line-height:1.65}
+.note{margin-top:12px;padding:12px 14px;border-left:3px solid var(--line);background:var(--inset);border-radius:0 8px 8px 0}
+.note .nl{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.note.caveat{border-color:var(--coral)}
+.src{margin-top:8px;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--mute)}
+
+.quotes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:24px}
+.quote{
+  background:var(--panel);border-radius:12px;padding:22px;border:1px solid var(--line);
+  transition:transform .28s var(--ease);
+}
+.quote:hover{transform:translateY(-2px)}
+.quote .q{font-family:"Source Serif 4",Georgia,serif;font-size:1.24rem;line-height:1.35;margin-bottom:12px}
+.quote .take{color:var(--mute);font-size:1rem}
+.quote .qm{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--mute)}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0}
+.search,.sel,.tog{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.tog{cursor:pointer;font-weight:600}
+.tog[aria-pressed="true"]{border-color:var(--teal);color:var(--teal);background:rgba(42,157,143,.12)}
+#expandBook,#expandCourse{background:rgba(201,162,39,.14);border-color:rgba(201,162,39,.4);color:var(--ink)}
+.tally{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute)}
+.book{display:flex;flex-direction:column;gap:10px}
+.stage-l{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:22px 0 10px}
+.empty{color:var(--mute);font-style:italic;padding:20px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+.keep,.skip{border-radius:12px;padding:26px;border:1px solid var(--line);background:var(--panel)}
+.keep{border-color:rgba(42,157,143,.35)}
+.keep h3,.skip h3{font-family:"Source Serif 4",Georgia,serif;font-size:1.35rem;font-weight:600;margin-bottom:14px}
+.keep ul,.skip ul{display:flex;flex-direction:column;gap:8px}
+.keep li,.skip li{list-style:none;padding:12px 14px;background:var(--inset);border:1px solid var(--line);border-radius:10px}
+.keep li b,.skip li b{display:block;margin-bottom:2px}
+.fine{color:var(--mute);font-size:.95rem;margin-top:18px;max-width:70ch}
+
+footer{padding:48px 0 72px;color:var(--mute);font-size:14px;max-width:52rem;line-height:1.6}
+
+html.js .reveal{opacity:0;transform:translateY(12px)}
+html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease), transform .55s var(--ease)}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media(max-width:1100px){
+  .tl-scroll,.quotes{grid-template-columns:1fr 1fr}
+  .loop{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .wrap{padding:0 20px}
+  .hero,.loop,.quotes,.split,.stations,.tl-scroll{grid-template-columns:1fr}
+  .navlinks{display:none}
+  .row > button{grid-template-columns:3.8rem 1fr}
+  .marks{grid-column:2}
+  .body-card{margin-left:16px;margin-right:16px}
+  section{padding:40px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+  .reveal.in{transition:none}
+  .case,.step,.quote{transition:none}
+  .case:hover,.step:hover,.quote:hover{transform:none;box-shadow:none}
+  .body{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 22 22" fill="none"><rect x="1" y="9" width="5" height="5" fill="#d85a3a"/><rect x="8.5" y="9" width="5" height="5" fill="#c9a227"/><rect x="16" y="9" width="5" height="5" fill="#2a9d8f"/></svg>
+      The loop
+    </a>
+    <div class="navlinks">
+      <a href="#stories">Stories</a>
+      <a href="#loop">The loop</a>
+      <a href="#ship">Ship</a>
+      <a href="#course">Eight</a>
+      <a href="#gold">Wire</a>
+      <a href="#book">Book</a>
+    </div>
+  </nav>
+
+  <header class="hero reveal" id="top">
+    <p class="kicker">A field guide · August 2026</p>
+    <h1>Problem. <i>Folder.</i> Video.</h1>
+    <p class="lede">The Cal AI tape is on <b>Brett Malinowski’s channel</b> (@TheBrettWay). Same show, more founders. Same pattern: a painful-enough problem, a folder you own, a clip people actually watch. <b>You do not need Lovable to ship the app.</b> You do need the loop.</p>
+    <div class="pills">
+      <div class="pill"><b>6</b> case files</div>
+      <div class="pill"><b>36</b> labeled tips</div>
+      <div class="pill"><b>0</b> second builders required</div>
+    </div>
+  </header>
+
+  <section class="reveal" id="stories">
+    <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 2v4M16 2v4"/></svg> Stories</p>
+    <h2>Same channel. Same shape. Different apps.</h2>
+    <p class="intro">Brett Malinowski / TheBrettWay is the Cal AI interview home. Click a card for receipts. Numbers stay labeled — including the ones that later got walked back.</p>
+    <p class="tape">Sources: TheBrettWay / WGMI · TechCrunch · BI · Forbes · a16z · r/nocode · X</p>
+    <div class="tl-scroll" id="cases"></div>
+    <div class="detail" id="casedetail"></div>
+  </section>
+
+  <section class="reveal" id="loop">
+    <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg> The loop</p>
+    <h2>Four beats. Then again, faster.</h2>
+    <div class="loop">
+      <article class="step"><div class="num" style="background:var(--coral)">1</div><h3>Name the pain</h3><p>One sentence of core badness. If you need a feature list, you do not have it.</p></article>
+      <article class="step"><div class="num" style="background:var(--gold)">2</div><h3>Own the folder</h3><p>Agent + git. No rented factory. Spec in a chat, then build.</p></article>
+      <article class="step"><div class="num" style="background:var(--teal)">3</div><h3>Make the clip</h3><p>One problem per video. Ten hooks. Kill eight.</p></article>
+      <article class="step"><div class="num" style="background:var(--violet)">4</div><h3>Price the test</h3><p>Four figures before five. Split the paywall, not the brand.</p></article>
+    </div>
+  </section>
+
+  <section class="reveal" id="ship">
+    <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v10H3z"/></svg> How you ship</p>
+    <h2>Keep the agent. Skip the factory.</h2>
+    <div class="split">
+      <div class="keep">
+        <h3>Keep the agent</h3>
+        <ul>
+          <li><b>Claude Code, Cursor, Codex, Grok</b> An agent in a folder you own.</li>
+          <li><b>One surface first</b> Web or Expo/SwiftUI. Not both.</li>
+          <li><b>Auth off the generator</b> Supabase or Clerk yourself.</li>
+          <li><b>Real data</b> Pretty first pass is demo-data theater.</li>
+        </ul>
+      </div>
+      <div class="skip">
+        <h3>Skip — unless it’s a 20-minute mock</h3>
+        <ul>
+          <li><b>Lovable</b> React factory. Runs on Claude. Credits burn on debug.</li>
+          <li><b>Replit</b> Looks finished. Core features often aren’t.</li>
+          <li><b>Rork</b> Expo with a meter.</li>
+          <li><b>10x</b> SwiftUI with a meter. Blake’s other product.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Lovable is also on this page as a case study. The factory is a real business. You still don’t need to rent it to ship one app. Anton Osika told Slush 2025 they were at $200M ARR — TechCrunch reported the onstage claim. Not audited books.</p>
+  </section>
+
+  <section class="reveal" id="course">
+    <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg> Eight stations</p>
+    <h2>Do these in order.</h2>
+    <p class="intro">After the first app, run 1→8 again. The related tips open in place. IDs are colored by pillar — tap one, or expand all of them.</p>
+    <div class="controls" style="margin-top:14px">
+      <button class="tog" id="expandCourse" type="button" aria-pressed="false">Expand all</button>
+    </div>
+    <div class="stations" id="lessons"></div>
+  </section>
+
+  <section class="reveal" id="gold">
+    <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h3l2-7 4 14 2-7h5"/></svg> Heard on the wire</p>
+    <h2>Short, loud, labeled.</h2>
+    <div class="quotes" id="quotes"></div>
+  </section>
+
+  <section class="reveal" id="book">
+    <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v16H5z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg> The book</p>
+    <h2>Thirty-six tips. Two rest on outlet-reviewed numbers.</h2>
+    <div class="controls">
+      <input class="search" id="search" type="search" placeholder="Search tips…" autocomplete="off">
+      <select class="sel" id="f-stage"></select>
+      <select class="sel" id="f-pillar"></select>
+      <select class="sel" id="f-ev"></select>
+      <button class="tog" id="vonly" type="button" aria-pressed="false">Verified only</button>
+      <button class="tog" id="expandBook" type="button" aria-pressed="false">Expand all</button>
+      <span class="tally" id="tally"></span>
+    </div>
+    <div class="book" id="booklist"></div>
+  </section>
+
+  <footer>Brett Malinowski’s titles are marketing. We used the interviews, then checked outlets. Cluely’s $500k/mo line is on the tape — and later acknowledged as a misrepresentation. That is the point of the labels. Validity ratings are editorial. This page is a retelling too.</footer>
+</div>
+<script>
+document.documentElement.classList.add("js");
+
+const EV = {
+  verified:{label:"Verified", cls:"ev-verified"},
+  self:{label:"Self-reported", cls:"ev-self"},
+  opinion:{label:"Opinion", cls:"ev-opinion"},
+  pattern:{label:"Pattern", cls:"ev-pattern"}
+};
+const VAL = {
+  strong:{label:"Strong", cls:"vl-strong"},
+  conditional:{label:"Conditional", cls:"vl-conditional"},
+  decaying:{label:"Decaying", cls:"vl-decaying"},
+  survivorship:{label:"Survivorship", cls:"vl-survivorship"}
+};
+const PILLARS = [
+  {id:"problem", name:"Problem"},
+  {id:"product", name:"Product"},
+  {id:"build", name:"How you ship"},
+  {id:"distribution", name:"Distribution"},
+  {id:"pricing", name:"Pricing"},
+  {id:"team", name:"Team"},
+  {id:"reps", name:"Reps"},
+  {id:"mindset", name:"Mindset"}
+];
+const STAGES = [
+  {id:"0-reps", n:"0", name:"Build reps"},
+  {id:"1-select", n:"1", name:"Select the problem"},
+  {id:"2-design", n:"2", name:"Design for distribution"},
+  {id:"3-build", n:"3", name:"Build fast"},
+  {id:"4-launch", n:"4", name:"Launch"},
+  {id:"5-scale", n:"5", name:"Scale"},
+  {id:"6-exit", n:"6", name:"Exit"},
+  {id:"all", n:"∞", name:"Runs through everything"}
+];
+const LESSONS = [
+  {n:"00", title:"Discount the storytellers", do:"Read the labels before you read the advice.", why:"Most of this industry is marketing itself. Start skeptical or the rest of the page will hypnotise you.", tips:["T24"]},
+  {n:"01", title:"Name the problem, not the idea", do:"Write one sentence of core badness. If you need a feature list to explain it, you do not have it.", why:"Seibel’s test. Your own pain is just the cheapest version of a real problem.", tips:["T03","T02","T04"]},
+  {n:"02", title:"Picture the video first", do:"Describe the TikTok before you describe the screens.", why:"For consumer apps, distribution feasibility is the scarce input. Test it first.", tips:["T01","T05","T07"]},
+  {n:"03", title:"Spec in a chat, not in a factory", do:"One hour: screens, data, what not to build, the video. Write it into a README.", why:"Credits and tokens die when you invent the product inside the builder.", tips:["T27","T09","T08"]},
+  {n:"04", title:"Empty folder. Agent. Git.", do:"Claude, Cursor, Grok, or Codex in a folder you own. No Lovable, Replit, Rork, or 10x.", why:"The factory is a markup on the same model. Own the repo or you own a demo.", tips:["T25","T26","T30","T32"]},
+  {n:"05", title:"Verify on real data", do:"Upload a real file. Tap the real phone. Read the real error. Then prompt again.", why:"Pretty first pass is demo-data theater.", tips:["T29","T28","T31","T10"]},
+  {n:"06", title:"Ten videos. Kill eight.", do:"One problem per video. Five to ten hooks. Mixed formats. Iterate the winner.", why:"Winning content is the hundredth iteration. Feature 47 is not.", tips:["T12","T33","T34","T35","T11"]},
+  {n:"07", title:"Test price, then scale what already works", do:"A four-figure distribution test before a five-figure commitment. Split-test the paywall.", why:"Cal AI’s $2,000 test bought six months of conviction. Most people buy ads with no users.", tips:["T14","T36","T15","T16"]}
+];
+const GOLD = [
+  {q:"Honestly just use Claude Code and talk at it for a while.", take:"The 2026 migration advice, in one sentence.", src:"r/nocode, Aug 2026", ev:"opinion", val:"strong"},
+  {q:"Lovable runs on Claude.", take:"Their own comparison page. You are paying a wrapper for the model you can already subscribe to.", src:"Lovable, 2026", ev:"verified", val:"strong"},
+  {q:"The credits go because every change regenerates half the thing.", take:"The factory’s business model colliding with iteration.", src:"r/nocode, Aug 2026", ev:"self", val:"strong"},
+  {q:"Your app isn’t the problem. Your distribution is.", take:"Feature 47 is almost never the bottleneck.", src:"indie-hacker X, 2025–26", ev:"opinion", val:"strong"},
+  {q:"95%+ of indie-hacking X is broke because they obsess over building.", take:"Their idea of distribution is documenting the journey. Steal the diagnosis. Leave the swagger.", src:"@eptwts, Jul 2026", ev:"opinion", val:"conditional"},
+  {q:"One problem per video. Test 5–10 hooks. Boost $20–30 a day to start.", take:"The anti-demo-reel rule.", src:"@TheWalid, Feb 2025", ev:"opinion", val:"strong"},
+  {q:"The two ads that took 80%+ of spend are the winners. Stop the rest.", take:"Standard creative testing, dressed as a victory lap.", src:"@rom1trs", ev:"self", val:"conditional"},
+  {q:"Founder-made ads and founder-picked creators beat hired spray.", take:"You understand the product. A $4/hr VA does not.", src:"@peterczepiga, Aug 2026", ev:"opinion", val:"strong"},
+  {q:"Reddit is a research mine, not a launchpad.", take:"Read the complaints. Do not drop your link.", src:"editorial synthesis", ev:"pattern", val:"strong"},
+  {q:"People have built Lovable clones with Claude Code in a session.", take:"The factory is a product you can also just make — which is how you remember you did not need it.", src:"@rileybrown, Jul 2025", ev:"self", val:"strong"}
+];
+const TIPS = [
+{id:"T01", pillar:"distribution", stage:"1-select", ev:"opinion", src:"Blake Anderson", val:"strong",
+ title:"Validate through content before code",
+ one:"Plan the TikToks before you build anything. If you cannot picture the video, question the idea.",
+ body:"Blake’s claim is blunter than most founders will say: the content strategy matters more than the product. The videos are the distribution, and distribution decides whether anyone ever opens it.",
+ notes:[{l:"Why it holds", t:"For a virality-dependent consumer app, distribution feasibility is the scarcest input — so test it first."},{l:"Caveat", k:"caveat", t:"Consumer-app specific. B2B and utilities validate through conversations and pilots."}]},
+{id:"T02", pillar:"problem", stage:"1-select", ev:"opinion", src:"Zach Yadegari; Josh Browder", val:"conditional",
+ title:"Solve your own problem — for the real reason",
+ one:"Zach quit MyFitnessPal after three days of manual entry. That frustration became Cal AI.",
+ body:"Josh Browder says a deep personal connection to the problem is the strongest predictor of young-founder success — because it produces stamina, not just product intuition.",
+ notes:[{l:"Why it’s conditional", k:"caveat", t:"Neither necessary (Jake Castillo wasn’t the target user) nor sufficient (your problem may be a market of twelve). Tiebreaker and stamina source, not a strategy."}]},
+{id:"T03", pillar:"problem", stage:"1-select", ev:"opinion", src:"Michael Seibel, Y Combinator", val:"strong",
+ title:"Hear the problem, not the idea",
+ one:"Seibel: “I don’t want to hear ideas. I want to hear the problem.”",
+ body:"There must be a core badness the product removes. An idea can be described without anyone having suffered. A problem cannot.",
+ notes:[{l:"Pairs with", t:"Tip 02. Your own problem is simply the cheapest one to verify is real."}]},
+{id:"T04", pillar:"problem", stage:"1-select", ev:"self", src:"Cal AI origin story", val:"strong",
+ title:"A shared pain point is your cheapest first validation",
+ one:"Blake and Zach independently had the same calorie-tracking frustration.",
+ body:"One other person with the same pain, discovered organically, is a meaningful early signal. It is not proof of a market. It is proof you are not the only one.",
+ notes:[]},
+{id:"T05", pillar:"problem", stage:"1-select", ev:"self", src:"Anderson / Yadegari, via Forbes", val:"strong",
+ title:"Scan social content to validate demand",
+ one:"If content about a problem is already going viral, demand is pre-validated and the channel is pre-mapped.",
+ body:"Looksmaxxing, “rizz”, calorie hacks. RizzGPT and Umax were both trend-surfing plays built on this read.",
+ notes:[{l:"Caveat", k:"caveat", t:"Trend-surfing has a shelf life. See tip 18."}]},
+{id:"T06", pillar:"problem", stage:"1-select", ev:"opinion", src:"Paul Graham", val:"strong",
+ title:"Start with deceptively small things",
+ one:"Big things start deceptively small.",
+ body:"RizzGPT — a dating-reply generator from a roommate’s screenshot — seeded a whole portfolio. Smallness is what makes the first version shippable.",
+ notes:[]},
+{id:"T07", pillar:"product", stage:"2-design", ev:"self", src:"Blake Anderson", val:"strong",
+ title:"Design the app to be the content",
+ one:"Umax’s ratings looked like Madden. RizzGPT’s screens were built for TikTok slideshows.",
+ body:"The shareable screen is a day-one product requirement. If a screenshot of your app does not work as a video frame, the growth engine has nothing to run on.",
+ notes:[{l:"Method", k:"method", t:"Burner accounts that consume only your target customer’s content. Let the algorithm inform the design."}]},
+{id:"T08", pillar:"product", stage:"2-design", ev:"opinion", src:"Blake Anderson", val:"conditional",
+ title:"Minimise cognitive load; single-player utilities win",
+ one:"Viral apps are commonly simple single-player utilities that solve one problem.",
+ body:"Stick to standard UX. Save novelty for the core mechanic.",
+ notes:[{l:"Caveat", k:"caveat", t:"This describes the viral-consumer genre, not all good software."}]},
+{id:"T09", pillar:"product", stage:"2-design", ev:"opinion", src:"Alexandr Wang, Scale AI", val:"strong",
+ title:"Focus really, really finely at first",
+ one:"Scale AI started on self-driving data labelling only.",
+ body:"Wang predicted the market wrong. Tight focus surfaced the correction fast enough to act.",
+ notes:[{l:"Why it holds", t:"Narrow focus is an error-detection mechanism. A broad product hides a wrong hypothesis."}]},
+{id:"T10", pillar:"product", stage:"3-build", ev:"pattern", src:"Anderson’s portfolio", val:"conditional",
+ title:"Done beats perfect; speed is the feature",
+ one:"RizzGPT cost roughly $100 and took days, not months.",
+ body:"A consumer app in a trend window needs speed, distribution, and a problem people care about. Perfect engineering is not on the list.",
+ notes:[{l:"Caveat", k:"caveat", t:"Valid where the moat is distribution timing. Invalid where the product is the moat."}]},
+{id:"T11", pillar:"distribution", stage:"4-launch", ev:"self", src:"RizzGPT numbers", val:"decaying",
+ title:"The $100 underground-creator launch",
+ one:"Two underground TikTok creators, $50 each. ~200K downloads, ~$80K/month.",
+ body:"18–19-year-old creators with high engagement who had not priced their commercial reach. The promos read as recommendations because at that price they mostly were.",
+ notes:[{l:"Why it’s decaying", k:"caveat", t:"The $50 price existed because rates had not repriced in 2023. They have. The principle — find undervalued attention — still holds."}]},
+{id:"T12", pillar:"distribution", stage:"4-launch", ev:"opinion", src:"Blake Anderson", val:"strong",
+ title:"The 100th iteration, not the first video",
+ one:"Winning content is rarely the first attempt.",
+ body:"Discard hooks that do not land. When a format spikes downloads, double down. Treat content like ad creative, run in-house.",
+ notes:[]},
+{id:"T13", pillar:"distribution", stage:"4-launch", ev:"self", src:"Cal AI / Umax", val:"conditional",
+ title:"In-house content beats paid ads on margin",
+ one:"Keeping UGC in-house preserved margin against Meta Ads Manager.",
+ body:"The team acted as its own agency, iterating hooks across dozens of accounts.",
+ notes:[{l:"Caveat", k:"caveat", t:"Needs native fluency and real time. Paid ads still win where LTV supports them."}]},
+{id:"T14", pillar:"distribution", stage:"4-launch", ev:"verified", src:"CNBC", val:"strong",
+ title:"Run a small paid test before committing",
+ one:"The Cal AI team spent $2,000 on a social marketing test.",
+ body:"Positive response. They funded six months of operating costs. A four-figure test bought a five-figure commitment.",
+ notes:[{l:"Why it holds", t:"It converts an all-or-nothing bet into a priced question."}]},
+{id:"T15", pillar:"pricing", stage:"5-scale", ev:"opinion", src:"Blake Anderson", val:"conditional",
+ title:"Price low to widen the viral funnel",
+ one:"Cal AI charges $2.49/month.",
+ body:"More users, more word of mouth, better social sentiment — when growth is the thing compounding.",
+ notes:[{l:"Caveat", k:"caveat", t:"The inverse of “charge more,” which is B2B advice. Know which game you are playing."}]},
+{id:"T16", pillar:"pricing", stage:"5-scale", ev:"opinion", src:"Blake Anderson", val:"strong",
+ title:"Split-test paywalls continuously",
+ one:"Weekly, monthly, yearly. Different prices. Different placement.",
+ body:"Paywall framing is as testable as content hooks. Most teams test one and not the other.",
+ notes:[{l:"Note", k:"caveat", t:"Anderson wrote Superwall’s blog series. The tool recommendation is not neutral. The practice is still sound."}]},
+{id:"T17", pillar:"team", stage:"all", ev:"self", src:"Cal AI team", val:"conditional",
+ title:"One owner per domain, complete trust",
+ one:"Four founders, four clean domains, each with full authority.",
+ body:"Their claim: this is why there were no fights. Business Insider corroborates a non-hierarchical structure.",
+ notes:[{l:"Caveat", k:"caveat", t:"Role-separation is actionable. “No fights” is survivorship gloss."}]},
+{id:"T18", pillar:"problem", stage:"1-select", ev:"opinion", src:"Blake Anderson", val:"strong",
+ title:"Copycats cap out; differentiation raises the ceiling",
+ one:"Copy plus distribution can reach $10K–$100K/month. Bigger outcomes need a spin.",
+ body:"The spin can live in features, approach, or distribution.",
+ notes:[{l:"The irony", t:"Cal AI was a differentiated take on calorie tracking, not a novel category. Differentiation is not novelty."}]},
+{id:"T19", pillar:"reps", stage:"0-reps", ev:"verified", src:"multiple outlets on the Yadegari timeline", val:"strong",
+ title:"Reps are the moat",
+ one:"Coding at 7. Lessons at 10. App Store at 12. A sale at ~16. A failed app. Then Cal AI.",
+ body:"Years of full-pipeline reps compress idea-to-shipped latency to near zero. When a wave hits, you can surf it. In 2026 the paddle is an agent. The reps are still the moat.",
+ notes:[]},
+{id:"T20", pillar:"distribution", stage:"2-design", ev:"pattern", src:"editorial synthesis", val:"strong",
+ title:"Demographic fluency is an unfair distribution advantage",
+ one:"These founders are natives of the platform their growth runs on.",
+ body:"They have consumed thousands of the videos. Identical coding skill without that is the harder half to acquire.",
+ notes:[{l:"Actionable version", k:"method", t:"Tip 07’s burner-account immersion is the substitute for non-natives."}]},
+{id:"T21", pillar:"reps", stage:"0-reps", ev:"self", src:"Grind Clock", val:"strong",
+ title:"The failed project is part of the pipeline",
+ one:"Zach’s motivational alarm app did not grow.",
+ body:"It taught scaling, and how to work with Henry — met at camp at 10, later Cal AI’s CTO.",
+ notes:[{l:"How to apply", k:"method", t:"Frame failed projects as tuition. Keep the collaborators."}]},
+{id:"T22", pillar:"mindset", stage:"all", ev:"opinion", src:"Cal AI founders", val:"conditional",
+ title:"The game you’d actually play",
+ one:"“Would you put your GTA character down to watch TV?”",
+ body:"Sustainable motivation is intrinsic. Money is the score, not the game.",
+ notes:[{l:"Caveat", k:"caveat", t:"A flattering self-narrative from people whose game paid out. Seibel: this life fits a type, and not being that type is fine."}]},
+{id:"T23", pillar:"mindset", stage:"6-exit", ev:"self", src:"founder account", val:"survivorship",
+ title:"Don’t sell early — a survivorship warning",
+ one:"They declined low-eight-figure offers in 2024 and later sold for more.",
+ body:"On the page as outcome bias, not advice. The identical decision into a downturn is the cautionary tale, and nobody writes that one up.",
+ notes:[{l:"The transferable part", t:"Open communication among founders during the decision. The decision itself was a bet that landed."}]},
+{id:"T24", pillar:"mindset", stage:"all", ev:"pattern", src:"editorial synthesis", val:"strong",
+ title:"Discount the storytellers",
+ one:"Most retellings are content-mill recycling, or marketing by the founders themselves.",
+ body:"They sell playbooks, communities, and app-builder tools. That does not make the stories false. It makes them shaped.",
+ notes:[{l:"House rule", k:"method", t:"Every tip shows its evidence level, including this one. This page is a retelling too."}]},
+{id:"T25", pillar:"build", stage:"3-build", ev:"pattern", src:"Lovable’s own docs + product pages", val:"strong",
+ title:"You don’t need a second builder",
+ one:"Lovable runs on Claude. Rork wraps Expo. 10x wraps SwiftUI. Replit is a cloud IDE around the same agent class.",
+ body:"The factory is a markup on the model, plus a folder you do not control. Pick one agent, open a folder you own, ship from there.",
+ notes:[{l:"Caveat", k:"caveat", t:"A factory is fine for a twenty-minute mock. The moment you iterate, the wrapper is a tax."}]},
+{id:"T26", pillar:"build", stage:"3-build", ev:"pattern", src:"migration guides, GitHub-export tax", val:"strong",
+ title:"Own the folder or you don’t own the product",
+ one:"A product that only exists inside a credit meter is a demo.",
+ body:"Whole essays exist on “Lovable → Claude Code” because people hit this wall — some after paying for GitHub export.",
+ notes:[{l:"Method", k:"method", t:"Empty folder, git init, a README with the spec, then let the agent write."}]},
+{id:"T27", pillar:"build", stage:"3-build", ev:"opinion", src:"r/nocode, Aug 2026", val:"strong",
+ title:"Spec in a chat. Build in the folder.",
+ one:"An hour designing screens, data, and what not to build. Then let the agent replan.",
+ body:"Building is 20–30 minutes if the spec is real. Credits die when you invent the product inside the builder.",
+ notes:[{l:"Pairs with", t:"Tip 01. The spec includes the video."}]},
+{id:"T28", pillar:"build", stage:"3-build", ev:"self", src:"r/nocode, Aug 2026", val:"conditional",
+ title:"Credits burn on debugging, not building",
+ one:"“Both ate my credits before I finish the core feature.”",
+ body:"Login plus permissioned file upload is where factories fall over. You cannot read the error, so you prompt again, and it rewrites working code.",
+ notes:[{l:"Caveat", k:"caveat", t:"Forum testimony, not a price study. The mechanism is real."}]},
+{id:"T29", pillar:"build", stage:"3-build", ev:"self", src:"XDA, Mahnoor Faisal, Mar 2026", val:"conditional",
+ title:"Pretty first pass is not a working app",
+ one:"Same vague prompt, three tools. Only Claude Code handled a real bank CSV.",
+ body:"Sample data each tool generated for itself worked everywhere. The real-world file is the test.",
+ notes:[{l:"Caveat", k:"caveat", t:"n=1, one prompt, one app. Warning, not a league table."}]},
+{id:"T30", pillar:"build", stage:"3-build", ev:"pattern", src:"product pages + community", val:"strong",
+ title:"Rork and 10x wrap stacks you can already prompt",
+ one:"Rork is Expo. 10x is SwiftUI. Neither is a stack an agent cannot write in your folder.",
+ body:"10x Plus $20 / Max $200 as of August 2026, plus “marketing on autopilot.” Speed of first screenshot is not speed of a product you can keep.",
+ notes:[]},
+{id:"T31", pillar:"build", stage:"2-design", ev:"opinion", src:"community workflow (Finn, Hassid, others)", val:"strong",
+ title:"Taste is the last scarce input",
+ one:"“Match this” beats “make it modern.”",
+ body:"Once generation is cheap, generic vibe-coded UI is the default. Give the agent taste you actually have.",
+ notes:[{l:"Method", k:"method", t:"Two or three reference screenshots in the folder. Reuse that file every session."}]},
+{id:"T32", pillar:"build", stage:"3-build", ev:"opinion", src:"community operating advice", val:"strong",
+ title:"One job per chat",
+ one:"Long chats re-send everything and eat tokens.",
+ body:"Fresh chat per task. Plan, then build. Point at files. The README is the memory, not the transcript.",
+ notes:[]},
+{id:"T33", pillar:"distribution", stage:"4-launch", ev:"opinion", src:"@TheWalid, Feb 2025", val:"strong",
+ title:"One problem per video",
+ one:"Founders film every feature. What works: one problem, many hooks.",
+ body:"Screen recordings, creator-led, founder-on-camera. $20–$30 a day to start, only on what already moves.",
+ notes:[{l:"Pairs with", t:"Tip 12."}]},
+{id:"T34", pillar:"distribution", stage:"4-launch", ev:"self", src:"@rom1trs", val:"conditional",
+ title:"Ten creatives. Keep the two that ate the spend.",
+ one:"Week 1: make 10, run broad, keep the 2 that took 80% of spend.",
+ body:"Week 2: two iterations of winners plus six new. Repeat six weeks. If it is not profitable, change the app, not the font.",
+ notes:[{l:"Caveat", k:"caveat", t:"Founder also sells an ads tool. The 7-fig claim is unaudited. The mechanism is standard."}]},
+{id:"T35", pillar:"distribution", stage:"4-launch", ev:"pattern", src:"indie-hacker X, 2025–26", val:"strong",
+ title:"Building in public is not distribution",
+ one:"Day 147, two signups, $1,200 in eight months. Feature 47.",
+ body:"Founder-journey content is comfort. Distribution is one platform, one problem, tests against people who have the pain.",
+ notes:[{l:"Caveat", k:"caveat", t:"Can help B2B and developer tools. For consumer apps it is usually a diary."}]},
+{id:"T36", pillar:"distribution", stage:"4-launch", ev:"opinion", src:"Hormozi, as circulated on X", val:"strong",
+ title:"Three lanes, in order",
+ one:"Outbound until first users. Content on one platform. Paid once you can measure.",
+ body:"Cal AI’s $2,000 test is lane 3 done correctly. Most people start in lane 3 with no lane 1 or 2.",
+ notes:[{l:"How to apply", k:"method", t:"This week: ten conversations. This month: ten videos. Next: a four-figure test."}]}
+];
+
+
+const CASES = [
+  {id:"calai", acc:"#ff6b4a", yr:"2024–26", name:"Cal AI",
+   hook:"Photo the plate. Sell the company.",
+   what:"AI calorie tracking. In-house TikTok/IG. $2.49/mo on purpose.",
+   lesson:"Distribution first. Differentiated take on an old category.",
+   founders:"Zach Yadegari, Henry Langmack, Jake Castillo, Blake Anderson",
+   icon:"cam",
+   nums:[
+     {ev:"verified", t:"CNBC reviewed docs: ~$1.4M/month gross profit after store cuts."},
+     {ev:"verified", t:"TechCrunch, Business Insider, Forbes (Mar 2026): MyFitnessPal acquired Cal AI. Terms not disclosed. Team of seven retained."},
+     {ev:"self", t:"Company / BI: ~$30M last-year revenue; later $50M/yr claims. ~10M users."}
+   ],
+   src:"Brett Malinowski / TheBrettWay · My First Million · TechCrunch 2 Mar 2026 · BI · Forbes"},
+  {id:"rizz", acc:"#ff4d8d", yr:"2023", name:"RizzGPT",
+   hook:"A roommate screenshot. $100. Two $50 creators.",
+   what:"Dating-reply generator. Screens built for TikTok slideshows.",
+   lesson:"Tiny + timed + designed to be the clip.",
+   founders:"Blake Anderson (portfolio)",
+   icon:"chat",
+   nums:[
+     {ev:"self", val:"decaying", t:"Founder: two underground creators at $50 each → ~200K downloads, ~$80K/mo. The $50 rate is decaying."}
+   ],
+   src:"Blake Anderson interviews, including TheBrettWay “250 million downloads” episode"},
+  {id:"umax", acc:"#8b6cff", yr:"2023–24", name:"Umax",
+   hook:"Looksmaxxing ratings, Madden-style.",
+   what:"Face/rating screens made to screenshot. Trend already on the feed.",
+   lesson:"If the screen is not a video frame, you do not have a growth engine.",
+   founders:"Blake Anderson",
+   icon:"face",
+   nums:[
+     {ev:"self", t:"Part of Anderson’s portfolio story (with RizzGPT) on Brett’s channel."},
+     {ev:"pattern", t:"Demand was pre-mapped: the content was already going viral."}
+   ],
+   src:"TheBrettWay · Anderson / Yadegari via Forbes"},
+  {id:"musicfi", acc:"#4ea2ff", yr:"2024", name:"MusicFi",
+   hook:"AI Drake cover. Two million users.",
+   what:"AI music from a 19-year-old who shipped a project every month. Affiliates, not a feature farm.",
+   lesson:"Trend-surf + a clip people already wanted to share.",
+   founders:"Aria, 19",
+   icon:"note",
+   nums:[
+     {ev:"self", t:"On Brett (Jan 2024): viral Drake cover → ~2M users. Projected year-one $1.2–1.5M."}
+   ],
+   src:"Brett Malinowski, “The 19-year-old Who Built a $1.5M Ai SaaS in 7 Days”"},
+  {id:"cluely", acc:"#f5c542", yr:"2025–26", name:"Cluely",
+   hook:"The scandal was the distribution.",
+   what:"Interview Coder → Columbia suspension → “cheat on everything” → Cluely. Virality as the product.",
+   lesson:"A video can be the company. A revenue claim can also be a lie. Keep the labels.",
+   founders:"Roy Lee, Neel Shanmugam",
+   icon:"eye",
+   nums:[
+     {ev:"verified", t:"TechCrunch (Apr 2025): Columbia action; $5.3M seed (Abstract, Susa). Product is a hidden interview/exam assistant."},
+     {ev:"self", t:"Brett title: $500k/month in two months. a16z later led a $15M Series A (reported)."},
+     {ev:"self", t:"Flag: Wikipedia / his own later admission (Mar 2026) — he misrepresented Cluely ARR in a 2025 TechCrunch interview. Treat every dollar on that tape as unaudited."}
+   ],
+   src:"TheBrettWay · TechCrunch 21 Apr 2025 · a16z interview · Wikipedia (ARR walk-back)"},
+  {id:"lovable", acc:"#2ec4b6", yr:"2024–26", name:"Lovable",
+   hook:"They sold the wrapper.",
+   what:"Text in, React app out. The demand was “I have an idea.” Anton Osika on Brett when the number was $43M.",
+   lesson:"The factory is a real company. You still do not need it to ship one app.",
+   founders:"Anton Osika",
+   icon:"box",
+   nums:[
+     {ev:"self", t:"CEO onstage at Slush 2025: $200M ARR. TechCrunch reported the claim (19 Nov 2025). Not audited books."},
+     {ev:"verified", t:"TechCrunch: $200M Series A led by Accel, $1.8B valuation (Jul 2025)."},
+     {ev:"pattern", t:"Lovable’s own site: they run on Claude. The wrapper is a markup on the model."}
+   ],
+   src:"TheBrettWay “$0 to $43M” · TechCrunch Jul + Nov 2025"}
+];
+
+const ICONS = {
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h4l2-2h4l2 2h4v10H4z"/><circle cx="12" cy="13" r="3"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 6h14v9H8l-3 3z"/></svg>',
+  face:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M9 10h.01M15 10h.01M9 15c1.2 1.2 4.8 1.2 6 0"/></svg>',
+  note:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg>',
+  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg>',
+  box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l9-4 9 4-9 4z"/><path d="M3 8v8l9 4 9-4V8"/><path d="M12 12v8"/></svg>'
+};
+
+const byId = Object.fromEntries(TIPS.map(t=>[t.id,t]));
+const stageBy = Object.fromEntries(STAGES.map(s=>[s.id,s]));
+const pillarBy = Object.fromEntries(PILLARS.map(p=>[p.id,p]));
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function marks(t){
+  return '<span class="dot '+EV[t.ev].cls+'">'+EV[t.ev].label+'</span>'+
+         (t.val? '<span class="dot '+VAL[t.val].cls+'">'+VAL[t.val].label+'</span>':'');
+}
+function row(t, idPrefix){
+  const notes=(t.notes||[]).map(n=>'<div class="note '+(n.k||'')+'"><span class="nl">'+esc(n.l)+'</span>'+esc(n.t)+'</div>').join("");
+  const id=idPrefix?idPrefix+t.id:t.id;
+  return '<article class="row" id="'+id+'"><button type="button" aria-expanded="false">'+
+    '<span class="tid p-'+t.pillar+'">'+t.id+'</span><span><span class="ttl">'+esc(t.title)+'</span><span class="one">'+esc(t.one)+'</span></span>'+
+    '<span class="marks">'+marks(t)+'</span></button><div class="body"><div class="body-in"><div class="body-card"><p>'+esc(t.body)+'</p>'+notes+
+    '<p class="src">'+esc(t.src)+' · '+esc(pillarBy[t.pillar].name)+'</p></div></div></div></article>';
+}
+
+document.getElementById("cases").innerHTML = CASES.map(c=>
+  '<article class="case reveal" style="--acc:'+c.acc+'">'+
+    '<div class="ic">'+ICONS[c.icon]+'</div>'+
+    '<div class="yr">'+esc(c.yr)+'</div>'+
+    '<h3>'+esc(c.name)+'</h3>'+
+    '<p class="hook">'+esc(c.hook)+'</p>'+
+    '<p class="inset what">'+esc(c.what)+'</p>'+
+    '<p class="inset lesson">'+esc(c.lesson)+'</p>'+
+    '<button type="button" data-case="'+c.id+'">Receipts →</button>'+
+  '</article>'
+).join("");
+
+const det = document.getElementById("casedetail");
+document.getElementById("cases").addEventListener("click", e=>{
+  const b=e.target.closest("button[data-case]");
+  if(!b) return;
+  const c=CASES.find(x=>x.id===b.dataset.case);
+  det.className="detail on";
+  det.style.setProperty("--acc", c.acc);
+  det.innerHTML = '<p class="kicker">'+esc(c.name)+' · '+esc(c.founders)+'</p>'+
+    '<h3 style="font-family:\'Source Serif 4\',Georgia,serif;font-size:1.4rem;font-weight:600;margin:6px 0 8px">'+esc(c.hook)+'</h3>'+
+    '<ul>'+c.nums.map(n=>'<li>'+marks(n)+' '+esc(n.t)+'</li>').join("")+'</ul>'+
+    '<p class="src">SOURCE · '+esc(c.src)+'</p>';
+  det.scrollIntoView({behavior:"smooth",block:"nearest"});
+});
+
+document.getElementById("lessons").innerHTML = LESSONS.map(L=>
+  '<article class="stn reveal"><div class="ln">Station '+L.n+'</div><h3>'+esc(L.title)+'</h3>'+
+  '<div class="inset do">'+esc(L.do)+'</div><p class="inset why">'+esc(L.why)+'</p>'+
+  '<div class="related">'+L.tips.map(id=>row(byId[id],"s"+L.n+"-")).join("")+'</div></article>'
+).join("");
+
+const qAcc=["#ff6b4a","#f5c542","#2ec4b6","#8b6cff","#ff4d8d","#4ea2ff","#c6f04d","#ff6b4a","#f5c542","#2ec4b6"];
+document.getElementById("quotes").innerHTML = GOLD.map((g,i)=>
+  '<article class="quote reveal" style="--acc:'+qAcc[i]+'"><p class="q">“'+esc(g.q)+'”</p>'+
+  '<p class="inset take">'+esc(g.take)+'</p><div class="qm">'+marks(g)+'<span>'+esc(g.src)+'</span></div></article>'
+).join("");
+
+const state={q:"",stage:"all",pillar:"all",ev:"all",verified:false};
+function fillSel(id, items, label){
+  document.getElementById(id).innerHTML='<option value="all">'+label+'</option>'+items.map(it=>'<option value="'+it.id+'">'+esc(it.name)+'</option>').join("");
+}
+fillSel("f-stage", STAGES, "All stages");
+fillSel("f-pillar", PILLARS, "All pillars");
+fillSel("f-ev", Object.entries(EV).map(([id,v])=>({id,name:v.label})), "All evidence");
+function match(t){
+  if(state.verified && t.ev!=="verified") return false;
+  if(state.stage!=="all" && t.stage!==state.stage) return false;
+  if(state.pillar!=="all" && t.pillar!==state.pillar) return false;
+  if(state.ev!=="all" && t.ev!==state.ev) return false;
+  if(state.q){
+    const hay=(t.id+" "+t.title+" "+t.one+" "+t.body+" "+t.src).toLowerCase();
+    if(!hay.includes(state.q)) return false;
+  }
+  return true;
+}
+let bookOpen=false;
+function setScopeOpen(root, open){
+  if(!root) return;
+  root.querySelectorAll(".row").forEach(art=>{
+    art.classList.toggle("open", open);
+    const btn=art.querySelector(":scope > button");
+    if(btn) btn.setAttribute("aria-expanded", String(open));
+  });
+}
+function bindExpand(id, scopeId){
+  const b=document.getElementById(id);
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    const next=b.getAttribute("aria-pressed")!=="true";
+    b.setAttribute("aria-pressed", String(next));
+    b.textContent=next?"Collapse all":"Expand all";
+    if(scopeId==="booklist") bookOpen=next;
+    setScopeOpen(document.getElementById(scopeId), next);
+  });
+}
+bindExpand("expandBook","booklist");
+bindExpand("expandCourse","lessons");
+
+function renderBook(){
+  const list=TIPS.filter(match);
+  document.getElementById("tally").textContent=list.length+" of "+TIPS.length;
+  if(!list.length){
+    document.getElementById("booklist").innerHTML='<p class="empty">Nothing matches. Only two tips are outlet-verified — that dryness is the evidence base.</p>';
+    return;
+  }
+  document.getElementById("booklist").innerHTML=STAGES.map(s=>{
+    const tips=list.filter(t=>t.stage===s.id);
+    if(!tips.length) return "";
+    return '<div class="stage-l">Stage '+s.n+' · '+esc(s.name)+'</div>'+tips.map(t=>row(t)).join("");
+  }).join("");
+  if(bookOpen) setScopeOpen(document.getElementById("booklist"), true);
+}
+renderBook();
+document.getElementById("search").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();renderBook();});
+document.getElementById("f-stage").addEventListener("change",e=>{state.stage=e.target.value;renderBook();});
+document.getElementById("f-pillar").addEventListener("change",e=>{state.pillar=e.target.value;renderBook();});
+document.getElementById("f-ev").addEventListener("change",e=>{state.ev=e.target.value;renderBook();});
+document.getElementById("vonly").addEventListener("click",e=>{
+  state.verified=!state.verified;
+  e.currentTarget.setAttribute("aria-pressed", String(state.verified));
+  renderBook();
+});
+document.body.addEventListener("click",e=>{
+  const btn=e.target.closest(".row > button");
+  if(!btn) return;
+  const art=btn.parentElement;
+  const open=art.classList.toggle("open");
+  btn.setAttribute("aria-expanded", String(open));
+});
+
+const io=new IntersectionObserver(ents=>{
+  ents.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+},{threshold:.08, rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll("section, .hero, .case, .step, .quote, .stn").forEach(el=>{
+  el.classList.add("reveal");
+  io.observe(el);
+});
+
+</script>
+</body>
+</html>
