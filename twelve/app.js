@@ -9,6 +9,8 @@
     'Judges': 'JDG', '1 Samuel': '1SA', '2 Samuel': '2SA', '1 Kings': '1KI',
     '1 Chronicles': '1CH', 'Nehemiah': 'NEH', 'Psalm': 'PSA', 'Proverbs': 'PRO',
     'Ecclesiastes': 'ECC', 'Isaiah': 'ISA', 'Micah': 'MIC', 'Matthew': 'MAT',
+    'Exodus': 'EXO', '2 Kings': '2KI', '2 Chronicles': '2CH', 'Ezra': 'EZR',
+    'Daniel': 'DAN', '2 Timothy': '2TI',
     'Mark': 'MRK', 'Luke': 'LUK', 'John': 'JHN', 'Acts': 'ACT', 'Romans': 'ROM',
     '1 Corinthians': '1CO', '2 Corinthians': '2CO', 'Galatians': 'GAL',
     'Ephesians': 'EPH', 'Hebrews': 'HEB', 'James': 'JAS', '1 John': '1JN',
@@ -21,6 +23,8 @@
     'Judges': 7, '1 Samuel': 9, '2 Samuel': 10, '1 Kings': 11,
     '1 Chronicles': 13, 'Nehemiah': 16, 'Psalm': 19, 'Proverbs': 20,
     'Ecclesiastes': 21, 'Isaiah': 23, 'Micah': 33, 'Matthew': 40,
+    'Exodus': 2, '2 Kings': 12, '2 Chronicles': 14, 'Ezra': 15,
+    'Daniel': 27, '2 Timothy': 55,
     'Mark': 41, 'Luke': 42, 'John': 43, 'Acts': 44, 'Romans': 45,
     '1 Corinthians': 46, '2 Corinthians': 47, 'Galatians': 48,
     'Ephesians': 49, 'Hebrews': 58, 'James': 59, '1 John': 62,
@@ -774,15 +778,20 @@
             </details>`).join('')}
         </div>
         ${additionalWitness ? `
-          <article class="additional-witness">
-            <span class="additional-witness-icon" aria-hidden="true">${icon('scroll')}</span>
-            <div>
-              <p class="section-kicker">One more guided comparison</p>
-              <h4>${additionalWitness.name}</h4>
-              <p>${additionalWitness.note}</p>
+          <details class="case-file additional-case">
+            <summary>
+              <span class="case-summary-main">
+                <span class="additional-case-kicker"><i aria-hidden="true">${icon('scroll')}</i>One more guided comparison</span>
+                <span class="case-title-line"><strong>${additionalWitness.name}</strong>${referenceBadge(additionalWitness.ref)}</span>
+                <span class="case-basis">${additionalWitness.note}</span>
+              </span>
+              <span class="witness-badge ${additionalWitness.type}">${witnessBadge(additionalWitness.type)}</span>
+            </summary>
+            <div class="case-content">
+              <p class="section-kicker">Read the passage</p>
+              <div class="witness-passage" data-witness-passage="${escapeHtml(additionalWitness.ref)}">Loading passage…</div>
             </div>
-            <div class="additional-witness-evidence">${referenceBadge(additionalWitness.ref)}<span class="witness-badge ${additionalWitness.type}">${witnessBadge(additionalWitness.type)}</span></div>
-          </article>` : ''}
+          </details>` : ''}
       </section>`;
   }
 
@@ -857,11 +866,37 @@
     setScriptureLoading(false);
   }
 
+  // The guided comparison points at a passage that is not in the tribe's vault, so it is
+  // fetched on its own — in the same translation, through the same fallback order.
+  async function hydrateWitnessPassage(tribe, token) {
+    const host = profileBody.querySelector('[data-witness-passage]');
+    if (!host) return;
+    const reference = host.dataset.witnessPassage;
+    const segments = String(reference).split(';')
+      .map(part => part.trim())
+      .filter(part => referenceToUsfm(part));
+    if (!segments.length) {
+      host.textContent = 'This combined reference opens best in a Bible app.';
+      return;
+    }
+    const results = await Promise.allSettled(segments.map(part => passagePreview(part)));
+    if (token !== scriptureLoadToken || currentProfileId !== tribe.id) return;
+    const rendered = results
+      .map((result, index) => result.status === 'fulfilled'
+        ? `<p>${segments.length > 1 ? `<b>${escapeHtml(segments[index])}</b> ` : ''}${escapeHtml(result.value.text)}</p>`
+        : '')
+      .filter(Boolean);
+    host.innerHTML = rendered.length
+      ? rendered.join('')
+      : 'This passage could not be loaded right now.';
+  }
+
   async function hydrateProfileScripture(tribe) {
     const token = ++scriptureLoadToken;
     const version = selectedBibleVersion();
     restoreWebScripture(tribe);
     updateTranslationChrome(version);
+    hydrateWitnessPassage(tribe, token);
 
     if (version.id === 'web') return;
     const fromBolls = version.id === 'nlt';
