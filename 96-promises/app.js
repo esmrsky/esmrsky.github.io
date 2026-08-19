@@ -46,11 +46,11 @@
       'story-style-kinetic',
       'story-style-cinzel',
       'story-style-anton',
-      'story-style-playfair',
+      'story-style-lora',
       'story-style-newsreader',
       'story-style-spacemono',
       'story-style-epilogue',
-      'story-style-cormorant',
+      'story-style-merriweather',
       'story-style-instrument-serif'
     ],
     storyCurrentStyle: 'story-style-swiss'
@@ -607,7 +607,7 @@
           return `<span class="fx-roman">${escapeHtml(w)}</span>`;
         } else if (styleName === 'story-style-spacemono') {
           return `<span class="fx-mono-glow">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-playfair' || styleName === 'story-style-newsreader' || styleName === 'story-style-cormorant' || styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif' || styleName === 'story-style-instrument-serif') {
+        } else if (styleName === 'story-style-lora' || styleName === 'story-style-newsreader' || styleName === 'story-style-merriweather' || styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif' || styleName === 'story-style-instrument-serif') {
           return `<span class="fx-italic">${escapeHtml(w)}</span>`;
         } else if (styleName === 'story-style-unbounded' || styleName === 'story-style-kinetic') {
           return `<span class="fx-gradient">${escapeHtml(w)}</span>`;
