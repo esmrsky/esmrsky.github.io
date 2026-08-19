@@ -23,18 +23,27 @@
     <div class="header-inner">
       <div class="top-bar">
         
-        <!-- Translation Picker (NIV / TPT / NLT / NASB) -->
+        <!-- Translation Picker (NIV / AMP / NKJV / TPT / NLT / NASB) -->
         <div class="segmented-control version-picker" role="group" aria-label="Bible Version">
           <button class="segmented-btn active" data-version="NIV" title="New International Version">NIV</button>
+          <button class="segmented-btn" data-version="AMP" title="Amplified Bible">AMP</button>
+          <button class="segmented-btn" data-version="NKJV" title="New King James Version">NKJV</button>
           <button class="segmented-btn" data-version="TPT" title="The Passion Translation">TPT</button>
           <button class="segmented-btn" data-version="NLT" title="New Living Translation">NLT</button>
           <button class="segmented-btn" data-version="NASB" title="New American Standard Bible">NASB</button>
         </div>
 
-        <!-- Typography & Reading Settings Button (Aa / Sliders) -->
-        <button class="icon-btn btn-type-settings" id="btnOpenTypeSettings" title="Typography, Theme &amp; Reading Settings (Aa)">
-          <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
-        </button>
+        <div class="header-right-actions" style="display: flex; align-items: center; gap: 0.45rem;">
+          <!-- Shuffle Verses Button -->
+          <button class="icon-btn btn-shuffle-verses" id="btnShuffleVerses" title="Shuffle verses order">
+            <i data-lucide="shuffle" style="width: 16px; height: 16px;"></i>
+          </button>
+
+          <!-- Typography & Reading Settings Button (Aa / Sliders) -->
+          <button class="icon-btn btn-type-settings" id="btnOpenTypeSettings" title="Typography, Theme &amp; Reading Settings (Aa)">
+            <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
 
       </div>
 
@@ -104,19 +113,21 @@
   <!-- Main Application Container -->
   <main class="app-container">
 
-    <!-- Simplified Full-Width Story Mode Launch Card -->
-    <section class="hero-overview-simplified" id="heroOverview">
-      <button class="hero-story-launch-btn" id="btnHeroOpenStories" title="Launch Immersive Fullscreen Stories Mode (S)">
+    <!-- Hero Overview & Fullscreen Stories Mode Launch Card -->
+    <section class="hero-overview-simplified">
+      <button class="hero-story-launch-btn" id="btnHeroOpenStories" title="Enter Fullscreen Endless Scripture Stories Mode">
         <div class="hero-story-btn-left">
           <div class="hero-story-play-icon">
-            <i data-lucide="play" style="width: 18px; height: 18px; fill: currentColor;"></i>
+            <i data-lucide="play" style="width: 18px; height: 18px; fill: white; margin-left: 2px;"></i>
           </div>
           <div class="hero-story-btn-text">
             <strong>Launch Fullscreen Stories Mode</strong>
             <span>Tap to immerse in dynamic typographic scripture</span>
           </div>
         </div>
-        <i data-lucide="arrow-right" class="hero-story-arrow" style="width: 20px; height: 20px;"></i>
+        <div class="hero-story-arrow">
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </div>
       </button>
     </section>
 
@@ -158,119 +169,105 @@
         </div>
 
         <div class="reader-header-actions">
-          <!-- Translation Switcher Pills inside Lightbox -->
-          <div class="segmented-control" id="readerVersionPicker" style="padding: 2px;">
-            <button class="segmented-btn active" data-ver="NIV">NIV</button>
-            <button class="segmented-btn" data-ver="TPT">TPT</button>
-            <button class="segmented-btn" data-ver="NLT">NLT</button>
-            <button class="segmented-btn" data-ver="NASB">NASB</button>
+          <button class="icon-btn" id="btnOpenStoryFromReader" title="Open this verse in Fullscreen Stories Mode">
+            <i data-lucide="play-circle" style="width: 16px; height: 16px;"></i>
+          </button>
+          <div class="reader-nav-group">
+            <button class="icon-btn" id="btnReaderPrev" title="Previous Promise (←)">
+              <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
+            </button>
+            <button class="icon-btn" id="btnReaderNext" title="Next Promise (→)">
+              <i data-lucide="chevron-right" style="width: 15px; height: 15px;"></i>
+            </button>
           </div>
-
-          <!-- Prev & Next Navigation -->
-          <button class="icon-btn" id="btnReaderPrev" title="Previous Promise (Left Arrow)">
-            <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
-          </button>
-          <button class="icon-btn" id="btnReaderNext" title="Next Promise (Right Arrow)">
-            <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
-          </button>
-
-          <!-- Launch in Stories Mode -->
-          <button class="story-mode-btn" id="btnOpenStoryFromReader" title="Open in Stories View (S)" style="padding: 0.32rem 0.65rem !important;">
-            <i data-lucide="play" style="width: 12px; height: 12px;"></i>
-            <span style="font-size: 0.74rem;">Story</span>
-          </button>
-
-          <button class="icon-btn" id="readerCloseBtn" title="Close Lightbox (Esc)">
-            <i data-lucide="x" style="width: 17px; height: 17px;"></i>
+          <button class="icon-btn" id="readerCloseBtn" title="Close reader (Esc)">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
           </button>
         </div>
       </div>
 
-      <!-- Continuous Scrolling Study Body -->
-      <div class="reader-body">
+      <!-- Reader Scrollable Content -->
+      <div class="reader-content-body">
 
-        <!-- 1. Flowing Inline Chapter Context -->
-        <section class="inline-context-section" id="sec-inline-context">
-          <div class="inline-chapter-banner">
-            <div>
-              <strong id="readerChapterTitle">Psalm 16 — David's Miktam of Inheritance</strong>
-              <div id="readerChapterSummary" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;"></div>
+        <!-- 1. Chapter Flow & Surrounding Narrative Context -->
+        <section class="study-sub-section" id="sec-context-flow">
+          <div class="context-chapter-header">
+            <div class="context-chapter-icon">
+              <i data-lucide="book-marked" style="width: 18px; height: 18px; color: #f59e0b;"></i>
             </div>
-            <span class="story-version-pill" id="readerActiveVerBadge">NIV</span>
+            <div>
+              <h4 id="readerChapterTitle">Psalm 16 — David's Miktam of Inheritance</h4>
+              <p id="readerChapterSummary" class="context-chapter-summary">
+                David celebrates Yahweh as his supreme portion and cup, culminating in the triumphant prophecy of fullness of joy.
+              </p>
+            </div>
           </div>
 
-          <!-- Flowing Inline Text Paragraph with Highlighted & Underlined Target Verse -->
-          <div class="inline-passage-block" id="readerInlinePassage"></div>
+          <div class="inline-scripture-flow" id="readerInlinePassage"></div>
         </section>
 
-        <!-- 2. 4 Translations Comparison -->
+        <!-- 2. Parallel Translations Comparison Grid -->
         <section class="study-sub-section" id="sec-translations">
           <h4 class="study-sub-heading">
-            <i data-lucide="git-compare" style="width: 17px; height: 17px; color: #6366f1;"></i> 4 Translations Comparison
+            <i data-lucide="layers" style="width: 17px; height: 17px; color: #3b82f6;"></i> Six Parallel Translations
           </h4>
-          <div class="translations-comparison-grid" id="readerTranslationsGrid"></div>
+          <div class="translations-grid" id="readerTranslationsGrid"></div>
         </section>
 
-        <!-- 3. Gospel of Radical Grace — Paul Ellis Commentary -->
-        <section class="study-sub-section" id="sec-grace-study">
+        <!-- 3. New Covenant Grace Perspective & Theological Depth -->
+        <section class="study-sub-section" id="sec-grace-depth">
           <h4 class="study-sub-heading">
-            <i data-lucide="heart-handshake" style="width: 17px; height: 17px; color: #ec4899;"></i> Gospel of Radical Grace — Paul Ellis Commentary
+            <i data-lucide="sparkles" style="width: 17px; height: 17px; color: #8b5cf6;"></i> New Covenant Grace Perspective
           </h4>
-          <div class="grace-commentary-box">
-            <h4 id="readerGraceTheme">The Finished Work of Christ &amp; Unconditional Favor</h4>
-            <blockquote class="grace-quote" id="readerGraceQuote"></blockquote>
-            <p id="readerGraceTakeaway" style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;"></p>
+          <div class="grace-depth-card">
+            <div class="grace-badge" id="readerGraceTheme">THE FINISHED WORK OF CHRIST</div>
+            <p class="grace-core-quote" id="readerGraceQuote">
+              David's prophecy reached ultimate realization at Jesus' resurrection.
+            </p>
+            <div class="grace-takeaway-box">
+              <strong>Key Grace Revelation:</strong>
+              <span id="readerGraceTakeaway">Your joy is not contingent on outward circumstances, but rooted in Christ.</span>
+            </div>
           </div>
         </section>
 
-        <!-- 4. Biblical Case Studies & Real Demonstrations -->
+        <!-- 4. Historical & Biblical Case Studies -->
         <section class="study-sub-section" id="sec-case-studies">
           <h4 class="study-sub-heading">
-            <i data-lucide="landmark" style="width: 17px; height: 17px; color: #f59e0b;"></i> Real Biblical Demonstrations &amp; Case Studies
+            <i data-lucide="history" style="width: 17px; height: 17px; color: #f59e0b;"></i> Biblical Case Studies &amp; Historical Evidence
           </h4>
           <div class="case-studies-grid" id="readerCaseStudiesGrid"></div>
         </section>
 
-        <!-- 5. Original Greek & Hebrew Word Lexicon & Strong's Numbers -->
-        <section class="study-sub-section" id="sec-greek-hebrew">
+        <!-- 5. Interlinear Original Language Word Study (Greek & Hebrew) -->
+        <section class="study-sub-section" id="sec-lexicon">
           <h4 class="study-sub-heading">
-            <i data-lucide="languages" style="width: 17px; height: 17px; color: #10b981;"></i> Original Language Word Lexicon &amp; Strong's Concordance
+            <i data-lucide="languages" style="width: 17px; height: 17px; color: #10b981;"></i> Original Language Lexicon
           </h4>
           <div class="lexicon-container">
-            <div class="lexicon-lang-badge" id="readerLexiconLang">
-              <i data-lucide="book-marked" style="width: 13px; height: 13px;"></i> Biblical Hebrew
-            </div>
-
-            <!-- Interlinear Word Mapper: Verse text with highlighted Greek/Hebrew root words -->
-            <div class="lexicon-interlinear-box" id="readerInterlinearBox">
+            <div class="lexicon-interlinear-box">
               <div class="lexicon-interlinear-title">
-                <i data-lucide="highlighter" style="width: 14px; height: 14px;"></i> Translated Scripture Root Breakdown (Click any word to inspect)
+                <span id="readerLexiconLang">HEBREW INTERLINEAR (CLICK A WORD TO STUDY)</span>
               </div>
               <div class="lexicon-interlinear-text" id="readerInterlinearText"></div>
             </div>
-
             <div class="lexicon-terms-grid" id="readerLexiconGrid"></div>
-            <div class="depth-box" style="margin-top: 0.5rem;">
-              <h5 style="font-size: 0.95rem; font-weight: 800; color: #10b981;">Theological Synthesis &amp; Grace Depth</h5>
-              <p id="readerLexiconSummary" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;"></p>
-            </div>
+            <div class="lexicon-theological-depth" id="readerLexiconSummary"></div>
           </div>
         </section>
 
-        <!-- 6. The Passion Translation (TPT) Revelatory Notes -->
+        <!-- 6. TPT Revelatory Notes (Conditionally Shown) -->
         <section class="study-sub-section" id="sec-tpt-notes">
           <h4 class="study-sub-heading">
-            <i data-lucide="file-text" style="width: 17px; height: 17px; color: #8b5cf6;"></i> The Passion Translation (TPT) Revelatory Notes
+            <i data-lucide="feather" style="width: 17px; height: 17px; color: #ec4899;"></i> The Passion Translation Revelatory Footnotes
           </h4>
-          <div class="depth-box">
-            <p id="readerTptFootnotes" style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65;"></p>
-          </div>
+          <div class="tpt-notes-box" id="readerTptFootnotes"></div>
         </section>
 
         <!-- 7. Connected Scripture Cross-References -->
         <section class="study-sub-section" id="sec-cross-refs">
           <h4 class="study-sub-heading">
-            <i data-lucide="link-2" style="width: 17px; height: 17px; color: #06b6d4;"></i> Interconnected Scriptures &amp; Covenant Witnesses
+            <i data-lucide="link" style="width: 17px; height: 17px; color: #06b6d4;"></i> Interconnected Scriptures
           </h4>
           <div class="cross-refs-rich-grid" id="readerCrossRefsGrid"></div>
         </section>
@@ -288,7 +285,7 @@
     <div class="story-orb story-orb-2" id="storyOrb2"></div>
     <div class="story-orb story-orb-3" id="storyOrb3"></div>
 
-    <!-- Floating Top-Right Close Button Only (No version picker) -->
+    <!-- Floating Top-Right Close Button -->
     <button class="story-close-fixed-btn" id="storyCloseBtn" title="Exit Stories Mode (Esc)">
       <i data-lucide="x" style="width: 18px; height: 18px;"></i>
     </button>
@@ -306,7 +303,7 @@
         </blockquote>
       </div>
 
-      <!-- Bottom Pinned Controls: Reference on Left, Prev & Bookmark Center/Right, Version on Far Right -->
+      <!-- Bottom Pinned Controls: Reference on Left, Prev & Bookmark in Fixed Center, Version Cycle on Right -->
       <div class="story-bottom-bar">
         <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
         <div class="story-bottom-center-actions">
@@ -314,11 +311,12 @@
             <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
             <span>Previous</span>
           </button>
-          <button class="story-nav-btn story-heart-btn" id="btnStoryHeart" title="Bookmark this verse">
-            <i data-lucide="heart" id="storyHeartIcon" style="width: 16px; height: 16px;"></i>
+          <button class="story-nav-btn story-bookmark-btn" id="btnStoryBookmark" title="Bookmark this verse">
+            <i data-lucide="bookmark" id="storyBookmarkIcon" style="width: 15px; height: 15px;"></i>
+            <span id="storyBookmarkBtnText">Bookmark</span>
           </button>
         </div>
-        <div class="story-version-pill" id="storyActiveVerBadge">NIV</div>
+        <button class="story-version-pill story-version-cycle-btn" id="storyActiveVerBadge" title="Click to cycle translation (NIV / AMP / NKJV / TPT / NLT / NASB)">NIV</button>
       </div>
     </div>
   </div>
@@ -332,10 +330,10 @@
       <!-- Drawer Header -->
       <div class="settings-drawer-header">
         <div class="settings-drawer-title">
-          <i data-lucide="sliders-horizontal" style="width: 18px; height: 18px; color: #f59e0b;"></i>
+          <i data-lucide="sliders" style="width: 18px; height: 18px; color: #f59e0b;"></i>
           <h3>Typography &amp; Reading</h3>
         </div>
-        <button class="icon-btn" id="btnCloseTypeSettings" title="Close Settings (Esc)">
+        <button class="icon-btn" id="btnCloseTypeSettings" title="Close settings (Esc)">
           <i data-lucide="x" style="width: 16px; height: 16px;"></i>
         </button>
       </div>
@@ -350,14 +348,15 @@
           </div>
           <div class="segmented-control" id="drawerVersionPicker" style="width: 100%; justify-content: space-between;">
             <button class="segmented-btn active" data-version="NIV" style="flex: 1; justify-content: center;">NIV</button>
+            <button class="segmented-btn" data-version="AMP" style="flex: 1; justify-content: center;">AMP</button>
+            <button class="segmented-btn" data-version="NKJV" style="flex: 1; justify-content: center;">NKJV</button>
             <button class="segmented-btn" data-version="TPT" style="flex: 1; justify-content: center;">TPT</button>
             <button class="segmented-btn" data-version="NLT" style="flex: 1; justify-content: center;">NLT</button>
             <button class="segmented-btn" data-version="NASB" style="flex: 1; justify-content: center;">NASB</button>
           </div>
         </div>
 
-        <!-- 2. Font Family Aesthetic Selector (Inline Buttons) -->
-        <!-- 2. Font Family & Aesthetic Selector (Curated 13 Clean & Editorial Fonts) -->
+        <!-- 2. Font Family & Aesthetic Selector (Curated 9 Clean & Editorial Fonts) -->
         <div class="settings-section">
           <div class="settings-label">
             <span>Font Family &amp; Aesthetic</span>
@@ -379,21 +378,9 @@
               <span class="font-pill-icon" style="font-family: var(--font-merriweather);">Aa</span>
               <span class="font-pill-label">Merriweather</span>
             </button>
-            <button class="font-pill-btn" data-font="fraunces" title="Fraunces — Warm Humanist Serif">
-              <span class="font-pill-icon" style="font-family: var(--font-fraunces);">Aa</span>
-              <span class="font-pill-label">Fraunces</span>
-            </button>
-            <button class="font-pill-btn" data-font="dm-serif" title="DM Serif — High Contrast Editorial">
-              <span class="font-pill-icon" style="font-family: var(--font-dm-serif);">Aa</span>
-              <span class="font-pill-label">DM Serif</span>
-            </button>
             <button class="font-pill-btn" data-font="jakarta" title="Jakarta — Geometric Corporate Sans">
               <span class="font-pill-icon" style="font-family: var(--font-jakarta);">Aa</span>
               <span class="font-pill-label">Jakarta</span>
-            </button>
-            <button class="font-pill-btn" data-font="inter" title="Inter — Clean High-Legibility Sans">
-              <span class="font-pill-icon" style="font-family: var(--font-inter);">Aa</span>
-              <span class="font-pill-label">Inter</span>
             </button>
             <button class="font-pill-btn" data-font="outfit" title="Outfit — Open Editorial Sans">
               <span class="font-pill-icon" style="font-family: var(--font-outfit);">Aa</span>
@@ -411,32 +398,40 @@
               <span class="font-pill-icon" style="font-family: var(--font-epilogue);">Aa</span>
               <span class="font-pill-label">Epilogue</span>
             </button>
-            <button class="font-pill-btn" data-font="space" title="Space Grotesk — Modernist Sans">
-              <span class="font-pill-icon" style="font-family: var(--font-space);">Aa</span>
-              <span class="font-pill-label">Space</span>
-            </button>
           </div>
         </div>
 
-        <!-- 3. Text Sizing Slider -->
+        <!-- 3. Text Sizing Presets & Custom Slider -->
         <div class="settings-section">
           <div class="settings-label">
             <span>Text Sizing</span>
-            <span class="settings-value-badge" id="settingsFontSizeBadge">1.22rem</span>
+            <span class="settings-value-badge" id="settingsFontSizeBadge" style="display: none;">1.22rem</span>
           </div>
-          <div class="settings-slider-wrapper">
+          <div class="segmented-control" id="drawerFontSizePresets" style="width: 100%; margin-bottom: 0.35rem;">
+            <button class="segmented-btn" data-size-val="1.05" style="flex: 1; justify-content: center;">Small</button>
+            <button class="segmented-btn active" data-size-val="1.22" style="flex: 1; justify-content: center;">Medium</button>
+            <button class="segmented-btn" data-size-val="1.45" style="flex: 1; justify-content: center;">Large</button>
+            <button class="segmented-btn" id="btnCustomFontSize" style="flex: 1; justify-content: center;">Custom</button>
+          </div>
+          <div class="settings-slider-wrapper" id="customFontSizeWrapper" style="display: none;">
             <input type="range" class="settings-range-slider" id="drawerFontSizeSlider" min="0.95" max="1.85" step="0.05" value="1.22">
           </div>
         </div>
 
-        <!-- 4. Line Height / Leading Slider -->
+        <!-- 4. Line Height Presets & Custom Slider -->
         <div class="settings-section">
           <div class="settings-label">
             <span>Line Height / Leading</span>
-            <span class="settings-value-badge" id="settingsLineHeightBadge">1.70</span>
+            <span class="settings-value-badge" id="settingsLineHeightBadge" style="display: none;">1.70</span>
           </div>
-          <div class="settings-slider-wrapper">
-            <input type="range" class="settings-range-slider" id="drawerLineHeightSlider" min="1.4" max="2.3" step="0.05" value="1.7">
+          <div class="segmented-control" id="drawerLineHeightPresets" style="width: 100%; margin-bottom: 0.35rem;">
+            <button class="segmented-btn" data-lh-val="1.50" style="flex: 1; justify-content: center;">Compact</button>
+            <button class="segmented-btn active" data-lh-val="1.70" style="flex: 1; justify-content: center;">Standard</button>
+            <button class="segmented-btn" data-lh-val="2.05" style="flex: 1; justify-content: center;">Spacious</button>
+            <button class="segmented-btn" id="btnCustomLineHeight" style="flex: 1; justify-content: center;">Custom</button>
+          </div>
+          <div class="settings-slider-wrapper" id="customLineHeightWrapper" style="display: none;">
+            <input type="range" class="settings-range-slider" id="drawerLineHeightSlider" min="1.35" max="2.35" step="0.05" value="1.70">
           </div>
         </div>
 

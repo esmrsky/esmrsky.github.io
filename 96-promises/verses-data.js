@@ -1,5 +1,5 @@
 /**
- * Complete 96 Bible Verses Dataset - Dynamic Multi-Translation Context, Interlinear Lexicon & Comprehensive Case Studies Edition
+ * Complete 96 Bible Verses Dataset - Multi-Translation (NIV, AMP, NKJV, TPT, NLT, NASB), Context, Lexicon & Concordance
  */
 
 const BIBLE_VERSES = [
@@ -17,7 +17,9 @@ const BIBLE_VERSES = [
       "NIV": "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand.",
       "TPT": "For you bring me a continual revelation of resurrection life, the path to the bliss that brings me face-to-face with you. Where we have the sweetest fellowship and pleasures that will never end.",
       "NLT": "You will show me the way of life, granting me the joy of your presence and the pleasures of living with you forever.",
-      "NASB": "You will make known to me the way of life; in Your presence is fullness of joy; in Your right hand there are pleasures forever."
+      "NASB": "You will make known to me the way of life; in Your presence is fullness of joy; in Your right hand there are pleasures forever.",
+      "AMP": "You will show me the path of life; in Your presence is fullness of joy; in Your right hand there are pleasures forevermore.",
+      "NKJV": "You will show me the path of life; In Your presence is fullness of joy; At Your right hand are pleasures forevermore."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 16 — David's Miktam of Inheritance & Resurrection Joy",
@@ -265,7 +267,9 @@ const BIBLE_VERSES = [
       "NIV": "In times of disaster they will not wither; in days of famine they will enjoy plenty.",
       "TPT": "When hard times come, they’ll not be ashamed, and in days of famine they will feast on plenty.",
       "NLT": "They will not be disgraced in hard times; even in famine they will have more than enough.",
-      "NASB": "They will not be ashamed in the time of evil, and in the days of famine they will have abundance."
+      "NASB": "They will not be ashamed in the time of evil, and in the days of famine they will have abundance.",
+      "AMP": "They will not be ashamed in the time of evil, and in the days of famine they will have abundance and be satisfied.",
+      "NKJV": "They shall not be ashamed in the evil time, and in the days of famine they shall be satisfied."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 37 — The Sovereign Deliverance & Living Hope of God",
@@ -512,7 +516,9 @@ const BIBLE_VERSES = [
       "NIV": "As for me, I will be vindicated and will see your face; when I awake, I will be satisfied with seeing your likeness.",
       "TPT": "As for me, because I am innocent I will see your face until now and forever! When I awake, I will be fully satisfied seeing your likeness.",
       "NLT": "Because I am righteous, I will see you. When I awake, I will see you face to face and be satisfied.",
-      "NASB": "As for me, I shall behold Your face in righteousness; I will be satisfied with Your likeness when I awake."
+      "NASB": "As for me, I shall behold Your face in righteousness; I will be satisfied with Your likeness when I awake.",
+      "AMP": "As for me, I shall see Your face in righteousness; I will be [fully] satisfied when I awake [to find myself] seeing Your likeness.",
+      "NKJV": "As for me, I will see Your face in righteousness; I shall be satisfied when I awake in Your likeness."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 17 — The Sovereign Deliverance & Living Hope of God",
@@ -748,7 +754,9 @@ const BIBLE_VERSES = [
       "NIV": "You will go out in joy and be led forth in peace; the mountains and hills will burst into song before you, and all the trees of the field will clap their hands.",
       "TPT": "You will go out with celebration and be guided with peace. The mountains and the hills will erupt with singing before you, and all the trees of the forest will clap their hands in praise!",
       "NLT": "You will live in joy and peace. The mountains and hills will burst into song, and the trees of the field will clap their hands!",
-      "NASB": "For you will go out with joy and be led forth with peace; the mountains and the hills will break forth into shouts of joy before you, and all the trees of the field will clap their hands."
+      "NASB": "For you will go out with joy and be led forth with peace; the mountains and the hills will break forth into shouts of joy before you, and all the trees of the field will clap their hands.",
+      "AMP": "For you will go out [from exile] with joy and be led forth with peace; the mountains and the hills will break forth into shouts of joy before you, and all the trees of the field will clap their hands.",
+      "NKJV": "For you shall go out with joy, and be led out with peace; The mountains and the hills shall break forth into singing before you, and all the trees of the field shall clap their hands."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 55 — The Sovereign Deliverance & Living Hope of God",
@@ -984,7 +992,9 @@ const BIBLE_VERSES = [
       "NIV": "But remember the LORD your God, for it is he who gives you the ability to produce wealth, and so confirms his covenant, which he swore to your ancestors, as it is today.",
       "TPT": "Always remember the LORD your God, for he is the one who gives you the ability and power to gain wealth, in order to fulfill the covenant he swore to your fathers, as it is this day.",
       "NLT": "Remember the LORD your God. He is the one who gives you power to be successful, in order to fulfill the covenant he confirmed to your ancestors with an oath.",
-      "NASB": "But you are to remember the LORD your God, for it is He who is giving you power to make wealth, that He may confirm His covenant which He swore to your fathers, as it is this day."
+      "NASB": "But you are to remember the LORD your God, for it is He who is giving you power to make wealth, that He may confirm His covenant which He swore to your fathers, as it is this day.",
+      "AMP": "But you shall remember [with profound respect] the Lord your God, for it is He who is giving you power to make wealth, that He may confirm His covenant which He swore to your fathers, as it is this day.",
+      "NKJV": "And you shall remember the Lord your God, for it is He who gives you power to get wealth, that He may establish His covenant which He swore to your fathers, as it is this day."
     },
     "dynamicContext": {
       "chapterTitle": "Deuteronomy 8 — The Sovereign Deliverance & Living Hope of God",
@@ -1220,7 +1230,9 @@ const BIBLE_VERSES = [
       "NIV": "If you fully obey the LORD your God and carefully follow all his commands... All these blessings will come on you and accompany you: You will be blessed in the city and blessed in the country. The fruit of your womb will be blessed, and the crops of your land and the young of your livestock... You will be blessed when you come in and blessed when you go out. The LORD will grant that the enemies who rise up against you will be defeated before you... The LORD will open the heavens, the storehouse of his bounty, to send rain on your land in season and to bless all the work of your hands. You will lend to many nations but will borrow from none. The LORD will make you the head, not the tail.",
       "TPT": "If you listen diligently to the voice of Yahweh your God, being careful to do all his commands... All these blessings will come upon you and overtake you! You will be blessed in the city and blessed in the field. Blessed will be the fruit of your body, the yield of your ground, and the fruit of your herds... Blessed shall you be when you come in, and blessed shall you be when you go out. Yahweh will cause your enemies who rise against you to be defeated before your face... Yahweh will command the blessing upon you in your storehouses and in all that you undertake. The Lord will establish you as a holy people to himself, and make you the head and not the tail; you shall be above only and not beneath!",
       "NLT": "If you fully obey the LORD your God and carefully keep all his commands... all these blessings will come on you and accompany you: You will be blessed in your towns and blessed in your fields. Your children and your crops and your herds of cattle and flocks of sheep and goats will be blessed. Your fruit baskets and breadboards will be blessed. Wherever you go and whatever you do, you will be blessed. The LORD will conquer your enemies when they attack you... The LORD will send a blessing on your barns and on everything you put your hand to. The LORD will make you the head and not the tail, and you will always be on top and never at the bottom.",
-      "NASB": "Now it shall be, if you diligently obey the LORD your God, being careful to do all His commandments... all these blessings will come upon you and overtake you: Blessed shall you be in the city, and blessed shall you be in the country. Blessed shall be the offspring of your body and the produce of your ground... Blessed shall you be when you come in, and blessed shall you be when you go out. The LORD will cause your enemies who rise up against you to be defeated before you... The LORD will open for you His good storehouse, the heavens, to give rain to your land in its season and to bless all the work of your hand; and you shall lend to many nations, but you shall not borrow. The LORD will make you the head and not the tail."
+      "NASB": "Now it shall be, if you diligently obey the LORD your God, being careful to do all His commandments... all these blessings will come upon you and overtake you: Blessed shall you be in the city, and blessed shall you be in the country. Blessed shall be the offspring of your body and the produce of your ground... Blessed shall you be when you come in, and blessed shall you be when you go out. The LORD will cause your enemies who rise up against you to be defeated before you... The LORD will open for you His good storehouse, the heavens, to give rain to your land in its season and to bless all the work of your hand; and you shall lend to many nations, but you shall not borrow. The LORD will make you the head and not the tail.",
+      "AMP": "Now it shall be, if you diligently obey the voice of the Lord your God, being careful to do all His commandments... Blessed shall you be in the city, and blessed shall you be in the country. The Lord will open for you His good treasure, the heavens, to give the rain to your land in its season and to bless all the work of your hand.",
+      "NKJV": "Now it shall come to pass, if you diligently obey the voice of the Lord your God... Blessed shall you be in the city, and blessed shall you be in the country. The Lord will open to you His good treasure, the heavens, to give the rain to your land in its season, and to bless all the work of your hand."
     },
     "dynamicContext": {
       "chapterTitle": "Deuteronomy 28 — The Sovereign Deliverance & Living Hope of God",
@@ -1457,7 +1469,9 @@ const BIBLE_VERSES = [
       "NIV": "I will instruct you and teach you in the way you should go; I will counsel you with my loving eye on you.",
       "TPT": "I hear the Lord saying, 'I will stay close to you, instructing and guiding you along the pathway for your life. I will advise you and watch over you with my loving eye.'",
       "NLT": "The LORD says, 'I will guide you along the best pathway for your life. I will advise you and watch over you.'",
-      "NASB": "I will instruct you and teach you in the way which you should go; I will advise you with My eye upon you."
+      "NASB": "I will instruct you and teach you in the way which you should go; I will advise you with My eye upon you.",
+      "AMP": "I will instruct you and teach you in the way you should go; I will counsel you [who are willing to learn] with My eye upon you.",
+      "NKJV": "I will instruct you and teach you in the way you should go; I will guide you with My eye."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 32 — The Sovereign Deliverance & Living Hope of God",
@@ -1694,7 +1708,9 @@ const BIBLE_VERSES = [
       "NIV": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.",
       "TPT": "Do not yield to fear, for I am always near. Never turn your gaze away, for I am your God. I will strengthen you; yes, I will help you. I will hold you tight in my hand of victory and righteousness.",
       "NLT": "Don't be afraid, for I am with you. Don't be discouraged, for I am your God. I will strengthen you and help you. I will hold you up with my victorious right hand.",
-      "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand."
+      "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand.",
+      "AMP": "Do not fear [anything], for I am with you; do not be afraid, for I am your God. I will strengthen you, be assured I will help you; I will certainly take hold of you with My righteous right hand.",
+      "NKJV": "Fear not, for I am with you; Be not dismayed, for I am your God. I will strengthen you, Yes, I will help you, I will uphold you with My righteous right hand."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 41 — The Sovereign Deliverance & Living Hope of God",
@@ -1931,7 +1947,9 @@ const BIBLE_VERSES = [
       "NIV": "But blessed is the one who trusts in the LORD, whose confidence is in him. They will be like a tree planted by the water that sends out its roots by the stream. It does not fear when heat comes; its leaves are always green. It has no worries in a year of drought and never fails to bear fruit.",
       "TPT": "Blessed is the man who believes in and relies on Yahweh, whose confidence is in Yahweh. For he will be like a tree planted by the waters, spreading out its roots by the river. It will not fear when heat comes; its leaves will be green. It will not be anxious in the year of drought, nor cease from yielding fruit.",
       "NLT": "But blessed are those who trust in the LORD and have made the LORD their hope and confidence. They are like trees planted along a riverbank, with roots that reach deep into the water. Such trees are not bothered by the heat or worried by long months of drought. Their leaves stay green, and they never stop producing fruit.",
-      "NASB": "Blessed is the man who trusts in the LORD, and whose trust is the LORD. For he will be like a tree planted by the water, that extends its roots by a stream, and does not fear when the heat comes; but its leaves will be green, and it will not be anxious in a year of drought, nor cease to yield fruit."
+      "NASB": "Blessed is the man who trusts in the LORD, and whose trust is the LORD. For he will be like a tree planted by the water, that extends its roots by a stream, and does not fear when the heat comes; but its leaves will be green, and it will not be anxious in a year of drought, nor cease to yield fruit.",
+      "AMP": "Blessed [with great happiness and joy] is the man who believes in, trusts in, and relies on the Lord and whose hope and confident expectation is the Lord. For he will be like a tree planted by the waters that spreads out its roots by the river, and will not fear when heat comes.",
+      "NKJV": "Blessed is the man who trusts in the Lord, and whose hope is the Lord. For he shall be like a tree planted by the waters, which spreads out its roots by the river, and will not fear when heat comes."
     },
     "dynamicContext": {
       "chapterTitle": "Jeremiah 17 — The Sovereign Deliverance & Living Hope of God",
@@ -2168,7 +2186,9 @@ const BIBLE_VERSES = [
       "NIV": "The LORD will guide you always; he will satisfy your needs in a sun-scorched land and will strengthen your frame. You will be like a well-watered garden, like a spring whose waters never fail. Your people will rebuild the ancient ruins and will raise up the age-old foundations; you will be called Repairer of Broken Walls, Restorer of Streets with Dwellings.",
       "TPT": "Yahweh will always guide you and satisfy you even in the parched places. He will strengthen your bones, and you will become like a watered garden, like a spring of water whose waters never fail. You will rebuild the ancient ruins and raise up the foundations of bygone generations. You will be called 'Restorer of the Broken Walls,' 'Repairer of Streets to Dwell In.'",
       "NLT": "The LORD will guide you continually, giving you water when you are dry and restoring your strength. You will be like a well-watered garden, like an ever-flowing spring. Some of you will rebuild the deserted ruins of your cities. Then you will be known as a rebuilder of walls and a restorer of homes.",
-      "NASB": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail. Those from among you will rebuild the ancient ruins; you will raise up the age-old foundations; and you will be called the repairer of the breach, the restorer of the streets in which to dwell."
+      "NASB": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail. Those from among you will rebuild the ancient ruins; you will raise up the age-old foundations; and you will be called the repairer of the breach, the restorer of the streets in which to dwell.",
+      "AMP": "And the Lord will continually guide you, and satisfy your soul in scorched and dry places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail.",
+      "NKJV": "The Lord will guide you continually, and satisfy your soul in drought, and strengthen your bones; You shall be like a watered garden, and like a spring of water, whose waters do not fail."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 58 — The Sovereign Deliverance & Living Hope of God",
@@ -2404,7 +2424,9 @@ const BIBLE_VERSES = [
       "NIV": "I was young and now I am old, yet I have never seen the righteous forsaken or their children begging bread. They are always generous and lend freely; their children are a blessing.",
       "TPT": "I was once young, but now I’m old, and not once have I ever seen the godly forsaken, nor have I seen their children begging for bread. They are always generous and lend freely; their children are a blessing to all.",
       "NLT": "Once I was young, and now I am old. Yet I have never seen the godly abandoned or their children begging for bread. The godly always give generous loans to others, and their children are a blessing.",
-      "NASB": "I have been young and now I am old, yet I have not seen the righteous forsaken or his descendants begging bread. All day long he is gracious and lends, and his descendants are a blessing."
+      "NASB": "I have been young and now I am old, yet I have not seen the righteous forsaken or his descendants begging bread. All day long he is gracious and lends, and his descendants are a blessing.",
+      "AMP": "I have been young and now I am old, yet I have not seen the righteous (those in right standing with God) abandoned or his descendants pleading for bread. All day long he is gracious and lends, and his descendants are a blessing.",
+      "NKJV": "I have been young, and now am old; Yet I have not seen the righteous forsaken, Nor his descendants begging bread. He is ever merciful, and lends; And his descendants are blessed."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 37 — The Sovereign Deliverance & Living Hope of God",
@@ -2641,7 +2663,9 @@ const BIBLE_VERSES = [
       "NIV": "Now he who supplies seed to the sower and bread for food will also supply and increase your store of seed and will enlarge the harvest of your righteousness. You will be enriched in every way so that you can be generous on every occasion, and through us your generosity will result in thanksgiving to God.",
       "TPT": "This generous God who supplies abundant seed to the farmer, which becomes bread for our meals, will even more extravagantly supply you with all you need. He will multiply what you produce and brew a harvest of righteousness in you and through you. You will be abundantly enriched in every way so that you can give generously on every occasion.",
       "NLT": "For God is the one who provides seed for the farmer and then bread to eat. In the same way, he will provide and increase your resources and then produce a great harvest of generosity in you. Yes, you will be enriched in every way so that you can always be generous.",
-      "NASB": "Now He who supplies seed to the sower and bread for food will supply and multiply your seed for sowing and increase the harvest of your righteousness; you will be enriched in everything for all liberality, which through us is producing thanksgiving to God."
+      "NASB": "Now He who supplies seed to the sower and bread for food will supply and multiply your seed for sowing and increase the harvest of your righteousness; you will be enriched in everything for all liberality, which through us is producing thanksgiving to God.",
+      "AMP": "Now He who provides seed for the sower and bread for food will provide and multiply your seed for sowing and increase the harvest of your righteousness. You will be enriched in every way so that you can be generous on every occasion.",
+      "NKJV": "Now may He who supplies seed to the sower, and bread for food, supply and multiply the seed you have sown and increase the fruits of your righteousness, while you are enriched in everything for all liberality."
     },
     "dynamicContext": {
       "chapterTitle": "2 Corinthians 9 — The Sovereign Deliverance & Living Hope of God",
@@ -2877,7 +2901,9 @@ const BIBLE_VERSES = [
       "NIV": "He said to them, 'Go into all the world and preach the gospel to all creation.'",
       "TPT": "And he said to them, 'As you go into every part of the world, proclaim the good news to everyone in all creation!'",
       "NLT": "And then he told them, 'Go into all the world and preach the Good News to everyone.'",
-      "NASB": "And He said to them, 'Go into all the world and preach the gospel to all creation.'"
+      "NASB": "And He said to them, 'Go into all the world and preach the gospel to all creation.'",
+      "AMP": "And He said to them, 'Go into all the world and preach the gospel to all creation.'",
+      "NKJV": "And He said to them, 'Go into all the world and preach the gospel to every creature.'"
     },
     "dynamicContext": {
       "chapterTitle": "Mark 16 — The Sovereign Deliverance & Living Hope of God",
@@ -3114,7 +3140,9 @@ const BIBLE_VERSES = [
       "NIV": "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes: first to the Jew, then to the Gentile.",
       "TPT": "I refuse to be ashamed of the wonderful message of God’s liberating power, which brings salvation to everyone who believes—first to the Jew and also to the Gentile.",
       "NLT": "For I am not ashamed of this Good News about Christ. It is the power of God at work, saving everyone who believes—the Jew first and also the Gentile.",
-      "NASB": "For I am not ashamed of the gospel, for it is the power of God for salvation to everyone who believes, to the Jew first and also to the Greek."
+      "NASB": "For I am not ashamed of the gospel, for it is the power of God for salvation to everyone who believes, to the Jew first and also to the Greek.",
+      "AMP": "For I am not ashamed of the gospel, for it is the power of God for salvation [from His wrath and punishment] to everyone who believes [in Christ as Savior], to the Jew first and also to the Greek.",
+      "NKJV": "For I am not ashamed of the gospel of Christ, for it is the power of God to salvation for everyone who believes, for the Jew first and also for the Greek."
     },
     "dynamicContext": {
       "chapterTitle": "Romans 1 — The Sovereign Deliverance & Living Hope of God",
@@ -3351,7 +3379,9 @@ const BIBLE_VERSES = [
       "NIV": "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.",
       "TPT": "Now go in my authority and make disciples of all nations, baptizing them in the name of the Father, the Son, and the Holy Spirit. Teach them to observe everything that I have commanded you. And believe this: I am with you always, even to the end of the age!",
       "NLT": "Therefore, go and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit. Teach these new disciples to obey all the commands I have given you. And be sure of this: I am with you always, even to the end of the age.",
-      "NASB": "Go, therefore, and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit, teaching them to follow all that I commanded you; and behold, I am with you always, to the end of the age."
+      "NASB": "Go, therefore, and make disciples of all the nations, baptizing them in the name of the Father and the Son and the Holy Spirit, teaching them to follow all that I commanded you; and behold, I am with you always, to the end of the age.",
+      "AMP": "Go therefore and make disciples of all the nations [help the people to learn of Me, believe in Me, and obey My words]... and lo, I am with you always [remaining with you perpetually], even to the end of the age.",
+      "NKJV": "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all things that I have commanded you; and lo, I am with you always, even to the end of the age."
     },
     "dynamicContext": {
       "chapterTitle": "Matthew 28 — The Sovereign Deliverance & Living Hope of God",
@@ -3587,7 +3617,9 @@ const BIBLE_VERSES = [
       "NIV": "Before they call I will answer; while they are still speaking I will hear.",
       "TPT": "Before they even call out to me, I will answer them; and while they are still speaking, I will hear.",
       "NLT": "I will answer them before they even call to me. While they are still talking about their needs, I will go ahead and answer their prayers!",
-      "NASB": "It will also come to pass that before they call, I will answer; and while they are still speaking, I will hear."
+      "NASB": "It will also come to pass that before they call, I will answer; and while they are still speaking, I will hear.",
+      "AMP": "It shall also come to pass that before they call, I will answer; and while they are still speaking, I will hear.",
+      "NKJV": "It shall come to pass that before they call, I will answer; and while they are still speaking, I will hear."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 65 — The Sovereign Deliverance & Living Hope of God",
@@ -3823,7 +3855,9 @@ const BIBLE_VERSES = [
       "NIV": "You are the light of the world. A town built on a hill cannot be hidden.",
       "TPT": "Your lives light up the world. Let others see your light from a distance, for how can you hide a city that stands on a hilltop?",
       "NLT": "You are the light of the world—like a city on a hilltop that cannot be hidden.",
-      "NASB": "You are the light of the world. A city set on a hill cannot be hidden."
+      "NASB": "You are the light of the world. A city set on a hill cannot be hidden.",
+      "AMP": "You are the light of [Christ to] the world. A city set on a hill cannot be hidden.",
+      "NKJV": "You are the light of the world. A city that is set on a hill cannot be hidden."
     },
     "dynamicContext": {
       "chapterTitle": "Matthew 5 — The Sovereign Deliverance & Living Hope of God",
@@ -4059,7 +4093,9 @@ const BIBLE_VERSES = [
       "NIV": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
       "TPT": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!",
       "NLT": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
-      "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful."
+      "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful.",
+      "AMP": "Peace I leave with you; My [perfect] peace I give to you; not as the world gives do I give to you. Do not let your heart be troubled, nor let it be fearful.",
+      "NKJV": "Peace I leave with you, My peace I give to you; not as the world gives do I give to you. Let not your heart be troubled, neither let it be afraid."
     },
     "dynamicContext": {
       "chapterTitle": "John 14 — The Sovereign Deliverance & Living Hope of God",
@@ -4296,7 +4332,9 @@ const BIBLE_VERSES = [
       "NIV": "Therefore, brothers and sisters, since we have confidence to enter the Most Holy Place by the blood of Jesus, by a new and living way opened for us through the curtain, that is, his body... let us draw near to God with a sincere heart and with the full assurance that faith brings... Let us hold unswervingly to the hope we profess, for he who promised is faithful. And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together... but encouraging one another.",
       "TPT": "And now we have boldness and free access to come directly into the presence of God through the blood of Jesus! He has uncovered a fresh and living pathway for us through the veil, which is his own body... Let us come right into the presence of God with a true heart in full assurance of faith... Let us wrap our hearts around the hope we confess, for the one who promised is completely faithful. And let us discover creative ways to encourage one another to show love and do beautiful works, not neglecting our gathering together, but encouraging one another.",
       "NLT": "And so, dear brothers and sisters, we can boldly enter heaven's Most Holy Place because of the blood of Jesus. By his death, Jesus opened a new and life-giving way through the curtain into the Most Holy Place... let us go right into the presence of God with sincere hearts fully trusting him... Let us hold tightly without wavering to the hope we affirm, for God can be trusted to keep his promise. Let us think of ways to motivate one another to acts of love and good works. And let us not neglect our meeting together... but encourage one another.",
-      "NASB": "Therefore, brothers and sisters, since we have confidence to enter the holy place by the blood of Jesus, by a new and living way which He inaugurated for us through the veil, that is, through His flesh... let's approach God with a sincere heart in full assurance of faith... Let's hold firmly to the confession of our hope without wavering, for He who promised is faithful; and let's consider how to encourage one another in love and good deeds, not abandoning our own meeting together... but encouraging one another."
+      "NASB": "Therefore, brothers and sisters, since we have confidence to enter the holy place by the blood of Jesus, by a new and living way which He inaugurated for us through the veil, that is, through His flesh... let's approach God with a sincere heart in full assurance of faith... Let's hold firmly to the confession of our hope without wavering, for He who promised is faithful; and let's consider how to encourage one another in love and good deeds, not abandoning our own meeting together... but encouraging one another.",
+      "AMP": "Therefore, believers, since we have confidence and full freedom to enter the Holy Place by the blood of Jesus... let us hold fast the confession of our hope without wavering, for He who promised is faithful.",
+      "NKJV": "Therefore, brethren, having boldness to enter the Holiest by the blood of Jesus... let us hold fast the confession of our hope without wavering, for He who promised is faithful."
     },
     "dynamicContext": {
       "chapterTitle": "Hebrews 10 — The Sovereign Deliverance & Living Hope of God",
@@ -4532,7 +4570,9 @@ const BIBLE_VERSES = [
       "NIV": "Your word, LORD, is eternal; it stands firm in the heavens.",
       "TPT": "Standing firm in the heavens, your word, Yahweh, will endure forever.",
       "NLT": "Your eternal word, O LORD, stands firm in heaven.",
-      "NASB": "Forever, LORD, Your word stands firm in heaven."
+      "NASB": "Forever, LORD, Your word stands firm in heaven.",
+      "AMP": "Forever, O Lord, Your word is settled in heaven [standing firm and unchangeable].",
+      "NKJV": "Forever, O Lord, Your word is settled in heaven."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
@@ -4768,7 +4808,9 @@ const BIBLE_VERSES = [
       "NIV": "Guide me in your truth and teach me, for you are God my Savior, and my hope is in you all day long.",
       "TPT": "Escort me along the way; take me by the hand and teach me your truth, for you are my God, the God of my salvation; upon you I wait expectantly all day long.",
       "NLT": "Lead me by your truth and teach me, for you are the God who saves me. All day long I put my hope in you.",
-      "NASB": "Lead me in Your truth and teach me, for You are the God of my salvation; for You I wait all the day."
+      "NASB": "Lead me in Your truth and teach me, for You are the God of my salvation; for You I wait all the day.",
+      "AMP": "Lead me in Your truth and teach me, for You are the God of my salvation; for You [and Your greatness] I wait all the day long.",
+      "NKJV": "Lead me in Your truth and teach me, for You are the God of my salvation; On You I wait all the day."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 25 — The Sovereign Deliverance & Living Hope of God",
@@ -5004,7 +5046,9 @@ const BIBLE_VERSES = [
       "NIV": "The LORD will guide you always; he will satisfy your needs in a sun-scorched land and will strengthen your frame. You will be like a well-watered garden, like a spring whose waters never fail.",
       "TPT": "Yahweh will always guide you and satisfy you even in the parched places. He will strengthen your bones, and you will become like a watered garden, like a spring of water whose waters never fail.",
       "NLT": "The LORD will guide you continually, giving you water when you are dry and restoring your strength. You will be like a well-watered garden, like an ever-flowing spring.",
-      "NASB": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail."
+      "NASB": "And the LORD will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden, and like a spring of water whose waters do not fail.",
+      "AMP": "And the Lord will continually guide you, and satisfy your desire in scorched places, and give strength to your bones; and you will be like a watered garden.",
+      "NKJV": "The Lord will guide you continually, and satisfy your soul in drought, and strengthen your bones; You shall be like a watered garden."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 58 — The Sovereign Deliverance & Living Hope of God",
@@ -5240,7 +5284,9 @@ const BIBLE_VERSES = [
       "NIV": "The fear of the LORD leads to life; then one rests content, untouched by trouble.",
       "TPT": "When you live in the reverence of the LORD, you will experience true life and be satisfied, living in tranquility, untouched by harm.",
       "NLT": "Fear of the LORD leads to life, bringing security and protection from harm.",
-      "NASB": "The fear of the LORD leads to life, so that one may sleep satisfied, untouched by evil."
+      "NASB": "The fear of the LORD leads to life, so that one may sleep satisfied, untouched by evil.",
+      "AMP": "The fear of the Lord leads to life, so that one may sleep satisfied, untouched by evil.",
+      "NKJV": "The fear of the Lord leads to life, and he who has it will abide in satisfaction; He will not be visited with evil."
     },
     "dynamicContext": {
       "chapterTitle": "Proverbs 19 — The Sovereign Deliverance & Living Hope of God",
@@ -5476,7 +5522,9 @@ const BIBLE_VERSES = [
       "NIV": "Finally, be strong in the Lord and in his mighty power.",
       "TPT": "Now my beloved ones, I have saved these most important truths for last: Be supernaturally infused with strength through your life-union with the Lord Jesus. Stand victorious with the force of his explosive power flowing in and through you.",
       "NLT": "A final word: Be strong in the Lord and in his mighty power.",
-      "NASB": "Finally, be strong in the Lord and in the strength of His might."
+      "NASB": "Finally, be strong in the Lord and in the strength of His might.",
+      "AMP": "Finally, be strong in the Lord [draw your strength from Him and be empowered through your union with Him] and in the power of His [boundless] might.",
+      "NKJV": "Finally, my brethren, be strong in the Lord and in the power of His might."
     },
     "dynamicContext": {
       "chapterTitle": "Ephesians 6 — The Sovereign Deliverance & Living Hope of God",
@@ -5713,7 +5761,9 @@ const BIBLE_VERSES = [
       "NIV": "Do not work for food that spoils, but for food that endures to eternal life, which the Son of Man will give you. For on him God the Father has placed his seal of approval.",
       "TPT": "Why would you strive for food that is perishable and doesn’t satisfy? You should be seeking the food that gives permanent, eternal life that the Son of Man will give you. For upon him the Father God has placed his seal of approval!",
       "NLT": "But don't be so concerned about perishable things like food. Spend your energy seeking the eternal life that the Son of Man can give you. For God the Father has given me the seal of his approval.",
-      "NASB": "Do not work for the food that perishes, but for the food that lasts for eternal life, which the Son of Man will give you; for on Him the Father, God, has set His seal."
+      "NASB": "Do not work for the food that perishes, but for the food that lasts for eternal life, which the Son of Man will give you; for on Him the Father, God, has set His seal.",
+      "AMP": "Do not work for food that perishes, but for the food that endures to eternal life, which the Son of Man will give you, for on Him God the Father has set His seal [of authorization].",
+      "NKJV": "Do not labor for the food which perishes, but for the food which endures to everlasting life, which the Son of Man will give you, because God the Father has set His seal on Him."
     },
     "dynamicContext": {
       "chapterTitle": "John 6 — The Sovereign Deliverance & Living Hope of God",
@@ -5949,7 +5999,9 @@ const BIBLE_VERSES = [
       "NIV": "Therefore my heart is glad and my tongue rejoices; my body also will rest secure, because you will not abandon me to the realm of the dead, nor will you let your faithful one see decay.",
       "TPT": "My heart and soul explode with joy—full of glory! Even my body will rest confident and secure. For you will not leave my soul in the realm of darkness, nor will you allow your Holy One to experience decay.",
       "NLT": "No wonder my heart is glad, and I rejoice. My body rests in safety. For you will not leave my soul among the dead or allow your holy one to rot in the grave.",
-      "NASB": "Therefore my heart is glad and my glory rejoices; my flesh also will dwell securely. For You will not abandon my soul to Sheol; You will not allow Your Holy One to undergo decay."
+      "NASB": "Therefore my heart is glad and my glory rejoices; my flesh also will dwell securely. For You will not abandon my soul to Sheol; You will not allow Your Holy One to undergo decay.",
+      "AMP": "Therefore my heart is glad and my glory [my inner self] rejoices; my body too will dwell [confidently] in safety, for You will not abandon me to Sheol, nor will You allow Your Holy One to see corruption.",
+      "NKJV": "Therefore my heart is glad, and my glory rejoices; My flesh also will rest in hope. For You will not leave my soul in Sheol, Nor will You allow Your Holy One to see corruption."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 16 — The Sovereign Deliverance & Living Hope of God",
@@ -6186,7 +6238,9 @@ const BIBLE_VERSES = [
       "NIV": "Then Jesus declared, 'I am the bread of life. Whoever comes to me will never go hungry, and whoever believes in me will never be thirsty.'",
       "TPT": "Jesus said to them, 'I am the Bread of Life. Come every day to me and you will never be hungry. Believe in me and you will never be thirsty.'",
       "NLT": "Jesus replied, 'I am the bread of life. Whoever comes to me will never be hungry again. Whoever believes in me will never be thirsty.'",
-      "NASB": "Jesus said to them, 'I am the bread of life; the one who comes to Me will not be hungry, and the one who believes in Me will never be thirsty.'"
+      "NASB": "Jesus said to them, 'I am the bread of life; the one who comes to Me will not be hungry, and the one who believes in Me will never be thirsty.'",
+      "AMP": "Jesus said to them, 'I am the Bread of Life. He who comes to Me will never be hungry, and he who believes in Me [as Savior] will never be thirsty.'",
+      "NKJV": "And Jesus said to them, 'I am the bread of life. He who comes to Me shall never hunger, and he who believes in Me shall never thirst.'"
     },
     "dynamicContext": {
       "chapterTitle": "John 6 — The Sovereign Deliverance & Living Hope of God",
@@ -6422,7 +6476,9 @@ const BIBLE_VERSES = [
       "NIV": "Praise the LORD, my soul; all my inmost being, praise his holy name. Praise the LORD, my soul, and forget not all his benefits—who forgives all your sins and heals all your diseases, who redeems your life from the pit and crowns you with love and compassion, who satisfies your desires with good things so that your youth is renewed like the eagle’s.",
       "TPT": "With my whole heart, with my whole life, and with the inmost parts of my being, I will praise and bless his holy name. Let my whole being sing the praises of Yahweh, and let me never forget the marvelous benefits he gives: He forgives all our sins and heals every one of our diseases! He rescues us from hell and saves our lives, and he crowns us with love and tender mercies. He satisfies our desires with good things, renewing our youth like the eagle’s!",
       "NLT": "Let all that I am praise the LORD; with my whole heart, I will praise his holy name. Let all that I am praise the LORD; may I never forget the good things he does for me. He forgives all my sins and heals all my diseases. He redeems me from death and crowns me with love and tender mercies. He fills my life with good things. My youth is renewed like the eagle's!",
-      "NASB": "Bless the LORD, my soul, and all that is within me, bless His holy name. Bless the LORD, my soul, and do not forget any of His benefits; Who pardons all your guilt, Who heals all your diseases; Who redeems your life from the pit, Who crowns you with favor and compassion; Who satisfies your years with good things, so that your youth is renewed like the eagle."
+      "NASB": "Bless the LORD, my soul, and all that is within me, bless His holy name. Bless the LORD, my soul, and do not forget any of His benefits; Who pardons all your guilt, Who heals all your diseases; Who redeems your life from the pit, Who crowns you with favor and compassion; Who satisfies your years with good things, so that your youth is renewed like the eagle.",
+      "AMP": "Bless and affectionately praise the Lord, O my soul, and all that is within me, bless His holy name... Who forgives all your sins, Who heals all your diseases, Who redeems your life from the pit, Who crowns you with lovingkindness and tender mercy.",
+      "NKJV": "Bless the Lord, O my soul; And all that is within me, bless His holy name! Bless the Lord, O my soul, and forget not all His benefits: Who forgives all your iniquities, Who heals all your diseases, Who redeems your life from destruction, Who crowns you with lovingkindness and tender mercies."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 103 — The Sovereign Deliverance & Living Hope of God",
@@ -6659,7 +6715,9 @@ const BIBLE_VERSES = [
       "NIV": "But I am like an olive tree flourishing in the house of God; I trust in God’s unfailing love for ever and ever.",
       "TPT": "But I am like an olive tree, thriving in the house of God. I will trust in your passionate, faithful love forever and ever.",
       "NLT": "But I am like an olive tree, thriving in the house of God. I will always trust in God's unfailing love.",
-      "NASB": "But as for me, I am like a green olive tree in the house of God; I trust in the faithfulness of God forever and ever."
+      "NASB": "But as for me, I am like a green olive tree in the house of God; I trust in the faithfulness of God forever and ever.",
+      "AMP": "But as for me, I am like a green olive tree [flourishing] in the house of God; I trust [confidently] in the lovingkindness and faithfulness of God forever and ever.",
+      "NKJV": "But I am like a green olive tree in the house of God; I trust in the mercy of God forever and ever."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 52 — The Sovereign Deliverance & Living Hope of God",
@@ -6895,7 +6953,9 @@ const BIBLE_VERSES = [
       "NIV": "You will tread on the lion and the cobra; you will trample the great lion and the serpent.",
       "TPT": "You will walk over the lion and the adder; you will crush fierce lions and venomous snakes beneath your feet!",
       "NLT": "You will trample upon lions and cobras; you will crush fierce lions and serpents under your feet!",
-      "NASB": "You will walk on the lion and cobra, you will trample the young lion and the serpent."
+      "NASB": "You will walk on the lion and cobra, you will trample the young lion and the serpent.",
+      "AMP": "You will tread on the lion and cobra; the young lion and the serpent you will trample underfoot.",
+      "NKJV": "You shall tread upon the lion and the cobra, the young lion and the serpent you shall trample underfoot."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 91 — The Sovereign Deliverance & Living Hope of God",
@@ -7131,7 +7191,9 @@ const BIBLE_VERSES = [
       "NIV": "Oh, how I love your law! I meditate on it all day long. Your commands are always with me and make me wiser than my enemies. I have more insight than all my teachers, for I meditate on your statutes... How sweet are your words to my taste, sweeter than honey to my mouth! I gain understanding from your precepts; therefore I hate every wrong path. Your word is a lamp for my feet, a light on my path.",
       "TPT": "O how I love your law! It is my meditation all the day. Your commandment makes me wiser than my enemies, for it is ever with me. I have more insight than all my teachers, for your testimonies are my meditation... How sweet are your words to my taste, yes, sweeter than honey to my mouth! From your precepts I get understanding; therefore I hate every false way. Your word is a lamp to my feet and a light to my path.",
       "NLT": "Oh, how I love your instructions! I think about them all day long. Your commands make me wiser than my enemies, for they are my constant guide. Yes, I have more insight than my teachers, for I am always thinking of your laws... How sweet your words taste to me; they are sweeter than honey. Your commandments give me understanding; no wonder I hate every false way of life. Your word is a lamp to guide my feet and a light for my path.",
-      "NASB": "How I love Your Law! It is my meditation all the day. Your commandments make me wiser than my enemies, for they are ever mine. I have more insight than all my teachers, for Your testimonies are my meditation... How sweet are Your words to my taste! Yes, sweeter than honey to my mouth! From Your precepts I get understanding; therefore I hate every false way. Your word is a lamp to my feet and a light to my path."
+      "NASB": "How I love Your Law! It is my meditation all the day. Your commandments make me wiser than my enemies, for they are ever mine. I have more insight than all my teachers, for Your testimonies are my meditation... How sweet are Your words to my taste! Yes, sweeter than honey to my mouth! From Your precepts I get understanding; therefore I hate every false way. Your word is a lamp to my feet and a light to my path.",
+      "AMP": "Oh, how I love Your law! It is my meditation all the day... Your word is a lamp to my feet and a light to my path.",
+      "NKJV": "Oh, how I love Your law! It is my meditation all the day... Your word is a lamp to my feet and a light to my path."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
@@ -7367,7 +7429,9 @@ const BIBLE_VERSES = [
       "NIV": "No one will be able to stand against you all the days of your life. As I was with Moses, so I will be with you; I will never leave you nor forsake you.",
       "TPT": "No one will be able to stand against you all the days of your life. For I will be with you just as I was with Moses; I will not fail you or forsake you.",
       "NLT": "No one will be able to stand against you as long as you live. For I will be with you as I was with Moses. I will not fail you or abandon you.",
-      "NASB": "No one will be able to oppose you all the days of your life. Just as I have been with Moses, I will be with you; I will not abandon you nor forsake you."
+      "NASB": "No one will be able to oppose you all the days of your life. Just as I have been with Moses, I will be with you; I will not abandon you nor forsake you.",
+      "AMP": "No man will [be able to] stand before you [to oppose you] all the days of your life. Just as I was with Moses, so will I be with you; I will not fail you or abandon you.",
+      "NKJV": "No man shall be able to stand before you all the days of your life; as I was with Moses, so I will be with you. I will not leave you nor forsake you."
     },
     "dynamicContext": {
       "chapterTitle": "Joshua 1 — The Sovereign Deliverance & Living Hope of God",
@@ -7604,7 +7668,9 @@ const BIBLE_VERSES = [
       "NIV": "The Spirit of the Sovereign LORD is on me, because the LORD has anointed me to proclaim good news to the poor. He has sent me to bind up the brokenhearted, to proclaim freedom for the captives and release from darkness for the prisoners.",
       "TPT": "The mighty Spirit of the Lord Yahweh is upon me, because Yahweh has anointed me to bring good news to the afflicted. He has sent me to heal the brokenhearted, to proclaim release to the captives and freedom to those bound in darkness.",
       "NLT": "The Spirit of the Sovereign LORD is upon me, for the LORD has anointed me to bring good news to the poor. He has sent me to comfort the brokenhearted and to proclaim that captives will be released and prisoners will be freed.",
-      "NASB": "The Spirit of the Lord GOD is upon me, because the LORD anointed me to bring good news to the humble; He has sent me to bind up the brokenhearted, to proclaim release to captives and freedom to prisoners."
+      "NASB": "The Spirit of the Lord GOD is upon me, because the LORD anointed me to bring good news to the humble; He has sent me to bind up the brokenhearted, to proclaim release to captives and freedom to prisoners.",
+      "AMP": "The Spirit of the Lord God is upon me, because the Lord has anointed and commissioned me to bring good news to the humble and afflicted; He has sent me to bind up [the wounds of] the brokenhearted, to proclaim release [from bondage and the penalty of God’s judgment] to the [physical and spiritual] captives and freedom to prisoners.",
+      "NKJV": "The Spirit of the Lord God is upon Me, because the Lord has anointed Me to preach good tidings to the poor; He has sent Me to heal the brokenhearted, to proclaim liberty to the captives, and the opening of the prison to those who are bound."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 61 — The Sovereign Deliverance & Living Hope of God",
@@ -7840,7 +7906,9 @@ const BIBLE_VERSES = [
       "NIV": "The LORD himself goes before you and will be with you; he will never leave you nor forsake you. Do not be afraid; do not be discouraged.",
       "TPT": "Yahweh himself is the one who goes before you! He will be with you; he will never fail you nor abandon you. So don't be afraid or disheartened!",
       "NLT": "Do not be afraid or discouraged, for the LORD will personally go ahead of you. He will be with you; he will neither fail you nor abandon you.",
-      "NASB": "And the LORD is the one who goes ahead of you; He will be with you. He will not fail you or forsake you. Do not fear or be dismayed."
+      "NASB": "And the LORD is the one who goes ahead of you; He will be with you. He will not fail you or forsake you. Do not fear or be dismayed.",
+      "AMP": "It is the Lord who goes before you; He will be with you. He will not fail you or abandon you. Do not fear or be dismayed.",
+      "NKJV": "And the Lord, He is the One who goes before you. He will be with you, He will not leave you nor forsake you; do not fear nor be dismayed."
     },
     "dynamicContext": {
       "chapterTitle": "Deuteronomy 31 — The Sovereign Deliverance & Living Hope of God",
@@ -8076,7 +8144,9 @@ const BIBLE_VERSES = [
       "NIV": "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law. Those who belong to Christ Jesus have crucified the flesh with its passions and desires. Since we live by the Spirit, let us keep in step with the Spirit.",
       "TPT": "But the fruit produced by the Holy Spirit within you is divine love in all its varied expressions: joy that overflows, peace that subdues, patience that endures, kindness in action, a life full of virtue, faith that prevails, gentleness of heart, and strength of spirit. Never will you find a law that conflicts with these! Now those who belong to Christ Jesus have crucified the self-life with its passions and desires. Since we live with the Spirit, let us step in time with each other, walking in the Holy Spirit!",
       "NLT": "But the Holy Spirit produces this kind of fruit in our lives: love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control. There is no law against these things! Those who belong to Christ Jesus have nailed the passions and desires of their sinful nature to his cross and crucified them there. Since we are living by the Spirit, let us follow the Spirit's leading in every part of our lives.",
-      "NASB": "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law. Now those who belong to Christ Jesus have crucified the flesh with its passions and desires. If we live by the Spirit, let's also follow the Spirit."
+      "NASB": "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law. Now those who belong to Christ Jesus have crucified the flesh with its passions and desires. If we live by the Spirit, let's also follow the Spirit.",
+      "AMP": "But the fruit of the Spirit [the result of His presence within us] is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control... If we live by the [Holy] Spirit, let us also walk by the Spirit.",
+      "NKJV": "But the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control... If we live in the Spirit, let us also walk in the Spirit."
     },
     "dynamicContext": {
       "chapterTitle": "Galatians 5 — The Sovereign Deliverance & Living Hope of God",
@@ -8312,7 +8382,9 @@ const BIBLE_VERSES = [
       "NIV": "Therefore I tell you, whatever you ask for in prayer, believe that you have received it, and it will be yours.",
       "TPT": "This is the reason I urge you to boldly believe for whatever you ask for in prayer—be convinced that you have already received it and it will be yours.",
       "NLT": "I tell you, you can pray for anything, and if you believe that you've received it, it will be yours.",
-      "NASB": "Therefore, I say to you, all things for which you pray and ask, believe that you have received them, and they will be granted to you."
+      "NASB": "Therefore, I say to you, all things for which you pray and ask, believe that you have received them, and they will be granted to you.",
+      "AMP": "For this reason I tell you, whatever things you ask for in prayer, believe [with confident trust] that you have received them, and they will be given to you.",
+      "NKJV": "Therefore I say to you, whatever things you ask when you pray, believe that you receive them, and you will have them."
     },
     "dynamicContext": {
       "chapterTitle": "Mark 11 — The Sovereign Deliverance & Living Hope of God",
@@ -8548,7 +8620,9 @@ const BIBLE_VERSES = [
       "NIV": "Set your minds on things above, not on earthly things. For you died, and your life is now hidden with Christ in God. When Christ, who is your life, appears, then you also will appear with him in glory.",
       "TPT": "Feast your thoughts continuously on the heavenly realm and not on this earthly realm! For you have died and your life is hidden with Christ in God. Yes, Christ is your life, and when he appears in all his glory, you will be revealed in glorious splendour with him!",
       "NLT": "Think about the things of heaven, not the things of earth. For you died to this life, and your real life is hidden with Christ in God. And when Christ, who is your life, is revealed to the whole world, you will share in all his glory.",
-      "NASB": "Set your mind on the things that are above, not on the things that are on earth. For you have died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory."
+      "NASB": "Set your mind on the things that are above, not on the things that are on earth. For you have died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory.",
+      "AMP": "Set your mind and keep your thoughts focused on the things above, not on the things that are on the earth. For you died [to this world], and your [new, real] life is hidden with Christ in God.",
+      "NKJV": "Set your mind on things above, not on things on the earth. For you died, and your life is hidden with Christ in God. When Christ who is our life appears, then you also will appear with Him in glory."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -8784,7 +8858,9 @@ const BIBLE_VERSES = [
       "NIV": "And my God will meet all your needs according to the riches of his glory in Christ Jesus.",
       "TPT": "I am convinced that my God will fully satisfy every need you have, for I have seen the magnificent riches of his glory unveiled through Jesus the Anointed One!",
       "NLT": "And this same God who takes care of me will supply all your needs from his glorious riches, which have been given to us in Christ Jesus.",
-      "NASB": "And my God will supply all your needs according to His riches in glory in Christ Jesus."
+      "NASB": "And my God will supply all your needs according to His riches in glory in Christ Jesus.",
+      "AMP": "And my God will liberally supply (fill until full) your every need according to His riches in glory in Christ Jesus.",
+      "NKJV": "And my God shall supply all your need according to His riches in glory by Christ Jesus."
     },
     "dynamicContext": {
       "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
@@ -9020,7 +9096,9 @@ const BIBLE_VERSES = [
       "NIV": "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator... Therefore, as God’s chosen people, holy and dearly loved, clothe yourselves with compassion, kindness, humility, gentleness and patience.",
       "TPT": "Do not lie to one another, since you have stripped off the old man with its practices and have put on the new man, which is being renewed into full knowledge according to the image of the One who created it... Therefore, as God’s chosen holy and beloved ones, put on tender mercies, kindness, humility, gentleness, and patient endurance.",
       "NLT": "Don't lie to each other, for you have stripped off your old sinful nature and all its wicked deeds. Put on your new nature, and be renewed as you learn to know your Creator and become like him... Since God chose you to be the holy people he loves, you must clothe yourselves with tenderhearted mercy, kindness, humility, gentleness, and patience.",
-      "NASB": "Do not lie to one another, since you stripped off the old self with its evil practices, and have put on the new self, which is being renewed to a true knowledge according to the image of the One who created it... So, as those who have been chosen of God, holy and beloved, put on a heart of compassion, kindness, humility, gentleness, and patience."
+      "NASB": "Do not lie to one another, since you stripped off the old self with its evil practices, and have put on the new self, which is being renewed to a true knowledge according to the image of the One who created it... So, as those who have been chosen of God, holy and beloved, put on a heart of compassion, kindness, humility, gentleness, and patience.",
+      "AMP": "So, as God’s own chosen people, who are holy and beloved, put on tenderhearted mercy, kindness, humility, gentleness, and patience.",
+      "NKJV": "Therefore, as the elect of God, holy and beloved, put on tender mercies, kindness, humility, meekness, longsuffering."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -9256,7 +9334,9 @@ const BIBLE_VERSES = [
       "NIV": "Very truly I tell you, whoever obeys my word will never see death.",
       "TPT": "I speak to you the living truth: whoever keeps my teaching and lives by my word will never see death.",
       "NLT": "I tell you the truth, anyone who obeys my teaching will never die!",
-      "NASB": "Truly, truly I say to you, if anyone follows My word he will never see death."
+      "NASB": "Truly, truly I say to you, if anyone follows My word he will never see death.",
+      "AMP": "I assure you and most solemnly say to you, if anyone keeps My word [by believing, trusting, and obeying it], he will never, ever see and experience death.",
+      "NKJV": "Most assuredly, I say to you, if anyone keeps My word he shall never see death."
     },
     "dynamicContext": {
       "chapterTitle": "John 8 — The Sovereign Deliverance & Living Hope of God",
@@ -9492,7 +9572,9 @@ const BIBLE_VERSES = [
       "NIV": "The LORD is my light and my salvation—whom shall I fear? The LORD is the stronghold of my life—of whom shall I be afraid?",
       "TPT": "The LORD is my light and the source of my salvation! Whom could I ever fear? The LORD is the fortress of my life, my impenetrable stronghold; why should I be afraid of anything?",
       "NLT": "The LORD is my light and my salvation—so why should I be afraid? The LORD is my fortress, protecting me from danger, so why should I tremble?",
-      "NASB": "The LORD is my light and my salvation; whom should I fear? The LORD is the defense of my life; whom should I dread?"
+      "NASB": "The LORD is my light and my salvation; whom should I fear? The LORD is the defense of my life; whom should I dread?",
+      "AMP": "The Lord is my light and my salvation—whom shall I fear? The Lord is the refuge and fortress of my life—whom shall I dread?",
+      "NKJV": "The Lord is my light and my salvation; Whom shall I fear? The Lord is the strength of my life; Of whom shall I be afraid?"
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 27 — The Sovereign Deliverance & Living Hope of God",
@@ -9728,7 +9810,9 @@ const BIBLE_VERSES = [
       "NIV": "Before the coming of this faith, we were held in custody under the law... So the law was our guardian until Christ came that we might be justified by faith. Now that this faith has come, we are no longer under a guardian. So in Christ Jesus you are all children of God through faith, for all of you who were baptized into Christ have clothed yourselves with Christ. There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus. If you belong to Christ, then you are Abraham’s seed, and heirs according to the promise.",
       "TPT": "Before the faith came, we were kept under guard by the law... The law became our guardian until the Anointed One appeared, that we might be justified by faith. But now that this faith has come, we are no longer under a tutor. For you are all children of God through faith in Christ Jesus. For as many of you as were immersed into Christ have clothed yourselves with Christ... If you belong to Christ, you are Abraham’s descendant and heirs according to the promise!",
       "NLT": "Before the way of faith in Christ was available to us, we were placed under guard by the law... Let me put it another way. The law was our guardian until Christ came; it protected us until we could be made right with God through faith. And now that the way of faith has come, we no longer need the law as our guardian. For you are all children of God through faith in Christ Jesus... And now that you belong to Christ, you are the true children of Abraham. You are his heirs, and God's promise to Abraham belongs to you.",
-      "NASB": "But before faith came, we were kept in custody under the Law... Therefore the Law has become our guardian to lead us to Christ, so that we may be justified by faith. But now that faith has come, we are no longer under a guardian. For you are all sons and daughters of God through faith in Christ Jesus. For all of you who were baptized into Christ have clothed yourselves with Christ... And if you belong to Christ, then you are Abraham's descendants, heirs according to promise."
+      "NASB": "But before faith came, we were kept in custody under the Law... Therefore the Law has become our guardian to lead us to Christ, so that we may be justified by faith. But now that faith has come, we are no longer under a guardian. For you are all sons and daughters of God through faith in Christ Jesus. For all of you who were baptized into Christ have clothed yourselves with Christ... And if you belong to Christ, then you are Abraham's descendants, heirs according to promise.",
+      "AMP": "For you are all sons of God through faith in Christ Jesus... And if you belong to Christ [are in Him Who is Abraham's Seed], then you are Abraham’s offspring and [spiritual] heirs according to [the] promise.",
+      "NKJV": "For you are all sons of God through faith in Christ Jesus... And if you are Christ’s, then you are Abraham’s seed, and heirs according to the promise."
     },
     "dynamicContext": {
       "chapterTitle": "Galatians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -9964,7 +10048,9 @@ const BIBLE_VERSES = [
       "NIV": "Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.",
       "TPT": "Stop dwelling on the past. Don’t even think about what’s behind you! Look! I am doing a new thing; now it springs forth! Can’t you see it? I am making a road in the desert and rivers in the dry wilderness.",
       "NLT": "But forget all that—it is nothing compared to what I am going to do. For I am about to do something new. See, I have already begun! Do you not see it? I will make a pathway through the wilderness. I will create rivers in the dry wasteland.",
-      "NASB": "Do not call to mind the former things, or ponder things of the past. Behold, I will do something new, now it will spring forth; will you not be aware of it? I will even make a roadway in the wilderness, rivers in the desert."
+      "NASB": "Do not call to mind the former things, or ponder things of the past. Behold, I will do something new, now it will spring forth; will you not be aware of it? I will even make a roadway in the wilderness, rivers in the desert.",
+      "AMP": "Do not remember the former things, or ponder the things of the past. Listen carefully, I am about to do a new thing; now it will spring forth; will you not be aware of it? I will even put a road in the wilderness and rivers in the desert.",
+      "NKJV": "Do not remember the former things, nor consider the things of old. Behold, I will do a new thing, now it shall spring forth; Shall you not know it? I will even make a road in the wilderness and rivers in the desert."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 43 — The Sovereign Deliverance & Living Hope of God",
@@ -10200,7 +10286,9 @@ const BIBLE_VERSES = [
       "NIV": "I will praise you with an upright heart as I learn your righteous laws.",
       "TPT": "I will give you thanks with an upright heart, as I learn your righteous judgments.",
       "NLT": "As I learn your righteous regulations, I will thank you by living as I should!",
-      "NASB": "I will give thanks to You with an upright heart, when I learn Your righteous judgments."
+      "NASB": "I will give thanks to You with an upright heart, when I learn Your righteous judgments.",
+      "AMP": "I will praise You with an upright heart, as I learn Your righteous judgments.",
+      "NKJV": "I will praise You with uprightness of heart, when I learn Your righteous judgments."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
@@ -10436,7 +10524,9 @@ const BIBLE_VERSES = [
       "NIV": "I have hidden your word in my heart that I might not sin against you.",
       "TPT": "I have treasured your word in my heart, that I might not sin against you.",
       "NLT": "I have hidden your word in my heart, that I might not sin against you.",
-      "NASB": "I have treasured Your word in my heart, so that I may not sin against You."
+      "NASB": "I have treasured Your word in my heart, so that I may not sin against You.",
+      "AMP": "Your word I have treasured and hidden in my heart, that I might not sin against You.",
+      "NKJV": "Your word I have hidden in my heart, that I might not sin against You."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
@@ -10672,7 +10762,9 @@ const BIBLE_VERSES = [
       "NIV": "With my lips I recount all the laws that come from your mouth. I rejoice in following your statutes as one rejoices in great riches. I meditate on your precepts and consider your ways. I delight in your decrees; I will not neglect your word.",
       "TPT": "With my lips I proclaim all the regulations of your mouth. I rejoice in following your decrees as much as in all riches. I will meditate on your precepts and give respect to your ways. I will delight in your statutes; I will not forget your word.",
       "NLT": "I have recited aloud all the regulations you have given us. I have rejoiced in your laws as much as in riches. I will study your commandments and reflect on your ways. I will delight in your decrees and not forget your word.",
-      "NASB": "With my lips I have told of all the ordinances of Your mouth. I have rejoiced in the way of Your testimonies, as much as in all riches. I will meditate on Your precepts and regard Your ways. I shall delight in Your statutes; I will not forget Your word."
+      "NASB": "With my lips I have told of all the ordinances of Your mouth. I have rejoiced in the way of Your testimonies, as much as in all riches. I will meditate on Your precepts and regard Your ways. I shall delight in Your statutes; I will not forget Your word.",
+      "AMP": "I have rejoiced in the way of Your testimonies as much as in all riches. I will meditate on Your precepts and regard Your ways. I will delight myself in Your statutes; I will not forget Your word.",
+      "NKJV": "I have rejoiced in the way of Your testimonies, as much as in all riches. I will meditate on Your precepts, and contemplate Your ways. I will delight myself in Your statutes; I will not forget Your word."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
@@ -10908,7 +11000,9 @@ const BIBLE_VERSES = [
       "NIV": "I will praise the LORD, who counsels me; even at night my heart instructs me. I keep my eyes always on the LORD. With him at my right hand, I will not be shaken.",
       "TPT": "I will praise Yahweh who counsels me; even in the night my innermost feelings instruct me. Because I always set Yahweh before me and he is at my right hand, I will never be shaken.",
       "NLT": "I will bless the LORD who guides me; even at night my heart instructs me. I know the LORD is always with me. I will not be shaken, for he is right beside me.",
-      "NASB": "I will bless the LORD who has advised me; indeed, my mind instructs me in the night. I have set the LORD continually before me; because He is at my right hand, I will not be shaken."
+      "NASB": "I will bless the LORD who has advised me; indeed, my mind instructs me in the night. I have set the LORD continually before me; because He is at my right hand, I will not be shaken.",
+      "AMP": "I will bless the Lord who has given me counsel; my heart also instructs me in the night seasons. I have set the Lord continually before me; because He is at my right hand, I will not be shaken.",
+      "NKJV": "I will bless the Lord who has given me counsel; My heart also instructs me in the night seasons. I have set the Lord always before me; Because He is at my right hand I shall not be moved."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 16 — The Sovereign Deliverance & Living Hope of God",
@@ -11144,7 +11238,9 @@ const BIBLE_VERSES = [
       "NIV": "If you remain in me and my words remain in you, ask whatever you wish, and it will be done for you.",
       "TPT": "If you live in union with me and if my words remain continually in you, ask whatever you desire and it will be done for you.",
       "NLT": "But if you remain in me and my words remain in you, you may ask for anything you want, and it will be granted!",
-      "NASB": "If you remain in Me, and My words remain in you, ask whatever you wish, and it will be done for you."
+      "NASB": "If you remain in Me, and My words remain in you, ask whatever you wish, and it will be done for you.",
+      "AMP": "If you remain in Me and My words remain in you [that is, if we are vitally united and My message lives in your heart], ask whatever you wish and it will be done for you.",
+      "NKJV": "If you abide in Me, and My words abide in you, you will ask what you desire, and it shall be done for you."
     },
     "dynamicContext": {
       "chapterTitle": "John 15 — The Sovereign Deliverance & Living Hope of God",
@@ -11381,7 +11477,9 @@ const BIBLE_VERSES = [
       "NIV": "I will consider all your works and meditate on all your mighty deeds.",
       "TPT": "I will meditate on all your wondrous deeds and ponder all your mighty miracles.",
       "NLT": "They are constantly in my thoughts. I cannot stop thinking about your mighty acts.",
-      "NASB": "I will meditate on all Your work, and consider Your deeds."
+      "NASB": "I will meditate on all Your work, and consider Your deeds.",
+      "AMP": "I will meditate on all Your work and consider all Your mighty deeds.",
+      "NKJV": "I will also meditate on all Your work, and talk of Your deeds."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 77 — The Sovereign Deliverance & Living Hope of God",
@@ -11617,7 +11715,9 @@ const BIBLE_VERSES = [
       "NIV": "I have been crucified with Christ and I no longer live, but Christ lives in me. The life I now live in the body, I live by faith in the Son of God, who loved me and gave himself for me.",
       "TPT": "My old identity has been co-crucified with Messiah and no longer lives; for the Anointed One lives his life in union with me. And even though I still live in my natural body, I live each moment by the faith of the Son of God, who loved me and gave his very life for me.",
       "NLT": "My old self has been crucified with Christ. It is no longer I who live, but Christ lives in me. So I live in this earthly body by trusting in the Son of God, who loved me and gave himself for me.",
-      "NASB": "I have been crucified with Christ; and it is no longer I who live, but Christ lives in me; and the life which I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself up for me."
+      "NASB": "I have been crucified with Christ; and it is no longer I who live, but Christ lives in me; and the life which I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself up for me.",
+      "AMP": "I have been crucified with Christ [in Him I have shared His crucifixion]; it is no longer I who live, but Christ lives in me. The life I now live in the body I live by faith in the Son of God, who loved me and gave Himself up for me.",
+      "NKJV": "I have been crucified with Christ; it is no longer I who live, but Christ lives in me; and the life which I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself for me."
     },
     "dynamicContext": {
       "chapterTitle": "Galatians 2 — The Sovereign Deliverance & Living Hope of God",
@@ -11853,7 +11953,9 @@ const BIBLE_VERSES = [
       "NIV": "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go.",
       "TPT": "Have I not commanded you? Be strong and courageous! Do not be terrified or dismayed, for Yahweh your God is with you wherever you go!",
       "NLT": "This is my command—be strong and courageous! Do not be afraid or discouraged. For the LORD your God is with you wherever you go.",
-      "NASB": "Have I not commanded you? Be strong and courageous! Do not be terrified or dismayed, for the LORD your God is with you wherever you go."
+      "NASB": "Have I not commanded you? Be strong and courageous! Do not be terrified or dismayed, for the LORD your God is with you wherever you go.",
+      "AMP": "Have I not commanded you? Be strong and courageous! Do not be terrified or dismayed (intimidated), for the Lord your God is with you wherever you go.",
+      "NKJV": "Have I not commanded you? Be strong and of good courage; do not be afraid, nor be dismayed, for the Lord your God is with you wherever you go."
     },
     "dynamicContext": {
       "chapterTitle": "Joshua 1 — The Sovereign Deliverance & Living Hope of God",
@@ -12089,7 +12191,9 @@ const BIBLE_VERSES = [
       "NIV": "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.",
       "TPT": "For God has not given us a spirit of fear, but of power, love, and a sound, well-balanced mind.",
       "NLT": "For God has not given us a spirit of fear and timidity, but of power, love, and self-discipline.",
-      "NASB": "For God has not given us a spirit of timidity, but of power and love and discipline."
+      "NASB": "For God has not given us a spirit of timidity, but of power and love and discipline.",
+      "AMP": "For God did not give us a spirit of timidity or cowardice or fear, but [He has given us a spirit] of power and of love and of sound judgment and personal discipline [abilities that result in a calm, well-balanced mind and self-control].",
+      "NKJV": "For God has not given us a spirit of fear, but of power and of love and of a sound mind."
     },
     "dynamicContext": {
       "chapterTitle": "2 Timothy 1 — The Sovereign Deliverance & Living Hope of God",
@@ -12325,7 +12429,9 @@ const BIBLE_VERSES = [
       "NIV": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.",
       "TPT": "Do not yield to fear, for I am always near. Never turn your gaze away, for I am your God. I will strengthen you; yes, I will help you. I will hold you tight in my hand of victory and righteousness.",
       "NLT": "Don't be afraid, for I am with you. Don't be discouraged, for I am your God. I will strengthen you and help you. I will hold you up with my victorious right hand.",
-      "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand."
+      "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand.",
+      "AMP": "Do not fear [anything], for I am with you; do not be afraid, for I am your God. I will strengthen you, be assured I will help you; I will certainly take hold of you with My righteous right hand.",
+      "NKJV": "Fear not, for I am with you; Be not dismayed, for I am your God. I will strengthen you, Yes, I will help you, I will uphold you with My righteous right hand."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 41 — The Sovereign Deliverance & Living Hope of God",
@@ -12561,7 +12667,9 @@ const BIBLE_VERSES = [
       "NIV": "I sought the LORD, and he answered me; he delivered me from all my fears.",
       "TPT": "I sought Yahweh, and he answered me; he freed me from all my fears.",
       "NLT": "I prayed to the LORD, and he answered me. He freed me from all my fears.",
-      "NASB": "I sought the LORD, and He answered me, and rescued me from all my fears."
+      "NASB": "I sought the LORD, and He answered me, and rescued me from all my fears.",
+      "AMP": "I sought (inquired of) the Lord and required Him [of necessity and on the authority of His word], and He heard me, and delivered me from all my fears.",
+      "NKJV": "I sought the Lord, and He heard me, and delivered me from all my fears."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 34 — The Sovereign Deliverance & Living Hope of God",
@@ -12797,7 +12905,9 @@ const BIBLE_VERSES = [
       "NIV": "The LORD is with me; I will not be afraid. What can mere mortals do to me?",
       "TPT": "Yahweh is for me, my protector; I will not be afraid. What can mere humans do to me?",
       "NLT": "The LORD is for me, so I will have no fear. What can mere people do to me?",
-      "NASB": "The LORD is for me; I will not fear; what can man do to me?"
+      "NASB": "The LORD is for me; I will not fear; what can man do to me?",
+      "AMP": "The Lord is on my side; I will not fear. What can man do to me?",
+      "NKJV": "The Lord is on my side; I will not fear. What can man do to me?"
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 118 — The Sovereign Deliverance & Living Hope of God",
@@ -13033,7 +13143,9 @@ const BIBLE_VERSES = [
       "NIV": "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
       "TPT": "Trust in the Lord completely, and do not rely on your own opinions. With all your heart rely on him to guide you, and he will lead you in every decision you make. Become intimate with him in whatever you do, and he will lead you wherever you go.",
       "NLT": "Trust in the LORD with all your heart; do not depend on your own understanding. Seek his will in all you do, and he will show you which path to take.",
-      "NASB": "Trust in the LORD with all your heart and do not lean on your own understanding. In all your ways acknowledge Him, and He will make your paths straight."
+      "NASB": "Trust in the LORD with all your heart and do not lean on your own understanding. In all your ways acknowledge Him, and He will make your paths straight.",
+      "AMP": "Trust in and rely confidently on the Lord with all your heart and do not rely on your own insight or understanding. In all your ways know and acknowledge and recognize Him, and He will make your paths straight and smooth.",
+      "NKJV": "Trust in the Lord with all your heart, and lean not on your own understanding; In all your ways acknowledge Him, and He shall direct your paths."
     },
     "dynamicContext": {
       "chapterTitle": "Proverbs 3 — The Sovereign Deliverance & Living Hope of God",
@@ -13269,7 +13381,9 @@ const BIBLE_VERSES = [
       "NIV": "And these signs will accompany those who believe: In my name they will drive out demons; they will speak in new tongues; they will pick up snakes with their hands; and when they drink deadly poison, it will not hurt them at all; they will place their hands on sick people, and they will get well.",
       "TPT": "And these miracle signs will accompany those who believe: They will drive out demons in the power of my name. They will speak in new tongues. They will handle snakes with safety, and if they drink anything poisonous, it will not hurt them at all. They will lay hands on the sick and they will be healed.",
       "NLT": "These miraculous signs will accompany those who believe: They will cast out demons in my name, and they will speak in new languages. They will be able to handle snakes with safety, and if they drink anything poisonous, it won't hurt them. They will be able to place their hands on sick people, and they will be healed.",
-      "NASB": "These signs will accompany those who have believed: in My name they will cast out demons, they will speak with new tongues; they will pick up serpents, and if they drink any deadly poison, it will not hurt them; they will lay hands on the sick, and they will recover."
+      "NASB": "These signs will accompany those who have believed: in My name they will cast out demons, they will speak with new tongues; they will pick up serpents, and if they drink any deadly poison, it will not hurt them; they will lay hands on the sick, and they will recover.",
+      "AMP": "These signs will accompany those who have believed: in My name they will cast out demons, they will speak in new tongues; they will pick up serpents, and if they drink anything deadly, it will not hurt them; they will lay hands on the sick, and they will get well.",
+      "NKJV": "And these signs will follow those who believe: In My name they will cast out demons; they will speak with new tongues; they will take up serpents; and if they drink anything deadly, it will by no means hurt them; they will lay hands on the sick, and they will recover."
     },
     "dynamicContext": {
       "chapterTitle": "Mark 16 — The Sovereign Deliverance & Living Hope of God",
@@ -13505,7 +13619,9 @@ const BIBLE_VERSES = [
       "NIV": "No, in all these things we are more than conquerors through him who loved us.",
       "TPT": "Yet even in the midst of all these things, we triumph over them all, for God has made us to be more than conquerors, and his love will never fail!",
       "NLT": "No, despite all these things, overwhelming victory is ours through Christ, who loved us.",
-      "NASB": "But in all these things we overwhelmingly conquer through Him who loved us."
+      "NASB": "But in all these things we overwhelmingly conquer through Him who loved us.",
+      "AMP": "Yet in all these things we are more than conquerors and gain an overwhelming victory through Him who loved us [so much that He died for us].",
+      "NKJV": "Yet in all these things we are more than conquerors through Him who loved us."
     },
     "dynamicContext": {
       "chapterTitle": "Romans 8 — The Sovereign Deliverance & Living Hope of God",
@@ -13741,7 +13857,9 @@ const BIBLE_VERSES = [
       "NIV": "For no word from God will ever fail.",
       "TPT": "For not one promise from God is empty of power, for nothing is impossible with God!",
       "NLT": "For the word of God will never fail.",
-      "NASB": "For nothing will be impossible with God."
+      "NASB": "For nothing will be impossible with God.",
+      "AMP": "For with God nothing is or ever shall be impossible.",
+      "NKJV": "For with God nothing will be impossible."
     },
     "dynamicContext": {
       "chapterTitle": "Luke 1 — The Sovereign Deliverance & Living Hope of God",
@@ -13977,7 +14095,9 @@ const BIBLE_VERSES = [
       "NIV": "I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy; nothing will harm you.",
       "TPT": "Now you understand that I have imparted to you all my authority to trample over his kingdom. You will walk upon serpents and scorpions and overcome all the power of the enemy—nothing will harm you.",
       "NLT": "Look, I have given you authority over all the power of the enemy, and you can walk among snakes and scorpions and crush them. Nothing will injure you.",
-      "NASB": "Behold, I have given you authority to walk on snakes and scorpions, and authority over all the power of the enemy, and nothing will injure you."
+      "NASB": "Behold, I have given you authority to walk on snakes and scorpions, and authority over all the power of the enemy, and nothing will injure you.",
+      "AMP": "Listen carefully: I have given you authority over all the power of the enemy [to tread on serpents and scorpions], and nothing shall by any means hurt you.",
+      "NKJV": "Behold, I give you the authority to trample on serpents and scorpions, and over all the power of the enemy, and nothing shall by any means hurt you."
     },
     "dynamicContext": {
       "chapterTitle": "Luke 10 — The Sovereign Deliverance & Living Hope of God",
@@ -14214,7 +14334,9 @@ const BIBLE_VERSES = [
       "NIV": "Truly I tell you, if anyone says to this mountain, 'Go, throw yourself into the sea,' and does not doubt in their heart but believes that what they say will happen, it will be done for them.",
       "TPT": "Listen to the truth I speak to you: If someone says to this mountain, 'Be lifted up and thrown into the sea,' and has no doubt in his heart, but believes that what he says will happen, it will be done for him.",
       "NLT": "I tell you the truth, you can say to this mountain, 'May you be lifted up and thrown into the sea,' and it will happen. But you must really believe it will happen and have no doubt in your heart.",
-      "NASB": "Truly I say to you, whoever says to this mountain, 'Be taken up and thrown into the sea,' and does not doubt in his heart, but believes that what he says is going to happen, it will be granted to him."
+      "NASB": "Truly I say to you, whoever says to this mountain, 'Be taken up and thrown into the sea,' and does not doubt in his heart, but believes that what he says is going to happen, it will be granted to him.",
+      "AMP": "Truly I say to you, whoever says to this mountain, 'Be lifted up and thrown into the sea!' and does not doubt at all in his heart, but believes that what he says will take place, it will be done for him.",
+      "NKJV": "For assuredly, I say to you, whoever says to this mountain, 'Be removed and be cast into the sea,' and does not doubt in his heart, but believes that those things he says will be done, he will have whatever he says."
     },
     "dynamicContext": {
       "chapterTitle": "Mark 11 — The Sovereign Deliverance & Living Hope of God",
@@ -14450,7 +14572,9 @@ const BIBLE_VERSES = [
       "NIV": "But not a hair of your head will perish.",
       "TPT": "Yet not even a single hair of your head will ever perish!",
       "NLT": "But not a hair of your head will perish!",
-      "NASB": "Yet not a hair of your head will perish."
+      "NASB": "Yet not a hair of your head will perish.",
+      "AMP": "Yet not a hair of your head will be lost [without your Father's knowledge and permission].",
+      "NKJV": "But not a hair of your head shall be lost."
     },
     "dynamicContext": {
       "chapterTitle": "Luke 21 — The Sovereign Deliverance & Living Hope of God",
@@ -14686,7 +14810,9 @@ const BIBLE_VERSES = [
       "NIV": "That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither—whatever they do prospers.",
       "TPT": "He will be standing firm like a flourishing tree planted by streams of living water, which yields its fruit in each season and whose leaves never wither; and in everything he does, he prospers!",
       "NLT": "They are like trees planted along the riverbank, bearing fruit each season. Their leaves never wither, and they prosper in all they do.",
-      "NASB": "He will be like a tree planted by streams of water, which yields its fruit in its season, and its leaf does not wither; and in whatever he does, he prospers."
+      "NASB": "He will be like a tree planted by streams of water, which yields its fruit in its season, and its leaf does not wither; and in whatever he does, he prospers.",
+      "AMP": "And he will be like a tree firmly planted [and fed] by streams of water, which yields its fruit in its season; its leaf does not wither; and in whatever he does, he prospers [and comes to maturity].",
+      "NKJV": "He shall be like a tree planted by the rivers of water, that brings forth its fruit in its season, whose leaf also shall not wither; and whatever he does shall prosper."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 1 — The Sovereign Deliverance & Living Hope of God",
@@ -14922,7 +15048,9 @@ const BIBLE_VERSES = [
       "NIV": "What, then, shall we say in response to these things? If God is for us, who can be against us? He who did not spare his own Son, but gave him up for us all—how will he not also, along with him, graciously give us all things?",
       "TPT": "So, what does all this mean? If God has determined to stand with us, tell me, who then could ever stand against us? For God has proved his love by giving us his greatest treasure, the gift of his Son. And since he did not spare him, won’t he also freely give us everything else along with him?",
       "NLT": "What shall we say about such wonderful things as these? If God is for us, who can ever be against us? Since he did not spare even his own Son but gave him up for us all, won't he also give us everything else?",
-      "NASB": "What then shall we say to these things? If God is for us, who is against us? He who did not spare His own Son, but delivered Him over for us all, how will He not also with Him freely give us all things?"
+      "NASB": "What then shall we say to these things? If God is for us, who is against us? He who did not spare His own Son, but delivered Him over for us all, how will He not also with Him freely give us all things?",
+      "AMP": "What then shall we say to all these things? If God is for us, who can be [successful] against us? He who did not spare [even] His own Son, but gave Him up for us all, how will He not also, along with Him, freely give us all things?",
+      "NKJV": "What then shall we say to these things? If God is for us, who can be against us? He who did not spare His own Son, but delivered Him up for us all, how shall He not with Him also freely give us all things?"
     },
     "dynamicContext": {
       "chapterTitle": "Romans 8 — The Sovereign Deliverance & Living Hope of God",
@@ -15158,7 +15286,9 @@ const BIBLE_VERSES = [
       "NIV": "'No weapon forged against you will prevail, and you will refute every tongue that accuses you. This is the heritage of the servants of the LORD, and this is their vindication from me,' declares the LORD.",
       "TPT": "'No weapon formed against you will succeed, and you will refute every slanderous accusation voiced against you. For this is the inheritance of the servants of Yahweh, and their righteousness is from me,' declares Yahweh.",
       "NLT": "'But in that coming day no weapon turned against you will succeed. You will silence every voice raised up to accuse you. These benefits are enjoyed by the servants of the LORD; their vindication will come from me. I, the LORD, have spoken!'",
-      "NASB": "'No weapon that is formed against you will succeed; and you will condemn every tongue that accuses you in judgment. This is the heritage of the servants of the LORD, and their vindication is from Me,' declares the LORD."
+      "NASB": "'No weapon that is formed against you will succeed; and you will condemn every tongue that accuses you in judgment. This is the heritage of the servants of the LORD, and their vindication is from Me,' declares the LORD.",
+      "AMP": "'No weapon that is formed against you will succeed; and every tongue that rises against you in judgment you will condemn. This [peace, righteousness, security, and triumph over opposition] is the heritage of the servants of the Lord,' says the Lord.",
+      "NKJV": "'No weapon formed against you shall prosper, and every tongue which rises against you in judgment you shall condemn. This is the heritage of the servants of the Lord, and their righteousness is from Me,' says the Lord."
     },
     "dynamicContext": {
       "chapterTitle": "Isaiah 54 — The Sovereign Deliverance & Living Hope of God",
@@ -15394,7 +15524,9 @@ const BIBLE_VERSES = [
       "NIV": "Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful.",
       "TPT": "Let your hearts be always guided by the peace of the Anointed One, who called you to peace as part of his one body. And always be thankful.",
       "NLT": "And let the peace that comes from Christ rule in your hearts. For as members of one body you are called to live in peace. And always be thankful.",
-      "NASB": "Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful."
+      "NASB": "Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful.",
+      "AMP": "Let the peace of Christ [the inner calm of one who walks daily with Him] rule [act as umpire continually] in your hearts [deciding and settling with finality all questions that arise in your minds], to which [peace] you were indeed called as one body; and be thankful [always].",
+      "NKJV": "And let the peace of God rule in your hearts, to which also you were called in one body; and be thankful."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -15630,7 +15762,9 @@ const BIBLE_VERSES = [
       "NIV": "Now may the Lord of peace himself give you peace at all times and in every way. The Lord be with all of you.",
       "TPT": "Now may the Lord of peace himself constantly give you his peace in every circumstance. The Lord be with you all.",
       "NLT": "Now may the Lord of peace himself give you his peace at all times and in every situation. The Lord be with you all.",
-      "NASB": "Now may the Lord of peace Himself continually grant you peace in every circumstance. The Lord be with you all!"
+      "NASB": "Now may the Lord of peace Himself continually grant you peace in every circumstance. The Lord be with you all!",
+      "AMP": "Now may the Lord of peace Himself grant you His peace at all times and in every way [that peace and spiritual well-being that comes to those who walk with Him]. The Lord be with you all.",
+      "NKJV": "Now may the Lord of peace Himself give you peace always in every way. The Lord be with you all."
     },
     "dynamicContext": {
       "chapterTitle": "2 Thessalonians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -15866,7 +16000,9 @@ const BIBLE_VERSES = [
       "NIV": "Great peace have those who love your law, and nothing can make them stumble.",
       "TPT": "There is abundant peace for those who love your law, and nothing can cause them to stumble!",
       "NLT": "Those who love your instructions have great peace and do not stumble.",
-      "NASB": "Those who love Your Law have great peace, and nothing causes them to stumble."
+      "NASB": "Those who love Your Law have great peace, and nothing causes them to stumble.",
+      "AMP": "Great peace have those who love Your law; nothing can make them stumble or cause them to fall.",
+      "NKJV": "Great peace have those who love Your law, and nothing causes them to stumble."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
@@ -16102,7 +16238,9 @@ const BIBLE_VERSES = [
       "NIV": "Since, then, you have been raised with Christ, set your hearts on things above, where Christ is, seated at the right hand of God. Set your minds on things above, not on earthly things. For you died, and your life is now hidden with Christ in God. When Christ, who is your life, appears, then you also will appear with him in glory.",
       "TPT": "Since you were raised with the Messiah, pursue the things above, where Christ is seated at the right hand of God. Feast your thoughts continuously on the heavenly realm and not on this earthly realm! For you have died and your life is hidden with Christ in God. Yes, Christ is your life, and when he appears in all his glory, you will be revealed in glorious splendour with him!",
       "NLT": "Since you have been raised to new life with Christ, set your sights on the realities of heaven, where Christ sits in the place of honor at God's right hand. Think about the things of heaven, not the things of earth. For you died to this life, and your real life is hidden with Christ in God. And when Christ, who is your life, is revealed to the whole world, you will share in all his glory.",
-      "NASB": "Therefore, if you have been raised with Christ, keep seeking the things that are above, where Christ is, seated at the right hand of God. Set your minds on things above, not on things on the earth. For you died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory."
+      "NASB": "Therefore, if you have been raised with Christ, keep seeking the things that are above, where Christ is, seated at the right hand of God. Set your minds on things above, not on things on the earth. For you died, and your life is hidden with Christ in God. When Christ, who is our life, is revealed, then you also will be revealed with Him in glory.",
+      "AMP": "Therefore if you have been raised with Christ [to a new life, sharing in His resurrection], keep seeking the things that are above, where Christ is, seated at the right hand of God. Set your mind and keep your thoughts focused on the things above.",
+      "NKJV": "If then you were raised with Christ, seek those things which are above, where Christ is, sitting at the right hand of God. Set your mind on things above, not on things on the earth."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -16338,7 +16476,9 @@ const BIBLE_VERSES = [
       "NIV": "And over all these virtues put on love, which binds them all together in perfect unity. Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful. Let the message of Christ dwell among you richly as you teach and admonish one another with all wisdom through psalms, hymns, and songs from the Spirit... And whatever you do, whether in word or deed, do it all in the name of the Lord Jesus, giving thanks to God the Father through him.",
       "TPT": "And above all these things put on divine love, which is the perfect bond of unity. Let your hearts be always guided by the peace of the Anointed One... Let the word of Christ dwell in you richly in all wisdom, teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord. And whatever you do in word or deed, do everything in the name of the Lord Jesus, giving thanks to God the Father through him.",
       "NLT": "Above all, clothe yourselves with love, which binds us all together in perfect harmony. And let the peace that comes from Christ rule in your hearts. For as members of one body you are called to live in peace. And always be thankful. Let the message about Christ, in all its richness, fill your lives... And whatever you do or say, do it as a representative of the Lord Jesus, giving thanks through him to God the Father.",
-      "NASB": "In addition to all these things put on love, which is the perfect bond of unity. Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful. Let the word of Christ richly dwell within you, with all wisdom teaching and admonishing one another with psalms, hymns, and spiritual songs... Whatever you do in word or deed, do everything in the name of the Lord Jesus, giving thanks through Him to God the Father."
+      "NASB": "In addition to all these things put on love, which is the perfect bond of unity. Let the peace of Christ rule in your hearts, to which indeed you were called in one body; and be thankful. Let the word of Christ richly dwell within you, with all wisdom teaching and admonishing one another with psalms, hymns, and spiritual songs... Whatever you do in word or deed, do everything in the name of the Lord Jesus, giving thanks through Him to God the Father.",
+      "AMP": "Beyond all these things put on [and wrap yourselves in] unselfish love, which is the perfect bond of unity... And whatever you do [no matter what it is] in word or deed, do everything in the name of the Lord Jesus, giving thanks to God the Father through Him.",
+      "NKJV": "But above all these things put on love, which is the bond of perfection. And let the peace of God rule in your hearts... And whatever you do in word or deed, do all in the name of the Lord Jesus, giving thanks to God the Father through Him."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
@@ -16574,7 +16714,9 @@ const BIBLE_VERSES = [
       "NIV": "Therefore do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own.",
       "TPT": "Refuse to worry about tomorrow, but deal with each challenge that comes your way, one day at a time. Tomorrow will take care of itself.",
       "NLT": "So don't worry about tomorrow, for tomorrow will bring its own worries. Today's trouble is enough for today.",
-      "NASB": "So do not worry about tomorrow; for tomorrow will care for itself. Each day has enough trouble of its own."
+      "NASB": "So do not worry about tomorrow; for tomorrow will care for itself. Each day has enough trouble of its own.",
+      "AMP": "So do not worry about tomorrow; for tomorrow will worry about itself. Each day has enough trouble of its own.",
+      "NKJV": "Therefore do not worry about tomorrow, for tomorrow will worry about its own things. Sufficient for the day is its own trouble."
     },
     "dynamicContext": {
       "chapterTitle": "Matthew 6 — The Sovereign Deliverance & Living Hope of God",
@@ -16810,7 +16952,9 @@ const BIBLE_VERSES = [
       "NIV": "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls. For my yoke is easy and my burden is light.",
       "TPT": "Come to me with your heavy burdens, and I will give you rest. Take my yoke upon you, and learn from me, for I am gentle and humble in heart, and you will discover rest for your soul. For the yoke that I offer is pleasant to bear, and my burden is light.",
       "NLT": "Then Jesus said, 'Come to me, all of you who are weary and carry heavy burdens, and I will give you rest. Take my yoke upon you. Let me teach you, because I am humble and gentle at heart, and you will find rest for your souls. For my yoke is easy to bear, and the burden I give you is light.'",
-      "NASB": "Come to Me, all who are weary and burdened, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and humble in heart, and you will find rest for your souls. For My yoke is easy and My burden is light."
+      "NASB": "Come to Me, all who are weary and burdened, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and humble in heart, and you will find rest for your souls. For My yoke is easy and My burden is light.",
+      "AMP": "Come to Me, all who are weary and heavily burdened [by religious rituals that provide no peace], and I will give you rest [refreshing your souls with salvation]. Take My yoke upon you and learn from Me, for I am gentle and humble in heart, and you will find rest (refreshment, blessed quiet, and satisfaction) for your souls.",
+      "NKJV": "Come to Me, all you who labor and are heavy laden, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and lowly in heart, and you will find rest for your souls. For My yoke is easy and My burden is light."
     },
     "dynamicContext": {
       "chapterTitle": "Matthew 11 — The Sovereign Deliverance & Living Hope of God",
@@ -17047,7 +17191,9 @@ const BIBLE_VERSES = [
       "NIV": "In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety.",
       "TPT": "Now, because of you and you alone, I will lie down in peace and fall asleep at once, for you alone, Yahweh, make me dwell in safety!",
       "NLT": "In peace I will lie down and sleep, for you alone, O LORD, will keep me safe.",
-      "NASB": "In peace I will both lie down and sleep, for You alone, LORD, have me dwell in safety."
+      "NASB": "In peace I will both lie down and sleep, for You alone, LORD, have me dwell in safety.",
+      "AMP": "In peace [without anxiety] I will both lie down and sleep, for You alone, O Lord, make me dwell in safety and confident trust.",
+      "NKJV": "I will both lie down in peace, and sleep; For You alone, O Lord, make me dwell in safety."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 4 — The Sovereign Deliverance & Living Hope of God",
@@ -17283,7 +17429,9 @@ const BIBLE_VERSES = [
       "NIV": "Finally, brothers and sisters, whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely, whatever is admirable—if anything is excellent or praiseworthy—think about such things. Whatever you have learned or received or heard from me, or seen in me—put it into practice. And the God of peace will be with you.",
       "TPT": "Keep your minds fixed on whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is admirable, whatever is excellent, and whatever is praiseworthy. Put into practice what you’ve learned and received from me, both what you’ve heard and seen. And the God of peace will be with you!",
       "NLT": "And now, dear brothers and sisters, one final thing. Fix your thoughts on what is true, and honorable, and right, and pure, and lovely, and admirable. Think about things that are excellent and worthy of praise. Keep putting into practice all you learned and received from me—everything you heard from me and saw me doing. Then the God of peace will be with you.",
-      "NASB": "Finally, brothers and sisters, whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is commendable, if there is any excellence and if anything worthy of praise, think about these things. As for the things you have learned and received and heard and seen in me, practice these things, and the God of peace will be with you."
+      "NASB": "Finally, brothers and sisters, whatever is true, whatever is honorable, whatever is right, whatever is pure, whatever is lovely, whatever is commendable, if there is any excellence and if anything worthy of praise, think about these things. As for the things you have learned and received and heard and seen in me, practice these things, and the God of peace will be with you.",
+      "AMP": "Finally, believers, whatever is true, whatever is honorable and worthy of respect, whatever is right and confirmed by God's word, whatever is pure and wholesome, whatever is lovely and brings peace, whatever is admirable and of good repute; if there is any excellence, if there is anything worthy of praise, think continually on these things.",
+      "NKJV": "Finally, brethren, whatever things are true, whatever things are noble, whatever things are just, whatever things are pure, whatever things are lovely, whatever things are of good report, if there is any virtue and if there is anything praiseworthy—meditate on these things."
     },
     "dynamicContext": {
       "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
@@ -17519,7 +17667,9 @@ const BIBLE_VERSES = [
       "NIV": "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
       "TPT": "Don't be pulled in different directions or worried about a thing. Be saturated in prayer throughout each day, offering your faith-filled requests before God with overflowing gratitude. Tell him every detail of your life, then God's wonderful peace, that transcends human understanding, will make the answers known to your heart and mind through Jesus Christ.",
       "NLT": "Don't worry about anything; instead, pray about everything. Tell God what you need, and thank him for all he has done. Then you will experience God's peace, which exceeds anything we can understand. His peace will guard your hearts and minds as you live in Christ Jesus.",
-      "NASB": "Do not be anxious about anything, but in everything by prayer and pleading with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all comprehension, will guard your hearts and your minds in Christ Jesus."
+      "NASB": "Do not be anxious about anything, but in everything by prayer and pleading with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all comprehension, will guard your hearts and your minds in Christ Jesus.",
+      "AMP": "Do not be anxious or worried about anything, but in everything [every circumstance and situation] by prayer and petition with thanksgiving, continue to make your [specific] requests known to God. And the peace of God [that peace which transcends all understanding] will guard your hearts and your minds in Christ Jesus.",
+      "NKJV": "Be anxious for nothing, but in everything by prayer and supplication, with thanksgiving, let your requests be made known to God; and the peace of God, which surpasses all understanding, will guard your hearts and minds through Christ Jesus."
     },
     "dynamicContext": {
       "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
@@ -17755,7 +17905,9 @@ const BIBLE_VERSES = [
       "NIV": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
       "TPT": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!",
       "NLT": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
-      "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful."
+      "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful.",
+      "AMP": "Peace I leave with you; My [perfect] peace I give to you; not as the world gives do I give to you. Do not let your heart be troubled, nor let it be fearful [let My perfect peace calm you in every circumstance and give you courage and strength for every challenge].",
+      "NKJV": "Peace I leave with you, My peace I give to you; not as the world gives do I give to you. Let not your heart be troubled, neither let it be afraid."
     },
     "dynamicContext": {
       "chapterTitle": "John 14 — The Sovereign Deliverance & Living Hope of God",
@@ -17991,7 +18143,9 @@ const BIBLE_VERSES = [
       "NIV": "To the Jews who had believed him, Jesus said, 'If you hold to my teaching, you are really my disciples. Then you will know the truth, and the truth will set you free.'",
       "TPT": "Jesus said to those who believed in him, 'If you continue to embrace the truth of what I teach, you will be my true disciples. You will know the truth, and the truth will release you into freedom.'",
       "NLT": "Jesus said to the people who believed in him, 'You are truly my disciples if you remain faithful to my teachings. And you will know the truth, and the truth will set you free.'",
-      "NASB": "So Jesus was saying to those Jews who had believed Him, 'If you continue in My word, then you are truly disciples of Mine; and you will know the truth, and the truth will make you free.'"
+      "NASB": "So Jesus was saying to those Jews who had believed Him, 'If you continue in My word, then you are truly disciples of Mine; and you will know the truth, and the truth will make you free.'",
+      "AMP": "So Jesus was saying to those Jews who had believed Him, 'If you abide in My word [continually obeying My teachings and living in accordance with them, then] you are truly My disciples. And you will know the truth [regarding the grace of God], and the truth will set you free.'",
+      "NKJV": "Then Jesus said to those Jews who believed Him, 'If you abide in My word, you are My disciples indeed. And you shall know the truth, and the truth shall make you free.'"
     },
     "dynamicContext": {
       "chapterTitle": "John 8 — The Sovereign Deliverance & Living Hope of God",
@@ -18227,7 +18381,9 @@ const BIBLE_VERSES = [
       "NIV": "I no longer call you servants, because a servant does not know his master’s business. Instead, I have called you friends, for everything that I learned from my Father I have made known to you. You did not choose me, but I chose you and appointed you so that you might go and bear fruit—fruit that will last.",
       "TPT": "I don't call you servants anymore, for a master doesn't explain his business to his servants. Now I call you friends, since I have shared with you everything the Father has revealed to me. You didn't choose me, but I've chosen and commissioned you to go into the world to bear fruit that will last lasting fruit.",
       "NLT": "I no longer call you slaves, because a master doesn't confide in his slaves. Now you are my friends, since I have told you everything the Father told me. You didn't choose me. I chose you. I appointed you to go and produce lasting fruit, so that the Father will give you whatever you ask for, using my name.",
-      "NASB": "No longer do I call you slaves, for the slave does not know what his master is doing; but I have called you friends, because all things that I have heard from My Father I have made known to you. You did not choose Me but I chose you, and appointed you that you would go and bear fruit, and that your fruit would remain."
+      "NASB": "No longer do I call you slaves, for the slave does not know what his master is doing; but I have called you friends, because all things that I have heard from My Father I have made known to you. You did not choose Me but I chose you, and appointed you that you would go and bear fruit, and that your fruit would remain.",
+      "AMP": "I do not call you servants any longer, for the servant does not know what his master is doing; but I have called you [My] friends, because I have made known to you everything that I have heard from My Father. You did not choose Me, but I chose you and appointed you that you would go and bear fruit.",
+      "NKJV": "No longer do I call you servants, for a servant does not know what his master is doing; but I have called you friends, for all things that I heard from My Father I have made known to you. You did not choose Me, but I chose you and appointed you that you should go and bear fruit."
     },
     "dynamicContext": {
       "chapterTitle": "John 15 — The Sovereign Deliverance & Living Hope of God",
@@ -18463,7 +18619,9 @@ const BIBLE_VERSES = [
       "NIV": "At one time we too were foolish, disobedient, deceived and enslaved by all kinds of passions and pleasures... But when the kindness and love of God our Savior appeared, he saved us, not because of righteous things we had done, but because of his mercy. He saved us through the washing of rebirth and renewal by the Holy Spirit, whom he poured out on us generously through Jesus Christ our Savior, so that, having been justified by his grace, we might become heirs having the hope of eternal life.",
       "TPT": "For there was a time when we too were foolish, rebellious, deceived, and enslaved by many passions and pleasures... But when the extraordinary compassion and love of God our Savior shone upon us, he saved us! Not because we were good or did righteous things, but because of his rich mercy. He washed away our sins, giving us a new birth and a new life through the Holy Spirit. He poured out this Spirit on us generously through Jesus Christ our Savior.",
       "NLT": "Once we, too, were foolish and disobedient. We were misled and became slaves to many lusts and pleasures... But—When God our Savior revealed his kindness and love, he saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life through the Holy Spirit. He generously poured out the Spirit upon us through Jesus Christ our Savior.",
-      "NASB": "For we too were once foolish, disobedient, deceived, enslaved to various lusts and pleasures... But when the kindness of God our Savior and His love for mankind appeared, He saved us, not on the basis of deeds which we have done in righteousness, but according to His mercy, by the washing of regeneration and renewing by the Holy Spirit, whom He poured out upon us richly through Jesus Christ our Savior, so that being justified by His grace we would be made heirs according to the hope of eternal life."
+      "NASB": "For we too were once foolish, disobedient, deceived, enslaved to various lusts and pleasures... But when the kindness of God our Savior and His love for mankind appeared, He saved us, not on the basis of deeds which we have done in righteousness, but according to His mercy, by the washing of regeneration and renewing by the Holy Spirit, whom He poured out upon us richly through Jesus Christ our Savior, so that being justified by His grace we would be made heirs according to the hope of eternal life.",
+      "AMP": "But when the goodness and lovingkindness of God our Savior toward mankind appeared, He saved us, not because of any works of righteousness that we had done, but because of His own compassion and mercy, by the washing of new birth and renewing by the Holy Spirit.",
+      "NKJV": "But when the kindness and the love of God our Savior toward man appeared, not by works of righteousness which we have done, but according to His mercy He saved us, through the washing of regeneration and renewing of the Holy Spirit."
     },
     "dynamicContext": {
       "chapterTitle": "Titus 3 — The Sovereign Deliverance & Living Hope of God",
@@ -18699,7 +18857,9 @@ const BIBLE_VERSES = [
       "NIV": "Once you were alienated from God and were enemies in your minds because of your evil behavior. But now he has reconciled you by Christ’s physical body through death to present you holy in his sight, without blemish and free from accusation—if you continue in your faith, established and firm, and do not move from the hope held out in the gospel.",
       "TPT": "Even though you were once distant from God, living as his enemies in your minds and with behavior that was evil, he has now reconciled you to himself in his physical body through death, so that he may present you before him holy, without fault, and unblamable—if indeed you continue in the faith, securely grounded and steadfast, never moving away from the hope of the good news.",
       "NLT": "This includes you who were once far away from God. You were his enemies, separated from him by your evil thoughts and actions. Yet now he has reconciled you to himself through the death of Christ in his physical body. As a result, he has brought you into his own presence, and you are holy and blameless as you stand before him without a single fault.",
-      "NASB": "And although you were formerly alienated and hostile in mind, engaged in evil deeds, yet He has now reconciled you in His body of flesh through death, in order to present you before Him holy and blameless and beyond reproach—if indeed you continue in the faith firmly established and steadfast, and not moved away from the hope of the gospel."
+      "NASB": "And although you were formerly alienated and hostile in mind, engaged in evil deeds, yet He has now reconciled you in His body of flesh through death, in order to present you before Him holy and blameless and beyond reproach—if indeed you continue in the faith firmly established and steadfast, and not moved away from the hope of the gospel.",
+      "AMP": "And although you were at one time estranged and alienated from Him, and hostile in your mind because of your evil deeds, yet Christ has now reconciled you [to God] in His body of flesh through His death, in order to present you before Him holy, blameless, and beyond reproach.",
+      "NKJV": "And you, who once were alienated and enemies in your mind by wicked works, yet now He has reconciled in the body of His flesh through death, to present you holy, and blameless, and above reproach in His sight."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 1 — The Sovereign Deliverance & Living Hope of God",
@@ -18935,7 +19095,9 @@ const BIBLE_VERSES = [
       "NIV": "Consequently, you are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household.",
       "TPT": "So now, you who were once outcasts are no longer foreigners and strangers, but fellow citizens with God’s holy people and members of his household.",
       "NLT": "So now you Gentiles are no longer strangers and foreigners. You are citizens along with all of God's holy people. You are members of God's family.",
-      "NASB": "So then you are no longer strangers and foreigners, but you are fellow citizens with the saints, and are of God's household."
+      "NASB": "So then you are no longer strangers and foreigners, but you are fellow citizens with the saints, and are of God's household.",
+      "AMP": "So then you are no longer strangers and aliens [outsiders without rights of citizenship], but you are fellow citizens with the saints (God's people), and are [members] of God's household.",
+      "NKJV": "Now, therefore, you are no longer strangers and foreigners, but fellow citizens with the saints and members of the household of God."
     },
     "dynamicContext": {
       "chapterTitle": "Ephesians 2 — The Sovereign Deliverance & Living Hope of God",
@@ -19171,7 +19333,9 @@ const BIBLE_VERSES = [
       "NIV": "But now in Christ Jesus you who once were far away have been brought near by the blood of Christ.",
       "TPT": "Yet look at you now! Everything has changed. Once you were far off from God, but now you have been brought near to him through the blood of Christ.",
       "NLT": "But now you have been united with Christ Jesus. Once you were far away from God, but now you have been brought near to him through the blood of Christ.",
-      "NASB": "But now in Christ Jesus you who previously were far away have been brought near by the blood of Christ."
+      "NASB": "But now in Christ Jesus you who previously were far away have been brought near by the blood of Christ.",
+      "AMP": "But now in Christ Jesus you who once were far away [from God] have been brought near by the blood of Christ.",
+      "NKJV": "But now in Christ Jesus you who once were far off have been brought near by the blood of Christ."
     },
     "dynamicContext": {
       "chapterTitle": "Ephesians 2 — The Sovereign Deliverance & Living Hope of God",
@@ -19407,7 +19571,9 @@ const BIBLE_VERSES = [
       "NIV": "For he chose us in him before the creation of the world to be holy and blameless in his sight. In love he predestined us for adoption to sonship through Jesus Christ, in accordance with his pleasure and will—to the praise of his glorious grace, which he has freely given us in the One he loves. In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God’s grace.",
       "TPT": "And he chose us to be his very own, through our union with Christ, before he created the world! In his love he planned long ago to adopt us into his family through Jesus Christ, according to the pleasure of his will... In him we have redemption through his blood, the forgiveness of our sins, lavishly poured out upon us according to the riches of his grace.",
       "NLT": "Even before he made the world, God loved us and chose us in Christ to be holy and without fault in his eyes. God decided in advance to adopt us into his own family by bringing us to himself through Jesus Christ. This is what he wanted to do, and it gave him great pleasure... He is so rich in kindness and grace that he purchased our freedom with the blood of his Son and forgave our sins.",
-      "NASB": "Just as He chose us in Him before the foundation of the world, that we would be holy and blameless before Him in love, He predestined us to adoption as sons through Jesus Christ to Himself, according to the kind intention of His will, to the praise of the glory of His grace... In Him we have redemption through His blood, the forgiveness of our wrongdoings, according to the riches of His grace."
+      "NASB": "Just as He chose us in Him before the foundation of the world, that we would be holy and blameless before Him in love, He predestined us to adoption as sons through Jesus Christ to Himself, according to the kind intention of His will, to the praise of the glory of His grace... In Him we have redemption through His blood, the forgiveness of our wrongdoings, according to the riches of His grace.",
+      "AMP": "Just as [in His love] He chose us in Christ before the foundation of the world, so that we would be holy and blameless in His sight... In Him we have redemption through His blood, the forgiveness and complete pardon of our trespasses, according to the riches of His grace.",
+      "NKJV": "Just as He chose us in Him before the foundation of the world, that we should be holy and without blame before Him in love... In Him we have redemption through His blood, the forgiveness of sins, according to the riches of His grace."
     },
     "dynamicContext": {
       "chapterTitle": "Ephesians 1 — The Sovereign Deliverance & Living Hope of God",
@@ -19643,7 +19809,9 @@ const BIBLE_VERSES = [
       "NIV": "What agreement is there between the temple of God and idols? For we are the temple of the living God. As God has said: 'I will live with them and walk among them, and I will be their God, and they will be my people.'",
       "TPT": "What union can there be between God’s temple and idols? For we are the temple of the living God! As God has said, 'I will live and walk among them, and I will be their God, and they will be my loving people.'",
       "NLT": "And what union can there be between God's temple and idols? For we are the temple of the living God. As God said: 'I will live in them and walk among them. I will be their God, and they will be my people.'",
-      "NASB": "Or what agreement does the temple of God have with idols? For we are the temple of the living God; just as God said, 'I will dwell among them and walk among them; and I will be their God, and they shall be My people.'"
+      "NASB": "Or what agreement does the temple of God have with idols? For we are the temple of the living God; just as God said, 'I will dwell among them and walk among them; and I will be their God, and they shall be My people.'",
+      "AMP": "For we are the temple of the living God; just as God said: 'I will dwell among them and walk among them; and I will be their God, and they shall be My people.'",
+      "NKJV": "For you are the temple of the living God. As God has said: 'I will dwell in them and walk among them. I will be their God, and they shall be My people.'"
     },
     "dynamicContext": {
       "chapterTitle": "2 Corinthians 6 — The Sovereign Deliverance & Living Hope of God",
@@ -19879,7 +20047,9 @@ const BIBLE_VERSES = [
       "NIV": "For, 'Who has known the mind of the Lord so as to instruct him?' But we have the mind of Christ.",
       "TPT": "For 'Who has known the mind of the Lord to advise him?' But we have the mind of Christ!",
       "NLT": "For, 'Who can know the LORD's thoughts? Who can know enough to teach him?' But we understand these things, for we have the mind of Christ.",
-      "NASB": "For WHO HAS KNOWN THE MIND OF THE LORD, THAT HE WILL ADVISE HIM? But we have the mind of Christ."
+      "NASB": "For WHO HAS KNOWN THE MIND OF THE LORD, THAT HE WILL ADVISE HIM? But we have the mind of Christ.",
+      "AMP": "For who has known or understood the mind (the counsels and purposes) of the Lord, so as to guide and instruct Him? But we have the mind of Christ [and do hold the thoughts (feelings and purposes) of His heart].",
+      "NKJV": "For 'who has known the mind of the Lord that he may instruct Him?' But we have the mind of Christ."
     },
     "dynamicContext": {
       "chapterTitle": "1 Corinthians 2 — The Sovereign Deliverance & Living Hope of God",
@@ -20115,7 +20285,9 @@ const BIBLE_VERSES = [
       "NIV": "But whoever is united with the Lord is one with him in spirit.",
       "TPT": "But the one who joins himself to the Lord is one spirit with him.",
       "NLT": "But the person who is joined to the Lord is one spirit with him.",
-      "NASB": "But the one who joins himself to the Lord is one spirit with Him."
+      "NASB": "But the one who joins himself to the Lord is one spirit with Him.",
+      "AMP": "But the one who is united and joined to the Lord is one spirit with Him.",
+      "NKJV": "But he who is joined to the Lord is one spirit with Him."
     },
     "dynamicContext": {
       "chapterTitle": "1 Corinthians 6 — The Sovereign Deliverance & Living Hope of God",
@@ -20351,7 +20523,9 @@ const BIBLE_VERSES = [
       "NIV": "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child; and since you are his child, God has made you also an heir.",
       "TPT": "But when the right time arrived, God sent his Son into the world, born of a woman and subject to the law... so that we might be adopted as his own sons and daughters! And because you are his children, God has poured the Spirit of his Son into our hearts, crying out, 'Abba, Father!' So now you are no longer a slave, but a child of God, and an heir through Christ!",
       "NLT": "But when the right time came, God sent his Son, born of a woman, subject to the law. God sent him to buy freedom for us who were slaves to the law, so that he could adopt us as his very own children. And because we are his children, God has sent the Spirit of his Son into our hearts, prompting us to call out, 'Abba, Father.' Now you are no longer a slave but God's own child. And since you are his child, God has made you his heir.",
-      "NASB": "But when the fullness of the time came, God sent His Son, born of a woman, born under the Law, so that He might redeem those who were under the Law, that we might receive the adoption as sons and daughters. Because you are sons, God has sent the Spirit of His Son into our hearts, crying out, 'Abba! Father!' Therefore you are no longer a slave, but a son; and if a son, then an heir through God."
+      "NASB": "But when the fullness of the time came, God sent His Son, born of a woman, born under the Law, so that He might redeem those who were under the Law, that we might receive the adoption as sons and daughters. Because you are sons, God has sent the Spirit of His Son into our hearts, crying out, 'Abba! Father!' Therefore you are no longer a slave, but a son; and if a son, then an heir through God.",
+      "AMP": "And because you [really] are [His] sons, God has sent the Spirit of His Son into our hearts, crying out, 'Abba! Father!' Therefore you are no longer a slave (bondservant), but a son; and if a son, then an heir through God.",
+      "NKJV": "And because you are sons, God has sent forth the Spirit of His Son into your hearts, crying out, 'Abba, Father!' Therefore you are no longer a slave but a son, and if a son, then an heir of God through Christ."
     },
     "dynamicContext": {
       "chapterTitle": "Galatians 4 — The Sovereign Deliverance & Living Hope of God",
@@ -20587,7 +20761,9 @@ const BIBLE_VERSES = [
       "NIV": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!",
       "TPT": "Now, if anyone is enfolded into Christ, he has become an entirely new creation. All that is related to the old order has vanished, and behold, everything is fresh and new!",
       "NLT": "This means that anyone who belongs to Christ has become a new person. The old life is gone; a new life has begun!",
-      "NASB": "Therefore if anyone is in Christ, this person is a new creation; the old things passed away; behold, new things have come."
+      "NASB": "Therefore if anyone is in Christ, this person is a new creation; the old things passed away; behold, new things have come.",
+      "AMP": "Therefore if anyone is in Christ [that is, grafted in, joined to Him by faith in Him as Savior], he is a new creature [reborn and renewed by the Holy Spirit]; the old things [the previous moral and spiritual condition] have passed away. Behold, new things have come.",
+      "NKJV": "Therefore, if anyone is in Christ, he is a new creation; old things have passed away; behold, all things have become new."
     },
     "dynamicContext": {
       "chapterTitle": "2 Corinthians 5 — The Sovereign Deliverance & Living Hope of God",
@@ -20824,7 +21000,9 @@ const BIBLE_VERSES = [
       "NIV": "'He himself bore our sins' in his body on the cross, so that we might die to sins and live for righteousness; 'by his wounds you have been healed.'",
       "TPT": "He himself carried our sins in his body on the cross so that we might die to sin and live for righteousness. By his wounds you were healed.",
       "NLT": "He personally carried our sins in his body on the cross so that we can be dead to sin and live for what is right. By his wounds you are healed.",
-      "NASB": "and He Himself brought our sins in His body up on the cross, so that we might die to sin and live for righteousness; by His wounds you were healed."
+      "NASB": "and He Himself brought our sins in His body up on the cross, so that we might die to sin and live for righteousness; by His wounds you were healed.",
+      "AMP": "He personally carried our sins in His body on the cross [willingly offering Himself on it, as on an altar of sacrifice], so that we might die to sin and live to righteousness; for by His wounds you were healed.",
+      "NKJV": "Who Himself bore our sins in His own body on the tree, that we, having died to sins, might live for righteousness—by whose stripes you were healed."
     },
     "dynamicContext": {
       "chapterTitle": "1 Peter 2 — The Sovereign Deliverance & Living Hope of God",
@@ -21060,7 +21238,9 @@ const BIBLE_VERSES = [
       "NIV": "You will not have to fight this battle. Take up your positions; stand firm and see the deliverance the LORD will give you, Judah and Jerusalem. Do not be afraid; do not be discouraged. Go out to face them tomorrow, and the LORD will be with you.",
       "TPT": "You won't even need to fight this battle! Just take your positions, stand firm, and watch the deliverance of Yahweh on your behalf, Judah and Jerusalem! Do not fear or be dismayed. Go out tomorrow to face them, for Yahweh is with you!",
       "NLT": "But you will not even need to fight. Take your positions; then stand still and watch the LORD's victory. He is with you, O people of Judah and Jerusalem. Do not be afraid or discouraged. Go out against them tomorrow, for the LORD is with you!",
-      "NASB": "You need not fight in this battle; take your positions, stand and see the salvation of the LORD on your behalf, Judah and Jerusalem. Do not fear or be dismayed; tomorrow go out to face them, for the LORD is with you."
+      "NASB": "You need not fight in this battle; take your positions, stand and see the salvation of the LORD on your behalf, Judah and Jerusalem. Do not fear or be dismayed; tomorrow go out to face them, for the LORD is with you.",
+      "AMP": "You will not need to fight in this battle; position yourselves, stand still and see the salvation of the Lord with you... Do not fear or be dismayed; tomorrow go out against them, for the Lord is with you.",
+      "NKJV": "You will not need to fight in this battle. Position yourselves, stand still and see the salvation of the Lord, who is with you... Do not fear or be dismayed; tomorrow go out against them, for the Lord is with you."
     },
     "dynamicContext": {
       "chapterTitle": "2 Chronicles 20 — The Sovereign Deliverance & Living Hope of God",
@@ -21296,7 +21476,9 @@ const BIBLE_VERSES = [
       "NIV": "You, dear children, are from God and have overcome them, because the one who is in you is greater than the one who is in the world.",
       "TPT": "Little children, you can be certain that you belong to God and have conquered them, for the One who is in you is far greater than the one who is in the world.",
       "NLT": "But you belong to God, my dear children. You have already won a victory over those people, because the Spirit who lives in you is greater than the spirit who lives in the world.",
-      "NASB": "You are from God, little children, and have overcome them; because greater is He who is in you than he who is in the world."
+      "NASB": "You are from God, little children, and have overcome them; because greater is He who is in you than he who is in the world.",
+      "AMP": "Little children (believers, dear ones), you are of God and you have [already] overcome and conquered them, because He who is in you is greater and mightier than he who is in the world.",
+      "NKJV": "You are of God, little children, and have overcome them, because He who is in you is greater than he who is in the world."
     },
     "dynamicContext": {
       "chapterTitle": "1 John 4 — The Sovereign Deliverance & Living Hope of God",
@@ -21532,7 +21714,9 @@ const BIBLE_VERSES = [
       "NIV": "Nehemiah said, 'Go and enjoy choice food and sweet drinks, and send some to those who have nothing prepared. This day is holy to our Lord. Do not grieve, for the joy of the LORD is your strength.'",
       "TPT": "Then he said to them, 'Go on your way, eat rich food, drink sweet drinks, and send portions to him who has nothing prepared; for this day is holy to our Lord. Do not sorrow, for the joy of Yahweh is your strength!'",
       "NLT": "And Nehemiah continued, 'Go and celebrate with a feast of rich foods and sweet drinks, and share gifts of food with people who have nothing prepared. This is a sacred day before our Lord. Don't be dejected and sad, for the joy of the LORD is your strength!'",
-      "NASB": "Then he said to them, 'Go, eat of the fat, drink of the sweet, and send portions to him who has nothing prepared; for this day is holy to our Lord. Do not be grieved, for the joy of the LORD is your strength.'"
+      "NASB": "Then he said to them, 'Go, eat of the fat, drink of the sweet, and send portions to him who has nothing prepared; for this day is holy to our Lord. Do not be grieved, for the joy of the LORD is your strength.'",
+      "AMP": "Then he said to them, 'Go your way, eat the fat, drink the sweet, and send portions to those for whom nothing is prepared; for this day is holy to our Lord. Do not be grieved and depressed, for the joy of the Lord is your strength and stronghold.'",
+      "NKJV": "Then he said to them, 'Go your way, eat the fat, drink the sweet, and send portions to those for whom nothing is prepared; for this day is holy to our Lord. Do not sorrow, for the joy of the Lord is your strength.'"
     },
     "dynamicContext": {
       "chapterTitle": "Nehemiah 8 — The Sovereign Deliverance & Living Hope of God",
@@ -21768,7 +21952,9 @@ const BIBLE_VERSES = [
       "NIV": "The LORD is my shepherd, I lack nothing.",
       "TPT": "Yahweh is my best friend and my shepherd; I always have more than enough.",
       "NLT": "The LORD is my shepherd; I have all that I need.",
-      "NASB": "The LORD is my shepherd, I will not be in need."
+      "NASB": "The LORD is my shepherd, I will not be in need.",
+      "AMP": "The Lord is my Shepherd [to feed, to guide and to shield me], I shall not want.",
+      "NKJV": "The Lord is my shepherd; I shall not want."
     },
     "dynamicContext": {
       "chapterTitle": "Psalm 23 — The Sovereign Deliverance & Living Hope of God",
@@ -22004,7 +22190,9 @@ const BIBLE_VERSES = [
       "NIV": "When evening came, many who were demon-possessed were brought to him, and he drove out the spirits with a word and healed all the sick. This was to fulfill what was spoken through the prophet Isaiah: 'He took up our infirmities and bore our diseases.'",
       "TPT": "When evening came, they brought to him many who were demonized, and he drove out the evil spirits with a word and healed all who were sick. This fulfilled what was spoken through Isaiah the prophet: 'He himself took our weaknesses and bore our diseases.'",
       "NLT": "That evening many demon-possessed people were brought to Jesus. He cast out the evil spirits with a simple command, and he healed all the sick. This fulfilled the word of the LORD through the prophet Isaiah, who said, 'He took our sicknesses and removed our diseases.'",
-      "NASB": "Now when evening came, they brought to Him many who were demon-possessed; and He cast out the spirits with a word, and healed all who were ill. This occurred so that what was spoken through Isaiah the prophet would be fulfilled: 'HE HIMSELF TOOK OUR ILLNESSES AND CARRIED AWAY OUR DISEASES.'"
+      "NASB": "Now when evening came, they brought to Him many who were demon-possessed; and He cast out the spirits with a word, and healed all who were ill. This occurred so that what was spoken through Isaiah the prophet would be fulfilled: 'HE HIMSELF TOOK OUR ILLNESSES AND CARRIED AWAY OUR DISEASES.'",
+      "AMP": "When evening came, they brought to Him many who were demon-possessed; and He cast out the [evil] spirits with a single word, and healed all who were sick. This was to fulfill what was spoken by the prophet Isaiah: 'He Himself took our infirmities and carried away our diseases.'",
+      "NKJV": "When evening had come, they brought to Him many who were demon-possessed. And He cast out the spirits with a word, and healed all who were sick, that it might be fulfilled which was spoken by Isaiah the prophet, saying: 'He Himself took our infirmities and bore our sicknesses.'"
     },
     "dynamicContext": {
       "chapterTitle": "Matthew 8 — The Sovereign Deliverance & Living Hope of God",
@@ -22240,7 +22428,9 @@ const BIBLE_VERSES = [
       "NIV": "For you were once darkness, but now you are light in the Lord. Live as children of light (for the fruit of the light consists in all goodness, righteousness and truth) and find out what pleases the Lord. Have nothing to do with the fruitless deeds of darkness, but rather expose them.",
       "TPT": "Once your life was full of darkness, but now you are full of light in the Lord. Live then as children of light! For the fruit produced by the light consists of all goodness, righteousness, and truth, discovering what pleases the Lord. Have nothing to do with the unproductive deeds of darkness, but instead expose them.",
       "NLT": "For once you were full of darkness, but now you have light from the Lord. So live as people of light! For this light within you produces what is good and right and true. Carefully determine what pleases the Lord. Take no part in the worthless deeds of evil and darkness; instead, expose them.",
-      "NASB": "for you were formerly darkness, but now you are Light in the Lord; walk as children of Light (for the fruit of the Light consists in all goodness, righteousness, and truth), trying to learn what is pleasing to the Lord. Do not participate in the unfruitful deeds of darkness, but instead even expose them."
+      "NASB": "for you were formerly darkness, but now you are Light in the Lord; walk as children of Light (for the fruit of the Light consists in all goodness, righteousness, and truth), trying to learn what is pleasing to the Lord. Do not participate in the unfruitful deeds of darkness, but instead even expose them.",
+      "AMP": "For once you were darkness, but now you are light in the Lord; walk as children of Light [live as those who are native-born to the Light] (for the fruit of the Light consists in all goodness, righteousness, and truth).",
+      "NKJV": "For you were once darkness, but now you are light in the Lord. Walk as children of light (for the fruit of the Spirit is in all goodness, righteousness, and truth)."
     },
     "dynamicContext": {
       "chapterTitle": "Ephesians 5 — The Sovereign Deliverance & Living Hope of God",
@@ -22476,7 +22666,9 @@ const BIBLE_VERSES = [
       "NIV": "When you were dead in your sins and in the uncircumcision of your flesh, God made you alive with Christ. He forgave us all our sins, having canceled the charge of our legal indebtedness, which stood against us and condemned us; he has taken it away, nailing it to the cross. And having disarmed the powers and authorities, he made a public spectacle of them, triumphing over them by the cross.",
       "TPT": "This happened to you: you were once dead in your failures and sins, but now he has made you alive together with Christ, having forgiven us all our trespasses! He canceled out every legal debt of our sins, nailing it to the cross, destroying it once and for all. Then Jesus made a public spectacle of all powers and authorities, triumphing over them in his victory cross!",
       "NLT": "You were dead because of your sins and because your sinful nature was not yet cut away. Then God made you alive with Christ, for he forgave all our sins. He canceled the record of the charges against us and took it away by nailing it to the cross. In this way, he disarmed the spiritual rulers and authorities. He shamed them publicly by his victory over them on the cross.",
-      "NASB": "And when you were dead in your wrongdoings and the uncircumcision of your flesh, He made you alive together with Him, having forgiven us all our wrongdoings, having canceled the certificate of debt consisting of decrees against us, which was hostile to us; and He has taken it out of the way, having nailed it to the cross. When He had disarmed the rulers and authorities, He made a public display of them, having triumphed over them through Him."
+      "NASB": "And when you were dead in your wrongdoings and the uncircumcision of your flesh, He made you alive together with Him, having forgiven us all our wrongdoings, having canceled the certificate of debt consisting of decrees against us, which was hostile to us; and He has taken it out of the way, having nailed it to the cross. When He had disarmed the rulers and authorities, He made a public display of them, having triumphed over them through Him.",
+      "AMP": "When you were dead in your sins and in the uncircumcision of your flesh (your worldliness, your sinful nature), He made you alive together with Christ, having [freely] forgiven us all our sins... Having disarmed the rulers and authorities, He made a public show of them, triumphing over them in Him.",
+      "NKJV": "And you, being dead in your trespasses and the uncircumcision of your flesh, He has made alive together with Him, having forgiven you all trespasses... Having disarmed principalities and powers, He made a public spectacle of them, triumphing over them in it."
     },
     "dynamicContext": {
       "chapterTitle": "Colossians 2 — The Sovereign Deliverance & Living Hope of God",
