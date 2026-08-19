@@ -3,10 +3,10 @@
  * 
  * Features:
  * 1. Pure Verse-First Bento Cards with category tints (No copy buttons, clean bookmarks & story launcher).
- * 2. Slim, space-efficient responsive layout.
+ * 2. Slim, space-efficient responsive layout with robust auto-fitting.
  * 3. Dynamic Multi-Translation Context Flow with inline underlined & highlighted target verse.
  * 4. Interlinear Greek & Hebrew Lexicon with interactive highlighted phrase tags & Strong's concordance.
- * 5. Fullscreen Edge-to-Edge Stories Mode with 8 distinct styles, responsive viewport auto-fitting, cool word effects, and corner metadata.
+ * 5. Fullscreen Edge-to-Edge Stories Mode with 16 distinct typography styles, 6-tier adaptive text sizing, rich theological word effects, and corner metadata.
  * 6. Rich Historical Case Studies & Paul Ellis Gospel of Grace Commentaries for all 96 promises.
  */
 
@@ -42,7 +42,15 @@
       'story-style-fraunces',
       'story-style-bricolage',
       'story-style-unbounded',
-      'story-style-kinetic'
+      'story-style-kinetic',
+      'story-style-cinzel',
+      'story-style-anton',
+      'story-style-playfair',
+      'story-style-newsreader',
+      'story-style-spacemono',
+      'story-style-epilogue',
+      'story-style-cormorant',
+      'story-style-instrument-serif'
     ],
     storyCurrentStyle: 'story-style-swiss'
   };
@@ -283,7 +291,7 @@
 
   function applyFontStyle(style) {
     state.fontStyle = style;
-    elements.html.classList.remove('font-serif', 'font-sans', 'font-editorial', 'font-mono');
+    elements.html.classList.remove('font-serif', 'font-sans', 'font-editorial', 'font-display', 'font-mono');
     elements.html.classList.add(`font-${style}`);
     localStorage.setItem('agy_font_style', style);
 
@@ -541,7 +549,7 @@
   }
 
   // ==========================================================================
-  // FULLSCREEN ENDLESS STORIES MODE (RESPONSIVE AUTO-FITTING & TEXT EFFECTS)
+  // FULLSCREEN ENDLESS STORIES MODE (16 DYNAMIC STYLES & 6-TIER AUTO-FITTING)
   // ==========================================================================
   function resetStoriesShufflePool() {
     state.storyShufflePool = [...BIBLE_VERSES].sort(() => Math.random() - 0.5);
@@ -585,19 +593,24 @@
       'strength', 'power', 'love', 'mercy', 'favor', 'blessing', 'blessed', 
       'inheritance', 'covenant', 'everlasting', 'eternal', 'overcome', 
       'victory', 'triumphant', 'healed', 'whole', 'free', 'freedom', 'rest', 
-      'light', 'wisdom', 'hope', 'savior', 'redeem', 'redeemed'
+      'light', 'wisdom', 'hope', 'savior', 'redeem', 'redeemed', 'counselor', 
+      'majesty', 'sanctuary', 'shepherd', 'rock', 'shield', 'fortress'
     ];
 
     let words = rawText.split(/\s+/);
     let formattedWords = words.map(w => {
       const cleanW = w.toLowerCase().replace(/[^a-z]/g, '');
       if (powerWords.includes(cleanW)) {
-        if (styleName === 'story-style-swiss' || styleName === 'story-style-neobrutalism') {
-          return `<span class="fx-accent">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif') {
+        if (styleName === 'story-style-cinzel') {
+          return `<span class="fx-roman">${escapeHtml(w)}</span>`;
+        } else if (styleName === 'story-style-spacemono') {
+          return `<span class="fx-mono-glow">${escapeHtml(w)}</span>`;
+        } else if (styleName === 'story-style-playfair' || styleName === 'story-style-newsreader' || styleName === 'story-style-cormorant' || styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif' || styleName === 'story-style-instrument-serif') {
           return `<span class="fx-italic">${escapeHtml(w)}</span>`;
         } else if (styleName === 'story-style-unbounded' || styleName === 'story-style-kinetic') {
           return `<span class="fx-gradient">${escapeHtml(w)}</span>`;
+        } else if (styleName === 'story-style-swiss' || styleName === 'story-style-neobrutalism' || styleName === 'story-style-bricolage' || styleName === 'story-style-epilogue' || styleName === 'story-style-condensed' || styleName === 'story-style-anton') {
+          return `<span class="fx-accent">${escapeHtml(w)}</span>`;
         } else {
           return `<span class="fx-scale">${escapeHtml(w)}</span>`;
         }
@@ -608,11 +621,14 @@
     return `"${formattedWords.join(' ')}"`;
   }
 
+  // 6-Tier Adaptive Font Sizing based on character length
   function calculateStoryFontSizeClass(textLength) {
     if (textLength < 70) return 'story-size-hero';
-    if (textLength < 140) return 'story-size-large';
-    if (textLength < 240) return 'story-size-medium';
-    return 'story-size-compact';
+    if (textLength < 150) return 'story-size-large';
+    if (textLength < 250) return 'story-size-medium';
+    if (textLength < 400) return 'story-size-compact';
+    if (textLength < 550) return 'story-size-mini';
+    return 'story-size-dense';
   }
 
   function renderNextStorySlide(forcedVerse = null) {
@@ -633,7 +649,7 @@
     const chosenVer = versions[Math.floor(Math.random() * versions.length)];
     const textToDisplay = verse.translations[chosenVer] || verse.translations.NIV;
 
-    // Pick a new random style from the 8 unique styles
+    // Pick a random style from the 16 unique styles
     const nextStyle = state.storyTypographyStyles[Math.floor(Math.random() * state.storyTypographyStyles.length)];
     state.storyCurrentStyle = nextStyle;
 
