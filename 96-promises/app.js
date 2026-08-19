@@ -59,85 +59,90 @@
   };
 
   // --- DOM References ---
-  const elements = {
-    html: document.documentElement,
-    stickyHeader: document.getElementById('stickyHeader'),
-    heroOverview: document.getElementById('heroOverview'),
-    btnHeroOpenStories: document.getElementById('btnHeroOpenStories'),
-    bentoContainer: document.getElementById('bentoContainer'),
-    categoryChips: document.getElementById('categoryChips'),
-    favoritesFilterBtn: document.getElementById('favoritesFilterBtn'),
-    favoritesCount: document.getElementById('favoritesCount'),
-    statDisplayedCount: document.getElementById('statDisplayedCount'),
-    statBookmarksCount: document.getElementById('statBookmarksCount'),
-    activeVersionLabel: document.getElementById('activeVersionLabel'),
-    noResults: document.getElementById('noResults'),
-    resetFiltersBtn: document.getElementById('resetFiltersBtn'),
-    scrollToTopBtn: document.getElementById('scrollToTopBtn'),
-    btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
+  let elements = {};
 
-    // Typography & Reading Settings Flyout Drawer DOM
-    typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
-    btnCloseTypeSettings: document.getElementById('btnCloseTypeSettings'),
-    settingsActiveFontBadge: document.getElementById('settingsActiveFontBadge'),
-    drawerFontCards: document.getElementById('drawerFontCards'),
-    settingsFontSizeBadge: document.getElementById('settingsFontSizeBadge'),
-    drawerFontSizeSlider: document.getElementById('drawerFontSizeSlider'),
-    settingsLineHeightBadge: document.getElementById('settingsLineHeightBadge'),
-    drawerLineHeightSlider: document.getElementById('drawerLineHeightSlider'),
-    drawerThemePicker: document.getElementById('drawerThemePicker'),
-    drawerVersionPicker: document.getElementById('drawerVersionPicker'),
-    btnResetTypeSettings: document.getElementById('btnResetTypeSettings'),
+  function initElements() {
+    elements = {
+      html: document.documentElement,
+      stickyHeader: document.getElementById('stickyHeader'),
+      heroOverview: document.getElementById('heroOverview'),
+      btnHeroOpenStories: document.getElementById('btnHeroOpenStories'),
+      bentoContainer: document.getElementById('bentoContainer'),
+      categoryChips: document.getElementById('categoryChips'),
+      favoritesFilterBtn: document.getElementById('favoritesFilterBtn'),
+      favoritesCount: document.getElementById('favoritesCount'),
+      statDisplayedCount: document.getElementById('statDisplayedCount'),
+      statBookmarksCount: document.getElementById('statBookmarksCount'),
+      activeVersionLabel: document.getElementById('activeVersionLabel'),
+      noResults: document.getElementById('noResults'),
+      resetFiltersBtn: document.getElementById('resetFiltersBtn'),
+      scrollToTopBtn: document.getElementById('scrollToTopBtn'),
+      btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
 
-    // Unified Reader Lightbox DOM
-    readerLightbox: document.getElementById('readerLightbox'),
-    readerTitle: document.getElementById('readerTitle'),
-    readerCategoryBadge: document.getElementById('readerCategoryBadge'),
-    readerChapterTitle: document.getElementById('readerChapterTitle'),
-    readerChapterSummary: document.getElementById('readerChapterSummary'),
-    readerActiveVerBadge: document.getElementById('readerActiveVerBadge'),
-    readerInlinePassage: document.getElementById('readerInlinePassage'),
-    readerTranslationsGrid: document.getElementById('readerTranslationsGrid'),
-    readerGraceTheme: document.getElementById('readerGraceTheme'),
-    readerGraceQuote: document.getElementById('readerGraceQuote'),
-    readerGraceTakeaway: document.getElementById('readerGraceTakeaway'),
-    readerCaseStudiesGrid: document.getElementById('readerCaseStudiesGrid'),
-    readerLexiconLang: document.getElementById('readerLexiconLang'),
-    readerInterlinearText: document.getElementById('readerInterlinearText'),
-    readerLexiconGrid: document.getElementById('readerLexiconGrid'),
-    readerLexiconSummary: document.getElementById('readerLexiconSummary'),
-    secTptNotes: document.getElementById('sec-tpt-notes'),
-    readerTptFootnotes: document.getElementById('readerTptFootnotes'),
-    readerCrossRefsGrid: document.getElementById('readerCrossRefsGrid'),
-    readerCloseBtn: document.getElementById('readerCloseBtn'),
-    btnOpenStoryFromReader: document.getElementById('btnOpenStoryFromReader'),
-    btnReaderPrev: document.getElementById('btnReaderPrev'),
-    btnReaderNext: document.getElementById('btnReaderNext'),
+      // Typography & Reading Settings Flyout Drawer DOM
+      typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
+      btnCloseTypeSettings: document.getElementById('btnCloseTypeSettings'),
+      settingsActiveFontBadge: document.getElementById('settingsActiveFontBadge'),
+      drawerFontCards: document.getElementById('drawerFontCards'),
+      settingsFontSizeBadge: document.getElementById('settingsFontSizeBadge'),
+      drawerFontSizeSlider: document.getElementById('drawerFontSizeSlider'),
+      settingsLineHeightBadge: document.getElementById('settingsLineHeightBadge'),
+      drawerLineHeightSlider: document.getElementById('drawerLineHeightSlider'),
+      drawerThemePicker: document.getElementById('drawerThemePicker'),
+      drawerVersionPicker: document.getElementById('drawerVersionPicker'),
+      btnResetTypeSettings: document.getElementById('btnResetTypeSettings'),
 
-    // Story Overlay DOM
-    storyOverlay: document.getElementById('storyOverlay'),
-    storyBackdrop: document.getElementById('storyBackdrop'),
-    storyContainer: document.getElementById('storyContainer'),
-    storyContentWrapper: document.getElementById('storyContentWrapper'),
-    storyPassageText: document.getElementById('storyPassageText'),
-    storyPassageRef: document.getElementById('storyPassageRef'),
-    storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
-    storyCloseBtn: document.getElementById('storyCloseBtn'),
-    storyTapToast: document.getElementById('storyTapToast'),
-    btnStoryPrev: document.getElementById('btnStoryPrev'),
-    btnStoryHeart: document.getElementById('btnStoryHeart'),
-    storyHeartIcon: document.getElementById('storyHeartIcon'),
+      // Unified Reader Lightbox DOM
+      readerLightbox: document.getElementById('readerLightbox'),
+      readerTitle: document.getElementById('readerTitle'),
+      readerCategoryBadge: document.getElementById('readerCategoryBadge'),
+      readerChapterTitle: document.getElementById('readerChapterTitle'),
+      readerChapterSummary: document.getElementById('readerChapterSummary'),
+      readerActiveVerBadge: document.getElementById('readerActiveVerBadge'),
+      readerInlinePassage: document.getElementById('readerInlinePassage'),
+      readerTranslationsGrid: document.getElementById('readerTranslationsGrid'),
+      readerGraceTheme: document.getElementById('readerGraceTheme'),
+      readerGraceQuote: document.getElementById('readerGraceQuote'),
+      readerGraceTakeaway: document.getElementById('readerGraceTakeaway'),
+      readerCaseStudiesGrid: document.getElementById('readerCaseStudiesGrid'),
+      readerLexiconLang: document.getElementById('readerLexiconLang'),
+      readerInterlinearText: document.getElementById('readerInterlinearText'),
+      readerLexiconGrid: document.getElementById('readerLexiconGrid'),
+      readerLexiconSummary: document.getElementById('readerLexiconSummary'),
+      secTptNotes: document.getElementById('sec-tpt-notes'),
+      readerTptFootnotes: document.getElementById('readerTptFootnotes'),
+      readerCrossRefsGrid: document.getElementById('readerCrossRefsGrid'),
+      readerCloseBtn: document.getElementById('readerCloseBtn'),
+      btnOpenStoryFromReader: document.getElementById('btnOpenStoryFromReader'),
+      btnReaderPrev: document.getElementById('btnReaderPrev'),
+      btnReaderNext: document.getElementById('btnReaderNext'),
 
-    // Shortcuts Modal & Toast Container
-    shortcutsModal: document.getElementById('shortcutsModal'),
-    shortcutsCloseBtn: document.getElementById('shortcutsCloseBtn'),
-    toastContainer: document.getElementById('toastContainer')
-  };
+      // Story Overlay DOM
+      storyOverlay: document.getElementById('storyOverlay'),
+      storyBackdrop: document.getElementById('storyBackdrop'),
+      storyContainer: document.getElementById('storyContainer'),
+      storyContentWrapper: document.getElementById('storyContentWrapper'),
+      storyPassageText: document.getElementById('storyPassageText'),
+      storyPassageRef: document.getElementById('storyPassageRef'),
+      storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
+      storyCloseBtn: document.getElementById('storyCloseBtn'),
+      storyTapToast: document.getElementById('storyTapToast'),
+      btnStoryPrev: document.getElementById('btnStoryPrev'),
+      btnStoryHeart: document.getElementById('btnStoryHeart'),
+      storyHeartIcon: document.getElementById('storyHeartIcon'),
+
+      // Shortcuts Modal & Toast Container
+      shortcutsModal: document.getElementById('shortcutsModal'),
+      shortcutsCloseBtn: document.getElementById('shortcutsCloseBtn'),
+      toastContainer: document.getElementById('toastContainer')
+    };
+  }
 
   // ==========================================================================
   // INITIALIZATION
   // ==========================================================================
   function init() {
+    initElements();
     applyTheme(state.theme);
     applyFontStyle(state.fontStyle);
     applyLineHeight(state.lineHeight);
@@ -264,23 +269,20 @@
               </blockquote>
             </div>
 
-            <!-- Small Meta Row at Bottom: Reference, Category & Actions -->
+            <!-- Bottom Meta Row: Left = Category + Bookmark, Right = Unnumbered Reference -->
             <div class="card-meta-bottom">
-              <div class="meta-left">
-                <span class="card-ref-badge">${verse.id}. ${verse.ref}</span>
+              <div class="meta-bottom-left">
                 <span class="category-tag">
                   <i data-lucide="${verse.icon || 'bookmark'}" style="width: 11px; height: 11px;"></i>
                   ${verse.categoryLabel}
                 </span>
-              </div>
-
-              <div class="card-actions-row">
-                <button class="card-action-btn btn-story-single" data-id="${verse.id}" title="View in Fullscreen Stories Mode">
-                  <i data-lucide="play" style="width: 13px; height: 13px;"></i>
-                </button>
                 <button class="card-action-btn btn-favorite ${isFav ? 'favorite-active' : ''}" data-id="${verse.id}" title="${isFav ? 'Remove Bookmark' : 'Bookmark Verse'}">
                   <i data-lucide="bookmark" style="width: 13px; height: 13px; ${isFav ? 'fill: currentColor;' : ''}"></i>
                 </button>
+              </div>
+
+              <div class="meta-bottom-right">
+                <span class="card-ref-badge">${escapeHtml(verse.ref)}</span>
               </div>
             </div>
 
@@ -306,43 +308,38 @@
   // THEMES, FONTS & DISPLAY SETTINGS
   // ==========================================================================
   function applyTheme(theme) {
+    if (theme === 'mud') theme = 'warm';
     state.theme = theme;
     elements.html.setAttribute('data-theme', theme);
     localStorage.setItem('agy_bible_theme', theme);
 
     // Header buttons
     document.querySelectorAll('.theme-picker .segmented-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+      const val = btn.getAttribute('data-theme-val');
+      btn.classList.toggle('active', val === theme || (theme === 'warm' && val === 'mud'));
     });
 
     // Drawer buttons
     document.querySelectorAll('#drawerThemePicker .segmented-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+      const val = btn.getAttribute('data-theme-val');
+      btn.classList.toggle('active', val === theme || (theme === 'warm' && val === 'mud'));
     });
   }
 
   function applyFontStyle(style) {
     state.fontStyle = style;
-    elements.html.classList.remove('font-serif', 'font-sans', 'font-editorial', 'font-display', 'font-mono');
+    
+    // Remove old font-* classes
+    elements.html.className = elements.html.className
+      .replace(/font-\S+/g, '')
+      .trim();
     elements.html.classList.add(`font-${style}`);
     localStorage.setItem('agy_font_style', style);
 
     // Drawer font buttons
-    document.querySelectorAll('#drawerFontCards .font-pill-btn, #drawerFontCards .font-card-btn').forEach(btn => {
+    document.querySelectorAll('#drawerFontCards .font-pill-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-font') === style);
     });
-
-    // Badge text
-    const names = {
-      serif: 'Serif (Lora)',
-      sans: 'Sans (Jakarta)',
-      editorial: 'Editorial (Newsreader)',
-      display: 'Display (DM Serif & Outfit)',
-      mono: 'Mono (JetBrains)'
-    };
-    if (elements.settingsActiveFontBadge) {
-      elements.settingsActiveFontBadge.textContent = names[style] || style;
-    }
   }
 
   function applyLineHeight(lh) {
@@ -414,7 +411,7 @@
   }
 
   function resetTypeSettingsToDefault() {
-    applyFontStyle('serif');
+    applyFontStyle('lora');
     applyFontSize(1.22);
     applyLineHeight('1.7');
     applyTheme('light');
@@ -728,34 +725,11 @@
     return 'story-size-dense';
   }
 
-  // Dynamic Auto-Fit Loop: Scales down text dynamically if it exceeds wrapper height or width
   function autoFitStoryText() {
-    const wrapper = elements.storyContentWrapper;
     const passage = elements.storyPassageText;
-    if (!wrapper || !passage) return;
-
-    // Reset inline font size so CSS tier sets the initial large font size
-    passage.style.fontSize = '';
-    passage.style.lineHeight = '';
-
-    // Safety margin to prevent edge touching
-    const maxAllowedHeight = wrapper.clientHeight - 16;
-    const maxAllowedWidth = wrapper.clientWidth - 12;
-    if (maxAllowedHeight <= 40 || maxAllowedWidth <= 40) return;
-
-    let computedSize = parseFloat(window.getComputedStyle(passage).fontSize);
-    if (!computedSize || isNaN(computedSize)) computedSize = 32;
-
-    // Dynamic shrink loop with safe bound
-    let iterations = 0;
-    while (
-      (passage.scrollHeight > maxAllowedHeight || passage.scrollWidth > maxAllowedWidth) &&
-      computedSize > 12 &&
-      iterations < 50
-    ) {
-      computedSize *= 0.94; // shrink by 6%
-      passage.style.fontSize = `${computedSize}px`;
-      iterations++;
+    if (passage) {
+      passage.style.fontSize = '';
+      passage.style.lineHeight = '';
     }
   }
 
@@ -1004,14 +978,23 @@
         } else {
           const cat = btn.getAttribute('data-category');
           if (!cat) return;
-          state.category = cat;
-          state.favoritesOnly = false;
-          if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
 
-          document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
-            if (b.id !== 'favoritesFilterBtn') b.classList.remove('active');
-          });
-          btn.classList.add('active');
+          // Toggle logic: If clicking the active category filter, toggle it off and show all!
+          if (state.category === cat && cat !== 'all') {
+            state.category = 'all';
+            state.favoritesOnly = false;
+            if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-category') === 'all');
+            });
+          } else {
+            state.category = cat;
+            state.favoritesOnly = false;
+            if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              b.classList.toggle('active', b === btn);
+            });
+          }
         }
 
         render();
