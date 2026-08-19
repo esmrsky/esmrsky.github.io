@@ -88,7 +88,9 @@
   .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:50px;align-items:end}
   .kicker{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
   h1{
-    font-size:clamp(56px,14vw,196px);line-height:.76;margin:18px 0 28px;letter-spacing:-.075em;
+    /* Cap ≤150px: the word's min-content width otherwise out-grows its grid track and
+       squeezes .hero-side (and the assembly mark) down to a sliver on wide desktops. */
+    font-size:clamp(56px,14vw,150px);line-height:.76;margin:18px 0 28px;letter-spacing:-.075em;
     font-weight:900; text-wrap:balance;
   }
   h1 .greek{display:block;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;font-size:.44em;letter-spacing:-.04em;color:var(--muted);margin-left:.07em;margin-top:.22em}
@@ -100,8 +102,9 @@
   .assembly-mark:before,.assembly-mark:after{content:"";position:absolute;inset:18%;border:1px dashed color-mix(in srgb,var(--gold) 55%,var(--line));border-radius:50%}
   .assembly-mark:after{inset:34%;border-style:solid;background:var(--gold);box-shadow:0 0 34px color-mix(in srgb,var(--gold) 55%,transparent)}
   .assembly-mark b{position:absolute;inset:40%;display:grid;place-items:center;z-index:2;color:var(--bg);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
-  .assembly-mark i{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;background:var(--dot,var(--blue));box-shadow:0 0 18px color-mix(in srgb,var(--dot,var(--blue)) 70%,transparent);transform:rotate(var(--angle)) translateY(-118px)}
-  .assembly-mark i:nth-of-type(2n){width:12px;height:12px;margin:-6px;transform:rotate(var(--angle)) translateY(-118px)}
+  /* Dot orbit must scale with the mark: 40.7% = the authored 118px orbit / 290px design width. */
+  .assembly-mark i{position:absolute;left:calc(50% + sin(var(--angle)) * 40.7%);top:calc(50% - cos(var(--angle)) * 40.7%);width:16px;height:16px;margin:-8px;border-radius:50%;background:var(--dot,var(--blue));box-shadow:0 0 18px color-mix(in srgb,var(--dot,var(--blue)) 70%,transparent)}
+  .assembly-mark i:nth-of-type(2n){width:12px;height:12px;margin:-6px}
   .signal{display:flex;flex-wrap:wrap;gap:8px}
   .pill{border:1px solid var(--line);padding:8px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--panel)}
   .hero-foot{margin-top:70px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
@@ -289,7 +292,7 @@
     .kingdom-card{grid-column:1;grid-row:1}.king-node{grid-column:1;grid-row:2;width:94px}.ecclesia-card{grid-column:1;grid-row:3}
     .relation-note{grid-column:1;grid-row:4;margin-top:18px;padding:12px 14px}
     .scripture-shell{border-radius:26px;padding:24px 18px}.verse-card{padding:21px;min-height:0}
-    footer{flex-direction:column;padding-top:28px}.assembly-mark{width:235px}.assembly-mark i{transform:rotate(var(--angle)) translateY(-95px)}.assembly-mark i:nth-of-type(2n){transform:rotate(var(--angle)) translateY(-95px)}
+    footer{flex-direction:column;padding-top:28px}.assembly-mark{width:235px}
   }
   @media(max-width:390px){h1{font-size:51px}.lede{font-size:19px}}
   /* ══ scripture layer ═════════════════════════════════════════════════════
