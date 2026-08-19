@@ -248,7 +248,8 @@ const BIBLE_VERSES = [
         "ref": "Philippians 4:4–13",
         "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:11 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "16:11 The Hebrew word for 'path' is orach, meaning a well-trodden, radiant highway. In Acts 2:28, the apostle Peter quotes this verse on the Day of Pentecost as the primary scriptural proof of the resurrection of Jesus Christ. 'In your presence' is literally 'with your face' (panim), signifying unhindered face-to-face intimacy under the new covenant."
   },
   {
     "id": 2,
@@ -1439,7 +1440,8 @@ const BIBLE_VERSES = [
         "ref": "Mark 6:35–44",
         "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 28:1–14 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "28:1 The Hebrew verb shama is repeated for emphasis: 'If hearing you will hear and obeying you will obey.' Under the New Covenant in Christ, Jesus has redeemed us from every curse of the law (Gal. 3:13), so that all the covenant blessings of Deuteronomy 28 now belong to believers by grace through faith."
   },
   {
     "id": 7,
@@ -1675,7 +1677,8 @@ const BIBLE_VERSES = [
         "ref": "Acts 17:10–12",
         "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 32:8 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "32:8 The Hebrew word for 'counsel' is ya'ats, meaning to deliberate, guide, and advise with royal wisdom. 'With my eye upon you' implies intimate gaze and uninterrupted loving vigilance—not surveillance from fear, but loving guidance through unhindered eye contact."
   },
   {
     "id": 8,
@@ -1911,7 +1914,8 @@ const BIBLE_VERSES = [
         "ref": "Daniel 6:10–23",
         "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 41:10 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "41:10 The Hebrew root for 'dismayed' (sha'ah) literally means to gaze around in anxious panic or look frantically for help. God's promise is 'Do not look around in terror, for I am your God!' His victorious right hand represents Jesus, who sits at the right hand of the Majesty on high."
   },
   {
     "id": 9,
@@ -2147,7 +2151,8 @@ const BIBLE_VERSES = [
         "ref": "Mark 6:35–44",
         "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Jeremiah 17:7–8 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "17:8 The Hebrew word for 'drought' is batstsoreth, referring to seasons of severe scarcity and famine. The believer who trusts in Yahweh does not merely survive drought—their leaf remains vibrant green and they never cease producing supernatural kingdom fruit."
   },
   {
     "id": 10,
@@ -2619,7 +2624,8 @@ const BIBLE_VERSES = [
         "ref": "Mark 6:35–44",
         "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 37:25–26 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "9:10 The Greek word for 'supplies' is choregeo, which historically referred to a wealthy benefactor who lavishly funded a grand choir or theatrical festival out of sheer delight. God provides seed to the sower and bread for food with extravagant, uncalculating joy."
   },
   {
     "id": 12,
@@ -3091,7 +3097,8 @@ const BIBLE_VERSES = [
         "ref": "Acts 12:5–17",
         "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 16:15 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "1:16 The Greek word for 'power' is dunamis, from which we get 'dynamite' and 'dynamic.' Paul states that the gospel of grace is not merely good advice—it is the very explosive, saving energy of the Almighty unleashed for everyone who believes."
   },
   {
     "id": 14,
@@ -3327,7 +3334,8 @@ const BIBLE_VERSES = [
         "ref": "Acts 12:5–17",
         "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 1:16 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "28:20 In the Aramaic text, 'I am with you always' is 'Behold, I am with you every single day until the culmination of the ages.' There is never a single millisecond where the believer is left unattended by Christ."
   },
   {
     "id": 15,
@@ -4271,7 +4279,8 @@ const BIBLE_VERSES = [
         "ref": "2 Chronicles 20:14–24",
         "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 14:27 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "23:1 In Hebrew, 'Yahweh is my Shepherd, I shall not want' is Yahweh-Rohi. The phrase 'I shall not want' (lo echar) means lack has been permanently eradicated; in the Shepherd's pasture, there is no deficit of provision, rest, or favor."
   },
   {
     "id": 19,
@@ -5687,7 +5696,8 @@ const BIBLE_VERSES = [
         "ref": "Daniel 6:10–23",
         "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 6:10 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "1:4 The Greek word for 'chosen' is eklegomai, meaning to intentionally select out of infinite delight before the universe was formed. In the Aramaic text, 'in love He predestined us' conveys that God's loving delight was the sole motivating force behind our eternal adoption in Christ."
   },
   {
     "id": 25,
@@ -6159,7 +6169,8 @@ const BIBLE_VERSES = [
         "ref": "Philippians 4:4–13",
         "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:9–10 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "5:22 Notice that 'fruit' is singular (karpos) in the Greek, signifying that the nine virtues of love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control are a unified cluster produced by the indwelling Spirit, not independent human efforts."
   },
   {
     "id": 27,
@@ -6631,7 +6642,8 @@ const BIBLE_VERSES = [
         "ref": "Luke 8:43–48",
         "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 103:1–5 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "8:1 In the earliest and most reliable Greek manuscripts, the phrase ends at 'no condemnation for those who are in Christ Jesus.' The law of the Spirit of life has permanently emancipated us from the obsolete cycle of sin and death."
   },
   {
     "id": 29,
@@ -7575,7 +7587,8 @@ const BIBLE_VERSES = [
         "ref": "Daniel 6:10–23",
         "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Joshua 1:5 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "4:7 The Greek word for 'guard' is phroureo, a military term for an elite Roman garrison stationed around a city to defend it from invasion. God's transcendent peace actively garrisons and guards the believer's heart and mind."
   },
   {
     "id": 33,
@@ -11351,7 +11364,8 @@ const BIBLE_VERSES = [
         "ref": "Acts 12:5–17",
         "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 15:7 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "10:10 The Greek word for 'abundantly' is perissos, meaning superabundant, overflowing, beyond measure, and superior to anything previously conceived. Christ did not come to provide mere existence, but overflowing, indestructible zoe life."
   },
   {
     "id": 49,
@@ -14183,7 +14197,8 @@ const BIBLE_VERSES = [
         "ref": "Daniel 6:10–23",
         "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 10:19 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "40:31 The Hebrew word for 'wait' is qavah, meaning to intertwine and braid together like strands of rope. When we wait upon Yahweh, our human weakness is braided together with His indestructible divine power."
   },
   {
     "id": 61,
@@ -17015,7 +17030,8 @@ const BIBLE_VERSES = [
         "ref": "2 Chronicles 20:14–24",
         "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 11:28–30 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "91:1 The 'secret place' (sether) of the Most High (Elyon) and the shadow of the Almighty (Shaddai) refers to intimate communion and absolute fortress security where no enemy arrow can penetrate."
   },
   {
     "id": 73,
@@ -20791,7 +20807,8 @@ const BIBLE_VERSES = [
         "ref": "Genesis 45:1–15",
         "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 5:17 in your daily walk today."
       }
-    ]
+    ],
+    "tptFootnotes": "8:37 In Greek, 'more than conquerors' is hupernikomen, literally 'hyper-conquerors' or super-victors. We do not win through our own struggle; we step into a victory already decisively accomplished by Christ."
   },
   {
     "id": 89,

@@ -2,13 +2,13 @@
  * 96 Promises & Truths — Fullscreen Stories, Dynamic Typography & Deep Grace Concordance
  * 
  * Features:
- * 1. Pure Verse-First Bento Cards with category tints (No copy buttons, clean bookmarks & story launcher).
- * 2. Slim, space-efficient responsive layout with robust auto-fitting.
- * 3. Dynamic Multi-Translation Context Flow with inline underlined & highlighted target verse.
- * 4. Interlinear Greek & Hebrew Lexicon with interactive highlighted phrase tags & Strong's concordance.
- * 5. Fullscreen Edge-to-Edge Stories Mode with 16 distinct typography styles, 6-tier adaptive text sizing, rich theological word effects, and corner metadata.
- * 6. Rich Historical Case Studies & Paul Ellis Gospel of Grace Commentaries for all 96 promises.
- * 7. Resilient event delegation on header and modals ensuring 100% click responsiveness.
+ * 1. Pure Verse-First Bento Cards with category tints.
+ * 2. Mobile & Desktop Typography Settings Flyout Drawer with Live Font Family, Font Size & Line Height controls.
+ * 3. Conditional TPT Revelatory Notes (only visible when notes exist for the passage).
+ * 4. Dynamic Multi-Translation Context Flow with inline highlighted & underlined target verse.
+ * 5. Interlinear Greek & Hebrew Lexicon with Strong's concordance cards.
+ * 6. Fullscreen Edge-to-Edge Stories Mode with 16 distinct styles (including Lora, Merriweather, Syne, Unbounded), 6-tier auto-fitting, and word effects.
+ * 7. Resilient event delegation on sticky header, drawers, and modal overlays.
  */
 
 (() => {
@@ -77,6 +77,23 @@
     btnFontIncrease: document.getElementById('btnFontIncrease'),
     scrollToTopBtn: document.getElementById('scrollToTopBtn'),
     btnOpenStories: document.getElementById('btnOpenStories'),
+    btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
+
+    // Typography & Reading Settings Flyout Drawer DOM
+    typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
+    btnCloseTypeSettings: document.getElementById('btnCloseTypeSettings'),
+    settingsActiveFontBadge: document.getElementById('settingsActiveFontBadge'),
+    drawerFontCards: document.getElementById('drawerFontCards'),
+    settingsFontSizeBadge: document.getElementById('settingsFontSizeBadge'),
+    drawerFontSizeSlider: document.getElementById('drawerFontSizeSlider'),
+    drawerFontDecrease: document.getElementById('drawerFontDecrease'),
+    drawerFontIncrease: document.getElementById('drawerFontIncrease'),
+    settingsLineHeightBadge: document.getElementById('settingsLineHeightBadge'),
+    drawerLineHeightSlider: document.getElementById('drawerLineHeightSlider'),
+    drawerLineHeightPresets: document.getElementById('drawerLineHeightPresets'),
+    drawerThemePicker: document.getElementById('drawerThemePicker'),
+    drawerVersionPicker: document.getElementById('drawerVersionPicker'),
+    btnResetTypeSettings: document.getElementById('btnResetTypeSettings'),
 
     // Unified Reader Lightbox DOM
     readerLightbox: document.getElementById('readerLightbox'),
@@ -95,6 +112,7 @@
     readerInterlinearText: document.getElementById('readerInterlinearText'),
     readerLexiconGrid: document.getElementById('readerLexiconGrid'),
     readerLexiconSummary: document.getElementById('readerLexiconSummary'),
+    secTptNotes: document.getElementById('sec-tpt-notes'),
     readerTptFootnotes: document.getElementById('readerTptFootnotes'),
     readerCrossRefsGrid: document.getElementById('readerCrossRefsGrid'),
     readerCloseBtn: document.getElementById('readerCloseBtn'),
@@ -288,7 +306,13 @@
     elements.html.setAttribute('data-theme', theme);
     localStorage.setItem('agy_bible_theme', theme);
 
+    // Header buttons
     document.querySelectorAll('.theme-picker .segmented-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+    });
+
+    // Drawer buttons
+    document.querySelectorAll('#drawerThemePicker .segmented-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
     });
   }
@@ -299,21 +323,60 @@
     elements.html.classList.add(`font-${style}`);
     localStorage.setItem('agy_font_style', style);
 
+    // Header buttons
     document.querySelectorAll('.font-style-picker .segmented-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-font') === style);
     });
+
+    // Drawer cards
+    document.querySelectorAll('#drawerFontCards .font-card-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-font') === style);
+    });
+
+    // Badge text
+    const names = {
+      serif: 'Serif (Lora)',
+      sans: 'Sans (Jakarta)',
+      editorial: 'Editorial (Newsreader)',
+      display: 'Display (DM Serif)',
+      mono: 'Mono (JetBrains)'
+    };
+    if (elements.settingsActiveFontBadge) {
+      elements.settingsActiveFontBadge.textContent = names[style] || style;
+    }
   }
 
   function applyLineHeight(lh) {
-    state.lineHeight = lh;
-    document.documentElement.style.setProperty('--verse-line-height', lh);
-    localStorage.setItem('agy_line_height', lh);
+    const num = parseFloat(lh);
+    state.lineHeight = lh.toString();
+    document.documentElement.style.setProperty('--verse-line-height', state.lineHeight);
+    localStorage.setItem('agy_line_height', state.lineHeight);
+
+    if (elements.settingsLineHeightBadge) {
+      elements.settingsLineHeightBadge.textContent = num.toFixed(2);
+    }
+    if (elements.drawerLineHeightSlider) {
+      elements.drawerLineHeightSlider.value = num;
+    }
+
+    document.querySelectorAll('#drawerLineHeightPresets .segmented-btn').forEach(btn => {
+      const p = parseFloat(btn.getAttribute('data-lh'));
+      btn.classList.toggle('active', Math.abs(p - num) < 0.05);
+    });
   }
 
   function applyFontSize(size) {
-    state.fontSize = size;
-    document.documentElement.style.setProperty('--verse-font-size', `${size}rem`);
-    localStorage.setItem('agy_font_size', size.toString());
+    const num = Math.min(1.85, Math.max(0.95, parseFloat(size)));
+    state.fontSize = num;
+    document.documentElement.style.setProperty('--verse-font-size', `${num}rem`);
+    localStorage.setItem('agy_font_size', num.toString());
+
+    if (elements.settingsFontSizeBadge) {
+      elements.settingsFontSizeBadge.textContent = `${num.toFixed(2)}rem`;
+    }
+    if (elements.drawerFontSizeSlider) {
+      elements.drawerFontSizeSlider.value = num;
+    }
   }
 
   function applyViewMode(mode) {
@@ -335,13 +398,43 @@
       state.version = ver;
       localStorage.setItem('agy_bible_version', ver);
 
+      // Header buttons
       document.querySelectorAll('.version-picker .segmented-btn').forEach(btn => {
-        const bVer = btn.getAttribute('data-version');
-        btn.classList.toggle('active', bVer === ver);
+        btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
+      });
+
+      // Drawer buttons
+      document.querySelectorAll('#drawerVersionPicker .segmented-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
       });
 
       render();
     }
+  }
+
+  // ==========================================================================
+  // TYPOGRAPHY SETTINGS FLYOUT DRAWER (MOBILE & DESKTOP)
+  // ==========================================================================
+  function openTypeSettings() {
+    if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    refreshIcons();
+  }
+
+  function closeTypeSettings() {
+    if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.remove('active');
+    if (!state.isStoriesMode && (!elements.readerLightbox || !elements.readerLightbox.classList.contains('active'))) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function resetTypeSettingsToDefault() {
+    applyFontStyle('serif');
+    applyFontSize(1.22);
+    applyLineHeight('1.7');
+    applyTheme('light');
+    setBibleVersion('NIV');
+    showToast('Reset reading typography to defaults');
   }
 
   // ==========================================================================
@@ -364,6 +457,7 @@
     renderReaderGraceInsight(verse);
     renderReaderCaseStudies(verse);
     renderReaderLexicon(verse, state.activeReaderVersion);
+    renderReaderTptNotes(verse);
     renderReaderCrossRefs(verse);
 
     // Update active version buttons in reader
@@ -534,6 +628,23 @@
 
     // 3. Theological Summary
     if (elements.readerLexiconSummary) elements.readerLexiconSummary.textContent = lex.theologicalSummary || '';
+  }
+
+  // --- 6. Conditional TPT Revelatory Notes (Hide if not available) ---
+  function renderReaderTptNotes(verse) {
+    if (!elements.secTptNotes || !elements.readerTptFootnotes) return;
+
+    const notes = verse.tptFootnotes || verse.tptNotes || verse.tptRevelatoryNotes;
+    if (notes && (typeof notes === 'string' ? notes.trim().length > 0 : notes.length > 0)) {
+      elements.secTptNotes.style.display = 'flex';
+      if (Array.isArray(notes)) {
+        elements.readerTptFootnotes.innerHTML = notes.map(n => `<div style="margin-bottom: 0.65rem;">${escapeHtml(n)}</div>`).join('');
+      } else {
+        elements.readerTptFootnotes.innerHTML = escapeHtml(notes);
+      }
+    } else {
+      elements.secTptNotes.style.display = 'none';
+    }
   }
 
   function renderReaderCrossRefs(verse) {
@@ -724,7 +835,7 @@
   // ==========================================================================
   function setupEventListeners() {
 
-    // 1. Resilient Sticky Header Event Delegation (Version, Theme, Font, Size, Story, View Toggle)
+    // 1. Resilient Sticky Header Event Delegation (Version, Theme, Font, Size, Type Drawer, Story, View Toggle)
     if (elements.stickyHeader) {
       elements.stickyHeader.addEventListener('click', (e) => {
         // Translation Picker
@@ -763,6 +874,12 @@
           return;
         }
 
+        // Open Type Settings Drawer
+        if (e.target.closest('#btnOpenTypeSettings')) {
+          openTypeSettings();
+          return;
+        }
+
         // Stories Mode Button
         if (e.target.closest('#btnOpenStories')) {
           openStoriesMode();
@@ -777,7 +894,90 @@
       });
     }
 
-    // 2. Category Filter Chips (Event Delegation)
+    // 2. Typography Settings Drawer Event Listeners
+    if (elements.btnCloseTypeSettings) {
+      elements.btnCloseTypeSettings.addEventListener('click', closeTypeSettings);
+    }
+    if (elements.typeSettingsDrawer) {
+      elements.typeSettingsDrawer.addEventListener('click', (e) => {
+        if (e.target === elements.typeSettingsDrawer) closeTypeSettings();
+      });
+    }
+
+    // Drawer Font Aesthetic Cards
+    if (elements.drawerFontCards) {
+      elements.drawerFontCards.addEventListener('click', (e) => {
+        const btn = e.target.closest('.font-card-btn');
+        if (btn) {
+          const font = btn.getAttribute('data-font');
+          if (font) applyFontStyle(font);
+        }
+      });
+    }
+
+    // Drawer Font Size Slider & Step Buttons
+    if (elements.drawerFontSizeSlider) {
+      elements.drawerFontSizeSlider.addEventListener('input', (e) => {
+        applyFontSize(parseFloat(e.target.value));
+      });
+    }
+    if (elements.drawerFontDecrease) {
+      elements.drawerFontDecrease.addEventListener('click', () => {
+        const newSize = Math.max(0.95, state.fontSize - 0.08);
+        applyFontSize(newSize);
+      });
+    }
+    if (elements.drawerFontIncrease) {
+      elements.drawerFontIncrease.addEventListener('click', () => {
+        const newSize = Math.min(1.85, state.fontSize + 0.08);
+        applyFontSize(newSize);
+      });
+    }
+
+    // Drawer Line Height Slider & Presets
+    if (elements.drawerLineHeightSlider) {
+      elements.drawerLineHeightSlider.addEventListener('input', (e) => {
+        applyLineHeight(parseFloat(e.target.value));
+      });
+    }
+    if (elements.drawerLineHeightPresets) {
+      elements.drawerLineHeightPresets.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const lh = btn.getAttribute('data-lh');
+          if (lh) applyLineHeight(lh);
+        }
+      });
+    }
+
+    // Drawer Theme Picker
+    if (elements.drawerThemePicker) {
+      elements.drawerThemePicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const themeVal = btn.getAttribute('data-theme-val');
+          if (themeVal) applyTheme(themeVal);
+        }
+      });
+    }
+
+    // Drawer Bible Version Picker
+    if (elements.drawerVersionPicker) {
+      elements.drawerVersionPicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const ver = btn.getAttribute('data-version');
+          if (ver) setBibleVersion(ver);
+        }
+      });
+    }
+
+    // Reset Typography Settings Button
+    if (elements.btnResetTypeSettings) {
+      elements.btnResetTypeSettings.addEventListener('click', resetTypeSettingsToDefault);
+    }
+
+    // 3. Category Filter Chips (Event Delegation)
     if (elements.categoryChips) {
       elements.categoryChips.addEventListener('click', (e) => {
         const btn = e.target.closest('.chip-btn');
@@ -801,7 +1001,7 @@
       });
     }
 
-    // 3. Reset Filters Button
+    // 4. Reset Filters Button
     if (elements.resetFiltersBtn) {
       elements.resetFiltersBtn.addEventListener('click', () => {
         state.category = 'all';
@@ -815,7 +1015,7 @@
       });
     }
 
-    // 4. Bento Card Clicks (Open Reader Lightbox, Favorite, Story)
+    // 5. Bento Card Clicks (Open Reader Lightbox, Favorite, Story)
     if (elements.bentoContainer) {
       elements.bentoContainer.addEventListener('click', (e) => {
         const favBtn = e.target.closest('.btn-favorite');
@@ -842,7 +1042,7 @@
       });
     }
 
-    // 5. Fullscreen Endless Stories Mode Listeners
+    // 6. Fullscreen Endless Stories Mode Listeners
     if (elements.storyOverlay) {
       elements.storyOverlay.addEventListener('click', (e) => {
         if (e.target.closest('#storyCloseBtn')) return;
@@ -857,7 +1057,7 @@
       });
     }
 
-    // 6. Reader Lightbox Listeners
+    // 7. Reader Lightbox Listeners
     if (elements.readerCloseBtn) elements.readerCloseBtn.addEventListener('click', closeReaderLightbox);
     if (elements.readerLightbox) {
       elements.readerLightbox.addEventListener('click', (e) => {
@@ -931,14 +1131,14 @@
       });
     }
 
-    // 7. Scroll to top
+    // 8. Scroll to top
     if (elements.scrollToTopBtn) {
       elements.scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
 
-    // 8. Shortcuts Modal
+    // 9. Shortcuts Modal
     if (elements.shortcutsCloseBtn) {
       elements.shortcutsCloseBtn.addEventListener('click', () => {
         if (elements.shortcutsModal) elements.shortcutsModal.classList.remove('active');
@@ -951,10 +1151,14 @@
       });
     }
 
-    // 9. Global Keyboard Shortcuts
+    // 10. Global Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
-      // Escape closes modals
+      // Escape closes modals and drawers
       if (e.key === 'Escape') {
+        if (elements.typeSettingsDrawer && elements.typeSettingsDrawer.classList.contains('active')) {
+          closeTypeSettings();
+          return;
+        }
         if (state.isStoriesMode) {
           closeStoriesMode();
           return;

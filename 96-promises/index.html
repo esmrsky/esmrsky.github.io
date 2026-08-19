@@ -70,6 +70,11 @@
             <button class="segmented-btn" id="btnFontIncrease" title="Increase Font Size (A+)">A+</button>
           </div>
 
+          <!-- Type & Reading Settings Button (Flyout for Mobile & Desktop) -->
+          <button class="icon-btn btn-type-settings" id="btnOpenTypeSettings" title="Typography &amp; Reading Settings (Aa)">
+            <i data-lucide="sliders-horizontal" style="width: 15px; height: 15px;"></i>
+          </button>
+
           <!-- View Mode & Action Buttons -->
           <button class="story-mode-btn" id="btnOpenStories" title="Launch Endless Stories Mode (S)">
             <i data-lucide="play" style="width: 14px; height: 14px;"></i>
@@ -357,6 +362,138 @@
         <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
         <div class="story-version-pill" id="storyActiveVerBadge">NIV</div>
       </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TYPOGRAPHY & READING SETTINGS FLYOUT DRAWER (MOBILE & DESKTOP)
+       ========================================================================== -->
+  <div class="settings-drawer-backdrop" id="typeSettingsDrawer" role="dialog" aria-modal="true" aria-label="Typography & Reading Settings">
+    <div class="settings-drawer-dialog">
+      
+      <!-- Drawer Header -->
+      <div class="settings-drawer-header">
+        <div class="settings-drawer-title">
+          <i data-lucide="sliders-horizontal" style="width: 18px; height: 18px; color: #f59e0b;"></i>
+          <h3>Typography &amp; Reading</h3>
+        </div>
+        <button class="icon-btn" id="btnCloseTypeSettings" title="Close Settings (Esc)">
+          <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Body -->
+      <div class="settings-drawer-body">
+        
+        <!-- 1. Font Family Aesthetic Selector -->
+        <div class="settings-section">
+          <div class="settings-label">
+            <span>Font Aesthetic</span>
+            <span class="settings-value-badge" id="settingsActiveFontBadge">Serif</span>
+          </div>
+          <div class="font-aesthetic-cards" id="drawerFontCards">
+            <button class="font-card-btn active" data-font="serif">
+              <span class="font-card-preview" style="font-family: var(--font-lora);">Aa</span>
+              <div class="font-card-meta">
+                <span class="font-card-name">Serif</span>
+                <span class="font-card-sub">Lora &amp; Merriweather</span>
+              </div>
+            </button>
+            <button class="font-card-btn" data-font="sans">
+              <span class="font-card-preview" style="font-family: var(--font-sans);">Aa</span>
+              <div class="font-card-meta">
+                <span class="font-card-name">Sans</span>
+                <span class="font-card-sub">Plus Jakarta Sans</span>
+              </div>
+            </button>
+            <button class="font-card-btn" data-font="editorial">
+              <span class="font-card-preview" style="font-family: var(--font-newsreader);">Aa</span>
+              <div class="font-card-meta">
+                <span class="font-card-name">Editorial</span>
+                <span class="font-card-sub">Newsreader &amp; Fraunces</span>
+              </div>
+            </button>
+            <button class="font-card-btn" data-font="display">
+              <span class="font-card-preview" style="font-family: var(--font-dm-serif);">Aa</span>
+              <div class="font-card-meta">
+                <span class="font-card-name">Display</span>
+                <span class="font-card-sub">DM Serif &amp; Cinzel</span>
+              </div>
+            </button>
+            <button class="font-card-btn" data-font="mono">
+              <span class="font-card-preview" style="font-family: var(--font-mono);">Aa</span>
+              <div class="font-card-meta">
+                <span class="font-card-name">Mono</span>
+                <span class="font-card-sub">JetBrains Mono</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Font Size Slider & Adjusters -->
+        <div class="settings-section">
+          <div class="settings-label">
+            <span>Text Sizing</span>
+            <span class="settings-value-badge" id="settingsFontSizeBadge">1.22rem</span>
+          </div>
+          <div class="settings-slider-row">
+            <button class="drawer-step-btn" id="drawerFontDecrease" title="Smaller">A-</button>
+            <input type="range" class="settings-range-slider" id="drawerFontSizeSlider" min="0.95" max="1.85" step="0.05" value="1.22">
+            <button class="drawer-step-btn" id="drawerFontIncrease" title="Larger">A+</button>
+          </div>
+        </div>
+
+        <!-- 3. Line Height / Leading Control -->
+        <div class="settings-section">
+          <div class="settings-label">
+            <span>Line Height / Leading</span>
+            <span class="settings-value-badge" id="settingsLineHeightBadge">1.70</span>
+          </div>
+          <div class="settings-slider-row">
+            <input type="range" class="settings-range-slider" id="drawerLineHeightSlider" min="1.4" max="2.3" step="0.05" value="1.7">
+          </div>
+          <div class="segmented-control" id="drawerLineHeightPresets" style="margin-top: 0.65rem; width: 100%; justify-content: space-around;">
+            <button class="segmented-btn" data-lh="1.5">1.5 Compact</button>
+            <button class="segmented-btn active" data-lh="1.7">1.7 Standard</button>
+            <button class="segmented-btn" data-lh="1.9">1.9 Airy</button>
+            <button class="segmented-btn" data-lh="2.1">2.1 Spacious</button>
+          </div>
+        </div>
+
+        <!-- 4. Theme Mode -->
+        <div class="settings-section">
+          <div class="settings-label">
+            <span>Theme Mode</span>
+          </div>
+          <div class="segmented-control" id="drawerThemePicker" style="width: 100%; justify-content: space-between;">
+            <button class="segmented-btn" data-theme-val="light" style="flex: 1; justify-content: center;">☀️ Light</button>
+            <button class="segmented-btn" data-theme-val="mud" style="flex: 1; justify-content: center;">🍂 Mud</button>
+            <button class="segmented-btn" data-theme-val="dark" style="flex: 1; justify-content: center;">🌙 Dark</button>
+          </div>
+        </div>
+
+        <!-- 5. Default Translation Version -->
+        <div class="settings-section">
+          <div class="settings-label">
+            <span>Scripture Translation</span>
+          </div>
+          <div class="segmented-control" id="drawerVersionPicker" style="width: 100%; justify-content: space-between;">
+            <button class="segmented-btn" data-version="NIV" style="flex: 1; justify-content: center;">NIV</button>
+            <button class="segmented-btn" data-version="TPT" style="flex: 1; justify-content: center;">TPT</button>
+            <button class="segmented-btn" data-version="NLT" style="flex: 1; justify-content: center;">NLT</button>
+            <button class="segmented-btn" data-version="NASB" style="flex: 1; justify-content: center;">NASB</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="settings-drawer-footer">
+        <button class="btn-secondary" id="btnResetTypeSettings" style="width: 100%; text-align: center; padding: 0.65rem; justify-content: center;">
+          Reset to Defaults
+        </button>
+      </div>
+
     </div>
   </div>
 
