@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230b0d14' width='32' height='32' rx='8'/%3E%3Ccircle cx='10' cy='16' r='4' fill='%23ff6b4a'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23f5c542'/%3E%3Ccircle cx='22' cy='16' r='4' fill='%232ec4b6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:SOFT,WONK,opsz,wght@0..100,0..1,9..144,400..700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0f1117; --panel:#191d26; --panel-2:#1e222c; --inset:#14171f;
@@ -75,7 +75,7 @@ nav{
 h1{
   font-family:var(--serif);font-size:clamp(2.9rem,5.6vw,4.4rem);line-height:1.02;
   letter-spacing:-.03em;font-weight:600;margin:18px 0 18px;
-  font-variation-settings:"opsz" 96,"SOFT" 0;
+  font-variation-settings:"opsz" 120,"SOFT" 18,"WONK" 1;
 }
 h1 i{font-style:italic;font-weight:500;color:var(--gold)}
 .lede{color:var(--soft);font-size:1.16rem;line-height:1.6;max-width:46ch}
@@ -116,7 +116,7 @@ section{
 h2{
   font-family:var(--serif);font-size:clamp(1.95rem,3.1vw,2.65rem);line-height:1.08;
   letter-spacing:-.025em;font-weight:600;margin:12px 0 0;
-  font-variation-settings:"opsz" 60;
+  font-variation-settings:"opsz" 72,"SOFT" 14,"WONK" 1;
 }
 .sec-head{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,25rem),1fr));
@@ -144,7 +144,7 @@ h2{
 }
 .case .ic svg{width:17px;height:17px}
 .case .yr{font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--acc);letter-spacing:.1em}
-.case h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-.02em;margin:5px 0 7px;font-variation-settings:"opsz" 36}
+.case h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-.02em;margin:5px 0 7px;font-variation-settings:"opsz" 40,"SOFT" 12,"WONK" 1}
 .case .hook{font-weight:600;font-size:1.03rem;line-height:1.4;margin-bottom:14px;color:var(--soft)}
 .inset{
   background:var(--inset);border:1px solid var(--line);border-radius:11px;
@@ -176,19 +176,62 @@ h2{
 }
 .detail .src{margin-top:16px;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
 
-/* ---------- loop steps ---------- */
-.loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+/* ---------- the loop: diagram + beats, on one 8s cycle ---------- */
+.loop-wrap{display:grid;grid-template-columns:minmax(0,310px) minmax(0,1fr);gap:26px 42px;align-items:center}
+.loop-dia{margin:0;text-align:center}
+.loop-dia svg{width:100%;max-width:310px;height:auto;overflow:visible}
+.loop-dia figcaption{margin-top:12px;color:var(--mute);font-size:.86rem;max-width:30ch;margin-inline:auto}
+.ld-track{fill:none;stroke:var(--line);stroke-width:1.5}
+.ld-comet{
+  fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;
+  stroke-dasharray:74 466;stroke-dashoffset:0;
+  /* SVG circles start at 3 o'clock; beat 1 sits at 12, so rotate the path origin. */
+  transform:rotate(-90deg);transform-origin:120px 120px;
+  filter:drop-shadow(0 0 6px color-mix(in srgb,var(--gold) 55%,transparent));
+  animation:ld-orbit 8s linear infinite;
+}
+.ld-arrows path{fill:none;stroke:var(--mute);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.5}
+.ld-node rect{fill:var(--panel-2);stroke:var(--nc);stroke-width:1.5;transition:none}
+.ld-node text{
+  fill:var(--nc);font-family:var(--mono);font-size:15px;font-weight:700;
+  text-anchor:middle;dominant-baseline:middle;
+}
+.ld-node{animation:ld-beat 8s linear infinite;transform-box:fill-box;transform-origin:center}
+.n1{--nc:var(--coral)} .n2{--nc:var(--gold)} .n3{--nc:var(--teal)} .n4{--nc:var(--violet)}
+.n1,.step:nth-child(1){animation-delay:0s}
+.n2,.step:nth-child(2){animation-delay:2s}
+.n3,.step:nth-child(3){animation-delay:4s}
+.n4,.step:nth-child(4){animation-delay:6s}
+.ld-hub{
+  fill:var(--mute);font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.18em;text-anchor:middle;
+}
+.ld-hub-2{fill:var(--ink)}
+@keyframes ld-orbit{to{stroke-dashoffset:-540}}
+@keyframes ld-beat{
+  0%{scale:1}
+  4%{scale:1.16}
+  22%{scale:1}
+  100%{scale:1}
+}
+
+.loop{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .step{
-  padding:22px;border-radius:16px;
+  position:relative;padding:22px;border-radius:16px;
   background:linear-gradient(170deg, color-mix(in srgb, var(--sa) 13%, var(--panel)), var(--panel) 66%);
   border:1px solid color-mix(in srgb, var(--sa) 28%, var(--line));
   transition:transform .28s var(--ease), box-shadow .28s var(--ease);
+  animation:step-beat 8s linear infinite;
 }
 .step:nth-child(1){--sa:var(--coral)}
 .step:nth-child(2){--sa:var(--gold)}
 .step:nth-child(3){--sa:var(--teal)}
 .step:nth-child(4){--sa:var(--violet)}
 .step:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.26)}
+@keyframes step-beat{
+  0%,22%,100%{border-color:color-mix(in srgb, var(--sa) 28%, var(--line))}
+  5%,16%{border-color:color-mix(in srgb, var(--sa) 78%, transparent)}
+}
 .step .num{
   width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
   font-family:var(--mono);font-size:12px;font-weight:700;color:#12151c;margin-bottom:14px;
@@ -206,8 +249,14 @@ h2{
   background:linear-gradient(115deg, color-mix(in srgb, var(--acc) 11%, var(--panel)), var(--panel) 56%);
   border:1px solid color-mix(in srgb, var(--acc) 24%, var(--line));
 }
-.stn .ln{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:8px}
-.stn h3{font-family:var(--serif);font-size:1.42rem;font-weight:600;letter-spacing:-.02em;margin:6px 0 12px;font-variation-settings:"opsz" 36}
+.stn .ln{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:10px}
+.stn .ln svg{width:15px;height:15px;flex:none}
+.stn-num{
+  font-family:var(--serif);font-size:2.6rem;font-weight:600;line-height:.85;
+  letter-spacing:-.03em;color:color-mix(in srgb,var(--acc) 88%,transparent);
+  font-variation-settings:"opsz" 60,"WONK" 1;display:block;margin-bottom:6px;
+}
+.stn h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;line-height:1.14;letter-spacing:-.02em;margin:4px 0 15px;font-variation-settings:"opsz" 40,"SOFT" 12,"WONK" 1}
 .do{border-left:2px solid var(--acc);font-weight:500;color:var(--ink);margin-bottom:9px}
 .why{color:var(--mute);font-size:.95rem}
 .related{display:flex;flex-direction:column;gap:9px}
@@ -242,6 +291,11 @@ h2{
   .row > button{grid-template-columns:4.4rem minmax(0,1fr)}
   .marks{grid-column:2;justify-content:flex-start;min-width:0}
   .body-card{margin-left:16px}
+}
+@container (max-width:23rem){
+  .row > button{grid-template-columns:minmax(0,1fr);gap:9px}
+  .row .tid{justify-self:start;min-width:4.2rem;padding-inline:11px}
+  .marks{grid-column:1}
 }
 .dot{
   font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;
@@ -299,6 +353,25 @@ h2{
 #expandBook,#expandCourse{border-color:color-mix(in srgb,var(--acc) 40%,transparent);background:color-mix(in srgb,var(--acc) 12%,transparent);color:var(--ink)}
 .tally{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--mute)}
 
+/* ---------- evidence bar ---------- */
+.ebar-block{margin:0 0 18px}
+.ebar-head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:10px}
+.ebar-head h3{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.ebar-head p{color:var(--soft);font-size:.9rem}
+.ebar{display:flex;gap:3px;height:34px}
+.ebar span{
+  flex:var(--n) 1 0;display:grid;place-items:center;border-radius:7px;overflow:hidden;
+  font-family:var(--mono);font-size:11px;font-weight:700;color:#12151a;
+  animation:ebar-grow .8s var(--ease) backwards;
+}
+.ebar span:nth-child(1){--n:2;background:var(--teal);animation-delay:.05s}
+.ebar span:nth-child(2){--n:11;background:var(--gold);animation-delay:.15s}
+.ebar span:nth-child(3){--n:16;background:#b6bcc8;animation-delay:.25s}
+.ebar span:nth-child(4){--n:7;background:#9385db;animation-delay:.35s}
+@keyframes ebar-grow{from{flex-grow:.02;opacity:0}}
+.ebar-key{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:9px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--mute)}
+.ebar-key b{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
 /* ---------- legend ---------- */
 .legend{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 32px;
@@ -327,7 +400,20 @@ h2{
 .keep h3,.skip h3{font-family:var(--serif);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin-bottom:15px}
 .keep h3{color:#57c9b8} .skip h3{color:#ef8064}
 .keep ul,.skip ul{display:flex;flex-direction:column;gap:8px}
-.keep li,.skip li{list-style:none;padding:12px 14px;background:var(--inset);border:1px solid var(--line);border-radius:11px;font-size:.96rem;line-height:1.5;color:var(--mute)}
+.keep li,.skip li{
+  list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px;
+  padding:12px 14px;background:var(--inset);border:1px solid var(--line);border-radius:11px;
+  font-size:.96rem;line-height:1.5;color:var(--mute);
+}
+.keep li::before,.skip li::before{
+  grid-row:1 / span 2;align-self:start;margin-top:1px;
+  width:19px;height:19px;display:grid;place-items:center;border-radius:6px;
+  font-size:11px;font-weight:700;
+}
+.keep li::before{content:"\2713";color:#0e1216;background:var(--teal)}
+.skip li::before{content:"\2715";color:#12151a;background:var(--coral)}
+.keep li b,.skip li b{grid-column:2}
+.keep li::after,.skip li::after{content:"";display:none}
 .keep li b,.skip li b{display:block;margin-bottom:2px;color:var(--ink);font-weight:700}
 .fine{color:var(--mute);font-size:.9rem;line-height:1.6;margin-top:20px;max-width:74ch}
 
@@ -344,6 +430,10 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
   .hero{grid-template-columns:1fr;align-items:start}
   .lede{max-width:62ch}
 }
+@media(max-width:980px){
+  .loop-wrap{grid-template-columns:1fr;gap:26px}
+  .loop-dia svg{max-width:250px}
+}
 @media(max-width:900px){
   .stn{grid-template-columns:1fr;gap:18px}
 }
@@ -354,18 +444,20 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
   body{font-size:16.5px}
   .wrap{padding:0 18px}
   .tl-scroll,.loop{grid-template-columns:1fr}
+  .loop-dia svg{max-width:220px}
   .quotes{columns:1}
   .navlinks{display:none}
   section{padding:36px 18px 40px;margin:16px 0;border-radius:18px}
   .hero{padding:44px 0 26px}
   .pills{grid-template-columns:1fr}
-  .row > button{grid-template-columns:4rem minmax(0,1fr)}
   .body-card{margin-left:16px;margin-right:16px}
   .search{max-width:none}
   .tally{margin-left:0;width:100%}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .ld-comet,.ld-node,.step,.ebar span{animation:none}
+  .ld-comet{stroke-dasharray:none;opacity:.5}
   .reveal,html.js .reveal{opacity:1;transform:none}
   .reveal.in{transition:none}
   .case,.step,.quote{transition:none}
@@ -400,11 +492,11 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
     <div class="pills">
       <div class="pill"><b>6</b> case files</div>
       <div class="pill"><b>36</b> labeled tips</div>
-      <div class="pill"><b>0</b> second builders required</div>
+      <div class="pill"><b>0</b> no-code builders needed</div>
     </div>
   </header>
 
-  <section class="reveal" id="stories">
+  <section id="stories">
     <div class="sec-head">
       <div>
         <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 2v4M16 2v4"/></svg> Stories</p>
@@ -419,7 +511,7 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
     <div class="detail" id="casedetail"></div>
   </section>
 
-  <section class="reveal" id="loop">
+  <section id="loop">
     <div class="sec-head">
       <div>
         <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg> The loop</p>
@@ -429,15 +521,36 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
         <p class="intro">Every case file on this page runs the same four beats in the same order. The apps differ; the loop does not.</p>
       </div>
     </div>
-    <div class="loop">
-      <article class="step"><div class="num" style="background:var(--coral)">1</div><h3>Name the pain</h3><p>One sentence of core badness. If you need a feature list, you do not have it.</p></article>
-      <article class="step"><div class="num" style="background:var(--gold)">2</div><h3>Own the folder</h3><p>Agent + git. No rented factory. Spec in a chat, then build.</p></article>
-      <article class="step"><div class="num" style="background:var(--teal)">3</div><h3>Make the clip</h3><p>One problem per video. Ten hooks. Kill eight.</p></article>
-      <article class="step"><div class="num" style="background:var(--violet)">4</div><h3>Price the test</h3><p>Four figures before five. Split the paywall, not the brand.</p></article>
+    <div class="loop-wrap">
+      <figure class="loop-dia">
+        <svg viewBox="0 0 240 240" role="img" aria-label="The four beats run as a cycle: name the pain, own the folder, make the clip, price the test, then repeat.">
+          <circle class="ld-track" cx="120" cy="120" r="86"/>
+          <circle class="ld-comet" cx="120" cy="120" r="86"/>
+          <g class="ld-arrows">
+            <g transform="translate(180.8 59.2) rotate(45)"><path d="M-4 -4 L2 0 L-4 4"/></g>
+            <g transform="translate(180.8 180.8) rotate(135)"><path d="M-4 -4 L2 0 L-4 4"/></g>
+            <g transform="translate(59.2 180.8) rotate(225)"><path d="M-4 -4 L2 0 L-4 4"/></g>
+            <g transform="translate(59.2 59.2) rotate(315)"><path d="M-4 -4 L2 0 L-4 4"/></g>
+          </g>
+          <g class="ld-node n1"><rect x="101" y="15" width="38" height="38" rx="11"/><text x="120" y="34">1</text></g>
+          <g class="ld-node n2"><rect x="187" y="101" width="38" height="38" rx="11"/><text x="206" y="120">2</text></g>
+          <g class="ld-node n3"><rect x="101" y="187" width="38" height="38" rx="11"/><text x="120" y="206">3</text></g>
+          <g class="ld-node n4"><rect x="15" y="101" width="38" height="38" rx="11"/><text x="34" y="120">4</text></g>
+          <text class="ld-hub" x="120" y="115">THE</text>
+          <text class="ld-hub ld-hub-2" x="120" y="132">LOOP</text>
+        </svg>
+        <figcaption>Finish a lap, then run it again with what you learned.</figcaption>
+      </figure>
+      <div class="loop">
+        <article class="step"><div class="num">1</div><h3>Name the pain</h3><p>One sentence of core badness. If you need a feature list, you do not have it.</p></article>
+        <article class="step"><div class="num">2</div><h3>Own the folder</h3><p>Agent + git. No rented factory. Spec in a chat, then build.</p></article>
+        <article class="step"><div class="num">3</div><h3>Make the clip</h3><p>One problem per video. Ten hooks. Kill eight.</p></article>
+        <article class="step"><div class="num">4</div><h3>Price the test</h3><p>Four figures before five. Split the paywall, not the brand.</p></article>
+      </div>
     </div>
   </section>
 
-  <section class="reveal" id="ship">
+  <section id="ship">
     <div class="sec-head">
       <div>
         <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v10H3z"/></svg> How you ship</p>
@@ -470,7 +583,7 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
     <p class="fine">Lovable is also on this page as a case study. The factory is a real business. You still don’t need to rent it to ship one app. Anton Osika told Slush 2025 they were at $200M ARR — TechCrunch reported the onstage claim. Not audited books.</p>
   </section>
 
-  <section class="reveal" id="course">
+  <section id="course">
     <div class="sec-head">
       <div>
         <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg> Eight stations</p>
@@ -486,7 +599,7 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
     <div class="stations" id="lessons"></div>
   </section>
 
-  <section class="reveal" id="gold">
+  <section id="gold">
     <div class="sec-head">
       <div>
         <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h3l2-7 4 14 2-7h5"/></svg> Heard on the wire</p>
@@ -499,7 +612,7 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
     <div class="quotes" id="quotes"></div>
   </section>
 
-  <section class="reveal" id="book">
+  <section id="book">
     <div class="sec-head">
       <div>
         <p class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v16H5z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg> The book</p>
@@ -507,6 +620,21 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .55s var(--ease),
       </div>
       <div class="head-aside">
         <p class="intro">Filter by stage, pillar, or evidence type. Every tip carries how it was sourced and how far it holds.</p>
+      </div>
+    </div>
+    <div class="ebar-block">
+      <div class="ebar-head">
+        <h3>The evidence base</h3>
+        <p>Two of thirty-six tips rest on a number an outlet actually checked.</p>
+      </div>
+      <div class="ebar" role="img" aria-label="Of 36 tips: 2 verified, 11 self-reported, 16 opinion, 7 pattern.">
+        <span>2</span><span>11</span><span>16</span><span>7</span>
+      </div>
+      <div class="ebar-key">
+        <span><b style="background:var(--teal)"></b>Verified</span>
+        <span><b style="background:var(--gold)"></b>Self-reported</span>
+        <span><b style="background:#b6bcc8"></b>Opinion</span>
+        <span><b style="background:#9385db"></b>Pattern</span>
       </div>
     </div>
     <div class="legend" aria-label="How the labels work">
@@ -579,14 +707,14 @@ const STAGES = [
   {id:"all", n:"∞", name:"Runs through everything"}
 ];
 const LESSONS = [
-  {n:"00", title:"Discount the storytellers", do:"Read the labels before you read the advice.", why:"Most of this industry is marketing itself. Start skeptical or the rest of the page will hypnotise you.", tips:["T24"]},
-  {n:"01", title:"Name the problem, not the idea", do:"Write one sentence of core badness. If you need a feature list to explain it, you do not have it.", why:"Seibel’s test. Your own pain is just the cheapest version of a real problem.", tips:["T03","T02","T04"]},
-  {n:"02", title:"Picture the video first", do:"Describe the TikTok before you describe the screens.", why:"For consumer apps, distribution feasibility is the scarce input. Test it first.", tips:["T01","T05","T07"]},
-  {n:"03", title:"Spec in a chat, not in a factory", do:"One hour: screens, data, what not to build, the video. Write it into a README.", why:"Credits and tokens die when you invent the product inside the builder.", tips:["T27","T09","T08"]},
-  {n:"04", title:"Empty folder. Agent. Git.", do:"Claude, Cursor, Grok, or Codex in a folder you own. No Lovable, Replit, Rork, or 10x.", why:"The factory is a markup on the same model. Own the repo or you own a demo.", tips:["T25","T26","T30","T32"]},
-  {n:"05", title:"Verify on real data", do:"Upload a real file. Tap the real phone. Read the real error. Then prompt again.", why:"Pretty first pass is demo-data theater.", tips:["T29","T28","T31","T10"]},
-  {n:"06", title:"Ten videos. Kill eight.", do:"One problem per video. Five to ten hooks. Mixed formats. Iterate the winner.", why:"Winning content is the hundredth iteration. Feature 47 is not.", tips:["T12","T33","T34","T35","T11"]},
-  {n:"07", title:"Test price, then scale what already works", do:"A four-figure distribution test before a five-figure commitment. Split-test the paywall.", why:"Cal AI’s $2,000 test bought six months of conviction. Most people buy ads with no users.", tips:["T14","T36","T15","T16"]}
+  {n:"00", icon:"rep", title:"Bank reps. Discount the storytellers.", do:"Ship small things repeatedly. Read the labels before you read the advice.", why:"Most of this industry is marketing itself, and most first apps go nowhere. Reps are what let you tell a real pattern from a good story.", tips:["T24","T22","T19","T21"]},
+  {n:"01", icon:"target", title:"Name the problem, not the idea", do:"Write one sentence of core badness. If you need a feature list to explain it, you do not have it.", why:"Seibel’s test. Your own pain is just the cheapest version of a real problem — and a differentiated take is what raises the ceiling.", tips:["T03","T02","T04","T06","T18"]},
+  {n:"02", icon:"cam", title:"Picture the video first", do:"Describe the TikTok before you describe the screens.", why:"For consumer apps, distribution feasibility is the scarce input. Test it first, in a demographic you actually speak.", tips:["T01","T05","T07","T20"]},
+  {n:"03", icon:"spec", title:"Spec in a chat, not in a factory", do:"One hour: screens, data, what not to build, the video. Write it into a README.", why:"Credits and tokens die when you invent the product inside the builder.", tips:["T27","T09","T08"]},
+  {n:"04", icon:"folder", title:"Empty folder. Agent. Git.", do:"Claude, Cursor, Grok, or Codex in a folder you own. No Lovable, Replit, Rork, or 10x.", why:"The factory is a markup on the same model. Own the repo or you own a demo.", tips:["T25","T26","T30","T32","T17"]},
+  {n:"05", icon:"check", title:"Verify on real data", do:"Upload a real file. Tap the real phone. Read the real error. Then prompt again.", why:"Pretty first pass is demo-data theater.", tips:["T29","T28","T31","T10"]},
+  {n:"06", icon:"play", title:"Ten videos. Kill eight.", do:"One problem per video. Five to ten hooks. Mixed formats. Iterate the winner.", why:"Winning content is the hundredth iteration. Feature 47 is not.", tips:["T12","T33","T34","T35","T11","T13"]},
+  {n:"07", icon:"tag", title:"Test price, then scale what already works", do:"A four-figure distribution test before a five-figure commitment. Split-test the paywall.", why:"Cal AI’s $2,000 test bought six months of conviction. Most people buy ads with no users — and most sell too early.", tips:["T14","T36","T15","T16","T23"]}
 ];
 const GOLD = [
   {q:"Honestly just use Claude Code and talk at it for a while.", take:"The 2026 migration advice, in one sentence.", src:"r/nocode, Aug 2026", ev:"opinion", val:"strong"},
@@ -863,6 +991,17 @@ const ICONS = {
   box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l9-4 9 4-9 4z"/><path d="M3 8v8l9 4 9-4V8"/><path d="M12 12v8"/></svg>'
 };
 
+const STN_ICONS = {
+  rep:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16"/><path d="M4 20v-4h4"/></svg>',
+  target:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h4l2-2h4l2 2h4v10H4z"/><circle cx="12" cy="13" r="3"/></svg>',
+  spec:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h4"/></svg>',
+  folder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6h6l2 2h10v11H3z"/><path d="M3 10h18"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6v3H9z"/><path d="M15 5h3v15H6V5h3"/><path d="m9 13 2 2 4-4"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m11 9.5 4 2.5-4 2.5z"/></svg>',
+  tag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11V4h7l10 10-7 7z"/><circle cx="7.5" cy="7.5" r="1.4"/></svg>'
+};
+
 const byId = Object.fromEntries(TIPS.map(t=>[t.id,t]));
 const stageBy = Object.fromEntries(STAGES.map(s=>[s.id,s]));
 const pillarBy = Object.fromEntries(PILLARS.map(p=>[p.id,p]));
@@ -907,7 +1046,8 @@ document.getElementById("cases").addEventListener("click", e=>{
 });
 
 document.getElementById("lessons").innerHTML = LESSONS.map(L=>
-  '<article class="stn reveal"><div class="stn-lead"><div class="ln">Station '+L.n+'</div><h3>'+esc(L.title)+'</h3>'+
+  '<article class="stn reveal"><div class="stn-lead"><div class="ln">'+(STN_ICONS[L.icon]||'')+'Station</div>'+
+  '<span class="stn-num">'+L.n+'</span><h3>'+esc(L.title)+'</h3>'+
   '<div class="inset do">'+esc(L.do)+'</div><p class="inset why">'+esc(L.why)+'</p></div>'+
   '<div class="related">'+L.tips.map(id=>row(byId[id],"s"+L.n+"-")).join("")+'</div></article>'
 ).join("");
@@ -993,8 +1133,8 @@ document.body.addEventListener("click",e=>{
 
 const io=new IntersectionObserver(ents=>{
   ents.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
-},{threshold:.08, rootMargin:"0px 0px -8% 0px"});
-document.querySelectorAll("section, .hero, .case, .step, .quote, .stn").forEach(el=>{
+},{threshold:0, rootMargin:"0px 0px -48px 0px"});
+document.querySelectorAll(".hero, .case, .step, .quote, .stn, .loop-dia, .ebar-block").forEach(el=>{
   el.classList.add("reveal");
   io.observe(el);
 });
