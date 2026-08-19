@@ -15,12 +15,33 @@
     'Revelation': 'REV'
   };
 
+  // Bolls.life uses canonical book numbers (Genesis 1 … Revelation 66) for its NLT text.
+  const BOLLS_BOOK_IDS = {
+    'Genesis': 1, 'Numbers': 4, 'Deuteronomy': 5, 'Joshua': 6,
+    'Judges': 7, '1 Samuel': 9, '2 Samuel': 10, '1 Kings': 11,
+    '1 Chronicles': 13, 'Nehemiah': 16, 'Psalm': 19, 'Proverbs': 20,
+    'Ecclesiastes': 21, 'Isaiah': 23, 'Micah': 33, 'Matthew': 40,
+    'Mark': 41, 'Luke': 42, 'John': 43, 'Acts': 44, 'Romans': 45,
+    '1 Corinthians': 46, '2 Corinthians': 47, 'Galatians': 48,
+    'Ephesians': 49, 'Hebrews': 58, 'James': 59, '1 John': 62,
+    'Revelation': 66
+  };
+
   const webVersion = {
     id: 'web',
     abbreviation: 'WEB',
     title: 'World English Bible',
     copyright: 'World English Bible (WEB). Public domain.',
     deepLink: ''
+  };
+
+  // WEB is never offered in the picker; it is the silent public-domain fallback.
+  const nltVersion = {
+    id: 'nlt',
+    abbreviation: 'NLT',
+    title: 'New Living Translation',
+    copyright: 'New Living Translation (NLT). Scripture text supplied by Bolls.life.',
+    deepLink: 'https://www.bible.com/versions/116'
   };
 
   const preferredVersions = [
@@ -96,7 +117,7 @@
   let questionIndex = -1;
   let diagnosticAnswers = loadDiagnosticAnswers();
   let savedDiagnosticResult = loadDiagnosticResult();
-  let bibleVersions = [...preferredVersions, webVersion];
+  let bibleVersions = withNlt(preferredVersions);
   let selectedBibleVersionId = loadBibleVersionId() || '111';
   let bibleVersionsState = scriptureApi.configured ? 'loading' : 'local';
   let scriptureLoadToken = 0;
@@ -105,6 +126,7 @@
   let versePopoverToken = 0;
   let activeVerseTarget = null;
   let versePopoverHideTimer = 0;
+  const bollsChapterCache = new Map();
 
   function icon(name) {
     return ICONS[name] || ICONS.scroll;
@@ -163,7 +185,9 @@
 
   function loadBibleVersionId() {
     try {
-      return localStorage.getItem('twelve-bible-version-id');
+      const saved = localStorage.getItem('twelve-bible-version-id');
+      // WEB used to be a pickable option; it is now only the fallback.
+      return saved === 'web' ? null : saved;
     } catch (error) {
       return null;
     }
@@ -175,6 +199,60 @@
     } catch (error) {
       // Translation selection still applies for the current page view.
     }
+  }
+
+  // NIV first, then NLT, then whatever else the Scripture service returned.
+  function withNlt(list) {
+    const rest = list.filter(version => String(version.abbreviation).toUpperCase() !== 'NLT');
+    const nivIndex = rest.findIndex(version => String(version.abbreviation).toUpperCase() === 'NIV');
+    const ordered = rest.slice();
+    ordered.splice(nivIndex + 1, 0, nltVersion);
+    return ordered;
+  }
+
+  function referenceToBolls(reference) {
+    const firstPassage = String(reference).split(';')[0].trim();
+    const match = firstPassage.match(/^(.+?) (\d+):(\d+)(?:[\u2013-](\d+))?$/);
+    if (!match || !BOLLS_BOOK_IDS[match[1]]) return null;
+    return {
+      bookId: BOLLS_BOOK_IDS[match[1]],
+      chapter: Number(match[2]),
+      verseStart: Number(match[3]),
+      verseEnd: Number(match[4] || match[3])
+    };
+  }
+
+  function bollsChapter(bookId, chapter) {
+    const key = `${bookId}:${chapter}`;
+    if (!bollsChapterCache.has(key)) {
+      bollsChapterCache.set(key, fetch(`https://bolls.life/get-text/NLT/${bookId}/${chapter}/`)
+        .then(response => {
+          if (!response.ok) throw new Error('NLT could not be loaded.');
+          return response.json();
+        })
+        .then(verses => {
+          if (!Array.isArray(verses)) throw new Error('NLT returned an unexpected response.');
+          return verses;
+        })
+        .catch(error => {
+          bollsChapterCache.delete(key);
+          throw error;
+        }));
+    }
+    return bollsChapterCache.get(key);
+  }
+
+  async function bollsPassage(reference) {
+    const parts = referenceToBolls(reference);
+    if (!parts) throw new Error('Unsupported Scripture reference.');
+    const chapter = await bollsChapter(parts.bookId, parts.chapter);
+    const text = chapter
+      .filter(verse => Number(verse.verse) >= parts.verseStart && Number(verse.verse) <= parts.verseEnd)
+      .map(verse => cleanScriptureText(String(verse.text || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '')))
+      .filter(Boolean)
+      .join(' ');
+    if (!text) throw new Error('NLT passage was not found.');
+    return text;
   }
 
   function referenceToUsfm(reference) {
@@ -193,6 +271,12 @@
 
   function selectedBibleVersion() {
     return bibleVersions.find(version => String(version.id) === String(selectedBibleVersionId)) || webVersion;
+  }
+
+  function versionSource(version) {
+    if (version.id === 'web') return 'public domain';
+    if (version.id === 'nlt') return 'Bolls.life';
+    return 'YouVersion';
   }
 
   function shortVersionName(version) {
@@ -256,7 +340,13 @@
     const usfm = referenceToUsfm(reference);
     if (!usfm) throw new Error('This combined reference opens best inside its profile.');
 
-    if (selected.id !== 'web' && scriptureApi.configured && typeof scriptureApi.getPassage === 'function') {
+    if (selected.id === 'nlt') {
+      try {
+        return { text: await bollsPassage(reference), version: 'NLT' };
+      } catch (error) {
+        // Continue through the normal NIV → WEB fallback order.
+      }
+    } else if (selected.id !== 'web' && scriptureApi.configured && typeof scriptureApi.getPassage === 'function') {
       try {
         const result = await scriptureApi.getPassage(selected.id, usfm);
         if (result && result.content) return { text: cleanScriptureText(result.content), version: shortVersionName(selected) };
@@ -334,9 +424,9 @@
 
   function bibleVersionStatus() {
     if (bibleVersionsState === 'loading') return 'Connecting to available translations…';
-    if (bibleVersionsState === 'error') return 'Licensed translations are temporarily unavailable. WEB remains ready.';
-    if (bibleVersionsState === 'local') return 'WEB is ready. Licensed translations will appear after the Cloudflare connection is published.';
-    if (bibleVersionsState === 'empty') return 'WEB is ready. The requested licensed translations are not available to this YouVersion app yet.';
+    if (bibleVersionsState === 'error') return 'Licensed translations are temporarily unavailable. NLT is still ready.';
+    if (bibleVersionsState === 'local') return 'Licensed translations will appear once the Scripture service is connected.';
+    if (bibleVersionsState === 'empty') return 'The requested licensed translations are not available to this YouVersion app yet.';
     return 'Choose a translation for every Scripture passage in this profile.';
   }
 
@@ -464,22 +554,11 @@
 
       <details class="profile-drawer talent-drawer" open>
         <summary>
-          ${drawerHeading('lamp', 'Capacity map', 'Talents and tradeoffs')}
-          <span class="drawer-prompt">Open profile layer</span>
+          ${drawerHeading('lamp', 'Everyday shape', 'Where this shows up')}
+          <span class="drawer-prompt">Roles and moments you may recognize</span>
         </summary>
         <div class="drawer-content talent-grid">
-          <article class="talent-card strengths-card">
-            <p class="section-kicker">Natural strengths</p>
-            <h4>What this pattern tends to carry well</h4>
-            <div class="talent-chips">${tribe.strengths.map(item => `<span>${item}</span>`).join('')}</div>
-          </article>
-          <article class="talent-card weakness-card">
-            <p class="section-kicker">The weak side of the gift</p>
-            <h4>What the same capacity can become under pressure</h4>
-            <div class="talent-chips">${tribe.pressures.map(item => `<span>${item}</span>`).join('')}</div>
-          </article>
           <article class="talent-card roles-card">
-            <p class="section-kicker">Where it often shows up today</p>
             <h4>Familiar roles, not fixed job titles</h4>
             <div class="role-list">${tribe.roles.map(item => `<span>${item}</span>`).join('')}</div>
             <div class="real-world-examples">
@@ -594,7 +673,6 @@
           <article class="profile-block pressure-card spiral">
             <p class="section-kicker">The familiar spiral</p>
             <p>${tribe.spiral}</p>
-            <div class="pressure-tags">${tribe.pressures.map(item => `<span>${item}</span>`).join('')}</div>
           </article>
         </div>
       </section>
@@ -679,6 +757,16 @@
       </section>`;
   }
 
+  // The anchor verse ranges from ~55 to ~750 characters; scale it so short verses
+  // fill the pull-quote and long ones do not overshoot the column beside them.
+  function syncVerseScale() {
+    const block = profileBody.querySelector('.verse-block');
+    const anchor = profileBody.querySelector('[data-scripture-anchor]');
+    if (!block || !anchor) return;
+    const length = anchor.textContent.trim().length;
+    block.dataset.verseLength = length > 430 ? 'long' : length > 170 ? 'medium' : 'short';
+  }
+
   function setScriptureLoading(isLoading) {
     profileBody.querySelectorAll('[data-scripture-anchor], [data-scripture-index]').forEach(target => {
       target.classList.toggle('is-loading', isLoading);
@@ -719,8 +807,8 @@
 
     syncBibleVersionControls();
     if (status) status.textContent = message || bibleVersionStatus();
-    if (badge) badge.textContent = version.id === 'web' ? 'WEB · public domain' : `${version.abbreviation} · YouVersion`;
-    if (drawerLabel) drawerLabel.textContent = `Read inline · ${version.abbreviation}`;
+    if (badge) badge.textContent = `${shortVersionName(version)} · ${versionSource(version)}`;
+    if (drawerLabel) drawerLabel.textContent = `Read inline · ${shortVersionName(version)}`;
     if (credit) credit.textContent = version.copyright || `${version.title}. Supplied by YouVersion.`;
     if (link) {
       link.hidden = !version.deepLink;
@@ -736,6 +824,7 @@
       const entry = vault[Number(target.dataset.scriptureIndex)];
       if (entry) target.innerHTML = inlineVerses(entry);
     });
+    syncVerseScale();
     setScriptureLoading(false);
   }
 
@@ -746,15 +835,17 @@
     updateTranslationChrome(version);
 
     if (version.id === 'web') return;
-    if (!scriptureApi.configured || typeof scriptureApi.getPassage !== 'function') {
+    const fromBolls = version.id === 'nlt';
+    if (!fromBolls && (!scriptureApi.configured || typeof scriptureApi.getPassage !== 'function')) {
       showWebFallback('This translation is not connected yet. Showing WEB.');
       return;
     }
 
     const vault = tribe.scriptureVault || [];
     setScriptureLoading(true);
-    updateTranslationChrome(version, `Loading ${version.abbreviation} passages…`);
+    updateTranslationChrome(version, `Loading ${shortVersionName(version)} passages…`);
     const passages = await Promise.allSettled(vault.map(entry => {
+      if (fromBolls) return bollsPassage(entry.ref).then(text => ({ content: text }));
       const usfm = referenceToUsfm(entry.ref);
       return usfm ? scriptureApi.getPassage(version.id, usfm) : Promise.reject(new Error('Unsupported reference.'));
     }));
@@ -779,8 +870,8 @@
 
     const niv = bibleVersions.find(item => String(item.abbreviation).toUpperCase() === 'NIV');
     let nivLoaded = 0;
-    if (missingIndexes.length && niv && String(version.id) !== String(niv.id)) {
-      updateTranslationChrome(version, `${version.abbreviation} is incomplete here. Loading NIV fallback…`);
+    if (missingIndexes.length && niv && String(version.id) !== String(niv.id) && scriptureApi.configured) {
+      updateTranslationChrome(version, `${shortVersionName(version)} is incomplete here. Loading NIV fallback…`);
       const nivPassages = await Promise.allSettled(missingIndexes.map(index => {
         const usfm = referenceToUsfm(vault[index].ref);
         return usfm ? scriptureApi.getPassage(niv.id, usfm) : Promise.reject(new Error('Unsupported reference.'));
@@ -799,21 +890,22 @@
         }
       });
     }
+    syncVerseScale();
     setScriptureLoading(false);
 
     const webCount = vault.length - primaryLoaded - nivLoaded;
     if (primaryLoaded === vault.length) {
-      updateTranslationChrome(version, `${version.abbreviation} is shown throughout this profile.`);
+      updateTranslationChrome(version, `${shortVersionName(version)} is shown throughout this profile.`);
     } else if (primaryLoaded > 0 || nivLoaded > 0) {
       const badge = profileBody.querySelector('[data-translation-badge]');
       const drawerLabel = profileBody.querySelector('[data-scripture-drawer-label]');
       const fallbackLabel = nivLoaded ? 'NIV fallback' : 'WEB fallback';
-      updateTranslationChrome(primaryLoaded ? version : (niv || webVersion), `${version.abbreviation} supplied ${primaryLoaded} passage${primaryLoaded === 1 ? '' : 's'}${nivLoaded ? `; NIV supplied ${nivLoaded}` : ''}${webCount ? `; WEB supplied ${webCount}` : ''}.`);
-      if (badge) badge.textContent = primaryLoaded ? `${version.abbreviation} · ${fallbackLabel}` : fallbackLabel;
-      if (drawerLabel) drawerLabel.textContent = `Read inline · ${primaryLoaded ? version.abbreviation + ' + ' : ''}${nivLoaded ? 'NIV' : 'WEB'}`;
+      updateTranslationChrome(primaryLoaded ? version : (niv || webVersion), `${shortVersionName(version)} supplied ${primaryLoaded} passage${primaryLoaded === 1 ? '' : 's'}${nivLoaded ? `; NIV supplied ${nivLoaded}` : ''}${webCount ? `; WEB supplied ${webCount}` : ''}.`);
+      if (badge) badge.textContent = primaryLoaded ? `${shortVersionName(version)} · ${fallbackLabel}` : fallbackLabel;
+      if (drawerLabel) drawerLabel.textContent = `Read inline · ${primaryLoaded ? shortVersionName(version) + ' + ' : ''}${nivLoaded ? 'NIV' : 'WEB'}`;
       noteMixedAttribution(primaryLoaded ? version : (niv || webVersion), nivLoaded ? niv : null, webCount > 0);
     } else {
-      showWebFallback(`${version.abbreviation} could not be loaded. Showing WEB.`);
+      showWebFallback(`${shortVersionName(version)} could not be loaded. Showing WEB.`);
     }
   }
 
@@ -821,16 +913,18 @@
     if (!scriptureApi.configured || typeof scriptureApi.getVersions !== 'function') return;
     try {
       const remoteVersions = await scriptureApi.getVersions();
-      bibleVersions = [...remoteVersions, webVersion];
+      // NLT comes straight from Bolls.life, so it survives a Scripture-service outage.
+      bibleVersions = withNlt(remoteVersions);
       bibleVersionsState = remoteVersions.length ? 'ready' : 'empty';
-      if (!selectedBibleVersionId || !bibleVersions.some(version => String(version.id) === String(selectedBibleVersionId))) {
-        const niv = remoteVersions.find(version => String(version.abbreviation).toUpperCase() === 'NIV');
-        selectedBibleVersionId = niv ? String(niv.id) : 'web';
-        saveBibleVersionId(selectedBibleVersionId);
-      }
     } catch (error) {
+      bibleVersions = [nltVersion];
       bibleVersionsState = 'error';
-      selectedBibleVersionId = 'web';
+    }
+
+    if (!bibleVersions.some(version => String(version.id) === String(selectedBibleVersionId))) {
+      const niv = bibleVersions.find(version => String(version.abbreviation).toUpperCase() === 'NIV');
+      selectedBibleVersionId = String((niv || bibleVersions[0] || nltVersion).id);
+      saveBibleVersionId(selectedBibleVersionId);
     }
 
     if (currentProfileId) {
