@@ -902,12 +902,17 @@ button,summary,a{-webkit-touch-callout:none}
 .w-v .gk{--vb-base:1rem}
 .vline .tx{--vb-base:.98rem}
 
-.readbar{
-  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
-  padding:10px 12px;margin-bottom:clamp(14px,2vw,20px);
-  border:1px solid var(--hair);border-radius:12px;
-  background:color-mix(in srgb,var(--sift) 5%,transparent);
+/* The dials live in the "see in context" dialog only — on the page itself they
+   were furniture standing in front of the argument. */
+.readbar{display:none}
+.esv-ctx .readbar{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;width:100%;margin:0;
+  padding:9px 11px;
+  border:1px solid var(--hair);border-radius:11px;
+  background:color-mix(in srgb,var(--sift) 6%,transparent);
 }
+.esv-ctx-foot{flex-wrap:wrap;gap:10px}
+.esv-ctx-foot .readbar{order:-1}
 .readbar .lbl{
   font-family:var(--mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink-3);margin-right:.3em;
@@ -1239,8 +1244,8 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
       </div>
       <div class="card edge is-sift">
         <h4 class="small">A translator solved it in the 9th century</h4>
-        <p>The Church Slavonic renders that same pair <b class="ru">ѡ҆сꙋжда́емъ</b> (condemn) then
-        <b class="ru">сꙋди́те</b> (judge) — using the prefix English lacks. It does the same at
+        <p>The Church Slavonic renders that same pair <b class="ru">ѡ҆сꙋжда́емъ</b> <i>(osuzhdaem — condemn)</i> then
+        <b class="ru">сꙋди́те</b> <i>(sudite — judge)</i> — using the prefix English lacks. It does the same at
         1 Cor 12:10 and Titus 3:11.</p>
       </div>
       <div class="card edge is-sift">
@@ -1263,24 +1268,6 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
 
     <span class="kicker rise">The evidence</span>
     <h2 class="big rise d1">Go as deep as you like.</h2>
-
-    <div class="readbar rise d2" id="readbar" role="group" aria-label="Reading settings">
-      <span class="lbl">Reading</span>
-      <div class="grp" data-dial="size">
-        <button type="button" data-step="-1" aria-label="Smaller verse text">A&#8722;</button>
-        <span class="val" id="sizeVal">100%</span>
-        <button type="button" data-step="1" aria-label="Larger verse text">A+</button>
-      </div>
-      <div class="grp" data-dial="lh">
-        <button type="button" data-v="1.38">Snug</button>
-        <button type="button" data-v="1.5" class="on">Normal</button>
-        <button type="button" data-v="1.72">Roomy</button>
-      </div>
-      <div class="grp" data-dial="face">
-        <button type="button" data-v="serif" class="on">Serif</button>
-        <button type="button" data-v="sans">Sans</button>
-      </div>
-    </div>
 
     <div class="deeps" style="margin-top:clamp(24px,3.4vw,44px)">
 
@@ -1690,7 +1677,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           <span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2"><path d="M1 7h12"/><path class="v" d="M7 1v12"/></svg></span>
         </summary>
         <div class="deep-body">
-          <div class="vrow">
+          <div class="vrow esv-skip">
             <h4 class="small">Luke 6:37 — three commands, three verbs</h4>
             <div class="vline"><div class="who">Greek</div><div class="tx gk">καὶ μὴ <b class="k-cond">κρίνετε</b>… καὶ μὴ <b class="k-cond">καταδικάζετε</b>… <b class="k-sift">ἀπολύετε</b>, καὶ ἀπολυθήσεσθε·</div></div>
             <div class="vline"><div class="who">English</div><div class="tx">“Do not judge… do not <em>condemn</em>… <em>release</em>, and you will be released.”</div></div>
@@ -1704,7 +1691,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             one that ends in a penalty. Not the sense you used on the apples.</div>
           </div>
 
-          <div class="vrow">
+          <div class="vrow esv-skip">
             <h4 class="small">Romans 14:13 — settled outright</h4>
             <div class="vline"><div class="who">Greek</div><div class="tx gk">Μηκέτι οὖν ἀλλήλους <b class="k-cond">κρίνωμεν</b>, ἀλλὰ τοῦτο <b class="k-sift">κρίνατε</b> μᾶλλον…</div></div>
             <div class="vline"><div class="who">English</div><div class="tx">“Let us no longer <em>judge</em> one another — but rather <em>judge</em> this…”</div></div>
@@ -1718,7 +1705,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             prefix and used it. <b>A ninth-century translator solved this in one word.</b></div>
           </div>
 
-          <div class="vrow">
+          <div class="vrow esv-skip">
             <h4 class="small">And the verse nobody quotes</h4>
             <div class="vline"><div class="who">Greek</div><div class="tx gk">Τί δὲ καὶ ἀφ’ ἑαυτῶν οὐ <b class="k-sift">κρίνετε</b> τὸ δίκαιον;</div></div>
             <div class="vline"><div class="who">English</div><div class="tx">“And why do you not judge for yourselves what is right?” <span class="ref">Luke 12:57</span></div></div>
@@ -1929,8 +1916,6 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           <div class="rupick" id="ruPick" role="group" aria-label="Русский перевод">
             <button type="button" data-v="SYNOD" class="on">Синодальный</button>
             <button type="button" data-v="NRT">НРП</button>
-            <button type="button" data-v="RBS2">Совр. русский</button>
-            <button type="button" data-v="CSL">Церковнослав.</button>
           </div>
 
           <div class="rugrid">
@@ -1941,9 +1926,8 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           </div>
 
           <p class="lede" style="margin-top:clamp(16px,2.2vw,24px)">
-            Switch the translation and watch <b class="ru">судить</b> and <b class="ru">осуждать</b>
-            trade places. The Slavonic column is the oldest witness here, and it is the one that
-            splits the two senses most confidently.
+            Switch between the two and watch <b class="ru">судить</b> and <b class="ru">осуждать</b>
+            trade places. Both keep the prefix that English threw away.
           </p>
 
           <div class="ruladder">
@@ -2328,6 +2312,24 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
   </div>
 </footer>
 
+    <div class="readbar" id="readbar" role="group" aria-label="Reading settings">
+      <span class="lbl">Reading</span>
+      <div class="grp" data-dial="size">
+        <button type="button" data-step="-1" aria-label="Smaller verse text">A&#8722;</button>
+        <span class="val" id="sizeVal">100%</span>
+        <button type="button" data-step="1" aria-label="Larger verse text">A+</button>
+      </div>
+      <div class="grp" data-dial="lh">
+        <button type="button" data-v="1.38">Snug</button>
+        <button type="button" data-v="1.5" class="on">Normal</button>
+        <button type="button" data-v="1.72">Roomy</button>
+      </div>
+      <div class="grp" data-dial="face">
+        <button type="button" data-v="serif" class="on">Serif</button>
+        <button type="button" data-v="sans">Sans</button>
+      </div>
+    </div>
+
 <script src="/assets/scripture-popover.js"></script>
 <script>
 (function(){
@@ -2496,8 +2498,16 @@ if ("IntersectionObserver" in window && matchMedia("(prefers-reduced-motion: no-
    sentence-ending punctuation is dropped. Declared at IIFE scope because three
    painters use it and function declarations inside a block do not escape it
    under "use strict". */
+function decodeEntities(t){
+  t = String(t || "");
+  if (t.indexOf("&") === -1) return t;
+  var ta = document.createElement("textarea");
+  ta.innerHTML = t;
+  return ta.value;
+}
+
 function stripHeading(text){
-  var parts = String(text || "").split("\n");
+  var parts = decodeEntities(text).split("\n");
   if (parts.length > 1) {
     var head = parts[0].trim();
     if (head && head.length < 60 && !/[.!?\u201d\u2019:;,]$/.test(head)) parts.shift();
@@ -2518,7 +2528,7 @@ function quote(t){
    full. It ships no colours; this page's .esv-* rules dress it. */
 var S = window.EsmrskyScripture;
 if (S){
-  S.init({ key:"judgment", scan:".ref, .cite, .ev, .vpoint, .w-v" });
+  S.init({ key:"judgment", scan:".fence .cite, .miss .ev, .vpoint, .bcard .cite" });
 
   var host = document.getElementById("pickerHost");
   if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses read in"); }
@@ -2551,8 +2561,8 @@ var RU_BOOKS = {"Матфея":40,"Луки":42,"Римлянам":45,"Евре�
 var ruBlocks = document.querySelectorAll(".ruvb[data-ru]");
 var ruCache = {};
 function ruClean(x){
-  return String(x||"").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ")
-    .replace(/&[a-z]+;/g," ").replace(/\s+/g," ").trim()
+  return decodeEntities(String(x||"").replace(/<[^>]+>/g," "))
+    .replace(/\s+/g," ").trim()
     /* The Slavonic text opens with lectionary markers — "(Зачало 20)", "(Заⷱ҇ 27)" —
        which are reading-cycle bookkeeping, not part of the verse. Trim FIRST so a
        leading space cannot defeat the anchor, and match on "За" because the
@@ -2588,7 +2598,7 @@ function paintRu(code){
       t.textContent = out.join(" ") || "Стих не найден.";
       t.classList.remove("is-loading");
       t.classList.remove("swap-in"); void t.offsetWidth; t.classList.add("swap-in");
-      if (tag) tag.textContent = code === "SYNOD" ? "Синодальный" : code === "NRT" ? "НРП" : code === "CSL" ? "Церковнослав." : "Совр. русский";
+      if (tag) tag.textContent = code === "NRT" ? "НРП" : "Синодальный";
     });
   });
 }
@@ -2684,6 +2694,23 @@ function applyRead(){
   try{ localStorage.setItem("judgment-read", JSON.stringify(READ)); }catch(e){}
 }
 var readbar = document.getElementById("readbar");
+
+/* The dialog is built by the shared client the first time a reader asks for
+   context, and reused afterwards. Move the dials into its footer whenever it
+   turns up; the bar is display:none anywhere else. */
+function mountReader(){
+  if (!readbar) return;
+  var dlg = document.querySelector(".esv-ctx");
+  if (!dlg) return;
+  var foot = dlg.querySelector(".esv-ctx-foot") || dlg.querySelector(".esv-ctx-inner");
+  if (foot && readbar.parentElement !== foot) foot.insertBefore(readbar, foot.firstChild);
+}
+if (window.MutationObserver){
+  new MutationObserver(mountReader).observe(document.body, {childList:true});
+}
+document.addEventListener("click", function(ev){
+  if (ev.target.closest(".esv-tip-ctx")) setTimeout(mountReader, 60);
+});
 if (readbar){
   readbar.addEventListener("click", function(ev){
     var b = ev.target.closest("button"); if(!b) return;
