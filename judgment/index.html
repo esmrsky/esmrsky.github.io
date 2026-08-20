@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Judgment — κρίνω, and the one word that broke it</title>
-<meta name="description" content="Nineteen Greek words, one English word. What it actually means to judge — in the Greek, the Hebrew, the Slavonic and the Russian. The short version first; the evidence underneath.">
+<meta name="description" content="Twenty-eight Greek words, one English word. What it actually means to judge — in the Greek, the Hebrew, the Slavonic and the Russian. The short version first; the evidence underneath.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2317150F'/%3E%3Cpath d='M50 12v76' stroke='%23E7E0D2' stroke-width='5'/%3E%3Ccircle cx='27' cy='32' r='8' fill='%23C99433'/%3E%3Ccircle cx='27' cy='60' r='8' fill='%23C99433'/%3E%3Ccircle cx='73' cy='46' r='8' fill='%238C2B22'/%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://esmrsky.github.io/judgment/">
 <meta property="og:title" content="Judgment — κρίνω, and the one word that broke it">
-<meta property="og:description" content="Nineteen Greek words, one English word. What it actually means to judge.">
+<meta property="og:description" content="Twenty-eight Greek words, one English word. What it actually means to judge.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -598,6 +598,7 @@ footer p{max-width:64ch}
 .deep.s-mirror{--sec:#A8483C}
 .deep.s-missed{--sec:#6B4C96}
 .deep.s-test{--sec:#287871}
+.deep.s-brain{--sec:#A03C6E}
 .deep.s-sources{--sec:#4F5865}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   .deep.s-roots{--sec:#DCA93F}
@@ -610,6 +611,7 @@ footer p{max-width:64ch}
   .deep.s-mirror{--sec:#E88C7D}
   .deep.s-missed{--sec:#B79BE0}
   .deep.s-test{--sec:#6FD0C6}
+  .deep.s-brain{--sec:#EC93BE}
   .deep.s-sources{--sec:#A7B0BE}
 }}
 [data-theme="dark"]{
@@ -623,6 +625,7 @@ footer p{max-width:64ch}
   .deep.s-mirror{--sec:#E88C7D}
   .deep.s-missed{--sec:#B79BE0}
   .deep.s-test{--sec:#6FD0C6}
+  .deep.s-brain{--sec:#EC93BE}
   .deep.s-sources{--sec:#A7B0BE}
 }
 
@@ -837,6 +840,163 @@ footer p{max-width:64ch}
 .rugrid .vtext{font-size:clamp(1rem,.98rem + .3vw,1.14rem)}
 @media (max-width:720px){.rugrid{grid-template-columns:1fr}}
 
+
+/* ==========================================================================
+   TOUCH + SURFACE POLISH
+   ========================================================================== */
+/* iOS/Android paint a grey square over anything tappable on touch. It flashes
+   over buttons, summaries and inline verse refs and reads as a rendering bug.
+   Kill it globally — every interactive thing here has its own :active state. */
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+button,summary,a{-webkit-touch-callout:none}
+.chip:active,.opt:active,.apple:active,.rupick button:active,
+.esv-pick-btn:active,.theme-btn:active{transform:scale(.975)}
+.deep>summary:active .dt{opacity:.72}
+
+/* The pop-up already offers "see in context", which opens the passage in place.
+   A second button that throws the reader out to another site is noise. */
+.esv-tip-out,.esv-ctx-out{display:none !important}
+.esv-tip-actions{border-top:0;padding-top:0;margin-top:11px}
+
+/* ==========================================================================
+   ACCORDIONS THAT ACTUALLY OPEN
+   Height is animated, not snapped. The collapsed state lives ONLY on the
+   transient .anim class, which JS always removes (and a timer removes even if
+   JS is interrupted), so a failed animation can never leave a section stuck
+   shut with its content unreachable.
+   ========================================================================== */
+.deep-body{overflow:hidden}
+.deep.anim>.deep-body{
+  transition:height .34s cubic-bezier(.22,.68,.28,1),opacity .26s ease;
+  will-change:height;
+}
+.deep.anim.closing>.deep-body{opacity:.25}
+@media (prefers-reduced-motion:reduce){
+  .deep.anim>.deep-body{transition:none}
+}
+/* the marker rotates with the same curve as the body opens */
+.deep>summary .plus svg{transition:transform .34s cubic-bezier(.22,.68,.28,1)}
+
+/* ==========================================================================
+   THE READER — scoped type dials for scripture only.
+   Registered with @property so the browser can INTERPOLATE them: stepping the
+   size eases the words up instead of jumping. The dials are consumed by verse
+   text alone, never by the page's own prose, which is what keeps a transition
+   on them cheap enough to be smooth (a :root-wide dial re-lays everything).
+   ========================================================================== */
+@property --read-scale{syntax:"<number>";inherits:true;initial-value:1}
+@property --read-lh{syntax:"<number>";inherits:true;initial-value:1.5}
+:root{--read-scale:1;--read-lh:1.5;--read-face:var(--serif)}
+[data-read-face="sans"]{--read-face:var(--sans)}
+.vb .vtext,.esv-tip-text,.esv-ctx-body,.w-v .gk,.vline .tx{
+  font-family:var(--read-face);
+  font-size:calc(var(--vb-base,1.12rem) * var(--read-scale));
+  line-height:var(--read-lh);
+  transition:font-size .3s cubic-bezier(.22,.68,.28,1),line-height .3s cubic-bezier(.22,.68,.28,1);
+}
+@media (prefers-reduced-motion:reduce){
+  .vb .vtext,.esv-tip-text,.esv-ctx-body{transition:none}
+}
+.esv-tip-text{--vb-base:1.02rem}
+.esv-ctx-body{--vb-base:1.06rem}
+.w-v .gk{--vb-base:1rem}
+.vline .tx{--vb-base:.98rem}
+
+.readbar{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  padding:10px 12px;margin-bottom:clamp(14px,2vw,20px);
+  border:1px solid var(--hair);border-radius:12px;
+  background:color-mix(in srgb,var(--sift) 5%,transparent);
+}
+.readbar .lbl{
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-right:.3em;
+}
+.readbar .grp{display:flex;gap:4px;align-items:center}
+.readbar button{
+  min-width:44px;min-height:44px;padding-inline:11px;
+  border:1px solid var(--hair);border-radius:9px;background:none;color:var(--ink-2);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .16s ease;
+}
+.readbar button:hover{border-color:var(--sift);color:var(--ink)}
+.readbar button:active{transform:scale(.94)}
+.readbar button.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.readbar .val{font-family:var(--mono);font-size:.6rem;color:var(--ink-3);min-width:3.2em;text-align:center}
+.inkpanel .readbar{border-color:var(--ink-panel-hair);background:var(--ink-panel-film)}
+.inkpanel .readbar button{border-color:var(--ink-panel-hair);color:var(--ink-panel-dim)}
+.inkpanel .readbar button.on{background:var(--ink-panel-text);color:var(--ink-panel);border-color:var(--ink-panel-text)}
+.inkpanel .readbar .lbl,.inkpanel .readbar .val{color:var(--ink-panel-faint)}
+
+/* hero verse, written out under the Greek */
+.hero-verse{
+  display:block;margin-top:.55em;
+  font-family:var(--read-face);
+  font-size:calc(1.02rem * var(--read-scale));
+  line-height:var(--read-lh);
+  color:var(--hero-dim);
+  transition:opacity .18s ease,font-size .3s cubic-bezier(.22,.68,.28,1);
+}
+.hero-verse.is-loading{opacity:.4}
+.hero-verse .hv-tag{
+  display:block;margin-top:.4em;font-family:var(--mono);font-size:.56rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--hero-faint);
+}
+
+
+/* ---- lexicon: every occurrence written out ------------------------------ */
+.w-occs{border-top:1px solid var(--hair-2);padding-top:.8em;margin-top:auto;display:grid;gap:.7em}
+.occ{display:grid;gap:.16em}
+.occ+.occ{border-top:1px dotted var(--hair-2);padding-top:.7em}
+.occ-gk{font-family:var(--serif);font-size:1.02rem;line-height:1.42;color:var(--ink)}
+.occ .vtext{
+  font-family:var(--read-face);
+  font-size:calc(.94rem * var(--read-scale));
+  line-height:var(--read-lh);
+  color:var(--ink-2);margin:0;max-width:none;
+  transition:opacity .16s ease,font-size .3s cubic-bezier(.22,.68,.28,1);
+}
+.occ .vtext.is-loading{opacity:.32}
+.occ .ref{align-self:start}
+
+/* ---- the brain section -------------------------------------------------- */
+.brainrow{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(12px,1.8vw,20px)}
+.bcard{
+  border:1px solid var(--hair);border-left:4px solid var(--sec);
+  padding:clamp(16px,2.1vw,26px);background:color-mix(in srgb,var(--sec) 3.5%,var(--paper));
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background-color .18s ease;
+}
+.bcard:hover{transform:translateY(-2px);box-shadow:0 10px 26px var(--shadow-soft);
+  background:color-mix(in srgb,var(--sec) 7%,var(--paper));border-color:color-mix(in srgb,var(--sec) 34%,var(--hair))}
+.bcard .num{
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sec);margin-bottom:.6em;display:block;
+}
+.bcard h4{margin-bottom:.45em}
+.bcard p{font-size:.95rem;line-height:1.5;color:var(--ink-2);max-width:none}
+.bcard p+p{margin-top:.6em}
+.bcard .cite{
+  display:block;margin-top:.8em;padding-top:.75em;border-top:1px solid var(--hair-2);
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.03em;color:var(--ink-3);line-height:1.5;
+}
+.bcard .tie{
+  display:block;margin-top:.7em;padding-left:.8em;border-left:3px solid var(--sift);
+  font-size:.92rem;line-height:1.45;color:var(--ink);
+}
+.bcard .tie b{color:var(--sift-ink)}
+/* signal-detection grid */
+.sdt{display:grid;grid-template-columns:auto 1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:clamp(14px,2vw,20px)}
+.sdt>div{background:var(--paper);padding:clamp(9px,1.3vw,14px)}
+.sdt .hd{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.sdt .cell b{display:block;font-variation-settings:"wdth" 80;font-weight:800;text-transform:uppercase;font-size:.82rem;margin-bottom:.2em}
+.sdt .cell{font-size:.86rem;line-height:1.4;color:var(--ink-2)}
+.sdt .good b{color:var(--sift-ink)} .sdt .bad b{color:var(--condemn-ink)}
+@media (max-width:720px){
+  .brainrow{grid-template-columns:1fr}
+  .sdt{grid-template-columns:1fr}
+  .sdt .hd:first-child{display:none}
+}
 /* ==========================================================================
    RESPONSIVE — declared AFTER what it overrides. Media queries add no
    specificity, so one placed above its target does nothing.
@@ -897,24 +1057,22 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
     <div class="hero-rule"></div>
 
     <div class="standoff">
-      <blockquote class="l">
+      <blockquote class="l esv-skip">
         <span class="gk">Μὴ <span class="root">κρίν</span>ετε.</span>
-        <span class="en">“Do not judge.”</span>
-        <span class="ref">Matthew 7:1</span>
+        <span class="hero-verse is-loading" data-verse="Matthew 7:1">Loading…<span class="hv-tag"><span class="hv-ref">Matthew 7:1</span> · <span class="hv-ver"></span></span></span>
         <span class="tagline">The only line anyone quotes</span>
       </blockquote>
       <div class="seam" aria-hidden="true"></div>
-      <blockquote class="r">
+      <blockquote class="r esv-skip">
         <span class="gk">τὴν δικαίαν <span class="root">κρί</span>σιν <span class="root">κρίν</span>ατε.</span>
-        <span class="en">“Judge the righteous judgment.”</span>
-        <span class="ref">John 7:24</span>
+        <span class="hero-verse is-loading" data-verse="John 7:24">Loading…<span class="hv-tag"><span class="hv-ref">John 7:24</span> · <span class="hv-ver"></span></span></span>
         <span class="tagline">Same verb. Now an order.</span>
       </blockquote>
     </div>
 
     <p class="hero-claim">
       The contradiction isn’t in the Bible. It was made in English, by
-      <b>one word doing the work of nineteen</b>.
+      <b>one word doing the work of twenty-eight</b>.
     </p>
   </div>
 </section>
@@ -938,7 +1096,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
         <div class="n">02</div>
         <div>
           <h3 class="mid">English lost the prefix</h3>
-          <p>Greek had nineteen words for this. <b>δια-</b> means apart. <b>κατα-</b> means
+          <p>Greek had twenty-eight words for this. <b>δια-</b> means apart. <b>κατα-</b> means
           down-against. The prefix carried the entire moral difference. English has one
           syllable: <em>judge</em>.</p>
         </div>
@@ -1106,6 +1264,24 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
     <span class="kicker rise">The evidence</span>
     <h2 class="big rise d1">Go as deep as you like.</h2>
 
+    <div class="readbar rise d2" id="readbar" role="group" aria-label="Reading settings">
+      <span class="lbl">Reading</span>
+      <div class="grp" data-dial="size">
+        <button type="button" data-step="-1" aria-label="Smaller verse text">A&#8722;</button>
+        <span class="val" id="sizeVal">100%</span>
+        <button type="button" data-step="1" aria-label="Larger verse text">A+</button>
+      </div>
+      <div class="grp" data-dial="lh">
+        <button type="button" data-v="1.38">Snug</button>
+        <button type="button" data-v="1.5" class="on">Normal</button>
+        <button type="button" data-v="1.72">Roomy</button>
+      </div>
+      <div class="grp" data-dial="face">
+        <button type="button" data-v="serif" class="on">Serif</button>
+        <button type="button" data-v="sans">Sans</button>
+      </div>
+    </div>
+
     <div class="deeps" style="margin-top:clamp(24px,3.4vw,44px)">
 
       <details class="deep rise s-roots" id="roots">
@@ -1168,7 +1344,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           <span class="dn">02</span>
           <span class="sec-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v6M12 9L6.5 13M12 9l5.5 4M6.5 13v3M17.5 13v3M12 15v6" stroke-linecap="round"/><circle cx="12" cy="3" r="1.6"/></svg></span>
           <span class="dt">The family
-            <span class="dsub">All nineteen words, colour-stamped by the verdict Scripture gives them. Read the prefixes down the page.</span>
+            <span class="dsub">All twenty-eight words, colour-stamped by the verdict Scripture gives them. Read the prefixes down the page.</span>
           </span>
           <span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2"><path d="M1 7h12"/><path class="v" d="M7 1v12"/></svg></span>
         </summary>
@@ -1177,7 +1353,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           prefix said so before the sentence started.</p>
 
           <div class="chips" role="group" aria-label="Filter the word list">
-            <button class="chip on" type="button" data-f="all">All 19</button>
+            <button class="chip on" type="button" data-f="all">All 28</button>
             <button class="chip f-sift" type="button" data-f="sift"><span class="dot"></span>Commanded</button>
             <button class="chip f-cond" type="button" data-f="cond"><span class="dot"></span>Forbidden</button>
             <button class="chip f-god" type="button" data-f="god"><span class="dot"></span>God’s alone</button>
@@ -1188,134 +1364,197 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             <article class="w is-neu" data-cls="neu">
               <div class="w-top"><span class="w-gk gk">κρίνω</span><span class="w-tl">krinō</span><span class="w-sn">G2919</span></div>
               <div class="w-lit">κρίνω</div>
-              <p class="w-def">Separate one thing from another, and act on it. Sift, distinguish, decide, select — and only then, in a narrow legal use, <em>try a case</em>. Morally colourless. A tool.</p>
-              <div class="w-v"><span class="gk">Μηκέτι οὖν ἀλλήλους κρίνωμεν, ἀλλὰ τοῦτο κρίνατε μᾶλλον…</span>“Let us no longer judge one another — but rather judge this…” <span class="ref">Rom 14:13</span></div>
+              <p class="w-def">Separate one thing from another, and act on it. Sift, distinguish, decide, select — and only then, in a narrow legal use, <em>try a case</em>. Morally colourless: a tool.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Romans 14:13"><span class="gk occ-gk">Μηκέτι οὖν ἀλλήλους κρίνωμεν, ἀλλὰ τοῦτο κρίνατε μᾶλλον…</span><p class="vtext is-loading">…</p><span class="ref">Romans 14:13</span></div><div class="occ" data-verse="Luke 12:57"><span class="gk occ-gk">Τί δὲ καὶ ἀφ’ ἑαυτῶν οὐ κρίνετε τὸ δίκαιον;</span><p class="vtext is-loading">…</p><span class="ref">Luke 12:57</span></div><div class="occ" data-verse="1 Corinthians 10:15"><span class="gk occ-gk">ὡς φρονίμοις λέγω· κρίνατε ὑμεῖς ὅ φημι.</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 10:15</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">судить</b> — Paul forbids and commands the same verb in one breath.</div></div>
             </article>
             <article class="w is-sift" data-cls="sift">
               <div class="w-top"><span class="w-gk gk">διακρίνω</span><span class="w-tl">diakrinō</span><span class="w-sn">G1252</span></div>
               <div class="w-lit"><span class="pfx">δια-</span>κρίνω</div>
               <p class="w-def">To separate <em>all the way through</em> — to tell apart two things that arrived mixed. The word for sorting a pile, reading a sky, weighing a prophecy.</p>
-              <div class="w-v"><span class="gk">εἰ δὲ ἑαυτοὺς διεκρίνομεν, οὐκ ἂν ἐκρινόμεθα.</span>“If we sorted ourselves out, we would not be judged.” <span class="ref">1 Cor 11:31</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="1 Corinthians 11:31"><span class="gk occ-gk">εἰ δὲ ἑαυτοὺς διεκρίνομεν, οὐκ ἂν ἐκρινόμεθα.</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 11:31</span></div><div class="occ" data-verse="1 Corinthians 14:29"><span class="gk occ-gk">προφῆται δὲ δύο ἢ τρεῖς λαλείτωσαν, καὶ οἱ ἄλλοι διακρινέτωσαν·</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 14:29</span></div><div class="occ" data-verse="1 Corinthians 6:5"><span class="gk occ-gk">…οὐδεὶς σοφὸς ὃς δυνήσεται διακρῖναι ἀνὰ μέσον τοῦ ἀδελφοῦ αὐτοῦ;</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 6:5</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">различать · рассуждать</b> — Both Russian verbs carry <b>раз-/рас-</b> — “apart” — exactly Greek <b>δια-</b>.</div></div>
             </article>
             <article class="w is-sift" data-cls="sift">
               <div class="w-top"><span class="w-gk gk">διάκρισις</span><span class="w-tl">diakrisis</span><span class="w-sn">G1253</span></div>
               <div class="w-lit"><span class="pfx">δια-</span>κρίσις</div>
               <p class="w-def">The noun: <em>discernment</em>. Named as a gift of the Spirit, and as the mark of a grown-up.</p>
-              <div class="w-v"><span class="gk">…τὰ αἰσθητήρια γεγυμνασμένα πρὸς διάκρισιν καλοῦ τε καὶ κακοῦ.</span>“…faculties trained by practice to distinguish good from evil.” <span class="ref">Heb 5:14</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Hebrews 5:14"><span class="gk occ-gk">…γεγυμνασμένα πρὸς διάκρισιν καλοῦ τε καὶ κακοῦ.</span><p class="vtext is-loading">…</p><span class="ref">Hebrews 5:14</span></div><div class="occ" data-verse="1 Corinthians 12:10"><span class="gk occ-gk">…ἄλλῳ δὲ διακρίσεις πνευμάτων…</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 12:10</span></div><div class="occ" data-verse="Romans 14:1"><span class="gk occ-gk">…μὴ εἰς διακρίσεις διαλογισμῶν.</span><p class="vtext is-loading">…</p><span class="ref">Romans 14:1</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">различение · разсуждение</b> — Slavonic has <b>разсуждѐнїе</b>; the Synodal modernised it to <b>различение</b>.</div></div>
             </article>
             <article class="w is-sift" data-cls="sift">
               <div class="w-top"><span class="w-gk gk">ἀνακρίνω</span><span class="w-tl">anakrinō</span><span class="w-sn">G350</span></div>
               <div class="w-lit"><span class="pfx">ἀνα-</span>κρίνω</div>
-              <p class="w-def">To sift a matter from the bottom up — examine, investigate, cross-question. A pre-trial inquiry.</p>
-              <div class="w-v"><span class="gk">καθ’ ἡμέραν ἀνακρίνοντες τὰς γραφὰς εἰ ἔχοι ταῦτα οὕτως.</span>“…examining the Scriptures daily to see whether these things were so.” <span class="ref">Acts 17:11</span></div>
+              <p class="w-def">To sift a matter from the bottom up — examine, investigate, cross-question. The word for a pre-trial inquiry.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Acts 17:11"><span class="gk occ-gk">…καθ’ ἡμέραν ἀνακρίνοντες τὰς γραφὰς εἰ ἔχοι ταῦτα οὕτως.</span><p class="vtext is-loading">…</p><span class="ref">Acts 17:11</span></div><div class="occ" data-verse="1 Corinthians 2:15"><span class="gk occ-gk">ὁ δὲ πνευματικὸς ἀνακρίνει πάντα, αὐτὸς δὲ ὑπ’ οὐδενὸς ἀνακρίνεται.</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 2:15</span></div><div class="occ" data-verse="1 Corinthians 4:3"><span class="gk occ-gk">…ἀλλ’ οὐδὲ ἐμαυτὸν ἀνακρίνω·</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 4:3</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">исследовать</b> — Luke calls the Bereans <em>more noble</em> for doing this — to an apostle.</div></div>
             </article>
             <article class="w is-sift" data-cls="sift">
               <div class="w-top"><span class="w-gk gk">δοκιμάζω</span><span class="w-tl">dokimazō</span><span class="w-sn">G1381</span></div>
               <div class="w-lit">δόκιμος</div>
               <p class="w-def">The assayer’s word. Put metal in the fire, find out what it is, and <em>approve what passes</em>. Testing that intends to keep.</p>
-              <div class="w-v"><span class="gk">πάντα δὲ δοκιμάζετε, τὸ καλὸν κατέχετε.</span>“Test everything; hold fast what is good.” <span class="ref">1 Thess 5:21</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="1 Thessalonians 5:21"><span class="gk occ-gk">πάντα δὲ δοκιμάζετε, τὸ καλὸν κατέχετε.</span><p class="vtext is-loading">…</p><span class="ref">1 Thessalonians 5:21</span></div><div class="occ" data-verse="Romans 12:2"><span class="gk occ-gk">…εἰς τὸ δοκιμάζειν ὑμᾶς τί τὸ θέλημα τοῦ θεοῦ…</span><p class="vtext is-loading">…</p><span class="ref">Romans 12:2</span></div><div class="occ" data-verse="1 John 4:1"><span class="gk occ-gk">…δοκιμάζετε τὰ πνεύματα εἰ ἐκ τοῦ θεοῦ ἐστιν…</span><p class="vtext is-loading">…</p><span class="ref">1 John 4:1</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">испытывать</b> — Slavonic: <b>всѧ̑ же и҆скꙋша́юще</b> — “assaying all things.”</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">ἐπιγινώσκω</span><span class="w-tl">epiginōskō</span><span class="w-sn">G1921</span></div>
+              <div class="w-lit"><span class="pfx">ἐπι-</span>γινώσκω</div>
+              <p class="w-def">To know <em>upon</em> — recognition. Not a guess but an identification: you have seen enough to name the thing. The verb in “you will know them.”</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 7:16"><span class="gk occ-gk">ἀπὸ τῶν καρπῶν αὐτῶν ἐπιγνώσεσθε αὐτούς.</span><p class="vtext is-loading">…</p><span class="ref">Matthew 7:16</span></div><div class="occ" data-verse="Matthew 7:20"><span class="gk occ-gk">ἄραγε ἀπὸ τῶν καρπῶν αὐτῶν ἐπιγνώσεσθε αὐτούς.</span><p class="vtext is-loading">…</p><span class="ref">Matthew 7:20</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">узнавать</b> — Recognition is the payoff of inspection: look at fruit, and you will <em>recognise</em>.</div></div>
+            </article>
+            <article class="w is-neu" data-cls="neu">
+              <div class="w-top"><span class="w-gk gk">λογίζομαι</span><span class="w-tl">logizomai</span><span class="w-sn">G3049</span></div>
+              <div class="w-lit">λόγος</div>
+              <p class="w-def">To reckon — literally to <b>compute</b>. A bookkeeping word: run the numbers and enter the result in the ledger. English <em>logic</em> is its cousin.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Philippians 4:8"><span class="gk occ-gk">…ταῦτα λογίζεσθε.</span><p class="vtext is-loading">…</p><span class="ref">Philippians 4:8</span></div><div class="occ" data-verse="2 Corinthians 5:19"><span class="gk occ-gk">…μὴ λογιζόμενος αὐτοῖς τὰ παραπτώματα αὐτῶν…</span><p class="vtext is-loading">…</p><span class="ref">2 Corinthians 5:19</span></div><div class="occ" data-verse="Romans 4:3"><span class="gk occ-gk">ἐπίστευσεν δὲ Ἀβραὰμ τῷ θεῷ καὶ ἐλογίσθη αὐτῷ εἰς δικαιοσύνην.</span><p class="vtext is-loading">…</p><span class="ref">Romans 4:3</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">считать · помышлять</b> — The Bible’s word for weighing evidence is an accountant’s word — see the brain section.</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">συνίημι</span><span class="w-tl">syniēmi</span><span class="w-sn">G4920</span></div>
+              <div class="w-lit"><span class="pfx">συν-</span>ἵημι</div>
+              <p class="w-def">To send together — to <em>put two and two together</em>. Comprehension as assembly: the pieces arrive separately and you join them.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="2 Corinthians 10:12"><span class="gk occ-gk">…συνκρίνοντες ἑαυτοὺς ἑαυτοῖς οὐ συνιᾶσιν.</span><p class="vtext is-loading">…</p><span class="ref">2 Corinthians 10:12</span></div><div class="occ" data-verse="Matthew 13:13"><span class="gk occ-gk">…καὶ ἀκούοντες οὐκ ἀκούουσιν οὐδὲ συνίουσιν·</span><p class="vtext is-loading">…</p><span class="ref">Matthew 13:13</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">разуметь</b> — Slavic <em>суд</em> is also a “putting-together.” Both languages picture thinking as assembly.</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">φρόνιμος</span><span class="w-tl">phronimos</span><span class="w-sn">G5429</span></div>
+              <div class="w-lit">φρήν</div>
+              <p class="w-def">Prudent, shrewd, sensible — the one who sees what a situation actually requires. The last word of the Sermon on the Mount is about this man.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 7:24"><span class="gk occ-gk">…ὁμοιωθήσεται ἀνδρὶ φρονίμῳ, ὅστις ᾠκοδόμησεν αὐτοῦ τὴν οἰκίαν ἐπὶ τὴν πέτραν.</span><p class="vtext is-loading">…</p><span class="ref">Matthew 7:24</span></div><div class="occ" data-verse="Matthew 10:16"><span class="gk occ-gk">…γίνεσθε οὖν φρόνιμοι ὡς οἱ ὄφεις καὶ ἀκέραιοι ὡς αἱ περιστεραί.</span><p class="vtext is-loading">…</p><span class="ref">Matthew 10:16</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">благоразумный</b> — Shrewd <em>and</em> harmless. Neither half is optional.</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">αἰσθητήριον</span><span class="w-tl">aisthētērion</span><span class="w-sn">G145</span></div>
+              <div class="w-lit">αἴσθησις</div>
+              <p class="w-def">The organ of perception — the faculty a sense runs on. Hebrews says the mature have these <em>gymnasium-trained</em>. Discernment is anatomy, not mood.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Hebrews 5:14"><span class="gk occ-gk">…τὰ αἰσθητήρια γεγυμνασμένα ἐχόντων πρὸς διάκρισιν καλοῦ τε καὶ κακοῦ.</span><p class="vtext is-loading">…</p><span class="ref">Hebrews 5:14</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">чувства</b> — English <em>aesthetic</em> comes from the same root: perception before taste.</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">ἐλέγχω</span><span class="w-tl">elegchō</span><span class="w-sn">G1651</span></div>
+              <div class="w-lit">ἐλέγχω</div>
+              <p class="w-def">To bring into the light — expose, convict, show someone the thing they could not see. Correction aimed at sight, not at punishment.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 18:15"><span class="gk occ-gk">…ὕπαγε ἔλεγξον αὐτὸν μεταξὺ σοῦ καὶ αὐτοῦ μόνου·</span><p class="vtext is-loading">…</p><span class="ref">Matthew 18:15</span></div><div class="occ" data-verse="Ephesians 5:11"><span class="gk occ-gk">…μᾶλλον δὲ καὶ ἐλέγχετε.</span><p class="vtext is-loading">…</p><span class="ref">Ephesians 5:11</span></div><div class="occ" data-verse="John 16:8"><span class="gk occ-gk">καὶ ἐλθὼν ἐκεῖνος ἐλέγξει τὸν κόσμον περὶ ἁμαρτίας…</span><p class="vtext is-loading">…</p><span class="ref">John 16:8</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">обличать</b> — The correcting word is a <em>lighting</em> word — like κρίσις in John 3:19.</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">προσέχω</span><span class="w-tl">prosechō</span><span class="w-sn">G4337</span></div>
+              <div class="w-lit"><span class="pfx">προς-</span>ἔχω</div>
+              <p class="w-def">To hold your mind <em>toward</em> something — pay attention, watch out. The verb that opens the false-prophet warning.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 7:15"><span class="gk occ-gk">Προσέχετε ἀπὸ τῶν ψευδοπροφητῶν…</span><p class="vtext is-loading">…</p><span class="ref">Matthew 7:15</span></div><div class="occ" data-verse="Luke 12:1"><span class="gk occ-gk">…προσέχετε ἑαυτοῖς ἀπὸ τῆς ζύμης τῶν Φαρισαίων…</span><p class="vtext is-loading">…</p><span class="ref">Luke 12:1</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">остерегаться</b> — Attention is the first act of judgment. Nothing gets sorted that was never looked at.</div></div>
+            </article>
+            <article class="w is-sift" data-cls="sift">
+              <div class="w-top"><span class="w-gk gk">ἡγέομαι</span><span class="w-tl">hēgeomai</span><span class="w-sn">G2233</span></div>
+              <div class="w-lit">ἄγω</div>
+              <p class="w-def">To lead, and so to <em>consider</em> — to place a value on something. Judgment as ranking: this counts more than that.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Philippians 2:3"><span class="gk occ-gk">…ἀλλήλους ἡγούμενοι ὑπερέχοντας ἑαυτῶν·</span><p class="vtext is-loading">…</p><span class="ref">Philippians 2:3</span></div><div class="occ" data-verse="Philippians 3:8"><span class="gk occ-gk">…ἡγοῦμαι πάντα ζημίαν εἶναι…</span><p class="vtext is-loading">…</p><span class="ref">Philippians 3:8</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">почитать</b> — Paul’s cure for condemnation is not to stop ranking — it is to rank the other person above yourself.</div></div>
             </article>
             <article class="w is-neu" data-cls="neu">
               <div class="w-top"><span class="w-gk gk">συγκρίνω</span><span class="w-tl">synkrinō</span><span class="w-sn">G4793</span></div>
               <div class="w-lit"><span class="pfx">συν-</span>κρίνω</div>
-              <p class="w-def">To set side by side — to compare. Neutral, and Paul’s example is a warning about it.</p>
-              <div class="w-v"><span class="gk">…ἑαυτοὺς ἑαυτοῖς οὐ συνιᾶσιν.</span>“…measuring themselves by themselves — they do not understand.” <span class="ref">2 Cor 10:12</span></div>
+              <p class="w-def">To set side by side — to compare. Neutral in itself, and Paul’s example is a warning about it.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="2 Corinthians 10:12"><span class="gk occ-gk">…ἑαυτοὺς ἑαυτοῖς οὐ συνιᾶσιν.</span><p class="vtext is-loading">…</p><span class="ref">2 Corinthians 10:12</span></div><div class="occ" data-verse="1 Corinthians 2:13"><span class="gk occ-gk">…πνευματικοῖς πνευματικὰ συνκρίνοντες.</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 2:13</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">сравнивать</b> — Russian <em>суд</em> itself means “a putting-together.”</div></div>
             </article>
             <article class="w is-neu" data-cls="neu">
               <div class="w-top"><span class="w-gk gk">ἀποκρίνομαι</span><span class="w-tl">apokrinomai</span><span class="w-sn">G611</span></div>
               <div class="w-lit"><span class="pfx">ἀπο-</span>κρίνομαι</div>
               <p class="w-def">To judge <em>back</em> — that is, to answer. The ordinary word for replying, used over two hundred times.</p>
-              <div class="w-v"><span class="gk">ἀποκριθεὶς δὲ ὁ Ἰησοῦς εἶπεν…</span>“And Jesus, answering, said…” <span class="ref">passim</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 16:16"><span class="gk occ-gk">ἀποκριθεὶς δὲ Σίμων Πέτρος εἶπεν…</span><p class="vtext is-loading">…</p><span class="ref">Matthew 16:16</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">отвечать</b> — Every conversation in the Gospels is a chain of small judgments handed back.</div></div>
             </article>
             <article class="w is-neu" data-cls="neu">
               <div class="w-top"><span class="w-gk gk">κρίσις</span><span class="w-tl">krisis</span><span class="w-sn">G2920</span></div>
               <div class="w-lit">κρίσις</div>
               <p class="w-def">The <em>act</em> of separating, and the moment it happens. English took it whole: a <b>crisis</b> is the point a thing is decided.</p>
-              <div class="w-v"><span class="gk">αὕτη δέ ἐστιν ἡ κρίσις, ὅτι τὸ φῶς ἐλήλυθεν εἰς τὸν κόσμον…</span>“And this is the judgment: the light has come into the world…” <span class="ref">John 3:19</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="John 3:19"><span class="gk occ-gk">αὕτη δέ ἐστιν ἡ κρίσις, ὅτι τὸ φῶς ἐλήλυθεν εἰς τὸν κόσμον…</span><p class="vtext is-loading">…</p><span class="ref">John 3:19</span></div><div class="occ" data-verse="John 12:31"><span class="gk occ-gk">νῦν κρίσις ἐστὶν τοῦ κόσμου τούτου·</span><p class="vtext is-loading">…</p><span class="ref">John 12:31</span></div><div class="occ" data-verse="John 5:30"><span class="gk occ-gk">…καθὼς ἀκούω κρίνω, καὶ ἡ κρίσις ἡ ἐμὴ δικαία ἐστίν…</span><p class="vtext is-loading">…</p><span class="ref">John 5:30</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">суд</b> — Not a sentence read out. A lamp switched on, and what people do next.</div></div>
             </article>
             <article class="w is-neu" data-cls="neu">
               <div class="w-top"><span class="w-gk gk">κρίμα</span><span class="w-tl">krima</span><span class="w-sn">G2917</span></div>
               <div class="w-lit">κρίμα</div>
               <p class="w-def">The <em>result</em> — the verdict itself. Also, plainly, a lawsuit.</p>
-              <div class="w-v"><span class="gk">ἐν ᾧ γὰρ κρίματι κρίνετε κριθήσεσθε…</span>“For with the verdict you pass, you will be judged…” <span class="ref">Matt 7:2</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 7:2"><span class="gk occ-gk">ἐν ᾧ γὰρ κρίματι κρίνετε κριθήσεσθε…</span><p class="vtext is-loading">…</p><span class="ref">Matthew 7:2</span></div><div class="occ" data-verse="Romans 2:2"><span class="gk occ-gk">οἴδαμεν γὰρ ὅτι τὸ κρίμα τοῦ θεοῦ ἐστιν κατὰ ἀλήθειαν…</span><p class="vtext is-loading">…</p><span class="ref">Romans 2:2</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">суд · осуждение</b> — Not “don’t pass verdicts” — the one you pass is the one you get.</div></div>
             </article>
             <article class="w is-god" data-cls="god">
               <div class="w-top"><span class="w-gk gk">κριτής</span><span class="w-tl">kritēs</span><span class="w-sn">G2923</span></div>
               <div class="w-lit">κριτής</div>
               <p class="w-def">The one who separates: a judge. In the Greek Old Testament it is the title of Gideon and Deborah — raised up to <em>rescue</em>.</p>
-              <div class="w-v"><span class="gk">εἷς ἐστιν ὁ νομοθέτης καὶ κριτής, ὁ δυνάμενος σῶσαι καὶ ἀπολέσαι·</span>“There is one lawgiver and judge, able to save and to destroy.” <span class="ref">Jas 4:12</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="James 4:12"><span class="gk occ-gk">εἷς ἐστιν ὁ νομοθέτης καὶ κριτής, ὁ δυνάμενος σῶσαι καὶ ἀπολέσαι·</span><p class="vtext is-loading">…</p><span class="ref">James 4:12</span></div><div class="occ" data-verse="James 2:4"><span class="gk occ-gk">…καὶ ἐγένεσθε κριταὶ διαλογισμῶν πονηρῶν;</span><p class="vtext is-loading">…</p><span class="ref">James 2:4</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">судья</b> — James’s point is about <em>standing</em> — one seat, and it is taken.</div></div>
             </article>
             <article class="w is-neu" data-cls="neu">
               <div class="w-top"><span class="w-gk gk">κριτήριον</span><span class="w-tl">kritērion</span><span class="w-sn">G2922</span></div>
               <div class="w-lit">κριτήριον</div>
               <p class="w-def">The instrument of judging — the court, and the <em>standard</em> a case is measured against. English keeps the second sense: a <b>criterion</b>.</p>
-              <div class="w-v"><span class="gk">…ἀνάξιοί ἐστε κριτηρίων ἐλαχίστων;</span>“…are you unworthy to try the smallest cases?” <span class="ref">1 Cor 6:2</span></div>
-              <div class="w-ru"><span class="t">RU</span><div><b class="ru">судилище</b> — Paul is annoyed the church <em>won’t</em> hold court over its own disputes.</div></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="1 Corinthians 6:2"><span class="gk occ-gk">…ἀνάξιοί ἐστε κριτηρίων ἐλαχίστων;</span><p class="vtext is-loading">…</p><span class="ref">1 Corinthians 6:2</span></div><div class="occ" data-verse="James 2:6"><span class="gk occ-gk">…οὐχ ὑμᾶς ἕλκουσιν εἰς κριτήρια;</span><p class="vtext is-loading">…</p><span class="ref">James 2:6</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">судилище</b> — Signal-detection theory calls the threshold you set your <em>criterion</em>. Same word.</div></div>
             </article>
             <article class="w is-god" data-cls="god">
               <div class="w-top"><span class="w-gk gk">κριτικός</span><span class="w-tl">kritikos</span><span class="w-sn">G2924</span></div>
               <div class="w-lit">κριτικός</div>
               <p class="w-def">“Able to separate.” It appears once in the New Testament, and its object is the inside of a person. English turned it into <b>critic</b>.</p>
-              <div class="w-v"><span class="gk">…καὶ κριτικὸς ἐνθυμήσεων καὶ ἐννοιῶν καρδίας·</span>“…able to judge the thoughts and intentions of the heart.” <span class="ref">Heb 4:12</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Hebrews 4:12"><span class="gk occ-gk">…καὶ κριτικὸς ἐνθυμήσεων καὶ ἐννοιῶν καρδίας·</span><p class="vtext is-loading">…</p><span class="ref">Hebrews 4:12</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">судит</b> — The only <em>critic</em> in Scripture is not a person. It is the word of God.</div></div>
             </article>
             <article class="w is-cond" data-cls="cond">
               <div class="w-top"><span class="w-gk gk">κατακρίνω</span><span class="w-tl">katakrinō</span><span class="w-sn">G2632</span></div>
               <div class="w-lit"><span class="pfx">κατα-</span>κρίνω</div>
               <p class="w-def">To bring judgment <em>down against</em>. Not to assess — to sentence. The prefix is the whole difference.</p>
-              <div class="w-v"><span class="gk">οὐδὲ ἐγώ σε κατακρίνω· πορεύου καὶ μηκέτι ἁμάρτανε.</span>“Neither do I condemn you. Go, and sin no more.” <span class="ref">John 8:11</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="John 8:11"><span class="gk occ-gk">…οὐδὲ ἐγώ σε κατακρίνω· πορεύου καὶ μηκέτι ἁμάρτανε.</span><p class="vtext is-loading">…</p><span class="ref">John 8:11</span></div><div class="occ" data-verse="Romans 2:1"><span class="gk occ-gk">…ἐν ᾧ γὰρ κρίνεις τὸν ἕτερον, σεαυτὸν κατακρίνεις…</span><p class="vtext is-loading">…</p><span class="ref">Romans 2:1</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">осуждать</b> — Russian builds it identically: <b>о-суждать</b>, judgment brought down onto someone.</div></div>
             </article>
             <article class="w is-cond" data-cls="cond">
               <div class="w-top"><span class="w-gk gk">κατάκριμα</span><span class="w-tl">katakrima</span><span class="w-sn">G2631</span></div>
               <div class="w-lit"><span class="pfx">κατα-</span>κρίμα</div>
               <p class="w-def">The sentence handed down. The most famous sentence in Paul is its cancellation.</p>
-              <div class="w-v"><span class="gk">Οὐδὲν ἄρα νῦν κατάκριμα τοῖς ἐν Χριστῷ Ἰησοῦ.</span>“There is therefore now no condemnation for those in Christ Jesus.” <span class="ref">Rom 8:1</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Romans 8:1"><span class="gk occ-gk">Οὐδὲν ἄρα νῦν κατάκριμα τοῖς ἐν Χριστῷ Ἰησοῦ.</span><p class="vtext is-loading">…</p><span class="ref">Romans 8:1</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">осуждение</b> — Romans 8:1 removes the <em>sentence</em>. It does not remove the sorting.</div></div>
             </article>
             <article class="w is-cond" data-cls="cond">
               <div class="w-top"><span class="w-gk gk">καταδικάζω</span><span class="w-tl">katadikazō</span><span class="w-sn">G2613</span></div>
               <div class="w-lit"><span class="pfx">κατα-</span>δίκη</div>
               <p class="w-def">To pass sentence against — from δίκη, <em>justice</em>, not from κρίνω at all. Luke sets it beside κρίνω, and tells us which one Jesus forbade.</p>
-              <div class="w-v"><span class="gk">μὴ κρίνετε… καὶ μὴ καταδικάζετε…</span>“Do not judge… and do not condemn…” <span class="ref">Luke 6:37</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Luke 6:37"><span class="gk occ-gk">…καὶ μὴ καταδικάζετε, καὶ οὐ μὴ καταδικασθῆτε.</span><p class="vtext is-loading">…</p><span class="ref">Luke 6:37</span></div><div class="occ" data-verse="Matthew 12:7"><span class="gk occ-gk">…οὐκ ἂν κατεδικάσατε τοὺς ἀναιτίους.</span><p class="vtext is-loading">…</p><span class="ref">Matthew 12:7</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">осуждать</b> — Two Greek verbs, two Russian verbs, one English word.</div></div>
             </article>
             <article class="w is-cond" data-cls="cond">
               <div class="w-top"><span class="w-gk gk">πρόκριμα</span><span class="w-tl">prokrima</span><span class="w-sn">G4299</span></div>
               <div class="w-lit"><span class="pfx">προ-</span>κρίμα</div>
               <p class="w-def">A verdict reached <em>before</em> the case — the Greek word for prejudice.</p>
-              <div class="w-v"><span class="gk">…ἵνα ταῦτα φυλάξῃς χωρὶς προκρίματος…</span>“…keep these things without prejudgment…” <span class="ref">1 Tim 5:21</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="1 Timothy 5:21"><span class="gk occ-gk">…ἵνα ταῦτα φυλάξῃς χωρὶς προκρίματος…</span><p class="vtext is-loading">…</p><span class="ref">1 Timothy 5:21</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">предрассудок</b> — <b>пред-рассудок</b> · <b>prae-iūdicium</b> · <b>προ-κρίμα</b>. One construction.</div></div>
             </article>
             <article class="w is-cond" data-cls="cond">
               <div class="w-top"><span class="w-gk gk">ὑποκριτής</span><span class="w-tl">hypokritēs</span><span class="w-sn">G5273</span></div>
               <div class="w-lit"><span class="pfx">ὑπο-</span>κρίνομαι</div>
               <p class="w-def">One who answers from <em>under</em> — under a mask. In Athens, a stage actor. The word for the bad judge is itself built from the judging root.</p>
-              <div class="w-v"><span class="gk">ὑποκριτά, ἔκβαλε πρῶτον ἐκ τοῦ ὀφθαλμοῦ σοῦ τὴν δοκόν…</span>“Actor! First take the plank out of your own eye…” <span class="ref">Matt 7:5</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Matthew 7:5"><span class="gk occ-gk">ὑποκριτά, ἔκβαλε πρῶτον ἐκ τοῦ ὀφθαλμοῦ σοῦ τὴν δοκόν…</span><p class="vtext is-loading">…</p><span class="ref">Matthew 7:5</span></div><div class="occ" data-verse="Matthew 23:27"><span class="gk occ-gk">Οὐαὶ ὑμῖν, γραμματεῖς καὶ Φαρισαῖοι ὑποκριταί…</span><p class="vtext is-loading">…</p><span class="ref">Matthew 23:27</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">лицемер</b> — Russian <em>лицемер</em> — “face-measurer.” Both name it as a performance.</div></div>
             </article>
             <article class="w is-cond" data-cls="cond">
               <div class="w-top"><span class="w-gk gk">αὐτοκατάκριτος</span><span class="w-tl">autokatakritos</span><span class="w-sn">G843</span></div>
               <div class="w-lit"><span class="pfx">αὐτο-κατα-</span>κριτός</div>
               <p class="w-def">Self-condemned. Three pieces: <em>self</em> + <em>down-against</em> + <em>judged</em>. Used once, of a man who split a church.</p>
-              <div class="w-v"><span class="gk">…καὶ ἁμαρτάνει, ὢν αὐτοκατάκριτος.</span>“…and sins, being self-condemned.” <span class="ref">Titus 3:11</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Titus 3:11"><span class="gk occ-gk">…καὶ ἁμαρτάνει, ὢν αὐτοκατάκριτος.</span><p class="vtext is-loading">…</p><span class="ref">Titus 3:11</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">самоосуждён</b> — Slavonic calques it piece for piece: <b>самоѡсꙋжде́нъ</b>.</div></div>
+            </article>
+            <article class="w is-cond" data-cls="cond">
+              <div class="w-top"><span class="w-gk gk">ἀδόκιμος</span><span class="w-tl">adokimos</span><span class="w-sn">G96</span></div>
+              <div class="w-lit"><span class="pfx">ἀ-</span>δόκιμος</div>
+              <p class="w-def">Failed the assay. Paul turns it into a pun: they did not <em>test</em> to keep God in view, so they were given a mind that cannot <em>pass a test</em>.</p>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="Romans 1:28"><span class="gk occ-gk">καὶ καθὼς οὐκ ἐδοκίμασαν τὸν θεὸν ἔχειν ἐν ἐπιγνώσει, παρέδωκεν αὐτοὺς ὁ θεὸς εἰς ἀδόκιμον νοῦν…</span><p class="vtext is-loading">…</p><span class="ref">Romans 1:28</span></div><div class="occ" data-verse="2 Corinthians 13:5"><span class="gk occ-gk">…ἑαυτοὺς δοκιμάζετε· ἢ οὐκ ἐπιγινώσκετε ἑαυτοὺς…</span><p class="vtext is-loading">…</p><span class="ref">2 Corinthians 13:5</span></div></div>
+              <div class="w-ru"><span class="t">RU</span><div><b class="ru">негодный</b> — Refuse to judge well and you lose the faculty. That is the sentence, and it is self-executing.</div></div>
             </article>
             <article class="w is-sift" data-cls="sift">
               <div class="w-top"><span class="w-gk gk">ἀδιάκριτος</span><span class="w-tl">adiakritos</span><span class="w-sn">G87</span></div>
               <div class="w-lit"><span class="pfx">ἀ-δια-</span>κριτός</div>
               <p class="w-def">Un-sorting: making no distinction <em>between persons</em>. Listed beside ἀνυπόκριτος, <em>un-play-acted</em> — two κρίνω words, both negated.</p>
-              <div class="w-v"><span class="gk">…μεστὴ ἐλέους καὶ καρπῶν ἀγαθῶν, ἀδιάκριτος, ἀνυπόκριτος·</span>“…full of mercy and good fruits, impartial, unhypocritical.” <span class="ref">Jas 3:17</span></div>
+              <div class="w-occs esv-skip"><div class="occ" data-verse="James 3:17"><span class="gk occ-gk">…μεστὴ ἐλέους καὶ καρπῶν ἀγαθῶν, ἀδιάκριτος, ἀνυπόκριτος·</span><p class="vtext is-loading">…</p><span class="ref">James 3:17</span></div></div>
               <div class="w-ru"><span class="t">RU</span><div><b class="ru">беспристрастна</b> — Wisdom sorts <em>things</em> ruthlessly and refuses to rank <em>people</em>.</div></div>
             </article>
           </div>
@@ -1339,7 +1578,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           <p class="lede">One question of each movement: can you obey this without separating one
           thing from another?</p>
 
-          <div class="vb" data-verse="Matthew 7:1-5">
+          <div class="vb esv-skip" data-verse="Matthew 7:1-5">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Matthew 7:1-5</span><span class="vver"></span></div>
           </div>
@@ -1456,7 +1695,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             <div class="vline"><div class="who">Greek</div><div class="tx gk">καὶ μὴ <b class="k-cond">κρίνετε</b>… καὶ μὴ <b class="k-cond">καταδικάζετε</b>… <b class="k-sift">ἀπολύετε</b>, καὶ ἀπολυθήσεσθε·</div></div>
             <div class="vline"><div class="who">English</div><div class="tx">“Do not judge… do not <em>condemn</em>… <em>release</em>, and you will be released.”</div></div>
             <div class="vline"><div class="who">Синод.</div><div class="tx ru">Не <b>судите</b>… не <b>осуждайте</b>… прощайте, и прощены будете;</div></div>
-            <div class="vb" data-verse="Luke 6:37">
+            <div class="vb esv-skip" data-verse="Luke 6:37">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Luke 6:37</span><span class="vver"></span></div>
           </div>
@@ -1470,7 +1709,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             <div class="vline"><div class="who">Greek</div><div class="tx gk">Μηκέτι οὖν ἀλλήλους <b class="k-cond">κρίνωμεν</b>, ἀλλὰ τοῦτο <b class="k-sift">κρίνατε</b> μᾶλλον…</div></div>
             <div class="vline"><div class="who">English</div><div class="tx">“Let us no longer <em>judge</em> one another — but rather <em>judge</em> this…”</div></div>
             <div class="vline"><div class="who">Слав.</div><div class="tx ru">Не ктомꙋ̀ ᲂу҆̀бо дрꙋ́гъ дрꙋ́га <b>ѡ҆сꙋжда́емъ</b>, но сїѐ па́че <b>сꙋди́те</b>…</div></div>
-            <div class="vb" data-verse="Romans 14:13">
+            <div class="vb esv-skip" data-verse="Romans 14:13">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Romans 14:13</span><span class="vver"></span></div>
           </div>
@@ -1484,7 +1723,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             <div class="vline"><div class="who">Greek</div><div class="tx gk">Τί δὲ καὶ ἀφ’ ἑαυτῶν οὐ <b class="k-sift">κρίνετε</b> τὸ δίκαιον;</div></div>
             <div class="vline"><div class="who">English</div><div class="tx">“And why do you not judge for yourselves what is right?” <span class="ref">Luke 12:57</span></div></div>
             <div class="vline"><div class="who">НРП</div><div class="tx ru">Почему вы сами не <b>рассудите</b>, в чем истина?</div></div>
-            <div class="vb" data-verse="Luke 12:57">
+            <div class="vb esv-skip" data-verse="Luke 12:57">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Luke 12:57</span><span class="vver"></span></div>
           </div>
@@ -1547,7 +1786,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             </div>
           </div>
 
-          <div class="vb" data-verse="1 Corinthians 4:5">
+          <div class="vb esv-skip" data-verse="1 Corinthians 4:5">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">1 Corinthians 4:5</span><span class="vver"></span></div>
           </div>
@@ -1647,11 +1886,11 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
               </div>
             </div>
 
-            <div class="vb" data-verse="Judges 2:16">
+            <div class="vb esv-skip" data-verse="Judges 2:16">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Judges 2:16</span><span class="vver"></span></div>
           </div>
-            <div class="vb" data-verse="Psalm 96:11-13">
+            <div class="vb esv-skip" data-verse="Psalm 96:11-13">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Psalm 96:11-13</span><span class="vver"></span></div>
           </div>
@@ -1695,10 +1934,10 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
           </div>
 
           <div class="rugrid">
-            <div class="vb ruvb" data-ru="Матфея 7:1-2"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Матфея 7:1–2</span><span class="vver"></span></div></div>
-            <div class="vb ruvb" data-ru="Луки 6:37"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Луки 6:37</span><span class="vver"></span></div></div>
-            <div class="vb ruvb" data-ru="Римлянам 14:13"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Римлянам 14:13</span><span class="vver"></span></div></div>
-            <div class="vb ruvb" data-ru="Евреям 5:14"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Евреям 5:14</span><span class="vver"></span></div></div>
+            <div class="vb ruvb esv-skip" data-ru="Матфея 7:1-2"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Матфея 7:1–2</span><span class="vver"></span></div></div>
+            <div class="vb ruvb esv-skip" data-ru="Луки 6:37"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Луки 6:37</span><span class="vver"></span></div></div>
+            <div class="vb ruvb esv-skip" data-ru="Римлянам 14:13"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Римлянам 14:13</span><span class="vver"></span></div></div>
+            <div class="vb ruvb esv-skip" data-ru="Евреям 5:14"><p class="vtext is-loading">Загрузка…</p><div class="vmeta"><span class="vref">Евреям 5:14</span><span class="vver"></span></div></div>
           </div>
 
           <p class="lede" style="margin-top:clamp(16px,2.2vw,24px)">
@@ -1794,7 +2033,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
             </div>
           </div>
 
-          <div class="vb" data-verse="Romans 2:1">
+          <div class="vb esv-skip" data-verse="Romans 2:1">
             <p class="vtext is-loading">Loading…</p>
             <div class="vmeta"><span class="vref">Romans 2:1</span><span class="vver"></span></div>
           </div>
@@ -1948,9 +2187,109 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
         </div>
       </details>
 
-      <details class="deep rise s-sources" id="sources">
+      <details class="deep rise s-brain" id="brain">
         <summary>
           <span class="dn">11</span>
+          <span class="sec-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 4.2A3.2 3.2 0 0 0 5.8 7.4 3 3 0 0 0 4 10.2c0 1.1.6 2.1 1.5 2.6-.3.5-.5 1-.5 1.6a3 3 0 0 0 3 3c.2 1.4 1.5 2.4 3 2.4V4.2H9zM15 4.2a3.2 3.2 0 0 1 3.2 3.2 3 3 0 0 1 1.8 2.8c0 1.1-.6 2.1-1.5 2.6.3.5.5 1 .5 1.6a3 3 0 0 1-3 3c-.2 1.4-1.5 2.4-3 2.4V4.2h2z"/></svg></span>
+          <span class="dt">What the brain is actually doing
+            <span class="dsub">You cannot obey “do not judge” as a ban. The machinery runs in a tenth of a second, before you are consulted.</span>
+          </span>
+          <span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2"><path d="M1 7h12"/><path class="v" d="M7 1v12"/></svg></span>
+        </summary>
+        <div class="deep-body">
+          <p class="lede">Cognitive science arrived at the same shape as the Greek, from the other
+          end. Judgment is not an optional act you perform on people you dislike. It is the
+          brain’s default operation, running continuously, mostly below awareness.</p>
+
+          <div class="brainrow">
+            <div class="bcard">
+              <span class="num">01 · Speed</span>
+              <h4 class="small">A tenth of a second</h4>
+              <p>Willis and Todorov showed faces for <b>100 milliseconds</b> and asked for trait
+              ratings. The judgments matched those of people given unlimited time — and the
+              strongest correlation of all was <em>trustworthiness</em>.</p>
+              <p>Extra viewing time did not change the verdict. It only increased confidence in it.</p>
+              <span class="cite">Willis &amp; Todorov, “First Impressions: Making Up Your Mind After a 100-Ms Exposure to a Face,” <em>Psychological Science</em> 17 (2006), 592–598.</span>
+              <span class="tie">This is why a ban cannot work. <b>By the time you decide not to judge someone, you already have.</b> What is left to choose is what you do with the verdict.</span>
+            </div>
+
+            <div class="bcard">
+              <span class="num">02 · The plank, measured</span>
+              <h4 class="small">You cannot see your own bias</h4>
+              <p>Pronin, Lin and Ross asked people to rate how susceptible they were to a list of
+              biases, compared with others. People rated <em>themselves</em> as markedly less
+              biased than the average person, than classmates, than fellow travellers.</p>
+              <p>And when the mechanism was explained to them, they insisted their own
+              self-assessment was the accurate one anyway.</p>
+              <span class="cite">Pronin, Lin &amp; Ross, “The Bias Blind Spot: Perceptions of Bias in Self Versus Others,” <em>Personality and Social Psychology Bulletin</em> 28 (2002), 369–381.</span>
+              <span class="tie">Matthew 7:3 in a lab. <b>The plank is not hidden by dishonesty — it is hidden by the geometry of looking out of your own eyes.</b> Which is why the instruction is to remove it first, not to try harder to see past it.</span>
+            </div>
+          </div>
+
+          <div class="bcard" style="margin-top:clamp(12px,1.8vw,20px)">
+            <span class="num">03 · The criterion</span>
+            <h4 class="small">The threshold has a name, and it is the same word</h4>
+            <p>Signal detection theory splits any judgment call into two independent quantities:
+            <b>sensitivity</b> — how well you can actually tell signal from noise — and the
+            <b>criterion</b>, the threshold you set for calling something a signal. Move the
+            criterion and you trade one kind of error for the other. You never remove both.</p>
+            <div class="sdt">
+              <div class="hd"></div><div class="hd">It really is so</div><div class="hd">It really is not</div>
+              <div class="hd">You say yes</div>
+              <div class="cell good"><b>Hit</b>The wolf named as a wolf.</div>
+              <div class="cell bad"><b>False alarm</b>An innocent condemned.</div>
+              <div class="hd">You say no</div>
+              <div class="cell bad"><b>Miss</b>The wolf left with the sheep.</div>
+              <div class="cell good"><b>Correct rejection</b>No accusation made.</div>
+            </div>
+            <span class="tie">Proverbs 17:15 names the same two errors and calls <b>both</b> an
+            abomination — “acquitting the guilty and condemning the innocent.” Refusing to judge
+            does not escape the grid. It just parks you in the bottom row, where the misses live.</span>
+            <span class="cite">The technical term for that threshold, borrowed into psychophysics from Greek, is <em>criterion</em> — <span class="gk">κριτήριον</span>, the instrument of judging.</span>
+          </div>
+
+          <div class="brainrow" style="margin-top:clamp(12px,1.8vw,20px)">
+            <div class="bcard">
+              <span class="num">04 · Two speeds</span>
+              <h4 class="small">Fast judgment, slow judgment</h4>
+              <p>The fast system categorises automatically and cheaply — it is what fires at 100ms.
+              The slow one is deliberate, effortful, and lazy: it usually ratifies whatever the
+              fast one produced rather than auditing it.</p>
+              <span class="tie">“Judge with righteous judgment” <span class="ref">John 7:24</span>
+              is an instruction to <b>put the second system on the case</b> — not to pretend the
+              first one is off.</span>
+            </div>
+            <div class="bcard">
+              <span class="num">05 · Prediction</span>
+              <h4 class="small">Prejudice is a prior</h4>
+              <p>On predictive accounts of perception, the brain does not receive the world and
+              then evaluate it. It runs a model, predicts the input, and processes mainly the
+              error. What you already expect therefore shapes what you perceive — before any
+              conscious weighing happens.</p>
+              <span class="tie">Which is exactly <span class="gk">πρόκριμα</span>, a verdict
+              filed before the hearing. <b>A prior is not a sin; an unexamined prior is.</b>
+              “Test everything” is the instruction to check the model against the error.</span>
+            </div>
+          </div>
+
+          <p class="note" style="margin-top:clamp(18px,2.4vw,28px)">
+            Put together: the brain judges constantly, fast, and invisibly; it cannot audit itself
+            from the inside; and every threshold it sets trades one error against another.
+            <b>A blanket ban on judging is not humility — it is an instruction the hardware cannot
+            execute.</b> What Scripture asks for instead is the only thing that is actually
+            available: check the measure, clear your own eye first, and know which errors you are
+            choosing.
+          </p>
+
+          <p class="lede">Every one of those five is a restatement of something already on this
+            page. That is not because the Bible anticipated cognitive science. It is because both
+            are describing the same animal.</p>
+        </div>
+      </details>
+
+      <details class="deep rise s-sources" id="sources">
+        <summary>
+          <span class="dn">12</span>
           <span class="sec-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4.5h9.5L19 9v10.5H5z"/><path d="M14 4.5V9h5" /><path d="M8 13h8M8 16.5h5" stroke-linecap="round"/></svg></span>
           <span class="dt">Sources, and what is contested
             <span class="dsub">Which texts these quotations come from, and the two places the argument could be pushed back on.</span>
@@ -2151,6 +2490,28 @@ if ("IntersectionObserver" in window && matchMedia("(prefers-reduced-motion: no-
   revealAll();
 }
 
+/* Some bolls translations prepend the publisher's section heading to the first
+   verse of a passage ("Judging Others\n\u201cDo not judge\u2026"). In a block that is
+   quoting the verse itself that is noise, so a short opening line with no
+   sentence-ending punctuation is dropped. Declared at IIFE scope because three
+   painters use it and function declarations inside a block do not escape it
+   under "use strict". */
+function stripHeading(text){
+  var parts = String(text || "").split("\n");
+  if (parts.length > 1) {
+    var head = parts[0].trim();
+    if (head && head.length < 60 && !/[.!?\u201d\u2019:;,]$/.test(head)) parts.shift();
+  }
+  return parts.join("\n").trim();
+}
+
+/* Most translations already ship their own quotation marks around direct speech,
+   so wrapping unconditionally produced ““Do not judge.””. Strip whatever is
+   there, then add exactly one pair. */
+function quote(t){
+  return "\u201c" + String(t||"").replace(/^["\u201c\u2018']+/,"").replace(/["\u201d\u2019']+$/,"") + "\u201d";
+}
+
 /* ---- written-out scripture ---------------------------------------------- */
 /* Behaviour from /assets/scripture-popover.js: reference parsing, the picker,
    pop-ups on every inline ref, and loadVerse() for the blocks written out in
@@ -2162,18 +2523,6 @@ if (S){
   var host = document.getElementById("pickerHost");
   if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses read in"); }
 
-  /* Some bolls translations prepend the publisher's section heading to the first
-     verse of a passage ("Judging Others\n\u201cDo not judge\u2026"). In a block that is
-     quoting the verse itself that is noise, so a short opening line with no
-     sentence-ending punctuation is dropped. */
-  function stripHeading(text){
-    var parts = String(text || "").split("\n");
-    if (parts.length > 1) {
-      var head = parts[0].trim();
-      if (head && head.length < 60 && !/[.!?\u201d\u2019:;,]$/.test(head)) parts.shift();
-    }
-    return parts.join("\n").trim();
-  }
 
   var blocks = document.querySelectorAll(".vb[data-verse]");
   var enGen = 0;
@@ -2263,6 +2612,137 @@ if (ruPick){
   };
   ruSec.addEventListener("toggle", kick);
   kick();
+}
+
+
+/* ---- accordions that animate their height ------------------------------- */
+/* <details> snaps by default. Intercept the summary, measure, and ease the body
+   between 0 and its natural height. Every path clears the .anim class and the
+   inline height — including a timer — so an interrupted animation can never
+   leave a section collapsed with its content unreachable. */
+function wireAccordion(d){
+  var sum = d.querySelector("summary"), body = d.querySelector(".deep-body");
+  if(!sum || !body) return;
+  var timer = null;
+  function settle(){
+    clearTimeout(timer);
+    d.classList.remove("anim","closing");
+    body.style.height = "";
+  }
+  sum.addEventListener("click", function(ev){
+    if (!matchMedia("(prefers-reduced-motion: no-preference)").matches) return;  /* let it snap */
+    ev.preventDefault();
+    clearTimeout(timer);
+    if (d.open){
+      var h = body.scrollHeight;
+      d.classList.add("anim","closing");
+      body.style.height = h + "px";
+      void body.offsetHeight;                    /* commit the start value */
+      body.style.height = "0px";
+      timer = setTimeout(function(){ d.open = false; settle(); }, 340);
+    } else {
+      d.open = true;
+      d.classList.add("anim");
+      body.style.height = "0px";
+      void body.offsetHeight;
+      body.style.height = body.scrollHeight + "px";
+      timer = setTimeout(settle, 360);
+      d.dispatchEvent(new Event("opened"));
+    }
+  });
+  /* height is a fixed px during the animation; a resize mid-flight would strand it */
+  addEventListener("resize", settle);
+}
+document.querySelectorAll("details.deep").forEach(wireAccordion);
+
+/* ---- the reader dials --------------------------------------------------- */
+/* Scoped to scripture only. --read-scale and --read-lh are registered with
+   @property, so the browser interpolates them and the words ease up instead of
+   jumping a step. */
+var READ = { scale:1, lh:1.5, face:"serif" };
+try{
+  var saved = JSON.parse(localStorage.getItem("judgment-read") || "null");
+  if (saved && typeof saved === "object") READ = Object.assign(READ, saved);
+}catch(e){}
+
+function applyRead(){
+  var r = document.documentElement;
+  r.style.setProperty("--read-scale", READ.scale);
+  r.style.setProperty("--read-lh", READ.lh);
+  if (READ.face === "sans") r.setAttribute("data-read-face","sans");
+  else r.removeAttribute("data-read-face");
+  var sv = document.getElementById("sizeVal");
+  if (sv) sv.textContent = Math.round(READ.scale * 100) + "%";
+  document.querySelectorAll('[data-dial="lh"] button').forEach(function(b){
+    b.classList.toggle("on", parseFloat(b.dataset.v) === READ.lh);
+    b.setAttribute("aria-pressed", String(parseFloat(b.dataset.v) === READ.lh));
+  });
+  document.querySelectorAll('[data-dial="face"] button').forEach(function(b){
+    b.classList.toggle("on", b.dataset.v === READ.face);
+    b.setAttribute("aria-pressed", String(b.dataset.v === READ.face));
+  });
+  try{ localStorage.setItem("judgment-read", JSON.stringify(READ)); }catch(e){}
+}
+var readbar = document.getElementById("readbar");
+if (readbar){
+  readbar.addEventListener("click", function(ev){
+    var b = ev.target.closest("button"); if(!b) return;
+    var dial = b.closest("[data-dial]").dataset.dial;
+    if (dial === "size"){
+      /* a reader stepping twice in a row wants both steps, so clamp, do not toggle */
+      READ.scale = Math.min(1.5, Math.max(0.85, +(READ.scale + (+b.dataset.step) * 0.08).toFixed(2)));
+    } else if (dial === "lh"){ READ.lh = parseFloat(b.dataset.v); }
+    else { READ.face = b.dataset.v; }
+    applyRead();
+  });
+  applyRead();
+}
+
+/* ---- the two hero verses, written out ----------------------------------- */
+if (S){
+  var heroV = document.querySelectorAll(".hero-verse[data-verse]");
+  function paintHero(){
+    var v = S.getVersion();
+    heroV.forEach(function(el){
+      var tag = el.querySelector(".hv-tag"), refTxt = el.querySelector(".hv-ref").textContent;
+      el.classList.add("is-loading");
+      S.loadVerse(el.dataset.verse, v).then(function(text){
+        el.textContent = quote(stripHeading(text).replace(/\s+/g," ").trim()) + " ";
+        el.appendChild(tag);
+        el.querySelector(".hv-ver").textContent = v;
+        el.classList.remove("is-loading");
+      });
+    });
+  }
+  paintHero();
+  S.onChange(paintHero);
+
+  /* ---- every lexicon occurrence, written out, lazily ---------------------
+     Fifty-seven of them: fetched only once the family drawer is opened, so the
+     page does not spend its first second on verses nobody has asked for. */
+  var famSec = document.getElementById("family"), occDone = false, occGen = 0;
+  function paintOccs(){
+    var v = S.getVersion(), gen = ++occGen;
+    document.querySelectorAll("#lex .occ[data-verse]").forEach(function(o, i){
+      var t = o.querySelector(".vtext");
+      t.classList.add("is-loading");
+      /* stagger so the browser is not asked for forty chapters in one frame */
+      setTimeout(function(){
+        S.loadVerse(o.dataset.verse, v).then(function(text){
+          if (gen !== occGen) return;
+          t.textContent = stripHeading(text);
+          t.classList.remove("is-loading");
+        });
+      }, Math.floor(i / 6) * 90);
+    });
+  }
+  var kickOccs = function(){ if(!occDone && famSec.open){ occDone = true; paintOccs(); } };
+  if (famSec){
+    famSec.addEventListener("toggle", kickOccs);
+    famSec.addEventListener("opened", kickOccs);
+    kickOccs();
+    S.onChange(function(){ if (occDone) paintOccs(); });
+  }
 }
 
 /* ---- deep-linking into a collapsed section ------------------------------ */
