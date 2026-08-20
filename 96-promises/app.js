@@ -505,7 +505,7 @@
     state.activeReaderVersion = state.version;
 
     // Header metadata
-    if (elements.readerTitle) elements.readerTitle.textContent = `${verse.id}. ${verse.ref}`;
+    if (elements.readerTitle) elements.readerTitle.textContent = verse.ref;
     if (elements.readerCategoryBadge) elements.readerCategoryBadge.textContent = verse.categoryLabel;
 
     // Render components
@@ -815,7 +815,7 @@
     if (elements.btnStoryBookmark) {
       elements.btnStoryBookmark.classList.toggle('favorite-active', isFav);
       if (elements.storyBookmarkBtnText) {
-        elements.storyBookmarkBtnText.textContent = isFav ? 'Bookmarked' : 'Bookmark';
+        elements.storyBookmarkBtnText.textContent = isFav ? 'SAVED' : 'SAVE';
       }
       if (elements.storyBookmarkIcon) {
         elements.storyBookmarkIcon.style.fill = isFav ? 'currentColor' : 'none';
