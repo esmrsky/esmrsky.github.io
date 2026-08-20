@@ -1303,7 +1303,12 @@ button {
   line-height: var(--verse-line-height);
   color: var(--text-primary);
   letter-spacing: 0.005em;
-  transition: font-size var(--transition-fast), line-height var(--transition-fast);
+  /* One list, declared once. The translation cross-fade below used to add its own
+     `transition: opacity` on a more specific selector, and because `transition` is a
+     shorthand that rewrote the whole declaration — the two type dials stopped easing and
+     started snapping, so changing text size read as a flash rather than a growth. Anything
+     the verse text animates belongs on this line. */
+  transition: font-size var(--transition-fast), line-height var(--transition-fast), opacity 0.16s ease;
 }
 
 .card-meta-bottom {
@@ -3814,11 +3819,9 @@ input:focus-visible,
   border-width: 1.5px;
 }
 
-/* --- Translation swap: cross-fade instead of a hard rebuild -------------- */
-.bento-grid .scripture-text {
-  transition: opacity 0.16s ease;
-}
-
+/* --- Translation swap: cross-fade instead of a hard rebuild --------------
+   The opacity leg of this lives in `.scripture-text`'s own transition list; a second
+   `transition` declaration here would win on specificity and drop the type dials. */
 .bento-grid.is-swapping .scripture-text {
   opacity: 0;
 }
