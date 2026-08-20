@@ -1,5 +1,5 @@
 /**
- * Complete 96 Bible Verses Dataset - Multi-Translation (NIV, AMP, NKJV, TPT, NLT, NASB), Context, Lexicon & Concordance
+ * Complete 94 Bible Verses Dataset - Multi-Translation (NIV, AMP, NKJV, TPT, NLT, NASB), Context, Lexicon & Concordance
  */
 
 const BIBLE_VERSES = [
@@ -22,8 +22,8 @@ const BIBLE_VERSES = [
       "NKJV": "You will show me the path of life; In Your presence is fullness of joy; At Your right hand are pleasures forevermore."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 16 — David's Miktam of Inheritance & Resurrection Joy",
-      "chapterSummary": "David celebrates Yahweh as his supreme portion and cup, culminating in the triumphant prophecy of bodily resurrection and fullness of joy.",
+      "chapterTitle": "Psalm 16 — David's miktam of portion and cup",
+      "chapterSummary": "David takes refuge in the LORD, names him as his chosen portion and inheritance, and follows that assurance past the grave to the path of life and fullness of joy.",
       "versions": {
         "NIV": {
           "before": [
@@ -165,90 +165,80 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "You make known to me the [path of life]{H7307}; you will fill me with [joy in your presence]{H7654}, with [eternal pleasures]{H5273} at your right hand.",
-        "TPT": "For you bring me a continual revelation of [resurrection life]{H7307}, the path to the bliss that brings me [face-to-face with you]{H7654}. Where we have the [sweetest fellowship and pleasures]{H5273} that will never end.",
-        "NLT": "You will show me the [way of life]{H7307}, granting me the [joy of your presence]{H7654} and the [pleasures of living with you]{H5273} forever.",
-        "NASB": "You will make known to me the [way of life]{H7307}; In Your presence is [fullness of joy]{H7654}; In Your right hand there are [pleasures forever]{H5273}."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H7654 & H8057",
-          "word": "שֹׂבַע שְׂמָחוֹת",
-          "transliteration": "śōḇaʻ śimḥōṯ (sova simchot)",
-          "pronunciation": "so'-vah sim-khote'",
-          "partOfSpeech": "Noun Masculine & Noun Feminine Plural",
-          "matchedEnglish": "joy in your presence / fullness of joy",
-          "root": "From saba (to be sated to overflowing) + samach (to brighten, exult)",
-          "definition": "The sum total and highest conceivable intensity of delight and satisfaction in God's immediate manifest presence.",
-          "usageInPassage": "Points directly to Christ's resurrection victory where joy is unbroken and perpetual (Acts 2:28)."
+          "strongs": "H8057",
+          "word": "שִׂמְחָה",
+          "transliteration": "simchâh",
+          "pronunciation": "sim-khaw'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "joy",
+          "root": "from H8056 (שָׂמֵחַ);",
+          "definition": "blithesomeness or glee, (religious or festival)",
+          "usageInPassage": "Rendered “gladnesses” in this passage — noun, feminine, plural."
+        },
+        {
+          "strongs": "H7648",
+          "word": "שֹׂבַע",
+          "transliteration": "sôbaʻ",
+          "pronunciation": "so'-bah",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "abundance of",
+          "root": "from H7646 (שָׂבַע);",
+          "definition": "satisfaction (of food or (figuratively) joy)",
+          "usageInPassage": "Rendered “abundance of” in this passage — noun, masculine, singular."
         },
         {
           "strongs": "H5273",
-          "word": "נְעִימוֹת",
-          "transliteration": "nə‘îmōṯ (ne'imot)",
-          "pronunciation": "neh-ee-mote'",
-          "partOfSpeech": "Noun Feminine Plural",
-          "matchedEnglish": "eternal pleasures / pleasures forever",
-          "root": "From na'em (to be delightful, sweet, lovely)",
-          "definition": "Exquisite pleasures, sweet harmonies, and delightful inheritances that never fade or decay.",
-          "usageInPassage": "Describes the perpetual delights at the Father's right hand where believers are seated in Christ."
-        },
-        {
-          "strongs": "H7307 / H734",
-          "word": "אֹרַח חַיִּים",
-          "transliteration": "’ōraḥ ḥayyîm (orach chayyim)",
-          "pronunciation": "o'-rakh khah-yeem'",
-          "partOfSpeech": "Noun Construct",
-          "matchedEnglish": "path of life / way of life",
-          "root": "From arach (to travel) + chai (living, active, vigorous)",
-          "definition": "The divine trajectory of immortality and indestructible vitality that escapes Sheol.",
-          "usageInPassage": "The resurrection path pioneered by Jesus for all who believe."
+          "word": "נָעִים",
+          "transliteration": "nâʻîym",
+          "pronunciation": "naw-eem'",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "pleasant things",
+          "root": "from H5276 (נָעֵם);",
+          "definition": "delightful (objective or subjective, literal or figurative)",
+          "usageInPassage": "Rendered “pleasant things” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "David prophetically reveals that true joy is relational, not circumstantial. In the Septuagint and Acts 2:28, Peter translates 'sova simchot' as 'plēroseis me euphrosynēs meta tou prosōpou sou'—being filled to the brim with joyful gladness in the presence of the Father's face."
+      "theologicalSummary": "The weight of Psalm 16:11 in Biblical Hebrew sits on שִׂמְחָה (simchâh) “blithesomeness or glee, (religious or festival)”, שֹׂבַע (sôbaʻ) “satisfaction (of food or (figuratively) joy)” and נָעִים (nâʻîym) “delightful (objective or subjective, literal or figurative)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
-        "ref": "Acts 2:25–28",
-        "text": "Peter quotes Psalm 16:11 at Pentecost to announce Christ's triumphant resurrection and eternal gladness.",
-        "linkedVerseId": 1
-      },
-      {
         "ref": "Hebrews 12:2",
         "text": "For the joy set before Him, Jesus endured the cross, despising its shame, and sat down at the right hand of God.",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       },
       {
         "ref": "John 15:11",
         "text": "I have told you this so that my joy may be in you and that your joy may be complete.",
-        "linkedVerseId": 27
+        "linkedVerseId": null
       },
       {
         "ref": "Romans 14:17",
         "text": "For the kingdom of God is not eating and drinking, but righteousness, peace and joy in the Holy Spirit.",
-        "linkedVerseId": 14
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "In your presence there is fullness of joy — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 16:11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 16:11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "In your presence there is fullness of joy",
+      "quote": "Joy here is not a mood David worked up but a location — it belongs to the presence, and the presence has been opened by the torn veil.",
+      "graceTakeaway": "You do not manufacture joy and then approach God; you come near, and joy is what is there."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Psalm 16:11",
+        "era": "United Monarchy",
+        "title": "David dances the ark into Jerusalem",
         "character": "King David",
         "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 16:11 that God's covenant never fails those who trust His goodness."
+        "story": "David stripped off his royal dignity and danced before the ark with all his might, unembarrassed in front of the whole city. The joy was not in the procession but in the presence it escorted home."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 16:11",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:11 in your daily walk today."
+        "era": "Early Church",
+        "title": "Midnight singing in the Philippian jail",
+        "character": "Paul and Silas",
+        "ref": "Acts 16:22–34",
+        "story": "Flogged and clamped in stocks, Paul and Silas sang hymns at midnight while the other prisoners listened. Their joy plainly did not depend on the room they were in."
       }
     ],
     "tptFootnotes": "16:11 The Hebrew word for 'path' is orach, meaning a well-trodden, radiant highway. In Acts 2:28, the apostle Peter quotes this verse on the Day of Pentecost as the primary scriptural proof of the resurrection of Jesus Christ. 'In your presence' is literally 'with your face' (panim), signifying unhindered face-to-face intimacy under the new covenant."
@@ -272,8 +262,8 @@ const BIBLE_VERSES = [
       "NKJV": "They shall not be ashamed in the evil time, and in the days of famine they shall be satisfied."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 37 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 37:19 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 37 — Do not fret",
+      "chapterSummary": "A wisdom psalm on the apparent success of the wicked, who wither like grass, set against the quiet inheritance of those who trust, delight and commit their way to the LORD.",
       "versions": {
         "NIV": {
           "before": [
@@ -415,90 +405,80 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "In times of disaster they will [not wither / not be ashamed]{H954}; in [days of famine]{H7458} they will [enjoy plenty / be satisfied]{H7646}.",
-        "TPT": "When hard times come, they'll [not be ashamed]{H954}, and in the [days of famine]{H7458} they will be [abundantly satisfied]{H7646}.",
-        "NLT": "They will [not be disgraced]{H954} in hard times; even in [famine]{H7458} they will have [more than enough]{H7646}.",
-        "NASB": "They will [not be ashamed]{H954} in the time of evil, and in the [days of famine]{H7458} they will have [abundance]{H7646}."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H954",
-          "word": "לֹא־יֵבֹשׁוּ",
-          "transliteration": "lō’-yēḇōšû (lo yevoshu)",
-          "pronunciation": "lo yeh-vo'-shoo",
-          "partOfSpeech": "Negative Particle + Verb Qal Imperfect",
-          "matchedEnglish": "not wither / not be ashamed / not be disgraced",
-          "root": "From bosh (to be disappointed, confounded, or fail of expectations)",
-          "definition": "They shall never suffer embarrassment, disappointment, or public ruin because God is their guarantee.",
-          "usageInPassage": "Covenant security protecting believers from anxiety during societal and financial collapse."
-        },
-        {
-          "strongs": "H7458",
-          "word": "רָעָב",
-          "transliteration": "rā‘āḇ (ra'av)",
-          "pronunciation": "raw-awb'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "days of famine / famine",
-          "root": "From ra'ev (to hunger, crave food)",
-          "definition": "Severe economic drought, agricultural crisis, extreme national scarcity.",
-          "usageInPassage": "The harshest external environment is powerless against God's supernatural supply line."
+          "strongs": "H7459",
+          "word": "רְעָבוֹן",
+          "transliteration": "rᵉʻâbôwn",
+          "pronunciation": "reh-aw-bone'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "famine",
+          "root": "from H7456 (רָעֵב);",
+          "definition": "famine",
+          "usageInPassage": "Rendered “famine” in this passage — noun, masculine, singular."
         },
         {
           "strongs": "H7646",
-          "word": "יִשְׂבָּעוּ",
-          "transliteration": "yiśbā‘û (yisba'u)",
-          "pronunciation": "yis-baw'-oo",
-          "partOfSpeech": "Verb Qal Imperfect",
-          "matchedEnglish": "enjoy plenty / abundantly satisfied / have abundance",
-          "root": "From saba (to be filled to the utmost satisfaction, to feast)",
-          "definition": "To have surplus, to eat to total contentment, to experience overflow while the world starves.",
-          "usageInPassage": "Supernatural covenant abundance in direct contrast to worldly recession."
+          "word": "שָׂבַע",
+          "transliteration": "sâbaʻ",
+          "pronunciation": "saw-bah'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "satisfied",
+          "root": "or שָׂבֵעַ; a primitive root;",
+          "definition": "to sate, i.e. fill to satisfaction (literally or figuratively)",
+          "usageInPassage": "Rendered “they will be satisfied” in this passage — verb, qal, imperfect."
+        },
+        {
+          "strongs": "H0954",
+          "word": "בּוּשׁ",
+          "transliteration": "bûwsh",
+          "pronunciation": "boosh",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "ashamed",
+          "root": "a primitive root;",
+          "definition": "properly, to pale, i.e. by implication to be ashamed; also (by implication) to be disappointed or delayed",
+          "usageInPassage": "Rendered “they will be ashamed” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "Under God's covenant of grace, the believer's supply is not tied to natural market forces. In Christ, God supplies every need according to His riches in glory (Phil 4:19)."
+      "theologicalSummary": "The weight of Psalm 37:19 in Biblical Hebrew sits on רְעָבוֹן (rᵉʻâbôwn) “famine”, שָׂבַע (sâbaʻ) “to sate” and בּוּשׁ (bûwsh) “to pale”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Philippians 4:19",
         "text": "And my God will meet all your needs according to the riches of his glory in Christ Jesus.",
-        "linkedVerseId": 12
+        "linkedVerseId": 38
       },
       {
         "ref": "1 Kings 17:14–16",
         "text": "The jar of flour was not used up and the jug of oil did not run dry in the middle of severe drought.",
-        "linkedVerseId": 5
-      },
-      {
-        "ref": "Psalm 33:18–19",
-        "text": "The eyes of the Lord are on those who fear him, to keep them alive in famine.",
-        "linkedVerseId": 2
+        "linkedVerseId": null
       },
       {
         "ref": "2 Corinthians 9:8",
         "text": "God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "In days of famine they will enjoy plenty — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 37:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 37:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "In days of famine they will enjoy plenty",
+      "quote": "The promise is not that famine never comes, but that it does not get the last word over those God has claimed.",
+      "graceTakeaway": "Scarcity around you is not a verdict on God's care for you."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 37:19",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 37:19 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "The widow's jar that did not run out",
+        "character": "The widow of Zarephath",
+        "ref": "1 Kings 17:8–16",
+        "story": "She was gathering sticks for a last meal for herself and her son when Elijah asked for bread first. The flour and oil lasted the length of the famine."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 37:19",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 37:19 in your daily walk today."
+        "era": "Patriarchs",
+        "title": "Grain in Egypt during seven years of famine",
+        "character": "Joseph",
+        "ref": "Genesis 41:53–57",
+        "story": "The famine was severe over all the earth, yet there was bread in Egypt because God had given Joseph a warning and a plan seven years early. Provision was in place before the shortage arrived."
       }
     ]
   },
@@ -521,8 +501,8 @@ const BIBLE_VERSES = [
       "NKJV": "As for me, I will see Your face in righteousness; I shall be satisfied when I awake in Your likeness."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 17 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 17:15 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 17 — A prayer for vindication",
+      "chapterSummary": "David asks to be tried and found true, to be kept as the apple of God's eye and hidden in the shadow of his wings, and closes looking past his accusers to waking in God's likeness.",
       "versions": {
         "NIV": {
           "before": [
@@ -664,79 +644,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 17:15.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 17:15.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 17:15.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 17:15."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 17:15."
+          "strongs": "H6664",
+          "word": "צֶדֶק",
+          "transliteration": "tsedeq",
+          "pronunciation": "tseh'-dek",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "right natural",
+          "root": "from H6663 (צָדַק);",
+          "definition": "the right (natural, moral or legal); also (abstractly) equity or (figuratively) prosperity",
+          "usageInPassage": "Rendered “in righteousness” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H8544",
+          "word": "תְּמוּנָה",
+          "transliteration": "tᵉmûwnâh",
+          "pronunciation": "tem-oo-naw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "likeness",
+          "root": "or תְּמֻנָה; from H4327 (מִין);",
+          "definition": "something portioned (i.e. fashioned) out, as ashape, i.e. (indefinitely) phantom, or (specifically) embodiment, or (figuratively) manifestation (of favor)",
+          "usageInPassage": "Rendered “likeness your” in this passage — noun, feminine, singular."
+        },
+        {
+          "strongs": "H6974",
+          "word": "קוּץ",
+          "transliteration": "qûwts",
+          "pronunciation": "koots",
+          "partOfSpeech": "Verb, hiphil, infinitive construct",
+          "matchedEnglish": "when",
+          "root": "a primitive root (identical with through the idea of abruptness in starting up from sleep (compare H3364 (יָקַץ)));",
+          "definition": "to awake (literally or figuratively)",
+          "usageInPassage": "Rendered “when awake” in this passage — verb, hiphil, infinitive construct."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 17:15 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 17:15 in Biblical Hebrew sits on צֶדֶק (tsedeq) “the right (natural, moral or legal)”, תְּמוּנָה (tᵉmûwnâh) “something portioned (i.e. fashioned) out, as ashape” and קוּץ (qûwts) “to awake (literally or figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "When I awake, I will be satisfied with seeing your likeness — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 17:15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 17:15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "When I awake, I will be satisfied with seeing your likeness",
+      "quote": "David's satisfaction is deferred to a waking — and Christ's resurrection is the guarantee that the waking comes.",
+      "graceTakeaway": "What you have not yet received is not what you have been denied."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Psalm 17:15",
-        "character": "King David",
-        "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 17:15 that God's covenant never fails those who trust His goodness."
+        "era": "Exile",
+        "title": "Waking to see the King",
+        "character": "Daniel",
+        "ref": "Daniel 12:13",
+        "story": "Daniel is told to go his way to the end, rest, and rise for his allotted inheritance at the end of days. The satisfaction promised him lay past his own lifetime."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 17:15",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 17:15 in your daily walk today."
+        "era": "Gospels",
+        "title": "A promise made from one cross to another",
+        "character": "The thief crucified beside Jesus",
+        "ref": "Luke 23:39–43",
+        "story": "He asked only to be remembered, and was told that today he would be in paradise. What he could not see he received within hours."
       }
     ]
   },
@@ -759,8 +745,8 @@ const BIBLE_VERSES = [
       "NKJV": "For you shall go out with joy, and be led out with peace; The mountains and the hills shall break forth into singing before you, and all the trees of the field shall clap their hands."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 55 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 55:12 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 55 — Come to the waters",
+      "chapterSummary": "An open invitation to buy without money, to seek the LORD while he may be found; his thoughts are higher, his word does not return empty, and the redeemed go out in joy.",
       "versions": {
         "NIV": {
           "before": [
@@ -902,79 +888,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 55:12.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 55:12.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 55:12.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 55:12."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 55:12."
+          "strongs": "H8057",
+          "word": "שִׂמְחָה",
+          "transliteration": "simchâh",
+          "pronunciation": "sim-khaw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "joy",
+          "root": "from H8056 (שָׂמֵחַ);",
+          "definition": "blithesomeness or glee, (religious or festival)",
+          "usageInPassage": "Rendered “in joy” in this passage — noun, feminine, singular."
+        },
+        {
+          "strongs": "H4222",
+          "word": "מָחָא",
+          "transliteration": "mâchâʼ",
+          "pronunciation": "maw-khaw'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "clap",
+          "root": "a primitive root;",
+          "definition": "to rub or strike the hands together (in exultation)",
+          "usageInPassage": "Rendered “they will clap” in this passage — verb, qal, imperfect."
         },
         {
           "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "shâlôwm",
           "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "peace",
+          "root": "or שָׁלֹם; from H7999 (שָׁלַם);",
+          "definition": "safe, i.e. (figuratively) well, happy, friendly; also (abstractly) welfare, i.e. health, prosperity, peace",
+          "usageInPassage": "Rendered “and in peace” in this passage — noun, masculine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 55:12 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 55:12 in Biblical Hebrew sits on שִׂמְחָה (simchâh) “blithesomeness or glee, (religious or festival)”, מָחָא (mâchâʼ) “to rub or strike the hands together (in exultation)” and שָׁלוֹם (shâlôwm) “safe”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You will go out in joy and be led forth in peace — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 55:12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 55:12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You will go out in joy and be led forth in peace",
+      "quote": "Going out in joy and being led in peace is Isaiah's picture of exile ending; the exile ended at the cross.",
+      "graceTakeaway": "You are not being led out to prove yourself, but escorted home."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Isaiah 55:12",
-        "character": "King David",
-        "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Isaiah 55:12 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "The second temple foundation laid",
+        "character": "Zerubbabel and the returned exiles",
+        "ref": "Ezra 3:10–13",
+        "story": "When the foundation was laid the people shouted so loudly that weeping and rejoicing could not be told apart. The exile had actually ended."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Isaiah 55:12",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 55:12 in your daily walk today."
+        "era": "Exodus",
+        "title": "Singing on the far bank of the sea",
+        "character": "Miriam and the women of Israel",
+        "ref": "Exodus 15:19–21",
+        "story": "With Egypt behind them and the sea closed, Miriam took a tambourine and led the women out in song. They went out in joy because they had been led out in safety."
       }
     ]
   },
@@ -997,8 +989,8 @@ const BIBLE_VERSES = [
       "NKJV": "And you shall remember the Lord your God, for it is He who gives you power to get wealth, that He may establish His covenant which He swore to your fathers, as it is this day."
     },
     "dynamicContext": {
-      "chapterTitle": "Deuteronomy 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 8:18 revealing God's covenant faithfulness.",
+      "chapterTitle": "Deuteronomy 8 — Remember the wilderness",
+      "chapterSummary": "Moses reads forty years of manna and worn sandals as schooling in dependence, then warns that the danger of the good land is forgetting who gives the power to prosper.",
       "versions": {
         "NIV": {
           "before": [
@@ -1140,79 +1132,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Deuteronomy 8:18.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Deuteronomy 8:18.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Deuteronomy 8:18.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Deuteronomy 8:18."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Deuteronomy 8:18."
+          "strongs": "H3581",
+          "word": "כֹּחַ",
+          "transliteration": "kôach",
+          "pronunciation": "ko'-akh",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "strength",
+          "root": "or (Daniel 11:6) כּוֹחַ; from an unused root meaning to be firm;",
+          "definition": "vigor, literally (force, in a good or a bad sense) or figuratively (capacity, means, produce); also (from its hardiness) a large lizard",
+          "usageInPassage": "Rendered “strength” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7650",
+          "word": "שָׁבַע",
+          "transliteration": "shâbaʻ",
+          "pronunciation": "shaw-bah'",
+          "partOfSpeech": "Verb, niphal, perfect",
+          "matchedEnglish": "swore",
+          "root": "a primitive root; properly to be complete, but used only as a denominative from H7651 (שֶׁבַע);",
+          "definition": "to seven oneself, i.e. swear (as if by repeating a declaration seven times)",
+          "usageInPassage": "Rendered “he swore” in this passage — verb, niphal, perfect."
+        },
+        {
+          "strongs": "H2142",
+          "word": "זָכַר",
+          "transliteration": "zâkar",
+          "pronunciation": "zaw-kar'",
+          "partOfSpeech": "Verb, qal",
+          "matchedEnglish": "remember",
+          "root": "a primitive root; also as denominative from H2145 (זָכָר)",
+          "definition": "properly, to mark (so as to be recognized), i.e. to remember; by implication, to mention; to be male",
+          "usageInPassage": "Rendered “and you will remember” in this passage — verb, qal."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Deuteronomy 8:18 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Deuteronomy 8:18 in Biblical Hebrew sits on כֹּחַ (kôach) “vigor, literally (force, in a good or a bad sense) or figuratively…”, שָׁבַע (shâbaʻ) “to seven oneself” and זָכַר (zâkar) “to mark (so as to be recognized)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "He gives you the ability to produce wealth — Grace Revelation",
-      "quote": "Under the new covenant of grace, Deuteronomy 8:18 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Deuteronomy 8:18. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "He gives you the ability to produce wealth",
+      "quote": "The ability to produce is God's gift, which quietly removes both the pride of the earner and the shame of the struggling.",
+      "graceTakeaway": "Your capacity is a gift; treat it as trust rather than as trophy."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Deuteronomy 8:18",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Deuteronomy 8:18 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Flocks that multiplied in a rigged contract",
+        "character": "Jacob",
+        "ref": "Genesis 31:4–13",
+        "story": "Laban changed Jacob's wages ten times, and Jacob's herds still grew. He credited it plainly to the God of his father rather than to his own cleverness."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Deuteronomy 8:18",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 8:18 in your daily walk today."
+        "era": "United Monarchy",
+        "title": "Skilled hands for the tabernacle",
+        "character": "Bezalel and Oholiab",
+        "ref": "Exodus 35:30–35",
+        "story": "Bezalel is described as filled with the Spirit of God in skill, intelligence and craftsmanship. The ability itself was the gift before anything was built with it."
       }
     ]
   },
@@ -1235,8 +1233,8 @@ const BIBLE_VERSES = [
       "NKJV": "Now it shall come to pass, if you diligently obey the voice of the Lord your God... Blessed shall you be in the city, and blessed shall you be in the country. The Lord will open to you His good treasure, the heavens, to give the rain to your land in its season, and to bless all the work of your hand."
     },
     "dynamicContext": {
-      "chapterTitle": "Deuteronomy 28 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 28:1–14 revealing God's covenant faithfulness.",
+      "chapterTitle": "Deuteronomy 28 — Blessings and curses",
+      "chapterSummary": "The covenant terms laid out in full: the blessings that overtake obedience in city and field, followed by the far longer catalogue of what disobedience will cost.",
       "versions": {
         "NIV": {
           "before": [
@@ -1378,79 +1376,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Deuteronomy 28:1–14.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Deuteronomy 28:1–14.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Deuteronomy 28:1–14.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Deuteronomy 28:1–14."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Deuteronomy 28:1–14."
+          "strongs": "H0618",
+          "word": "אָסָם",
+          "transliteration": "ʼâçâm",
+          "pronunciation": "aw-sawm'",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "storehouse",
+          "root": "from an unused root meaning to heap together;",
+          "definition": "a storehouse (only in the plural)",
+          "usageInPassage": "Rendered “in barns your” in this passage — noun, masculine, plural."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H6251",
+          "word": "עַשְׁתְּרָה",
+          "transliteration": "ʻashtᵉrâh",
+          "pronunciation": "ash-ter-aw'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "young ones of",
+          "root": "probably from H6238 (עָשַׁר);",
+          "definition": "increase",
+          "usageInPassage": "Rendered “and the young ones of” in this passage — noun, feminine, plural."
+        },
+        {
+          "strongs": "H2935",
+          "word": "טֶנֶא",
+          "transliteration": "ṭeneʼ",
+          "pronunciation": "teh'-neh",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "basket",
+          "root": "from an unused root probably meaning to weave;",
+          "definition": "a basket (of interlaced osiers)",
+          "usageInPassage": "Rendered “basket your” in this passage — noun, masculine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Deuteronomy 28:1–14 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Deuteronomy 28:1–14 in Biblical Hebrew sits on אָסָם (ʼâçâm) “a storehouse (only in the plural)”, עַשְׁתְּרָה (ʻashtᵉrâh) “increase” and טֶנֶא (ṭeneʼ) “a basket (of interlaced osiers)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The LORD will make you the head, not the tail; you will always be on top — Grace Revelation",
-      "quote": "Under the new covenant of grace, Deuteronomy 28:1–14 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Deuteronomy 28:1–14. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The LORD will make you the head, not the tail; you will always be on top",
+      "quote": "Head and not tail is covenant language, and Christ has kept the covenant terms that were never kept before.",
+      "graceTakeaway": "Your standing does not rise and fall with your performance this week."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Deuteronomy 28:1–14",
+        "era": "Patriarchs",
+        "title": "A hundredfold harvest in a famine year",
         "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Deuteronomy 28:1–14 that God's covenant never fails those who trust His goodness."
+        "ref": "Genesis 26:12–14",
+        "story": "Isaac sowed in the land during a famine and reaped a hundredfold in the same year, until the Philistines envied him. The blessing overtook him where the conditions said it should not."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Deuteronomy 28:1–14",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 28:1–14 in your daily walk today."
+        "era": "Exile",
+        "title": "Ten times better in a foreign court",
+        "character": "Daniel and his three friends",
+        "ref": "Daniel 1:17–20",
+        "story": "After refusing the king's food they were found ten times better than all the magicians in the realm. They rose to the top of a system that was not theirs."
       }
     ],
     "tptFootnotes": "28:1 The Hebrew verb shama is repeated for emphasis: 'If hearing you will hear and obeying you will obey.' Under the New Covenant in Christ, Jesus has redeemed us from every curse of the law (Gal. 3:13), so that all the covenant blessings of Deuteronomy 28 now belong to believers by grace through faith."
@@ -1474,8 +1478,8 @@ const BIBLE_VERSES = [
       "NKJV": "I will instruct you and teach you in the way you should go; I will guide you with My eye."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 32 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 32:8 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 32 — The blessing of forgiveness",
+      "chapterSummary": "David describes what silence did to his bones and what confession undid in a moment, then hears God promise to instruct and counsel him with an eye upon him.",
       "versions": {
         "NIV": {
           "before": [
@@ -1617,79 +1621,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 32:8.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 32:8.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 32:8.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 32:8."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 32:8."
+          "strongs": "H7919",
+          "word": "שָׂכַל",
+          "transliteration": "sâkal",
+          "pronunciation": "saw-kal'",
+          "partOfSpeech": "Verb, hiphil, imperfect",
+          "matchedEnglish": "instruct",
+          "root": "a primitive root;",
+          "definition": "to be (causatively, make or act) circumspect and hence, intelligent",
+          "usageInPassage": "Rendered “I will instruct you” in this passage — verb, hiphil, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3289",
+          "word": "יָעַץ",
+          "transliteration": "yâʻats",
+          "pronunciation": "yaw-ats'",
+          "partOfSpeech": "Verb, qal, infinitive construct",
+          "matchedEnglish": "advise",
+          "root": "a primitive root;",
+          "definition": "to advise; reflexively, to deliberate or resolve",
+          "usageInPassage": "Rendered “I will counsel you” in this passage — verb, qal, infinitive construct."
+        },
+        {
+          "strongs": "H3384",
+          "word": "יָרָה",
+          "transliteration": "yârâh",
+          "pronunciation": "yaw-raw'",
+          "partOfSpeech": "Verb, hiphil",
+          "matchedEnglish": "teach",
+          "root": "or (2 Chronicles 26:15) יָרָא; a primitive root;",
+          "definition": "properly, to flow as water (i.e. to rain); transitively, to lay or throw (especially an arrow, i.e. to shoot); figuratively, to point out (as if by aiming the finger), to teach",
+          "usageInPassage": "Rendered “and I will teach you” in this passage — verb, hiphil."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 32:8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 32:8 in Biblical Hebrew sits on שָׂכַל (sâkal) “to be (causatively, make or act) circumspect and hence, intelligent”, יָעַץ (yâʻats) “to advise” and יָרָה (yârâh) “to flow as water (i.e. to rain)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I will instruct you and teach you in the way you should go — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 32:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 32:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I will instruct you and teach you in the way you should go",
+      "quote": "God's answer to a man who had hidden his sin is to promise instruction, not surveillance.",
+      "graceTakeaway": "God's counsel comes with an eye of care on you, not an eye of suspicion."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 32:8",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 32:8 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "The letter spread out before the LORD",
+        "character": "King Hezekiah",
+        "ref": "2 Kings 19:14–19",
+        "story": "Hezekiah took Sennacherib's threatening letter into the temple and spread it out before God rather than answering it himself. He was given both counsel and deliverance."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 32:8",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 32:8 in your daily walk today."
+        "era": "Gospels",
+        "title": "Two on the road being taught as they walked",
+        "character": "Cleopas and his companion",
+        "ref": "Luke 24:13–32",
+        "story": "Jesus joined them in their confusion and walked them through the Scriptures without first correcting their mood. Instruction came alongside them on the road they were already on."
       }
     ],
     "tptFootnotes": "32:8 The Hebrew word for 'counsel' is ya'ats, meaning to deliberate, guide, and advise with royal wisdom. 'With my eye upon you' implies intimate gaze and uninterrupted loving vigilance—not surveillance from fear, but loving guidance through unhindered eye contact."
@@ -1713,8 +1723,8 @@ const BIBLE_VERSES = [
       "NKJV": "Fear not, for I am with you; Be not dismayed, for I am your God. I will strengthen you, Yes, I will help you, I will uphold you with My righteous right hand."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 41 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 41:10 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 41 — Fear not, I have chosen you",
+      "chapterSummary": "The LORD calls the nations to court, exposes the idols they carry, and turns to Israel as his servant: I have chosen you, I will strengthen you, I will uphold you with my righteous right hand.",
       "versions": {
         "NIV": {
           "before": [
@@ -1856,79 +1866,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 41:10.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 41:10.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 41:10.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 41:10."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 41:10."
+          "strongs": "H6664",
+          "word": "צֶדֶק",
+          "transliteration": "tsedeq",
+          "pronunciation": "tseh'-dek",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "right natural",
+          "root": "from H6663 (צָדַק);",
+          "definition": "the right (natural, moral or legal); also (abstractly) equity or (figuratively) prosperity",
+          "usageInPassage": "Rendered “righteousness my” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H8159",
+          "word": "שָׁעָה",
+          "transliteration": "shâʻâh",
+          "pronunciation": "shaw-aw'",
+          "partOfSpeech": "Verb, hithpael",
+          "matchedEnglish": "fear",
+          "root": "a primitive root;",
+          "definition": "to gaze at or about (properly, for help); by implication, to inspect, consider, compassionate, be nonplussed (as looking around in amazement) or bewildered",
+          "usageInPassage": "Rendered “you fear” in this passage — verb, hithpael."
+        },
+        {
+          "strongs": "H8551",
+          "word": "תָּמַךְ",
+          "transliteration": "tâmak",
+          "pronunciation": "taw-mak'",
+          "partOfSpeech": "Verb, qal, perfect",
+          "matchedEnglish": "supported",
+          "root": "a primitive root;",
+          "definition": "to sustain; by implication, to obtain, keep fast; figuratively, to help, follow close",
+          "usageInPassage": "Rendered “I have supported you” in this passage — verb, qal, perfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 41:10 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 41:10 in Biblical Hebrew sits on צֶדֶק (tsedeq) “the right (natural, moral or legal)”, שָׁעָה (shâʻâh) “to gaze at or about (properly, for help)” and תָּמַךְ (tâmak) “to sustain”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Do not fear, for I am with you; I will uphold you with my righteous right hand — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 41:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 41:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Do not fear, for I am with you; I will uphold you with my righteous right hand",
+      "quote": "The right hand that upholds is called righteous — the holding is as strong as God's own justice.",
+      "graceTakeaway": "You are not being held by your grip on God."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Isaiah 41:10",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Isaiah 41:10 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "Hands held up until sunset",
+        "character": "Moses, Aaron and Hur",
+        "ref": "Exodus 17:8–13",
+        "story": "When Moses' hands grew heavy Aaron and Hur put a stone under him and held his arms up until the sun set. The victory held because the holding held."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Isaiah 41:10",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 41:10 in your daily walk today."
+        "era": "Exile",
+        "title": "A fourth figure in the furnace",
+        "character": "Shadrach, Meshach and Abednego",
+        "ref": "Daniel 3:19–27",
+        "story": "They went into the fire without a guarantee of rescue and were seen walking in it unbound, with a fourth. They came out without even the smell of smoke."
       }
     ],
     "tptFootnotes": "41:10 The Hebrew root for 'dismayed' (sha'ah) literally means to gaze around in anxious panic or look frantically for help. God's promise is 'Do not look around in terror, for I am your God!' His victorious right hand represents Jesus, who sits at the right hand of the Majesty on high."
@@ -1952,8 +1968,8 @@ const BIBLE_VERSES = [
       "NKJV": "Blessed is the man who trusts in the Lord, and whose hope is the Lord. For he shall be like a tree planted by the waters, which spreads out its roots by the river, and will not fear when heat comes."
     },
     "dynamicContext": {
-      "chapterTitle": "Jeremiah 17 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Jeremiah 17:7–8 revealing God's covenant faithfulness.",
+      "chapterTitle": "Jeremiah 17 — The tree planted by water",
+      "chapterSummary": "The heart is called deceitful above all things, and two lives are set side by side — the shrub in the desert that trusts in man, and the tree by the stream that trusts in the LORD.",
       "versions": {
         "NIV": {
           "before": [
@@ -2095,79 +2111,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Jeremiah 17:7–8.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Jeremiah 17:7–8.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Jeremiah 17:7–8.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Jeremiah 17:7–8."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Jeremiah 17:7–8."
+          "strongs": "H3105",
+          "word": "יוּבַל",
+          "transliteration": "yûwbal",
+          "pronunciation": "yoo-bal'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "stream",
+          "root": "from H2986 (יָבַל);",
+          "definition": "a stream",
+          "usageInPassage": "Rendered “a stream” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H1226",
+          "word": "בַּצֹּרֶת",
+          "transliteration": "batstsôreth",
+          "pronunciation": "bats-tso'-reth",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "drought",
+          "root": "feminine intensive from H1219 (בָּצַר);",
+          "definition": "restraint (of rain), i.e. drought",
+          "usageInPassage": "Rendered “drought” in this passage — noun, feminine, singular."
+        },
+        {
+          "strongs": "H0982",
+          "word": "בָּטַח",
+          "transliteration": "bâṭach",
+          "pronunciation": "baw-takh'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "trust",
+          "root": "a primitive root; properly, to hide for refuge (but not so precipitately as H2620 (חָסָה));",
+          "definition": "figuratively, to trust, be confident or sure",
+          "usageInPassage": "Rendered “he trusts” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Jeremiah 17:7–8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Jeremiah 17:7–8 in Biblical Hebrew sits on יוּבַל (yûwbal) “a stream”, בַּצֹּרֶת (batstsôreth) “restraint (of rain)” and בָּטַח (bâṭach) “figuratively, to trust, be confident or sure”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Like a tree planted by the water that never fails to bear fruit — Grace Revelation",
-      "quote": "Under the new covenant of grace, Jeremiah 17:7–8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Jeremiah 17:7–8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Like a tree planted by the water that never fails to bear fruit",
+      "quote": "The tree does not produce fruit by straining; it produces because of where it is planted.",
+      "graceTakeaway": "Fruitfulness follows placement, not effort."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Jeremiah 17:7–8",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Jeremiah 17:7–8 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "Fed by ravens at the Kerith ravine",
+        "character": "Elijah",
+        "ref": "1 Kings 17:2–6",
+        "story": "Hidden by a brook during a drought he had himself announced, Elijah drank from the stream and was fed morning and evening. He was planted by water while the nation dried out."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Jeremiah 17:7–8",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Jeremiah 17:7–8 in your daily walk today."
+        "era": "Exile",
+        "title": "A garden planted in Babylon",
+        "character": "Jeremiah's letter to the exiles",
+        "ref": "Jeremiah 29:4–7",
+        "story": "Jeremiah told the exiles to build houses, plant gardens and seek the welfare of the city that had taken them. Fruitfulness was possible in the last place they would have chosen."
       }
     ],
     "tptFootnotes": "17:8 The Hebrew word for 'drought' is batstsoreth, referring to seasons of severe scarcity and famine. The believer who trusts in Yahweh does not merely survive drought—their leaf remains vibrant green and they never cease producing supernatural kingdom fruit."
@@ -2191,8 +2213,8 @@ const BIBLE_VERSES = [
       "NKJV": "The Lord will guide you continually, and satisfy your soul in drought, and strengthen your bones; You shall be like a watered garden, and like a spring of water, whose waters do not fail."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 58 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 58:11–12 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 58 — The fast that God chooses",
+      "chapterSummary": "God rejects a fasting that keeps oppressing, and names the fast he wants — loosing chains, sharing bread — after which light breaks forth and the faster becomes a watered garden.",
       "versions": {
         "NIV": {
           "before": [
@@ -2334,79 +2356,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 58:11–12.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 58:11–12.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 58:11–12.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 58:11–12."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 58:11–12."
+          "strongs": "H6710",
+          "word": "צַחְצָחָה",
+          "transliteration": "tsachtsâchâh",
+          "pronunciation": "tsakh-tsaw-khaw'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "scorched",
+          "root": "from H6705 (צָחַח);",
+          "definition": "a dry place, i.e. desert",
+          "usageInPassage": "Rendered “in arid regions” in this passage — noun, feminine, plural."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7302",
+          "word": "רָוֶה",
+          "transliteration": "râveh",
+          "pronunciation": "raw-veh'",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "watered",
+          "root": "from H7301 (רָוָה);",
+          "definition": "sated (with drink)",
+          "usageInPassage": "Rendered “watered” in this passage — adjective."
+        },
+        {
+          "strongs": "H4144",
+          "word": "מוֹסָד",
+          "transliteration": "môwçâd",
+          "pronunciation": "mo-sawd'",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "foundations of",
+          "root": "from H3245 (יָסַד);",
+          "definition": "a foundation",
+          "usageInPassage": "Rendered “the foundations of” in this passage — noun, masculine, plural."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 58:11–12 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 58:11–12 in Biblical Hebrew sits on צַחְצָחָה (tsachtsâchâh) “a dry place”, רָוֶה (râveh) “sated (with drink)” and מוֹסָד (môwçâd) “a foundation”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You will be called Repairer of Broken Walls, Restorer of Streets — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 58:11–12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 58:11–12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You will be called Repairer of Broken Walls, Restorer of Streets",
+      "quote": "Isaiah names the restored as repairers — those who were rebuilt become rebuilders.",
+      "graceTakeaway": "What was repaired in you was never meant to stop with you."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 58:11–12",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 58:11–12 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "The wall rebuilt in fifty-two days",
+        "character": "Nehemiah",
+        "ref": "Nehemiah 6:15–16",
+        "story": "Nehemiah rebuilt Jerusalem's broken wall under constant threat and finished in fifty-two days, and the surrounding nations lost their confidence. The repairer had himself come from exile."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 58:11–12",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 58:11–12 in your daily walk today."
+        "era": "Early Church",
+        "title": "The persecutor sent to strengthen the church",
+        "character": "Ananias and Saul",
+        "ref": "Acts 9:10–19",
+        "story": "Ananias was asked to go and lay hands on the man who had come to arrest him. The one who had broken the walls of the church became its builder."
       }
     ]
   },
@@ -2429,8 +2457,8 @@ const BIBLE_VERSES = [
       "NKJV": "I have been young, and now am old; Yet I have not seen the righteous forsaken, Nor his descendants begging bread. He is ever merciful, and lends; And his descendants are blessed."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 37 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 37:25–26 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 37 — Do not fret",
+      "chapterSummary": "A wisdom psalm on the apparent success of the wicked, who wither like grass, set against the quiet inheritance of those who trust, delight and commit their way to the LORD.",
       "versions": {
         "NIV": {
           "before": [
@@ -2572,79 +2600,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 37:25–26.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 37:25–26.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 37:25–26.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 37:25–26."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 37:25–26."
+          "strongs": "H3867",
+          "word": "לָוָה",
+          "transliteration": "lâvâh",
+          "pronunciation": "law-vaw'",
+          "partOfSpeech": "Verb, hiphil, participle",
+          "matchedEnglish": "lending",
+          "root": "a primitive root;",
+          "definition": "properly, to twine, i.e. (by implication) to unite, to remain; also to borrow (as a form of obligation) or (caus.) to lend",
+          "usageInPassage": "Rendered “and he is lending” in this passage — verb, hiphil, participle."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H2204",
+          "word": "זָקֵן",
+          "transliteration": "zâqên",
+          "pronunciation": "zaw-kane'",
+          "partOfSpeech": "Verb, qal, perfect",
+          "matchedEnglish": "old",
+          "root": "a primitive root;",
+          "definition": "to be old",
+          "usageInPassage": "Rendered “I am old” in this passage — verb, qal, perfect."
+        },
+        {
+          "strongs": "H1293",
+          "word": "בְּרָכָה",
+          "transliteration": "Bᵉrâkâh",
+          "pronunciation": "ber-aw-kaw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "blessing",
+          "root": "from H1288 (בָרַךְ);",
+          "definition": "benediction; by implication prosperity",
+          "usageInPassage": "Rendered “become into a blessing” in this passage — noun, feminine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 37:25–26 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 37:25–26 in Biblical Hebrew sits on לָוָה (lâvâh) “to twine”, זָקֵן (zâqên) “to be old” and בְּרָכָה (Bᵉrâkâh) “benediction”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I have never seen the righteous forsaken or their children begging bread — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 37:25–26 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 37:25–26. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I have never seen the righteous forsaken or their children begging bread",
+      "quote": "David's testimony is an old man's observation, not a formula: he simply never saw God abandon his own.",
+      "graceTakeaway": "Provision has a longer memory than your current shortage."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 37:25–26",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 37:25–26 that God's covenant never fails those who trust His goodness."
+        "era": "Judges",
+        "title": "Gleaning that turned into an inheritance",
+        "character": "Ruth and Naomi",
+        "ref": "Ruth 2:1–12",
+        "story": "Ruth went out to glean behind whoever would allow it and happened onto the field of Boaz. Naomi, who had come home empty, ended the book with a grandson in her lap."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 37:25–26",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 37:25–26 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "Oil enough to pay every debt",
+        "character": "The widow of a prophet",
+        "ref": "2 Kings 4:1–7",
+        "story": "Her creditors were coming for her two sons and she had one jar of oil. It filled every vessel she could borrow, paid the debt, and left her enough to live on."
       }
     ],
     "tptFootnotes": "9:10 The Greek word for 'supplies' is choregeo, which historically referred to a wealthy benefactor who lavishly funded a grand choir or theatrical festival out of sheer delight. God provides seed to the sower and bread for food with extravagant, uncalculating joy."
@@ -2668,8 +2702,8 @@ const BIBLE_VERSES = [
       "NKJV": "Now may He who supplies seed to the sower, and bread for food, supply and multiply the seed you have sown and increase the fruits of your righteousness, while you are enriched in everything for all liberality."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Corinthians 9 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 9:10–11 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Corinthians 9 — God loves a cheerful giver",
+      "chapterSummary": "On finishing the collection for Jerusalem: sowing and reaping, giving without reluctance, and the God who supplies seed to the sower and multiplies the harvest of righteousness.",
       "versions": {
         "NIV": {
           "before": [
@@ -2811,79 +2845,80 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Corinthians 9:10–11.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Corinthians 9:10–11.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Corinthians 9:10–11.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Corinthians 9:10–11."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 2 Corinthians 9:10–11."
+          "strongs": "G5524",
+          "word": "χορηγέω",
+          "transliteration": "chorēgéō",
+          "pronunciation": "chorēgéō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "supply",
+          "root": "from a compound of G5525 (χορός) and G71 (ἄγω);",
+          "definition": "to be a dance-leader, i.e. (generally) to furnish",
+          "usageInPassage": "Rendered “will supply” in this passage — verb, future, active, indicative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1343",
+          "word": "δικαιοσύνη",
+          "transliteration": "dikaiosýnē",
+          "pronunciation": "dikaiosýnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "righteousness",
+          "root": "from G1342 (δίκαιος);",
+          "definition": "equity (of character or act); specially (Christian) justification",
+          "usageInPassage": "Rendered “righteousness” in this passage — noun."
+        },
+        {
+          "strongs": "G4148",
+          "word": "πλουτίζω",
+          "transliteration": "ploutízō",
+          "pronunciation": "ploutízō",
+          "partOfSpeech": "Verb, present, passive, participle",
+          "matchedEnglish": "enrich",
+          "root": "from G4149 (πλοῦτος);",
+          "definition": "to make wealthy (figuratively)",
+          "usageInPassage": "Rendered “enriching you” in this passage — verb, present, passive, participle."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 2 Corinthians 9:10–11 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 2 Corinthians 9:10–11 in Koine Greek sits on χορηγέω (chorēgéō) “to be a dance-leader”, δικαιοσύνη (dikaiosýnē) “equity (of character or act)” and πλουτίζω (ploutízō) “to make wealthy (figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
-      },
-      {
-        "ref": "2 Corinthians 1:20",
-        "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": 63
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Enriched in every way so that you can be generous on every occasion — Grace Revelation",
-      "quote": "Under the new covenant of grace, 2 Corinthians 9:10–11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Corinthians 9:10–11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Enriched in every way so that you can be generous on every occasion",
+      "quote": "God supplies seed to the sower — the resource arrives with the calling, not before it.",
+      "graceTakeaway": "Generosity is funded by God's supply, not by your surplus."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of 2 Corinthians 9:10–11",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of 2 Corinthians 9:10–11 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A famine collection gathered out of poverty",
+        "character": "The Macedonian churches",
+        "ref": "2 Corinthians 8:1–5",
+        "story": "In severe affliction and extreme poverty they begged for the privilege of giving, and gave beyond their means. Their supply was clearly not the source of their generosity."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of 2 Corinthians 9:10–11",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 9:10–11 in your daily walk today."
+        "era": "Gospels",
+        "title": "Five loaves that fed a hillside",
+        "character": "The boy with the loaves and fish",
+        "ref": "John 6:8–13",
+        "story": "A boy's lunch was handed over and became a meal for thousands with twelve baskets left. What was multiplied was what was released."
       }
     ]
   },
@@ -2906,8 +2941,8 @@ const BIBLE_VERSES = [
       "NKJV": "And He said to them, 'Go into all the world and preach the gospel to every creature.'"
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 16 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Mark 16:15 revealing God's covenant faithfulness.",
+      "chapterTitle": "Mark 16 — He has risen",
+      "chapterSummary": "The women come at sunrise to a rolled-away stone and an empty place where he lay; the longer ending sends the disciples into all the world with the good news.",
       "versions": {
         "NIV": {
           "before": [
@@ -3049,79 +3084,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Mark 16:15.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Mark 16:15.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Mark 16:15.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Mark 16:15."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Mark 16:15."
+          "strongs": "G2937",
+          "word": "κτίσις",
+          "transliteration": "ktísis",
+          "pronunciation": "ktísis",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "creation",
+          "root": "from G2936 (κτίζω);",
+          "definition": "original formation (properly, the act; by implication, the thing, literally or figuratively)",
+          "usageInPassage": "Rendered “creation.” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0537",
+          "word": "ἅπας",
+          "transliteration": "hápas",
+          "pronunciation": "hápas",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "all",
+          "root": "from G1 (Α) (as a particle of union) and G3956 (πᾶς);",
+          "definition": "absolutely all or (singular) every one",
+          "usageInPassage": "Rendered “all” in this passage — adjective."
+        },
+        {
+          "strongs": "G2784",
+          "word": "κηρύσσω",
+          "transliteration": "kērýssō",
+          "pronunciation": "kērýssō",
+          "partOfSpeech": "Verb, aorist, active, imperative",
+          "matchedEnglish": "preach",
+          "root": "of uncertain affinity;",
+          "definition": "to herald (as a public crier), especially divine truth (the gospel)",
+          "usageInPassage": "Rendered “do proclaim” in this passage — verb, aorist, active, imperative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Mark 16:15 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Mark 16:15 in Koine Greek sits on κτίσις (ktísis) “original formation (properly, the act”, ἅπας (hápas) “absolutely all or (singular) every one” and κηρύσσω (kērýssō) “to herald (as a public crier), especially divine truth (the gospel)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Go into all the world and preach the gospel to all creation — Grace Revelation",
-      "quote": "Under the new covenant of grace, Mark 16:15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 16:15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Go into all the world and preach the gospel to all creation",
+      "quote": "The commission goes to the same disciples who had just abandoned him.",
+      "graceTakeaway": "Being sent is not a reward for reliability."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 16:15",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 16:15 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "The gospel reaches an Ethiopian on a desert road",
+        "character": "Philip and the Ethiopian official",
+        "ref": "Acts 8:26–39",
+        "story": "Philip was sent to one chariot on a wilderness road to explain Isaiah to a foreign official. The commission scaled down to a single traveller and then out to a continent."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 16:15",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 16:15 in your daily walk today."
+        "era": "Early Church",
+        "title": "A tanner's rooftop and a Roman house",
+        "character": "Peter and Cornelius",
+        "ref": "Acts 10:9–48",
+        "story": "Peter's vision of the sheet undid the boundary he had assumed, and he preached in a Gentile household. All creation turned out to mean all creation."
       }
     ],
     "tptFootnotes": "1:16 The Greek word for 'power' is dunamis, from which we get 'dynamite' and 'dynamic.' Paul states that the gospel of grace is not merely good advice—it is the very explosive, saving energy of the Almighty unleashed for everyone who believes."
@@ -3145,8 +3186,8 @@ const BIBLE_VERSES = [
       "NKJV": "For I am not ashamed of the gospel of Christ, for it is the power of God to salvation for everyone who believes, for the Jew first and also for the Greek."
     },
     "dynamicContext": {
-      "chapterTitle": "Romans 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Romans 1:16 revealing God's covenant faithfulness.",
+      "chapterTitle": "Romans 1 — Not ashamed of the gospel",
+      "chapterSummary": "Paul longs to visit Rome and states his thesis — the gospel is God's power for salvation to everyone who believes — before tracing what happens when truth is exchanged for a lie.",
       "versions": {
         "NIV": {
           "before": [
@@ -3288,79 +3329,80 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Romans 1:16.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Romans 1:16.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Romans 1:16.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Romans 1:16."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Romans 1:16."
+          "strongs": "G4991",
+          "word": "σωτηρία",
+          "transliteration": "sōtēría",
+          "pronunciation": "sōtēría",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "salvation",
+          "root": "feminine of a derivative of G4990 (σωτήρ) as (properly, abstract) noun;",
+          "definition": "rescue or safety (physically or morally)",
+          "usageInPassage": "Rendered “salvation” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1870",
+          "word": "ἐπαισχύνομαι",
+          "transliteration": "epaischýnomai",
+          "pronunciation": "epaischýnomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "am ashamed of",
+          "root": "from G1909 (ἐπί) and G153 (αἰσχύνομαι);",
+          "definition": "to feel shame for something",
+          "usageInPassage": "Rendered “I am ashamed of” in this passage — verb."
+        },
+        {
+          "strongs": "G1672",
+          "word": "Ἕλλην",
+          "transliteration": "Héllēn",
+          "pronunciation": "Héllēn",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "Greek",
+          "root": "from G1671 (Ἑλλάς);",
+          "definition": "a Hellen (Grecian) or inhabitant of Hellas; by extension a Greek-speaking person, especially a non-Jew",
+          "usageInPassage": "Rendered “to Greek.” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Romans 1:16 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Romans 1:16 in Koine Greek sits on σωτηρία (sōtēría) “rescue or safety (physically or morally)”, ἐπαισχύνομαι (epaischýnomai) “to feel shame for something” and Ἕλλην (Héllēn) “a Hellen (Grecian) or inhabitant of Hellas”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
-        "ref": "Romans 8:31–32",
-        "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
-      },
-      {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The gospel is the power of God that brings salvation to everyone who believes — Grace Revelation",
-      "quote": "Under the new covenant of grace, Romans 1:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Romans 1:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The gospel is the power of God that brings salvation to everyone who believes",
+      "quote": "Paul is not ashamed because the gospel does not depend on the persuasiveness of the one carrying it.",
+      "graceTakeaway": "The power is in the message, which takes the pressure off the messenger."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Romans 1:16",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Romans 1:16 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "Preaching to the philosophers on Mars Hill",
+        "character": "Paul in Athens",
+        "ref": "Acts 17:22–34",
+        "story": "Paul stood among the Areopagus philosophers, quoted their own poets and preached the resurrection. Some sneered, some believed — the message did the work."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Romans 1:16",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 1:16 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "A servant girl's word sends a general to the prophet",
+        "character": "The Israelite girl in Naaman's house",
+        "ref": "2 Kings 5:1–14",
+        "story": "A captive girl told her mistress about a prophet in Samaria, and a Syrian commander was healed. The smallest voice in the house carried the message."
       }
     ],
     "tptFootnotes": "28:20 In the Aramaic text, 'I am with you always' is 'Behold, I am with you every single day until the culmination of the ages.' There is never a single millisecond where the believer is left unattended by Christ."
@@ -3384,8 +3426,8 @@ const BIBLE_VERSES = [
       "NKJV": "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all things that I have commanded you; and lo, I am with you always, even to the end of the age."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 28 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 28:19–20 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 28 — The Great Commission",
+      "chapterSummary": "The stone is rolled back, the guards are paid to lie, and the risen Jesus claims all authority and sends the eleven out with the promise of his presence to the end of the age.",
       "versions": {
         "NIV": {
           "before": [
@@ -3527,79 +3569,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 28:19–20.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 28:19–20.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 28:19–20.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 28:19–20."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 28:19–20."
+          "strongs": "G3100",
+          "word": "μαθητεύω",
+          "transliteration": "mathēteúō",
+          "pronunciation": "mathēteúō",
+          "partOfSpeech": "Verb, aorist, active, imperative",
+          "matchedEnglish": "disciple",
+          "root": "from G3101 (μαθητής);",
+          "definition": "intransitively, to become a pupil; transitively, to disciple, i.e. enrol as scholar",
+          "usageInPassage": "Rendered “do disciple” in this passage — verb, aorist, active, imperative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4930",
+          "word": "συντέλεια",
+          "transliteration": "syntéleia",
+          "pronunciation": "syntéleia",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "completion",
+          "root": "from G4931 (συντελέω);",
+          "definition": "entire completion, i.e. consummation (of a dispensation)",
+          "usageInPassage": "Rendered “completion” in this passage — noun."
+        },
+        {
+          "strongs": "G4151",
+          "word": "πνεῦμα",
+          "transliteration": "pneûma",
+          "pronunciation": "pneûma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "Spirit",
+          "root": "from G4154 (πνέω);",
+          "definition": "a current of air, i.e. breath (blast) or a breeze; by analogy or figuratively, a spirit, i.e. (human) the rational soul, (by implication) vital principle, mental disposition, etc., or (superhuman) an angel, demon, or (divine) God, Christ's spirit, the Holy Spirit",
+          "usageInPassage": "Rendered “Spirit,” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 28:19–20 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Matthew 28:19–20 in Koine Greek sits on μαθητεύω (mathēteúō) “intransitively, to become a pupil”, συντέλεια (syntéleia) “entire completion” and πνεῦμα (pneûma) “a current of air”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "And surely I am with you always, to the very end of the age — Grace Revelation",
-      "quote": "Under the new covenant of grace, Matthew 28:19–20 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 28:19–20. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "And surely I am with you always, to the very end of the age",
+      "quote": "The Commission ends not with a task but with a presence: I am with you.",
+      "graceTakeaway": "You are not sent out and left; you are sent out and accompanied."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Matthew 28:19–20",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Matthew 28:19–20 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "The presence that refused to send them alone",
+        "character": "Moses at Sinai",
+        "ref": "Exodus 33:12–17",
+        "story": "Moses told God plainly that if his presence did not go with them he did not want to leave. The answer was that the presence would go and give them rest."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Matthew 28:19–20",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 28:19–20 in your daily walk today."
+        "era": "Early Church",
+        "title": "Standing trial with no one beside him",
+        "character": "Paul before Caesar",
+        "ref": "2 Timothy 4:16–18",
+        "story": "At his first defence everyone deserted him, but he writes that the Lord stood at his side and gave him strength. The promise held in an empty courtroom."
       }
     ]
   },
@@ -3622,8 +3670,8 @@ const BIBLE_VERSES = [
       "NKJV": "It shall come to pass that before they call, I will answer; and while they are still speaking, I will hear."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 65 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 65:24 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 65 — New heavens and a new earth",
+      "chapterSummary": "God answers a people who did not ask, then paints the world he is making: no more weeping, no more futile labour, and an answer given before the call is finished.",
       "versions": {
         "NIV": {
           "before": [
@@ -3765,79 +3813,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 65:24.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 65:24.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 65:24.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 65:24."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 65:24."
+          "strongs": "H2962",
+          "word": "טֶרֶם",
+          "transliteration": "ṭerem",
+          "pronunciation": "teh'-rem",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "before",
+          "root": "from an unused root apparently meaning to interrupt or suspend;",
+          "definition": "properly, non-occurrence; used adverbially, not yet or before",
+          "usageInPassage": "Rendered “before” in this passage — adjective."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H6030",
+          "word": "עָנָה",
+          "transliteration": "ʻânâh",
+          "pronunciation": "aw-naw'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "answer",
+          "root": "a primitive root;",
+          "definition": "properly, to eye or (generally) to heed, i.e. pay attention; by implication, to respond; by extension to begin to speak; specifically to sing, shout, testify, announce",
+          "usageInPassage": "Rendered “I will answer” in this passage — verb, qal, imperfect."
+        },
+        {
+          "strongs": "H5750",
+          "word": "עוֹד",
+          "transliteration": "ʻôwd",
+          "pronunciation": "ode",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "still",
+          "root": "or עֹד; from H5749 (עוּד);",
+          "definition": "properly, iteration or continuance; used only adverbially (with or without preposition), again, repeatedly, still, more",
+          "usageInPassage": "Rendered “still” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 65:24 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 65:24 in Biblical Hebrew sits on טֶרֶם (ṭerem) “non-occurrence”, עָנָה (ʻânâh) “to eye or (generally) to heed” and עוֹד (ʻôwd) “iteration or continuance”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Before they call I will answer; while they are still speaking I will hear — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 65:24 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 65:24. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Before they call I will answer; while they are still speaking I will hear",
+      "quote": "The answer precedes the call — God is not waiting to be persuaded.",
+      "graceTakeaway": "Prayer joins something already in motion."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Isaiah 65:24",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Isaiah 65:24 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "An answer arriving before the prayer finished",
+        "character": "Peter and the praying church",
+        "ref": "Acts 12:5–17",
+        "story": "The church prayed through the night for Peter and did not believe Rhoda when he knocked at the gate. The angel had come before their prayer meeting ended."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Isaiah 65:24",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 65:24 in your daily walk today."
+        "era": "Patriarchs",
+        "title": "A servant's prayer answered mid-sentence",
+        "character": "Abraham's servant at the well",
+        "ref": "Genesis 24:12–21",
+        "story": "He was still speaking his request when Rebekah came out with her jar. The answer was already walking toward him."
       }
     ]
   },
@@ -3860,8 +3914,8 @@ const BIBLE_VERSES = [
       "NKJV": "You are the light of the world. A city that is set on a hill cannot be hidden."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 5 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 5:14 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 5 — The Sermon on the Mount begins",
+      "chapterSummary": "The Beatitudes open a new kind of blessedness, followed by salt and light and a reading of the law that goes past the act to the heart behind it.",
       "versions": {
         "NIV": {
           "before": [
@@ -4003,79 +4057,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 5:14.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 5:14.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 5:14.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 5:14."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 5:14."
+          "strongs": "G2928",
+          "word": "κρύπτω",
+          "transliteration": "krýptō",
+          "pronunciation": "krýptō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "hidden",
+          "root": "a primary verb;",
+          "definition": "to conceal (properly, by covering)",
+          "usageInPassage": "Rendered “to be hidden” in this passage — verb."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2749",
+          "word": "κεῖμαι",
+          "transliteration": "keîmai",
+          "pronunciation": "keîmai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "lying",
+          "root": "middle voice of a primary verb;",
+          "definition": "to lie outstretched (literally or figuratively)",
+          "usageInPassage": "Rendered “lying;” in this passage — verb."
+        },
+        {
+          "strongs": "G3735",
+          "word": "ὄρος",
+          "transliteration": "óros",
+          "pronunciation": "óros",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "hill",
+          "root": "probably from an obsolete (to rise or \"rear\";",
+          "definition": "perhaps akin to G142 (αἴρω); compare G3733 (ὄρνις)); a mountain (as lifting itself above the plain)",
+          "usageInPassage": "Rendered “a hill” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 5:14 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Matthew 5:14 in Koine Greek sits on κρύπτω (krýptō) “to conceal (properly, by covering)”, κεῖμαι (keîmai) “to lie outstretched (literally or figuratively)” and ὄρος (óros) “perhaps akin to G142 (αἴρω)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You are the light of the world. A town built on a hill cannot be hidden — Grace Revelation",
-      "quote": "Under the new covenant of grace, Matthew 5:14 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 5:14. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You are the light of the world. A town built on a hill cannot be hidden",
+      "quote": "Jesus does not tell them to become light but declares that they are.",
+      "graceTakeaway": "Your identity is stated over you before it is asked of you."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Matthew 5:14",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Matthew 5:14 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A lamp not hidden under a basket",
+        "character": "The healed Gerasene man",
+        "ref": "Mark 5:18–20",
+        "story": "Jesus refused to let him follow and sent him home to tell what had been done for him. He went through the Decapolis and everyone was amazed."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Matthew 5:14",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 5:14 in your daily walk today."
+        "era": "Early Church",
+        "title": "A jailer's household lit at midnight",
+        "character": "The Philippian jailer",
+        "ref": "Acts 16:27–34",
+        "story": "Their refusal to escape saved his life, and the light of it reached his whole household before morning. What they were showed before it was explained."
       }
     ]
   },
@@ -4098,8 +4158,8 @@ const BIBLE_VERSES = [
       "NKJV": "Peace I leave with you, My peace I give to you; not as the world gives do I give to you. Let not your heart be troubled, neither let it be afraid."
     },
     "dynamicContext": {
-      "chapterTitle": "John 14 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 14:27 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 14 — Let not your hearts be troubled",
+      "chapterSummary": "In the upper room Jesus promises a prepared place, names himself the way and the truth and the life, pledges the Advocate, and leaves a peace unlike the world's.",
       "versions": {
         "NIV": {
           "before": [
@@ -4241,79 +4301,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 14:27.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 14:27.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 14:27.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 14:27."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 14:27."
+          "strongs": "G1168",
+          "word": "δειλιάω",
+          "transliteration": "deiliáō",
+          "pronunciation": "deiliáō",
+          "partOfSpeech": "Verb, present, active, imperative",
+          "matchedEnglish": "should it fear",
+          "root": "from G1167 (δειλία);",
+          "definition": "to be timid",
+          "usageInPassage": "Rendered “should it fear.” in this passage — verb, present, active, imperative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1515",
+          "word": "εἰρήνη",
+          "transliteration": "eirḗnē",
+          "pronunciation": "eirḗnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "Peace",
+          "root": "probably from a primary verb (to join);",
+          "definition": "peace (literally or figuratively); by implication, prosperity",
+          "usageInPassage": "Rendered “Peace” in this passage — noun."
+        },
+        {
+          "strongs": "G5015",
+          "word": "ταράσσω",
+          "transliteration": "tarássō",
+          "pronunciation": "tarássō",
+          "partOfSpeech": "Verb, present, passive, imperative",
+          "matchedEnglish": "trouble",
+          "root": "of uncertain affinity;",
+          "definition": "to stir or agitate (roil water)",
+          "usageInPassage": "Rendered “should be troubled” in this passage — verb, present, passive, imperative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 14:27 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 14:27 in Koine Greek sits on δειλιάω (deiliáō) “to be timid”, εἰρήνη (eirḗnē) “peace (literally or figuratively)” and ταράσσω (tarássō) “to stir or agitate (roil water)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Peace I leave with you; my peace I give you. Do not let your hearts be troubled — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 14:27 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 14:27. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Peace I leave with you; my peace I give you. Do not let your hearts be troubled",
+      "quote": "He distinguishes his peace from the world's: not the absence of trouble, but a peace given in the middle of it.",
+      "graceTakeaway": "Peace is a gift handed to you, not a state you achieve."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of John 14:27",
-        "character": "Jesus & The Disciples",
+        "era": "Gospels",
+        "title": "Asleep in the stern in a swamping boat",
+        "character": "Jesus and the disciples on Galilee",
         "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of John 14:27 that God's covenant never fails those who trust His goodness."
+        "story": "The boat was filling and Jesus was asleep on a cushion. The peace he then spoke to the storm was the peace he had already been sleeping in."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of John 14:27",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 14:27 in your daily walk today."
+        "era": "Early Church",
+        "title": "A face like an angel's under sentence",
+        "character": "Stephen",
+        "ref": "Acts 6:15, 7:54–60",
+        "story": "Accused before the council, his face was like an angel's, and he died asking forgiveness for the men stoning him. It was not a peace the room supplied."
       }
     ],
     "tptFootnotes": "23:1 In Hebrew, 'Yahweh is my Shepherd, I shall not want' is Yahweh-Rohi. The phrase 'I shall not want' (lo echar) means lack has been permanently eradicated; in the Shepherd's pasture, there is no deficit of provision, rest, or favor."
@@ -4337,8 +4403,8 @@ const BIBLE_VERSES = [
       "NKJV": "Therefore, brethren, having boldness to enter the Holiest by the blood of Jesus... let us hold fast the confession of our hope without wavering, for He who promised is faithful."
     },
     "dynamicContext": {
-      "chapterTitle": "Hebrews 10 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Hebrews 10:19–25 revealing God's covenant faithfulness.",
+      "chapterTitle": "Hebrews 10 — One sacrifice, once for all",
+      "chapterSummary": "The repeated sacrifices could never take sins away, but a single offering has perfected those being made holy; therefore draw near in full assurance, hold the confession fast, and stir one another to love.",
       "versions": {
         "NIV": {
           "before": [
@@ -4480,79 +4546,80 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Hebrews 10:19–25.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Hebrews 10:19–25.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Hebrews 10:19–25.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Hebrews 10:19–25."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Hebrews 10:19–25."
+          "strongs": "G4372",
+          "word": "πρόσφατος",
+          "transliteration": "prósphatos",
+          "pronunciation": "prósphatos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "new",
+          "root": "from G4253 (πρό) and a derivative of G4969 (σφάζω);",
+          "definition": "previously (recently) slain (fresh), i.e. (figuratively) lately made",
+          "usageInPassage": "Rendered “new” in this passage — adjective."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0186",
+          "word": "ἀκλινής",
+          "transliteration": "aklinḗs",
+          "pronunciation": "aklinḗs",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "firmly",
+          "root": "from G1 (Α) (as a negative particle) and G2827 (κλίνω);",
+          "definition": "not leaning, i.e. (figuratively) firm",
+          "usageInPassage": "Rendered “firmly,” in this passage — adjective."
+        },
+        {
+          "strongs": "G1680",
+          "word": "ἐλπίς",
+          "transliteration": "elpís",
+          "pronunciation": "elpís",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "hope",
+          "root": "from a primary (to anticipate, usually with pleasure);",
+          "definition": "expectation (abstractly or concretely) or confidence",
+          "usageInPassage": "Rendered “of our hope” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Hebrews 10:19–25 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Hebrews 10:19–25 in Koine Greek sits on πρόσφατος (prósphatos) “previously (recently) slain (fresh)”, ἀκλινής (aklinḗs) “not leaning” and ἐλπίς (elpís) “expectation (abstractly or concretely) or confidence”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
-      },
-      {
-        "ref": "Hebrews 13:5–6",
-        "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Confidence to enter the Most Holy Place by the blood of Jesus — Grace Revelation",
-      "quote": "Under the new covenant of grace, Hebrews 10:19–25 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Hebrews 10:19–25. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Confidence to enter the Most Holy Place by the blood of Jesus",
+      "quote": "Confidence to enter the holy place rests on the blood, which is why it is confidence and not presumption.",
+      "graceTakeaway": "You may come near on your worst day for the same reason you may on your best."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Hebrews 10:19–25",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Hebrews 10:19–25 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "The high priest entering once a year",
+        "character": "Aaron on the Day of Atonement",
+        "ref": "Leviticus 16:1–17",
+        "story": "Aaron could enter the holy place only once a year, with blood, and not without incense to shield him. The restriction measured what the torn veil later removed."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Hebrews 10:19–25",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Hebrews 10:19–25 in your daily walk today."
+        "era": "Gospels",
+        "title": "The curtain torn from the top down",
+        "character": "The temple at the crucifixion",
+        "ref": "Matthew 27:50–51",
+        "story": "At the moment Jesus died the curtain of the temple tore in two from top to bottom. The way in was opened from God's side."
       }
     ]
   },
@@ -4575,8 +4642,8 @@ const BIBLE_VERSES = [
       "NKJV": "Forever, O Lord, Your word is settled in heaven."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:89 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The long love song to God's word",
+      "chapterSummary": "The great acrostic: twenty-two stanzas, one per Hebrew letter, turning over God's law, statutes, precepts and promises from every angle a life can meet them.",
       "versions": {
         "NIV": {
           "before": [
@@ -4718,79 +4785,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:89.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:89.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:89.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:89."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:89."
+          "strongs": "H5324",
+          "word": "נָצַב",
+          "transliteration": "nâtsab",
+          "pronunciation": "naw-tsab'",
+          "partOfSpeech": "Verb, niphal, participle",
+          "matchedEnglish": "stand",
+          "root": "a primitive root;",
+          "definition": "to station, in various applications (literally or figuratively)",
+          "usageInPassage": "Rendered “is standing firm” in this passage — verb, niphal, participle."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H8064",
+          "word": "שָׁמַיִם",
+          "transliteration": "shâmayim",
+          "pronunciation": "shaw-mah'-yim",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "heaven",
+          "root": "dual of an unused singular שָׁמֶה; from an unused root meaning to be lofty;",
+          "definition": "the sky (as aloft; the dual perhaps alluding to the visible arch in which the clouds move, as well as to the higher ether where the celestial bodies revolve)",
+          "usageInPassage": "Rendered “in the heavens” in this passage — noun, masculine, plural."
+        },
+        {
+          "strongs": "H5769",
+          "word": "עוֹלָם",
+          "transliteration": "ʻôwlâm",
+          "pronunciation": "o-lawm'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "ever",
+          "root": "or עֹלָם; from H5956 (עָלַם);",
+          "definition": "properly, concealed, i.e. the vanishing point; generally, time out of mind (past or future), i.e. (practically) eternity; frequentatively, adverbial (especially with prepositional prefix) always",
+          "usageInPassage": "Rendered “for ever” in this passage — noun, masculine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:89 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 119:89 in Biblical Hebrew sits on נָצַב (nâtsab) “to station, in various applications (literally or figuratively)”, שָׁמַיִם (shâmayim) “the sky (as aloft” and עוֹלָם (ʻôwlâm) “concealed”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Your word, LORD, is eternal; it stands firm in the heavens — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 119:89 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:89. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Your word, LORD, is eternal; it stands firm in the heavens",
+      "quote": "What is settled in heaven is not renegotiated by your circumstances.",
+      "graceTakeaway": "God's word outlasts the season you are reading it in."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:89",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:89 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "A scroll cut up and burned, and rewritten",
+        "character": "Jehoiakim and Jeremiah",
+        "ref": "Jeremiah 36:20–32",
+        "story": "The king sliced the scroll column by column and threw it in the fire, and Jeremiah simply dictated it again with more added. The word outlasted the knife."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:89",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:89 in your daily walk today."
+        "era": "Return from Exile",
+        "title": "A book preserved through the exile",
+        "character": "Ezra the scribe",
+        "ref": "Ezra 7:6–10",
+        "story": "Ezra came up from Babylon with the Law intact after generations of captivity, having set his heart to study and to teach it. The text survived the empire."
       }
     ]
   },
@@ -4813,8 +4886,8 @@ const BIBLE_VERSES = [
       "NKJV": "Lead me in Your truth and teach me, for You are the God of my salvation; On You I wait all the day."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 25 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 25:5 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 25 — Teach me your paths",
+      "chapterSummary": "An acrostic prayer of David asking to be shown God's ways, pleading that the sins of his youth be forgotten, and resting on the covenant friendship of the LORD.",
       "versions": {
         "NIV": {
           "before": [
@@ -4956,79 +5029,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 25:5.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 25:5.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 25:5.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 25:5."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 25:5."
+          "strongs": "H0571",
+          "word": "אֶמֶת",
+          "transliteration": "ʼemeth",
+          "pronunciation": "eh'-meth",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "truth",
+          "root": "contracted from H539 (אָמַן);",
+          "definition": "stability; (figuratively) certainty, truth, trustworthiness",
+          "usageInPassage": "Rendered “in truth your” in this passage — noun, feminine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3468",
+          "word": "יֶשַׁע",
+          "transliteration": "yeshaʻ",
+          "pronunciation": "yeh'-shah",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "salvation",
+          "root": "or יֵשַׁע; from H3467 (יָשַׁע);",
+          "definition": "liberty, deliverance, prosperity",
+          "usageInPassage": "Rendered “salvation my” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H6960",
+          "word": "קָוָה",
+          "transliteration": "qâvâh",
+          "pronunciation": "kaw-vaw'",
+          "partOfSpeech": "Verb, piel, perfect",
+          "matchedEnglish": "waited for",
+          "root": "a primitive root;",
+          "definition": "to bind together (perhaps by twisting), i.e. collect; (figuratively) to expect",
+          "usageInPassage": "Rendered “I have waited for” in this passage — verb, piel, perfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 25:5 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 25:5 in Biblical Hebrew sits on אֶמֶת (ʼemeth) “stability”, יֶשַׁע (yeshaʻ) “liberty, deliverance, prosperity” and קָוָה (qâvâh) “to bind together (perhaps by twisting)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Guide me in your truth and teach me, for you are God my Savior — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 25:5 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 25:5. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Guide me in your truth and teach me, for you are God my Savior",
+      "quote": "The prayer to be taught assumes a Saviour who is patient with the untaught.",
+      "graceTakeaway": "Not knowing the way is not a disqualification from being led."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 25:5",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 25:5 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "A boy who did not recognise the voice",
+        "character": "Samuel under Eli",
+        "ref": "1 Samuel 3:1–10",
+        "story": "Samuel ran to Eli three times before he was told who was calling. He needed instruction in the very thing he was being called to."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 25:5",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 25:5 in your daily walk today."
+        "era": "Early Church",
+        "title": "An eloquent teacher taught more accurately",
+        "character": "Apollos with Priscilla and Aquila",
+        "ref": "Acts 18:24–28",
+        "story": "Apollos already spoke with fervour and accuracy as far as he knew, and they took him aside and filled in what he lacked. Teachability made him more useful, not less."
       }
     ]
   },
@@ -5051,8 +5130,8 @@ const BIBLE_VERSES = [
       "NKJV": "The Lord will guide you continually, and satisfy your soul in drought, and strengthen your bones; You shall be like a watered garden."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 58 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 58:11 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 58 — The fast that God chooses",
+      "chapterSummary": "God rejects a fasting that keeps oppressing, and names the fast he wants — loosing chains, sharing bread — after which light breaks forth and the faster becomes a watered garden.",
       "versions": {
         "NIV": {
           "before": [
@@ -5194,79 +5273,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 58:11.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 58:11.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 58:11.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 58:11."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 58:11."
+          "strongs": "H6710",
+          "word": "צַחְצָחָה",
+          "transliteration": "tsachtsâchâh",
+          "pronunciation": "tsakh-tsaw-khaw'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "scorched",
+          "root": "from H6705 (צָחַח);",
+          "definition": "a dry place, i.e. desert",
+          "usageInPassage": "Rendered “in arid regions” in this passage — noun, feminine, plural."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7302",
+          "word": "רָוֶה",
+          "transliteration": "râveh",
+          "pronunciation": "raw-veh'",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "watered",
+          "root": "from H7301 (רָוָה);",
+          "definition": "sated (with drink)",
+          "usageInPassage": "Rendered “watered” in this passage — adjective."
+        },
+        {
+          "strongs": "H3576",
+          "word": "כָּזַב",
+          "transliteration": "kâzab",
+          "pronunciation": "kaw-zab'",
+          "partOfSpeech": "Verb, piel, imperfect",
+          "matchedEnglish": "fail",
+          "root": "a primitive root;",
+          "definition": "to lie (i.e. deceive), literally or figuratively",
+          "usageInPassage": "Rendered “they will fail” in this passage — verb, piel, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 58:11 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 58:11 in Biblical Hebrew sits on צַחְצָחָה (tsachtsâchâh) “a dry place”, רָוֶה (râveh) “sated (with drink)” and כָּזַב (kâzab) “to lie (i.e. deceive), literally or figuratively”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You will be like a well-watered garden, like a spring whose waters never fail — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 58:11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 58:11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You will be like a well-watered garden, like a spring whose waters never fail",
+      "quote": "A well-watered garden is not self-sustaining; it is continually supplied.",
+      "graceTakeaway": "Your flourishing depends on a source, and the source does not run dry."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 58:11",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 58:11 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Wells re-dug in a dry country",
+        "character": "Isaac in Gerar",
+        "ref": "Genesis 26:17–22",
+        "story": "Isaac reopened the wells the Philistines had stopped up, and kept moving each time they were seized, until there was room. He kept finding water because he kept digging."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 58:11",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 58:11 in your daily walk today."
+        "era": "Gospels",
+        "title": "A well in Samaria at noon",
+        "character": "The Samaritan woman",
+        "ref": "John 4:7–15",
+        "story": "She came at the hottest hour to avoid people and was offered water that would become a spring inside her. She left the jar behind."
       }
     ]
   },
@@ -5289,8 +5374,8 @@ const BIBLE_VERSES = [
       "NKJV": "The fear of the Lord leads to life, and he who has it will abide in satisfaction; He will not be visited with evil."
     },
     "dynamicContext": {
-      "chapterTitle": "Proverbs 19 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Proverbs 19:23 revealing God's covenant faithfulness.",
+      "chapterTitle": "Proverbs 19 — Integrity over words",
+      "chapterSummary": "Assorted proverbs weighing poverty with integrity against crooked speech, patience against temper, and closing on the LORD's purpose standing above human plans.",
       "versions": {
         "NIV": {
           "before": [
@@ -5432,79 +5517,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Proverbs 19:23.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Proverbs 19:23.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Proverbs 19:23.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Proverbs 19:23."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Proverbs 19:23."
+          "strongs": "H7649",
+          "word": "שָׂבֵעַ",
+          "transliteration": "sâbêaʻ",
+          "pronunciation": "saw-bay'-ah",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "satisfied",
+          "root": "from H7646 (שָׂבַע);",
+          "definition": "satiated (in a pleasant or disagreeable sense)",
+          "usageInPassage": "Rendered “and satisfied” in this passage — adjective."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3374",
+          "word": "יִרְאָה",
+          "transliteration": "yirʼâh",
+          "pronunciation": "yir-aw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "fear of",
+          "root": "feminine of H3373 (יָרֵא);",
+          "definition": "fear (also used as infinitive); morally, reverence",
+          "usageInPassage": "Rendered “the fear of” in this passage — noun, feminine, singular."
+        },
+        {
+          "strongs": "H3885",
+          "word": "לוּן",
+          "transliteration": "lûwn",
+          "pronunciation": "loon",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "someone will pass the night",
+          "root": "or לִין; a primitive root;",
+          "definition": "to stop (usually over night); by implication, to stay permanently; hence (in a bad sense) to be obstinate (especially in words, to complain)",
+          "usageInPassage": "Rendered “someone will pass the night” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Proverbs 19:23 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Proverbs 19:23 in Biblical Hebrew sits on שָׂבֵעַ (sâbêaʻ) “satiated (in a pleasant or disagreeable sense)”, יִרְאָה (yirʼâh) “fear (also used as infinitive)” and לוּן (lûwn) “to stop (usually over night)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The fear of the LORD leads to life; then one rests content, untouched by trouble — Grace Revelation",
-      "quote": "Under the new covenant of grace, Proverbs 19:23 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Proverbs 19:23. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The fear of the LORD leads to life; then one rests content, untouched by trouble",
+      "quote": "The fear of the LORD produces rest rather than dread — reverence that ends in contentment.",
+      "graceTakeaway": "Awe of God settles you rather than unsettling you."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Proverbs 19:23",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Proverbs 19:23 that God's covenant never fails those who trust His goodness."
+        "era": "Wisdom",
+        "title": "A man who feared God and lost everything",
+        "character": "Job",
+        "ref": "Job 1:1–22",
+        "story": "Job is introduced as blameless and God-fearing, and he lost his children, wealth and health in a day. He worshipped, and the book ends with him restored and content."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Proverbs 19:23",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Proverbs 19:23 in your daily walk today."
+        "era": "United Monarchy",
+        "title": "A king who asked for discernment instead of long life",
+        "character": "Solomon at Gibeon",
+        "ref": "1 Kings 3:5–14",
+        "story": "Offered anything, Solomon asked for a discerning heart to govern well. He was given wisdom, and rest from enemies besides."
       }
     ]
   },
@@ -5527,8 +5618,8 @@ const BIBLE_VERSES = [
       "NKJV": "Finally, my brethren, be strong in the Lord and in the power of His might."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 6 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 6:10 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 6 — The armour of God",
+      "chapterSummary": "Households ordered under Christ, then the call to be strong in the Lord and to stand — belt, breastplate, shoes, shield, helmet and sword — against what is not flesh and blood.",
       "versions": {
         "NIV": {
           "before": [
@@ -5670,79 +5761,80 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 6:10.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 6:10.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 6:10.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 6:10."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 6:10."
+          "strongs": "G3064",
+          "word": "λοιποῦ",
+          "transliteration": "loipoû",
+          "pronunciation": "loipoû",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "Henceforth",
+          "root": "genitive case singular of the same as G3062 (λοιποί);",
+          "definition": "remaining time",
+          "usageInPassage": "Rendered “Henceforth” in this passage — adjective."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1743",
+          "word": "ἐνδυναμόω",
+          "transliteration": "endynamóō",
+          "pronunciation": "endynamóō",
+          "partOfSpeech": "Verb, present, passive, imperative",
+          "matchedEnglish": "empowered",
+          "root": "from G1722 (ἐν) and G1412 (δυναμόω);",
+          "definition": "to empower",
+          "usageInPassage": "Rendered “do be empowered” in this passage — verb, present, passive, imperative."
+        },
+        {
+          "strongs": "G2479",
+          "word": "ἰσχύς",
+          "transliteration": "ischýs",
+          "pronunciation": "ischýs",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "might",
+          "root": "from a derivative of (force;",
+          "definition": "compare , a form of G2192 (ἔχω)); forcefulness (literally or figuratively)",
+          "usageInPassage": "Rendered “might” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 6:10 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Ephesians 6:10 in Koine Greek sits on λοιποῦ (loipoû) “remaining time”, ἐνδυναμόω (endynamóō) “to empower” and ἰσχύς (ischýs) “compare , a form of G2192 (ἔχω))”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
-      },
-      {
-        "ref": "Ephesians 1:3",
-        "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Be strong in the Lord and in his mighty power — Grace Revelation",
-      "quote": "Under the new covenant of grace, Ephesians 6:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 6:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Be strong in the Lord and in his mighty power",
+      "quote": "The strength is located in the Lord and in his might, not in the believer's reserves.",
+      "graceTakeaway": "You draw on strength you did not generate."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Ephesians 6:10",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Ephesians 6:10 that God's covenant never fails those who trust His goodness."
+        "era": "Judges",
+        "title": "Three hundred men and a torch each",
+        "character": "Gideon",
+        "ref": "Judges 7:1–22",
+        "story": "God reduced Gideon's army from twenty-two thousand to three hundred so the victory could not be misattributed. The strength was never in the numbers."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Ephesians 6:10",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 6:10 in your daily walk today."
+        "era": "United Monarchy",
+        "title": "A sling against a champion",
+        "character": "David and Goliath",
+        "ref": "1 Samuel 17:32–50",
+        "story": "David refused Saul's armour and went out with a sling, saying the battle belonged to the LORD. He was strong in something other than equipment."
       }
     ],
     "tptFootnotes": "1:4 The Greek word for 'chosen' is eklegomai, meaning to intentionally select out of infinite delight before the universe was formed. In the Aramaic text, 'in love He predestined us' conveys that God's loving delight was the sole motivating force behind our eternal adoption in Christ."
@@ -5766,8 +5858,8 @@ const BIBLE_VERSES = [
       "NKJV": "Do not labor for the food which perishes, but for the food which endures to everlasting life, which the Son of Man will give you, because God the Father has set His seal on Him."
     },
     "dynamicContext": {
-      "chapterTitle": "John 6 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 6:27 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 6 — The bread of life",
+      "chapterSummary": "Five loaves feed five thousand and Jesus walks on the water; when he calls himself the bread of life many disciples leave, and Peter asks where else they would go.",
       "versions": {
         "NIV": {
           "before": [
@@ -5909,79 +6001,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 6:27.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 6:27.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 6:27.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 6:27."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 6:27."
+          "strongs": "G3306",
+          "word": "μένω",
+          "transliteration": "ménō",
+          "pronunciation": "ménō",
+          "partOfSpeech": "Verb, present, active, participle",
+          "matchedEnglish": "enduring",
+          "root": "a primary verb;",
+          "definition": "to stay (in a given place, state, relation or expectancy)",
+          "usageInPassage": "Rendered “is enduring” in this passage — verb, present, active, participle."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2222",
+          "word": "ζωή",
+          "transliteration": "zōḗ",
+          "pronunciation": "zōḗ",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "life",
+          "root": "from G2198 (ζάω);",
+          "definition": "life (literally or figuratively)",
+          "usageInPassage": "Rendered “life” in this passage — noun."
+        },
+        {
+          "strongs": "G1035",
+          "word": "βρῶσις",
+          "transliteration": "brōsis",
+          "pronunciation": "brōsis",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "food",
+          "root": "from the base of G977 (βιβρώσκω);",
+          "definition": "(abstractly) eating (literally or figuratively); by extension (concretely) food (literally or figuratively)",
+          "usageInPassage": "Rendered “food” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 6:27 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 6:27 in Koine Greek sits on μένω (ménō) “to stay (in a given place, state, relation or expectancy)”, ζωή (zōḗ) “life (literally or figuratively)” and βρῶσις (brōsis) “(abstractly) eating (literally or figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Work for food that endures to eternal life, which the Son of Man will give you — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 6:27 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 6:27. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Work for food that endures to eternal life, which the Son of Man will give you",
+      "quote": "Jesus contrasts food that perishes with food he gives — the labour is receiving.",
+      "graceTakeaway": "Effort spent on what spoils is the only wasted effort here."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of John 6:27",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of John 6:27 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "Manna that spoiled by morning",
+        "character": "Israel in the wilderness",
+        "ref": "Exodus 16:13–21",
+        "story": "Anyone who hoarded manna overnight found it full of maggots by morning. The food that lasted was the food received daily."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of John 6:27",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 6:27 in your daily walk today."
+        "era": "Gospels",
+        "title": "A crowd that followed for the bread",
+        "character": "The five thousand at Capernaum",
+        "ref": "John 6:22–27",
+        "story": "They crossed the lake looking for another meal, and Jesus told them plainly they were working for food that spoils. He offered them the kind that does not."
       }
     ]
   },
@@ -6004,8 +6102,8 @@ const BIBLE_VERSES = [
       "NKJV": "Therefore my heart is glad, and my glory rejoices; My flesh also will rest in hope. For You will not leave my soul in Sheol, Nor will You allow Your Holy One to see corruption."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 16 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 16:9–10 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 16 — David's miktam of portion and cup",
+      "chapterSummary": "David takes refuge in the LORD, names him as his chosen portion and inheritance, and follows that assurance past the grave to the path of life and fullness of joy.",
       "versions": {
         "NIV": {
           "before": [
@@ -6147,79 +6245,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 16:9–10.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 16:9–10.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 16:9–10.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 16:9–10."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 16:9–10."
+          "strongs": "H0983",
+          "word": "בֶּטַח",
+          "transliteration": "beṭach",
+          "pronunciation": "beh'takh",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "security",
+          "root": "from H982 (בָּטַח);",
+          "definition": "properly, a place of refuge; abstract, safety, both the fact (security) and the feeling (trust); often (adverb with or without preposition) safely",
+          "usageInPassage": "Rendered “to security” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3519",
+          "word": "כָּבוֹד",
+          "transliteration": "kâbôwd",
+          "pronunciation": "kaw-bode'",
+          "partOfSpeech": "Noun, singular",
+          "matchedEnglish": "glory",
+          "root": "rarely כָּבֹד; from H3513 (כָּבַד);",
+          "definition": "properly, weight, but only figuratively in a good sense, splendor or copiousness",
+          "usageInPassage": "Rendered “honor my” in this passage — noun, singular."
+        },
+        {
+          "strongs": "H7845",
+          "word": "שַׁחַת",
+          "transliteration": "shachath",
+          "pronunciation": "shakh'-ath",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "pit",
+          "root": "from H7743 (שׁוּחַ);",
+          "definition": "a pit (especially as a trap); figuratively, destruction",
+          "usageInPassage": "Rendered “the pit” in this passage — noun, feminine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 16:9–10 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 16:9–10 in Biblical Hebrew sits on בֶּטַח (beṭach) “a place of refuge”, כָּבוֹד (kâbôwd) “weight, but only figuratively in a good sense, splendor or copiousness” and שַׁחַת (shachath) “a pit (especially as a trap)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "My heart is glad and my tongue rejoices; my body also will rest secure — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 16:9–10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 16:9–10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "My heart is glad and my tongue rejoices; my body also will rest secure",
+      "quote": "David's body rests secure on a promise about resurrection he did not yet fully understand.",
+      "graceTakeaway": "Security is not the same as understanding."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Psalm 16:9–10",
-        "character": "King David",
-        "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 16:9–10 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "A body laid in a borrowed tomb",
+        "character": "Joseph of Arimathea",
+        "ref": "Matthew 27:57–60",
+        "story": "Joseph asked Pilate for the body and laid it in his own new tomb, cut in rock. The grave was borrowed because it was not needed for long."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 16:9–10",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:9–10 in your daily walk today."
+        "era": "Gospels",
+        "title": "Four days in the tomb",
+        "character": "Lazarus of Bethany",
+        "ref": "John 11:38–44",
+        "story": "Martha objected that there would be a stench after four days. The body that had begun to decay walked out at a word."
       }
     ],
     "tptFootnotes": "5:22 Notice that 'fruit' is singular (karpos) in the Greek, signifying that the nine virtues of love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control are a unified cluster produced by the indwelling Spirit, not independent human efforts."
@@ -6243,8 +6347,8 @@ const BIBLE_VERSES = [
       "NKJV": "And Jesus said to them, 'I am the bread of life. He who comes to Me shall never hunger, and he who believes in Me shall never thirst.'"
     },
     "dynamicContext": {
-      "chapterTitle": "John 6 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 6:35 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 6 — The bread of life",
+      "chapterSummary": "Five loaves feed five thousand and Jesus walks on the water; when he calls himself the bread of life many disciples leave, and Peter asks where else they would go.",
       "versions": {
         "NIV": {
           "before": [
@@ -6386,79 +6490,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 6:35.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 6:35.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 6:35.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 6:35."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 6:35."
+          "strongs": "G2222",
+          "word": "ζωή",
+          "transliteration": "zōḗ",
+          "pronunciation": "zōḗ",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "life",
+          "root": "from G2198 (ζάω);",
+          "definition": "life (literally or figuratively)",
+          "usageInPassage": "Rendered “of life;” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1372",
+          "word": "διψάω",
+          "transliteration": "dipsáō",
+          "pronunciation": "dipsáō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "thirst",
+          "root": "from a variation of G1373 (δίψος);",
+          "definition": "to thirst for (literally or figuratively)",
+          "usageInPassage": "Rendered “will thirst” in this passage — verb, future, active, indicative."
+        },
+        {
+          "strongs": "G3983",
+          "word": "πεινάω",
+          "transliteration": "peináō",
+          "pronunciation": "peináō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "hunger",
+          "root": "from the same as G3993 (πένης) (through the idea of pinching toil;",
+          "definition": "\"pine\"); to famish (absolutely or comparatively); figuratively, to crave",
+          "usageInPassage": "Rendered “may hunger,” in this passage — verb, aorist, active, subjunctive."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 6:35 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 6:35 in Koine Greek sits on ζωή (zōḗ) “life (literally or figuratively)”, διψάω (dipsáō) “to thirst for (literally or figuratively)” and πεινάω (peináō) “\"pine\")”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I am the bread of life. Whoever comes to me will never go hungry — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 6:35 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 6:35. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I am the bread of life. Whoever comes to me will never go hungry",
+      "quote": "Bread of life is an offer to the hungry, not a reward for the full.",
+      "graceTakeaway": "Coming is the only requirement stated."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of John 6:35",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of John 6:35 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "Bread from heaven six mornings a week",
+        "character": "Israel in the wilderness",
+        "ref": "Exodus 16:4–5",
+        "story": "For forty years bread appeared each morning, enough for the day, with a double portion before the Sabbath. Hunger was answered before it was earned."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of John 6:35",
-        "character": "Jesus & The Disciples",
+        "era": "Gospels",
+        "title": "A hungry crowd told to sit down on the grass",
+        "character": "The feeding of the five thousand",
         "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 6:35 in your daily walk today."
+        "story": "The disciples wanted the crowd sent away to find food; Jesus told them to sit, and fed them all. Nobody was sent away to fend for themselves."
       }
     ]
   },
@@ -6481,8 +6591,8 @@ const BIBLE_VERSES = [
       "NKJV": "Bless the Lord, O my soul; And all that is within me, bless His holy name! Bless the Lord, O my soul, and forget not all His benefits: Who forgives all your iniquities, Who heals all your diseases, Who redeems your life from destruction, Who crowns you with lovingkindness and tender mercies."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 103 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 103:1–5 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 103 — Bless the LORD, O my soul",
+      "chapterSummary": "David calls his own soul to remember the benefits — forgiveness, healing, redemption, satisfaction — and measures God's compassion by the distance of east from west.",
       "versions": {
         "NIV": {
           "before": [
@@ -6624,79 +6734,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 103:1–5.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 103:1–5.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 103:1–5.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 103:1–5."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 103:1–5."
+          "strongs": "H8463",
+          "word": "תַּחֲלוּא",
+          "transliteration": "tachălûwʼ",
+          "pronunciation": "takh-al-oo'",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "diseases",
+          "root": "or תַּחֲלֻא; from H2456 (חָלָא);",
+          "definition": "a malady",
+          "usageInPassage": "Rendered “diseases your” in this passage — noun, masculine, plural."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H2617",
+          "word": "חֵסֵד",
+          "transliteration": "chêçêd",
+          "pronunciation": "kheh'-sed",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "kindness",
+          "root": "from H2616 (חָסַד);",
+          "definition": "kindness; by implication (towards God) piety; rarely (by opposition) reproof, or (subject.) beauty",
+          "usageInPassage": "Rendered “covenant loyalty” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H5849",
+          "word": "עָטַר",
+          "transliteration": "ʻâṭar",
+          "pronunciation": "aw-tar'",
+          "partOfSpeech": "Verb, piel, participle",
+          "matchedEnglish": "crowns",
+          "root": "a primitive root;",
+          "definition": "to encircle (for attack or protection); especially to crown (literally or figuratively)",
+          "usageInPassage": "Rendered “who crowns you” in this passage — verb, piel, participle."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 103:1–5 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 103:1–5 in Biblical Hebrew sits on תַּחֲלוּא (tachălûwʼ) “a malady”, חֵסֵד (chêçêd) “kindness” and עָטַר (ʻâṭar) “to encircle (for attack or protection)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Who forgives all your sins and heals all your diseases — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 103:1–5 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 103:1–5. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Who forgives all your sins and heals all your diseases",
+      "quote": "Forgiveness and healing are listed in the same breath as the benefits of one God.",
+      "graceTakeaway": "The God who pardons is not a different God from the one who restores."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of Psalm 103:1–5",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Psalm 103:1–5 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "Fifteen years added after a death sentence",
+        "character": "King Hezekiah",
+        "ref": "2 Kings 20:1–7",
+        "story": "Told to set his house in order, Hezekiah turned to the wall and wept, and was given fifteen more years. Forgiveness and healing came in the same answer."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Psalm 103:1–5",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 103:1–5 in your daily walk today."
+        "era": "Gospels",
+        "title": "A paralysed man forgiven, then told to walk",
+        "character": "The man lowered through the roof",
+        "ref": "Mark 2:1–12",
+        "story": "Jesus forgave his sins first, which offended the room, and then healed him to prove he could do the first. Both came from the same authority."
       }
     ],
     "tptFootnotes": "8:1 In the earliest and most reliable Greek manuscripts, the phrase ends at 'no condemnation for those who are in Christ Jesus.' The law of the Spirit of life has permanently emancipated us from the obsolete cycle of sin and death."
@@ -6720,8 +6836,8 @@ const BIBLE_VERSES = [
       "NKJV": "But I am like a green olive tree in the house of God; I trust in the mercy of God forever and ever."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 52 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 52:8 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 52 — The green olive tree",
+      "chapterSummary": "Against Doeg the Edomite and every boast in wealth and destructive speech; the tyrant is uprooted while the psalmist stands like a green olive tree in the house of God.",
       "versions": {
         "NIV": {
           "before": [
@@ -6863,79 +6979,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 52:8.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 52:8.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 52:8.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 52:8."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 52:8."
+          "strongs": "H0982",
+          "word": "בָּטַח",
+          "transliteration": "bâṭach",
+          "pronunciation": "baw-takh'",
+          "partOfSpeech": "Verb, qal, perfect",
+          "matchedEnglish": "trust",
+          "root": "a primitive root; properly, to hide for refuge (but not so precipitately as H2620 (חָסָה));",
+          "definition": "figuratively, to trust, be confident or sure",
+          "usageInPassage": "Rendered “I trust” in this passage — verb, qal, perfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H2617",
+          "word": "חֵסֵד",
+          "transliteration": "chêçêd",
+          "pronunciation": "kheh'-sed",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "kindness",
+          "root": "from H2616 (חָסַד);",
+          "definition": "kindness; by implication (towards God) piety; rarely (by opposition) reproof, or (subject.) beauty",
+          "usageInPassage": "Rendered “in the covenant loyalty of” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H7488",
+          "word": "רַעֲנָן",
+          "transliteration": "raʻănân",
+          "pronunciation": "rah-an-awn'",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "luxuriant",
+          "root": "from an unused root meaning to be green;",
+          "definition": "verdant; by analogy, new; figuratively, prosperous",
+          "usageInPassage": "Rendered “luxuriant” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 52:8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 52:8 in Biblical Hebrew sits on בָּטַח (bâṭach) “figuratively, to trust, be confident or sure”, חֵסֵד (chêçêd) “kindness” and רַעֲנָן (raʻănân) “verdant”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I am like an olive tree flourishing in the house of God — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 52:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 52:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I am like an olive tree flourishing in the house of God",
+      "quote": "The olive tree flourishes because of where it stands — in the house of God.",
+      "graceTakeaway": "Longevity comes from location."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 52:8",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 52:8 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "A hundred prophets hidden in two caves",
+        "character": "Obadiah in Ahab's household",
+        "ref": "1 Kings 18:1–4",
+        "story": "While Jezebel was killing the prophets, Obadiah hid a hundred of them in caves and fed them. He flourished in the most hostile house in Israel."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 52:8",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 52:8 in your daily walk today."
+        "era": "Exile",
+        "title": "Serving three kings without losing his footing",
+        "character": "Daniel in Babylon and Persia",
+        "ref": "Daniel 6:1–5",
+        "story": "Daniel served across a change of empires, and his rivals could find no fault or corruption in him. He was still standing when the regimes were not."
       }
     ]
   },
@@ -6958,8 +7080,8 @@ const BIBLE_VERSES = [
       "NKJV": "You shall tread upon the lion and the cobra, the young lion and the serpent you shall trample underfoot."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 91 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 91:13 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 91 — The shelter of the Most High",
+      "chapterSummary": "Whoever dwells in the secret place is promised refuge, fortress and shield: no terror by night, angels given charge, and the lion and the cobra underfoot.",
       "versions": {
         "NIV": {
           "before": [
@@ -7101,79 +7223,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 91:13.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 91:13.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 91:13.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 91:13."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 91:13."
+          "strongs": "H6620",
+          "word": "פֶּתֶן",
+          "transliteration": "pethen",
+          "pronunciation": "peh'-then",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "cobra",
+          "root": "from an unused root meaning to twist;",
+          "definition": "an asp (from its contortions)",
+          "usageInPassage": "Rendered “and a cobra” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7826",
+          "word": "שַׁחַל",
+          "transliteration": "shachal",
+          "pronunciation": "shakh'-al",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "lion",
+          "root": "from an unused root probably meaning to roar;",
+          "definition": "a lion (from his characteristic roar)",
+          "usageInPassage": "Rendered “a lion” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H7429",
+          "word": "רָמַס",
+          "transliteration": "râmaç",
+          "pronunciation": "raw-mas'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "trample",
+          "root": "a primitive root;",
+          "definition": "to tread upon (as a potter, in walking or abusively)",
+          "usageInPassage": "Rendered “you will trample” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 91:13 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 91:13 in Biblical Hebrew sits on פֶּתֶן (pethen) “an asp (from its contortions)”, שַׁחַל (shachal) “a lion (from his characteristic roar)” and רָמַס (râmaç) “to tread upon (as a potter, in walking or abusively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You will tread on the lion and the cobra; you will trample the great lion and the serpent — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 91:13 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 91:13. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You will tread on the lion and the cobra; you will trample the great lion and the serpent",
+      "quote": "Treading on the lion and the cobra is promised to the one dwelling in the shelter, not to the one fighting alone.",
+      "graceTakeaway": "Authority flows from shelter, not from bravado."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Psalm 91:13",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Psalm 91:13 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "A lion, a bear, and then a giant",
+        "character": "David as a shepherd",
+        "ref": "1 Samuel 17:34–37",
+        "story": "David told Saul he had killed a lion and a bear defending the flock, and expected the same outcome with Goliath. The pattern was set in private first."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Psalm 91:13",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 91:13 in your daily walk today."
+        "era": "Early Church",
+        "title": "A viper shaken off into the fire",
+        "character": "Paul on Malta",
+        "ref": "Acts 28:1–6",
+        "story": "A snake fastened onto Paul's hand as he laid brushwood on the fire, and the islanders waited for him to drop dead. He shook it into the flames and suffered no harm."
       }
     ]
   },
@@ -7196,8 +7324,8 @@ const BIBLE_VERSES = [
       "NKJV": "Oh, how I love Your law! It is my meditation all the day... Your word is a lamp to my feet and a light to my path."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:97–106 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The long love song to God's word",
+      "chapterSummary": "The great acrostic: twenty-two stanzas, one per Hebrew letter, turning over God's law, statutes, precepts and promises from every angle a life can meet them.",
       "versions": {
         "NIV": {
           "before": [
@@ -7339,79 +7467,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:97–106.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:97–106.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:97–106.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:97–106."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:97–106."
+          "strongs": "H4452",
+          "word": "מָלַץ",
+          "transliteration": "mâlats",
+          "pronunciation": "maw-lats'",
+          "partOfSpeech": "Verb, niphal, perfect",
+          "matchedEnglish": "smooth",
+          "root": "a primitive root;",
+          "definition": "to be smooth, i.e. (figuratively) pleasant",
+          "usageInPassage": "Rendered “they are smooth” in this passage — verb, niphal, perfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H6664",
+          "word": "צֶדֶק",
+          "transliteration": "tsedeq",
+          "pronunciation": "tseh'-dek",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "righteousness",
+          "root": "from H6663 (צָדַק);",
+          "definition": "the right (natural, moral or legal); also (abstractly) equity or (figuratively) prosperity",
+          "usageInPassage": "Rendered “righteousness your” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H7881",
+          "word": "שִׂיחָה",
+          "transliteration": "sîychâh",
+          "pronunciation": "see-khaw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "meditation",
+          "root": "feminine of H7879 (שִׂיחַ);",
+          "definition": "reflection; be extension, devotion",
+          "usageInPassage": "Rendered “is meditation my” in this passage — noun, feminine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:97–106 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 119:97–106 in Biblical Hebrew sits on מָלַץ (mâlats) “to be smooth”, צֶדֶק (tsedeq) “the right (natural, moral or legal)” and שִׂיחָה (sîychâh) “reflection”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Your word is a lamp for my feet, a light on my path — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 119:97–106 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:97–106. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Your word is a lamp for my feet, a light on my path",
+      "quote": "A lamp for the feet lights the next step, not the whole road.",
+      "graceTakeaway": "You are given enough light to move, not enough to remove the need for trust."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:97–106",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:97–106 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "A lost book found during renovations",
+        "character": "King Josiah",
+        "ref": "2 Kings 22:8–13",
+        "story": "The Book of the Law was found while the temple was being repaired, and Josiah tore his clothes when he heard it read. One reading redirected a nation."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:97–106",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:97–106 in your daily walk today."
+        "era": "Return from Exile",
+        "title": "Reading from daybreak to midday",
+        "character": "Ezra at the Water Gate",
+        "ref": "Nehemiah 8:1–8",
+        "story": "Ezra read the Law aloud for hours while Levites made the meaning clear, and the people stood the whole time. The light came from the text being understood."
       }
     ]
   },
@@ -7434,8 +7568,8 @@ const BIBLE_VERSES = [
       "NKJV": "No man shall be able to stand before you all the days of your life; as I was with Moses, so I will be with you. I will not leave you nor forsake you."
     },
     "dynamicContext": {
-      "chapterTitle": "Joshua 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Joshua 1:5 revealing God's covenant faithfulness.",
+      "chapterTitle": "Joshua 1 — Be strong and courageous",
+      "chapterSummary": "With Moses dead, God commissions Joshua to cross the Jordan, repeats the charge to be strong and courageous three times, and ties it to meditating on the book of the law.",
       "versions": {
         "NIV": {
           "before": [
@@ -7577,79 +7711,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Joshua 1:5.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Joshua 1:5.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Joshua 1:5.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Joshua 1:5."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Joshua 1:5."
+          "strongs": "H7503",
+          "word": "רָפָה",
+          "transliteration": "râphâh",
+          "pronunciation": "raw-faw'",
+          "partOfSpeech": "Verb, hiphil, imperfect",
+          "matchedEnglish": "abandon",
+          "root": "a primitive root;",
+          "definition": "to slacken (in many applications, literal or figurative)",
+          "usageInPassage": "Rendered “I will abandon you” in this passage — verb, hiphil, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3320",
+          "word": "יָצַב",
+          "transliteration": "yâtsab",
+          "pronunciation": "yaw-tsab'",
+          "partOfSpeech": "Verb, hithpael, imperfect",
+          "matchedEnglish": "stand",
+          "root": "a primitive root;",
+          "definition": "to place (any thing so as to stay); reflexively, to station, offer, continue",
+          "usageInPassage": "Rendered “he will stand” in this passage — verb, hithpael, imperfect."
+        },
+        {
+          "strongs": "H5800",
+          "word": "עָזַב",
+          "transliteration": "ʻâzab",
+          "pronunciation": "aw-zab'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "forsake",
+          "root": "a primitive root;",
+          "definition": "to loosen, i.e. relinquish, permit, etc.",
+          "usageInPassage": "Rendered “I will leave you” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Joshua 1:5 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Joshua 1:5 in Biblical Hebrew sits on רָפָה (râphâh) “to slacken (in many applications, literal or figurative)”, יָצַב (yâtsab) “to place (any thing so as to stay)” and עָזַב (ʻâzab) “to loosen”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "As I was with Moses, so I will be with you; I will never leave you nor forsake you — Grace Revelation",
-      "quote": "Under the new covenant of grace, Joshua 1:5 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Joshua 1:5. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "As I was with Moses, so I will be with you; I will never leave you nor forsake you",
+      "quote": "The promise made to Moses is transferred intact to Joshua before he has done anything.",
+      "graceTakeaway": "God's presence is not earned by the successor's record."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Joshua 1:5",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Joshua 1:5 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "A commission handed over at the Jordan",
+        "character": "Moses to Joshua",
+        "ref": "Deuteronomy 34:9",
+        "story": "Joshua was filled with the spirit of wisdom because Moses had laid hands on him, and Israel listened to him. The presence transferred with the office."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Joshua 1:5",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Joshua 1:5 in your daily walk today."
+        "era": "Judges",
+        "title": "A threshing floor and an unlikely greeting",
+        "character": "Gideon",
+        "ref": "Judges 6:11–16",
+        "story": "The angel greeted a man hiding in a winepress as a mighty warrior and said the LORD was with him. The presence was announced before the courage existed."
       }
     ],
     "tptFootnotes": "4:7 The Greek word for 'guard' is phroureo, a military term for an elite Roman garrison stationed around a city to defend it from invasion. God's transcendent peace actively garrisons and guards the believer's heart and mind."
@@ -7673,8 +7813,8 @@ const BIBLE_VERSES = [
       "NKJV": "The Spirit of the Lord God is upon Me, because the Lord has anointed Me to preach good tidings to the poor; He has sent Me to heal the brokenhearted, to proclaim liberty to the captives, and the opening of the prison to those who are bound."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 61 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 61:1 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 61 — The year of the LORD's favour",
+      "chapterSummary": "The Spirit-anointed herald brings good news to the poor and binds up the broken, trading ashes for beauty and mourning for praise, and the ruins are rebuilt.",
       "versions": {
         "NIV": {
           "before": [
@@ -7816,79 +7956,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 61:1.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 61:1.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 61:1.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 61:1."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 61:1."
+          "strongs": "H6495",
+          "word": "פְּקַח־קוֹחַ",
+          "transliteration": "pᵉqach-qôwach",
+          "pronunciation": "pek-akh-ko'-akh",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "opening",
+          "root": "from H6491 (פָּקַח) redoubled;",
+          "definition": "opening (of a dungeon), i.e. jail-delivery (figuratively, salvation for sin)",
+          "usageInPassage": "Rendered “re-” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H1865",
+          "word": "דְּרוֹר",
+          "transliteration": "dᵉrôwr",
+          "pronunciation": "der-ore'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "freedom",
+          "root": "from an unused root (meaning to move rapidly);",
+          "definition": "freedom; hence, spontaneity of outflow, and so clear",
+          "usageInPassage": "Rendered “liberty” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H7307",
+          "word": "רוּחַ",
+          "transliteration": "rûwach",
+          "pronunciation": "roo'-akh",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "spirit of",
+          "root": "from H7306 (רוּחַ);",
+          "definition": "wind; by resemblance breath, i.e. a sensible (or even violent) exhalation; figuratively, life, anger, unsubstantiality; by extension, a region of the sky; by resemblance spirit, but only of a rational being (including its expression and functions)",
+          "usageInPassage": "Rendered “the spirit of” in this passage — noun, feminine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 61:1 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 61:1 in Biblical Hebrew sits on פְּקַח־קוֹחַ (pᵉqach-qôwach) “opening (of a dungeon)”, דְּרוֹר (dᵉrôwr) “freedom” and רוּחַ (rûwach) “wind”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The Spirit of the Sovereign LORD is on me to proclaim good news to the poor — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 61:1 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 61:1. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The Spirit of the Sovereign LORD is on me to proclaim good news to the poor",
+      "quote": "Isaiah's anointing is to announce, and Jesus read it aloud as fulfilled.",
+      "graceTakeaway": "The good news reaches the poor first, by design."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 61:1",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 61:1 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Reading Isaiah aloud in his home synagogue",
+        "character": "Jesus at Nazareth",
+        "ref": "Luke 4:16–21",
+        "story": "Jesus read Isaiah 61, sat down, and said the scripture was fulfilled in their hearing. The anointing was claimed in front of people who had watched him grow up."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 61:1",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 61:1 in your daily walk today."
+        "era": "Early Church",
+        "title": "Good news preached to a slave girl's owners' loss",
+        "character": "Paul at Philippi",
+        "ref": "Acts 16:16–19",
+        "story": "Freeing an exploited slave girl cost her owners their income and Paul his liberty. Good news to the poor was expensive to somebody."
       }
     ]
   },
@@ -7911,8 +8057,8 @@ const BIBLE_VERSES = [
       "NKJV": "And the Lord, He is the One who goes before you. He will be with you, He will not leave you nor forsake you; do not fear nor be dismayed."
     },
     "dynamicContext": {
-      "chapterTitle": "Deuteronomy 31 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Deuteronomy 31:8 revealing God's covenant faithfulness.",
+      "chapterTitle": "Deuteronomy 31 — He will not leave you",
+      "chapterSummary": "Moses, at a hundred and twenty, hands the people to Joshua, writes the law down for public reading every seventh year, and promises that the LORD himself goes before them.",
       "versions": {
         "NIV": {
           "before": [
@@ -8054,79 +8200,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Deuteronomy 31:8.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Deuteronomy 31:8.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Deuteronomy 31:8.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Deuteronomy 31:8."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Deuteronomy 31:8."
+          "strongs": "H7503",
+          "word": "רָפָה",
+          "transliteration": "râphâh",
+          "pronunciation": "raw-faw'",
+          "partOfSpeech": "Verb, hiphil, imperfect",
+          "matchedEnglish": "abandon",
+          "root": "a primitive root;",
+          "definition": "to slacken (in many applications, literal or figurative)",
+          "usageInPassage": "Rendered “he will abandon you” in this passage — verb, hiphil, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H2865",
+          "word": "חָתַת",
+          "transliteration": "châthath",
+          "pronunciation": "khaw-thath'",
+          "partOfSpeech": "Verb, niphal, imperfect",
+          "matchedEnglish": "dismayed",
+          "root": "a primitive root;",
+          "definition": "properly, to prostrate; hence, to break down, either (literally) by violence, or (figuratively) by confusion and fear",
+          "usageInPassage": "Rendered “you must be dismayed” in this passage — verb, niphal, imperfect."
+        },
+        {
+          "strongs": "H5800",
+          "word": "עָזַב",
+          "transliteration": "ʻâzab",
+          "pronunciation": "aw-zab'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "forsake",
+          "root": "a primitive root;",
+          "definition": "to loosen, i.e. relinquish, permit, etc.",
+          "usageInPassage": "Rendered “he will forsake you” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Deuteronomy 31:8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Deuteronomy 31:8 in Biblical Hebrew sits on רָפָה (râphâh) “to slacken (in many applications, literal or figurative)”, חָתַת (châthath) “to prostrate” and עָזַב (ʻâzab) “to loosen”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The LORD himself goes before you and will be with you; do not be afraid — Grace Revelation",
-      "quote": "Under the new covenant of grace, Deuteronomy 31:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Deuteronomy 31:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The LORD himself goes before you and will be with you; do not be afraid",
+      "quote": "God goes before and is also with — ahead of you and beside you at once.",
+      "graceTakeaway": "You never arrive somewhere God has not already been."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Deuteronomy 31:8",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Deuteronomy 31:8 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "A pillar of cloud and fire going ahead",
+        "character": "Israel leaving Egypt",
+        "ref": "Exodus 13:21–22",
+        "story": "The pillar went before them by day and by night and never departed from in front of the people. They were not sent ahead to scout their own way."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Deuteronomy 31:8",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Deuteronomy 31:8 in your daily walk today."
+        "era": "Patriarchs",
+        "title": "A stone pillow and a promise at Bethel",
+        "character": "Jacob fleeing Esau",
+        "ref": "Genesis 28:10–17",
+        "story": "Running for his life, Jacob dreamt of a stairway and woke saying the LORD was in this place and he had not known it. God was ahead of him in the wilderness."
       }
     ]
   },
@@ -8149,8 +8301,8 @@ const BIBLE_VERSES = [
       "NKJV": "But the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control... If we live in the Spirit, let us also walk in the Spirit."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 5 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 5:22–25 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 5 — Freedom and the fruit of the Spirit",
+      "chapterSummary": "Christ set us free for freedom, not for another yoke; what counts is faith working through love, and the works of the flesh are set against a single ninefold fruit.",
       "versions": {
         "NIV": {
           "before": [
@@ -8292,79 +8444,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 5:22–25.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 5:22–25.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 5:22–25.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 5:22–25."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 5:22–25."
+          "strongs": "G5479",
+          "word": "χαρά",
+          "transliteration": "chará",
+          "pronunciation": "chará",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "joy",
+          "root": "from G5463 (χαίρω);",
+          "definition": "cheerfulness, i.e. calm delight",
+          "usageInPassage": "Rendered “joy,” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4240",
+          "word": "πραΰτης",
+          "transliteration": "praÿtēs",
+          "pronunciation": "praÿtēs",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "gentleness",
+          "root": "from G4239 (πραΰς);",
+          "definition": "mildness, i.e. (by implication) humility",
+          "usageInPassage": "Rendered “gentleness,” in this passage — noun."
+        },
+        {
+          "strongs": "G1515",
+          "word": "εἰρήνη",
+          "transliteration": "eirḗnē",
+          "pronunciation": "eirḗnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "peace",
+          "root": "probably from a primary verb (to join);",
+          "definition": "peace (literally or figuratively); by implication, prosperity",
+          "usageInPassage": "Rendered “peace,” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 5:22–25 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Galatians 5:22–25 in Koine Greek sits on χαρά (chará) “cheerfulness”, πραΰτης (praÿtēs) “mildness” and εἰρήνη (eirḗnē) “peace (literally or figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness — Grace Revelation",
-      "quote": "Under the new covenant of grace, Galatians 5:22–25 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 5:22–25. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness",
+      "quote": "Fruit is singular in Paul's list — one life yielding nine flavours, not nine tasks.",
+      "graceTakeaway": "You cultivate the tree, not the individual fruits."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Galatians 5:22–25",
-        "character": "King David",
-        "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Galatians 5:22–25 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A son of encouragement vouching for a persecutor",
+        "character": "Barnabas",
+        "ref": "Acts 9:26–27",
+        "story": "When the Jerusalem disciples were afraid of Saul, Barnabas took him and brought him to the apostles. Kindness and goodness did what argument could not."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Galatians 5:22–25",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 5:22–25 in your daily walk today."
+        "era": "Gospels",
+        "title": "Feet washed by the one they called Lord",
+        "character": "Jesus in the upper room",
+        "ref": "John 13:3–15",
+        "story": "Knowing all things were under his power, Jesus took a towel and washed their feet, including the feet of the man who would betray him. The fruit was shown before it was named."
       }
     ]
   },
@@ -8387,8 +8545,8 @@ const BIBLE_VERSES = [
       "NKJV": "Therefore I say to you, whatever things you ask when you pray, believe that you receive them, and you will have them."
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 11 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Mark 11:24 revealing God's covenant faithfulness.",
+      "chapterTitle": "Mark 11 — Have faith in God",
+      "chapterSummary": "The entry into Jerusalem, a fig tree cursed and found withered, the temple cleared of traders, and a lesson on praying with belief and with forgiveness.",
       "versions": {
         "NIV": {
           "before": [
@@ -8530,79 +8688,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Mark 11:24.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Mark 11:24.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Mark 11:24.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Mark 11:24."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Mark 11:24."
+          "strongs": "G0154",
+          "word": "αἰτέω",
+          "transliteration": "aitéō",
+          "pronunciation": "aitéō",
+          "partOfSpeech": "Verb, present, middle, indicative",
+          "matchedEnglish": "ask",
+          "root": "of uncertain derivation;",
+          "definition": "to ask (in genitive case)",
+          "usageInPassage": "Rendered “you ask,” in this passage — verb, present, middle, indicative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4336",
+          "word": "προσεύχομαι",
+          "transliteration": "proseúchomai",
+          "pronunciation": "proseúchomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "pray",
+          "root": "from G4314 (πρός) and G2172 (εὔχομαι);",
+          "definition": "to pray to God, i.e. supplicate, worship",
+          "usageInPassage": "Rendered “praying” in this passage — verb."
+        },
+        {
+          "strongs": "G4100",
+          "word": "πιστεύω",
+          "transliteration": "pisteúō",
+          "pronunciation": "pisteúō",
+          "partOfSpeech": "Verb, present, active, imperative",
+          "matchedEnglish": "believe",
+          "root": "from G4102 (πίστις);",
+          "definition": "to have faith (in, upon, or with respect to, a person or thing), i.e. credit; by implication, to entrust (especially one's spiritual well-being to Christ)",
+          "usageInPassage": "Rendered “do believe” in this passage — verb, present, active, imperative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Mark 11:24 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Mark 11:24 in Koine Greek sits on αἰτέω (aitéō) “to ask (in genitive case)”, προσεύχομαι (proseúchomai) “to pray to God” and πιστεύω (pisteúō) “to have faith (in, upon, or with respect to, a person or thing)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Whatever you ask for in prayer, believe that you have received it, and it will be yours — Grace Revelation",
-      "quote": "Under the new covenant of grace, Mark 11:24 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 11:24. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Whatever you ask for in prayer, believe that you have received it, and it will be yours",
+      "quote": "Believing you have received is faith resting on the giver's character, not on the outcome's visibility.",
+      "graceTakeaway": "Assurance can precede evidence."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 11:24",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 11:24 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "Rain prayed for seven times over",
+        "character": "Elijah on Carmel",
+        "ref": "1 Kings 18:41–45",
+        "story": "Elijah told Ahab he heard the sound of heavy rain before there was a cloud, and sent his servant to look seven times. He was certain before there was evidence."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 11:24",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 11:24 in your daily walk today."
+        "era": "Gospels",
+        "title": "A father honest about his own doubt",
+        "character": "The father of the epileptic boy",
+        "ref": "Mark 9:20–27",
+        "story": "He said he believed and asked for help with his unbelief, and his son was healed. The faith did not have to be flawless to be real."
       }
     ]
   },
@@ -8625,8 +8789,8 @@ const BIBLE_VERSES = [
       "NKJV": "Set your mind on things above, not on things on the earth. For you died, and your life is hidden with Christ in God. When Christ who is our life appears, then you also will appear with Him in glory."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:2–4 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — Put on the new self",
+      "chapterSummary": "Minds set on things above, the old clothing stripped off and the new put on; over it all love, with the peace of Christ as umpire and thankfulness running through.",
       "versions": {
         "NIV": {
           "before": [
@@ -8768,79 +8932,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:2–4.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:2–4.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:2–4.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:2–4."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:2–4."
+          "strongs": "G2222",
+          "word": "ζωή",
+          "transliteration": "zōḗ",
+          "pronunciation": "zōḗ",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "life",
+          "root": "from G2198 (ζάω);",
+          "definition": "life (literally or figuratively)",
+          "usageInPassage": "Rendered “life” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1391",
+          "word": "δόξα",
+          "transliteration": "dóxa",
+          "pronunciation": "dóxa",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "glory",
+          "root": "from the base of G1380 (δοκέω);",
+          "definition": "glory (as very apparent), in a wide application (literal or figurative, objective or subjective)",
+          "usageInPassage": "Rendered “glory.” in this passage — noun."
+        },
+        {
+          "strongs": "G2928",
+          "word": "κρύπτω",
+          "transliteration": "krýptō",
+          "pronunciation": "krýptō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "hidden",
+          "root": "a primary verb;",
+          "definition": "to conceal (properly, by covering)",
+          "usageInPassage": "Rendered “has been hidden” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:2–4 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 3:2–4 in Koine Greek sits on ζωή (zōḗ) “life (literally or figuratively)”, δόξα (dóxa) “glory (as very apparent), in a wide application (literal or…” and κρύπτω (krýptō) “to conceal (properly, by covering)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Set your minds on things above... for your life is now hidden with Christ in God — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 3:2–4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:2–4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Set your minds on things above... for your life is now hidden with Christ in God",
+      "quote": "Your life is hidden with Christ — kept where it cannot be reached.",
+      "graceTakeaway": "What is hidden in Christ cannot be lost in circumstance."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:2–4",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:2–4 that God's covenant never fails those who trust His goodness."
+        "era": "Exile",
+        "title": "Windows open toward Jerusalem three times a day",
+        "character": "Daniel under the edict",
+        "ref": "Daniel 6:6–10",
+        "story": "Knowing the decree had been signed, Daniel went home and prayed as he always had, facing a city he could not see. His mind was set somewhere above Babylon."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:2–4",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:2–4 in your daily walk today."
+        "era": "Early Church",
+        "title": "Looking up while the stones fell",
+        "character": "Stephen",
+        "ref": "Acts 7:55–56",
+        "story": "Full of the Spirit, Stephen looked into heaven and saw Jesus standing at the right hand of God. He was seeing the thing his life was hidden in."
       }
     ]
   },
@@ -8863,8 +9033,8 @@ const BIBLE_VERSES = [
       "NKJV": "And my God shall supply all your need according to His riches in glory by Christ Jesus."
     },
     "dynamicContext": {
-      "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:19 revealing God's covenant faithfulness.",
+      "chapterTitle": "Philippians 4 — The peace that guards",
+      "chapterSummary": "Rejoice, be reasonable, be anxious for nothing; a peace beyond understanding stands guard, contentment is learned in plenty and want, and God supplies every need.",
       "versions": {
         "NIV": {
           "before": [
@@ -9006,79 +9176,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:19.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:19.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:19.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:19."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Philippians 4:19."
+          "strongs": "G1391",
+          "word": "δόξα",
+          "transliteration": "dóxa",
+          "pronunciation": "dóxa",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "glory",
+          "root": "from the base of G1380 (δοκέω);",
+          "definition": "glory (as very apparent), in a wide application (literal or figurative, objective or subjective)",
+          "usageInPassage": "Rendered “glory” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4149",
+          "word": "πλοῦτος",
+          "transliteration": "ploûtos",
+          "pronunciation": "ploûtos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "riches",
+          "root": "from the base of G4130 (πλήθω);",
+          "definition": "wealth (as fulness), i.e. (literally) money, possessions, or (figuratively) abundance, richness, (specially), valuable bestowment",
+          "usageInPassage": "Rendered “riches” in this passage — noun."
+        },
+        {
+          "strongs": "G5532",
+          "word": "χρεία",
+          "transliteration": "chreía",
+          "pronunciation": "chreía",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "need",
+          "root": "from the base of G5530 (χράομαι) or G5534 (χρή);",
+          "definition": "employment, i.e. an affair; also (by implication) occasion, demand, requirement or destitution",
+          "usageInPassage": "Rendered “the needs” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Philippians 4:19 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Philippians 4:19 in Koine Greek sits on δόξα (dóxa) “glory (as very apparent), in a wide application (literal or…”, πλοῦτος (ploûtos) “wealth (as fulness)” and χρεία (chreía) “employment”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "My God will meet all your needs according to the riches of his glory in Christ Jesus — Grace Revelation",
-      "quote": "Under the new covenant of grace, Philippians 4:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Philippians 4:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "My God will meet all your needs according to the riches of his glory in Christ Jesus",
+      "quote": "The measure is the riches of his glory, not the size of the need.",
+      "graceTakeaway": "Supply is calibrated to God's wealth, not your shortfall."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Philippians 4:19",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Philippians 4:19 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "A room on the roof for a passing prophet",
+        "character": "The Shunammite woman",
+        "ref": "2 Kings 4:8–17",
+        "story": "She built a room for Elisha expecting nothing, and was given the son she had never asked for. What she needed was supplied out of another economy."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Philippians 4:19",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Philippians 4:19 in your daily walk today."
+        "era": "Early Church",
+        "title": "A church that shared everything it had",
+        "character": "The Jerusalem believers",
+        "ref": "Acts 4:32–35",
+        "story": "They held nothing as their own and there was no needy person among them. Need was met from riches held in common."
       }
     ]
   },
@@ -9101,8 +9277,8 @@ const BIBLE_VERSES = [
       "NKJV": "Therefore, as the elect of God, holy and beloved, put on tender mercies, kindness, humility, meekness, longsuffering."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:9–12 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — Put on the new self",
+      "chapterSummary": "Minds set on things above, the old clothing stripped off and the new put on; over it all love, with the peace of Christ as umpire and thankfulness running through.",
       "versions": {
         "NIV": {
           "before": [
@@ -9244,79 +9420,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:9–12.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:9–12.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:9–12.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:9–12."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:9–12."
+          "strongs": "G4658",
+          "word": "Σκύθης",
+          "transliteration": "Skýthēs",
+          "pronunciation": "Skýthēs",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "Scythian",
+          "root": "probably of foreign origin;",
+          "definition": "a Scythene or Scythian, i.e. (by implication) a savage",
+          "usageInPassage": "Rendered “Scythian,” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0554",
+          "word": "ἀπεκδύομαι",
+          "transliteration": "apekdýomai",
+          "pronunciation": "apekdýomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "take off",
+          "root": "middle voice from G575 (ἀπό) and G1562 (ἐκδύω);",
+          "definition": "to divest wholly oneself, or (for oneself) despoil",
+          "usageInPassage": "Rendered “having put off” in this passage — verb."
+        },
+        {
+          "strongs": "G0341",
+          "word": "ἀνακαινόω",
+          "transliteration": "anakainóō",
+          "pronunciation": "anakainóō",
+          "partOfSpeech": "Verb, present, passive, participle",
+          "matchedEnglish": "renew",
+          "root": "from G303 (ἀνά) and a derivative of G2537 (καινός);",
+          "definition": "to renovate",
+          "usageInPassage": "Rendered “is being renewed” in this passage — verb, present, passive, participle."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:9–12 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 3:9–12 in Koine Greek sits on Σκύθης (Skýthēs) “a Scythene or Scythian”, ἀπεκδύομαι (apekdýomai) “to divest wholly oneself, or (for oneself) despoil” and ἀνακαινόω (anakainóō) “to renovate”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Clothe yourselves with compassion, kindness, humility, gentleness and patience — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 3:9–12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:9–12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Clothe yourselves with compassion, kindness, humility, gentleness and patience",
+      "quote": "Compassion and kindness are clothing to be put on, which means they are given before they are worn.",
+      "graceTakeaway": "Character here is something you receive and then wear."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:9–12",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:9–12 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "A brother who wept on the necks of the men who sold him",
+        "character": "Joseph in Egypt",
+        "ref": "Genesis 45:1–15",
+        "story": "Joseph revealed himself to the brothers who had trafficked him and told them not to be angry with themselves. He put on compassion where he had every right to put on judgement."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:9–12",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:9–12 in your daily walk today."
+        "era": "Gospels",
+        "title": "A father running down the road",
+        "character": "The father of the prodigal",
+        "ref": "Luke 15:20–24",
+        "story": "While the son was still far off the father ran, embraced him, and cut off the rehearsed apology with a robe and a ring. Kindness arrived before the speech."
       }
     ]
   },
@@ -9339,8 +9521,8 @@ const BIBLE_VERSES = [
       "NKJV": "Most assuredly, I say to you, if anyone keeps My word he shall never see death."
     },
     "dynamicContext": {
-      "chapterTitle": "John 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 8:51 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 8 — The truth will set you free",
+      "chapterSummary": "Accusers drift away one by one from a woman they meant to stone; Jesus calls himself the light of the world and ends by saying that before Abraham was, he is.",
       "versions": {
         "NIV": {
           "before": [
@@ -9482,79 +9664,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 8:51.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 8:51.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 8:51.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 8:51."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 8:51."
+          "strongs": "G2334",
+          "word": "θεωρέω",
+          "transliteration": "theōréō",
+          "pronunciation": "theōréō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "see",
+          "root": "from a derivative of G2300 (θεάομαι) (perhaps by addition of G3708 (ὁράω));",
+          "definition": "to be a spectator of, i.e. discern, (literally, figuratively (experience) or intensively (acknowledge))",
+          "usageInPassage": "Rendered “shall he see” in this passage — verb, aorist, active, subjunctive."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G5083",
+          "word": "τηρέω",
+          "transliteration": "tēréō",
+          "pronunciation": "tēréō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "keep",
+          "root": "from (a watch;",
+          "definition": "perhaps akin to G2334 (θεωρέω)); to guard (from loss or injury, properly, by keeping the eye upon; and thus differing from G5442 (φυλάσσω), which is properly to prevent escaping; and from G2892 (κουστωδία), which implies a fortress or full military lines of apparatus), i.e. to note (a prophecy; figuratively, to fulfil a command); by implication, to detain (in custody; figuratively, to maintain); by extension, to withhold (for personal ends; figuratively, to keep unmarried); by extension, to withhold (for personal ends; figuratively, to keep unmarried)",
+          "usageInPassage": "Rendered “shall keep,” in this passage — verb, aorist, active, subjunctive."
+        },
+        {
+          "strongs": "G2288",
+          "word": "θάνατος",
+          "transliteration": "thánatos",
+          "pronunciation": "thánatos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "death",
+          "root": "from G2348 (θνήσκω);",
+          "definition": "(properly, an adjective used as a noun) death (literally or figuratively)",
+          "usageInPassage": "Rendered “death” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 8:51 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 8:51 in Koine Greek sits on θεωρέω (theōréō) “to be a spectator of”, τηρέω (tēréō) “perhaps akin to G2334 (θεωρέω))” and θάνατος (thánatos) “(properly, an adjective used as a noun) death (literally or…”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Whoever obeys my word will never see death — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 8:51 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 8:51. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Whoever obeys my word will never see death",
+      "quote": "Never seeing death is Jesus' claim about a horizon, not about the funeral.",
+      "graceTakeaway": "Death changes address, not belonging."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of John 8:51",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of John 8:51 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "A man who walked with God and was not",
+        "character": "Enoch",
+        "ref": "Genesis 5:21–24",
+        "story": "Enoch walked with God, and then he was not, because God took him. The Bible records no grave."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of John 8:51",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 8:51 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "A chariot of fire and a dropped cloak",
+        "character": "Elijah and Elisha",
+        "ref": "2 Kings 2:9–14",
+        "story": "Elijah went up in a whirlwind while Elisha watched and cried out. The cloak that fell still parted the Jordan."
       }
     ]
   },
@@ -9577,8 +9765,8 @@ const BIBLE_VERSES = [
       "NKJV": "The Lord is my light and my salvation; Whom shall I fear? The Lord is the strength of my life; Of whom shall I be afraid?"
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 27 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 27:1 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 27 — The LORD is my light",
+      "chapterSummary": "Confidence and longing side by side: an army may encamp against David and he will not fear, yet the one thing he asks is to dwell in God's house and behold his beauty.",
       "versions": {
         "NIV": {
           "before": [
@@ -9720,79 +9908,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 27:1.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 27:1.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 27:1.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 27:1."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 27:1."
+          "strongs": "H6342",
+          "word": "פָּחַד",
+          "transliteration": "pâchad",
+          "pronunciation": "paw-kkad'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "dread",
+          "root": "a primitive root;",
+          "definition": "to be startled (by a sudden alarm); hence, to fear in general",
+          "usageInPassage": "Rendered “will I be in dread” in this passage — verb, qal, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3468",
+          "word": "יֶשַׁע",
+          "transliteration": "yeshaʻ",
+          "pronunciation": "yeh'-shah",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "salvation",
+          "root": "or יֵשַׁע; from H3467 (יָשַׁע);",
+          "definition": "liberty, deliverance, prosperity",
+          "usageInPassage": "Rendered “and salvation my” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H4581",
+          "word": "מָעוֹז",
+          "transliteration": "mâʻôwz",
+          "pronunciation": "maw-oze'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "refuge of",
+          "root": "(also מָעוּז ); or מָעֹז (also מָעֻז; from H5810 (עָזַז);",
+          "definition": "a fortified place; figuratively, a defence",
+          "usageInPassage": "Rendered “is the refuge of” in this passage — noun, masculine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 27:1 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 27:1 in Biblical Hebrew sits on פָּחַד (pâchad) “to be startled (by a sudden alarm)”, יֶשַׁע (yeshaʻ) “liberty, deliverance, prosperity” and מָעוֹז (mâʻôwz) “a fortified place”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The LORD is my light and my salvation—whom shall I fear? — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 27:1 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 27:1. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The LORD is my light and my salvation—whom shall I fear?",
+      "quote": "Light and salvation are named before the question about fear is asked.",
+      "graceTakeaway": "The answer is established before the fear is voiced."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Psalm 27:1",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Psalm 27:1 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "Alone in a cave with a king hunting him",
+        "character": "David at Adullam",
+        "ref": "1 Samuel 22:1–2",
+        "story": "Hunted by Saul, David gathered the distressed, indebted and discontented in a cave and became their captain. His light and salvation were not his circumstances."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Psalm 27:1",
+        "era": "Exile",
+        "title": "A den of lions and an early-morning shout",
         "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 27:1 in your daily walk today."
+        "ref": "Daniel 6:16–23",
+        "story": "Darius could not sleep and ran to the den at first light. Daniel answered from inside, unhurt, having spent the night with the thing he was supposed to fear."
       }
     ]
   },
@@ -9815,8 +10009,8 @@ const BIBLE_VERSES = [
       "NKJV": "For you are all sons of God through faith in Christ Jesus... And if you are Christ’s, then you are Abraham’s seed, and heirs according to the promise."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 3:23–29 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 3 — Sons of Abraham by faith",
+      "chapterSummary": "If the Spirit came by faith, why finish in the flesh? Abraham believed, Christ took the curse, the law served as a guardian, and in Christ the old divisions fall.",
       "versions": {
         "NIV": {
           "before": [
@@ -9958,79 +10152,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 3:23–29.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 3:23–29.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 3:23–29.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 3:23–29."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 3:23–29."
+          "strongs": "G3807",
+          "word": "παιδαγωγός",
+          "transliteration": "paidagōgós",
+          "pronunciation": "paidagōgós",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "guardian",
+          "root": "from G3816 (παῖς) and a reduplicated form of G71 (ἄγω);",
+          "definition": "a boy-leader, i.e. a servant whose office it was to take the children to school; (by implication, (figuratively) a tutor (\"pædagogue\"))",
+          "usageInPassage": "Rendered “trainer” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G5432",
+          "word": "φρουρέω",
+          "transliteration": "phrouréō",
+          "pronunciation": "phrouréō",
+          "partOfSpeech": "Verb, imperfect, passive, indicative",
+          "matchedEnglish": "guard",
+          "root": "from a compound of G4253 (πρό) and G3708 (ὁράω);",
+          "definition": "to be a watcher in advance, i.e. to mount guard as a sentinel (post spies at gates); figuratively, to hem in, protect",
+          "usageInPassage": "Rendered “we were held in custody” in this passage — verb, imperfect, passive, indicative."
+        },
+        {
+          "strongs": "G4788",
+          "word": "συγκλείω",
+          "transliteration": "synkleíō",
+          "pronunciation": "synkleíō",
+          "partOfSpeech": "Verb, present, passive, participle",
+          "matchedEnglish": "being locked up",
+          "root": "from G4862 (σύν) and G2808 (κλείω);",
+          "definition": "to shut together, i.e. include or (figuratively) embrace in a common subjection to",
+          "usageInPassage": "Rendered “being locked up” in this passage — verb, present, passive, participle."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 3:23–29 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Galatians 3:23–29 in Koine Greek sits on παιδαγωγός (paidagōgós) “a boy-leader”, φρουρέω (phrouréō) “to be a watcher in advance” and συγκλείω (synkleíō) “to shut together”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You are all children of God through faith in Christ Jesus... heirs according to the promise — Grace Revelation",
-      "quote": "Under the new covenant of grace, Galatians 3:23–29 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 3:23–29. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You are all children of God through faith in Christ Jesus... heirs according to the promise",
+      "quote": "Sonship comes through faith, which is why the old dividing categories collapse.",
+      "graceTakeaway": "Your place in the family does not depend on your pedigree."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Galatians 3:23–29",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Galatians 3:23–29 that God's covenant never fails those who trust His goodness."
+        "era": "Judges",
+        "title": "A Moabite woman written into the royal line",
+        "character": "Ruth",
+        "ref": "Ruth 4:13–17",
+        "story": "A foreigner with no claim on Israel became the great-grandmother of David. Her place came by covenant loyalty, not by descent."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Galatians 3:23–29",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 3:23–29 in your daily walk today."
+        "era": "Early Church",
+        "title": "A Gentile household receiving the Spirit",
+        "character": "Cornelius and his house",
+        "ref": "Acts 10:44–48",
+        "story": "The Spirit fell on Gentiles while Peter was still speaking, and the circumcised believers were astonished. The dividing category dissolved mid-sermon."
       }
     ]
   },
@@ -10053,8 +10253,8 @@ const BIBLE_VERSES = [
       "NKJV": "Do not remember the former things, nor consider the things of old. Behold, I will do a new thing, now it shall spring forth; Shall you not know it? I will even make a road in the wilderness and rivers in the desert."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 43 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 43:18–19 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 43 — I have called you by name",
+      "chapterSummary": "Passing through waters and fire without being swept away or burned, because the one who formed Israel has redeemed them; and behold, he is doing a new thing — rivers in the desert.",
       "versions": {
         "NIV": {
           "before": [
@@ -10196,79 +10396,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 43:18–19.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 43:18–19.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 43:18–19.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 43:18–19."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 43:18–19."
+          "strongs": "H6931",
+          "word": "קַדְמוֹנִי",
+          "transliteration": "qadmôwnîy",
+          "pronunciation": "kad-mo-nee'",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "ancient things",
+          "root": "or קַדְמֹנִי; from H6930 (קַדְמוֹן);",
+          "definition": "(of time) anterior or (of place) oriental",
+          "usageInPassage": "Rendered “and ancient things” in this passage — adjective."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3452",
+          "word": "יְשִׁימוֹן",
+          "transliteration": "yᵉshîymôwn",
+          "pronunciation": "yesh-ee-mone'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "wilderness",
+          "root": "from H3456 (יָשַׁם);",
+          "definition": "a desolation",
+          "usageInPassage": "Rendered “in a desolate place” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H6779",
+          "word": "צָמַח",
+          "transliteration": "tsâmach",
+          "pronunciation": "tsaw-makh'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "spring",
+          "root": "a primitive root;",
+          "definition": "to sprout (transitive or intransitive, literal or figurative)",
+          "usageInPassage": "Rendered “it is springing up” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 43:18–19 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 43:18–19 in Biblical Hebrew sits on קַדְמוֹנִי (qadmôwnîy) “(of time) anterior or (of place) oriental”, יְשִׁימוֹן (yᵉshîymôwn) “a desolation” and צָמַח (tsâmach) “to sprout (transitive or intransitive, literal or figurative)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "See, I am doing a new thing! Now it springs up; do you not perceive it? — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 43:18–19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 43:18–19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "See, I am doing a new thing! Now it springs up; do you not perceive it?",
+      "quote": "The new thing is already springing up while the question is whether it is perceived.",
+      "graceTakeaway": "God's new work usually starts before it is noticed."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of Isaiah 43:18–19",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Isaiah 43:18–19 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "A decree that sent exiles home",
+        "character": "Cyrus of Persia",
+        "ref": "Ezra 1:1–4",
+        "story": "A pagan king issued the order that let Judah return and rebuild. The new thing came through a channel nobody in Babylon was watching."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Isaiah 43:18–19",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 43:18–19 in your daily walk today."
+        "era": "Early Church",
+        "title": "A road to Damascus with a warrant in hand",
+        "character": "Saul of Tarsus",
+        "ref": "Acts 9:1–9",
+        "story": "Saul set out with letters authorising arrests and arrived blind and led by the hand. The new thing began before he perceived it."
       }
     ]
   },
@@ -10291,8 +10497,8 @@ const BIBLE_VERSES = [
       "NKJV": "I will praise You with uprightness of heart, when I learn Your righteous judgments."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:7 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The long love song to God's word",
+      "chapterSummary": "The great acrostic: twenty-two stanzas, one per Hebrew letter, turning over God's law, statutes, precepts and promises from every angle a life can meet them.",
       "versions": {
         "NIV": {
           "before": [
@@ -10434,79 +10640,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:7.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:7.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:7.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:7."
+          "strongs": "H6664",
+          "word": "צֶדֶק",
+          "transliteration": "tsedeq",
+          "pronunciation": "tseh'-dek",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "right natural",
+          "root": "from H6663 (צָדַק);",
+          "definition": "the right (natural, moral or legal); also (abstractly) equity or (figuratively) prosperity",
+          "usageInPassage": "Rendered “righteousness your” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3476",
+          "word": "יֹשֶׁר",
+          "transliteration": "yôsher",
+          "pronunciation": "yo'-sher",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "right",
+          "root": "from H3474 (יָשַׁר);",
+          "definition": "the right",
+          "usageInPassage": "Rendered “in uprightness of” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H3925",
+          "word": "לָמַד",
+          "transliteration": "lâmad",
+          "pronunciation": "law-mad'",
+          "partOfSpeech": "Verb, qal, infinitive construct",
+          "matchedEnglish": "learn",
+          "root": "a primitive root;",
+          "definition": "properly, to goad, i.e. (by implication) to teach (the rod being an Oriental incentive)",
+          "usageInPassage": "Rendered “when learn I” in this passage — verb, qal, infinitive construct."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:7 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 119:7 in Biblical Hebrew sits on צֶדֶק (tsedeq) “the right (natural, moral or legal)”, יֹשֶׁר (yôsher) “the right” and לָמַד (lâmad) “to goad”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I will praise you with an upright heart as I learn your righteous laws — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 119:7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I will praise you with an upright heart as I learn your righteous laws",
+      "quote": "Praise with an upright heart is described as something learned.",
+      "graceTakeaway": "Sincerity grows; it is not a prerequisite."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:7",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:7 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "A census that cost seventy thousand lives",
+        "character": "David's confession",
+        "ref": "2 Samuel 24:10–17",
+        "story": "David's heart struck him after he numbered the people, and he refused to offer God something that cost him nothing. He learned righteousness the expensive way."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:7",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:7 in your daily walk today."
+        "era": "Wisdom",
+        "title": "A man corrected out of the whirlwind",
+        "character": "Job's answer",
+        "ref": "Job 42:1–6",
+        "story": "After chapters of argument Job says he had heard of God by the hearing of the ear but now his eye sees. Learning ended in worship rather than in a verdict."
       }
     ]
   },
@@ -10529,8 +10741,8 @@ const BIBLE_VERSES = [
       "NKJV": "Your word I have hidden in my heart, that I might not sin against You."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:11 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The long love song to God's word",
+      "chapterSummary": "The great acrostic: twenty-two stanzas, one per Hebrew letter, turning over God's law, statutes, precepts and promises from every angle a life can meet them.",
       "versions": {
         "NIV": {
           "before": [
@@ -10672,79 +10884,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:11.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:11.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:11.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:11."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:11."
+          "strongs": "H6845",
+          "word": "צָפַן",
+          "transliteration": "tsâphan",
+          "pronunciation": "tsaw-fan'",
+          "partOfSpeech": "Verb, qal, perfect",
+          "matchedEnglish": "hidden",
+          "root": "a primitive root;",
+          "definition": "to hide (by covering over); by implication, to hoard or reserve; figuratively to deny; specifically (favorably) to protect, (unfavorably) to lurk",
+          "usageInPassage": "Rendered “I have hidden” in this passage — verb, qal, perfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H0565",
+          "word": "אִמְרָה",
+          "transliteration": "ʼimrâh",
+          "pronunciation": "im-raw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "word",
+          "root": "or אֶמְרָה; feminine of H561 (אֵמֶר), and meaning the same",
+          "definition": "{something said}",
+          "usageInPassage": "Rendered “word your” in this passage — noun, feminine, singular."
+        },
+        {
+          "strongs": "H2398",
+          "word": "חָטָא",
+          "transliteration": "châṭâʼ",
+          "pronunciation": "khaw-taw'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "sin",
+          "root": "a primitive root;",
+          "definition": "properly, to miss; hence (figuratively and generally) to sin; by inference, to forfeit, lack, expiate, repent, (causatively) lead astray, condemn",
+          "usageInPassage": "Rendered “I will sin” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:11 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 119:11 in Biblical Hebrew sits on צָפַן (tsâphan) “to hide (by covering over)”, אִמְרָה (ʼimrâh) “{something said}” and חָטָא (châṭâʼ) “to miss”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I have hidden your word in my heart that I might not sin against you — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 119:11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I have hidden your word in my heart that I might not sin against you",
+      "quote": "The word is hidden in the heart, which is where sin is also decided.",
+      "graceTakeaway": "What you store shapes what you choose."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:11",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:11 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Answering the tempter three times from Deuteronomy",
+        "character": "Jesus in the wilderness",
+        "ref": "Matthew 4:1–11",
+        "story": "Every reply to the tempter began with 'It is written', quoted from memory after forty days without food. What he had stored was what he had to hand."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:11",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:11 in your daily walk today."
+        "era": "Exile",
+        "title": "A young man who resolved beforehand",
+        "character": "Daniel at the king's table",
+        "ref": "Daniel 1:8",
+        "story": "Daniel resolved not to defile himself with the royal food before the plate was ever in front of him. The decision was made in advance."
       }
     ]
   },
@@ -10767,8 +10985,8 @@ const BIBLE_VERSES = [
       "NKJV": "I have rejoiced in the way of Your testimonies, as much as in all riches. I will meditate on Your precepts, and contemplate Your ways. I will delight myself in Your statutes; I will not forget Your word."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:13–16 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The long love song to God's word",
+      "chapterSummary": "The great acrostic: twenty-two stanzas, one per Hebrew letter, turning over God's law, statutes, precepts and promises from every angle a life can meet them.",
       "versions": {
         "NIV": {
           "before": [
@@ -10910,79 +11128,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:13–16.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:13–16.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:13–16.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:13–16."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:13–16."
+          "strongs": "H8173",
+          "word": "שָׁעַע",
+          "transliteration": "shâʻaʻ",
+          "pronunciation": "shaw-ah'",
+          "partOfSpeech": "Verb, hithpael, imperfect",
+          "matchedEnglish": "delight myself",
+          "root": "a primitive root;",
+          "definition": "(in a good acceptation) to look upon (with complacency), i.e. fondle, please or amuse (self); (in a bad one) to look about (in dismay), i.e. stare",
+          "usageInPassage": "Rendered “I will delight myself” in this passage — verb, hithpael, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7878",
+          "word": "שִׂיחַ",
+          "transliteration": "sîyach",
+          "pronunciation": "see'-akh",
+          "partOfSpeech": "Verb, qal, infinitive construct",
+          "matchedEnglish": "meditate",
+          "root": "a primitive root;",
+          "definition": "to ponder, i.e. (by implication) converse (with oneself, and hence, aloud) or (transitively) utter",
+          "usageInPassage": "Rendered “I will meditate” in this passage — verb, qal, infinitive construct."
+        },
+        {
+          "strongs": "H6490",
+          "word": "פִּקּוּד",
+          "transliteration": "piqqûwd",
+          "pronunciation": "pik-kood'",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "precepts",
+          "root": "or פִּקֻּד; from H6485 (פָּקַד);",
+          "definition": "properly, appointed, i.e. a mandate (of God; plural only, collectively, for the Law)",
+          "usageInPassage": "Rendered “on precepts your” in this passage — noun, masculine, plural."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:13–16 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 119:13–16 in Biblical Hebrew sits on שָׁעַע (shâʻaʻ) “(in a good acceptation) to look upon (with complacency)”, שִׂיחַ (sîyach) “to ponder” and פִּקּוּד (piqqûwd) “appointed”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I delight in your decrees; I will not neglect your word — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 119:13–16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:13–16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I delight in your decrees; I will not neglect your word",
+      "quote": "Delight, not duty, is the verb Psalm 119 keeps reaching for.",
+      "graceTakeaway": "Obedience that begins in delight lasts longer than obedience that begins in fear."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 119:13–16",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 119:13–16 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "Weeping that turned into a feast",
+        "character": "The assembly at the Water Gate",
+        "ref": "Nehemiah 8:9–12",
+        "story": "The people wept when they understood the Law, and were told to eat, drink and send portions, because the day was holy. Delight was commanded over guilt."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 119:13–16",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:13–16 in your daily walk today."
+        "era": "United Monarchy",
+        "title": "Statutes sweeter than honey",
+        "character": "David's testimony",
+        "ref": "Psalm 19:7–11",
+        "story": "David compares God's ordinances to gold and honeycomb and says that in keeping them there is great reward. He is describing pleasure, not obligation."
       }
     ]
   },
@@ -11005,8 +11229,8 @@ const BIBLE_VERSES = [
       "NKJV": "I will bless the Lord who has given me counsel; My heart also instructs me in the night seasons. I have set the Lord always before me; Because He is at my right hand I shall not be moved."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 16 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 16:7–8 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 16 — David's miktam of portion and cup",
+      "chapterSummary": "David takes refuge in the LORD, names him as his chosen portion and inheritance, and follows that assurance past the grave to the path of life and fullness of joy.",
       "versions": {
         "NIV": {
           "before": [
@@ -11148,79 +11372,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 16:7–8.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 16:7–8.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 16:7–8.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 16:7–8."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 16:7–8."
+          "strongs": "H1288",
+          "word": "בָרַךְ",
+          "transliteration": "bârak",
+          "pronunciation": "baw-rak'",
+          "partOfSpeech": "Verb, piel, imperfect",
+          "matchedEnglish": "bless",
+          "root": "a primitive root;",
+          "definition": "to kneel; by implication to bless God (as an act of adoration), and (vice-versa) man (as a benefit); also (by euphemism) to curse (God or the king, as treason)",
+          "usageInPassage": "Rendered “I will bless” in this passage — verb, piel, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7737",
+          "word": "שָׁוָה",
+          "transliteration": "shâvâh",
+          "pronunciation": "shaw-vaw'",
+          "partOfSpeech": "Verb, piel, perfect",
+          "matchedEnglish": "set",
+          "root": "a primitive root;",
+          "definition": "properly, to level, i.e. equalize; figuratively, to resemble; by implication, to adjust (i.e. counterbalance, be suitable, compose, place, yield, etc.)",
+          "usageInPassage": "Rendered “I have placed” in this passage — verb, piel, perfect."
+        },
+        {
+          "strongs": "H3629",
+          "word": "כִּלְיָה",
+          "transliteration": "kilyâh",
+          "pronunciation": "kil-yaw'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "kidneys",
+          "root": "feminine of H3627 (כְּלִי) (only in the plural);",
+          "definition": "a kidney (as an essential organ); figuratively, the mind (as the interior self)",
+          "usageInPassage": "Rendered “kidneys my” in this passage — noun, feminine, plural."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 16:7–8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 16:7–8 in Biblical Hebrew sits on בָרַךְ (bârak) “to kneel”, שָׁוָה (shâvâh) “to level” and כִּלְיָה (kilyâh) “a kidney (as an essential organ)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Because he is at my right hand, I will not be shaken — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 16:7–8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 16:7–8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Because he is at my right hand, I will not be shaken",
+      "quote": "The right hand is God's position, not David's achievement.",
+      "graceTakeaway": "Stability comes from who stands beside you."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Psalm 16:7–8",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Psalm 16:7–8 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A prison door open and chains fallen off",
+        "character": "Peter",
+        "ref": "Acts 12:6–11",
+        "story": "Peter slept between two soldiers the night before his execution and had to be struck on the side to wake up. He was not shaken because he was not carrying it."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Psalm 16:7–8",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 16:7–8 in your daily walk today."
+        "era": "Gospels",
+        "title": "Sleeping through a squall",
+        "character": "Jesus on the Sea of Galilee",
+        "ref": "Matthew 8:23–27",
+        "story": "The boat was being swamped and he was asleep; the disciples woke him in terror. He was not moved by what was moving everyone else."
       }
     ]
   },
@@ -11243,8 +11473,8 @@ const BIBLE_VERSES = [
       "NKJV": "If you abide in Me, and My words abide in you, you will ask what you desire, and it shall be done for you."
     },
     "dynamicContext": {
-      "chapterTitle": "John 15 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 15:7 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 15 — Abide in the vine",
+      "chapterSummary": "Fruit is not produced by effort away from the vine but by remaining in it; the disciples are called friends rather than servants, and warned the world will hate them.",
       "versions": {
         "NIV": {
           "before": [
@@ -11386,79 +11616,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 15:7.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 15:7.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 15:7.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 15:7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 15:7."
+          "strongs": "G4487",
+          "word": "ῥῆμα",
+          "transliteration": "rhēma",
+          "pronunciation": "rhēma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "declarations",
+          "root": "from G4483 (ῥέω);",
+          "definition": "an utterance (individually, collectively or specially),; by implication, a matter or topic (especially of narration, command or dispute); with a negative naught whatever",
+          "usageInPassage": "Rendered “declarations” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3306",
+          "word": "μένω",
+          "transliteration": "ménō",
+          "pronunciation": "ménō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "abide",
+          "root": "a primary verb;",
+          "definition": "to stay (in a given place, state, relation or expectancy)",
+          "usageInPassage": "Rendered “you shall abide” in this passage — verb, aorist, active, subjunctive."
+        },
+        {
+          "strongs": "G0154",
+          "word": "αἰτέω",
+          "transliteration": "aitéō",
+          "pronunciation": "aitéō",
+          "partOfSpeech": "Verb, aorist, middle, imperative",
+          "matchedEnglish": "ask",
+          "root": "of uncertain derivation;",
+          "definition": "to ask (in genitive case)",
+          "usageInPassage": "Rendered “do yourself ask” in this passage — verb, aorist, middle, imperative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 15:7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 15:7 in Koine Greek sits on ῥῆμα (rhēma) “an utterance (individually, collectively or specially),”, μένω (ménō) “to stay (in a given place, state, relation or expectancy)” and αἰτέω (aitéō) “to ask (in genitive case)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "If you remain in me and my words remain in you, ask whatever you wish — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 15:7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 15:7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "If you remain in me and my words remain in you, ask whatever you wish",
+      "quote": "Remaining comes first; the asking follows from the abiding.",
+      "graceTakeaway": "Prayer grows out of nearness rather than replacing it."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of John 15:7",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of John 15:7 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Sitting at his feet while the meal went cold",
+        "character": "Mary of Bethany",
+        "ref": "Luke 10:38–42",
+        "story": "Martha was distracted by much serving; Mary sat and listened. Jesus called it the one thing needed and said it would not be taken from her."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of John 15:7",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 15:7 in your daily walk today."
+        "era": "Early Church",
+        "title": "A church that would not stop meeting to pray",
+        "character": "The believers in Jerusalem",
+        "ref": "Acts 2:42–47",
+        "story": "They devoted themselves to the apostles' teaching, the breaking of bread and prayer, day by day. What they asked for came out of where they stayed."
       }
     ],
     "tptFootnotes": "10:10 The Greek word for 'abundantly' is perissos, meaning superabundant, overflowing, beyond measure, and superior to anything previously conceived. Christ did not come to provide mere existence, but overflowing, indestructible zoe life."
@@ -11482,8 +11718,8 @@ const BIBLE_VERSES = [
       "NKJV": "I will also meditate on all Your work, and talk of Your deeds."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 77 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 77:12 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 77 — Remembering the deeds of the LORD",
+      "chapterSummary": "Asaph cannot sleep and asks whether God has forgotten to be gracious, then deliberately turns to remembrance: God's way was through the sea, though his footprints were unseen.",
       "versions": {
         "NIV": {
           "before": [
@@ -11625,79 +11861,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 77:12.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 77:12.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 77:12.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 77:12."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 77:12."
+          "strongs": "H7878",
+          "word": "שִׂיחַ",
+          "transliteration": "sîyach",
+          "pronunciation": "see'-akh",
+          "partOfSpeech": "Verb, qal, infinitive construct",
+          "matchedEnglish": "meditate",
+          "root": "a primitive root;",
+          "definition": "to ponder, i.e. (by implication) converse (with oneself, and hence, aloud) or (transitively) utter",
+          "usageInPassage": "Rendered “I will meditate” in this passage — verb, qal, infinitive construct."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H5949",
+          "word": "עֲלִילָה",
+          "transliteration": "ʻălîylâh",
+          "pronunciation": "al-ee-law'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "deeds",
+          "root": "or עֲלִלָה; from H5953 (עָלַל) in the sense of effecting;",
+          "definition": "an exploit (of God), or a performance (of man, often in a bad sense); by implication, an opportunity",
+          "usageInPassage": "Rendered “and on deeds your” in this passage — noun, feminine, plural."
+        },
+        {
+          "strongs": "H1897",
+          "word": "הָגָה",
+          "transliteration": "hâgâh",
+          "pronunciation": "daw-gaw'",
+          "partOfSpeech": "Verb, qal",
+          "matchedEnglish": "meditate",
+          "root": "a primitive root (compare H1901 (הָגִיג));",
+          "definition": "to murmur (in pleasure or anger); by implication, to ponder",
+          "usageInPassage": "Rendered “and I will meditate” in this passage — verb, qal."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 77:12 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 77:12 in Biblical Hebrew sits on שִׂיחַ (sîyach) “to ponder”, עֲלִילָה (ʻălîylâh) “an exploit (of God), or a performance (of man, often in a bad sense)” and הָגָה (hâgâh) “to murmur (in pleasure or anger)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I will consider all your works and meditate on all your mighty deeds — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 77:12 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 77:12. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I will consider all your works and meditate on all your mighty deeds",
+      "quote": "Asaph deliberately turns his mind to God's past works while the present is still dark.",
+      "graceTakeaway": "Remembering is an action available when feeling is not."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Psalm 77:12",
-        "character": "King David",
-        "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Psalm 77:12 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "A memorial of twelve stones from the riverbed",
+        "character": "Joshua at Gilgal",
+        "ref": "Joshua 4:1–7",
+        "story": "Twelve stones were carried out of the dry Jordan so that children would ask what they meant. Remembering was built into the landscape on purpose."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Psalm 77:12",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 77:12 in your daily walk today."
+        "era": "United Monarchy",
+        "title": "Talking himself back to hope",
+        "character": "David in the caves",
+        "ref": "Psalm 42:5–6",
+        "story": "David asks his own soul why it is downcast and tells it to hope in God, from the land of the Jordan. He preaches to himself when he cannot feel it."
       }
     ]
   },
@@ -11720,8 +11962,8 @@ const BIBLE_VERSES = [
       "NKJV": "I have been crucified with Christ; it is no longer I who live, but Christ lives in me; and the life which I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself for me."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 2 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 2:20 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 2 — Crucified with Christ",
+      "chapterSummary": "Paul defends his gospel before the Jerusalem apostles and confronts Peter at Antioch, landing on justification by faith and a life now lived by the Son of God.",
       "versions": {
         "NIV": {
           "before": [
@@ -11863,79 +12105,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 2:20.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 2:20.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 2:20.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 2:20."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 2:20."
+          "strongs": "G0025",
+          "word": "ἀγαπάω",
+          "transliteration": "agapáō",
+          "pronunciation": "agapáō",
+          "partOfSpeech": "Verb, aorist, active, participle",
+          "matchedEnglish": "love",
+          "root": "perhaps from (much) (or compare G5689);",
+          "definition": "to love (in a social or moral sense)",
+          "usageInPassage": "Rendered “having loved” in this passage — verb, aorist, active, participle."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4102",
+          "word": "πίστις",
+          "transliteration": "pístis",
+          "pronunciation": "pístis",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "faith",
+          "root": "from G3982 (πείθω);",
+          "definition": "persuasion, i.e. credence; moral conviction (of religious truth, or the truthfulness of God or a religious teacher), especially reliance upon Christ for salvation; abstractly, constancy in such profession; by extension, the system of religious (Gospel) truth itself",
+          "usageInPassage": "Rendered “faith” in this passage — noun."
+        },
+        {
+          "strongs": "G3860",
+          "word": "παραδίδωμι",
+          "transliteration": "paradídōmi",
+          "pronunciation": "paradídōmi",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "having given up",
+          "root": "from G3844 (παρά) and G1325 (δίδωμι);",
+          "definition": "to surrender, i.e yield up, intrust, transmit",
+          "usageInPassage": "Rendered “having given up” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 2:20 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Galatians 2:20 in Koine Greek sits on ἀγαπάω (agapáō) “to love (in a social or moral sense)”, πίστις (pístis) “persuasion” and παραδίδωμι (paradídōmi) “to surrender, i.e yield up, intrust, transmit”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I have been crucified with Christ and I no longer live, but Christ lives in me — Grace Revelation",
-      "quote": "Under the new covenant of grace, Galatians 2:20 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 2:20. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I have been crucified with Christ and I no longer live, but Christ lives in me",
+      "quote": "Crucified with Christ, yet living — the old self is not improved but ended and replaced.",
+      "graceTakeaway": "You are not being renovated; you have been raised."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Galatians 2:20",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Galatians 2:20 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A name changed and a life reversed",
+        "character": "Saul becoming Paul",
+        "ref": "Galatians 1:13–16",
+        "story": "He had violently persecuted the church, and describes God as pleased to reveal his Son in him. The old life was not reformed but ended."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Galatians 2:20",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 2:20 in your daily walk today."
+        "era": "Gospels",
+        "title": "A tax collector who left the booth",
+        "character": "Levi (Matthew)",
+        "ref": "Luke 5:27–28",
+        "story": "Jesus said follow me, and Levi left everything at the table and got up. There was no version of the old job to return to."
       }
     ]
   },
@@ -11958,8 +12206,8 @@ const BIBLE_VERSES = [
       "NKJV": "Have I not commanded you? Be strong and of good courage; do not be afraid, nor be dismayed, for the Lord your God is with you wherever you go."
     },
     "dynamicContext": {
-      "chapterTitle": "Joshua 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Joshua 1:9 revealing God's covenant faithfulness.",
+      "chapterTitle": "Joshua 1 — Be strong and courageous",
+      "chapterSummary": "With Moses dead, God commissions Joshua to cross the Jordan, repeats the charge to be strong and courageous three times, and ties it to meditating on the book of the law.",
       "versions": {
         "NIV": {
           "before": [
@@ -12101,79 +12349,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Joshua 1:9.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Joshua 1:9.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Joshua 1:9.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Joshua 1:9."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Joshua 1:9."
+          "strongs": "H6206",
+          "word": "עָרַץ",
+          "transliteration": "ʻârats",
+          "pronunciation": "aw-rats'",
+          "partOfSpeech": "Verb, qal",
+          "matchedEnglish": "terrified",
+          "root": "a primitive root;",
+          "definition": "to awe or (intransitive) to dread; hence, to harass",
+          "usageInPassage": "Rendered “you be terrified” in this passage — verb, qal."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H0553",
+          "word": "אָמַץ",
+          "transliteration": "ʼâmats",
+          "pronunciation": "aw-mats'",
+          "partOfSpeech": "Verb, qal, imperative",
+          "matchedEnglish": "bold",
+          "root": "a primitive root;",
+          "definition": "to be alert, physically (on foot) or mentally (in courage)",
+          "usageInPassage": "Rendered “and be bold” in this passage — verb, qal, imperative."
+        },
+        {
+          "strongs": "H2865",
+          "word": "חָתַת",
+          "transliteration": "châthath",
+          "pronunciation": "khaw-thath'",
+          "partOfSpeech": "Verb, niphal",
+          "matchedEnglish": "dismayed",
+          "root": "a primitive root;",
+          "definition": "properly, to prostrate; hence, to break down, either (literally) by violence, or (figuratively) by confusion and fear",
+          "usageInPassage": "Rendered “you be dismayed” in this passage — verb, niphal."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Joshua 1:9 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Joshua 1:9 in Biblical Hebrew sits on עָרַץ (ʻârats) “to awe or (intransitive) to dread”, אָמַץ (ʼâmats) “to be alert, physically (on foot) or mentally (in courage)” and חָתַת (châthath) “to prostrate”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you — Grace Revelation",
-      "quote": "Under the new covenant of grace, Joshua 1:9 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Joshua 1:9. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you",
+      "quote": "The command to be courageous is grounded in a fact: the LORD your God will be with you.",
+      "graceTakeaway": "Courage is a response to a promise, not a personality trait."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Joshua 1:9",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Joshua 1:9 that God's covenant never fails those who trust His goodness."
+        "era": "Judges",
+        "title": "A woman who went when the general would not",
+        "character": "Deborah and Barak",
+        "ref": "Judges 4:4–16",
+        "story": "Barak refused to go unless Deborah went with him, and she went. Courage came from company and a word already given."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Joshua 1:9",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Joshua 1:9 in your daily walk today."
+        "era": "Conquest",
+        "title": "Still asking for the hill country at eighty-five",
+        "character": "Caleb",
+        "ref": "Joshua 14:6–14",
+        "story": "Forty-five years after the spies, Caleb asked for the hill country with its fortified cities, saying he was as strong as the day Moses sent him. He had believed the report nobody else did."
       }
     ]
   },
@@ -12196,8 +12450,8 @@ const BIBLE_VERSES = [
       "NKJV": "For God has not given us a spirit of fear, but of power and of love and of a sound mind."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Timothy 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Timothy 1:7 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Timothy 1 — A spirit of power, love and self-control",
+      "chapterSummary": "Paul stirs Timothy to fan into flame the gift in him, reminding him that fear is not what God gave, and pointing to a calling that rests on grace, not performance.",
       "versions": {
         "NIV": {
           "before": [
@@ -12339,322 +12593,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Timothy 1:7.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Timothy 1:7.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Timothy 1:7.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Timothy 1:7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 2 Timothy 1:7."
+          "strongs": "G1167",
+          "word": "δειλία",
+          "transliteration": "deilía",
+          "pronunciation": "deilía",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "timidity",
+          "root": "from G1169 (δειλός);",
+          "definition": "timidity",
+          "usageInPassage": "Rendered “of cowardice” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4995",
+          "word": "σωφρονισμός",
+          "transliteration": "sōphronismós",
+          "pronunciation": "sōphronismós",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "discipline",
+          "root": "from G4994 (σωφρονίζω);",
+          "definition": "discipline, i.e. self-control",
+          "usageInPassage": "Rendered “of self-control.” in this passage — noun."
+        },
+        {
+          "strongs": "G0026",
+          "word": "ἀγάπη",
+          "transliteration": "agápē",
+          "pronunciation": "agápē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "love",
+          "root": "from G25 (ἀγαπάω);",
+          "definition": "love, i.e. affection or benevolence; specially (plural) a love-feast",
+          "usageInPassage": "Rendered “of love” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 2 Timothy 1:7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 2 Timothy 1:7 in Koine Greek sits on δειλία (deilía) “timidity”, σωφρονισμός (sōphronismós) “discipline” and ἀγάπη (agápē) “love”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "God has not given us a spirit of fear, but of power and of love and of a sound mind — Grace Revelation",
-      "quote": "Under the new covenant of grace, 2 Timothy 1:7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Timothy 1:7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "God has not given us a spirit of fear, but of power and of love and of a sound mind",
+      "quote": "Power, love and a sound mind are described as given, in place of a spirit of fear.",
+      "graceTakeaway": "Fear is not the equipment you were issued."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of 2 Timothy 1:7",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of 2 Timothy 1:7 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A young minister told not to let anyone look down on him",
+        "character": "Timothy",
+        "ref": "1 Timothy 4:12–14",
+        "story": "Paul tells Timothy not to neglect his gift and not to be dismissed for his youth. The equipment was already given."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of 2 Timothy 1:7",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Timothy 1:7 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "A prophet who asked to die and was fed instead",
+        "character": "Elijah under the broom tree",
+        "ref": "1 Kings 19:1–9",
+        "story": "After Carmel he ran from a threat and asked to die; God let him sleep and sent food twice. He was not scolded out of the fear."
       }
     ]
   },
   {
     "id": 53,
-    "ref": "Isaiah 41:10",
-    "book": "Isaiah",
-    "category": "courage-protection",
-    "categoryLabel": "Courage & Defense",
-    "icon": "shield-check",
-    "bentoSpan": "standard",
-    "keyPhrase": "I will strengthen you and help you; I will uphold you with my righteous right hand",
-    "themeColor": "rose",
-    "translations": {
-      "NIV": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.",
-      "TPT": "Do not yield to fear, for I am always near. Never turn your gaze away, for I am your God. I will strengthen you; yes, I will help you. I will hold you tight in my hand of victory and righteousness.",
-      "NLT": "Don't be afraid, for I am with you. Don't be discouraged, for I am your God. I will strengthen you and help you. I will hold you up with my victorious right hand.",
-      "NASB": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand.",
-      "AMP": "Do not fear [anything], for I am with you; do not be afraid, for I am your God. I will strengthen you, be assured I will help you; I will certainly take hold of you with My righteous right hand.",
-      "NKJV": "Fear not, for I am with you; Be not dismayed, for I am your God. I will strengthen you, Yes, I will help you, I will uphold you with My righteous right hand."
-    },
-    "dynamicContext": {
-      "chapterTitle": "Isaiah 41 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 41:10 revealing God's covenant faithfulness.",
-      "versions": {
-        "NIV": {
-          "before": [
-            {
-              "num": "16",
-              "text": "Better the little that the righteous have than the wealth of many wicked;"
-            },
-            {
-              "num": "17",
-              "text": "for the power of the wicked will be broken, but the Lord upholds the righteous."
-            },
-            {
-              "num": "18",
-              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
-            }
-          ],
-          "target": {
-            "num": "10",
-            "text": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrow and do not repay, but the righteous give generously;"
-            },
-            {
-              "num": "22",
-              "text": "those the Lord blesses will inherit the land, but those he curses will be destroyed."
-            }
-          ]
-        },
-        "TPT": {
-          "before": [
-            {
-              "num": "16",
-              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
-            },
-            {
-              "num": "17",
-              "text": "For the strength of the wicked will be shattered, but the Lord sustains the righteous with His own hand."
-            },
-            {
-              "num": "18",
-              "text": "Day by day the Lord tenderly guards the innocent, ensuring their inheritance will stand firm through the ages."
-            }
-          ],
-          "target": {
-            "num": "10",
-            "text": "Do not yield to fear, for I am always near. Never turn your gaze away, for I am your God. I will strengthen you; yes, I will help you. I will hold you tight in my hand of victory and righteousness."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "The enemies of God will vanish like sweet grass in the fire; they will disappear into thin air like smoke."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrow and default on their debts, but the lover of God is gracious and gives with an open hand."
-            },
-            {
-              "num": "22",
-              "text": "Those favored by God will take possession of the promised land and dwell securely in His blessing."
-            }
-          ]
-        },
-        "NLT": {
-          "before": [
-            {
-              "num": "16",
-              "text": "It is better to be godly and have little than to be evil and rich."
-            },
-            {
-              "num": "17",
-              "text": "For the strength of the wicked will be shattered, but the Lord takes care of the godly."
-            },
-            {
-              "num": "18",
-              "text": "Day by day the Lord takes care of the innocent, and they will receive an inheritance that lasts forever."
-            }
-          ],
-          "target": {
-            "num": "10",
-            "text": "Don't be afraid, for I am with you. Don't be discouraged, for I am your God. I will strengthen you and help you. I will hold you up with my victorious right hand."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrow and never repay, but the godly are generous and give."
-            },
-            {
-              "num": "22",
-              "text": "Those the Lord blesses will possess the land, but those he curses will die."
-            }
-          ]
-        },
-        "NASB": {
-          "before": [
-            {
-              "num": "16",
-              "text": "Better is the little of the righteous than the abundance of many wicked."
-            },
-            {
-              "num": "17",
-              "text": "For the arms of the wicked will be broken, but the Lord sustains the righteous."
-            },
-            {
-              "num": "18",
-              "text": "The Lord knows the days of the blameless, and their inheritance will be forever."
-            }
-          ],
-          "target": {
-            "num": "10",
-            "text": "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you, I will also help you, I will also uphold you with My righteous right hand."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrows and does not pay back, but the righteous is gracious and gives."
-            },
-            {
-              "num": "22",
-              "text": "For those blessed by Him will inherit the land, but those cursed by Him will be cut off."
-            }
-          ]
-        }
-      }
-    },
-    "lexicon": {
-      "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 41:10.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 41:10.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 41:10.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 41:10."
-      },
-      "keyTerms": [
-        {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 41:10."
-        },
-        {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
-        }
-      ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 41:10 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
-    },
-    "crossReferencesList": [
-      {
-        "ref": "Romans 8:31–32",
-        "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
-      },
-      {
-        "ref": "2 Corinthians 1:20",
-        "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
-      },
-      {
-        "ref": "Ephesians 1:3",
-        "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
-      },
-      {
-        "ref": "Hebrews 13:5–6",
-        "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
-      }
-    ],
-    "paulEllisInsight": {
-      "theme": "I will strengthen you and help you; I will uphold you with my righteous right hand — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 41:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 41:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
-    },
-    "caseStudiesList": [
-      {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Isaiah 41:10",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Isaiah 41:10 that God's covenant never fails those who trust His goodness."
-      },
-      {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Isaiah 41:10",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 41:10 in your daily walk today."
-      }
-    ]
-  },
-  {
-    "id": 54,
     "ref": "Psalm 34:4",
     "book": "Psalms",
     "category": "peace-rest",
@@ -12672,8 +12694,8 @@ const BIBLE_VERSES = [
       "NKJV": "I sought the Lord, and He heard me, and delivered me from all my fears."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 34 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 34:4 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 34 — Taste and see",
+      "chapterSummary": "Written when David feigned madness to escape Abimelech: he seeks the LORD and is delivered from every fear, and testifies that the LORD is near to the brokenhearted.",
       "versions": {
         "NIV": {
           "before": [
@@ -12815,84 +12837,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 34:4.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 34:4.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 34:4.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 34:4."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 34:4."
+          "strongs": "H4034",
+          "word": "מְגוֹרַה",
+          "transliteration": "mᵉgôwrah",
+          "pronunciation": "meg-o-raw'",
+          "partOfSpeech": "Noun, feminine, plural",
+          "matchedEnglish": "fears",
+          "root": "feminine of H4032 (מָגוֹר);",
+          "definition": "affright",
+          "usageInPassage": "Rendered “fears my” in this passage — noun, feminine, plural."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H1875",
+          "word": "דָּרַשׁ",
+          "transliteration": "dârash",
+          "pronunciation": "daw-rash'",
+          "partOfSpeech": "Verb, qal, perfect",
+          "matchedEnglish": "sought",
+          "root": "a primitive root;",
+          "definition": "properly, to tread or frequent; usually to follow (for pursuit or search); by implication, to seek or ask; specifically to worship",
+          "usageInPassage": "Rendered “I sought” in this passage — verb, qal, perfect."
+        },
+        {
+          "strongs": "H5337",
+          "word": "נָצַל",
+          "transliteration": "nâtsal",
+          "pronunciation": "naw-tsal'",
+          "partOfSpeech": "Verb, hiphil, perfect",
+          "matchedEnglish": "me",
+          "root": "a primitive root;",
+          "definition": "to snatch away, whether in a good or a bad sense",
+          "usageInPassage": "Rendered “he delivered me” in this passage — verb, hiphil, perfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 34:4 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 34:4 in Biblical Hebrew sits on מְגוֹרַה (mᵉgôwrah) “affright”, דָּרַשׁ (dârash) “to tread or frequent” and נָצַל (nâtsal) “to snatch away, whether in a good or a bad sense”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I sought the LORD, and he answered me; he delivered me from all my fears — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 34:4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 34:4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I sought the LORD, and he answered me; he delivered me from all my fears",
+      "quote": "David sought and was answered — and was delivered from the fears, not only the threats.",
+      "graceTakeaway": "God addresses the fear as well as the danger."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Psalm 34:4",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Psalm 34:4 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "Feigning madness at the gate of Gath",
+        "character": "David before Achish",
+        "ref": "1 Samuel 21:10–15",
+        "story": "David escaped by scratching on the doors and letting spit run down his beard, which is the situation this psalm was written out of. The fear was real and the deliverance was real."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Psalm 34:4",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 34:4 in your daily walk today."
+        "era": "Gospels",
+        "title": "A father asking through his panic",
+        "character": "Jairus",
+        "ref": "Mark 5:22–24, 35–42",
+        "story": "Jairus fell at Jesus' feet, then heard on the road that his daughter had died. He was told not to fear, only believe, and he kept walking."
       }
     ]
   },
   {
-    "id": 55,
+    "id": 54,
     "ref": "Psalm 118:6",
     "book": "Psalms",
     "category": "courage-protection",
@@ -12910,8 +12938,8 @@ const BIBLE_VERSES = [
       "NKJV": "The Lord is on my side; I will not fear. What can man do to me?"
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 118 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 118:6 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 118 — His steadfast love endures forever",
+      "chapterSummary": "A processional thanksgiving from distress to deliverance, giving the church the rejected stone that became the cornerstone and the day the LORD has made.",
       "versions": {
         "NIV": {
           "before": [
@@ -13053,84 +13081,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 118:6.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 118:6.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 118:6.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 118:6."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 118:6."
+          "strongs": "H3372",
+          "word": "יָרֵא",
+          "transliteration": "yârêʼ",
+          "pronunciation": "yaw-ray'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "fear",
+          "root": "a primitive root;",
+          "definition": "to fear; morally, to revere; caus. to frighten",
+          "usageInPassage": "Rendered “I will be afraid” in this passage — verb, qal, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H0120",
+          "word": "אָדָם",
+          "transliteration": "ʼâdâm",
+          "pronunciation": "aw-dawm'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "man",
+          "root": "from H119 (אָדַם);",
+          "definition": "ruddy i.e. a human being (an individual or the species, mankind, etc.)",
+          "usageInPassage": "Rendered “anyone” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H6213",
+          "word": "עָשָׂה",
+          "transliteration": "ʻâsâh",
+          "pronunciation": "aw-saw'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "or make",
+          "root": "a primitive root;",
+          "definition": "to do or make, in the broadest sense and widest application",
+          "usageInPassage": "Rendered “will he do” in this passage — verb, qal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 118:6 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 118:6 in Biblical Hebrew sits on יָרֵא (yârêʼ) “to fear”, אָדָם (ʼâdâm) “ruddy i.e. a human being (an individual or the species, mankind, etc.)” and עָשָׂה (ʻâsâh) “to do or make, in the broadest sense and widest application”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The LORD is with me; I will not be afraid. What can mere mortals do to me? — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 118:6 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 118:6. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The LORD is with me; I will not be afraid. What can mere mortals do to me?",
+      "quote": "The question 'what can mere mortals do' is asked from beside the LORD, not from safety.",
+      "graceTakeaway": "Perspective changes what a threat weighs."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Psalm 118:6",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Psalm 118:6 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "Building with a trowel in one hand",
+        "character": "Nehemiah's workers",
+        "ref": "Nehemiah 4:7–18",
+        "story": "Ridiculed, then threatened with attack, they carried materials with one hand and a weapon in the other and kept building. The threats did not stop the wall."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Psalm 118:6",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 118:6 in your daily walk today."
+        "era": "Early Church",
+        "title": "Told to stop preaching, and praying for boldness",
+        "character": "Peter and John",
+        "ref": "Acts 4:18–31",
+        "story": "Commanded not to speak in that name, they asked God not for protection but for boldness. The room shook."
       }
     ]
   },
   {
-    "id": 56,
+    "id": 55,
     "ref": "Proverbs 3:5–6",
     "book": "Proverbs",
     "category": "wisdom-word",
@@ -13148,8 +13182,8 @@ const BIBLE_VERSES = [
       "NKJV": "Trust in the Lord with all your heart, and lean not on your own understanding; In all your ways acknowledge Him, and He shall direct your paths."
     },
     "dynamicContext": {
-      "chapterTitle": "Proverbs 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Proverbs 3:5–6 revealing God's covenant faithfulness.",
+      "chapterTitle": "Proverbs 3 — Trust in the LORD with all your heart",
+      "chapterSummary": "A father's charge not to lean on one's own understanding, to honour the LORD with one's wealth, and to receive discipline as a father's love; wisdom is a tree of life.",
       "versions": {
         "NIV": {
           "before": [
@@ -13291,84 +13325,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Proverbs 3:5–6.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Proverbs 3:5–6.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Proverbs 3:5–6.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Proverbs 3:5–6."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Proverbs 3:5–6."
+          "strongs": "H0982",
+          "word": "בָּטַח",
+          "transliteration": "bâṭach",
+          "pronunciation": "baw-takh'",
+          "partOfSpeech": "Verb, qal, imperative",
+          "matchedEnglish": "trust",
+          "root": "a primitive root; properly, to hide for refuge (but not so precipitately as H2620 (חָסָה));",
+          "definition": "figuratively, to trust, be confident or sure",
+          "usageInPassage": "Rendered “trust” in this passage — verb, qal, imperative."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H8172",
+          "word": "שָׁעַן",
+          "transliteration": "shâʻan",
+          "pronunciation": "shaw-an'",
+          "partOfSpeech": "Verb, niphal",
+          "matchedEnglish": "lean",
+          "root": "a primitive root;",
+          "definition": "to support one's self",
+          "usageInPassage": "Rendered “you depend” in this passage — verb, niphal."
+        },
+        {
+          "strongs": "H3474",
+          "word": "יָשַׁר",
+          "transliteration": "yâshar",
+          "pronunciation": "yaw-shar'",
+          "partOfSpeech": "Verb, piel, imperfect",
+          "matchedEnglish": "make straight",
+          "root": "a primitive root;",
+          "definition": "to be straight or even; figuratively, to be (causatively, to make) right, pleasant, prosperous",
+          "usageInPassage": "Rendered “he will make straight” in this passage — verb, piel, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Proverbs 3:5–6 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Proverbs 3:5–6 in Biblical Hebrew sits on בָּטַח (bâṭach) “figuratively, to trust, be confident or sure”, שָׁעַן (shâʻan) “to support one's self” and יָשַׁר (yâshar) “to be straight or even”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Trust in the LORD with all your heart and lean not on your own understanding — Grace Revelation",
-      "quote": "Under the new covenant of grace, Proverbs 3:5–6 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Proverbs 3:5–6. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Trust in the LORD with all your heart and lean not on your own understanding",
+      "quote": "Leaning not on your own understanding is not anti-thought; it is refusing to make your own grasp the foundation.",
+      "graceTakeaway": "You can think hard and still not lean there."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Proverbs 3:5–6",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Proverbs 3:5–6 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Setting out without knowing the destination",
+        "character": "Abraham leaving Haran",
+        "ref": "Genesis 12:1–4",
+        "story": "Abraham was told to go to a land God would show him, and went. He was not given the map before he was given the command."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Proverbs 3:5–6",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Proverbs 3:5–6 in your daily walk today."
+        "era": "Gospels",
+        "title": "Nets let down at the wrong time of day",
+        "character": "Simon Peter",
+        "ref": "Luke 5:4–7",
+        "story": "Peter had fished all night and caught nothing, and said so, then let the nets down because Jesus said to. His own expertise said no."
       }
     ]
   },
   {
-    "id": 57,
+    "id": 56,
     "ref": "Mark 16:17–18",
     "book": "Mark",
     "category": "faith-prayer",
@@ -13386,8 +13426,8 @@ const BIBLE_VERSES = [
       "NKJV": "And these signs will follow those who believe: In My name they will cast out demons; they will speak with new tongues; they will take up serpents; and if they drink anything deadly, it will by no means hurt them; they will lay hands on the sick, and they will recover."
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 16 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Mark 16:17–18 revealing God's covenant faithfulness.",
+      "chapterTitle": "Mark 16 — He has risen",
+      "chapterSummary": "The women come at sunrise to a rolled-away stone and an empty place where he lay; the longer ending sends the disciples into all the world with the good news.",
       "versions": {
         "NIV": {
           "before": [
@@ -13529,84 +13569,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Mark 16:17–18.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Mark 16:17–18.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Mark 16:17–18.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Mark 16:17–18."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Mark 16:17–18."
+          "strongs": "G2286",
+          "word": "θανάσιμος",
+          "transliteration": "thanásimos",
+          "pronunciation": "thanásimos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "deadly",
+          "root": "from G2288 (θάνατος);",
+          "definition": "fatal, i.e. poisonous",
+          "usageInPassage": "Rendered “deadly” in this passage — adjective."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0984",
+          "word": "βλάπτω",
+          "transliteration": "bláptō",
+          "pronunciation": "bláptō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "hurt",
+          "root": "a primary verb;",
+          "definition": "properly, to hinder, i.e. (by implication) to injure",
+          "usageInPassage": "Rendered “it will hurt,” in this passage — verb, future, active, indicative."
+        },
+        {
+          "strongs": "G3877",
+          "word": "παρακολουθέω",
+          "transliteration": "parakolouthéō",
+          "pronunciation": "parakolouthéō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "accompany",
+          "root": "from G3844 (παρά) and G190 (ἀκολουθέω);",
+          "definition": "to follow near, i.e. (figuratively) attend (as a result), trace out, conform to",
+          "usageInPassage": "Rendered “will accompany:” in this passage — verb, future, active, indicative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Mark 16:17–18 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Mark 16:17–18 in Koine Greek sits on θανάσιμος (thanásimos) “fatal”, βλάπτω (bláptō) “to hinder” and παρακολουθέω (parakolouthéō) “to follow near”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "These signs will accompany those who believe: In my name they will drive out demons... they will place their hands on sick people, and they will get well — Grace Revelation",
-      "quote": "Under the new covenant of grace, Mark 16:17–18 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 16:17–18. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "These signs will accompany those who believe: In my name they will drive out demons... they will place their hands on sick people, and they will get well",
+      "quote": "The signs follow those who believe — they accompany, rather than certify.",
+      "graceTakeaway": "Signs trail faith; they are not the ticket to it."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 16:17–18",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 16:17–18 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A lame man at the temple gate",
+        "character": "Peter, John and the beggar",
+        "ref": "Acts 3:1–10",
+        "story": "Peter had no silver or gold, took the man by the right hand, and he went into the temple walking and leaping. The sign followed the word spoken in the name."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 16:17–18",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 16:17–18 in your daily walk today."
+        "era": "Early Church",
+        "title": "A seamstress raised in an upper room",
+        "character": "Tabitha at Joppa",
+        "ref": "Acts 9:36–42",
+        "story": "Peter knelt, prayed, and told her to get up, and he presented her alive to the widows holding the coats she had made. Many in Joppa believed."
       }
     ]
   },
   {
-    "id": 58,
+    "id": 57,
     "ref": "Romans 8:37",
     "book": "Romans",
     "category": "courage-protection",
@@ -13624,8 +13670,8 @@ const BIBLE_VERSES = [
       "NKJV": "Yet in all these things we are more than conquerors through Him who loved us."
     },
     "dynamicContext": {
-      "chapterTitle": "Romans 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Romans 8:37 revealing God's covenant faithfulness.",
+      "chapterTitle": "Romans 8 — No condemnation, no separation",
+      "chapterSummary": "Life in the Spirit replaces the law's condemnation; creation and believers groan together, all things are worked toward good, and the chapter ends with a list of what cannot separate.",
       "versions": {
         "NIV": {
           "before": [
@@ -13767,84 +13813,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Romans 8:37.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Romans 8:37.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Romans 8:37.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Romans 8:37."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Romans 8:37."
+          "strongs": "G5245",
+          "word": "ὑπερνικάω",
+          "transliteration": "hypernikáō",
+          "pronunciation": "hypernikáō",
+          "partOfSpeech": "Verb, present, active, indicative",
+          "matchedEnglish": "conquer",
+          "root": "from G5228 (ὑπέρ) and G3528 (νικάω);",
+          "definition": "to vanquish beyond, i.e. gain a decisive victory",
+          "usageInPassage": "Rendered “we more than conquer” in this passage — verb, present, active, indicative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0025",
+          "word": "ἀγαπάω",
+          "transliteration": "agapáō",
+          "pronunciation": "agapáō",
+          "partOfSpeech": "Verb, aorist, active, participle",
+          "matchedEnglish": "love",
+          "root": "perhaps from (much) (or compare G5689);",
+          "definition": "to love (in a social or moral sense)",
+          "usageInPassage": "Rendered “having loved” in this passage — verb, aorist, active, participle."
+        },
+        {
+          "strongs": "G3956",
+          "word": "πᾶς",
+          "transliteration": "pâs",
+          "pronunciation": "pâs",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "all",
+          "root": "including all the forms of declension; apparently a primary word;",
+          "definition": "all, any, every, the whole",
+          "usageInPassage": "Rendered “all” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Romans 8:37 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Romans 8:37 in Koine Greek sits on ὑπερνικάω (hypernikáō) “to vanquish beyond”, ἀγαπάω (agapáō) “to love (in a social or moral sense)” and πᾶς (pâs) “all, any, every, the whole”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "No, in all these things we are more than conquerors through him who loved us — Grace Revelation",
-      "quote": "Under the new covenant of grace, Romans 8:37 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Romans 8:37. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "No, in all these things we are more than conquerors through him who loved us",
+      "quote": "More than conquerors — through him who loved us, which names the mechanism.",
+      "graceTakeaway": "The victory is borrowed, and that is what makes it certain."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Romans 8:37",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Romans 8:37 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "Shipwreck, snakebite, and arriving anyway",
+        "character": "Paul on the way to Rome",
+        "ref": "Acts 27:13–44",
+        "story": "Two weeks in a storm, the ship broken up on a reef, and not one life lost. He reached the city he had been told he would reach."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Romans 8:37",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 8:37 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "Chariots of fire on the hills around Dothan",
+        "character": "Elisha's servant",
+        "ref": "2 Kings 6:15–17",
+        "story": "The servant saw an army surrounding the city and panicked; Elisha prayed that his eyes be opened. The hills were already full of horses and chariots of fire."
       }
     ]
   },
   {
-    "id": 59,
+    "id": 58,
     "ref": "Luke 1:37",
     "book": "Luke",
     "category": "faith-prayer",
@@ -13862,8 +13914,8 @@ const BIBLE_VERSES = [
       "NKJV": "For with God nothing will be impossible."
     },
     "dynamicContext": {
-      "chapterTitle": "Luke 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Luke 1:37 revealing God's covenant faithfulness.",
+      "chapterTitle": "Luke 1 — Nothing will be impossible with God",
+      "chapterSummary": "Gabriel comes to Zechariah and then to Mary; her question is answered with Elizabeth's pregnancy and a promise, and the chapter closes in two songs.",
       "versions": {
         "NIV": {
           "before": [
@@ -14005,84 +14057,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Luke 1:37.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Luke 1:37.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Luke 1:37.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Luke 1:37."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Luke 1:37."
+          "strongs": "G4487",
+          "word": "ῥῆμα",
+          "transliteration": "rhēma",
+          "pronunciation": "rhēma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "declaration",
+          "root": "from G4483 (ῥέω);",
+          "definition": "an utterance (individually, collectively or specially),; by implication, a matter or topic (especially of narration, command or dispute); with a negative naught whatever",
+          "usageInPassage": "Rendered “declaration.” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0101",
+          "word": "ἀδυνατέω",
+          "transliteration": "adynatéō",
+          "pronunciation": "adynatéō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "impossible",
+          "root": "from G102 (ἀδύνατος);",
+          "definition": "to be unable, i.e. (passively) impossible",
+          "usageInPassage": "Rendered “will be impossible” in this passage — verb, future, active, indicative."
+        },
+        {
+          "strongs": "G3956",
+          "word": "πᾶς",
+          "transliteration": "pâs",
+          "pronunciation": "pâs",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "all",
+          "root": "including all the forms of declension; apparently a primary word;",
+          "definition": "all, any, every, the whole",
+          "usageInPassage": "Rendered “every” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Luke 1:37 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Luke 1:37 in Koine Greek sits on ῥῆμα (rhēma) “an utterance (individually, collectively or specially),”, ἀδυνατέω (adynatéō) “to be unable” and πᾶς (pâs) “all, any, every, the whole”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "For no word from God will ever fail — Grace Revelation",
-      "quote": "Under the new covenant of grace, Luke 1:37 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Luke 1:37. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "For no word from God will ever fail",
+      "quote": "No word from God will ever fail, said to a young woman with no evidence yet.",
+      "graceTakeaway": "God's word does not need your circumstances to cooperate."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Luke 1:37",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Luke 1:37 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Laughing behind the tent flap",
+        "character": "Sarah",
+        "ref": "Genesis 18:9–14, 21:1–2",
+        "story": "Sarah laughed at ninety and was asked whether anything is too hard for the LORD. She named the boy Laughter."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Luke 1:37",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 1:37 in your daily walk today."
+        "era": "Gospels",
+        "title": "An old priest struck silent for asking how",
+        "character": "Zechariah",
+        "ref": "Luke 1:11–20, 57–64",
+        "story": "Zechariah doubted and lost his speech until the child was born and he wrote the name John. The promise held through his unbelief."
       }
     ]
   },
   {
-    "id": 60,
+    "id": 59,
     "ref": "Luke 10:19",
     "book": "Luke",
     "category": "courage-protection",
@@ -14100,8 +14158,8 @@ const BIBLE_VERSES = [
       "NKJV": "Behold, I give you the authority to trample on serpents and scorpions, and over all the power of the enemy, and nothing shall by any means hurt you."
     },
     "dynamicContext": {
-      "chapterTitle": "Luke 10 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Luke 10:19 revealing God's covenant faithfulness.",
+      "chapterTitle": "Luke 10 — The Samaritan and the better portion",
+      "chapterSummary": "Seventy-two are sent out and return amazed; a lawyer's question about neighbours is answered with a road to Jericho, and Martha's busyness with Mary's seat.",
       "versions": {
         "NIV": {
           "before": [
@@ -14243,85 +14301,91 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Luke 10:19.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Luke 10:19.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Luke 10:19.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Luke 10:19."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Luke 10:19."
+          "strongs": "G3961",
+          "word": "πατέω",
+          "transliteration": "patéō",
+          "pronunciation": "patéō",
+          "partOfSpeech": "Verb, present, active, infinitive",
+          "matchedEnglish": "trample",
+          "root": "from a derivative probably of G3817 (παίω) (meaning a \"path\");",
+          "definition": "to trample (literally or figuratively)",
+          "usageInPassage": "Rendered “to tread” in this passage — verb, present, active, infinitive."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4651",
+          "word": "σκορπίος",
+          "transliteration": "skorpíos",
+          "pronunciation": "skorpíos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "scorpions",
+          "root": "probably from an obsolete (perhaps strengthened from the base of G4649 (σκοπός) and meaning to pierce);",
+          "definition": "a \"scorpion\" (from its sting)",
+          "usageInPassage": "Rendered “scorpions” in this passage — noun."
+        },
+        {
+          "strongs": "G3789",
+          "word": "ὄφις",
+          "transliteration": "óphis",
+          "pronunciation": "óphis",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "serpents",
+          "root": "probably from G3700 (ὀπτάνομαι) (through the idea of sharpness of vision);",
+          "definition": "a snake, figuratively, (as a type of sly cunning) an artful malicious person, especially Satan",
+          "usageInPassage": "Rendered “serpents” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Luke 10:19 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Luke 10:19 in Koine Greek sits on πατέω (patéō) “to trample (literally or figuratively)”, σκορπίος (skorpíos) “a \"scorpion\" (from its sting)” and ὄφις (óphis) “a snake, figuratively, (as a type of sly cunning) an artful…”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy — Grace Revelation",
-      "quote": "Under the new covenant of grace, Luke 10:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Luke 10:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy",
+      "quote": "Authority is given, which means it is delegated rather than developed.",
+      "graceTakeaway": "You exercise something handed to you."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Luke 10:19",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Luke 10:19 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Seventy-two returning astonished at what obeyed them",
+        "character": "The seventy-two",
+        "ref": "Luke 10:17–20",
+        "story": "They came back amazed that even the demons submitted, and Jesus told them to rejoice instead that their names were written in heaven. The authority was delegated, not earned."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Luke 10:19",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 10:19 in your daily walk today."
+        "era": "Early Church",
+        "title": "A fortune-teller silenced on a Philippi street",
+        "character": "Paul and the slave girl",
+        "ref": "Acts 16:16–18",
+        "story": "After days of being followed, Paul turned and addressed the spirit, and it left her that hour. The authority was exercised in a name."
       }
     ],
     "tptFootnotes": "40:31 The Hebrew word for 'wait' is qavah, meaning to intertwine and braid together like strands of rope. When we wait upon Yahweh, our human weakness is braided together with His indestructible divine power."
   },
   {
-    "id": 61,
+    "id": 60,
     "ref": "Mark 11:23",
     "book": "Mark",
     "category": "faith-prayer",
@@ -14339,8 +14403,8 @@ const BIBLE_VERSES = [
       "NKJV": "For assuredly, I say to you, whoever says to this mountain, 'Be removed and be cast into the sea,' and does not doubt in his heart, but believes that those things he says will be done, he will have whatever he says."
     },
     "dynamicContext": {
-      "chapterTitle": "Mark 11 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Mark 11:23 revealing God's covenant faithfulness.",
+      "chapterTitle": "Mark 11 — Have faith in God",
+      "chapterSummary": "The entry into Jerusalem, a fig tree cursed and found withered, the temple cleared of traders, and a lesson on praying with belief and with forgiveness.",
       "versions": {
         "NIV": {
           "before": [
@@ -14482,84 +14546,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Mark 11:23.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Mark 11:23.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Mark 11:23.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Mark 11:23."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Mark 11:23."
+          "strongs": "G1252",
+          "word": "διακρίνω",
+          "transliteration": "diakrínō",
+          "pronunciation": "diakrínō",
+          "partOfSpeech": "Verb, aorist, passive, subjunctive",
+          "matchedEnglish": "doubt",
+          "root": "from G1223 (διά) and G2919 (κρίνω);",
+          "definition": "to separate thoroughly, i.e. (literally and reflexively) to withdraw from, or (by implication) oppose; figuratively, to discriminate (by implication, decide), or (reflexively) hesitate",
+          "usageInPassage": "Rendered “may doubt” in this passage — verb, aorist, passive, subjunctive."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3735",
+          "word": "ὄρος",
+          "transliteration": "óros",
+          "pronunciation": "óros",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "mountain",
+          "root": "probably from an obsolete (to rise or \"rear\";",
+          "definition": "perhaps akin to G142 (αἴρω); compare G3733 (ὄρνις)); a mountain (as lifting itself above the plain)",
+          "usageInPassage": "Rendered “mountain” in this passage — noun."
+        },
+        {
+          "strongs": "G2281",
+          "word": "θάλασσα",
+          "transliteration": "thálassa",
+          "pronunciation": "thálassa",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "sea",
+          "root": "probably prolonged from G251 (ἅλς);",
+          "definition": "the sea (genitive case or specially)",
+          "usageInPassage": "Rendered “sea,’” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Mark 11:23 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Mark 11:23 in Koine Greek sits on διακρίνω (diakrínō) “to separate thoroughly”, ὄρος (óros) “perhaps akin to G142 (αἴρω)” and θάλασσα (thálassa) “the sea (genitive case or specially)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Truly I tell you, if anyone says to this mountain, 'Go, throw yourself into the sea,' it will be done — Grace Revelation",
-      "quote": "Under the new covenant of grace, Mark 11:23 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Mark 11:23. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Truly I tell you, if anyone says to this mountain, 'Go, throw yourself into the sea,' it will be done",
+      "quote": "The mountain moves at a word spoken in belief, not at the volume of the shouting.",
+      "graceTakeaway": "Confidence, not intensity, is what is asked for."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Mount Carmel",
-        "title": "Elijah's Fire and the Abundance of Rain — Testimony of Mark 11:23",
-        "character": "Elijah the Prophet",
-        "ref": "1 Kings 18:36–46",
-        "story": "Elijah stood alone against false prophets, prayed down holy fire upon the altar, and then knelt atop Carmel in persistent intercession until torrential rain ended a three-year drought. This historical breakthrough vividly illustrates the living truth of Mark 11:23 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "Praying for rain and for it to stop",
+        "character": "Elijah as James remembers him",
+        "ref": "James 5:16–18",
+        "story": "James points out that Elijah was a man with a nature like ours, and his prayer shut the sky for three and a half years. The distance between him and us is smaller than assumed."
       },
       {
-        "era": "New Testament / Jerusalem Church",
-        "title": "Peter Rescued from Herod's Prison — Living Reality of Mark 11:23",
-        "character": "Peter & The Praying Church",
-        "ref": "Acts 12:5–17",
-        "story": "While the church prayed earnestly in the night, an angel struck off Peter's chains, bypassed four squads of Roman soldiers, opened the iron gates, and led him into freedom. Just as God demonstrated His mighty hand in this account, He confirms the promise of Mark 11:23 in your daily walk today."
+        "era": "Return from Exile",
+        "title": "A mountain flattened before Zerubbabel",
+        "character": "Zerubbabel",
+        "ref": "Zechariah 4:6–7",
+        "story": "The word came that it would not be by might nor by power but by God's Spirit, and the great mountain would become level ground. The obstacle was addressed directly."
       }
     ]
   },
   {
-    "id": 62,
+    "id": 61,
     "ref": "Luke 21:18",
     "book": "Luke",
     "category": "courage-protection",
@@ -14577,8 +14647,8 @@ const BIBLE_VERSES = [
       "NKJV": "But not a hair of your head shall be lost."
     },
     "dynamicContext": {
-      "chapterTitle": "Luke 21 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Luke 21:18 revealing God's covenant faithfulness.",
+      "chapterTitle": "Luke 21 — Watch and pray",
+      "chapterSummary": "A widow's two coins outweigh the rich; the temple's stones will come down, nations will shake, and the disciples are told to stand up and lift their heads.",
       "versions": {
         "NIV": {
           "before": [
@@ -14720,84 +14790,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Luke 21:18.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Luke 21:18.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Luke 21:18.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Luke 21:18."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Luke 21:18."
+          "strongs": "G2359",
+          "word": "θρίξ",
+          "transliteration": "thríx",
+          "pronunciation": "thríx",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "hair",
+          "root": "genitive case , etc.;",
+          "definition": "of uncertain derivation; hair",
+          "usageInPassage": "Rendered “a hair” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2776",
+          "word": "κεφαλή",
+          "transliteration": "kephalḗ",
+          "pronunciation": "kephalḗ",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "head",
+          "root": "from the primary (in the sense of seizing);",
+          "definition": "the head (as the part most readily taken hold of), literally or figuratively",
+          "usageInPassage": "Rendered “head” in this passage — noun."
+        },
+        {
+          "strongs": "G0622",
+          "word": "ἀπόλλυμι",
+          "transliteration": "apóllymi",
+          "pronunciation": "apóllymi",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "perish",
+          "root": "from G575 (ἀπό) and the base of G3639 (ὄλεθρος);",
+          "definition": "to destroy fully (reflexively, to perish, or lose), literally or figuratively",
+          "usageInPassage": "Rendered “may perish.” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Luke 21:18 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Luke 21:18 in Koine Greek sits on θρίξ (thríx) “of uncertain derivation”, κεφαλή (kephalḗ) “the head (as the part most readily taken hold of), literally or…” and ἀπόλλυμι (apóllymi) “to destroy fully (reflexively, to perish, or lose), literally or…”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "But not a hair of your head will perish — Grace Revelation",
-      "quote": "Under the new covenant of grace, Luke 21:18 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Luke 21:18. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "But not a hair of your head will perish",
+      "quote": "Not a hair perishing is said in a chapter about persecution, not comfort.",
+      "graceTakeaway": "Preservation is not the same as immunity."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Luke 21:18",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Luke 21:18 that God's covenant never fails those who trust His goodness."
+        "era": "Exile",
+        "title": "Not a hair singed in the furnace",
+        "character": "Shadrach, Meshach and Abednego",
+        "ref": "Daniel 3:26–27",
+        "story": "The satraps gathered and saw that the fire had not harmed their bodies, not a hair of their heads was singed, and there was no smell of fire on them."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Luke 21:18",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Luke 21:18 in your daily walk today."
+        "era": "Early Church",
+        "title": "Kept through a night at sea",
+        "character": "Paul reassuring the crew",
+        "ref": "Acts 27:33–34",
+        "story": "In the fourteenth night of the storm Paul told them to eat, because not a hair would perish from the head of any of them. He fed them in the middle of it."
       }
     ]
   },
   {
-    "id": 63,
+    "id": 62,
     "ref": "Psalm 1:3",
     "book": "Psalms",
     "category": "provision-abundance",
@@ -14815,8 +14891,8 @@ const BIBLE_VERSES = [
       "NKJV": "He shall be like a tree planted by the rivers of water, that brings forth its fruit in its season, whose leaf also shall not wither; and whatever he does shall prosper."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 1:3 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 1 — The two ways",
+      "chapterSummary": "The psalter opens with a fork in the road: the one who refuses the counsel of the wicked and delights in the LORD's instruction is a tree planted by streams of water, while the wicked are chaff the wind drives away.",
       "versions": {
         "NIV": {
           "before": [
@@ -14958,84 +15034,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 1:3.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 1:3.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 1:3.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 1:3."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 1:3."
+          "strongs": "H8362",
+          "word": "שָׁתַל",
+          "transliteration": "shâthal",
+          "pronunciation": "shaw-thal'",
+          "partOfSpeech": "Verb, qal, passive participle",
+          "matchedEnglish": "planted",
+          "root": "a primitive root;",
+          "definition": "to transplant",
+          "usageInPassage": "Rendered “planted” in this passage — verb, qal, passive participle."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H6388",
+          "word": "פֶּלֶג",
+          "transliteration": "peleg",
+          "pronunciation": "peh'-leg",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "streams of",
+          "root": "from H6385 (פָּלַג);",
+          "definition": "a rill (i.e. small channel of water, as in irrigation)",
+          "usageInPassage": "Rendered “streams of” in this passage — noun, masculine, plural."
+        },
+        {
+          "strongs": "H5929",
+          "word": "עָלֶה",
+          "transliteration": "ʻâleh",
+          "pronunciation": "aw-leh'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "its",
+          "root": "from H5927 (עָלָה);",
+          "definition": "a leaf (as coming up on a tree); collectively, foliage",
+          "usageInPassage": "Rendered “and leafage its” in this passage — noun, masculine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 1:3 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 1:3 in Biblical Hebrew sits on שָׁתַל (shâthal) “to transplant”, פֶּלֶג (peleg) “a rill (i.e. small channel of water, as in irrigation)” and עָלֶה (ʻâleh) “a leaf (as coming up on a tree)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "That person is like a tree planted by streams of water... Whatever they do prospers — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 1:3 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 1:3. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "That person is like a tree planted by streams of water... Whatever they do prospers",
+      "quote": "The tree prospers because of the stream, and the stream is God's instruction.",
+      "graceTakeaway": "What you are planted beside determines what you can survive."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 1:3",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 1:3 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Prospering in prison and in a palace",
+        "character": "Joseph",
+        "ref": "Genesis 39:20–23",
+        "story": "In Potiphar's house and then in the prison, the text simply repeats that the LORD was with Joseph and gave success to what he did. The place changed and the outcome did not."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 1:3",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 1:3 in your daily walk today."
+        "era": "Exile",
+        "title": "A garden in a captive city",
+        "character": "Daniel's steady rise",
+        "ref": "Daniel 6:28",
+        "story": "Daniel prospered through the reign of Darius and the reign of Cyrus the Persian. He was planted somewhere deeper than the regime."
       }
     ]
   },
   {
-    "id": 64,
+    "id": 63,
     "ref": "Romans 8:31–32",
     "book": "Romans",
     "category": "courage-protection",
@@ -15053,8 +15135,8 @@ const BIBLE_VERSES = [
       "NKJV": "What then shall we say to these things? If God is for us, who can be against us? He who did not spare His own Son, but delivered Him up for us all, how shall He not with Him also freely give us all things?"
     },
     "dynamicContext": {
-      "chapterTitle": "Romans 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Romans 8:31–32 revealing God's covenant faithfulness.",
+      "chapterTitle": "Romans 8 — No condemnation, no separation",
+      "chapterSummary": "Life in the Spirit replaces the law's condemnation; creation and believers groan together, all things are worked toward good, and the chapter ends with a list of what cannot separate.",
       "versions": {
         "NIV": {
           "before": [
@@ -15196,84 +15278,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Romans 8:31–32.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Romans 8:31–32.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Romans 8:31–32.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Romans 8:31–32."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Romans 8:31–32."
+          "strongs": "G5339",
+          "word": "φείδομαι",
+          "transliteration": "pheídomai",
+          "pronunciation": "pheídomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "spare",
+          "root": "of uncertain affinity;",
+          "definition": "to be chary of, i.e. (subjectively) to abstain or (objectively) to treat leniently",
+          "usageInPassage": "Rendered “spared,” in this passage — verb."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G5483",
+          "word": "χαρίζομαι",
+          "transliteration": "charízomai",
+          "pronunciation": "charízomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "give grace",
+          "root": "middle voice from G5485 (χάρις);",
+          "definition": "to grant as a favor, i.e. gratuitously, in kindness, pardon or rescue",
+          "usageInPassage": "Rendered “will He grant?” in this passage — verb."
+        },
+        {
+          "strongs": "G4483",
+          "word": "ῥέω",
+          "transliteration": "rhéō",
+          "pronunciation": "rhéō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "say",
+          "root": "perhaps akin (or identical) with G4482 (ῥέω) (through the idea of pouring forth);",
+          "definition": "to utter, i.e. speak or say",
+          "usageInPassage": "Rendered “will we say” in this passage — verb, future, active, indicative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Romans 8:31–32 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Romans 8:31–32 in Koine Greek sits on φείδομαι (pheídomai) “to be chary of”, χαρίζομαι (charízomai) “to grant as a favor” and ῥέω (rhéō) “to utter”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": null
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "If God is for us, who can be against us? — Grace Revelation",
-      "quote": "Under the new covenant of grace, Romans 8:31–32 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Romans 8:31–32. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "If God is for us, who can be against us?",
+      "quote": "If God is for us — Paul settles the question of allegiance before he lists the opposition.",
+      "graceTakeaway": "The decisive fact is which side God is on."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Romans 8:31–32",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Romans 8:31–32 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "One prophet against four hundred and fifty",
+        "character": "Elijah on Mount Carmel",
+        "ref": "1 Kings 18:20–39",
+        "story": "Elijah soaked the altar with water and asked God to answer by fire, alone against the prophets of Baal. The numbers were never the relevant figure."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Romans 8:31–32",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Romans 8:31–32 in your daily walk today."
+        "era": "Exile",
+        "title": "A queen who went in uninvited",
+        "character": "Esther",
+        "ref": "Esther 4:15–5:3",
+        "story": "Esther approached the king unsummoned, having said that if she perished, she perished. The sceptre was extended."
       }
     ]
   },
   {
-    "id": 65,
+    "id": 64,
     "ref": "Isaiah 54:17",
     "book": "Isaiah",
     "category": "courage-protection",
@@ -15291,8 +15379,8 @@ const BIBLE_VERSES = [
       "NKJV": "'No weapon formed against you shall prosper, and every tongue which rises against you in judgment you shall condemn. This is the heritage of the servants of the Lord, and their righteousness is from Me,' says the Lord."
     },
     "dynamicContext": {
-      "chapterTitle": "Isaiah 54 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Isaiah 54:17 revealing God's covenant faithfulness.",
+      "chapterTitle": "Isaiah 54 — Enlarge the place of your tent",
+      "chapterSummary": "The barren woman is told to sing and make room; the LORD's covenant of peace will not be removed though the mountains depart, and no weapon formed against her will prosper.",
       "versions": {
         "NIV": {
           "before": [
@@ -15434,84 +15522,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Isaiah 54:17.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Isaiah 54:17.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Isaiah 54:17.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Isaiah 54:17."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Isaiah 54:17."
+          "strongs": "H6666",
+          "word": "צְדָקָה",
+          "transliteration": "tsᵉdâqâh",
+          "pronunciation": "tsed-aw-kaw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "righteousness",
+          "root": "from H6663 (צָדַק);",
+          "definition": "rightness (abstractly), subjectively (rectitude), objectively (justice), morally (virtue) or figuratively (prosperity)",
+          "usageInPassage": "Rendered “and righteousness their” in this passage — noun, feminine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7561",
+          "word": "רָשַׁע",
+          "transliteration": "râshaʻ",
+          "pronunciation": "raw-shah'",
+          "partOfSpeech": "Verb, hiphil, imperfect",
+          "matchedEnglish": "condemn as guilty",
+          "root": "a primitive root;",
+          "definition": "to be (causatively, do or declare) wrong; by implication, to disturb, violate",
+          "usageInPassage": "Rendered “you will condemn as guilty” in this passage — verb, hiphil, imperfect."
+        },
+        {
+          "strongs": "H3335",
+          "word": "יָצַר",
+          "transliteration": "yâtsar",
+          "pronunciation": "yaw-tsar'",
+          "partOfSpeech": "Verb, hophal, imperfect",
+          "matchedEnglish": "formed",
+          "root": "probably identical with H3334 (יָצַר) (through the squeezing into shape); (compare H3331 (יַצַע));",
+          "definition": "to mould into a form; especially as apotter; figuratively, to determine (i.e. form a resolution)",
+          "usageInPassage": "Rendered “which it will be formed” in this passage — verb, hophal, imperfect."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Isaiah 54:17 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Isaiah 54:17 in Biblical Hebrew sits on צְדָקָה (tsᵉdâqâh) “rightness (abstractly), subjectively (rectitude), objectively…”, רָשַׁע (râshaʻ) “to be (causatively, do or declare) wrong” and יָצַר (yâtsar) “to mould into a form”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "No weapon forged against you will prevail, and you will refute every tongue that accuses you — Grace Revelation",
-      "quote": "Under the new covenant of grace, Isaiah 54:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Isaiah 54:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "No weapon forged against you will prevail, and you will refute every tongue that accuses you",
+      "quote": "Weapons are formed; the promise is that they do not prevail.",
+      "graceTakeaway": "Opposition existing is not opposition winning."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of Isaiah 54:17",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of Isaiah 54:17 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "Every accusation answered in the rebuilding",
+        "character": "Nehemiah and Sanballat",
+        "ref": "Nehemiah 6:1–9",
+        "story": "Sanballat sent four invitations and then an open letter of slander to stop the work. Nehemiah answered that no such thing had happened and kept building."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of Isaiah 54:17",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of Isaiah 54:17 in your daily walk today."
+        "era": "Gospels",
+        "title": "Silence in front of the accusers",
+        "character": "Jesus before Pilate",
+        "ref": "Matthew 27:12–14",
+        "story": "When accused by the chief priests and elders he gave no answer, to the governor's great amazement. The charges did not stick to him."
       }
     ]
   },
   {
-    "id": 66,
+    "id": 65,
     "ref": "Colossians 3:15",
     "book": "Colossians",
     "category": "peace-rest",
@@ -15529,8 +15623,8 @@ const BIBLE_VERSES = [
       "NKJV": "And let the peace of God rule in your hearts, to which also you were called in one body; and be thankful."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:15 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — Put on the new self",
+      "chapterSummary": "Minds set on things above, the old clothing stripped off and the new put on; over it all love, with the peace of Christ as umpire and thankfulness running through.",
       "versions": {
         "NIV": {
           "before": [
@@ -15672,84 +15766,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:15.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:15.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:15.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:15."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:15."
+          "strongs": "G1018",
+          "word": "βραβεύω",
+          "transliteration": "brabeúō",
+          "pronunciation": "brabeúō",
+          "partOfSpeech": "Verb, present, active, imperative",
+          "matchedEnglish": "rule",
+          "root": "from the same as G1017 (βραβεῖον);",
+          "definition": "to arbitrate, i.e. (genitive case) to govern (figuratively, prevail)",
+          "usageInPassage": "Rendered “should rule” in this passage — verb, present, active, imperative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2170",
+          "word": "εὐχάριστος",
+          "transliteration": "eucháristos",
+          "pronunciation": "eucháristos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "thankful",
+          "root": "from G2095 (εὖ) and a derivative of G5483 (χαρίζομαι);",
+          "definition": "well favored, i.e. (by implication) grateful",
+          "usageInPassage": "Rendered “thankful” in this passage — adjective."
+        },
+        {
+          "strongs": "G1515",
+          "word": "εἰρήνη",
+          "transliteration": "eirḗnē",
+          "pronunciation": "eirḗnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "peace",
+          "root": "probably from a primary verb (to join);",
+          "definition": "peace (literally or figuratively); by implication, prosperity",
+          "usageInPassage": "Rendered “peace” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:15 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 3:15 in Koine Greek sits on βραβεύω (brabeúō) “to arbitrate”, εὐχάριστος (eucháristos) “well favored” and εἰρήνη (eirḗnē) “peace (literally or figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Let the peace of Christ rule in your hearts... And be thankful — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 3:15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Let the peace of Christ rule in your hearts... And be thankful",
+      "quote": "Peace is given the role of umpire in the heart, deciding what stays.",
+      "graceTakeaway": "Peace is not only a feeling but a way of judging."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Colossians 3:15",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Colossians 3:15 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A dispute settled and a decision that gave rest",
+        "character": "The Jerusalem Council",
+        "ref": "Acts 15:22–31",
+        "story": "The letter sent to Antioch removed a burden, and when it was read the believers rejoiced at its encouragement. Peace decided the outcome."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Colossians 3:15",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:15 in your daily walk today."
+        "era": "Patriarchs",
+        "title": "Two brothers meeting after twenty years",
+        "character": "Jacob and Esau",
+        "ref": "Genesis 33:1–11",
+        "story": "Jacob expected four hundred men and an accounting, and Esau ran and embraced him. The dreaded meeting ended in peace."
       }
     ]
   },
   {
-    "id": 67,
+    "id": 66,
     "ref": "2 Thessalonians 3:16",
     "book": "2 Thessalonians",
     "category": "peace-rest",
@@ -15767,8 +15867,8 @@ const BIBLE_VERSES = [
       "NKJV": "Now may the Lord of peace Himself give you peace always in every way. The Lord be with you all."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Thessalonians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Thessalonians 3:16 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Thessalonians 3 — The Lord of peace himself",
+      "chapterSummary": "Paul asks for prayer, promises that the faithful Lord will establish and guard them, corrects idleness with the example of his own labour, and blesses them with peace at all times.",
       "versions": {
         "NIV": {
           "before": [
@@ -15910,84 +16010,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Thessalonians 3:16.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Thessalonians 3:16.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Thessalonians 3:16.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Thessalonians 3:16."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 2 Thessalonians 3:16."
+          "strongs": "G1515",
+          "word": "εἰρήνη",
+          "transliteration": "eirḗnē",
+          "pronunciation": "eirḗnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "peace",
+          "root": "probably from a primary verb (to join);",
+          "definition": "peace (literally or figuratively); by implication, prosperity",
+          "usageInPassage": "Rendered “of peace” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G5158",
+          "word": "τρόπος",
+          "transliteration": "trópos",
+          "pronunciation": "trópos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "way",
+          "root": "from the same as G5157 (τροπή);",
+          "definition": "a turn, i.e. (by implication) mode or style (especially with preposition or relative prefix as adverb, like); figuratively, deportment or character",
+          "usageInPassage": "Rendered “way.” in this passage — noun."
+        },
+        {
+          "strongs": "G1325",
+          "word": "δίδωμι",
+          "transliteration": "dídōmi",
+          "pronunciation": "dídōmi",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "give",
+          "root": "a prolonged form of a primary verb (which is used as an alternative in most of the tenses);",
+          "definition": "to give (used in a very wide application, properly, or by implication, literally or figuratively; greatly modified by the connection)",
+          "usageInPassage": "Rendered “would give” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 2 Thessalonians 3:16 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 2 Thessalonians 3:16 in Koine Greek sits on εἰρήνη (eirḗnē) “peace (literally or figuratively)”, τρόπος (trópos) “a turn” and δίδωμι (dídōmi) “to give (used in a very wide application, properly, or by…”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "May the Lord of peace himself give you peace at all times and in every way — Grace Revelation",
-      "quote": "Under the new covenant of grace, 2 Thessalonians 3:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Thessalonians 3:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "May the Lord of peace himself give you peace at all times and in every way",
+      "quote": "At all times and in every way — Paul leaves no category of life outside it.",
+      "graceTakeaway": "There is no situation that falls outside the offer."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of 2 Thessalonians 3:16",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of 2 Thessalonians 3:16 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "A blessing that put God's name on the people",
+        "character": "Aaron's priestly blessing",
+        "ref": "Numbers 6:22–27",
+        "story": "The LORD gave Aaron words to speak over Israel ending in peace, and said it would put his name on them. Peace was pronounced, not achieved."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of 2 Thessalonians 3:16",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Thessalonians 3:16 in your daily walk today."
+        "era": "Gospels",
+        "title": "Standing in a locked room saying peace",
+        "character": "Jesus after the resurrection",
+        "ref": "John 20:19–21",
+        "story": "The doors were locked for fear, and he stood among them and said peace be with you, twice. The greeting arrived through the locked door."
       }
     ]
   },
   {
-    "id": 68,
+    "id": 67,
     "ref": "Psalm 119:165",
     "book": "Psalms",
     "category": "peace-rest",
@@ -16005,8 +16111,8 @@ const BIBLE_VERSES = [
       "NKJV": "Great peace have those who love Your law, and nothing causes them to stumble."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 119 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 119:165 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 119 — The long love song to God's word",
+      "chapterSummary": "The great acrostic: twenty-two stanzas, one per Hebrew letter, turning over God's law, statutes, precepts and promises from every angle a life can meet them.",
       "versions": {
         "NIV": {
           "before": [
@@ -16148,84 +16254,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 119:165.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 119:165.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 119:165.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 119:165."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 119:165."
+          "strongs": "H7965",
+          "word": "שָׁלוֹם",
+          "transliteration": "shâlôwm",
+          "pronunciation": "shaw-lome'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "peace",
+          "root": "or שָׁלֹם; from H7999 (שָׁלַם);",
+          "definition": "safe, i.e. (figuratively) well, happy, friendly; also (abstractly) welfare, i.e. health, prosperity, peace",
+          "usageInPassage": "Rendered “peace” in this passage — noun, masculine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H4383",
+          "word": "מִכְשׁוֹל",
+          "transliteration": "mikshôwl",
+          "pronunciation": "mik-shole'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "stumbling block",
+          "root": "or מִכְשֹׁל; masculine from H3782 (כָּשַׁל);",
+          "definition": "a stumbling-block, literally or figuratively (obstacle, enticement (specifically an idol), scruple)",
+          "usageInPassage": "Rendered “a stumbling block” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H0157",
+          "word": "אָהַב",
+          "transliteration": "ʼâhab",
+          "pronunciation": "aw-hab'",
+          "partOfSpeech": "Verb, qal, participle",
+          "matchedEnglish": "those who love",
+          "root": "or אָהֵב ; a primitive root;",
+          "definition": "to have affection for (sexually or otherwise)",
+          "usageInPassage": "Rendered “belongs to those who love” in this passage — verb, qal, participle."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 119:165 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 119:165 in Biblical Hebrew sits on שָׁלוֹם (shâlôwm) “safe”, מִכְשׁוֹל (mikshôwl) “a stumbling-block, literally or figuratively (obstacle, enticement…” and אָהַב (ʼâhab) “to have affection for (sexually or otherwise)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Great peace have those who love your law, and nothing can make them stumble — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 119:165 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 119:165. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Great peace have those who love your law, and nothing can make them stumble",
+      "quote": "Great peace belongs to those who love the law, because they have stopped fighting it.",
+      "graceTakeaway": "Peace often arrives when resistance ends."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Psalm 119:165",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Psalm 119:165 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "A people who did not stumble over the reading",
+        "character": "Judah under Ezra",
+        "ref": "Nehemiah 8:13–18",
+        "story": "On the second day the heads of families came to study the Law further, and kept the festival with very great gladness. Love of the text produced joy, not friction."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Psalm 119:165",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 119:165 in your daily walk today."
+        "era": "Wisdom",
+        "title": "Meditating day and night by the streams",
+        "character": "The blessed man of Psalm 1",
+        "ref": "Psalm 1:1–3",
+        "story": "His delight is in the law of the LORD, and on it he meditates day and night. Whatever he does prospers because of where he is rooted."
       }
     ]
   },
   {
-    "id": 69,
+    "id": 68,
     "ref": "Colossians 3:1–4",
     "book": "Colossians",
     "category": "identity-grace",
@@ -16243,8 +16355,8 @@ const BIBLE_VERSES = [
       "NKJV": "If then you were raised with Christ, seek those things which are above, where Christ is, sitting at the right hand of God. Set your mind on things above, not on things on the earth."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:1–4 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — Put on the new self",
+      "chapterSummary": "Minds set on things above, the old clothing stripped off and the new put on; over it all love, with the peace of Christ as umpire and thankfulness running through.",
       "versions": {
         "NIV": {
           "before": [
@@ -16386,84 +16498,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:1–4.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:1–4.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:1–4.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:1–4."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:1–4."
+          "strongs": "G4891",
+          "word": "συνεγείρω",
+          "transliteration": "synegeírō",
+          "pronunciation": "synegeírō",
+          "partOfSpeech": "Verb, aorist, passive, indicative",
+          "matchedEnglish": "raised with",
+          "root": "from G4862 (σύν) and G1453 (ἐγείρω);",
+          "definition": "to rouse (from death) in company with, i.e. (figuratively) to revivify (spirtually) in resemblance to",
+          "usageInPassage": "Rendered “you have been raised with” in this passage — verb, aorist, passive, indicative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2222",
+          "word": "ζωή",
+          "transliteration": "zōḗ",
+          "pronunciation": "zōḗ",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "life",
+          "root": "from G2198 (ζάω);",
+          "definition": "life (literally or figuratively)",
+          "usageInPassage": "Rendered “life” in this passage — noun."
+        },
+        {
+          "strongs": "G1391",
+          "word": "δόξα",
+          "transliteration": "dóxa",
+          "pronunciation": "dóxa",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "glory",
+          "root": "from the base of G1380 (δοκέω);",
+          "definition": "glory (as very apparent), in a wide application (literal or figurative, objective or subjective)",
+          "usageInPassage": "Rendered “glory.” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:1–4 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 3:1–4 in Koine Greek sits on συνεγείρω (synegeírō) “to rouse (from death) in company with”, ζωή (zōḗ) “life (literally or figuratively)” and δόξα (dóxa) “glory (as very apparent), in a wide application (literal or…”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Since, then, you have been raised with Christ, set your hearts on things above — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 3:1–4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:1–4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Since, then, you have been raised with Christ, set your hearts on things above",
+      "quote": "Raised with Christ is stated as accomplished, and the seeking follows from it.",
+      "graceTakeaway": "You seek from resurrection, not toward it."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:1–4",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:1–4 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Called out of a tomb and told to unwrap him",
+        "character": "Lazarus",
+        "ref": "John 11:43–44",
+        "story": "He came out still bound in grave clothes, and Jesus told them to loose him and let him go. The life came first and the wrappings came off second."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:1–4",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:1–4 in your daily walk today."
+        "era": "Early Church",
+        "title": "Praying on a rooftop and having his categories broken",
+        "character": "Peter at Joppa",
+        "ref": "Acts 10:9–16",
+        "story": "Hungry and waiting for lunch, Peter saw a sheet lowered three times and heard that what God had cleansed was not common. His mind was reset from above."
       }
     ]
   },
   {
-    "id": 70,
+    "id": 69,
     "ref": "Colossians 3:14–17",
     "book": "Colossians",
     "category": "identity-grace",
@@ -16481,8 +16599,8 @@ const BIBLE_VERSES = [
       "NKJV": "But above all these things put on love, which is the bond of perfection. And let the peace of God rule in your hearts... And whatever you do in word or deed, do all in the name of the Lord Jesus, giving thanks to God the Father through Him."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 3:14–17 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 3 — Put on the new self",
+      "chapterSummary": "Minds set on things above, the old clothing stripped off and the new put on; over it all love, with the peace of Christ as umpire and thankfulness running through.",
       "versions": {
         "NIV": {
           "before": [
@@ -16624,84 +16742,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 3:14–17.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 3:14–17.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 3:14–17.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 3:14–17."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 3:14–17."
+          "strongs": "G1018",
+          "word": "βραβεύω",
+          "transliteration": "brabeúō",
+          "pronunciation": "brabeúō",
+          "partOfSpeech": "Verb, present, active, imperative",
+          "matchedEnglish": "rule",
+          "root": "from the same as G1017 (βραβεῖον);",
+          "definition": "to arbitrate, i.e. (genitive case) to govern (figuratively, prevail)",
+          "usageInPassage": "Rendered “should rule” in this passage — verb, present, active, imperative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2170",
+          "word": "εὐχάριστος",
+          "transliteration": "eucháristos",
+          "pronunciation": "eucháristos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "thankful",
+          "root": "from G2095 (εὖ) and a derivative of G5483 (χαρίζομαι);",
+          "definition": "well favored, i.e. (by implication) grateful",
+          "usageInPassage": "Rendered “thankful” in this passage — adjective."
+        },
+        {
+          "strongs": "G4678",
+          "word": "σοφία",
+          "transliteration": "sophía",
+          "pronunciation": "sophía",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "wisdom",
+          "root": "from G4680 (σοφός);",
+          "definition": "wisdom (higher or lower, worldly or spiritual)",
+          "usageInPassage": "Rendered “wisdom” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 3:14–17 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 3:14–17 in Koine Greek sits on βραβεύω (brabeúō) “to arbitrate”, εὐχάριστος (eucháristos) “well favored” and σοφία (sophía) “wisdom (higher or lower, worldly or spiritual)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Over all these virtues put on love, which binds them all together in perfect unity — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 3:14–17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 3:14–17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Over all these virtues put on love, which binds them all together in perfect unity",
+      "quote": "Love binds the other virtues together — it is the thread, not another item.",
+      "graceTakeaway": "Without love the other virtues come apart."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 3:14–17",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 3:14–17 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A runaway slave sent back as a brother",
+        "character": "Onesimus and Philemon",
+        "ref": "Philemon 10–17",
+        "story": "Paul sends Onesimus back asking Philemon to receive him no longer as a slave but as a beloved brother. Love was asked to hold together what law would have separated."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 3:14–17",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 3:14–17 in your daily walk today."
+        "era": "Early Church",
+        "title": "A collection carried between churches that had never met",
+        "character": "Paul's delegation",
+        "ref": "Romans 15:25–27",
+        "story": "Gentile churches sent money to poor believers in Jerusalem, people they had never seen. Love bound two groups with little else in common."
       }
     ]
   },
   {
-    "id": 71,
+    "id": 70,
     "ref": "Matthew 6:34",
     "book": "Matthew",
     "category": "peace-rest",
@@ -16719,8 +16843,8 @@ const BIBLE_VERSES = [
       "NKJV": "Therefore do not worry about tomorrow, for tomorrow will worry about its own things. Sufficient for the day is its own trouble."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 6 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 6:34 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 6 — Giving, praying, and not worrying",
+      "chapterSummary": "Practising righteousness unseen, the Lord's Prayer, treasure that cannot be stolen, and the argument from birds and lilies against anxiety: seek first the kingdom.",
       "versions": {
         "NIV": {
           "before": [
@@ -16862,84 +16986,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 6:34.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 6:34.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 6:34.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 6:34."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 6:34."
+          "strongs": "G0713",
+          "word": "ἀρκετός",
+          "transliteration": "arketós",
+          "pronunciation": "arketós",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "Sufficient",
+          "root": "from G714 (ἀρκέω);",
+          "definition": "satisfactory",
+          "usageInPassage": "Rendered “Sufficient” in this passage — adjective."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2549",
+          "word": "κακία",
+          "transliteration": "kakía",
+          "pronunciation": "kakía",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "trouble",
+          "root": "from G2556 (κακός);",
+          "definition": "badness, i.e. (subjectively) depravity, or (actively) malignity, or (passively) trouble",
+          "usageInPassage": "Rendered “trouble” in this passage — noun."
+        },
+        {
+          "strongs": "G3309",
+          "word": "μεριμνάω",
+          "transliteration": "merimnáō",
+          "pronunciation": "merimnáō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "worry",
+          "root": "from G3308 (μέριμνα);",
+          "definition": "to be anxious about",
+          "usageInPassage": "Rendered “shall you be anxious” in this passage — verb, aorist, active, subjunctive."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 6:34 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Matthew 6:34 in Koine Greek sits on ἀρκετός (arketós) “satisfactory”, κακία (kakía) “badness” and μεριμνάω (merimnáō) “to be anxious about”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Therefore do not worry about tomorrow, for tomorrow will worry about itself — Grace Revelation",
-      "quote": "Under the new covenant of grace, Matthew 6:34 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 6:34. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Therefore do not worry about tomorrow, for tomorrow will worry about itself",
+      "quote": "Jesus does not deny that tomorrow has trouble; he denies that it is yours today.",
+      "graceTakeaway": "You are given grace for today's portion only."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Matthew 6:34",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Matthew 6:34 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "Enough for the day and no more",
+        "character": "Israel gathering manna",
+        "ref": "Exodus 16:16–20",
+        "story": "Each household gathered as much as it needed for that day, and what was kept overnight bred worms. Tomorrow was supplied tomorrow."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Matthew 6:34",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 6:34 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "A handful of flour and a little oil",
+        "character": "The widow at Zarephath",
+        "ref": "1 Kings 17:12–16",
+        "story": "She had enough for one final meal and was asked to make a small loaf first. The jar was not filled — it simply did not run out, a day at a time."
       }
     ]
   },
   {
-    "id": 72,
+    "id": 71,
     "ref": "Matthew 11:28–30",
     "book": "Matthew",
     "category": "peace-rest",
@@ -16957,8 +17087,8 @@ const BIBLE_VERSES = [
       "NKJV": "Come to Me, all you who labor and are heavy laden, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and lowly in heart, and you will find rest for your souls. For My yoke is easy and My burden is light."
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 11 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 11:28–30 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 11 — Come to me, all who are weary",
+      "chapterSummary": "John sends from prison to ask if Jesus is the one; after woes on the unrepentant cities, Jesus offers rest and a yoke that turns out to be easy.",
       "versions": {
         "NIV": {
           "before": [
@@ -17100,85 +17230,91 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 11:28–30.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 11:28–30.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 11:28–30.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 11:28–30."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 11:28–30."
+          "strongs": "G5412",
+          "word": "φορτίζω",
+          "transliteration": "phortízō",
+          "pronunciation": "phortízō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "burden",
+          "root": "from G5414 (φόρτος);",
+          "definition": "to load up (properly, as a vessel or animal), i.e. (figuratively) to overburden with ceremony (or spiritual anxiety)",
+          "usageInPassage": "Rendered “burdened,” in this passage — verb."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1645",
+          "word": "ἐλαφρός",
+          "transliteration": "elaphrós",
+          "pronunciation": "elaphrós",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "light",
+          "root": "probably akin to G1643 (ἐλαύνω) and the base of G1640 (ἐλάσσων);",
+          "definition": "light, i.e. easy",
+          "usageInPassage": "Rendered “light” in this passage — adjective."
+        },
+        {
+          "strongs": "G4235",
+          "word": "πρᾷος",
+          "transliteration": "prâios",
+          "pronunciation": "prâios",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "gentle",
+          "root": "a form of G4239 (πραΰς), used in certain parts;",
+          "definition": "gentle, i.e. humble",
+          "usageInPassage": "Rendered “gentle” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 11:28–30 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Matthew 11:28–30 in Koine Greek sits on φορτίζω (phortízō) “to load up (properly, as a vessel or animal)”, ἐλαφρός (elaphrós) “light” and πρᾷος (prâios) “gentle”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Come to me, all you who are weary and burdened, and I will give you rest — Grace Revelation",
-      "quote": "Under the new covenant of grace, Matthew 11:28–30 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 11:28–30. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Come to me, all you who are weary and burdened, and I will give you rest",
+      "quote": "The invitation is to the weary and burdened — the qualification is exhaustion.",
+      "graceTakeaway": "You come as you are, and tiredness is the ticket."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Matthew 11:28–30",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Matthew 11:28–30 that God's covenant never fails those who trust His goodness."
+        "era": "Divided Kingdom",
+        "title": "Sleep and food before the journey",
+        "character": "Elijah at Horeb",
+        "ref": "1 Kings 19:5–8",
+        "story": "An angel woke him twice to eat and let him sleep between, because the journey was too much for him. Rest came before the assignment resumed."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Matthew 11:28–30",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 11:28–30 in your daily walk today."
+        "era": "Gospels",
+        "title": "A woman who had spent everything on doctors",
+        "character": "The woman with the haemorrhage",
+        "ref": "Mark 5:25–34",
+        "story": "Twelve years, all her money, and she had grown worse. She touched the cloak and was told to go in peace, freed from her suffering."
       }
     ],
     "tptFootnotes": "91:1 The 'secret place' (sether) of the Most High (Elyon) and the shadow of the Almighty (Shaddai) refers to intimate communion and absolute fortress security where no enemy arrow can penetrate."
   },
   {
-    "id": 73,
+    "id": 72,
     "ref": "Psalm 4:8",
     "book": "Psalms",
     "category": "peace-rest",
@@ -17196,8 +17332,8 @@ const BIBLE_VERSES = [
       "NKJV": "I will both lie down in peace, and sleep; For You alone, O Lord, make me dwell in safety."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 4 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 4:8 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 4 — David's evening prayer",
+      "chapterSummary": "A night-time appeal for relief that turns into confidence: many ask who will show them good, but David asks for the light of God's face, and ends able to lie down and sleep.",
       "versions": {
         "NIV": {
           "before": [
@@ -17339,84 +17475,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 4:8.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 4:8.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 4:8.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 4:8."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 4:8."
+          "strongs": "H0983",
+          "word": "בֶּטַח",
+          "transliteration": "beṭach",
+          "pronunciation": "beh'takh",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "security",
+          "root": "from H982 (בָּטַח);",
+          "definition": "properly, a place of refuge; abstract, safety, both the fact (security) and the feeling (trust); often (adverb with or without preposition) safely",
+          "usageInPassage": "Rendered “to security” in this passage — noun, masculine, singular."
         },
         {
           "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
+          "word": "שָׁלוֹם",
+          "transliteration": "shâlôwm",
           "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "peace",
+          "root": "or שָׁלֹם; from H7999 (שָׁלַם);",
+          "definition": "safe, i.e. (figuratively) well, happy, friendly; also (abstractly) welfare, i.e. health, prosperity, peace",
+          "usageInPassage": "Rendered “in peace” in this passage — noun, masculine, singular."
+        },
+        {
+          "strongs": "H0910",
+          "word": "בָּדָד",
+          "transliteration": "bâdâd",
+          "pronunciation": "baw-dawd'",
+          "partOfSpeech": "Noun, masculine, singular",
+          "matchedEnglish": "alone",
+          "root": "from H909 (בָּדַד);",
+          "definition": "separate; adverb, separately",
+          "usageInPassage": "Rendered “to alone” in this passage — noun, masculine, singular."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 4:8 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 4:8 in Biblical Hebrew sits on בֶּטַח (beṭach) “a place of refuge”, שָׁלוֹם (shâlôwm) “safe” and בָּדָד (bâdâd) “separate”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 4:8 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 4:8. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety",
+      "quote": "David can sleep because the safety does not depend on his vigilance.",
+      "graceTakeaway": "Rest is possible when keeping watch is not your job."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Psalm 4:8",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Psalm 4:8 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "Sleeping in a cave with a spear-throwing king outside",
+        "character": "David",
+        "ref": "1 Samuel 26:7–12",
+        "story": "David walked into Saul's camp at night, took the spear and the water jug, and left, because a deep sleep from the LORD had fallen on them. He slept safe where he should not have."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Psalm 4:8",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 4:8 in your daily walk today."
+        "era": "Gospels",
+        "title": "Sleeping in a boat that was filling with water",
+        "character": "Jesus",
+        "ref": "Luke 8:22–25",
+        "story": "He fell asleep as they set out, and the squall came down while he stayed asleep. His rest was not conditional on the weather."
       }
     ]
   },
   {
-    "id": 74,
+    "id": 73,
     "ref": "Philippians 4:8–9",
     "book": "Philippians",
     "category": "wisdom-word",
@@ -17434,8 +17576,8 @@ const BIBLE_VERSES = [
       "NKJV": "Finally, brethren, whatever things are true, whatever things are noble, whatever things are just, whatever things are pure, whatever things are lovely, whatever things are of good report, if there is any virtue and if there is anything praiseworthy—meditate on these things."
     },
     "dynamicContext": {
-      "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:8–9 revealing God's covenant faithfulness.",
+      "chapterTitle": "Philippians 4 — The peace that guards",
+      "chapterSummary": "Rejoice, be reasonable, be anxious for nothing; a peace beyond understanding stands guard, contentment is learned in plenty and want, and God supplies every need.",
       "versions": {
         "NIV": {
           "before": [
@@ -17577,84 +17719,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:8–9.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:8–9.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:8–9.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:8–9."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Philippians 4:8–9."
+          "strongs": "G4375",
+          "word": "προσφιλής",
+          "transliteration": "prosphilḗs",
+          "pronunciation": "prosphilḗs",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "lovely",
+          "root": "from a presumed compound of G4314 (πρός) and G5368 (φιλέω);",
+          "definition": "friendly towards, i.e. acceptable",
+          "usageInPassage": "Rendered “lovely,” in this passage — adjective."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2163",
+          "word": "εὔφημος",
+          "transliteration": "eúphēmos",
+          "pronunciation": "eúphēmos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "admirable",
+          "root": "from G2095 (εὖ) and G5345 (φήμη);",
+          "definition": "well spoken of, i.e. reputable",
+          "usageInPassage": "Rendered “admirable —” in this passage — adjective."
+        },
+        {
+          "strongs": "G1515",
+          "word": "εἰρήνη",
+          "transliteration": "eirḗnē",
+          "pronunciation": "eirḗnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "peace",
+          "root": "probably from a primary verb (to join);",
+          "definition": "peace (literally or figuratively); by implication, prosperity",
+          "usageInPassage": "Rendered “of peace” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Philippians 4:8–9 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Philippians 4:8–9 in Koine Greek sits on προσφιλής (prosphilḗs) “friendly towards”, εὔφημος (eúphēmos) “well spoken of” and εἰρήνη (eirḗnē) “peace (literally or figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Whatever is true, whatever is noble, whatever is right, pure, lovely, admirable—think about such things — Grace Revelation",
-      "quote": "Under the new covenant of grace, Philippians 4:8–9 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Philippians 4:8–9. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Whatever is true, whatever is noble, whatever is right, pure, lovely, admirable—think about such things",
+      "quote": "Paul directs attention rather than suppressing thought.",
+      "graceTakeaway": "You change what you dwell on before you change how you feel."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Philippians 4:8–9",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Philippians 4:8–9 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "Writing about joy from a Roman cell",
+        "character": "Paul to the Philippians",
+        "ref": "Philippians 1:12–14",
+        "story": "Paul reports that his imprisonment has actually advanced the gospel and that the brothers have grown bold. He directs attention to what is true rather than what is obvious."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Philippians 4:8–9",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Philippians 4:8–9 in your daily walk today."
+        "era": "Exile",
+        "title": "Choosing a diet and a discipline in a pagan court",
+        "character": "Daniel and his companions",
+        "ref": "Daniel 1:11–16",
+        "story": "They asked for a ten-day trial of vegetables and water and looked better at the end of it. What they gave their attention to showed."
       }
     ]
   },
   {
-    "id": 75,
+    "id": 74,
     "ref": "Philippians 4:6–7",
     "book": "Philippians",
     "category": "peace-rest",
@@ -17672,8 +17820,8 @@ const BIBLE_VERSES = [
       "NKJV": "Be anxious for nothing, but in everything by prayer and supplication, with thanksgiving, let your requests be made known to God; and the peace of God, which surpasses all understanding, will guard your hearts and minds through Christ Jesus."
     },
     "dynamicContext": {
-      "chapterTitle": "Philippians 4 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Philippians 4:6–7 revealing God's covenant faithfulness.",
+      "chapterTitle": "Philippians 4 — The peace that guards",
+      "chapterSummary": "Rejoice, be reasonable, be anxious for nothing; a peace beyond understanding stands guard, contentment is learned in plenty and want, and God supplies every need.",
       "versions": {
         "NIV": {
           "before": [
@@ -17815,322 +17963,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Philippians 4:6–7.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Philippians 4:6–7.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Philippians 4:6–7.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Philippians 4:6–7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Philippians 4:6–7."
+          "strongs": "G1515",
+          "word": "εἰρήνη",
+          "transliteration": "eirḗnē",
+          "pronunciation": "eirḗnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "peace",
+          "root": "probably from a primary verb (to join);",
+          "definition": "peace (literally or figuratively); by implication, prosperity",
+          "usageInPassage": "Rendered “peace” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0155",
+          "word": "αἴτημα",
+          "transliteration": "aítēma",
+          "pronunciation": "aítēma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "thing asked or abstractly an asking",
+          "root": "from G154 (αἰτέω);",
+          "definition": "a thing asked or (abstractly) an asking",
+          "usageInPassage": "Rendered “requests” in this passage — noun."
+        },
+        {
+          "strongs": "G5432",
+          "word": "φρουρέω",
+          "transliteration": "phrouréō",
+          "pronunciation": "phrouréō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "guard",
+          "root": "from a compound of G4253 (πρό) and G3708 (ὁράω);",
+          "definition": "to be a watcher in advance, i.e. to mount guard as a sentinel (post spies at gates); figuratively, to hem in, protect",
+          "usageInPassage": "Rendered “will guard” in this passage — verb, future, active, indicative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Philippians 4:6–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Philippians 4:6–7 in Koine Greek sits on εἰρήνη (eirḗnē) “peace (literally or figuratively)”, αἴτημα (aítēma) “a thing asked or (abstractly) an asking” and φρουρέω (phrouréō) “to be a watcher in advance”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God — Grace Revelation",
-      "quote": "Under the new covenant of grace, Philippians 4:6–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Philippians 4:6–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God",
+      "quote": "Anxiety is answered with a practice — prayer and petition with thanksgiving — not with a rebuke.",
+      "graceTakeaway": "The instruction is something to do, not merely to stop."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of Philippians 4:6–7",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of Philippians 4:6–7 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "Praying before answering the king",
+        "character": "Nehemiah in Susa",
+        "ref": "Nehemiah 2:4–5",
+        "story": "Asked what he wanted, Nehemiah prayed to the God of heaven and then answered the king in the same breath. The petition went up before the request went across."
       },
       {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of Philippians 4:6–7",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of Philippians 4:6–7 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "A prayer in the temple instead of a war council",
+        "character": "Hezekiah",
+        "ref": "Isaiah 37:14–20",
+        "story": "He carried the threatening letter into the house of the LORD and prayed rather than negotiating. The anxiety was handed over item by item."
       }
     ]
   },
   {
-    "id": 76,
-    "ref": "John 14:27",
-    "book": "John",
-    "category": "peace-rest",
-    "categoryLabel": "Peace & Rest",
-    "icon": "shield-check",
-    "bentoSpan": "standard",
-    "keyPhrase": "My peace I give you... Do not let your hearts be troubled and do not be afraid",
-    "themeColor": "teal",
-    "translations": {
-      "NIV": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
-      "TPT": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!",
-      "NLT": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid.",
-      "NASB": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful.",
-      "AMP": "Peace I leave with you; My [perfect] peace I give to you; not as the world gives do I give to you. Do not let your heart be troubled, nor let it be fearful [let My perfect peace calm you in every circumstance and give you courage and strength for every challenge].",
-      "NKJV": "Peace I leave with you, My peace I give to you; not as the world gives do I give to you. Let not your heart be troubled, neither let it be afraid."
-    },
-    "dynamicContext": {
-      "chapterTitle": "John 14 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 14:27 revealing God's covenant faithfulness.",
-      "versions": {
-        "NIV": {
-          "before": [
-            {
-              "num": "16",
-              "text": "Better the little that the righteous have than the wealth of many wicked;"
-            },
-            {
-              "num": "17",
-              "text": "for the power of the wicked will be broken, but the Lord upholds the righteous."
-            },
-            {
-              "num": "18",
-              "text": "The blameless spend their days under the Lord’s care, and their inheritance will endure forever."
-            }
-          ],
-          "target": {
-            "num": "27",
-            "text": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "But the wicked will perish: Though the Lord’s enemies are like the flowers of the fields, they will be consumed, they will go up in smoke."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrow and do not repay, but the righteous give generously;"
-            },
-            {
-              "num": "22",
-              "text": "those the Lord blesses will inherit the land, but those he curses will be destroyed."
-            }
-          ]
-        },
-        "TPT": {
-          "before": [
-            {
-              "num": "16",
-              "text": "It is much better to have very little and combined with God’s presence than to possess great wealth without Him."
-            },
-            {
-              "num": "17",
-              "text": "For the strength of the wicked will be shattered, but the Lord sustains the righteous with His own hand."
-            },
-            {
-              "num": "18",
-              "text": "Day by day the Lord tenderly guards the innocent, ensuring their inheritance will stand firm through the ages."
-            }
-          ],
-          "target": {
-            "num": "27",
-            "text": "I leave the gift of peace with you—my peace. Not the kind of fragile peace given by the world, but my perfect peace. Don’t yield to fear or be troubled in your hearts—instead, be courageous!"
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "The enemies of God will vanish like sweet grass in the fire; they will disappear into thin air like smoke."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrow and default on their debts, but the lover of God is gracious and gives with an open hand."
-            },
-            {
-              "num": "22",
-              "text": "Those favored by God will take possession of the promised land and dwell securely in His blessing."
-            }
-          ]
-        },
-        "NLT": {
-          "before": [
-            {
-              "num": "16",
-              "text": "It is better to be godly and have little than to be evil and rich."
-            },
-            {
-              "num": "17",
-              "text": "For the strength of the wicked will be shattered, but the Lord takes care of the godly."
-            },
-            {
-              "num": "18",
-              "text": "Day by day the Lord takes care of the innocent, and they will receive an inheritance that lasts forever."
-            }
-          ],
-          "target": {
-            "num": "27",
-            "text": "I am leaving you with a gift—peace of mind and heart. And the peace I give is a gift the world cannot give. So don't be troubled or afraid."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "The wicked will die. The Lord’s enemies are like flowers in a field—they will disappear like smoke."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrow and never repay, but the godly are generous and give."
-            },
-            {
-              "num": "22",
-              "text": "Those the Lord blesses will possess the land, but those he curses will die."
-            }
-          ]
-        },
-        "NASB": {
-          "before": [
-            {
-              "num": "16",
-              "text": "Better is the little of the righteous than the abundance of many wicked."
-            },
-            {
-              "num": "17",
-              "text": "For the arms of the wicked will be broken, but the Lord sustains the righteous."
-            },
-            {
-              "num": "18",
-              "text": "The Lord knows the days of the blameless, and their inheritance will be forever."
-            }
-          ],
-          "target": {
-            "num": "27",
-            "text": "Peace I leave you, My peace I give you; not as the world gives, do I give to you. Do not let your hearts be troubled, nor fearful."
-          },
-          "after": [
-            {
-              "num": "20",
-              "text": "For the wicked will perish; and the enemies of the Lord will be like the glory of the pastures, they vanish—like smoke they vanish away."
-            },
-            {
-              "num": "21",
-              "text": "The wicked borrows and does not pay back, but the righteous is gracious and gives."
-            },
-            {
-              "num": "22",
-              "text": "For those blessed by Him will inherit the land, but those cursed by Him will be cut off."
-            }
-          ]
-        }
-      }
-    },
-    "lexicon": {
-      "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 14:27.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 14:27.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 14:27.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 14:27."
-      },
-      "keyTerms": [
-        {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 14:27."
-        },
-        {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
-        }
-      ],
-      "theologicalSummary": "In Koine Greek, John 14:27 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
-    },
-    "crossReferencesList": [
-      {
-        "ref": "Romans 8:31–32",
-        "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
-      },
-      {
-        "ref": "2 Corinthians 1:20",
-        "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
-      },
-      {
-        "ref": "Ephesians 1:3",
-        "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
-      },
-      {
-        "ref": "Hebrews 13:5–6",
-        "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
-      }
-    ],
-    "paulEllisInsight": {
-      "theme": "My peace I give you... Do not let your hearts be troubled and do not be afraid — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 14:27 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 14:27. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
-    },
-    "caseStudiesList": [
-      {
-        "era": "Gospels / Sea of Galilee",
-        "title": "Jesus Rebuking the Fierce Tempest — Testimony of John 14:27",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 4:35–41",
-        "story": "As howling winds and waves swamped their boat, Jesus spoke three sovereign words: 'Peace, be still!' and immediately there was a great and tranquil calm. This historical breakthrough vividly illustrates the living truth of John 14:27 that God's covenant never fails those who trust His goodness."
-      },
-      {
-        "era": "Old Testament / Kingdom of Judah",
-        "title": "Jehoshaphat's Worship Leading the Army — Living Reality of John 14:27",
-        "character": "King Jehoshaphat",
-        "ref": "2 Chronicles 20:14–24",
-        "story": "Facing an overwhelming confederacy of three armies, Jehoshaphat stationed singers at the frontline praising God's steadfast mercy, and the Lord ambushed the enemy before a sword was drawn. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 14:27 in your daily walk today."
-      }
-    ]
-  },
-  {
-    "id": 77,
+    "id": 75,
     "ref": "John 8:31–32",
     "book": "John",
     "category": "wisdom-word",
@@ -18148,8 +18064,8 @@ const BIBLE_VERSES = [
       "NKJV": "Then Jesus said to those Jews who believed Him, 'If you abide in My word, you are My disciples indeed. And you shall know the truth, and the truth shall make you free.'"
     },
     "dynamicContext": {
-      "chapterTitle": "John 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 8:31–32 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 8 — The truth will set you free",
+      "chapterSummary": "Accusers drift away one by one from a woman they meant to stone; Jesus calls himself the light of the world and ends by saying that before Abraham was, he is.",
       "versions": {
         "NIV": {
           "before": [
@@ -18291,84 +18207,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 8:31–32.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 8:31–32.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 8:31–32.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 8:31–32."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 8:31–32."
+          "strongs": "G3306",
+          "word": "μένω",
+          "transliteration": "ménō",
+          "pronunciation": "ménō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "abide",
+          "root": "a primary verb;",
+          "definition": "to stay (in a given place, state, relation or expectancy)",
+          "usageInPassage": "Rendered “shall abide” in this passage — verb, aorist, active, subjunctive."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1659",
+          "word": "ἐλευθερόω",
+          "transliteration": "eleutheróō",
+          "pronunciation": "eleutheróō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "set free",
+          "root": "from G1658 (ἐλεύθερος);",
+          "definition": "to liberate, i.e. (figuratively) to exempt (from moral, ceremonial or mortal liability)",
+          "usageInPassage": "Rendered “will set free” in this passage — verb, future, active, indicative."
+        },
+        {
+          "strongs": "G0225",
+          "word": "ἀλήθεια",
+          "transliteration": "alḗtheia",
+          "pronunciation": "alḗtheia",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "truth",
+          "root": "from G227 (ἀληθής);",
+          "definition": "truth",
+          "usageInPassage": "Rendered “truth,” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 8:31–32 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 8:31–32 in Koine Greek sits on μένω (ménō) “to stay (in a given place, state, relation or expectancy)”, ἐλευθερόω (eleutheróō) “to liberate” and ἀλήθεια (alḗtheia) “truth”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Then you will know the truth, and the truth will set you free — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 8:31–32 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 8:31–32. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Then you will know the truth, and the truth will set you free",
+      "quote": "Knowing the truth and being freed by it are joined; freedom is a consequence of knowing.",
+      "graceTakeaway": "Freedom follows sight."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of John 8:31–32",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of John 8:31–32 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A man born blind who would not be talked out of it",
+        "character": "The blind man of John 9",
+        "ref": "John 9:24–34",
+        "story": "Pressed by the authorities, he said only that he was blind and now he saw, and was thrown out for it. The truth he knew made him unmovable."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of John 8:31–32",
-        "character": "The Berean Believers",
+        "era": "Early Church",
+        "title": "Examining the Scriptures daily to check the preacher",
+        "character": "The Bereans",
         "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 8:31–32 in your daily walk today."
+        "story": "They received the message eagerly and examined the Scriptures every day to see whether it was so. Many believed as a result of checking."
       }
     ]
   },
   {
-    "id": 78,
+    "id": 76,
     "ref": "John 15:15–16",
     "book": "John",
     "category": "identity-grace",
@@ -18386,8 +18308,8 @@ const BIBLE_VERSES = [
       "NKJV": "No longer do I call you servants, for a servant does not know what his master is doing; but I have called you friends, for all things that I heard from My Father I have made known to you. You did not choose Me, but I chose you and appointed you that you should go and bear fruit."
     },
     "dynamicContext": {
-      "chapterTitle": "John 15 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of John 15:15–16 revealing God's covenant faithfulness.",
+      "chapterTitle": "John 15 — Abide in the vine",
+      "chapterSummary": "Fruit is not produced by effort away from the vine but by remaining in it; the disciples are called friends rather than servants, and warned the world will hate them.",
       "versions": {
         "NIV": {
           "before": [
@@ -18529,84 +18451,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in John 15:15–16.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in John 15:15–16.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in John 15:15–16.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in John 15:15–16."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of John 15:15–16."
+          "strongs": "G3306",
+          "word": "μένω",
+          "transliteration": "ménō",
+          "pronunciation": "ménō",
+          "partOfSpeech": "Verb, present, active, subjunctive",
+          "matchedEnglish": "remain",
+          "root": "a primary verb;",
+          "definition": "to stay (in a given place, state, relation or expectancy)",
+          "usageInPassage": "Rendered “may remain;” in this passage — verb, present, active, subjunctive."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1586",
+          "word": "ἐκλέγομαι",
+          "transliteration": "eklégomai",
+          "pronunciation": "eklégomai",
+          "partOfSpeech": "Verb, aorist, middle, indicative",
+          "matchedEnglish": "chose",
+          "root": "middle voice from G1537 (ἐκ) and G3004 (λέγω) (in its primary sense);",
+          "definition": "to select",
+          "usageInPassage": "Rendered “chose,” in this passage — verb, aorist, middle, indicative."
+        },
+        {
+          "strongs": "G1107",
+          "word": "γνωρίζω",
+          "transliteration": "gnōrízō",
+          "pronunciation": "gnōrízō",
+          "partOfSpeech": "Verb, aorist, active, indicative",
+          "matchedEnglish": "made known",
+          "root": "from a derivative of G1097 (γινώσκω);",
+          "definition": "to make known; subjectively, to know",
+          "usageInPassage": "Rendered “I have made known” in this passage — verb, aorist, active, indicative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, John 15:15–16 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of John 15:15–16 in Koine Greek sits on μένω (ménō) “to stay (in a given place, state, relation or expectancy)”, ἐκλέγομαι (eklégomai) “to select” and γνωρίζω (gnōrízō) “to make known”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "I have called you friends... I chose you and appointed you so that you might go and bear fruit — Grace Revelation",
-      "quote": "Under the new covenant of grace, John 15:15–16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in John 15:15–16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "I have called you friends... I chose you and appointed you so that you might go and bear fruit",
+      "quote": "Friends, not servants — and the choosing was his, not theirs.",
+      "graceTakeaway": "Your place was decided by him before it was chosen by you."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of John 15:15–16",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of John 15:15–16 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Called the friend of God",
+        "character": "Abraham",
+        "ref": "James 2:23; Isaiah 41:8",
+        "story": "Abraham believed God and it was credited to him as righteousness, and he was called God's friend. The title came with the relationship, not the résumé."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of John 15:15–16",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of John 15:15–16 in your daily walk today."
+        "era": "Exodus",
+        "title": "Speaking face to face as with a friend",
+        "character": "Moses at the tent of meeting",
+        "ref": "Exodus 33:11",
+        "story": "The LORD would speak to Moses face to face, as one speaks to a friend. Access came before achievement."
       }
     ]
   },
   {
-    "id": 79,
+    "id": 77,
     "ref": "Titus 3:3–7",
     "book": "Titus",
     "category": "identity-grace",
@@ -18624,8 +18552,8 @@ const BIBLE_VERSES = [
       "NKJV": "But when the kindness and the love of God our Savior toward man appeared, not by works of righteousness which we have done, but according to His mercy He saved us, through the washing of regeneration and renewing of the Holy Spirit."
     },
     "dynamicContext": {
-      "chapterTitle": "Titus 3 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Titus 3:3–7 revealing God's covenant faithfulness.",
+      "chapterTitle": "Titus 3 — Not by works, but by his mercy",
+      "chapterSummary": "Believers are to be ready for every good work and gentle toward all, because they were once foolish themselves and were saved by the washing of regeneration.",
       "versions": {
         "NIV": {
           "before": [
@@ -18767,84 +18695,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Titus 3:3–7.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Titus 3:3–7.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Titus 3:3–7.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Titus 3:3–7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Titus 3:3–7."
+          "strongs": "G1656",
+          "word": "ἔλεος",
+          "transliteration": "éleos",
+          "pronunciation": "éleos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "mercy",
+          "root": "of uncertain affinity;",
+          "definition": "compassion (human or divine, especially active)",
+          "usageInPassage": "Rendered “mercy” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4767",
+          "word": "στυγνητός",
+          "transliteration": "stygnētós",
+          "pronunciation": "stygnētós",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "hateful",
+          "root": "from a derivative of an obsolete apparently primary (to hate);",
+          "definition": "hated, i.e. odious",
+          "usageInPassage": "Rendered “hateful,” in this passage — adjective."
+        },
+        {
+          "strongs": "G1680",
+          "word": "ἐλπίς",
+          "transliteration": "elpís",
+          "pronunciation": "elpís",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "hope",
+          "root": "from a primary (to anticipate, usually with pleasure);",
+          "definition": "expectation (abstractly or concretely) or confidence",
+          "usageInPassage": "Rendered “the hope” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Titus 3:3–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Titus 3:3–7 in Koine Greek sits on ἔλεος (éleos) “compassion (human or divine, especially active)”, στυγνητός (stygnētós) “hated” and ἐλπίς (elpís) “expectation (abstractly or concretely) or confidence”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "He saved us, not because of righteous things we had done, but because of his mercy — Grace Revelation",
-      "quote": "Under the new covenant of grace, Titus 3:3–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Titus 3:3–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "He saved us, not because of righteous things we had done, but because of his mercy",
+      "quote": "Not because of righteous things we had done — Paul rules out the obvious explanation.",
+      "graceTakeaway": "Mercy is the whole explanation of your salvation."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Titus 3:3–7",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Titus 3:3–7 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A tax collector who could not lift his eyes",
+        "character": "The publican in the temple",
+        "ref": "Luke 18:9–14",
+        "story": "He stood at a distance, beat his breast and asked for mercy, and went home justified rather than the man with the list. Mercy was the whole basis."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Titus 3:3–7",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Titus 3:3–7 in your daily walk today."
+        "era": "Early Church",
+        "title": "A jailer who had just been about to kill himself",
+        "character": "The Philippian jailer",
+        "ref": "Acts 16:29–33",
+        "story": "He came in trembling, asked what he must do, and was baptised with his household that same hour. Nothing in his record contributed."
       }
     ]
   },
   {
-    "id": 80,
+    "id": 78,
     "ref": "Colossians 1:21–23",
     "book": "Colossians",
     "category": "identity-grace",
@@ -18862,8 +18796,8 @@ const BIBLE_VERSES = [
       "NKJV": "And you, who once were alienated and enemies in your mind by wicked works, yet now He has reconciled in the body of His flesh through death, to present you holy, and blameless, and above reproach in His sight."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 1:21–23 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 1 — Christ in you, the hope of glory",
+      "chapterSummary": "Thanksgiving and prayer give way to the great hymn of Christ's supremacy — image of the invisible God, firstborn over creation — and the mystery now disclosed.",
       "versions": {
         "NIV": {
           "before": [
@@ -19005,84 +18939,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 1:21–23.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 1:21–23.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 1:21–23.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 1:21–23."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 1:21–23."
+          "strongs": "G3334",
+          "word": "μετακινέω",
+          "transliteration": "metakinéō",
+          "pronunciation": "metakinéō",
+          "partOfSpeech": "Verb, present, passive, participle",
+          "matchedEnglish": "being moved away",
+          "root": "from G3326 (μετά) and G2795 (κινέω);",
+          "definition": "to stir to a place elsewhere, i.e. remove (figuratively)",
+          "usageInPassage": "Rendered “being moved away” in this passage — verb, present, passive, participle."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1680",
+          "word": "ἐλπίς",
+          "transliteration": "elpís",
+          "pronunciation": "elpís",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "hope",
+          "root": "from a primary (to anticipate, usually with pleasure);",
+          "definition": "expectation (abstractly or concretely) or confidence",
+          "usageInPassage": "Rendered “hope” in this passage — noun."
+        },
+        {
+          "strongs": "G0526",
+          "word": "ἀπαλλοτριόω",
+          "transliteration": "apallotrióō",
+          "pronunciation": "apallotrióō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "alienated",
+          "root": "from G575 (ἀπό) and a derivative of G245 (ἀλλότριος);",
+          "definition": "to estrange away, i.e. (passively and figuratively) to be non-participant",
+          "usageInPassage": "Rendered “alienated” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 1:21–23 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 1:21–23 in Koine Greek sits on μετακινέω (metakinéō) “to stir to a place elsewhere”, ἐλπίς (elpís) “expectation (abstractly or concretely) or confidence” and ἀπαλλοτριόω (apallotrióō) “to estrange away”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "He has reconciled you by Christ’s physical body through death to present you holy in his sight — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 1:21–23 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 1:21–23. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "He has reconciled you by Christ’s physical body through death to present you holy in his sight",
+      "quote": "Reconciled through a physical body and a real death, in order to be presented holy.",
+      "graceTakeaway": "Your holiness before God is a presentation, not a self-assessment."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 1:21–23",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 1:21–23 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A woman brought in to be condemned",
+        "character": "The woman caught in adultery",
+        "ref": "John 8:3–11",
+        "story": "Her accusers left one by one and Jesus asked who was left to condemn her. She was sent away without a charge."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 1:21–23",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 1:21–23 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "The worst king in Judah's history restored",
+        "character": "Manasseh",
+        "ref": "2 Chronicles 33:10–13",
+        "story": "He filled Jerusalem with innocent blood, was taken to Babylon with a hook in his nose, humbled himself, and God brought him back. The reconciliation was real."
       }
     ]
   },
   {
-    "id": 81,
+    "id": 79,
     "ref": "Ephesians 2:19",
     "book": "Ephesians",
     "category": "identity-grace",
@@ -19100,8 +19040,8 @@ const BIBLE_VERSES = [
       "NKJV": "Now, therefore, you are no longer strangers and foreigners, but fellow citizens with the saints and members of the household of God."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 2 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 2:19 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 2 — From dead to seated",
+      "chapterSummary": "Dead in trespasses, made alive with Christ by grace through faith; then the dividing wall comes down and strangers become fellow citizens and a temple God lives in.",
       "versions": {
         "NIV": {
           "before": [
@@ -19243,84 +19183,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 2:19.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 2:19.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 2:19.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 2:19."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 2:19."
+          "strongs": "G4847",
+          "word": "συμπολίτης",
+          "transliteration": "sympolítēs",
+          "pronunciation": "sympolítēs",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "fellow citizens",
+          "root": "from G4862 (σύν) and G4177 (πολίτης);",
+          "definition": "a native of the same town, i.e. (figuratively) co-religionist (fellow-Christian)",
+          "usageInPassage": "Rendered “fellow citizens” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3609",
+          "word": "οἰκεῖος",
+          "transliteration": "oikeîos",
+          "pronunciation": "oikeîos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "household",
+          "root": "from G3624 (οἶκος);",
+          "definition": "domestic, i.e. (as noun), a relative, adherent",
+          "usageInPassage": "Rendered “of the household” in this passage — adjective."
+        },
+        {
+          "strongs": "G3941",
+          "word": "πάροικος",
+          "transliteration": "pároikos",
+          "pronunciation": "pároikos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "foreigner",
+          "root": "from G3844 (παρά) and G3624 (οἶκος);",
+          "definition": "having a home near, i.e. (as noun) a by-dweller (alien resident)",
+          "usageInPassage": "Rendered “aliens,” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 2:19 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Ephesians 2:19 in Koine Greek sits on συμπολίτης (sympolítēs) “a native of the same town”, οἰκεῖος (oikeîos) “domestic” and πάροικος (pároikos) “having a home near”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household — Grace Revelation",
-      "quote": "Under the new covenant of grace, Ephesians 2:19 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 2:19. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You are no longer foreigners and strangers, but fellow citizens with God’s people and also members of his household",
+      "quote": "Foreigners become fellow citizens and household members — two upgrades in one sentence.",
+      "graceTakeaway": "You are not a guest here."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Ephesians 2:19",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Ephesians 2:19 that God's covenant never fails those who trust His goodness."
+        "era": "Judges",
+        "title": "A prostitute in Jericho written into the genealogy",
+        "character": "Rahab",
+        "ref": "Joshua 6:22–25; Matthew 1:5",
+        "story": "She hid the spies, hung the scarlet cord, and lived among Israel from that day. She appears in Matthew's list of the Messiah's ancestors."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Ephesians 2:19",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 2:19 in your daily walk today."
+        "era": "Early Church",
+        "title": "A dealer in purple cloth whose house became a church",
+        "character": "Lydia of Thyatira",
+        "ref": "Acts 16:13–15",
+        "story": "The Lord opened her heart at a riverside prayer meeting, and her household was baptised and her home became the base in Philippi. An outsider became the household."
       }
     ]
   },
   {
-    "id": 82,
+    "id": 80,
     "ref": "Ephesians 2:13",
     "book": "Ephesians",
     "category": "identity-grace",
@@ -19338,8 +19284,8 @@ const BIBLE_VERSES = [
       "NKJV": "But now in Christ Jesus you who once were far off have been brought near by the blood of Christ."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 2 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 2:13 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 2 — From dead to seated",
+      "chapterSummary": "Dead in trespasses, made alive with Christ by grace through faith; then the dividing wall comes down and strangers become fellow citizens and a temple God lives in.",
       "versions": {
         "NIV": {
           "before": [
@@ -19481,84 +19427,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 2:13.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 2:13.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 2:13.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 2:13."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 2:13."
+          "strongs": "G0129",
+          "word": "αἷμα",
+          "transliteration": "haîma",
+          "pronunciation": "haîma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "blood",
+          "root": "of uncertain derivation;",
+          "definition": "blood, literally (of men or animals), figuratively (the juice of grapes) or specially (the atoning blood of Christ); by implication, bloodshed, also kindred",
+          "usageInPassage": "Rendered “blood” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G5547",
+          "word": "Χριστός",
+          "transliteration": "Christós",
+          "pronunciation": "Christós",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "Christ",
+          "root": "from G5548 (χρίω);",
+          "definition": "anointed, i.e. the Messiah, an epithet of Jesus",
+          "usageInPassage": "Rendered “Christ” in this passage — noun."
+        },
+        {
+          "strongs": "G1096",
+          "word": "γίνομαι",
+          "transliteration": "gínomai",
+          "pronunciation": "gínomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "become",
+          "root": "a prolongation and middle voice form of a primary verb;",
+          "definition": "to cause to be (\"gen\"-erate), i.e. (reflexively) to become (come into being), used with great latitude (literal, figurative, intensive, etc.)",
+          "usageInPassage": "Rendered “have become” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 2:13 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Ephesians 2:13 in Koine Greek sits on αἷμα (haîma) “blood, literally (of men or animals), figuratively (the juice of…”, Χριστός (Christós) “anointed” and γίνομαι (gínomai) “to cause to be (\"gen\"-erate)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Now in Christ Jesus you who once were far away have been brought near by the blood of Christ — Grace Revelation",
-      "quote": "Under the new covenant of grace, Ephesians 2:13 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 2:13. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Now in Christ Jesus you who once were far away have been brought near by the blood of Christ",
+      "quote": "Brought near by the blood — the distance was closed from the other side.",
+      "graceTakeaway": "Nearness was accomplished for you."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Ephesians 2:13",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Ephesians 2:13 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A Canaanite woman who would not leave",
+        "character": "The Syrophoenician mother",
+        "ref": "Matthew 15:21–28",
+        "story": "She had no claim, accepted the position of a dog under the table, and asked for crumbs. She was commended for great faith and her daughter was healed."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Ephesians 2:13",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 2:13 in your daily walk today."
+        "era": "Early Church",
+        "title": "A eunuch excluded by law, baptised on the road",
+        "character": "The Ethiopian official",
+        "ref": "Acts 8:34–38; Isaiah 56:3–5",
+        "story": "Deuteronomy barred him from the assembly and Isaiah promised him a name better than sons. He went on his way rejoicing."
       }
     ]
   },
   {
-    "id": 83,
+    "id": 81,
     "ref": "Ephesians 1:4–7",
     "book": "Ephesians",
     "category": "identity-grace",
@@ -19576,8 +19528,8 @@ const BIBLE_VERSES = [
       "NKJV": "Just as He chose us in Him before the foundation of the world, that we should be holy and without blame before Him in love... In Him we have redemption through His blood, the forgiveness of sins, according to the riches of His grace."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 1 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 1:4–7 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 1 — Every spiritual blessing",
+      "chapterSummary": "One long sentence of blessing — chosen, adopted, redeemed, sealed — followed by Paul's prayer that they would know the hope, the inheritance and the power already theirs.",
       "versions": {
         "NIV": {
           "before": [
@@ -19719,84 +19671,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 1:4–7.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 1:4–7.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 1:4–7.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 1:4–7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 1:4–7."
+          "strongs": "G5487",
+          "word": "χαριτόω",
+          "transliteration": "charitóō",
+          "pronunciation": "charitóō",
+          "partOfSpeech": "Verb, aorist, active, indicative",
+          "matchedEnglish": "grace",
+          "root": "from G5485 (χάρις);",
+          "definition": "to grace, i.e. indue with special honor",
+          "usageInPassage": "Rendered “He has freely given” in this passage — verb, aorist, active, indicative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G0026",
+          "word": "ἀγάπη",
+          "transliteration": "agápē",
+          "pronunciation": "agápē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "love",
+          "root": "from G25 (ἀγαπάω);",
+          "definition": "love, i.e. affection or benevolence; specially (plural) a love-feast",
+          "usageInPassage": "Rendered “love” in this passage — noun."
+        },
+        {
+          "strongs": "G0025",
+          "word": "ἀγαπάω",
+          "transliteration": "agapáō",
+          "pronunciation": "agapáō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "love",
+          "root": "perhaps from (much) (or compare G5689);",
+          "definition": "to love (in a social or moral sense)",
+          "usageInPassage": "Rendered “Beloved One,” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 1:4–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Ephesians 1:4–7 in Koine Greek sits on χαριτόω (charitóō) “to grace”, ἀγάπη (agápē) “love” and ἀγαπάω (agapáō) “to love (in a social or moral sense)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "He chose us in him before the creation of the world to be holy and blameless in his sight — Grace Revelation",
-      "quote": "Under the new covenant of grace, Ephesians 1:4–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 1:4–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "He chose us in him before the creation of the world to be holy and blameless in his sight",
+      "quote": "Chosen before the creation of the world, which places the decision outside your record.",
+      "graceTakeaway": "Nothing you did preceded God's choosing."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Ephesians 1:4–7",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Ephesians 1:4–7 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "Chosen before he had done anything",
+        "character": "Jacob",
+        "ref": "Romans 9:10–13",
+        "story": "Paul points out that before the twins were born or had done anything good or bad, the choice was already made. Nothing in the record preceded it."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Ephesians 1:4–7",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 1:4–7 in your daily walk today."
+        "era": "Gospels",
+        "title": "A disciple seen under the fig tree before he was called",
+        "character": "Nathanael",
+        "ref": "John 1:47–49",
+        "story": "Jesus described him before they met, and Nathanael asked how he knew him. He had been seen first."
       }
     ]
   },
   {
-    "id": 84,
+    "id": 82,
     "ref": "2 Corinthians 6:16",
     "book": "2 Corinthians",
     "category": "identity-grace",
@@ -19814,8 +19772,8 @@ const BIBLE_VERSES = [
       "NKJV": "For you are the temple of the living God. As God has said: 'I will dwell in them and walk among them. I will be their God, and they shall be My people.'"
     },
     "dynamicContext": {
-      "chapterTitle": "2 Corinthians 6 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 6:16 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Corinthians 6 — Now is the day of salvation",
+      "chapterSummary": "Paul commends his ministry through a long catalogue of hardship and paradox — poor yet making many rich — and calls the Corinthians into the open-hearted life of God's own people.",
       "versions": {
         "NIV": {
           "before": [
@@ -19957,84 +19915,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Corinthians 6:16.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Corinthians 6:16.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Corinthians 6:16.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Corinthians 6:16."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 2 Corinthians 6:16."
+          "strongs": "G4783",
+          "word": "συγκατάθεσις",
+          "transliteration": "synkatáthesis",
+          "pronunciation": "synkatáthesis",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "agreement",
+          "root": "from G4784 (συγκατατίθεμαι);",
+          "definition": "a deposition (of sentiment) in company with, i.e. (figuratively) accord with",
+          "usageInPassage": "Rendered “agreement” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1704",
+          "word": "ἐμπεριπατέω",
+          "transliteration": "emperipatéō",
+          "pronunciation": "emperipatéō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "walk among them",
+          "root": "from G1722 (ἐν) and G4043 (περιπατέω);",
+          "definition": "to perambulate on a place, i.e. (figuratively) to be occupied among persons",
+          "usageInPassage": "Rendered “will walk among them,” in this passage — verb, future, active, indicative."
+        },
+        {
+          "strongs": "G1774",
+          "word": "ἐνοικέω",
+          "transliteration": "enoikéō",
+          "pronunciation": "enoikéō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "dwell",
+          "root": "from G1722 (ἐν) and G3611 (οἰκέω);",
+          "definition": "to inhabit (figuratively)",
+          "usageInPassage": "Rendered “I will dwell” in this passage — verb, future, active, indicative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 2 Corinthians 6:16 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 2 Corinthians 6:16 in Koine Greek sits on συγκατάθεσις (synkatáthesis) “a deposition (of sentiment) in company with”, ἐμπεριπατέω (emperipatéō) “to perambulate on a place” and ἐνοικέω (enoikéō) “to inhabit (figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "For we are the temple of the living God. As God has said: 'I will live with them and walk among them' — Grace Revelation",
-      "quote": "Under the new covenant of grace, 2 Corinthians 6:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Corinthians 6:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "For we are the temple of the living God. As God has said: 'I will live with them and walk among them'",
+      "quote": "We are the temple — the dwelling has moved from a building to a people.",
+      "graceTakeaway": "God's address is now a people, and you are in it."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of 2 Corinthians 6:16",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 2 Corinthians 6:16 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "Glory filling a tent in the desert",
+        "character": "The tabernacle completed",
+        "ref": "Exodus 40:33–35",
+        "story": "When Moses finished the work the cloud covered the tent and the glory filled the tabernacle so that he could not enter. God moved in with them."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 2 Corinthians 6:16",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 6:16 in your daily walk today."
+        "era": "Early Church",
+        "title": "A rushing wind filling a house, not a temple",
+        "character": "Pentecost",
+        "ref": "Acts 2:1–4",
+        "story": "The sound filled the whole house where they were sitting, and the flames rested on each of them. The dwelling had become people."
       }
     ]
   },
   {
-    "id": 85,
+    "id": 83,
     "ref": "1 Corinthians 2:16",
     "book": "1 Corinthians",
     "category": "identity-grace",
@@ -20052,8 +20016,8 @@ const BIBLE_VERSES = [
       "NKJV": "For 'who has known the mind of the Lord that he may instruct Him?' But we have the mind of Christ."
     },
     "dynamicContext": {
-      "chapterTitle": "1 Corinthians 2 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 1 Corinthians 2:16 revealing God's covenant faithfulness.",
+      "chapterTitle": "1 Corinthians 2 — The Spirit searches the depths of God",
+      "chapterSummary": "Paul deliberately came without lofty speech, so that faith would rest on God's power; what no eye has seen is revealed by the Spirit, who alone knows God's mind.",
       "versions": {
         "NIV": {
           "before": [
@@ -20195,84 +20159,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 1 Corinthians 2:16.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 1 Corinthians 2:16.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 1 Corinthians 2:16.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 1 Corinthians 2:16."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 1 Corinthians 2:16."
+          "strongs": "G4822",
+          "word": "συμβιβάζω",
+          "transliteration": "symbibázō",
+          "pronunciation": "symbibázō",
+          "partOfSpeech": "Verb, future, active, indicative",
+          "matchedEnglish": "instruct",
+          "root": "from G4862 (σύν) and (to force;",
+          "definition": "causative (by reduplication) of the base of G939 (βάσις)); to drive together, i.e. unite (in association or affection), (mentally) to infer, show, teach",
+          "usageInPassage": "Rendered “will instruct” in this passage — verb, future, active, indicative."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3563",
+          "word": "νοῦς",
+          "transliteration": "noûs",
+          "pronunciation": "noûs",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "mind",
+          "root": "probably from the base of G1097 (γινώσκω);",
+          "definition": "the intellect, i.e. mind (divine or human; in thought, feeling, or will); by implication, meaning",
+          "usageInPassage": "Rendered “the mind” in this passage — noun."
+        },
+        {
+          "strongs": "G1097",
+          "word": "γινώσκω",
+          "transliteration": "ginṓskō",
+          "pronunciation": "ginṓskō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "know",
+          "root": "a prolonged form of a primary verb;",
+          "definition": "to \"know\" (absolutely) in a great variety of applications and with many implications (as follow, with others not thus clearly expressed)",
+          "usageInPassage": "Rendered “has known” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 1 Corinthians 2:16 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 1 Corinthians 2:16 in Koine Greek sits on συμβιβάζω (symbibázō) “causative (by reduplication) of the base of G939 (βάσις))”, νοῦς (noûs) “the intellect” and γινώσκω (ginṓskō) “to \"know\" (absolutely) in a great variety of applications and with…”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "For, 'Who has known the mind of the Lord so as to instruct him?' But we have the mind of Christ — Grace Revelation",
-      "quote": "Under the new covenant of grace, 1 Corinthians 2:16 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 Corinthians 2:16. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "For, 'Who has known the mind of the Lord so as to instruct him?' But we have the mind of Christ",
+      "quote": "Having the mind of Christ is stated as a possession, not a goal.",
+      "graceTakeaway": "You think from a given mind, not toward one."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of 1 Corinthians 2:16",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 1 Corinthians 2:16 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A tentmaker reasoning in the synagogue",
+        "character": "Paul at Corinth",
+        "ref": "1 Corinthians 2:1–5",
+        "story": "Paul says he came in weakness and fear and much trembling, refusing persuasive words so that faith would rest on God's power. The mind he preached from was not his own."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 1 Corinthians 2:16",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 Corinthians 2:16 in your daily walk today."
+        "era": "United Monarchy",
+        "title": "Wisdom to divide a disputed child",
+        "character": "Solomon's judgement",
+        "ref": "1 Kings 3:16–28",
+        "story": "Two women claimed one living son and Solomon called for a sword. All Israel heard and saw that the wisdom of God was in him."
       }
     ]
   },
   {
-    "id": 86,
+    "id": 84,
     "ref": "1 Corinthians 6:17",
     "book": "1 Corinthians",
     "category": "identity-grace",
@@ -20290,8 +20260,8 @@ const BIBLE_VERSES = [
       "NKJV": "But he who is joined to the Lord is one spirit with Him."
     },
     "dynamicContext": {
-      "chapterTitle": "1 Corinthians 6 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 1 Corinthians 6:17 revealing God's covenant faithfulness.",
+      "chapterTitle": "1 Corinthians 6 — You were bought with a price",
+      "chapterSummary": "Believers taking each other to court, a list of who will not inherit the kingdom followed by 'and such were some of you', and the body named as a temple of the Holy Spirit.",
       "versions": {
         "NIV": {
           "before": [
@@ -20433,84 +20403,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 1 Corinthians 6:17.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 1 Corinthians 6:17.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 1 Corinthians 6:17.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 1 Corinthians 6:17."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 1 Corinthians 6:17."
+          "strongs": "G4151",
+          "word": "πνεῦμα",
+          "transliteration": "pneûma",
+          "pronunciation": "pneûma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "spirit",
+          "root": "from G4154 (πνέω);",
+          "definition": "a current of air, i.e. breath (blast) or a breeze; by analogy or figuratively, a spirit, i.e. (human) the rational soul, (by implication) vital principle, mental disposition, etc., or (superhuman) an angel, demon, or (divine) God, Christ's spirit, the Holy Spirit",
+          "usageInPassage": "Rendered “spirit” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2853",
+          "word": "κολλάω",
+          "transliteration": "kolláō",
+          "pronunciation": "kolláō",
+          "partOfSpeech": "Verb, present, passive, participle",
+          "matchedEnglish": "join",
+          "root": "from (\"glue\");",
+          "definition": "to glue, i.e. (passively or reflexively) to stick (figuratively)",
+          "usageInPassage": "Rendered “being joined” in this passage — verb, present, passive, participle."
+        },
+        {
+          "strongs": "G1520",
+          "word": "εἷς",
+          "transliteration": "heîs",
+          "pronunciation": "heîs",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "one",
+          "root": "a primary numeral;",
+          "definition": "one",
+          "usageInPassage": "Rendered “one” in this passage — adjective."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 1 Corinthians 6:17 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 1 Corinthians 6:17 in Koine Greek sits on πνεῦμα (pneûma) “a current of air”, κολλάω (kolláō) “to glue” and εἷς (heîs) “one”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Whoever is united with the Lord is one with him in spirit — Grace Revelation",
-      "quote": "Under the new covenant of grace, 1 Corinthians 6:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 Corinthians 6:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Whoever is united with the Lord is one with him in spirit",
+      "quote": "United with the Lord and one with him in spirit — the union is already fact.",
+      "graceTakeaway": "Closeness is your status before it is your experience."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of 1 Corinthians 6:17",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 1 Corinthians 6:17 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Grafted branches drawing from one vine",
+        "character": "Jesus in the upper room",
+        "ref": "John 15:4–5",
+        "story": "Apart from the vine the branch can do nothing, and the branch does not have a separate life to maintain. The union is the whole arrangement."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 1 Corinthians 6:17",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 Corinthians 6:17 in your daily walk today."
+        "era": "Early Church",
+        "title": "A voice from heaven asking why he was being persecuted",
+        "character": "Saul on the Damascus road",
+        "ref": "Acts 9:4–5",
+        "story": "Jesus asked Saul why he was persecuting him, though Saul had only touched the church. What was done to the body was done to the head."
       }
     ]
   },
   {
-    "id": 87,
+    "id": 85,
     "ref": "Galatians 4:4–7",
     "book": "Galatians",
     "category": "identity-grace",
@@ -20528,8 +20504,8 @@ const BIBLE_VERSES = [
       "NKJV": "And because you are sons, God has sent forth the Spirit of His Son into your hearts, crying out, 'Abba, Father!' Therefore you are no longer a slave but a son, and if a son, then an heir of God through Christ."
     },
     "dynamicContext": {
-      "chapterTitle": "Galatians 4 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Galatians 4:4–7 revealing God's covenant faithfulness.",
+      "chapterTitle": "Galatians 4 — Heirs, not slaves",
+      "chapterSummary": "At the right time God sent his Son to redeem those under the law, and the Spirit of the Son now cries Abba in the heart of an heir who was formerly a slave.",
       "versions": {
         "NIV": {
           "before": [
@@ -20671,84 +20647,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Galatians 4:4–7.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Galatians 4:4–7.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Galatians 4:4–7.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Galatians 4:4–7."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Galatians 4:4–7."
+          "strongs": "G0005",
+          "word": "Ἀββᾶ",
+          "transliteration": "Abbâ",
+          "pronunciation": "Abbâ",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "Abba",
+          "root": "of Chaldee origin (H02);",
+          "definition": "father as a vocative",
+          "usageInPassage": "Rendered “Abba” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G1805",
+          "word": "ἐξαγοράζω",
+          "transliteration": "exagorázō",
+          "pronunciation": "exagorázō",
+          "partOfSpeech": "Verb, aorist, active, subjunctive",
+          "matchedEnglish": "redeem",
+          "root": "from G1537 (ἐκ) and G59 (ἀγοράζω);",
+          "definition": "to buy up, i.e. ransom; figuratively, to rescue from loss (improve opportunity)",
+          "usageInPassage": "Rendered “He may redeem,” in this passage — verb, aorist, active, subjunctive."
+        },
+        {
+          "strongs": "G5206",
+          "word": "υἱοθεσία",
+          "transliteration": "huiothesía",
+          "pronunciation": "huiothesía",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "adoption as son",
+          "root": "from a presumed compound of G5207 (υἱός) and a derivative of G5087 (τίθημι);",
+          "definition": "the placing as a son, i.e. adoption (figuratively, Christian sonship in respect to God)",
+          "usageInPassage": "Rendered “divine adoption as sons” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Galatians 4:4–7 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Galatians 4:4–7 in Koine Greek sits on Ἀββᾶ (Abbâ) “father as a vocative”, ἐξαγοράζω (exagorázō) “to buy up” and υἱοθεσία (huiothesía) “the placing as a son”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child — Grace Revelation",
-      "quote": "Under the new covenant of grace, Galatians 4:4–7 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Galatians 4:4–7. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "God sent the Spirit of his Son into our hearts, the Spirit who calls out, 'Abba, Father.' So you are no longer a slave, but God’s child",
+      "quote": "The Spirit cries Abba from within, which is how a slave discovers he is a child.",
+      "graceTakeaway": "The evidence of sonship is a cry you did not work up."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Galatians 4:4–7",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Galatians 4:4–7 that God's covenant never fails those who trust His goodness."
+        "era": "Patriarchs",
+        "title": "A slave woman's son who was not the heir",
+        "character": "Ishmael and Isaac",
+        "ref": "Genesis 21:8–13; Galatians 4:22–31",
+        "story": "Paul reads the two sons as two covenants, one of slavery and one of promise. The heir's standing came from the promise, not from effort."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Galatians 4:4–7",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Galatians 4:4–7 in your daily walk today."
+        "era": "Gospels",
+        "title": "A son rehearsing a speech about being a hired servant",
+        "character": "The prodigal",
+        "ref": "Luke 15:17–22",
+        "story": "He planned to ask for a job and was given a robe, a ring and sandals before he finished. He was restored as a son, not employed."
       }
     ]
   },
   {
-    "id": 88,
+    "id": 86,
     "ref": "2 Corinthians 5:17",
     "book": "2 Corinthians",
     "category": "identity-grace",
@@ -20766,8 +20748,8 @@ const BIBLE_VERSES = [
       "NKJV": "Therefore, if anyone is in Christ, he is a new creation; old things have passed away; behold, all things have become new."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Corinthians 5 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Corinthians 5:17 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Corinthians 5 — The ministry of reconciliation",
+      "chapterSummary": "The earthly tent gives way to a building from God; we walk by faith, not by sight; anyone in Christ is a new creation, and God makes his appeal through those he has reconciled.",
       "versions": {
         "NIV": {
           "before": [
@@ -20909,85 +20891,91 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 2 Corinthians 5:17.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 2 Corinthians 5:17.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 2 Corinthians 5:17.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 2 Corinthians 5:17."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 2 Corinthians 5:17."
+          "strongs": "G0744",
+          "word": "ἀρχαῖος",
+          "transliteration": "archaîos",
+          "pronunciation": "archaîos",
+          "partOfSpeech": "Adjective",
+          "matchedEnglish": "old things",
+          "root": "from G746 (ἀρχή);",
+          "definition": "original or primeval",
+          "usageInPassage": "Rendered “old things” in this passage — adjective."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G2937",
+          "word": "κτίσις",
+          "transliteration": "ktísis",
+          "pronunciation": "ktísis",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "creation",
+          "root": "from G2936 (κτίζω);",
+          "definition": "original formation (properly, the act; by implication, the thing, literally or figuratively)",
+          "usageInPassage": "Rendered “creation;” in this passage — noun."
+        },
+        {
+          "strongs": "G3928",
+          "word": "παρέρχομαι",
+          "transliteration": "parérchomai",
+          "pronunciation": "parérchomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "come near or aside",
+          "root": "from G3844 (παρά) and G2064 (ἔρχομαι);",
+          "definition": "to come near or aside, i.e. to approach (arrive), go by (or away), (figuratively) perish or neglect, (causative) avert",
+          "usageInPassage": "Rendered “have passed away,” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 2 Corinthians 5:17 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 2 Corinthians 5:17 in Koine Greek sits on ἀρχαῖος (archaîos) “original or primeval”, κτίσις (ktísis) “original formation (properly, the act” and παρέρχομαι (parérchomai) “to come near or aside”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "If anyone is in Christ, the new creation has come: The old has gone, the new is here! — Grace Revelation",
-      "quote": "Under the new covenant of grace, 2 Corinthians 5:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Corinthians 5:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "If anyone is in Christ, the new creation has come: The old has gone, the new is here!",
+      "quote": "New creation is announced as an event, not a process: the old has gone.",
+      "graceTakeaway": "You are not an improved version; you are a new one."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of 2 Corinthians 5:17",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of 2 Corinthians 5:17 that God's covenant never fails those who trust His goodness."
+        "era": "Early Church",
+        "title": "A man lowered over a wall in a basket",
+        "character": "Saul escaping Damascus",
+        "ref": "Acts 9:23–25",
+        "story": "Days after his conversion the man who had come to arrest believers was smuggled out by them. Everything about his life had inverted."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of 2 Corinthians 5:17",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Corinthians 5:17 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "A commander who came up out of the Jordan with new skin",
+        "character": "Naaman",
+        "ref": "2 Kings 5:13–14",
+        "story": "He dipped seven times as instructed and his flesh was restored like that of a young boy. The old skin did not improve; it was replaced."
       }
     ],
     "tptFootnotes": "8:37 In Greek, 'more than conquerors' is hupernikomen, literally 'hyper-conquerors' or super-victors. We do not win through our own struggle; we step into a victory already decisively accomplished by Christ."
   },
   {
-    "id": 89,
+    "id": 87,
     "ref": "1 Peter 2:24",
     "book": "1 Peter",
     "category": "healing-renewal",
@@ -21005,8 +20993,8 @@ const BIBLE_VERSES = [
       "NKJV": "Who Himself bore our sins in His own body on the tree, that we, having died to sins, might live for righteousness—by whose stripes you were healed."
     },
     "dynamicContext": {
-      "chapterTitle": "1 Peter 2 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 1 Peter 2:24 revealing God's covenant faithfulness.",
+      "chapterTitle": "1 Peter 2 — A chosen people",
+      "chapterSummary": "Living stones built into a spiritual house, a royal priesthood called out of darkness; then freedom exercised as service, and Christ's suffering held up as the pattern.",
       "versions": {
         "NIV": {
           "before": [
@@ -21148,84 +21136,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 1 Peter 2:24.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 1 Peter 2:24.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 1 Peter 2:24.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 1 Peter 2:24."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 1 Peter 2:24."
+          "strongs": "G0581",
+          "word": "ἀπογενόμενος",
+          "transliteration": "apogenómenos",
+          "pronunciation": "apogenómenos",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "having been dead",
+          "root": "past participle of a compound of G575 (ἀπό) and G1096 (γίνομαι);",
+          "definition": "absent, i.e. deceased (figuratively, renounced)",
+          "usageInPassage": "Rendered “having been dead” in this passage — verb."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3468",
+          "word": "μώλωψ",
+          "transliteration": "mṓlōps",
+          "pronunciation": "mṓlōps",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "wounds",
+          "root": "from (\"moil\";",
+          "definition": "probably akin to the base of G3433 (μόλις)) and probably (the face; from G3700 (ὀπτάνομαι)); a mole (\"black eye\") or blow-mark",
+          "usageInPassage": "Rendered “wounds” in this passage — noun."
+        },
+        {
+          "strongs": "G1343",
+          "word": "δικαιοσύνη",
+          "transliteration": "dikaiosýnē",
+          "pronunciation": "dikaiosýnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "righteousness",
+          "root": "from G1342 (δίκαιος);",
+          "definition": "equity (of character or act); specially (Christian) justification",
+          "usageInPassage": "Rendered “to righteousness” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 1 Peter 2:24 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 1 Peter 2:24 in Koine Greek sits on ἀπογενόμενος (apogenómenos) “absent”, μώλωψ (mṓlōps) “probably akin to the base of G3433 (μόλις)) and probably (the face” and δικαιοσύνη (dikaiosýnē) “equity (of character or act)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "By his wounds you have been healed — Grace Revelation",
-      "quote": "Under the new covenant of grace, 1 Peter 2:24 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 Peter 2:24. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "By his wounds you have been healed",
+      "quote": "By his wounds — Peter puts healing on the same account as forgiveness.",
+      "graceTakeaway": "The cost has already been paid on your behalf."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of 1 Peter 2:24",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of 1 Peter 2:24 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Healing at the pool after thirty-eight years",
+        "character": "The man at Bethesda",
+        "ref": "John 5:2–9",
+        "story": "He had been an invalid thirty-eight years and had nobody to put him in the water. He was told to get up, and did, without ever reaching the pool."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of 1 Peter 2:24",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 Peter 2:24 in your daily walk today."
+        "era": "Exodus",
+        "title": "A bronze serpent lifted on a pole",
+        "character": "Israel bitten in the wilderness",
+        "ref": "Numbers 21:6–9; John 3:14",
+        "story": "Whoever looked at the bronze serpent lived, and Jesus applied the image to himself. Looking, not treating, was the cure."
       }
     ]
   },
   {
-    "id": 90,
+    "id": 88,
     "ref": "2 Chronicles 20:17",
     "book": "2 Chronicles",
     "category": "courage-protection",
@@ -21243,8 +21237,8 @@ const BIBLE_VERSES = [
       "NKJV": "You will not need to fight in this battle. Position yourselves, stand still and see the salvation of the Lord, who is with you... Do not fear or be dismayed; tomorrow go out against them, for the Lord is with you."
     },
     "dynamicContext": {
-      "chapterTitle": "2 Chronicles 20 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 2 Chronicles 20:17 revealing God's covenant faithfulness.",
+      "chapterTitle": "2 Chronicles 20 — The battle is not yours",
+      "chapterSummary": "Jehoshaphat, facing a coalition he cannot beat, prays that he does not know what to do but his eyes are on God — and sends the singers out in front of the army.",
       "versions": {
         "NIV": {
           "before": [
@@ -21386,84 +21380,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in 2 Chronicles 20:17.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in 2 Chronicles 20:17.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in 2 Chronicles 20:17.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in 2 Chronicles 20:17."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in 2 Chronicles 20:17."
+          "strongs": "H3444",
+          "word": "יְשׁוּעָה",
+          "transliteration": "yᵉshûwʻâh",
+          "pronunciation": "yesh-oo'-aw",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "salvation",
+          "root": "feminine passive participle of H3467 (יָשַׁע);",
+          "definition": "something saved, i.e. (abstractly) deliverance; hence, aid, victory, prosperity",
+          "usageInPassage": "Rendered “the victory of” in this passage — noun, feminine, singular."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H3320",
+          "word": "יָצַב",
+          "transliteration": "yâtsab",
+          "pronunciation": "yaw-tsab'",
+          "partOfSpeech": "Verb, hithpael, imperative",
+          "matchedEnglish": "stand",
+          "root": "a primitive root;",
+          "definition": "to place (any thing so as to stay); reflexively, to station, offer, continue",
+          "usageInPassage": "Rendered “take your stand” in this passage — verb, hithpael, imperative."
+        },
+        {
+          "strongs": "H2865",
+          "word": "חָתַת",
+          "transliteration": "châthath",
+          "pronunciation": "khaw-thath'",
+          "partOfSpeech": "Verb, niphal",
+          "matchedEnglish": "dismayed",
+          "root": "a primitive root;",
+          "definition": "properly, to prostrate; hence, to break down, either (literally) by violence, or (figuratively) by confusion and fear",
+          "usageInPassage": "Rendered “you be dismayed” in this passage — verb, niphal."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, 2 Chronicles 20:17 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of 2 Chronicles 20:17 in Biblical Hebrew sits on יְשׁוּעָה (yᵉshûwʻâh) “something saved”, יָצַב (yâtsab) “to place (any thing so as to stay)” and חָתַת (châthath) “to prostrate”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "You will not have to fight this battle. Take up your positions; stand firm and see the deliverance the LORD will give you — Grace Revelation",
-      "quote": "Under the new covenant of grace, 2 Chronicles 20:17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 2 Chronicles 20:17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "You will not have to fight this battle. Take up your positions; stand firm and see the deliverance the LORD will give you",
+      "quote": "You will not have to fight this battle — stated before the outcome was visible.",
+      "graceTakeaway": "Standing firm is sometimes the whole assignment."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of 2 Chronicles 20:17",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of 2 Chronicles 20:17 that God's covenant never fails those who trust His goodness."
+        "era": "Exodus",
+        "title": "Standing still at the edge of the sea",
+        "character": "Israel at the Red Sea",
+        "ref": "Exodus 14:13–14",
+        "story": "Moses told a trapped people to stand firm and see the deliverance of the LORD, who would fight for them while they were silent. They walked through on dry ground."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of 2 Chronicles 20:17",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of 2 Chronicles 20:17 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "An army destroyed overnight without a battle",
+        "character": "Sennacherib's siege lifted",
+        "ref": "2 Kings 19:32–36",
+        "story": "Isaiah said the king of Assyria would not shoot an arrow there, and the camp was struck during the night. Jerusalem never engaged."
       }
     ]
   },
   {
-    "id": 91,
+    "id": 89,
     "ref": "1 John 4:4",
     "book": "1 John",
     "category": "courage-protection",
@@ -21481,8 +21481,8 @@ const BIBLE_VERSES = [
       "NKJV": "You are of God, little children, and have overcome them, because He who is in you is greater than he who is in the world."
     },
     "dynamicContext": {
-      "chapterTitle": "1 John 4 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of 1 John 4:4 revealing God's covenant faithfulness.",
+      "chapterTitle": "1 John 4 — God is love",
+      "chapterSummary": "Spirits are to be tested by what they confess about Christ; love comes from God, perfect love drives out fear, and we love only because he loved first.",
       "versions": {
         "NIV": {
           "before": [
@@ -21624,84 +21624,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in 1 John 4:4.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in 1 John 4:4.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in 1 John 4:4.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in 1 John 4:4."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of 1 John 4:4."
+          "strongs": "G5040",
+          "word": "τεκνίον",
+          "transliteration": "tekníon",
+          "pronunciation": "tekníon",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "children",
+          "root": "diminutive of G5043 (τέκνον);",
+          "definition": "an infant, i.e. (plural figuratively) darlings (Christian converts)",
+          "usageInPassage": "Rendered “little children,” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3528",
+          "word": "νικάω",
+          "transliteration": "nikáō",
+          "pronunciation": "nikáō",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "overcome",
+          "root": "from G3529 (νίκη);",
+          "definition": "to subdue (literally or figuratively)",
+          "usageInPassage": "Rendered “have overcome” in this passage — verb."
+        },
+        {
+          "strongs": "G2889",
+          "word": "κόσμος",
+          "transliteration": "kósmos",
+          "pronunciation": "kósmos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "world",
+          "root": "probably from the base of G2865 (κομίζω);",
+          "definition": "orderly arrangement, i.e. decoration; by implication, the world (in a wide or narrow sense, including its inhabitants, literally or figuratively (morally))",
+          "usageInPassage": "Rendered “world.” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, 1 John 4:4 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of 1 John 4:4 in Koine Greek sits on τεκνίον (tekníon) “an infant”, νικάω (nikáō) “to subdue (literally or figuratively)” and κόσμος (kósmos) “orderly arrangement”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The one who is in you is greater than the one who is in the world — Grace Revelation",
-      "quote": "Under the new covenant of grace, 1 John 4:4 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in 1 John 4:4. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The one who is in you is greater than the one who is in the world",
+      "quote": "Greater is the one in you — a comparison, which settles the contest before it starts.",
+      "graceTakeaway": "The question is size, and it has been answered."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Valley of Elah",
-        "title": "David Toppling Goliath with a Sling — Testimony of 1 John 4:4",
-        "character": "Young David",
-        "ref": "1 Samuel 17:32–50",
-        "story": "Armed only with a shepherd's staff and five smooth stones, David charged the armored giant, declaring that the battle belongs to Yahweh. This historical breakthrough vividly illustrates the living truth of 1 John 4:4 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "A giant addressed in the name of the LORD of hosts",
+        "character": "David at Elah",
+        "ref": "1 Samuel 17:45–47",
+        "story": "David told Goliath he came in the name of the LORD of hosts, and that the battle was the LORD's. The size difference was not the operative fact."
       },
       {
-        "era": "Old Testament / Persian Empire",
-        "title": "Daniel Preserved in the Lions' Den — Living Reality of 1 John 4:4",
-        "character": "Daniel",
-        "ref": "Daniel 6:10–23",
-        "story": "Cast into a pit of ravenous lions for his devotion to God, Daniel was found unhurt at dawn because the Lord sent His angel to seal the lions' mouths. Just as God demonstrated His mighty hand in this account, He confirms the promise of 1 John 4:4 in your daily walk today."
+        "era": "Early Church",
+        "title": "A sorcerer's grip broken on an island",
+        "character": "Paul and Elymas at Paphos",
+        "ref": "Acts 13:6–12",
+        "story": "Elymas opposed the message and Paul confronted him directly, and the proconsul believed. The greater power was present in the room."
       }
     ]
   },
   {
-    "id": 92,
+    "id": 90,
     "ref": "Nehemiah 8:10",
     "book": "Nehemiah",
     "category": "joy-presence",
@@ -21719,8 +21725,8 @@ const BIBLE_VERSES = [
       "NKJV": "Then he said to them, 'Go your way, eat the fat, drink the sweet, and send portions to those for whom nothing is prepared; for this day is holy to our Lord. Do not sorrow, for the joy of the Lord is your strength.'"
     },
     "dynamicContext": {
-      "chapterTitle": "Nehemiah 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Nehemiah 8:10 revealing God's covenant faithfulness.",
+      "chapterTitle": "Nehemiah 8 — The joy of the LORD is your strength",
+      "chapterSummary": "Ezra reads the Law from daybreak at the Water Gate while Levites explain it; the people weep at what they hear, and are told to feast instead, because the day is holy.",
       "versions": {
         "NIV": {
           "before": [
@@ -21862,84 +21868,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Nehemiah 8:10.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Nehemiah 8:10.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Nehemiah 8:10.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Nehemiah 8:10."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Nehemiah 8:10."
+          "strongs": "H4477",
+          "word": "מַמְתַּק",
+          "transliteration": "mamtaq",
+          "pronunciation": "mam-tak'",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "sweet things",
+          "root": "from H4985 (מָתַק);",
+          "definition": "something sweet (literally or figuratively)",
+          "usageInPassage": "Rendered “sweet things” in this passage — noun, masculine, plural."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H2304",
+          "word": "חֶדְוָה",
+          "transliteration": "chedvâh",
+          "pronunciation": "khed-vaw'",
+          "partOfSpeech": "Noun, feminine, singular",
+          "matchedEnglish": "joy of",
+          "root": "from H2302 (חָדָה);",
+          "definition": "rejoicing",
+          "usageInPassage": "Rendered “the joy of” in this passage — noun, feminine, singular."
+        },
+        {
+          "strongs": "H4924",
+          "word": "מַשְׁמָן",
+          "transliteration": "mashmân",
+          "pronunciation": "mash-mawn'",
+          "partOfSpeech": "Noun, masculine, plural",
+          "matchedEnglish": "fat foods",
+          "root": "from H8080 (שָׁמַן);",
+          "definition": "fat, i.e. (literally and abstractly) fatness; but usually (figuratively and concretely) a rich dish, a fertile field, a robust man",
+          "usageInPassage": "Rendered “fat foods” in this passage — noun, masculine, plural."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Nehemiah 8:10 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Nehemiah 8:10 in Biblical Hebrew sits on מַמְתַּק (mamtaq) “something sweet (literally or figuratively)”, חֶדְוָה (chedvâh) “rejoicing” and מַשְׁמָן (mashmân) “fat”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "Do not grieve, for the joy of the LORD is your strength — Grace Revelation",
-      "quote": "Under the new covenant of grace, Nehemiah 8:10 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Nehemiah 8:10. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "Do not grieve, for the joy of the LORD is your strength",
+      "quote": "Joy is named as strength, which makes gladness practical rather than decorative.",
+      "graceTakeaway": "Joy is not the reward for strength; it is the source of it."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Monarchy",
-        "title": "David Dancing Before the Ark — Testimony of Nehemiah 8:10",
-        "character": "King David",
-        "ref": "2 Samuel 6:12–19",
-        "story": "When the Ark of God was brought into Jerusalem, David cast aside his royal robes and danced before Yahweh with all his might. Unshackled by religious decorum, he discovered that genuine joy is found in God's immediate manifest presence. This historical breakthrough vividly illustrates the living truth of Nehemiah 8:10 that God's covenant never fails those who trust His goodness."
+        "era": "Return from Exile",
+        "title": "A holy day and a command to feast",
+        "character": "Nehemiah and Ezra",
+        "ref": "Nehemiah 8:9–12",
+        "story": "The people were told to stop weeping, eat rich food, send portions to those with nothing, and treat joy as their strength. Gladness was the instruction."
       },
       {
-        "era": "New Testament / Apostolic Epistles",
-        "title": "Paul's Unshakable Joy in Prison — Living Reality of Nehemiah 8:10",
-        "character": "The Apostle Paul",
-        "ref": "Philippians 4:4–13",
-        "story": "Chained in a Roman dungeon, Paul penned the epistle of triumphant joy, proclaiming that through Christ who infuses him with divine energy, fullness of joy transcends all external circumstances. Just as God demonstrated His mighty hand in this account, He confirms the promise of Nehemiah 8:10 in your daily walk today."
+        "era": "Divided Kingdom",
+        "title": "Singers sent out ahead of the army",
+        "character": "Jehoshaphat's choir",
+        "ref": "2 Chronicles 20:20–22",
+        "story": "He appointed men to sing to the LORD in holy attire at the head of the army, and as they began to sing the ambushes were set. Praise went first."
       }
     ]
   },
   {
-    "id": 93,
+    "id": 91,
     "ref": "Psalm 23:1",
     "book": "Psalms",
     "category": "provision-abundance",
@@ -21957,8 +21969,8 @@ const BIBLE_VERSES = [
       "NKJV": "The Lord is my shepherd; I shall not want."
     },
     "dynamicContext": {
-      "chapterTitle": "Psalm 23 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Psalm 23:1 revealing God's covenant faithfulness.",
+      "chapterTitle": "Psalm 23 — The LORD is my shepherd",
+      "chapterSummary": "Six verses that move from pasture to valley to banqueting table: the shepherd who restores also sets a table in front of enemies, and the psalm ends at home in the house of the LORD.",
       "versions": {
         "NIV": {
           "before": [
@@ -22100,84 +22112,79 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Biblical Hebrew (Old Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Proclaims God's [covenant lovingkindness]{H2617} and [supernatural peace]{H7965} in Psalm 23:1.",
-        "TPT": "Unveils God's [unfailing mercy]{H2617} and [divine wholeness]{H7965} in Psalm 23:1.",
-        "NLT": "Guarantees God's [faithful love]{H2617} and [abundant peace]{H7965} in Psalm 23:1.",
-        "NASB": "Establishes God's [lovingkindness]{H2617} and [covenant shalom]{H7965} in Psalm 23:1."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "H2617",
-          "word": "חֶסֶד",
-          "transliteration": "ḥeseḏ (chesed)",
-          "pronunciation": "kheh'-sed",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "lovingkindness / unfailing mercy",
-          "root": "Ardent, loyal, unbreakable covenant devotion",
-          "definition": "Steadfast love, unfailing covenant mercy, relentless favor that never abandons its object.",
-          "usageInPassage": "The bedrock guarantee of God's character in Psalm 23:1."
+          "strongs": "H2637",
+          "word": "חָסֵר",
+          "transliteration": "châçêr",
+          "pronunciation": "khaw-sare'",
+          "partOfSpeech": "Verb, qal, imperfect",
+          "matchedEnglish": "lack",
+          "root": "a primitive root;",
+          "definition": "to lack; by implication, to fail, want, lessen",
+          "usageInPassage": "Rendered “I lack” in this passage — verb, qal, imperfect."
         },
         {
-          "strongs": "H7965",
-          "word": "שָׁלוֹם",
-          "transliteration": "šālôm (shalom)",
-          "pronunciation": "shaw-lome'",
-          "partOfSpeech": "Noun Masculine",
-          "matchedEnglish": "peace / wholeness",
-          "root": "From shalam (to make complete, sound, whole, restore)",
-          "definition": "Completeness, soundness, health, safety, prosperity, total absence of disturbance; nothing broken and nothing missing.",
-          "usageInPassage": "The atmospheric peace and provision given by Yahweh."
+          "strongs": "H7462",
+          "word": "רָעָה",
+          "transliteration": "râʻâh",
+          "pronunciation": "raw-aw'",
+          "partOfSpeech": "Verb, qal, participle",
+          "matchedEnglish": "shepherd",
+          "root": "a primitive root;",
+          "definition": "to tend a flock; i.e. pasture it; intransitively, to graze (literally or figuratively); generally to rule; by extension, to associate with (as a friend)",
+          "usageInPassage": "Rendered “is shepherd my” in this passage — verb, qal, participle."
         }
       ],
-      "theologicalSummary": "In Biblical Hebrew, Psalm 23:1 carries the full weight of covenant certainty ('Hesed' & 'Shalom'), finding its ultimate 'Yes and Amen' in Christ Jesus."
+      "theologicalSummary": "The weight of Psalm 23:1 in Biblical Hebrew sits on חָסֵר (châçêr) “to lack” and רָעָה (râʻâh) “to tend a flock”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "The LORD is my shepherd, I lack nothing — Grace Revelation",
-      "quote": "Under the new covenant of grace, Psalm 23:1 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Psalm 23:1. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "The LORD is my shepherd, I lack nothing",
+      "quote": "I lack nothing follows from the LORD is my shepherd — the second clause depends on the first.",
+      "graceTakeaway": "Sufficiency is a consequence of who is shepherding."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Patriarchal Era",
-        "title": "Isaac Reaping a Hundredfold in Famine — Testimony of Psalm 23:1",
-        "character": "Isaac",
-        "ref": "Genesis 26:1–14",
-        "story": "During a severe drought, Isaac obeyed God and sowed in dry ground. That same year, Yahweh blessed him so abundantly that he reaped a hundredfold harvest and prospered exceedingly. This historical breakthrough vividly illustrates the living truth of Psalm 23:1 that God's covenant never fails those who trust His goodness."
+        "era": "United Monarchy",
+        "title": "A shepherd boy who knew the work from the inside",
+        "character": "David",
+        "ref": "1 Samuel 16:11–13",
+        "story": "David was out with the sheep when Samuel came, and was anointed with his brothers watching. He wrote about shepherding from having done it."
       },
       {
-        "era": "Gospels / Ministry of Jesus",
-        "title": "The Feeding of the Five Thousand — Living Reality of Psalm 23:1",
-        "character": "Jesus & The Disciples",
-        "ref": "Mark 6:35–44",
-        "story": "In a barren wilderness with hungry thousands, Jesus took five small loaves and two fish, blessed them, and fed the multitudes with twelve overflowing baskets left over. Just as God demonstrated His mighty hand in this account, He confirms the promise of Psalm 23:1 in your daily walk today."
+        "era": "Gospels",
+        "title": "Sheep without a shepherd",
+        "character": "Jesus seeing the crowds",
+        "ref": "Mark 6:34",
+        "story": "He had gone away to rest, saw the crowd, and had compassion because they were like sheep without a shepherd. He began to teach them many things."
       }
     ]
   },
   {
-    "id": 94,
+    "id": 92,
     "ref": "Matthew 8:16–17",
     "book": "Matthew",
     "category": "healing-renewal",
@@ -22195,8 +22202,8 @@ const BIBLE_VERSES = [
       "NKJV": "When evening had come, they brought to Him many who were demon-possessed. And He cast out the spirits with a word, and healed all who were sick, that it might be fulfilled which was spoken by Isaiah the prophet, saying: 'He Himself took our infirmities and bore our sicknesses.'"
     },
     "dynamicContext": {
-      "chapterTitle": "Matthew 8 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Matthew 8:16–17 revealing God's covenant faithfulness.",
+      "chapterTitle": "Matthew 8 — Authority over sickness and storm",
+      "chapterSummary": "A leper, a centurion's servant and Peter's mother-in-law are healed, a storm is silenced with a word, and Matthew reads it all through Isaiah's suffering servant.",
       "versions": {
         "NIV": {
           "before": [
@@ -22338,84 +22345,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Matthew 8:16–17.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Matthew 8:16–17.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Matthew 8:16–17.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Matthew 8:16–17."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Matthew 8:16–17."
+          "strongs": "G4151",
+          "word": "πνεῦμα",
+          "transliteration": "pneûma",
+          "pronunciation": "pneûma",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "spirits",
+          "root": "from G4154 (πνέω);",
+          "definition": "a current of air, i.e. breath (blast) or a breeze; by analogy or figuratively, a spirit, i.e. (human) the rational soul, (by implication) vital principle, mental disposition, etc., or (superhuman) an angel, demon, or (divine) God, Christ's spirit, the Holy Spirit",
+          "usageInPassage": "Rendered “spirits” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G3554",
+          "word": "νόσος",
+          "transliteration": "nósos",
+          "pronunciation": "nósos",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "diseases",
+          "root": "of uncertain affinity;",
+          "definition": "a malady (rarely figuratively, of moral disability)",
+          "usageInPassage": "Rendered “our diseases” in this passage — noun."
+        },
+        {
+          "strongs": "G1139",
+          "word": "δαιμονίζομαι",
+          "transliteration": "daimonízomai",
+          "pronunciation": "daimonízomai",
+          "partOfSpeech": "Verb",
+          "matchedEnglish": "being demonised",
+          "root": "middle voice from G1142 (δαίμων);",
+          "definition": "to be exercised by a dæmon",
+          "usageInPassage": "Rendered “being demonised” in this passage — verb."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Matthew 8:16–17 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Matthew 8:16–17 in Koine Greek sits on πνεῦμα (pneûma) “a current of air”, νόσος (nósos) “a malady (rarely figuratively, of moral disability)” and δαιμονίζομαι (daimonízomai) “to be exercised by a dæmon”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "He took up our infirmities and bore our diseases — Grace Revelation",
-      "quote": "Under the new covenant of grace, Matthew 8:16–17 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Matthew 8:16–17. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "He took up our infirmities and bore our diseases",
+      "quote": "Matthew reads the healings through Isaiah: he took up our infirmities himself.",
+      "graceTakeaway": "He carried what he could have simply commanded away."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Jordan River",
-        "title": "Naaman Restored from Leprosy — Testimony of Matthew 8:16–17",
-        "character": "Naaman the Commander",
-        "ref": "2 Kings 5:1–14",
-        "story": "Dipping seven times in the Jordan River in obedience to the prophetic word, Naaman's leprous flesh was instantly cleansed and restored like that of a young child. This historical breakthrough vividly illustrates the living truth of Matthew 8:16–17 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "Healing everyone who was brought that evening",
+        "character": "Jesus at Capernaum",
+        "ref": "Matthew 8:16–17",
+        "story": "At evening they brought many, and he healed all who were sick, which Matthew reads as Isaiah fulfilled. He took the infirmities rather than merely removing them."
       },
       {
-        "era": "Gospels / Galilee",
-        "title": "The Woman Touching the Hem of Jesus's Garment — Living Reality of Matthew 8:16–17",
-        "character": "Jesus & The Faithful Woman",
-        "ref": "Luke 8:43–48",
-        "story": "After twelve years of chronic suffering and exhausting all her resources, she touched the fringe of Jesus's cloak in faith and was immediately made completely whole. Just as God demonstrated His mighty hand in this account, He confirms the promise of Matthew 8:16–17 in your daily walk today."
+        "era": "Gospels",
+        "title": "A leper touched instead of avoided",
+        "character": "The man with leprosy",
+        "ref": "Mark 1:40–42",
+        "story": "He said that if Jesus was willing he could make him clean, and Jesus reached out and touched him, which no one did. He was willing."
       }
     ]
   },
   {
-    "id": 95,
+    "id": 93,
     "ref": "Ephesians 5:8–11",
     "book": "Ephesians",
     "category": "wisdom-word",
@@ -22433,8 +22446,8 @@ const BIBLE_VERSES = [
       "NKJV": "For you were once darkness, but now you are light in the Lord. Walk as children of light (for the fruit of the Spirit is in all goodness, righteousness, and truth)."
     },
     "dynamicContext": {
-      "chapterTitle": "Ephesians 5 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Ephesians 5:8–11 revealing God's covenant faithfulness.",
+      "chapterTitle": "Ephesians 5 — Walk in love",
+      "chapterSummary": "Imitating God as beloved children, leaving darkness for light, being filled with the Spirit, and a picture of marriage held up against Christ and the church.",
       "versions": {
         "NIV": {
           "before": [
@@ -22576,84 +22589,90 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Ephesians 5:8–11.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Ephesians 5:8–11.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Ephesians 5:8–11.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Ephesians 5:8–11."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Ephesians 5:8–11."
+          "strongs": "G1343",
+          "word": "δικαιοσύνη",
+          "transliteration": "dikaiosýnē",
+          "pronunciation": "dikaiosýnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "righteousness",
+          "root": "from G1342 (δίκαιος);",
+          "definition": "equity (of character or act); specially (Christian) justification",
+          "usageInPassage": "Rendered “in righteousness” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4790",
+          "word": "συγκοινωνέω",
+          "transliteration": "synkoinōnéō",
+          "pronunciation": "synkoinōnéō",
+          "partOfSpeech": "Verb, present, active, imperative",
+          "matchedEnglish": "fellowship with",
+          "root": "from G4862 (σύν) and G2841 (κοινωνέω);",
+          "definition": "to share in company with, i.e. co-participate in",
+          "usageInPassage": "Rendered “do have fellowship with” in this passage — verb, present, active, imperative."
+        },
+        {
+          "strongs": "G0019",
+          "word": "ἀγαθωσύνη",
+          "transliteration": "agathōsýnē",
+          "pronunciation": "agathōsýnē",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "goodness",
+          "root": "from G18 (ἀγαθός);",
+          "definition": "goodness, i.e. virtue or beneficence",
+          "usageInPassage": "Rendered “goodness” in this passage — noun."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Ephesians 5:8–11 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Ephesians 5:8–11 in Koine Greek sits on δικαιοσύνη (dikaiosýnē) “equity (of character or act)”, συγκοινωνέω (synkoinōnéō) “to share in company with” and ἀγαθωσύνη (agathōsýnē) “goodness”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "For you were once darkness, but now you are light in the Lord. Live as children of light — Grace Revelation",
-      "quote": "Under the new covenant of grace, Ephesians 5:8–11 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Ephesians 5:8–11. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "For you were once darkness, but now you are light in the Lord. Live as children of light",
+      "quote": "Once darkness, now light — the change is of substance, not behaviour.",
+      "graceTakeaway": "You are not told to become light but to live as what you are."
     },
     "caseStudiesList": [
       {
-        "era": "Old Testament / Kingdom of Israel",
-        "title": "Solomon Granted a Discerning Heart — Testimony of Ephesians 5:8–11",
-        "character": "King Solomon",
-        "ref": "1 Kings 3:5–14",
-        "story": "When invited by God to ask for anything, Solomon requested an understanding heart to discern good and evil. God granted him supreme wisdom along with wealth and honor. This historical breakthrough vividly illustrates the living truth of Ephesians 5:8–11 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A man who came at night and later carried the body",
+        "character": "Nicodemus",
+        "ref": "John 3:1–2; 19:38–42",
+        "story": "He first came to Jesus after dark with careful questions, and appears last carrying seventy-five pounds of spices in daylight. He ended in the open."
       },
       {
-        "era": "New Testament / Apostolic Missions",
-        "title": "The Bereans Searching the Scriptures Daily — Living Reality of Ephesians 5:8–11",
-        "character": "The Berean Believers",
-        "ref": "Acts 17:10–12",
-        "story": "The noble believers in Berea examined the scriptures with eager openness each day to test and verify the gospel, grounding their faith in the living Word. Just as God demonstrated His mighty hand in this account, He confirms the promise of Ephesians 5:8–11 in your daily walk today."
+        "era": "Early Church",
+        "title": "Bonfires of expensive books in Ephesus",
+        "character": "The believers at Ephesus",
+        "ref": "Acts 19:18–20",
+        "story": "Those who had practised magic burned their scrolls publicly, at a cost of fifty thousand pieces of silver. The old life was disposed of in daylight."
       }
     ]
   },
   {
-    "id": 96,
+    "id": 94,
     "ref": "Colossians 2:13–15",
     "book": "Colossians",
     "category": "identity-grace",
@@ -22671,8 +22690,8 @@ const BIBLE_VERSES = [
       "NKJV": "And you, being dead in your trespasses and the uncircumcision of your flesh, He has made alive together with Him, having forgiven you all trespasses... Having disarmed principalities and powers, He made a public spectacle of them, triumphing over them in it."
     },
     "dynamicContext": {
-      "chapterTitle": "Colossians 2 — The Sovereign Deliverance & Living Hope of God",
-      "chapterSummary": "Explore the surrounding biblical flow of Colossians 2:13–15 revealing God's covenant faithfulness.",
+      "chapterTitle": "Colossians 2 — Nailed to the cross",
+      "chapterSummary": "Rooted and built up in Christ, in whom the fullness of deity dwells bodily; the record of debt is nailed to the cross, and shadows give way to the substance.",
       "versions": {
         "NIV": {
           "before": [
@@ -22814,79 +22833,85 @@ const BIBLE_VERSES = [
     },
     "lexicon": {
       "originalLanguage": "Koine Greek (New Testament)",
-      "highlightedVerseTemplates": {
-        "NIV": "Reveals God's [unconditional grace]{G5485} and [supernatural power]{G1411} in Colossians 2:13–15.",
-        "TPT": "Unveils the radiant [glory of grace]{G5485} and [indestructible life]{G2222} in Colossians 2:13–15.",
-        "NLT": "Declares God's [gift of grace]{G5485} and [divine energy]{G1411} in Colossians 2:13–15.",
-        "NASB": "Proclaims the [riches of grace]{G5485} and [divine power]{G1411} in Colossians 2:13–15."
-      },
+      "highlightedVerseTemplates": {},
       "keyTerms": [
         {
-          "strongs": "G5485",
-          "word": "χάρις",
-          "transliteration": "charis (grace)",
-          "pronunciation": "khar'-ece",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "grace / unconditional favor",
-          "root": "From chairo (to rejoice, be glad)",
-          "definition": "Unmerited divine favor, the finished gift of God's goodwill in Christ granting what human effort could never earn.",
-          "usageInPassage": "The primary operational foundation of Colossians 2:13–15."
+          "strongs": "G5498",
+          "word": "χειρόγραφον",
+          "transliteration": "cheirógraphon",
+          "pronunciation": "cheirógraphon",
+          "partOfSpeech": "Noun",
+          "matchedEnglish": "handwriting",
+          "root": "neuter of a compound of G5495 (χείρ) and G1125 (γράφω);",
+          "definition": "something hand-written (\"chirograph\"), i.e. a manuscript (specially, a legal document or bond (figuratively))",
+          "usageInPassage": "Rendered “handwriting” in this passage — noun."
         },
         {
-          "strongs": "G1411",
-          "word": "δύναμις",
-          "transliteration": "dynamis (power / ability)",
-          "pronunciation": "doo'-nam-is",
-          "partOfSpeech": "Noun Feminine",
-          "matchedEnglish": "power / divine ability",
-          "root": "From dynamai (to be capable, have inherent strength)",
-          "definition": "Supernatural miraculous ability, spiritual energy imparted by the Holy Spirit to accomplish God's will.",
-          "usageInPassage": "Supernatural divine enablement residing in the believer."
+          "strongs": "G4338",
+          "word": "προσηλόω",
+          "transliteration": "prosēlóō",
+          "pronunciation": "prosēlóō",
+          "partOfSpeech": "Verb, aorist, active, participle",
+          "matchedEnglish": "having nailed",
+          "root": "from G4314 (πρός) and a derivative of G2247 (ἧλος);",
+          "definition": "to peg to, i.e. spike fast",
+          "usageInPassage": "Rendered “having nailed” in this passage — verb, aorist, active, participle."
+        },
+        {
+          "strongs": "G4806",
+          "word": "συζωοποιέω",
+          "transliteration": "syzōopoiéō",
+          "pronunciation": "syzōopoiéō",
+          "partOfSpeech": "Verb, aorist, active, indicative",
+          "matchedEnglish": "made alive together",
+          "root": "from G4862 (σύν) and G2227 (ζωοποιέω);",
+          "definition": "to reanimate conjointly with (figuratively)",
+          "usageInPassage": "Rendered “He made alive together” in this passage — verb, aorist, active, indicative."
         }
       ],
-      "theologicalSummary": "In Koine Greek, Colossians 2:13–15 reveals that under the New Covenant, every promise is a gift of pure grace (charis) received through faith in Christ."
+      "theologicalSummary": "The weight of Colossians 2:13–15 in Koine Greek sits on χειρόγραφον (cheirógraphon) “something hand-written (\"chirograph\")”, προσηλόω (prosēlóō) “to peg to” and συζωοποιέω (syzōopoiéō) “to reanimate conjointly with (figuratively)”. Definitions are Strong’s; the original-language text is the STEPBible amalgamated edition."
     },
     "crossReferencesList": [
       {
         "ref": "Romans 8:31–32",
         "text": "If God is for us, who can be against us? He who did not spare his own Son, will he not also graciously give us all things?",
-        "linkedVerseId": 14
+        "linkedVerseId": 63
       },
       {
         "ref": "2 Corinthians 1:20",
         "text": "For no matter how many promises God has made, they are 'Yes' in Christ.",
-        "linkedVerseId": 12
+        "linkedVerseId": null
       },
       {
         "ref": "Ephesians 1:3",
         "text": "Praise be to the God and Father of our Lord Jesus Christ, who has blessed us in the heavenly realms with every spiritual blessing in Christ.",
-        "linkedVerseId": 24
+        "linkedVerseId": null
       },
       {
         "ref": "Hebrews 13:5–6",
         "text": "Never will I leave you; never will I forsake you. So we say with confidence, 'The Lord is my helper; I will not be afraid.'",
-        "linkedVerseId": 19
+        "linkedVerseId": null
       }
     ],
     "paulEllisInsight": {
-      "theme": "He forgave us all our sins, having canceled the charge of our legal indebtedness... disarming the powers and authorities — Grace Revelation",
-      "quote": "Under the new covenant of grace, Colossians 2:13–15 is not an impossible demand on human willpower, but a blood-bought promise established and fulfilled in Christ Jesus.",
-      "graceTakeaway": "Because of Jesus's finished work at Calvary, you inherit every spiritual blessing in Colossians 2:13–15. You are secure, favored, righteous, and deeply cherished by your Heavenly Father."
+      "theme": "He forgave us all our sins, having canceled the charge of our legal indebtedness... disarming the powers and authorities",
+      "quote": "The charge against us was cancelled and nailed up publicly, and the powers disarmed with it.",
+      "graceTakeaway": "The record that accused you no longer exists to be consulted."
     },
     "caseStudiesList": [
       {
-        "era": "Gospels / Parables of Grace",
-        "title": "The Prodigal Son Restored by the Father — Testimony of Colossians 2:13–15",
-        "character": "The Father & The Younger Son",
-        "ref": "Luke 15:11–24",
-        "story": "Expecting judgment and servitude, the broken son was met by a running father who embraced him with tears, clothed him in the finest robe, and restored his sonship unconditionally. This historical breakthrough vividly illustrates the living truth of Colossians 2:13–15 that God's covenant never fails those who trust His goodness."
+        "era": "Gospels",
+        "title": "A debt of ten thousand talents cancelled outright",
+        "character": "The unforgiving servant's master",
+        "ref": "Matthew 18:23–27",
+        "story": "The servant asked for patience and time; the master cancelled the whole unpayable debt instead. The ledger was destroyed, not extended."
       },
       {
-        "era": "Old Testament / Egyptian Dynasty",
-        "title": "Joseph Elevating and Blessing His Brothers — Living Reality of Colossians 2:13–15",
-        "character": "Joseph & His Brothers",
-        "ref": "Genesis 45:1–15",
-        "story": "Instead of avenging his betrayal, Joseph wept with tender affection over his brothers, supplied them with the best land in Egypt, and proclaimed that God turned evil into salvation. Just as God demonstrated His mighty hand in this account, He confirms the promise of Colossians 2:13–15 in your daily walk today."
+        "era": "Early Church",
+        "title": "Chains falling off in an inner cell",
+        "character": "Paul and Silas at Philippi",
+        "ref": "Acts 16:25–26",
+        "story": "An earthquake shook the foundations, the doors flew open, and everyone's chains came loose. What held them was disarmed at once."
       }
     ]
   }

@@ -138,21 +138,19 @@
     elements = {
       html: document.documentElement,
       stickyHeader: document.getElementById('stickyHeader'),
-      heroOverview: document.getElementById('heroOverview'),
       btnHeroOpenStories: document.getElementById('btnHeroOpenStories'),
       bentoContainer: document.getElementById('bentoContainer'),
       categoryChips: document.getElementById('categoryChips'),
       favoritesFilterBtn: document.getElementById('favoritesFilterBtn'),
       favoritesCount: document.getElementById('favoritesCount'),
-      statDisplayedCount: document.getElementById('statDisplayedCount'),
-      statBookmarksCount: document.getElementById('statBookmarksCount'),
-      activeVersionLabel: document.getElementById('activeVersionLabel'),
       noResults: document.getElementById('noResults'),
       resetFiltersBtn: document.getElementById('resetFiltersBtn'),
       scrollToTopBtn: document.getElementById('scrollToTopBtn'),
       btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
       btnShuffleVerses: document.getElementById('btnShuffleVerses'),
       mobileVersionSelect: document.getElementById('mobileVersionSelect'),
+      chipScrollPrev: document.getElementById('chipScrollPrev'),
+      chipScrollNext: document.getElementById('chipScrollNext'),
 
       // Typography & Reading Settings Flyout Drawer DOM
       typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
@@ -179,7 +177,6 @@
       readerCategoryBadge: document.getElementById('readerCategoryBadge'),
       readerChapterTitle: document.getElementById('readerChapterTitle'),
       readerChapterSummary: document.getElementById('readerChapterSummary'),
-      readerActiveVerBadge: document.getElementById('readerActiveVerBadge'),
       readerInlinePassage: document.getElementById('readerInlinePassage'),
       readerTranslationsGrid: document.getElementById('readerTranslationsGrid'),
       readerGraceTheme: document.getElementById('readerGraceTheme'),
@@ -194,9 +191,7 @@
       readerTptFootnotes: document.getElementById('readerTptFootnotes'),
       readerCrossRefsGrid: document.getElementById('readerCrossRefsGrid'),
       readerCloseBtn: document.getElementById('readerCloseBtn'),
-      btnOpenStoryFromReader: document.getElementById('btnOpenStoryFromReader'),
-      btnReaderPrev: document.getElementById('btnReaderPrev'),
-      btnReaderNext: document.getElementById('btnReaderNext'),
+      btnReaderTypeSettings: document.getElementById('btnReaderTypeSettings'),
 
       // Story Overlay DOM
       storyOverlay: document.getElementById('storyOverlay'),
@@ -204,6 +199,7 @@
       storyContainer: document.getElementById('storyContainer'),
       storyContentWrapper: document.getElementById('storyContentWrapper'),
       storyPassageText: document.getElementById('storyPassageText'),
+      storyCategoryMark: document.getElementById('storyCategoryMark'),
       storyPassageRef: document.getElementById('storyPassageRef'),
       storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
       storyCloseBtn: document.getElementById('storyCloseBtn'),
@@ -327,17 +323,14 @@
     }
     state.shuffledVerses = pool;
     render();
-    showToast('Verses shuffled into dynamic order');
+    showToast('Verses shuffled');
   }
 
   // --- Render Bento Grid (Vibrant Tints & Pure Scripture Focus) ---
   function render() {
     const filtered = getFilteredVerses();
 
-    if (elements.statDisplayedCount) elements.statDisplayedCount.textContent = filtered.length;
-    if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
     if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
-    if (elements.activeVersionLabel) elements.activeVersionLabel.textContent = state.version;
 
     if (filtered.length === 0) {
       if (elements.bentoContainer) elements.bentoContainer.style.display = 'none';
@@ -557,8 +550,34 @@
         btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
       });
 
-      render();
+      // Changing translation does not change *which* cards are on screen, so
+      // rebuilding all 96 (and re-running createIcons over them) made the swap
+      // look like a hard jump. Cross-fade the text in place instead.
+      swapVerseTexts();
     }
+  }
+
+  function swapVerseTexts() {
+    const grid = elements.bentoContainer;
+    if (!grid) return;
+
+    const paint = () => {
+      grid.querySelectorAll('.bento-card').forEach(card => {
+        const verse = BIBLE_VERSES.find(v => v.id === parseInt(card.dataset.id, 10));
+        const target = card.querySelector('.scripture-text');
+        if (verse && target) {
+          target.textContent = `"${verse.translations[state.version] || verse.translations.NIV}"`;
+        }
+      });
+    };
+
+    if (reducedMotion()) { paint(); return; }
+
+    grid.classList.add('is-swapping');
+    window.setTimeout(() => {
+      paint();
+      requestAnimationFrame(() => grid.classList.remove('is-swapping'));
+    }, 150);
   }
 
   // ==========================================================================
@@ -717,7 +736,7 @@
   function renderReaderGraceInsight(verse) {
     if (verse.paulEllisInsight) {
       if (elements.readerGraceTheme) elements.readerGraceTheme.textContent = verse.paulEllisInsight.theme;
-      if (elements.readerGraceQuote) elements.readerGraceQuote.textContent = `"${verse.paulEllisInsight.quote}"`;
+      if (elements.readerGraceQuote) elements.readerGraceQuote.textContent = verse.paulEllisInsight.quote;
       if (elements.readerGraceTakeaway) elements.readerGraceTakeaway.textContent = verse.paulEllisInsight.graceTakeaway;
     }
   }
@@ -879,7 +898,7 @@
             
             <div class="lexicon-usage-field">
               <i data-lucide="sparkles" class="lex-icon"></i>
-              <strong class="lex-label">Covenant Context:</strong>
+              <strong class="lex-label">In this verse:</strong>
               <span>${escapeHtml(term.usageInPassage)}</span>
             </div>
           </div>
@@ -912,15 +931,19 @@
 
   function renderReaderCrossRefs(verse) {
     if (verse.crossReferencesList && verse.crossReferencesList.length && elements.readerCrossRefsGrid) {
-      elements.readerCrossRefsGrid.innerHTML = verse.crossReferencesList.map(cr => `
-        <div class="cross-ref-card" data-linked-id="${cr.linkedVerseId}">
+      // Only passages that are themselves in the collection can be opened; the
+      // rest are citations, and must not look like buttons that do nothing.
+      elements.readerCrossRefsGrid.innerHTML = verse.crossReferencesList.map(cr => {
+        const linkable = Number.isInteger(cr.linkedVerseId);
+        return `
+        <div class="cross-ref-card${linkable ? ' is-linkable' : ''}"${linkable ? ` data-linked-id="${cr.linkedVerseId}" role="button" tabindex="0"` : ''}>
           <div class="cross-ref-title">
-            <i data-lucide="link-2" style="width: 13px; height: 13px;"></i>
+            <i data-lucide="${linkable ? 'link-2' : 'book-open'}" style="width: 13px; height: 13px;"></i>
             ${escapeHtml(cr.ref)}
           </div>
           <p class="cross-ref-text">${escapeHtml(cr.text)}</p>
         </div>
-      `).join('');
+      `;}).join('');
     }
   }
 
@@ -964,38 +987,115 @@
   }
 
   // Cool Text Effects Generator
-  function formatStoryTextWithEffects(rawText, styleName) {
-    // Keywords for dynamic theological emphasis
-    const powerWords = [
-      'joy', 'presence', 'life', 'grace', 'righteous', 'righteousness', 
-      'pleasures', 'glory', 'peace', 'shalom', 'abundance', 'plenty', 
-      'strength', 'power', 'love', 'mercy', 'favor', 'blessing', 'blessed', 
-      'inheritance', 'covenant', 'everlasting', 'eternal', 'overcome', 
-      'victory', 'triumphant', 'healed', 'whole', 'free', 'freedom', 'rest', 
-      'light', 'wisdom', 'hope', 'savior', 'redeem', 'redeemed', 'counselor', 
-      'majesty', 'sanctuary', 'shepherd', 'rock', 'shield', 'fortress'
-    ];
+  // Words that should never carry emphasis, however often they appear.
+  const STOPWORDS = new Set([
+    'the','and','for','you','your','with','that','this','from','have','has','had',
+    'will','shall','unto','they','them','their','there','then','than','when','who',
+    'whom','which','what','was','were','are','not','but','all','any','can','may',
+    'his','her','him','she','its','our','out','into','upon','over','under','also',
+    'him','one','two','let','yet','say','said','says','been','be','is','of','in',
+    'to','a','an','it','as','at','by','on','or','so','if','do','does','did','my',
+    'me','we','us','no','nor','off','up','down','out','about','because','while'
+  ]);
 
-    let words = rawText.split(/\s+/);
-    let formattedWords = words.map(w => {
-      const cleanW = w.toLowerCase().replace(/[^a-z]/g, '');
-      if (powerWords.includes(cleanW)) {
-        if (styleName === 'story-style-spacemono') {
-          return `<span class="fx-mono-glow">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-lora' || styleName === 'story-style-newsreader' || styleName === 'story-style-merriweather' || styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif' || styleName === 'story-style-instrument-serif') {
-          return `<span class="fx-italic">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-kinetic') {
-          return `<span class="fx-gradient">${escapeHtml(w)}</span>`;
-        } else if (styleName === 'story-style-swiss' || styleName === 'story-style-neobrutalism' || styleName === 'story-style-bricolage' || styleName === 'story-style-epilogue' || styleName === 'story-style-condensed' || styleName === 'story-style-anton' || styleName === 'story-style-outfit' || styleName === 'story-style-sora') {
-          return `<span class="fx-accent">${escapeHtml(w)}</span>`;
-        } else {
-          return `<span class="fx-scale">${escapeHtml(w)}</span>`;
-        }
+  const POWER_WORDS = new Set([
+    'joy','joyful','rejoice','presence','life','alive','grace','gracious','righteous',
+    'righteousness','pleasures','glory','glorious','peace','shalom','abundance','abundant',
+    'plenty','strength','strong','power','powerful','love','beloved','mercy','mercies',
+    'favor','favour','blessing','blessed','bless','inheritance','heir','covenant',
+    'everlasting','eternal','eternity','overcome','overcomes','victory','victorious',
+    'triumphant','triumph','healed','healing','whole','wholeness','free','freedom',
+    'rest','light','wisdom','hope','saviour','savior','redeem','redeemed','redemption',
+    'counselor','majesty','sanctuary','shepherd','rock','shield','fortress','refuge',
+    'faith','faithful','faithfulness','truth','holy','holiness','new','renewed','restore',
+    'restored','forgiven','forgiveness','saved','salvation','chosen','adopted','child',
+    'children','son','sons','daughter','daughters','kingdom','throne','name','word',
+    'spirit','christ','jesus','lord','god','father','satisfied','satisfy','fullness',
+    'overflow','increase','multiply','prosper','provide','provision','supply','never',
+    'forever','always','courage','courageous','fear','afraid','strengthen','uphold',
+    'delivered','deliver','rescue'
+  ]);
+
+  // Each typographic style gets a rotation of treatments rather than one flat
+  // colour, so a long verse reads with rhythm instead of as a single block.
+  const EFFECT_FAMILIES = {
+    'story-style-spacemono':        ['fx-mono-glow', 'fx-caps', 'fx-accent'],
+    'story-style-lora':             ['fx-italic', 'fx-scale', 'fx-caps'],
+    'story-style-newsreader':       ['fx-italic', 'fx-caps', 'fx-scale'],
+    'story-style-merriweather':     ['fx-italic', 'fx-scale', 'fx-accent'],
+    'story-style-fraunces':         ['fx-italic', 'fx-caps', 'fx-gradient'],
+    'story-style-dm-serif':         ['fx-italic', 'fx-gradient', 'fx-scale'],
+    'story-style-instrument-serif': ['fx-italic', 'fx-caps', 'fx-scale'],
+    'story-style-kinetic':          ['fx-gradient', 'fx-caps', 'fx-scale'],
+    'story-style-anton':            ['fx-gradient', 'fx-accent', 'fx-caps'],
+    'story-style-neobrutalism':     ['fx-accent', 'fx-caps', 'fx-scale'],
+    'story-style-condensed':        ['fx-accent', 'fx-caps', 'fx-gradient'],
+    'story-style-swiss':            ['fx-accent', 'fx-scale', 'fx-caps'],
+    'story-style-bricolage':        ['fx-accent', 'fx-gradient', 'fx-scale'],
+    'story-style-epilogue':         ['fx-accent', 'fx-caps', 'fx-scale'],
+    'story-style-outfit':           ['fx-scale', 'fx-accent', 'fx-gradient'],
+    'story-style-sora':             ['fx-scale', 'fx-gradient', 'fx-caps']
+  };
+
+  function formatStoryTextWithEffects(rawText, styleName, verse) {
+    const family = EFFECT_FAMILIES[styleName] || ['fx-accent', 'fx-scale', 'fx-italic'];
+
+    // The lexicon already curates the phrases that matter for THIS verse —
+    // better emphasis targets than any global keyword list.
+    const keyWords = new Set();
+    const terms = verse && verse.lexicon && verse.lexicon.keyTerms;
+    if (terms) {
+      terms.forEach(t => {
+        String(t.matchedEnglish || '').split(/[\/,;]/).forEach(phrase => {
+          phrase.trim().split(/\s+/).forEach(w => {
+            const c = w.toLowerCase().replace(/[^a-z]/g, '');
+            if (c.length > 3 && !STOPWORDS.has(c)) keyWords.add(c);
+          });
+        });
+      });
+    }
+
+    const words = rawText.split(/\s+/);
+    const clean = w => w.toLowerCase().replace(/[^a-z]/g, '');
+
+    // Space the emphasis out; three highlights in a row looks like a mistake.
+    const marked = new Array(words.length).fill(null);
+    let used = 0;
+    let lastIdx = -99;
+
+    words.forEach((w, i) => {
+      const c = clean(w);
+      if (!c || c.length < 4 || STOPWORDS.has(c)) return;
+      if (i - lastIdx < 3) return;
+      if (keyWords.has(c) || POWER_WORDS.has(c)) {
+        marked[i] = family[used % family.length];
+        used++;
+        lastIdx = i;
       }
-      return escapeHtml(w);
     });
 
-    return `"${formattedWords.join(' ')}"`;
+    // A long verse with nothing marked is the "wall of one colour" case. Fall
+    // back to its most substantial words so every long slide has some rhythm.
+    const target = words.length > 45 ? 4 : (words.length > 24 ? 3 : (words.length > 12 ? 2 : 1));
+    if (used < target) {
+      const candidates = words
+        .map((w, i) => ({ i, c: clean(w) }))
+        .filter(o => o.c.length > 4 && !STOPWORDS.has(o.c) && !marked[o.i])
+        .sort((a, b) => b.c.length - a.c.length);
+
+      for (const cand of candidates) {
+        if (used >= target) break;
+        if (marked.some((m, i) => m && Math.abs(i - cand.i) < 3)) continue;
+        marked[cand.i] = family[used % family.length];
+        used++;
+      }
+    }
+
+    const out = words.map((w, i) =>
+      marked[i] ? `<span class="${marked[i]}">${escapeHtml(w)}</span>` : escapeHtml(w)
+    );
+
+    return `"${out.join(' ')}"`;
   }
 
   // 6-Tier Adaptive Base Font Sizing based on character length
@@ -1122,7 +1222,13 @@
     const gradientMap = isDark ? darkCategoryGradients : categoryGradients;
     if (elements.storyBackdrop) elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
 
-    if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, styleName);
+    if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, styleName, verse);
+    // A small category mark gives a plain slide something to look at without
+    // decorating the scripture itself.
+    if (elements.storyCategoryMark) {
+      elements.storyCategoryMark.innerHTML =
+        `<i data-lucide="${verse.icon || 'sparkles'}"></i><span>${escapeHtml(verse.categoryLabel || '')}</span>`;
+    }
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
     if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
 
@@ -1351,6 +1457,9 @@
       });
     }
 
+    // 4b. Filter strip: make the overflow reachable without Shift+wheel.
+    setupChipScroller();
+
     // 5. Reset Filters Button
     if (elements.resetFiltersBtn) {
       elements.resetFiltersBtn.addEventListener('click', () => {
@@ -1510,39 +1619,24 @@
 
     // Cross-References Click (Jump to linked verse in reader)
     if (elements.readerCrossRefsGrid) {
+      const jump = (card) => {
+        const linkedId = parseInt(card.getAttribute('data-linked-id'), 10);
+        if (linkedId) openReaderLightbox(linkedId);
+      };
       elements.readerCrossRefsGrid.addEventListener('click', (e) => {
-        const card = e.target.closest('.cross-ref-card');
-        if (card) {
-          const linkedId = parseInt(card.getAttribute('data-linked-id'), 10);
-          if (linkedId) openReaderLightbox(linkedId);
-        }
+        const card = e.target.closest('.cross-ref-card.is-linkable');
+        if (card) jump(card);
+      });
+      elements.readerCrossRefsGrid.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const card = e.target.closest('.cross-ref-card.is-linkable');
+        if (card) { e.preventDefault(); jump(card); }
       });
     }
 
-    // Prev / Next Navigation in Reader
-    if (elements.btnReaderPrev) {
-      elements.btnReaderPrev.addEventListener('click', () => {
-        let prevId = state.activeReaderVerseId - 1;
-        if (prevId < 1) prevId = BIBLE_VERSES.length;
-        openReaderLightbox(prevId);
-      });
-    }
-
-    if (elements.btnReaderNext) {
-      elements.btnReaderNext.addEventListener('click', () => {
-        let nextId = state.activeReaderVerseId + 1;
-        if (nextId > BIBLE_VERSES.length) nextId = 1;
-        openReaderLightbox(nextId);
-      });
-    }
-
-    // Launch Story from Reader
-    if (elements.btnOpenStoryFromReader) {
-      elements.btnOpenStoryFromReader.addEventListener('click', () => {
-        const currId = state.activeReaderVerseId;
-        closeReaderLightbox();
-        openStoriesMode(currId);
-      });
+    // Typography settings, opened from inside the reader
+    if (elements.btnReaderTypeSettings) {
+      elements.btnReaderTypeSettings.addEventListener('click', openTypeSettings);
     }
 
     // 9. Scroll to top
@@ -1599,13 +1693,6 @@
         return;
       }
 
-      // Reader Modal Navigation
-      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
-        if (e.key === 'ArrowLeft' && elements.btnReaderPrev) elements.btnReaderPrev.click();
-        else if (e.key === 'ArrowRight' && elements.btnReaderNext) elements.btnReaderNext.click();
-        return;
-      }
-
       // Reader Navigation (the shortcuts panel advertises these)
       if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
         if (e.key === 'ArrowRight') {
@@ -1650,6 +1737,89 @@
     });
   }
 
+  // The filter strip scrolls horizontally but hid its scrollbar, so on desktop
+  // the only way to reach the far chips was Shift+wheel. Give it arrows, plain
+  // wheel scrolling, drag-to-pan, and edge fades that show only when there is
+  // actually more in that direction.
+  function setupChipScroller() {
+    const strip = elements.categoryChips;
+    if (!strip) return;
+
+    const prev = elements.chipScrollPrev;
+    const next = elements.chipScrollNext;
+
+    const sync = () => {
+      const max = strip.scrollWidth - strip.clientWidth;
+      const atStart = strip.scrollLeft <= 1;
+      const atEnd = strip.scrollLeft >= max - 1;
+      const scrollable = max > 2;
+
+      strip.classList.toggle('can-scroll-left', scrollable && !atStart);
+      strip.classList.toggle('can-scroll-right', scrollable && !atEnd);
+      if (prev) prev.hidden = !scrollable || atStart;
+      if (next) next.hidden = !scrollable || atEnd;
+    };
+
+    const page = (dir) => {
+      strip.scrollBy({ left: dir * strip.clientWidth * 0.7, behavior: scrollBehavior() });
+    };
+
+    if (prev) prev.addEventListener('click', () => page(-1));
+    if (next) next.addEventListener('click', () => page(1));
+
+    strip.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+
+    // A vertical wheel over the strip should move it sideways — otherwise the
+    // page scrolls away underneath and the chips never move.
+    strip.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      const max = strip.scrollWidth - strip.clientWidth;
+      if (max <= 2) return;
+      const next_ = strip.scrollLeft + e.deltaY;
+      // Only swallow the page scroll while there is somewhere left to go.
+      if (next_ > 0 && next_ < max) e.preventDefault();
+      strip.scrollLeft = next_;
+    }, { passive: false });
+
+    // Drag to pan. The click is suppressed only if the pointer actually moved,
+    // so tapping a chip still filters.
+    let dragging = false, startX = 0, startScroll = 0, moved = false;
+
+    strip.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') return; // native touch scrolling is fine
+      dragging = true; moved = false;
+      startX = e.clientX;
+      startScroll = strip.scrollLeft;
+    });
+
+    strip.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 3) {
+        moved = true;
+        strip.classList.add('is-dragging');
+        strip.setPointerCapture(e.pointerId);
+      }
+      if (moved) strip.scrollLeft = startScroll - dx;
+    });
+
+    const endDrag = () => {
+      dragging = false;
+      strip.classList.remove('is-dragging');
+    };
+    strip.addEventListener('pointerup', endDrag);
+    strip.addEventListener('pointercancel', endDrag);
+
+    strip.addEventListener('click', (e) => {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
+
+    sync();
+    // Chip widths depend on webfonts; re-measure once they land.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+  }
+
   function toggleFavorite(verseId) {
     if (state.favorites.has(verseId)) {
       state.favorites.delete(verseId);
@@ -1661,7 +1831,6 @@
 
     localStorage.setItem('agy_bible_favs', JSON.stringify([...state.favorites]));
     if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
-    if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
 
     updateStoryBookmarkButton(verseId);
     render();

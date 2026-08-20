@@ -3657,3 +3657,336 @@ input:focus-visible,
 [role="dialog"]:focus {
   outline: none;
 }
+
+/* ==========================================================================
+   FEEDBACK PASS
+   ========================================================================== */
+
+/* --- Story slide themes must be self-contained ---------------------------
+   `.story-theme-light` had no rule at all, so a light slide inherited
+   `.story-container { color: var(--text-primary) }` — which is #f8fafc while
+   the app is in dark mode. On phones (no opaque panel below 900px) that put
+   near-white text straight onto a pale gradient: 1.04:1, 12 of 28 combinations.
+   Both slide themes now state their own colours at every width. */
+.story-container.story-theme-light,
+.story-container.story-theme-light .story-passage-text {
+  color: #131a2b !important;
+}
+
+.story-container.story-theme-light .story-passage-text {
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.55);
+}
+
+.story-container.story-theme-light .story-passage-ref {
+  color: rgba(19, 26, 43, 0.86) !important;
+}
+
+.story-container.story-theme-light .story-nav-btn,
+.story-container.story-theme-light .story-version-pill {
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(19, 26, 43, 0.22) !important;
+  color: #131a2b !important;
+}
+
+.story-container.story-theme-light .story-category-mark {
+  color: rgba(19, 26, 43, 0.72);
+}
+
+.story-container.story-theme-dark .story-category-mark {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Emphasis colours have to clear the slide they sit on, not the app theme. */
+.story-container.story-theme-light .fx-accent { color: #9d174d; text-decoration-color: #b45309; }
+.story-container.story-theme-light .fx-italic { color: #3730a3; }
+.story-container.story-theme-light .fx-scale  { color: #065f46; }
+.story-container.story-theme-light .fx-caps   { color: #9a3412; }
+.story-container.story-theme-light .fx-mono-glow { color: #155e75; background: rgba(6, 182, 212, 0.14); }
+
+.story-container.story-theme-dark .fx-caps { color: #fcd34d; }
+
+.fx-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 900;
+  color: #9a3412;
+}
+
+.story-category-mark {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 1.1rem;
+  opacity: 0.9;
+}
+
+.story-category-mark svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* --- Full screen bottom bar: PREV · SAVE · REFERENCE · VERSION ------------ */
+.story-bottom-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.story-bottom-center-actions,
+.story-version-pill {
+  flex: 0 0 auto;
+}
+
+.story-passage-ref {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+/* Below 520px the four items cannot share one line without ellipsising the
+   reference, which is the one label that says what you are reading. */
+@media (max-width: 520px) {
+  .story-bottom-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "actions ref version";
+    gap: 0.5rem;
+  }
+
+  .story-bottom-center-actions { grid-area: actions; }
+  .story-passage-ref { grid-area: ref; text-align: center; font-size: 0.72rem; letter-spacing: 0.02em; }
+  .story-version-pill { grid-area: version; }
+}
+
+@media (max-width: 400px) {
+  .story-bottom-bar {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "ref ref"
+      "actions version";
+    row-gap: 0.55rem;
+  }
+  .story-passage-ref { text-align: left; }
+}
+
+/* --- Lexicon fields read as one paragraph -------------------------------- */
+/* These were flex containers, so the trailing <span> became its own column and
+   the definition sat in a narrow block to the right of its label. The label and
+   icon belong at the head of the paragraph, with the text wrapping under them. */
+.lexicon-field,
+.lexicon-usage-field {
+  display: block;
+}
+
+.lexicon-field .lex-icon,
+.lexicon-usage-field .lex-icon {
+  display: inline-block;
+  vertical-align: -0.2em;
+  margin-top: 0;
+  margin-right: 0.35rem;
+}
+
+.lexicon-field .lex-label,
+.lexicon-usage-field .lex-label {
+  margin-right: 0.3rem;
+  color: var(--text-primary);
+}
+
+/* --- Segmented buttons: no jump, no flash -------------------------------- */
+/* The base had no border and `.active` added one, so every click resized the
+   button by 1–1.5px and nudged its neighbours, while `transition: all`
+   animated the new border in. Reserve the border up front. */
+.segmented-btn {
+  border: 1.5px solid transparent;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.segmented-btn.active {
+  border-width: 1.5px;
+}
+
+/* --- Translation swap: cross-fade instead of a hard rebuild -------------- */
+.bento-grid .scripture-text {
+  transition: opacity 0.16s ease;
+}
+
+.bento-grid.is-swapping .scripture-text {
+  opacity: 0;
+}
+
+/* --- Filter strip: show that there is more ------------------------------- */
+.filter-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.category-chips {
+  scroll-behavior: smooth;
+  scroll-padding-inline: 2.5rem;
+}
+
+.category-chips.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  user-select: none;
+}
+
+/* Fade only on the side that actually has more chips. */
+.category-chips.can-scroll-left {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 3rem);
+  mask-image: linear-gradient(to right, transparent 0, #000 3rem);
+}
+
+.category-chips.can-scroll-right {
+  -webkit-mask-image: linear-gradient(to left, transparent 0, #000 3rem);
+  mask-image: linear-gradient(to left, transparent 0, #000 3rem);
+}
+
+.category-chips.can-scroll-left.can-scroll-right {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 3rem, #000 calc(100% - 3rem), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 3rem, #000 calc(100% - 3rem), transparent 100%);
+}
+
+.chip-scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.chip-scroll-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+}
+
+.chip-scroll-btn:hover {
+  background: var(--bg-surface-subtle);
+  color: var(--accent, #92400e);
+}
+
+.chip-scroll-btn[hidden] {
+  display: none;
+}
+
+.chip-scroll-prev { left: -0.35rem; }
+.chip-scroll-next { right: -0.35rem; }
+
+/* Touch devices scroll the strip directly; the arrows would only cover chips. */
+@media (hover: none) {
+  .chip-scroll-btn { display: none !important; }
+}
+
+/* --- Toasts sit at the bottom, centred ----------------------------------- */
+.toast-container {
+  bottom: 1.5rem;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+/* --- Mobile translation picker ------------------------------------------- */
+/* A 2px amber outline on a native <select> is the browser focus ring, not the
+   site's language. Ring the wrapper instead, and only for keyboard focus. */
+.mobile-version-select:focus,
+.mobile-version-select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.mobile-version-dropdown-wrapper:has(.mobile-version-select:focus-visible) {
+  border-color: var(--accent, #92400e);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #92400e) 22%, transparent);
+}
+
+.mobile-version-select {
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+/* Keep the keyboard ring for everything else, but not for selects. */
+select:focus-visible {
+  outline: none !important;
+}
+
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent, #92400e) !important;
+  outline-offset: 2px;
+}
+
+/* The desktop panel used var(--story-card-bg), which follows the APP theme —
+   so a light slide in dark mode got a dark panel under newly-dark text. The
+   panel has to follow the slide, exactly like the text does. */
+@media (min-width: 900px) {
+  .story-container.story-theme-light {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(19, 26, 43, 0.12) !important;
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.35) !important;
+  }
+}
+
+/* When the reader header wraps on a narrow screen, the actions were left
+   stranded at the left edge under the title. Keep them on the right. */
+.reader-header-actions {
+  margin-left: auto;
+}
+
+/* Only cross-references that are themselves in the collection can be opened.
+   The other 279 are citations — they should not offer a pointer and a lift. */
+.cross-ref-card {
+  cursor: default;
+}
+
+.cross-ref-card.is-linkable {
+  cursor: pointer;
+}
+
+.cross-ref-card:not(.is-linkable):hover {
+  transform: none;
+}
+
+/* Source attribution for the original-language data (CC BY / CC BY-SA). */
+.footer-credit {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
+.footer-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-credit a:hover {
+  color: var(--accent, #92400e);
+}
