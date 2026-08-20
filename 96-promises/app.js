@@ -646,6 +646,58 @@
     }
   }
 
+  // Helper: Extract clean readable transliteration without parentheses or archaic dots
+  function cleanTransliteration(raw) {
+    if (!raw) return '';
+    let str = String(raw).trim();
+    // If it has parentheses, check if inside is an alternative transliteration (like (chesed) or (sova simchot))
+    const parenMatch = str.match(/\(([^)]+)\)/);
+    let candidate = '';
+    if (parenMatch) {
+      const inside = parenMatch[1].trim();
+      const before = str.split('(')[0].trim();
+      // If inside is transliteration (e.g. chesed, sova simchot, orach chayyim, ne'imot)
+      if (/^[a-zA-Z\s'-]+$/.test(inside) && !inside.includes('/') && inside.split(' ').length <= 3 && !['grace', 'power', 'love', 'peace', 'righteousness', 'spirit', 'faith', 'ability'].includes(inside.toLowerCase())) {
+        candidate = inside;
+      } else {
+        candidate = before;
+      }
+    } else {
+      candidate = str;
+    }
+    // Clean diacritics and special unicode characters
+    let cleaned = candidate
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘ʻʿʾ`]/g, "'")
+      .trim();
+    // Map specific words for clean readability (Dunamis, not Dynamis per user request)
+    cleaned = cleaned.replace(/^ḥesed/i, 'Chesed')
+                     .replace(/^hesed/i, 'Chesed')
+                     .replace(/^dynamis/i, 'Dunamis')
+                     .replace(/^dyn/i, 'Dun');
+    // Capitalize words
+    cleaned = cleaned.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    return cleaned;
+  }
+
+  function cleanPronunciation(raw) {
+    if (!raw) return '';
+    let text = String(raw).trim();
+    text = text.replace(/^\/+|\/+$/g, '').trim();
+    return text;
+  }
+
+  function speakLexiconWord(word) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(word);
+      u.rate = 0.85;
+      u.pitch = 1.0;
+      window.speechSynthesis.speak(u);
+    }
+  }
+
   function renderReaderLexicon(verse, ver = 'NIV') {
     const lex = verse.lexicon;
     if (!lex) return;
@@ -657,38 +709,93 @@
       `;
     }
 
-    // 1. Render Interlinear Highlighted Verse Template
+    // 1. Render Actual Verse with Highlighted Key Terms
+    const rawVerseText = verse.translations[ver] || verse.translations.NIV || '';
     let interlinearHtml = '';
-    const template = lex.highlightedVerseTemplates?.[ver] || lex.highlightedVerseTemplates?.['NIV'] || '';
 
-    if (template) {
-      interlinearHtml = template.replace(/\[(.*?)\]\{(.*?)\}/g, (match, phrase, strongs) => {
-        return `<mark class="lexicon-word-tag" data-strongs="${escapeHtml(strongs)}" title="Strong's ${escapeHtml(strongs)} — Click to inspect root">${escapeHtml(phrase)}</mark>`;
+    const template = lex.highlightedVerseTemplates?.[ver] || lex.highlightedVerseTemplates?.['NIV'] || '';
+    const isPlaceholderTemplate = /^(reveals|unveils|declares|proclaims)\s+god'?s/i.test((template || '').trim());
+
+    if (template && !isPlaceholderTemplate) {
+      let tIdx = 0;
+      interlinearHtml = template.replace(/\[(.*?)\]\{.*?\}/g, (match, phrase) => {
+        const curIdx = tIdx++;
+        return `<mark class="lexicon-word-tag" data-term-idx="${curIdx}" title="Click to view root definition">${escapeHtml(phrase)}</mark>`;
       });
     } else {
-      const rawText = verse.translations[ver] || verse.translations.NIV;
-      interlinearHtml = `"${escapeHtml(rawText)}"`;
+      // Intelligently highlight key theological words in the actual verse text
+      let highlighted = escapeHtml(rawVerseText);
+      if (lex.keyTerms && lex.keyTerms.length) {
+        lex.keyTerms.forEach((term, idx) => {
+          const cleanName = cleanTransliteration(term.transliteration);
+          const candidates = [];
+          if (term.matchedEnglish) {
+            term.matchedEnglish.split(/[\/,;]/).forEach(c => {
+              const cleaned = c.trim().replace(/^["']|["']$/g, '');
+              if (cleaned.length > 2) candidates.push(cleaned);
+            });
+          }
+          candidates.sort((a, b) => b.length - a.length);
+
+          candidates.forEach(cand => {
+            if (!cand) return;
+            const regex = new RegExp(`\\b(${escapeRegExp(cand)})\\b`, 'gi');
+            highlighted = highlighted.replace(regex, `<mark class="lexicon-word-tag" data-term-idx="${idx}" title="${escapeHtml(cleanName)} — Click to view root definition">$1</mark>`);
+          });
+        });
+      }
+      interlinearHtml = highlighted;
     }
 
-    if (elements.readerInterlinearText) elements.readerInterlinearText.innerHTML = interlinearHtml;
+    if (elements.readerInterlinearText) {
+      elements.readerInterlinearText.innerHTML = `"${interlinearHtml}"`;
+    }
 
-    // 2. Render Key Term Cards
+    // 2. Render Clean Key Term Cards with Icons, Bolder Labels & Audio Pronunciation (No Strong's Numbers)
     if (lex.keyTerms && lex.keyTerms.length && elements.readerLexiconGrid) {
-      elements.readerLexiconGrid.innerHTML = lex.keyTerms.map(term => `
-        <div class="lexicon-term-card" id="lex-card-${term.strongs.replace(/[^a-zA-Z0-9]/g, '')}">
-          <div class="lexicon-term-header">
-            <span class="lexicon-original-word">${escapeHtml(term.word)}</span>
-            <span class="lexicon-strongs-pill">${escapeHtml(term.strongs)}</span>
+      elements.readerLexiconGrid.innerHTML = lex.keyTerms.map((term, idx) => {
+        const cleanName = cleanTransliteration(term.transliteration);
+        const cleanPron = cleanPronunciation(term.pronunciation);
+        return `
+          <div class="lexicon-term-card" id="lex-term-card-${idx}">
+            <div class="lexicon-term-header">
+              <span class="lexicon-original-word">${escapeHtml(term.word)}</span>
+              <span class="lexicon-matched-pill">${escapeHtml(term.matchedEnglish || '')}</span>
+            </div>
+            
+            <div class="lexicon-translit-row">
+              <span class="lexicon-clean-name">${escapeHtml(cleanName)}</span>
+              <span class="lexicon-dot">•</span>
+              <span class="lexicon-phonetic">/${escapeHtml(cleanPron)}/</span>
+              <button class="lexicon-audio-btn" data-speak="${escapeHtml(cleanName)}" title="Listen to pronunciation of ${escapeHtml(cleanName)}">
+                <i data-lucide="volume-2" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
+            
+            <div class="lexicon-part-of-speech">${escapeHtml(term.partOfSpeech || '')}</div>
+            
+            <div class="lexicon-field">
+              <i data-lucide="git-branch" class="lex-icon"></i>
+              <strong class="lex-label">Root:</strong>
+              <span>${escapeHtml(term.root)}</span>
+            </div>
+            
+            <div class="lexicon-field">
+              <i data-lucide="book-open" class="lex-icon"></i>
+              <strong class="lex-label">Definition:</strong>
+              <span>${escapeHtml(term.definition)}</span>
+            </div>
+            
+            <div class="lexicon-usage-field">
+              <i data-lucide="sparkles" class="lex-icon"></i>
+              <strong class="lex-label">Covenant Context:</strong>
+              <span>${escapeHtml(term.usageInPassage)}</span>
+            </div>
           </div>
-          <div class="lexicon-translit">${escapeHtml(term.transliteration)} • /${escapeHtml(term.pronunciation)}/</div>
-          <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">
-            ${escapeHtml(term.partOfSpeech)} • Matched: "${escapeHtml(term.matchedEnglish)}"
-          </div>
-          <p class="lexicon-def"><strong>Root:</strong> ${escapeHtml(term.root)}</p>
-          <p class="lexicon-def"><strong>Definition:</strong> ${escapeHtml(term.definition)}</p>
-          <div class="lexicon-usage"><strong>Covenant Context:</strong> ${escapeHtml(term.usageInPassage)}</div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
     }
 
     // 3. Theological Summary
@@ -1277,19 +1384,30 @@
       });
     }
 
-    // Interlinear Word Tag Click (Scrolls and Highlights Strong's Lexicon Card)
+    // Interlinear Word Tag Click (Scrolls and Highlights Lexicon Card)
     if (elements.readerInterlinearText) {
       elements.readerInterlinearText.addEventListener('click', (e) => {
         const mark = e.target.closest('.lexicon-word-tag');
         if (mark) {
-          const strongs = mark.getAttribute('data-strongs');
-          const cleanId = `lex-card-${strongs.replace(/[^a-zA-Z0-9]/g, '')}`;
-          const card = document.getElementById(cleanId);
+          const idx = mark.getAttribute('data-term-idx');
+          const card = document.getElementById(`lex-term-card-${idx}`);
           if (card) {
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
             card.classList.add('highlight-lex');
-            setTimeout(() => card.classList.remove('highlight-lex'), 2000);
+            setTimeout(() => card.classList.remove('highlight-lex'), 2200);
           }
+        }
+      });
+    }
+
+    // Lexicon Pronunciation Audio Button Click
+    if (elements.readerLexiconGrid) {
+      elements.readerLexiconGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.lexicon-audio-btn');
+        if (btn) {
+          e.stopPropagation();
+          const word = btn.getAttribute('data-speak');
+          if (word) speakLexiconWord(word);
         }
       });
     }
