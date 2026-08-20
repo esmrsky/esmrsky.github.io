@@ -55,7 +55,11 @@
       'story-style-epilogue',
       'story-style-merriweather',
       'story-style-instrument-serif'
-    ]
+    ],
+
+    // Shuffle Mode State
+    shuffledOrder: false,
+    shuffledVerses: []
   };
 
   // --- DOM References ---
@@ -78,6 +82,7 @@
       resetFiltersBtn: document.getElementById('resetFiltersBtn'),
       scrollToTopBtn: document.getElementById('scrollToTopBtn'),
       btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
+      btnShuffleVerses: document.getElementById('btnShuffleVerses'),
 
       // Typography & Reading Settings Flyout Drawer DOM
       typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
@@ -85,8 +90,14 @@
       settingsActiveFontBadge: document.getElementById('settingsActiveFontBadge'),
       drawerFontCards: document.getElementById('drawerFontCards'),
       settingsFontSizeBadge: document.getElementById('settingsFontSizeBadge'),
+      drawerFontSizePresets: document.getElementById('drawerFontSizePresets'),
+      btnCustomFontSize: document.getElementById('btnCustomFontSize'),
+      customFontSizeWrapper: document.getElementById('customFontSizeWrapper'),
       drawerFontSizeSlider: document.getElementById('drawerFontSizeSlider'),
       settingsLineHeightBadge: document.getElementById('settingsLineHeightBadge'),
+      drawerLineHeightPresets: document.getElementById('drawerLineHeightPresets'),
+      btnCustomLineHeight: document.getElementById('btnCustomLineHeight'),
+      customLineHeightWrapper: document.getElementById('customLineHeightWrapper'),
       drawerLineHeightSlider: document.getElementById('drawerLineHeightSlider'),
       drawerThemePicker: document.getElementById('drawerThemePicker'),
       drawerVersionPicker: document.getElementById('drawerVersionPicker'),
@@ -128,8 +139,9 @@
       storyCloseBtn: document.getElementById('storyCloseBtn'),
       storyTapToast: document.getElementById('storyTapToast'),
       btnStoryPrev: document.getElementById('btnStoryPrev'),
-      btnStoryHeart: document.getElementById('btnStoryHeart'),
-      storyHeartIcon: document.getElementById('storyHeartIcon'),
+      btnStoryBookmark: document.getElementById('btnStoryBookmark'),
+      storyBookmarkBtnText: document.getElementById('storyBookmarkBtnText'),
+      storyBookmarkIcon: document.getElementById('storyBookmarkIcon'),
 
       // Shortcuts Modal & Toast Container
       shortcutsModal: document.getElementById('shortcutsModal'),
@@ -171,6 +183,8 @@
     const hash = window.location.hash;
     if (hash.startsWith('#story')) {
       openStoriesMode();
+    } else if (hash === '#settings' || hash.startsWith('#settings')) {
+      openTypeSettings();
     } else if (hash.startsWith('#verse=') || hash.startsWith('#study=') || hash.startsWith('#compare=')) {
       const match = hash.match(/id=(\d+)/) || hash.match(/=(\d+)/);
       const id = match ? parseInt(match[1], 10) : 1;
@@ -226,11 +240,24 @@
   }
 
   function getFilteredVerses() {
-    return BIBLE_VERSES.filter(verse => {
+    const source = state.shuffledOrder ? state.shuffledVerses : BIBLE_VERSES;
+    return source.filter(verse => {
       if (state.category !== 'all' && verse.category !== state.category) return false;
       if (state.favoritesOnly && !state.favorites.has(verse.id)) return false;
       return true;
     });
+  }
+
+  function shuffleVerses() {
+    state.shuffledOrder = true;
+    const pool = [...BIBLE_VERSES];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    state.shuffledVerses = pool;
+    render();
+    showToast('Verses shuffled into dynamic order');
   }
 
   // --- Render Bento Grid (Vibrant Tints & Pure Scripture Focus) ---
@@ -248,7 +275,7 @@
       refreshIcons();
       return;
     } else {
-      if (elements.bentoContainer) elements.bentoContainer.style.display = 'grid';
+      if (elements.bentoContainer) elements.bentoContainer.style.display = '';
       if (elements.noResults) elements.noResults.style.display = 'none';
     }
 
@@ -256,11 +283,10 @@
       elements.bentoContainer.innerHTML = filtered.map(verse => {
         const isFav = state.favorites.has(verse.id);
         const currentText = verse.translations[state.version] || verse.translations.NIV;
-        const spanClass = `bento-${verse.bentoSpan || 'standard'}`;
         const catClass = `cat-${verse.themeColor || 'amber'}`;
 
         return `
-          <article class="bento-card ${spanClass} ${catClass}" id="verse-card-${verse.id}" data-id="${verse.id}" data-category="${verse.category}" title="Click to open chapter context & deep grace study">
+          <article class="bento-card ${catClass}" id="verse-card-${verse.id}" data-id="${verse.id}" data-category="${verse.category}" title="Click to open chapter context & deep grace study">
             
             <!-- Pure Main Scripture Text -->
             <div class="card-verse-first">
@@ -342,7 +368,7 @@
     });
   }
 
-  function applyLineHeight(lh) {
+  function applyLineHeight(lh, isPreset = false) {
     const num = parseFloat(lh);
     state.lineHeight = lh.toString();
     document.documentElement.style.setProperty('--verse-line-height', state.lineHeight);
@@ -354,9 +380,33 @@
     if (elements.drawerLineHeightSlider) {
       elements.drawerLineHeightSlider.value = num;
     }
+
+    // Sync presets buttons
+    let matchedPreset = false;
+    document.querySelectorAll('#drawerLineHeightPresets .segmented-btn').forEach(btn => {
+      const presetVal = parseFloat(btn.getAttribute('data-lh-val'));
+      if (!isNaN(presetVal) && Math.abs(presetVal - num) < 0.04) {
+        btn.classList.add('active');
+        matchedPreset = true;
+      } else if (btn.id !== 'btnCustomLineHeight') {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (elements.btnCustomLineHeight) {
+      if (!matchedPreset) {
+        elements.btnCustomLineHeight.classList.add('active');
+        if (elements.customLineHeightWrapper) elements.customLineHeightWrapper.style.display = 'block';
+        if (elements.settingsLineHeightBadge) elements.settingsLineHeightBadge.style.display = 'inline-block';
+      } else if (isPreset) {
+        elements.btnCustomLineHeight.classList.remove('active');
+        if (elements.customLineHeightWrapper) elements.customLineHeightWrapper.style.display = 'none';
+        if (elements.settingsLineHeightBadge) elements.settingsLineHeightBadge.style.display = 'none';
+      }
+    }
   }
 
-  function applyFontSize(size) {
+  function applyFontSize(size, isPreset = false) {
     const num = Math.min(1.85, Math.max(0.95, parseFloat(size)));
     state.fontSize = num;
     document.documentElement.style.setProperty('--verse-font-size', `${num}rem`);
@@ -368,6 +418,30 @@
     if (elements.drawerFontSizeSlider) {
       elements.drawerFontSizeSlider.value = num;
     }
+
+    // Sync presets buttons
+    let matchedPreset = false;
+    document.querySelectorAll('#drawerFontSizePresets .segmented-btn').forEach(btn => {
+      const presetVal = parseFloat(btn.getAttribute('data-size-val'));
+      if (!isNaN(presetVal) && Math.abs(presetVal - num) < 0.04) {
+        btn.classList.add('active');
+        matchedPreset = true;
+      } else if (btn.id !== 'btnCustomFontSize') {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (elements.btnCustomFontSize) {
+      if (!matchedPreset) {
+        elements.btnCustomFontSize.classList.add('active');
+        if (elements.customFontSizeWrapper) elements.customFontSizeWrapper.style.display = 'block';
+        if (elements.settingsFontSizeBadge) elements.settingsFontSizeBadge.style.display = 'inline-block';
+      } else if (isPreset) {
+        elements.btnCustomFontSize.classList.remove('active');
+        if (elements.customFontSizeWrapper) elements.customFontSizeWrapper.style.display = 'none';
+        if (elements.settingsFontSizeBadge) elements.settingsFontSizeBadge.style.display = 'none';
+      }
+    }
   }
 
   function applyViewMode(mode) {
@@ -375,12 +449,13 @@
     localStorage.setItem('agy_view_mode', mode);
 
     if (elements.heroOverview) elements.heroOverview.style.display = 'flex';
-    if (elements.bentoContainer) elements.bentoContainer.style.display = 'grid';
+    if (elements.bentoContainer) elements.bentoContainer.style.display = 'block';
     document.body.classList.toggle('view-list', mode === 'list');
   }
 
   function setBibleVersion(ver) {
-    if (['NIV', 'TPT', 'NLT', 'NASB'].includes(ver)) {
+    const allowed = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+    if (allowed.includes(ver)) {
       state.version = ver;
       localStorage.setItem('agy_bible_version', ver);
 
@@ -430,7 +505,7 @@
     state.activeReaderVersion = state.version;
 
     // Header metadata
-    if (elements.readerTitle) elements.readerTitle.textContent = `${verse.id}. ${verse.ref}`;
+    if (elements.readerTitle) elements.readerTitle.textContent = verse.ref;
     if (elements.readerCategoryBadge) elements.readerCategoryBadge.textContent = verse.categoryLabel;
 
     // Render components
@@ -516,12 +591,14 @@
   }
 
   function renderReaderTranslations(verse) {
-    const trans = ['NIV', 'TPT', 'NLT', 'NASB'];
+    const trans = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
     const names = {
       NIV: 'New International Version',
+      AMP: 'Amplified Bible',
+      NKJV: 'New King James Version',
       TPT: 'The Passion Translation',
       NLT: 'New Living Translation',
-      NASB: 'New American Standard'
+      NASB: 'New American Standard Bible'
     };
 
     if (elements.readerTranslationsGrid) {
@@ -733,10 +810,16 @@
     }
   }
 
-  function updateStoryHeartButton(verseId) {
+  function updateStoryBookmarkButton(verseId) {
     const isFav = state.favorites.has(verseId);
-    if (elements.btnStoryHeart) {
-      elements.btnStoryHeart.classList.toggle('favorite-active', isFav);
+    if (elements.btnStoryBookmark) {
+      elements.btnStoryBookmark.classList.toggle('favorite-active', isFav);
+      if (elements.storyBookmarkBtnText) {
+        elements.storyBookmarkBtnText.textContent = isFav ? 'SAVED' : 'SAVE';
+      }
+      if (elements.storyBookmarkIcon) {
+        elements.storyBookmarkIcon.style.fill = isFav ? 'currentColor' : 'none';
+      }
     }
   }
 
@@ -763,7 +846,7 @@
     state.storyCurrentVerse = verse;
 
     // Pick dynamic randomized version for endless storytelling
-    const versions = ['TPT', 'NIV', 'NLT', 'NASB'];
+    const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
     const chosenVer = versions[Math.floor(Math.random() * versions.length)];
     state.storyCurrentVer = chosenVer;
 
@@ -827,7 +910,7 @@
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
     if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
 
-    updateStoryHeartButton(verse.id);
+    updateStoryBookmarkButton(verse.id);
 
     // Run dynamic auto-fitting to guarantee no cut-off/clipping
     autoFitStoryText();
@@ -880,6 +963,12 @@
           return;
         }
 
+        // Shuffle Button
+        if (e.target.closest('#btnShuffleVerses')) {
+          shuffleVerses();
+          return;
+        }
+
         // Open Type Settings Drawer
         if (e.target.closest('#btnOpenTypeSettings')) {
           openTypeSettings();
@@ -927,10 +1016,48 @@
       });
     }
 
+    // Drawer Text Size Presets & Custom Toggle
+    if (elements.drawerFontSizePresets) {
+      elements.drawerFontSizePresets.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (!btn) return;
+
+        if (btn.id === 'btnCustomFontSize') {
+          const isHidden = elements.customFontSizeWrapper.style.display === 'none';
+          elements.customFontSizeWrapper.style.display = isHidden ? 'block' : 'none';
+          if (elements.settingsFontSizeBadge) elements.settingsFontSizeBadge.style.display = isHidden ? 'inline-block' : 'none';
+          document.querySelectorAll('#drawerFontSizePresets .segmented-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          const val = btn.getAttribute('data-size-val');
+          if (val) applyFontSize(parseFloat(val), true);
+        }
+      });
+    }
+
     // Drawer Text Size Slider
     if (elements.drawerFontSizeSlider) {
       elements.drawerFontSizeSlider.addEventListener('input', (e) => {
         applyFontSize(parseFloat(e.target.value));
+      });
+    }
+
+    // Drawer Line Height Presets & Custom Toggle
+    if (elements.drawerLineHeightPresets) {
+      elements.drawerLineHeightPresets.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (!btn) return;
+
+        if (btn.id === 'btnCustomLineHeight') {
+          const isHidden = elements.customLineHeightWrapper.style.display === 'none';
+          elements.customLineHeightWrapper.style.display = isHidden ? 'block' : 'none';
+          if (elements.settingsLineHeightBadge) elements.settingsLineHeightBadge.style.display = isHidden ? 'inline-block' : 'none';
+          document.querySelectorAll('#drawerLineHeightPresets .segmented-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          const val = btn.getAttribute('data-lh-val');
+          if (val) applyLineHeight(parseFloat(val), true);
+        }
       });
     }
 
@@ -1006,6 +1133,7 @@
       elements.resetFiltersBtn.addEventListener('click', () => {
         state.category = 'all';
         state.favoritesOnly = false;
+        state.shuffledOrder = false;
 
         document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
           b.classList.toggle('active', b.getAttribute('data-category') === 'all');
@@ -1015,9 +1143,33 @@
       });
     }
 
-    // 6. Bento Card Clicks (Open Reader Lightbox, Favorite, Story)
+    // 6. Bento Card Clicks (Open Reader Lightbox, Favorite, Category Filter)
     if (elements.bentoContainer) {
       elements.bentoContainer.addEventListener('click', (e) => {
+        const card = e.target.closest('.bento-card');
+        if (!card) return;
+
+        // Click on category tag on individual card filters by that category!
+        if (e.target.closest('.category-tag')) {
+          e.stopPropagation();
+          const cat = card.getAttribute('data-category');
+          if (cat) {
+            if (state.category === cat) {
+              state.category = 'all';
+            } else {
+              state.category = cat;
+            }
+            state.favoritesOnly = false;
+            if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-category') === state.category);
+            });
+            render();
+            if (elements.stickyHeader) elements.stickyHeader.scrollIntoView({ behavior: 'smooth' });
+          }
+          return;
+        }
+
         const favBtn = e.target.closest('.btn-favorite');
         if (favBtn) {
           e.stopPropagation();
@@ -1034,18 +1186,15 @@
           return;
         }
 
-        const card = e.target.closest('.bento-card');
-        if (card) {
-          const id = parseInt(card.getAttribute('data-id'), 10);
-          openReaderLightbox(id);
-        }
+        const id = parseInt(card.getAttribute('data-id'), 10);
+        openReaderLightbox(id);
       });
     }
 
     // 7. Fullscreen Endless Stories Mode Listeners
     if (elements.storyOverlay) {
       elements.storyOverlay.addEventListener('click', (e) => {
-        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryHeart')) return;
+        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge')) return;
         renderNextStorySlide();
       });
     }
@@ -1064,11 +1213,26 @@
       });
     }
 
-    if (elements.btnStoryHeart) {
-      elements.btnStoryHeart.addEventListener('click', (e) => {
+    if (elements.btnStoryBookmark) {
+      elements.btnStoryBookmark.addEventListener('click', (e) => {
         e.stopPropagation();
         if (state.storyCurrentVerse) {
           toggleFavorite(state.storyCurrentVerse.id);
+        }
+      });
+    }
+
+    // Clicking Story Version Pill Cycles Translation in Place
+    if (elements.storyActiveVerBadge) {
+      elements.storyActiveVerBadge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+        const nextIdx = (versions.indexOf(state.storyCurrentVer) + 1) % versions.length;
+        const nextVer = versions[nextIdx];
+        state.storyCurrentVer = nextVer;
+        if (state.storyCurrentVerse) {
+          const textToDisplay = state.storyCurrentVerse.translations[nextVer] || state.storyCurrentVerse.translations.NIV;
+          applyStorySlideVisuals(state.storyCurrentVerse, nextVer, state.storyCurrentStyle, textToDisplay);
         }
       });
     }
@@ -1211,11 +1375,11 @@
       // Main Shortcuts
       if (e.key.toLowerCase() === 's') openStoriesMode();
       else if (e.key.toLowerCase() === 't') {
-        const nextTheme = state.theme === 'light' ? 'mud' : (state.theme === 'mud' ? 'dark' : 'light');
+        const nextTheme = state.theme === 'light' ? 'warm' : (state.theme === 'warm' ? 'dark' : 'light');
         applyTheme(nextTheme);
       }
       else if (e.key.toLowerCase() === 'v') {
-        const versions = ['NIV', 'TPT', 'NLT', 'NASB'];
+        const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
         const nextVer = versions[(versions.indexOf(state.version) + 1) % versions.length];
         setBibleVersion(nextVer);
       }
@@ -1238,7 +1402,7 @@
     if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
     if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
 
-    updateStoryHeartButton(verseId);
+    updateStoryBookmarkButton(verseId);
     render();
   }
 
