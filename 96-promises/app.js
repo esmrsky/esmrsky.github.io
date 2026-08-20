@@ -83,6 +83,7 @@
       scrollToTopBtn: document.getElementById('scrollToTopBtn'),
       btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
       btnShuffleVerses: document.getElementById('btnShuffleVerses'),
+      mobileVersionSelect: document.getElementById('mobileVersionSelect'),
 
       // Typography & Reading Settings Flyout Drawer DOM
       typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
@@ -459,10 +460,15 @@
       state.version = ver;
       localStorage.setItem('agy_bible_version', ver);
 
-      // Header buttons
+      // Header desktop buttons
       document.querySelectorAll('.version-picker .segmented-btn').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
       });
+
+      // Header mobile select dropdown
+      if (elements.mobileVersionSelect) {
+        elements.mobileVersionSelect.value = ver;
+      }
 
       // Drawer buttons
       document.querySelectorAll('#drawerVersionPicker .segmented-btn').forEach(btn => {
@@ -838,7 +844,8 @@
       state.storyHistory.push({
         verse: state.storyCurrentVerse,
         ver: state.storyCurrentVer,
-        style: state.storyCurrentStyle
+        style: state.storyCurrentStyle,
+        isDark: state.storyCurrentIsDark || false
       });
     }
 
@@ -856,7 +863,11 @@
     const nextStyle = state.storyTypographyStyles[Math.floor(Math.random() * state.storyTypographyStyles.length)];
     state.storyCurrentStyle = nextStyle;
 
-    applyStorySlideVisuals(verse, chosenVer, nextStyle, textToDisplay);
+    // Dynamic dark bg + white text vs luminous light cards for rich visual rhythm
+    const isDarkSlide = state.theme === 'dark' ? (Math.random() < 0.85) : (Math.random() < 0.45);
+    state.storyCurrentIsDark = isDarkSlide;
+
+    applyStorySlideVisuals(verse, chosenVer, nextStyle, textToDisplay, isDarkSlide);
   }
 
   function renderPreviousStorySlide() {
@@ -869,16 +880,18 @@
     state.storyCurrentVerse = prevItem.verse;
     state.storyCurrentVer = prevItem.ver;
     state.storyCurrentStyle = prevItem.style;
+    state.storyCurrentIsDark = prevItem.isDark || false;
 
     const textToDisplay = prevItem.verse.translations[prevItem.ver] || prevItem.verse.translations.NIV;
-    applyStorySlideVisuals(prevItem.verse, prevItem.ver, prevItem.style, textToDisplay);
+    applyStorySlideVisuals(prevItem.verse, prevItem.ver, prevItem.style, textToDisplay, prevItem.isDark);
   }
 
-  function applyStorySlideVisuals(verse, ver, styleName, textToDisplay) {
+  function applyStorySlideVisuals(verse, ver, styleName, textToDisplay, isDark = false) {
     const sizeClass = calculateStoryFontSizeClass(textToDisplay.length);
+    const darkThemeClass = isDark ? 'story-theme-dark' : 'story-theme-light';
 
     if (elements.storyContainer) {
-      elements.storyContainer.className = `story-container ${styleName} ${sizeClass}`;
+      elements.storyContainer.className = `story-container ${styleName} ${sizeClass} ${darkThemeClass}`;
     }
 
     const categoryGradients = {
@@ -903,7 +916,7 @@
       'healing-renewal': 'linear-gradient(135deg, #240c1e 0%, #240c11 50%, #1c1407 100%)'
     };
 
-    const gradientMap = state.theme === 'dark' ? darkCategoryGradients : categoryGradients;
+    const gradientMap = isDark ? darkCategoryGradients : categoryGradients;
     if (elements.storyBackdrop) elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
 
     if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, styleName);
@@ -974,6 +987,13 @@
           openTypeSettings();
           return;
         }
+      });
+    }
+
+    // Mobile Bible Version Select Dropdown
+    if (elements.mobileVersionSelect) {
+      elements.mobileVersionSelect.addEventListener('change', (e) => {
+        setBibleVersion(e.target.value);
       });
     }
 
@@ -1232,7 +1252,7 @@
         state.storyCurrentVer = nextVer;
         if (state.storyCurrentVerse) {
           const textToDisplay = state.storyCurrentVerse.translations[nextVer] || state.storyCurrentVerse.translations.NIV;
-          applyStorySlideVisuals(state.storyCurrentVerse, nextVer, state.storyCurrentStyle, textToDisplay);
+          applyStorySlideVisuals(state.storyCurrentVerse, nextVer, state.storyCurrentStyle, textToDisplay, state.storyCurrentIsDark);
         }
       });
     }
