@@ -70,13 +70,7 @@
       'story-style-spacemono',
       'story-style-epilogue',
       'story-style-merriweather',
-      'story-style-instrument-serif',
-      'story-style-playfair',
-      'story-style-cormorant',
-      'story-style-bodoni',
-      'story-style-spectral',
-      'story-style-alegreya',
-      'story-style-gabarito'
+      'story-style-instrument-serif'
     ],
 
     // Shuffle Mode State
@@ -210,8 +204,7 @@
       storyPassageText: document.getElementById('storyPassageText'),
       storyPassageRef: document.getElementById('storyPassageRef'),
       storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
-      storyStyleBtn: document.getElementById('storyStyleBtn'),
-      storyDeepPanel: document.getElementById('storyDeepPanel'),
+      storyCloseBtn: document.getElementById('storyCloseBtn'),
       storyTapToast: document.getElementById('storyTapToast'),
       btnStoryPrev: document.getElementById('btnStoryPrev'),
       btnStoryDeeper: document.getElementById('btnStoryDeeper'),
@@ -243,9 +236,7 @@
     setupEventListeners();
     refreshIcons();
 
-    /* There is no landing page to arrive on — the site is the verses. Anything the hash asks
-       for happens inside that, not instead of it. */
-    openStoriesMode();
+    // Deep Link Navigation
     handleHashNavigation();
     window.addEventListener('hashchange', handleHashNavigation);
 
@@ -253,6 +244,10 @@
     window.addEventListener('resize', () => {
       if (state.isStoriesMode) {
         autoFitStoryText();
+      }
+      /* the header's category comes back when the room does */
+      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+        fitReaderHeader();
       }
     });
   }
@@ -620,73 +615,70 @@
     showToast('Reset reading typography to defaults');
   }
 
+  /* The header is one row: reference, category, then the settings and close buttons. A long
+     reference next to a long category ("1 Thessalonians 5:16-18" + "Identity & Grace") ran past
+     the row and the two buttons wrapped underneath it. The row no longer wraps — the CSS pins
+     it — so something has to give instead, and it is the category: it is the one thing in that
+     row that is decoration rather than function. Measured, not guessed at a breakpoint, because
+     what overflows is the pair of strings and neither has a fixed width. */
+  function fitReaderHeader() {
+    const left = document.querySelector('.reader-header-left');
+    const badge = elements.readerCategoryBadge;
+    if (!left || !badge) return;
+    badge.hidden = false;
+    if (left.scrollWidth > left.clientWidth + 1) badge.hidden = true;
+  }
+
   // ==========================================================================
   // UNIFIED READER LIGHTBOX (CONTEXT FLOW, 4 TRANSLATIONS, LEXICONS & STUDY)
   // ==========================================================================
-  /* One place that fills the study, so the panel cannot drift from what opened it — a verse
-     changed underneath it by PREV or by the translation pill goes through here too. */
-  function renderStudyFor(verse, ver) {
-    state.activeReaderVerseId = verse.id;
-    state.activeReaderVersion = ver;
-    renderReaderContext(verse, ver);
-    renderReaderTranslations(verse);
-    renderReaderGraceInsight(verse);
-    renderReaderCaseStudies(verse);
-    renderReaderLexicon(verse, ver);
-    renderReaderTptNotes(verse);
-    renderReaderCrossRefs(verse);
-    updateReaderVersionPickerButtons(ver);
-    refreshIcons();
-  }
-
   function openReaderLightbox(verseId) {
     const verse = BIBLE_VERSES.find(v => v.id === verseId);
     if (!verse) return;
-    renderStudyFor(verse, state.storyCurrentVer || state.version);
-    showDeepPanel();
+
+    const wasOpen = elements.readerLightbox &&
+      elements.readerLightbox.classList.contains('active');
+
+    state.activeReaderVerseId = verseId;
+    state.activeReaderVersion = state.version;
+
+    // Header metadata
+    if (elements.readerTitle) elements.readerTitle.textContent = verse.ref;
+    if (elements.readerCategoryBadge) elements.readerCategoryBadge.textContent = verse.categoryLabel;
+
+    // Render components
+    renderReaderContext(verse, state.activeReaderVersion);
+    renderReaderTranslations(verse);
+    renderReaderGraceInsight(verse);
+    renderReaderCaseStudies(verse);
+    renderReaderLexicon(verse, state.activeReaderVersion);
+    renderReaderTptNotes(verse);
+    renderReaderCrossRefs(verse);
+
+    // Update active version buttons in reader
+    updateReaderVersionPickerButtons(state.activeReaderVersion);
+
+    // Show Lightbox Modal
+    if (elements.readerLightbox) elements.readerLightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (!wasOpen) enterDialog(elements.readerLightbox);
+
+    /* After `active`, not before: a hidden dialog measures 0 wide, so asking whether the header
+       fits while it is still closed always answers yes. */
+    requestAnimationFrame(fitReaderHeader);
+
+    // Deep link hash
     history.replaceState(null, null, `#verse=${verseId}`);
-  }
-
-  /* ---------- the study, in place of the verse ----------
-     Go Deeper does not open anything. It swaps what is inside the same frame — the verse goes,
-     the study of that verse arrives, and the button becomes the way back. Tapping is suspended
-     for as long as it is open, because in here a tap is a scroll or a link. */
-  function isDeepOpen() {
-    return !!elements.storyDeepPanel && !elements.storyDeepPanel.hidden;
-  }
-
-  function setDeeperButton(deep) {
-    const label = document.getElementById('storyDeeperBtnText');
-    const btn = elements.btnStoryDeeper;
-    if (label) label.textContent = deep ? 'BACK' : 'GO DEEPER';
-    if (btn) {
-      btn.title = deep ? 'Back to the verse' : 'Study this verse';
-      btn.classList.toggle('is-back', deep);
-      const icon = btn.querySelector('svg, i');
-      if (icon) icon.setAttribute('data-lucide', deep ? 'arrow-left' : 'book-open');
-    }
     refreshIcons();
   }
 
-  function showDeepPanel() {
-    if (!elements.storyDeepPanel) return;
-    elements.storyDeepPanel.hidden = false;
-    elements.storyDeepPanel.scrollTop = 0;
-    if (elements.storyContentWrapper) elements.storyContentWrapper.hidden = true;
-    if (elements.storyContainer) elements.storyContainer.classList.add('is-deep');
-    setDeeperButton(true);
-  }
-
-  function hideDeepPanel() {
-    if (elements.storyDeepPanel) elements.storyDeepPanel.hidden = true;
-    if (elements.storyContentWrapper) elements.storyContentWrapper.hidden = false;
-    if (elements.storyContainer) elements.storyContainer.classList.remove('is-deep');
-    setDeeperButton(false);
-    if (window.location.hash.startsWith('#verse=')) history.replaceState(null, null, ' ');
-  }
-
   function closeReaderLightbox() {
-    hideDeepPanel();
+    if (elements.readerLightbox) elements.readerLightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    exitDialog(elements.readerLightbox);
+    if (window.location.hash.startsWith('#verse=') || window.location.hash.startsWith('#study=')) {
+      history.replaceState(null, null, ' ');
+    }
   }
 
   function updateReaderVersionPickerButtons(ver) {
@@ -1054,13 +1046,7 @@
     'story-style-bricolage':        'fx-gradient',
     'story-style-epilogue':         'fx-caps',
     'story-style-outfit':           'fx-scale',
-    'story-style-sora':             'fx-gradient',
-    'story-style-playfair':         'fx-italic',
-    'story-style-cormorant':        'fx-italic',
-    'story-style-bodoni':           'fx-accent',
-    'story-style-spectral':         'fx-caps',
-    'story-style-alegreya':         'fx-italic',
-    'story-style-gabarito':         'fx-gradient'
+    'story-style-sora':             'fx-gradient'
   };
 
   /* The highlight, per category, for each kind of slide: dark and saturated on a pale one,
@@ -1302,10 +1288,6 @@
     if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
 
     updateStoryBookmarkButton(verse.id);
-
-    /* PREV and the translation pill both still work behind the study panel, so what it is
-       showing has to follow them rather than stay on the verse it was opened with. */
-    if (isDeepOpen()) renderStudyFor(verse, ver);
 
     // Run dynamic auto-fitting to guarantee no cut-off/clipping
     autoFitStoryText();
@@ -1641,16 +1623,15 @@
     // 7. Fullscreen Endless Stories Mode Listeners
     if (elements.storyOverlay) {
       elements.storyOverlay.addEventListener('click', (e) => {
-        if (isDeepOpen()) return;   /* in here a tap is a scroll or a link, not a page turn */
-        if (e.target.closest('#storyStyleBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge') || e.target.closest('#btnStoryDeeper')) return;
+        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge') || e.target.closest('#btnStoryDeeper')) return;
         renderNextStorySlide();
       });
     }
 
-    if (elements.storyStyleBtn) {
-      elements.storyStyleBtn.addEventListener('click', (e) => {
+    if (elements.storyCloseBtn) {
+      elements.storyCloseBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        openTypeSettings();
+        closeStoriesMode();
       });
     }
 
@@ -1676,9 +1657,10 @@
     if (elements.btnStoryDeeper) {
       elements.btnStoryDeeper.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (isDeepOpen()) { hideDeepPanel(); return; }
         const verse = state.storyCurrentVerse;
-        if (verse) openReaderLightbox(verse.id);
+        if (!verse) return;
+        closeStoriesMode();
+        openReaderLightbox(verse.id);
       });
     }
 
@@ -1789,15 +1771,18 @@
 
     // 11. Global Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
-      /* Escape backs out one layer at a time and stops at the verses — there is nothing behind
-         them to escape to. */
+      // Escape closes modals and drawers
       if (e.key === 'Escape') {
         if (elements.typeSettingsDrawer && elements.typeSettingsDrawer.classList.contains('active')) {
           closeTypeSettings();
           return;
         }
-        if (isDeepOpen()) {
-          hideDeepPanel();
+        if (state.isStoriesMode) {
+          closeStoriesMode();
+          return;
+        }
+        if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+          closeReaderLightbox();
           return;
         }
         if (elements.shortcutsModal && elements.shortcutsModal.classList.contains('active')) {

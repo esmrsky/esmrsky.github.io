@@ -28,16 +28,6 @@
   --font-editorial: 'Newsreader', Georgia, serif;
   --font-mono: 'Inter', sans-serif;
   --font-anton: 'Anton', sans-serif;
-  /* Six more for full screen. Chosen for what they do at 60px and up: three high-contrast
-     serifs with real drama in the thick/thin, one screen serif with an unusual eye, one
-     humanist serif with calligraphic warmth, one geometric sans that is not another grotesque.
-     None of them are novelty faces — they still have to hold a whole verse. */
-  --font-playfair: 'Playfair Display', Georgia, serif;
-  --font-cormorant: 'Cormorant Garamond', Garamond, Georgia, serif;
-  --font-bodoni: 'Bodoni Moda', 'Didot', Georgia, serif;
-  --font-spectral: 'Spectral', Georgia, serif;
-  --font-alegreya: 'Alegreya', Georgia, serif;
-  --font-gabarito: 'Gabarito', system-ui, sans-serif;
   --font-spacemono: 'Space Mono', monospace;
   --font-epilogue: 'Epilogue', sans-serif;
 
@@ -2175,9 +2165,6 @@ button {
 /* ==========================================================================
    FULLSCREEN IMMERSIVE STORIES MODE (EDGE-TO-EDGE, RESPONSIVE AUTOSCALING)
    ========================================================================== */
-/* This is the page. It used to be an overlay that opened over one, which is why it starts
-   `display: none` and waits for `.active`; it is shown from the first paint now so there is no
-   black frame before the script runs. */
 .story-overlay {
   position: fixed;
   top: 0;
@@ -2189,15 +2176,21 @@ button {
   height: 100dvh;
   z-index: 1000;
   background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
+  display: none;
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
   overflow: hidden !important;
   contain: strict;
   user-select: none;
   cursor: pointer;
   box-sizing: border-box;
+}
+
+.story-overlay.active {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
 }
 
 .story-backdrop {
@@ -2290,47 +2283,6 @@ button {
   opacity: 0;
   transform: translateX(-50%) translateY(15px);
 }
-
-/* ---------- the study, in the well the verse was in ----------
-   Same frame, same rule underneath, same bar below it: only the middle changes. It is the one
-   scrolling surface on the site, so it takes the pointer back — everything around it is still
-   a tap-to-advance target. */
-.story-deep-panel {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  cursor: auto;
-  user-select: text;
-  padding-right: 0.35rem;
-  scrollbar-width: thin;
-}
-
-/* The study body brought the reader's own page padding with it — 2.5rem of it, inside a frame
-   that already has its own. It only needs the rhythm between sections here. */
-.story-deep-panel .reader-body {
-  padding: 0.2rem 0 1.4rem;
-  gap: 2.4rem;
-}
-
-.story-deep-panel[hidden] { display: none; }
-/* `.story-content-wrapper { display: flex }` outranks the browser's own `[hidden]` rule, so the
-   verse stayed on screen behind the study. Same trap as the reader's category badge. */
-.story-content-wrapper[hidden] { display: none; }
-
-.story-deep-panel::-webkit-scrollbar { width: 6px; }
-.story-deep-panel::-webkit-scrollbar-track { background: transparent; }
-.story-deep-panel::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, currentColor 26%, transparent);
-  border-radius: 999px;
-}
-
-
-
-/* Back is the same pill as the rest; only what it says changes. */
-.story-deeper-btn.is-back { border-color: var(--story-hl); color: var(--story-hl); }
 
 /* Fullscreen Story Container */
 .story-container {
@@ -2547,60 +2499,6 @@ button {
   font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  line-height: 1.2;
-}
-
-/* 17. Playfair Display (high-contrast didone, editorial and upright) */
-.story-style-playfair { text-align: center; }
-.story-style-playfair .story-passage-text {
-  font-family: var(--font-playfair);
-  font-weight: 700;
-  letter-spacing: -0.005em;
-  line-height: 1.24;
-}
-
-/* 18. Cormorant Garamond (delicate old-style — needs size, and full screen has it) */
-.story-style-cormorant { text-align: center; }
-.story-style-cormorant .story-passage-text {
-  font-family: var(--font-cormorant);
-  font-weight: 600;
-  letter-spacing: 0.005em;
-  line-height: 1.22;
-}
-
-/* 19. Bodoni Moda (the sharpest thick/thin in the set; left-set so the stems line up) */
-.story-style-bodoni { text-align: left; }
-.story-style-bodoni .story-passage-text {
-  font-family: var(--font-bodoni);
-  font-weight: 500;
-  letter-spacing: 0.004em;
-  line-height: 1.26;
-}
-
-/* 20. Spectral (a screen serif with an unusual eye — reads long without going flat) */
-.story-style-spectral { text-align: left; }
-.story-style-spectral .story-passage-text {
-  font-family: var(--font-spectral);
-  font-weight: 600;
-  letter-spacing: 0.002em;
-  line-height: 1.34;
-}
-
-/* 21. Alegreya (calligraphic roots, warm — the least "designed" of the six) */
-.story-style-alegreya { text-align: left; }
-.story-style-alegreya .story-passage-text {
-  font-family: var(--font-alegreya);
-  font-weight: 700;
-  letter-spacing: 0.004em;
-  line-height: 1.3;
-}
-
-/* 22. Gabarito (geometric sans with a soft eye — not another grotesque) */
-.story-style-gabarito { text-align: center; }
-.story-style-gabarito .story-passage-text {
-  font-family: var(--font-gabarito);
-  font-weight: 700;
-  letter-spacing: -0.012em;
   line-height: 1.2;
 }
 
@@ -2892,7 +2790,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  transform: translateY(-20px);
+  transform: translateY(20px);
   opacity: 0;
   transition: all var(--transition-normal);
   pointer-events: auto;
@@ -3863,27 +3761,45 @@ input:focus-visible,
   opacity: 0.88;
 }
 
-/* Go Deeper is the third of the four, in the same pill as the rest — it was a filled accent
-   button, which made it the loudest thing on a slide whose whole job is the verse. It carries
-   `.story-nav-btn` for its shape and colour; only the label is its own. */
 .story-deeper-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  pointer-events: auto;
   white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  background: var(--story-hl);
+  transition: transform var(--transition-fast), filter var(--transition-fast);
 }
+/* The fill is the slide's own highlight, so the label has to take the other end of it. */
+.story-container.story-theme-light .story-deeper-btn { color: #ffffff; }
+.story-container.story-theme-dark .story-deeper-btn { color: #0b0f19; }
+.story-deeper-btn:hover { transform: scale(1.04); filter: brightness(1.06); }
+.story-deeper-btn:active { transform: scale(0.96); }
 
-/* Four pills on one line, and the line has to hold at 320px. The icon steps out first, then
-   the two labels that are already carrying an icon of their own — Go Deeper's words are the
-   last thing to go, because it is the only one of the four you would not guess. */
-@media (max-width: 420px) {
-  .story-deeper-btn svg { display: none; }
-  .story-nav-btn { padding-left: 0.6rem; padding-right: 0.6rem; }
-  .story-bottom-bar { gap: 0.45rem; }
-  .story-bottom-center-actions { gap: 0.3rem; }
-}
-
-@media (max-width: 350px) {
-  .story-prev-btn span,
-  .story-bookmark-btn span { display: none; }
-  .story-nav-btn { padding-left: 0.5rem; padding-right: 0.5rem; }
+/* Four controls will not share one line on a phone, and the primary one should not be the one
+   that shrinks. It takes its own row; PREV/SAVE and the translation share the row below. */
+@media (max-width: 560px) {
+  .story-bottom-bar {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "deeper deeper"
+      "actions version";
+    row-gap: 0.6rem;
+    gap: 0.5rem;
+  }
+  .story-bottom-center-actions { grid-area: actions; justify-self: start; }
+  .story-version-pill { grid-area: version; justify-self: end; }
+  .story-deeper-btn { grid-area: deeper; width: 100%; justify-content: center; }
 }
 
 /* --- Lexicon fields read as one paragraph -------------------------------- */
@@ -4012,12 +3928,9 @@ input:focus-visible,
   .chip-scroll-btn { display: none !important; }
 }
 
-/* --- Toasts drop in from the top, centred --------------------------------
-   The bottom of the screen is where the controls live — a toast landing there covered the very
-   buttons it was reporting on, and on a phone it sat under the thumb. */
+/* --- Toasts sit at the bottom, centred ----------------------------------- */
 .toast-container {
-  top: max(1.1rem, env(safe-area-inset-top));
-  bottom: auto;
+  bottom: 1.5rem;
   right: auto;
   left: 50%;
   transform: translateX(-50%);
@@ -4123,37 +4036,4 @@ input:focus-visible,
 
 .footer-credit a:hover {
   color: var(--accent, #92400e);
-}
-
-/* ==========================================================================
-   THE STUDY TAKES THE APP'S READING COLOURS, NOT THE SLIDE'S
-   ==========================================================================
-   The slide palettes are cut for one verse held at arm's length. A page of body copy,
-   translation cards, a lexicon and a table of cross-references needs the app's own reading
-   colours under it — and every card in there already carries them, so the frame has to follow
-   or you get light cards floating on a dark slide. Last in the sheet and `!important` because
-   the slide-theme rules it is overriding are both. */
-.story-container.is-deep,
-.story-container.story-theme-dark.is-deep,
-.story-container.story-theme-light.is-deep {
-  background: var(--bg-app) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-subtle) !important;
-}
-
-.story-container.is-deep .story-passage-ref {
-  color: var(--text-primary) !important;
-  opacity: 1;
-}
-
-.story-container.is-deep .story-nav-btn,
-.story-container.is-deep .story-version-pill {
-  background: var(--bg-surface) !important;
-  border-color: var(--border-strong) !important;
-  color: var(--text-primary) !important;
-}
-
-.story-container.is-deep .story-deeper-btn.is-back {
-  border-color: var(--accent, #92400e) !important;
-  color: var(--accent, #92400e) !important;
 }
