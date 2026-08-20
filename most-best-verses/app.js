@@ -1,1563 +1,1677 @@
-const VERSES = [
-  {
-    "number": 1,
-    "reference": "Psalm 16:11",
-    "apiReference": "Psalms 16:11",
-    "text": "You will show me the path of life. In your presence is fullness of joy. In your right hand there are pleasures forever more.",
-    "theme": "Joy",
-    "icon": "spark",
-    "book": "Psalm"
-  },
-  {
-    "number": 2,
-    "reference": "Psalm 37:19",
-    "apiReference": "Psalms 37:19",
-    "text": "They shall not be disappointed in the time of evil. In the days of famine they shall be satisfied.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 3,
-    "reference": "Psalm 17:15",
-    "apiReference": "Psalms 17:15",
-    "text": "As for me, I shall see your face in righteousness. I shall be satisfied, when I awake, with seeing your form.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 4,
-    "reference": "Isaiah 55:12",
-    "apiReference": "Isaiah 55:12",
-    "text": "For you shall go out with joy, and be led out with peace. The mountains and the hills will break out before you into singing; and all the trees of the fields will clap their hands.",
-    "theme": "Joy",
-    "icon": "spark",
-    "book": "Isaiah"
-  },
-  {
-    "number": 5,
-    "reference": "Deuteronomy 8:18",
-    "apiReference": "Deuteronomy 8:18",
-    "text": "But you shall remember Yahweh your God, for it is he who gives you power to get wealth; that he may establish his covenant which he swore to your fathers, as it is today.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Deuteronomy"
-  },
-  {
-    "number": 6,
-    "reference": "Deuteronomy 28:1-14",
-    "apiReference": "Deuteronomy 28:1-14",
-    "text": "It shall happen, if you shall listen diligently to Yahweh your God’s voice, to observe to do all his commandments which I command you today, that Yahweh your God will set you high above all the nations of the earth. All these blessings will come upon you, and overtake you, if you listen to Yahweh your God’s voice. You shall be blessed in the city, and you shall be blessed in the field. You shall be blessed in the fruit of your body, the fruit of your ground, the fruit of your animals, the increase of your livestock, and the young of your flock. Your basket and your kneading trough shall be blessed. You shall be blessed when you come in, and you shall be blessed when you go out. Yahweh will cause your enemies who rise up against you to be struck before you. They will come out against you one way, and will flee before you seven ways. Yahweh will command the blessing on you in your barns, and in all that you put your hand to. He will bless you in the land which Yahweh your God gives you. Yahweh will establish you for a holy people to himself, as he has sworn to you, if you shall keep the commandments of Yahweh your God, and walk in his ways. All the peoples of the earth shall see that you are called by Yahweh’s name, and they will be afraid of you. Yahweh will grant you abundant prosperity, in the fruit of your body, in the fruit of your livestock, and in the fruit of your ground, in the land which Yahweh swore to your fathers to give you. Yahweh will open to you his good treasure in the sky, to give the rain of your land in its season, and to bless all the work of your hand. You will lend to many nations, and you will not borrow. Yahweh will make you the head, and not the tail. You will be above only, and you will not be beneath; if you listen to the commandments of Yahweh your God, which I command you today, to observe and to do, and shall not turn away from any of the words which I command you today, to the right hand, or to the left, to go after other gods to serve them.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Deuteronomy"
-  },
-  {
-    "number": 7,
-    "reference": "Psalm 32:8",
-    "apiReference": "Psalms 32:8",
-    "text": "I will instruct you and teach you in the way which you shall go. I will counsel you with my eye on you.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Psalm"
-  },
-  {
-    "number": 8,
-    "reference": "Isaiah 41:10",
-    "apiReference": "Isaiah 41:10",
-    "text": "Don’t you be afraid, for I am with you. Don’t be dismayed, for I am your God. I will strengthen you. Yes, I will help you. Yes, I will uphold you with the right hand of my righteousness.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Isaiah"
-  },
-  {
-    "number": 9,
-    "reference": "Jeremiah 17:7-8",
-    "apiReference": "Jeremiah 17:7-8",
-    "text": "“Blessed is the man who trusts in Yahweh, and whose confidence is in Yahweh. For he will be as a tree planted by the waters, who spreads out its roots by the river, and will not fear when heat comes, but its leaf will be green; and will not be concerned in the year of drought. It won’t cease from yielding fruit.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Jeremiah"
-  },
-  {
-    "number": 10,
-    "reference": "Isaiah 58:11-12",
-    "apiReference": "Isaiah 58:11-12",
-    "text": "and Yahweh will guide you continually, and satisfy your soul in dry places, and make your bones strong; and you shall be like a watered garden, and like a spring of water, whose waters don’t fail. Those who shall be of you shall build the old waste places; you shall raise up the foundations of many generations; and you shall be called Repairer of the Breach, Restorer of Paths with Dwellings.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Isaiah"
-  },
-  {
-    "number": 11,
-    "reference": "Psalm 37:25-26",
-    "apiReference": "Psalms 37:25-26",
-    "text": "I have been young, and now am old, yet I have not seen the righteous forsaken, nor his children begging for bread. All day long he deals graciously, and lends. His offspring is blessed.",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": "Psalm"
-  },
-  {
-    "number": 12,
-    "reference": "2 Corinthians 9:10-11",
-    "apiReference": "2 Corinthians 9:10-11",
-    "text": "Now may he who supplies seed to the sower and bread for food, supply and multiply your seed for sowing, and increase the fruits of your righteousness; you being enriched in everything to all generosity, which produces through us thanksgiving to God.",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": ""
-  },
-  {
-    "number": 13,
-    "reference": "Mark 16:15",
-    "apiReference": "Mark 16:15",
-    "text": "He said to them, “Go into all the world, and preach the Good News to the whole creation.",
-    "theme": "Mission",
-    "icon": "send",
-    "book": "Mark"
-  },
-  {
-    "number": 14,
-    "reference": "Romans 1:16",
-    "apiReference": "Romans 1:16",
-    "text": "For I am not ashamed of the Good News of Christ, because it is the power of God for salvation for everyone who believes; for the Jew first, and also for the Greek.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Romans"
-  },
-  {
-    "number": 15,
-    "reference": "Matthew 28:19-20",
-    "apiReference": "Matthew 28:19-20",
-    "text": "Go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all things that I commanded you. Behold, I am with you always, even to the end of the age.” Amen.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Matthew"
-  },
-  {
-    "number": 16,
-    "reference": "Isaiah 65:24",
-    "apiReference": "Isaiah 65:24",
-    "text": "It will happen that, before they call, I will answer; and while they are yet speaking, I will hear.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Isaiah"
-  },
-  {
-    "number": 17,
-    "reference": "Matthew 5:14",
-    "apiReference": "Matthew 5:14",
-    "text": "You are the light of the world. A city located on a hill can’t be hidden.",
-    "theme": "Mission",
-    "icon": "send",
-    "book": "Matthew"
-  },
-  {
-    "number": 18,
-    "reference": "John 14:27",
-    "apiReference": "John 14:27",
-    "text": "Peace I leave with you. My peace I give to you; not as the world gives, give I to you. Don’t let your heart be troubled, neither let it be fearful.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "John"
-  },
-  {
-    "number": 19,
-    "reference": "Hebrews 10:19-25",
-    "apiReference": "Hebrews 10:19-25",
-    "text": "Having therefore, brothers, boldness to enter into the holy place by the blood of Jesus, by the way which he dedicated for us, a new and living way, through the veil, that is to say, his flesh; and having a great priest over God’s house, let’s draw near with a true heart in fullness of faith, having our hearts sprinkled from an evil conscience, and having our body washed with pure water, let us hold fast the confession of our hope without wavering; for he who promised is faithful. Let us consider how to provoke one another to love and good works, not forsaking our own assembling together, as the custom of some is, but exhorting one another; and so much the more, as you see the Day approaching.",
-    "theme": "Identity",
-    "icon": "home",
-    "book": "Hebrews"
-  },
-  {
-    "number": 20,
-    "reference": "Psalm 119:89",
-    "apiReference": "Psalms 119:89",
-    "text": "Yahweh, your word is settled in heaven forever.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Psalm"
-  },
-  {
-    "number": 21,
-    "reference": "Psalm 25:5",
-    "apiReference": "Psalms 25:5",
-    "text": "Guide me in your truth, and teach me, For you are the God of my salvation, I wait for you all day long.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Psalm"
-  },
-  {
-    "number": 22,
-    "reference": "Isaiah 58:11",
-    "apiReference": "Isaiah 58:11",
-    "text": "and Yahweh will guide you continually, and satisfy your soul in dry places, and make your bones strong; and you shall be like a watered garden, and like a spring of water, whose waters don’t fail.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Isaiah"
-  },
-  {
-    "number": 23,
-    "reference": "Proverbs 19:23",
-    "apiReference": "Proverbs 19:23",
-    "text": "The fear of Yahweh leads to life, then contentment; he rests and will not be touched by trouble.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Proverbs"
-  },
-  {
-    "number": 24,
-    "reference": "Ephesians 6:10",
-    "apiReference": "Ephesians 6:10",
-    "text": "Finally, be strong in the Lord, and in the strength of his might.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Ephesians"
-  },
-  {
-    "number": 25,
-    "reference": "John 6:27",
-    "apiReference": "John 6:27",
-    "text": "Don’t work for the food which perishes, but for the food which remains to eternal life, which the Son of Man will give to you. For God the Father has sealed him.”",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "John"
-  },
-  {
-    "number": 26,
-    "reference": "Psalm 16:9-10",
-    "apiReference": "Psalms 16:9-10",
-    "text": "Therefore my heart is glad, and my tongue rejoices. My body shall also dwell in safety. For you will not leave my soul in Sheol, neither will you allow your holy one to see corruption.",
-    "theme": "Joy",
-    "icon": "spark",
-    "book": "Psalm"
-  },
-  {
-    "number": 27,
-    "reference": "John 6:35",
-    "apiReference": "John 6:35",
-    "text": "Jesus said to them, “I am the bread of life. He who comes to me will not be hungry, and he who believes in me will never be thirsty.",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": "John"
-  },
-  {
-    "number": 28,
-    "reference": "Psalm 103:1-5",
-    "apiReference": "Psalms 103:1-5",
-    "text": "Praise Yahweh, my soul! All that is within me, praise his holy name! Praise Yahweh, my soul, and don’t forget all his benefits; who forgives all your sins; who heals all your diseases; who redeems your life from destruction; who crowns you with loving kindness and tender mercies; who satisfies your desire with good things, so that your youth is renewed like the eagle’s.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 29,
-    "reference": "Psalm 52:8",
-    "apiReference": "Psalms 52:8",
-    "text": "But as for me, I am like a green olive tree in God’s house. I trust in God’s loving kindness forever and ever.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 30,
-    "reference": "Psalm 91:13",
-    "apiReference": "Psalms 91:13",
-    "text": "You will tread on the lion and cobra. You will trample the young lion and the serpent underfoot.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 31,
-    "reference": "Psalm 119:97-106",
-    "apiReference": "Psalms 119:97-106",
-    "text": "How I love your law! It is my meditation all day. Your commandments make me wiser than my enemies, for your commandments are always with me. I have more understanding than all my teachers, for your testimonies are my meditation. I understand more than the aged, because I have kept your precepts. I have kept my feet from every evil way, that I might observe your word. I have not turned away from your ordinances, for you have taught me. How sweet are your promises to my taste, more than honey to my mouth! Through your precepts, I get understanding; therefore I hate every false way. Your word is a lamp to my feet, and a light for my path. I have sworn, and have confirmed it, that I will obey your righteous ordinances.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Psalm"
-  },
-  {
-    "number": 32,
-    "reference": "Joshua 1:5",
-    "apiReference": "Joshua 1:5",
-    "text": "No man will be able to stand before you all the days of your life. As I was with Moses, so I will be with you. I will not fail you nor forsake you.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Joshua"
-  },
-  {
-    "number": 33,
-    "reference": "Isaiah 61:1",
-    "apiReference": "Isaiah 61:1",
-    "text": "The Lord Yahweh’s Spirit is on me; because Yahweh has anointed me to preach good news to the humble. He has sent me to bind up the broken hearted, to proclaim liberty to the captives, and release to those who are bound;",
-    "theme": "Mission",
-    "icon": "send",
-    "book": "Isaiah"
-  },
-  {
-    "number": 34,
-    "reference": "Deuteronomy 31:8",
-    "apiReference": "Deuteronomy 31:8",
-    "text": "Yahweh himself is who goes before you. He will be with you. He will not fail you nor forsake you. Don’t be afraid. Don’t be discouraged.”",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Deuteronomy"
-  },
-  {
-    "number": 35,
-    "reference": "Galatians 5:22-25",
-    "apiReference": "Galatians 5:22-25",
-    "text": "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faith, gentleness, and self-control. Against such things there is no law. Those who belong to Christ have crucified the flesh with its passions and lusts. If we live by the Spirit, let’s also walk by the Spirit.",
-    "theme": "Joy",
-    "icon": "spark",
-    "book": "Galatians"
-  },
-  {
-    "number": 36,
-    "reference": "Mark 11:24",
-    "apiReference": "Mark 11:24",
-    "text": "Therefore I tell you, all things whatever you pray and ask for, believe that you have received them, and you shall have them.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Mark"
-  },
-  {
-    "number": 37,
-    "reference": "Colossians 3:2-4",
-    "apiReference": "Colossians 3:2-4",
-    "text": "Set your mind on the things that are above, not on the things that are on the earth. For you died, and your life is hidden with Christ in God. When Christ, our life, is revealed, then you will also be revealed with him in glory.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Colossians"
-  },
-  {
-    "number": 38,
-    "reference": "Philippians 4:19",
-    "apiReference": "Philippians 4:19",
-    "text": "My God will supply every need of yours according to his riches in glory in Christ Jesus.",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": "Philippians"
-  },
-  {
-    "number": 39,
-    "reference": "Colossians 3:9-12",
-    "apiReference": "Colossians 3:9-12",
-    "text": "Don’t lie to one another, seeing that you have put off the old man with his doings, and have put on the new man, who is being renewed in knowledge after the image of his Creator, where there can’t be Greek and Jew, circumcision and uncircumcision, barbarian, Scythian, bondservant, freeman; but Christ is all, and in all. Put on therefore, as God’s chosen ones, holy and beloved, a heart of compassion, kindness, lowliness, humility, and perseverance;",
-    "theme": "Identity",
-    "icon": "home",
-    "book": "Colossians"
-  },
-  {
-    "number": 40,
-    "reference": "John 8:51",
-    "apiReference": "John 8:51",
-    "text": "Most certainly, I tell you, if a person keeps my word, he will never see death.”",
-    "theme": "Word",
-    "icon": "book",
-    "book": "John"
-  },
-  {
-    "number": 41,
-    "reference": "Psalm 27:1",
-    "apiReference": "Psalms 27:1",
-    "text": "Yahweh is my light and my salvation. Whom shall I fear? Yahweh is the strength of my life. Of whom shall I be afraid?",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Psalm"
-  },
-  {
-    "number": 42,
-    "reference": "Galatians 3:23-29",
-    "apiReference": "Galatians 3:23-29",
-    "text": "But before faith came, we were kept in custody under the law, confined for the faith which should afterwards be revealed. So that the law has become our tutor to bring us to Christ, that we might be justified by faith. But now that faith has come, we are no longer under a tutor. For you are all children of God, through faith in Christ Jesus. For as many of you as were baptized into Christ have put on Christ. There is neither Jew nor Greek, there is neither slave nor free man, there is neither male nor female; for you are all one in Christ Jesus. If you are Christ’s, then you are Abraham’s offspring and heirs according to promise.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Galatians"
-  },
-  {
-    "number": 43,
-    "reference": "Isaiah 43:18-19",
-    "apiReference": "Isaiah 43:18-19",
-    "text": "“Don’t remember the former things, and don’t consider the things of old. Behold, I will do a new thing. It springs out now. Don’t you know it? I will even make a way in the wilderness, and rivers in the desert.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Isaiah"
-  },
-  {
-    "number": 44,
-    "reference": "Psalm 119:7",
-    "apiReference": "Psalms 119:7",
-    "text": "I will give thanks to you with uprightness of heart, when I learn your righteous judgments.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 45,
-    "reference": "Psalm 119:11",
-    "apiReference": "Psalms 119:11",
-    "text": "I have hidden your word in my heart, that I might not sin against you.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Psalm"
-  },
-  {
-    "number": 46,
-    "reference": "Psalm 119:13-16",
-    "apiReference": "Psalms 119:13-16",
-    "text": "With my lips, I have declared all the ordinances of your mouth. I have rejoiced in the way of your testimonies, as much as in all riches. I will meditate on your precepts, and consider your ways. I will delight myself in your statutes. I will not forget your word.",
-    "theme": "Joy",
-    "icon": "spark",
-    "book": "Psalm"
-  },
-  {
-    "number": 47,
-    "reference": "Psalm 16:7-8",
-    "apiReference": "Psalms 16:7-8",
-    "text": "I will bless Yahweh, who has given me counsel. Yes, my heart instructs me in the night seasons. I have set Yahweh always before me. Because he is at my right hand, I shall not be moved.",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": "Psalm"
-  },
-  {
-    "number": 48,
-    "reference": "John 15:7",
-    "apiReference": "John 15:7",
-    "text": "If you remain in me, and my words remain in you, you will ask whatever you desire, and it will be done for you.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "John"
-  },
-  {
-    "number": 49,
-    "reference": "Psalm 77:12",
-    "apiReference": "Psalms 77:12",
-    "text": "I will also meditate on all your work, and consider your doings.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 50,
-    "reference": "Galatians 2:20",
-    "apiReference": "Galatians 2:20",
-    "text": "I have been crucified with Christ, and it is no longer I that live, but Christ lives in me. That life which I now live in the flesh, I live by faith in the Son of God, who loved me, and gave himself up for me.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Galatians"
-  },
-  {
-    "number": 51,
-    "reference": "Joshua 1:9",
-    "apiReference": "Joshua 1:9",
-    "text": "Haven’t I commanded you? Be strong and courageous. Don’t be afraid. Don’t be dismayed, for Yahweh your God is with you wherever you go.”",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Joshua"
-  },
-  {
-    "number": 52,
-    "reference": "2 Timothy 1:7",
-    "apiReference": "2 Timothy 1:7",
-    "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": ""
-  },
-  {
-    "number": 53,
-    "reference": "Isaiah 41:10",
-    "apiReference": "Isaiah 41:10",
-    "text": "Don’t you be afraid, for I am with you. Don’t be dismayed, for I am your God. I will strengthen you. Yes, I will help you. Yes, I will uphold you with the right hand of my righteousness.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Isaiah"
-  },
-  {
-    "number": 54,
-    "reference": "Psalm 34:4",
-    "apiReference": "Psalms 34:4",
-    "text": "I sought Yahweh, and he answered me, and delivered me from all my fears.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Psalm"
-  },
-  {
-    "number": 55,
-    "reference": "Psalm 118:6",
-    "apiReference": "Psalms 118:6",
-    "text": "Yahweh is on my side. I will not be afraid. What can man do to me?",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Psalm"
-  },
-  {
-    "number": 56,
-    "reference": "Proverbs 3:5-6",
-    "apiReference": "Proverbs 3:5-6",
-    "text": "Trust in Yahweh with all your heart, and don’t lean on your own understanding. In all your ways acknowledge him, and he will make your paths straight.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Proverbs"
-  },
-  {
-    "number": 57,
-    "reference": "Mark 16:17-18",
-    "apiReference": "Mark 16:17-18",
-    "text": "These signs will accompany those who believe: in my name they will cast out demons; they will speak with new languages; they will take up serpents; and if they drink any deadly thing, it will in no way hurt them; they will lay hands on the sick, and they will recover.”",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Mark"
-  },
-  {
-    "number": 58,
-    "reference": "Romans 8:37",
-    "apiReference": "Romans 8:37",
-    "text": "No, in all these things, we are more than conquerors through him who loved us.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Romans"
-  },
-  {
-    "number": 59,
-    "reference": "Luke 1:37",
-    "apiReference": "Luke 1:37",
-    "text": "For nothing spoken by God is impossible.”",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Luke"
-  },
-  {
-    "number": 60,
-    "reference": "Luke 10:19",
-    "apiReference": "Luke 10:19",
-    "text": "Behold, I give you authority to tread on serpents and scorpions, and over all the power of the enemy. Nothing will in any way hurt you.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Luke"
-  },
-  {
-    "number": 61,
-    "reference": "Mark 11:23",
-    "apiReference": "Mark 11:23",
-    "text": "For most certainly I tell you, whoever may tell this mountain, ‘Be taken up and cast into the sea,’ and doesn’t doubt in his heart, but believes that what he says is happening; he shall have whatever he says.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Mark"
-  },
-  {
-    "number": 62,
-    "reference": "Luke 21:18",
-    "apiReference": "Luke 21:18",
-    "text": "And not a hair of your head will perish.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Luke"
-  },
-  {
-    "number": 63,
-    "reference": "Psalm 1:3",
-    "apiReference": "Psalms 1:3",
-    "text": "He will be like a tree planted by the streams of water, that produces its fruit in its season, whose leaf also does not wither. Whatever he does shall prosper.",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": "Psalm"
-  },
-  {
-    "number": 64,
-    "reference": "Romans 8:31-32",
-    "apiReference": "Romans 8:31-32",
-    "text": "What then shall we say about these things? If God is for us, who can be against us? He who didn’t spare his own Son, but delivered him up for us all, how would he not also with him freely give us all things?",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Romans"
-  },
-  {
-    "number": 65,
-    "reference": "Isaiah 54:17",
-    "apiReference": "Isaiah 54:17",
-    "text": "No weapon that is formed against you will prevail; and you will condemn every tongue that rises against you in judgment. This is the heritage of Yahweh’s servants, and their righteousness is of me,” says Yahweh.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Isaiah"
-  },
-  {
-    "number": 66,
-    "reference": "Colossians 3:15",
-    "apiReference": "Colossians 3:15",
-    "text": "And let the peace of God rule in your hearts, to which also you were called in one body; and be thankful.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Colossians"
-  },
-  {
-    "number": 67,
-    "reference": "2 Thessalonians 3:16",
-    "apiReference": "2 Thessalonians 3:16",
-    "text": "Now may the Lord of peace himself give you peace at all times in all ways. The Lord be with you all.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": ""
-  },
-  {
-    "number": 68,
-    "reference": "Psalm 119:165",
-    "apiReference": "Psalms 119:165",
-    "text": "Those who love your law have great peace. Nothing causes them to stumble.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Psalm"
-  },
-  {
-    "number": 69,
-    "reference": "Colossians 3:1-4",
-    "apiReference": "Colossians 3:1-4",
-    "text": "If then you were raised together with Christ, seek the things that are above, where Christ is, seated on the right hand of God. Set your mind on the things that are above, not on the things that are on the earth. For you died, and your life is hidden with Christ in God. When Christ, our life, is revealed, then you will also be revealed with him in glory.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Colossians"
-  },
-  {
-    "number": 70,
-    "reference": "Colossians 3:14-17",
-    "apiReference": "Colossians 3:14-17",
-    "text": "Above all these things, walk in love, which is the bond of perfection. And let the peace of God rule in your hearts, to which also you were called in one body; and be thankful. Let the word of Christ dwell in you richly; in all wisdom teaching and admonishing one another with psalms, hymns, and spiritual songs, singing with grace in your heart to the Lord. Whatever you do, in word or in deed, do all in the name of the Lord Jesus, giving thanks to God the Father, through him.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Colossians"
-  },
-  {
-    "number": 71,
-    "reference": "Matthew 6:34",
-    "apiReference": "Matthew 6:34",
-    "text": "Therefore don’t be anxious for tomorrow, for tomorrow will be anxious for itself. Each day’s own evil is sufficient.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Matthew"
-  },
-  {
-    "number": 72,
-    "reference": "Matthew 11:28-30",
-    "apiReference": "Matthew 11:28-30",
-    "text": "“Come to me, all you who labor and are heavily burdened, and I will give you rest. Take my yoke upon you, and learn from me, for I am gentle and humble in heart; and you will find rest for your souls. For my yoke is easy, and my burden is light.”",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Matthew"
-  },
-  {
-    "number": 73,
-    "reference": "Psalm 4:8",
-    "apiReference": "Psalms 4:8",
-    "text": "In peace I will both lay myself down and sleep, for you, Yahweh alone, make me live in safety.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Psalm"
-  },
-  {
-    "number": 74,
-    "reference": "Philippians 4:8-9",
-    "apiReference": "Philippians 4:8-9",
-    "text": "Finally, brothers, whatever things are true, whatever things are honorable, whatever things are just, whatever things are pure, whatever things are lovely, whatever things are of good report; if there is any virtue, and if there is any praise, think about these things. The things which you learned, received, heard, and saw in me: do these things, and the God of peace will be with you.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Philippians"
-  },
-  {
-    "number": 75,
-    "reference": "Philippians 4:6-7",
-    "apiReference": "Philippians 4:6-7",
-    "text": "In nothing be anxious, but in everything, by prayer and petition with thanksgiving, let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts in Christ Jesus.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "Philippians"
-  },
-  {
-    "number": 76,
-    "reference": "John 14:27",
-    "apiReference": "John 14:27",
-    "text": "Peace I leave with you. My peace I give to you; not as the world gives, give I to you. Don’t let your heart be troubled, neither let it be fearful.",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": "John"
-  },
-  {
-    "number": 77,
-    "reference": "John 8:31-32",
-    "apiReference": "John 8:31-32",
-    "text": "Jesus therefore said to those Jews who had believed him, “If you remain in my word, then you are truly my disciples. You will know the truth, and the truth will make you free.”",
-    "theme": "Word",
-    "icon": "book",
-    "book": "John"
-  },
-  {
-    "number": 78,
-    "reference": "John 15:15-16",
-    "apiReference": "John 15:15-16",
-    "text": "No longer do I call you servants, for the servant doesn’t know what his lord does. But I have called you friends, for everything that I heard from my Father, I have made known to you. You didn’t choose me, but I chose you, and appointed you, that you should go and bear fruit, and that your fruit should remain; that whatever you will ask of the Father in my name, he may give it to you.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "John"
-  },
-  {
-    "number": 79,
-    "reference": "Titus 3:3-7",
-    "apiReference": "Titus 3:3-7",
-    "text": "For we were also once foolish, disobedient, deceived, serving various lusts and pleasures, living in malice and envy, hateful, and hating one another. But when the kindness of God our Savior and his love toward mankind appeared, not by works of righteousness which we did ourselves, but according to his mercy, he saved us through the washing of regeneration and renewing by the Holy Spirit, whom he poured out on us richly, through Jesus Christ our Savior; that being justified by his grace, we might be made heirs according to the hope of eternal life.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Titus"
-  },
-  {
-    "number": 80,
-    "reference": "Colossians 1:21-23",
-    "apiReference": "Colossians 1:21-23",
-    "text": "You, being in past times alienated and enemies in your mind in your evil deeds, yet now he has reconciled in the body of his flesh through death, to present you holy and without defect and blameless before him, if it is so that you continue in the faith, grounded and steadfast, and not moved away from the hope of the Good News which you heard, which is being proclaimed in all creation under heaven; of which I, Paul, was made a servant.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Colossians"
-  },
-  {
-    "number": 81,
-    "reference": "Ephesians 2:19",
-    "apiReference": "Ephesians 2:19",
-    "text": "So then you are no longer strangers and foreigners, but you are fellow citizens with the saints, and of the household of God,",
-    "theme": "Identity",
-    "icon": "home",
-    "book": "Ephesians"
-  },
-  {
-    "number": 82,
-    "reference": "Ephesians 2:13",
-    "apiReference": "Ephesians 2:13",
-    "text": "But now in Christ Jesus you who once were far off are made near in the blood of Christ.",
-    "theme": "Identity",
-    "icon": "home",
-    "book": "Ephesians"
-  },
-  {
-    "number": 83,
-    "reference": "Ephesians 1:4-7",
-    "apiReference": "Ephesians 1:4-7",
-    "text": "even as he chose us in him before the foundation of the world, that we would be holy and without defect before him in love; having predestined us for adoption as children through Jesus Christ to himself, according to the good pleasure of his desire, to the praise of the glory of his grace, by which he freely gave us favor in the Beloved, in whom we have our redemption through his blood, the forgiveness of our trespasses, according to the riches of his grace,",
-    "theme": "Provision",
-    "icon": "leaf",
-    "book": "Ephesians"
-  },
-  {
-    "number": 84,
-    "reference": "2 Corinthians 6:16",
-    "apiReference": "2 Corinthians 6:16",
-    "text": "What agreement has a temple of God with idols? For you are a temple of the living God. Even as God said, “I will dwell in them, and walk in them; and I will be their God, and they will be my people.”",
-    "theme": "Promise",
-    "icon": "star",
-    "book": ""
-  },
-  {
-    "number": 85,
-    "reference": "1 Corinthians 2:16",
-    "apiReference": "1 Corinthians 2:16",
-    "text": "“For who has known the mind of the Lord, that he should instruct him?” But we have Christ’s mind.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": ""
-  },
-  {
-    "number": 86,
-    "reference": "1 Corinthians 6:17",
-    "apiReference": "1 Corinthians 6:17",
-    "text": "But he who is joined to the Lord is one spirit.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": ""
-  },
-  {
-    "number": 87,
-    "reference": "Galatians 4:4-7",
-    "apiReference": "Galatians 4:4-7",
-    "text": "But when the fullness of the time came, God sent out his Son, born to a woman, born under the law, that he might redeem those who were under the law, that we might receive the adoption of children. And because you are children, God sent out the Spirit of his Son into your hearts, crying, “Abba, Father!” So you are no longer a bondservant, but a son; and if a son, then an heir of God through Christ.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Galatians"
-  },
-  {
-    "number": 88,
-    "reference": "2 Corinthians 5:17",
-    "apiReference": "2 Corinthians 5:17",
-    "text": "Therefore if anyone is in Christ, he is a new creation. The old things have passed away. Behold, all things have become new.",
-    "theme": "Redemption",
-    "icon": "cross",
-    "book": ""
-  },
-  {
-    "number": 89,
-    "reference": "1 Peter 2:24",
-    "apiReference": "1 Peter 2:24",
-    "text": "He himself bore our sins in his body on the tree, that we, having died to sins, might live to righteousness; by whose stripes you were healed.",
-    "theme": "Redemption",
-    "icon": "cross",
-    "book": ""
-  },
-  {
-    "number": 90,
-    "reference": "2 Chronicles 20:17",
-    "apiReference": "2 Chronicles 20:17",
-    "text": "You will not need to fight this battle. Set yourselves, stand still, and see the salvation of Yahweh with you, O Judah and Jerusalem. Don’t be afraid, nor be dismayed. Go out against them tomorrow, for Yahweh is with you.’”",
-    "theme": "Peace",
-    "icon": "shield",
-    "book": ""
-  },
-  {
-    "number": 91,
-    "reference": "1 John 4:4",
-    "apiReference": "1 John 4:4",
-    "text": "You are of God, little children, and have overcome them; because greater is he who is in you than he who is in the world.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": ""
-  },
-  {
-    "number": 92,
-    "reference": "Nehemiah 8:10",
-    "apiReference": "Nehemiah 8:10",
-    "text": "Then he said to them, “Go your way. Eat the fat, drink the sweet, and send portions to him for whom nothing is prepared, for today is holy to our Lord. Don’t be grieved, for the joy of Yahweh is your strength.”",
-    "theme": "Joy",
-    "icon": "spark",
-    "book": "Nehemiah"
-  },
-  {
-    "number": 93,
-    "reference": "Psalm 23:1",
-    "apiReference": "Psalms 23:1",
-    "text": "Yahweh is my shepherd: I shall lack nothing.",
-    "theme": "Promise",
-    "icon": "star",
-    "book": "Psalm"
-  },
-  {
-    "number": 94,
-    "reference": "Matthew 8:16-17",
-    "apiReference": "Matthew 8:16-17",
-    "text": "When evening came, they brought to him many possessed with demons. He cast out the spirits with a word, and healed all who were sick; that it might be fulfilled which was spoken through Isaiah the prophet, saying, “He took our infirmities, and bore our diseases.”",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Matthew"
-  },
-  {
-    "number": 95,
-    "reference": "Ephesians 5:8-11",
-    "apiReference": "Ephesians 5:8-11",
-    "text": "For you were once darkness, but are now light in the Lord. Walk as children of light, for the fruit of the Spirit is in all goodness and righteousness and truth, proving what is well pleasing to the Lord. Have no fellowship with the unfruitful deeds of darkness, but rather even reprove them.",
-    "theme": "Word",
-    "icon": "book",
-    "book": "Ephesians"
-  },
-  {
-    "number": 96,
-    "reference": "Colossians 2:13-15",
-    "apiReference": "Colossians 2:13-15",
-    "text": "You were dead through your trespasses and the uncircumcision of your flesh. He made you alive together with him, having forgiven us all our trespasses, wiping out the handwriting in ordinances which was against us; and he has taken it out of the way, nailing it to the cross; having stripped the principalities and the powers, he made a show of them openly, triumphing over them in it.",
-    "theme": "Strength",
-    "icon": "bolt",
-    "book": "Colossians"
-  }
-];
-const BIBLE_VERSIONS = {
-  NIV: { id: 111, abbreviation: 'NIV', apiAbbreviations: ['NIV'], linkAbbreviation: 'NIV' },
-  TPT: { id: 1849, abbreviation: 'TPT', apiAbbreviations: ['TPT'], linkAbbreviation: 'TPT' },
-  NLT: { id: 116, abbreviation: 'NLT', apiAbbreviations: ['NLT'], linkAbbreviation: 'NLT' },
-  NASB: { id: 2692, abbreviation: 'NASB', apiAbbreviations: ['NASB2020', 'NASB'], linkAbbreviation: 'NASB2020' }
-};
+/**
+ * The Most Best Verses — Fullscreen Stories, Dynamic Typography & Deep Grace Concordance
+ * 
+ * Features:
+ * 1. Pure Verse-First Bento Cards with category tints.
+ * 2. Mobile & Desktop Typography Settings Flyout Drawer with Live Translation, Font Family, Font Size & Line Height controls (Transparent live site preview, elevated container per theme).
+ * 3. Conditional TPT Revelatory Notes (only visible when notes exist for the passage).
+ * 4. Dynamic Multi-Translation Context Flow with inline highlighted target verse.
+ * 5. Interlinear Greek & Hebrew Lexicon with Strong's concordance cards.
+ * 6. Fullscreen Edge-to-Edge Stories Mode with 16 modern styles, Dynamic Auto-Fit (zero cut-off/clipping), left-aligned long verses, previous history navigation, and direct heart bookmarking.
+ * 7. Resilient event delegation on sticky header, drawers, and modal overlays.
+ */
 
-const BOOK_USFM = {
-  'Deuteronomy': 'DEU', 'Joshua': 'JOS', '2 Chronicles': '2CH', 'Nehemiah': 'NEH',
-  'Psalm': 'PSA', 'Proverbs': 'PRO', 'Isaiah': 'ISA', 'Jeremiah': 'JER',
-  'Matthew': 'MAT', 'Mark': 'MRK', 'Luke': 'LUK', 'John': 'JHN', 'Romans': 'ROM',
-  '1 Corinthians': '1CO', '2 Corinthians': '2CO', 'Galatians': 'GAL',
-  'Ephesians': 'EPH', 'Philippians': 'PHP', 'Colossians': 'COL',
-  '1 Thessalonians': '1TH', '2 Thessalonians': '2TH', '1 Timothy': '1TI',
-  '2 Timothy': '2TI', 'Titus': 'TIT', 'Hebrews': 'HEB', '1 Peter': '1PE',
-  '1 John': '1JN'
-};
+(() => {
+  'use strict';
 
-const BOLLS_BOOK_IDS = {
-  'Deuteronomy': 5, 'Joshua': 6, '2 Chronicles': 14, 'Nehemiah': 16,
-  'Psalm': 19, 'Proverbs': 20, 'Isaiah': 23, 'Jeremiah': 24,
-  'Matthew': 40, 'Mark': 41, 'Luke': 42, 'John': 43, 'Romans': 45,
-  '1 Corinthians': 46, '2 Corinthians': 47, 'Galatians': 48,
-  'Ephesians': 49, 'Philippians': 50, 'Colossians': 51,
-  '2 Thessalonians': 53, '2 Timothy': 55, 'Titus': 56, 'Hebrews': 58,
-  '1 Peter': 60, '1 John': 62
-};
-
-const ICONS = {
-  spark: '✦', shield: '○', bolt: '↑', leaf: '♧', book: '≡',
-  home: '◎', send: '↗', cross: '✚', star: '◇'
-};
-
-const CATEGORY_ORDER = ['All', 'Joy', 'Promise', 'Strength', 'Peace', 'The Word', 'Provision', 'Mission', 'Identity', 'Redemption'];
-const CATEGORY_ICONS = { All: '✦', Joy: '✦', Promise: '◇', Strength: '↑', Peace: '○', 'The Word': '≡', Provision: '♧', Mission: '↗', Identity: '◎', Redemption: '✚' };
-
-const scriptureApi = window.ESMRSKY_SCRIPTURE_API || window.PROMISES_SCRIPTURE_API || { configured: false };
-const translationCache = new Map();
-const bollsChapterCache = new Map();
-const cards = document.querySelector('#cards');
-const categoryFilters = document.querySelector('#categoryFilters');
-const visibleCount = document.querySelector('#visibleCount');
-const translationStatus = document.querySelector('#translationStatus');
-const translationCredit = document.querySelector('#translationCredit');
-const copyVisibilityButton = document.querySelector('#copyVisibilityButton');
-const versionPicker = document.querySelector('#versionPicker');
-const versionTrigger = document.querySelector('#versionTrigger');
-const versionMenu = document.querySelector('#versionMenu');
-const topbar = document.querySelector('.topbar');
-const mobileSettingsTrigger = document.querySelector('#mobileSettingsTrigger');
-const selectedVersionLabel = document.querySelector('#selectedVersionLabel');
-const versionOptions = Array.from(document.querySelectorAll('[data-version-option]'));
-let selectedVersionKey = loadVersionKey();
-let activeCategory = 'All';
-let activeLoadToken = 0;
-let loadingVersionKey = null;
-let lastScrollY = window.scrollY;
-let scrollFramePending = false;
-const mobileSettingsMedia = window.matchMedia('(max-width: 680px)');
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, character => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  })[character]);
-}
-
-function loadVersionKey() {
-  try {
-    const saved = localStorage.getItem('promises96-version');
-    return BIBLE_VERSIONS[saved] ? saved : 'NIV';
-  } catch (error) {
-    return 'NIV';
-  }
-}
-
-function saveVersionKey(key) {
-  try {
-    localStorage.setItem('promises96-version', key);
-  } catch (error) {
-    // The selection still applies for this visit.
-  }
-}
-
-function referenceParts(reference) {
-  return String(reference).match(/^(.+?) (\d+):(\d+)(?:[–-](\d+))?$/);
-}
-
-function referenceToUsfm(reference) {
-  const match = referenceParts(reference);
-  if (!match || !BOOK_USFM[match[1]]) return '';
-  return `${BOOK_USFM[match[1]]}.${match[2]}.${match[3]}${match[4] ? `-${match[4]}` : ''}`;
-}
-
-function referenceToBolls(reference) {
-  const match = referenceParts(reference);
-  if (!match || !BOLLS_BOOK_IDS[match[1]]) return null;
-  return {
-    bookId: BOLLS_BOOK_IDS[match[1]],
-    chapter: Number(match[2]),
-    verseStart: Number(match[3]),
-    verseEnd: Number(match[4] || match[3])
+  // The drawer offers concrete typeface names; earlier builds stored generic
+  // aliases. Map the old values forward so the drawer can show a selection.
+  const FONT_ALIASES = {
+    serif: 'lora', sans: 'jakarta', editorial: 'newsreader',
+    display: 'dm-serif', mono: 'inter'
   };
-}
+  const FONT_CHOICES = [
+    'lora', 'newsreader', 'source-serif', 'merriweather',
+    'jakarta', 'outfit', 'sora', 'bricolage', 'epilogue'
+  ];
 
-function normalizePassageText(value) {
-  return String(value || '')
-    .replace(/<br\s*\/?>/gi, ' ')
-    .replace(/¶/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-async function getBollsChapter(bookId, chapter) {
-  const key = `${bookId}:${chapter}`;
-  if (!bollsChapterCache.has(key)) {
-    bollsChapterCache.set(key, fetch(`https://bolls.life/get-text/NLT/${bookId}/${chapter}/`)
-      .then(response => {
-        if (!response.ok) throw new Error('NLT could not be loaded.');
-        return response.json();
-      })
-      .then(verses => {
-        if (!Array.isArray(verses)) throw new Error('NLT returned an unexpected response.');
-        return verses;
-      })
-      .catch(error => {
-        bollsChapterCache.delete(key);
-        throw error;
-      }));
+  function normalizeFontStyle(value) {
+    const v = FONT_ALIASES[value] || value;
+    return FONT_CHOICES.includes(v) ? v : 'lora';
   }
-  return bollsChapterCache.get(key);
-}
 
-async function getBollsPassage(reference) {
-  const parts = referenceToBolls(reference);
-  if (!parts) throw new Error('Unsupported Scripture reference.');
-  const chapter = await getBollsChapter(parts.bookId, parts.chapter);
-  const text = chapter
-    .filter(verse => Number(verse.verse) >= parts.verseStart && Number(verse.verse) <= parts.verseEnd)
-    .map(verse => normalizePassageText(verse.text))
-    .filter(Boolean)
-    .join(' ');
-  if (!text) throw new Error('NLT passage was not found.');
-  return text;
-}
+  // --- Global Application State ---
+  const state = {
+    version: localStorage.getItem('agy_bible_version') || 'NIV',
+    theme: localStorage.getItem('agy_bible_theme') || 'light',
+    fontStyle: normalizeFontStyle(localStorage.getItem('agy_font_style')),
+    lineHeight: localStorage.getItem('agy_line_height') || '1.7',
+    fontSize: parseFloat(localStorage.getItem('agy_font_size')) || 1.22,
+    viewMode: localStorage.getItem('agy_view_mode') || 'bento',
+    category: 'all',
+    favoritesOnly: false,
+    favorites: new Set(JSON.parse(localStorage.getItem('agy_bible_favs') || '[]')),
+    
+    // Unified Reader Lightbox
+    activeReaderVerseId: 1,
+    activeReaderVersion: localStorage.getItem('agy_bible_version') || 'NIV',
 
-function bookName(reference) {
-  const match = referenceParts(reference);
-  return match ? match[1] : '';
-}
+    // Fullscreen Endless Stories Mode
+    isStoriesMode: false,
+    hasTappedStoryOnce: false,
+    storyShufflePool: [],
+    storyHistory: [],
+    storyCurrentVerse: null,
+    storyCurrentVer: 'NIV',
+    storyCurrentStyle: 'story-style-swiss',
+    storyTypographyStyles: [
+      'story-style-swiss',
+      'story-style-neobrutalism',
+      'story-style-condensed',
+      'story-style-dm-serif',
+      'story-style-fraunces',
+      'story-style-bricolage',
+      'story-style-outfit',
+      'story-style-kinetic',
+      'story-style-sora',
+      'story-style-anton',
+      'story-style-lora',
+      'story-style-newsreader',
+      'story-style-spacemono',
+      'story-style-epilogue',
+      'story-style-merriweather',
+      'story-style-instrument-serif'
+    ],
 
-function selectedVersion() {
-  return BIBLE_VERSIONS[selectedVersionKey];
-}
+    // Shuffle Mode State
+    shuffledOrder: false,
+    shuffledVerses: []
+  };
 
-function versionPassages(key) {
-  if (!translationCache.has(key)) translationCache.set(key, new Map());
-  return translationCache.get(key);
-}
+  // Readers who ask the OS to reduce motion get instant jumps rather than
+  // smooth scrolling; the CSS half of this lives in styles.css.
+  const reducedMotion = () =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function currentPassage(item) {
-  const translated = versionPassages(selectedVersionKey).get(item.number);
-  if (translated) return translated;
+  const scrollBehavior = () => (reducedMotion() ? 'auto' : 'smooth');
 
-  const nivFallback = selectedVersionKey === 'TPT'
-    ? versionPassages('NIV').get(item.number)
-    : null;
-  if (nivFallback) {
-    return {
-      ...nivFallback,
-      source: 'NIV fallback · YouVersion',
-      isFallback: true
+  // --- Modal focus management ---
+  // The dialogs are plain divs toggled by a class, so nothing moved focus into
+  // them, nothing gave it back on close, and Tab walked straight out into the
+  // page behind. Marking the page regions `inert` handles both the focus trap
+  // and the accessibility tree in one step.
+  let lastFocusedBeforeDialog = null;
+
+  function pageRegions() {
+    return [
+      document.getElementById('stickyHeader'),
+      document.querySelector('main.app-container'),
+      document.querySelector('footer.site-footer')
+    ].filter(Boolean);
+  }
+
+  function enterDialog(dialog) {
+    if (!dialog) return;
+    lastFocusedBeforeDialog = document.activeElement;
+    pageRegions().forEach(el => { el.inert = true; });
+    dialog.removeAttribute('aria-hidden');
+    dialog.setAttribute('tabindex', '-1');
+    // The drawer transitions `visibility`, so it stays `hidden` — and
+    // therefore unfocusable — until the transition has actually advanced.
+    // Retry across frames until focus lands or the transition is long past.
+    const claimFocus = (frame) => {
+      dialog.focus({ preventScroll: true });
+      if (document.activeElement === dialog) return;
+      if (frame < 40) requestAnimationFrame(() => claimFocus(frame + 1));
+    };
+    claimFocus(0);
+  }
+
+  function exitDialog(dialog) {
+    if (!dialog) return;
+    // Drop focus before hiding, so it is never left on a hidden element.
+    if (dialog.contains(document.activeElement)) document.activeElement.blur();
+    dialog.setAttribute('aria-hidden', 'true');
+    if (document.querySelectorAll('[role="dialog"]:not([aria-hidden="true"])').length === 0) {
+      pageRegions().forEach(el => { el.inert = false; });
+    }
+    if (lastFocusedBeforeDialog && document.contains(lastFocusedBeforeDialog)) {
+      lastFocusedBeforeDialog.focus({ preventScroll: true });
+    }
+    lastFocusedBeforeDialog = null;
+  }
+
+  // --- DOM References ---
+  let elements = {};
+
+  function initElements() {
+    elements = {
+      html: document.documentElement,
+      stickyHeader: document.getElementById('stickyHeader'),
+      heroOverview: document.getElementById('heroOverview'),
+      btnHeroOpenStories: document.getElementById('btnHeroOpenStories'),
+      bentoContainer: document.getElementById('bentoContainer'),
+      categoryChips: document.getElementById('categoryChips'),
+      favoritesFilterBtn: document.getElementById('favoritesFilterBtn'),
+      favoritesCount: document.getElementById('favoritesCount'),
+      statDisplayedCount: document.getElementById('statDisplayedCount'),
+      statBookmarksCount: document.getElementById('statBookmarksCount'),
+      activeVersionLabel: document.getElementById('activeVersionLabel'),
+      noResults: document.getElementById('noResults'),
+      resetFiltersBtn: document.getElementById('resetFiltersBtn'),
+      scrollToTopBtn: document.getElementById('scrollToTopBtn'),
+      btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
+      btnShuffleVerses: document.getElementById('btnShuffleVerses'),
+      mobileVersionSelect: document.getElementById('mobileVersionSelect'),
+
+      // Typography & Reading Settings Flyout Drawer DOM
+      typeSettingsDrawer: document.getElementById('typeSettingsDrawer'),
+      btnCloseTypeSettings: document.getElementById('btnCloseTypeSettings'),
+      settingsActiveFontBadge: document.getElementById('settingsActiveFontBadge'),
+      drawerFontCards: document.getElementById('drawerFontCards'),
+      settingsFontSizeBadge: document.getElementById('settingsFontSizeBadge'),
+      drawerFontSizePresets: document.getElementById('drawerFontSizePresets'),
+      btnCustomFontSize: document.getElementById('btnCustomFontSize'),
+      customFontSizeWrapper: document.getElementById('customFontSizeWrapper'),
+      drawerFontSizeSlider: document.getElementById('drawerFontSizeSlider'),
+      settingsLineHeightBadge: document.getElementById('settingsLineHeightBadge'),
+      drawerLineHeightPresets: document.getElementById('drawerLineHeightPresets'),
+      btnCustomLineHeight: document.getElementById('btnCustomLineHeight'),
+      customLineHeightWrapper: document.getElementById('customLineHeightWrapper'),
+      drawerLineHeightSlider: document.getElementById('drawerLineHeightSlider'),
+      drawerThemePicker: document.getElementById('drawerThemePicker'),
+      drawerVersionPicker: document.getElementById('drawerVersionPicker'),
+      btnResetTypeSettings: document.getElementById('btnResetTypeSettings'),
+
+      // Unified Reader Lightbox DOM
+      readerLightbox: document.getElementById('readerLightbox'),
+      readerTitle: document.getElementById('readerTitle'),
+      readerCategoryBadge: document.getElementById('readerCategoryBadge'),
+      readerChapterTitle: document.getElementById('readerChapterTitle'),
+      readerChapterSummary: document.getElementById('readerChapterSummary'),
+      readerActiveVerBadge: document.getElementById('readerActiveVerBadge'),
+      readerInlinePassage: document.getElementById('readerInlinePassage'),
+      readerTranslationsGrid: document.getElementById('readerTranslationsGrid'),
+      readerGraceTheme: document.getElementById('readerGraceTheme'),
+      readerGraceQuote: document.getElementById('readerGraceQuote'),
+      readerGraceTakeaway: document.getElementById('readerGraceTakeaway'),
+      readerCaseStudiesGrid: document.getElementById('readerCaseStudiesGrid'),
+      readerLexiconLang: document.getElementById('readerLexiconLang'),
+      readerInterlinearText: document.getElementById('readerInterlinearText'),
+      readerLexiconGrid: document.getElementById('readerLexiconGrid'),
+      readerLexiconSummary: document.getElementById('readerLexiconSummary'),
+      secTptNotes: document.getElementById('sec-tpt-notes'),
+      readerTptFootnotes: document.getElementById('readerTptFootnotes'),
+      readerCrossRefsGrid: document.getElementById('readerCrossRefsGrid'),
+      readerCloseBtn: document.getElementById('readerCloseBtn'),
+      btnOpenStoryFromReader: document.getElementById('btnOpenStoryFromReader'),
+      btnReaderPrev: document.getElementById('btnReaderPrev'),
+      btnReaderNext: document.getElementById('btnReaderNext'),
+
+      // Story Overlay DOM
+      storyOverlay: document.getElementById('storyOverlay'),
+      storyBackdrop: document.getElementById('storyBackdrop'),
+      storyContainer: document.getElementById('storyContainer'),
+      storyContentWrapper: document.getElementById('storyContentWrapper'),
+      storyPassageText: document.getElementById('storyPassageText'),
+      storyPassageRef: document.getElementById('storyPassageRef'),
+      storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
+      storyCloseBtn: document.getElementById('storyCloseBtn'),
+      storyTapToast: document.getElementById('storyTapToast'),
+      btnStoryPrev: document.getElementById('btnStoryPrev'),
+      btnStoryBookmark: document.getElementById('btnStoryBookmark'),
+      storyBookmarkBtnText: document.getElementById('storyBookmarkBtnText'),
+      storyBookmarkIcon: document.getElementById('storyBookmarkIcon'),
+
+      // Shortcuts Modal & Toast Container
+      shortcutsModal: document.getElementById('shortcutsModal'),
+      shortcutsCloseBtn: document.getElementById('shortcutsCloseBtn'),
+      toastContainer: document.getElementById('toastContainer')
     };
   }
 
-  return {
-    text: item.text,
-    source: 'WEB · public domain',
-    isFallback: true
-  };
-}
+  // ==========================================================================
+  // INITIALIZATION
+  // ==========================================================================
+  function init() {
+    initElements();
+    applyTheme(state.theme);
+    applyFontStyle(state.fontStyle);
+    applyLineHeight(state.lineHeight);
+    applyFontSize(state.fontSize);
+    applyViewMode(state.viewMode);
+    setBibleVersion(state.version);
 
-function cardSize(text) {
-  if (text.length > 520) return 'is-long';
-  if (text.length > 270) return 'is-medium';
-  return '';
-}
+    updateCategoryCounts();
+    render();
+    setupEventListeners();
+    refreshIcons();
 
-function desktopCardSpans(items) {
-  const spans = [];
+    // Deep Link Navigation
+    handleHashNavigation();
+    window.addEventListener('hashchange', handleHashNavigation);
 
-  for (let index = 0; index < items.length;) {
-    const currentText = currentPassage(items[index]).text;
-    const nextItem = items[index + 1];
-
-    if (cardSize(currentText) === 'is-long' || !nextItem) {
-      spans.push(12);
-      index += 1;
-      continue;
-    }
-
-    const nextText = currentPassage(nextItem).text;
-    if (cardSize(nextText) === 'is-long') {
-      spans.push(12);
-      index += 1;
-      continue;
-    }
-
-    const currentShare = currentText.length / (currentText.length + nextText.length);
-    const currentSpan = currentShare < .46 ? 5 : currentShare > .54 ? 7 : 6;
-    spans.push(currentSpan, 12 - currentSpan);
-    index += 2;
+    // Global resize handler for dynamic story auto-fitting
+    window.addEventListener('resize', () => {
+      if (state.isStoriesMode) {
+        autoFitStoryText();
+      }
+    });
   }
 
-  return spans;
-}
+  function handleHashNavigation() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#story')) {
+      openStoriesMode();
+    } else if (hash === '#settings' || hash.startsWith('#settings')) {
+      openTypeSettings();
+    } else if (hash.startsWith('#verse=') || hash.startsWith('#study=') || hash.startsWith('#compare=')) {
+      const match = hash.match(/id=(\d+)/) || hash.match(/=(\d+)/);
+      const id = match ? parseInt(match[1], 10) : 1;
+      openReaderLightbox(id);
 
-function categoryValue(category) {
-  return category === 'The Word' ? 'Word' : category;
-}
+      if (hash.includes('sec=')) {
+        const secName = hash.split('sec=')[1].split('&')[0];
+        setTimeout(() => {
+          const el = document.getElementById(`sec-${secName}`);
+          if (el) el.scrollIntoView({ behavior: scrollBehavior() });
+        }, 150);
+      }
+    } else if (hash === '#bento' || hash === '' || hash === '#') {
+      applyViewMode('bento');
+    } else if (hash.startsWith('#theme=')) {
+      const themeVal = hash.replace('#theme=', '').trim();
+      if (['light', 'mud', 'dark'].includes(themeVal)) applyTheme(themeVal);
+    }
+  }
 
-function categoryLabel(category) {
-  return category === 'Word' ? 'The Word' : category;
-}
+  function refreshIcons() {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  }
 
-function renderCategoryFilters() {
-  categoryFilters.innerHTML = CATEGORY_ORDER.map(category => {
-    const value = categoryValue(category);
-    const count = category === 'All' ? VERSES.length : VERSES.filter(item => item.theme === value).length;
-    const themeSlug = value.toLowerCase();
-    const active = category === activeCategory;
-    return `<button class="category-pill${active ? ' is-active' : ''}" type="button" data-category="${category}" style="--pill-accent:var(--${category === 'All' ? 'lime' : `tone-${themeSlug}`})" aria-pressed="${active}"><i aria-hidden="true">${CATEGORY_ICONS[category]}</i>${category}<small>${count}</small></button>`;
-  }).join('');
-}
+  // ==========================================================================
+  // FILTERING & RENDERING (BENTO GRID)
+  // ==========================================================================
+  function updateCategoryCounts() {
+    const counts = {
+      all: BIBLE_VERSES.length,
+      'joy-presence': 0,
+      'provision-abundance': 0,
+      'courage-protection': 0,
+      'peace-rest': 0,
+      'identity-grace': 0,
+      'wisdom-word': 0,
+      'faith-prayer': 0,
+      'healing-renewal': 0
+    };
 
-function render() {
-  const filtered = activeCategory === 'All'
-    ? VERSES
-    : VERSES.filter(item => item.theme === categoryValue(activeCategory));
-  const cardSpans = desktopCardSpans(filtered);
+    BIBLE_VERSES.forEach(v => {
+      if (counts[v.category] !== undefined) counts[v.category]++;
+    });
 
-  cards.innerHTML = filtered.map((item, index) => {
-    const passage = currentPassage(item);
-    const themeSlug = item.theme.toLowerCase();
-    const isLoading = loadingVersionKey === selectedVersionKey && passage.isFallback;
-    return `<article class="card ${cardSize(passage.text)}${isLoading ? ' is-loading' : ''}" data-passage="${item.number}" style="--card-span:${cardSpans[index]};--card-accent:var(--tone-${themeSlug});--card-surface:var(--card-bg-${themeSlug})">
-      <div class="card-top">
-        <div class="card-kicker">
-          <span class="number">${String(item.number).padStart(2, '0')}</span>
-          <span class="theme-pill"><span class="theme-icon" aria-hidden="true">${ICONS[item.icon] || '◇'}</span>${escapeHtml(categoryLabel(item.theme))}</span>
+    Object.keys(counts).forEach(cat => {
+      const el = document.getElementById(`count-${cat}`);
+      if (el) el.textContent = counts[cat];
+    });
+
+    if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
+  }
+
+  function getFilteredVerses() {
+    const source = state.shuffledOrder ? state.shuffledVerses : BIBLE_VERSES;
+    return source.filter(verse => {
+      if (state.category !== 'all' && verse.category !== state.category) return false;
+      if (state.favoritesOnly && !state.favorites.has(verse.id)) return false;
+      return true;
+    });
+  }
+
+  function shuffleVerses() {
+    state.shuffledOrder = true;
+    const pool = [...BIBLE_VERSES];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    state.shuffledVerses = pool;
+    render();
+    showToast('Verses shuffled into dynamic order');
+  }
+
+  // --- Render Bento Grid (Vibrant Tints & Pure Scripture Focus) ---
+  function render() {
+    const filtered = getFilteredVerses();
+
+    if (elements.statDisplayedCount) elements.statDisplayedCount.textContent = filtered.length;
+    if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
+    if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
+    if (elements.activeVersionLabel) elements.activeVersionLabel.textContent = state.version;
+
+    if (filtered.length === 0) {
+      if (elements.bentoContainer) elements.bentoContainer.style.display = 'none';
+      if (elements.noResults) elements.noResults.style.display = 'flex';
+      refreshIcons();
+      return;
+    } else {
+      if (elements.bentoContainer) elements.bentoContainer.style.display = '';
+      if (elements.noResults) elements.noResults.style.display = 'none';
+    }
+
+    if (elements.bentoContainer) {
+      elements.bentoContainer.innerHTML = filtered.map(verse => {
+        const isFav = state.favorites.has(verse.id);
+        const currentText = verse.translations[state.version] || verse.translations.NIV;
+        const catClass = `cat-${verse.themeColor || 'amber'}`;
+
+        return `
+          <article class="bento-card ${catClass}" id="verse-card-${verse.id}" data-id="${verse.id}" data-category="${verse.category}">
+
+            <!-- Stretched hit area: gives the card a single keyboard stop and an
+                 accessible name without nesting the meta-row buttons inside it. -->
+            <button class="card-open-btn" type="button" tabindex="0"
+                    aria-label="Open ${escapeHtml(verse.ref)} — chapter context, translations and word study"></button>
+
+            <!-- Pure Main Scripture Text -->
+            <div class="card-verse-first">
+              <blockquote class="scripture-text" id="verse-text-${verse.id}">
+                "${escapeHtml(currentText)}"
+              </blockquote>
+            </div>
+
+            <!-- Bottom Meta Row: Left = Category + Bookmark, Right = Unnumbered Reference -->
+            <div class="card-meta-bottom">
+              <div class="meta-bottom-left">
+                <button class="category-tag" type="button" aria-label="Filter by ${escapeHtml(verse.categoryLabel)}">
+                  <i data-lucide="${verse.icon || 'bookmark'}" style="width: 11px; height: 11px;"></i>
+                  ${verse.categoryLabel}
+                </button>
+                <button class="card-action-btn btn-favorite ${isFav ? 'favorite-active' : ''}" data-id="${verse.id}" title="${isFav ? 'Remove Bookmark' : 'Bookmark Verse'}">
+                  <i data-lucide="bookmark" style="width: 13px; height: 13px; ${isFav ? 'fill: currentColor;' : ''}"></i>
+                </button>
+              </div>
+
+              <div class="meta-bottom-right">
+                <span class="card-ref-badge">${escapeHtml(verse.ref)}</span>
+              </div>
+            </div>
+
+          </article>
+        `;
+      }).join('');
+    }
+
+    refreshIcons();
+  }
+
+  // Escape a user-facing string for safe interpolation into a RegExp. Called by
+  // the lexicon highlighter; its absence threw a ReferenceError that aborted
+  // openReaderLightbox() before the modal was ever shown.
+  function escapeRegExp(str) {
+    return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // ==========================================================================
+  // THEMES, FONTS & DISPLAY SETTINGS
+  // ==========================================================================
+  function applyTheme(theme) {
+    if (theme === 'mud') theme = 'warm';
+    state.theme = theme;
+    elements.html.setAttribute('data-theme', theme);
+    localStorage.setItem('agy_bible_theme', theme);
+
+    // Header buttons
+    document.querySelectorAll('.theme-picker .segmented-btn').forEach(btn => {
+      const val = btn.getAttribute('data-theme-val');
+      btn.classList.toggle('active', val === theme || (theme === 'warm' && val === 'mud'));
+    });
+
+    // Drawer buttons
+    document.querySelectorAll('#drawerThemePicker .segmented-btn').forEach(btn => {
+      const val = btn.getAttribute('data-theme-val');
+      btn.classList.toggle('active', val === theme || (theme === 'warm' && val === 'mud'));
+    });
+  }
+
+  function applyFontStyle(style) {
+    style = normalizeFontStyle(style);
+    state.fontStyle = style;
+    
+    // Remove old font-* classes
+    elements.html.className = elements.html.className
+      .replace(/font-\S+/g, '')
+      .trim();
+    elements.html.classList.add(`font-${style}`);
+    localStorage.setItem('agy_font_style', style);
+
+    // Drawer font buttons
+    document.querySelectorAll('#drawerFontCards .font-pill-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-font') === style);
+    });
+  }
+
+  function applyLineHeight(lh, isPreset = false) {
+    const num = parseFloat(lh);
+    state.lineHeight = lh.toString();
+    document.documentElement.style.setProperty('--verse-line-height', state.lineHeight);
+    localStorage.setItem('agy_line_height', state.lineHeight);
+
+    if (elements.settingsLineHeightBadge) {
+      elements.settingsLineHeightBadge.textContent = num.toFixed(2);
+    }
+    if (elements.drawerLineHeightSlider) {
+      elements.drawerLineHeightSlider.value = num;
+    }
+
+    // Sync presets buttons
+    let matchedPreset = false;
+    document.querySelectorAll('#drawerLineHeightPresets .segmented-btn').forEach(btn => {
+      const presetVal = parseFloat(btn.getAttribute('data-lh-val'));
+      if (!isNaN(presetVal) && Math.abs(presetVal - num) < 0.04) {
+        btn.classList.add('active');
+        matchedPreset = true;
+      } else if (btn.id !== 'btnCustomLineHeight') {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (elements.btnCustomLineHeight) {
+      if (!matchedPreset) {
+        elements.btnCustomLineHeight.classList.add('active');
+        if (elements.customLineHeightWrapper) elements.customLineHeightWrapper.style.display = 'block';
+        if (elements.settingsLineHeightBadge) elements.settingsLineHeightBadge.style.display = 'inline-block';
+      } else if (isPreset) {
+        elements.btnCustomLineHeight.classList.remove('active');
+        if (elements.customLineHeightWrapper) elements.customLineHeightWrapper.style.display = 'none';
+        if (elements.settingsLineHeightBadge) elements.settingsLineHeightBadge.style.display = 'none';
+      }
+    }
+  }
+
+  function applyFontSize(size, isPreset = false) {
+    const num = Math.min(1.85, Math.max(0.95, parseFloat(size)));
+    state.fontSize = num;
+    document.documentElement.style.setProperty('--verse-font-size', `${num}rem`);
+    localStorage.setItem('agy_font_size', num.toString());
+
+    if (elements.settingsFontSizeBadge) {
+      elements.settingsFontSizeBadge.textContent = `${num.toFixed(2)}rem`;
+    }
+    if (elements.drawerFontSizeSlider) {
+      elements.drawerFontSizeSlider.value = num;
+    }
+
+    // Sync presets buttons
+    let matchedPreset = false;
+    document.querySelectorAll('#drawerFontSizePresets .segmented-btn').forEach(btn => {
+      const presetVal = parseFloat(btn.getAttribute('data-size-val'));
+      if (!isNaN(presetVal) && Math.abs(presetVal - num) < 0.04) {
+        btn.classList.add('active');
+        matchedPreset = true;
+      } else if (btn.id !== 'btnCustomFontSize') {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (elements.btnCustomFontSize) {
+      if (!matchedPreset) {
+        elements.btnCustomFontSize.classList.add('active');
+        if (elements.customFontSizeWrapper) elements.customFontSizeWrapper.style.display = 'block';
+        if (elements.settingsFontSizeBadge) elements.settingsFontSizeBadge.style.display = 'inline-block';
+      } else if (isPreset) {
+        elements.btnCustomFontSize.classList.remove('active');
+        if (elements.customFontSizeWrapper) elements.customFontSizeWrapper.style.display = 'none';
+        if (elements.settingsFontSizeBadge) elements.settingsFontSizeBadge.style.display = 'none';
+      }
+    }
+  }
+
+  function applyViewMode(mode) {
+    state.viewMode = mode;
+    localStorage.setItem('agy_view_mode', mode);
+
+    if (elements.heroOverview) elements.heroOverview.style.display = 'flex';
+    if (elements.bentoContainer) elements.bentoContainer.style.display = 'block';
+    document.body.classList.toggle('view-list', mode === 'list');
+  }
+
+  function setBibleVersion(ver) {
+    const allowed = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+    if (allowed.includes(ver)) {
+      state.version = ver;
+      localStorage.setItem('agy_bible_version', ver);
+
+      // Header desktop buttons
+      document.querySelectorAll('.version-picker .segmented-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
+      });
+
+      // Header mobile select dropdown
+      if (elements.mobileVersionSelect) {
+        elements.mobileVersionSelect.value = ver;
+      }
+
+      // Drawer buttons
+      document.querySelectorAll('#drawerVersionPicker .segmented-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
+      });
+
+      render();
+    }
+  }
+
+  // ==========================================================================
+  // TYPOGRAPHY SETTINGS FLYOUT DRAWER (TRANSPARENT NO-BLUR LIVE PREVIEW)
+  // ==========================================================================
+  function openTypeSettings() {
+    if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    enterDialog(elements.typeSettingsDrawer);
+    refreshIcons();
+  }
+
+  function closeTypeSettings() {
+    if (elements.typeSettingsDrawer) elements.typeSettingsDrawer.classList.remove('active');
+    document.body.style.overflow = '';
+    exitDialog(elements.typeSettingsDrawer);
+  }
+
+  function resetTypeSettingsToDefault() {
+    applyFontStyle('lora');
+    applyFontSize(1.22, true);
+    applyLineHeight('1.7', true);
+    applyTheme('light');
+    setBibleVersion('NIV');
+    showToast('Reset reading typography to defaults');
+  }
+
+  // ==========================================================================
+  // UNIFIED READER LIGHTBOX (CONTEXT FLOW, 4 TRANSLATIONS, LEXICONS & STUDY)
+  // ==========================================================================
+  function openReaderLightbox(verseId) {
+    const verse = BIBLE_VERSES.find(v => v.id === verseId);
+    if (!verse) return;
+
+    const wasOpen = elements.readerLightbox &&
+      elements.readerLightbox.classList.contains('active');
+
+    state.activeReaderVerseId = verseId;
+    state.activeReaderVersion = state.version;
+
+    // Header metadata
+    if (elements.readerTitle) elements.readerTitle.textContent = verse.ref;
+    if (elements.readerCategoryBadge) elements.readerCategoryBadge.textContent = verse.categoryLabel;
+
+    // Render components
+    renderReaderContext(verse, state.activeReaderVersion);
+    renderReaderTranslations(verse);
+    renderReaderGraceInsight(verse);
+    renderReaderCaseStudies(verse);
+    renderReaderLexicon(verse, state.activeReaderVersion);
+    renderReaderTptNotes(verse);
+    renderReaderCrossRefs(verse);
+
+    // Update active version buttons in reader
+    updateReaderVersionPickerButtons(state.activeReaderVersion);
+
+    // Show Lightbox Modal
+    if (elements.readerLightbox) elements.readerLightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (!wasOpen) enterDialog(elements.readerLightbox);
+
+    // Deep link hash
+    history.replaceState(null, null, `#verse=${verseId}`);
+    refreshIcons();
+  }
+
+  function closeReaderLightbox() {
+    if (elements.readerLightbox) elements.readerLightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    exitDialog(elements.readerLightbox);
+    if (window.location.hash.startsWith('#verse=') || window.location.hash.startsWith('#study=')) {
+      history.replaceState(null, null, ' ');
+    }
+  }
+
+  function updateReaderVersionPickerButtons(ver) {
+    document.querySelectorAll('#readerVersionPicker .segmented-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-ver') === ver);
+    });
+    if (elements.readerActiveVerBadge) elements.readerActiveVerBadge.textContent = ver;
+  }
+
+  function switchReaderVersion(ver) {
+    const verse = BIBLE_VERSES.find(v => v.id === state.activeReaderVerseId);
+    if (!verse) return;
+
+    state.activeReaderVersion = ver;
+    updateReaderVersionPickerButtons(ver);
+
+    // 1. Update Context Flow
+    renderReaderContext(verse, ver);
+
+    // 2. Update Interlinear Highlighted Verse
+    renderReaderLexicon(verse, ver);
+
+    refreshIcons();
+  }
+
+  function renderReaderContext(verse, ver = 'NIV') {
+    const ctx = verse.dynamicContext;
+    if (!ctx) return;
+
+    if (elements.readerChapterTitle) elements.readerChapterTitle.textContent = ctx.chapterTitle;
+    if (elements.readerChapterSummary) elements.readerChapterSummary.textContent = ctx.chapterSummary;
+
+    const verData = ctx.versions[ver] || ctx.versions['NIV'];
+    let html = '';
+
+    // Verses Before
+    if (verData.before && verData.before.length) {
+      verData.before.forEach(v => {
+        html += `<span class="ctx-verse ctx-surrounding"><sup class="ctx-num">${v.num}</sup>${escapeHtml(v.text)}</span> `;
+      });
+    }
+
+    // Target Verse (Inline Underlined & Glowing)
+    html += `<span class="ctx-verse ctx-target" title="Target Promise (${verse.ref} - ${ver})"><sup class="ctx-num">${verData.target.num}</sup>${escapeHtml(verData.target.text)}</span> `;
+
+    // Verses After
+    if (verData.after && verData.after.length) {
+      verData.after.forEach(v => {
+        html += `<span class="ctx-verse ctx-surrounding"><sup class="ctx-num">${v.num}</sup>${escapeHtml(v.text)}</span> `;
+      });
+    }
+
+    if (elements.readerInlinePassage) elements.readerInlinePassage.innerHTML = html;
+  }
+
+  function renderReaderTranslations(verse) {
+    const trans = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+    const names = {
+      NIV: 'New International Version',
+      AMP: 'Amplified Bible',
+      NKJV: 'New King James Version',
+      TPT: 'The Passion Translation',
+      NLT: 'New Living Translation',
+      NASB: 'New American Standard Bible'
+    };
+
+    if (elements.readerTranslationsGrid) {
+      elements.readerTranslationsGrid.innerHTML = trans.map(t => {
+        const text = verse.translations[t] || '';
+        return `
+          <div class="trans-card" data-ver="${t}">
+            <div class="trans-card-header">
+              <span class="trans-card-name">${t}</span>
+              <span class="trans-card-fullname">${names[t]}</span>
+            </div>
+            <p class="trans-card-text">"${escapeHtml(text)}"</p>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function renderReaderGraceInsight(verse) {
+    if (verse.paulEllisInsight) {
+      if (elements.readerGraceTheme) elements.readerGraceTheme.textContent = verse.paulEllisInsight.theme;
+      if (elements.readerGraceQuote) elements.readerGraceQuote.textContent = `"${verse.paulEllisInsight.quote}"`;
+      if (elements.readerGraceTakeaway) elements.readerGraceTakeaway.textContent = verse.paulEllisInsight.graceTakeaway;
+    }
+  }
+
+  function renderReaderCaseStudies(verse) {
+    if (verse.caseStudiesList && verse.caseStudiesList.length && elements.readerCaseStudiesGrid) {
+      elements.readerCaseStudiesGrid.innerHTML = verse.caseStudiesList.map(cs => `
+        <div class="case-study-card">
+          <div class="case-study-era">${escapeHtml(cs.era)}</div>
+          <div class="case-study-title">${escapeHtml(cs.title)}</div>
+          <div style="font-size: 0.78rem; font-weight: 700; color: var(--cat-indigo);">
+            ${escapeHtml(cs.character)} (${escapeHtml(cs.ref)})
+          </div>
+          <p class="case-study-narrative">${escapeHtml(cs.story)}</p>
         </div>
-        <h2 class="reference">${escapeHtml(item.reference)}</h2>
-      </div>
-      <p class="verse">${escapeHtml(passage.text)}</p>
-      <div class="card-bottom">
-        <span class="source">${escapeHtml(passage.source)}</span>
-        <button class="copy-button" type="button" data-copy-passage="${item.number}" aria-label="Copy ${escapeHtml(item.reference)}"><span aria-hidden="true">⧉</span><span class="copy-label">Copy</span></button>
-      </div>
-    </article>`;
-  }).join('') || '<div class="empty">No passages in this category.</div>';
-
-  visibleCount.textContent = filtered.length;
-  renderCategoryFilters();
-}
-
-function copyFallback(text) {
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'fixed';
-  textarea.style.opacity = '0';
-  document.body.appendChild(textarea);
-  textarea.select();
-  const copied = document.execCommand('copy');
-  textarea.remove();
-  if (!copied) throw new Error('Copy was not available.');
-}
-
-async function copyPassage(number, button) {
-  const item = VERSES.find(entry => entry.number === number);
-  if (!item) return;
-  const passage = currentPassage(item);
-  const text = `“${passage.text}”\n\n— ${item.reference}`;
-
-  try {
-    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
-    else copyFallback(text);
-    const label = button.querySelector('.copy-label');
-    button.classList.add('is-copied');
-    if (label) label.textContent = 'Copied';
-    window.setTimeout(() => {
-      button.classList.remove('is-copied');
-      if (label) label.textContent = 'Copy';
-    }, 1600);
-  } catch (error) {
-    const label = button.querySelector('.copy-label');
-    if (label) label.textContent = 'Try again';
+      `).join('');
+    }
   }
-}
 
-function findAvailableVersion(versions, expected) {
-  return versions.find(version => expected.apiAbbreviations.includes(String(version.abbreviation || '').toUpperCase()));
-}
+  // Helper: Extract clean readable transliteration without parentheses or archaic dots
+  function cleanTransliteration(raw) {
+    if (!raw) return '';
+    let str = String(raw).trim();
+    // If it has parentheses, check if inside is an alternative transliteration (like (chesed) or (sova simchot))
+    const parenMatch = str.match(/\(([^)]+)\)/);
+    let candidate = '';
+    if (parenMatch) {
+      const inside = parenMatch[1].trim();
+      const before = str.split('(')[0].trim();
+      // If inside is transliteration (e.g. chesed, sova simchot, orach chayyim, ne'imot)
+      if (/^[a-zA-Z\s'-]+$/.test(inside) && !inside.includes('/') && inside.split(' ').length <= 3 && !['grace', 'power', 'love', 'peace', 'righteousness', 'spirit', 'faith', 'ability'].includes(inside.toLowerCase())) {
+        candidate = inside;
+      } else {
+        candidate = before;
+      }
+    } else {
+      candidate = str;
+    }
+    // Clean diacritics and special unicode characters
+    let cleaned = candidate
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘ʻʿʾ`]/g, "'")
+      .trim();
+    // Map specific words for clean readability (Dunamis, not Dynamis per user request)
+    cleaned = cleaned.replace(/^ḥesed/i, 'Chesed')
+                     .replace(/^hesed/i, 'Chesed')
+                     .replace(/^dynamis/i, 'Dunamis')
+                     .replace(/^dyn/i, 'Dun');
+    // Capitalize words
+    cleaned = cleaned.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    return cleaned;
+  }
 
-function setStatus(message) {
-  translationStatus.textContent = message;
-}
+  function cleanPronunciation(raw) {
+    if (!raw) return '';
+    let text = String(raw).trim();
+    text = text.replace(/^\/+|\/+$/g, '').trim();
+    return text;
+  }
 
-function fallbackCounts(key) {
-  const selectedPassages = versionPassages(key);
-  const nivPassages = versionPassages('NIV');
-  let niv = 0;
-  let web = 0;
+  function speakLexiconWord(word) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(word);
+      u.rate = 0.85;
+      u.pitch = 1.0;
+      window.speechSynthesis.speak(u);
+    }
+  }
 
-  VERSES.forEach(item => {
-    if (selectedPassages.has(item.number)) return;
-    if (key === 'TPT' && nivPassages.has(item.number)) niv += 1;
-    else web += 1;
-  });
+  function renderReaderLexicon(verse, ver = 'NIV') {
+    const lex = verse.lexicon;
+    if (!lex) return;
 
-  return { niv, web };
-}
+    if (elements.readerLexiconLang) {
+      elements.readerLexiconLang.innerHTML = `
+        <i data-lucide="book-marked" style="width: 13px; height: 13px;"></i>
+        ${escapeHtml(lex.originalLanguage)}
+      `;
+    }
 
-function fallbackStatus(base, counts) {
-  return [
-    base,
-    counts.niv ? `${counts.niv} shown in NIV` : '',
-    counts.web ? `${counts.web} shown in WEB` : ''
-  ].filter(Boolean).join(' · ');
-}
+    // 1. Render Actual Verse with Highlighted Key Terms
+    const rawVerseText = verse.translations[ver] || verse.translations.NIV || '';
+    let interlinearHtml = '';
 
-function fallbackCredits(counts) {
-  return [
-    counts.niv ? 'NIV fallback text supplied by YouVersion.' : '',
-    counts.web ? 'World English Bible fallback text is public domain.' : ''
-  ].filter(Boolean);
-}
+    const template = lex.highlightedVerseTemplates?.[ver] || lex.highlightedVerseTemplates?.['NIV'] || '';
+    const isPlaceholderTemplate = /^(reveals|unveils|declares|proclaims)\s+god'?s/i.test((template || '').trim());
 
-async function hydrateNivFallback(token, items, knownVersions = null) {
-  if (!items.length || selectedVersionKey !== 'TPT' || !scriptureApi.configured || typeof scriptureApi.getPassage !== 'function') return;
+    if (template && !isPlaceholderTemplate) {
+      let tIdx = 0;
+      interlinearHtml = template.replace(/\[(.*?)\]\{.*?\}/g, (match, phrase) => {
+        const curIdx = tIdx++;
+        return `<mark class="lexicon-word-tag" data-term-idx="${curIdx}" title="Click to view root definition">${escapeHtml(phrase)}</mark>`;
+      });
+    } else {
+      // Intelligently highlight key theological words in the actual verse text
+      let highlighted = escapeHtml(rawVerseText);
+      if (lex.keyTerms && lex.keyTerms.length) {
+        lex.keyTerms.forEach((term, idx) => {
+          const cleanName = cleanTransliteration(term.transliteration);
+          const candidates = [];
+          if (term.matchedEnglish) {
+            term.matchedEnglish.split(/[\/,;]/).forEach(c => {
+              const cleaned = c.trim().replace(/^["']|["']$/g, '');
+              if (cleaned.length > 2) candidates.push(cleaned);
+            });
+          }
+          candidates.sort((a, b) => b.length - a.length);
 
-  let versions = knownVersions;
-  if (!versions) {
-    try {
-      versions = await scriptureApi.getVersions();
-    } catch (error) {
+          candidates.forEach(cand => {
+            if (!cand) return;
+            const regex = new RegExp(`\\b(${escapeRegExp(cand)})\\b`, 'gi');
+            highlighted = highlighted.replace(regex, `<mark class="lexicon-word-tag" data-term-idx="${idx}" title="${escapeHtml(cleanName)} — Click to view root definition">$1</mark>`);
+          });
+        });
+      }
+      interlinearHtml = highlighted;
+    }
+
+    if (elements.readerInterlinearText) {
+      elements.readerInterlinearText.innerHTML = `"${interlinearHtml}"`;
+    }
+
+    // 2. Render Clean Key Term Cards with Icons, Bolder Labels & Audio Pronunciation (No Strong's Numbers)
+    if (lex.keyTerms && lex.keyTerms.length && elements.readerLexiconGrid) {
+      elements.readerLexiconGrid.innerHTML = lex.keyTerms.map((term, idx) => {
+        const cleanName = cleanTransliteration(term.transliteration);
+        const cleanPron = cleanPronunciation(term.pronunciation);
+        return `
+          <div class="lexicon-term-card" id="lex-term-card-${idx}">
+            <div class="lexicon-term-header">
+              <span class="lexicon-original-word">${escapeHtml(term.word)}</span>
+              <span class="lexicon-matched-pill">${escapeHtml(term.matchedEnglish || '')}</span>
+            </div>
+            
+            <div class="lexicon-translit-row">
+              <span class="lexicon-clean-name">${escapeHtml(cleanName)}</span>
+              <span class="lexicon-dot">•</span>
+              <span class="lexicon-phonetic">/${escapeHtml(cleanPron)}/</span>
+              <button class="lexicon-audio-btn" data-speak="${escapeHtml(cleanName)}" title="Listen to pronunciation of ${escapeHtml(cleanName)}">
+                <i data-lucide="volume-2" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
+            
+            <div class="lexicon-part-of-speech">${escapeHtml(term.partOfSpeech || '')}</div>
+            
+            <div class="lexicon-field">
+              <i data-lucide="git-branch" class="lex-icon"></i>
+              <strong class="lex-label">Root:</strong>
+              <span>${escapeHtml(term.root)}</span>
+            </div>
+            
+            <div class="lexicon-field">
+              <i data-lucide="book-open" class="lex-icon"></i>
+              <strong class="lex-label">Definition:</strong>
+              <span>${escapeHtml(term.definition)}</span>
+            </div>
+            
+            <div class="lexicon-usage-field">
+              <i data-lucide="sparkles" class="lex-icon"></i>
+              <strong class="lex-label">Covenant Context:</strong>
+              <span>${escapeHtml(term.usageInPassage)}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // 3. Theological Summary
+    if (elements.readerLexiconSummary) elements.readerLexiconSummary.textContent = lex.theologicalSummary || '';
+  }
+
+  // --- 6. Conditional TPT Revelatory Notes (Hide if not available) ---
+  function renderReaderTptNotes(verse) {
+    if (!elements.secTptNotes || !elements.readerTptFootnotes) return;
+
+    const notes = verse.tptFootnotes || verse.tptNotes || verse.tptRevelatoryNotes;
+    if (notes && (typeof notes === 'string' ? notes.trim().length > 0 : notes.length > 0)) {
+      elements.secTptNotes.style.display = 'flex';
+      if (Array.isArray(notes)) {
+        elements.readerTptFootnotes.innerHTML = notes.map(n => `<div style="margin-bottom: 0.65rem;">${escapeHtml(n)}</div>`).join('');
+      } else {
+        elements.readerTptFootnotes.innerHTML = escapeHtml(notes);
+      }
+    } else {
+      elements.secTptNotes.style.display = 'none';
+    }
+  }
+
+  function renderReaderCrossRefs(verse) {
+    if (verse.crossReferencesList && verse.crossReferencesList.length && elements.readerCrossRefsGrid) {
+      elements.readerCrossRefsGrid.innerHTML = verse.crossReferencesList.map(cr => `
+        <div class="cross-ref-card" data-linked-id="${cr.linkedVerseId}">
+          <div class="cross-ref-title">
+            <i data-lucide="link-2" style="width: 13px; height: 13px;"></i>
+            ${escapeHtml(cr.ref)}
+          </div>
+          <p class="cross-ref-text">${escapeHtml(cr.text)}</p>
+        </div>
+      `).join('');
+    }
+  }
+
+  // ==========================================================================
+  // FULLSCREEN ENDLESS STORIES MODE (16 DYNAMIC STYLES & DYNAMIC AUTO-FIT)
+  // ==========================================================================
+  function resetStoriesShufflePool() {
+    state.storyShufflePool = [...BIBLE_VERSES].sort(() => Math.random() - 0.5);
+  }
+
+  function openStoriesMode(specificVerseId = null) {
+    state.isStoriesMode = true;
+    state.hasTappedStoryOnce = false;
+    state.storyHistory = [];
+    resetStoriesShufflePool();
+
+    let targetVerse = null;
+    if (specificVerseId) {
+      targetVerse = BIBLE_VERSES.find(v => v.id === specificVerseId);
+    }
+    
+    if (elements.storyTapToast) elements.storyTapToast.classList.remove('dismissed');
+    if (elements.storyOverlay) elements.storyOverlay.classList.add('active');
+    enterDialog(elements.storyOverlay);
+    document.body.style.overflow = 'hidden';
+
+    renderNextStorySlide(targetVerse, false);
+
+    // Auto dismiss tap toast after 3 seconds
+    setTimeout(() => {
+      if (elements.storyTapToast) elements.storyTapToast.classList.add('dismissed');
+    }, 3000);
+  }
+
+  function closeStoriesMode() {
+    state.isStoriesMode = false;
+    if (elements.storyOverlay) elements.storyOverlay.classList.remove('active');
+    exitDialog(elements.storyOverlay);
+    document.body.style.overflow = '';
+    if (window.location.hash.startsWith('#story')) history.replaceState(null, null, ' ');
+  }
+
+  // Cool Text Effects Generator
+  function formatStoryTextWithEffects(rawText, styleName) {
+    // Keywords for dynamic theological emphasis
+    const powerWords = [
+      'joy', 'presence', 'life', 'grace', 'righteous', 'righteousness', 
+      'pleasures', 'glory', 'peace', 'shalom', 'abundance', 'plenty', 
+      'strength', 'power', 'love', 'mercy', 'favor', 'blessing', 'blessed', 
+      'inheritance', 'covenant', 'everlasting', 'eternal', 'overcome', 
+      'victory', 'triumphant', 'healed', 'whole', 'free', 'freedom', 'rest', 
+      'light', 'wisdom', 'hope', 'savior', 'redeem', 'redeemed', 'counselor', 
+      'majesty', 'sanctuary', 'shepherd', 'rock', 'shield', 'fortress'
+    ];
+
+    let words = rawText.split(/\s+/);
+    let formattedWords = words.map(w => {
+      const cleanW = w.toLowerCase().replace(/[^a-z]/g, '');
+      if (powerWords.includes(cleanW)) {
+        if (styleName === 'story-style-spacemono') {
+          return `<span class="fx-mono-glow">${escapeHtml(w)}</span>`;
+        } else if (styleName === 'story-style-lora' || styleName === 'story-style-newsreader' || styleName === 'story-style-merriweather' || styleName === 'story-style-fraunces' || styleName === 'story-style-dm-serif' || styleName === 'story-style-instrument-serif') {
+          return `<span class="fx-italic">${escapeHtml(w)}</span>`;
+        } else if (styleName === 'story-style-kinetic') {
+          return `<span class="fx-gradient">${escapeHtml(w)}</span>`;
+        } else if (styleName === 'story-style-swiss' || styleName === 'story-style-neobrutalism' || styleName === 'story-style-bricolage' || styleName === 'story-style-epilogue' || styleName === 'story-style-condensed' || styleName === 'story-style-anton' || styleName === 'story-style-outfit' || styleName === 'story-style-sora') {
+          return `<span class="fx-accent">${escapeHtml(w)}</span>`;
+        } else {
+          return `<span class="fx-scale">${escapeHtml(w)}</span>`;
+        }
+      }
+      return escapeHtml(w);
+    });
+
+    return `"${formattedWords.join(' ')}"`;
+  }
+
+  // 6-Tier Adaptive Base Font Sizing based on character length
+  function calculateStoryFontSizeClass(textLength) {
+    if (textLength < 70) return 'story-size-hero';
+    if (textLength < 140) return 'story-size-large';
+    if (textLength < 240) return 'story-size-medium';
+    if (textLength < 380) return 'story-size-compact';
+    if (textLength < 520) return 'story-size-mini';
+    return 'story-size-dense';
+  }
+
+  function autoFitStoryText() {
+    const passage = elements.storyPassageText;
+    if (passage) {
+      passage.style.fontSize = '';
+      passage.style.lineHeight = '';
+    }
+  }
+
+  function updateStoryBookmarkButton(verseId) {
+    const isFav = state.favorites.has(verseId);
+    if (elements.btnStoryBookmark) {
+      elements.btnStoryBookmark.classList.toggle('favorite-active', isFav);
+      if (elements.storyBookmarkBtnText) {
+        elements.storyBookmarkBtnText.textContent = isFav ? 'SAVED' : 'SAVE';
+      }
+      // Re-query: createIcons() swaps the <i> placeholder for an <svg>, so the
+      // reference cached in initElements() points at a detached node.
+      const icon = document.getElementById('storyBookmarkIcon');
+      if (icon) {
+        icon.style.fill = isFav ? 'currentColor' : 'none';
+      }
+    }
+  }
+
+  function renderNextStorySlide(forcedVerse = null, addToHistory = true) {
+    if (!state.storyShufflePool.length) {
+      resetStoriesShufflePool();
+    }
+
+    if (!state.hasTappedStoryOnce) {
+      state.hasTappedStoryOnce = true;
+      if (elements.storyTapToast) elements.storyTapToast.classList.add('dismissed');
+    }
+
+    // Save previous to history
+    if (addToHistory && state.storyCurrentVerse) {
+      state.storyHistory.push({
+        verse: state.storyCurrentVerse,
+        ver: state.storyCurrentVer,
+        style: state.storyCurrentStyle,
+        isDark: state.storyCurrentIsDark || false
+      });
+    }
+
+    const verse = forcedVerse || state.storyShufflePool.pop();
+    state.storyCurrentVerse = verse;
+
+    // Pick dynamic randomized version for endless storytelling
+    const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+    const chosenVer = versions[Math.floor(Math.random() * versions.length)];
+    state.storyCurrentVer = chosenVer;
+
+    const textToDisplay = verse.translations[chosenVer] || verse.translations.NIV;
+
+    // Pick a random style from the 16 unique styles
+    const nextStyle = state.storyTypographyStyles[Math.floor(Math.random() * state.storyTypographyStyles.length)];
+    state.storyCurrentStyle = nextStyle;
+
+    // Dynamic dark bg + white text vs luminous light cards for rich visual rhythm
+    const isDarkSlide = state.theme === 'dark' ? (Math.random() < 0.85) : (Math.random() < 0.45);
+    state.storyCurrentIsDark = isDarkSlide;
+
+    applyStorySlideVisuals(verse, chosenVer, nextStyle, textToDisplay, isDarkSlide);
+  }
+
+  function renderPreviousStorySlide() {
+    if (!state.storyHistory.length) {
+      showToast('At the beginning of story history');
       return;
     }
+
+    const prevItem = state.storyHistory.pop();
+    state.storyCurrentVerse = prevItem.verse;
+    state.storyCurrentVer = prevItem.ver;
+    state.storyCurrentStyle = prevItem.style;
+    state.storyCurrentIsDark = prevItem.isDark || false;
+
+    const textToDisplay = prevItem.verse.translations[prevItem.ver] || prevItem.verse.translations.NIV;
+    applyStorySlideVisuals(prevItem.verse, prevItem.ver, prevItem.style, textToDisplay, prevItem.isDark);
   }
 
-  if (token !== activeLoadToken) return;
-  const availableNiv = findAvailableVersion(versions, BIBLE_VERSIONS.NIV);
-  if (!availableNiv) return;
+  function applyStorySlideVisuals(verse, ver, styleName, textToDisplay, isDark = false) {
+    const sizeClass = calculateStoryFontSizeClass(textToDisplay.length);
+    const darkThemeClass = isDark ? 'story-theme-dark' : 'story-theme-light';
 
-  const nivPassages = versionPassages('NIV');
-  const pending = items.filter(item => !nivPassages.has(item.number));
-  let completed = items.length - pending.length;
-  const batchSize = 8;
+    if (elements.storyContainer) {
+      elements.storyContainer.className = `story-container ${styleName} ${sizeClass} ${darkThemeClass}`;
+    }
 
-  for (let index = 0; index < pending.length; index += batchSize) {
-    const batch = pending.slice(index, index + batchSize);
-    const results = await Promise.allSettled(batch.map(item => {
-      const usfm = referenceToUsfm(item.reference);
-      return usfm
-        ? scriptureApi.getPassage(availableNiv.id, usfm)
-        : Promise.reject(new Error('Unsupported Scripture reference.'));
-    }));
+    const categoryGradients = {
+      'joy-presence': 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fce7f3 100%)',
+      'provision-abundance': 'linear-gradient(135deg, #d1fae5 0%, #ecfccb 50%, #e0f2fe 100%)',
+      'courage-protection': 'linear-gradient(135deg, #ffe4e6 0%, #ffedd5 50%, #fef3c7 100%)',
+      'peace-rest': 'linear-gradient(135deg, #ccfbf1 0%, #e0e7ff 50%, #ede9fe 100%)',
+      'identity-grace': 'linear-gradient(135deg, #ede9fe 0%, #fae8ff 50%, #e0e7ff 100%)',
+      'wisdom-word': 'linear-gradient(135deg, #cffafe 0%, #e0f2fe 50%, #f1f5f9 100%)',
+      'faith-prayer': 'linear-gradient(135deg, #e0e7ff 0%, #ede9fe 50%, #fce7f3 100%)',
+      'healing-renewal': 'linear-gradient(135deg, #fce7f3 0%, #ffe4e6 50%, #fef3c7 100%)'
+    };
 
-    if (token !== activeLoadToken) return;
-    results.forEach((result, resultIndex) => {
-      if (result.status !== 'fulfilled' || !result.value.content) return;
-      const item = batch[resultIndex];
-      nivPassages.set(item.number, {
-        text: normalizePassageText(result.value.content),
-        source: 'NIV · YouVersion',
-        isFallback: false
+    const darkCategoryGradients = {
+      'joy-presence': 'linear-gradient(135deg, #1c1917 0%, #291807 50%, #17101a 100%)',
+      'provision-abundance': 'linear-gradient(135deg, #062419 0%, #0c1f12 50%, #061924 100%)',
+      'courage-protection': 'linear-gradient(135deg, #240c11 0%, #1f120c 50%, #17101a 100%)',
+      'peace-rest': 'linear-gradient(135deg, #041f1e 0%, #0c1328 50%, #160c28 100%)',
+      'identity-grace': 'linear-gradient(135deg, #160c28 0%, #200c28 50%, #0c1328 100%)',
+      'wisdom-word': 'linear-gradient(135deg, #051c24 0%, #0c1824 50%, #0d1117 100%)',
+      'faith-prayer': 'linear-gradient(135deg, #0c1328 0%, #160c28 50%, #240c1e 100%)',
+      'healing-renewal': 'linear-gradient(135deg, #240c1e 0%, #240c11 50%, #1c1407 100%)'
+    };
+
+    const gradientMap = isDark ? darkCategoryGradients : categoryGradients;
+    if (elements.storyBackdrop) elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
+
+    if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, styleName);
+    if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
+    if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
+
+    updateStoryBookmarkButton(verse.id);
+
+    // Run dynamic auto-fitting to guarantee no cut-off/clipping
+    autoFitStoryText();
+    requestAnimationFrame(() => {
+      autoFitStoryText();
+    });
+
+    if (elements.storyContentWrapper) {
+      elements.storyContentWrapper.style.animation = 'none';
+      elements.storyContentWrapper.offsetHeight;
+      elements.storyContentWrapper.style.animation = 'storySlideEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    }
+
+    refreshIcons();
+  }
+
+  function showToast(message, isError = false) {
+    if (!elements.toastContainer) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    if (isError) toast.style.background = '#ef4444';
+    toast.innerHTML = `
+      <i data-lucide="${isError ? 'alert-circle' : 'check-circle-2'}" style="width: 15px; height: 15px;"></i>
+      <span>${escapeHtml(message)}</span>
+    `;
+
+    elements.toastContainer.appendChild(toast);
+    refreshIcons();
+
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 2800);
+  }
+
+  // ==========================================================================
+  // EVENT LISTENERS SETUP
+  // ==========================================================================
+  function setupEventListeners() {
+
+    // 1. Resilient Header Event Delegation
+    if (elements.stickyHeader) {
+      elements.stickyHeader.addEventListener('click', (e) => {
+        // Translation Picker
+        const verBtn = e.target.closest('.version-picker .segmented-btn');
+        if (verBtn) {
+          const ver = verBtn.getAttribute('data-version');
+          if (ver) setBibleVersion(ver);
+          return;
+        }
+
+        // Shuffle Button
+        if (e.target.closest('#btnShuffleVerses')) {
+          shuffleVerses();
+          return;
+        }
+
+        // Open Type Settings Drawer
+        if (e.target.closest('#btnOpenTypeSettings')) {
+          openTypeSettings();
+          return;
+        }
       });
-      completed += 1;
-    });
+    }
 
-    setStatus(`Loading NIV fallback · ${completed} of ${items.length}`);
-    render();
-  }
-}
+    // Mobile Bible Version Select Dropdown
+    if (elements.mobileVersionSelect) {
+      elements.mobileVersionSelect.addEventListener('change', (e) => {
+        setBibleVersion(e.target.value);
+      });
+    }
 
-async function hydrateNltFromBolls(token, passages, expected) {
-  loadingVersionKey = 'NLT';
-  setStatus('Connecting to NLT…');
-  render();
+    // 2. Hero Story Launch Button
+    if (elements.btnHeroOpenStories) {
+      elements.btnHeroOpenStories.addEventListener('click', () => {
+        openStoriesMode();
+      });
+    }
 
-  const pending = VERSES.filter(item => !passages.has(item.number));
-  let completed = VERSES.length - pending.length;
-  let failed = 0;
-  const batchSize = 8;
+    // 3. Typography Settings Drawer Event Listeners
+    if (elements.btnCloseTypeSettings) {
+      elements.btnCloseTypeSettings.addEventListener('click', closeTypeSettings);
+    }
+    if (elements.typeSettingsDrawer) {
+      elements.typeSettingsDrawer.addEventListener('click', (e) => {
+        if (e.target === elements.typeSettingsDrawer) closeTypeSettings();
+      });
+    }
 
-  for (let index = 0; index < pending.length; index += batchSize) {
-    const batch = pending.slice(index, index + batchSize);
-    const results = await Promise.allSettled(batch.map(item => getBollsPassage(item.reference)));
+    // Drawer Translation Version Picker (First in list)
+    if (elements.drawerVersionPicker) {
+      elements.drawerVersionPicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const ver = btn.getAttribute('data-version');
+          if (ver) setBibleVersion(ver);
+        }
+      });
+    }
 
-    if (token !== activeLoadToken) return;
-    results.forEach((result, resultIndex) => {
-      const item = batch[resultIndex];
-      if (result.status === 'fulfilled') {
-        passages.set(item.number, {
-          text: result.value,
-          source: 'NLT · Bolls.life',
-          isFallback: false
+    // Drawer Font Aesthetic Inline Buttons
+    if (elements.drawerFontCards) {
+      elements.drawerFontCards.addEventListener('click', (e) => {
+        const btn = e.target.closest('.font-pill-btn') || e.target.closest('.font-card-btn');
+        if (btn) {
+          const font = btn.getAttribute('data-font');
+          if (font) applyFontStyle(font);
+        }
+      });
+    }
+
+    // Drawer Text Size Presets & Custom Toggle
+    if (elements.drawerFontSizePresets) {
+      elements.drawerFontSizePresets.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (!btn) return;
+
+        if (btn.id === 'btnCustomFontSize') {
+          const isHidden = elements.customFontSizeWrapper.style.display === 'none';
+          elements.customFontSizeWrapper.style.display = isHidden ? 'block' : 'none';
+          if (elements.settingsFontSizeBadge) elements.settingsFontSizeBadge.style.display = isHidden ? 'inline-block' : 'none';
+          document.querySelectorAll('#drawerFontSizePresets .segmented-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          const val = btn.getAttribute('data-size-val');
+          if (val) applyFontSize(parseFloat(val), true);
+        }
+      });
+    }
+
+    // Drawer Text Size Slider
+    if (elements.drawerFontSizeSlider) {
+      elements.drawerFontSizeSlider.addEventListener('input', (e) => {
+        applyFontSize(parseFloat(e.target.value));
+      });
+    }
+
+    // Drawer Line Height Presets & Custom Toggle
+    if (elements.drawerLineHeightPresets) {
+      elements.drawerLineHeightPresets.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (!btn) return;
+
+        if (btn.id === 'btnCustomLineHeight') {
+          const isHidden = elements.customLineHeightWrapper.style.display === 'none';
+          elements.customLineHeightWrapper.style.display = isHidden ? 'block' : 'none';
+          if (elements.settingsLineHeightBadge) elements.settingsLineHeightBadge.style.display = isHidden ? 'inline-block' : 'none';
+          document.querySelectorAll('#drawerLineHeightPresets .segmented-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          const val = btn.getAttribute('data-lh-val');
+          if (val) applyLineHeight(parseFloat(val), true);
+        }
+      });
+    }
+
+    // Drawer Line Height Slider
+    if (elements.drawerLineHeightSlider) {
+      elements.drawerLineHeightSlider.addEventListener('input', (e) => {
+        applyLineHeight(parseFloat(e.target.value));
+      });
+    }
+
+    // Drawer Theme Picker
+    if (elements.drawerThemePicker) {
+      elements.drawerThemePicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const themeVal = btn.getAttribute('data-theme-val');
+          if (themeVal) applyTheme(themeVal);
+        }
+      });
+    }
+
+    // Reset Typography Settings Button
+    if (elements.btnResetTypeSettings) {
+      elements.btnResetTypeSettings.addEventListener('click', resetTypeSettingsToDefault);
+    }
+
+    // 4. Category Filter Chips (Event Delegation)
+    if (elements.categoryChips) {
+      elements.categoryChips.addEventListener('click', (e) => {
+        const btn = e.target.closest('.chip-btn');
+        if (!btn) return;
+
+        if (btn.id === 'favoritesFilterBtn') {
+          state.favoritesOnly = !state.favoritesOnly;
+          btn.classList.toggle('active', state.favoritesOnly);
+          if (state.favoritesOnly) {
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              if (b.id !== 'favoritesFilterBtn') b.classList.remove('active');
+            });
+          } else {
+            const allBtn = document.querySelector('#categoryChips .chip-btn[data-category="all"]');
+            if (allBtn) allBtn.classList.add('active');
+            state.category = 'all';
+          }
+        } else {
+          const cat = btn.getAttribute('data-category');
+          if (!cat) return;
+
+          // Toggle logic: If clicking the active category filter, toggle it off and show all!
+          if (state.category === cat && cat !== 'all') {
+            state.category = 'all';
+            state.favoritesOnly = false;
+            if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-category') === 'all');
+            });
+          } else {
+            state.category = cat;
+            state.favoritesOnly = false;
+            if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              b.classList.toggle('active', b === btn);
+            });
+          }
+        }
+
+        render();
+      });
+    }
+
+    // 5. Reset Filters Button
+    if (elements.resetFiltersBtn) {
+      elements.resetFiltersBtn.addEventListener('click', () => {
+        state.category = 'all';
+        state.favoritesOnly = false;
+        state.shuffledOrder = false;
+
+        document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-category') === 'all');
         });
-        completed += 1;
-      } else {
-        failed += 1;
+
+        render();
+      });
+    }
+
+    // 6. Bento Card Clicks (Open Reader Lightbox, Favorite, Category Filter)
+    if (elements.bentoContainer) {
+      elements.bentoContainer.addEventListener('click', (e) => {
+        const card = e.target.closest('.bento-card');
+        if (!card) return;
+
+        // Click on category tag on individual card filters by that category!
+        if (e.target.closest('.category-tag')) {
+          e.stopPropagation();
+          const cat = card.getAttribute('data-category');
+          if (cat) {
+            if (state.category === cat) {
+              state.category = 'all';
+            } else {
+              state.category = cat;
+            }
+            state.favoritesOnly = false;
+            if (elements.favoritesFilterBtn) elements.favoritesFilterBtn.classList.remove('active');
+            document.querySelectorAll('#categoryChips .chip-btn').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-category') === state.category);
+            });
+            render();
+            if (elements.stickyHeader) elements.stickyHeader.scrollIntoView({ behavior: scrollBehavior() });
+          }
+          return;
+        }
+
+        const favBtn = e.target.closest('.btn-favorite');
+        if (favBtn) {
+          e.stopPropagation();
+          const id = parseInt(favBtn.getAttribute('data-id'), 10);
+          toggleFavorite(id);
+          return;
+        }
+
+        const storyBtn = e.target.closest('.btn-story-single');
+        if (storyBtn) {
+          e.stopPropagation();
+          const id = parseInt(storyBtn.getAttribute('data-id'), 10);
+          openStoriesMode(id);
+          return;
+        }
+
+        const id = parseInt(card.getAttribute('data-id'), 10);
+        openReaderLightbox(id);
+      });
+    }
+
+    // 7. Fullscreen Endless Stories Mode Listeners
+    if (elements.storyOverlay) {
+      elements.storyOverlay.addEventListener('click', (e) => {
+        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge')) return;
+        renderNextStorySlide();
+      });
+    }
+
+    if (elements.storyCloseBtn) {
+      elements.storyCloseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeStoriesMode();
+      });
+    }
+
+    if (elements.btnStoryPrev) {
+      elements.btnStoryPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        renderPreviousStorySlide();
+      });
+    }
+
+    if (elements.btnStoryBookmark) {
+      elements.btnStoryBookmark.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (state.storyCurrentVerse) {
+          toggleFavorite(state.storyCurrentVerse.id);
+        }
+      });
+    }
+
+    // Clicking Story Version Pill Cycles Translation in Place
+    if (elements.storyActiveVerBadge) {
+      elements.storyActiveVerBadge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+        const nextIdx = (versions.indexOf(state.storyCurrentVer) + 1) % versions.length;
+        const nextVer = versions[nextIdx];
+        state.storyCurrentVer = nextVer;
+        if (state.storyCurrentVerse) {
+          const textToDisplay = state.storyCurrentVerse.translations[nextVer] || state.storyCurrentVerse.translations.NIV;
+          applyStorySlideVisuals(state.storyCurrentVerse, nextVer, state.storyCurrentStyle, textToDisplay, state.storyCurrentIsDark);
+        }
+      });
+    }
+
+    // 8. Reader Lightbox Listeners
+    if (elements.readerCloseBtn) elements.readerCloseBtn.addEventListener('click', closeReaderLightbox);
+    if (elements.readerLightbox) {
+      elements.readerLightbox.addEventListener('click', (e) => {
+        if (e.target === elements.readerLightbox) closeReaderLightbox();
+      });
+    }
+
+    // Translation switcher inside Reader Lightbox
+    const readerVersionPicker = document.getElementById('readerVersionPicker');
+    if (readerVersionPicker) {
+      readerVersionPicker.addEventListener('click', (e) => {
+        const btn = e.target.closest('.segmented-btn');
+        if (btn) {
+          const ver = btn.getAttribute('data-ver');
+          if (ver) switchReaderVersion(ver);
+        }
+      });
+    }
+
+    // Interlinear Word Tag Click (Scrolls and Highlights Lexicon Card)
+    if (elements.readerInterlinearText) {
+      elements.readerInterlinearText.addEventListener('click', (e) => {
+        const mark = e.target.closest('.lexicon-word-tag');
+        if (mark) {
+          const idx = mark.getAttribute('data-term-idx');
+          const card = document.getElementById(`lex-term-card-${idx}`);
+          if (card) {
+            card.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+            card.classList.add('highlight-lex');
+            setTimeout(() => card.classList.remove('highlight-lex'), 2200);
+          }
+        }
+      });
+    }
+
+    // Lexicon Pronunciation Audio Button Click
+    if (elements.readerLexiconGrid) {
+      elements.readerLexiconGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.lexicon-audio-btn');
+        if (btn) {
+          e.stopPropagation();
+          const word = btn.getAttribute('data-speak');
+          if (word) speakLexiconWord(word);
+        }
+      });
+    }
+
+    // Cross-References Click (Jump to linked verse in reader)
+    if (elements.readerCrossRefsGrid) {
+      elements.readerCrossRefsGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.cross-ref-card');
+        if (card) {
+          const linkedId = parseInt(card.getAttribute('data-linked-id'), 10);
+          if (linkedId) openReaderLightbox(linkedId);
+        }
+      });
+    }
+
+    // Prev / Next Navigation in Reader
+    if (elements.btnReaderPrev) {
+      elements.btnReaderPrev.addEventListener('click', () => {
+        let prevId = state.activeReaderVerseId - 1;
+        if (prevId < 1) prevId = BIBLE_VERSES.length;
+        openReaderLightbox(prevId);
+      });
+    }
+
+    if (elements.btnReaderNext) {
+      elements.btnReaderNext.addEventListener('click', () => {
+        let nextId = state.activeReaderVerseId + 1;
+        if (nextId > BIBLE_VERSES.length) nextId = 1;
+        openReaderLightbox(nextId);
+      });
+    }
+
+    // Launch Story from Reader
+    if (elements.btnOpenStoryFromReader) {
+      elements.btnOpenStoryFromReader.addEventListener('click', () => {
+        const currId = state.activeReaderVerseId;
+        closeReaderLightbox();
+        openStoriesMode(currId);
+      });
+    }
+
+    // 9. Scroll to top
+    if (elements.scrollToTopBtn) {
+      elements.scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: scrollBehavior() });
+      });
+    }
+
+    // 10. Shortcuts Modal
+    if (elements.shortcutsCloseBtn) {
+      elements.shortcutsCloseBtn.addEventListener('click', () => {
+        if (elements.shortcutsModal) elements.shortcutsModal.classList.remove('active');
+      });
+    }
+
+    if (elements.shortcutsModal) {
+      elements.shortcutsModal.addEventListener('click', (e) => {
+        if (e.target === elements.shortcutsModal) elements.shortcutsModal.classList.remove('active');
+      });
+    }
+
+    // 11. Global Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Escape closes modals and drawers
+      if (e.key === 'Escape') {
+        if (elements.typeSettingsDrawer && elements.typeSettingsDrawer.classList.contains('active')) {
+          closeTypeSettings();
+          return;
+        }
+        if (state.isStoriesMode) {
+          closeStoriesMode();
+          return;
+        }
+        if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+          closeReaderLightbox();
+          return;
+        }
+        if (elements.shortcutsModal && elements.shortcutsModal.classList.contains('active')) {
+          elements.shortcutsModal.classList.remove('active');
+          return;
+        }
+      }
+
+      // Stories Navigation
+      if (state.isStoriesMode) {
+        if (e.key === ' ' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          renderNextStorySlide();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          renderPreviousStorySlide();
+        }
+        return;
+      }
+
+      // Reader Modal Navigation
+      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+        if (e.key === 'ArrowLeft' && elements.btnReaderPrev) elements.btnReaderPrev.click();
+        else if (e.key === 'ArrowRight' && elements.btnReaderNext) elements.btnReaderNext.click();
+        return;
+      }
+
+      // Reader Navigation (the shortcuts panel advertises these)
+      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          let nextId = state.activeReaderVerseId + 1;
+          if (nextId > BIBLE_VERSES.length) nextId = 1;
+          openReaderLightbox(nextId);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          let prevId = state.activeReaderVerseId - 1;
+          if (prevId < 1) prevId = BIBLE_VERSES.length;
+          openReaderLightbox(prevId);
+        }
+      }
+
+      // Main Shortcuts. Skip them when the key is part of a browser chord
+      // (Cmd+V must paste, not cycle translations), when the reader is typing
+      // into a control, or when a dialog already owns the keyboard.
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      const focused = document.activeElement;
+      if (focused && (focused.matches('input, select, textarea') || focused.isContentEditable)) return;
+
+      if (elements.typeSettingsDrawer && elements.typeSettingsDrawer.classList.contains('active')) return;
+      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) return;
+
+      if (typeof e.key !== 'string') return;
+
+      if (e.key.toLowerCase() === 's') openStoriesMode();
+      else if (e.key.toLowerCase() === 't') {
+        const nextTheme = state.theme === 'light' ? 'warm' : (state.theme === 'warm' ? 'dark' : 'light');
+        applyTheme(nextTheme);
+      }
+      else if (e.key.toLowerCase() === 'v') {
+        const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+        const nextVer = versions[(versions.indexOf(state.version) + 1) % versions.length];
+        setBibleVersion(nextVer);
+      }
+      else if (e.key === '?') {
+        if (elements.shortcutsModal) elements.shortcutsModal.classList.toggle('active');
       }
     });
-
-    setStatus(`Loading NLT · ${completed} of ${VERSES.length}`);
-    render();
   }
 
-  if (token !== activeLoadToken) return;
-  const missing = VERSES.filter(item => !passages.has(item.number));
-  await hydrateNivFallback(token, missing);
-  if (token !== activeLoadToken) return;
-
-  loadingVersionKey = null;
-  const counts = fallbackCounts('NLT');
-  setStatus(fallbackStatus(
-    passages.size === VERSES.length ? `All ${VERSES.length} passages in NLT` : `${passages.size} passages in NLT`,
-    counts
-  ));
-  translationCredit.textContent = [
-    `${expected.abbreviation} · New Living Translation. Scripture text supplied by Bolls.life.`,
-    ...fallbackCredits(counts)
-  ].filter(Boolean).join(' ');
-  render();
-}
-
-async function hydrateSelectedVersion() {
-  const token = ++activeLoadToken;
-  const key = selectedVersionKey;
-  const expected = selectedVersion();
-  const passages = versionPassages(key);
-
-  if (key === 'NLT') {
-    await hydrateNltFromBolls(token, passages, expected);
-    return;
-  }
-
-  if (!scriptureApi.configured || typeof scriptureApi.getPassage !== 'function') {
-    loadingVersionKey = null;
-    setStatus(`${expected.abbreviation} selected · showing WEB until the shared Scripture service is connected`);
-    translationCredit.textContent = 'World English Bible (WEB). Public domain.';
-    render();
-    return;
-  }
-
-  loadingVersionKey = key;
-  setStatus(`Connecting to ${expected.abbreviation}…`);
-  render();
-
-  let availableVersions;
-  try {
-    availableVersions = await scriptureApi.getVersions();
-  } catch (error) {
-    if (token !== activeLoadToken) return;
-    loadingVersionKey = null;
-    setStatus(`${expected.abbreviation} is temporarily unavailable · showing WEB`);
-    translationCredit.textContent = 'World English Bible (WEB). Public domain.';
-    render();
-    return;
-  }
-
-  if (token !== activeLoadToken) return;
-  const available = findAvailableVersion(availableVersions, expected);
-  if (!available) {
-    await hydrateNivFallback(token, VERSES.filter(item => !passages.has(item.number)), availableVersions);
-    if (token !== activeLoadToken) return;
-    loadingVersionKey = null;
-    const counts = fallbackCounts(key);
-    setStatus(fallbackStatus(`${expected.abbreviation} is not available to the shared Scripture service`, counts));
-    translationCredit.textContent = fallbackCredits(counts).join(' ');
-    render();
-    return;
-  }
-
-  const pending = VERSES.filter(item => !passages.has(item.number));
-  let completed = VERSES.length - pending.length;
-  let failed = 0;
-  const batchSize = 8;
-
-  for (let index = 0; index < pending.length; index += batchSize) {
-    const batch = pending.slice(index, index + batchSize);
-    const results = await Promise.allSettled(batch.map(item => {
-      const usfm = referenceToUsfm(item.reference);
-      return usfm
-        ? scriptureApi.getPassage(available.id, usfm)
-        : Promise.reject(new Error('Unsupported Scripture reference.'));
-    }));
-
-    if (token !== activeLoadToken) return;
-    results.forEach((result, resultIndex) => {
-      const item = batch[resultIndex];
-      if (result.status === 'fulfilled' && result.value.content) {
-        passages.set(item.number, {
-          text: normalizePassageText(result.value.content),
-          source: `${expected.abbreviation} · YouVersion`,
-          isFallback: false
-        });
-        completed += 1;
-      } else {
-        failed += 1;
-      }
-    });
-
-    setStatus(`Loading ${expected.abbreviation} · ${completed} of ${VERSES.length}`);
-    render();
-  }
-
-  if (token !== activeLoadToken) return;
-  await hydrateNivFallback(token, VERSES.filter(item => !passages.has(item.number)), availableVersions);
-  if (token !== activeLoadToken) return;
-
-  loadingVersionKey = null;
-  const counts = fallbackCounts(key);
-  setStatus(fallbackStatus(
-    passages.size === VERSES.length
-      ? `All ${VERSES.length} passages in ${expected.abbreviation}`
-      : `${passages.size} passages in ${expected.abbreviation}`,
-    counts
-  ));
-  translationCredit.textContent = [
-    available.copyright || `${available.title || expected.abbreviation}. Supplied by YouVersion.`,
-    ...fallbackCredits(counts)
-  ].filter(Boolean).join(' ');
-  render();
-}
-
-function syncThemeButtons() {
-  const theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = theme;
-  document.querySelectorAll('[data-theme-option]').forEach(option => {
-    const active = option.dataset.themeOption === theme;
-    option.classList.toggle('is-active', active);
-    option.setAttribute('aria-pressed', String(active));
-  });
-  document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f3f0e7' : '#121612';
-}
-
-function setMobileSettingsOpen(open) {
-  topbar.classList.toggle('is-mobile-open', open);
-  if (open) topbar.classList.remove('is-mobile-hidden');
-  mobileSettingsTrigger.setAttribute('aria-expanded', String(open));
-  mobileSettingsTrigger.setAttribute('aria-label', `${open ? 'Close' : 'Open'} reader settings`);
-  if (!open) setVersionMenuOpen(false);
-}
-
-function setVersionMenuOpen(open, focusSelection = false) {
-  versionMenu.hidden = !open;
-  versionTrigger.setAttribute('aria-expanded', String(open));
-  if (open && focusSelection) {
-    const selectedIndex = versionOptions.findIndex(option => option.dataset.versionOption === selectedVersionKey);
-    focusVersionOption(Math.max(0, selectedIndex));
-  }
-}
-
-function focusVersionOption(index) {
-  versionOptions.forEach((option, optionIndex) => {
-    option.tabIndex = optionIndex === index ? 0 : -1;
-  });
-  versionOptions[index].focus();
-}
-
-function syncVersionPicker() {
-  selectedVersionLabel.textContent = selectedVersion().abbreviation;
-  versionOptions.forEach(option => {
-    const selected = option.dataset.versionOption === selectedVersionKey;
-    option.setAttribute('aria-selected', String(selected));
-    option.tabIndex = selected ? 0 : -1;
-  });
-}
-
-function chooseVersion(key) {
-  if (!BIBLE_VERSIONS[key]) return;
-  selectedVersionKey = key;
-  saveVersionKey(selectedVersionKey);
-  syncVersionPicker();
-  setVersionMenuOpen(false);
-  versionTrigger.focus();
-  render();
-  hydrateSelectedVersion();
-}
-
-document.querySelectorAll('[data-theme-option]').forEach(button => {
-  button.addEventListener('click', () => {
-    document.documentElement.dataset.theme = button.dataset.themeOption;
-    try {
-      localStorage.setItem('promises96-theme', button.dataset.themeOption);
-    } catch (error) {
-      // Theme selection still applies for this visit.
-    }
-    syncThemeButtons();
-  });
-});
-
-mobileSettingsTrigger.addEventListener('click', () => {
-  setMobileSettingsOpen(!topbar.classList.contains('is-mobile-open'));
-});
-
-window.addEventListener('scroll', () => {
-  if (scrollFramePending) return;
-  scrollFramePending = true;
-  window.requestAnimationFrame(() => {
-    const currentScrollY = window.scrollY;
-    const scrollDelta = currentScrollY - lastScrollY;
-
-    if (!mobileSettingsMedia.matches || currentScrollY <= 32 || scrollDelta < -2) {
-      topbar.classList.remove('is-mobile-hidden');
-    } else if (scrollDelta > 2 && !topbar.classList.contains('is-mobile-open')) {
-      topbar.classList.add('is-mobile-hidden');
+  function toggleFavorite(verseId) {
+    if (state.favorites.has(verseId)) {
+      state.favorites.delete(verseId);
+      showToast(`Removed #${verseId} from bookmarks`);
+    } else {
+      state.favorites.add(verseId);
+      showToast(`Saved #${verseId} to bookmarks`);
     }
 
-    lastScrollY = currentScrollY;
-    scrollFramePending = false;
-  });
-}, { passive: true });
+    localStorage.setItem('agy_bible_favs', JSON.stringify([...state.favorites]));
+    if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
+    if (elements.statBookmarksCount) elements.statBookmarksCount.textContent = state.favorites.size;
 
-categoryFilters.addEventListener('click', event => {
-  const button = event.target.closest('[data-category]');
-  if (!button) return;
-  activeCategory = button.dataset.category;
-  render();
-});
-
-cards.addEventListener('click', event => {
-  const button = event.target.closest('[data-copy-passage]');
-  if (!button) return;
-  copyPassage(Number(button.dataset.copyPassage), button);
-});
-
-copyVisibilityButton.addEventListener('click', () => {
-  const visible = document.body.classList.toggle('copy-buttons-visible');
-  copyVisibilityButton.textContent = `${visible ? 'Hide' : 'Show'} verse copy button`;
-  copyVisibilityButton.setAttribute('aria-pressed', String(visible));
-});
-
-versionTrigger.addEventListener('click', () => {
-  setVersionMenuOpen(versionMenu.hidden, versionMenu.hidden);
-});
-
-versionTrigger.addEventListener('keydown', event => {
-  if (event.key === 'ArrowDown') {
-    event.preventDefault();
-    setVersionMenuOpen(true, true);
+    updateStoryBookmarkButton(verseId);
+    render();
   }
-});
 
-versionOptions.forEach(option => {
-  option.addEventListener('click', () => chooseVersion(option.dataset.versionOption));
-});
-
-versionMenu.addEventListener('keydown', event => {
-  if (event.key === 'Enter' || event.key === ' ') {
-    const option = event.target.closest('[data-version-option]');
-    if (option) {
-      event.preventDefault();
-      chooseVersion(option.dataset.versionOption);
-    }
-    return;
+  // --- Bootstrap on DOM Ready ---
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
-  const currentIndex = versionOptions.indexOf(document.activeElement);
-  let nextIndex = currentIndex;
-  if (event.key === 'ArrowDown') nextIndex = (currentIndex + 1 + versionOptions.length) % versionOptions.length;
-  else if (event.key === 'ArrowUp') nextIndex = (currentIndex - 1 + versionOptions.length) % versionOptions.length;
-  else if (event.key === 'Home') nextIndex = 0;
-  else if (event.key === 'End') nextIndex = versionOptions.length - 1;
-  else return;
-  event.preventDefault();
-  focusVersionOption(nextIndex);
-});
 
-document.addEventListener('click', event => {
-  if (!versionMenu.hidden && !versionPicker.contains(event.target)) setVersionMenuOpen(false);
-  if (topbar.classList.contains('is-mobile-open') && !topbar.contains(event.target)) setMobileSettingsOpen(false);
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && !versionMenu.hidden) {
-    setVersionMenuOpen(false);
-    versionTrigger.focus();
-  } else if (event.key === 'Escape' && topbar.classList.contains('is-mobile-open')) {
-    setMobileSettingsOpen(false);
-    mobileSettingsTrigger.focus();
-  }
-});
-
-syncThemeButtons();
-syncVersionPicker();
-render();
-hydrateSelectedVersion();
+})();

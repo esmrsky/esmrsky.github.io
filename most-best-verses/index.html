@@ -1,87 +1,562 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="font-lora">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#121612">
-    <title>The Most Best Verses</title>
-  <meta name="description" content="Ninety-six favorite Scripture passages in a calm bento-card reader.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Most Best Verses — Scripture Reader &amp; Deep Study</title>
+  <meta name="description" content="Ninety-six favourite Scripture passages in six translations, with chapter context, Greek and Hebrew lexicons, grace commentary, and a fullscreen stories mode.">
+  <link rel="canonical" href="https://esmrsky.github.io/most-best-verses/">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="The Most Best Verses">
+  <meta property="og:description" content="Ninety-six favourite Scripture passages in six translations, with chapter context, Greek and Hebrew lexicons, and a fullscreen stories mode.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://esmrsky.github.io/most-best-verses/">
+  <meta property="og:site_name" content="esmrsky">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12100e" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2312100E'/%3E%3Cpath d='M14 18h14a6 6 0 0 1 4 1.6A6 6 0 0 1 36 18h14v28H36a4 4 0 0 0-4 4 4 4 0 0 0-4-4H14z' fill='none' stroke='%23F59E0B' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M32 19.6V50' stroke='%23F59E0B' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <!-- Webfonts: linked here rather than @import-ed from the stylesheet, so the
+       browser can start fetching them without first parsing styles.css. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Serif+Display:ital@0;1&family=Epilogue:ital,wght@0,700;0,800;0,900;1,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:ital,wght@0,500;0,700;1,500;1,700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&family=Oswald:wght@600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Sora:wght@500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap">
+
   <script>
-    try {
-      const savedTheme = localStorage.getItem('promises96-theme');
-      const preferredTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-      document.documentElement.dataset.theme = ['dark', 'light'].includes(savedTheme) ? savedTheme : preferredTheme;
-    } catch (error) {}
+    /* Apply the saved theme and typeface before first paint, so a dark-mode
+       reader never gets a white flash on the way in. */
+    (function () {
+      var d = document.documentElement;
+      try {
+        var theme = localStorage.getItem('agy_bible_theme');
+        if (theme === 'mud') theme = 'warm';
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        d.setAttribute('data-theme', theme);
+
+        var font = localStorage.getItem('agy_font_style') || 'lora';
+        d.className = d.className.replace(/font-\S+/g, '').trim();
+        d.classList.add('font-' + font);
+      } catch (e) {}
+    })();
   </script>
-  <link rel="stylesheet" href="styles.css">
+
+  <link rel="stylesheet" href="styles.css?v=3.0.0">
+  <script src="icons.js" defer></script>
 </head>
 <body>
-  <header class="topbar" aria-label="Reader controls">
-    <button class="mobile-settings-trigger" id="mobileSettingsTrigger" type="button" aria-label="Open reader settings" aria-controls="topControls" aria-expanded="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 15.25A3.25 3.25 0 1 0 12 8.75a3.25 3.25 0 0 0 0 6.5Z"></path>
-        <path d="M19.1 13.15a7.4 7.4 0 0 0 .05-1.15 7.4 7.4 0 0 0-.05-1.15l2-1.55-2-3.45-2.4.98a7.7 7.7 0 0 0-2-1.16L14.35 3h-4.1L9.9 5.67a7.7 7.7 0 0 0-2 1.16l-2.4-.98-2 3.45 2 1.55A7.4 7.4 0 0 0 5.45 12c0 .39.02.77.05 1.15l-2 1.55 2 3.45 2.4-.98a7.7 7.7 0 0 0 2 1.16l.35 2.67h4.1l.35-2.67a7.7 7.7 0 0 0 2-1.16l2.4.98 2-3.45-2-1.55Z"></path>
-      </svg>
-    </button>
 
-    <div class="top-controls" id="topControls">
-      <div class="theme-switch" aria-label="Color theme">
-        <button class="theme-button" type="button" data-theme-option="dark" aria-label="Use dark theme" aria-pressed="true">
-          <span aria-hidden="true">◐</span><span>Dark</span>
-        </button>
-        <button class="theme-button" type="button" data-theme-option="light" aria-label="Use light theme" aria-pressed="false">
-          <span aria-hidden="true">☼</span><span>Light</span>
-        </button>
+  <!-- Sticky Compact Header -->
+  <header class="header-wrapper" id="stickyHeader">
+    <div class="header-inner">
+      <div class="top-bar">
+        
+        <!-- Desktop Translation Picker (NIV / AMP / NKJV / TPT / NLT / NASB) -->
+        <div class="segmented-control version-picker desktop-only" role="group" aria-label="Bible Version">
+          <button class="segmented-btn active" data-version="NIV" title="New International Version">NIV</button>
+          <button class="segmented-btn" data-version="AMP" title="Amplified Bible">AMP</button>
+          <button class="segmented-btn" data-version="NKJV" title="New King James Version">NKJV</button>
+          <button class="segmented-btn" data-version="TPT" title="The Passion Translation">TPT</button>
+          <button class="segmented-btn" data-version="NLT" title="New Living Translation">NLT</button>
+          <button class="segmented-btn" data-version="NASB" title="New American Standard Bible">NASB</button>
+        </div>
+
+        <!-- Mobile Translation Dropdown with Book Icon -->
+        <div class="mobile-version-dropdown-wrapper mobile-only">
+          <i data-lucide="book-open" class="mobile-version-book-icon"></i>
+          <select id="mobileVersionSelect" class="mobile-version-select" aria-label="Select Bible Version">
+            <option value="NIV">NIV · International</option>
+            <option value="AMP">AMP · Amplified</option>
+            <option value="NKJV">NKJV · King James</option>
+            <option value="TPT">TPT · Passion</option>
+            <option value="NLT">NLT · Living</option>
+            <option value="NASB">NASB · Standard</option>
+          </select>
+          <i data-lucide="chevron-down" class="mobile-version-chevron-icon"></i>
+        </div>
+
+        <div class="header-right-actions" style="display: flex; align-items: center; gap: 0.45rem;">
+          <!-- Shuffle Verses Button -->
+          <button class="icon-btn btn-shuffle-verses" id="btnShuffleVerses" title="Shuffle verses order">
+            <i data-lucide="shuffle" style="width: 16px; height: 16px;"></i>
+          </button>
+
+          <!-- Typography & Reading Settings Button (Aa / Sliders) -->
+          <button class="icon-btn btn-type-settings" id="btnOpenTypeSettings" title="Typography, Theme &amp; Reading Settings (Aa)">
+            <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
       </div>
 
-      <div class="version-picker" id="versionPicker">
-        <button class="version-trigger" id="versionTrigger" type="button" aria-label="Choose Bible version" aria-haspopup="listbox" aria-expanded="false" aria-controls="versionMenu" aria-describedby="translationStatus">
-          <strong id="selectedVersionLabel">NIV</strong>
-          <span class="version-chevron" aria-hidden="true"><i>⌄</i></span>
-        </button>
-        <div class="version-menu" id="versionMenu" role="listbox" aria-label="Bible version" hidden>
-          <button type="button" role="option" data-version-option="NIV"><span>NIV</span><small>New International Version</small><i aria-hidden="true">✓</i></button>
-          <button type="button" role="option" data-version-option="TPT"><span>TPT</span><small>The Passion Translation</small><i aria-hidden="true">✓</i></button>
-          <button type="button" role="option" data-version-option="NLT"><span>NLT</span><small>New Living Translation</small><i aria-hidden="true">✓</i></button>
-          <button type="button" role="option" data-version-option="NASB"><span>NASB</span><small>New American Standard Bible</small><i aria-hidden="true">✓</i></button>
+      <!-- Category Filters (Horizontal Scrollable Pill Bar — Bookmarks is FIRST) -->
+      <div class="filter-bar">
+        <div class="category-chips" id="categoryChips">
+          
+          <!-- Bookmarks Filter is FIRST -->
+          <button class="chip-btn chip-bookmarks" id="favoritesFilterBtn" title="Show Bookmarked Verses">
+            <i data-lucide="bookmark" style="width: 12px; height: 12px;"></i>
+            <span>Bookmarks</span>
+            <span class="chip-count" id="favoritesCount">0</span>
+          </button>
+
+          <!-- All Promises -->
+          <button class="chip-btn active" data-category="all">
+            <span>All Verses</span>
+            <span class="chip-count" id="count-all">96</span>
+          </button>
+
+          <button class="chip-btn" data-category="joy-presence">
+            <i data-lucide="sun" style="width: 12px; height: 12px;"></i>
+            <span>Joy &amp; Presence</span>
+            <span class="chip-count" id="count-joy-presence">7</span>
+          </button>
+          <button class="chip-btn" data-category="provision-abundance">
+            <i data-lucide="sprout" style="width: 12px; height: 12px;"></i>
+            <span>Provision &amp; Supply</span>
+            <span class="chip-count" id="count-provision-abundance">12</span>
+          </button>
+          <button class="chip-btn" data-category="courage-protection">
+            <i data-lucide="shield" style="width: 12px; height: 12px;"></i>
+            <span>Courage &amp; Defense</span>
+            <span class="chip-count" id="count-courage-protection">17</span>
+          </button>
+          <button class="chip-btn" data-category="peace-rest">
+            <i data-lucide="moon" style="width: 12px; height: 12px;"></i>
+            <span>Peace &amp; Rest</span>
+            <span class="chip-count" id="count-peace-rest">11</span>
+          </button>
+          <button class="chip-btn" data-category="identity-grace">
+            <i data-lucide="award" style="width: 12px; height: 12px;"></i>
+            <span>Identity &amp; Grace</span>
+            <span class="chip-count" id="count-identity-grace">20</span>
+          </button>
+          <button class="chip-btn" data-category="wisdom-word">
+            <i data-lucide="book-open" style="width: 12px; height: 12px;"></i>
+            <span>Wisdom &amp; Word</span>
+            <span class="chip-count" id="count-wisdom-word">13</span>
+          </button>
+          <button class="chip-btn" data-category="faith-prayer">
+            <i data-lucide="flame" style="width: 12px; height: 12px;"></i>
+            <span>Faith &amp; Prayer</span>
+            <span class="chip-count" id="count-faith-prayer">9</span>
+          </button>
+          <button class="chip-btn" data-category="healing-renewal">
+            <i data-lucide="heart-pulse" style="width: 12px; height: 12px;"></i>
+            <span>Healing &amp; Renewal</span>
+            <span class="chip-count" id="count-healing-renewal">7</span>
+          </button>
+
         </div>
       </div>
     </div>
   </header>
 
-  <main id="collection">
-    <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span>96</span> Scripture passages</p>
-          <h1 id="page-title">The Most Best<br><em>Verses.</em></h1>
-        <p class="lede">A quiet place to read the promises, truths, and declarations that steady a life.</p>
-      </div>
-      <div class="hero-index" aria-hidden="true">
-        <span>Read</span>
-        <strong>01—96</strong>
-        <i></i>
-        <small>Old + New Testament</small>
-      </div>
+  <!-- Main Application Container -->
+  <main class="app-container">
+
+    <!-- Hero Overview & Fullscreen Stories Mode Launch Card -->
+    <section class="hero-overview-simplified">
+      <button class="hero-story-launch-btn" id="btnHeroOpenStories" title="Enter Fullscreen Endless Scripture Stories Mode">
+        <div class="hero-story-btn-left">
+          <div class="hero-story-play-icon">
+            <i data-lucide="play" style="width: 18px; height: 18px; fill: white; margin-left: 2px;"></i>
+          </div>
+          <div class="hero-story-btn-text">
+            <strong>Launch Fullscreen Stories Mode</strong>
+            <span>Tap to immerse in dynamic typographic scripture</span>
+          </div>
+        </div>
+        <div class="hero-story-arrow">
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </div>
+      </button>
     </section>
 
-    <section class="filter-bar" aria-label="Filter passages by category">
-      <div class="category-list" id="categoryFilters"></div>
-      <p class="sr-only" id="translationStatus" aria-live="polite">Preparing NIV…</p>
-      <span class="sr-only" id="visibleCount">96</span>
-    </section>
+    <!-- Bento Grid Container (Pure Verse-First Hierarchy) -->
+    <section class="bento-grid" id="bentoContainer" aria-label="Bible Verse Cards"></section>
 
-    <section class="grid" id="cards" aria-label="96 Scripture passages"></section>
+    <!-- No Results State -->
+    <div class="no-results" id="noResults" style="display: none;">
+      <i data-lucide="bookmark-x" style="width: 48px; height: 48px;"></i>
+      <h3>No verses in this filter</h3>
+      <p>Clear your category filter or bookmarks to view all 96 verses.</p>
+      <button class="btn-secondary" id="resetFiltersBtn">View All Verses</button>
+    </div>
+
   </main>
 
-  <footer>
-    <span class="footer-mark" aria-hidden="true">✦</span>
-    <p id="translationCredit">World English Bible (WEB). Public domain.</p>
-    <a href="#collection">Back to top ↑</a>
-    <button class="copy-visibility-button" id="copyVisibilityButton" type="button" aria-pressed="false">Show verse copy button</button>
+  <!-- Floating Footer -->
+  <footer class="site-footer">
+    <div>The Most Best Verses — ninety-six passages, six translations</div>
+    <div class="footer-nav">
+      <button id="scrollToTopBtn" title="Scroll to top">Back to top ↑</button>
+    </div>
   </footer>
 
-  <script src="scripture-config.js"></script>
-  <script src="scripture-api.js"></script>
-  <script src="app.js"></script>
+  <!-- ==========================================================================
+       UNIFIED SINGLE SCRIPTURE READER & DEEP STUDY LIGHTBOX
+       ========================================================================== -->
+  <div class="reader-lightbox-backdrop" id="readerLightbox" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" aria-label="Scripture Reader & Deep Study">
+    <div class="reader-lightbox-dialog">
+      
+      <!-- Pinned Compact Top Header -->
+      <div class="reader-sticky-header">
+        <div class="reader-header-left">
+          <h3 id="readerTitle">Psalm 16:11</h3>
+          <span class="category-tag cat-amber" id="readerCategoryBadge">
+            <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
+            Joy &amp; Presence
+          </span>
+        </div>
+
+        <div class="reader-header-actions">
+          <button class="icon-btn" id="btnOpenStoryFromReader" type="button" aria-label="Open this verse in fullscreen stories mode">
+            <i data-lucide="play-circle" style="width: 16px; height: 16px;"></i>
+          </button>
+          <div class="reader-nav-group">
+            <button class="icon-btn" id="btnReaderPrev" type="button" aria-label="Previous verse (left arrow)">
+              <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
+            </button>
+            <button class="icon-btn" id="btnReaderNext" type="button" aria-label="Next verse (right arrow)">
+              <i data-lucide="chevron-right" style="width: 15px; height: 15px;"></i>
+            </button>
+          </div>
+          <button class="icon-btn" id="readerCloseBtn" type="button" aria-label="Close reader (Escape)">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reader Scrollable Content -->
+      <div class="reader-content-body reader-body">
+
+        <!-- 1. Chapter Flow & Surrounding Narrative Context -->
+        <section class="study-sub-section" id="sec-context-flow">
+          <div class="context-chapter-header">
+            <div class="context-chapter-icon">
+              <i data-lucide="book-marked" style="width: 18px; height: 18px; color: #f59e0b;"></i>
+            </div>
+            <div>
+              <h4 id="readerChapterTitle">Psalm 16 — David's Miktam of Inheritance</h4>
+              <p id="readerChapterSummary" class="context-chapter-summary">
+                David celebrates Yahweh as his supreme portion and cup, culminating in the triumphant prophecy of fullness of joy.
+              </p>
+            </div>
+          </div>
+
+          <div class="inline-scripture-flow inline-passage-block" id="readerInlinePassage"></div>
+        </section>
+
+        <!-- 2. Parallel Translations Comparison Grid -->
+        <section class="study-sub-section" id="sec-translations">
+          <h4 class="study-sub-heading">
+            <i data-lucide="layers" style="width: 17px; height: 17px; color: #3b82f6;"></i> Six Parallel Translations
+          </h4>
+          <div class="translations-grid" id="readerTranslationsGrid"></div>
+        </section>
+
+        <!-- 3. New Covenant Grace Perspective & Theological Depth -->
+        <section class="study-sub-section" id="sec-grace-depth">
+          <h4 class="study-sub-heading">
+            <i data-lucide="sparkles" style="width: 17px; height: 17px; color: #8b5cf6;"></i> New Covenant Grace Perspective
+          </h4>
+          <div class="grace-depth-card">
+            <div class="grace-badge" id="readerGraceTheme">THE FINISHED WORK OF CHRIST</div>
+            <p class="grace-core-quote" id="readerGraceQuote">
+              David's prophecy reached ultimate realization at Jesus' resurrection.
+            </p>
+            <div class="grace-takeaway-box">
+              <strong>Key Grace Revelation:</strong>
+              <span id="readerGraceTakeaway">Your joy is not contingent on outward circumstances, but rooted in Christ.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Historical & Biblical Case Studies -->
+        <section class="study-sub-section" id="sec-case-studies">
+          <h4 class="study-sub-heading">
+            <i data-lucide="history" style="width: 17px; height: 17px; color: #f59e0b;"></i> Biblical Case Studies &amp; Historical Evidence
+          </h4>
+          <div class="case-studies-grid" id="readerCaseStudiesGrid"></div>
+        </section>
+
+        <!-- 5. Interlinear Original Language Word Study (Greek & Hebrew) -->
+        <section class="study-sub-section" id="sec-lexicon">
+          <h4 class="study-sub-heading">
+            <i data-lucide="languages" style="width: 17px; height: 17px; color: #10b981;"></i> Original Language Lexicon
+          </h4>
+          <div class="lexicon-container">
+            <div class="lexicon-interlinear-box">
+              <div class="lexicon-interlinear-title">
+                <span id="readerLexiconLang">HEBREW INTERLINEAR (CLICK A WORD TO STUDY)</span>
+              </div>
+              <div class="lexicon-interlinear-text" id="readerInterlinearText"></div>
+            </div>
+            <div class="lexicon-terms-grid" id="readerLexiconGrid"></div>
+            <div class="lexicon-theological-depth" id="readerLexiconSummary"></div>
+          </div>
+        </section>
+
+        <!-- 6. TPT Revelatory Notes (Conditionally Shown) -->
+        <section class="study-sub-section" id="sec-tpt-notes">
+          <h4 class="study-sub-heading">
+            <i data-lucide="feather" style="width: 17px; height: 17px; color: #ec4899;"></i> The Passion Translation Revelatory Footnotes
+          </h4>
+          <div class="tpt-notes-box" id="readerTptFootnotes"></div>
+        </section>
+
+        <!-- 7. Connected Scripture Cross-References -->
+        <section class="study-sub-section" id="sec-cross-refs">
+          <h4 class="study-sub-heading">
+            <i data-lucide="link" style="width: 17px; height: 17px; color: #06b6d4;"></i> Interconnected Scriptures
+          </h4>
+          <div class="cross-refs-rich-grid" id="readerCrossRefsGrid"></div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FULL SCREEN IMMERSIVE STORIES MODE (TAP ANYWHERE TO ADVANCE)
+       ========================================================================== -->
+  <div class="story-overlay" id="storyOverlay" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" aria-label="Endless Scripture Stories">
+    <div class="story-backdrop" id="storyBackdrop"></div>
+    <div class="story-orb story-orb-1" id="storyOrb1"></div>
+    <div class="story-orb story-orb-2" id="storyOrb2"></div>
+    <div class="story-orb story-orb-3" id="storyOrb3"></div>
+
+    <!-- Floating Top-Right Close Button -->
+    <button class="story-close-fixed-btn" id="storyCloseBtn" title="Exit Stories Mode (Esc)">
+      <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+    </button>
+
+    <!-- Temporary Auto-Dismissing Tap Hint Toast -->
+    <div class="story-tap-toast" id="storyTapToast">
+      <i data-lucide="pointer" style="width: 14px; height: 14px;"></i> Tap anywhere for next scripture
+    </div>
+
+    <!-- Full-Screen Edge-to-Edge Story Monolith -->
+    <div class="story-container" id="storyContainer">
+      <div class="story-content-wrapper" id="storyContentWrapper">
+        <blockquote class="story-passage-text" id="storyPassageText">
+          "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."
+        </blockquote>
+      </div>
+
+      <!-- Bottom Pinned Controls: Reference on Left, Prev & Bookmark in Fixed Center, Version Cycle on Right -->
+      <div class="story-bottom-bar">
+        <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
+        <div class="story-bottom-center-actions">
+          <button class="story-nav-btn story-prev-btn" id="btnStoryPrev" title="Go back to previous verse">
+            <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
+            <span>PREV</span>
+          </button>
+          <button class="story-nav-btn story-bookmark-btn" id="btnStoryBookmark" title="Save this verse">
+            <i data-lucide="bookmark" id="storyBookmarkIcon" style="width: 15px; height: 15px;"></i>
+            <span id="storyBookmarkBtnText">SAVE</span>
+          </button>
+        </div>
+        <button class="story-version-pill story-version-cycle-btn" id="storyActiveVerBadge" title="Click to cycle translation (NIV / AMP / NKJV / TPT / NLT / NASB)">NIV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TYPOGRAPHY & READING SETTINGS FLYOUT DRAWER (MOBILE & DESKTOP)
+       ========================================================================== -->
+  <div class="settings-drawer-backdrop" id="typeSettingsDrawer" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" aria-label="Typography & Reading Settings">
+    <div class="settings-drawer-dialog">
+      
+      <!-- Drawer Header -->
+      <div class="settings-drawer-header">
+        <div class="settings-drawer-title">
+          <i data-lucide="sliders" style="width: 18px; height: 18px; color: #f59e0b;"></i>
+          <h3>Typography &amp; Reading</h3>
+        </div>
+        <button class="icon-btn" id="btnCloseTypeSettings" title="Close settings (Esc)">
+          <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Body -->
+      <div class="settings-drawer-body">
+        
+        <!-- 1. Scripture Translation Version (First on List) -->
+        <div class="settings-section" id="drawerSecVersion">
+          <div class="settings-label">
+            <span>Scripture Translation</span>
+          </div>
+          <div class="segmented-control" id="drawerVersionPicker" style="width: 100%; justify-content: space-between;">
+            <button class="segmented-btn active" data-version="NIV" style="flex: 1; justify-content: center;">NIV</button>
+            <button class="segmented-btn" data-version="AMP" style="flex: 1; justify-content: center;">AMP</button>
+            <button class="segmented-btn" data-version="NKJV" style="flex: 1; justify-content: center;">NKJV</button>
+            <button class="segmented-btn" data-version="TPT" style="flex: 1; justify-content: center;">TPT</button>
+            <button class="segmented-btn" data-version="NLT" style="flex: 1; justify-content: center;">NLT</button>
+            <button class="segmented-btn" data-version="NASB" style="flex: 1; justify-content: center;">NASB</button>
+          </div>
+        </div>
+
+        <!-- 2. Theme Mode (Right Below Scripture Translation) -->
+        <div class="settings-section" id="drawerSecTheme">
+          <div class="settings-label">
+            <span>Theme Mode</span>
+          </div>
+          <div class="segmented-control" id="drawerThemePicker" style="width: 100%; justify-content: space-between;">
+            <button class="segmented-btn active" data-theme-val="light" style="flex: 1; justify-content: center; gap: 0.35rem;">
+              <i data-lucide="sun" style="width: 14px; height: 14px;"></i>
+              <span>Light</span>
+            </button>
+            <button class="segmented-btn" data-theme-val="warm" style="flex: 1; justify-content: center; gap: 0.35rem;">
+              <i data-lucide="sun-medium" style="width: 14px; height: 14px;"></i>
+              <span>Warm</span>
+            </button>
+            <button class="segmented-btn" data-theme-val="dark" style="flex: 1; justify-content: center; gap: 0.35rem;">
+              <i data-lucide="moon" style="width: 14px; height: 14px;"></i>
+              <span>Dark</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Font Family & Aesthetic Selector (Curated 9 Clean & Editorial Fonts) -->
+        <div class="settings-section" id="drawerSecFont">
+          <div class="settings-label">
+            <span>Font Family &amp; Aesthetic</span>
+            <span class="settings-value-badge" id="settingsActiveFontBadge">Lora</span>
+          </div>
+          <div class="font-aesthetic-grid" id="drawerFontCards">
+            <button class="font-pill-btn active" data-font="lora" title="Lora — Contemporary Reading Serif">
+              <span class="font-pill-icon" style="font-family: var(--font-lora);">Aa</span>
+              <span class="font-pill-label">Lora</span>
+            </button>
+            <button class="font-pill-btn" data-font="newsreader" title="Newsreader — Literary Editorial Serif">
+              <span class="font-pill-icon" style="font-family: var(--font-newsreader);">Aa</span>
+              <span class="font-pill-label">Newsreader</span>
+            </button>
+            <button class="font-pill-btn" data-font="source-serif" title="Source Serif — Adobe Book Serif">
+              <span class="font-pill-icon" style="font-family: var(--font-source-serif);">Aa</span>
+              <span class="font-pill-label">Source Serif</span>
+            </button>
+            <button class="font-pill-btn" data-font="merriweather" title="Merriweather — Screen Reading Serif">
+              <span class="font-pill-icon" style="font-family: var(--font-merriweather);">Aa</span>
+              <span class="font-pill-label">Merriweather</span>
+            </button>
+            <button class="font-pill-btn" data-font="jakarta" title="Jakarta — Geometric Corporate Sans">
+              <span class="font-pill-icon" style="font-family: var(--font-jakarta);">Aa</span>
+              <span class="font-pill-label">Jakarta</span>
+            </button>
+            <button class="font-pill-btn" data-font="outfit" title="Outfit — Open Editorial Sans">
+              <span class="font-pill-icon" style="font-family: var(--font-outfit);">Aa</span>
+              <span class="font-pill-label">Outfit</span>
+            </button>
+            <button class="font-pill-btn" data-font="sora" title="Sora — Crisp Contemporary Sans">
+              <span class="font-pill-icon" style="font-family: var(--font-sora);">Aa</span>
+              <span class="font-pill-label">Sora</span>
+            </button>
+            <button class="font-pill-btn" data-font="bricolage" title="Bricolage — Expressive Grotesk">
+              <span class="font-pill-icon" style="font-family: var(--font-bricolage);">Aa</span>
+              <span class="font-pill-label">Bricolage</span>
+            </button>
+            <button class="font-pill-btn" data-font="epilogue" title="Epilogue — Editorial Grotesk">
+              <span class="font-pill-icon" style="font-family: var(--font-epilogue);">Aa</span>
+              <span class="font-pill-label">Epilogue</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. Text Sizing Presets & Custom Slider -->
+        <div class="settings-section" id="drawerSecSize">
+          <div class="settings-label">
+            <span>Text Sizing</span>
+            <span class="settings-value-badge" id="settingsFontSizeBadge" style="display: none;">1.22rem</span>
+          </div>
+          <div class="segmented-control" id="drawerFontSizePresets" style="width: 100%;">
+            <button class="segmented-btn" data-size-val="1.05" style="flex: 1; justify-content: center;">Small</button>
+            <button class="segmented-btn active" data-size-val="1.22" style="flex: 1; justify-content: center;">Medium</button>
+            <button class="segmented-btn" data-size-val="1.45" style="flex: 1; justify-content: center;">Large</button>
+            <button class="segmented-btn" id="btnCustomFontSize" style="flex: 1; justify-content: center;">Custom</button>
+          </div>
+          <div class="settings-slider-wrapper" id="customFontSizeWrapper" style="display: none; margin-top: 0.35rem;">
+            <input type="range" class="settings-range-slider" id="drawerFontSizeSlider" min="0.95" max="1.85" step="0.05" value="1.22">
+          </div>
+        </div>
+
+        <!-- 5. Line Height Presets & Custom Slider -->
+        <div class="settings-section" id="drawerSecLineHeight">
+          <div class="settings-label">
+            <span>Line Height / Leading</span>
+            <span class="settings-value-badge" id="settingsLineHeightBadge" style="display: none;">1.70</span>
+          </div>
+          <div class="segmented-control" id="drawerLineHeightPresets" style="width: 100%;">
+            <button class="segmented-btn" data-lh-val="1.50" style="flex: 1; justify-content: center;">Compact</button>
+            <button class="segmented-btn active" data-lh-val="1.70" style="flex: 1; justify-content: center;">Standard</button>
+            <button class="segmented-btn" data-lh-val="2.05" style="flex: 1; justify-content: center;">Spacious</button>
+            <button class="segmented-btn" id="btnCustomLineHeight" style="flex: 1; justify-content: center;">Custom</button>
+          </div>
+          <div class="settings-slider-wrapper" id="customLineHeightWrapper" style="display: none; margin-top: 0.35rem;">
+            <input type="range" class="settings-range-slider" id="drawerLineHeightSlider" min="1.35" max="2.35" step="0.05" value="1.70">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="settings-drawer-footer">
+        <button class="btn-secondary" id="btnResetTypeSettings" style="width: 100%; text-align: center; padding: 0.65rem; justify-content: center;">
+          Reset to Defaults
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="shortcuts-modal-backdrop" id="shortcutsModal" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+    <div class="shortcuts-dialog">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.45rem;">
+          <i data-lucide="keyboard" style="width: 18px; height: 18px; color: #f59e0b;"></i> Keyboard Shortcuts
+        </h3>
+        <button class="icon-btn" id="shortcutsCloseBtn" title="Close (Esc)">
+          <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+        </button>
+      </div>
+      <div class="shortcut-list" style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Launch Endless Stories Mode</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">S</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Toggle Theme (Light / Warm / Dark)</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">T</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Cycle Bible Version (NIV / AMP / NKJV / TPT / NLT / NASB)</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">V</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Next / Previous Verse (Reader / Stories)</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">← / →</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Close Modals / Overlays</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">Esc</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Data and Application Scripts -->
+  <script src="verses-data.js?v=2.5.0"></script>
+  <script src="app.js?v=2.5.0"></script>
+
 </body>
 </html>
