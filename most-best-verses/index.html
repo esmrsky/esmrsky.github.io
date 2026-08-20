@@ -65,18 +65,25 @@
           <button class="segmented-btn" data-version="NASB" title="New American Standard Bible">NASB</button>
         </div>
 
-        <!-- Mobile Translation Dropdown with Book Icon -->
-        <div class="mobile-version-dropdown-wrapper mobile-only">
-          <i data-lucide="book-open" class="mobile-version-book-icon"></i>
-          <select id="mobileVersionSelect" class="mobile-version-select" aria-label="Select Bible Version">
-            <option value="NIV">NIV</option>
-            <option value="AMP">AMP</option>
-            <option value="NKJV">NKJV</option>
-            <option value="TPT">TPT</option>
-            <option value="NLT">NLT</option>
-            <option value="NASB">NASB</option>
-          </select>
-          <i data-lucide="chevron-down" class="mobile-version-chevron-icon"></i>
+        <!-- Mobile Translation Dropdown with Book Icon.
+             A <select> hands the choice to the operating system's own picker — a full-height
+             iOS wheel with its own type and its own chrome, in the middle of a site that has
+             neither. This is the site's own menu instead. -->
+        <div class="mobile-version-dropdown-wrapper mobile-only" id="mobileVersionPicker">
+          <button type="button" class="mobile-version-trigger" id="mobileVersionTrigger"
+                  aria-haspopup="listbox" aria-expanded="false" aria-label="Bible translation">
+            <i data-lucide="book-open" class="mobile-version-book-icon"></i>
+            <span class="mobile-version-value" id="mobileVersionValue">NIV</span>
+            <i data-lucide="chevron-down" class="mobile-version-chevron-icon"></i>
+          </button>
+          <div class="mobile-version-menu" id="mobileVersionMenu" role="listbox" aria-label="Bible translation" hidden>
+            <button type="button" class="mobile-version-opt" role="option" data-version="NIV" title="New International Version">NIV</button>
+            <button type="button" class="mobile-version-opt" role="option" data-version="AMP" title="Amplified Bible">AMP</button>
+            <button type="button" class="mobile-version-opt" role="option" data-version="NKJV" title="New King James Version">NKJV</button>
+            <button type="button" class="mobile-version-opt" role="option" data-version="TPT" title="The Passion Translation">TPT</button>
+            <button type="button" class="mobile-version-opt" role="option" data-version="NLT" title="New Living Translation">NLT</button>
+            <button type="button" class="mobile-version-opt" role="option" data-version="NASB" title="New American Standard Bible">NASB</button>
+          </div>
         </div>
 
         <div class="header-right-actions" style="display: flex; align-items: center; gap: 0.45rem;">
@@ -346,13 +353,15 @@
     <!-- Full-Screen Edge-to-Edge Story Monolith -->
     <div class="story-container" id="storyContainer">
       <div class="story-content-wrapper" id="storyContentWrapper">
-        <div class="story-category-mark" id="storyCategoryMark" aria-hidden="true"></div>
         <blockquote class="story-passage-text" id="storyPassageText">
           "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."
         </blockquote>
       </div>
 
-      <!-- Bottom Pinned Controls: Reference on Left, Prev & Bookmark in Fixed Center, Version Cycle on Right -->
+      <!-- The reference belongs to the scripture, so it sits with it, above the rule — the bar
+           below is controls only: Prev & Save left, Go Deeper centre, translation right. -->
+      <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
+
       <div class="story-bottom-bar">
         <div class="story-bottom-center-actions">
           <button class="story-nav-btn story-prev-btn" id="btnStoryPrev" title="Go back to previous verse">
@@ -364,7 +373,10 @@
             <span id="storyBookmarkBtnText">SAVE</span>
           </button>
         </div>
-        <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
+        <button class="story-deeper-btn" id="btnStoryDeeper" type="button" title="Open this verse in the study reader">
+          <i data-lucide="book-open" style="width: 15px; height: 15px;"></i>
+          <span>GO DEEPER</span>
+        </button>
         <button class="story-version-pill story-version-cycle-btn" id="storyActiveVerBadge" title="Click to cycle translation (NIV / AMP / NKJV / TPT / NLT / NASB)">NIV</button>
       </div>
     </div>

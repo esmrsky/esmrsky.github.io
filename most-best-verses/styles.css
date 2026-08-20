@@ -479,36 +479,75 @@ button {
   pointer-events: none;
 }
 
-.mobile-version-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+.mobile-version-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
   background: transparent;
   border: none;
-  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+.mobile-version-value {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+/* The menu the OS picker used to stand in for. It is placed on <body> while open — the header
+   clips its overflow — so it is positioned in viewport coordinates, not against the wrapper. */
+.mobile-version-menu {
+  position: fixed;
+  z-index: 1150;
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.28);
+}
+
+.mobile-version-menu[hidden] { display: none; }
+
+.mobile-version-opt {
+  appearance: none;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-md, 8px);
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--text-primary);
-  width: 100%;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
   cursor: pointer;
-  padding-right: 1.15rem;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.mobile-version-select option {
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  font-weight: 600;
-  padding: 0.5rem;
-}
+.mobile-version-opt:hover { background: var(--bg-surface-subtle); color: var(--text-primary); }
+.mobile-version-opt.active { background: var(--cat-amber-bg); color: var(--cat-amber); }
 
 .mobile-version-chevron-icon {
   width: 14px;
   height: 14px;
   color: var(--text-secondary);
-  position: absolute;
-  right: 0.75rem;
+  margin-left: auto;
+  flex-shrink: 0;
   pointer-events: none;
+  transition: transform var(--transition-fast);
+}
+
+.mobile-version-trigger[aria-expanded="true"] .mobile-version-chevron-icon {
+  transform: rotate(180deg);
 }
 
 .version-picker {
@@ -1780,15 +1819,24 @@ button {
   gap: 0.45rem;
 }
 
+/* The card is a flex column, so this stretched to the card's full width and read as a header
+   bar rather than the tag it is — a lone word like "Gospels" sitting in a 500px box. Sized to
+   its own text, at the height the site's other pills use. */
 .case-study-era {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--text-muted);
   background: var(--bg-surface);
-  padding: 0.15rem 0.55rem;
+  padding: 0.3rem 0.7rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
+  white-space: nowrap;
 }
 
 .case-study-title {
@@ -2238,6 +2286,9 @@ button {
 
 /* Fullscreen Story Container */
 .story-container {
+  /* replaced per slide from the verse's theme colour; these are the fallback */
+  --story-hl: #b45309;
+  --story-hl-2: #9a3412;
   position: relative;
   z-index: 10;
   width: 100%;
@@ -2512,18 +2563,27 @@ button {
 }
 
 /* --- Cool Word-Level Text Effects Spans --- */
+/* --- Word emphasis: one colour per slide ---------------------------------
+   These used to carry a colour each — pink, indigo, emerald, amber, cyan — and a slide drew
+   three of them at once, which is three highlight colours in one verse plus a three-stop
+   gradient. Every form now paints in --story-hl, which the slide sets from the verse's own
+   theme colour, so a slide is its text colour and one highlight and nothing else. The forms
+   differ in *shape* — italic, caps, underline, scale, mono — not in hue. */
 .fx-accent {
-  color: #ec4899;
+  color: var(--story-hl);
   font-weight: 900;
   text-decoration: underline;
-  text-decoration-color: #f59e0b;
+  text-decoration-color: color-mix(in srgb, var(--story-hl) 52%, transparent);
   text-decoration-thickness: 3px;
   text-underline-offset: 4px;
 }
 
+/* The gradient is itself the highlight — two tones of the same family, not a rainbow — and a
+   slide that uses it uses nothing else. */
 .fx-gradient {
-  background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
+  background: linear-gradient(135deg, var(--story-hl), var(--story-hl-2));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 900;
   display: inline;
@@ -2533,7 +2593,7 @@ button {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 700;
-  color: var(--cat-indigo);
+  color: var(--story-hl);
   padding: 0 0.15rem;
 }
 
@@ -2541,28 +2601,16 @@ button {
   display: inline-block;
   font-weight: 900;
   transform: scale(1.06);
-  color: #047857;
-}
-
-.fx-roman {
-  font-family: var(--font-cinzel);
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  color: #f59e0b;
-  text-transform: uppercase;
+  color: var(--story-hl);
 }
 
 .fx-mono-glow {
   font-family: var(--font-spacemono);
   font-weight: 800;
-  color: var(--cat-cyan);
-  background: rgba(6, 182, 212, 0.12);
+  color: var(--story-hl);
+  background: color-mix(in srgb, var(--story-hl) 14%, transparent);
   padding: 0.05rem 0.35rem;
   border-radius: 4px;
-}
-
-[data-theme="dark"] .fx-scale {
-  color: #34d399;
 }
 
 /* --- Pinned Bottom Controls: Left = Ref, Center = Prev & Bookmark, Right = Version Cycler --- */
@@ -2717,24 +2765,6 @@ button {
   background: rgba(255, 255, 255, 0.22) !important;
   border-color: #f59e0b !important;
   color: #f59e0b !important;
-}
-
-.story-container.story-theme-dark .fx-accent {
-  color: #f472b6 !important;
-  text-decoration-color: #fbbf24 !important;
-}
-
-.story-container.story-theme-dark .fx-italic {
-  color: #a78bfa !important;
-}
-
-.story-container.story-theme-dark .fx-scale {
-  color: #34d399 !important;
-}
-
-.story-container.story-theme-dark .fx-mono-glow {
-  color: #22d3ee !important;
-  background: rgba(34, 211, 238, 0.2) !important;
 }
 
 /* Toast */
@@ -3471,7 +3501,10 @@ input:focus-visible,
   align-items: center;
 }
 
-.mobile-version-select {
+.mobile-version-trigger {
+  min-height: 44px;
+}
+.mobile-version-opt {
   min-height: 44px;
 }
 
@@ -3693,91 +3726,80 @@ input:focus-visible,
   color: #131a2b !important;
 }
 
-.story-container.story-theme-light .story-category-mark {
-  color: rgba(19, 26, 43, 0.72);
-}
-
-.story-container.story-theme-dark .story-category-mark {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-/* Emphasis colours have to clear the slide they sit on, not the app theme. */
-.story-container.story-theme-light .fx-accent { color: #9d174d; text-decoration-color: #b45309; }
-.story-container.story-theme-light .fx-italic { color: #3730a3; }
-.story-container.story-theme-light .fx-scale  { color: #065f46; }
-.story-container.story-theme-light .fx-caps   { color: #9a3412; }
-.story-container.story-theme-light .fx-mono-glow { color: #155e75; background: rgba(6, 182, 212, 0.14); }
-
-.story-container.story-theme-dark .fx-caps { color: #fcd34d; }
-
+/* Emphasis colour still has to clear the slide it sits on, not the app theme — which is why
+   the two --story-hl tables are keyed by slide theme rather than by [data-theme]. */
 .fx-caps {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 900;
-  color: #9a3412;
+  color: var(--story-hl);
 }
 
-.story-category-mark {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.4rem;
-  font-family: var(--font-sans);
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  margin-bottom: 1.1rem;
-  opacity: 0.9;
-}
-
-.story-category-mark svg {
-  width: 15px;
-  height: 15px;
-}
-
-/* --- Full screen bottom bar: PREV · SAVE · REFERENCE · VERSION ------------ */
+/* --- Full screen bottom bar: PREV · SAVE · GO DEEPER · VERSION ------------
+   The reference is no longer one of these. It belongs to the scripture, not to the controls,
+   so it now sits above the rule with the verse, and the seat it had in the middle of the bar
+   goes to the one thing a reader might want next: the study reader for this verse. */
 .story-bottom-bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.7rem;
 }
 
 .story-bottom-center-actions,
-.story-version-pill {
+.story-version-pill,
+.story-deeper-btn {
   flex: 0 0 auto;
 }
 
+/* Above the rule, on the left, with the verse it names. */
 .story-passage-ref {
-  flex: 1 1 auto;
-  min-width: 0;
-  text-align: center;
+  align-self: flex-start;
+  flex-shrink: 0;
+  max-width: 100%;
+  margin: 0;
+  opacity: 0.88;
 }
 
-/* Below 520px the four items cannot share one line without ellipsising the
-   reference, which is the one label that says what you are reading. */
-@media (max-width: 520px) {
+.story-deeper-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  pointer-events: auto;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  background: var(--story-hl);
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+/* The fill is the slide's own highlight, so the label has to take the other end of it. */
+.story-container.story-theme-light .story-deeper-btn { color: #ffffff; }
+.story-container.story-theme-dark .story-deeper-btn { color: #0b0f19; }
+.story-deeper-btn:hover { transform: scale(1.04); filter: brightness(1.06); }
+.story-deeper-btn:active { transform: scale(0.96); }
+
+/* Four controls will not share one line on a phone, and the primary one should not be the one
+   that shrinks. It takes its own row; PREV/SAVE and the translation share the row below. */
+@media (max-width: 560px) {
   .story-bottom-bar {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas: "actions ref version";
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "deeper deeper"
+      "actions version";
+    row-gap: 0.6rem;
     gap: 0.5rem;
   }
-
-  .story-bottom-center-actions { grid-area: actions; }
-  .story-passage-ref { grid-area: ref; text-align: center; font-size: 0.72rem; letter-spacing: 0.02em; }
-  .story-version-pill { grid-area: version; }
-}
-
-@media (max-width: 400px) {
-  .story-bottom-bar {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "ref ref"
-      "actions version";
-    row-gap: 0.55rem;
-  }
-  .story-passage-ref { text-align: left; }
+  .story-bottom-center-actions { grid-area: actions; justify-self: start; }
+  .story-version-pill { grid-area: version; justify-self: end; }
+  .story-deeper-btn { grid-area: deeper; width: 100%; justify-content: center; }
 }
 
 /* --- Lexicon fields read as one paragraph -------------------------------- */
@@ -3916,27 +3938,21 @@ input:focus-visible,
 }
 
 /* --- Mobile translation picker ------------------------------------------- */
-/* A 2px amber outline on a native <select> is the browser focus ring, not the
-   site's language. Ring the wrapper instead, and only for keyboard focus. */
-.mobile-version-select:focus,
-.mobile-version-select:focus-visible {
+/* Ring the wrapper rather than the control inside it, and only for keyboard focus. */
+.mobile-version-trigger:focus,
+.mobile-version-trigger:focus-visible {
   outline: none !important;
   box-shadow: none !important;
 }
 
-.mobile-version-dropdown-wrapper:has(.mobile-version-select:focus-visible) {
+.mobile-version-dropdown-wrapper:has(.mobile-version-trigger:focus-visible) {
   border-color: var(--accent, #92400e);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #92400e) 22%, transparent);
 }
 
-.mobile-version-select {
+.mobile-version-value {
   font-size: 0.9rem;
   letter-spacing: 0.02em;
-}
-
-/* Keep the keyboard ring for everything else, but not for selects. */
-select:focus-visible {
-  outline: none !important;
 }
 
 input:focus-visible,
@@ -3956,8 +3972,36 @@ input:focus-visible,
   }
 }
 
-/* When the reader header wraps on a narrow screen, the actions were left
-   stranded at the left edge under the title. Keep them on the right. */
+/* The header used to wrap, which stranded the settings and close buttons on a line of their
+   own under the title. It is one row now and stays one row; when the reference and the category
+   will not both fit, `fitReaderHeader()` drops the category. `min-width: 0` and the clip are
+   what make that measurable — without them the group reports the width it wanted, not the width
+   it has. */
+.reader-sticky-header {
+  flex-wrap: nowrap;
+}
+
+.reader-header-left {
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.reader-header-left h3 {
+  white-space: nowrap;
+}
+
+#readerCategoryBadge {
+  flex-shrink: 0;
+}
+
+/* `.category-tag { display: inline-flex }` outranks the browser's own `[hidden]` rule, so
+   hiding the badge left it laid out and still counted in the row's width — the measurement
+   above then always found an overflow. */
+.category-tag[hidden] {
+  display: none;
+}
+
 .reader-header-actions {
   margin-left: auto;
 }

@@ -148,7 +148,10 @@
       scrollToTopBtn: document.getElementById('scrollToTopBtn'),
       btnOpenTypeSettings: document.getElementById('btnOpenTypeSettings'),
       btnShuffleVerses: document.getElementById('btnShuffleVerses'),
-      mobileVersionSelect: document.getElementById('mobileVersionSelect'),
+      mobileVersionPicker: document.getElementById('mobileVersionPicker'),
+      mobileVersionTrigger: document.getElementById('mobileVersionTrigger'),
+      mobileVersionValue: document.getElementById('mobileVersionValue'),
+      mobileVersionMenu: document.getElementById('mobileVersionMenu'),
       chipScrollPrev: document.getElementById('chipScrollPrev'),
       chipScrollNext: document.getElementById('chipScrollNext'),
 
@@ -199,12 +202,12 @@
       storyContainer: document.getElementById('storyContainer'),
       storyContentWrapper: document.getElementById('storyContentWrapper'),
       storyPassageText: document.getElementById('storyPassageText'),
-      storyCategoryMark: document.getElementById('storyCategoryMark'),
       storyPassageRef: document.getElementById('storyPassageRef'),
       storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
       storyCloseBtn: document.getElementById('storyCloseBtn'),
       storyTapToast: document.getElementById('storyTapToast'),
       btnStoryPrev: document.getElementById('btnStoryPrev'),
+      btnStoryDeeper: document.getElementById('btnStoryDeeper'),
       btnStoryBookmark: document.getElementById('btnStoryBookmark'),
       storyBookmarkBtnText: document.getElementById('storyBookmarkBtnText'),
       storyBookmarkIcon: document.getElementById('storyBookmarkIcon'),
@@ -241,6 +244,10 @@
     window.addEventListener('resize', () => {
       if (state.isStoriesMode) {
         autoFitStoryText();
+      }
+      /* the header's category comes back when the room does */
+      if (elements.readerLightbox && elements.readerLightbox.classList.contains('active')) {
+        fitReaderHeader();
       }
     });
   }
@@ -540,10 +547,13 @@
         btn.classList.toggle('active', btn.getAttribute('data-version') === ver);
       });
 
-      // Header mobile select dropdown
-      if (elements.mobileVersionSelect) {
-        elements.mobileVersionSelect.value = ver;
-      }
+      // Header mobile dropdown — the site's own, not the OS picker
+      if (elements.mobileVersionValue) elements.mobileVersionValue.textContent = ver;
+      document.querySelectorAll('#mobileVersionMenu .mobile-version-opt').forEach(opt => {
+        const on = opt.getAttribute('data-version') === ver;
+        opt.classList.toggle('active', on);
+        opt.setAttribute('aria-selected', String(on));
+      });
 
       // Drawer buttons
       document.querySelectorAll('#drawerVersionPicker .segmented-btn').forEach(btn => {
@@ -605,6 +615,20 @@
     showToast('Reset reading typography to defaults');
   }
 
+  /* The header is one row: reference, category, then the settings and close buttons. A long
+     reference next to a long category ("1 Thessalonians 5:16-18" + "Identity & Grace") ran past
+     the row and the two buttons wrapped underneath it. The row no longer wraps — the CSS pins
+     it — so something has to give instead, and it is the category: it is the one thing in that
+     row that is decoration rather than function. Measured, not guessed at a breakpoint, because
+     what overflows is the pair of strings and neither has a fixed width. */
+  function fitReaderHeader() {
+    const left = document.querySelector('.reader-header-left');
+    const badge = elements.readerCategoryBadge;
+    if (!left || !badge) return;
+    badge.hidden = false;
+    if (left.scrollWidth > left.clientWidth + 1) badge.hidden = true;
+  }
+
   // ==========================================================================
   // UNIFIED READER LIGHTBOX (CONTEXT FLOW, 4 TRANSLATIONS, LEXICONS & STUDY)
   // ==========================================================================
@@ -638,6 +662,10 @@
     if (elements.readerLightbox) elements.readerLightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
     if (!wasOpen) enterDialog(elements.readerLightbox);
+
+    /* After `active`, not before: a hidden dialog measures 0 wide, so asking whether the header
+       fits while it is still closed always answers yes. */
+    requestAnimationFrame(fitReaderHeader);
 
     // Deep link hash
     history.replaceState(null, null, `#verse=${verseId}`);
@@ -998,103 +1026,130 @@
     'me','we','us','no','nor','off','up','down','out','about','because','while'
   ]);
 
-  const POWER_WORDS = new Set([
-    'joy','joyful','rejoice','presence','life','alive','grace','gracious','righteous',
-    'righteousness','pleasures','glory','glorious','peace','shalom','abundance','abundant',
-    'plenty','strength','strong','power','powerful','love','beloved','mercy','mercies',
-    'favor','favour','blessing','blessed','bless','inheritance','heir','covenant',
-    'everlasting','eternal','eternity','overcome','overcomes','victory','victorious',
-    'triumphant','triumph','healed','healing','whole','wholeness','free','freedom',
-    'rest','light','wisdom','hope','saviour','savior','redeem','redeemed','redemption',
-    'counselor','majesty','sanctuary','shepherd','rock','shield','fortress','refuge',
-    'faith','faithful','faithfulness','truth','holy','holiness','new','renewed','restore',
-    'restored','forgiven','forgiveness','saved','salvation','chosen','adopted','child',
-    'children','son','sons','daughter','daughters','kingdom','throne','name','word',
-    'spirit','christ','jesus','lord','god','father','satisfied','satisfy','fullness',
-    'overflow','increase','multiply','prosper','provide','provision','supply','never',
-    'forever','always','courage','courageous','fear','afraid','strengthen','uphold',
-    'delivered','deliver','rescue'
-  ]);
-
-  // Each typographic style gets a rotation of treatments rather than one flat
-  // colour, so a long verse reads with rhythm instead of as a single block.
-  const EFFECT_FAMILIES = {
-    'story-style-spacemono':        ['fx-mono-glow', 'fx-caps', 'fx-accent'],
-    'story-style-lora':             ['fx-italic', 'fx-scale', 'fx-caps'],
-    'story-style-newsreader':       ['fx-italic', 'fx-caps', 'fx-scale'],
-    'story-style-merriweather':     ['fx-italic', 'fx-scale', 'fx-accent'],
-    'story-style-fraunces':         ['fx-italic', 'fx-caps', 'fx-gradient'],
-    'story-style-dm-serif':         ['fx-italic', 'fx-gradient', 'fx-scale'],
-    'story-style-instrument-serif': ['fx-italic', 'fx-caps', 'fx-scale'],
-    'story-style-kinetic':          ['fx-gradient', 'fx-caps', 'fx-scale'],
-    'story-style-anton':            ['fx-gradient', 'fx-accent', 'fx-caps'],
-    'story-style-neobrutalism':     ['fx-accent', 'fx-caps', 'fx-scale'],
-    'story-style-condensed':        ['fx-accent', 'fx-caps', 'fx-gradient'],
-    'story-style-swiss':            ['fx-accent', 'fx-scale', 'fx-caps'],
-    'story-style-bricolage':        ['fx-accent', 'fx-gradient', 'fx-scale'],
-    'story-style-epilogue':         ['fx-accent', 'fx-caps', 'fx-scale'],
-    'story-style-outfit':           ['fx-scale', 'fx-accent', 'fx-gradient'],
-    'story-style-sora':             ['fx-scale', 'fx-gradient', 'fx-caps']
+  /* One emphasis form per style — never a family of three. Colour is not part of the form:
+     every non-gradient form paints in --story-hl, which the slide sets from the verse's own
+     theme colour, so a slide carries exactly two colours, its text and its highlight. The
+     gradient forms *are* the highlight, and get no second colour beside them. */
+  const EFFECT_FORM = {
+    'story-style-spacemono':        'fx-mono-glow',
+    'story-style-lora':             'fx-italic',
+    'story-style-newsreader':       'fx-italic',
+    'story-style-merriweather':     'fx-italic',
+    'story-style-fraunces':         'fx-gradient',
+    'story-style-dm-serif':         'fx-gradient',
+    'story-style-instrument-serif': 'fx-italic',
+    'story-style-kinetic':          'fx-gradient',
+    'story-style-anton':            'fx-gradient',
+    'story-style-neobrutalism':     'fx-accent',
+    'story-style-condensed':        'fx-accent',
+    'story-style-swiss':            'fx-accent',
+    'story-style-bricolage':        'fx-gradient',
+    'story-style-epilogue':         'fx-caps',
+    'story-style-outfit':           'fx-scale',
+    'story-style-sora':             'fx-gradient'
   };
 
-  function formatStoryTextWithEffects(rawText, styleName, verse) {
-    const family = EFFECT_FAMILIES[styleName] || ['fx-accent', 'fx-scale', 'fx-italic'];
-
-    // The lexicon already curates the phrases that matter for THIS verse —
-    // better emphasis targets than any global keyword list.
-    const keyWords = new Set();
-    const terms = verse && verse.lexicon && verse.lexicon.keyTerms;
-    if (terms) {
-      terms.forEach(t => {
-        String(t.matchedEnglish || '').split(/[\/,;]/).forEach(phrase => {
-          phrase.trim().split(/\s+/).forEach(w => {
-            const c = w.toLowerCase().replace(/[^a-z]/g, '');
-            if (c.length > 3 && !STOPWORDS.has(c)) keyWords.add(c);
-          });
-        });
-      });
+  /* The highlight, per category, for each kind of slide: dark and saturated on a pale one,
+     bright on a dark one. The second tone is only ever used by the gradient forms and stays in
+     the same family, so a gradient is still one colour's worth of emphasis rather than three. */
+  const STORY_HIGHLIGHTS = {
+    light: {
+      amber:   ['#b45309', '#9a3412'], emerald: ['#047857', '#0f766e'],
+      rose:    ['#be123c', '#9d174d'], teal:    ['#0f766e', '#115e59'],
+      violet:  ['#6d28d9', '#7e22ce'], cyan:    ['#0369a1', '#0e7490'],
+      indigo:  ['#4338ca', '#5b21b6'], purple:  ['#7e22ce', '#a21caf']
+    },
+    dark: {
+      amber:   ['#fbbf24', '#fb923c'], emerald: ['#34d399', '#a3e635'],
+      rose:    ['#fb7185', '#f472b6'], teal:    ['#2dd4bf', '#38bdf8'],
+      violet:  ['#a78bfa', '#c084fc'], cyan:    ['#22d3ee', '#38bdf8'],
+      indigo:  ['#818cf8', '#a78bfa'], purple:  ['#c084fc', '#f0abfc']
     }
+  };
 
-    const words = rawText.split(/\s+/);
-    const clean = w => w.toLowerCase().replace(/[^a-z]/g, '');
+  const STEM_SUFFIXES = ['ness', 'ing', 'ed', 'es', 's'];
+  function stemWord(w) {
+    for (const suf of STEM_SUFFIXES) {
+      if (w.length - suf.length >= 4 && w.endsWith(suf)) return w.slice(0, -suf.length);
+    }
+    return w;
+  }
+  const cleanWord = w => w.toLowerCase().replace(/[^a-z]/g, '');
 
-    // Space the emphasis out; three highlights in a row looks like a mistake.
-    const marked = new Array(words.length).fill(null);
-    let used = 0;
-    let lastIdx = -99;
+  /* What this verse is actually about. `keyPhrase` is curated per verse — it is the line the
+     verse is remembered by — and the lexicon's matched English is the word the original turns
+     on. Between them there is no need to guess, which is what the old global keyword list and
+     its "longest word" fallback were doing. */
+  function emphasisKeys(verse) {
+    const keys = new Set();
+    const add = txt => String(txt || '').split(/\s+/).forEach(w => {
+      const c = cleanWord(w);
+      if (c.length >= 4 && !STOPWORDS.has(c)) { keys.add(c); keys.add(stemWord(c)); }
+    });
+    add(verse && verse.keyPhrase);
+    const terms = verse && verse.lexicon && verse.lexicon.keyTerms;
+    if (terms) terms.forEach(t => String(t.matchedEnglish || '').split(/[\/,;]/).forEach(add));
+    return keys;
+  }
 
-    words.forEach((w, i) => {
-      const c = clean(w);
-      if (!c || c.length < 4 || STOPWORDS.has(c)) return;
-      if (i - lastIdx < 3) return;
-      if (keyWords.has(c) || POWER_WORDS.has(c)) {
-        marked[i] = family[used % family.length];
-        used++;
-        lastIdx = i;
+  /* The densest run of those words, taken as a phrase rather than a word — one word lifted out
+     of a curated phrase is exactly what read as arbitrary. Both ends of the window must be
+     hits, so it never trails off into "and the". */
+  function bestPhraseWindow(words, hit, avoid) {
+    let best = null, bestVal = 0;
+    for (let i = 0; i < words.length; i++) {
+      if (!hit[i]) continue;
+      for (let len = 1; len <= 5 && i + len <= words.length; len++) {
+        const j = i + len;
+        if (!hit[j - 1]) continue;
+        if (avoid && j > avoid[0] - 3 && i < avoid[1] + 3) continue;
+        let score = 0;
+        for (let k = i; k < j; k++) if (hit[k]) score++;
+        const val = score * 10 + len;   /* most key words first, then the longer phrase */
+        if (val > bestVal) { bestVal = val; best = [i, j]; }
       }
+    }
+    return best;
+  }
+
+  function formatStoryTextWithEffects(rawText, styleName, verse) {
+    const form = EFFECT_FORM[styleName] || 'fx-accent';
+    const words = rawText.split(/\s+/);
+    const keys = emphasisKeys(verse);
+    const hit = words.map(w => {
+      const c = cleanWord(w);
+      return !!c && (keys.has(c) || keys.has(stemWord(c)));
     });
 
-    // A long verse with nothing marked is the "wall of one colour" case. Fall
-    // back to its most substantial words so every long slide has some rhythm.
-    const target = words.length > 45 ? 4 : (words.length > 24 ? 3 : (words.length > 12 ? 2 : 1));
-    if (used < target) {
-      const candidates = words
-        .map((w, i) => ({ i, c: clean(w) }))
-        .filter(o => o.c.length > 4 && !STOPWORDS.has(o.c) && !marked[o.i])
-        .sort((a, b) => b.c.length - a.c.length);
-
-      for (const cand of candidates) {
-        if (used >= target) break;
-        if (marked.some((m, i) => m && Math.abs(i - cand.i) < 3)) continue;
-        marked[cand.i] = family[used % family.length];
-        used++;
-      }
+    const spans = [];
+    const first = bestPhraseWindow(words, hit, null);
+    if (first) spans.push(first);
+    /* A second spot only on a long slide, and only well clear of the first — two marks in one
+       breath is the "wall of colour" the emphasis was meant to break up. */
+    if (first && words.length > 32) {
+      const second = bestPhraseWindow(words, hit, first);
+      if (second) spans.push(second);
+    }
+    if (!spans.length) {
+      /* A paraphrase loose enough that none of the curated phrase survived. One focal word,
+         so the slide is not a flat wall — but it is the last resort, not the rule. */
+      let bi = -1, bl = 0;
+      words.forEach((w, i) => {
+        const c = cleanWord(w);
+        if (c.length > bl && !STOPWORDS.has(c)) { bl = c.length; bi = i; }
+      });
+      if (bi >= 0) spans.push([bi, bi + 1]);
     }
 
-    const out = words.map((w, i) =>
-      marked[i] ? `<span class="${marked[i]}">${escapeHtml(w)}</span>` : escapeHtml(w)
-    );
-
+    spans.sort((a, b) => a[0] - b[0]);
+    const out = [];
+    let i = 0;
+    spans.forEach(span => {
+      while (i < span[0]) out.push(escapeHtml(words[i++]));
+      out.push('<span class="' + form + '">' + escapeHtml(words.slice(span[0], span[1]).join(' ')) + '</span>');
+      i = span[1];
+    });
+    while (i < words.length) out.push(escapeHtml(words[i++]));
     return `"${out.join(' ')}"`;
   }
 
@@ -1195,6 +1250,12 @@
 
     if (elements.storyContainer) {
       elements.storyContainer.className = `story-container ${styleName} ${sizeClass} ${darkThemeClass}`;
+      /* Set before the text is written: every emphasis form reads these two, so the slide is
+         its own palette rather than each effect carrying a hard-coded colour of its own. */
+      const table = STORY_HIGHLIGHTS[isDark ? 'dark' : 'light'];
+      const hl = table[verse.themeColor] || table.amber;
+      elements.storyContainer.style.setProperty('--story-hl', hl[0]);
+      elements.storyContainer.style.setProperty('--story-hl-2', hl[1]);
     }
 
     const categoryGradients = {
@@ -1223,12 +1284,6 @@
     if (elements.storyBackdrop) elements.storyBackdrop.style.background = gradientMap[verse.category] || gradientMap['joy-presence'];
 
     if (elements.storyPassageText) elements.storyPassageText.innerHTML = formatStoryTextWithEffects(textToDisplay, styleName, verse);
-    // A small category mark gives a plain slide something to look at without
-    // decorating the scripture itself.
-    if (elements.storyCategoryMark) {
-      elements.storyCategoryMark.innerHTML =
-        `<i data-lucide="${verse.icon || 'sparkles'}"></i><span>${escapeHtml(verse.categoryLabel || '')}</span>`;
-    }
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
     if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
 
@@ -1299,10 +1354,52 @@
       });
     }
 
-    // Mobile Bible Version Select Dropdown
-    if (elements.mobileVersionSelect) {
-      elements.mobileVersionSelect.addEventListener('change', (e) => {
-        setBibleVersion(e.target.value);
+    // Mobile Bible Version Dropdown — the site's own menu
+    if (elements.mobileVersionTrigger && elements.mobileVersionMenu) {
+      const menu = elements.mobileVersionMenu;
+      const trigger = elements.mobileVersionTrigger;
+      /* The header and its top bar both clip their overflow — for the chip scroller — so a menu
+         hanging off the trigger is cut off at the header's edge no matter what it is positioned
+         against. While it is open it lives on <body> and is placed from the trigger's own rect;
+         it goes back into the wrapper on close so nothing is left stranded there. */
+      const closeMenu = () => {
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+        if (menu.parentElement === document.body && elements.mobileVersionPicker) {
+          elements.mobileVersionPicker.appendChild(menu);
+        }
+      };
+      const openMenu = () => {
+        const r = trigger.getBoundingClientRect();
+        document.body.appendChild(menu);
+        menu.style.top = (r.bottom + 6) + 'px';
+        menu.style.left = r.left + 'px';
+        menu.style.minWidth = r.width + 'px';
+        menu.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+      };
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menu.hidden) openMenu(); else closeMenu();
+      });
+      /* Placed from a rect, so it has to go once that rect moves. */
+      window.addEventListener('scroll', () => { if (!menu.hidden) closeMenu(); }, { passive: true });
+      window.addEventListener('resize', () => { if (!menu.hidden) closeMenu(); });
+      menu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const opt = e.target.closest('.mobile-version-opt');
+        if (!opt) return;
+        setBibleVersion(opt.getAttribute('data-version'));
+        closeMenu();
+      });
+      document.addEventListener('click', (e) => {
+        if (menu.hidden) return;
+        if (menu.contains(e.target)) return;
+        if (elements.mobileVersionPicker && elements.mobileVersionPicker.contains(e.target)) return;
+        closeMenu();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !menu.hidden) { closeMenu(); trigger.focus(); }
       });
     }
 
@@ -1526,7 +1623,7 @@
     // 7. Fullscreen Endless Stories Mode Listeners
     if (elements.storyOverlay) {
       elements.storyOverlay.addEventListener('click', (e) => {
-        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge')) return;
+        if (e.target.closest('#storyCloseBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge') || e.target.closest('#btnStoryDeeper')) return;
         renderNextStorySlide();
       });
     }
@@ -1551,6 +1648,19 @@
         if (state.storyCurrentVerse) {
           toggleFavorite(state.storyCurrentVerse.id);
         }
+      });
+    }
+
+    /* Full screen is for reading one verse at a time; this is the way out of it into the whole
+       apparatus for the verse currently on screen. The overlay is closed first — two stacked
+       dialogs would trap focus between them. */
+    if (elements.btnStoryDeeper) {
+      elements.btnStoryDeeper.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const verse = state.storyCurrentVerse;
+        if (!verse) return;
+        closeStoriesMode();
+        openReaderLightbox(verse.id);
       });
     }
 
