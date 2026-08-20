@@ -198,11 +198,26 @@ a:hover { color: var(--ink); }
 .section[id] { scroll-margin-top: 66px; }
 
 /* heading underline draws itself on reveal */
+/* ---------- the drawn rule under a heading ----------
+   It used to be positioned against the `.rule-draw` SPAN, and a span is an inline box: its
+   `padding-bottom` overflows the line box instead of growing it, and with `line-height: 1.08`
+   under a Garamond the content area overflows by another third of an em at each end. So the
+   rule landed in a different place depending on whether the heading wrapped — measured, 0.9px
+   above the paragraph on every h2, and 22px INSIDE the paragraph on a single-line h3.
+
+   The rule belongs to the heading, which is a block, where `bottom: 0` is the padding edge and
+   means the same thing every time. The span stays as the hook the markup already uses. */
 .rule-draw {
-  position: relative;
-  padding-bottom: 0.35em;
+  position: static;
+  padding-bottom: 0;
 }
-.rule-draw::after {
+
+:is(h1, h2, h3, h4):has(> .rule-draw) {
+  position: relative;
+  padding-bottom: 0.42em;
+}
+
+:is(h1, h2, h3, h4):has(> .rule-draw)::after {
   content: "";
   position: absolute;
   left: 0; bottom: 0;
@@ -215,8 +230,13 @@ a:hover { color: var(--ink); }
   transform-origin: left;
   transition: transform 0.9s cubic-bezier(.2, .7, .3, 1) 0.15s;
 }
-.reveal.in .rule-draw::after, .rule-draw.in::after { transform: scaleX(1); }
-@media (prefers-reduced-motion: reduce) { .rule-draw::after { transform: scaleX(1); transition: none; } }
+
+:is(h1, h2, h3, h4).in:has(> .rule-draw)::after,
+.reveal.in :is(h1, h2, h3, h4):has(> .rule-draw)::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  :is(h1, h2, h3, h4):has(> .rule-draw)::after { transform: scaleX(1); transition: none; }
+}
 
 /* ---------- nav ---------- */
 .nav {
@@ -588,7 +608,7 @@ a:hover { color: var(--ink); }
 
 .section h2 {
   font-size: clamp(2.2rem, 5vw, 3.5rem);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.9rem;
   max-width: 21ch;
 }
 .section h2 .tint { color: color-mix(in srgb, var(--c) 78%, var(--ink)); }
@@ -609,26 +629,29 @@ strong { font-weight: 600; }
 .h3-editorial {
   font-family: var(--serif-display);
   font-size: clamp(1.7rem, 3.4vw, 2.3rem);
-  margin: 3.2rem 0 1.2rem;
+  margin: 3.2rem 0 1.5rem;
 }
 
-/* dark band sections keep their drama in both themes */
+/* ---------- the banded sections ----------
+   These used to be painted in fixed near-black whatever the reader had chosen, so The
+   Counterfeit and The Record stayed night while the rest of the page went to paper. They are
+   still a band — set apart from the sections either side by a tint of the section's own colour
+   and a rule top and bottom — but the band is now built from the palette, so it turns with it.
+   Every colour in here is a token or a mix of one: nothing hardcoded, which is what stranded
+   light text on light paper before. */
 .section-night {
   background:
-    radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in srgb, var(--c) 13%, transparent), transparent 72%),
-    linear-gradient(180deg, #191308, #12100b);
-  color: #ece3d0;
-  border-top: none;
+    radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in srgb, var(--c) 12%, transparent), transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--c) 8%, var(--paper-2)), var(--paper));
+  color: var(--ink);
+  border-top: 1px solid color-mix(in srgb, var(--c) 22%, var(--line-soft));
+  border-bottom: 1px solid color-mix(in srgb, var(--c) 22%, var(--line-soft));
 }
-.section-night .lede { color: #b3a68d; }
-.section-night h2, .section-night h3 { color: #f0e8d6; }
-.section-night .prose { color: #cfc4ab; }
+.section-night .lede { color: var(--ink-soft); }
+.section-night h2, .section-night h3 { color: var(--ink); }
+.section-night .prose { color: var(--ink-soft); }
 .section-night .section-label { color: var(--c); }
 .section-night .section-label .medallion { background: color-mix(in srgb, var(--c) 16%, transparent); border-color: color-mix(in srgb, var(--c) 40%, transparent); }
-:root[data-theme="dark"] .section-night { background: linear-gradient(180deg, #191308, var(--paper)); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .section-night { background: linear-gradient(180deg, #191308, var(--paper)); }
-}
 
 /* ---------- pull quotes ---------- */
 .pull {
@@ -678,9 +701,14 @@ strong { font-weight: 600; }
 @media (max-width: 940px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
+/* Every section carries a colour in `--c`, and until now only its heading and its left rules
+   used it — the cards themselves were the same neutral everywhere, which made a long page read
+   as one undifferentiated column. A few per cent of the section's colour in the fill and a
+   fifth of it in the border is enough to tell you which part of the argument you are in
+   without tinting the words themselves. */
 .card {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--c, var(--gold)) 4%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c, var(--gold)) 20%, var(--line));
   border-radius: var(--r);
   padding: 1.7rem 1.6rem;
   position: relative;
@@ -743,8 +771,8 @@ strong { font-weight: 600; }
 
 /* verse cards — live scripture, follows the version picker */
 .verse-card {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--c, var(--gold)) 5%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c, var(--gold)) 22%, var(--line));
   border-left: 3px solid var(--c, var(--gold-hi));
   border-radius: 6px;
   padding: 1.4rem 1.5rem;
@@ -755,11 +783,13 @@ strong { font-weight: 600; }
    Cormorant is a display Garamond — gorgeous at 3rem in the hero, but its
    italic strokes go thin and muddy at reading size, worst of all on dark.
    Newsreader is built for running text and holds its colour at 1.15rem. */
+/* Printed in full, these are not captions — they are the scripture the section is about, and
+   they were set smaller than the prose around them. */
 .verse-card blockquote {
   font-family: var(--serif-text);
   font-style: normal;
-  font-size: 1.16rem;
-  line-height: 1.62;
+  font-size: 1.3rem;
+  line-height: 1.6;
   color: var(--ink);
   transition: opacity 0.25s ease;
 }
@@ -1225,7 +1255,7 @@ strong { font-weight: 600; }
   cursor: pointer;
 }
 .ref-link:hover { color: var(--gold-deep); border-bottom-color: var(--gold-deep); border-bottom-style: solid; }
-.section-night .ref-link:hover, .footer .ref-link:hover { color: var(--gold-hi); border-bottom-color: var(--gold-hi); }
+.footer .ref-link:hover { color: var(--gold-hi); border-bottom-color: var(--gold-hi); }
 cite .ref-link { color: inherit; }
 .ref-separator { color: var(--ink-faint); }
 
@@ -1391,6 +1421,7 @@ cite .ref-link { color: inherit; }
 .context-passage > .context-heading:first-child { margin-top: 0; }
 .context-verse, .context-block { display: inline; }
 .context-verse + .context-verse::before, .context-block + .context-block::before { content: " "; }
+.context-verse.is-selected .context-verse-number { color: color-mix(in srgb, var(--gold) 70%, var(--ink)); }
 .context-verse-number {
   margin-right: 0.3em;
   color: var(--ink-faint);
@@ -1398,7 +1429,10 @@ cite .ref-link { color: inherit; }
   font-size: 0.62em;
   font-weight: 700;
 }
-.context-verse.is-selected .ctx-t, .context-block.is-selected {
+/* The mark covers the whole verse, its number included. Set on `.ctx-t` it began one glyph in,
+   and across a selection of several verses it broke at every number — beside a `.context-block`
+   selection, which is one unbroken run, that reads as a verse that was not fully underlined. */
+.context-verse.is-selected, .context-block.is-selected {
   padding: 0.08em 0.14em;
   color: var(--ink);
   background: color-mix(in srgb, var(--gold-hi) 17%, transparent);
@@ -1468,3 +1502,350 @@ cite .ref-link { color: inherit; }
   .context-dialog-head { padding: 16px 16px 12px; }
   .context-dialog-body { padding: 16px 16px 20px; }
 }
+
+/* ==========================================================================
+   GLANCE, THEN GO DEEPER
+   ==========================================================================
+   The page is long and it is nearly all running prose. Two components fix that without
+   cutting anything: a `.brief` at the head of a section, which is the whole argument in four
+   lines for someone scanning; and `.drawer`, which folds the evidence and the examples away
+   until they are asked for. Everything that used to be a wall is still here — it is just no
+   longer all open at once. */
+
+.brief {
+  list-style: none;
+  margin: 0 0 2.4rem;
+  padding: 1.1rem 1.3rem;
+  max-width: var(--measure);
+  background: color-mix(in srgb, var(--c, var(--gold)) 6%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c, var(--gold)) 24%, var(--line));
+  border-left: 3px solid var(--c, var(--gold-hi));
+  border-radius: 6px;
+}
+
+.brief-head {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--c, var(--gold)) 80%, var(--ink));
+}
+
+.brief li {
+  position: relative;
+  padding-left: 1.35rem;
+  font-family: var(--sans);
+  font-size: 0.97rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.brief li + li { margin-top: 0.55rem; }
+
+.brief li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c, var(--gold-hi));
+}
+
+.brief li strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- drawers ----------
+   Native <details>, so the keyboard, find-in-page and assistive technology all get it for
+   free and there is no script to load. */
+.drawer {
+  margin-top: 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--c, var(--gold)) 24%, var(--line));
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--c, var(--gold)) 4%, var(--card));
+  max-width: var(--measure);
+}
+
+.drawer > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 44px;
+  padding: 0.8rem 1.1rem;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+  border-radius: var(--r);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.drawer > summary::-webkit-details-marker { display: none; }
+.drawer > summary::marker { content: ""; }
+.drawer > summary:hover { background: color-mix(in srgb, var(--c, var(--gold)) 9%, transparent); }
+.drawer > summary:focus-visible { outline: 2px solid var(--c, var(--gold)); outline-offset: 2px; }
+
+/* The plus. One pseudo-element, two background layers: the horizontal stroke stays, the
+   vertical one retracts, and the whole thing takes a quarter turn on the way. */
+.drawer > summary::before {
+  content: "";
+  flex: 0 0 21px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--c, var(--gold)) 55%, transparent);
+  background-image:
+    linear-gradient(var(--c, var(--gold)), var(--c, var(--gold))),
+    linear-gradient(var(--c, var(--gold)), var(--c, var(--gold)));
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 9px 1.6px, 1.6px 9px;
+  transition: transform 0.26s cubic-bezier(.2, .7, .3, 1),
+              background-size 0.26s cubic-bezier(.2, .7, .3, 1),
+              border-color 0.18s ease;
+}
+
+.drawer[open] > summary::before {
+  transform: rotate(90deg);
+  background-size: 9px 1.6px, 1.6px 0;
+  border-color: color-mix(in srgb, var(--c, var(--gold)) 80%, transparent);
+}
+
+.drawer[open] > summary { color: color-mix(in srgb, var(--c, var(--gold)) 72%, var(--ink)); }
+
+.drawer-body {
+  padding: 0.9rem 1.15rem 1.1rem;
+  border-top: 1px solid color-mix(in srgb, var(--c, var(--gold)) 16%, var(--line-soft));
+  animation: drawerIn 0.28s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+@keyframes drawerIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-body { animation: none; }
+  .drawer > summary::before { transition: none; }
+}
+
+.drawer-body p {
+  font-size: 0.98rem;
+  line-height: 1.66;
+  color: var(--ink-soft);
+  max-width: none;
+}
+
+.drawer-body p + p { margin-top: 0.8rem; }
+.drawer-body cite { display: block; margin-top: 0.35rem; font-style: normal; font-size: 0.86rem; color: color-mix(in srgb, var(--c, var(--gold)) 78%, var(--ink)); }
+
+/* A row of examples inside a drawer: the scripture on one side, the everyday shape of the
+   same thing on the other. */
+.drawer-body .eg { margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px dashed var(--line-soft); }
+.drawer-body .eg:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.drawer-body .eg-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- a reference under a verse that is already printed ----------
+   The pop-up on hover is for a reference you have NOT been shown. Under a verse-card the
+   whole verse is right there, so the hover only ever redrew what the reader was already
+   looking at. The click still opens the passage around it — that is the part that adds
+   something — so the link keeps looking like a link. */
+.ref-link[data-written] { border-bottom-style: dashed; }
+.ref-link[data-written]:hover { border-bottom-style: solid; }
+
+/* ==========================================================================
+   THE PASSAGE DIALOG IS A READER
+   ==========================================================================
+   With a whole chapter open in it this stops being a pop-up, so it carries the same dials The
+   Thread's dialog does. All three are scoped by attributes and one custom property on the
+   dialog itself; because the change is confined to one block, the stylesheet can simply
+   transition `font-size` and `line-height` — no document-wide view transition, which is the
+   thing that swallows the next press. */
+.verse-context-dialog { --ctx-fs: 1; }
+
+.context-passage {
+  font-size: calc(1.06rem * var(--ctx-fs));
+  transition: font-size 260ms cubic-bezier(.2, .7, .3, 1),
+              line-height 260ms cubic-bezier(.2, .7, .3, 1);
+}
+
+.verse-context-dialog[data-ctx-lh="snug"] .context-passage { line-height: 1.72; }
+.verse-context-dialog[data-ctx-lh="roomy"] .context-passage { line-height: 2.5; }
+.verse-context-dialog[data-ctx-type="display"] .context-dialog-body { font-family: var(--serif-display); }
+.verse-context-dialog[data-ctx-type="sans"] .context-dialog-body { font-family: var(--sans); }
+
+@media (prefers-reduced-motion: reduce) {
+  .context-passage { transition: none; }
+}
+
+/* ---------- the settings button and its panel ---------- */
+.ctxprefs { position: relative; flex-shrink: 0; }
+
+.ctxprefs-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.ctxprefs-btn svg { width: 18px; height: 18px; }
+.ctxprefs-btn:hover { color: var(--ink); border-color: color-mix(in srgb, var(--gold) 55%, var(--line)); }
+.ctxprefs.open .ctxprefs-btn { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 60%, var(--line)); }
+
+.ctxprefs-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: var(--z-menu);
+  width: 250px;
+  padding: 12px 13px 11px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Stated after the block above, so the browser's own [hidden] rule is not outranked. */
+.ctxprefs-menu[hidden] { display: none; }
+
+.ctxp-head {
+  display: block;
+  margin: 0 0 6px;
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.ctxp-head + * + .ctxp-head, .ctxp-seg + .ctxp-head { margin-top: 13px; }
+.ctxp-val { color: var(--gold); font-weight: 700; }
+.ctxp-val::before { content: "\00b7"; margin: 0 5px 0 3px; color: var(--ink-faint); }
+
+.ctxp-faces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 13px; }
+
+.ctxp-faces button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-height: 56px;
+  padding: 7px 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease;
+}
+
+.ctxp-faces button b { font-size: 1.05rem; font-weight: 600; line-height: 1; }
+.ctxp-faces button i { font-size: 0.82rem; font-style: italic; line-height: 1.1; }
+.ctxp-faces button span { font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.04em; color: var(--ink-faint); }
+.ctxp-faces button[data-v="text"] b, .ctxp-faces button[data-v="text"] i { font-family: var(--serif-text); }
+.ctxp-faces button[data-v="display"] b, .ctxp-faces button[data-v="display"] i { font-family: var(--serif-display); }
+.ctxp-faces button[data-v="sans"] b, .ctxp-faces button[data-v="sans"] i { font-family: var(--sans); }
+.ctxp-faces button:hover { color: var(--ink); border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
+
+.ctxp-faces button[aria-pressed="true"] {
+  color: var(--gold);
+  border-color: color-mix(in srgb, var(--gold) 55%, var(--line));
+  background: color-mix(in srgb, var(--gold) 10%, var(--card));
+}
+
+.ctxp-seg, .ctxp-step {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-2);
+}
+
+/* 44px, not 34: the estate is systemically under-spec on touch targets and this panel is used
+   with a thumb more often than a mouse. */
+.ctxp-seg button, .ctxp-step button {
+  flex: 1 1 auto;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.ctxp-seg button:hover, .ctxp-step button:hover:not(:disabled) { color: var(--ink); }
+
+.ctxp-seg button[aria-pressed="true"] {
+  color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 13%, var(--card));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 30%, transparent);
+}
+
+.ctxp-step { margin-bottom: 2px; }
+.ctxp-step button:disabled { opacity: 0.35; cursor: default; }
+.ctxp-step .sz { font-family: var(--serif-text); font-weight: 600; }
+.ctxp-step .sz-sm { font-size: 0.8rem; }
+.ctxp-step .sz-lg { font-size: 1.15rem; }
+
+.ctxp-foot { margin-top: 11px; padding-top: 10px; border-top: 1px dashed var(--line-soft); }
+
+.ctxp-reset {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.ctxp-reset:hover {
+  color: var(--gold);
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--line));
+  background: color-mix(in srgb, var(--gold) 8%, var(--card));
+}
+
+/* On a phone the dialog's controls are tight; the panel takes the width it needs and opens
+   from the right edge of the screen rather than off it. */
+@media (max-width: 520px) {
+  .ctxprefs-menu { width: min(250px, calc(100vw - 32px)); right: -6px; }
+}
+
+/* The two controls the dialog already had sat under the 44px floor the new one clears. */
+.context-dialog-close { width: 44px; height: 44px; flex: 0 0 44px; }
+.context-dialog-actions .verpick-btn { min-height: 44px; }

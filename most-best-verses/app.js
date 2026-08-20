@@ -81,8 +81,19 @@
 
     // Shuffle Mode State
     shuffledOrder: false,
-    shuffledVerses: []
+    shuffledVerses: [],
+
+    /* Slides pick light or dark for themselves. A reader who prefers one of them can lock it,
+       and that choice outlives the session. */
+    slideMode: 'shuffle',
+    storyHasRendered: false
   };
+
+  const SLIDE_MODES = ['light', 'dark', 'shuffle'];
+  try {
+    const saved = localStorage.getItem('agy_slide_mode');
+    if (SLIDE_MODES.includes(saved)) state.slideMode = saved;
+  } catch (e) {}
 
   // Readers who ask the OS to reduce motion get instant jumps rather than
   // smooth scrolling; the CSS half of this lives in styles.css.
@@ -210,19 +221,19 @@
       storyPassageText: document.getElementById('storyPassageText'),
       storyPassageRef: document.getElementById('storyPassageRef'),
       storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
-      storyStyleBtn: document.getElementById('storyStyleBtn'),
       storyDeepPanel: document.getElementById('storyDeepPanel'),
       storyTapToast: document.getElementById('storyTapToast'),
       btnStoryPrev: document.getElementById('btnStoryPrev'),
       btnStoryDeeper: document.getElementById('btnStoryDeeper'),
-      btnStoryBookmark: document.getElementById('btnStoryBookmark'),
-      storyBookmarkBtnText: document.getElementById('storyBookmarkBtnText'),
-      storyBookmarkIcon: document.getElementById('storyBookmarkIcon'),
 
-      // Shortcuts Modal & Toast Container
+      // Appearance lock (light / dark / shuffle)
+      storyMode: document.getElementById('storyMode'),
+      storyModeBtn: document.getElementById('storyModeBtn'),
+      storyModeMenu: document.getElementById('storyModeMenu'),
+
+      // Shortcuts Modal
       shortcutsModal: document.getElementById('shortcutsModal'),
-      shortcutsCloseBtn: document.getElementById('shortcutsCloseBtn'),
-      toastContainer: document.getElementById('toastContainer')
+      shortcutsCloseBtn: document.getElementById('shortcutsCloseBtn')
     };
   }
 
@@ -237,6 +248,7 @@
     applyFontSize(state.fontSize);
     applyViewMode(state.viewMode);
     setBibleVersion(state.version);
+    syncSlideModeUI();
 
     updateCategoryCounts();
     render();
@@ -335,7 +347,6 @@
     }
     state.shuffledVerses = pool;
     render();
-    showToast('Verses shuffled');
   }
 
   // --- Render Bento Grid (Vibrant Tints & Pure Scripture Focus) ---
@@ -617,7 +628,6 @@
     applyLineHeight('1.7', true);
     applyTheme('light');
     setBibleVersion('NIV');
-    showToast('Reset reading typography to defaults');
   }
 
   // ==========================================================================
@@ -651,6 +661,60 @@
      Go Deeper does not open anything. It swaps what is inside the same frame — the verse goes,
      the study of that verse arrives, and the button becomes the way back. Tapping is suspended
      for as long as it is open, because in here a tap is a scroll or a link. */
+  function setSlideModeMenuOpen(open) {
+    if (!elements.storyModeMenu || !elements.storyModeBtn) return;
+    elements.storyModeMenu.hidden = !open;
+    elements.storyModeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (elements.storyMode) elements.storyMode.classList.toggle('is-open', !!open);
+  }
+
+  const SLIDE_MODE_ICON = { light: 'sun', dark: 'moon', shuffle: 'shuffle' };
+
+  function syncSlideModeUI() {
+    if (elements.storyModeMenu) {
+      elements.storyModeMenu.querySelectorAll('.story-mode-opt').forEach(btn => {
+        const on = btn.getAttribute('data-mode') === state.slideMode;
+        btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        btn.classList.toggle('is-active', on);
+      });
+    }
+    if (elements.storyModeBtn) {
+      const name = SLIDE_MODE_ICON[state.slideMode] || 'shuffle';
+      elements.storyModeBtn.title = 'Appearance: ' + state.slideMode;
+      elements.storyModeBtn.setAttribute('aria-label', 'Appearance: ' + state.slideMode);
+      /* createIcons() replaces the <i> with an <svg>, so the live node is whatever is in
+         there now — set the attribute on it and let refreshIcons() redraw. */
+      const icon = elements.storyModeBtn.querySelector('svg, i');
+      if (icon && icon.getAttribute('data-lucide') !== name) {
+        const fresh = document.createElement('i');
+        fresh.setAttribute('data-lucide', name);
+        fresh.id = 'storyModeIcon';
+        fresh.style.width = '16px';
+        fresh.style.height = '16px';
+        icon.replaceWith(fresh);
+        refreshIcons();
+      }
+    }
+  }
+
+  function setSlideMode(mode) {
+    if (!SLIDE_MODES.includes(mode)) return;
+    state.slideMode = mode;
+    try { localStorage.setItem('agy_slide_mode', mode); } catch (e) {}
+    syncSlideModeUI();
+
+    /* Locking light or dark should be visible on the passage already on screen, not only on
+       the next one. Shuffle leaves this slide as it is and takes effect from the next tap. */
+    if (mode !== 'shuffle' && state.storyCurrentVerse) {
+      const isDark = mode === 'dark';
+      state.storyCurrentIsDark = isDark;
+      const text = state.storyCurrentVerse.translations[state.storyCurrentVer]
+        || state.storyCurrentVerse.translations.NIV;
+      applyStorySlideVisuals(state.storyCurrentVerse, state.storyCurrentVer,
+        state.storyCurrentStyle, text, isDark);
+    }
+  }
+
   function isDeepOpen() {
     return !!elements.storyDeepPanel && !elements.storyDeepPanel.hidden;
   }
@@ -668,12 +732,26 @@
     refreshIcons();
   }
 
+  /* The study is full screen and takes its light or dark from the SLIDE, not from the app.
+     Scoping `data-theme` onto the container is what does it: every token in the sheet is
+     declared on a bare `[data-theme=...]` attribute selector, so the whole study — surfaces,
+     borders, body copy, the cards — resolves against the slide the reader came in on. */
+  function syncDeepTheme() {
+    if (!elements.storyContainer) return;
+    if (isDeepOpen()) {
+      elements.storyContainer.setAttribute('data-theme', state.storyCurrentIsDark ? 'dark' : 'light');
+    } else {
+      elements.storyContainer.removeAttribute('data-theme');
+    }
+  }
+
   function showDeepPanel() {
     if (!elements.storyDeepPanel) return;
     elements.storyDeepPanel.hidden = false;
     elements.storyDeepPanel.scrollTop = 0;
     if (elements.storyContentWrapper) elements.storyContentWrapper.hidden = true;
     if (elements.storyContainer) elements.storyContainer.classList.add('is-deep');
+    syncDeepTheme();
     setDeeperButton(true);
   }
 
@@ -681,6 +759,7 @@
     if (elements.storyDeepPanel) elements.storyDeepPanel.hidden = true;
     if (elements.storyContentWrapper) elements.storyContentWrapper.hidden = false;
     if (elements.storyContainer) elements.storyContainer.classList.remove('is-deep');
+    syncDeepTheme();
     setDeeperButton(false);
     if (window.location.hash.startsWith('#verse=')) history.replaceState(null, null, ' ');
   }
@@ -1156,15 +1235,31 @@
     }
 
     spans.sort((a, b) => a[0] - b[0]);
+
+    /* Every unit of the slide is wrapped so the enter animation can bring them in one after
+       another. The unit is deliberately INLINE and only ever animates opacity — the gesture
+       (the rise, the focus pull, the wipe) belongs to the block above it. Two reasons:
+       an inline-block word would forbid a line break inside an emphasised phrase, and it
+       would also cut `.fx-accent`'s underline and `.fx-gradient`'s clipped background,
+       neither of which paints across an atomic inline. An emphasised phrase is therefore one
+       unit rather than several, which is also how it reads — the phrase lands as one gesture. */
+    const esc = words.map(escapeHtml);
+    if (esc.length) {
+      esc[0] = '"' + esc[0];
+      esc[esc.length - 1] = esc[esc.length - 1] + '"';
+    }
+    let unit = 0;
+    const cell = inner => '<span class="sw" style="--i:' + (unit++) + '">' + inner + '</span>';
+
     const out = [];
     let i = 0;
     spans.forEach(span => {
-      while (i < span[0]) out.push(escapeHtml(words[i++]));
-      out.push('<span class="' + form + '">' + escapeHtml(words.slice(span[0], span[1]).join(' ')) + '</span>');
+      while (i < span[0]) out.push(cell(esc[i++]));
+      out.push(cell('<span class="' + form + '">' + esc.slice(span[0], span[1]).join(' ') + '</span>'));
       i = span[1];
     });
-    while (i < words.length) out.push(escapeHtml(words[i++]));
-    return `"${out.join(' ')}"`;
+    while (i < words.length) out.push(cell(esc[i++]));
+    return out.join(' ');
   }
 
   // 6-Tier Adaptive Base Font Sizing based on character length
@@ -1185,20 +1280,62 @@
     }
   }
 
-  function updateStoryBookmarkButton(verseId) {
-    const isFav = state.favorites.has(verseId);
-    if (elements.btnStoryBookmark) {
-      elements.btnStoryBookmark.classList.toggle('favorite-active', isFav);
-      if (elements.storyBookmarkBtnText) {
-        elements.storyBookmarkBtnText.textContent = isFav ? 'SAVED' : 'SAVE';
-      }
-      // Re-query: createIcons() swaps the <i> placeholder for an <svg>, so the
-      // reference cached in initElements() points at a detached node.
-      const icon = document.getElementById('storyBookmarkIcon');
-      if (icon) {
-        icon.style.fill = isFav ? 'currentColor' : 'none';
-      }
+  /* ---------- moving between passages ----------
+     Six ways in, chosen per slide. Each one is a gesture on the block — a rise, a focus pull,
+     a tracking settle, a hinge, a wipe, a lift — with the words of the passage resolving in
+     sequence underneath it. The words themselves only fade: see formatStoryTextWithEffects for
+     why nothing below the block is allowed to transform. */
+  const STORY_ENTERS = [
+    'enter-rise', 'enter-focus', 'enter-cascade',
+    'enter-sweep', 'enter-lift', 'enter-veil'
+  ];
+
+  let slideLeaveTimer = null;
+  let slidePendingApply = null;
+
+  /* A tap that lands mid-exit must not be dropped and must not queue up behind the one in
+     flight: the state for that slide is already committed, so the pending paint is flushed
+     and the new one starts its own exit. */
+  function flushPendingSlide() {
+    if (slideLeaveTimer) { clearTimeout(slideLeaveTimer); slideLeaveTimer = null; }
+    if (slidePendingApply) { const fn = slidePendingApply; slidePendingApply = null; fn(); }
+  }
+
+  function runSlideTransition(apply) {
+    const wrap = elements.storyContentWrapper;
+    /* No exit for the first passage — there is nothing on screen yet to take off — and none
+       while the study is open, where the wrapper is hidden anyway. */
+    if (!wrap || reducedMotion() || !state.storyHasRendered || isDeepOpen()) {
+      flushPendingSlide();
+      apply();
+      state.storyHasRendered = true;
+      return;
     }
+    flushPendingSlide();
+    wrap.classList.add('is-leaving');
+    slidePendingApply = apply;
+    slideLeaveTimer = setTimeout(() => {
+      slideLeaveTimer = null;
+      slidePendingApply = null;
+      wrap.classList.remove('is-leaving');
+      apply();
+    }, 170);
+  }
+
+  function playSlideEnter() {
+    const wrap = elements.storyContentWrapper;
+    if (!wrap) return;
+    wrap.classList.remove('is-leaving', 'is-entering', ...STORY_ENTERS);
+    wrap.style.animation = '';
+    if (reducedMotion()) return;
+
+    /* The stagger has a fixed budget rather than a fixed step, so a 90-word passage does not
+       take four times as long to arrive as a 20-word one. */
+    const units = wrap.querySelectorAll('.sw').length || 1;
+    wrap.style.setProperty('--sw-step', Math.min(26, Math.round(430 / units)) + 'ms');
+
+    void wrap.offsetWidth;   // restart the animation even when the same one is picked twice
+    wrap.classList.add('is-entering', STORY_ENTERS[Math.floor(Math.random() * STORY_ENTERS.length)]);
   }
 
   function renderNextStorySlide(forcedVerse = null, addToHistory = true) {
@@ -1235,18 +1372,18 @@
     const nextStyle = state.storyTypographyStyles[Math.floor(Math.random() * state.storyTypographyStyles.length)];
     state.storyCurrentStyle = nextStyle;
 
-    // Dynamic dark bg + white text vs luminous light cards for rich visual rhythm
-    const isDarkSlide = state.theme === 'dark' ? (Math.random() < 0.85) : (Math.random() < 0.45);
+    // Dark bg + white text, or luminous light card — shuffled for rhythm unless a reader has
+    // asked for one of them and only that one.
+    const isDarkSlide = state.slideMode === 'dark' ? true
+      : state.slideMode === 'light' ? false
+      : (state.theme === 'dark' ? (Math.random() < 0.85) : (Math.random() < 0.45));
     state.storyCurrentIsDark = isDarkSlide;
 
-    applyStorySlideVisuals(verse, chosenVer, nextStyle, textToDisplay, isDarkSlide);
+    runSlideTransition(() => applyStorySlideVisuals(verse, chosenVer, nextStyle, textToDisplay, isDarkSlide));
   }
 
   function renderPreviousStorySlide() {
-    if (!state.storyHistory.length) {
-      showToast('At the beginning of story history');
-      return;
-    }
+    if (!state.storyHistory.length) return;
 
     const prevItem = state.storyHistory.pop();
     state.storyCurrentVerse = prevItem.verse;
@@ -1255,7 +1392,7 @@
     state.storyCurrentIsDark = prevItem.isDark || false;
 
     const textToDisplay = prevItem.verse.translations[prevItem.ver] || prevItem.verse.translations.NIV;
-    applyStorySlideVisuals(prevItem.verse, prevItem.ver, prevItem.style, textToDisplay, prevItem.isDark);
+    runSlideTransition(() => applyStorySlideVisuals(prevItem.verse, prevItem.ver, prevItem.style, textToDisplay, prevItem.isDark));
   }
 
   function applyStorySlideVisuals(verse, ver, styleName, textToDisplay, isDark = false) {
@@ -1263,7 +1400,8 @@
     const darkThemeClass = isDark ? 'story-theme-dark' : 'story-theme-light';
 
     if (elements.storyContainer) {
-      elements.storyContainer.className = `story-container ${styleName} ${sizeClass} ${darkThemeClass}`;
+      const deep = elements.storyContainer.classList.contains('is-deep') ? ' is-deep' : '';
+      elements.storyContainer.className = `story-container ${styleName} ${sizeClass} ${darkThemeClass}${deep}`;
       /* Set before the text is written: every emphasis form reads these two, so the slide is
          its own palette rather than each effect carrying a hard-coded colour of its own. */
       const table = STORY_HIGHLIGHTS[isDark ? 'dark' : 'light'];
@@ -1301,11 +1439,9 @@
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
     if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = ver;
 
-    updateStoryBookmarkButton(verse.id);
-
     /* PREV and the translation pill both still work behind the study panel, so what it is
        showing has to follow them rather than stay on the verse it was opened with. */
-    if (isDeepOpen()) renderStudyFor(verse, ver);
+    if (isDeepOpen()) { renderStudyFor(verse, ver); syncDeepTheme(); }
 
     // Run dynamic auto-fitting to guarantee no cut-off/clipping
     autoFitStoryText();
@@ -1313,33 +1449,10 @@
       autoFitStoryText();
     });
 
-    if (elements.storyContentWrapper) {
-      elements.storyContentWrapper.style.animation = 'none';
-      elements.storyContentWrapper.offsetHeight;
-      elements.storyContentWrapper.style.animation = 'storySlideEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-    }
+    state.storyHasRendered = true;
+    playSlideEnter();
 
     refreshIcons();
-  }
-
-  function showToast(message, isError = false) {
-    if (!elements.toastContainer) return;
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    if (isError) toast.style.background = '#ef4444';
-    toast.innerHTML = `
-      <i data-lucide="${isError ? 'alert-circle' : 'check-circle-2'}" style="width: 15px; height: 15px;"></i>
-      <span>${escapeHtml(message)}</span>
-    `;
-
-    elements.toastContainer.appendChild(toast);
-    refreshIcons();
-
-    setTimeout(() => toast.classList.add('show'), 10);
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 2800);
   }
 
   // ==========================================================================
@@ -1642,31 +1755,35 @@
     if (elements.storyOverlay) {
       elements.storyOverlay.addEventListener('click', (e) => {
         if (isDeepOpen()) return;   /* in here a tap is a scroll or a link, not a page turn */
-        if (e.target.closest('#storyStyleBtn') || e.target.closest('#btnStoryPrev') || e.target.closest('#btnStoryBookmark') || e.target.closest('#storyActiveVerBadge') || e.target.closest('#btnStoryDeeper')) return;
+        if (e.target.closest('#storyMode') || e.target.closest('#btnStoryPrev') || e.target.closest('#storyActiveVerBadge') || e.target.closest('#btnStoryDeeper')) return;
         renderNextStorySlide();
       });
     }
 
-    if (elements.storyStyleBtn) {
-      elements.storyStyleBtn.addEventListener('click', (e) => {
+    /* Appearance lock. The menu lives inside the overlay, so every click in here has to be
+       stopped from reaching the tap-to-advance handler on the overlay itself. */
+    if (elements.storyModeBtn && elements.storyModeMenu) {
+      elements.storyModeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        openTypeSettings();
+        setSlideModeMenuOpen(elements.storyModeMenu.hidden);
       });
+
+      elements.storyModeMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const opt = e.target.closest('.story-mode-opt');
+        if (!opt) return;
+        setSlideMode(opt.getAttribute('data-mode'));
+        setSlideModeMenuOpen(false);
+        elements.storyModeBtn.focus();
+      });
+
+      document.addEventListener('click', () => setSlideModeMenuOpen(false));
     }
 
     if (elements.btnStoryPrev) {
       elements.btnStoryPrev.addEventListener('click', (e) => {
         e.stopPropagation();
         renderPreviousStorySlide();
-      });
-    }
-
-    if (elements.btnStoryBookmark) {
-      elements.btnStoryBookmark.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (state.storyCurrentVerse) {
-          toggleFavorite(state.storyCurrentVerse.id);
-        }
       });
     }
 
@@ -1692,7 +1809,7 @@
         state.storyCurrentVer = nextVer;
         if (state.storyCurrentVerse) {
           const textToDisplay = state.storyCurrentVerse.translations[nextVer] || state.storyCurrentVerse.translations.NIV;
-          applyStorySlideVisuals(state.storyCurrentVerse, nextVer, state.storyCurrentStyle, textToDisplay, state.storyCurrentIsDark);
+          runSlideTransition(() => applyStorySlideVisuals(state.storyCurrentVerse, nextVer, state.storyCurrentStyle, textToDisplay, state.storyCurrentIsDark));
         }
       });
     }
@@ -1948,16 +2065,13 @@
   function toggleFavorite(verseId) {
     if (state.favorites.has(verseId)) {
       state.favorites.delete(verseId);
-      showToast(`Removed #${verseId} from bookmarks`);
     } else {
       state.favorites.add(verseId);
-      showToast(`Saved #${verseId} to bookmarks`);
     }
 
     localStorage.setItem('agy_bible_favs', JSON.stringify([...state.favorites]));
     if (elements.favoritesCount) elements.favoritesCount.textContent = state.favorites.size;
 
-    updateStoryBookmarkButton(verseId);
     render();
   }
 

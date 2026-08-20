@@ -273,6 +273,23 @@
         .replace(REF_RE, function (m) { return refLink(m); });
       node.parentNode.replaceChild(span, node);
     });
+    markWrittenOutRefs(root);
+  }
+
+  /* ---------- references whose verse is already on the page ----------
+     A <cite> on this site always names a quotation printed directly above it — a verse-card
+     or a pull-quote. Hovering that reference opened a pop-up containing the very words the
+     reader was already looking at, which is the one case where the pop-up has nothing to add.
+     Marked here rather than guessed at hover time, so the rule is stated once and the
+     handlers stay simple. The CLICK is untouched: the passage AROUND the verse is genuinely
+     more than what is printed, and that is what the dialog gives. */
+  function markWrittenOutRefs(root) {
+    (root || document).querySelectorAll('cite .ref-link').forEach(function (link) {
+      var host = link.closest('.verse-card, .pull, figure');
+      if (!host) return;                                        /* a bare cite names nothing */
+      if (!host.querySelector('[data-verse], blockquote')) return;  /* nothing printed above it */
+      link.setAttribute('data-written', '');
+    });
   }
 
   /* ---------- text cleaning ---------- */
@@ -539,6 +556,112 @@
   var contextRequestId = 0;
   var contextVersionPicker = null;
 
+  /* ---------- the passage dialog is a reader ----------
+     Once a whole chapter is open in it, it is no longer a pop-up — it is somewhere you read for
+     a few minutes, and it wants the same dials The Thread's dialog has. All three are scoped to
+     the dialog by attributes on it, which is the cheap mechanism: `--ctx-fs` and the two
+     attributes are inherited, so the stylesheet can transition `font-size` and `line-height` on
+     the one block that moves. Nothing here goes near a document-wide view transition — on The
+     Thread that is exactly what made the panel close under a second press. */
+  var CTX_FACES = [
+    ['text', 'Newsreader', 'serif, built for reading'],
+    ['display', 'Cormorant', 'the site display serif'],
+    ['sans', 'Inter', 'sans, high legibility']
+  ];
+  var CTX_LH = ['snug', 'normal', 'roomy'];
+  var CTX_FS_STEPS = [0.88, 0.94, 1, 1.08, 1.18, 1.3];
+  var ctxType = 'text', ctxLh = 'normal', ctxFsIndex = 2;
+
+  function readingPanelHtml() {
+    return '<span class="ctxp-head">Typeface</span>' +
+      '<div class="ctxp-faces" data-ctxp="type">' +
+      CTX_FACES.map(function (f) {
+        return '<button type="button" data-v="' + f[0] + '" aria-pressed="false"' +
+          ' title="' + f[1] + ' \u2014 ' + f[2] + '" aria-label="' + f[1] + ', ' + f[2] + '">' +
+          '<b>A</b><i>a</i><span>' + f[1] + '</span></button>';
+      }).join('') + '</div>' +
+      '<span class="ctxp-head">Line height</span>' +
+      '<div class="ctxp-seg" data-ctxp="lh">' +
+      CTX_LH.map(function (v) {
+        return '<button type="button" data-v="' + v + '" aria-pressed="false">' + v + '</button>';
+      }).join('') + '</div>' +
+      '<span class="ctxp-head">Text size <b class="ctxp-val">100%</b></span>' +
+      '<div class="ctxp-step" data-ctxp="fs">' +
+      '<button type="button" data-step="-1" aria-label="Smaller passage text"><span class="sz sz-sm">A</span></button>' +
+      '<button type="button" data-step="1" aria-label="Larger passage text"><span class="sz sz-lg">A</span></button>' +
+      '</div>' +
+      '<div class="ctxp-foot"><button class="ctxp-reset" type="button" data-ctxp-reset>Reset</button></div>';
+  }
+
+  function markCtxButtons(group, value) {
+    var wrap = contextDialogEl && contextDialogEl.querySelector('[data-ctxp="' + group + '"]');
+    if (!wrap) return;
+    wrap.querySelectorAll('button[data-v]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.v === value));
+    });
+  }
+
+  function applyCtxType(v) {
+    ctxType = CTX_FACES.some(function (f) { return f[0] === v; }) ? v : 'text';
+    lsSet('faith-ctx-type', ctxType);
+    markCtxButtons('type', ctxType);
+    if (contextDialogEl) contextDialogEl.dataset.ctxType = ctxType;
+  }
+
+  function applyCtxLh(v) {
+    ctxLh = CTX_LH.indexOf(v) >= 0 ? v : 'normal';
+    lsSet('faith-ctx-lh', ctxLh);
+    markCtxButtons('lh', ctxLh);
+    if (contextDialogEl) contextDialogEl.dataset.ctxLh = ctxLh;
+  }
+
+  function applyCtxFs(i) {
+    ctxFsIndex = Math.max(0, Math.min(CTX_FS_STEPS.length - 1, isNaN(i) ? 2 : i));
+    lsSet('faith-ctx-fs', String(ctxFsIndex));
+    if (!contextDialogEl) return;
+    contextDialogEl.style.setProperty('--ctx-fs', String(CTX_FS_STEPS[ctxFsIndex]));
+    var val = contextDialogEl.querySelector('.ctxp-val');
+    if (val) val.textContent = Math.round(CTX_FS_STEPS[ctxFsIndex] * 100) + '%';
+    contextDialogEl.querySelectorAll('[data-ctxp="fs"] button[data-step]').forEach(function (b) {
+      var dir = +b.dataset.step;
+      b.disabled = (dir < 0 && ctxFsIndex === 0) || (dir > 0 && ctxFsIndex === CTX_FS_STEPS.length - 1);
+    });
+  }
+
+  function wireReadingPanel() {
+    var wrap = contextDialogEl.querySelector('.ctxprefs');
+    var btn = wrap.querySelector('.ctxprefs-btn');
+    var menu = wrap.querySelector('.ctxprefs-menu');
+    var close = function () { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); wrap.classList.remove('open'); };
+    var open = function () { menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); wrap.classList.add('open'); };
+
+    btn.addEventListener('click', function (ev) { ev.stopPropagation(); menu.hidden ? open() : close(); });
+    menu.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      if (ev.target.closest('[data-ctxp-reset]')) { applyCtxType('text'); applyCtxLh('normal'); applyCtxFs(2); return; }
+      var step = ev.target.closest('[data-ctxp="fs"] button[data-step]');
+      if (step) { applyCtxFs(ctxFsIndex + (+step.dataset.step)); return; }
+      var b = ev.target.closest('[data-ctxp] button[data-v]');
+      if (!b) return;
+      if (b.closest('[data-ctxp]').dataset.ctxp === 'type') applyCtxType(b.dataset.v);
+      else applyCtxLh(b.dataset.v);
+    });
+    /* The dialog is modal, so a click anywhere else in it is "outside" this panel. */
+    contextDialogEl.addEventListener('click', function (ev) {
+      if (!menu.hidden && !wrap.contains(ev.target)) close();
+    });
+    contextDialogEl.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !menu.hidden) { ev.stopPropagation(); ev.preventDefault(); close(); btn.focus(); }
+    });
+
+    var savedFs = parseInt(lsGet('faith-ctx-fs'), 10);
+    applyCtxType(lsGet('faith-ctx-type') || 'text');
+    applyCtxLh(lsGet('faith-ctx-lh') || 'normal');
+    applyCtxFs(isNaN(savedFs) ? 2 : savedFs);
+  }
+
+  var GEAR_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h9M17.5 8H20M4 16h3.5M12 16h8"/><circle cx="15.2" cy="8" r="2.3"/><circle cx="9.7" cy="16" r="2.3"/></svg>';
+
   var BOOK_SVG = '<svg class="verpick-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.2C10 4.4 7 4.1 4 4.6V19c3-.5 6-.2 8 1.6 2-1.8 5-2.1 8-1.6V4.6c-3-.5-6-.2-8 1.6z"/><path d="M12 6.2v14.4"/></svg>';
   var CARET_SVG = '<svg class="verpick-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 9.8 5.5 5 5.5-5"/></svg>';
 
@@ -559,6 +682,10 @@
       '      <span class="verpick-val">' + ACTIVE_VERSION + '</span>' +
       CARET_SVG +
       '    </button><div class="verpick-menu" role="listbox" aria-label="Bible translation" hidden></div></div>' +
+      '    <div class="ctxprefs">' +
+      '      <button class="ctxprefs-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Reading settings" title="Reading settings">' + GEAR_SVG + '</button>' +
+      '      <div class="ctxprefs-menu" role="dialog" aria-label="Reading settings" hidden>' + readingPanelHtml() + '</div>' +
+      '    </div>' +
       '    <button class="context-dialog-close" type="button" aria-label="Close">' +
       '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6.6 6.6l10.8 10.8M17.4 6.6 6.6 17.4"/></svg>' +
       '    </button></div></header>' +
@@ -567,7 +694,8 @@
       '</div>';
     document.body.appendChild(contextDialogEl);
     var contextPickerWrap = contextDialogEl.querySelector('.context-verpick');
-    contextPickerWrap.querySelector('.verpick-menu').innerHTML = versionMenuHtml('Read this passage in');
+    contextPickerWrap.querySelector('.verpick-menu').innerHTML = versionMenuHtml('Read in');
+    wireReadingPanel();
     contextVersionPicker = wireVersionPicker(contextPickerWrap, function (code) {
       contextDialogEl.dataset.version = code;
       refreshVerseContext(true);
@@ -585,6 +713,7 @@
       if (tooltipPinned) return;
       var link = ev.target.closest('.ref-link');
       if (!link) return;
+      if (link.hasAttribute('data-written')) return;   /* the verse is already on the page */
       var ref = link.dataset.ref || link.textContent;
       if (!ref) return;
       showTooltip(link, ref, false);
@@ -602,8 +731,16 @@
         ev.preventDefault();
         var ref = link.dataset.ref || link.textContent;
         if (!ref) return;
-        if (HOVER_CAPABLE) { openVerseContext(ref, getVersion()); hideTooltip(true); }
-        else showTooltip(link, ref, true);
+        /* On touch the first tap normally pins the little pop-up, because there was no hover
+           to show the verse. Under a verse that is already printed there is nothing for that
+           tap to reveal, so it goes straight to the passage — the same place the pointer
+           click goes, and the only thing the reader could still be asking for. */
+        if (HOVER_CAPABLE || link.hasAttribute('data-written')) {
+          openVerseContext(ref, getVersion());
+          hideTooltip(true);
+        } else {
+          showTooltip(link, ref, true);
+        }
         return;
       }
       var contextButton = ev.target.closest('.tooltip-context-button');
