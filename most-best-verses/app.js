@@ -1326,7 +1326,7 @@
      here anyway: the same 3% is 7px in landscape, where the well is 240px tall. So the margin
      is a measure in pixels, and only scales through the middle of the range. */
   function fitGapFor(availH) {
-    return Math.min(34, Math.max(16, availH * 0.038));
+    return Math.min(44, Math.max(18, availH * 0.052));
   }
 
   function autoFitStoryText() {
@@ -1341,10 +1341,14 @@
     const availW = passage.clientWidth || wrap.clientWidth;
     if (availH < 40 || availW < 40) return;      /* laid out at zero — measure later */
 
-    /* A short verse should be able to be large without becoming a billboard, and the cap has
-       to follow the measure rather than the viewport, because the desktop card is 680px wide
-       inside a much wider window. */
-    const ceiling = Math.round(Math.min(64, Math.max(30, availW * 0.14)));
+    /* The cap is what most slides actually land on: seven in ten of the ninety-four are short
+       enough to reach it, so it is the size of the app far more than the fit is. At 14% of the
+       measure it was 49px on a 390px phone and 64px on the desktop card, which is a billboard
+       — a hundred-character verse took the whole screen at four words to the line. 11.2% is
+       39px and 50px, still large enough that a short verse is a statement rather than a
+       paragraph. It follows the measure rather than the viewport because the desktop card is
+       680px wide inside a much wider window. */
+    const ceiling = Math.round(Math.min(50, Math.max(26, availW * 0.112)));
     const target = availH - 2 * fitGapFor(availH);
 
     let lo = FIT_MIN_PX, hi = ceiling, best = FIT_MIN_PX;
