@@ -1341,17 +1341,21 @@
     const availW = passage.clientWidth || wrap.clientWidth;
     if (availH < 40 || availW < 40) return;      /* laid out at zero — measure later */
 
-    /* The cap is what most slides actually land on: seven in ten of the ninety-four are short
-       enough to reach it, so it is the size of the app far more than the fit is. At 14% of the
-       measure it was 49px on a 390px phone and 64px on the desktop card, which is a billboard
-       — a hundred-character verse took the whole screen at four words to the line. 11.2% is
-       39px and 50px, still large enough that a short verse is a statement rather than a
-       paragraph. It follows the measure rather than the viewport because the desktop card is
-       680px wide inside a much wider window. */
-    const ceiling = Math.round(Math.min(50, Math.max(26, availW * 0.112)));
+    /* The ladder sets the size; this only ever takes it down. Growing the passage to whatever
+       still fit was the thing that made every slide feel like a billboard — a hundred-character
+       verse at four words to the line, filling the frame edge to edge. The six rungs are a
+       judgement about how big a passage of that length wants to be, and a short one wanting to
+       sit small in the middle of the screen with air above and below it is the point, not a gap
+       to be filled. So: read what the rung asks for, and if it fits, leave it alone. */
+    passage.style.removeProperty('font-size');
+    const ladder = parseFloat(getComputedStyle(passage).fontSize) || 24;
     const target = availH - 2 * fitGapFor(availH);
+    if (passage.scrollHeight <= target) return;
 
-    let lo = FIT_MIN_PX, hi = ceiling, best = FIT_MIN_PX;
+    /* It does not fit — which happens on the long passages, and happens at different lengths
+       for each of the twenty-two faces, since they differ by about 1.9x in rendered height at
+       one size. Come down to the largest size that does. */
+    let lo = FIT_MIN_PX, hi = Math.floor(ladder), best = FIT_MIN_PX;
     while (lo <= hi) {
       const mid = (lo + hi) >> 1;
       passage.style.setProperty('font-size', mid + 'px', 'important');
