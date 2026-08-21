@@ -2237,49 +2237,38 @@ button {
   100% { transform: translate(-25px, 35px) scale(0.95); }
 }
 
-/* ---------- Appearance lock (top-right) ----------
-   It sits on the overlay rather than inside the slide, so it cannot take its colour from
-   `.story-theme-light` / `.story-theme-dark` the way everything in the bar does. Neutral dark
-   glass is the one treatment that holds on both kinds of slide. */
+/* ---------- Appearance lock ----------
+   It used to float in the top-right corner of the overlay, on neutral dark glass, because up
+   there it could not take a colour from the slide. It sits in the bottom bar with the other
+   controls now, so it carries `.story-nav-btn` and follows the slide's light or dark exactly
+   the way Prev and the translation pill do — nothing is left in a corner, and the passage (and
+   the study behind it) get the whole screen. */
 .story-mode {
-  position: absolute;
-  top: max(1rem, env(safe-area-inset-top));
-  right: 1.1rem;
-  z-index: 80;
+  position: relative;
+  flex: 0 0 auto;
+  z-index: 60;
 }
 
+/* Shape only: the fill, the border and the text colour all come from `.story-nav-btn`, which
+   is declared later in the sheet and is what the slide-theme rules are written against. */
 .story-mode-btn {
   width: 44px;
-  height: 44px;
   min-width: 44px;
-  min-height: 44px;
-  border-radius: var(--radius-full);
-  background: rgba(15, 23, 42, 0.5);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
+  height: 44px;
+  padding: 0;
   justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  transition: background var(--transition-fast),
-              border-color var(--transition-fast),
-              transform var(--transition-fast);
 }
 
-.story-mode-btn:hover { background: rgba(15, 23, 42, 0.82); }
 .story-mode-btn:active { transform: scale(0.94); }
 
 .story-mode.is-open .story-mode-btn {
-  background: rgba(15, 23, 42, 0.88);
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: #f59e0b;
 }
 
+/* The bar is at the foot of the screen, so the menu opens up out of it. */
 .story-mode-menu {
   position: absolute;
-  top: calc(100% + 0.45rem);
+  bottom: calc(100% + 0.45rem);
   right: 0;
   min-width: 10.5rem;
   padding: 0.3rem;
@@ -2300,7 +2289,7 @@ button {
 .story-mode-menu[hidden] { display: none; }
 
 @keyframes storyModeMenuIn {
-  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -2389,8 +2378,11 @@ button {
 
 .story-deep-panel[hidden] { display: none; }
 /* `.story-content-wrapper { display: flex }` outranks the browser's own `[hidden]` rule, so the
-   verse stayed on screen behind the study. Same trap as the reader's category badge. */
-.story-content-wrapper[hidden] { display: none; }
+   verse stayed on screen behind the study. Same trap as the reader's category badge — and on
+   phones the narrow-screen block below declares that `display: flex` with `!important`, which
+   beat this rule too, so the study opened as a cramped scroller under a verse that would not
+   leave. `!important` here is what that one has to be answered with. */
+.story-content-wrapper[hidden] { display: none !important; }
 
 .story-deep-panel::-webkit-scrollbar { width: 6px; }
 .story-deep-panel::-webkit-scrollbar-track { background: transparent; }
@@ -2420,7 +2412,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 4.5rem 1.65rem 2rem 1.65rem;
+  padding: 2rem 1.65rem max(2rem, env(safe-area-inset-bottom)) 1.65rem;
   overflow: hidden;
   color: var(--text-primary);
   transition: transform 0.2s ease;
@@ -2439,7 +2431,7 @@ button {
     border: 1px solid var(--story-card-border);
     border-radius: 36px;
     box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.45);
-    padding: 4.5rem 3.5rem 2.5rem 3.5rem;
+    padding: 2.5rem 3.5rem 2.5rem 3.5rem;
   }
 }
 
@@ -3413,7 +3405,7 @@ button {
     max-height: 100dvh !important;
     border-radius: 0 !important;
     border: none !important;
-    padding: 3rem 1.25rem 1.5rem 1.25rem !important;
+    padding: 1.5rem 1.25rem max(1.5rem, env(safe-area-inset-bottom)) 1.25rem !important;
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
@@ -4181,7 +4173,7 @@ input:focus-visible,
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    padding: 3.25rem 2.25rem 1.75rem;
+    padding: 1.75rem 2.25rem max(1.75rem, env(safe-area-inset-bottom));
   }
 }
 
@@ -4218,99 +4210,25 @@ input:focus-visible,
 /* ==========================================================================
    MOVING BETWEEN PASSAGES
    ==========================================================================
-   Six ways in, one way out, picked per slide in `playSlideEnter()`. The division of labour is
-   the whole design: the GESTURE belongs to the block — a rise, a focus pull, a hinge, a wipe,
-   a lift, a veil — and the WORDS underneath it only ever fade, in sequence.
+   One gesture on the block, and it does not gate the next tap. This used to be six entrances
+   picked per slide with the words of the passage resolving one after another underneath —
+   a 170ms exit, then up to 430ms of stagger on top of a 300ms fade per word. Read once it is
+   handsome; read at the speed people actually use this thing, which is thumbing through
+   passages, it meant every tap was a wait for the verse to assemble itself. The passage now
+   lands whole, immediately, and only rises the last few pixels into place.
 
-   That split is not a stylistic choice. A word that transformed would have to be an atomic
-   inline, and an atomic inline cannot be broken across lines, does not receive `.fx-accent`'s
-   underline, and does not paint `.fx-gradient`'s clipped background. Keeping every unit
-   `display: inline` costs one property and keeps all three intact. */
+   `.sw` stays as the unit wrapper: it is deliberately INLINE so a line break can fall inside an
+   emphasised phrase and so `.fx-accent`'s underline and `.fx-gradient`'s clipped background
+   still paint across it — none of which survives an atomic inline. */
 .story-passage-text .sw {
   display: inline;
 }
 
-.story-content-wrapper.is-entering .sw {
-  animation: swWordIn 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--i, 0) * var(--sw-step, 20ms));
+.story-content-wrapper.is-entering {
+  animation: storySlideEnter 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes swWordIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* One exit for all six entrances, short enough that a fast reader tapping through never
-   waits on it. */
-.story-content-wrapper.is-leaving {
-  animation: storyLeave 170ms cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-
-@keyframes storyLeave {
-  from { opacity: 1; transform: translateY(0); filter: blur(0px); }
-  to   { opacity: 0; transform: translateY(-10px); filter: blur(5px); }
-}
-
-.story-content-wrapper.enter-rise {
-  animation: storyEnterRise 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes storyEnterRise {
-  from { opacity: 0; transform: translateY(24px); }
+@keyframes storySlideEnter {
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-.story-content-wrapper.enter-focus {
-  animation: storyEnterFocus 580ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes storyEnterFocus {
-  from { opacity: 0; transform: scale(1.04); filter: blur(18px); }
-  to   { opacity: 1; transform: scale(1); filter: blur(0px); }
-}
-
-.story-content-wrapper.enter-cascade {
-  transform-origin: 50% 0%;
-  animation: storyEnterCascade 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes storyEnterCascade {
-  from { opacity: 0; transform: perspective(900px) rotateX(8deg) translateY(-18px); }
-  to   { opacity: 1; transform: perspective(900px) rotateX(0deg) translateY(0); }
-}
-
-.story-content-wrapper.enter-sweep {
-  animation: storyEnterSweep 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes storyEnterSweep {
-  from { opacity: 1; clip-path: inset(0 100% 0 0); transform: translateX(-14px); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); transform: translateX(0); }
-}
-
-.story-content-wrapper.enter-lift {
-  animation: storyEnterLift 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes storyEnterLift {
-  from { opacity: 0; transform: scale(0.93) translateY(18px); filter: blur(8px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
-}
-
-.story-content-wrapper.enter-veil {
-  animation: storyEnterVeil 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes storyEnterVeil {
-  from { opacity: 1; clip-path: inset(0 0 100% 0); transform: translateY(-10px); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
-}
-
-/* The global reduced-motion rule collapses every duration but says nothing about delay, and
-   the stagger is all delay — 430ms of it. `playSlideEnter()` also refuses to add the classes
-   at all in that case; this is the belt to its braces. */
-@media (prefers-reduced-motion: reduce) {
-  .story-content-wrapper.is-entering .sw {
-    animation-delay: 0ms !important;
-  }
 }

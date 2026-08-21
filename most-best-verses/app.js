@@ -1281,61 +1281,24 @@
   }
 
   /* ---------- moving between passages ----------
-     Six ways in, chosen per slide. Each one is a gesture on the block — a rise, a focus pull,
-     a tracking settle, a hinge, a wipe, a lift — with the words of the passage resolving in
-     sequence underneath it. The words themselves only fade: see formatStoryTextWithEffects for
-     why nothing below the block is allowed to transform. */
-  const STORY_ENTERS = [
-    'enter-rise', 'enter-focus', 'enter-cascade',
-    'enter-sweep', 'enter-lift', 'enter-veil'
-  ];
-
-  let slideLeaveTimer = null;
-  let slidePendingApply = null;
-
-  /* A tap that lands mid-exit must not be dropped and must not queue up behind the one in
-     flight: the state for that slide is already committed, so the pending paint is flushed
-     and the new one starts its own exit. */
-  function flushPendingSlide() {
-    if (slideLeaveTimer) { clearTimeout(slideLeaveTimer); slideLeaveTimer = null; }
-    if (slidePendingApply) { const fn = slidePendingApply; slidePendingApply = null; fn(); }
-  }
-
+     A tap paints the next passage on the spot. There used to be a 170ms exit in front of this,
+     with one of six entrances behind it and the words of the passage resolving in sequence
+     underneath — which meant thumbing quickly through verses was mostly spent watching text
+     assemble. Nothing is deferred now: the new passage is already on screen while its one
+     enter gesture plays over it, so taps never queue and never wait on each other. */
   function runSlideTransition(apply) {
-    const wrap = elements.storyContentWrapper;
-    /* No exit for the first passage — there is nothing on screen yet to take off — and none
-       while the study is open, where the wrapper is hidden anyway. */
-    if (!wrap || reducedMotion() || !state.storyHasRendered || isDeepOpen()) {
-      flushPendingSlide();
-      apply();
-      state.storyHasRendered = true;
-      return;
-    }
-    flushPendingSlide();
-    wrap.classList.add('is-leaving');
-    slidePendingApply = apply;
-    slideLeaveTimer = setTimeout(() => {
-      slideLeaveTimer = null;
-      slidePendingApply = null;
-      wrap.classList.remove('is-leaving');
-      apply();
-    }, 170);
+    apply();
+    state.storyHasRendered = true;
   }
 
   function playSlideEnter() {
     const wrap = elements.storyContentWrapper;
     if (!wrap) return;
-    wrap.classList.remove('is-leaving', 'is-entering', ...STORY_ENTERS);
+    wrap.classList.remove('is-entering');
     wrap.style.animation = '';
     if (reducedMotion()) return;
-
-    /* The stagger has a fixed budget rather than a fixed step, so a 90-word passage does not
-       take four times as long to arrive as a 20-word one. */
-    const units = wrap.querySelectorAll('.sw').length || 1;
-    wrap.style.setProperty('--sw-step', Math.min(26, Math.round(430 / units)) + 'ms');
-
-    void wrap.offsetWidth;   // restart the animation even when the same one is picked twice
-    wrap.classList.add('is-entering', STORY_ENTERS[Math.floor(Math.random() * STORY_ENTERS.length)]);
+    void wrap.offsetWidth;   // restart the animation on a passage that follows another
+    wrap.classList.add('is-entering');
   }
 
   function renderNextStorySlide(forcedVerse = null, addToHistory = true) {
