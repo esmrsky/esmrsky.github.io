@@ -64,6 +64,13 @@ SKIP = {
     "the-return/index.html",
     "the-return.html",
     "index-old-return-backup.html",
+    # judgment is NOT translated. Its five data-ru attributes are runtime
+    # data for its own verse picker (`.ruvb[data-ru]` holds the Russian
+    # scripture reference to fetch) — a name collision with this generator,
+    # not translation units. Generating from them produces an English page
+    # at /ru/ AND strips the attributes the picker needs. When judgment is
+    # actually translated, rename its runtime attribute first.
+    "judgment/index.html",
 }
 
 VOID = {
