@@ -2820,18 +2820,23 @@ button {
   cursor: pointer;
   pointer-events: auto;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-fast);
+  /* Named properties, never `all`. `all` was animating width too, so the bar visibly slid
+     every time the translation pill changed character count. */
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast);
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.story-nav-btn:hover {
-  transform: scale(1.04);
-  border-color: #f59e0b;
+/* Behind `hover: hover` because a touch browser leaves `:hover` stuck on the last thing
+   tapped — which, with a scale on it, left one button sitting bigger than its neighbours
+   until you tapped elsewhere. That plus the `:active` scale was the bounce. */
+@media (hover: hover) {
+  .story-nav-btn:hover { border-color: #f59e0b; }
 }
 
-.story-nav-btn:active {
-  transform: scale(0.96);
-}
+.story-nav-btn:active { background: var(--bg-surface-subtle); }
 
 .story-version-pill {
   font-family: var(--font-mono);
@@ -2842,20 +2847,30 @@ button {
   color: var(--text-secondary);
   padding: 0.22rem 0.65rem;
   border-radius: var(--radius-full);
-  text-align: right;
+  /* Fixed measure. The six codes are three or four characters, so sizing to content moved
+     this pill 12px between slides and shoved the whole bar sideways on every tap. */
+  min-width: 4.25rem;
+  text-align: center;
   white-space: nowrap;
   flex-shrink: 0;
   justify-self: end;
   cursor: pointer;
   pointer-events: auto;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.story-version-pill:hover {
-  color: #f59e0b;
-  border-color: #f59e0b;
-  background: var(--bg-surface);
+@media (hover: hover) {
+  .story-version-pill:hover {
+    color: #f59e0b;
+    border-color: #f59e0b;
+    background: var(--bg-surface);
+  }
 }
+
+.story-version-pill:active { background: var(--bg-surface-subtle); }
 
 /* ==========================================================================
    STORY MODE DARK SLIDE THEME VARIATIONS (DARK BG + WHITE TEXT)
@@ -3840,14 +3855,15 @@ input:focus-visible,
   gap: 0.7rem;
 }
 
-/* Prev and the translation pill are the two fixed ends of the bar; everything between them
-   belongs to Go Deeper, so the row has no gap in the middle of it. */
+/* Four controls, all sized to their own content. Go Deeper used to take every pixel between
+   Prev and the pill, which made it read as a different class of thing from its neighbours;
+   the row is evenly weighted now and `space-between` on the bar does the distribution. */
 .story-version-pill {
   flex: 0 0 auto;
 }
 
 .story-bottom-center-actions {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
   justify-content: flex-start;
   gap: 0.5rem;
@@ -3858,8 +3874,7 @@ input:focus-visible,
 }
 
 .story-deeper-btn {
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 0 0 auto;
   justify-content: center;
 }
 
@@ -3893,6 +3908,10 @@ input:focus-visible,
 @media (max-width: 360px) {
   .story-prev-btn span { display: none; }
   .story-prev-btn { padding-left: 0.55rem; padding-right: 0.55rem; }
+  /* The pill now holds a fixed 4.25rem, so the last few pixels come from Go Deeper's icon.
+     Its words stay — it is still the one control you would not guess from its shape. */
+  .story-deeper-btn > i,
+  .story-deeper-btn > svg { display: none; }
 }
 
 /* --- Lexicon fields read as one paragraph -------------------------------- */
@@ -4232,3 +4251,35 @@ input:focus-visible,
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ==========================================================================
+   SCRIPTURE COPYRIGHT NOTICES
+   ==========================================================================
+   Set quietly and small: they are a requirement, not a section of the study. The link has to
+   stay a real link — Lockman asks for a click-enabled one specifically. */
+.scripture-credits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: 0.72rem;
+  line-height: 1.62;
+  color: var(--text-secondary);
+  opacity: 0.85;
+}
+
+.scripture-credits p { margin: 0; }
+
+.scripture-credits strong {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+}
+
+.scripture-credits a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.scripture-credits a:hover { color: var(--accent, #92400e); }

@@ -267,6 +267,13 @@
         autoFitStoryText();
       }
     });
+
+    /* The first fit runs against whatever metrics are available at that moment, which for a
+       cold visit is the fallback face — and the fallback is not the size the reader will see.
+       Fit once more when the real faces land. */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => { if (state.isStoriesMode) autoFitStoryText(); });
+    }
   }
 
   function handleHashNavigation() {
@@ -761,6 +768,9 @@
     if (elements.storyContainer) elements.storyContainer.classList.remove('is-deep');
     syncDeepTheme();
     setDeeperButton(false);
+    /* The well had no height while the study was up, so the size on the passage is whatever it
+       was fitted to before — refit now that there is a box to measure again. */
+    autoFitStoryText();
     if (window.location.hash.startsWith('#verse=')) history.replaceState(null, null, ' ');
   }
 
@@ -1272,12 +1282,50 @@
     return 'story-size-dense';
   }
 
+  /* ---------- fitting the passage to the well ----------
+     The six size tiers were keyed to character count and nothing else, which cannot be made
+     to work: the same string set in Syne and in Cormorant differs by about 1.9x in rendered
+     height at one font-size, and there are twenty-two faces sharing one ladder. A ladder tuned
+     to clear the tall ones starves the short ones; tuned for the short ones it clips the tall.
+     Measured on a 375x667 phone, six of the twenty-two overflowed the well on the longest
+     passages — silently, because the container is `overflow: hidden`. And the function that
+     used to live here, whose comment promised to "guarantee no cut-off", only cleared two
+     inline properties. There was never any fitting.
+
+     So stop predicting the height from the text and measure it: binary-search the largest size
+     at which the block still fits. The tier classes keep line-height and alignment, which are
+     per-length judgements worth keeping; only the size is decided here.
+
+     `!important` on the inline size is not a flourish — the narrow-screen block declares these
+     font sizes `!important`, and a normal inline declaration loses to that. */
+  const FIT_MIN_PX = 15;
+
   function autoFitStoryText() {
     const passage = elements.storyPassageText;
-    if (passage) {
-      passage.style.fontSize = '';
-      passage.style.lineHeight = '';
+    const wrap = elements.storyContentWrapper;
+    if (!passage || !wrap) return;
+
+    /* Line-height stays with the tier; only ever clear what this function sets. */
+    if (wrap.hidden) { passage.style.removeProperty('font-size'); return; }
+
+    const availH = wrap.clientHeight;
+    const availW = passage.clientWidth || wrap.clientWidth;
+    if (availH < 40 || availW < 40) return;      /* laid out at zero — measure later */
+
+    /* A short verse should be able to be large without becoming a billboard, and the cap has
+       to follow the measure rather than the viewport, because the desktop card is 680px wide
+       inside a much wider window. */
+    const ceiling = Math.round(Math.min(64, Math.max(30, availW * 0.14)));
+    const target = availH * 0.97;               /* a little air, and room for sub-pixel drift */
+
+    let lo = FIT_MIN_PX, hi = ceiling, best = FIT_MIN_PX;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      passage.style.setProperty('font-size', mid + 'px', 'important');
+      if (passage.scrollHeight <= target) { best = mid; lo = mid + 1; }
+      else { hi = mid - 1; }
     }
+    passage.style.setProperty('font-size', best + 'px', 'important');
   }
 
   /* ---------- moving between passages ----------
