@@ -2412,7 +2412,11 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 1.65rem max(2rem, env(safe-area-inset-bottom)) 1.65rem;
+  /* `viewport-fit=cover` means the top inset is ours to clear — in landscape, and in any
+     standalone/fullscreen presentation, the first line of the passage was underneath it. The
+     rest of the breathing room is inside the well now (see `fitGapFor`), so the frame itself
+     no longer has to hold it. */
+  padding: max(1.4rem, env(safe-area-inset-top)) 1.65rem max(1.4rem, env(safe-area-inset-bottom)) 1.65rem;
   overflow: hidden;
   color: var(--text-primary);
   transition: transform 0.2s ease;
@@ -2460,7 +2464,11 @@ button {
   white-space: normal !important;
 }
 
-/* --- Responsive Autoscaling Font Sizes (Substantially Larger, Left-Aligned for Long Verses) --- */
+/* --- Responsive Autoscaling Font Sizes (Substantially Larger, Left-Aligned for Long Verses) ---
+   The three long rungs used to lead at 1.44/1.48/1.52. That is the generous end of normal, and
+   on a passage that already has to shrink to fit its well it is spent in the wrong place: a
+   650-character verse pays for it twice, once per line, and the size is what gives way. They
+   lead at the ordinary end of normal now, which is where the long verses get their size from. */
 .story-size-hero .story-passage-text {
   font-size: clamp(2.4rem, 6.0vw, 3.8rem);
   line-height: 1.25;
@@ -2479,19 +2487,19 @@ button {
 
 .story-size-compact .story-passage-text {
   font-size: clamp(1.35rem, 3.2vw, 1.95rem);
-  line-height: 1.44;
+  line-height: 1.38;
   text-align: left !important;
 }
 
 .story-size-mini .story-passage-text {
   font-size: clamp(1.2rem, 2.7vw, 1.68rem);
-  line-height: 1.48;
+  line-height: 1.40;
   text-align: left !important;
 }
 
 .story-size-dense .story-passage-text {
   font-size: clamp(1.08rem, 2.3vw, 1.45rem);
-  line-height: 1.52;
+  line-height: 1.42;
   text-align: left !important;
 }
 
@@ -2775,9 +2783,11 @@ button {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding-top: 1rem;
+  /* Every pixel above this rule belongs to the passage: the bar used to take 30px of the well
+     in margin and padding for air it did not need, on top of the air the well already has. */
+  padding-top: 0.8rem;
   border-top: 1px solid rgba(128, 128, 128, 0.2);
-  margin-top: 0.85rem;
+  margin-top: 0.55rem;
   gap: 0.5rem;
   flex-shrink: 0;
 }
@@ -3420,7 +3430,7 @@ button {
     max-height: 100dvh !important;
     border-radius: 0 !important;
     border: none !important;
-    padding: 1.5rem 1.25rem max(1.5rem, env(safe-area-inset-bottom)) 1.25rem !important;
+    padding: max(0.95rem, env(safe-area-inset-top)) 1.25rem max(1rem, env(safe-area-inset-bottom)) 1.25rem !important;
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3455,17 +3465,17 @@ button {
   }
   .story-size-compact .story-passage-text {
     font-size: clamp(1.28rem, 4.3vw, 1.65rem) !important;
-    line-height: 1.44 !important;
+    line-height: 1.38 !important;
     text-align: left !important;
   }
   .story-size-mini .story-passage-text {
     font-size: clamp(1.15rem, 3.8vw, 1.45rem) !important;
-    line-height: 1.48 !important;
+    line-height: 1.40 !important;
     text-align: left !important;
   }
   .story-size-dense .story-passage-text {
     font-size: clamp(1.05rem, 3.4vw, 1.32rem) !important;
-    line-height: 1.52 !important;
+    line-height: 1.42 !important;
     text-align: left !important;
   }
 
@@ -3855,15 +3865,15 @@ input:focus-visible,
   gap: 0.7rem;
 }
 
-/* Four controls, all sized to their own content. Go Deeper used to take every pixel between
-   Prev and the pill, which made it read as a different class of thing from its neighbours;
-   the row is evenly weighted now and `space-between` on the bar does the distribution. */
+/* Prev, the appearance button and the translation pill are fixed to their own content; the
+   space that is left over is Go Deeper's. It is the one control with somewhere to go, so it
+   gets the width, and the row has no loose gap sitting in the middle of it. */
 .story-version-pill {
   flex: 0 0 auto;
 }
 
 .story-bottom-center-actions {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
   min-width: 0;
   justify-content: flex-start;
   gap: 0.5rem;
@@ -3874,7 +3884,8 @@ input:focus-visible,
 }
 
 .story-deeper-btn {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-width: 0;
   justify-content: center;
 }
 
@@ -3894,11 +3905,10 @@ input:focus-visible,
   white-space: nowrap;
 }
 
-/* Four pills on one line, and the line has to hold at 320px. The icon steps out first, then
-   the two labels that are already carrying an icon of their own — Go Deeper's words are the
-   last thing to go, because it is the only one of the four you would not guess. */
-/* Three controls where there were four, so Go Deeper keeps both its icon and its words all
-   the way down; only Prev gives up its label, and only on the narrowest screens. */
+/* Four pills on one line, and the line has to hold at 320px. Go Deeper absorbs the slack down
+   to the point where there is none left; past that, Prev drops its label and Go Deeper drops
+   its icon. Go Deeper's words are the last thing to go, because it is the only one of the four
+   you would not guess from its shape. */
 @media (max-width: 420px) {
   .story-nav-btn { padding-left: 0.7rem; padding-right: 0.7rem; }
   .story-bottom-bar { gap: 0.45rem; }

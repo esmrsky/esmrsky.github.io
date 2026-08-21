@@ -274,6 +274,15 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => { if (state.isStoriesMode) autoFitStoryText(); });
     }
+    /* `fonts.ready` settles once. A typeface is only fetched the first time a slide uses it,
+       so twenty of the twenty-two arrive well after that — each one measured as the fallback,
+       fitted to the fallback, and then swapped for a face that is up to 1.9x as tall. Refit
+       every time a batch lands. */
+    if (document.fonts && document.fonts.addEventListener) {
+      document.fonts.addEventListener('loadingdone', () => {
+        if (state.isStoriesMode) autoFitStoryText();
+      });
+    }
   }
 
   function handleHashNavigation() {
@@ -675,7 +684,12 @@
     if (elements.storyMode) elements.storyMode.classList.toggle('is-open', !!open);
   }
 
-  const SLIDE_MODE_ICON = { light: 'sun', dark: 'moon', shuffle: 'shuffle' };
+  /* Shuffle wears a sun rather than the two crossed arrows. The arrows are the icon for
+     reordering a list, which is not what this does — it alternates the light and dark slide —
+     and next to Light's sun and Dark's moon they read as belonging to a different control.
+     `sun-moon` is a sun with the crescent taken out of it, so it sits in the same family as
+     its two neighbours without being mistaken for Light's plain sun. */
+  const SLIDE_MODE_ICON = { light: 'sun', dark: 'moon', shuffle: 'sun-moon' };
 
   function syncSlideModeUI() {
     if (elements.storyModeMenu) {
@@ -686,7 +700,7 @@
       });
     }
     if (elements.storyModeBtn) {
-      const name = SLIDE_MODE_ICON[state.slideMode] || 'shuffle';
+      const name = SLIDE_MODE_ICON[state.slideMode] || 'sun-moon';
       elements.storyModeBtn.title = 'Appearance: ' + state.slideMode;
       elements.storyModeBtn.setAttribute('aria-label', 'Appearance: ' + state.slideMode);
       /* createIcons() replaces the <i> with an <svg>, so the live node is whatever is in
@@ -1298,7 +1312,22 @@
 
      `!important` on the inline size is not a flourish — the narrow-screen block declares these
      font sizes `!important`, and a normal inline declaration loses to that. */
-  const FIT_MIN_PX = 15;
+  /* Where the fit gives up, not a size anything is meant to be read at. It used to be 15px,
+     and 15px is a size the longest passage in the set actually reaches: at 320px wide, set in
+     Oswald or in Anton, it overflowed the well by 59px — two whole lines gone, silently, into
+     `overflow: hidden`. A floor that clips is worse than small type, so it sits well below
+     anything the ninety-four verses ask for. */
+  const FIT_MIN_PX = 12;
+
+  /* The passage does not run to the edge of its well. The margin used to be 3% of the well,
+     split by the centring into half of that above the first line — 15px on a 390x844 phone,
+     11px on a 375x667 one, measured — and a verse that comes within 11px of the top of the
+     screen reads as cut off whether or not it is. A proportion is the wrong shape of number
+     here anyway: the same 3% is 7px in landscape, where the well is 240px tall. So the margin
+     is a measure in pixels, and only scales through the middle of the range. */
+  function fitGapFor(availH) {
+    return Math.min(34, Math.max(16, availH * 0.038));
+  }
 
   function autoFitStoryText() {
     const passage = elements.storyPassageText;
@@ -1316,7 +1345,7 @@
        to follow the measure rather than the viewport, because the desktop card is 680px wide
        inside a much wider window. */
     const ceiling = Math.round(Math.min(64, Math.max(30, availW * 0.14)));
-    const target = availH * 0.97;               /* a little air, and room for sub-pixel drift */
+    const target = availH - 2 * fitGapFor(availH);
 
     let lo = FIT_MIN_PX, hi = ceiling, best = FIT_MIN_PX;
     while (lo <= hi) {
