@@ -49,6 +49,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import os
 import re
 import sys
@@ -73,6 +74,13 @@ RAWTEXT = {"script", "style", "textarea", "title"}
 
 # Attributes whose value is a URL and therefore has to move with the page.
 URL_ATTRS = {"href", "src", "srcset", "poster", "action", "data", "xlink:href"}
+
+# Written next to every `data-ru`: a short hash of the English the translation
+# was made from. `--check` only proves the output matches the attributes; it
+# cannot see that the English underneath has since been reworded, which leaves
+# the Russian page confidently saying something the English no longer says.
+# This is what makes that visible.
+FP_ATTR = "data-ru-src"
 
 ALT_START = "<!-- lang-alt:start -->"
 ALT_END = "<!-- lang-alt:end -->"
@@ -333,6 +341,8 @@ def apply_translation(src: str) -> str:
                     (cs, ce, as_text(value) if in_svg.get(idx) else as_html(value))
                 )
                 covered_until = max(covered_until, ce)
+            elif a.name == FP_ATTR:
+                continue  # a fingerprint of the English, not a translation
             else:
                 target = a.name[len("data-ru-"):]
                 existing = t.attr(target)
@@ -348,6 +358,69 @@ def apply_translation(src: str) -> str:
     # An attribute edit and its own drop_attr never overlap (different attrs),
     # but a value rewrite on attribute X and the deletion of data-ru-X can be
     # adjacent; sorting handles that, overlap would raise.
+    return splice(src, edits)
+
+
+# --------------------------------------------------------------------------
+# Fingerprinting the English
+# --------------------------------------------------------------------------
+
+def fingerprint(text: str) -> str:
+    """Short hash of the English a translation was made from.
+
+    Whitespace is collapsed first, so reindenting the markup is not mistaken
+    for a content change. Anything else — a reworded sentence, a changed tag,
+    an added link — is."""
+    return hashlib.sha256(" ".join(text.split()).encode("utf-8")).hexdigest()[:10]
+
+
+def translated_elements(src: str):
+    """(tag, data-ru attr, fingerprint attr or None, English source) for every
+    element carrying a `data-ru`.
+
+    Skips elements nested inside a region an outer `data-ru` already replaces,
+    exactly as apply_translation does — those do not exist in the Russian
+    document, so their English is not a thing anyone translated."""
+    tags = parse_tags(src)
+    inner, _ = element_spans(src, tags)
+    covered_until = -1
+    for idx, t in enumerate(tags):
+        if t.is_end:
+            continue
+        ru = t.attr("data-ru")
+        if ru is None or t.start < covered_until:
+            continue
+        cs, ce = inner[idx]
+        covered_until = max(covered_until, ce)
+        yield t, ru, t.attr(FP_ATTR), src[cs:ce]
+
+
+def stale_report(src: str):
+    """(stale, unfingerprinted) — translations whose English has moved, and
+    translations carrying no fingerprint to check against."""
+    stale, missing = [], []
+    for t, ru, fp, english in translated_elements(src):
+        want = fingerprint(english)
+        if fp is None:
+            missing.append(english)
+        elif fp.value(src) != want:
+            stale.append((english, fp.value(src), want))
+    return stale, missing
+
+
+def write_fingerprints(src: str) -> str:
+    """Record the current English against every translation.
+
+    Only ever run when the two are known to agree — it asserts nothing, so
+    running it over a page whose English has drifted silently blesses the
+    stale Russian."""
+    edits: list[tuple[int, int, str]] = []
+    for t, ru, fp, english in translated_elements(src):
+        want = fingerprint(english)
+        if fp is None:
+            edits.append((ru.end, ru.end, ' %s="%s"' % (FP_ATTR, want)))
+        elif fp.value(src) != want:
+            edits.append((fp.vstart, fp.vend, want))
     return splice(src, edits)
 
 
@@ -849,6 +922,8 @@ def build(pages: list[str], check: bool, known: list[str] | None = None) -> int:
         by_dir.setdefault(d, set()).add(name)
 
     changed = 0
+    stale_total = [0]
+    unfingerprinted = [0]
     for rel in pages:
         d, name = os.path.split(rel)
         en_url, ru_url_, out = urls_for(rel)
@@ -863,6 +938,17 @@ def build(pages: list[str], check: bool, known: list[str] | None = None) -> int:
         if patched != src:
             changed += 1
             print(f"  en  {rel}")
+
+        stale, missing = stale_report(patched)
+        for english, had, want in stale:
+            print(f"  !!  {rel}: English changed under a translation "
+                  f"({had} -> {want}); the Russian below is stale\n"
+                  f"      EN now: {' '.join(english.split())[:150]}",
+                  file=sys.stderr)
+        if stale:
+            stale_total[0] += len(stale)
+        if missing:
+            unfingerprinted[0] += len(missing)
 
         doc = apply_translation(patched)
         if rel == "index.html":
@@ -890,7 +976,14 @@ def build(pages: list[str], check: bool, known: list[str] | None = None) -> int:
         if leftover:
             print(f"  !!  {out}: {leftover.group(0).strip()} survived into "
                   f"the output", file=sys.stderr)
-    return changed
+    if unfingerprinted[0]:
+        print(f"  ..  {unfingerprinted[0]} translation(s) carry no {FP_ATTR}; "
+              f"run --fingerprint to record the English they were made from",
+              file=sys.stderr)
+    if stale_total[0]:
+        print(f"  !!  {stale_total[0]} translation(s) are stale — the English "
+              f"moved after they were written", file=sys.stderr)
+    return changed, stale_total[0]
 
 
 def main() -> int:
@@ -899,6 +992,13 @@ def main() -> int:
                     help="site directory or source path; default: all")
     ap.add_argument("--check", action="store_true",
                     help="report what would change without writing")
+    ap.add_argument("--stale", action="store_true",
+                    help="only report translations whose English has changed "
+                         "since they were written; exit 1 if any have")
+    ap.add_argument("--fingerprint", action="store_true",
+                    help="record the current English against every translation. "
+                         "Only run when the two are known to agree — it blesses "
+                         "whatever is there.")
     args = ap.parse_args()
 
     known = discover()
@@ -912,10 +1012,41 @@ def main() -> int:
             print("nothing matched", file=sys.stderr)
             return 1
 
-    changed = build(pages, args.check, known)
+    if args.fingerprint:
+        touched = 0
+        for rel in pages:
+            path = os.path.join(ROOT, rel)
+            with open(path, encoding="utf-8") as fh:
+                src = fh.read()
+            out = write_fingerprints(src)
+            if out != src:
+                with open(path, "w", encoding="utf-8") as fh:
+                    fh.write(out)
+                touched += 1
+                print(f"  fp  {rel}")
+        print(f"{len(pages)} page(s), {touched} file(s) fingerprinted")
+        return 0
+
+    if args.stale:
+        total = 0
+        for rel in pages:
+            with open(os.path.join(ROOT, rel), encoding="utf-8") as fh:
+                src = fh.read()
+            stale, missing = stale_report(src)
+            for english, had, want in stale:
+                total += 1
+                print(f"  !!  {rel}: {had} -> {want}")
+                print(f"      EN now: {' '.join(english.split())[:150]}")
+            if missing:
+                print(f"  ..  {rel}: {len(missing)} translation(s) "
+                      f"carry no {FP_ATTR}")
+        print(f"{len(pages)} page(s), {total} stale translation(s)")
+        return 1 if total else 0
+
+    changed, stale_total = build(pages, args.check, known)
     print(f"{len(pages)} page(s), {changed} file(s) "
           f"{'would change' if args.check else 'written'}")
-    return 0
+    return 1 if stale_total else 0
 
 
 if __name__ == "__main__":
