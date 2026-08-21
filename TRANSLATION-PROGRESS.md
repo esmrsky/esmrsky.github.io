@@ -99,6 +99,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `bait-constellation` | not started | 37 glossary terms. |
 | `everything-mid` | **done** | `/everything-mid/ru/`. Written entirely in lowercase, very online; the Russian keeps that register (lowercase headings, everyday internet Russian) — except the two quoted scriptures, which are **НРП** (Притчи 14:12, Ин. 4:14) — retrofitted from Синодальный 2026-08-19 once bolls was reachable. Theme-button label localised to «ночь»/«день». |
 | `coding-agents-guide` | not started | |
+| `judgment` | not started | ⚠️ **Attribute collision.** Its five existing `data-ru` attributes are *runtime data* for its own verse picker (`.ruvb[data-ru]` holds the Russian reference to fetch), not translation units — the generator once built an English page at `/judgment/ru/` from them and stripped the attributes the picker reads. `tools/build-ru.py` now skips it by name. Before translating: rename the picker's attribute, then remove the skip. |
 | `the-return` | **n/a** | Redirect stub: it bounces before paint, so a `/ru/` copy would be a URL nobody can reach. The generator skips it by name. Note its target `/the-return-new/` does not exist in this repo. |
 | `the-return.html`, `index-old-return-backup.html` | **n/a** | Same as above — skipped. |
 
@@ -112,11 +113,10 @@ Six pages landed: `desire-master`, `colour-of-middle-c`,
 `the-seeking-machine`, `the-fixed-point`, `predicting-mind`,
 `two-hundred-milliseconds`. Fourteen cards now show on `/ru/`.
 
-Two things a future run should know:
+Two things a future run should know (historical — both resolved):
 
-- **The work is on `claude/jolly-goodall-o7vr82`, not `main`.** The session
-  was constrained to that branch, so none of it is published yet — GitHub
-  Pages builds from `main`. Merging the branch is what makes it live.
+- ~~The work is on `claude/jolly-goodall-o7vr82`, not `main`.~~ **Merged and
+  live since 2026-08-21**; the branch has no unmerged commits left.
 - **Live URLs could not be verified from the sandbox.** `esmrsky.github.io`
   is blocked by the same egress proxy as bolls. Instead every generated page
   was verified by comparing its pushed git blob SHA against the local one —
