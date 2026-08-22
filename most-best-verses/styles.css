@@ -4487,3 +4487,100 @@ input:focus-visible,
     animation: none !important;
   }
 }
+
+/* ==========================================================================
+   THE SLIDE STATES ITS OWN COLOURS
+   ==========================================================================
+   The theme class moved from the frame onto the slide, so every rule written against
+   `.story-container.story-theme-*` stopped reaching the passage — which put near-white text
+   back on a pale ground and dark text on a dark one. That contrast was fixed once already
+   (1.04:1 across 12 of 28 combinations); this is the same fix, re-aimed at where the text
+   actually lives now. The bar keeps the container rules: the frame still mirrors the class. */
+.reel-slide.story-theme-dark { color: #ffffff; }
+
+.reel-slide.story-theme-dark .story-passage-text {
+  color: #ffffff !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+
+.reel-slide.story-theme-light { color: #131a2b; }
+
+.reel-slide.story-theme-light .story-passage-text {
+  color: #131a2b !important;
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.55);
+}
+
+/* The desktop card. The ground is the slide and the card is the well inside it, which is how
+   this read before the reel — the frame was the card and the gradient sat behind it. Now the
+   gradient travels with its own slide and the card travels with it. */
+.reel-slide .story-content-wrapper { padding: 0; }
+
+@media (min-width: 900px) {
+  .reel-slide .story-content-wrapper {
+    width: 100%;
+    max-width: 680px;
+    margin-inline: auto;
+    padding: 2.5rem 3.5rem;
+    border-radius: 36px;
+    /* No `backdrop-filter` here. It makes the card a backdrop root, and inside a slide that
+       carries `will-change: transform` and a blurred bloom the passage stopped painting
+       altogether — laid out, correctly coloured, real bounding boxes, and simply not drawn.
+       The card is 92-94% opaque, so the blur was buying a few percent of a ground nobody can
+       see through anyway. */
+  }
+
+  .reel-slide.story-theme-dark .story-content-wrapper {
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.8);
+  }
+
+  .reel-slide.story-theme-light .story-content-wrapper {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(19, 26, 43, 0.12);
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ==========================================================================
+   THE FRAME IS NOT THE CARD ANY MORE
+   ==========================================================================
+   The wide-screen block still dressed `.story-container` as the 680px card it used to be —
+   including `backdrop-filter: blur(32px)`. As furniture floating over the reel, that made it a
+   backdrop root spanning the middle of the screen, and it blurred everything behind it: the
+   passage was laid out, correctly coloured, with real bounding boxes, and smeared into an
+   unreadable ghost before it ever reached the screen. Transparent background alone did not
+   help — a backdrop-filter paints whether or not the element has a fill of its own.
+
+   Only desktop was affected, because the card rules only exist above 900px. The card look now
+   belongs to `.story-content-wrapper`, which travels with its slide; this box is a bar. */
+@media (min-width: 900px) {
+  .story-container {
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding-left: max(3.5rem, calc((100% - 680px) / 2));
+    padding-right: max(3.5rem, calc((100% - 680px) / 2));
+  }
+}
+
+/* The theme-specific card fills are the other half of the same mistake, and they outrank a
+   bare `.story-container` override — so the frame was painting a 92%-opaque panel across the
+   ENTIRE viewport (it is full height now, not a 680px card), washing the reel out behind it.
+   `:not(.is-deep)` because the study still wants its own ground. */
+@media (min-width: 900px) {
+  .story-container:not(.is-deep),
+  .story-container.story-theme-dark:not(.is-deep),
+  .story-container.story-theme-light:not(.is-deep) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}

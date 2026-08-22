@@ -1339,7 +1339,11 @@
     /* An offstage slide is `visibility: hidden`, which still lays out — so it can be measured
        and fitted before it is ever shown. Only a zero box is unmeasurable. */
 
-    const availH = wrap.clientHeight;
+    /* `clientHeight` counts the wrapper's own padding, which is nothing on a phone and 40px
+       top and bottom inside the desktop card. Measuring against it there would let the passage
+       fill its own margin. The content box is what the text actually gets. */
+    const wcs = getComputedStyle(wrap);
+    const availH = wrap.clientHeight - parseFloat(wcs.paddingTop) - parseFloat(wcs.paddingBottom);
     const availW = passage.clientWidth || wrap.clientWidth;
     if (availH < 40 || availW < 40) return;      /* laid out at zero — measure later */
 
