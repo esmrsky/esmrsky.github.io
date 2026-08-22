@@ -4265,13 +4265,27 @@ input:focus-visible,
   display: inline;
 }
 
+/* A cross-fade, and nothing else. This used to rise 14px over 380ms on that easing, which
+   spends nine tenths of the distance in the first 95ms and then creeps the last pixel and a
+   half for another 285ms. Since the passage lands whole and fully painted on the first frame —
+   nothing is deferred any more — the reader has already started reading by then, and words
+   that move while you are reading them do not read as an entrance. They read as a shift.
+   Everything else on screen holds still (the reference and the bar never move), so the passage
+   was sliding against fixed furniture, which made it plainer still.
+
+   Duration comes down with it: 380ms was chosen to cover a movement, and a fade in place does
+   not need that long. */
 .story-content-wrapper.is-entering {
-  animation: storySlideEnter 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: storySlideEnter 200ms ease-out both;
 }
 
+/* Not from zero. A CSS animation stays pending for the first few frames after the class goes
+   on — `startTime` is still null two frames in — and `both` holds the `from` value throughout,
+   so a fade that starts at 0 leaves the screen with no verse on it for ~65ms after the tap.
+   Starting part-lit means the new passage is there the instant it is there, and only firms up. */
 @keyframes storySlideEnter {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0.32; }
+  to   { opacity: 1; }
 }
 
 /* ==========================================================================
