@@ -54,26 +54,29 @@
     storyCurrentVerse: null,
     storyCurrentVer: 'NIV',
     storyCurrentStyle: 'story-style-swiss',
+    /* Every one of these has to carry eight to twelve lines of scripture at twenty to
+       thirty pixels, on a phone, on a pale ground and a dark one. Seven faces could not:
+       Anton and Oswald set the passage in condensed capitals, Bodoni Moda's hairlines
+       disappear against a dark ground, Syne closes its counters at 800, Space Mono is
+       monospace, Cormorant Garamond is drawn for display sizes and starves below about
+       thirty, and `instrument-serif` was pointing at `--font-serif`, which is Lora — the
+       same face as the Lora slide, one weight lighter. Source Serif and Plus Jakarta take
+       two of those places; the page was already fetching both for its own chrome. */
     storyTypographyStyles: [
       'story-style-swiss',
       'story-style-neobrutalism',
-      'story-style-condensed',
+      'story-style-jakarta',
       'story-style-dm-serif',
       'story-style-fraunces',
       'story-style-bricolage',
       'story-style-outfit',
-      'story-style-kinetic',
       'story-style-sora',
-      'story-style-anton',
       'story-style-lora',
       'story-style-newsreader',
-      'story-style-spacemono',
+      'story-style-source',
       'story-style-epilogue',
       'story-style-merriweather',
-      'story-style-instrument-serif',
       'story-style-playfair',
-      'story-style-cormorant',
-      'story-style-bodoni',
       'story-style-spectral',
       'story-style-alegreya',
       'story-style-gabarito'
@@ -277,6 +280,7 @@
        so twenty of the twenty-two arrive well after that — each one measured as the fallback,
        fitted to the fallback, and then swapped for a face that is up to 1.9x as tall. Refit
        every time a batch lands. */
+    preloadPassageFaces();
     if (document.fonts && document.fonts.addEventListener) {
       document.fonts.addEventListener('loadingdone', () => {
         if (state.isStoriesMode) reelSlides().forEach(autoFitStoryText);
@@ -1140,28 +1144,23 @@
      theme colour, so a slide carries exactly two colours, its text and its highlight. The
      gradient forms *are* the highlight, and get no second colour beside them. */
   const EFFECT_FORM = {
-    'story-style-spacemono':        'fx-mono-glow',
     'story-style-lora':             'fx-italic',
     'story-style-newsreader':       'fx-italic',
     'story-style-merriweather':     'fx-italic',
     'story-style-fraunces':         'fx-gradient',
     'story-style-dm-serif':         'fx-gradient',
-    'story-style-instrument-serif': 'fx-italic',
-    'story-style-kinetic':          'fx-gradient',
-    'story-style-anton':            'fx-gradient',
     'story-style-neobrutalism':     'fx-accent',
-    'story-style-condensed':        'fx-accent',
     'story-style-swiss':            'fx-accent',
     'story-style-bricolage':        'fx-gradient',
     'story-style-epilogue':         'fx-caps',
     'story-style-outfit':           'fx-scale',
     'story-style-sora':             'fx-gradient',
     'story-style-playfair':         'fx-italic',
-    'story-style-cormorant':        'fx-italic',
-    'story-style-bodoni':           'fx-accent',
     'story-style-spectral':         'fx-caps',
     'story-style-alegreya':         'fx-italic',
-    'story-style-gabarito':         'fx-gradient'
+    'story-style-gabarito':         'fx-gradient',
+    'story-style-source':           'fx-accent',
+    'story-style-jakarta':          'fx-scale'
   };
 
   /* The highlight, per category, for each kind of slide: dark and saturated on a pale one,
@@ -1387,6 +1386,7 @@
   const REEL_ENTERS = ['enter-rise', 'enter-focus', 'enter-cascade',
                        'enter-sweep', 'enter-lift', 'enter-veil'];
   const DRAG_COMMIT_PX = 64;      /* below this a drag springs back rather than turning the page */
+  const DRAG_SLOP_PX = 6;         /* how far a finger travels before it counts as a drag */
   const DRAG_COMMIT_VELOCITY = 0.45;
   const SETTLE_MS = 340;
   const TAP_BACK_FRACTION = 1 / 3;
@@ -1422,6 +1422,54 @@
   /* One item is everything a slide is: which verse, in which translation, set which way, on
      which kind of ground. Drawn once and kept, so walking back gives the same slide back
      rather than a new reading of the same verse. */
+  /* ---------- a slide is never set in a face the browser does not have yet ----------
+     Each family is fetched on first use, so a tap could land on one that had not arrived.
+     `font-display: swap` then drew the passage in the fallback, the real face turned up a
+     moment later, and the words were re-set and re-fitted underneath the reader — the text
+     visibly swapping for itself a beat after the tap. Both halves are fixed here: ask for
+     every face once the page is up, and until one has answered, do not choose it. */
+  const STYLE_FONT = {
+    'story-style-swiss':        '700 24px "Instrument Sans"',
+    'story-style-neobrutalism': '700 24px "Space Grotesk"',
+    'story-style-jakarta':      '700 24px "Plus Jakarta Sans"',
+    'story-style-dm-serif':     '400 24px "DM Serif Display"',
+    'story-style-fraunces':     '600 24px "Fraunces"',
+    'story-style-bricolage':    '800 24px "Bricolage Grotesque"',
+    'story-style-outfit':       '700 24px "Outfit"',
+    'story-style-sora':         '700 24px "Sora"',
+    'story-style-lora':         '500 24px "Lora"',
+    'story-style-newsreader':   '500 24px "Newsreader"',
+    'story-style-source':       '600 24px "Source Serif 4"',
+    'story-style-epilogue':     '800 24px "Epilogue"',
+    'story-style-merriweather': '700 24px "Merriweather"',
+    'story-style-playfair':     '700 24px "Playfair Display"',
+    'story-style-spectral':     '600 24px "Spectral"',
+    'story-style-alegreya':     '700 24px "Alegreya"',
+    'story-style-gabarito':     '700 24px "Gabarito"'
+  };
+
+  function styleIsReady(style) {
+    const face = STYLE_FONT[style];
+    if (!face || !document.fonts || !document.fonts.check) return true;
+    try { return document.fonts.check(face); } catch (e) { return true; }
+  }
+
+  /* `.fx-italic` sets its phrase in Lora italic whichever face the passage is in, so it is a
+     seventeenth face on any of five slides — and one the per-style gate cannot see, since it
+     belongs to the emphasis rather than to the style. Left out of the preload it arrived on
+     its own schedule and re-wrapped the line it was on. */
+  const EMPHASIS_FONTS = ['600 italic 24px "Lora"'];
+
+  /* After first paint, not during it: these are eighteen requests and the verse on screen is
+     worth more than the one after it. */
+  function preloadPassageFaces() {
+    if (!document.fonts || !document.fonts.load) return;
+    const ask = () => Object.keys(STYLE_FONT).map(k => STYLE_FONT[k]).concat(EMPHASIS_FONTS)
+      .forEach(f => { try { document.fonts.load(f); } catch (e) {} });
+    if (window.requestIdleCallback) window.requestIdleCallback(ask, { timeout: 1200 });
+    else window.setTimeout(ask, 400);
+  }
+
   function drawItem(verse) {
     if (!verse) {
       if (!state.storyShufflePool.length) resetStoriesShufflePool();
@@ -1429,7 +1477,11 @@
     }
     const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
     const ver = versions[Math.floor(Math.random() * versions.length)];
-    const style = state.storyTypographyStyles[Math.floor(Math.random() * state.storyTypographyStyles.length)];
+    /* Cold, this is a short list and the first few slides repeat a face. That is the right
+       trade: a face the reader has already seen beats one that changes shape under them. */
+    const ready = state.storyTypographyStyles.filter(styleIsReady);
+    const pool = ready.length ? ready : state.storyTypographyStyles;
+    const style = pool[Math.floor(Math.random() * pool.length)];
     return { verse, ver, style, isDark: pickSlideDarkness() };
   }
 
@@ -1501,7 +1553,9 @@
     }
     el.dataset.enter = REEL_ENTERS[Math.floor(Math.random() * REEL_ENTERS.length)];
     autoFitStoryText(el);
-    refreshIcons();
+    /* No `refreshIcons()` here. A slide is a wrapper and a blockquote — it has never held an
+       icon — and this ran a document-wide `[data-lucide]` query on every tap and again in the
+       middle of every drag, at the one moment there is a frame budget to keep. */
   }
 
   /* The furniture is shared by both slides, so it follows whichever one is on screen: the
@@ -1628,18 +1682,33 @@
     };
   }
 
+  /* Abandoning a drag has to put the incoming slide back where it came from, and `transform:
+     ''` is not that. It removes the inline offset while the slide is still on stage and still
+     carrying a transform transition, so instead of staying parked a screen away the unwanted
+     verse animated all the way down into view — measured at y=-535, -154, -25 over the next
+     180ms, which is 97% of the screen — and was then snapped out of existence when the timeout
+     put `is-offstage` back at 220ms, mid-flight. Whether the reader saw it came down to which
+     slot was later in the DOM, since the pair have no stacking order between them: half the
+     time it painted under the verse and half the time straight over it. That is the flash.
+
+     So it animates back to its parked position rather than away from it, and the class lands
+     when the motion has finished rather than a third of the way through. */
+  const SPRING_MS = 220;
+
   function reelSpringBack() {
     const cur = currentSlide(), off = offstageSlide();
+    const H = (elements.storyReel && elements.storyReel.clientHeight) || window.innerHeight;
+    const dir = reel.dir || 1;
     reel.settling = true;
-    [cur, off].forEach(el => { if (el) el.classList.add('is-settling'); });
+    [cur, off].forEach(el => { if (el) el.classList.add('is-springing'); });
     if (cur) cur.style.transform = 'translate3d(0,0,0)';
-    if (off) off.style.transform = '';
+    if (off) off.style.transform = 'translate3d(0,' + (-dir * H) + 'px,0)';
     window.setTimeout(() => {
-      [cur, off].forEach(el => { if (el) { el.classList.remove('is-settling'); el.style.transform = ''; } });
       if (off) off.classList.add('is-offstage');
+      [cur, off].forEach(el => { if (el) { el.classList.remove('is-springing'); el.style.transform = ''; } });
       reel.dy = 0;
       reel.settling = false;
-    }, 220);
+    }, SPRING_MS);
   }
 
   /* Kept so the rest of the app — the hash router, the keyboard, the study — can still ask
@@ -2008,7 +2077,7 @@
         const dt = Math.max(1, t - reel.lastT);
         reel.v = (e.clientY - reel.lastY) / dt;
         reel.lastY = e.clientY; reel.lastT = t;
-        if (Math.abs(dy) > 6) reel.moved = true;
+        if (Math.abs(dy) > DRAG_SLOP_PX) reel.moved = true;
         if (!reel.moved) return;
 
         /* Dragging down means going back, and there may be nothing to go back to. Rather than
@@ -2020,8 +2089,11 @@
           reelForward.push(reel.armedItem);
           reel.armedItem = null;
         }
+        /* Subtract the slop the gesture spent deciding it was a drag, or the slide jumps that
+           distance the instant it starts following the finger. */
+        const eased = dy - Math.sign(dy) * DRAG_SLOP_PX;
         const blocked = wantsBack && !state.storyHistory.length;
-        reel.dy = blocked ? dy * 0.28 : dy;
+        reel.dy = blocked ? eased * 0.28 : eased;
         reel.dir = wantsBack ? -1 : 1;
 
         const cur = currentSlide(), off = offstageSlide();
