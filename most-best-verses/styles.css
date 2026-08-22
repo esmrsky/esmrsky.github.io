@@ -3928,8 +3928,6 @@ input:focus-visible,
 }
 
 @media (max-width: 360px) {
-  .story-prev-btn span { display: none; }
-  .story-prev-btn { padding-left: 0.55rem; padding-right: 0.55rem; }
   /* The pill now holds a fixed 4.25rem, so the last few pixels come from Go Deeper's icon.
      Its words stay — it is still the one control you would not guess from its shape. */
   .story-deeper-btn > i,
@@ -4319,3 +4317,173 @@ input:focus-visible,
 }
 
 .scripture-credits a:hover { color: var(--accent, #92400e); }
+
+/* ==========================================================================
+   THE REEL
+   ==========================================================================
+   Two slides, translated together. The reel takes the pointer for the whole screen and the
+   furniture floats over it without taking any, so a tap or a drag anywhere that is not a
+   control reaches this. `touch-action: none` is safe because nothing under here scrolls —
+   the overlay is fixed and the study, which does scroll, is a separate layer above. */
+.story-reel {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.reel-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: max(2rem, env(safe-area-inset-top)) 1.65rem var(--furniture-h, 7rem);
+  color: var(--text-primary);
+  background: var(--slide-bg, transparent);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Only the slide on screen is reachable; the other is parked a screen away and must never
+   answer a tap or be read out. */
+.reel-slide.is-offstage {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.reel-slide.is-settling {
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 900px) {
+  .reel-slide {
+    padding-left: max(3.5rem, calc((100% - 680px) / 2));
+    padding-right: max(3.5rem, calc((100% - 680px) / 2));
+  }
+}
+
+/* The furniture stops being a box with the verse in it and becomes a bar over one. It holds
+   the reference, the controls and the study, and nothing else — so it must not swallow the
+   taps meant for the reel. */
+.story-container {
+  /* `!important` answers the narrow-screen block, which declares `space-between` that way.
+     With the verse gone from this box its only children are the reference and the bar, and
+     space-between drove them to opposite ends of the screen — the reference ended up in the
+     top-left corner, a whole screen away from the verse it names. */
+  justify-content: flex-end !important;
+  pointer-events: none;
+  background: transparent !important;
+}
+
+/* The ground moved onto the slides, so the shared backdrop and the three floating orbs are
+   painting underneath two opaque panels where nothing can see them — an animated gradient and
+   three 90px blurs repainting every frame for no one. The bloom belongs to the slide now. */
+.story-backdrop,
+.story-orb { display: none; }
+
+/* Each slide carries its own, behind its own text. Same drifting light the orbs gave, at a
+   third of the cost and in the slide's own colours rather than one set shared by all of them. */
+.reel-slide::before {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background:
+    radial-gradient(38% 34% at 16% 14%, var(--story-hl, #f59e0b) 0%, transparent 68%),
+    radial-gradient(42% 36% at 84% 88%, var(--story-hl-2, #ec4899) 0%, transparent 70%);
+  filter: blur(58px);
+  animation: reelBloom 16s ease-in-out infinite alternate;
+}
+
+@keyframes reelBloom {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(4%, -3%, 0) scale(1.12); }
+}
+
+.reel-slide > * { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-slide::before { animation: none; }
+}
+
+.story-container > * { pointer-events: auto; }
+
+/* The study is still a full-screen surface, and while it is up the reel behind it neither
+   moves nor answers anything. */
+.story-overlay.is-deep .story-reel { pointer-events: none; }
+
+/* ==========================================================================
+   THE REEL'S ENTRANCES — a drag plays one, a tap never does
+   ==========================================================================
+   These are the entrances that were taken out for gating the reader: six gestures on the
+   block with the words resolving underneath, up to 430ms of stagger on a 300ms fade. They
+   were not bad; they were in the wrong mode. Thumbing through, they made every tap a wait
+   for the verse to assemble. Landing one verse after a deliberate flick, that assembling IS
+   the thing — you have stopped to look at this one.
+
+   So the split is the mode, not the animation. Tapping stays instant and plays nothing at
+   all. Only `.is-playing`, which the drag sets and the tap never does, animates.
+
+   Fail-safe by construction: a slide is fully visible with no class on it. These start from
+   a hidden state and end visible, so if the class is never added nothing is stranded. */
+.reel-slide.is-playing .story-passage-text .sw {
+  animation: reelWordIn 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * var(--sw-step, 20ms));
+}
+
+@keyframes reelWordIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.reel-slide.is-playing .enter-rise    { animation: reelRise    460ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-focus   { animation: reelFocus   560ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.reel-slide.is-playing .enter-cascade { animation: reelCascade 520ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 0%; }
+.reel-slide.is-playing .enter-sweep   { animation: reelSweep   600ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-lift    { animation: reelLift    500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-veil    { animation: reelVeil    560ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes reelRise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes reelFocus {
+  from { opacity: 0; transform: scale(1.04); filter: blur(16px); }
+  to   { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes reelCascade {
+  from { opacity: 0; transform: perspective(900px) rotateX(8deg) translateY(-18px); }
+  to   { opacity: 1; transform: perspective(900px) rotateX(0deg) translateY(0); }
+}
+@keyframes reelSweep {
+  from { clip-path: inset(0 100% 0 0); transform: translateX(-14px); }
+  to   { clip-path: inset(0 0 0 0); transform: translateX(0); }
+}
+@keyframes reelLift {
+  from { opacity: 0; transform: scale(0.93) translateY(18px); filter: blur(7px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+@keyframes reelVeil {
+  from { clip-path: inset(0 0 100% 0); transform: translateY(-10px); }
+  to   { clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+/* The stagger is all delay and the global reduced-motion rule only collapses durations, so
+   the belt as well as the braces: nothing animates at all under it. */
+@media (prefers-reduced-motion: reduce) {
+  .reel-slide.is-playing .story-passage-text .sw,
+  .reel-slide.is-playing .enter-rise,
+  .reel-slide.is-playing .enter-focus,
+  .reel-slide.is-playing .enter-cascade,
+  .reel-slide.is-playing .enter-sweep,
+  .reel-slide.is-playing .enter-lift,
+  .reel-slide.is-playing .enter-veil {
+    animation: none !important;
+  }
+}

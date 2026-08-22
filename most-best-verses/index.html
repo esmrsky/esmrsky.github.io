@@ -64,16 +64,39 @@
 
     <!-- Temporary Auto-Dismissing Tap Hint Toast -->
     <div class="story-tap-toast" id="storyTapToast">
-      <i data-lucide="pointer" style="width: 14px; height: 14px;"></i> Tap anywhere for next scripture
+      <i data-lucide="pointer" style="width: 14px; height: 14px;"></i> Tap right for next &middot; left to go back
     </div>
 
-    <!-- Full-Screen Edge-to-Edge Story Monolith -->
+    <!-- ======================================================================
+         THE REEL — two slides, never more
+         ======================================================================
+         Reels and Stories both settle one item per flick; neither free-scrolls through a
+         stack. So this is not a scroller: it is the outgoing slide and the incoming one,
+         translated together under the finger, and there is never a third. That is what lets
+         the drag track a thumb exactly without a recycling scheme, and why `touch-action:
+         none` is safe here — nothing underneath this wants to scroll.
+
+         A tap swaps the two in place with nothing playing over it. A drag moves the pair, and
+         the slide that lands plays one of the entrances. Same content, two speeds. -->
+    <div class="story-reel" id="storyReel">
+      <article class="reel-slide is-current" data-slot="a">
+        <div class="story-content-wrapper">
+          <blockquote class="story-passage-text">
+            "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."
+          </blockquote>
+        </div>
+      </article>
+      <article class="reel-slide is-offstage" data-slot="b" aria-hidden="true">
+        <div class="story-content-wrapper">
+          <blockquote class="story-passage-text"></blockquote>
+        </div>
+      </article>
+    </div>
+
+    <!-- The furniture: the reference and the controls, fixed over the reel, plus the study.
+         It does not take the pointer except on the controls themselves, so a tap or a drag
+         anywhere else reaches the reel underneath. -->
     <div class="story-container" id="storyContainer">
-      <div class="story-content-wrapper" id="storyContentWrapper">
-        <blockquote class="story-passage-text" id="storyPassageText">
-          "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."
-        </blockquote>
-      </div>
 
       <!-- The study of the verse, in the same well the verse was in. Every id in here is the one
            the reader's renderers already write to, so they did not have to change. -->
@@ -190,10 +213,6 @@
 
       <div class="story-bottom-bar">
         <div class="story-bottom-center-actions">
-          <button class="story-nav-btn story-prev-btn" id="btnStoryPrev" title="Go back to previous verse">
-            <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
-            <span>PREV</span>
-          </button>
           <button class="story-nav-btn story-deeper-btn" id="btnStoryDeeper" type="button" title="Study this verse">
             <i data-lucide="book-open" style="width: 15px; height: 15px;"></i>
             <span id="storyDeeperBtnText">GO DEEPER</span>
