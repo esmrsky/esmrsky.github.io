@@ -4286,8 +4286,10 @@ input:focus-visible,
   pointer-events: none;
 }
 
+/* Glide sets its own duration from how far is left and how fast the thumb was going, so the
+   settle is a variable rather than a constant. Snap and scrub leave it at the default. */
 .reel-slide.is-settling {
-  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--settle, 340ms) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* An abandoned drag is a shorter movement than a committed one — it travels back the little
@@ -4375,9 +4377,27 @@ input:focus-visible,
 
    Fail-safe by construction: a slide is fully visible with no class on it. These start from
    a hidden state and end visible, so if the class is never added nothing is stranded. */
-.reel-slide.is-playing .story-passage-text .sw {
+.reel-slide.is-playing .story-passage-text .sw,
+.reel-slide.is-scrubbing .story-passage-text .sw {
   animation: reelWordIn 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--i, 0) * var(--sw-step, 20ms));
+  /* `--scrub` is how far into the entrance the drag has carried it. A NEGATIVE delay is the
+     whole scrubbing mechanism: an animation with `both` fill and a delay of -p x duration
+     renders the frame at progress p, so setting one number per pointermove seeks every word
+     of the passage at once, in sequence, with no per-word bookkeeping. Zero when nothing is
+     scrubbing, which is what the fallback is for. */
+  animation-delay: calc(var(--i, 0) * var(--sw-step, 20ms) - var(--scrub, 0ms));
+}
+
+/* Paused, the same negative delay is a seek head rather than a head start. */
+.reel-slide.is-scrubbing .story-passage-text .sw,
+.reel-slide.is-scrubbing .story-passage-text > span > span,
+.reel-slide.is-scrubbing .enter-rise,
+.reel-slide.is-scrubbing .enter-focus,
+.reel-slide.is-scrubbing .enter-cascade,
+.reel-slide.is-scrubbing .enter-sweep,
+.reel-slide.is-scrubbing .enter-lift,
+.reel-slide.is-scrubbing .enter-veil {
+  animation-play-state: paused;
 }
 
 @keyframes reelWordIn {
@@ -4385,12 +4405,33 @@ input:focus-visible,
   to   { opacity: 1; }
 }
 
-.reel-slide.is-playing .enter-rise    { animation: reelRise    460ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-.reel-slide.is-playing .enter-focus   { animation: reelFocus   560ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-.reel-slide.is-playing .enter-cascade { animation: reelCascade 520ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 0%; }
-.reel-slide.is-playing .enter-sweep   { animation: reelSweep   600ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-.reel-slide.is-playing .enter-lift    { animation: reelLift    500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-.reel-slide.is-playing .enter-veil    { animation: reelVeil    560ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-rise,
+.reel-slide.is-scrubbing .enter-rise    { animation: reelRise    460ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-focus,
+.reel-slide.is-scrubbing .enter-focus   { animation: reelFocus   560ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.reel-slide.is-playing .enter-cascade,
+.reel-slide.is-scrubbing .enter-cascade { animation: reelCascade 520ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 0%; }
+.reel-slide.is-playing .enter-sweep,
+.reel-slide.is-scrubbing .enter-sweep   { animation: reelSweep   600ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-lift,
+.reel-slide.is-scrubbing .enter-lift    { animation: reelLift    500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-veil,
+.reel-slide.is-scrubbing .enter-veil    { animation: reelVeil    560ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+.reel-slide.is-playing .enter-rise,
+.reel-slide.is-scrubbing .enter-rise,
+.reel-slide.is-playing .enter-focus,
+.reel-slide.is-scrubbing .enter-focus,
+.reel-slide.is-playing .enter-cascade,
+.reel-slide.is-scrubbing .enter-cascade,
+.reel-slide.is-playing .enter-sweep,
+.reel-slide.is-scrubbing .enter-sweep,
+.reel-slide.is-playing .enter-lift,
+.reel-slide.is-scrubbing .enter-lift,
+.reel-slide.is-playing .enter-veil,
+.reel-slide.is-scrubbing .enter-veil {
+  animation-delay: calc(0ms - var(--scrub, 0ms));
+}
 
 @keyframes reelRise {
   from { opacity: 0; transform: translateY(26px); }
@@ -4421,6 +4462,7 @@ input:focus-visible,
    the belt as well as the braces: nothing animates at all under it. */
 @media (prefers-reduced-motion: reduce) {
   .reel-slide.is-playing .story-passage-text .sw,
+  .reel-slide.is-scrubbing .story-passage-text .sw,
   .reel-slide.is-playing .enter-rise,
   .reel-slide.is-playing .enter-focus,
   .reel-slide.is-playing .enter-cascade,
@@ -4526,4 +4568,56 @@ input:focus-visible,
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
+}
+
+/* The appearance menu carries a second group now. Same pills, a rule and a label between. */
+.story-menu-rule {
+  height: 1px;
+  margin: 0.35rem 0.15rem;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.story-menu-head {
+  padding: 0.15rem 0.75rem 0.3rem;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.story-motion-opt {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) {
+  .story-motion-opt:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+}
+
+.story-motion-opt.is-active { background: rgba(255, 255, 255, 0.16); color: #ffffff; }
+
+.story-motion-opt.is-active::after {
+  content: '';
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
 }

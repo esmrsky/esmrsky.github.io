@@ -89,6 +89,9 @@
     /* Slides pick light or dark for themselves. A reader who prefers one of them can lock it,
        and that choice outlives the session. */
     slideMode: 'shuffle',
+
+    /* How a drag feels: snap, scrub or glide. See REEL_MOTIONS. */
+    reelMotion: 'snap',
     storyHasRendered: false
   };
 
@@ -96,6 +99,8 @@
   try {
     const saved = localStorage.getItem('agy_slide_mode');
     if (SLIDE_MODES.includes(saved)) state.slideMode = saved;
+    const motion = localStorage.getItem('agy_reel_motion');
+    if (['snap', 'scrub', 'glide'].includes(motion)) state.reelMotion = motion;
   } catch (e) {}
 
   // Readers who ask the OS to reduce motion get instant jumps rather than
@@ -221,6 +226,7 @@
       storyBackdrop: document.getElementById('storyBackdrop'),
       storyContainer: document.getElementById('storyContainer'),
       storyReel: document.getElementById('storyReel'),
+      storyMotionMenu: document.getElementById('storyMotionMenu'),
       storyPassageRef: document.getElementById('storyPassageRef'),
       storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
       storyDeepPanel: document.getElementById('storyDeepPanel'),
@@ -250,6 +256,7 @@
     applyViewMode(state.viewMode);
     setBibleVersion(state.version);
     syncSlideModeUI();
+    syncReelMotionUI();
 
     updateCategoryCounts();
     render();
@@ -1391,6 +1398,65 @@
   const SETTLE_MS = 340;
   const TAP_BACK_FRACTION = 1 / 3;
 
+  /* ---------- three ways a drag can feel ----------
+     Same two slides, same entrances; what changes is WHEN the entrance runs relative to the
+     gesture. Worth being able to switch between rather than argue about:
+
+       snap   the entrance runs after the drag commits. The arriving verse is whole the whole
+              way in and performs once it has landed. Quickest to read.
+       scrub  the entrance is seeked by the drag. The words assemble under the thumb in
+              proportion to how far it has travelled, and let go, they finish at a fixed rate.
+              This is the scrollytelling one — the gesture IS the timeline.
+       glide  scrub, but the release carries momentum: the rest of the entrance is spent over a
+              distance-and-velocity curve rather than a fixed one, so a hard flick finishes
+              fast and a gentle one drifts.
+
+     The scrub duration is the stagger budget plus one word's fade, which is how long the whole
+     passage actually takes to assemble. */
+  const REEL_MOTIONS = ['snap', 'scrub', 'glide'];
+  const SCRUB_MS = 730;
+  const GLIDE_MIN_MS = 320;
+  const GLIDE_MAX_MS = 940;
+
+  function scrubbing() { return state.reelMotion === 'scrub' || state.reelMotion === 'glide'; }
+
+  function setReelMotion(mode) {
+    if (!REEL_MOTIONS.includes(mode)) return;
+    state.reelMotion = mode;
+    try { localStorage.setItem('agy_reel_motion', mode); } catch (e) {}
+    syncReelMotionUI();
+  }
+
+  function syncReelMotionUI() {
+    document.querySelectorAll('.story-motion-opt').forEach(btn => {
+      const on = btn.getAttribute('data-motion') === state.reelMotion;
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+  }
+
+  /* Seeks the incoming slide's entrance to `p` (0..1) without running it. */
+  function scrubSlide(el, p) {
+    if (!el) return;
+    el.classList.remove('is-playing');
+    el.classList.add('is-scrubbing');
+    el.style.setProperty('--scrub', Math.round(Math.max(0, Math.min(1, p)) * SCRUB_MS) + 'ms');
+  }
+
+  /* Lets a seeked entrance run on from where the drag left it. Removing the pause is all it
+     takes — the negative delay that was a seek head becomes a head start. */
+  function releaseScrub(el) {
+    if (!el) return;
+    el.classList.remove('is-scrubbing');
+    el.classList.add('is-playing');
+  }
+
+  function clearScrub(el) {
+    if (!el) return;
+    el.classList.remove('is-scrubbing');
+    el.style.removeProperty('--scrub');
+  }
+
   const reel = {
     dragging: false, settling: false, moved: false, startY: 0, lastY: 0, lastT: 0, dy: 0, v: 0,
     dir: 0, pointerId: null, wheelAccum: 0, wheelLock: 0, armedItem: null
@@ -1595,14 +1661,19 @@
   function clearEntrance(el) {
     if (!el) return;
     const passage = el.querySelector('.story-passage-text');
-    el.classList.remove('is-playing');
+    el.classList.remove('is-playing', 'is-scrubbing');
+    el.style.removeProperty('--scrub');
     if (passage) passage.classList.remove(...REEL_ENTERS);
   }
 
   /* The one way a verse changes. `animated` is the whole difference between a tap and a flick:
      with it the pair travels and the arriving slide performs, without it they simply trade
      places on the next frame. */
-  function reelAdvance(dir, animated, forcedVerse, preItem) {
+  function reelAdvance(dir, animated, opts) {
+    opts = opts || {};
+    const forcedVerse = opts.forcedVerse || null;
+    const preItem = opts.preItem || null;
+    const settleMs = opts.ms || SETTLE_MS;
     if (reel.settling) return;
     const cur = currentSlide(), off = offstageSlide();
     if (!cur || !off) return;
@@ -1627,9 +1698,14 @@
       if (state.storyCurrentVerse) state.storyHistory.push(currentItem());
     }
 
-    clearEntrance(off);
-    off.classList.remove('is-offstage');
-    paintSlide(off, item);
+    /* A drag has already painted the arriving slide and, in the scrubbing modes, seeked its
+       entrance to wherever the thumb stopped. Repainting here would throw both away and
+       restart the passage from nothing at the moment it is supposed to be arriving. */
+    if (!opts.painted) {
+      clearEntrance(off);
+      off.classList.remove('is-offstage');
+      paintSlide(off, item);
+    }
     syncFurniture(item);
 
     const H = elements.storyReel.clientHeight || window.innerHeight;
@@ -1652,11 +1728,15 @@
     const from = reel.dy;                      /* carry on from wherever the finger left it */
     off.style.transform = 'translate3d(0,' + (from + dir * H) + 'px,0)';
     void off.offsetWidth;
+    cur.style.setProperty('--settle', settleMs + 'ms');
+    off.style.setProperty('--settle', settleMs + 'ms');
     cur.classList.add('is-settling');
     off.classList.add('is-settling');
     cur.style.transform = 'translate3d(0,' + (-dir * H) + 'px,0)';
     off.style.transform = 'translate3d(0,0,0)';
-    playReelEntrance(off);
+    /* Seeked already: let it run on from there rather than snapping back to the first frame. */
+    if (off.classList.contains('is-scrubbing')) releaseScrub(off);
+    else playReelEntrance(off);
 
     window.setTimeout(() => {
       cur.classList.remove('is-settling', 'is-current');
@@ -1667,10 +1747,13 @@
       off.removeAttribute('aria-hidden');
       cur.style.transform = '';
       off.style.transform = '';
+      cur.style.removeProperty('--settle');
+      off.style.removeProperty('--settle');
+      off.style.removeProperty('--scrub');
       reel.dy = 0;
       reel.settling = false;
       state.storyHasRendered = true;
-    }, SETTLE_MS);
+    }, settleMs);
   }
 
   function currentItem() {
@@ -1714,7 +1797,7 @@
   /* Kept so the rest of the app — the hash router, the keyboard, the study — can still ask
      for a verse without knowing any of the above. */
   function renderNextStorySlide(forcedVerse = null) {
-    reelAdvance(1, false, forcedVerse);
+    reelAdvance(1, false, { forcedVerse: forcedVerse });
   }
   function renderPreviousStorySlide() {
     reelAdvance(-1, false);
@@ -2110,10 +2193,18 @@
               off.classList.remove('is-offstage');
               clearEntrance(off);
               paintSlide(off, item);
+              /* In the scrubbing modes the arriving slide starts at the beginning of its own
+                 entrance rather than whole, so the drag has something to assemble. */
+              if (scrubbing() && !reducedMotion()) {
+                const passage = off.querySelector('.story-passage-text');
+                if (passage && off.dataset.enter) passage.classList.add(off.dataset.enter);
+                scrubSlide(off, 0);
+              }
               off.dataset.armed = String(reel.dir);
             }
           }
           off.style.transform = 'translate3d(0,' + (reel.dy - reel.dir * H) + 'px,0)';
+          if (scrubbing() && !reducedMotion()) scrubSlide(off, Math.abs(reel.dy) / H);
         }
       });
 
@@ -2129,7 +2220,17 @@
         const flicked = Math.abs(reel.v) > DRAG_COMMIT_VELOCITY;
         const canGo = reel.dir > 0 || state.storyHistory.length;
         if ((past || flicked) && canGo) {
-          reelAdvance(reel.dir, true, null, reel.armedItem);
+          /* Glide spends the rest of the travel on a curve set by how much is left and how
+             fast the thumb was going, so a hard flick lands quickly and a gentle one drifts.
+             Snap and scrub both finish at a fixed rate. */
+          let ms = SETTLE_MS;
+          if (state.reelMotion === 'glide') {
+            const H = reelEl.clientHeight || window.innerHeight;
+            const left = Math.max(0, H - Math.abs(reel.dy));
+            const speed = Math.max(0.25, Math.abs(reel.v));
+            ms = Math.round(Math.max(GLIDE_MIN_MS, Math.min(GLIDE_MAX_MS, left / speed)));
+          }
+          reelAdvance(reel.dir, true, { preItem: reel.armedItem, ms: ms, painted: true });
         } else {
           if (reel.armedItem) reelForward.push(reel.armedItem);
           reelSpringBack();
@@ -2169,6 +2270,13 @@
 
       elements.storyModeMenu.addEventListener('click', (e) => {
         e.stopPropagation();
+        const motion = e.target.closest('.story-motion-opt');
+        if (motion) {
+          /* The menu stays open on a motion change: the point of having three is comparing
+             them, and closing after each one makes that four taps instead of one. */
+          setReelMotion(motion.getAttribute('data-motion'));
+          return;
+        }
         const opt = e.target.closest('.story-mode-opt');
         if (!opt) return;
         setSlideMode(opt.getAttribute('data-mode'));

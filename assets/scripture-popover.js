@@ -772,6 +772,14 @@
     pickerHtml: pickerHtml,
     wirePicker: wirePicker,
     loadVerse: loadVerse,
+    /* The passage WITH its surroundings, as HTML, and without any UI attached. `openContext`
+       has always had this — it just kept it inside its own <dialog>. A host that wants to show
+       context somewhere other than a modal (a panel, a page, a face of a cube) needs the data
+       and not the dialog, and reimplementing the fetch is how a shared layer gets forked.
+       Additive: nothing that existed behaves differently.
+         loadContext(ref, version, radius) -> Promise<string>
+       Rejects on an unparseable reference or an empty chapter. */
+    loadContext: loadContext,
     parseReference: parseReference,
     splitReferenceGroup: splitReferenceGroup,
     fullTitle: fullTitle,
