@@ -4621,3 +4621,209 @@ input:focus-visible,
   border-radius: 50%;
   background: #f59e0b;
 }
+
+/* ==========================================================================
+   THE CUBE
+   ==========================================================================
+   Two faces of one box: the verse, and the chapter it sits in. `--cube-half` is half the
+   stage's width, set from JS, because a cube's faces have to be pushed out by exactly half
+   its edge or the corner does not meet. Rotating the box -90deg brings the right face round.
+
+   The rotation is finger-tracked, not fired-and-forgotten: `--cube-deg` follows the thumb, and
+   a canned rotation on release is precisely what makes this read as a gimmick rather than a
+   place. `backface-visibility: hidden` keeps the face you are leaving from showing through
+   the one you are turning to. */
+.story-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+}
+
+/* The cube turns, then lands flat. Both matter.
+
+   Turning in 3D is the point — it says which way you came, so back is the same gesture
+   reversed. But a face rotated inside a `preserve-3d` subtree is not reliably hit-testable:
+   measured, a point over the close button returned `.story-cube`, never the button, so the
+   whole reader face was visible, correct, and dead to the touch. Chrome flattens the subtree
+   for hit testing even while it renders the perspective.
+
+   So 3D is the TRANSITION and 2D is the resting state. At the end of a quarter turn the
+   arriving face already fills the screen exactly as a -100% translate would, so dropping out
+   of 3D at that instant is visually identical and gives back a plain, fully interactive
+   element. `.is-3d` is only ever on while something is moving. */
+.story-cube {
+  position: absolute;
+  inset: 0;
+  transform: translateX(var(--cube-x, 0%));
+}
+
+.story-cube.is-3d {
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--cube-half, 50vw) * -1)) rotateY(var(--cube-deg, 0deg));
+}
+
+.story-cube.is-turning { transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* The frame in which 3D is swapped for 2D must not itself animate. */
+.story-cube.no-transition { transition: none !important; }
+
+.cube-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Resting: a plain row. Turning: two faces of a box. */
+.cube-face-reader { transform: translateX(100%); }
+
+.story-cube.is-3d .cube-face-verse  { transform: translateZ(var(--cube-half, 50vw)); }
+.story-cube.is-3d .cube-face-reader { transform: rotateY(90deg) translateZ(var(--cube-half, 50vw)); }
+.story-stage:not(.is-reader) .cube-face-reader,
+.story-stage.is-reader .cube-face-verse {
+  pointer-events: none;
+}
+
+/* ---------- the reader face ---------- */
+.story-reader {
+  /* The chapter scrolls; the reel does not. `pan-y` hands vertical to the browser and leaves
+     horizontal to the gesture that turns back out of here. */
+  touch-action: pan-y;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  padding: max(1.5rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .story-reader {
+    padding-left: max(3.5rem, calc((100% - 720px) / 2));
+    padding-right: max(3.5rem, calc((100% - 720px) / 2));
+  }
+}
+
+.reader-face-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.reader-face-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1.18rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.reader-face-sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.reader-face-close {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+}
+
+/* The one scrolling surface on this face. `overscroll-behavior: contain` stops a flick that
+   runs out of chapter from turning into a page gesture on whatever is underneath. */
+.reader-face-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.1rem 0.15rem 1.4rem;
+  scrollbar-width: thin;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6rem), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6rem), transparent 100%);
+}
+
+.reader-face-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* The passage the reader came in on is marked across the WHOLE verse, number included — a
+   highlight that skips the verse numbers reads as a series of gaps rather than one run. */
+.reader-face-body .esv-ctx-passage {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.06rem;
+  line-height: 1.85;
+  color: var(--text-primary);
+}
+
+.reader-face-body .esv-ctx-verse { display: inline; }
+
+.reader-face-body .esv-ctx-num {
+  font-family: var(--font-sans);
+  font-size: 0.62em;
+  font-weight: 800;
+  color: var(--text-secondary);
+  margin-right: 0.15em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.reader-face-body .esv-ctx-verse.is-selected {
+  background: color-mix(in srgb, var(--accent, #b45309) 16%, transparent);
+  box-shadow: 0 0 0 0.18em color-mix(in srgb, var(--accent, #b45309) 16%, transparent);
+  border-radius: 2px;
+}
+
+.reader-face-body .esv-ctx-verse.is-selected .esv-ctx-num { color: var(--accent, #b45309); }
+
+/* bolls sends a section heading as text before a `<br/>`, and the shared client turns that
+   into a newline. Honouring it is what puts "Rules for Holy Living" on its own line instead of
+   running it into the first word of verse one. It cannot be styled as a heading from here —
+   nothing marks where it ends — but a line of its own is the difference between odd and wrong.
+   `pre-line` collapses runs of spaces, so it costs nothing on the verses that have none. */
+.reader-face-body .esv-ctx-t {
+  white-space: pre-line;
+}
+
+.reader-face-body .esv-ctx-note {
+  margin: 1.1rem 0 0;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.reader-face-state {
+  margin: 0;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* The reference and the controls name the verse and act on it, so they belong to the verse
+   face — floating over the chapter they are furniture for a room you have left. They fade
+   with the turn rather than cutting, so the two faces read as one movement. */
+.story-overlay.is-reader .story-container {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.story-container { transition: opacity 260ms ease; }

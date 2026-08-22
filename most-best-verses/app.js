@@ -227,6 +227,15 @@
       storyContainer: document.getElementById('storyContainer'),
       storyReel: document.getElementById('storyReel'),
       storyMotionMenu: document.getElementById('storyMotionMenu'),
+      storyStage: document.getElementById('storyStage'),
+      storyCube: document.getElementById('storyCube'),
+      storyReader: document.getElementById('storyReader'),
+      readerFaceTitle: document.getElementById('readerFaceTitle'),
+      readerFaceSub: document.getElementById('readerFaceSub'),
+      readerFaceBody: document.getElementById('readerFaceBody'),
+      readerFaceVer: document.getElementById('readerFaceVer'),
+      btnReaderClose: document.getElementById('btnReaderClose'),
+      btnReaderMore: document.getElementById('btnReaderMore'),
       storyPassageRef: document.getElementById('storyPassageRef'),
       storyActiveVerBadge: document.getElementById('storyActiveVerBadge'),
       storyDeepPanel: document.getElementById('storyDeepPanel'),
@@ -754,7 +763,7 @@
       btn.title = deep ? 'Back to the verse' : 'Study this verse';
       btn.classList.toggle('is-back', deep);
       const icon = btn.querySelector('svg, i');
-      if (icon) icon.setAttribute('data-lucide', deep ? 'arrow-left' : 'book-open');
+      if (icon) icon.setAttribute('data-lucide', deep ? 'chevron-left' : 'book-open');
     }
     refreshIcons();
   }
@@ -1420,6 +1429,142 @@
 
   function scrubbing() { return state.reelMotion === 'scrub' || state.reelMotion === 'glide'; }
 
+  /* ==========================================================================
+     THE CUBE — the verse, and the chapter it lives in
+     ==========================================================================
+     Vertical moves through the verses; horizontal turns to the one on screen and shows it
+     where it sits. The rotation follows the thumb rather than firing on release, because a
+     canned rotation is what makes this read as an effect instead of a place.
+
+     The context itself comes from `assets/scripture-popover.js` — the same fetch, clean and
+     reference parser five other pages use. Only the presentation is ours. */
+  const READER_RADIUS_START = 6;
+  const READER_RADIUS_STEP = 8;
+
+  const cube = { open: false, turning: false, radius: READER_RADIUS_START, ref: null, ver: null, seq: 0 };
+
+  function cubeHalf() {
+    const w = (elements.storyStage && elements.storyStage.clientWidth) || window.innerWidth;
+    return w / 2;
+  }
+
+  function syncCubeHalf() {
+    if (elements.storyStage) {
+      elements.storyStage.style.setProperty('--cube-half', cubeHalf() + 'px');
+    }
+  }
+
+  /* Drives the turn. 3D goes on for the duration and comes off the moment it settles, because
+     a face left inside a preserve-3d subtree cannot be tapped. */
+  const CUBE_TURN_MS = 420;
+  let cubeLandTimer = null;
+
+  function setCubeAngle(deg, animated) {
+    if (!elements.storyCube) return;
+    const el = elements.storyCube;
+    if (cubeLandTimer) { clearTimeout(cubeLandTimer); cubeLandTimer = null; }
+    el.classList.add('is-3d');
+    el.classList.toggle('is-turning', !!animated);
+    el.style.setProperty('--cube-deg', deg + 'deg');
+    if (!animated) return;
+
+    cube.turning = true;
+    cubeLandTimer = window.setTimeout(() => {
+      cubeLandTimer = null;
+      cube.turning = false;
+      landCube();
+    }, CUBE_TURN_MS);
+  }
+
+  /* Swaps the quarter turn for the 2D translate it ended on. Same picture, live element. */
+  function landCube() {
+    const el = elements.storyCube;
+    if (!el) return;
+    el.classList.add('no-transition');
+    el.classList.remove('is-3d', 'is-turning');
+    el.style.setProperty('--cube-x', cube.open ? '-100%' : '0%');
+    el.style.removeProperty('--cube-deg');
+    void el.offsetWidth;                 /* land the swap before transitions come back */
+    el.classList.remove('no-transition');
+  }
+
+  function readerAvailable() {
+    return !!(window.EsmrskyScripture && typeof window.EsmrskyScripture.loadContext === 'function');
+  }
+
+  /* Opens the chapter for whatever verse is on screen. The reference the dataset carries is
+     already the human-readable form the shared parser accepts, so nothing is translated. */
+  function openCube(animated) {
+    if (cube.open || !elements.storyCube || !state.storyCurrentVerse) return;
+    cube.open = true;
+    cube.radius = READER_RADIUS_START;
+    if (elements.storyStage) elements.storyStage.classList.add('is-reader');
+    if (elements.storyOverlay) elements.storyOverlay.classList.add('is-reader');
+    if (elements.storyReader) elements.storyReader.removeAttribute('aria-hidden');
+    setCubeAngle(-90, animated !== false);
+    loadReaderFace();
+  }
+
+  function closeCube(animated) {
+    if (!cube.open || !elements.storyCube) return;
+    cube.open = false;
+    if (elements.storyStage) elements.storyStage.classList.remove('is-reader');
+    if (elements.storyOverlay) elements.storyOverlay.classList.remove('is-reader');
+    if (elements.storyReader) elements.storyReader.setAttribute('aria-hidden', 'true');
+    setCubeAngle(0, animated !== false);
+  }
+
+  function loadReaderFace() {
+    const verse = state.storyCurrentVerse;
+    if (!verse || !elements.readerFaceBody) return;
+    const ver = cube.ver || readerVersionFor(state.storyCurrentVer);
+    cube.ver = ver;
+    cube.ref = verse.ref;
+
+    if (elements.readerFaceTitle) {
+      elements.readerFaceTitle.textContent =
+        (window.EsmrskyScripture && window.EsmrskyScripture.fullTitle)
+          ? window.EsmrskyScripture.fullTitle(verse.ref) : verse.ref;
+    }
+    if (elements.readerFaceSub) {
+      elements.readerFaceSub.textContent = (verse.dynamicContext && verse.dynamicContext.chapterTitle)
+        ? verse.dynamicContext.chapterTitle : 'The passage in its chapter';
+    }
+    if (elements.readerFaceVer) elements.readerFaceVer.textContent = ver;
+
+    if (!readerAvailable()) {
+      elements.readerFaceBody.innerHTML =
+        '<p class="reader-face-state">The chapter needs the shared scripture client, which did not load.</p>';
+      return;
+    }
+
+    /* Every request carries a sequence number and only the newest one is allowed to paint.
+       Turning the cube, tapping MORE CONTEXT and cycling the translation can all be in flight
+       at once, and the slowest answer must not be the one that lands. */
+    const mine = ++cube.seq;
+    elements.readerFaceBody.innerHTML = '<p class="reader-face-state">Loading the chapter…</p>';
+    window.EsmrskyScripture.loadContext(verse.ref, ver, cube.radius)
+      .then(html => {
+        if (mine !== cube.seq) return;
+        elements.readerFaceBody.innerHTML = html;
+        const sel = elements.readerFaceBody.querySelector('.is-selected');
+        if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'center' });
+      })
+      .catch(() => {
+        if (mine !== cube.seq) return;
+        elements.readerFaceBody.innerHTML =
+          '<p class="reader-face-state">That chapter could not be fetched just now.</p>';
+      });
+  }
+
+  /* The slide's translation is not always one the shared client can fetch — it carries NKJV,
+     which bolls does not serve through this layer. Fall back rather than fail. */
+  function readerVersionFor(ver) {
+    const ok = (window.EsmrskyScripture && window.EsmrskyScripture.versions)
+      ? window.EsmrskyScripture.versions().map(v => v.code) : ['NIV'];
+    return ok.includes(ver) ? ver : 'NIV';
+  }
+
   function setReelMotion(mode) {
     if (!REEL_MOTIONS.includes(mode)) return;
     state.reelMotion = mode;
@@ -1646,6 +1791,7 @@
       cont.style.setProperty('--story-hl-2', hl[1]);
     }
     if (isDeepOpen()) { renderStudyFor(item.verse, item.ver); syncDeepTheme(); }
+    if (cube.open) { cube.radius = READER_RADIUS_START; loadReaderFace(); }
   }
 
   function playReelEntrance(el) {
@@ -2132,6 +2278,7 @@
         if (e.target.closest('#storyMode') || e.target.closest('#storyActiveVerBadge') ||
             e.target.closest('#btnStoryDeeper') || e.target.closest('.story-bottom-bar')) return;
         if (reel.dragging || reel.settling || reel.moved) return;
+        if (cube.open) return;      /* in the chapter a tap is a scroll or a link, not a turn */
         const w = elements.storyOverlay.clientWidth || window.innerWidth;
         reelAdvance(e.clientX < w * TAP_BACK_FRACTION ? -1 : 1, false);
       });
@@ -2143,25 +2290,62 @@
        finger, and past a distance or a flick it commits; short of both it springs back. */
     if (elements.storyReel) {
       const reelEl = elements.storyReel;
+      /* The gestures live on the STAGE, not on the verse face. While the chapter is showing,
+         the verse face is `pointer-events: none` — so a handler bound there cannot see the
+         drag that would turn back out of it. The stage is under both faces and sees both. */
+      const gestureEl = elements.storyStage || reelEl;
 
-      reelEl.addEventListener('pointerdown', (e) => {
+      gestureEl.addEventListener('pointerdown', (e) => {
         if (isDeepOpen() || reel.settling) return;
         if (e.target.closest('.story-bottom-bar') || e.target.closest('#storyMode')) return;
         reel.dragging = true; reel.moved = false; reel.pointerId = e.pointerId;
         reel.startY = reel.lastY = e.clientY; reel.lastT = e.timeStamp || Date.now();
-        reel.dy = 0; reel.v = 0; reel.dir = 0;
-        try { reelEl.setPointerCapture(e.pointerId); } catch (err) {}
+        reel.startX = e.clientX;
+        reel.axis = null;                /* decided on the first movement past the slop */
+        reel.dy = 0; reel.dx = 0; reel.v = 0; reel.vx = 0; reel.dir = 0;
+        /* Capture is taken only once the gesture is known to be a horizontal one. Taking it up
+           front would pull the pointer stream away from the chapter's own scroller. */
       });
 
-      reelEl.addEventListener('pointermove', (e) => {
+      gestureEl.addEventListener('pointermove', (e) => {
         if (!reel.dragging || e.pointerId !== reel.pointerId) return;
         const dy = e.clientY - reel.startY;
+        const dx = e.clientX - reel.startX;
         const t = e.timeStamp || Date.now();
         const dt = Math.max(1, t - reel.lastT);
         reel.v = (e.clientY - reel.lastY) / dt;
-        reel.lastY = e.clientY; reel.lastT = t;
-        if (Math.abs(dy) > DRAG_SLOP_PX) reel.moved = true;
+        reel.vx = (e.clientX - (reel.lastX == null ? reel.startX : reel.lastX)) / dt;
+        reel.lastY = e.clientY; reel.lastX = e.clientX; reel.lastT = t;
+        if (Math.abs(dy) > DRAG_SLOP_PX || Math.abs(dx) > DRAG_SLOP_PX) reel.moved = true;
         if (!reel.moved) return;
+
+        /* One axis per gesture, decided once and never revisited. Letting it switch mid-drag
+           means a diagonal thumb turns the cube AND the page, which is two things nobody
+           asked for; committing to the dominant axis at the moment the gesture stops being a
+           tap is what every surface that does both does. */
+        if (!reel.axis) {
+          reel.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+          if (reel.axis === 'x') {
+            try { gestureEl.setPointerCapture(reel.pointerId); } catch (err) {}
+          }
+        }
+
+        /* Vertical inside the chapter belongs to the chapter: that face scrolls, and
+           `touch-action: pan-y` lets the browser do it natively. */
+        if (reel.axis === 'y' && cube.open) return;
+
+        if (reel.axis === 'x') {
+          /* Horizontal turns the cube. Left drags toward the chapter, right drags back out of
+             it; at either end it resists rather than refusing. */
+          const W = gestureEl.clientWidth || window.innerWidth;
+          const raw = (dx - Math.sign(dx) * DRAG_SLOP_PX) / W;      /* -1 .. 1 of a quarter turn */
+          const wants = cube.open ? Math.max(0, Math.min(1, raw)) : Math.max(0, Math.min(1, -raw));
+          const over = cube.open ? (raw < 0) : (raw > 0);
+          const p = over ? Math.abs(raw) * 0.18 : wants;
+          reel.dx = dx;
+          setCubeAngle(cube.open ? -90 + p * 90 : -p * 90, false);
+          return;
+        }
 
         /* Dragging down means going back, and there may be nothing to go back to. Rather than
            refuse the gesture, let it move a little and resist — the standard way a surface
@@ -2211,10 +2395,28 @@
       const endDrag = (e) => {
         if (!reel.dragging || (e && e.pointerId !== reel.pointerId)) return;
         reel.dragging = false;
-        try { reelEl.releasePointerCapture(reel.pointerId); } catch (err) {}
+        reel.lastX = null;
+        try { gestureEl.releasePointerCapture(reel.pointerId); } catch (err) {}
         const off = offstageSlide();
         if (off) delete off.dataset.armed;
         if (!reel.moved) { reel.dy = 0; return; }
+
+        if (reel.axis === 'y' && cube.open) { reel.dy = 0; reel.moved = false; return; }
+
+        if (reel.axis === 'x') {
+          const W = gestureEl.clientWidth || window.innerWidth;
+          const past = Math.abs(reel.dx) > W * 0.28;
+          const flick = Math.abs(reel.vx) > DRAG_COMMIT_VELOCITY;
+          const towardReader = reel.dx < 0;
+          if ((past || flick) && towardReader !== cube.open) {
+            if (cube.open) closeCube(true); else openCube(true);
+          } else {
+            setCubeAngle(cube.open ? -90 : 0, true);
+          }
+          reel.dx = 0;
+          window.setTimeout(() => { reel.moved = false; }, 0);
+          return;
+        }
 
         const past = Math.abs(reel.dy) > DRAG_COMMIT_PX;
         const flicked = Math.abs(reel.v) > DRAG_COMMIT_VELOCITY;
@@ -2239,13 +2441,13 @@
         /* The click that follows a drag has to be swallowed, or the gesture turns two pages. */
         window.setTimeout(() => { reel.moved = false; }, 0);
       };
-      reelEl.addEventListener('pointerup', endDrag);
-      reelEl.addEventListener('pointercancel', endDrag);
+      gestureEl.addEventListener('pointerup', endDrag);
+      gestureEl.addEventListener('pointercancel', endDrag);
 
       /* A trackpad or a mouse wheel is the same gesture without a finger. Accumulate so one
          firm scroll turns one page rather than twenty. */
       reelEl.addEventListener('wheel', (e) => {
-        if (isDeepOpen() || reel.settling) return;
+        if (isDeepOpen() || reel.settling || cube.open) return;
         e.preventDefault();
         const now = e.timeStamp || Date.now();
         if (now < reel.wheelLock) return;
@@ -2259,6 +2461,48 @@
         reelAdvance(dir, true);
       }, { passive: false });
     }
+
+    /* ---------- the reader face ---------- */
+    if (elements.btnReaderClose) {
+      elements.btnReaderClose.addEventListener('click', (e) => { e.stopPropagation(); closeCube(true); });
+    }
+
+    if (elements.btnReaderMore) {
+      elements.btnReaderMore.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cube.radius += READER_RADIUS_STEP;
+        loadReaderFace();
+      });
+    }
+
+    if (elements.readerFaceVer) {
+      elements.readerFaceVer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const codes = (window.EsmrskyScripture && window.EsmrskyScripture.versions)
+          ? window.EsmrskyScripture.versions().map(v => v.code) : ['NIV'];
+        const i = codes.indexOf(cube.ver);
+        cube.ver = codes[(i + 1) % codes.length];
+        loadReaderFace();
+      });
+    }
+
+    /* The reference names the passage, so it is also the way to go and read it. A reader who
+       never tries the gesture still finds the chapter. */
+    if (elements.storyPassageRef) {
+      elements.storyPassageRef.style.cursor = 'pointer';
+      elements.storyPassageRef.setAttribute('role', 'button');
+      elements.storyPassageRef.setAttribute('tabindex', '0');
+      elements.storyPassageRef.setAttribute('title', 'Read this passage in its chapter');
+      elements.storyPassageRef.addEventListener('click', (e) => { e.stopPropagation(); openCube(true); });
+      elements.storyPassageRef.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); openCube(true); }
+      });
+    }
+
+    /* A cube whose faces are pushed out by half of the wrong width does not meet at the
+       corner, so the half has to follow the viewport. */
+    syncCubeHalf();
+    window.addEventListener('resize', syncCubeHalf);
 
     /* Appearance lock. The menu lives inside the overlay, so every click in here has to be
        stopped from reaching the tap-to-advance handler on the overlay itself. */

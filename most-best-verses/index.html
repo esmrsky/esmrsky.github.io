@@ -78,7 +78,16 @@
 
          A tap swaps the two in place with nothing playing over it. A drag moves the pair, and
          the slide that lands plays one of the entrances. Same content, two speeds. -->
-    <div class="story-reel" id="storyReel">
+    <!-- ======================================================================
+         THE STAGE
+         ======================================================================
+         The verse and its chapter are two faces of the same box. Vertical moves THROUGH the
+         verses; horizontal turns to the one you are on and shows it where it lives. That is
+         the whole reason the cube is not decoration here: it encodes which way you came, so
+         swiping back is the same gesture reversed rather than a button you have to find. -->
+    <div class="story-stage" id="storyStage">
+      <div class="story-cube" id="storyCube">
+    <div class="story-reel cube-face cube-face-verse" id="storyReel">
       <article class="reel-slide is-current" data-slot="a">
         <div class="story-content-wrapper">
           <blockquote class="story-passage-text">
@@ -91,6 +100,30 @@
           <blockquote class="story-passage-text"></blockquote>
         </div>
       </article>
+    </div>
+
+        <!-- The chapter the verse is in, on the face to its right. The passage itself is
+             marked inside it, so turning back and forth is reading the same words at two
+             distances rather than moving between two documents. -->
+        <section class="story-reader cube-face cube-face-reader" id="storyReader" aria-label="Chapter" aria-hidden="true">
+          <header class="reader-face-head">
+            <div>
+              <h2 class="reader-face-title" id="readerFaceTitle">Psalm 16</h2>
+              <p class="reader-face-sub" id="readerFaceSub">The passage in its chapter</p>
+            </div>
+            <button class="story-nav-btn reader-face-close" id="btnReaderClose" type="button" title="Back to the verse" aria-label="Back to the verse">
+              <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
+            </button>
+          </header>
+          <div class="reader-face-body" id="readerFaceBody" aria-live="polite"></div>
+          <footer class="reader-face-foot">
+            <button class="story-nav-btn" id="btnReaderMore" type="button">
+              <i data-lucide="chevron-down" style="width: 15px; height: 15px;"></i><span>MORE CONTEXT</span>
+            </button>
+            <button class="story-version-pill" id="readerFaceVer" type="button" title="Cycle translation">NIV</button>
+          </footer>
+        </section>
+      </div>
     </div>
 
     <!-- The furniture: the reference and the controls, fixed over the reel, plus the study.
@@ -246,7 +279,7 @@
               <i data-lucide="zap" style="width: 15px; height: 15px;"></i><span>Snap</span>
             </button>
             <button class="story-motion-opt" type="button" role="menuitemradio" aria-checked="false" data-motion="scrub">
-              <i data-lucide="move-vertical" style="width: 15px; height: 15px;"></i><span>Scrub</span>
+              <i data-lucide="sliders" style="width: 15px; height: 15px;"></i><span>Scrub</span>
             </button>
             <button class="story-motion-opt" type="button" role="menuitemradio" aria-checked="false" data-motion="glide">
               <i data-lucide="wind" style="width: 15px; height: 15px;"></i><span>Glide</span>
@@ -442,6 +475,12 @@
       </div>
     </div>
   </div>
+
+  <!-- The shared scripture layer, for the chapter on the reader face. Loading it does nothing
+       on its own — it defines `window.EsmrskyScripture` and touches neither the DOM nor the
+       network until something calls it, and this page only ever calls `loadContext`, so none
+       of its own UI is built. -->
+  <script src="../assets/scripture-popover.js?v=1.1.0"></script>
 
   <!-- Data and Application Scripts -->
   <script src="verses-data.js?v=2.5.0"></script>
