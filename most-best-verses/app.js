@@ -1423,7 +1423,29 @@
      The scrub duration is the stagger budget plus one word's fade, which is how long the whole
      passage actually takes to assemble. */
   const REEL_MOTIONS = ['snap', 'scrub', 'glide'];
-  const SCRUB_MS = 730;
+
+  /* ---------- how fast the words arrive ----------
+     The stagger used to be a fixed BUDGET — 430ms shared out among however many words there
+     were — which meant the pacing got faster the more there was to read. A twenty-word verse
+     arrived word by word at 26ms apart; a ninety-word one arrived at five, which is not a
+     sequence at all, it is the whole wall at once. Exactly backwards: the long passages are
+     the ones a reader needs led through.
+
+     So the step is a RATE, not a share. Every passage arrives at the same reading pace and
+     only the very longest are compressed, by a ceiling on the total rather than on the step.
+
+       16 words -> 56ms apart, 1.1s in total
+       30 words -> 56ms apart, 1.9s
+       90 words -> 27ms apart, 2.7s (the ceiling)
+
+     The ceiling bounds the SPAN between the first word and the last, not the step, or the
+     arithmetic caps the wrong quantity and a fifty-word passage runs past a ninety-word one.
+
+     `WORD_FADE_MS` is how long one word takes to resolve once its turn comes, so the passage
+     is finished a word's fade after the last one starts — which is what a scrub has to cover. */
+  const READ_STEP_MS = 56;
+  const STAGGER_SPAN_MAX_MS = 2400;
+  const WORD_FADE_MS = 300;
   const GLIDE_MIN_MS = 320;
   const GLIDE_MAX_MS = 940;
 
@@ -1585,7 +1607,8 @@
     if (!el) return;
     el.classList.remove('is-playing');
     el.classList.add('is-scrubbing');
-    el.style.setProperty('--scrub', Math.round(Math.max(0, Math.min(1, p)) * SCRUB_MS) + 'ms');
+    const span = parseInt(el.dataset.scrubMs, 10) || 730;
+    el.style.setProperty('--scrub', Math.round(Math.max(0, Math.min(1, p)) * span) + 'ms');
   }
 
   /* Lets a seeked entrance run on from where the drag left it. Removing the pause is all it
@@ -1757,10 +1780,13 @@
     const passage = el.querySelector('.story-passage-text');
     if (passage) {
       passage.innerHTML = formatStoryTextWithEffects(text, item.style, item.verse);
-      /* The stagger has a fixed budget rather than a fixed step, so a ninety-word passage does
-         not take four times as long to arrive as a twenty-word one. */
       const units = passage.querySelectorAll('.sw').length || 1;
-      el.style.setProperty('--sw-step', Math.min(26, Math.round(430 / units)) + 'ms');
+      const step = units > 1
+        ? Math.min(READ_STEP_MS, STAGGER_SPAN_MAX_MS / (units - 1))
+        : READ_STEP_MS;
+      el.style.setProperty('--sw-step', step.toFixed(1) + 'ms');
+      /* A scrub has to span the whole assembly, so it is measured rather than assumed. */
+      el.dataset.scrubMs = Math.round(step * (units - 1) + WORD_FADE_MS);
     }
     el.dataset.enter = REEL_ENTERS[Math.floor(Math.random() * REEL_ENTERS.length)];
     autoFitStoryText(el);
@@ -2334,6 +2360,9 @@
            `touch-action: pan-y` lets the browser do it natively. */
         if (reel.axis === 'y' && cube.open) return;
 
+        /* Nothing blooms while the pair is travelling — see the note in the sheet. */
+        if (reel.axis === 'y' && elements.storyReel) elements.storyReel.classList.add('is-dragging');
+
         if (reel.axis === 'x') {
           /* Horizontal turns the cube. Left drags toward the chapter, right drags back out of
              it; at either end it resists rather than refusing. */
@@ -2396,6 +2425,7 @@
         if (!reel.dragging || (e && e.pointerId !== reel.pointerId)) return;
         reel.dragging = false;
         reel.lastX = null;
+        if (elements.storyReel) elements.storyReel.classList.remove('is-dragging');
         try { gestureEl.releasePointerCapture(reel.pointerId); } catch (err) {}
         const off = offstageSlide();
         if (off) delete off.dataset.armed;

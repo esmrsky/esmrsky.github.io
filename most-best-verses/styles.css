@@ -4332,6 +4332,14 @@ input:focus-visible,
 
 /* Each slide carries its own, behind its own text. Same drifting light the orbs gave, at a
    third of the cost and in the slide's own colours rather than one set shared by all of them. */
+/* The bloom belongs to a slide that is STANDING STILL. It is anchored to its own slide, so
+   while the pair travels there are two of them crossing — the outgoing one's bottom-right
+   patch and the incoming one's top-left — each appearing or vanishing at the seam. Two bright
+   spots sweeping past each other across a hard edge is the flash; neither gradient is at
+   fault, the fact that they move is.
+
+   So nothing blooms while anything moves. During a drag or a settle there are two clean
+   grounds crossing, and the light comes back up on the verse once it has arrived. */
 .reel-slide::before {
   content: '';
   position: absolute;
@@ -4339,6 +4347,7 @@ input:focus-visible,
   z-index: 0;
   pointer-events: none;
   opacity: 0.5;
+  transition: opacity 240ms ease;
   background:
     radial-gradient(38% 34% at 16% 14%, var(--story-hl, #f59e0b) 0%, transparent 68%),
     radial-gradient(42% 36% at 84% 88%, var(--story-hl-2, #ec4899) 0%, transparent 70%);
@@ -4827,3 +4836,21 @@ input:focus-visible,
 }
 
 .story-container { transition: opacity 260ms ease; }
+
+.story-reel.is-dragging .reel-slide::before,
+.reel-slide.is-settling::before,
+.reel-slide.is-springing::before {
+  opacity: 0;
+  /* Out quickly, back gently: the flash is on the way out, not on the way in. */
+  transition: opacity 120ms ease;
+}
+
+/* With the blooms held still the seam is clean, but it is still two flat grounds butting at a
+   line. A shadow on whichever slide is moving falls only where the two meet — the rest of it
+   is off-screen — so the pair reads as one surface passing another rather than as two colours
+   trading places. It costs nothing at rest, because at rest nothing has this class. */
+.story-reel.is-dragging .reel-slide,
+.reel-slide.is-settling,
+.reel-slide.is-springing {
+  box-shadow: 0 0 52px -6px rgba(0, 0, 0, 0.42);
+}
