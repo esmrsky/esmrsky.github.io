@@ -1605,18 +1605,20 @@
   /* Seeks the incoming slide's entrance to `p` (0..1) without running it. */
   function scrubSlide(el, p) {
     if (!el) return;
-    el.classList.remove('is-playing');
-    el.classList.add('is-scrubbing');
+    /* Both, together. `is-playing` is what declares the animation and must stay on from the
+       first frame of the drag to the last of the settle; `is-scrubbing` only holds it still. */
+    el.classList.add('is-playing', 'is-scrubbing');
     const span = parseInt(el.dataset.scrubMs, 10) || 730;
     el.style.setProperty('--scrub', Math.round(Math.max(0, Math.min(1, p)) * span) + 'ms');
   }
 
   /* Lets a seeked entrance run on from where the drag left it. Removing the pause is all it
      takes — the negative delay that was a seek head becomes a head start. */
+  /* Letting go is one class off. The animation itself is untouched, so it carries on from
+     exactly the frame the thumb left it on instead of being built again from zero. */
   function releaseScrub(el) {
     if (!el) return;
     el.classList.remove('is-scrubbing');
-    el.classList.add('is-playing');
   }
 
   function clearScrub(el) {
@@ -1765,7 +1767,8 @@
     /* Where a slide IS belongs to the reel, not to what is written on it. Rebuilding the class
        list wholesale wiped that and left both slides claiming to be offstage — so the
        positional classes are carried across and only the content ones are rewritten. */
-    const positional = ['is-current', 'is-offstage', 'is-settling', 'is-playing']
+    const positional = ['is-current', 'is-offstage', 'is-settling', 'is-springing',
+                        'is-playing', 'is-scrubbing']
       .filter(c => el.classList.contains(c));
     el.className = ['reel-slide', item.style, sizeClass, themeClass].concat(positional).join(' ');
 
@@ -1835,6 +1838,7 @@
     const passage = el.querySelector('.story-passage-text');
     el.classList.remove('is-playing', 'is-scrubbing');
     el.style.removeProperty('--scrub');
+    delete el.dataset.scrubMs;
     if (passage) passage.classList.remove(...REEL_ENTERS);
   }
 
@@ -1921,7 +1925,11 @@
       off.style.transform = '';
       cur.style.removeProperty('--settle');
       off.style.removeProperty('--settle');
-      off.style.removeProperty('--scrub');
+      /* `--scrub` STAYS. The settle is over in 340ms but the passage can still be assembling
+         two seconds later, and this value is part of its delay: clearing it here shifts every
+         remaining word forward by however far the thumb had carried it, which reads as the
+         verse starting over halfway through. It is cleared where it should be — when the slide
+         is next repainted, in clearEntrance. */
       reel.dy = 0;
       reel.settling = false;
       state.storyHasRendered = true;

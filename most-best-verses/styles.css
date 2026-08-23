@@ -4386,8 +4386,7 @@ input:focus-visible,
 
    Fail-safe by construction: a slide is fully visible with no class on it. These start from
    a hidden state and end visible, so if the class is never added nothing is stranded. */
-.reel-slide.is-playing .story-passage-text .sw,
-.reel-slide.is-scrubbing .story-passage-text .sw {
+.reel-slide.is-playing .story-passage-text .sw {
   animation: reelWordIn 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
   /* `--scrub` is how far into the entrance the drag has carried it. A NEGATIVE delay is the
      whole scrubbing mechanism: an animation with `both` fill and a delay of -p x duration
@@ -4397,9 +4396,13 @@ input:focus-visible,
   animation-delay: calc(var(--i, 0) * var(--sw-step, 20ms) - var(--scrub, 0ms));
 }
 
-/* Paused, the same negative delay is a seek head rather than a head start. */
+/* `.is-scrubbing` rides ALONGSIDE `.is-playing` and does exactly one thing: hold the animation
+   still so the negative delay reads as a seek head rather than a head start. It must never
+   declare the animation itself. Two rules each naming the same animation and swapping between
+   them re-creates it, and the passage restarts from its first word at the moment the reader
+   lets go — measured at 87 restarts in one drag, every one of them a word going from fully
+   lit back to nothing. */
 .reel-slide.is-scrubbing .story-passage-text .sw,
-.reel-slide.is-scrubbing .story-passage-text > span > span,
 .reel-slide.is-scrubbing .enter-rise,
 .reel-slide.is-scrubbing .enter-focus,
 .reel-slide.is-scrubbing .enter-cascade,
@@ -4414,31 +4417,19 @@ input:focus-visible,
   to   { opacity: 1; }
 }
 
-.reel-slide.is-playing .enter-rise,
-.reel-slide.is-scrubbing .enter-rise    { animation: reelRise    460ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-.reel-slide.is-playing .enter-focus,
-.reel-slide.is-scrubbing .enter-focus   { animation: reelFocus   560ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-.reel-slide.is-playing .enter-cascade,
-.reel-slide.is-scrubbing .enter-cascade { animation: reelCascade 520ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 0%; }
-.reel-slide.is-playing .enter-sweep,
-.reel-slide.is-scrubbing .enter-sweep   { animation: reelSweep   600ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-.reel-slide.is-playing .enter-lift,
-.reel-slide.is-scrubbing .enter-lift    { animation: reelLift    500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-.reel-slide.is-playing .enter-veil,
-.reel-slide.is-scrubbing .enter-veil    { animation: reelVeil    560ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-rise    { animation: reelRise    460ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-focus   { animation: reelFocus   560ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.reel-slide.is-playing .enter-cascade { animation: reelCascade 520ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 0%; }
+.reel-slide.is-playing .enter-sweep   { animation: reelSweep   600ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-lift    { animation: reelLift    500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.reel-slide.is-playing .enter-veil    { animation: reelVeil    560ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 .reel-slide.is-playing .enter-rise,
-.reel-slide.is-scrubbing .enter-rise,
 .reel-slide.is-playing .enter-focus,
-.reel-slide.is-scrubbing .enter-focus,
 .reel-slide.is-playing .enter-cascade,
-.reel-slide.is-scrubbing .enter-cascade,
 .reel-slide.is-playing .enter-sweep,
-.reel-slide.is-scrubbing .enter-sweep,
 .reel-slide.is-playing .enter-lift,
-.reel-slide.is-scrubbing .enter-lift,
-.reel-slide.is-playing .enter-veil,
-.reel-slide.is-scrubbing .enter-veil {
+.reel-slide.is-playing .enter-veil {
   animation-delay: calc(0ms - var(--scrub, 0ms));
 }
 
