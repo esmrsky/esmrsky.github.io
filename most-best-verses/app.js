@@ -1285,17 +1285,38 @@
       esc[0] = '"' + esc[0];
       esc[esc.length - 1] = esc[esc.length - 1] + '"';
     }
-    let unit = 0;
-    const cell = inner => '<span class="sw" style="--i:' + (unit++) + '">' + inner + '</span>';
+    /* ---------- the unit of arrival is a CLAUSE, not a word ----------
+       Word by word, a passage arrives as ninety separate events, and ninety things asking for
+       attention one after another is not reading, it is a ticker. Scripture is already written
+       in clauses — the commas and the colons are where the sense turns — so those are the
+       joints to move at. Every word inside a clause shares one index and therefore lands
+       together; the reader gets a phrase, reads it, and the next arrives.
+
+       A clause is punctuation OR six words, whichever comes first, because an unpunctuated
+       stretch has to break somewhere and six is about as much as lands as one thought. */
+    const CHUNK_MAX_WORDS = 6;
+    const closesClause = w => /[,;:.!?—–]["'”’)]?$/.test(w);
+
+    let chunk = 0, inChunk = 0;
+    const cell = (inner, raw) => {
+      if (inChunk >= CHUNK_MAX_WORDS) { chunk++; inChunk = 0; }
+      const html = '<span class="sw" style="--i:' + chunk + '">' + inner + '</span>';
+      inChunk++;
+      if (raw && closesClause(raw)) { chunk++; inChunk = 0; }
+      return html;
+    };
 
     const out = [];
     let i = 0;
     spans.forEach(span => {
-      while (i < span[0]) out.push(cell(esc[i++]));
-      out.push(cell('<span class="' + form + '">' + esc.slice(span[0], span[1]).join(' ') + '</span>'));
+      while (i < span[0]) { out.push(cell(esc[i], words[i])); i++; }
+      /* An emphasised phrase is already one unit and stays one: it reads as a single gesture
+         and must not be broken across two arrivals. */
+      out.push(cell('<span class="' + form + '">' + esc.slice(span[0], span[1]).join(' ') + '</span>',
+                    words[span[1] - 1]));
       i = span[1];
     });
-    while (i < words.length) out.push(cell(esc[i++]));
+    while (i < words.length) { out.push(cell(esc[i], words[i])); i++; }
     return out.join(' ');
   }
 
@@ -1424,27 +1445,27 @@
      passage actually takes to assemble. */
   const REEL_MOTIONS = ['snap', 'scrub', 'glide'];
 
-  /* ---------- how fast the words arrive ----------
-     The stagger used to be a fixed BUDGET — 430ms shared out among however many words there
-     were — which meant the pacing got faster the more there was to read. A twenty-word verse
-     arrived word by word at 26ms apart; a ninety-word one arrived at five, which is not a
-     sequence at all, it is the whole wall at once. Exactly backwards: the long passages are
-     the ones a reader needs led through.
+  /* ---------- how fast a passage arrives, and how that differs per mode ----------
+     The three modes were mechanically different and perceptually identical, which is the worst
+     of both. Scrub and glide assembled 72-79% of the passage under the thumb against snap's
+     nothing — a real difference — but all three then finished at the SAME rate, and glide
+     differed from scrub only in how long the slide's transform took, which is not the part
+     anyone is looking at. The pace is what a reader perceives, so the pace is what has to
+     differ:
 
-     So the step is a RATE, not a share. Every passage arrives at the same reading pace and
-     only the very longest are compressed, by a ceiling on the total rather than on the step.
+       snap    brisk. The verse is there almost at once; the clauses only stop it landing as
+               one slab. For thumbing through.
+       scrub   the drag assembles it, and what is left finishes at a readable pace.
+       glide   slow and unhurried, a clause at a time, well after the slide has landed. For
+               sitting with one verse.
 
-       16 words -> 56ms apart, 1.1s in total
-       30 words -> 56ms apart, 1.9s
-       90 words -> 27ms apart, 2.7s (the ceiling)
-
-     The ceiling bounds the SPAN between the first word and the last, not the step, or the
-     arithmetic caps the wrong quantity and a fifty-word passage runs past a ninety-word one.
-
-     `WORD_FADE_MS` is how long one word takes to resolve once its turn comes, so the passage
-     is finished a word's fade after the last one starts — which is what a scrub has to cover. */
-  const READ_STEP_MS = 56;
-  const STAGGER_SPAN_MAX_MS = 2400;
+     A span ceiling per mode keeps the longest passages from running away: a ninety-word verse
+     is eighteen clauses, and eighteen at glide's rate would be nine seconds without one. */
+  const MOTION_PACE = {
+    snap:  { step: 90,  span: 1100 },
+    scrub: { step: 200, span: 2600 },
+    glide: { step: 330, span: 4200 }
+  };
   const WORD_FADE_MS = 300;
   const GLIDE_MIN_MS = 320;
   const GLIDE_MAX_MS = 940;
@@ -1783,11 +1804,18 @@
     const passage = el.querySelector('.story-passage-text');
     if (passage) {
       passage.innerHTML = formatStoryTextWithEffects(text, item.style, item.verse);
-      const units = passage.querySelectorAll('.sw').length || 1;
-      const step = units > 1
-        ? Math.min(READ_STEP_MS, STAGGER_SPAN_MAX_MS / (units - 1))
-        : READ_STEP_MS;
+      /* Clauses, not words: the arrival index is shared within a clause, so what matters is
+         how many distinct indices there are. */
+      const cells = passage.querySelectorAll('.sw');
+      let units = 1;
+      cells.forEach(c => {
+        const i = parseInt(c.style.getPropertyValue('--i'), 10);
+        if (!isNaN(i) && i + 1 > units) units = i + 1;
+      });
+      const pace = MOTION_PACE[state.reelMotion] || MOTION_PACE.snap;
+      const step = units > 1 ? Math.min(pace.step, pace.span / (units - 1)) : pace.step;
       el.style.setProperty('--sw-step', step.toFixed(1) + 'ms');
+      el.dataset.clauses = units;
       /* A scrub has to span the whole assembly, so it is measured rather than assumed. */
       el.dataset.scrubMs = Math.round(step * (units - 1) + WORD_FADE_MS);
     }
