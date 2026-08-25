@@ -90,14 +90,7 @@ a{color:inherit}
   font-size:clamp(2.7rem,12.4vw,9.4rem);
   letter-spacing:-.038em;line-height:.855;position:relative;z-index:2;
 }
-/* misregistration: the riso tell, used once */
-.bigtype h1::before,
-.bigtype h1::after{
-  content:attr(data-t);position:absolute;inset:0;z-index:-1;
-  mix-blend-mode:multiply;pointer-events:none;
-}
-.bigtype h1::before{color:var(--pink);transform:translate(.055em,.028em)}
-.bigtype h1::after{color:var(--blue);transform:translate(-.038em,-.02em)}
+/* the masthead is set clean — the riso tell lives in the figures, not the title */
 
 .dek{margin-top:clamp(20px,3vw,32px);max-width:60ch;font-size:clamp(1rem,1.9vw,1.22rem);line-height:1.5}
 .dek b{font-weight:500}
@@ -249,9 +242,17 @@ a{color:inherit}
 .chart{width:100%;height:auto;overflow:visible}
 .axis{stroke:var(--edge-hi);stroke-width:1}
 .gridline{stroke:var(--edge);stroke-width:1;stroke-dasharray:2 4}
-.ax-t{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.04em;fill:var(--ink);fill-opacity:.72}
-.an-t{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.03em;fill:var(--ink)}
-.an-k{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+.ax-t{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.04em;fill:var(--ink);fill-opacity:.72}
+.an-t{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.03em;fill:var(--ink)}
+.an-k{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+/* annotations sit directly on the plotted lines, so they knock a hole in
+   whatever is behind them rather than tangling with it */
+.an-t,.ax-t,.an-k{paint-order:stroke fill;stroke:var(--ground);stroke-width:4px;stroke-linejoin:round}
+.invert .an-t,.invert .ax-t,.invert .an-k{stroke:var(--ink)}
+/* except the ones printed ON an ink — there the ink is the backing */
+text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{stroke:none}
+.invert text[fill="#EEF0F6"]{stroke:var(--ink)}
+
 .ln{fill:none;stroke-width:2.4;stroke-linecap:square}
 .ln.thin{stroke-width:1.6}
 
@@ -415,8 +416,6 @@ a{color:inherit}
   --tb-bg:#111014;--tb-fg:rgba(237,239,245,.6);
 }
 /* riso overprint: multiply darkens on a light ground, screen lightens on a dark one */
-[data-theme="dark"] .bigtype h1::before,
-[data-theme="dark"] .bigtype h1::after,
 [data-theme="dark"] .blob,
 [data-theme="dark"] .solo{mix-blend-mode:screen}
 /* anything printed ON an ink takes dark type once the inks are lifted */
@@ -533,7 +532,7 @@ a{color:inherit}
 
           <!-- night band -->
           <rect x="697" y="24" width="263" height="238" fill="var(--ink)" fill-opacity=".055"/>
-          <text class="an-k" x="705" y="42" fill="var(--ink)" fill-opacity=".45">Asleep</text>
+          <text class="an-k" x="952" y="42" text-anchor="end" fill="var(--ink)" fill-opacity=".45">Asleep</text>
 
           <!-- sleep pressure: pink -->
           <path class="ln" stroke="var(--pink)" d="M60 232 C170 214 300 168 430 130 C520 104 610 76 697 50 C740 96 800 168 860 208 C900 232 935 240 960 243"/>
@@ -544,20 +543,20 @@ a{color:inherit}
           <g>
             <line class="gridline" x1="360" y1="134" x2="360" y2="262" stroke="var(--ink)" stroke-opacity=".3"/>
             <circle cx="360" cy="134" r="4.5" fill="var(--blue)"/>
-            <text class="an-t" x="368" y="122">Afternoon dip</text>
-            <text class="ax-t" x="368" y="137">alerting falls, pressure mid</text>
+            <text class="an-t" x="368" y="116">Afternoon dip</text>
+            <text class="ax-t" x="368" y="135">alerting falls, pressure mid</text>
           </g>
           <g>
             <line class="gridline" x1="552" y1="62" x2="552" y2="262" stroke="var(--ink)" stroke-opacity=".3"/>
             <circle class="pulse-dot" cx="552" cy="62" r="4.5" fill="var(--blue)"/>
-            <text class="an-t" x="560" y="50">Wake maintenance zone</text>
-            <text class="ax-t" x="560" y="65">alerting peaks against high pressure</text>
-            <text class="ax-t" x="560" y="79">this is the second wind</text>
+            <text class="an-t" x="560" y="44">Wake maintenance zone</text>
+            <text class="ax-t" x="560" y="63">alerting peaks against high pressure</text>
+            <text class="ax-t" x="560" y="80">this is the second wind</text>
           </g>
           <g>
             <line class="gridline" x1="697" y1="50" x2="697" y2="262" stroke="var(--ink)" stroke-opacity=".3"/>
             <circle cx="697" cy="50" r="4.5" fill="var(--pink)"/>
-            <text class="an-t" x="600" y="288">Alerting collapses. You go under.</text>
+            <text class="an-t" x="600" y="308">Alerting collapses. You go under.</text>
           </g>
 
           <!-- playhead -->
@@ -799,15 +798,15 @@ a{color:inherit}
           <g transform="translate(600,40)">
             <text class="an-k" x="0" y="0" fill="var(--ink)" fill-opacity=".5">Deprioritised while absorbed</text>
             <g transform="translate(0,26)">
-              <rect x="0" y="0" width="330" height="42" fill="none" stroke="var(--ink)" stroke-opacity=".25" stroke-dasharray="4 4"/>
+              <rect x="0" y="0" width="362" height="42" fill="none" stroke="var(--ink)" stroke-opacity=".25" stroke-dasharray="4 4"/>
               <text class="an-t" x="14" y="26" fill="var(--ink)" fill-opacity=".55">Self-monitoring · the voice commenting on you</text>
             </g>
             <g transform="translate(0,80)">
-              <rect x="0" y="0" width="330" height="42" fill="none" stroke="var(--ink)" stroke-opacity=".25" stroke-dasharray="4 4"/>
+              <rect x="0" y="0" width="362" height="42" fill="none" stroke="var(--ink)" stroke-opacity=".25" stroke-dasharray="4 4"/>
               <text class="an-t" x="14" y="26" fill="var(--ink)" fill-opacity=".55">Time-tracking · effortful, so it goes first</text>
             </g>
             <g transform="translate(0,134)">
-              <rect x="0" y="0" width="330" height="42" fill="var(--ground)" stroke="var(--blue)" stroke-width="1.5"/>
+              <rect x="0" y="0" width="362" height="42" fill="var(--ground)" stroke="var(--blue)" stroke-width="1.5"/>
               <text class="an-t" x="14" y="26" fill="var(--blue)">Arousal · held up by the loop itself</text>
             </g>
           </g>
@@ -1000,9 +999,9 @@ a{color:inherit}
           <g transform="translate(760,120)">
             <line x1="-40" y1="40" x2="10" y2="40" stroke="var(--green)" stroke-width="2"/>
             <path d="M10 34 l12 6 -12 6Z" fill="var(--green)"/>
-            <rect x="26" y="18" width="196" height="44" fill="none" stroke="var(--green)" stroke-width="1.5"/>
-            <text class="an-k" x="124" y="38" text-anchor="middle" fill="var(--green)">Get out of bed</text>
-            <text class="ax-t" x="124" y="53" text-anchor="middle" fill="var(--green)" fill-opacity=".8">break the association</text>
+            <rect x="26" y="14" width="196" height="52" fill="none" stroke="var(--green)" stroke-width="1.5"/>
+            <text class="an-k" x="124" y="35" text-anchor="middle" fill="var(--green)">Get out of bed</text>
+            <text class="ax-t" x="124" y="54" text-anchor="middle" fill="var(--green)" fill-opacity=".8">break the association</text>
           </g>
         </svg>
       </div>
@@ -1085,7 +1084,7 @@ a{color:inherit}
 
           <!-- sleep threshold -->
           <line x1="60" y1="200" x2="960" y2="200" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="6 4"/>
-          <text class="an-k" x="964" y="204" fill="var(--green)">threshold</text>
+          <text class="an-k" x="956" y="192" text-anchor="end" fill="var(--green)">threshold</text>
 
           <!-- arousal path -->
           <path id="descPath" class="ln" stroke="var(--blue)" fill="none"
@@ -1405,7 +1404,7 @@ a{color:inherit}
 
           <!-- markers -->
           <g class="an-k">
-            <g><rect x="200" y="252" width="9" height="9" fill="var(--ink)"/><text x="152" y="284" fill="var(--ink)" fill-opacity=".65">screens</text><text x="152" y="298" fill="var(--ink)" fill-opacity=".4">no lift</text></g>
+            <g><rect x="200" y="252" width="9" height="9" fill="var(--ink)"/><text x="152" y="282" fill="var(--ink)" fill-opacity=".65">screens</text><text x="152" y="301" fill="var(--ink)" fill-opacity=".4">no lift</text></g>
             <g><rect x="242" y="146" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text x="222" y="136" fill="var(--ink)">talking</text></g>
             <g><rect x="322" y="104" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text x="300" y="94" fill="var(--ink)">absorbed in building</text></g>
             <g><rect x="496" y="92" width="9" height="9" fill="var(--pink)" stroke="var(--ink)"/><text x="474" y="82" fill="var(--ink)">fear spike</text></g>
@@ -1414,8 +1413,8 @@ a{color:inherit}
 
           <!-- annotations under -->
           <g class="ax-t">
-            <text x="410" y="352">each spike costs the descent already made</text>
-            <text x="800" y="352">only uninterrupted decline crosses the line</text>
+            <text x="60" y="352">each spike costs the descent already made</text>
+            <text x="990" y="352" text-anchor="end">only uninterrupted decline crosses the line</text>
           </g>
           <g class="ax-t">
             <text x="62" y="46" text-anchor="end">high</text>
