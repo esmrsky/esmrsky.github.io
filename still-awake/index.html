@@ -349,10 +349,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
 @media (max-width:760px){
   .fig-stage:has(>.chart),
   .fig-stage:has(>.turns),
-  .fig-stage:has(>.compbar){
-    overflow-x:auto;overscroll-behavior-x:contain;
-    scrollbar-width:thin;scroll-snap-type:x proximity;
-  }
+  .fig-stage:has(>.compbar){overflow-x:auto;overscroll-behavior-x:contain}
   .fig-stage>.chart{min-width:820px}
   .fig-stage>.turns{min-width:560px}
   .fig-stage>.compbar{min-width:530px}
@@ -363,6 +360,30 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
     font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
     text-transform:uppercase;opacity:.6;white-space:nowrap;
   }
+}
+
+/* ─────────── scrollbars ───────────
+   Square, flat, drawn in the page's own inks — the zero-radius rule applies to
+   the chrome too. The thumb is a 6px bar centred in a 12px track by way of a
+   transparent border, so nothing here needs a radius to look finished. */
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:var(--ground)}
+::-webkit-scrollbar-thumb{
+  background:var(--edge-hi);border:3px solid var(--ground);background-clip:content-box;
+}
+::-webkit-scrollbar-thumb:hover{background:var(--blue)}
+::-webkit-scrollbar-corner{background:var(--ground)}
+
+/* inside a figure the track is the figure's own surface, with a hairline to
+   sit it against the frame */
+.fig-stage::-webkit-scrollbar-track{background:transparent;border-top:1px solid var(--edge)}
+.fig-stage::-webkit-scrollbar-thumb{border-color:transparent}
+
+/* Firefox has no ::-webkit-scrollbar; setting scrollbar-width there would make
+   Blink ignore everything above, so it is scoped to browsers that need it */
+@supports not selector(::-webkit-scrollbar){
+  html{scrollbar-width:thin;scrollbar-color:var(--edge-hi) var(--ground)}
+  .fig-stage{scrollbar-width:thin;scrollbar-color:var(--edge-hi) transparent}
 }
 
 /* ─────────── footer ─────────── */
@@ -886,8 +907,9 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
             <line class="axis" x1="40" y1="30" x2="40" y2="200"/>
             <path class="ln trace" stroke="#FF3E8A" d="M40 178 L150 176 L172 44 L186 60 L210 96 L250 124 L300 142 L360 150 L450 154"/>
             <line x1="40" y1="178" x2="450" y2="178" stroke="#EEF0F6" stroke-opacity=".3" stroke-width="1" stroke-dasharray="3 5"/>
-            <text class="ax-t" x="456" y="182">baseline</text>
-            <text class="ax-t" x="456" y="158">never quite returns</text>
+            <text class="ax-t" x="456" y="186">baseline</text>
+            <text class="ax-t" x="456" y="146">never quite</text>
+            <text class="ax-t" x="456" y="163">returns</text>
             <text class="ax-t" x="176" y="36">instant</text>
           </g>
           <!-- right: bladder -->
