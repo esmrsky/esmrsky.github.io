@@ -255,6 +255,7 @@ em{font-style:normal;font-weight:500}
    whatever is behind them rather than tangling with it */
 .an-t,.ax-t,.an-k{paint-order:stroke fill;stroke:var(--ground);stroke-width:4px;stroke-linejoin:round}
 .invert .an-t,.invert .ax-t,.invert .an-k{stroke:var(--ink)}
+.invert text[fill="var(--ground)"],.invert text[fill="var(--on-ink)"],.invert text.on-fill{stroke:none}
 /* except the ones printed ON an ink — there the ink is the backing */
 text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 /* plate text now resolves through --ground */
@@ -565,6 +566,39 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 }
 @media (prefers-reduced-motion:reduce){
   .dsw-caret,.dsw-opt,.dsw-handle{transition:none}
+}
+
+/* ─────────── phones: reflow rather than scroll where the figure allows ───────────
+   A 1000-unit chart cannot be read at a 327px stage, so most of them hold their
+   size and scroll. But a figure built from side-by-side panels can simply stack,
+   and the two figures made of HTML rows can reflow outright — those three show
+   the whole picture with no sideways movement at all. */
+@media (max-width:760px){
+  /* stacked charts opt out of the hold-and-scroll rule */
+  .fig-stage:has(>svg[data-stack]){overflow-x:visible}
+  .fig-stage>svg[data-stack]{min-width:0}
+  .fig:has(.fig-stage>svg[data-stack]) .fig-bar::before{content:none}
+  svg[data-stack] .pane{transform:var(--mt)}
+
+  /* the turn-taking figure: the name moves above its track, which hands the
+     track the whole width and stops the segment labels clipping */
+  .fig-stage>.turns{min-width:0}
+  .fig-stage:has(>.turns){overflow-x:visible}
+  .fig:has(.fig-stage>.turns) .fig-bar::before{content:none}
+  .trow{grid-template-columns:minmax(0,1fr);gap:5px}
+  .trow .tname{text-align:left;opacity:.85}
+  .taxis{grid-template-columns:minmax(0,1fr)}
+  .taxis .bar{grid-column:1}
+  .gaplab{font-size:10px}
+
+  /* the cycle bars: name and duration share a line above a full-width stack */
+  .fig-stage>.compbar{min-width:0}
+  .fig-stage:has(>.compbar){overflow-x:visible}
+  .fig:has(.fig-stage>.compbar) .fig-bar::before{content:none}
+  .crow{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px}
+  .crow .cn{grid-row:1;grid-column:1}
+  .crow .cq{grid-row:1;grid-column:2}
+  .cstack{grid-row:2;grid-column:1/-1}
 }
 
 /* ─────────── scrollbars ───────────
@@ -923,11 +957,11 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
         <div class="turns">
           <div class="trow">
             <p class="tname">Them</p>
-            <div class="track"><div class="seg k-pink" style="left:0;width:52%">Their turn · you are listening</div></div>
+            <div class="track"><div class="seg k-pink" style="left:0;width:52%">Their turn · listening</div></div>
           </div>
           <div class="trow">
             <p class="tname">You (inside)</p>
-            <div class="track"><div class="seg k-yellow" style="left:22%;width:36%">Planning your reply · already running</div></div>
+            <div class="track"><div class="seg k-yellow" style="left:22%;width:36%">Planning your reply</div></div>
           </div>
           <div class="trow">
             <p class="tname">You (out loud)</p>
@@ -1165,18 +1199,18 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
         <p class="lbl">Overprint · both forces high at once</p>
       </div>
       <div class="fig-stage">
-        <svg class="chart" viewBox="0 0 1000 210" role="img" aria-label="Three states shown as overlapping ink: pressure alone leads to sleep, arousal alone leads to alert wakefulness, and both together produce the wired and exhausted state.">
-          <g transform="translate(60,20)">
+        <svg class="chart" data-stack="0 0 260 600" viewBox="0 0 1000 210" role="img" aria-label="Three states shown as overlapping ink: pressure alone leads to sleep, arousal alone leads to alert wakefulness, and both together produce the wired and exhausted state.">
+          <g class="pane" style="--mt:translate(25px,10px)" transform="translate(60,20)">
             <rect class="fill" x="0" y="30" width="150" height="90" fill="var(--pink)"/>
             <text class="an-k on-fill" x="75" y="80" text-anchor="middle" fill="var(--ground)">Pressure only</text>
             <text class="ax-t" x="75" y="142" text-anchor="middle" fill="var(--ground)" fill-opacity=".65">you sleep</text>
           </g>
-          <g transform="translate(300,20)">
+          <g class="pane" style="--mt:translate(25px,180px)" transform="translate(300,20)">
             <rect class="fill" x="0" y="30" width="150" height="90" fill="var(--blue)"/>
             <text class="an-k on-fill" x="75" y="80" text-anchor="middle" fill="var(--ground)">Arousal only</text>
             <text class="ax-t" x="75" y="142" text-anchor="middle" fill="var(--ground)" fill-opacity=".65">alert, fine</text>
           </g>
-          <g transform="translate(560,20)" style="isolation:isolate">
+          <g class="pane" style="isolation:isolate;--mt:translate(25px,350px)" transform="translate(560,20)">
             <rect x="0" y="30" width="150" height="90" fill="var(--pink)"/>
             <rect class="fill" x="60" y="30" width="150" height="90" fill="var(--blue)" style="mix-blend-mode:multiply"/>
             <text class="an-k on-fill" x="105" y="80" text-anchor="middle" fill="var(--ground)">Both</text>
@@ -2125,6 +2159,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     if(tag==='input'||tag==='textarea'||e.target.isContentEditable)return;
     if(e.key>='1'&&e.key<='3')apply(DIRS[Number(e.key)-1].id,true);
   });
+
+  /* charts that carry a mobile arrangement swap their viewBox at the breakpoint;
+     viewBox is an attribute, so CSS cannot do this one */
+  (function(){
+    var wide=window.matchMedia('(min-width:761px)');
+    var svgs=document.querySelectorAll('svg[data-stack]');
+    for(var i=0;i<svgs.length;i++) svgs[i].setAttribute('data-vb', svgs[i].getAttribute('viewBox'));
+    function fit(){
+      for(var i=0;i<svgs.length;i++){
+        svgs[i].setAttribute('viewBox', wide.matches ? svgs[i].getAttribute('data-vb') : svgs[i].getAttribute('data-stack'));
+      }
+    }
+    fit();
+    if(wide.addEventListener)wide.addEventListener('change',fit);
+    else if(wide.addListener)wide.addListener(fit);
+  })();
 
   /* the top-right toggle writes data-theme; keep the tray row honest */
   new MutationObserver(syncModes).observe(root,{attributes:true,attributeFilter:['data-theme']});
