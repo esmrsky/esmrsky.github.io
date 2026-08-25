@@ -1,0 +1,231 @@
+/* ============================================================
+   FAITH — the three figures (preview only)
+
+   Diagrams of three things the page already argues: that a word
+   propagates through each hearer rather than stopping at them, that
+   fear is the same loop running the other way, and that the five
+   steps close into a circuit.
+
+   Everything is drawn from the tokens the site already defines, so
+   the eight directions restyle them for free; the dials below
+   (--fig-*) are what each direction re-points for its own drawing
+   language — stroke weight, dash, square or round nodes, glow.
+
+   Motion is SVG-internal (r, stroke-dashoffset, opacity), never a
+   layout transform, so a running figure cannot widen the document.
+   ============================================================ */
+
+.fig {
+  --fig-w: 1.5;            /* stroke weight */
+  --fig-dash: none;
+  --fig-node-rx: 50%;      /* 50% = round station, 0 = square */
+  --fig-glow: drop-shadow(0 0 7px color-mix(in srgb, var(--c, var(--gold)) 55%, transparent));
+  --fig-track-op: 0.62;
+  --fig-cycle: 7s;
+  --fig-accent: var(--c, var(--gold));
+
+  margin: 3rem 0;
+  padding: 1.5rem 1.4rem 1.3rem;
+  background: color-mix(in srgb, var(--c, var(--gold)) 3.5%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c, var(--gold)) 20%, var(--line));
+  border-radius: var(--r-lg);
+}
+
+.fig-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+.fig-num {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fig-accent) 56%, var(--ink));
+}
+.fig-title { font-family: var(--serif-display); font-size: 1.16rem; line-height: 1.25; color: var(--ink); }
+
+.fig-svg { width: 100%; height: auto; overflow: hidden; display: block; margin: 0.6rem 0 0.2rem; }
+.fig-svg-sq { max-width: 540px; margin-inline: auto; }
+
+.fig-cap {
+  margin-top: 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 68ch;
+}
+
+/* ---------- shared primitives ---------- */
+.fig-base, .fig-track, .fig-ring {
+  fill: none;
+  stroke: color-mix(in srgb, var(--fig-accent) 42%, var(--line));
+  stroke-width: var(--fig-w);
+  stroke-dasharray: var(--fig-dash);
+  opacity: var(--fig-track-op);
+}
+.fig-ticks line { stroke: color-mix(in srgb, var(--fig-accent) 50%, var(--line)); stroke-width: var(--fig-w); }
+
+.fig-node {
+  rx: var(--fig-node-rx);
+  ry: var(--fig-node-rx);
+  fill: var(--card);
+  stroke: color-mix(in srgb, var(--fig-accent) 78%, var(--ink));
+  stroke-width: calc(var(--fig-w) * 1.4);
+}
+.fig-node-src { fill: color-mix(in srgb, var(--fig-accent) 82%, var(--ink)); stroke: none; }
+
+/* Station names and refs are HTML, not SVG <text>. Faith's scripture linker walks
+   text nodes and wraps every reference in an HTML <span>/<a>; dropped inside an SVG
+   <text> that is a foreign-namespace child, so it renders as nothing and the ref
+   silently disappears. In HTML they become real reference links with the site's
+   verse tooltips, which is what they should have been. The SVG also carries
+   .no-reflink so the walker skips it entirely. */
+.fig-stations {
+  list-style: none;
+  display: grid;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  gap: 0 0.3rem;
+}
+.fig-stations-4 { grid-template-columns: repeat(4, 1fr); }
+.fig-stations-5 { grid-template-columns: repeat(5, 1fr); }
+.fig-stations li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  text-align: center;
+  padding: 0 2px;
+}
+.fig-st-name {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fig-accent) 52%, var(--ink));
+  text-wrap: balance;
+}
+.fig-st-ref { font-family: var(--sans); font-size: 0.74rem; line-height: 1.35; color: var(--ink-soft); }
+/* a mono direction sets these in a wider face; without this the four- and
+   five-column rows push past the card on a phone */
+.fig-st-name, .fig-st-ref { overflow-wrap: anywhere; }
+/* .ref-link is white-space:nowrap everywhere else on purpose — a reference should
+   not break across lines in prose. In a five-column station row it has to. */
+.fig-st-ref .ref-link { white-space: normal; }
+
+.fig-mid {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: var(--ink-faint);
+}
+.fig-return { letter-spacing: 0.17em; }
+
+/* the travelling pulse: a short dash chasing the path */
+.fig-comet {
+  fill: none;
+  stroke: var(--fig-accent);
+  stroke-width: calc(var(--fig-w) * 2.4);
+  stroke-linecap: round;
+  stroke-dasharray: 9 91;
+  stroke-dashoffset: 100;
+  filter: var(--fig-glow);
+}
+
+/* the expanding wavefronts */
+.fig-wave {
+  fill: none;
+  stroke: var(--fig-accent);
+  stroke-width: var(--fig-w);
+  r: 12;
+  opacity: 0;
+}
+
+.fig-ping {
+  fill: none;
+  stroke: var(--fig-accent);
+  stroke-width: var(--fig-w);
+  r: 9;
+  opacity: 0;
+}
+
+.fig-key {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0.5rem 0 0;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.fig-key li { display: flex; align-items: center; gap: 0.5rem; }
+.fig-key i {
+  width: 22px; height: 3px; flex: 0 0 22px;
+  border-radius: var(--fig-node-rx);
+  background: var(--fig-accent);
+}
+.fig-key-a i { background: color-mix(in srgb, var(--mir-a) 72%, var(--ink)); }
+.fig-key-b i { background: color-mix(in srgb, var(--mir-b) 72%, var(--ink)); }
+
+/* the mirror figure runs on the two mirror colours, not the section accent */
+.fig-mirror .fig-comet { stroke-width: calc(var(--fig-w) * 3); }
+.fig-mirror .fig-comet-a { stroke: color-mix(in srgb, var(--mir-a) 74%, var(--ink)); }
+.fig-mirror .fig-comet-b { stroke: color-mix(in srgb, var(--mir-b) 74%, var(--ink)); }
+
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .fig-comet-a { animation: fig-run var(--fig-cycle) linear infinite; }
+  .fig-comet-b { animation: fig-run-rev var(--fig-cycle) linear infinite; }
+  .fig-wave { animation: fig-out 4.2s cubic-bezier(.25,.6,.35,1) infinite; animation-delay: var(--wd, 0s); }
+  .fig-wave-2 { animation-name: fig-out-2; }
+  .fig-ping { animation: fig-ping var(--fig-cycle) ease-out infinite; animation-delay: var(--d, 0s); }
+  .fig-node:not(.fig-node-src) { animation: fig-lit var(--fig-cycle) ease-out infinite; animation-delay: var(--d, var(--hd, 0s)); }
+  .fig-emitter .fig-node:not(.fig-node-src) { animation-duration: 4.2s; }
+}
+
+@keyframes fig-run   { to { stroke-dashoffset: 0; } }
+@keyframes fig-run-rev { to { stroke-dashoffset: 200; } }
+
+@keyframes fig-out {
+  0%   { r: 11; opacity: 0; }
+  9%   { opacity: 0.66; }
+  100% { r: 78; opacity: 0; }
+}
+@keyframes fig-out-2 {
+  0%   { r: 9; opacity: 0; }
+  9%   { opacity: 0.5; }
+  100% { r: 44; opacity: 0; }
+}
+@keyframes fig-ping {
+  0%   { r: 9; opacity: 0.85; }
+  9%   { r: 26; opacity: 0; }
+  100% { r: 26; opacity: 0; }
+}
+@keyframes fig-lit {
+  0%   { fill: color-mix(in srgb, var(--fig-accent) 78%, var(--ink)); }
+  9%   { fill: var(--card); }
+  100% { fill: var(--card); }
+}
+
+/* At rest — reduced motion, or an unsupported browser — the diagram still
+   has to read: the pulse sits at the first station rather than vanishing. */
+@media (prefers-reduced-motion: reduce) {
+  .fig-comet { stroke-dashoffset: 92; }
+  .fig-wave { opacity: 0.3; r: 30; }
+  .fig-emit .fig-wave:nth-of-type(2) { r: 52; opacity: 0.19; }
+  .fig-emit .fig-wave:nth-of-type(3) { r: 74; opacity: 0.1; }
+}
+
+@media (max-width: 620px) {
+  .fig { padding: 1.15rem 1rem 1.05rem; margin: 2.2rem 0; }
+  .fig-mid { font-size: 12px; }
+  .fig-return { font-size: 8.5px; letter-spacing: 0.1em; }
+  .fig-cap { font-size: 0.88rem; }
+  .fig-st-name { font-size: 0.58rem; letter-spacing: 0.05em; }
+  .fig-st-ref { font-size: 0.62rem; }
+  .fig-stations { gap: 0 0.15rem; }
+  .fig-stations li { padding: 0; }
+}

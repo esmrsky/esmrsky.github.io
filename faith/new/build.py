@@ -7,7 +7,8 @@ not a second copy of the writing. This script takes ../index.html and
 ../miracles.html verbatim and adds exactly four things:
 
   1. asset paths pointed one level up (styles.css, site.js, scripture.js)
-  2. the direction typefaces + themes.css after the site's own stylesheet
+  2. the direction typefaces, themes.css and figures.css after the site's own
+     stylesheet, and the three figures at their anchors in the prose
   3. a first-paint script that sets data-dir before CSS loads (no flash)
   4. the floating switcher markup and switcher.js before </body>
 
@@ -84,6 +85,29 @@ SWITCHER = """
 """
 
 
+# Each figure goes immediately before/after a line of the argument it draws.
+# The anchors are prose, so a rewrite of that sentence in /faith/ will make the
+# build fail loudly here rather than silently dropping a figure.
+FIGURE_ANCHORS = {
+    "index.html": [
+        ("emitter", "That is the founding physics of Scripture:</p>", "after"),
+        ("mirror", '    <div class="mirror reveal">', "before"),
+        ("circuit", '    <div class="steps">', "before"),
+    ],
+    "miracles.html": [],
+}
+
+
+def figures() -> dict:
+    raw = (HERE / "figures.html").read_text(encoding="utf-8")
+    out = {}
+    for key in ("emitter", "mirror", "circuit"):
+        a = raw.index(f"<!--FIG:{key}-->") + len(f"<!--FIG:{key}-->")
+        b = raw.index(f"<!--/FIG:{key}-->")
+        out[key] = raw[a:b].strip("\n")
+    return out
+
+
 def build(name: str) -> None:
     src = SRC / name
     html = src.read_text(encoding="utf-8")
@@ -96,7 +120,8 @@ def build(name: str) -> None:
     # 2 + 3. the theme layer, its typefaces, and the first-paint script
     html = html.replace(
         '<link rel="stylesheet" href="../styles.css">',
-        DIR_FONTS + '\n<link rel="stylesheet" href="../styles.css">\n<link rel="stylesheet" href="themes.css">',
+        DIR_FONTS + '\n<link rel="stylesheet" href="../styles.css">'
+        '\n<link rel="stylesheet" href="figures.css">\n<link rel="stylesheet" href="themes.css">',
         1,
     )
     html = html.replace(
@@ -113,7 +138,15 @@ def build(name: str) -> None:
         count=1,
     )
 
-    # 4. the switcher
+    # 4. the figures
+    figs = figures()
+    for key, anchor, where in FIGURE_ANCHORS[name]:
+        if html.count(anchor) != 1:
+            sys.exit(f"{name}: anchor for figure '{key}' matched {html.count(anchor)} times, expected 1")
+        block = figs[key]
+        html = html.replace(anchor, f"{anchor}\n\n{block}\n" if where == "after" else f"{block}\n\n{anchor}", 1)
+
+    # 5. the switcher
     html = html.replace("</body>", SWITCHER + "\n</body>", 1)
 
     (HERE / name).write_text(html, encoding="utf-8")
