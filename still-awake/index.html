@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Why You're Still Awake — arousal, absorption and the architecture of a night</title>
 <meta name="description" content="Two forces decide whether you are asleep. A colour-coded walk through one night: arousal, sleep pressure, why conversation wakes you and a screen doesn't, and what a short night actually removes.">
-<script>(function(){try{var s=localStorage.getItem('sa-theme');document.documentElement.setAttribute('data-theme',s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<script>(function(){var r=document.documentElement;try{var s=localStorage.getItem('sa-theme');r.setAttribute('data-theme',s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));var d=localStorage.getItem('sa-dir');if(d&&d!=='riso')r.setAttribute('data-dir',d);}catch(e){r.setAttribute('data-theme','light');}})();</script>
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Why You're Still Awake — arousal, absorption and the architecture of a night">
@@ -35,6 +35,11 @@
   --yellow:#FFD029;
   --green:#14A06A;
   --on-ink:#111014;   /* type printed ON an ink — never flips */
+  /* the inverted plate: fixed across themes, redefined per style */
+  --fg:var(--ink);--surface:var(--ground);
+  --plate-bg:#111014;--plate-fg:#EEF0F6;
+  --plate-1:#2933F0;--plate-2:#FF3E8A;--plate-3:#FFD029;--plate-4:#14A06A;
+  --plate-1t:#8A92FF;
   --edge:rgba(17,16,20,.18);
   --edge-hi:rgba(17,16,20,.42);
   --display:"Archivo",system-ui,sans-serif;
@@ -251,8 +256,8 @@ em{font-style:normal;font-weight:500}
 .an-t,.ax-t,.an-k{paint-order:stroke fill;stroke:var(--ground);stroke-width:4px;stroke-linejoin:round}
 .invert .an-t,.invert .ax-t,.invert .an-k{stroke:var(--ink)}
 /* except the ones printed ON an ink — there the ink is the backing */
-text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{stroke:none}
-.invert text[fill="#EEF0F6"]{stroke:var(--ink)}
+text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
+/* plate text now resolves through --ground */
 
 .ln{fill:none;stroke-width:2.4;stroke-linecap:square}
 .ln.thin{stroke-width:1.6}
@@ -315,34 +320,37 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
 
 /* ─────────── inverted block ─────────── */
 .invert{
-  /* dark surface by design — freeze the palette inside it so the block, and
-     every figure in it, renders identically in both themes */
-  --ground:#EEF0F6;--ink:#111014;
-  --blue:#2933F0;--pink:#FF3E8A;--yellow:#FFD029;--green:#14A06A;
-  --edge:rgba(238,240,246,.22);--edge-hi:rgba(238,240,246,.42);
+  /* A plate: its own surface, independent of the theme, so the block and every
+     figure in it render identically in light and dark. The values come from the
+     active style via --plate-*, which is what lets a third style restyle it. */
+  --ground:var(--plate-fg);--ink:var(--plate-bg);
+  --blue:var(--plate-1);--pink:var(--plate-2);--yellow:var(--plate-3);--green:var(--plate-4);
+  --fg:var(--plate-fg);--surface:var(--plate-bg);
+  --edge:color-mix(in srgb,var(--plate-fg) 22%,transparent);
+  --edge-hi:color-mix(in srgb,var(--plate-fg) 42%,transparent);
   background:var(--ink);color:var(--ground);margin-top:clamp(52px,8vw,110px);
 }
 .invert .sec{padding-top:clamp(44px,7vw,88px)}
 .invert .eyebrow .tick{background:var(--yellow)}
 .invert .eyebrow .lbl{color:var(--yellow)}
 .invert .sec-head .stand{opacity:.66}
-.invert .fig{border-color:rgba(238,240,246,.22);background:transparent}
-.invert .fig-bar{border-color:rgba(238,240,246,.22)}
-.invert .fig-cap{border-color:rgba(238,240,246,.22);opacity:.82}
+.invert .fig{border-color:var(--edge);background:transparent}
+.invert .fig-bar{border-color:var(--edge)}
+.invert .fig-cap{border-color:var(--edge);opacity:.82}
 .invert .fig-cap b{background:var(--yellow);color:var(--ink)}
-.invert .grid,.invert .mech{background:rgba(238,240,246,.22);border-color:rgba(238,240,246,.22)}
+.invert .grid,.invert .mech{background:var(--edge);border-color:var(--edge)}
 .invert .cell,.invert .mrow{background:var(--ink)}
 .invert .axis{stroke:rgba(238,240,246,.4)}
 .invert .gridline{stroke:rgba(238,240,246,.18)}
 .invert .ax-t,.invert .an-t{fill:var(--ground);fill-opacity:.8}
-.invert .claim{border-top-color:var(--ground);border-bottom-color:rgba(238,240,246,.22)}
+.invert .claim{border-top-color:var(--ground);border-bottom-color:var(--edge)}
 
 /* the frozen palette puts blue type on near-black inside these blocks; lift it
    where the ink is type rather than a fill, and give the N2 chip a visible one */
-.invert .fig-bar .lbl.k{color:#8A92FF}
-.invert .mrow .via{color:#8A92FF;opacity:1}
-.invert .cseg.n2{background:rgba(238,240,246,.16);color:#EEF0F6}
-.invert .cseg.n3{color:#06140D}
+.invert .fig-bar .lbl.k{color:var(--plate-1t)}
+.invert .mrow .via{color:var(--plate-1t);opacity:1}
+.invert .cseg.n2{background:color-mix(in srgb,var(--plate-fg) 16%,transparent);color:var(--plate-fg)}
+.invert .cseg.n3{color:var(--plate-bg)}
 
 /* ─────────── phones: figures hold their size ───────────
    A 1000-unit viewBox scaled into a 327px stage renders its 12px labels at 3.9px.
@@ -361,6 +369,202 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
     font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
     text-transform:uppercase;opacity:.6;white-space:nowrap;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STYLES — three directions on one document.
+   `data-dir` on <html> picks the palette and the faces; `data-theme`
+   still picks light or dark within it, so each direction carries two
+   colour blocks. The four ink meanings never move: whatever the
+   direction, ink 1 is arousal, 2 is pressure, 3 is generation,
+   4 is restoration. Only their values change.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── PRISM · five-hue index, flat fills, report ── */
+[data-dir="prism"]{
+  --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
+  --body:"Chivo",system-ui,sans-serif;
+  --mono:"Chivo Mono",ui-monospace,monospace;
+  --ground:#FFFFFF;--surface:#F4F5F8;--ink:#111114;
+  --edge:rgba(17,17,20,.15);--edge-hi:rgba(17,17,20,.40);
+  --blue:#0B4CFF;--pink:#D42D00;--yellow:#B87400;--green:#00875F;
+  --on-ink:#FFFFFF;
+  --plate-bg:#0C0C10;--plate-fg:#F2F2F5;
+  --plate-1:#5B85FF;--plate-2:#FF7A4D;--plate-3:#FFC94D;--plate-4:#2FD9A4;--plate-1t:#8FA9FF;
+}
+[data-dir="prism"][data-theme="dark"]{
+  --ground:#0C0C10;--surface:#16161C;--ink:#F2F2F5;
+  --edge:rgba(242,242,245,.17);--edge-hi:rgba(242,242,245,.42);
+  --blue:#5B85FF;--pink:#FF7A4D;--yellow:#FFC94D;--green:#2FD9A4;
+  --on-ink:#0C0C10;
+  --plate-bg:#1B1B22;--plate-fg:#F2F2F5;
+}
+/* Archivo's width axis does not exist on Bricolage; drive weight instead */
+[data-dir="prism"] .dsp,[data-dir="prism"] .bigtype h1,[data-dir="prism"] .sec-head h2,
+[data-dir="prism"] .cell h3,[data-dir="prism"] .optitle{font-variation-settings:"wght" 800;font-weight:800}
+[data-dir="prism"] .claim p{font-variation-settings:"wght" 600;font-weight:600}
+/* flat fills only — the overprint reads as stacking, not multiplying */
+[data-dir="prism"] .blob,[data-dir="prism"] .solo{mix-blend-mode:normal;opacity:.76}
+[data-dir="prism"] .leg .chip{height:12px}
+[data-dir="prism"][data-theme] .invert .cseg.rem{color:var(--plate-bg)}
+[data-dir="prism"][data-theme] .cell.on-yellow .tagm{opacity:.95}
+[data-dir="prism"][data-theme] .cell.on-yellow p{opacity:1}
+
+/* ── MARGIN · text serif, apparatus, relations ── */
+[data-dir="margin"]{
+  --display:"Spectral",Georgia,"Times New Roman",serif;
+  --body:"Literata",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ground:#FBFBF9;--surface:#FFFFFF;--ink:#14141A;
+  --edge:rgba(20,20,26,.16);--edge-hi:rgba(20,20,26,.38);
+  --blue:#1B3BFF;--pink:#D6002E;--yellow:#8A5A00;--green:#007A5E;
+  --on-ink:#FFFFFF;
+  --plate-bg:#EFEEE8;--plate-fg:#14141A;
+  --plate-1:#1B3BFF;--plate-2:#D6002E;--plate-3:#8A5A00;--plate-4:#007A5E;--plate-1t:#1B3BFF;
+}
+[data-dir="margin"][data-theme="dark"]{
+  --ground:#131318;--surface:#1C1C22;--ink:#EDEDF0;
+  --edge:rgba(237,237,240,.16);--edge-hi:rgba(237,237,240,.38);
+  --blue:#7E97FF;--pink:#FF5470;--yellow:#D9A441;--green:#35C79A;
+  --on-ink:#131318;
+  --plate-bg:#20202A;--plate-fg:#EDEDF0;
+  --plate-1:#7E97FF;--plate-2:#FF5470;--plate-3:#D9A441;--plate-4:#35C79A;--plate-1t:#7E97FF;
+}
+/* Spectral is static: no axes to drive, and the masthead stops shouting */
+[data-dir="margin"] .dsp,[data-dir="margin"] .sec-head h2,[data-dir="margin"] .cell h3,
+[data-dir="margin"] .optitle{font-variation-settings:normal;font-weight:700}
+[data-dir="margin"] .claim p{font-variation-settings:normal;font-weight:600}
+[data-dir="margin"] .bigtype h1{
+  font-variation-settings:normal;font-weight:700;text-transform:none;
+  letter-spacing:-.022em;line-height:.98;font-size:clamp(2.5rem,9.6vw,7rem);
+}
+[data-dir="margin"] .sec-head h2{text-transform:none;letter-spacing:-.016em;line-height:1.02}
+[data-dir="margin"] .cell h3{text-transform:none;letter-spacing:0;font-size:1.06rem}
+[data-dir="margin"] .optitle{text-transform:none;letter-spacing:0;font-size:1.06rem}
+/* every stroke is a hairline, and no fill goes above a fifth */
+[data-dir="margin"] .ln{stroke-width:1.5}
+[data-dir="margin"] .ln.thin{stroke-width:1}
+[data-dir="margin"] .mast{border-bottom-width:1px}
+[data-dir="margin"] .claim{border-top-width:1px}
+[data-dir="margin"] .foot{border-top-width:1px}
+[data-dir="margin"] rect.fill{fill-opacity:.17}
+[data-dir="margin"][data-theme] text.on-fill{fill:var(--fg)}
+[data-dir="margin"][data-theme] .cell.on-blue{background:color-mix(in srgb,var(--blue) 13%,var(--surface));color:var(--fg)}
+[data-dir="margin"][data-theme] .cell.on-pink{background:color-mix(in srgb,var(--pink) 13%,var(--surface));color:var(--fg)}
+[data-dir="margin"][data-theme] .cell.on-yellow{background:color-mix(in srgb,var(--yellow) 15%,var(--surface));color:var(--fg)}
+[data-dir="margin"] .cell.on-blue p,[data-dir="margin"] .cell.on-blue .tagm,
+[data-dir="margin"] .cell.on-pink p{opacity:.82}
+[data-dir="margin"][data-theme] .seg{color:var(--fg)}
+[data-dir="margin"] .seg.k-pink{background:color-mix(in srgb,var(--pink) 20%,var(--surface))}
+[data-dir="margin"] .seg.k-yellow{background:color-mix(in srgb,var(--yellow) 22%,var(--surface))}
+[data-dir="margin"] .seg.k-blue{background:color-mix(in srgb,var(--blue) 20%,var(--surface))}
+[data-dir="margin"][data-theme] .cseg{color:var(--fg)}
+[data-dir="margin"] .cseg.n3{background:color-mix(in srgb,var(--green) 24%,var(--surface))}
+[data-dir="margin"] .cseg.rem{background:color-mix(in srgb,var(--blue) 24%,var(--surface))}
+[data-dir="margin"][data-theme] .invert .cseg.n3,[data-dir="margin"][data-theme] .invert .cseg.n2{color:var(--fg)}
+/* the highlight becomes a mark, which is where Margin puts its colour */
+[data-dir="margin"][data-theme] .fig-cap b,[data-dir="margin"][data-theme] ::selection{
+  background:color-mix(in srgb,var(--pink) 18%,transparent);color:var(--fg);
+}
+[data-dir="margin"] .blob{mix-blend-mode:multiply;opacity:.55}
+[data-dir="margin"] .leg .chip{height:4px}
+
+/* ═══════════════════════════════════════════════════════════
+   STYLE SWITCHER
+   Neutral chrome on purpose: it must read identically in all three
+   directions, so it does not inherit the page tokens. Same shape as
+   the one on /faith/new/.
+   Desktop: a floating bar at the bottom, style only — the theme has
+   its own control top-right. Phone: that top-right button becomes
+   this handle, and the tray carries the theme row as well.
+   ═══════════════════════════════════════════════════════════ */
+.dsw{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:200;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  width:min(560px,calc(100vw - 24px));
+  font-family:"Space Mono",ui-monospace,SFMono-Regular,monospace;
+  color:#F2F2F4;pointer-events:none;
+}
+.dsw *{box-sizing:border-box}
+@media print{.dsw{display:none}}
+
+.dsw-handle{
+  pointer-events:auto;display:inline-flex;align-items:center;gap:12px;
+  min-height:52px;padding:8px 16px 8px 12px;
+  border:1px solid rgba(255,255,255,.18);border-radius:999px;
+  background:rgba(17,17,20,.92);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:0 10px 34px rgba(0,0,0,.34);
+  color:inherit;font:inherit;cursor:pointer;touch-action:manipulation;
+  transition:border-color .18s ease,background .18s ease;
+}
+.dsw-handle:hover{border-color:rgba(255,255,255,.36)}
+.dsw-handle:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.dsw-chips{display:inline-flex;gap:3px;flex:0 0 auto}
+.dsw-chips i{width:9px;height:22px;border-radius:2px;display:block}
+.dsw-chips i:nth-child(1){background:var(--sw1,#2933F0)}
+.dsw-chips i:nth-child(2){background:var(--sw2,#FF3E8A)}
+.dsw-chips i:nth-child(3){background:var(--sw3,#FFD029)}
+.dsw-label{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;text-align:left}
+.dsw-kicker{font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.55}
+.dsw-name{font-size:13px;letter-spacing:-.01em;white-space:nowrap}
+.dsw-caret{width:15px;height:15px;opacity:.6;transition:transform .22s cubic-bezier(.2,.7,.3,1)}
+.dsw[data-open="true"] .dsw-caret{transform:rotate(180deg)}
+.dsw-icon{display:none;width:18px;height:18px}
+
+.dsw-tray{
+  pointer-events:auto;width:100%;padding:12px;
+  border:1px solid rgba(255,255,255,.15);border-radius:16px;
+  background:rgba(17,17,20,.95);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 18px 54px rgba(0,0,0,.44);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+  max-height:min(64vh,470px);overflow-y:auto;overscroll-behavior:contain;
+}
+.dsw-tray[hidden]{display:none}
+.dsw-opt{
+  appearance:none;display:flex;flex-direction:column;gap:7px;min-height:62px;
+  padding:9px 10px;border:1px solid rgba(255,255,255,.13);border-radius:10px;
+  background:rgba(255,255,255,.035);color:inherit;font:inherit;text-align:left;
+  cursor:pointer;touch-action:manipulation;
+  transition:border-color .15s ease,background .15s ease,scale .15s ease;
+}
+.dsw-opt:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.32)}
+.dsw-opt:active{scale:.985}
+.dsw-opt:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.dsw-opt[aria-selected="true"]{border-color:#fff;background:rgba(255,255,255,.14)}
+.dsw-sw{display:flex;gap:3px;height:16px}
+.dsw-sw span{flex:1;border-radius:2px;min-width:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.dsw-opt-name{font-size:12px;letter-spacing:-.01em}
+.dsw-opt-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;opacity:.55;line-height:1.3}
+.dsw-opt-num{opacity:.62;margin-right:5px}
+
+/* theme row — only on the phone, where this handle replaces the toggle */
+.dsw-modes{display:none;grid-column:1/-1;grid-template-columns:1fr 1fr;gap:6px;
+  padding-bottom:9px;margin-bottom:2px;border-bottom:1px solid rgba(255,255,255,.13)}
+.dsw-mode{
+  appearance:none;min-height:40px;border:1px solid rgba(255,255,255,.13);border-radius:9px;
+  background:rgba(255,255,255,.035);color:inherit;font:inherit;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;cursor:pointer;touch-action:manipulation;
+}
+.dsw-mode[aria-pressed="true"]{border-color:#fff;background:rgba(255,255,255,.14)}
+
+@media (max-width:760px){
+  .dsw{
+    left:auto;right:10px;top:10px;bottom:auto;transform:none;
+    width:auto;align-items:flex-end;flex-direction:column-reverse;
+  }
+  .dsw-handle{min-height:38px;width:38px;padding:0;justify-content:center;border-radius:999px}
+  .dsw-chips,.dsw-label,.dsw-caret{display:none}
+  .dsw-icon{display:block}
+  .dsw-tray{width:min(320px,calc(100vw - 20px));grid-template-columns:1fr}
+  .dsw-modes{display:grid}
+  .dsw-opt{min-height:52px;flex-direction:row;align-items:center;gap:9px}
+  .dsw-opt .dsw-sw{width:44px;flex:0 0 44px;height:14px}
+  .dsw-opt-tag{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .dsw-caret,.dsw-opt,.dsw-handle{transition:none}
 }
 
 /* ─────────── scrollbars ───────────
@@ -421,6 +625,9 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
 [data-theme="dark"] .theme-btn .moon{display:none}
 @media (pointer:coarse){.theme-btn:active{scale:.94}}
 @media (max-width:560px){.theme-btn{top:10px;right:10px;width:38px;height:38px}}
+/* the phone folds the theme control into the style menu; this rule has to sit
+   below .theme-btn's own block, because a media query adds no specificity */
+@media (max-width:760px){.theme-btn{display:none}}
 
 /* ─────────── dark ─────────── */
 :root{--tb-bg:#fff;--tb-bd:var(--edge-hi);--tb-fg:rgba(17,16,20,.6);--tb-hov:var(--blue)}
@@ -502,22 +709,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
     <dl class="legend">
       <div class="leg">
         <span class="chip" style="background:var(--blue)"></span>
-        <dt>Blue · arousal</dt>
+        <dt><span class="hue-name" data-ink="1">Blue</span> · arousal</dt>
         <dd>The drive to stay awake. Brainstem to cortex, raised by effort, novelty and threat.</dd>
       </div>
       <div class="leg">
         <span class="chip" style="background:var(--pink)"></span>
-        <dt>Pink · pressure</dt>
+        <dt><span class="hue-name" data-ink="2">Pink</span> · pressure</dt>
         <dd>Adenosine building all day. The debt. It never goes down while you are awake.</dd>
       </div>
       <div class="leg">
         <span class="chip" style="background:var(--yellow)"></span>
-        <dt>Yellow · generation</dt>
+        <dt><span class="hue-name" data-ink="3">Yellow</span> · generation</dt>
         <dd>Active production rather than reception. The load that separates talking from watching.</dd>
       </div>
       <div class="leg">
         <span class="chip" style="background:var(--green)"></span>
-        <dt>Green · restoration</dt>
+        <dt><span class="hue-name" data-ink="4">Green</span> · restoration</dt>
         <dd>Sleep actually banked. Slow wave clearance, consolidation, the part you cannot fake.</dd>
       </div>
     </dl>
@@ -804,17 +1011,17 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
 
           <!-- nodes -->
           <g>
-            <rect x="242" y="8" width="116" height="30" fill="var(--yellow)"/>
-            <text class="an-k" x="300" y="27" text-anchor="middle" fill="var(--on-ink)">Effort</text>
+            <rect class="fill" x="242" y="8" width="116" height="30" fill="var(--yellow)"/>
+            <text class="an-k on-fill" x="300" y="27" text-anchor="middle" fill="var(--on-ink)">Effort</text>
 
-            <rect x="392" y="135" width="132" height="30" fill="var(--blue)"/>
-            <text class="an-k" x="458" y="154" text-anchor="middle" fill="var(--ground)">Small result</text>
+            <rect class="fill" x="392" y="135" width="132" height="30" fill="var(--blue)"/>
+            <text class="an-k on-fill" x="458" y="154" text-anchor="middle" fill="var(--ground)">Small result</text>
 
-            <rect x="234" y="262" width="132" height="30" fill="var(--pink)"/>
-            <text class="an-k" x="300" y="281" text-anchor="middle" fill="var(--ground)">Dopamine</text>
+            <rect class="fill" x="234" y="262" width="132" height="30" fill="var(--pink)"/>
+            <text class="an-k on-fill" x="300" y="281" text-anchor="middle" fill="var(--ground)">Dopamine</text>
 
-            <rect x="80" y="135" width="132" height="30" fill="var(--ink)"/>
-            <text class="an-k" x="146" y="154" text-anchor="middle" fill="var(--ground)">Wanting more</text>
+            <rect class="fill" x="80" y="135" width="132" height="30" fill="var(--ink)"/>
+            <text class="an-k on-fill" x="146" y="154" text-anchor="middle" fill="var(--ground)">Wanting more</text>
           </g>
           <!-- direction arrows -->
           <g fill="var(--ink)" fill-opacity=".35">
@@ -912,11 +1119,11 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
         <svg class="chart" viewBox="0 0 1000 260" role="img" aria-label="A fear response spikes sharply then decays, while a bladder signal ratchets upward in steps without decaying.">
           <!-- left: fear -->
           <g>
-            <text class="an-k" x="40" y="18" fill="#FF3E8A">Fear · single event</text>
+            <text class="an-k" x="40" y="18" fill="var(--pink)">Fear · single event</text>
             <line class="axis" x1="40" y1="200" x2="450" y2="200"/>
             <line class="axis" x1="40" y1="30" x2="40" y2="200"/>
-            <path class="ln trace" stroke="#FF3E8A" d="M40 178 L150 176 L172 44 L186 60 L210 96 L250 124 L300 142 L360 150 L450 154"/>
-            <line x1="40" y1="178" x2="450" y2="178" stroke="#EEF0F6" stroke-opacity=".3" stroke-width="1" stroke-dasharray="3 5"/>
+            <path class="ln trace" stroke="var(--pink)" d="M40 178 L150 176 L172 44 L186 60 L210 96 L250 124 L300 142 L360 150 L450 154"/>
+            <line x1="40" y1="178" x2="450" y2="178" stroke="var(--ground)" stroke-opacity=".3" stroke-width="1" stroke-dasharray="3 5"/>
             <text class="ax-t" x="456" y="186">baseline</text>
             <text class="ax-t" x="456" y="146">never quite</text>
             <text class="ax-t" x="456" y="163">returns</text>
@@ -924,11 +1131,11 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
           </g>
           <!-- right: bladder -->
           <g>
-            <text class="an-k" x="560" y="18" fill="#FFD029">Full bladder · escalating</text>
+            <text class="an-k" x="560" y="18" fill="var(--yellow)">Full bladder · escalating</text>
             <line class="axis" x1="560" y1="200" x2="960" y2="200"/>
             <line class="axis" x1="560" y1="30" x2="560" y2="200"/>
-            <path class="ln trace" stroke="#FFD029" style="animation-delay:-1.4s" d="M560 182 L620 182 L620 158 L690 158 L690 128 L760 128 L760 92 L830 92 L830 52 L960 52"/>
-            <g fill="#FF3E8A">
+            <path class="ln trace" stroke="var(--yellow)" style="animation-delay:-1.4s" d="M560 182 L620 182 L620 158 L690 158 L690 128 L760 128 L760 92 L830 92 L830 52 L960 52"/>
+            <g fill="var(--pink)">
               <circle cx="620" cy="158" r="3.4"/><circle cx="690" cy="128" r="3.4"/>
               <circle cx="760" cy="92" r="3.4"/><circle cx="830" cy="52" r="3.4"/>
             </g>
@@ -960,22 +1167,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
       <div class="fig-stage">
         <svg class="chart" viewBox="0 0 1000 210" role="img" aria-label="Three states shown as overlapping ink: pressure alone leads to sleep, arousal alone leads to alert wakefulness, and both together produce the wired and exhausted state.">
           <g transform="translate(60,20)">
-            <rect x="0" y="30" width="150" height="90" fill="#FF3E8A"/>
-            <text class="an-k" x="75" y="80" text-anchor="middle" fill="#EEF0F6">Pressure only</text>
-            <text class="ax-t" x="75" y="142" text-anchor="middle" fill="#EEF0F6" fill-opacity=".65">you sleep</text>
+            <rect class="fill" x="0" y="30" width="150" height="90" fill="var(--pink)"/>
+            <text class="an-k on-fill" x="75" y="80" text-anchor="middle" fill="var(--ground)">Pressure only</text>
+            <text class="ax-t" x="75" y="142" text-anchor="middle" fill="var(--ground)" fill-opacity=".65">you sleep</text>
           </g>
           <g transform="translate(300,20)">
-            <rect x="0" y="30" width="150" height="90" fill="#2933F0"/>
-            <text class="an-k" x="75" y="80" text-anchor="middle" fill="#EEF0F6">Arousal only</text>
-            <text class="ax-t" x="75" y="142" text-anchor="middle" fill="#EEF0F6" fill-opacity=".65">alert, fine</text>
+            <rect class="fill" x="0" y="30" width="150" height="90" fill="var(--blue)"/>
+            <text class="an-k on-fill" x="75" y="80" text-anchor="middle" fill="var(--ground)">Arousal only</text>
+            <text class="ax-t" x="75" y="142" text-anchor="middle" fill="var(--ground)" fill-opacity=".65">alert, fine</text>
           </g>
           <g transform="translate(560,20)" style="isolation:isolate">
-            <rect x="0" y="30" width="150" height="90" fill="#FF3E8A"/>
-            <rect x="60" y="30" width="150" height="90" fill="#2933F0" style="mix-blend-mode:multiply"/>
-            <text class="an-k" x="105" y="80" text-anchor="middle" fill="#EEF0F6">Both</text>
-            <text class="ax-t" x="105" y="142" text-anchor="middle" fill="#EEF0F6" fill-opacity=".65">wired and exhausted</text>
-            <line x1="105" y1="150" x2="105" y2="170" stroke="#FFD029" stroke-width="1.5"/>
-            <text class="an-t" x="105" y="186" text-anchor="middle" fill="#FFD029">the worst outcome</text>
+            <rect x="0" y="30" width="150" height="90" fill="var(--pink)"/>
+            <rect class="fill" x="60" y="30" width="150" height="90" fill="var(--blue)" style="mix-blend-mode:multiply"/>
+            <text class="an-k on-fill" x="105" y="80" text-anchor="middle" fill="var(--ground)">Both</text>
+            <text class="ax-t" x="105" y="142" text-anchor="middle" fill="var(--ground)" fill-opacity=".65">wired and exhausted</text>
+            <line x1="105" y1="150" x2="105" y2="170" stroke="var(--yellow)" stroke-width="1.5"/>
+            <text class="an-t" x="105" y="186" text-anchor="middle" fill="var(--yellow)">the worst outcome</text>
           </g>
         </svg>
       </div>
@@ -1155,17 +1362,17 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
             <circle r="7" fill="var(--pink)"/>
           </g>
           <g>
-            <rect x="340" y="0" width="160" height="34" fill="var(--ink)"/>
-            <text class="an-k" x="420" y="22" text-anchor="middle" fill="var(--ground)">Notice you're awake</text>
+            <rect class="fill" x="340" y="0" width="160" height="34" fill="var(--ink)"/>
+            <text class="an-k on-fill" x="420" y="22" text-anchor="middle" fill="var(--ground)">Notice you're awake</text>
 
-            <rect x="546" y="143" width="150" height="34" fill="var(--yellow)"/>
-            <text class="an-k" x="621" y="165" text-anchor="middle" fill="var(--on-ink)">Try harder</text>
+            <rect class="fill" x="546" y="143" width="150" height="34" fill="var(--yellow)"/>
+            <text class="an-k on-fill" x="621" y="165" text-anchor="middle" fill="var(--on-ink)">Try harder</text>
 
-            <rect x="330" y="286" width="180" height="34" fill="var(--ink)"/>
-            <text class="an-k" x="420" y="308" text-anchor="middle" fill="var(--ground)">Check if it's working</text>
+            <rect class="fill" x="330" y="286" width="180" height="34" fill="var(--ink)"/>
+            <text class="an-k on-fill" x="420" y="308" text-anchor="middle" fill="var(--ground)">Check if it's working</text>
 
-            <rect x="150" y="143" width="150" height="34" fill="var(--blue)"/>
-            <text class="an-k" x="225" y="165" text-anchor="middle" fill="var(--ground)">Arousal rises</text>
+            <rect class="fill" x="150" y="143" width="150" height="34" fill="var(--blue)"/>
+            <text class="an-k on-fill" x="225" y="165" text-anchor="middle" fill="var(--ground)">Arousal rises</text>
           </g>
 
           <!-- exit -->
@@ -1276,8 +1483,8 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
 
           <!-- write it down marker -->
           <line x1="600" y1="40" x2="600" y2="248" stroke="var(--green)" stroke-width="1" stroke-dasharray="3 4"/>
-          <rect x="606" y="40" width="188" height="42" fill="var(--green)"/>
-          <text class="an-k" x="700" y="66" text-anchor="middle" fill="var(--ground)">Written down. Dropped.</text>
+          <rect class="fill" x="606" y="40" width="188" height="42" fill="var(--green)"/>
+          <text class="an-k on-fill" x="700" y="66" text-anchor="middle" fill="var(--ground)">Written down. Dropped.</text>
 
           <!-- travelling dot -->
           <circle class="descend" r="6" fill="var(--ink)" style="offset-path:path('M60 60 C130 92 180 130 240 156 L282 84 C320 120 350 152 400 176 L446 96 C486 128 520 158 570 182 C640 210 760 218 960 220');"/>
@@ -1385,30 +1592,30 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
           </g>
 
           <!-- REM bands highlighted -->
-          <g fill="#2933F0" fill-opacity=".9">
+          <g fill="var(--blue)" fill-opacity=".9">
             <rect x="272" y="94" width="34" height="12"/>
             <rect x="440" y="94" width="58" height="12"/>
             <rect x="608" y="94" width="86" height="12"/>
             <rect x="790" y="94" width="120" height="12"/>
           </g>
           <!-- deep bands -->
-          <g fill="#14A06A" fill-opacity=".9">
+          <g fill="var(--green)" fill-opacity=".9">
             <rect x="176" y="194" width="80" height="12"/>
             <rect x="344" y="194" width="60" height="12"/>
             <rect x="520" y="194" width="26" height="12"/>
           </g>
 
           <!-- the trace -->
-          <path class="ln thin draw" stroke="#EEF0F6" fill="none" d="M120 50 L142 150 L176 200 L256 200 L272 150 L272 100 L306 100 L306 150 L344 200 L404 200 L420 150 L440 150 L440 100 L498 100 L498 150 L520 200 L546 200 L560 150 L608 150 L608 100 L694 100 L694 150 L730 150 L730 160 L760 160 L760 150 L790 150 L790 100 L910 100 L910 60 L960 50"/>
+          <path class="ln thin draw" stroke="var(--ground)" fill="none" d="M120 50 L142 150 L176 200 L256 200 L272 150 L272 100 L306 100 L306 150 L344 200 L404 200 L420 150 L440 150 L440 100 L498 100 L498 150 L520 200 L546 200 L560 150 L608 150 L608 100 L694 100 L694 150 L730 150 L730 160 L760 160 L760 150 L790 150 L790 100 L910 100 L910 60 L960 50"/>
 
           <!-- cycle boundaries -->
-          <g stroke="#EEF0F6" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 5">
+          <g stroke="var(--ground)" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 5">
             <line x1="288" y1="30" x2="288" y2="230"/>
             <line x1="456" y1="30" x2="456" y2="230"/>
             <line x1="624" y1="30" x2="624" y2="230"/>
             <line x1="792" y1="30" x2="792" y2="230"/>
           </g>
-          <g class="an-k" fill="#EEF0F6" fill-opacity=".5">
+          <g class="an-k" fill="var(--ground)" fill-opacity=".5">
             <text x="204" y="26" text-anchor="middle">Cycle 1</text>
             <text x="372" y="26" text-anchor="middle">2</text>
             <text x="540" y="26" text-anchor="middle">3</text>
@@ -1424,8 +1631,8 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
             <text x="950" y="252" text-anchor="end">07:00</text>
           </g>
           <g class="an-k">
-            <text x="120" y="284" fill="#14A06A">■ Slow wave · restorative</text>
-            <text x="380" y="284" fill="#2933F0">■ REM · integrative</text>
+            <text x="120" y="284" fill="var(--green)">■ Slow wave · restorative</text>
+            <text x="380" y="284" fill="var(--blue)">■ REM · integrative</text>
           </g>
         </svg>
       </div>
@@ -1507,7 +1714,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
           <line class="axis" x1="60" y1="120" x2="960" y2="120"/>
 
           <!-- drift bands, widening -->
-          <g fill="#FFD029" fill-opacity=".35">
+          <g fill="var(--yellow)" fill-opacity=".35">
             <rect x="196" y="96" width="28" height="48"/>
             <rect x="336" y="90" width="48" height="60"/>
             <rect x="476" y="84" width="68" height="72"/>
@@ -1515,14 +1722,14 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
             <rect x="756" y="72" width="108" height="96"/>
           </g>
           <!-- nominal boundaries -->
-          <g stroke="#14A06A" stroke-width="2">
+          <g stroke="var(--green)" stroke-width="2">
             <line x1="210" y1="92" x2="210" y2="148"/>
             <line x1="360" y1="86" x2="360" y2="154"/>
             <line x1="510" y1="80" x2="510" y2="160"/>
             <line x1="660" y1="74" x2="660" y2="166"/>
             <line x1="810" y1="68" x2="810" y2="172"/>
           </g>
-          <g class="an-k" fill="#14A06A" text-anchor="middle">
+          <g class="an-k" fill="var(--green)" text-anchor="middle">
             <text x="210" y="84">1:30</text><text x="360" y="78">3:00</text>
             <text x="510" y="72">4:30</text><text x="660" y="66">6:00</text>
             <text x="810" y="60">7:30</text>
@@ -1532,7 +1739,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
             <text x="510" y="176">±22</text><text x="660" y="182">±28</text>
             <text x="810" y="188">±34</text>
           </g>
-          <text class="an-t" x="60" y="212" fill="#EEF0F6" fill-opacity=".62">Uncertainty compounds with every cycle. By hour six the target is wider than the window you were aiming at.</text>
+          <text class="an-t" x="60" y="212" fill="var(--ground)" fill-opacity=".62">Uncertainty compounds with every cycle. By hour six the target is wider than the window you were aiming at.</text>
         </svg>
       </div>
       <p class="fig-cap">Cycle length varies between people and between nights for the same person, and
@@ -1581,11 +1788,11 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
 
           <!-- markers -->
           <g class="an-k">
-            <g><rect x="200" y="252" width="9" height="9" fill="var(--ink)"/><text x="152" y="282" fill="var(--ink)" fill-opacity=".65">screens</text><text x="152" y="301" fill="var(--ink)" fill-opacity=".4">no lift</text></g>
-            <g><rect x="242" y="146" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text x="222" y="136" fill="var(--ink)">talking</text></g>
-            <g><rect x="322" y="104" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text x="300" y="94" fill="var(--ink)">absorbed in building</text></g>
-            <g><rect x="496" y="92" width="9" height="9" fill="var(--pink)" stroke="var(--ink)"/><text x="474" y="82" fill="var(--ink)">fear spike</text></g>
-            <g><rect x="662" y="172" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text x="640" y="162" fill="var(--ink)">an idea, in bed</text></g>
+            <g><rect x="200" y="252" width="9" height="9" fill="var(--ink)"/><text class="" x="152" y="282" fill="var(--ink)" fill-opacity=".65">screens</text><text x="152" y="301" fill="var(--ink)" fill-opacity=".4">no lift</text></g>
+            <g><rect x="242" y="146" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text class="" x="222" y="136" fill="var(--ink)">talking</text></g>
+            <g><rect x="322" y="104" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text class="" x="300" y="94" fill="var(--ink)">absorbed in building</text></g>
+            <g><rect x="496" y="92" width="9" height="9" fill="var(--pink)" stroke="var(--ink)"/><text class="" x="474" y="82" fill="var(--ink)">fear spike</text></g>
+            <g><rect x="662" y="172" width="9" height="9" fill="var(--yellow)" stroke="var(--ink)"/><text class="" x="640" y="162" fill="var(--ink)">an idea, in bed</text></g>
           </g>
 
           <!-- annotations under -->
@@ -1728,10 +1935,28 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
   <div class="wrap">
     <div class="foot-in">
       <p class="lbl">Why you're still awake</p>
-      <p class="lbl">Riso Civic · blue arousal, pink pressure, yellow generation, green restoration</p>
+      <p class="lbl" id="footNote">Riso Civic · blue arousal, pink pressure, yellow generation, green restoration</p>
     </div>
   </div>
 </footer>
+
+<div class="dsw" id="dsw" data-open="false">
+  <div class="dsw-tray" id="dsw-tray" role="listbox" aria-label="Design style" hidden>
+    <div class="dsw-modes" id="dsw-modes" role="group" aria-label="Colour theme">
+      <button type="button" class="dsw-mode" data-mode="light" aria-pressed="false">Light</button>
+      <button type="button" class="dsw-mode" data-mode="dark" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+  <button class="dsw-handle" id="dsw-handle" type="button" aria-expanded="false" aria-controls="dsw-tray" aria-label="Design style and colour theme">
+    <span class="dsw-chips" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="dsw-label">
+      <span class="dsw-kicker">Style</span>
+      <span class="dsw-name" id="dsw-name">Riso</span>
+    </span>
+    <svg class="dsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+    <svg class="dsw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.4"/><path d="M12 3v2M12 19v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M3 12h2M19 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+  </button>
+</div>
 
 <script>
 (function(){
@@ -1744,6 +1969,165 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"],text[fill="#EEF0F6"]{strok
     root.setAttribute('data-theme',next);
     try{localStorage.setItem('sa-theme',next);}catch(e){}
   });
+})();
+</script>
+
+<script>
+/* ============================================================
+   Style switcher. Sets `data-dir` on <html>; the stylesheet does the
+   rest. Deliberately not a view transition — this is a control a
+   reader presses repeatedly, and while one runs the document is a
+   photograph of itself, so the second press never reaches the button.
+   ============================================================ */
+(function(){
+  'use strict';
+  var KEY='sa-dir';
+  var DIRS=[
+    {id:'riso',   name:'Riso',   tag:'Flat inks \u00b7 overprint', sw:['#EEF0F6','#2933F0','#FF3E8A','#FFD029','#14A06A']},
+    {id:'prism',  name:'Prism',  tag:'Five-hue index',              sw:['#FFFFFF','#0B4CFF','#D42D00','#B87400','#00875F']},
+    {id:'margin', name:'Margin', tag:'Serif \u00b7 apparatus',      sw:['#FBFBF9','#1B3BFF','#D6002E','#8A5A00','#007A5E']}
+  ];
+  /* the other two directions' faces are fetched the first time they are picked */
+  var FONTS={
+    prism:'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Chivo:wght@400;600;700&family=Chivo+Mono:wght@400;700&display=swap',
+    margin:'https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Literata:opsz,wght@7..72,400..600&family=IBM+Plex+Mono:wght@400;600&display=swap'
+  };
+  /* the legend names the hue, so those names travel with the direction */
+  var HUE_NAMES={
+    riso:  ['Blue','Pink','Yellow','Green'],
+    prism: ['Blue','Orange','Amber','Green'],
+    margin:['Cite','Mark','Note','Rule']
+  };
+  var FOOT={
+    riso:  'Riso Civic \u00b7 blue arousal, pink pressure, yellow generation, green restoration',
+    prism: 'Prism \u00b7 a fixed hue index: blue arousal, orange pressure, amber generation, green restoration',
+    margin:'Margin \u00b7 the prose stays black; the apparatus carries arousal, pressure, generation, restoration'
+  };
+  var loaded={};
+  function loadFaces(id){
+    if(!FONTS[id]||loaded[id])return;
+    loaded[id]=1;
+    var l=document.createElement('link');
+    l.rel='stylesheet'; l.href=FONTS[id];
+    document.head.appendChild(l);
+  }
+
+  var root=document.documentElement;
+  var wrap=document.getElementById('dsw'),
+      handle=document.getElementById('dsw-handle'),
+      tray=document.getElementById('dsw-tray'),
+      nameEl=document.getElementById('dsw-name'),
+      modes=document.getElementById('dsw-modes');
+  if(!wrap||!handle||!tray||!nameEl)return;
+
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  function find(id){for(var i=0;i<DIRS.length;i++)if(DIRS[i].id===id)return DIRS[i];return DIRS[0];}
+  function current(){return root.getAttribute('data-dir')||'riso';}
+
+  function apply(id,userPick){
+    var d=find(id);
+    loadFaces(d.id);
+    if(d.id==='riso')root.removeAttribute('data-dir');
+    else root.setAttribute('data-dir',d.id);
+    if(userPick)lsSet(KEY,d.id);
+    nameEl.textContent=d.name;
+    handle.style.setProperty('--sw1',d.sw[1]);
+    handle.style.setProperty('--sw2',d.sw[2]);
+    handle.style.setProperty('--sw3',d.sw[3]);
+    var names=HUE_NAMES[d.id]||HUE_NAMES.riso;
+    var hn=document.querySelectorAll('.hue-name');
+    for(var j=0;j<hn.length;j++){
+      var k=Number(hn[j].getAttribute('data-ink'))-1;
+      if(names[k])hn[j].textContent=names[k];
+    }
+    var fn=document.getElementById('footNote');
+    if(fn&&FOOT[d.id])fn.textContent=FOOT[d.id];
+    var opts=tray.querySelectorAll('.dsw-opt');
+    for(var i=0;i<opts.length;i++)
+      opts[i].setAttribute('aria-selected',String(opts[i].getAttribute('data-id')===d.id));
+  }
+
+  function syncModes(){
+    if(!modes)return;
+    var t=root.getAttribute('data-theme')||'light';
+    var bs=modes.querySelectorAll('.dsw-mode');
+    for(var i=0;i<bs.length;i++)
+      bs[i].setAttribute('aria-pressed',String(bs[i].getAttribute('data-mode')===t));
+  }
+
+  function buildTray(){
+    var frag=document.createDocumentFragment();
+    DIRS.forEach(function(d,i){
+      var b=document.createElement('button');
+      b.type='button'; b.className='dsw-opt';
+      b.setAttribute('data-id',d.id);
+      b.setAttribute('role','option'); b.setAttribute('aria-selected','false');
+      var sw=document.createElement('span');
+      sw.className='dsw-sw'; sw.setAttribute('aria-hidden','true');
+      d.sw.forEach(function(c){var s=document.createElement('span');s.style.background=c;sw.appendChild(s);});
+      var n=document.createElement('span');
+      n.className='dsw-opt-name';
+      n.innerHTML='<span class="dsw-opt-num">0'+(i+1)+'</span>';
+      n.appendChild(document.createTextNode(d.name));
+      var t=document.createElement('span');
+      t.className='dsw-opt-tag'; t.textContent=d.tag;
+      b.appendChild(sw); b.appendChild(n); b.appendChild(t);
+      frag.appendChild(b);
+    });
+    tray.appendChild(frag);
+  }
+
+  function open(v){
+    wrap.setAttribute('data-open',String(v));
+    handle.setAttribute('aria-expanded',String(v));
+    tray.hidden=!v;
+    if(v){var sel=tray.querySelector('.dsw-opt[aria-selected="true"]');if(sel)sel.focus();}
+  }
+
+  buildTray();
+  apply(current(),false);
+  syncModes();
+
+  handle.addEventListener('click',function(e){e.stopPropagation();open(wrap.getAttribute('data-open')!=='true');});
+
+  tray.addEventListener('click',function(e){
+    var m=e.target.closest('.dsw-mode');
+    if(m){
+      root.setAttribute('data-theme',m.getAttribute('data-mode'));
+      lsSet('sa-theme',m.getAttribute('data-mode'));
+      syncModes(); return;
+    }
+    var b=e.target.closest('.dsw-opt');
+    if(!b)return;
+    apply(b.getAttribute('data-id'),true);
+    open(false); handle.focus();
+  });
+
+  tray.addEventListener('keydown',function(e){
+    var opts=Array.prototype.slice.call(tray.querySelectorAll('.dsw-opt'));
+    var i=opts.indexOf(document.activeElement);
+    if(i<0)return;
+    var next=null;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')next=opts[(i+1)%opts.length];
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp')next=opts[(i-1+opts.length)%opts.length];
+    if(next){e.preventDefault();next.focus();}
+  });
+
+  document.addEventListener('click',function(e){
+    if(wrap.getAttribute('data-open')==='true'&&!wrap.contains(e.target))open(false);
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&wrap.getAttribute('data-open')==='true'){open(false);handle.focus();}
+    if(e.altKey||e.ctrlKey||e.metaKey)return;
+    var tag=(e.target.tagName||'').toLowerCase();
+    if(tag==='input'||tag==='textarea'||e.target.isContentEditable)return;
+    if(e.key>='1'&&e.key<='3')apply(DIRS[Number(e.key)-1].id,true);
+  });
+
+  /* the top-right toggle writes data-theme; keep the tray row honest */
+  new MutationObserver(syncModes).observe(root,{attributes:true,attributeFilter:['data-theme']});
 })();
 </script>
 </body>
