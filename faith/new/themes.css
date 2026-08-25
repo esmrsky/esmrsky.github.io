@@ -51,6 +51,9 @@ html[data-dir] {
   --dir-footer-bg: linear-gradient(180deg, var(--paper-2), var(--card-2));
   --dir-footer-fg: var(--ink-soft);
   --dir-footer-word: var(--ink);
+  /* the accent at full chroma on a near-black footer measured 2.33:1 — lift it
+     toward the footer's own text colour instead */
+  --dir-footer-link: color-mix(in srgb, var(--gold) 55%, var(--dir-footer-word));
 }
 
 /* ---- type ---- */
@@ -122,19 +125,8 @@ html[data-dir] .mirror {
 }
 
 /* ---- the colours styles.css hardcoded for a dark band ---- */
-html[data-dir] .mirror-faith {
-  background: linear-gradient(160deg, color-mix(in srgb, var(--mir-a) 15%, var(--card)), var(--card-2));
-}
-html[data-dir] .mirror-fear {
-  background: linear-gradient(160deg, color-mix(in srgb, var(--mir-b) 15%, var(--card)), var(--card-2));
-}
-html[data-dir] .mirror-col { color: var(--ink-soft); }
-html[data-dir] :is(.mirror-faith h3, .mirror-faith .mirror-tag, .mirror-faith li strong) { color: var(--mir-a); }
-html[data-dir] :is(.mirror-fear h3, .mirror-fear .mirror-tag, .mirror-fear li strong) { color: var(--mir-b); }
-html[data-dir] .mirror-col li { border-top-color: var(--line-soft); }
-html[data-dir] .mirror-col .ref-link { border-bottom-color: color-mix(in srgb, var(--ink) 38%, transparent); }
-html[data-dir] .mirror-col .ref-link:hover { color: var(--ink); }
-
+/* The faith/fear mirror is fixed at source now: styles.css derives it from --mir-a
+   and --mir-b, which each direction sets below. Nothing to override here. */
 html[data-dir] .card-can { border-top-color: var(--pos); }
 html[data-dir] .card-cannot { border-top-color: var(--neg); }
 html[data-dir] .card-can .card-list li::before { background: var(--pos); }
@@ -158,7 +150,7 @@ html[data-dir] .footer {
   border-top: var(--dir-bw) solid var(--line);
 }
 html[data-dir] .footer .footer-word { color: var(--dir-footer-word); }
-html[data-dir] .footer :is(a, .ref-link) { color: var(--gold); }
+html[data-dir] .footer :is(a, .ref-link) { color: var(--dir-footer-link); }
 html[data-dir] .footer .ref-link:hover { color: var(--dir-footer-word); }
 
 /* ---- the drawn marks: timeline spine, moment dots, list bullets ---- */
@@ -219,7 +211,7 @@ html[data-dir="bulletin"] {
 }
 html[data-dir="bulletin"][data-mode="light"] {
   --paper: #EEF0F6; --paper-2: #E4E7F0; --card: #FFFFFF; --card-2: #E9ECF3;
-  --ink: #111014; --ink-soft: #3B3E47; --ink-faint: #6A6E7A;
+  --ink: #111014; --ink-soft: #3B3E47;
   --line: #C9CDD9; --line-soft: #DDE0E9;
   --gold: #2933F0; --gold-deep: #1B22B4; --gold-hi: #2933F0;
   --c-word: #2933F0; --c-greek: #14A06A; --c-fear: #E01B4C; --c-mech: #6A2BD9;
@@ -232,7 +224,7 @@ html[data-dir="bulletin"][data-mode="light"] {
 }
 html[data-dir="bulletin"][data-mode="dark"] {
   --paper: #0E1016; --paper-2: #12141C; --card: #171A22; --card-2: #1D202A;
-  --ink: #EDEFF5; --ink-soft: #B4B8C4; --ink-faint: #808591;
+  --ink: #EDEFF5; --ink-soft: #B4B8C4;
   --line: #2C3140; --line-soft: #232834;
   --gold: #6B84FF; --gold-deep: #8DA0FF; --gold-hi: #6B84FF;
   --c-word: #6B84FF; --c-greek: #35C88A; --c-fear: #FF6A86; --c-mech: #A88BFF;
@@ -285,7 +277,7 @@ html[data-dir="prism"] {
 }
 html[data-dir="prism"][data-mode="light"] {
   --paper: #FFFFFF; --paper-2: #F4F5F8; --card: #FFFFFF; --card-2: #F4F5F8;
-  --ink: #111114; --ink-soft: #45464E; --ink-faint: #797B85;
+  --ink: #111114; --ink-soft: #45464E;
   --line: #DCDEE5; --line-soft: #E9EAEF;
   --gold: #0B4CFF; --gold-deep: #0838C4; --gold-hi: #0B4CFF;
   --c-word: #0B4CFF; --c-greek: #8A22F0; --c-fear: #E23200; --c-mech: #00875F;
@@ -299,7 +291,7 @@ html[data-dir="prism"][data-mode="light"] {
 }
 html[data-dir="prism"][data-mode="dark"] {
   --paper: #0C0C10; --paper-2: #111116; --card: #16161C; --card-2: #1C1C24;
-  --ink: #F2F2F5; --ink-soft: #B5B6BE; --ink-faint: #82838D;
+  --ink: #F2F2F5; --ink-soft: #B5B6BE;
   --line: #2A2A33; --line-soft: #212128;
   --gold: #5B85FF; --gold-deep: #86A5FF; --gold-hi: #5B85FF;
   --c-word: #5B85FF; --c-greek: #BE85FF; --c-fear: #FF7A4D; --c-mech: #2FD9A4;
@@ -357,7 +349,7 @@ html[data-dir="placard"] {
 }
 html[data-dir="placard"][data-mode="light"] {
   --paper: #F4F5F7; --paper-2: #E8EAEE; --card: #FFFFFF; --card-2: #EDEFF2;
-  --ink: #0F0F10; --ink-soft: #3A3B3E; --ink-faint: #6E7076;
+  --ink: #0F0F10; --ink-soft: #3A3B3E;
   --line: #0F0F10; --line-soft: #C7CAD1;
   --gold: #E8112D; --gold-deep: #B8001F; --gold-hi: #E8112D;
   --c-word: #E8112D; --c-greek: #0026FF; --c-fear: #E8112D; --c-mech: #0026FF;
@@ -367,10 +359,11 @@ html[data-dir="placard"][data-mode="light"] {
   --k1: #E8112D; --k2: #0026FF; --k3: #E8112D; --k4: #0026FF;
   --k5: #E8112D; --k6: #0026FF; --k7: #E8112D;
   --dir-footer-bg: #0F0F10; --dir-footer-fg: #B7B9BE; --dir-footer-word: #FFFFFF;
+  --on-accent: #FFFFFF;
 }
 html[data-dir="placard"][data-mode="dark"] {
   --paper: #0F0F11; --paper-2: #151518; --card: #191A1D; --card-2: #202126;
-  --ink: #F4F5F7; --ink-soft: #B9BBC0; --ink-faint: #85878E;
+  --ink: #F4F5F7; --ink-soft: #B9BBC0;
   --line: #F4F5F7; --line-soft: #2B2C31;
   --gold: #FF3E58; --gold-deep: #FF6D80; --gold-hi: #FF3E58;
   --c-word: #FF3E58; --c-greek: #5470FF; --c-fear: #FF3E58; --c-mech: #5470FF;
@@ -380,6 +373,7 @@ html[data-dir="placard"][data-mode="dark"] {
   --k1: #FF3E58; --k2: #5470FF; --k3: #FF3E58; --k4: #5470FF;
   --k5: #FF3E58; --k6: #5470FF; --k7: #FF3E58;
   --dir-footer-bg: #191A1D; --dir-footer-fg: #B9BBC0; --dir-footer-word: #F4F5F7;
+  --on-accent: #0F0F11;   /* #fff on the lifted red is 3.45:1; the ground is 5.9:1 */
 }
 /* Anton is a display face: hold it to the display sizes and let the
    grot carry anything set small, or the page turns into a poster. */
@@ -404,7 +398,7 @@ html[data-dir="placard"] .section-label .medallion { background: var(--c); color
 html[data-dir="placard"] .section-label::after { height: 2px; background: var(--ink); opacity: 0.14; }
 html[data-dir="placard"] .card:hover { box-shadow: none; background: color-mix(in srgb, var(--c) 8%, var(--card)); }
 html[data-dir="placard"] .btn { border-radius: 0; text-transform: uppercase; letter-spacing: 0.1em; }
-html[data-dir="placard"] .btn-solid { background: var(--c, var(--gold)); color: #fff; }
+html[data-dir="placard"] .btn-solid { background: var(--c, var(--gold)); color: var(--on-accent); }
 html[data-dir="placard"] .pull { border-left-width: 10px; }
 html[data-dir="placard"] .step { border-top-width: 2px; border-top-color: var(--ink); }
 html[data-dir="placard"] .step-num { color: var(--c); font-family: var(--serif-display); }
@@ -448,7 +442,7 @@ html[data-dir="field"] {
 }
 html[data-dir="field"][data-mode="light"] {
   --paper: #EDEFEA; --paper-2: #E3E6DF; --card: #FFFFFF; --card-2: #E9ECE5;
-  --ink: #0D1611; --ink-soft: #3E4A44; --ink-faint: #6E7A73;
+  --ink: #0D1611; --ink-soft: #3E4A44;
   --line: #C6CDC4; --line-soft: #DBE0D6;
   --gold: #0B8F63; --gold-deep: #076B4A; --gold-hi: #0B8F63;
   --c-word: #0B8F63; --c-greek: #B07D12; --c-fear: #A85833; --c-mech: #0B8F63;
@@ -462,7 +456,7 @@ html[data-dir="field"][data-mode="light"] {
 }
 html[data-dir="field"][data-mode="dark"] {
   --paper: #0B1410; --paper-2: #0E1915; --card: #12201A; --card-2: #17271F;
-  --ink: #E8E6DC; --ink-soft: #A9AEA3; --ink-faint: #7B8179;
+  --ink: #E8E6DC; --ink-soft: #A9AEA3;
   --line: #26362E; --line-soft: #1C2922;
   --gold: #6EF2B0; --gold-deep: #96F7C7; --gold-hi: #6EF2B0;
   --c-word: #6EF2B0; --c-greek: #F2C14E; --c-fear: #C9744A; --c-mech: #6EF2B0;
@@ -528,7 +522,7 @@ html[data-dir="blueprint"] {
 }
 html[data-dir="blueprint"][data-mode="light"] {
   --paper: #EEF2FA; --paper-2: #E4EAF6; --card: #FFFFFF; --card-2: #EAEFF8;
-  --ink: #0D1B3E; --ink-soft: #3E4C6E; --ink-faint: #6D7A99;
+  --ink: #0D1B3E; --ink-soft: #3E4C6E;
   --line: #BFCBE0; --line-soft: #D6DEEC;
   --gold: #0A6FA8; --gold-deep: #08557F; --gold-hi: #0A6FA8;
   --c-word: #0A6FA8; --c-greek: #5A7099; --c-fear: #D94A38; --c-mech: #0A6FA8;
@@ -541,7 +535,7 @@ html[data-dir="blueprint"][data-mode="light"] {
 }
 html[data-dir="blueprint"][data-mode="dark"] {
   --paper: #0D1B3E; --paper-2: #112249; --card: #16295A; --card-2: #1B3068;
-  --ink: #EDF2FA; --ink-soft: #A9B8D6; --ink-faint: #7C8DB0;
+  --ink: #EDF2FA; --ink-soft: #A9B8D6;
   --line: #2C427A; --line-soft: #223460;
   --gold: #38BDF8; --gold-deep: #7DD5FB; --gold-hi: #38BDF8;
   --c-word: #38BDF8; --c-greek: #7C93BE; --c-fear: #FF7A6B; --c-mech: #38BDF8;
@@ -613,7 +607,7 @@ html[data-dir="margin"] {
 }
 html[data-dir="margin"][data-mode="light"] {
   --paper: #FBFBF9; --paper-2: #F2F2EE; --card: #FFFFFF; --card-2: #F6F6F3;
-  --ink: #14141A; --ink-soft: #45454E; --ink-faint: #7A7A84;
+  --ink: #14141A; --ink-soft: #45454E;
   --line: #DDDDD7; --line-soft: #EAEAE5;
   --gold: #D6002E; --gold-deep: #A50024; --gold-hi: #D6002E;
   --c-word: #1B3BFF; --c-greek: #007A5E; --c-fear: #D6002E; --c-mech: #1B3BFF;
@@ -626,7 +620,7 @@ html[data-dir="margin"][data-mode="light"] {
 }
 html[data-dir="margin"][data-mode="dark"] {
   --paper: #131318; --paper-2: #18181E; --card: #1C1C22; --card-2: #22222A;
-  --ink: #EDEDF0; --ink-soft: #B0B0B8; --ink-faint: #808088;
+  --ink: #EDEDF0; --ink-soft: #B0B0B8;
   --line: #2E2E36; --line-soft: #24242B;
   --gold: #FF5470; --gold-deep: #FF8398; --gold-hi: #FF5470;
   --c-word: #7E97FF; --c-greek: #35C79A; --c-fear: #FF5470; --c-mech: #7E97FF;
@@ -689,7 +683,7 @@ html[data-dir="ledger"] {
 }
 html[data-dir="ledger"][data-mode="light"] {
   --paper: #F0F2F4; --paper-2: #E6E9EC; --card: #FFFFFF; --card-2: #EBEEF1;
-  --ink: #1A1D21; --ink-soft: #474C52; --ink-faint: #767C84;
+  --ink: #1A1D21; --ink-soft: #474C52;
   --line: #CDD2D8; --line-soft: #DFE3E8;
   --gold: #2F5D8C; --gold-deep: #21456A; --gold-hi: #2F5D8C;
   --c-word: #2F5D8C; --c-greek: #6B4E82; --c-fear: #B5543F; --c-mech: #4E7A4A;
@@ -703,7 +697,7 @@ html[data-dir="ledger"][data-mode="light"] {
 }
 html[data-dir="ledger"][data-mode="dark"] {
   --paper: #14171A; --paper-2: #191D21; --card: #1D2126; --card-2: #23282E;
-  --ink: #E6E9EC; --ink-soft: #ADB3B9; --ink-faint: #7E858C;
+  --ink: #E6E9EC; --ink-soft: #ADB3B9;
   --line: #2E343B; --line-soft: #242A30;
   --gold: #6BA3D6; --gold-deep: #96BFE4; --gold-hi: #6BA3D6;
   --c-word: #6BA3D6; --c-greek: #A588BE; --c-fear: #E08A72; --c-mech: #85B67F;
@@ -783,21 +777,21 @@ html[data-dir="chroma"] {
 }
 html[data-dir="chroma"][data-mode="light"] {
   --paper: #FFFFFF; --paper-2: #F6F6F8; --card: #FFFFFF; --card-2: #F1F1F4;
-  --ink: #0A0A0A; --ink-soft: #3C3C40; --ink-faint: #74747A;
+  --ink: #0A0A0A; --ink-soft: #3C3C40;
   --line: #0A0A0A; --line-soft: #D9D9DE;
   --gold: #1D2BE0; --gold-deep: #1420A8; --gold-hi: #D6F034;
-  --c-word: #1D2BE0; --c-greek: #7B2FF7; --c-fear: #F4361F; --c-mech: #0A0A0A;
-  --c-jesus: #1D2BE0; --c-sci: #7B2FF7; --c-mir: #F4361F; --c-auth: #0A0A0A; --c-walk: #1D2BE0;
+  --c-word: #1D2BE0; --c-greek: #7B2FF7; --c-fear: #D92B14; --c-mech: #0A0A0A;
+  --c-jesus: #1D2BE0; --c-sci: #7B2FF7; --c-mir: #D92B14; --c-auth: #0A0A0A; --c-walk: #1D2BE0;
   --mir-a: #1D2BE0; --mir-b: #F4361F;
-  --pos: #1D2BE0; --neg: #F4361F;
-  --k1: #1D2BE0; --k2: #F4361F; --k3: #7B2FF7; --k4: #0A0A0A;
-  --k5: #7B2FF7; --k6: #F4361F; --k7: #1D2BE0;
+  --pos: #1D2BE0; --neg: #D92B14;
+  --k1: #1D2BE0; --k2: #D92B14; --k3: #7B2FF7; --k4: #0A0A0A;
+  --k5: #7B2FF7; --k6: #D92B14; --k7: #1D2BE0;
   --dir-footer-bg: #0A0A0A; --dir-footer-fg: #B4B4B9; --dir-footer-word: #D6F034;
   --chroma-on: #FFFFFF;
 }
 html[data-dir="chroma"][data-mode="dark"] {
   --paper: #0A0A0C; --paper-2: #101012; --card: #161618; --card-2: #1D1D20;
-  --ink: #F5F5F7; --ink-soft: #B2B2B8; --ink-faint: #82828A;
+  --ink: #F5F5F7; --ink-soft: #B2B2B8;
   --line: #F5F5F7; --line-soft: #2A2A2E;
   --gold: #6B7BFF; --gold-deep: #96A2FF; --gold-hi: #DFF56B;
   --c-word: #6B7BFF; --c-greek: #A66CFF; --c-fear: #FF6B52; --c-mech: #F5F5F7;

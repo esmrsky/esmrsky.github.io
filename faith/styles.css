@@ -34,6 +34,12 @@
   --serif-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --serif-text: "Newsreader", "Iowan Old Style", Georgia, serif;
   --sans: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  /* Derived, not literal: the two hardcoded values measured 3.66:1 (light) and
+     4.43:1 (dark) against their own card, and every caption on the site reads it.
+     Mixed against --card it holds ~4.7:1 in any palette, the eight in new/ included. */
+  --ink-faint: color-mix(in srgb, var(--ink) 70%, var(--card));
+  --mir-a: var(--gold-hi);
+  --mir-b: var(--c-fear);
   --measure: 66ch;
   --r: 10px;
   --r-lg: 16px;
@@ -65,7 +71,6 @@
   --card-2: #262016;
   --ink: #ede5d1;
   --ink-soft: #b6aa8f;
-  --ink-faint: #8a7f68;
   --line: #3a3222;
   --line-soft: #2b2517;
   --gold: #d0a23f;
@@ -90,7 +95,6 @@
     --card-2: #262016;
     --ink: #ede5d1;
     --ink-soft: #b6aa8f;
-    --ink-faint: #8a7f68;
     --line: #3a3222;
     --line-soft: #2b2517;
     --gold: #d0a23f;
@@ -449,7 +453,7 @@ a:hover { color: var(--ink); }
 .hero-inner { position: relative; max-width: 880px; margin: 0 auto; }
 
 .hero .kicker {
-  color: var(--gold);
+  color: var(--gold-deep);   /* --gold measured 3.26:1 on the hero's own gold wash */
   margin-bottom: 1.9rem;
   display: inline-flex;
   align-items: center;
@@ -494,7 +498,7 @@ a:hover { color: var(--ink); }
 }
 
 .hero .hero-ref { display: block; margin-top: 1.1rem; font-style: normal; }
-.hero .hero-ref .ref-link { color: var(--gold); border-bottom-color: color-mix(in srgb, var(--gold) 55%, transparent); }
+.hero .hero-ref .ref-link { color: var(--gold-deep); border-bottom-color: color-mix(in srgb, var(--gold) 55%, transparent); }
 
 .hero .hero-sub {
   margin: 2.3rem auto 0;
@@ -586,7 +590,9 @@ a:hover { color: var(--ink); }
   align-items: center;
   gap: 0.9rem;
   margin-bottom: 2.4rem;
-  color: color-mix(in srgb, var(--c) 78%, var(--ink));
+  /* 78% measured 4.19:1 on the section's own tint and the label is 0.72rem, so it
+     needs 4.5. h2 .tint keeps 78% — large text, and 3:1 is its bar. */
+  color: color-mix(in srgb, var(--c) 62%, var(--ink));
 }
 .section-label .medallion {
   width: 44px; height: 44px;
@@ -598,7 +604,7 @@ a:hover { color: var(--ink); }
   border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
 }
 .section-label .medallion svg { width: 20px; height: 20px; }
-.section-label .num { opacity: 0.75; margin-right: 0.35rem; }
+.section-label .num { margin-right: 0.35rem; }  /* opacity .75 took it to 2.52:1 */
 .section-label::after {
   content: "";
   height: 1px;
@@ -650,7 +656,7 @@ strong { font-weight: 600; }
 .section-night .lede { color: var(--ink-soft); }
 .section-night h2, .section-night h3 { color: var(--ink); }
 .section-night .prose { color: var(--ink-soft); }
-.section-night .section-label { color: var(--c); }
+.section-night .section-label { color: color-mix(in srgb, var(--c) 62%, var(--ink)); }
 .section-night .section-label .medallion { background: color-mix(in srgb, var(--c) 16%, transparent); border-color: color-mix(in srgb, var(--c) 40%, transparent); }
 
 /* ---------- pull quotes ---------- */
@@ -667,7 +673,7 @@ strong { font-weight: 600; }
   font-style: italic;
   line-height: 1.35;
 }
-.pull cite { display: block; margin-top: 0.9rem; font-style: normal; color: color-mix(in srgb, var(--c, var(--gold)) 80%, var(--ink)); }
+.pull cite { display: block; margin-top: 0.9rem; font-style: normal; color: color-mix(in srgb, var(--c, var(--gold)) 56%, var(--ink)); }
 
 .grand {
   --c: var(--gold);
@@ -692,7 +698,7 @@ strong { font-weight: 600; }
   max-width: 32ch;
   margin: 0 auto;
 }
-.grand cite { display: block; margin-top: 1.4rem; font-style: normal; color: var(--gold); }
+.grand cite { display: block; margin-top: 1.4rem; font-style: normal; color: color-mix(in srgb, var(--gold) 60%, var(--ink)); }
 
 /* ---------- cards ---------- */
 .grid { display: grid; gap: 1.15rem; }
@@ -794,7 +800,7 @@ strong { font-weight: 600; }
   transition: opacity 0.25s ease;
 }
 .verse-card blockquote.is-swapping { opacity: 0.35; }
-.verse-card cite { display: block; margin-top: 0.75rem; font-style: normal; color: color-mix(in srgb, var(--c, var(--gold)) 80%, var(--ink)); }
+.verse-card cite { display: block; margin-top: 0.75rem; font-style: normal; color: color-mix(in srgb, var(--c, var(--gold)) 56%, var(--ink)); }
 .verse-card .vc-note {
   margin-top: 0.85rem;
   font-family: var(--sans);
@@ -812,8 +818,8 @@ strong { font-weight: 600; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  background: rgba(236, 227, 210, 0.15);
-  border: 1px solid rgba(236, 227, 210, 0.15);
+  background: var(--line);
+  border: 1px solid var(--line);
   border-radius: var(--r-lg);
   overflow: hidden;
   margin: 2.8rem 0;
@@ -821,22 +827,27 @@ strong { font-weight: 600; }
 @media (max-width: 760px) { .mirror { grid-template-columns: 1fr; } }
 
 .mirror-col { padding: 2.1rem 1.9rem; position: relative; }
-.mirror-faith { background: linear-gradient(160deg, rgba(211, 165, 69, 0.11), rgba(23, 18, 10, 0.6)); }
-.mirror-fear { background: linear-gradient(160deg, rgba(196, 85, 63, 0.11), rgba(23, 14, 10, 0.6)); }
+/* Every colour in this block used to be a fixed near-white picked for a permanently
+   dark band — the same mistake .section-night was rebuilt to fix. In light mode the
+   column text was #cfc4ab over a gradient that only reaches dark at the BOTTOM, so it
+   measured 1.13:1 at the top of each list and faded in as you read down. Tokens now,
+   so it turns with the palette; --mir-a/--mir-b name the two sides for a restyle. */
+.mirror-faith { background: color-mix(in srgb, var(--mir-a) 9%, var(--card)); }
+.mirror-fear { background: color-mix(in srgb, var(--mir-b) 9%, var(--card)); }
 
 .mirror-col h3 { font-size: 1.8rem; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.6rem; }
 .mirror-col h3 svg { width: 22px; height: 22px; }
 .mirror-col .mirror-tag { margin-bottom: 1.5rem; display: block; }
-.mirror-faith h3, .mirror-faith .mirror-tag { color: #d9a63c; }
-.mirror-fear h3, .mirror-fear .mirror-tag { color: #d96a52; }
+.mirror-faith h3, .mirror-faith .mirror-tag { color: color-mix(in srgb, var(--mir-a) 54%, var(--ink)); }
+.mirror-fear h3, .mirror-fear .mirror-tag { color: color-mix(in srgb, var(--mir-b) 54%, var(--ink)); }
 
 .mirror-col ul { list-style: none; }
 .mirror-col li {
   padding: 0.9rem 0;
-  border-top: 1px solid rgba(236, 227, 210, 0.12);
+  border-top: 1px solid var(--line-soft);
   font-size: 1.01rem;
   line-height: 1.56;
-  color: #cfc4ab;
+  color: var(--ink-soft);
 }
 .mirror-col li strong {
   display: block;
@@ -847,10 +858,10 @@ strong { font-weight: 600; }
   text-transform: uppercase;
   margin-bottom: 0.3rem;
 }
-.mirror-faith li strong { color: #d9a63c; }
-.mirror-fear li strong { color: #d96a52; }
-.mirror-col .ref-link { color: inherit; border-bottom-color: rgba(236, 227, 210, 0.4); }
-.mirror-col .ref-link:hover { color: #f0e8d6; }
+.mirror-faith li strong { color: color-mix(in srgb, var(--mir-a) 54%, var(--ink)); }
+.mirror-fear li strong { color: color-mix(in srgb, var(--mir-b) 54%, var(--ink)); }
+.mirror-col .ref-link { color: inherit; border-bottom-color: color-mix(in srgb, var(--ink) 38%, transparent); }
+.mirror-col .ref-link:hover { color: var(--ink); }
 
 /* ---------- steps (how faith works) ---------- */
 .steps { counter-reset: step; margin-top: 3rem; }
@@ -924,7 +935,7 @@ strong { font-weight: 600; }
   transition: background 0.2s ease;
 }
 .moment:hover::before { background: color-mix(in srgb, var(--c) 45%, var(--paper)); }
-.moment-ref .smallcaps { color: color-mix(in srgb, var(--c) 80%, var(--ink)); display: inline-block; margin-bottom: 0.3rem; }
+.moment-ref .smallcaps { color: color-mix(in srgb, var(--c) 56%, var(--ink)); display: inline-block; margin-bottom: 0.3rem; }
 .moment-ref .smallcaps .ref-link { color: inherit; }
 .moment-ref h3 { font-size: 1.5rem; line-height: 1.12; margin-bottom: 0.6rem; }
 .moment-body .m-quote {
@@ -1010,7 +1021,9 @@ strong { font-weight: 600; }
   font-family: var(--serif-display);
   font-size: clamp(3rem, 7vw, 4.8rem);
   font-weight: 600;
-  color: var(--gold-hi);
+  /* --gold-hi is the highlight FILL and does not flip between modes; as text on
+     light paper it measured 1.68:1. --gold-deep is the mode-aware readable gold. */
+  color: var(--gold-deep);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -1021,7 +1034,7 @@ strong { font-weight: 600; }
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #b3a68d;
+  color: var(--ink-faint);
 }
 
 /* marquee ribbon (miracles teaser) */
@@ -1047,7 +1060,7 @@ strong { font-weight: 600; }
   font-family: var(--serif-display);
   font-style: italic;
   font-size: 1.05rem;
-  color: #b3a68d;
+  color: var(--ink-faint);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -1141,7 +1154,7 @@ strong { font-weight: 600; }
   border-radius: 4px;
 }
 .tag-era { background: var(--card-2); color: var(--ink-soft); }
-.tag-kind { background: color-mix(in srgb, var(--mc) 14%, transparent); color: color-mix(in srgb, var(--mc) 78%, var(--ink)); }
+.tag-kind { background: color-mix(in srgb, var(--mc) 14%, transparent); color: color-mix(in srgb, var(--mc) 56%, var(--ink)); }
 
 .mcard h3 { font-size: 1.28rem; line-height: 1.15; }
 .mcard .mcard-ref {
@@ -1163,7 +1176,7 @@ strong { font-weight: 600; }
 }
 .mcard .mcard-faith .smallcaps {
   display: block;
-  color: var(--gold);
+  color: color-mix(in srgb, var(--gold) 56%, var(--ink));
   margin-bottom: 0.3rem;
   font-size: 0.6rem;
 }
@@ -1214,7 +1227,7 @@ strong { font-weight: 600; }
     var(--paper);
 }
 .page-head-inner { max-width: 1120px; margin: 0 auto; position: relative; }
-.page-head .kicker { color: var(--gold); display: inline-flex; align-items: center; gap: 0.7rem; }
+.page-head .kicker { color: color-mix(in srgb, var(--gold) 56%, var(--ink)); display: inline-flex; align-items: center; gap: 0.7rem; }
 .page-head .kicker svg { width: 16px; height: 16px; }
 .page-head h1 { font-size: clamp(2.7rem, 6vw, 4.6rem); margin: 0.9rem 0 1.2rem; }
 .page-head .lede { font-size: 1.22rem; color: var(--ink-soft); max-width: 64ch; }
@@ -1531,7 +1544,7 @@ cite .ref-link { color: inherit; }
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--c, var(--gold)) 80%, var(--ink));
+  color: color-mix(in srgb, var(--c, var(--gold)) 58%, var(--ink));
 }
 
 .brief li {
@@ -1643,7 +1656,7 @@ cite .ref-link { color: inherit; }
 }
 
 .drawer-body p + p { margin-top: 0.8rem; }
-.drawer-body cite { display: block; margin-top: 0.35rem; font-style: normal; font-size: 0.86rem; color: color-mix(in srgb, var(--c, var(--gold)) 78%, var(--ink)); }
+.drawer-body cite { display: block; margin-top: 0.35rem; font-style: normal; font-size: 0.86rem; color: color-mix(in srgb, var(--c, var(--gold)) 56%, var(--ink)); }
 
 /* A row of examples inside a drawer: the scripture on one side, the everyday shape of the
    same thing on the other. */
