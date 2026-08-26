@@ -12,17 +12,31 @@
    The head is a stack, never a space-between row: a row drops
    the meta below the title only when the title is long, which
    makes one grid render two different layouts. */
+/* --tint is set per catalogue on the grid; a card with none falls
+   back to the chapter accent, so nothing ever renders untinted. */
+/* --tint is set per catalogue on the grid and inherits into the cards.
+   The fallback lives in the var() call, NOT in a declaration here: a
+   `--tint: var(--accent)` on .ecard would override the value coming
+   down from the grid and every catalogue would render the same. */
 .ecard {
-  background: var(--surface); border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--tint, var(--accent)) var(--tint-wash), var(--surface));
+  border: 1px solid color-mix(in srgb, var(--tint, var(--accent)) 22%, var(--line));
+  border-left: 3px solid var(--tint, var(--accent));
   border-radius: var(--radius); padding: 1.2rem 1.3rem; box-shadow: var(--shadow);
   display: flex; flex-direction: column; gap: .6rem;
 }
+.tint-rose   { --tint: var(--t-rose); }
+.tint-amber  { --tint: var(--t-amber); }
+.tint-green  { --tint: var(--t-green); }
+.tint-blue   { --tint: var(--t-blue); }
+.tint-violet { --tint: var(--t-violet); }
+.tint-teal   { --tint: var(--t-teal); }
 .ecard-head { display: block; }
 .ecard-head h3 { margin: 0; font-size: var(--step-1); line-height: 1.2; }
 .emeta {
   display: block; margin-top: .3rem;
   font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--ink-faint);
+  text-transform: uppercase; color: var(--tint, var(--accent-ink));
 }
 .ecard .sub { margin: 0; font-family: var(--font-serif); font-style: italic; color: var(--ink-faint); font-size: var(--step--1); }
 .erow { margin: 0; font-size: var(--step--1); color: var(--ink-dim); line-height: 1.55; }
@@ -47,19 +61,19 @@
 .chiprow { margin-top: auto; padding-top: .5rem; }
 
 /* ---- Expandable feeling cards ---- */
-.fcard { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.fcard { --tint: var(--t-blue); border: 1px solid color-mix(in srgb, var(--tint) 22%, var(--line)); border-left: 3px solid var(--tint); border-radius: var(--radius); background: color-mix(in srgb, var(--tint) var(--tint-wash), var(--surface)); box-shadow: var(--shadow); }
 .fcard > summary { list-style: none; cursor: pointer; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .8rem; min-height: 44px; border-radius: var(--radius); }
 .fcard > summary::-webkit-details-marker { display: none; }
 .fcard > summary:hover { background: var(--bg-tint); }
 .fcard .ftitle { font-family: var(--font-serif); font-size: 1.08rem; color: var(--ink); }
-.fcard .fneed { font-size: var(--step--1); color: var(--accent-ink); margin-left: auto; text-align: right; }
+.fcard .fneed { font-size: var(--step--1); color: var(--tint, var(--accent-ink)); margin-left: auto; text-align: right; }
 .fcard .chev { flex: none; color: var(--ink-faint); transition: transform .3s; width: 16px; height: 16px; }
 .fcard[open] .chev { transform: rotate(90deg); }
 .fcard[open] > summary { border-radius: var(--radius) var(--radius) 0 0; }
 .fcard .fbody { padding: .8rem 1.1rem 1rem; display: grid; gap: .55rem; border-top: 1px solid var(--line); }
 
 /* ---- Acts — full cards with loop beats ---- */
-.act-card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c-love); border-radius: var(--radius); padding: 1.4rem 1.5rem; box-shadow: var(--shadow); }
+.act-card { background: color-mix(in srgb, var(--tint, var(--t-rose)) var(--tint-wash), var(--surface)); border: 1px solid color-mix(in srgb, var(--tint, var(--t-rose)) 22%, var(--line)); border-left: 3px solid var(--tint, var(--t-rose)); border-radius: var(--radius); padding: 1.4rem 1.5rem; box-shadow: var(--shadow); }
 .act-card .act-num { font-family: var(--font-mono); color: var(--leak-ink); font-size: .76rem; letter-spacing: .1em; }
 .act-card h3 { margin: .1rem 0 .1rem; }
 .act-card .mech { display: block; font-family: var(--font-mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-faint); }

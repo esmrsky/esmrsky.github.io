@@ -44,22 +44,69 @@
 .disc-need { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--line); display: grid; gap: .45rem; }
 @media (max-width: 560px) { .disc-opts { grid-template-columns: 1fr; } }
 
-/* ---- Interactive existential axis map ---- */
-.axis-hint { margin: 1.2rem 0 .2rem; color: var(--ink-dim); font-size: var(--step--1); }
-.axis-plane { margin: 1.4rem auto 1.8rem; max-width: 34rem; }
-.axis-svg { width: 100%; height: auto; display: block; touch-action: manipulation; }
-.axis-grid { stroke: var(--line-strong); stroke-dasharray: 2 2; stroke-width: .4; }
-.axis-frame { fill: none; stroke: var(--line); stroke-width: .5; }
-.axis-spoke { stroke: var(--line-strong); stroke-width: .5; opacity: .35; }
-.axis-plane-label { fill: var(--ink-faint); font-family: var(--font-mono); font-size: 3px; letter-spacing: .03em; }
-.axis-hit { fill: transparent; cursor: pointer; }
-.axis-node { pointer-events: none; fill: var(--surface-2); stroke: var(--accent); stroke-width: 1.2; cursor: pointer; transition: fill .15s, r .15s, stroke-width .15s; }
-.axis-node:hover { fill: var(--accent); }
-.axis-node.active { fill: var(--accent); }
-.axis-node:focus-visible { outline: none; stroke-width: 2; }
-.axis-node-text { fill: var(--ink-dim); font-family: var(--font-mono); font-size: 3.4px; pointer-events: none; }
-.axis-node.active + .axis-node-text { fill: var(--accent-ink); }
-.ecard.axis-card-hl { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft), var(--shadow); }
+/* ---- The five axes ----
+   Five bipolar spectra, one per row. Each carries its own hue, so the
+   five are distinguishable before a word is read, and the card it opens
+   below wears the same one. */
+.axis-plane { margin: 1.4rem 0 1.8rem; max-width: var(--w-prose); }
+.axis-dial { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+
+.axis-btn {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-family: inherit; color: inherit;
+  padding: .95rem 1.15rem; border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--tint) 24%, var(--line));
+  border-left: 3px solid var(--tint);
+  background: color-mix(in srgb, var(--tint) var(--tint-wash), var(--surface));
+  transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+}
+.axis-btn:hover { transform: translateX(2px); background: color-mix(in srgb, var(--tint) var(--tint-soft), var(--surface)); }
+.axis-track.is-open .axis-btn { background: color-mix(in srgb, var(--tint) var(--tint-soft), var(--surface)); border-color: var(--tint); }
+
+.ax-hunger {
+  display: block; font-family: var(--font-mono); font-size: .64rem;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--tint);
+  margin-bottom: .5rem;
+}
+
+/* The spectrum: two named ends with a rule between them. The rule takes
+   the leftover space, so the poles stay hard against the edges however
+   long their names are and the row never needs a media query. */
+.ax-span { display: flex; align-items: center; gap: .75rem; }
+.ax-pole { font-family: var(--font-serif); font-size: var(--step-1); line-height: 1.15; color: var(--ink); white-space: nowrap; }
+.ax-line { flex: 1; min-width: 1.5rem; height: 0; border-top: 1.5px dashed color-mix(in srgb, var(--tint) 55%, transparent); position: relative; }
+.ax-line::before, .ax-line::after {
+  content: ""; position: absolute; top: 50%; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--tint); transform: translateY(-50%);
+}
+.ax-line::before { left: -1px; }
+.ax-line::after { right: -1px; }
+
+.ax-shame {
+  display: block; margin-top: .55rem; font-family: var(--font-serif);
+  font-style: italic; color: var(--ink-dim); font-size: var(--step--1); line-height: 1.5;
+}
+
+.ecard.axis-card-hl { border-color: var(--tint, var(--accent)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--tint, var(--accent)) 26%, transparent), var(--shadow); }
+
+@media (max-width: 560px) {
+  /* Below this the two poles and the rule stop fitting on one line;
+     stack them and turn the rule upright rather than squeezing. */
+  .ax-span { display: grid; grid-template-columns: auto 1fr; gap: .1rem .7rem; }
+  /* A real 7px box, with the dashes painted inside it. Drawn as a
+     zero-width border instead, the end dots hang outside the element
+     and every overflow probe reports a phantom 4px. */
+  .ax-line {
+    grid-column: 1; justify-self: center; width: 7px; height: 1.6rem; min-width: 0; border: 0;
+    background: repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--tint) 55%, transparent) 0 3px, transparent 3px 6px)
+      center / 1.5px 100% no-repeat;
+  }
+  .ax-line::before, .ax-line::after { left: 0; right: auto; transform: none; }
+  .ax-line::before { top: -2px; }
+  .ax-line::after { top: auto; bottom: -2px; }
+  .ax-pole { grid-column: 1; }
+}
 
 /* ---- Searchable glossary ---- */
 .gloss-tools { display: grid; gap: .8rem; margin: 0 0 1.2rem; }
@@ -68,10 +115,10 @@
 .gloss-tag { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; padding: .42rem 1rem; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-dim); cursor: pointer; transition: all .15s; }
 .gloss-tag:hover { border-color: var(--accent); color: var(--accent-ink); }
 .gloss-tag.active { background: var(--accent-solid); border-color: var(--accent-solid); color: var(--on-accent); }
-.gloss-card .gloss-verses { font-size: var(--step--1); color: var(--ink-dim); border-left: 2px solid var(--grace); background: var(--grace-soft); border-radius: 4px; padding: .35rem .6rem; }
+.gloss-card .gloss-verses { font-size: var(--step--1); color: var(--ink-dim); border-left: 2px solid var(--grace); background: color-mix(in srgb, var(--grace) 10%, var(--surface)); border-radius: 4px; padding: .35rem .6rem; }
 .gloss-card .gloss-topics { margin: 0; font-size: .74rem; color: var(--ink-faint); }
 .gloss-tagrow { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: auto; padding-top: .7rem; border-top: 1px dashed var(--line); }
-.gloss-pill { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); color: var(--accent-ink); }
+.gloss-pill { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--tint, var(--accent)) 32%, transparent); color: var(--tint, var(--accent-ink)); }
 .gloss-empty { grid-column: 1/-1; text-align: center; padding: 2.4rem; color: var(--ink-faint); font-family: var(--font-mono); font-size: var(--step--1); }
 
 /* ---- Re-source workbook / personal architect ---- */

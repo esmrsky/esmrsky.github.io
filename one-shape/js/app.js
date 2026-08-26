@@ -43,6 +43,55 @@
   }
   window.osmwReveal = reveal;
 
+  /* ---------- Panel open / close ----------
+     A native <details> snaps: the browser flips `open` and the content
+     appears in one frame. To ease it we take the click ourselves, hold
+     `open` true for the whole close animation, and animate the body's
+     height with WAAPI — the resting height is measured each time, so a
+     panel whose contents reflow still lands on the right number. */
+  var EASE = "cubic-bezier(.32,.72,0,1)";
+  function reduced() {
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+
+  function initPanels() {
+    document.querySelectorAll("details.panel").forEach(function (d) {
+      var summary = d.querySelector("summary");
+      var body = d.querySelector(".p-body");
+      if (!summary || !body) return;
+      var anim = null;
+
+      function run(opening) {
+        if (anim) anim.cancel();
+        var start = opening ? 0 : body.getBoundingClientRect().height;
+        body.style.height = "auto";
+        var end = opening ? body.getBoundingClientRect().height : 0;
+        body.style.height = start + "px";
+        // Duration scales with distance but stays inside a range that
+        // reads as "it moved", never as "it is loading".
+        var ms = Math.max(240, Math.min(460, 200 + Math.abs(end - start) * 0.22));
+        anim = body.animate(
+          { height: [start + "px", end + "px"], opacity: opening ? [0, 1] : [1, 0] },
+          { duration: ms, easing: EASE }
+        );
+        anim.onfinish = function () {
+          anim = null;
+          body.style.height = "";
+          if (!opening) d.open = false;
+          runSpy();
+        };
+        anim.oncancel = function () { anim = null; body.style.height = ""; };
+      }
+
+      summary.addEventListener("click", function (e) {
+        if (reduced()) return;            // let the browser snap it
+        e.preventDefault();
+        if (d.open) run(false);
+        else { d.open = true; run(true); }
+      });
+    });
+  }
+
   /* ---------- Scrolling to a target ---------- */
   function goTo(el, instant) {
     if (!el) return;
@@ -253,6 +302,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initTheme();
     initNav();
+    initPanels();
     runSpy();
     if (location.hash) routeFromHash(true);
   });

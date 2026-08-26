@@ -55,7 +55,13 @@ strong { font-weight: 600; }
 .m-prose, .m-wide, .m-full {
   width: 100%; margin-inline: auto; padding-inline: var(--pad);
 }
-.m-prose { max-width: calc(var(--w-prose) + 2 * var(--pad)); }
+/* One left edge for everything.
+   .m-prose is the SAME container as .m-wide — it just caps its
+   children at a reading measure and lets them sit left. Centring
+   the prose column instead makes every panel and grid look like it
+   is bursting out of the text, because they never share an edge. */
+.m-prose { max-width: calc(var(--w-wide) + 2 * var(--pad)); }
+.m-prose > * { max-width: var(--w-prose); }
 .m-wide  { max-width: calc(var(--w-wide)  + 2 * var(--pad)); }
 .m-full  { max-width: calc(var(--w-full)  + 2 * var(--pad)); }
 
@@ -260,6 +266,8 @@ strong { font-weight: 600; }
 }
 .panel > summary::-webkit-details-marker { display: none; }
 .panel > summary:hover { background: var(--bg-tint); }
+.panel > summary { transition: background-color .2s ease, border-color .34s ease; }
+.panel .p-open { transition: background-color .3s ease, color .3s ease; }
 .panel .p-t { font-family: var(--font-serif); font-size: var(--step-1); color: var(--ink); line-height: 1.2; }
 .panel .p-d { display: block; font-size: var(--step--1); color: var(--ink-faint); margin-top: .2rem; line-height: 1.45; }
 .panel .p-open {
@@ -267,14 +275,15 @@ strong { font-weight: 600; }
   font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase;
   color: var(--accent-ink); background: var(--accent-soft); border-radius: 999px; padding: .42rem .8rem;
 }
-.panel .p-open .chev { width: 13px; height: 13px; transition: transform .3s; }
+.panel .p-open .chev { width: 13px; height: 13px; transition: transform .34s cubic-bezier(.32,.72,0,1); }
 .panel[open] > summary { border-radius: var(--radius) var(--radius) 0 0; border-bottom: 1px solid var(--line); }
 .panel[open] .p-open .chev { transform: rotate(90deg); }
 .panel[open] .p-open .lbl-shut { display: inline; }
 .panel .p-open .lbl-shut { display: none; }
 .panel .p-open .lbl-open { display: inline; }
 .panel[open] .p-open .lbl-open { display: none; }
-.p-body { padding: var(--pad); }
+/* The body is the animated box, so it owns overflow while it moves. */
+.p-body { padding: var(--pad); overflow: hidden; }
 .p-body > :first-child { margin-top: 0; }
 
 /* ---- Scripture / quote panel ---- */

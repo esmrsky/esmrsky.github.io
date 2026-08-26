@@ -151,51 +151,54 @@
     }
   }
 
-  /* ---- Interactive existential axis map ---- */
-  // The SVG plane is built from AXES_DATA coords so the nodes stay in
-  // sync with the data; clicking a node jumps to that axis's card below.
-  function initAxisMap() {
+  /* ---- The five axes ----
+     Rebuilt from the scatter plot it used to be. Those coords put the
+     five axes on a plane whose own ends were named "Performance",
+     "Obscurity", "Provision" and "Scarcity" — four of the ten pole
+     names — so "Performance" read as both a dot and an axis end, and
+     the fifth axis sat exactly on the origin, under the crosshair.
+
+     They are not five points in a shared space. They are five separate
+     bipolar spectra, so they are drawn as five spectra: the hunger, the
+     two poles, and the sentence that plays in your head. HTML, not SVG
+     — real text that reflows, scales and themes, with no viewBox to
+     shrink its labels to 4px on a phone. */
+  var AXIS_TINT = {
+    rejection_acceptance: "rose",
+    scarcity_abundance:   "amber",
+    control_surrender:    "blue",
+    performance_standing: "violet",
+    obscurity_renown:     "teal"
+  };
+
+  function poles(title) {
+    // "Rejection vs. Acceptance" -> ["Rejection", "Acceptance"]
+    var m = String(title).split(/\s+vs\.?\s+/i);
+    return m.length === 2 ? m : [title, ""];
+  }
+
+  function initAxisDial() {
     var wrap = $("axis-plane");
     if (!wrap || !window.AXES_DATA) return;
-    var NODE_LABEL = {
-      rejection_acceptance: "Acceptance", scarcity_abundance: "Abundance",
-      control_surrender: "Control", performance_standing: "Performance",
-      obscurity_renown: "Renown"
-    };
     var keys = Object.keys(AXES_DATA);
-    var spokes = keys.map(function (k) {
-      var c = AXES_DATA[k].coords;
-      // One axis sits on the origin; a spoke from the centre to the
-      // centre is a zero-length line under its own node.
-      if (c.x === 50 && c.y === 50) return "";
-      return '<line class="axis-spoke" x1="50" y1="50" x2="' + c.x + '" y2="' + c.y + '"/>';
-    }).join("");
-    var nodes = keys.map(function (k) {
-      var a = AXES_DATA[k], c = a.coords, lbl = NODE_LABEL[k] || a.title;
-      // Label above a node in the lower half (and above the one on the
-      // origin, where a label below would land on the X-axis captions).
-      var ly = c.y > 45 ? c.y - 6.5 : c.y + 6.9;
-      // A transparent 7.5-unit disc under the 4.5-unit dot: the visible
-      // node stays small, the target clears 44px on a phone.
-      return '<circle class="axis-hit" data-axis="' + k + '" cx="' + c.x + '" cy="' + c.y + '" r="7.5"/>' +
-        '<circle class="axis-node" data-axis="' + k + '" cx="' + c.x + '" cy="' + c.y + '" r="4.5" tabindex="0" role="button" aria-label="' + a.title + '"><title>' + a.title + "</title></circle>" +
-        '<text class="axis-node-text" x="' + c.x + '" y="' + ly + '" text-anchor="middle">' + lbl + "</text>";
-    }).join("");
-    wrap.innerHTML =
-      '<svg class="axis-svg" viewBox="0 0 100 100" role="img" aria-label="Existential axis map: five striving poles on a performance–obscurity and provision–scarcity plane">' +
-        '<line class="axis-grid" x1="10" y1="50" x2="90" y2="50"/>' +
-        '<line class="axis-grid" x1="50" y1="10" x2="50" y2="90"/>' +
-        '<rect class="axis-frame" x="5" y="5" width="90" height="90"/>' +
-        '<text class="axis-plane-label" x="50" y="8" text-anchor="middle">Provision / Abundance (Y+)</text>' +
-        '<text class="axis-plane-label" x="50" y="96" text-anchor="middle">Deprivation / Scarcity (Y−)</text>' +
-        '<text class="axis-plane-label" x="92" y="52" text-anchor="end">Performance (X+)</text>' +
-        '<text class="axis-plane-label" x="8" y="52" text-anchor="start">Obscurity (X−)</text>' +
-        spokes + nodes +
-      "</svg>";
 
-    function highlight(key) {
-      wrap.querySelectorAll(".axis-node").forEach(function (n) {
-        n.classList.toggle("active", n.dataset.axis === key);
+    wrap.innerHTML = '<ol class="axis-dial">' + keys.map(function (k) {
+      var a = AXES_DATA[k], p = poles(a.title);
+      return '<li class="axis-track tint-' + (AXIS_TINT[k] || "blue") + '">' +
+        '<button type="button" class="axis-btn" data-axis="' + k + '" aria-label="' + a.title + ' — ' + a.hunger + '">' +
+          '<span class="ax-hunger">' + a.hunger + "</span>" +
+          '<span class="ax-span">' +
+            '<span class="ax-pole ax-l">' + p[0] + "</span>" +
+            '<span class="ax-line" aria-hidden="true"></span>' +
+            '<span class="ax-pole ax-r">' + p[1] + "</span>" +
+          "</span>" +
+          '<span class="ax-shame">' + a.shame + "</span>" +
+        "</button></li>";
+    }).join("") + "</ol>";
+
+    function select(key) {
+      wrap.querySelectorAll(".axis-track").forEach(function (t) {
+        t.classList.toggle("is-open", t.querySelector(".axis-btn").dataset.axis === key);
       });
       document.querySelectorAll("#axes-grid .ecard[data-axis]").forEach(function (card) {
         var on = card.dataset.axis === key;
@@ -204,21 +207,13 @@
         // first or the scroll lands on a summary and nothing appears.
         if (on) {
           if (window.osmwReveal) window.osmwReveal(card);
-          requestAnimationFrame(function () { card.scrollIntoView({ behavior: "smooth", block: "center" }); });
+          setTimeout(function () { card.scrollIntoView({ behavior: "smooth", block: "center" }); }, 360);
         }
       });
     }
 
-    // The hit disc takes the pointer (the visible dot is pointer-events:none
-    // so a tap anywhere in the 44px target counts); the dot keeps the focus
-    // ring and the keyboard role.
-    wrap.querySelectorAll(".axis-hit").forEach(function (hit) {
-      hit.addEventListener("click", function () { highlight(hit.dataset.axis); });
-    });
-    wrap.querySelectorAll(".axis-node").forEach(function (node) {
-      node.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); highlight(node.dataset.axis); }
-      });
+    wrap.querySelectorAll(".axis-btn").forEach(function (b) {
+      b.addEventListener("click", function () { select(b.dataset.axis); });
     });
   }
 
@@ -422,7 +417,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initFeelGenerator();
     initDiscriminator();
-    initAxisMap();
+    initAxisDial();
     initGlossary();
     initWorkbook();
   });

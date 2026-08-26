@@ -129,8 +129,10 @@
     var c = $("axes-grid"); if (!c || !window.AXES_DATA) return;
     c.innerHTML = Object.keys(AXES_DATA).map(function (k) {
       var a = AXES_DATA[k];
-      return '<div class="ecard" id="axis-card-' + k + '" data-axis="' + k + '"><div class="ecard-head"><h3>' + a.title + "</h3></div>" +
-        '<div class="sub">' + a.hunger + "</div>" +
+      var TINT = { rejection_acceptance: "rose", scarcity_abundance: "amber", control_surrender: "blue",
+                   performance_standing: "violet", obscurity_renown: "teal" };
+      return '<div class="ecard tint-' + (TINT[k] || "blue") + '" id="axis-card-' + k + '" data-axis="' + k + '"><div class="ecard-head"><h3>' + a.title + "</h3></div>" +
+        '<span class="emeta">' + a.hunger + "</span>" +
         '<p class="erow"><span class="elabel">cue</span>' + a.cue + "</p>" +
         '<p class="erow"><span class="elabel leak">counterfeit</span>' + a.counterfeit + "</p>" +
         '<p class="erow"><span class="elabel">why it leaks</span>' + a.leak + "</p>" +
