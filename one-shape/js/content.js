@@ -47,7 +47,13 @@
      cards under Mechanics, and a table). One card, both halves. */
   function renderCounterfeits() {
     var c = $("everyday-grid"); if (!c || !window.getCounterfeits) return;
-    c.innerHTML = window.getCounterfeits().map(function (e) {
+    // Engineered-on-purpose first: the section text leads with them, and
+    // grouping the five tall cards together stops a 392px height spread
+    // from landing a very tall card beside a very short one.
+    var list = window.getCounterfeits().slice().sort(function (a, b) {
+      return (b.behavioral ? 1 : 0) - (a.behavioral ? 1 : 0);
+    });
+    c.innerHTML = list.map(function (e) {
       var b = e.behavioral;
       return '<div class="ecard"><div class="ecard-head"><h3>' + e.name + "</h3>" +
         '<span class="emeta">' + e.type + (b ? " · " + b.axis : "") + "</span></div>" +

@@ -3,8 +3,13 @@
    reference tables (which become cards before they overflow).
    ============================================================ */
 
-/* min() on the track floor, or a 20rem minimum overflows a 301px phone. */
-.mini-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr)); align-items: start; }
+/* min() on the track floor, or a 20rem minimum overflows a 301px phone.
+   `stretch`, not `start`: with `start` a short card leaves a hole under
+   it inside its own row, which is exactly the "empty spot" a bento is
+   not supposed to have. Stretched, the row squares off and the chip
+   parks on the bottom edge. The leftover at the END of the run is
+   handled by bentoFill() in app.js. */
+.mini-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr)); align-items: stretch; }
 .stack { display: grid; gap: 1rem; }
 .mini-grid + .mini-grid, .stack + .stack { margin-top: 1rem; }
 

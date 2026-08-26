@@ -258,6 +258,8 @@
           '<div class="gloss-tagrow">' + pills + "</div></div>";
       }).join("");
       grid.innerHTML = cards || '<p class="gloss-empty">No matches for “' + gEsc(q) + "”.</p>";
+      // Filtering changes the count, so the last row has a new leftover.
+      if (window.osmwBento) window.osmwBento(grid.parentElement || grid);
     }
 
     search.addEventListener("input", render);

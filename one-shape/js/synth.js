@@ -1,7 +1,7 @@
 /* ============================================================
    SYNTHESIS behaviour — the need-map crosswalk + the need drawer.
    The drawer is the cross-cutting view: one need, seen through
-   every lens at once, built from the tagged model.
+   every chapter at once, built from the tagged model.
    ============================================================ */
 (function () {
   "use strict";
@@ -25,7 +25,7 @@
         cell(n.lens.pattern, "pattern") + cell(n.lens.love, "love") +
         cell(n.lens.mechanics, "mechanics") + cell(n.lens.wayback, "wayback") + "</button>";
     }).join("");
-    var foot = '<div class="needmap-foot">All four lenses converge on <b>belonging, worth, safety, significance</b> — then each reaches into its own ground (Love → intimacy, Mechanics → provision &amp; renown, The Way Back → all the way to transcendence). Tap any need to see it across every lens.</div>';
+    var foot = '<div class="needmap-foot">All four chapters converge on <b>belonging, worth, safety, significance</b> — then each reaches into its own ground (Love → intimacy, Mechanics → provision &amp; renown, The Way Back → all the way to transcendence). Open any need to read it in all four.</div>';
     c.innerHTML = head + rows + foot;
     c.querySelectorAll(".need-row").forEach(function (b) {
       b.addEventListener("click", function () { openNeed(b.dataset.need); });
@@ -41,7 +41,7 @@
   function buildDrawer(d) {
     var n = d.need, h = "";
     h += '<div class="nd-head"><div class="nd-tt">' +
-      '<span class="nd-eyebrow">the need · seen across every lens</span>' +
+      '<span class="nd-eyebrow">the need · seen in every chapter</span>' +
       "<h2>" + esc(n.name) + "</h2>" +
       '<p class="nd-q">' + esc(n.q) + "</p></div>" +
       '<button class="nd-close" aria-label="Close">' + X + "</button></div>";
@@ -118,7 +118,7 @@
     renderMap();
     if (scrim) scrim.addEventListener("click", closeNeed);
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeNeed(); });
-    // Delegated: any need-chip rendered into a lens opens the drawer.
+    // Delegated: any need-chip in any catalogue opens the drawer.
     document.addEventListener("click", function (e) {
       var chip = e.target.closest && e.target.closest(".need-chip");
       if (chip && chip.dataset.need) openNeed(chip.dataset.need);

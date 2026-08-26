@@ -43,22 +43,35 @@
   }
   window.osmwReveal = reveal;
 
-  /* ---------- Panel open / close ----------
+  /* ---------- Disclosure open / close ----------
      A native <details> snaps: the browser flips `open` and the content
-     appears in one frame. To ease it we take the click ourselves, hold
-     `open` true for the whole close animation, and animate the body's
-     height with WAAPI — the resting height is measured each time, so a
-     panel whose contents reflow still lands on the right number. */
+     appears in one frame. We take the click, hold `open` true through
+     the whole close, and animate the body's height with WAAPI against a
+     freshly measured resting height — so a disclosure whose contents
+     reflow still lands on the right number.
+
+     Every disclosure gets this, not just the big panels: the feelings
+     cards and the nested romance/parenting blocks are the ones a reader
+     opens most, and they were the ones still snapping. */
+  var DISCLOSURES = "details.panel, details.fcard, details.depth";
   var EASE = "cubic-bezier(.32,.72,0,1)";
   function reduced() {
     return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }
+  function bodyOf(d) {
+    for (var n = d.firstElementChild; n; n = n.nextElementSibling) {
+      if (n.tagName !== "SUMMARY") return n;
+    }
+    return null;
+  }
 
-  function initPanels() {
-    document.querySelectorAll("details.panel").forEach(function (d) {
-      var summary = d.querySelector("summary");
-      var body = d.querySelector(".p-body");
+  function initDisclosures(root) {
+    (root || document).querySelectorAll(DISCLOSURES).forEach(function (d) {
+      if (d.dataset.eased) return;
+      var summary = d.querySelector(":scope > summary");
+      var body = bodyOf(d);
       if (!summary || !body) return;
+      d.dataset.eased = "1";
       var anim = null;
 
       function run(opening) {
@@ -67,30 +80,79 @@
         body.style.height = "auto";
         var end = opening ? body.getBoundingClientRect().height : 0;
         body.style.height = start + "px";
-        // Duration scales with distance but stays inside a range that
-        // reads as "it moved", never as "it is loading".
-        var ms = Math.max(240, Math.min(460, 200 + Math.abs(end - start) * 0.22));
+        body.style.overflow = "hidden";
+        // Distance-scaled, but always inside a range a reader reads as
+        // "it moved" rather than "it is loading".
+        var ms = Math.max(200, Math.min(440, 180 + Math.abs(end - start) * 0.2));
         anim = body.animate(
-          { height: [start + "px", end + "px"], opacity: opening ? [0, 1] : [1, 0] },
+          { height: [start + "px", end + "px"] },
           { duration: ms, easing: EASE }
         );
         anim.onfinish = function () {
           anim = null;
           body.style.height = "";
+          body.style.overflow = "";     // never clip at rest
           if (!opening) d.open = false;
+          if (opening) bentoAll(body);  // its grids have a track list now
           runSpy();
         };
-        anim.oncancel = function () { anim = null; body.style.height = ""; };
+        anim.oncancel = function () {
+          anim = null; body.style.height = ""; body.style.overflow = "";
+        };
       }
 
       summary.addEventListener("click", function (e) {
-        if (reduced()) return;            // let the browser snap it
+        if (reduced()) return;          // let the browser snap it
         e.preventDefault();
         if (d.open) run(false);
         else { d.open = true; run(true); }
       });
     });
   }
+  window.osmwEase = initDisclosures;
+
+  /* ---------- Bento fill ----------
+     CSS grid leaves the tail of a run stranded: five cards in two
+     columns means one lonely half-width card with a hole beside it.
+     There is no CSS for "share out what is left" — `auto-fit` only
+     stretches when the items never filled a row at all, and masonry
+     is not in a stable browser — so the leftover is measured and
+     spanned. Read the resolved track list, take the remainder, and
+     hand the trailing cards the spare columns as evenly as they go. */
+  var BENTO = ".mini-grid, .grid, .phase-row, .beats, .spine ol, .lens-cards, .doors";
+
+  function bentoFill(grid) {
+    var kids = Array.prototype.slice.call(grid.children).filter(function (el) {
+      return el.nodeType === 1;
+    });
+    kids.forEach(function (el) { el.style.gridColumn = ""; });
+    if (!kids.length) return;
+
+    var tpl = getComputedStyle(grid).gridTemplateColumns;
+    // "none" means the grid is inside a closed <details> and has never
+    // been laid out; there is nothing to measure until it opens.
+    if (!tpl || tpl === "none") return;
+    var cols = tpl.split(" ").filter(Boolean).length;
+    if (cols < 2) return;
+
+    var items = kids.filter(function (el) { return getComputedStyle(el).display !== "none"; });
+    if (!items.length) return;
+
+    // A run shorter than one row shares the whole row; otherwise only
+    // the remainder after the last full row needs sharing out.
+    var rem = items.length < cols ? items.length : items.length % cols;
+    if (!rem) return;
+    var tail = items.slice(items.length - rem);
+    var base = Math.floor(cols / rem), extra = cols % rem;
+    tail.forEach(function (el, i) {
+      el.style.gridColumn = "span " + (base + (i < extra ? 1 : 0));
+    });
+  }
+
+  function bentoAll(root) {
+    (root || document).querySelectorAll(BENTO).forEach(bentoFill);
+  }
+  window.osmwBento = bentoAll;
 
   /* ---------- Scrolling to a target ---------- */
   function goTo(el, instant) {
@@ -294,15 +356,25 @@
 
     window.addEventListener("hashchange", function () { routeFromHash(false); });
     window.addEventListener("scroll", runSpy, { passive: true });
-    window.addEventListener("resize", runSpy);
-    // Opening a catalogue changes every offset below it.
-    document.addEventListener("toggle", runSpy, true);
+    var rt = null;
+    window.addEventListener("resize", function () {
+      runSpy();
+      clearTimeout(rt);
+      rt = setTimeout(bentoAll, 120);   // track count changes with width
+    });
+    // Opening a catalogue changes every offset below it — and gives its
+    // grids a track list for the first time.
+    document.addEventListener("toggle", function (e) {
+      runSpy();
+      if (e.target && e.target.open) bentoAll(e.target);
+    }, true);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     initTheme();
     initNav();
-    initPanels();
+    initDisclosures();
+    bentoAll();
     runSpy();
     if (location.hash) routeFromHash(true);
   });
