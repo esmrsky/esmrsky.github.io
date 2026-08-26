@@ -106,6 +106,15 @@ html[data-dir] .verse-card {
 }
 html[data-dir] .verse-card:hover,
 html[data-dir] .mcard:hover { transform: translateY(var(--dir-lift)); }
+html[data-dir] .drawer {
+  background: color-mix(in srgb, var(--c, var(--gold)) var(--dir-card-mix), var(--card));
+  border-color: color-mix(in srgb, var(--c, var(--gold)) var(--dir-card-line-mix), var(--line));
+  border-width: var(--dir-bw);
+}
+html[data-dir] .mcard {
+  background: color-mix(in srgb, var(--mc, var(--gold)) var(--dir-card-mix), var(--card));
+  border-color: color-mix(in srgb, var(--mc, var(--gold)) var(--dir-card-line-mix), var(--line));
+}
 html[data-dir] .brief {
   border-radius: var(--r);
   border-width: var(--dir-bw);
@@ -199,7 +208,7 @@ html[data-dir="bulletin"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 0;
   --dir-chip-r: 0;
-  --dir-card-mix: 0%;
+  --dir-card-mix: 6.5%;
   --dir-card-line-mix: 34%;
   --dir-tint: 0%;
   --dir-lift: 0px;
@@ -267,8 +276,8 @@ html[data-dir="prism"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 999px;
   --dir-chip-r: 4px;
-  --dir-card-mix: 0%;
-  --dir-card-line-mix: 0%;
+  --dir-card-mix: 6%;
+  --dir-card-line-mix: 26%;
   --dir-tint: 0%;
   --dir-lift: -3px;
   --dir-hero-glow: 8%;
@@ -276,7 +285,7 @@ html[data-dir="prism"] {
   --measure: 68ch;
 }
 html[data-dir="prism"][data-mode="light"] {
-  --paper: #FFFFFF; --paper-2: #F4F5F8; --card: #FFFFFF; --card-2: #F4F5F8;
+  --paper: #F7F8FC; --paper-2: #EEF0F7; --card: #FFFFFF; --card-2: #F3F5FA;
   --ink: #111114; --ink-soft: #45464E;
   --line: #DCDEE5; --line-soft: #E9EAEF;
   --gold: #0B4CFF; --gold-deep: #0838C4; --gold-hi: #0B4CFF;
@@ -287,6 +296,7 @@ html[data-dir="prism"][data-mode="light"] {
   --k1: #00875F; --k2: #E23200; --k3: #B87F00; --k4: #0B4CFF;
   --k5: #8A22F0; --k6: #C0006B; --k7: #007C93;
   --dir-footer-bg: #F4F5F8; --dir-footer-fg: #45464E; --dir-footer-word: #111114;
+  --grid-line: rgba(17, 17, 20, 0.055);
   --shadow-lift: 0 12px 30px rgba(17, 17, 20, 0.11);
 }
 html[data-dir="prism"][data-mode="dark"] {
@@ -301,11 +311,21 @@ html[data-dir="prism"][data-mode="dark"] {
   --k1: #2FD9A4; --k2: #FF7A4D; --k3: #FFC94D; --k4: #5B85FF;
   --k5: #BE85FF; --k6: #FF6FA5; --k7: #4FCFCF;
   --dir-footer-bg: #16161C; --dir-footer-fg: #B5B6BE; --dir-footer-word: #F2F2F5;
+  --grid-line: rgba(242, 242, 245, 0.045);
   --shadow-lift: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
+/* a report is read on a grid — the ruled ground Field used to carry */
+html[data-dir="prism"] .section {
+  background:
+    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 34px,
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 34px 100%,
+    linear-gradient(180deg, color-mix(in srgb, var(--c) var(--dir-tint), transparent), transparent min(560px, 46vh));
+}
+
 /* the hue owns the category: it fills the medallion and caps the card */
 html[data-dir="prism"] .section-label .medallion { background: var(--c); color: var(--paper); border-color: var(--c); }
 html[data-dir="prism"] .card { border-top: 3px solid var(--c, var(--gold)); }
+html[data-dir="prism"] .verse-card { border-left-width: 4px; }
 html[data-dir="prism"] .card:hover { border-color: var(--line); border-top-color: var(--c, var(--gold)); }
 html[data-dir="prism"] .step-ic { background: var(--c); color: var(--paper); }
 html[data-dir="prism"] .brief { border-left-color: var(--c, var(--gold)); }
@@ -337,7 +357,7 @@ html[data-dir="placard"] {
   --dir-medallion-r: 0;
   --dir-chip-r: 0;
   --dir-bw: 2px;
-  --dir-card-mix: 0%;
+  --dir-card-mix: 6%;
   --dir-card-line-mix: 100%;
   --dir-tint: 0%;
   --dir-lift: 0px;
@@ -405,173 +425,6 @@ html[data-dir="placard"] .step-num { color: var(--c); font-family: var(--serif-d
 html[data-dir="placard"] .stat-num { color: var(--gold); }
 
 
-/* ══════════════ 04 · FIELD INSTRUMENT ══════════════
-   Readouts, thresholds, measurement. Everything mono, every figure
-   tabular. Phosphor = live, amber = threshold, clay = stale. Opens
-   dark by default. */
-
-html[data-dir="field"] {
-  --dir-hero-track: 0.02em;
-  --dir-dot-r: 2px;
-  --dir-mark: "+";
-  --dir-line-bg: repeating-linear-gradient(180deg, var(--c) 0 6px, transparent 6px 11px);
-  --serif-display: "IBM Plex Mono", ui-monospace, monospace;
-  --serif-text: "IBM Plex Sans", system-ui, sans-serif;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --dir-label: "IBM Plex Mono", ui-monospace, monospace;
-  --dir-greek: "IBM Plex Mono", ui-monospace, monospace;
-  --dir-head-weight: 600;
-  --dir-head-track: -0.005em;
-  --dir-head-lh: 1.14;
-  --dir-quote-style: normal;
-  --dir-rule-h: 2px;
-  --dir-rule-w: 7rem;
-  --dir-rule-r: 0;
-  --dir-rule-bg: repeating-linear-gradient(90deg, var(--c, var(--gold)) 0 9px, transparent 9px 15px);
-  --dir-medallion-r: 2px;
-  --dir-chip-r: 2px;
-  --dir-card-mix: 3%;
-  --dir-card-line-mix: 28%;
-  --dir-tint: 0%;
-  --dir-lift: -2px;
-  --dir-hero-glow: 10%;
-  --dir-ring-w: 1;
-  --dir-ring-dash: 5 7;
-  --r: 2px; --r-lg: 3px;
-  --measure: 70ch;
-}
-html[data-dir="field"][data-mode="light"] {
-  --paper: #EDEFEA; --paper-2: #E3E6DF; --card: #FFFFFF; --card-2: #E9ECE5;
-  --ink: #0D1611; --ink-soft: #3E4A44;
-  --line: #C6CDC4; --line-soft: #DBE0D6;
-  --gold: #0B8F63; --gold-deep: #076B4A; --gold-hi: #0B8F63;
-  --c-word: #0B8F63; --c-greek: #B07D12; --c-fear: #A85833; --c-mech: #0B8F63;
-  --c-jesus: #B07D12; --c-sci: #0B8F63; --c-mir: #B07D12; --c-auth: #A85833; --c-walk: #0B8F63;
-  --mir-a: #0B8F63; --mir-b: #A85833;
-  --pos: #0B8F63; --neg: #A85833;
-  --k1: #0B8F63; --k2: #A85833; --k3: #B07D12; --k4: #2C6E7A;
-  --k5: #6B5AA8; --k6: #9C2F45; --k7: #2C7183;
-  --dir-footer-bg: #0D1611; --dir-footer-fg: #A8B2AB; --dir-footer-word: #EDEFEA;
-  --grid-line: rgba(13, 22, 17, 0.07);
-}
-html[data-dir="field"][data-mode="dark"] {
-  --paper: #0B1410; --paper-2: #0E1915; --card: #12201A; --card-2: #17271F;
-  --ink: #E8E6DC; --ink-soft: #A9AEA3;
-  --line: #26362E; --line-soft: #1C2922;
-  --gold: #6EF2B0; --gold-deep: #96F7C7; --gold-hi: #6EF2B0;
-  --c-word: #6EF2B0; --c-greek: #F2C14E; --c-fear: #C9744A; --c-mech: #6EF2B0;
-  --c-jesus: #F2C14E; --c-sci: #6EF2B0; --c-mir: #F2C14E; --c-auth: #C9744A; --c-walk: #6EF2B0;
-  --mir-a: #6EF2B0; --mir-b: #C9744A;
-  --pos: #6EF2B0; --neg: #C9744A;
-  --k1: #6EF2B0; --k2: #C9744A; --k3: #F2C14E; --k4: #5FB6C4;
-  --k5: #A18CE0; --k6: #E0687F; --k7: #64AEC1;
-  --dir-footer-bg: #0E1915; --dir-footer-fg: #A9AEA3; --dir-footer-word: #E8E6DC;
-  --grid-line: rgba(232, 230, 220, 0.06);
-}
-/* an instrument reads on a grid, and every figure is tabular */
-html[data-dir="field"] body { font-variant-numeric: tabular-nums; }
-html[data-dir="field"] .section {
-  background:
-    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 34px,
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 34px 100%,
-    linear-gradient(180deg, color-mix(in srgb, var(--c) 6%, transparent), transparent min(560px, 46vh));
-}
-html[data-dir="field"] .section-label .medallion { background: color-mix(in srgb, var(--c) 14%, transparent); border-color: var(--c); }
-html[data-dir="field"] .section-label::after { background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, transparent) 0 4px, transparent 4px 9px); }
-html[data-dir="field"] .hero-greek { color: color-mix(in srgb, var(--gold) 6%, transparent); }
-html[data-dir="field"] .stat-num { font-family: var(--dir-label); color: var(--gold); }
-html[data-dir="field"] .step-num { font-family: var(--dir-label); }
-html[data-dir="field"] .btn { border-radius: 2px; }
-html[data-dir="field"] .card { border-left: 2px solid var(--c, var(--gold)); }
-
-
-/* ══════════════ 05 · BLUEPRINT ══════════════
-   Drafted, annotated, dimensional. Every stroke 1px, no fill above
-   22%, and coral reserved for the one thing the reader should look
-   at — which here is the two sections about fear and authority.
-   Opens dark by default. */
-
-html[data-dir="blueprint"] {
-  --dir-hero-track: -0.01em;
-  --dir-dot-r: 0;
-  --dir-mark: "\00D7";
-  --dir-line-bg: repeating-linear-gradient(180deg, color-mix(in srgb, var(--c) 70%, transparent) 0 4px, transparent 4px 9px);
-  --serif-display: "Instrument Serif", Georgia, serif;
-  --serif-text: "IBM Plex Sans", system-ui, sans-serif;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --dir-label: "IBM Plex Mono", ui-monospace, monospace;
-  --dir-head-weight: 400;
-  --dir-head-track: -0.015em;
-  --dir-head-lh: 1.04;
-  --dir-rule-h: 1px;
-  --dir-rule-w: 100%;
-  --dir-rule-r: 0;
-  --dir-rule-bg: repeating-linear-gradient(90deg, var(--c, var(--gold)) 0 6px, transparent 6px 11px);
-  --dir-medallion-r: 0;
-  --dir-chip-r: 0;
-  --dir-card-mix: 0%;
-  --dir-card-line-mix: 46%;
-  --dir-tint: 0%;
-  --dir-lift: 0px;
-  --dir-hero-glow: 6%;
-  --dir-ring-w: 1;
-  --dir-ring-dash: 4 6;
-  --r: 0; --r-lg: 0;
-  --shadow-lift: none;
-  --measure: 68ch;
-}
-html[data-dir="blueprint"][data-mode="light"] {
-  --paper: #EEF2FA; --paper-2: #E4EAF6; --card: #FFFFFF; --card-2: #EAEFF8;
-  --ink: #0D1B3E; --ink-soft: #3E4C6E;
-  --line: #BFCBE0; --line-soft: #D6DEEC;
-  --gold: #0A6FA8; --gold-deep: #08557F; --gold-hi: #0A6FA8;
-  --c-word: #0A6FA8; --c-greek: #5A7099; --c-fear: #D94A38; --c-mech: #0A6FA8;
-  --c-jesus: #5A7099; --c-sci: #0A6FA8; --c-mir: #5A7099; --c-auth: #D94A38; --c-walk: #0A6FA8;
-  --mir-a: #0A6FA8; --mir-b: #D94A38;
-  --pos: #0A6FA8; --neg: #D94A38;
-  --k1: #0A6FA8; --k2: #D94A38; --k3: #8A6A2F; --k4: #5A7099;
-  --k5: #6B5A9E; --k6: #A83B58; --k7: #2C7183;
-  --dir-footer-bg: #0D1B3E; --dir-footer-fg: #A3B0CB; --dir-footer-word: #EEF2FA;
-}
-html[data-dir="blueprint"][data-mode="dark"] {
-  --paper: #0D1B3E; --paper-2: #112249; --card: #16295A; --card-2: #1B3068;
-  --ink: #EDF2FA; --ink-soft: #A9B8D6;
-  --line: #2C427A; --line-soft: #223460;
-  --gold: #38BDF8; --gold-deep: #7DD5FB; --gold-hi: #38BDF8;
-  --c-word: #38BDF8; --c-greek: #7C93BE; --c-fear: #FF7A6B; --c-mech: #38BDF8;
-  --c-jesus: #7C93BE; --c-sci: #38BDF8; --c-mir: #7C93BE; --c-auth: #FF7A6B; --c-walk: #38BDF8;
-  --mir-a: #38BDF8; --mir-b: #FF7A6B;
-  --pos: #38BDF8; --neg: #FF7A6B;
-  --k1: #38BDF8; --k2: #FF7A6B; --k3: #C9A45C; --k4: #7C93BE;
-  --k5: #A18CE0; --k6: #E0687F; --k7: #5FD3E0;
-  --dir-footer-bg: #112249; --dir-footer-fg: #A9B8D6; --dir-footer-word: #EDF2FA;
-}
-/* nothing is filled: cards are outlines with corner ticks, the way a
-   drawing marks an extent */
-html[data-dir="blueprint"] :is(.card, .mcard, .brief, .verse-card) { background: transparent; }
-html[data-dir="blueprint"] .card { position: relative; }
-html[data-dir="blueprint"] .card:not(.greek-card)::before,
-html[data-dir="blueprint"] .card:not(.greek-card)::after {
-  content: "";
-  position: absolute;
-  width: 9px; height: 9px;
-  border: 1px solid var(--c, var(--gold));
-  opacity: 0.9;
-  pointer-events: none;
-}
-html[data-dir="blueprint"] .card:not(.greek-card)::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
-html[data-dir="blueprint"] .card:not(.greek-card)::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
-html[data-dir="blueprint"] .card:hover { box-shadow: none; background: color-mix(in srgb, var(--c) 7%, transparent); }
-html[data-dir="blueprint"] .section-label .medallion { background: transparent; border-color: var(--c); }
-html[data-dir="blueprint"] .section-label::after { background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--c) 60%, transparent) 0 3px, transparent 3px 7px); }
-html[data-dir="blueprint"] .step-ic { background: transparent; border: 1px solid var(--c); }
-html[data-dir="blueprint"] .btn { border-radius: 0; }
-html[data-dir="blueprint"] .btn-solid { background: transparent; color: var(--ink); border: 1px solid var(--gold); }
-html[data-dir="blueprint"] .hero-greek { color: color-mix(in srgb, var(--gold) 9%, transparent); }
-html[data-dir="blueprint"] .stat-num { color: var(--gold); }
-html[data-dir="blueprint"] .pull { border-left-width: 1px; border-left-style: dashed; }
-
-
 /* ══════════════ 06 · MARGIN ══════════════
    Long-form with an apparatus. The prose is black; colour lives only
    in the references, the marks and the notes — so the tints come off
@@ -595,8 +448,8 @@ html[data-dir="margin"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 0;
   --dir-chip-r: 2px;
-  --dir-card-mix: 0%;
-  --dir-card-line-mix: 0%;
+  --dir-card-mix: 5%;
+  --dir-card-line-mix: 24%;
   --dir-tint: 0%;
   --dir-lift: 0px;
   --dir-hero-glow: 5%;
@@ -631,12 +484,9 @@ html[data-dir="margin"][data-mode="dark"] {
   --k5: #A588BE; --k6: #E0687F; --k7: #64AEC1;
   --dir-footer-bg: #18181E; --dir-footer-fg: #B0B0B8; --dir-footer-word: #EDEDF0;
 }
-/* colour appears in the apparatus, never in the prose */
-html[data-dir="margin"] :is(.card, .mcard, .brief, .verse-card, .greek-card, .study-card) {
-  background: transparent;
-  border-color: var(--line);
-}
-html[data-dir="margin"] .card:hover { box-shadow: none; border-color: var(--ink-faint); }
+/* Colour still stays out of the prose — but not out of the cards. Stripping them back to
+   the page left a column of outlines with nothing to separate them from the paper. */
+html[data-dir="margin"] .card:hover { border-color: color-mix(in srgb, var(--c, var(--gold)) 45%, var(--line)); }
 html[data-dir="margin"] .brief { border-left-color: var(--c, var(--gold)); }
 html[data-dir="margin"] .section h2 .tint { color: var(--ink); font-style: italic; }
 html[data-dir="margin"] .section-label .medallion { background: transparent; border-color: var(--line); color: var(--c); }
@@ -650,373 +500,51 @@ html[data-dir="margin"] .pull { border-left-width: 1px; }
 html[data-dir="margin"] .pull blockquote { font-size: clamp(1.35rem, 2.6vw, 1.85rem); }
 
 
-/* ══════════════ 07 · LEDGER ══════════════
-   Dense and tabular. Five muted keys chosen to survive sitting next
-   to each other. The visible change here is not hue, it is density —
-   smaller type, a tighter measure, less air between every rule. */
+/* ══════════════ the direction switcher ══════════════
+   One more control in the nav rather than a floating panel, so it sits with the
+   theme toggle and behaves like it: click to advance. It borrows .theme-toggle's
+   box so the two read as a pair in every direction. */
 
-html[data-dir="ledger"] {
-  --dir-hero-track: -0.02em;
-  --dir-dot-r: 2px;
-  --dir-mark: "\25AA";
-  --serif-display: "Familjen Grotesk", system-ui, sans-serif;
-  --serif-text: "Manrope", system-ui, sans-serif;
-  --sans: "Manrope", system-ui, sans-serif;
-  --dir-label: "Martian Mono", ui-monospace, monospace;
-  --dir-head-weight: 700;
-  --dir-head-track: -0.022em;
-  --dir-head-lh: 1.08;
-  --dir-quote-style: normal;
-  --dir-rule-h: 2px;
-  --dir-rule-w: 4rem;
-  --dir-rule-r: 0;
-  --dir-rule-bg: var(--c, var(--gold));
-  --dir-medallion-r: 3px;
-  --dir-chip-r: 3px;
-  --dir-card-mix: 4%;
-  --dir-card-line-mix: 24%;
-  --dir-tint: 3%;
-  --dir-lift: -2px;
-  --dir-hero-glow: 9%;
-  --r: 3px; --r-lg: 4px;
-  --measure: 76ch;
-}
-html[data-dir="ledger"][data-mode="light"] {
-  --paper: #F0F2F4; --paper-2: #E6E9EC; --card: #FFFFFF; --card-2: #EBEEF1;
-  --ink: #1A1D21; --ink-soft: #474C52;
-  --line: #CDD2D8; --line-soft: #DFE3E8;
-  --gold: #2F5D8C; --gold-deep: #21456A; --gold-hi: #2F5D8C;
-  --c-word: #2F5D8C; --c-greek: #6B4E82; --c-fear: #B5543F; --c-mech: #4E7A4A;
-  --c-jesus: #2F5D8C; --c-sci: #8A6A2F; --c-mir: #6B4E82; --c-auth: #B5543F; --c-walk: #4E7A4A;
-  --mir-a: #2F5D8C; --mir-b: #B5543F;
-  --pos: #4E7A4A; --neg: #B5543F;
-  --k1: #4E7A4A; --k2: #B5543F; --k3: #8A6A2F; --k4: #2F5D8C;
-  --k5: #6B4E82; --k6: #9C3F52; --k7: #2F7D8C;
-  --dir-footer-bg: #E6E9EC; --dir-footer-fg: #474C52; --dir-footer-word: #1A1D21;
-  --shadow-lift: 0 8px 22px rgba(26, 29, 33, 0.1);
-}
-html[data-dir="ledger"][data-mode="dark"] {
-  --paper: #14171A; --paper-2: #191D21; --card: #1D2126; --card-2: #23282E;
-  --ink: #E6E9EC; --ink-soft: #ADB3B9;
-  --line: #2E343B; --line-soft: #242A30;
-  --gold: #6BA3D6; --gold-deep: #96BFE4; --gold-hi: #6BA3D6;
-  --c-word: #6BA3D6; --c-greek: #A588BE; --c-fear: #E08A72; --c-mech: #85B67F;
-  --c-jesus: #6BA3D6; --c-sci: #C9A45C; --c-mir: #A588BE; --c-auth: #E08A72; --c-walk: #85B67F;
-  --mir-a: #6BA3D6; --mir-b: #E08A72;
-  --pos: #85B67F; --neg: #E08A72;
-  --k1: #85B67F; --k2: #E08A72; --k3: #C9A45C; --k4: #6BA3D6;
-  --k5: #A588BE; --k6: #D9808F; --k7: #6BC3D6;
-  --dir-footer-bg: #191D21; --dir-footer-fg: #ADB3B9; --dir-footer-word: #E6E9EC;
-  --shadow-lift: 0 8px 22px rgba(0, 0, 0, 0.45);
-}
-/* the density pass */
-html[data-dir="ledger"] body { font-size: 1rem; line-height: 1.58; font-variant-numeric: tabular-nums; }
-html[data-dir="ledger"] .section { padding-block: clamp(3.2rem, 6vh, 4.6rem); }
-html[data-dir="ledger"] .section h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); margin-bottom: 1.3rem; max-width: 26ch; }
-html[data-dir="ledger"] .section .lede { font-size: 1.1rem; line-height: 1.52; }
-html[data-dir="ledger"] .section-label { margin-bottom: 1.5rem; }
-html[data-dir="ledger"] .section-label .medallion { width: 34px; height: 34px; flex-basis: 34px; }
-html[data-dir="ledger"] .section-label .medallion svg { width: 16px; height: 16px; }
-html[data-dir="ledger"] .card { padding: 1.15rem 1.1rem; }
-html[data-dir="ledger"] .card h3 { font-size: 1.12rem; }
-html[data-dir="ledger"] .card p { font-size: 0.92rem; line-height: 1.52; }
-html[data-dir="ledger"] .grid { gap: 0.72rem; }
-html[data-dir="ledger"] .brief { padding: 0.85rem 1rem; margin-bottom: 1.7rem; }
-html[data-dir="ledger"] .step { padding: 1.35rem 0; }
-html[data-dir="ledger"] .step h3 { font-size: 1.28rem; }
-html[data-dir="ledger"] .step-num { font-size: 2.1rem; font-family: var(--dir-label); }
-html[data-dir="ledger"] .principle { padding: 0.8rem 0; }
-html[data-dir="ledger"] .pull { margin: 2rem 0; }
-html[data-dir="ledger"] .pull blockquote { font-size: clamp(1.25rem, 2.4vw, 1.7rem); line-height: 1.3; }
-html[data-dir="ledger"] .moment { padding-bottom: 1.6rem; }
-html[data-dir="ledger"] .prose { font-size: 0.98rem; }
-html[data-dir="ledger"] .verse-card { padding: 1.1rem 1.15rem; }
-html[data-dir="ledger"] .verse-card blockquote { font-size: 1.08rem; line-height: 1.5; }
-html[data-dir="ledger"] .verse-card .vc-note { font-size: 0.88rem; }
-html[data-dir="ledger"] .greek-word { font-size: 1.9rem; }
-html[data-dir="ledger"] .stat-num { font-family: var(--dir-label); font-size: clamp(2.2rem, 5vw, 3.2rem); color: var(--gold); }
-html[data-dir="ledger"] .hero h1 { font-size: clamp(3.4rem, 11vw, 8rem); }
-html[data-dir="ledger"] .hero-greek { color: color-mix(in srgb, var(--gold) 8%, transparent); }
-
-
-/* ══════════════ 08 · EDITORIAL CHROMA ══════════════
-   One saturated block per section, never two competing — so the
-   headings stay ink and the colour goes into the pull quotes, the
-   grand panels and the section marks. Chartreuse only ever sits on
-   ink or on ultra, never on white. */
-
-html[data-dir="chroma"] {
-  --dir-hero-track: -0.01em;
-  --dir-dot-r: 0;
-  --dir-mark: "\25A0";
-  --dir-line-bg: var(--c);
-  --serif-display: "Bricolage Grotesque", system-ui, sans-serif;
-  --serif-text: "Newsreader", Georgia, serif;
-  --sans: "Newsreader", Georgia, serif;
-  --dir-label: "IBM Plex Mono", ui-monospace, monospace;
-  --dir-greek: "Newsreader", Georgia, serif;
-  --dir-head-weight: 800;
-  --dir-head-track: -0.028em;
-  --dir-head-lh: 1.0;
-  --dir-rule-h: 6px;
-  --dir-rule-w: 5rem;
-  --dir-rule-r: 0;
-  --dir-rule-bg: var(--c, var(--gold));
-  --dir-medallion-r: 0;
-  --dir-chip-r: 0;
-  --dir-bw: 2px;
-  --dir-card-mix: 0%;
-  --dir-card-line-mix: 100%;
-  --dir-tint: 0%;
-  --dir-lift: -3px;
-  --dir-hero-glow: 0%;
-  --dir-ring-w: 2;
-  --r: 0; --r-lg: 0;
-  --shadow-lift: none;
-  --measure: 66ch;
-}
-html[data-dir="chroma"][data-mode="light"] {
-  --paper: #FFFFFF; --paper-2: #F6F6F8; --card: #FFFFFF; --card-2: #F1F1F4;
-  --ink: #0A0A0A; --ink-soft: #3C3C40;
-  --line: #0A0A0A; --line-soft: #D9D9DE;
-  --gold: #1D2BE0; --gold-deep: #1420A8; --gold-hi: #D6F034;
-  --c-word: #1D2BE0; --c-greek: #7B2FF7; --c-fear: #D92B14; --c-mech: #0A0A0A;
-  --c-jesus: #1D2BE0; --c-sci: #7B2FF7; --c-mir: #D92B14; --c-auth: #0A0A0A; --c-walk: #1D2BE0;
-  --mir-a: #1D2BE0; --mir-b: #F4361F;
-  --pos: #1D2BE0; --neg: #D92B14;
-  --k1: #1D2BE0; --k2: #D92B14; --k3: #7B2FF7; --k4: #0A0A0A;
-  --k5: #7B2FF7; --k6: #D92B14; --k7: #1D2BE0;
-  --dir-footer-bg: #0A0A0A; --dir-footer-fg: #B4B4B9; --dir-footer-word: #D6F034;
-  --chroma-on: #FFFFFF;
-}
-html[data-dir="chroma"][data-mode="dark"] {
-  --paper: #0A0A0C; --paper-2: #101012; --card: #161618; --card-2: #1D1D20;
-  --ink: #F5F5F7; --ink-soft: #B2B2B8;
-  --line: #F5F5F7; --line-soft: #2A2A2E;
-  --gold: #6B7BFF; --gold-deep: #96A2FF; --gold-hi: #DFF56B;
-  --c-word: #6B7BFF; --c-greek: #A66CFF; --c-fear: #FF6B52; --c-mech: #F5F5F7;
-  --c-jesus: #6B7BFF; --c-sci: #A66CFF; --c-mir: #FF6B52; --c-auth: #F5F5F7; --c-walk: #6B7BFF;
-  --mir-a: #6B7BFF; --mir-b: #FF6B52;
-  --pos: #6B7BFF; --neg: #FF6B52;
-  --k1: #6B7BFF; --k2: #FF6B52; --k3: #A66CFF; --k4: #F5F5F7;
-  --k5: #A66CFF; --k6: #FF6B52; --k7: #6B7BFF;
-  --dir-footer-bg: #161618; --dir-footer-fg: #B2B2B8; --dir-footer-word: #DFF56B;
-  --chroma-on: #0A0A0C;
-}
-/* the saturated block: one per section, and the heading stays quiet */
-html[data-dir="chroma"] .section h2 .tint { color: var(--ink); }
-html[data-dir="chroma"] .pull {
-  border-left: 0;
-  background: var(--c, var(--gold));
-  color: var(--chroma-on);
-  padding: 1.8rem 1.9rem;
-  max-width: 44ch;
-}
-html[data-dir="chroma"] .pull cite { color: var(--chroma-on); opacity: 0.78; }
-html[data-dir="chroma"] .pull blockquote .ref-link,
-html[data-dir="chroma"] .pull .ref-link { color: var(--chroma-on); border-bottom-color: color-mix(in srgb, currentColor 55%, transparent); }
-html[data-dir="chroma"] .grand { background: var(--gold) !important; color: var(--chroma-on); }
-html[data-dir="chroma"] .grand :is(blockquote, cite, .grand-mark) { color: var(--chroma-on); }
-html[data-dir="chroma"] .grand .grand-mark { opacity: 0.45; }
-html[data-dir="chroma"] .grand .ref-link { color: var(--chroma-on); border-bottom-color: color-mix(in srgb, currentColor 55%, transparent); }
-html[data-dir="chroma"] .section-label .medallion { background: var(--c); color: var(--chroma-on); border-color: var(--c); }
-html[data-dir="chroma"] .section-label::after { background: var(--c); opacity: 0.22; }
-html[data-dir="chroma"] .card:hover { box-shadow: none; background: color-mix(in srgb, var(--c) 7%, var(--card)); }
-html[data-dir="chroma"] .step-ic { background: var(--c); color: var(--chroma-on); }
-html[data-dir="chroma"] .btn { border-radius: 0; }
-html[data-dir="chroma"] .btn-solid { background: var(--gold); color: var(--chroma-on); }
-html[data-dir="chroma"] .hero-greek { color: color-mix(in srgb, var(--gold) 8%, transparent); }
-html[data-dir="chroma"] .hero h1 { font-variation-settings: "wght" 800, "opsz" 96; }
-html[data-dir="chroma"] .stat-num { color: var(--gold); }
-html[data-dir="chroma"] .brief { border-left-width: 6px; }
-
-
-/* ══════════════ the floating switcher ══════════════
-   Preview chrome, not part of any direction — so it carries its own
-   literal colours and reads the same dark over all nine. Everything
-   pressable clears 44px. */
-
-body { padding-bottom: 92px; }
-
-.dsw {
-  position: fixed;
-  left: 50%;
-  bottom: max(14px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: min(720px, calc(100vw - 24px));
-  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-  color: #F2F2F4;
-  pointer-events: none;
-}
-.dsw * { box-sizing: border-box; }
-@media print { .dsw { display: none; } }
-
-.dsw-handle {
-  pointer-events: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 8px 16px 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  background: rgba(17, 17, 20, 0.92);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.34);
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  transition: border-color 0.18s ease, background 0.18s ease;
-}
-.dsw-handle:hover { border-color: rgba(255, 255, 255, 0.34); }
-.dsw-handle:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; }
-
-.dsw-chips { display: inline-flex; gap: 3px; flex: 0 0 auto; }
-.dsw-chips i {
-  width: 9px; height: 22px;
-  border-radius: 2px;
-  background: var(--sw, #7A7A80);
-  display: block;
-}
-.dsw-chips i:nth-child(1) { background: var(--sw1, #A1761C); }
-.dsw-chips i:nth-child(2) { background: var(--sw2, #3C5A96); }
-.dsw-chips i:nth-child(3) { background: var(--sw3, #B03A2A); }
-
-.dsw-label { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; text-align: left; }
-.dsw-kicker { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.5; }
-.dsw-name { font-size: 13px; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; }
-.dsw-caret { width: 15px; height: 15px; opacity: 0.6; transition: transform 0.22s cubic-bezier(.2, .7, .3, 1); }
-.dsw[data-open="true"] .dsw-caret { transform: rotate(180deg); }
-
-.dsw-tray {
-  pointer-events: auto;
-  width: 100%;
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 16px;
-  background: rgba(17, 17, 20, 0.94);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  backdrop-filter: blur(16px) saturate(140%);
-  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.44);
+.dirsw {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  max-height: min(64vh, 470px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-@media (max-width: 560px) {
-  .dsw-tray { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 10px; }
-  .dsw-opt { min-height: 56px; padding: 8px 9px; gap: 6px; }
-  .dsw-sw { height: 14px; }
-}
-.dsw-tray[hidden] { display: none; }
-
-.dsw-opt {
-  appearance: none;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  min-height: 62px;
-  padding: 9px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.035);
-  color: inherit;
-  font: inherit;
-  text-align: left;
+  place-items: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
   cursor: pointer;
+  flex-shrink: 0;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
-.dsw-opt:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.3); }
-.dsw-opt:active { transform: scale(0.985); }
-.dsw-opt:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
-.dsw-opt[aria-selected="true"] {
-  border-color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.13);
+.dirsw:hover { border-color: var(--ink-faint); background: var(--card); }
+.dirsw:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (pointer: coarse) { .dirsw:active { scale: 0.94; } }
+/* 40px reads right beside the theme toggle; the tap target is the 44px floor */
+.dirsw::after { content: ""; position: absolute; inset: -2px; }
+
+.dirsw-sw { display: flex; gap: 2px; }
+.dirsw-sw i {
+  width: 4px;
+  height: 14px;
+  border-radius: 1px;
+  display: block;
+  background: var(--sw1, #a1761c);
 }
+.dirsw-sw i:nth-child(2) { background: var(--sw2, #3c5a96); }
+.dirsw-sw i:nth-child(3) { background: var(--sw3, #b03a2a); }
 
-.dsw-sw { display: flex; gap: 3px; height: 16px; }
-.dsw-sw span { flex: 1; border-radius: 2px; min-width: 0; }
-.dsw-opt-name { font-size: 12px; font-weight: 500; letter-spacing: -0.01em; }
-.dsw-opt-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; line-height: 1.3; }
-.dsw-opt-num { opacity: 0.42; margin-right: 5px; }
+/* the hard-edged directions square the control off with everything else */
+html[data-dir="bulletin"] .dirsw,
+html[data-dir="placard"] .dirsw,
+html[data-dir="margin"] .dirsw { border-radius: 0; }
+html[data-dir="bulletin"] .dirsw-sw i,
+html[data-dir="placard"] .dirsw-sw i { border-radius: 0; }
+html[data-dir="placard"] .dirsw { border-width: 2px; }
 
-@media (prefers-reduced-motion: reduce) {
-  .dsw-caret, .dsw-opt, .dsw-handle { transition: none; }
-}
-
-
-/* ══════════════ the figures, per direction ══════════════
-   figures.css draws them from the site's own tokens; these are the
-   dials that give each direction its own drawing language. */
-
-html[data-dir="bulletin"] .fig {
-  --fig-w: 3; --fig-node-rx: 0; --fig-glow: none; --fig-track-op: 1; --fig-cycle: 6s;
-  border-width: var(--dir-bw); border-radius: 0;
-}
-html[data-dir="bulletin"] .fig-node { fill: var(--card); }
-html[data-dir="bulletin"] .fig-comet { stroke-linecap: butt; stroke-dasharray: 12 88; }
-
-html[data-dir="prism"] .fig {
-  --fig-w: 2; --fig-node-rx: 50%; --fig-track-op: 0.55; --fig-cycle: 6.5s;
-  --fig-glow: none;
-}
-html[data-dir="prism"] .fig-node { fill: var(--fig-accent); stroke: var(--fig-accent); }
-
-html[data-dir="placard"] .fig {
-  --fig-w: 4; --fig-node-rx: 0; --fig-glow: none; --fig-track-op: 1; --fig-cycle: 5.5s;
-  border-width: 2px; border-radius: 0;
-}
-html[data-dir="placard"] .fig-comet { stroke-linecap: butt; stroke-dasharray: 14 86; }
-html[data-dir="placard"] .fig-st-name { letter-spacing: 0.09em; font-size: 0.72rem; }
-
-/* an instrument draws in dashes and reads out in mono */
-html[data-dir="field"] .fig {
-  --fig-w: 1.25; --fig-dash: 5 6; --fig-node-rx: 2px; --fig-track-op: 0.85; --fig-cycle: 8s;
-  --fig-glow: drop-shadow(0 0 6px color-mix(in srgb, var(--fig-accent) 70%, transparent));
-}
-html[data-dir="field"] .fig-comet { stroke-dasharray: 7 93; }
-html[data-dir="field"] :is(.fig-mid, .fig-st-name, .fig-st-ref) { font-family: var(--dir-label); letter-spacing: 0.06em; }
-
-/* a drawing: 1px throughout, dashed, nothing filled, nothing glowing */
-html[data-dir="blueprint"] .fig {
-  --fig-w: 1; --fig-dash: 4 5; --fig-node-rx: 0; --fig-glow: none; --fig-track-op: 0.9; --fig-cycle: 9s;
-  background: transparent; border-radius: 0;
-}
-html[data-dir="blueprint"] .fig-node { fill: none; }
-html[data-dir="blueprint"] .fig-comet { stroke-dasharray: 6 94; stroke-linecap: butt; }
-html[data-dir="blueprint"] :is(.fig-mid, .fig-st-name, .fig-st-ref) { font-family: var(--dir-label); }
-
-html[data-dir="margin"] .fig {
-  --fig-w: 1; --fig-node-rx: 50%; --fig-glow: none; --fig-track-op: 0.5; --fig-cycle: 9s;
-  background: transparent; border-color: var(--line); border-radius: 0;
-}
-html[data-dir="margin"] .fig-node { fill: var(--paper); }
-html[data-dir="margin"] .fig-title { font-style: italic; }
-
-html[data-dir="ledger"] .fig {
-  --fig-w: 1.5; --fig-node-rx: 2px; --fig-glow: none; --fig-track-op: 0.7; --fig-cycle: 7s;
-  padding: 1.05rem 1rem 0.95rem; margin: 2.1rem 0;
-}
-html[data-dir="ledger"] :is(.fig-mid, .fig-st-name) { font-family: var(--dir-label); letter-spacing: 0.04em; }
-html[data-dir="ledger"] .fig-st-name { font-size: 0.6rem; }
-html[data-dir="ledger"] .fig-cap { font-size: 0.86rem; }
-
-html[data-dir="chroma"] .fig {
-  --fig-w: 3.5; --fig-node-rx: 0; --fig-glow: none; --fig-track-op: 1; --fig-cycle: 6s;
-  border-width: 2px; border-radius: 0;
-  background: var(--card);
-}
-html[data-dir="chroma"] .fig-node { fill: var(--fig-accent); stroke: none; }
-html[data-dir="chroma"] .fig-comet { stroke-width: 7; stroke-linecap: butt; stroke-dasharray: 11 89; }
+@media print { .dirsw { display: none; } }

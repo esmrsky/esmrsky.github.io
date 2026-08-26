@@ -10,7 +10,7 @@ not a second copy of the writing. This script takes ../index.html and
   2. the direction typefaces, themes.css and figures.css after the site's own
      stylesheet, and the three figures at their anchors in the prose
   3. a first-paint script that sets data-dir before CSS loads (no flash)
-  4. the floating switcher markup and switcher.js before </body>
+  4. the direction switcher, as one more control in the nav beside the theme toggle
 
 Run it after any edit to the real Faith pages:  python3 build.py
 """
@@ -68,21 +68,13 @@ FIRST_PAINT = """<script>
 })();
 </script>"""
 
-SWITCHER = """
-<!-- ================= DIRECTION SWITCHER (preview only) ================= -->
-<div class="dsw" id="dsw" data-open="false">
-  <div class="dsw-tray" id="dsw-tray" role="listbox" aria-label="Design direction" hidden></div>
-  <button class="dsw-handle" id="dsw-handle" type="button" aria-expanded="false" aria-controls="dsw-tray">
-    <span class="dsw-chips" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="dsw-label">
-      <span class="dsw-kicker">Direction</span>
-      <span class="dsw-name" id="dsw-name">Original</span>
-    </span>
-    <svg class="dsw-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
-  </button>
-</div>
-<script src="switcher.js" defer></script>
-"""
+SWITCHER = """<button class="dirsw" id="dirsw" type="button" title="Design direction">
+        <span class="dirsw-sw" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>"""
+
+SWITCHER_SCRIPT = '<script src="switcher.js" defer></script>'
+SWITCHER_ANCHOR = '      <button class="theme-toggle" id="theme-toggle"'
+
 
 
 # Each figure goes immediately before/after a line of the argument it draws.
@@ -146,8 +138,11 @@ def build(name: str) -> None:
         block = figs[key]
         html = html.replace(anchor, f"{anchor}\n\n{block}\n" if where == "after" else f"{block}\n\n{anchor}", 1)
 
-    # 5. the switcher
-    html = html.replace("</body>", SWITCHER + "\n</body>", 1)
+    # 5. the switcher — one more control in the nav, next to the theme toggle
+    if html.count(SWITCHER_ANCHOR) != 1:
+        sys.exit(f"{name}: nav anchor for the switcher matched {html.count(SWITCHER_ANCHOR)} times, expected 1")
+    html = html.replace(SWITCHER_ANCHOR, SWITCHER + "\n" + SWITCHER_ANCHOR, 1)
+    html = html.replace("</body>", SWITCHER_SCRIPT + "\n</body>", 1)
 
     (HERE / name).write_text(html, encoding="utf-8")
     print(f"wrote {name}  ({len(html):,} bytes)")

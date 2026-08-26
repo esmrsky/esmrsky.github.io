@@ -284,8 +284,15 @@
      handlers stay simple. The CLICK is untouched: the passage AROUND the verse is genuinely
      more than what is printed, and that is what the dialog gives. */
   function markWrittenOutRefs(root) {
-    (root || document).querySelectorAll('cite .ref-link').forEach(function (link) {
-      var host = link.closest('.verse-card, .pull, figure');
+    /* .hero-ref is not a <cite> and .grand was not in the host list, so both still opened a
+       pop-up containing the exact words already on screen — the hero worst of all, where the
+       verse is the largest thing on the page. Abridged quotations are deliberately NOT here:
+       .step-verse, .m-quote and the parentheticals inside .eg all print part of a verse or a
+       range, so the pop-up still has something to add. */
+    var LINKS = 'cite .ref-link, .hero-ref .ref-link';
+    var HOSTS = '.verse-card, .pull, figure, .hero-verse, .grand';
+    (root || document).querySelectorAll(LINKS).forEach(function (link) {
+      var host = link.closest(HOSTS);
       if (!host) return;                                        /* a bare cite names nothing */
       if (!host.querySelector('[data-verse], blockquote')) return;  /* nothing printed above it */
       link.setAttribute('data-written', '');

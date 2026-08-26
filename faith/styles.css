@@ -116,7 +116,7 @@
 /* ---------- base ---------- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; interpolate-size: allow-keywords; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -262,20 +262,21 @@ a:hover { color: var(--ink); }
   gap: 1.1rem;
 }
 
+/* A masthead, not a logo. The mark it used to carry (a cross inside two rings) read as
+   generic denominational clip-art beside a Garamond set at 0.14em; the sections already
+   carry all the iconography this site needs, in the medallions. */
 .nav-brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
   font-family: var(--serif-display);
   font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: 0.14em;
+  font-size: 1.44rem;
+  letter-spacing: -0.012em;
   color: var(--ink);
   text-decoration: none;
   padding: 0.35rem 0;
+  white-space: nowrap;
 }
-.nav-brand svg { width: 22px; height: 22px; display: block; }
-.nav-brand span { color: var(--gold); }
 
 .nav-links {
   margin-left: auto;
@@ -764,7 +765,7 @@ strong { font-weight: 600; }
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--c-greek) 80%, var(--ink));
+  color: color-mix(in srgb, var(--c-greek) 56%, var(--ink));   /* caption size: 80% left it at 4.41:1 */
   margin: 0.4rem 0 0.85rem;
 }
 .greek-gloss {
@@ -1571,6 +1572,44 @@ cite .ref-link { color: inherit; }
 
 .brief li strong { color: var(--ink); font-weight: 600; }
 
+/* The wrapper had no rule at all, so the paragraph after the last drawer sat hard
+   against it with no separation. */
+.drawers { margin-bottom: 2.6rem; }
+
+/* ---------- go-deeper drawers ----------
+   The page carries a real argument and the evidence for it. A reader scrolling wants the
+   argument; a reader who has stopped wants the evidence. .drawer-deep folds the second kind
+   away without cutting a word of it — the body keeps reading-size prose rather than the
+   caption type the example drawers use. */
+.drawer-deep { margin: 1.6rem 0 1.9rem; }
+.drawer-deep > summary { font-weight: 500; gap: 0.7rem; }
+.drawer-kicker {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--c, var(--gold)) 54%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--c, var(--gold)) 30%, var(--line));
+  border-radius: 999px;
+  padding: 0.28rem 0.55rem;
+  flex: 0 0 auto;
+  line-height: 1;
+}
+.drawer-deep .drawer-body { padding: 1rem 1.15rem 1.2rem; }
+.drawer-deep .drawer-body p {
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: var(--measure);
+}
+.drawer-deep .drawer-body p + p { margin-top: 1.05em; }
+
+@media (max-width: 560px) {
+  .drawer-deep > summary { flex-wrap: wrap; row-gap: 0.4rem; }
+}
+.drawers + .prose, .drawers + .grid, .drawers + .pull { margin-top: 0; }
+
 /* ---------- drawers ----------
    Native <details>, so the keyboard, find-in-page and assistive technology all get it for
    free and there is no script to load. */
@@ -1632,10 +1671,28 @@ cite .ref-link { color: inherit; }
 
 .drawer[open] > summary { color: color-mix(in srgb, var(--c, var(--gold)) 72%, var(--ink)); }
 
+/* <details> snaps its content in and out; the old rule fades and slides the body AFTER
+   that snap, which is what made opening read as a jolt and closing as nothing at all.
+   ::details-content plus interpolate-size gives a real height transition both ways. */
+.drawer::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size 0.34s cubic-bezier(.2, .7, .3, 1),
+              content-visibility 0.34s allow-discrete;
+}
+.drawer[open]::details-content { block-size: auto; }
+
+@supports not selector(::details-content) {
+  .drawer-body { animation: drawerIn 0.28s cubic-bezier(.2, .7, .3, 1) both; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer::details-content { transition: none; }
+}
+
 .drawer-body {
   padding: 0.9rem 1.15rem 1.1rem;
   border-top: 1px solid color-mix(in srgb, var(--c, var(--gold)) 16%, var(--line-soft));
-  animation: drawerIn 0.28s cubic-bezier(.2, .7, .3, 1) both;
 }
 
 @keyframes drawerIn {
