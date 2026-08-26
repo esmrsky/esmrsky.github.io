@@ -52,7 +52,7 @@
 
     if (d.feelings.length) {
       var words = d.feelings.map(function (f) { return '<span class="nd-word">' + esc(f.feel) + "</span>"; }).join("");
-      h += sec("When it surfaces as a feeling", "the way back", '<div class="nd-words">' + words + "</div>" + jump("#/wayback/wayback-feel", "Open the feelings router"));
+      h += sec("When it surfaces as a feeling", "the way back", '<div class="nd-words">' + words + "</div>" + jump("#wayback-feel", "Open the feelings router"));
     }
     if (d.loveActs.length || d.loveFeelings.length) {
       var inner = d.loveActs.map(function (a) {
@@ -60,23 +60,23 @@
       }).join("") + d.loveFeelings.map(function (f) {
         return '<div class="nd-mini"><span class="nm-name">' + esc(f.name) + '</span> <span class="nm-sub">— ' + esc(f.sub) + "</span></div>";
       }).join("");
-      h += sec("As a counterfeit of love", "love", inner + jump("#/love/love-acts", "Open the love lens"));
+      h += sec("As a counterfeit of love", "love", inner + jump("#love-acts", "Open the love chapter"));
     }
     if (d.counterfeits.length) {
       var items = d.counterfeits.map(function (c) {
-        var tag = c.behavioral ? ' <span class="nm-sub">· also a mechanics view</span>' : "";
+        var tag = c.behavioral ? ' <span class="nm-sub">· engineered</span>' : "";
         return '<div class="nd-mini"><span class="nm-name">' + esc(c.name) + "</span>" + tag +
           '<br><span class="nm-sub">' + esc(c.counterfeitUse) + "</span></div>";
       }).join("");
       var anyB = d.counterfeits.some(function (c) { return c.behavioral; });
       h += sec("Where it shows up day to day", "everyday life", items +
-        jump("#/wayback/wayback-counterfeits", "Open everyday counterfeits") +
-        (anyB ? '<br>' + jump("#/mechanics/mech-counterfeits", "See the mechanics view") : ""));
+        jump("#mech-counterfeits", "Open everyday counterfeits") +
+        "");
     }
     if (d.axis) {
       h += sec("On the axis map", "loop mechanics",
         '<div class="nd-mini"><span class="nm-name">' + esc(d.axis.title) + '</span><br><span class="nm-sub">' + esc(d.axis.shame) + "</span></div>" +
-        jump("#/mechanics/mech-axes", "Open the axis map"));
+        jump("#mech-axes", "Open the axis map"));
     }
     h += '<div class="nd-scripture">“' + esc(n.scripture.line) + "”<cite>" + esc(n.scripture.ref) + "</cite></div>";
     h += "</div>";
@@ -94,7 +94,11 @@
     document.body.style.overflow = "hidden";
     drawer.querySelector(".nd-close").addEventListener("click", closeNeed);
     drawer.querySelectorAll("[data-jump]").forEach(function (b) {
-      b.addEventListener("click", function () { closeNeed(); location.hash = b.dataset.jump; });
+      b.addEventListener("click", function () {
+        var t = document.getElementById(b.dataset.jump.replace(/^#/, ""));
+        closeNeed();
+        if (t) { if (window.osmwReveal) window.osmwReveal(t); t.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      });
     });
     drawer.scrollTop = 0;
     drawer.querySelector(".nd-close").focus();

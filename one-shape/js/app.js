@@ -1,18 +1,15 @@
 /* ============================================================
    One Shape · Many Wells — app shell
-   Two-level navigation: floating lens dock (level 1) +
-   sticky scroll-spy section nav (level 2). Hash routing,
-   theme toggle, and the console mode for Loop Mechanics.
+
+   One document, one navigation. The rail (wide) and the
+   contents sheet (narrow) are two renderings of a single index
+   read out of the DOM, driven by a single scroll-spy.
    ============================================================ */
 (function () {
   "use strict";
 
-  var VIEWS = ["home", "pattern", "love", "mechanics", "wayback"];
-  var body = document.body;
   var docEl = document.documentElement;
-  var subnav = document.getElementById("subnav");
-  var dock = document.getElementById("dock");
-  var spy = { sections: [], ticking: false, last: null };
+  var body = document.body;
 
   /* ---------- Theme ---------- */
   var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>';
@@ -25,8 +22,7 @@
   }
   function initTheme() {
     var saved = localStorage.getItem("osmw-theme");
-    var t = saved || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    applyTheme(t);
+    applyTheme(saved || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
     var btn = document.getElementById("theme-toggle");
     if (btn) btn.addEventListener("click", function () {
       var next = docEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
@@ -35,146 +31,229 @@
     });
   }
 
-  /* ---------- Section nav (level 2) + scroll-spy ---------- */
-  function buildSubnav(view) {
-    subnav.innerHTML = "";
-    var sections = document.querySelectorAll("#view-" + view + " .lens-section[data-title]");
-    if (!sections.length) return;
-    sections.forEach(function (sec) {
-      var a = document.createElement("a");
-      a.href = "#/" + view + "/" + sec.id;
-      a.textContent = sec.getAttribute("data-title");
-      a.dataset.target = sec.id;
-      a.addEventListener("click", function (e) {
-        e.preventDefault();
-        scrollToSection(sec.id, false);
-        setHash(view, sec.id);
-      });
-      subnav.appendChild(a);
+  /* ---------- Reveal: open every <details> above a target ----------
+     A link into a collapsed catalogue must open its way in, or the
+     jump lands on a summary and the reader sees nothing happen. */
+  function reveal(el) {
+    var n = el;
+    while (n && n !== document.body) {
+      if (n.tagName === "DETAILS" && !n.open) n.open = true;
+      n = n.parentElement;
+    }
+  }
+  window.osmwReveal = reveal;
+
+  /* ---------- Scrolling to a target ---------- */
+  function goTo(el, instant) {
+    if (!el) return;
+    reveal(el);
+    var run = function () {
+      var top = el.getBoundingClientRect().top + window.pageYOffset - 64;
+      window.scrollTo({ top: Math.max(0, top), behavior: instant ? "auto" : "smooth" });
+    };
+    requestAnimationFrame(run);
+    // Correction passes: the page reflows as fonts and catalogues settle.
+    if (document.readyState !== "complete") window.addEventListener("load", run, { once: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  }
+
+  /* ---------- The index ---------- */
+  var chapters = [];
+
+  function collectIndex() {
+    chapters = Array.prototype.slice.call(document.querySelectorAll(".chapter")).map(function (ch) {
+      return {
+        el: ch,
+        id: ch.id,
+        key: ch.dataset.chapter,
+        num: ch.dataset.chNum || "",
+        title: ch.dataset.chTitle || "",
+        sections: Array.prototype.slice.call(ch.querySelectorAll(".section[data-title]")).map(function (s) {
+          return { el: s, id: s.id, title: s.dataset.title };
+        })
+      };
     });
-    spy.last = null;
-    var first = subnav.querySelector("a");
-    if (first) first.classList.add("active");
-    initSpy(view);
   }
 
-  function initSpy(view) {
-    spy.sections = Array.prototype.slice.call(
-      document.querySelectorAll("#view-" + view + " .lens-section[data-title]")
-    );
-    runSpy();
+  function renderIndex(listEl) {
+    listEl.innerHTML = chapters.map(function (c) {
+      var secs = c.sections.map(function (s) {
+        return '<li><a class="sec-link" href="#' + s.id + '" data-sec="' + s.id + '">' + s.title + "</a></li>";
+      }).join("");
+      return '<li data-ch="' + c.id + '">' +
+        '<a class="ch-link" href="#' + c.id + '" data-ch-link="' + c.id + '">' +
+          '<span class="ch-n">' + (c.num || "◆") + "</span>" +
+          "<span>" + c.title + "</span>" +
+        "</a>" +
+        (secs ? '<ol class="sec-list">' + secs + "</ol>" : "") +
+        "</li>";
+    }).join("");
   }
 
-  // Deterministic: the active section is the last one whose top has
-  // crossed a line just under the sticky header.
+  /* ---------- Scroll-spy ---------- */
+  var railList = document.getElementById("rail-list");
+  var sheetList = document.getElementById("sheet-list");
+  var progress = document.getElementById("progress");
+  var hereN = document.getElementById("here-n");
+  var hereT = document.getElementById("here-t");
+  var spyState = { ch: null, sec: null, ticking: false };
+
   function runSpy() {
-    if (spy.ticking) return;
-    spy.ticking = true;
+    if (spyState.ticking) return;
+    spyState.ticking = true;
     requestAnimationFrame(function () {
-      spy.ticking = false;
-      var secs = spy.sections;
-      if (!secs.length) return;
-      var line = 96;
-      var current = secs[0].id;
-      for (var i = 0; i < secs.length; i++) {
-        if (secs[i].getBoundingClientRect().top - line <= 1) current = secs[i].id;
+      spyState.ticking = false;
+      // The chapter turns over when its mark reaches the upper quarter,
+      // not the instant its top edge slips under the header — otherwise
+      // a full screen of the next chapter still wears the last one's accent.
+      var line = Math.min(160, window.innerHeight * 0.28);
+
+      // Progress
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progress) progress.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.pageYOffset / max) : 0) + ")";
+
+      // Current chapter = last one whose top has crossed the line
+      var cur = chapters[0], i;
+      for (i = 0; i < chapters.length; i++) {
+        if (chapters[i].el.getBoundingClientRect().top - line <= 1) cur = chapters[i];
         else break;
       }
-      highlightSubnav(current);
+      if (!cur) return;
+
+      if (cur.id !== spyState.ch) {
+        spyState.ch = cur.id;
+        body.setAttribute("data-chapter", cur.key);
+        if (hereN) hereN.textContent = cur.num || "";
+        if (hereT) hereT.textContent = cur.title;
+        [railList, sheetList].forEach(function (l) {
+          if (!l) return;
+          l.querySelectorAll("li[data-ch]").forEach(function (li) {
+            li.classList.toggle("current", li.dataset.ch === cur.id);
+          });
+        });
+        // A chapter change invalidates the section highlight
+        spyState.sec = null;
+      }
+
+      // Current section within that chapter
+      var secs = cur.sections, curSec = secs.length ? secs[0].id : null;
+      for (i = 0; i < secs.length; i++) {
+        if (secs[i].el.getBoundingClientRect().top - line <= 1) curSec = secs[i].id;
+        else break;
+      }
+      if (curSec !== spyState.sec) {
+        spyState.sec = curSec;
+        [railList, sheetList].forEach(function (l) {
+          if (!l) return;
+          l.querySelectorAll(".sec-link").forEach(function (a) {
+            a.classList.toggle("active", a.dataset.sec === curSec);
+          });
+        });
+        var active = railList && railList.querySelector(".sec-link.active");
+        if (active) {
+          var r = active.getBoundingClientRect(), rail = document.getElementById("rail");
+          if (rail && (r.top < 80 || r.bottom > window.innerHeight - 20)) {
+            active.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          }
+        }
+      }
     });
   }
 
-  function highlightSubnav(id) {
-    if (id === spy.last) return;
-    spy.last = id;
-    var active = null;
-    subnav.querySelectorAll("a").forEach(function (l) {
-      var on = l.dataset.target === id;
-      l.classList.toggle("active", on);
-      if (on) active = l;
-    });
-    if (active && active.scrollIntoView) {
-      active.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
-    }
+  /* ---------- The contents sheet ---------- */
+  var sheet = document.getElementById("sheet");
+  var sheetScrim = document.getElementById("sheet-scrim");
+  var sheetBtn = document.getElementById("contents-btn");
+  var lastFocus = null;
+
+  function openSheet() {
+    lastFocus = document.activeElement;
+    sheet.classList.add("open");
+    sheetScrim.classList.add("open");
+    sheet.setAttribute("aria-hidden", "false");
+    sheetBtn.setAttribute("aria-expanded", "true");
+    body.style.overflow = "hidden";
+    var first = sheet.querySelector("li.current .ch-link") || sheet.querySelector(".ch-link");
+    if (first) first.focus();
+  }
+  function closeSheet() {
+    sheet.classList.remove("open");
+    sheetScrim.classList.remove("open");
+    sheet.setAttribute("aria-hidden", "true");
+    sheetBtn.setAttribute("aria-expanded", "false");
+    body.style.overflow = "";
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
-  function scrollToSection(id, instant) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    var go = function () { el.scrollIntoView({ behavior: instant ? "auto" : "smooth", block: "start" }); };
-    requestAnimationFrame(go);
-    // Correction passes: layout shifts as web fonts and images settle.
-    if (document.readyState !== "complete") window.addEventListener("load", go, { once: true });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
-  }
+  /* ---------- Legacy hashes ----------
+     The site used to be five views at #/view/section. Those links
+     are in the wild (and inside the need drawer), so they still
+     resolve — to the section that now carries the content. */
+  var ALIAS = {
+    "love-matrix": "love-discriminator",
+    "mech-matrix": "mech-counterfeits",
+    "mech-simulator": "mech-archetypes",
+    "wayback-counterfeits": "mech-counterfeits",
+    "wayback-guardrails": "pattern-guardrails",
+    "pattern-almost": "home-loop",
+    "home": "top", "pattern": "ch-pattern", "love": "ch-love",
+    "mechanics": "ch-mech", "wayback": "ch-wayback"
+  };
 
-  /* ---------- Routing (level 1) ---------- */
-  function setHash(view, section) {
-    var h = "#/" + view + (section ? "/" + section : "");
-    if (location.hash !== h) history.replaceState(null, "", h);
-  }
-
-  function showView(view, section, fromHash) {
-    if (VIEWS.indexOf(view) === -1) view = "home";
-
-    VIEWS.forEach(function (v) {
-      document.getElementById("view-" + v).classList.toggle("active", v === view);
-    });
-    body.setAttribute("data-lens", view);
-
-    // Console mode only inside Loop Mechanics
-    if (view === "mechanics") docEl.setAttribute("data-console", "on");
-    else docEl.removeAttribute("data-console");
-
-    // Dock state
-    dock.querySelectorAll("button").forEach(function (b) {
-      b.classList.toggle("active", b.dataset.view === view);
-    });
-
-    buildSubnav(view);
-
-    if (section && document.getElementById(section)) {
-      scrollToSection(section, fromHash);
-    } else {
-      window.scrollTo({ top: 0, behavior: fromHash ? "auto" : "smooth" });
-    }
-    if (!fromHash) setHash(view, section);
-  }
-
-  function parseHash() {
-    var raw = location.hash.replace(/^#\/?/, "");
-    if (!raw) return { view: "home", section: null };
+  function resolve(hash) {
+    var raw = String(hash || "").replace(/^#\/?/, "");
+    if (!raw) return null;
     var parts = raw.split("/");
-    return { view: parts[0] || "home", section: parts[1] || null };
+    var want = parts.length > 1 ? parts[1] : parts[0];
+    if (ALIAS[want]) want = ALIAS[want];
+    return document.getElementById(want);
   }
 
-  function routeFromHash() {
-    var r = parseHash();
-    showView(r.view, r.section, true);
+  function routeFromHash(instant) {
+    var el = resolve(location.hash);
+    if (el) goTo(el, instant);
   }
 
   /* ---------- Wiring ---------- */
   function initNav() {
-    dock.querySelectorAll("button").forEach(function (b) {
-      b.addEventListener("click", function () { showView(b.dataset.view); });
-    });
-    document.getElementById("brand").addEventListener("click", function () { showView("home"); });
+    collectIndex();
+    if (railList) renderIndex(railList);
+    if (sheetList) renderIndex(sheetList);
 
-    document.querySelectorAll("[data-go]").forEach(function (el) {
-      el.addEventListener("click", function () {
-        var parts = el.getAttribute("data-go").split(":");
-        showView(parts[0], parts[1] || null);
-      });
+    // One handler for every in-page anchor, wherever it lives.
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var href = a.getAttribute("href");
+      if (href === "#" || a.classList.contains("skip-link")) return;
+      var el = resolve(href) || document.getElementById(href.slice(1));
+      if (!el) return;
+      e.preventDefault();
+      if (sheet.classList.contains("open")) closeSheet();
+      goTo(el, false);
+      if (location.hash !== href) history.replaceState(null, "", href);
     });
 
-    window.addEventListener("hashchange", routeFromHash);
+    sheetBtn.addEventListener("click", function () {
+      sheet.classList.contains("open") ? closeSheet() : openSheet();
+    });
+    document.getElementById("sheet-close").addEventListener("click", closeSheet);
+    sheetScrim.addEventListener("click", closeSheet);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && sheet.classList.contains("open")) closeSheet();
+    });
+
+    window.addEventListener("hashchange", function () { routeFromHash(false); });
     window.addEventListener("scroll", runSpy, { passive: true });
     window.addEventListener("resize", runSpy);
+    // Opening a catalogue changes every offset below it.
+    document.addEventListener("toggle", runSpy, true);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     initTheme();
     initNav();
-    routeFromHash();
+    runSpy();
+    if (location.hash) routeFromHash(true);
   });
 })();

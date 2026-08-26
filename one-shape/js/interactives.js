@@ -165,12 +165,21 @@
     var keys = Object.keys(AXES_DATA);
     var spokes = keys.map(function (k) {
       var c = AXES_DATA[k].coords;
+      // One axis sits on the origin; a spoke from the centre to the
+      // centre is a zero-length line under its own node.
+      if (c.x === 50 && c.y === 50) return "";
       return '<line class="axis-spoke" x1="50" y1="50" x2="' + c.x + '" y2="' + c.y + '"/>';
     }).join("");
     var nodes = keys.map(function (k) {
       var a = AXES_DATA[k], c = a.coords, lbl = NODE_LABEL[k] || a.title;
-      return '<circle class="axis-node" data-axis="' + k + '" cx="' + c.x + '" cy="' + c.y + '" r="4.5" tabindex="0" role="button" aria-label="' + a.title + '"><title>' + a.title + "</title></circle>" +
-        '<text class="axis-node-text" x="' + c.x + '" y="' + (c.y + 6.6) + '" text-anchor="middle">' + lbl + "</text>";
+      // Label above a node in the lower half (and above the one on the
+      // origin, where a label below would land on the X-axis captions).
+      var ly = c.y > 45 ? c.y - 6.5 : c.y + 6.9;
+      // A transparent 7.5-unit disc under the 4.5-unit dot: the visible
+      // node stays small, the target clears 44px on a phone.
+      return '<circle class="axis-hit" data-axis="' + k + '" cx="' + c.x + '" cy="' + c.y + '" r="7.5"/>' +
+        '<circle class="axis-node" data-axis="' + k + '" cx="' + c.x + '" cy="' + c.y + '" r="4.5" tabindex="0" role="button" aria-label="' + a.title + '"><title>' + a.title + "</title></circle>" +
+        '<text class="axis-node-text" x="' + c.x + '" y="' + ly + '" text-anchor="middle">' + lbl + "</text>";
     }).join("");
     wrap.innerHTML =
       '<svg class="axis-svg" viewBox="0 0 100 100" role="img" aria-label="Existential axis map: five striving poles on a performance–obscurity and provision–scarcity plane">' +
@@ -191,12 +200,22 @@
       document.querySelectorAll("#axes-grid .ecard[data-axis]").forEach(function (card) {
         var on = card.dataset.axis === key;
         card.classList.toggle("axis-card-hl", on);
-        if (on) card.scrollIntoView({ behavior: "smooth", block: "center" });
+        // The axes grid sits inside a collapsed panel; open the way in
+        // first or the scroll lands on a summary and nothing appears.
+        if (on) {
+          if (window.osmwReveal) window.osmwReveal(card);
+          requestAnimationFrame(function () { card.scrollIntoView({ behavior: "smooth", block: "center" }); });
+        }
       });
     }
 
+    // The hit disc takes the pointer (the visible dot is pointer-events:none
+    // so a tap anywhere in the 44px target counts); the dot keeps the focus
+    // ring and the keyboard role.
+    wrap.querySelectorAll(".axis-hit").forEach(function (hit) {
+      hit.addEventListener("click", function () { highlight(hit.dataset.axis); });
+    });
     wrap.querySelectorAll(".axis-node").forEach(function (node) {
-      node.addEventListener("click", function () { highlight(node.dataset.axis); });
       node.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); highlight(node.dataset.axis); }
       });

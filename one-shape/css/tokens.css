@@ -1,8 +1,21 @@
 /* ============================================================
    TOKENS — One Shape · Many Wells
-   Warm editorial core (light + dark) with a dark "systems
-   console" override that activates only inside Loop Mechanics.
+   One warm editorial language, light and dark. No per-view
+   palette override: the accent travels with the chapter you
+   are reading, everything else holds still.
    ============================================================ */
+
+/* Registering --accent makes it *transitionable*: an unregistered
+   custom property is an untyped string, so a transition on it is
+   accepted and silently does nothing.
+
+   Register ONLY --accent. A registered property computes where it
+   is declared and inherits that computed value, so registering the
+   two mixes below would freeze them to :root's accent and they
+   would never follow the chapter. Left unregistered they re-resolve
+   var(--accent) at every use — and, because --accent is animating,
+   they track it frame by frame for free. */
+@property --accent { syntax: "<color>"; inherits: true; initial-value: #b07d3c; }
 
 :root {
   /* Type */
@@ -23,16 +36,22 @@
   --radius: 14px;
   --radius-lg: 22px;
   --pad: clamp(1.1rem, 0.8rem + 1.4vw, 2rem);
-  --section-gap: clamp(3rem, 2rem + 5vw, 6rem);
-  --maxw: 1180px;
-  --readw: 720px;
+  --section-gap: clamp(2.8rem, 2rem + 4vw, 5rem);
+  --chapter-gap: clamp(4.5rem, 3rem + 7vw, 9rem);
 
-  /* Lens accent swatches (fixed, theme-independent hues) */
+  /* ---- The three measures ----
+     Every block declares which one it wants. Prose reads at a
+     comfortable line length; grids and tables get real width. */
+  --w-prose: 43rem;   /* ~68 characters */
+  --w-wide:  68rem;   /* card grids */
+  --w-full:  80rem;   /* tables, diagrams, chapter marks */
+
+  /* Chapter accents (fixed hues, theme-independent) */
+  --c-open:    #b07d3c;   /* warm brass */
   --c-pattern: #0e7c86;   /* living-water teal */
-  --c-love:    #b8504a;   /* clay rose */
-  --c-mech:    #2dd4a7;   /* terminal mint (used on dark) */
+  --c-love:    #b8504a;   /* clay rose — a chapter accent and a border hue */
+  --c-mech:    #4a6f9c;   /* instrument blue */
   --c-wayback: #4f7a52;   /* sage / path green */
-  --c-home:    #b07d3c;   /* warm brass */
 
   /* ---- LIGHT (warm paper) ---- */
   --bg: #f6f1e7;
@@ -40,20 +59,23 @@
   --surface: #fffdf8;
   --surface-2: #f3ecde;
   --ink: #2c2622;
-  --ink-dim: #5d544a;
-  --ink-faint: #8c8275;
+  --ink-dim: #574e45;
+  --ink-faint: #6e6557;   /* 5.09:1 on paper, 5.64:1 on card */
   --line: #e2d8c6;
   --line-strong: #cdbfa6;
-  --accent: var(--c-home);
-  --accent-soft: color-mix(in srgb, var(--accent) 14%, var(--surface));
-  --accent-ink: color-mix(in srgb, var(--accent) 72%, #2c2622);
-  --grace: #4f7a52;
-  --grace-soft: color-mix(in srgb, var(--grace) 14%, var(--surface));
-  --warn: #b0742f;
+  --accent: var(--c-open);
+  --mix-soft: 14%;
+  --mix-ink: 62%;
+  --ink-base: #2c2622;
+  --grace: #46704a;
+  --grace-soft: color-mix(in srgb, var(--grace) 12%, var(--surface));
+  /* The clay rose reads at 4.35:1 as text on paper. Borders and fills
+     can keep it; anything set in it gets the darker ink. */
+  --leak-ink: #a8443e;
+  --warn: #8a5820;
   --shadow: 0 1px 2px rgba(44,38,34,.05), 0 8px 28px -16px rgba(44,38,34,.22);
   --shadow-lg: 0 2px 6px rgba(44,38,34,.06), 0 24px 60px -28px rgba(44,38,34,.32);
 
-  --console: 0; /* flag read by JS-driven theming, kept for clarity */
 }
 
 /* ---- DARK (warm charcoal, still editorial) ---- */
@@ -63,44 +85,52 @@ html[data-theme="dark"] {
   --surface: #221d18;
   --surface-2: #2b251f;
   --ink: #ece3d4;
-  --ink-dim: #b3a895;
-  --ink-faint: #857c6d;
+  --ink-dim: #bcb09c;
+  --ink-faint: #9a9080;   /* 5.78:1 on ground, 5.31:1 on card */
   --line: #352e26;
   --line-strong: #4a4135;
-  --accent-soft: color-mix(in srgb, var(--accent) 22%, var(--surface));
-  --accent-ink: color-mix(in srgb, var(--accent) 60%, #ece3d4);
+  --c-pattern: #48b3ba;
+  --c-love:    #dd8078;
+  --c-mech:    #8fb2dd;
+  --c-wayback: #85b088;
+  --c-open:    #d3a05c;
+  --mix-soft: 22%;
+  --mix-ink: 62%;
+  --ink-base: #ece3d4;
   --grace: #7fae82;
-  --grace-soft: color-mix(in srgb, var(--grace) 18%, var(--surface));
+  --grace-soft: color-mix(in srgb, var(--grace) 16%, var(--surface));
+  --leak-ink: #dd8078;
+  --warn: #cf9a52;
   --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.7);
   --shadow-lg: 0 2px 8px rgba(0,0,0,.5), 0 30px 70px -30px rgba(0,0,0,.85);
 }
+html[data-theme="dark"] body { --accent-solid: var(--accent); --on-accent: #181512; }
 
-/* ---- Per-lens accent ---- */
-body[data-lens="pattern"]  { --accent: var(--c-pattern); }
-body[data-lens="love"]     { --accent: var(--c-love); }
-body[data-lens="mechanics"]{ --accent: var(--c-mech); }
-body[data-lens="wayback"]  { --accent: var(--c-wayback); }
-body[data-lens="home"]     { --accent: var(--c-home); }
+/* ---- Per-chapter accent — set by scroll-spy on <body> ----
+   The two mixes are declared HERE, on the same element that carries
+   the chapter accent. Declared on :root they would substitute :root's
+   --accent and inherit that one frozen colour down — the accent would
+   turn while everything derived from it stayed brass.
 
-/* ============================================================
-   CONSOLE OVERRIDE — engaged only while Loop Mechanics is active.
-   Forces a dark instrument palette regardless of light/dark.
-   ============================================================ */
-html[data-console="on"] {
-  --bg: #0c0f0e;
-  --bg-tint: #11140f;
-  --surface: #121614;
-  --surface-2: #181d19;
-  --ink: #d7e6dd;
-  --ink-dim: #8fa79a;
-  --ink-faint: #5f7568;
-  --line: #1f2a23;
-  --line-strong: #2e3d33;
-  --accent: var(--c-mech);
-  --accent-soft: color-mix(in srgb, var(--accent) 16%, var(--surface));
-  --accent-ink: color-mix(in srgb, var(--accent) 75%, #d7e6dd);
-  --grace: #59e6b0;
-  --grace-soft: color-mix(in srgb, var(--grace) 14%, var(--surface));
-  --shadow: 0 0 0 1px rgba(45,212,167,.05), 0 16px 40px -24px rgba(0,0,0,.9);
-  --shadow-lg: 0 0 0 1px rgba(45,212,167,.07), 0 30px 70px -30px rgba(0,0,0,.95);
+   The transition belongs here too: :root's --accent never changes,
+   body's does, and a transition only fires on the element whose own
+   computed value moved. */
+body {
+  --accent-soft: color-mix(in srgb, var(--accent) var(--mix-soft), var(--surface));
+  --accent-ink:  color-mix(in srgb, var(--accent) var(--mix-ink), var(--ink-base));
+  /* Filled controls. On paper the raw brass carries white at only
+     3.59:1, so a filled surface uses a darkened accent; in dark mode
+     the accent is already light, so it takes dark text instead. */
+  --accent-solid: color-mix(in srgb, var(--accent) 78%, var(--ink-base));
+  --on-accent: #fff;
+  transition: --accent .55s ease, background-color .4s ease, color .4s ease;
+}
+body[data-chapter="open"]    { --accent: var(--c-open); }
+body[data-chapter="pattern"] { --accent: var(--c-pattern); }
+body[data-chapter="love"]    { --accent: var(--c-love); }
+body[data-chapter="mech"]    { --accent: var(--c-mech); }
+body[data-chapter="wayback"] { --accent: var(--c-wayback); }
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
 }

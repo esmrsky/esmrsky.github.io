@@ -23,7 +23,7 @@
     c.innerHTML = WAYBACK_DATA.core.map(function (n) {
       return '<div class="ecard"><div class="ecard-head"><h3>' + n.name + '</h3><span class="emeta">' + n.q + "</span></div>" +
         '<p class="erow"><span class="elabel leak">counterfeit</span>' + n.bad + "</p>" +
-        '<p class="erow real"><span class="elabel well">real meal</span>' + n.good + "</p>" + chip(CORE_NEED[n.name]) + "</div>";
+        '<p class="erow real"><span class="elabel well">real meal</span>' + n.good + "</p>" + '<div class="chiprow">' + chip(CORE_NEED[n.name]) + "</div></div>";
     }).join("");
   }
 
@@ -37,28 +37,45 @@
         '<p class="erow"><span class="elabel leak">counterfeit</span>' + f.old + "</p>" +
         '<p class="erow real"><span class="elabel well">real meal</span>' + f.real + "</p>" +
         '<p class="erow real"><span class="elabel">first move</span>' + f.move + "</p>" +
-        chip(NO().feel ? NO().feel[f.feel] : null) + "</div></details>";
+        '<div class="chiprow">' + chip(NO().feel ? NO().feel[f.feel] : null) + "</div></div></details>";
     }).join("");
   }
 
-  function renderEveryday() {
+  /* ONE counterfeit card. The data model already holds a single
+     inventory of 20, five of which carry the behavioural payload;
+     the old build published that inventory three times (cards here,
+     cards under Mechanics, and a table). One card, both halves. */
+  function renderCounterfeits() {
     var c = $("everyday-grid"); if (!c || !window.getCounterfeits) return;
     c.innerHTML = window.getCounterfeits().map(function (e) {
-      return '<div class="ecard"><div class="ecard-head"><h3>' + e.name + '</h3><span class="emeta">' + e.type +
-        (e.behavioral ? " · also a mechanics view" : "") + "</span></div>" +
+      var b = e.behavioral;
+      return '<div class="ecard"><div class="ecard-head"><h3>' + e.name + "</h3>" +
+        '<span class="emeta">' + e.type + (b ? " · " + b.axis : "") + "</span></div>" +
         '<p class="erow"><span class="elabel leak">counterfeit use</span>' + e.counterfeitUse + "</p>" +
-        '<p class="erow"><span class="elabel">tell</span>' + e.tell + "</p>" +
+        '<p class="erow"><span class="elabel">the tell</span>' + e.tell + "</p>" +
+        (e.healthyUse ? '<p class="erow"><span class="elabel">used as a tool</span>' + e.healthyUse + "</p>" : "") +
         '<p class="erow real"><span class="elabel well">real meal</span>' + e.realMeal + "</p>" +
-        chip(e.need) + "</div>";
+        (b ? '<div class="ecard-more"><span class="more-tag">how the loop is built</span>' +
+          '<p class="erow"><span class="elabel">cue</span>' + b.cue + "</p>" +
+          '<p class="erow"><span class="elabel leak">routine</span>' + b.routine + "</p>" +
+          '<p class="erow"><span class="elabel">payoff</span>' + b.reward + "</p>" +
+          '<p class="erow"><span class="elabel">the works trap</span>' + b.worksTrap + "</p>" +
+          '<p class="erow real"><span class="elabel well">grace exit</span>' + b.graceExit + "</p></div>" : "") +
+        '<div class="chiprow">' + chip(e.need) + "</div></div>";
     }).join("");
   }
 
   function renderDeepTable() {
     var c = $("deep-table"); if (!c || !window.WAYBACK_DATA) return;
     var head = ["Real need", "Counterfeit", "What it gives", "What it can't give", "Why it hooks", "Real meal", "First move"];
+    // data-label carries the header down into the card layout the
+    // table becomes below 1000px, where seven columns stop working.
+    var cell = function (i, v, cls) {
+      return "<td" + (cls ? " class='" + cls + "'" : "") + " data-label=\"" + head[i] + "\">" + v + "</td>";
+    };
     var rows = WAYBACK_DATA.needs.map(function (n) {
-      return "<tr><td>" + n.need + "</td><td class='c-leak'>" + n.counterfeit + "</td><td>" + n.gives +
-        "</td><td>" + n.cannot + "</td><td>" + n.hook + "</td><td class='c-well'>" + n.real + "</td><td>" + n.move + "</td></tr>";
+      return "<tr>" + cell(0, n.need) + cell(1, n.counterfeit, "c-leak") + cell(2, n.gives) +
+        cell(3, n.cannot) + cell(4, n.hook) + cell(5, n.real, "c-well") + cell(6, n.move) + "</tr>";
     }).join("");
     c.innerHTML = "<table class='reftable'><thead><tr>" + head.map(function (h) { return "<th>" + h + "</th>"; }).join("") +
       "</tr></thead><tbody>" + rows + "</tbody></table>";
@@ -73,7 +90,7 @@
         '<p class="erow"><span class="elabel">sensation</span>' + f.sensation + "</p>" +
         '<p class="erow real">' + f.reality + "</p>" +
         '<p class="erow quote">“' + f.example + "”</p>" +
-        '<span class="lit">' + f.lit + "</span>" + chip(NO().loveFeel ? NO().loveFeel[i] : null) + "</div>";
+        '<span class="lit">' + f.lit + "</span>" + '<div class="chiprow">' + chip(NO().loveFeel ? NO().loveFeel[i] : null) + "</div></div>";
     }).join("");
   }
 
@@ -95,7 +112,7 @@
         '<p class="erow"><span class="elabel">parenting</span>' + d.parenting + "</p>" +
         '<p class="erow"><span class="elabel">the echo</span>' + d.echo + "</p></div></details>" +
         '<p class="turn"><span class="elabel well">the true turn</span> ' + d.turn + "</p>" +
-        chip(NO().loveAct ? NO().loveAct[d.num] : null) + "</div>";
+        '<div class="chiprow">' + chip(NO().loveAct ? NO().loveAct[d.num] : null) + "</div></div>";
     }).join("");
   }
 
@@ -119,36 +136,8 @@
         '<p class="erow"><span class="elabel">why it leaks</span>' + a.leak + "</p>" +
         '<p class="erow quote">' + a.shame + "</p>" +
         '<p class="erow real"><span class="elabel well">the exit</span>' + a.exit + "</p>" +
-        chip(NO().axis ? NO().axis[k] : null) + "</div>";
+        '<div class="chiprow">' + chip(NO().axis ? NO().axis[k] : null) + "</div></div>";
     }).join("");
-  }
-
-  function behavioral() { return window.getCounterfeits ? window.getCounterfeits().filter(function (x) { return x.behavioral; }) : []; }
-
-  function renderTraps() {
-    var c = $("traps-grid"); if (!c) return;
-    c.innerHTML = behavioral().map(function (t) {
-      var b = t.behavioral;
-      return '<div class="ecard"><div class="ecard-head"><h3>' + t.name + '</h3><span class="emeta">' + b.axis + "</span></div>" +
-        '<p class="erow"><span class="elabel">cue</span>' + b.cue + "</p>" +
-        '<p class="erow leak"><span class="elabel leak">routine</span>' + b.routine + "</p>" +
-        '<p class="erow"><span class="elabel">payoff</span>' + b.reward + "</p>" +
-        '<p class="erow"><span class="elabel">the works trap</span>' + b.worksTrap + "</p>" +
-        '<p class="erow real"><span class="elabel well">grace exit</span>' + b.graceExit + "</p>" +
-        chip(t.need) + "</div>";
-    }).join("");
-  }
-
-  function renderTechMatrix() {
-    var c = $("tech-matrix"); if (!c) return;
-    var head = ["App / metric", "Axis", "The cue", "Counterfeit routine", "The works trap", "Grace exit"];
-    var rows = behavioral().map(function (t) {
-      var b = t.behavioral;
-      return "<tr><td>" + t.name + "</td><td>" + b.axis + "</td><td>" + b.cue + "</td><td class='c-leak'>" + b.routine +
-        "</td><td>" + b.worksTrap + "</td><td class='c-well'>" + b.graceExit + "</td></tr>";
-    }).join("");
-    c.innerHTML = "<table class='reftable'><thead><tr>" + head.map(function (h) { return "<th>" + h + "</th>"; }).join("") +
-      "</tr></thead><tbody>" + rows + "</tbody></table>";
   }
 
   function renderArchetypes() {
@@ -164,8 +153,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    renderCore(); renderFeel(); renderEveryday(); renderDeepTable();
+    renderCore(); renderFeel(); renderCounterfeits(); renderDeepTable();
     renderFamily1(); renderFamily2(); renderAnatomy();
-    renderAxes(); renderTraps(); renderTechMatrix(); renderArchetypes();
+    renderAxes(); renderArchetypes();
   });
 })();

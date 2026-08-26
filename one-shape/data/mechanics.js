@@ -2,7 +2,7 @@
 window.AXES_DATA = {
   rejection_acceptance: {
     title: "Rejection vs. Acceptance",
-    hunger: "Belonging & Connection (👥)",
+    hunger: "Belonging & Connection",
     cue: "A silent text thread, passive email, or critical look.",
     counterfeit: "Fawning, over-compliance, hyper-checking status tags.",
     leak: "Transactional acceptance (must perform to remain loved).",
@@ -12,7 +12,7 @@ window.AXES_DATA = {
   },
   scarcity_abundance: {
     title: "Scarcity vs. Abundance",
-    hunger: "Security & Provision (🕯️)",
+    hunger: "Security & Provision",
     cue: "Sudden account repair bill, financial dip, or peer purchase.",
     counterfeit: "Banking app refreshing, panic hoarding, retail shopping.",
     leak: "Physical assets rust and decay; future ruin fear remains.",
@@ -22,7 +22,7 @@ window.AXES_DATA = {
   },
   control_surrender: {
     title: "Control vs. Surrender",
-    hunger: "Safety & Predictability (🧭)",
+    hunger: "Safety & Predictability",
     cue: "Relational ambiguity or sudden schedule adjustments.",
     counterfeit: "Hyper-planning roadmaps, micromanaging tasks, info binging.",
     leak: "Real-world variables drift from plans, causing collapse.",
@@ -32,7 +32,7 @@ window.AXES_DATA = {
   },
   performance_standing: {
     title: "Performance vs. Standing",
-    hunger: "Worth & Justification (🛠️)",
+    hunger: "Worth & Justification",
     cue: "Slow workday, colleague promotion card, or small mistake.",
     counterfeit: "Workaholism, late emails, credential stacking.",
     leak: "Striving metrics reset daily ('What have you done today?').",
@@ -42,7 +42,7 @@ window.AXES_DATA = {
   },
   obscurity_renown: {
     title: "Obscurity vs. Renown",
-    hunger: "Significance & Gaze (🌌)",
+    hunger: "Significance & Gaze",
     cue: "Low post engagement or feeling invisible in meetings.",
     counterfeit: "Digital curation, name-dropping, public self-branding.",
     leak: "Public attention is volatile; the spotlight shifts.",
@@ -103,7 +103,7 @@ window.APP_TRAPS_DATA = {
 window.ARCHETYPES_DATA = {
   abraham: {
     name: "Abraham",
-    calling: "Faith & Covenant Fatherhood (אֱמוּנָה - Emunah)",
+    calling: "Faith & Covenant Fatherhood",
     inverse: "Fear, self-protection, and deceptive manipulation.",
     failure: "Descended to Egypt under famine; passed Sarah off as his sister; fathered Ishmael in self-effort.",
     legacy: "Isaac repeats the sister-deception script in Gerar. Jacob uses identity theft to steal the blessing."

@@ -1,85 +1,161 @@
 /* ============================================================
-   CONTENT — components for the ported catalogues
-   (need cards, counterfeits, family cards, tables, archetypes)
+   CONTENT — one card shape for every catalogue, plus the
+   reference tables (which become cards before they overflow).
    ============================================================ */
 
-.mini-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); margin-top: 1.4rem; }
-.stack { display: grid; gap: 1rem; margin-top: 1.4rem; }
-.intro-note { color: var(--ink-dim); }
+/* min() on the track floor, or a 20rem minimum overflows a 301px phone. */
+.mini-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr)); align-items: start; }
+.stack { display: grid; gap: 1rem; }
+.mini-grid + .mini-grid, .stack + .stack { margin-top: 1rem; }
 
-/* ---- Generic entry card ---- */
-.ecard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.2rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: .55rem; }
-.ecard-head { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; flex-wrap: wrap; }
-.ecard-head h3 { margin: 0; font-size: var(--step-1); }
-.emeta { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .04em; color: var(--accent-ink); text-align: right; }
-.ecard .sub { margin: -.3rem 0 .2rem; font-family: var(--font-serif); font-style: italic; color: var(--ink-faint); font-size: var(--step--1); }
+/* ---- The entry card — ONE shape, used by every catalogue ----
+   The head is a stack, never a space-between row: a row drops
+   the meta below the title only when the title is long, which
+   makes one grid render two different layouts. */
+.ecard {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 1.2rem 1.3rem; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: .6rem;
+}
+.ecard-head { display: block; }
+.ecard-head h3 { margin: 0; font-size: var(--step-1); line-height: 1.2; }
+.emeta {
+  display: block; margin-top: .3rem;
+  font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.ecard .sub { margin: 0; font-family: var(--font-serif); font-style: italic; color: var(--ink-faint); font-size: var(--step--1); }
 .erow { margin: 0; font-size: var(--step--1); color: var(--ink-dim); line-height: 1.55; }
-.erow .elabel { display: inline-block; min-width: 0; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin-right: .5ch; }
-.elabel.leak { color: var(--c-love); }
+.erow .elabel {
+  display: block; font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-faint); margin-bottom: .1rem;
+}
+.elabel.leak { color: var(--leak-ink); }
 .elabel.well { color: var(--grace); }
 .erow.real { color: var(--ink); }
-.ecard .lit { margin-top: .2rem; font-size: .72rem; color: var(--ink-faint); font-family: var(--font-mono); }
-.ecard .quote { font-family: var(--font-serif); font-style: italic; color: var(--ink-dim); }
+.ecard .lit { margin: 0; font-size: .7rem; color: var(--ink-faint); font-family: var(--font-mono); line-height: 1.5; }
+.ecard .quote { font-family: var(--font-serif); font-style: italic; color: var(--ink-dim); margin: 0; }
+
+/* The behavioural half of a merged counterfeit card */
+.ecard-more { margin-top: .1rem; padding-top: .75rem; border-top: 1px dashed var(--line-strong); display: flex; flex-direction: column; gap: .55rem; }
+.ecard-more .more-tag {
+  font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent-ink);
+}
+
+/* Need chip — small by design, 44px to the finger */
+.chiprow { margin-top: auto; padding-top: .5rem; }
 
 /* ---- Expandable feeling cards ---- */
-.fcard { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; box-shadow: var(--shadow); }
-.fcard > summary { list-style: none; cursor: pointer; padding: .85rem 1.1rem; display: flex; align-items: center; gap: .8rem; }
+.fcard { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.fcard > summary { list-style: none; cursor: pointer; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .8rem; min-height: 44px; border-radius: var(--radius); }
 .fcard > summary::-webkit-details-marker { display: none; }
+.fcard > summary:hover { background: var(--bg-tint); }
 .fcard .ftitle { font-family: var(--font-serif); font-size: 1.08rem; color: var(--ink); }
 .fcard .fneed { font-size: var(--step--1); color: var(--accent-ink); margin-left: auto; text-align: right; }
 .fcard .chev { flex: none; color: var(--ink-faint); transition: transform .3s; width: 16px; height: 16px; }
 .fcard[open] .chev { transform: rotate(90deg); }
-.fcard .fbody { padding: 0 1.1rem 1rem; display: grid; gap: .45rem; border-top: 1px solid var(--line); padding-top: .8rem; }
+.fcard[open] > summary { border-radius: var(--radius) var(--radius) 0 0; }
+.fcard .fbody { padding: .8rem 1.1rem 1rem; display: grid; gap: .55rem; border-top: 1px solid var(--line); }
 
-/* ---- Family II (acts) — full cards with loop beats ---- */
-.act-card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c-love); border-radius: var(--radius); padding: 1.3rem 1.4rem; box-shadow: var(--shadow); }
-.act-card .act-num { font-family: var(--font-mono); color: var(--c-love); font-size: .8rem; letter-spacing: .1em; }
+/* ---- Acts — full cards with loop beats ---- */
+.act-card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c-love); border-radius: var(--radius); padding: 1.4rem 1.5rem; box-shadow: var(--shadow); }
+.act-card .act-num { font-family: var(--font-mono); color: var(--leak-ink); font-size: .76rem; letter-spacing: .1em; }
 .act-card h3 { margin: .1rem 0 .1rem; }
-.act-card .mech { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-faint); }
-.act-card .tell { font-family: var(--font-serif); font-style: italic; color: var(--ink); font-size: 1.05rem; margin: .7rem 0; }
+.act-card .mech { display: block; font-family: var(--font-mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-faint); }
+.act-card .tell { font-family: var(--font-serif); font-style: italic; color: var(--ink); font-size: 1.06rem; margin: .8rem 0; }
 .act-card .idol, .act-card .turn { font-size: var(--step--1); color: var(--ink-dim); margin: .4rem 0; }
 .act-card .turn { color: var(--ink); border-left: 2px solid var(--grace); padding-left: .8rem; }
 .act-card .turn b, .act-card .idol b { color: var(--ink); font-weight: 600; }
-.beats { display: flex; flex-wrap: wrap; align-items: stretch; gap: .35rem; margin: .8rem 0; }
-.beat { flex: 1 1 110px; background: var(--bg-tint); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .5rem .6rem; }
+.beats { display: grid; grid-template-columns: repeat(5, 1fr); gap: .4rem; margin: .9rem 0; }
+.beat { background: var(--bg-tint); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .55rem .65rem; }
 .beat.idol-beat { border-color: var(--c-love); background: color-mix(in srgb, var(--c-love) 10%, var(--surface)); }
-.beat .bk { display: block; font-family: var(--font-mono); font-size: .56rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
-.beat .bv { font-size: .8rem; color: var(--ink-dim); line-height: 1.35; }
+.beat .bk { display: block; font-family: var(--font-mono); font-size: .55rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+.beat .bv { font-size: .78rem; color: var(--ink-dim); line-height: 1.4; }
+@media (max-width: 900px) { .beats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .beats { grid-template-columns: 1fr; } }
 
 /* ---- Anatomy phase strip ---- */
-.phase-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: .7rem; margin-top: 1.4rem; }
-.phase { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow); }
-.phase .pn { font-family: var(--font-mono); color: var(--accent); font-size: 1.4rem; line-height: 1; }
-.phase h4 { margin: .4rem 0 .3rem; font-size: 1rem; }
-.phase p { margin: 0; font-size: .8rem; color: var(--ink-dim); line-height: 1.45; }
+.phase-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: .8rem; margin-top: 1.4rem; }
+.phase { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
+.phase .pn { font-family: var(--font-mono); color: var(--accent-ink); font-size: 1.4rem; line-height: 1; }
+.phase h4 { margin: .4rem 0 .3rem; font-size: 1.02rem; }
+.phase p { margin: 0; font-size: .82rem; color: var(--ink-dim); line-height: 1.5; }
+@media (max-width: 900px) { .phase-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .phase-row { grid-template-columns: 1fr; } }
 
-/* ---- Reference tables ---- */
-.dtable { margin-top: 1.2rem; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); -webkit-overflow-scrolling: touch; }
-.reftable { border-collapse: collapse; width: 100%; min-width: 720px; font-size: var(--step--1); }
-.reftable th, .reftable td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.45; }
-.reftable thead th { position: sticky; top: 0; background: var(--surface-2); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); }
+/* ============================================================
+   REFERENCE TABLES
+   A wide table gets real width. Below the width where its
+   columns stop working it becomes stacked cards — never a
+   hidden horizontal scroll inside a narrow box.
+   ============================================================ */
+.dtable { margin-top: 1.2rem; }
+.reftable { border-collapse: collapse; table-layout: fixed; width: 100%; font-size: var(--step--1); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.reftable th, .reftable td { text-align: left; padding: .75rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+.reftable tbody tr:last-child td { border-bottom: 0; }
+.reftable thead th { background: var(--surface-2); font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); font-weight: 500; }
 .reftable tbody tr:hover { background: var(--bg-tint); }
-.reftable td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
-.reftable .c-leak { color: var(--c-love); }
+.reftable th:first-child, .reftable td:first-child { width: 13%; }
+.reftable td:first-child { font-weight: 600; color: var(--ink); }
+.reftable .c-leak { color: var(--leak-ink); }
 .reftable .c-well { color: var(--grace); }
 
-/* ---- Pattern: law / grace columns ---- */
+@media (max-width: 1400px) {
+  .reftable, .reftable tbody, .reftable tr, .reftable td { display: block; width: 100%; }
+  /* every cell carries its header as data-label, so the row of
+     headers has nothing left to say — and hiding it any other way
+     leaves a clipped 460px-wide box that reads as overflow. */
+  .reftable thead { display: none; }
+  .reftable { border: 0; background: none; }
+  .reftable tbody tr {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 1rem 1.15rem; margin-bottom: 1rem;
+  }
+  .reftable tbody tr:hover { background: var(--surface); }
+  .reftable td { border-bottom: 0; padding: .35rem 0; }
+  .reftable td::before {
+    content: attr(data-label); display: block;
+    font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: .1rem;
+  }
+  .reftable td:first-child { width: auto; font-family: var(--font-serif); font-weight: 500; font-size: var(--step-1); line-height: 1.2; padding-top: 0; }
+  .reftable td:first-child::before { display: none; }
+}
+
+/* ---- Law / grace columns ---- */
 .lg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.4rem; }
-.lg-col { border-radius: var(--radius); padding: 1.3rem; border: 1px solid var(--line); }
+.lg-col { border-radius: var(--radius); padding: 1.4rem; border: 1px solid var(--line); }
 .lg-col.law { background: var(--surface-2); }
 .lg-col.grace { background: var(--grace-soft); border-color: color-mix(in srgb, var(--grace) 35%, var(--line)); }
 .lg-col h3 { margin: 0 0 .2rem; }
-.lg-col .tag { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+.lg-col .tag { display: block; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
 .lg-col.grace .tag { color: var(--grace); }
 .lg-col ul { margin: .8rem 0 0; padding-left: 1.1rem; }
 .lg-col li { margin-bottom: .5rem; color: var(--ink-dim); font-size: var(--step--1); }
 
-/* ---- Pattern: two moves ---- */
+/* ---- Two moves ---- */
 .moves2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.4rem; }
-.move-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem; background: var(--surface); box-shadow: var(--shadow); }
-.move-card .mtag { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); }
+.move-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem; background: var(--surface); box-shadow: var(--shadow); }
+.move-card .mtag { display: block; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: .3rem; }
+.move-card h3 { margin: 0 0 .4rem; }
+.move-card p { margin: 0; color: var(--ink-dim); font-size: var(--step--1); }
 .move-card.two { border-left: 4px solid var(--grace); }
 
-@media (max-width: 720px) {
-  .phase-row, .lg-grid, .moves2 { grid-template-columns: 1fr; }
+@media (max-width: 720px) { .lg-grid, .moves2 { grid-template-columns: 1fr; } }
+
+/* ---- Nested sub-disclosure inside a card (romance / parenting) ---- */
+.depth { border-top: 1px dashed var(--line-strong); margin: .8rem 0 0; }
+.depth > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: .6rem;
+  min-height: 44px; padding: .3rem 0; color: var(--ink-dim);
 }
+.depth > summary::-webkit-details-marker { display: none; }
+.depth > summary .tag {
+  font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent-ink);
+}
+.depth > summary .chev { margin-left: auto; transition: transform .3s; color: var(--ink-faint); flex: none; width: 15px; height: 15px; }
+.depth[open] > summary .chev { transform: rotate(90deg); }
+.depth-body { padding: .2rem 0 .6rem; display: grid; gap: .45rem; }
+.depth-body > :first-child { margin-top: 0; }
