@@ -37,6 +37,7 @@ html[data-dir] {
   --dir-rule-r: 999px;
   --dir-medallion-r: 999px;
   --dir-chip-r: 999px;
+  --dir-ctl-r: 999px;      /* nav controls: toggle, version picker, switcher */
   --dir-bw: 1px;
   --dir-card-mix: 4%;
   --dir-card-line-mix: 20%;
@@ -127,6 +128,17 @@ html[data-dir] .drawer > summary::before {
 }
 html[data-dir] .brief li::before { border-radius: var(--dir-medallion-r); }
 html[data-dir] :is(.chip, .tag) { border-radius: var(--dir-chip-r); }
+/* the toggle, the version picker and the direction switcher are one set of controls
+   and have to change shape together, or the nav reads as three different systems */
+html[data-dir] :is(.theme-toggle, .verpick-btn, .dirsw, .ctxprefs-btn, .context-dialog-close) {
+  border-radius: var(--dir-ctl-r);
+}
+html[data-dir] :is(.verpick-menu, .ctxprefs-menu) { border-radius: var(--r); }
+/* …and so do the controls inside the reading panel */
+html[data-dir] :is(.ctxp-seg, .ctxp-step, .ctxp-seg button, .ctxp-step button, .ctxp-reset) {
+  border-radius: var(--dir-ctl-r);
+}
+html[data-dir] .ctxp-faces button { border-radius: var(--r); }
 html[data-dir] .mirror {
   background: var(--line);
   border-color: var(--line);
@@ -208,6 +220,7 @@ html[data-dir="bulletin"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 0;
   --dir-chip-r: 0;
+  --dir-ctl-r: 0;
   --dir-card-mix: 6.5%;
   --dir-card-line-mix: 34%;
   --dir-tint: 0%;
@@ -276,6 +289,7 @@ html[data-dir="prism"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 999px;
   --dir-chip-r: 4px;
+  --dir-ctl-r: 4px;
   --dir-card-mix: 6%;
   --dir-card-line-mix: 26%;
   --dir-tint: 0%;
@@ -356,6 +370,7 @@ html[data-dir="placard"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 0;
   --dir-chip-r: 0;
+  --dir-ctl-r: 0;
   --dir-bw: 2px;
   --dir-card-mix: 6%;
   --dir-card-line-mix: 100%;
@@ -448,6 +463,7 @@ html[data-dir="margin"] {
   --dir-rule-bg: var(--c, var(--gold));
   --dir-medallion-r: 0;
   --dir-chip-r: 2px;
+  --dir-ctl-r: 0;
   --dir-card-mix: 5%;
   --dir-card-line-mix: 24%;
   --dir-tint: 0%;
@@ -539,12 +555,8 @@ html[data-dir="margin"] .pull blockquote { font-size: clamp(1.35rem, 2.6vw, 1.85
 .dirsw-sw i:nth-child(2) { background: var(--sw2, #3c5a96); }
 .dirsw-sw i:nth-child(3) { background: var(--sw3, #b03a2a); }
 
-/* the hard-edged directions square the control off with everything else */
-html[data-dir="bulletin"] .dirsw,
-html[data-dir="placard"] .dirsw,
-html[data-dir="margin"] .dirsw { border-radius: 0; }
 html[data-dir="bulletin"] .dirsw-sw i,
 html[data-dir="placard"] .dirsw-sw i { border-radius: 0; }
-html[data-dir="placard"] .dirsw { border-width: 2px; }
+html[data-dir="placard"] :is(.dirsw, .theme-toggle, .verpick-btn) { border-width: 2px; }
 
 @media print { .dirsw { display: none; } }

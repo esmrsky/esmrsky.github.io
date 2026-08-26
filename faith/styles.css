@@ -1746,7 +1746,18 @@ cite .ref-link { color: inherit; }
    dialog itself; because the change is confined to one block, the stylesheet can simply
    transition `font-size` and `line-height` — no document-wide view transition, which is the
    thing that swallows the next press. */
-.verse-context-dialog { --ctx-fs: 1; }
+/* The three faces the reader can choose between are a property of the READER, not of
+   whatever the page is dressed as. They were reading --serif-text/--serif-display/--sans,
+   so the choice moved under you every time the palette changed and "Cormorant" could
+   render as Anton. Fixed here, and named the same in the picker. */
+.verse-context-dialog {
+  --ctx-fs: 1;
+  --read-text: "Literata", Georgia, serif;
+  --read-display: "Source Serif 4", Georgia, serif;
+  --read-sans: "Atkinson Hyperlegible", "Inter", system-ui, sans-serif;
+}
+.context-dialog-body { font-family: var(--read-text); }
+.context-dialog-body .context-heading { font-family: var(--read-sans); }
 
 .context-passage {
   font-size: calc(1.06rem * var(--ctx-fs));
@@ -1756,8 +1767,8 @@ cite .ref-link { color: inherit; }
 
 .verse-context-dialog[data-ctx-lh="snug"] .context-passage { line-height: 1.72; }
 .verse-context-dialog[data-ctx-lh="roomy"] .context-passage { line-height: 2.5; }
-.verse-context-dialog[data-ctx-type="display"] .context-dialog-body { font-family: var(--serif-display); }
-.verse-context-dialog[data-ctx-type="sans"] .context-dialog-body { font-family: var(--sans); }
+.verse-context-dialog[data-ctx-type="display"] .context-dialog-body { font-family: var(--read-display); }
+.verse-context-dialog[data-ctx-type="sans"] .context-dialog-body { font-family: var(--read-sans); }
 
 @media (prefers-reduced-motion: reduce) {
   .context-passage { transition: none; }
@@ -1834,9 +1845,9 @@ cite .ref-link { color: inherit; }
 .ctxp-faces button b { font-size: 1.05rem; font-weight: 600; line-height: 1; }
 .ctxp-faces button i { font-size: 0.82rem; font-style: italic; line-height: 1.1; }
 .ctxp-faces button span { font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.04em; color: var(--ink-faint); }
-.ctxp-faces button[data-v="text"] b, .ctxp-faces button[data-v="text"] i { font-family: var(--serif-text); }
-.ctxp-faces button[data-v="display"] b, .ctxp-faces button[data-v="display"] i { font-family: var(--serif-display); }
-.ctxp-faces button[data-v="sans"] b, .ctxp-faces button[data-v="sans"] i { font-family: var(--sans); }
+.ctxp-faces button[data-v="text"] b, .ctxp-faces button[data-v="text"] i { font-family: var(--read-text); }
+.ctxp-faces button[data-v="display"] b, .ctxp-faces button[data-v="display"] i { font-family: var(--read-display); }
+.ctxp-faces button[data-v="sans"] b, .ctxp-faces button[data-v="sans"] i { font-family: var(--read-sans); }
 .ctxp-faces button:hover { color: var(--ink); border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
 
 .ctxp-faces button[aria-pressed="true"] {

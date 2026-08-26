@@ -570,10 +570,11 @@
      attributes are inherited, so the stylesheet can transition `font-size` and `line-height` on
      the one block that moves. Nothing here goes near a document-wide view transition — on The
      Thread that is exactly what made the panel close under a second press. */
+  /* Fixed faces, not the page's. See the --read-* tokens in styles.css. */
   var CTX_FACES = [
-    ['text', 'Newsreader', 'serif, built for reading'],
-    ['display', 'Cormorant', 'the site display serif'],
-    ['sans', 'Inter', 'sans, high legibility']
+    ['text', 'Literata', 'serif, built for screen reading'],
+    ['display', 'Source Serif', 'serif, more contrast'],
+    ['sans', 'Atkinson', 'sans, drawn for low vision']
   ];
   var CTX_LH = ['snug', 'normal', 'roomy'];
   var CTX_FS_STEPS = [0.88, 0.94, 1, 1.08, 1.18, 1.3];
