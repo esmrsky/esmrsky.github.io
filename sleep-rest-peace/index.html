@@ -37,6 +37,8 @@
   --on-ink:#111014;   /* type printed ON an ink — never flips */
   /* the inverted plate: fixed across themes, redefined per style */
   --fg:var(--ink);--surface:var(--ground);
+  /* the same four meanings, darkened enough to be set as type */
+  --blue-t:var(--blue);--pink-t:#C4005E;--yellow-t:#7A5A00;--green-t:#0A7A4F;
   --plate-bg:#111014;--plate-fg:#EEF0F6;
   --plate-1:#2933F0;--plate-2:#FF3E8A;--plate-3:#FFD029;--plate-4:#14A06A;
   --plate-1t:#8A92FF;
@@ -327,6 +329,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
   --ground:var(--plate-fg);--ink:var(--plate-bg);
   --blue:var(--plate-1);--pink:var(--plate-2);--yellow:var(--plate-3);--green:var(--plate-4);
   --fg:var(--plate-fg);--surface:var(--plate-bg);
+  --blue-t:var(--plate-1t);--pink-t:var(--plate-2);--yellow-t:var(--plate-3);--green-t:var(--plate-4);
   --edge:color-mix(in srgb,var(--plate-fg) 22%,transparent);
   --edge-hi:color-mix(in srgb,var(--plate-fg) 42%,transparent);
   background:var(--ink);color:var(--ground);margin-top:clamp(52px,8vw,110px);
@@ -383,6 +386,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 
 /* ── PRISM · five-hue index, flat fills, report ── */
 [data-dir="prism"]{
+  --pink-t:#C42800;--yellow-t:#8A5600;--green-t:#006B4C;
   --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
   --body:"Chivo",system-ui,sans-serif;
   --mono:"Chivo Mono",ui-monospace,monospace;
@@ -394,6 +398,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
   --plate-1:#5B85FF;--plate-2:#FF7A4D;--plate-3:#FFC94D;--plate-4:#2FD9A4;--plate-1t:#8FA9FF;
 }
 [data-dir="prism"][data-theme="dark"]{
+  --pink-t:var(--pink);--yellow-t:var(--yellow);--green-t:var(--green);
   --ground:#0C0C10;--surface:#16161C;--ink:#F2F2F5;
   --edge:rgba(242,242,245,.17);--edge-hi:rgba(242,242,245,.42);
   --blue:#5B85FF;--pink:#FF7A4D;--yellow:#FFC94D;--green:#2FD9A4;
@@ -413,6 +418,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 
 /* ── MARGIN · text serif, apparatus, relations ── */
 [data-dir="margin"]{
+  --pink-t:var(--pink);--yellow-t:var(--yellow);--green-t:var(--green);
   --display:"Spectral",Georgia,"Times New Roman",serif;
   --body:"Literata",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -424,6 +430,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
   --plate-1:#1B3BFF;--plate-2:#D6002E;--plate-3:#8A5A00;--plate-4:#007A5E;--plate-1t:#1B3BFF;
 }
 [data-dir="margin"][data-theme="dark"]{
+  --pink-t:var(--pink);--yellow-t:var(--yellow);--green-t:var(--green);
   --ground:#131318;--surface:#1C1C22;--ink:#EDEDF0;
   --edge:rgba(237,237,240,.16);--edge-hi:rgba(237,237,240,.38);
   --blue:#7E97FF;--pink:#FF5470;--yellow:#D9A441;--green:#35C79A;
@@ -603,49 +610,120 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 
 /* ═══════════════════════════════════════════════════════════
    DEPTH — every section reads whole without opening anything.
-   The detail lives in <details>, which needs no JS, survives
-   Ctrl-F in most browsers, and cannot strand content the way a
-   scripted accordion can.
+   Native <details>: no JS to strand content, and in-page find works.
    ═══════════════════════════════════════════════════════════ */
-.dig{border:var(--rule);margin:clamp(18px,2.6vw,28px) 0 0;background:var(--surface)}
-.dig+.dig{margin-top:-1px}
+:root{interpolate-size:allow-keywords}
+
+.dig{
+  border:var(--rule);background:var(--surface);
+  margin:clamp(22px,3vw,34px) 0 0;
+}
 .dig>summary{
-  display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;
-  padding:14px clamp(14px,2.2vw,20px);min-height:52px;
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  display:flex;align-items:center;gap:clamp(10px,1.4vw,16px);cursor:pointer;list-style:none;
+  padding:clamp(14px,1.8vw,18px) clamp(14px,2.2vw,22px);min-height:60px;
+  background:color-mix(in srgb,var(--sec-ink,var(--blue)) 6%,transparent);
   color:var(--fg);
-  touch-action:manipulation;transition:background .16s ease,color .16s ease;
+  touch-action:manipulation;transition:background .18s ease;
 }
 .dig>summary::-webkit-details-marker{display:none}
-.dig>summary:hover{background:color-mix(in srgb,var(--blue) 7%,transparent)}
-.dig>summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.dig>summary:hover{background:color-mix(in srgb,var(--sec-ink,var(--blue)) 12%,transparent)}
+.dig>summary:focus-visible{outline:2px solid var(--sec-ink-t,var(--blue-t));outline-offset:-3px}
+.dig-key{
+  flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;
+  background:color-mix(in srgb,var(--sec-ink,var(--blue)) 16%,transparent);
+  color:var(--sec-ink,var(--blue));
+}
+.dig-key .icn{width:19px;height:19px;margin:0}
+.dig-key{color:var(--sec-ink-t,var(--blue-t))}
+.dig-txt{flex:1 1 auto;display:flex;flex-direction:column;gap:3px;min-width:0}
+.dig-cta{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--sec-ink-t,var(--blue-t));
+}
+.dig-lede{font-size:clamp(.95rem,1.5vw,1.04rem);line-height:1.35;opacity:.9}
 .dig-mark{
-  flex:0 0 auto;width:17px;height:17px;position:relative;
-  border:1px solid currentColor;opacity:.75;
+  flex:0 0 auto;position:relative;width:26px;height:26px;
+  border:1px solid color-mix(in srgb,var(--fg) 34%,transparent);
 }
 .dig-mark::before,.dig-mark::after{
-  content:"";position:absolute;background:currentColor;
-  left:50%;top:50%;translate:-50% -50%;
+  content:"";position:absolute;background:currentColor;left:50%;top:50%;translate:-50% -50%;
 }
-.dig-mark::before{width:9px;height:1px}
-.dig-mark::after{width:1px;height:9px;transition:scale .2s cubic-bezier(.4,0,.2,1)}
+.dig-mark::before{width:12px;height:1.5px}
+.dig-mark::after{width:1.5px;height:12px;transition:scale .3s cubic-bezier(.4,0,.2,1)}
+.dig[open] .dig-mark{border-color:var(--sec-ink-t,var(--blue-t));color:var(--sec-ink-t,var(--blue-t))}
 .dig[open] .dig-mark::after{scale:1 0}
-.dig-lede{flex:1 1 auto;opacity:.78;letter-spacing:.06em;text-transform:none;font-size:12px}
-@media (max-width:640px){.dig-lede{display:none}}
-.dig-body{padding:2px clamp(14px,2.2vw,20px) clamp(18px,2.4vw,26px);border-top:var(--rule)}
-.dig-body>*:first-child{margin-top:clamp(14px,2vw,20px)}
-.dig-body .fig:first-of-type{margin-top:clamp(14px,2vw,20px)}
-.dig[open]>summary{color:var(--blue)}
 
-/* the three directions carry it differently */
-[data-dir="prism"] .dig{border-width:1px}
-[data-dir="margin"] .dig{border-left:none;border-right:none;background:transparent}
-[data-dir="margin"] .dig>summary{font-family:var(--mono);letter-spacing:.1em}
+/* the fold itself animates where the browser supports it, and simply snaps
+   where it does not — nothing depends on the transition running */
+.dig::details-content{
+  block-size:0;overflow:clip;
+  transition:block-size .42s cubic-bezier(.4,0,.2,1),content-visibility .42s allow-discrete;
+}
+.dig[open]::details-content{block-size:auto}
+@media (prefers-reduced-motion:reduce){.dig::details-content{transition:none}}
 
-/* an overview paragraph is the part that must stand alone */
-.over{max-width:66ch;font-size:clamp(1.02rem,1.7vw,1.14rem);line-height:1.6}
-.over p:last-child{margin-bottom:0}
-.over b{font-weight:500}
+.dig-body{
+  padding:clamp(20px,2.8vw,34px) clamp(14px,2.2vw,22px) clamp(24px,3vw,36px);
+  border-top:var(--rule);background:var(--surface);
+}
+.dig-body>*:first-child{margin-top:0}
+.dig-body .fig:first-child,.dig-body .cols:first-child,.dig-body .mech:first-child,
+.dig-body .grid:first-child{margin-top:0}
+
+/* ─────────── the overview band ───────────
+   Text on the left, something with colour in it on the right, so no section
+   is a slab of prose against an empty column. */
+.over{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(20px,3vw,40px);margin-top:clamp(6px,1vw,14px);
+}
+@media (min-width:920px){
+  .over{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start}
+}
+.over-text{max-width:62ch;font-size:clamp(1.02rem,1.7vw,1.14rem);line-height:1.62}
+.over-text p:last-child{margin-bottom:0}
+.over-text b{font-weight:500}
+
+/* a tinted aside, keyed to the section's ink */
+.tint{
+  border:var(--rule);border-left:3px solid var(--sec-ink,var(--blue));
+  background:color-mix(in srgb,var(--sec-ink,var(--blue)) 8%,transparent);
+  padding:clamp(16px,2vw,22px);
+}
+.tint .icn{color:var(--sec-ink-t,var(--blue-t));margin-bottom:12px}
+.tint h4{
+  font-family:var(--display);text-transform:uppercase;
+  font-variation-settings:"wght" 780,"wdth" 106;
+  font-size:.95rem;letter-spacing:.005em;line-height:1.15;margin-bottom:9px;
+}
+.tint p{font-size:.94rem;line-height:1.55;margin:0;opacity:.9}
+.tint p+p{margin-top:.7em}
+[data-dir="margin"] .tint h4{font-variation-settings:normal;font-weight:700;text-transform:none;letter-spacing:0;font-size:1.04rem}
+[data-dir="prism"] .tint h4{font-variation-settings:"wght" 800;font-weight:800}
+
+/* number tiles — the page had almost no figures you could read at a glance */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--edge);border:var(--rule)}
+.stats.one{grid-template-columns:minmax(0,1fr)}
+.stat{background:var(--surface);padding:clamp(14px,1.8vw,20px)}
+.stat b{
+  display:block;font-family:var(--display);
+  font-variation-settings:"wght" 820,"wdth" 108;font-weight:800;
+  font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:.98;letter-spacing:-.02em;
+  color:var(--sec-ink-t,var(--blue-t));
+}
+.stat span{
+  display:block;margin-top:8px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;opacity:.82;line-height:1.45;
+}
+[data-dir="margin"] .stat b{font-variation-settings:normal;font-weight:700}
+
+/* per-section ink, so the page is not one long blue document */
+#forces,#whole,#paradox,#ideas{--sec-ink:var(--blue);--sec-ink-t:var(--blue-t)}
+#load,#flow,#older{--sec-ink:var(--yellow);--sec-ink-t:var(--yellow-t)}
+#forcing,#chemistry,#counterfeits{--sec-ink:var(--pink);--sec-ink-t:var(--pink-t)}
+#night,#nightshift,#rest,#peace,#doing{--sec-ink:var(--green);--sec-ink-t:var(--green-t)}
+.eyebrow .tick{background:var(--sec-ink,var(--blue))}
+.eyebrow .lbl{color:var(--sec-ink-t,var(--blue-t))}
 
 /* ─────────── scrollbars ───────────
    Square, flat, drawn in the page's own inks — the zero-radius rule applies to
@@ -712,6 +790,7 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 /* ─────────── dark ─────────── */
 :root{--tb-bg:#fff;--tb-bd:var(--edge-hi);--tb-fg:rgba(17,16,20,.6);--tb-hov:var(--blue)}
 [data-theme="dark"]{
+  --pink-t:var(--pink);--yellow-t:var(--yellow);--green-t:var(--green);
   --ground:#17161E;
   --ink:#EDEFF5;
   /* the inks are lifted, not swapped: the same four semantics, legible on a
@@ -808,6 +887,56 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
         <dd>Sleep actually banked. Slow wave clearance, consolidation, the part you cannot fake.</dd>
       </div>
     </dl>
+
+    <div class="fig" id="strandsFig">
+      <div class="fig-bar">
+        <p class="lbl k">Figure · three strands, one rope</p>
+        <p class="lbl">07:00 → 07:00 · where each one acts</p>
+      </div>
+      <div class="fig-stage">
+        <svg class="chart" viewBox="0 0 1000 300" role="img" aria-label="Across one day: peace is available at any hour, deliberate rest happens in short daytime blocks, and sleep is one long block at night. All three draw on the same falling arousal.">
+          <g class="gridline">
+            <line x1="60" y1="40" x2="960" y2="40"/>
+            <line x1="60" y1="248" x2="960" y2="248"/>
+          </g>
+
+          <!-- lane 1 · peace, available at any hour -->
+          <text class="an-k" x="60" y="34" fill="var(--blue)">Peace &middot; any hour</text>
+          <rect class="fill" x="60" y="48" width="900" height="44" fill="var(--blue)" fill-opacity=".16"/>
+          <rect x="60" y="48" width="900" height="44" fill="none" stroke="var(--blue)" stroke-width="1.5"/>
+          <text class="ax-t" x="510" y="76" text-anchor="middle">the arousal floor, reachable on purpose &mdash; one long exhale at a time</text>
+
+          <!-- lane 2 · deliberate rest, short daytime blocks -->
+          <text class="an-k" x="60" y="122" fill="var(--yellow)">Rest &middot; deliberate, 10&ndash;20 min</text>
+          <line x1="60" y1="158" x2="960" y2="158" stroke="var(--edge-hi)" stroke-width="1" stroke-dasharray="3 5"/>
+          <g fill="var(--yellow)">
+            <rect class="fill" x="172" y="136" width="70" height="44"/>
+            <rect class="fill" x="322" y="136" width="70" height="44"/>
+            <rect class="fill" x="472" y="136" width="70" height="44"/>
+          </g>
+          <g class="ax-t">
+            <text x="207" y="198" text-anchor="middle">10:00</text>
+            <text x="357" y="198" text-anchor="middle">14:00</text>
+            <text x="507" y="198" text-anchor="middle">18:00</text>
+          </g>
+
+          <!-- lane 3 · sleep, one long block -->
+          <text class="an-k" x="60" y="226" fill="var(--green)">Sleep &middot; 4&ndash;5 cycles</text>
+          <rect class="fill" x="679" y="238" width="281" height="44" fill="var(--green)"/>
+          <text class="an-k on-fill" x="820" y="266" text-anchor="middle" fill="var(--ground)">23:30 &rarr; 07:00</text>
+
+          <!-- axis -->
+          <g class="ax-t">
+            <text x="60" y="296">07:00</text>
+            <text x="510" y="296" text-anchor="middle">one full turn</text>
+            <text x="960" y="296" text-anchor="end">07:00</text>
+          </g>
+        </svg>
+      </div>
+      <p class="fig-cap">Three strands of one rope, and the reason they share a page: <b>they all run on
+        the same falling arousal.</b> Spend one to buy another &mdash; borrow the night to finish the
+        work, or call a screen a rest &mdash; and the other two fray.</p>
+    </div>
   </div>
 </header>
 
@@ -825,11 +954,21 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Tiredness is not one quantity. <b>Sleep pressure</b> climbs from the moment you wake and never falls until you sleep; a <b>circadian alerting signal</b> rises across the day to hold it off, and peaks in the late evening. The gap between them is what you actually feel — which is why the hour before you can sleep is so often the hour you feel most awake.</p>
+      <div class="over-text">
+        <p>Tiredness is not one quantity. <b>Sleep pressure</b> climbs from the moment you wake and never falls until you sleep; a <b>circadian alerting signal</b> rises across the day to hold it off, and peaks in the late evening. The gap between them is what you actually feel — which is why the hour before you can sleep is so often the hour you feel most awake.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>≈16 h</b><span>pressure has been climbing by the time you go to bed</span></div>
+        <div class="stat"><b>21–23h</b><span>when alerting peaks against it</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">The two-process model</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-wave"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">The two-process model</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="fig">
@@ -945,11 +1084,21 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>People fall asleep in front of a television and lie wide awake after ten minutes of conversation. The difference is not the screen — it is <b>who is doing the work</b>. Receiving content asks almost nothing of you. Producing a sentence means searching memory with no cue, suppressing every near-miss, and hitting a deadline you did not set, roughly every two hundred milliseconds.</p>
+      <div class="over-text">
+        <p>People fall asleep in front of a television and lie wide awake after ten minutes of conversation. The difference is not the screen — it is <b>who is doing the work</b>. Receiving content asks almost nothing of you. Producing a sentence means searching memory with no cue, suppressing every near-miss, and hitting a deadline you did not set, roughly every two hundred milliseconds.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>≈200 ms</b><span>the gap between turns, in every language measured</span></div>
+        <div class="stat"><b>3</b><span>systems running at once while you talk</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Why conversation costs what a screen does not</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-speech"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Why conversation costs what a screen does not</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="grid g2">
@@ -1095,11 +1244,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Being pulled into something you are building is the same mechanism as conversation, turned up, with a reward loop attached. Time disappears because tracking it is effortful and gets dropped first. The loop feeds itself — which is why finishing a good session at midnight leaves you <b>wired rather than sleepy</b>.</p>
+      <div class="over-text">
+        <p>Being pulled into something you are building is the same mechanism as conversation, turned up, with a reward loop attached. Time disappears because tracking it is effortful and gets dropped first. The loop feeds itself — which is why finishing a good session at midnight leaves you <b>wired rather than sleepy</b>.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-loop"/></svg>
+        <h4>The condition</h4>
+        <p>Hard enough to demand everything you have and no harder. Too easy and attention leaks; too hard and you quit. The band between is where the loop closes.</p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">The absorption loop</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-loop"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">The absorption loop</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="fig">
@@ -1189,11 +1349,21 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Every reliable way of staying awake is one of four things, and only one of them is about effort. Two are your own alarm circuitry pointed at you deliberately: a <b>sympathetic spike</b>, or an <b>interoceptive signal</b> that escalates rather than habituating. The third moves your clock with light. The fourth is cognitive load, and it is the gentlest and least reliable. None of them pays the debt down — they outbid it, and add a stress load on top.</p>
+      <div class="over-text">
+        <p>Every reliable way of staying awake is one of four things, and only one of them is about effort. Two are your own alarm circuitry pointed at you deliberately: a <b>sympathetic spike</b>, or an <b>interoceptive signal</b> that escalates rather than habituating. The third moves your clock with light. The fourth is cognitive load, and it is the gentlest and least reliable. None of them pays the debt down — they outbid it, and add a stress load on top.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4</b><span>mechanisms that reliably keep you awake</span></div>
+        <div class="stat"><b>1</b><span>of the four is actually about effort</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Four mechanisms, and what each costs</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-bolt"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Four mechanisms, and what each costs</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="mech">
@@ -1328,11 +1498,21 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Nothing you drink makes energy. Caffeine is a <b>blockade</b>: it occupies the adenosine receptor without switching it on, so the signal stops arriving while the debt keeps growing behind it. Nicotine is the other side of the model — a real push on arousal, with a two-hour tail that runs out in the middle of your night. The crash is not the drug leaving; it is everything you could not feel arriving at once.</p>
+      <div class="over-text">
+        <p>Nothing you drink makes energy. Caffeine is a <b>blockade</b>: it occupies the adenosine receptor without switching it on, so the signal stops arriving while the debt keeps growing behind it. Nicotine is the other side of the model — a real push on arousal, with a two-hour tail that runs out in the middle of your night. The crash is not the drug leaving; it is everything you could not feel arriving at once.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>5 h</b><span>caffeine half-life, if you are average</span></div>
+        <div class="stat"><b>2–10 h</b><span>the real spread across people</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Caffeine, tea, energy drinks, nicotine</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-drop"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Caffeine, tea, energy drinks, nicotine</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="cols two">
@@ -1479,11 +1659,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Sleep onset requires arousal to fall, and effort raises arousal. So every minute spent working at falling asleep feeds the thing preventing it. <b>Monitoring is the hinge</b> — calculating hours remaining, checking whether it is working — because goal-directed cognition is arousing by definition. The two responses with the best evidence both work by removing the goal.</p>
+      <div class="over-text">
+        <p>Sleep onset requires arousal to fall, and effort raises arousal. So every minute spent working at falling asleep feeds the thing preventing it. <b>Monitoring is the hinge</b> — calculating hours remaining, checking whether it is working — because goal-directed cognition is arousing by definition. The two responses with the best evidence both work by removing the goal.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-bed"/></svg>
+        <h4>The strongest item on this page</h4>
+        <p>Getting out of bed when you are awake and annoyed is a component of CBT-I, the first-line treatment for chronic insomnia. It is also the one people skip, because it feels like abandoning sleep.</p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Why effort makes it worse</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-bed"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Why effort makes it worse</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="fig">
@@ -1576,11 +1767,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>The wave of thoughts that arrives when you lie down is not a malfunction. All day your attention is captured from outside; remove the input and the brain's <b>default mode network</b> wins by default. Worse, the drift toward sleep is a genuinely creative state — so the good ideas turn up exactly there, and finding one exciting is what destroys the state that produced it.</p>
+      <div class="over-text">
+        <p>The wave of thoughts that arrives when you lie down is not a malfunction. All day your attention is captured from outside; remove the input and the brain's <b>default mode network</b> wins by default. Worse, the drift toward sleep is a genuinely creative state — so the good ideas turn up exactly there, and finding one exciting is what destroys the state that produced it.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-pen"/></svg>
+        <h4>Capture without pursuit</h4>
+        <p>Paper, not a phone. Write the one sentence, tell yourself it is safe, stop turning it over. Chasing an idea costs the whole descent; writing it down costs almost nothing.</p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">The queue was always full</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-pen"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">The queue was always full</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="cols two">
@@ -1721,11 +1923,21 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Sleep runs in cycles of roughly ninety minutes, but the cycles are not copies of each other. <b>Deep sleep is front-loaded</b> and REM expands toward morning, so a short night is not evenly short — it is a night with the REM removed. Cycles also lengthen as the night goes on, which is the part the ninety-minute rule leaves out.</p>
+      <div class="over-text">
+        <p>Sleep runs in cycles of roughly ninety minutes, but the cycles are not copies of each other. <b>Deep sleep is front-loaded</b> and REM expands toward morning, so a short night is not evenly short — it is a night with the REM removed. Cycles also lengthen as the night goes on, which is the part the ninety-minute rule leaves out.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>≈90 min</b><span>one cycle — and they lengthen as the night goes on</span></div>
+        <div class="stat"><b>4 of 5</b><span>cycles kept on a short night, losing most of the REM</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Stages, cycles, and what a short night removes</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-layers"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Stages, cycles, and what a short night removes</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="fig">
@@ -1923,11 +2135,22 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Everything above acts on the same quantity. Sleep pressure has been climbing the entire time and never falls; the only thing that changes is arousal. <b>Nothing here is about being tired enough</b> — you were tired enough hours ago.</p>
+      <div class="over-text">
+        <p>Everything above acts on the same quantity. Sleep pressure has been climbing the entire time and never falls; the only thing that changes is arousal. <b>Nothing here is about being tired enough</b> — you were tired enough hours ago.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-clock"/></svg>
+        <h4>What none of it changes</h4>
+        <p>Sleep pressure has been climbing the entire time and never falls. The only thing any of this moves is arousal — and you were tired enough hours ago.</p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Every lever on one curve</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-clock"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Every lever on one curve</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
 
     <div class="fig">
@@ -2001,7 +2224,8 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Three jobs are not in dispute. <b>Memory is filed</b> — fragile new traces are replayed and
+      <div class="over-text">
+        <p>Three jobs are not in dispute. <b>Memory is filed</b> — fragile new traces are replayed and
         moved into long-term storage, which is why sleep after learning is when it sticks. <b>The body
         rebuilds</b> — growth hormone peaks in deep sleep, tissue repairs, immune function restocks.
         And <b>REM strips the charge off the day</b>: lose a night and the amygdala becomes markedly
@@ -2010,10 +2234,19 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
       <p>The fourth job — that deep sleep opens the brain's channels and flushes metabolic waste — is
         the one you will see stated most confidently and the one the field is currently arguing
         about.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>3</b><span>jobs of sleep that are not in dispute</span></div>
+        <div class="stat"><b>1</b><span>that genuinely is</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">The glymphatic argument, both sides</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-brain"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">The glymphatic argument, both sides</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
         <div class="cols two">
           <div class="prose">
@@ -2087,17 +2320,27 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Rest is not one substance you run out of. You can be in surplus on one kind and bankrupt on
+      <div class="over-text">
+        <p>Rest is not one substance you run out of. You can be in surplus on one kind and bankrupt on
         another — sleeping soundly and still exhausted, because the thing you actually spent all day
         was attention, or feeling, or the performance of being fine. <b>Naming which one you are
         starved for is most of the cure</b>, and it is usually not the physical one.</p>
       <p>There is also a deliberate version you can do awake. Lie down, close your eyes, lengthen the
         exhale, and walk attention slowly through the body: the parasympathetic branch takes over,
         cortisol falls, attention recovers. It supplements sleep. <b>It does not replace it.</b></p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>7</b><span>kinds of rest people run out of</span></div>
+        <div class="stat"><b>10–20 min</b><span>the deliberate version you can do awake</span></div>
+      </div>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Seven kinds of rest, and the honest case for NSDR</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-eye"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Seven kinds of rest, and the honest case for NSDR</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
         <p class="fig-cap" style="border:var(--rule);margin-bottom:clamp(18px,2.4vw,26px)">The seven-type
           framework comes from the physician <b>Saundra Dalton-Smith</b>. It is a lens rather than a lab
@@ -2193,15 +2436,26 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>There is a single test, and it is not how the thing feels while you are doing it. <b>Real rest
+      <div class="over-text">
+        <p>There is a single test, and it is not how the thing feels while you are doing it. <b>Real rest
         lowers arousal and leaves you steadier than it found you. A counterfeit charges you
         afterwards.</b> By that test an evening of scrolling is stimulation with your body lying down,
         a nightcap is sedation rather than sleep, and "I'll rest when it's done" is motion wearing the
         costume of rest and deferring it forever.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-eye"/></svg>
+        <h4>The one-line test</h4>
+        <p>Not how it feels while you are doing it. Real rest lowers arousal and leaves you steadier than it found you. <b>A counterfeit charges you afterwards.</b></p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Five disguises, and what each actually costs</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-screen"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Five disguises, and what each actually costs</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
         <div class="mech">
           <div class="mrow">
@@ -2259,17 +2513,28 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Your autonomic nervous system runs on two settings. The sympathetic branch is built for the
+      <div class="over-text">
+        <p>Your autonomic nervous system runs on two settings. The sympathetic branch is built for the
         sprint — heart up, muscles tense, attention narrowed. The parasympathetic branch is where
         repair and settling happen. <b>Peace, in the sense people mean it, is the second one being in
         charge</b>, and the reason a slow breath works is mechanical rather than mystical: a long,
         unhurried out-breath raises vagal tone, and the heart rate follows it down.</p>
       <p>Which is also why it belongs on this page at all. Sleep onset requires arousal to fall. So
         does peace. They are the same lever pulled at different times of day.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-wave"/></svg>
+        <h4>The exhale is the lever</h4>
+        <p>Breathing in briefly speeds the heart; breathing out slows it. Make the out-breath longer than the in-breath and you are pulling the parasympathetic side up directly. Nothing has to be believed or visualised.</p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">The two branches, and the one that responds to breathing</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-wave"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">The two branches, and the one that responds to breathing</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
         <div class="grid g2">
           <div class="cell">
@@ -2315,16 +2580,27 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
     </div>
 
     <div class="over">
-      <p>Three moves are worth noticing, whatever you make of the source. Rest is placed <b>at the
+      <div class="over-text">
+        <p>Three moves are worth noticing, whatever you make of the source. Rest is placed <b>at the
         beginning rather than the end</b> — a rhythm written into the week before anyone has earned
         anything, not a reward for finishing. Sleep is framed as <b>an act of trust</b> rather than a
         biological chore: to lie down is to concede the world turns without you holding it. And peace
         is defined <b>by what it is not</b> — explicitly not the absence of storms, which is precisely
         the distinction the counterfeits section arrives at from the other direction.</p>
+      </div>
+      <aside class="tint">
+        <svg class="icn lg" aria-hidden="true"><use href="#i-scroll"/></svg>
+        <h4>Synthesis, not proof</h4>
+        <p>An empirical tradition and a liturgical one use different methods and answer different questions. That they converge on the same practical shape is striking and useful — and it is an interpretation drawn across two domains, not a finding.</p>
+      </aside>
     </div>
 
     <details class="dig">
-      <summary><span class="dig-mark" aria-hidden="true"></span>Go deeper<span class="dig-lede">Four passages, and where the two maps agree</span></summary>
+      <summary>
+        <span class="dig-key" aria-hidden="true"><svg class="icn"><use href="#i-scroll"/></svg></span>
+        <span class="dig-txt"><span class="dig-cta">Go deeper</span><span class="dig-lede">Four passages, and where the two maps agree</span></span>
+        <span class="dig-mark" aria-hidden="true"></span>
+      </summary>
       <div class="dig-body">
         <p class="fig-cap" style="border:var(--rule);margin-bottom:clamp(18px,2.4vw,26px)">Read what
           follows as <b>synthesis, not proof.</b> An empirical tradition and a liturgical one use
