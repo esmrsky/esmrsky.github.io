@@ -38,6 +38,16 @@
      4.43:1 (dark) against their own card, and every caption on the site reads it.
      Mixed against --card it holds ~4.7:1 in any palette, the eight in new/ included. */
   --ink-faint: color-mix(in srgb, var(--ink) 70%, var(--card));
+  /* The seven miracle kinds, named rather than numbered: the cards, the tags and the filter
+     chips all read the same token, so a kind is one colour wherever it appears. Every
+     direction re-points these. */
+  --k-healing:      #4c8a42;
+  --k-resurrection: #b3562a;
+  --k-provision:    #a1761c;
+  --k-nature:       #3c6f96;
+  --k-deliverance:  #6d4b94;
+  --k-judgment:     #a02c3c;
+  --k-wonder:       #2c7183;
   --mir-a: var(--gold-hi);
   --mir-b: var(--c-fear);
   --measure: 66ch;
@@ -85,6 +95,13 @@
   --c-mir: #d3a545;
   --c-auth: #d16480;
   --c-walk: #d99a4e;
+  --k-healing:      #79bf6a;
+  --k-resurrection: #dd8b5c;
+  --k-provision:    #d0a23f;
+  --k-nature:       #6fa8d6;
+  --k-deliverance:  #a98bd3;
+  --k-judgment:     #d9697c;
+  --k-wonder:       #5fb0c4;
   --shadow-lift: 0 14px 44px rgba(0, 0, 0, 0.5);
 }
 @media (prefers-color-scheme: dark) {
@@ -109,6 +126,13 @@
     --c-mir: #d3a545;
     --c-auth: #d16480;
     --c-walk: #d99a4e;
+    --k-healing:      #79bf6a;
+    --k-resurrection: #dd8b5c;
+    --k-provision:    #d0a23f;
+    --k-nature:       #6fa8d6;
+    --k-deliverance:  #a98bd3;
+    --k-judgment:     #d9697c;
+    --k-wonder:       #5fb0c4;
     --shadow-lift: 0 14px 44px rgba(0, 0, 0, 0.5);
   }
 }
@@ -1086,6 +1110,33 @@ strong { font-weight: 600; }
 }
 .chip:hover { border-color: var(--ink-faint); color: var(--ink); transform: translateY(-1px); }
 .chip.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+/* ---------- the kind filters wear the colour they filter ----------
+   A row of identical grey pills makes the reader do the mapping twice: once to learn that
+   Healing is green on the cards, again to find Healing in the filter. The chip and the card
+   read the same token now. The era row stays neutral on purpose — those are not a colour
+   contract, and colouring them too would leave nothing signalling. */
+.chip[data-type="healing"] { --ck: var(--k-healing); }
+.chip[data-type="resurrection"] { --ck: var(--k-resurrection); }
+.chip[data-type="provision"] { --ck: var(--k-provision); }
+.chip[data-type="nature"] { --ck: var(--k-nature); }
+.chip[data-type="deliverance"] { --ck: var(--k-deliverance); }
+.chip[data-type="judgment"] { --ck: var(--k-judgment); }
+.chip[data-type="wonder"] { --ck: var(--k-wonder); }
+.chip[data-type]:not([data-type="all"]) {
+  background: color-mix(in srgb, var(--ck) 9%, var(--card));
+  border-color: color-mix(in srgb, var(--ck) 40%, var(--line));
+  color: color-mix(in srgb, var(--ck) 58%, var(--ink));
+}
+.chip[data-type]:not([data-type="all"]):hover {
+  border-color: color-mix(in srgb, var(--ck) 62%, var(--line));
+  color: color-mix(in srgb, var(--ck) 44%, var(--ink));
+}
+.chip[data-type]:not([data-type="all"]).on {
+  background: color-mix(in srgb, var(--ck) 86%, var(--ink));
+  border-color: transparent;
+  color: var(--paper);
+}
 .chip.chip-faith.on { background: color-mix(in srgb, var(--gold) 88%, var(--ink)); border-color: transparent; }
 
 .filter-group .smallcaps { color: var(--ink-faint); display: block; margin: 1.1rem 0 0; }
@@ -1136,13 +1187,13 @@ strong { font-weight: 600; }
   .mcard { animation: card-in 0.35s ease backwards; }
   @keyframes card-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 }
-.mcard.k-healing { --mc: #4c8a42; }
-.mcard.k-resurrection { --mc: #b3562a; }
-.mcard.k-provision { --mc: #a1761c; }
-.mcard.k-nature { --mc: #3c6f96; }
-.mcard.k-deliverance { --mc: #6d4b94; }
-.mcard.k-judgment { --mc: #a02c3c; }
-.mcard.k-wonder { --mc: #2c7183; }
+.mcard.k-healing { --mc: var(--k-healing); }
+.mcard.k-resurrection { --mc: var(--k-resurrection); }
+.mcard.k-provision { --mc: var(--k-provision); }
+.mcard.k-nature { --mc: var(--k-nature); }
+.mcard.k-deliverance { --mc: var(--k-deliverance); }
+.mcard.k-judgment { --mc: var(--k-judgment); }
+.mcard.k-wonder { --mc: var(--k-wonder); }
 
 .mcard-tags { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
 .tag {
