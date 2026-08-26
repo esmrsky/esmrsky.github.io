@@ -579,56 +579,26 @@
   var CTX_LH = ['snug', 'normal', 'roomy'];
   var CTX_FS_STEPS = [0.88, 0.94, 1, 1.08, 1.18, 1.3];
   var ctxType = 'text', ctxLh = 'normal', ctxFsIndex = 2;
-  /* Off by default: a verse number every twenty words and a publisher's section heading
-     every few verses are apparatus, and the passage reads better as the prose it is. Both
-     are one press away, and the CSS hides them on the attribute being ABSENT rather than on
-     it being "off", so nothing flashes on screen before this is read back. */
-  var ctxNums = false, ctxHeads = false;
 
   function readingPanelHtml() {
-    return '<span class="ctxp-head">Typeface <b class="ctxp-head-val">Literata</b></span>' +
+    return '<span class="ctxp-head">Typeface</span>' +
       '<div class="ctxp-faces" data-ctxp="type">' +
       CTX_FACES.map(function (f) {
-        return '<button type="button" data-v="' + f[0] + '" data-name="' + f[1] + '" aria-pressed="false"' +
+        return '<button type="button" data-v="' + f[0] + '" aria-pressed="false"' +
           ' title="' + f[1] + ' \u2014 ' + f[2] + '" aria-label="' + f[1] + ', ' + f[2] + '">' +
-          '<b>A</b><i>a</i></button>';
+          '<b>A</b><i>a</i><span>' + f[1] + '</span></button>';
       }).join('') + '</div>' +
       '<span class="ctxp-head">Line height</span>' +
       '<div class="ctxp-seg" data-ctxp="lh">' +
       CTX_LH.map(function (v) {
         return '<button type="button" data-v="' + v + '" aria-pressed="false">' + v + '</button>';
       }).join('') + '</div>' +
-      '<span class="ctxp-head">Text size</span>' +
-      /* Two equal halves in a pill read as a two-way preset, not as a ladder you can walk.
-         A minus, the value you are on, and a plus say what it actually is. */
+      '<span class="ctxp-head">Text size <b class="ctxp-val">100%</b></span>' +
       '<div class="ctxp-step" data-ctxp="fs">' +
-      '<button type="button" data-step="-1" aria-label="Smaller passage text"><span class="sz-op" aria-hidden="true">\u2212</span></button>' +
-      '<span class="ctxp-val">100%</span>' +
-      '<button type="button" data-step="1" aria-label="Larger passage text"><span class="sz-op" aria-hidden="true">+</span></button>' +
+      '<button type="button" data-step="-1" aria-label="Smaller passage text"><span class="sz sz-sm">A</span></button>' +
+      '<button type="button" data-step="1" aria-label="Larger passage text"><span class="sz sz-lg">A</span></button>' +
       '</div>' +
-      contextShowsHtml() +
       '<div class="ctxp-foot"><button class="ctxp-reset" type="button" data-ctxp-reset>Reset</button></div>';
-  }
-
-  /* One element, moved rather than duplicated — beside "Even more context" on a desktop
-     footer that has room for it, and inside the settings panel on a phone where the footer
-     is already two controls wide. `data-show` rather than the panel's `data-ctxp`/`data-v`
-     on purpose: these are two independent switches, not one choice out of a set, and the
-     shape keeps them out of the panel's single-select handler while sitting inside it. */
-  function contextShowsHtml() {
-    return '<div class="ctx-shows"><span class="ctxp-head">Show in the passage</span>' +
-      '<button type="button" data-show="nums" aria-pressed="false">Verse numbers</button>' +
-      '<button type="button" data-show="heads" aria-pressed="false">Headings</button>' +
-      '</div>';
-  }
-
-  function setContextShow(which, on) {
-    if (which === 'nums') ctxNums = !!on; else ctxHeads = !!on;
-    lsSet('faith-ctx-' + which, on ? 'on' : 'off');
-    if (contextDialogEl) contextDialogEl.dataset[which] = on ? 'on' : 'off';
-    document.querySelectorAll('.ctx-shows button[data-show="' + which + '"]').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(!!on));
-    });
   }
 
   function markCtxButtons(group, value) {
@@ -643,11 +613,7 @@
     ctxType = CTX_FACES.some(function (f) { return f[0] === v; }) ? v : 'text';
     lsSet('faith-ctx-type', ctxType);
     markCtxButtons('type', ctxType);
-    if (!contextDialogEl) return;
-    contextDialogEl.dataset.ctxType = ctxType;
-    var name = contextDialogEl.querySelector('.ctxp-head-val');
-    var chosen = contextDialogEl.querySelector('.ctxp-faces button[data-v="' + ctxType + '"]');
-    if (name && chosen) name.textContent = chosen.dataset.name;
+    if (contextDialogEl) contextDialogEl.dataset.ctxType = ctxType;
   }
 
   function applyCtxLh(v) {
@@ -680,11 +646,7 @@
     btn.addEventListener('click', function (ev) { ev.stopPropagation(); menu.hidden ? open() : close(); });
     menu.addEventListener('click', function (ev) {
       ev.stopPropagation();
-      if (ev.target.closest('[data-ctxp-reset]')) {
-        applyCtxType('text'); applyCtxLh('normal'); applyCtxFs(2);
-        setContextShow('nums', false); setContextShow('heads', false);
-        return;
-      }
+      if (ev.target.closest('[data-ctxp-reset]')) { applyCtxType('text'); applyCtxLh('normal'); applyCtxFs(2); return; }
       var step = ev.target.closest('[data-ctxp="fs"] button[data-step]');
       if (step) { applyCtxFs(ctxFsIndex + (+step.dataset.step)); return; }
       var b = ev.target.closest('[data-ctxp] button[data-v]');
@@ -704,31 +666,6 @@
     applyCtxType(lsGet('faith-ctx-type') || 'text');
     applyCtxLh(lsGet('faith-ctx-lh') || 'normal');
     applyCtxFs(isNaN(savedFs) ? 2 : savedFs);
-    setContextShow('nums', lsGet('faith-ctx-nums') === 'on');
-    setContextShow('heads', lsGet('faith-ctx-heads') === 'on');
-
-    /* Two independent switches, so their own handler — the panel's runs on
-       [data-ctxp] and would treat these as one choice out of a set. Delegated from
-       the dialog because the group moves between the footer and the panel. */
-    contextDialogEl.addEventListener('click', function (ev) {
-      var t = ev.target.closest('.ctx-shows button[data-show]');
-      if (!t) return;
-      ev.stopPropagation();
-      setContextShow(t.dataset.show, t.getAttribute('aria-pressed') !== 'true');
-    });
-
-    /* The controls that change HOW the passage reads belong beside the one that changes
-       how much of it there is — until the footer runs out of room. */
-    var footMQ = window.matchMedia('(max-width: 720px)');
-    var foot = contextDialogEl.querySelector('.context-dialog-foot');
-    var shows = contextDialogEl.querySelector('.ctx-shows');
-    var place = function () {
-      if (footMQ.matches) menu.insertBefore(shows, menu.querySelector('.ctxp-foot'));
-      else foot.insertBefore(shows, foot.firstChild);
-    };
-    place();
-    if (footMQ.addEventListener) footMQ.addEventListener('change', function () { close(); place(); });
-    else if (footMQ.addListener) footMQ.addListener(place);
   }
 
   var GEAR_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h9M17.5 8H20M4 16h3.5M12 16h8"/><circle cx="15.2" cy="8" r="2.3"/><circle cx="9.7" cy="16" r="2.3"/></svg>';
