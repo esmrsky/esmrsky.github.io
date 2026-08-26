@@ -38,7 +38,7 @@
   /* the inverted plate: fixed across themes, redefined per style */
   --fg:var(--ink);--surface:var(--ground);
   /* the same four meanings, darkened enough to be set as type */
-  --blue-t:var(--blue);--pink-t:#C4005E;--yellow-t:#7A5A00;--green-t:#0A7A4F;
+  --blue-t:var(--blue);--pink-t:#C4005E;--yellow-t:#71530A;--green-t:#06663F;
   --plate-bg:#111014;--plate-fg:#EEF0F6;
   --plate-1:#2933F0;--plate-2:#FF3E8A;--plate-3:#FFD029;--plate-4:#14A06A;
   --plate-1t:#8A92FF;
@@ -335,6 +335,9 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
   background:var(--ink);color:var(--ground);margin-top:clamp(52px,8vw,110px);
 }
 .invert .sec{padding-top:clamp(44px,7vw,88px)}
+/* the plate paints its own background, so it has to close itself — without
+   this the last thing in it sits flush against the edge */
+.invert{padding-bottom:clamp(44px,7vw,88px)}
 .invert .eyebrow .tick{background:var(--yellow)}
 .invert .eyebrow .lbl{color:var(--yellow)}
 .invert .sec-head .stand{opacity:.66}
@@ -724,6 +727,41 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
 #night,#nightshift,#rest,#peace,#doing{--sec-ink:var(--green);--sec-ink-t:var(--green-t)}
 .eyebrow .tick{background:var(--sec-ink,var(--blue))}
 .eyebrow .lbl{color:var(--sec-ink-t,var(--blue-t))}
+
+/* ─────────── two sides of an argument ───────────
+   Used where the honest answer is "it is contested": each side gets its own
+   ink and its evidence dated, so the reader can see the shape of the dispute
+   rather than being told there is one. */
+.sides{display:grid;gap:clamp(14px,2vw,20px);grid-template-columns:minmax(0,1fr)}
+@media (min-width:820px){.sides{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.side{
+  border:var(--rule);border-top:3px solid var(--side-ink,var(--blue));
+  background:color-mix(in srgb,var(--side-ink,var(--blue)) 7%,transparent);
+  padding:clamp(16px,2.2vw,24px);
+}
+.side-head{display:flex;align-items:center;gap:11px;margin-bottom:clamp(14px,1.8vw,18px)}
+.side-head .icn{color:var(--side-ink-t,var(--blue-t));margin:0}
+.side-head h4{
+  font-family:var(--display);text-transform:uppercase;
+  font-variation-settings:"wght" 780,"wdth" 106;
+  font-size:.95rem;letter-spacing:.005em;line-height:1.1;
+}
+[data-dir="margin"] .side-head h4{font-variation-settings:normal;font-weight:700;text-transform:none;letter-spacing:0;font-size:1.04rem}
+[data-dir="prism"] .side-head h4{font-variation-settings:"wght" 800;font-weight:800}
+.ev{display:grid;gap:clamp(12px,1.6vw,16px)}
+.ev-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:start}
+@media (max-width:520px){.ev-row{grid-template-columns:minmax(0,1fr)}}
+.ev-when{
+  font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--side-ink-t,var(--blue-t));white-space:nowrap;padding-top:2px;
+}
+.ev-row p{font-size:.92rem;line-height:1.55;margin:0;opacity:.9}
+.verdict{
+  border:var(--rule);border-left:3px solid var(--sec-ink-t,var(--blue-t));
+  padding:clamp(16px,2vw,22px);margin-top:clamp(16px,2vw,22px);background:var(--surface);
+}
+.verdict .lbl{color:var(--sec-ink-t,var(--blue-t));margin-bottom:9px}
+.verdict p{margin:0;font-size:clamp(1rem,1.6vw,1.08rem);line-height:1.5}
 
 /* ─────────── scrollbars ───────────
    Square, flat, drawn in the page's own inks — the zero-radius rule applies to
@@ -2248,29 +2286,62 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
         <span class="dig-mark" aria-hidden="true"></span>
       </summary>
       <div class="dig-body">
-        <div class="cols two">
-          <div class="prose">
-            <p>The case for. In 2013 a landmark study found the space between brain cells widens
-              substantially during sleep, letting cerebrospinal fluid move through the tissue and carry
-              out metabolic litter — including beta-amyloid, the protein that clumps into the plaques
-              seen in Alzheimer's. In 2025 a mechanism arrived: during deep sleep the brainstem
-              releases noradrenaline in slow waves, roughly once every fifty seconds, squeezing blood
-              vessels in a rhythm that drives the fluid through like a tide. The same work found a
-              common sleep aid suppressed those waves — knocking the brain out without letting it
-              clean, which is a genuinely useful distinction between <em>sedated</em> and
-              <em>rested</em>.</p>
+        <div class="sides">
+          <div class="side" style="--side-ink:var(--green);--side-ink-t:var(--green-t)">
+            <div class="side-head">
+              <svg class="icn" aria-hidden="true"><use href="#i-wave"/></svg>
+              <h4>The case for</h4>
+            </div>
+            <div class="ev">
+              <div class="ev-row">
+                <span class="ev-when">2013</span>
+                <p>The space between brain cells widens substantially during sleep, letting
+                  cerebrospinal fluid move through the tissue and carry out metabolic litter —
+                  including the beta-amyloid that clumps into Alzheimer&rsquo;s plaques.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">2025</span>
+                <p>A mechanism arrives: in deep sleep the brainstem releases noradrenaline in slow
+                  waves, about once every fifty seconds, squeezing vessels in a rhythm that drives the
+                  fluid through like a tide.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">Same work</span>
+                <p>A common sleep aid suppressed those waves — knocking the brain out without letting
+                  it clean. A useful distinction between <em>sedated</em> and <em>rested</em>.</p>
+              </div>
+            </div>
           </div>
-          <div class="prose">
-            <p>The case against. In 2024 a study measuring clearance directly reported it
-              <em>lower</em> during sleep and anaesthesia, not higher — the opposite of the headline.
-              The group behind the original finding disputes the method in strong terms; a 2025 human
-              study using an implanted sensor came down on the original side; and the field is still
-              arguing about tracers, species, and what should even count as clearance.</p>
-            <p>Where that leaves it: the direction is <b>likely but unsettled</b>, the mechanism is
-              strong in animals and thinner in humans, and a single bad night almost certainly does not
-              matter the way the popular version implies. Sleep has enough well-evidenced jobs that it
-              does not need this one to carry the argument.</p>
+          <div class="side" style="--side-ink:var(--pink);--side-ink-t:var(--pink-t)">
+            <div class="side-head">
+              <svg class="icn" aria-hidden="true"><use href="#i-bolt"/></svg>
+              <h4>The case against</h4>
+            </div>
+            <div class="ev">
+              <div class="ev-row">
+                <span class="ev-when">2024</span>
+                <p>A study measuring clearance directly reports it <em>lower</em> during sleep and
+                  anaesthesia, not higher — the opposite of the headline everyone repeats.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">Rebuttal</span>
+                <p>The group behind the original finding disputes the method in strong terms. A 2025
+                  human study using an implanted sensor comes down on the original side.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">Open</span>
+                <p>Tracers, species, and what should even count as clearance are all still being
+                  argued about. The mechanism is strong in animals and thinner in humans.</p>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div class="verdict">
+          <p class="lbl">Where that leaves it</p>
+          <p>Likely but unsettled — and a single bad night almost certainly does not matter the way the
+            popular version implies. Sleep has enough well-evidenced jobs that it does not need this
+            one to carry the argument.</p>
         </div>
 
         <div class="grid g3">
@@ -2398,24 +2469,53 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
             physiology and drop the metaphysics.</p>
         </div>
 
-        <div class="cols two">
-          <div class="prose">
-            <p>What holds up. The parasympathetic shift is real and measurable — heart-rate variability
-              rises, cortisol falls, perceived stress drops, and attention is sharper afterwards, which
-              makes it genuinely useful before hard cognitive work or after a broken night.</p>
-            <p>A 2023 Stanford trial found five minutes a day of exhale-extended breathing beat both
-              box breathing and mindfulness for mood and for slowing respiration. That is the cheapest
-              intervention on this page and the best evidenced of the rest-side ones.</p>
+        <div class="sides">
+          <div class="side" style="--side-ink:var(--green);--side-ink-t:var(--green-t)">
+            <div class="side-head">
+              <svg class="icn" aria-hidden="true"><use href="#i-wave"/></svg>
+              <h4>What holds up</h4>
+            </div>
+            <div class="ev">
+              <div class="ev-row">
+                <span class="ev-when">Measured</span>
+                <p>The parasympathetic shift is real: heart-rate variability rises, cortisol falls,
+                  perceived stress drops.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">Measured</span>
+                <p>Attention is sharper afterwards — genuinely useful before hard cognitive work, or
+                  after a broken night.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">RCT · 2023</span>
+                <p>Five minutes a day of exhale-extended breathing beat both box breathing and
+                  mindfulness for mood and for slowing respiration. The cheapest item on this page.</p>
+              </div>
+            </div>
           </div>
-          <div class="prose">
-            <p>What does not. The widely repeated <em>65% dopamine increase</em> comes from a 2002 PET
-              study of eight experienced practitioners, and the figure is inferred from an eight per
-              cent change in receptor binding rather than measured directly. The direction is probably
-              real; the number is not a promise, least of all for a beginner.</p>
-            <p>A 2026 meta-analysis pooled 73 studies and found moderate-to-large effects on stress and
-              anxiety — while expressly warning that low study quality likely inflates them. Note also
-              that the evidence is for structured yoga nidra rather than for any particular branded
-              audio track.</p>
+          <div class="side" style="--side-ink:var(--pink);--side-ink-t:var(--pink-t)">
+            <div class="side-head">
+              <svg class="icn" aria-hidden="true"><use href="#i-bolt"/></svg>
+              <h4>What does not</h4>
+            </div>
+            <div class="ev">
+              <div class="ev-row">
+                <span class="ev-when">n&nbsp;=&nbsp;8</span>
+                <p>The widely repeated <em>65% dopamine increase</em> comes from a 2002 PET study of
+                  eight experienced practitioners — and is inferred from an eight per cent change in
+                  receptor binding rather than measured directly.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">Caveated</span>
+                <p>A 2026 meta-analysis pooled 73 studies and found moderate-to-large effects on stress
+                  and anxiety, while expressly warning that low study quality likely inflates them.</p>
+              </div>
+              <div class="ev-row">
+                <span class="ev-when">Note</span>
+                <p>The evidence is for structured yoga nidra, not for any particular branded audio
+                  track — and none of it replaces sleep.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2552,13 +2652,48 @@ text[fill="var(--ground)"],text[fill="var(--on-ink)"]{stroke:none}
             <p class="tagm">Where rest lives</p>
           </div>
         </div>
-        <div class="prose" style="margin-top:clamp(18px,2.4vw,26px)">
-          <p>The lever is the exhale, not the inhale. Breathing in briefly speeds the heart; breathing
-            out slows it. Make the out-breath longer than the in-breath — four in, six out, or the
-            double-inhale-then-long-sigh pattern the Stanford trial tested — and you are pulling the
-            parasympathetic side up directly. No belief is required and nothing has to be visualised.</p>
-          <p>This is the same reason paradoxical intention works on insomnia, and the same reason the
-            deliberate-rest protocol works in the afternoon. One mechanism, three applications.</p>
+        <div class="fig" style="margin-bottom:0">
+          <div class="fig-bar">
+            <p class="lbl k">Figure · which half of the breath does the work</p>
+            <p class="lbl">Four in, six out</p>
+          </div>
+          <div class="fig-stage">
+            <svg class="chart" viewBox="0 0 1000 240" role="img" aria-label="Breathing in briefly speeds the heart; breathing out slows it. With the out-breath longer than the in-breath, the heart rate trends downward over successive cycles.">
+              <g class="gridline"><line x1="60" y1="150" x2="960" y2="150"/></g>
+              <line class="axis" x1="60" y1="196" x2="960" y2="196"/>
+
+              <!-- breath bars: 4 in / 6 out, three cycles -->
+              <g>
+                <rect class="fill" x="60" y="40" width="144" height="34" fill="var(--pink)"/>
+                <rect class="fill" x="204" y="40" width="216" height="34" fill="var(--green)"/>
+                <rect class="fill" x="420" y="40" width="144" height="34" fill="var(--pink)"/>
+                <rect class="fill" x="564" y="40" width="216" height="34" fill="var(--green)"/>
+                <rect class="fill" x="780" y="40" width="144" height="34" fill="var(--pink)"/>
+              </g>
+              <g class="an-k">
+                <text class="on-fill" x="132" y="63" text-anchor="middle" fill="var(--ground)">In &middot; 4</text>
+                <text class="on-fill" x="312" y="63" text-anchor="middle" fill="var(--ground)">Out &middot; 6</text>
+                <text class="on-fill" x="492" y="63" text-anchor="middle" fill="var(--ground)">In &middot; 4</text>
+                <text class="on-fill" x="672" y="63" text-anchor="middle" fill="var(--ground)">Out &middot; 6</text>
+                <text class="on-fill" x="852" y="63" text-anchor="middle" fill="var(--ground)">In &middot; 4</text>
+              </g>
+
+              <!-- heart rate: up a little on the inhale, further down on the exhale -->
+              <path class="ln" stroke="var(--blue)" fill="none"
+                d="M60 120 L204 100 L420 138 L564 118 L780 154 L924 136 L960 140"/>
+              <text class="an-t" x="60" y="176">heart rate &mdash; it rises on the in-breath and falls further on the out</text>
+              <text class="an-k" x="960" y="120" text-anchor="end" fill="var(--blue)">net: downward</text>
+
+              <g class="ax-t">
+                <text x="60" y="220">0 s</text>
+                <text x="960" y="220" text-anchor="end">&asymp;25 s</text>
+              </g>
+            </svg>
+          </div>
+          <p class="fig-cap">Breathing in briefly speeds the heart; breathing out slows it. Make the
+            out-breath the longer half and the trend goes one way. <b>No belief is required and nothing
+            has to be visualised</b> &mdash; it is the same lever behind paradoxical intention at 2am
+            and the deliberate-rest protocol at 2pm.</p>
         </div>
       </div>
     </details>
