@@ -212,7 +212,14 @@
   .bento-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 256px;
+    /* minmax, not a flat 256px: the row is the right *floor*, but between the
+       1024px breakpoint and about 1200px the columns are narrow enough that a
+       card's header + title + description + footer stack runs past it, and
+       `overflow: hidden` on the card chopped the footer clean off (the Coding
+       Agents Guide and App Founder Playbook cards lost their pills and arrow
+       entirely at 1040px). Letting a row grow costs ~20px on the two rows that
+       need it and nothing at all from 1200px up, where every row is still 256. */
+    grid-auto-rows: minmax(256px, auto);
     gap: 20px;
     /* Backfill holes left when a 2-wide card can't fit the remaining
        columns of a row. Card areas total 84 cells over 4 columns, so
@@ -722,7 +729,7 @@
   @media (max-width: 1024px) {
     .bento-grid {
       grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 256px;
+      grid-auto-rows: minmax(256px, auto);
     }
     .bento-card.span-2-2 {
       grid-column: span 2;
