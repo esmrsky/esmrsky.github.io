@@ -368,11 +368,19 @@
     min-width: 0;
   }
 
+  /* line-height 13px, not the inherited 1.5 (14.25px): JetBrains Mono's descent
+     is far deeper than these labels use, so with the inherited leading the
+     cap-to-baseline band landed 0.59px ABOVE the box centre and the text read
+     high. Pinning the line box to the font's own content height and padding it
+     symmetrically brings the band to within 0.03px of centre. Measured by
+     probing the real baseline with a zero-height inline-block and comparing it
+     to the cap height from canvas measureText. */
   .pill {
     font-family: var(--font-mono);
     font-size: 9.5px;
     letter-spacing: 0.04em;
-    padding: 3px 8px;
+    line-height: 13px;
+    padding: 4px 8px;
     border-radius: 100px;
     white-space: nowrap;
     color: var(--fg-dim);
