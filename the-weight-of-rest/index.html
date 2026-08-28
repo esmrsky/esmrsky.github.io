@@ -144,6 +144,19 @@
   .scrolldown .chev{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;animation:bob 2.2s ease-in-out infinite;}
   .scrolldown svg{stroke:var(--aurora);}
 
+  /* The nav links only exist from 721px up, which on a tablet is exactly where
+     the pointer is coarse — and 20px of uppercase text is well under the 44px
+     touch floor. Grow the hit area there and take the height back out of the
+     bar's own padding so the bar stays 52px tall; the mouse layout is untouched.
+     Must stay after the rules above: a media query adds no specificity, so
+     source order is what makes it win. */
+  @media (pointer: coarse) {
+    nav { padding-block: 4px; }
+    nav .links { gap: 20px; }
+    nav .links a { display: inline-flex; align-items: center; min-height: 44px; }
+    .scrolldown { min-height: 44px; }
+  }
+
   /* three-word overline */
   .triad{display:flex;gap:0;flex-wrap:wrap;font-family:var(--sans);font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;color:var(--haze-dim);margin-top:6px;}
   .triad span{padding-right:1.1em;margin-right:1.1em;border-right:1px solid var(--line);}
