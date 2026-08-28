@@ -1547,14 +1547,18 @@ cite .ref-link { color: inherit; }
 .mt-3 { margin-top: 3rem; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 900px) {
-  .nav-links a { padding: 0.62rem 0.4rem; }
-}
-@media (max-width: 760px) {
-  .section { padding: 4rem 1.25rem; }
-  .nav-inner { flex-wrap: wrap; row-gap: 0.1rem; padding: 0.55rem 1.1rem; }
-  .nav-tools { margin-left: auto; order: 2; }
+
+/* The brand, nine links and three tools need 1090px to sit on one line. Below
+   that the links have nowhere to go and every multi-word label broke across two
+   lines mid-phrase — "The / Word", "Jesus / on Faith" — which is what a tablet
+   in portrait got. This treatment (links on their own full-width row, scrolled
+   horizontally, each label kept whole) used to start at 760px, so the whole
+   761-1100 band was left with the wrapped version. Measure before moving it:
+   the number is the nav's own content width, not a device size. */
+@media (max-width: 1100px) {
+  .nav-inner { flex-wrap: wrap; row-gap: 0.1rem; }
   .nav-brand { order: 1; }
+  .nav-tools { margin-left: auto; order: 2; }
   .nav-links {
     order: 3;
     margin-left: 0;
@@ -1567,6 +1571,13 @@ cite .ref-link { color: inherit; }
   }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a { white-space: nowrap; }
+}
+@media (max-width: 900px) {
+  .nav-links a { padding: 0.62rem 0.4rem; }
+}
+@media (max-width: 760px) {
+  .section { padding: 4rem 1.25rem; }
+  .nav-inner { padding: 0.55rem 1.1rem; }
   .hero-rings svg { width: 210vw; }
   .ribbon { margin-left: -1.25rem; margin-right: -1.25rem; }
   .verse-context-dialog { width: calc(100% - 20px); }
