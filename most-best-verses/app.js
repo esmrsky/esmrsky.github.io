@@ -252,7 +252,7 @@
     window.addEventListener('resize', () => {
       if (!state.isStoriesMode) return;
       syncFurnitureHeight();
-      placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
+      replaceReading();
     });
 
     /* Nineteen faces, asked for once the page is up. Until one has answered, `drawItem` will
@@ -267,7 +267,7 @@
        on the first verses of a session. Both events put it back. Cheap now — there is nothing
        to re-fit, only a scroll offset to recompute. */
     const replace = () => {
-      if (state.isStoriesMode) placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
+      replaceReading();
     };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(replace);
     if (document.fonts && document.fonts.addEventListener) {
@@ -764,7 +764,7 @@
     /* The well had no height while the study was up, so any scroll position taken while it was
        open was measured against a box of nothing. Put the reading line back now that there is
        something to measure. */
-    placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
+    replaceReading();
     if (window.location.hash.startsWith('#verse=')) history.replaceState(null, null, ' ');
   }
 
@@ -1092,6 +1092,9 @@
 
     syncFurnitureHeight();
     renderNextStorySlide(targetVerse);
+    /* The bar is measured again once the icons have been drawn into it — before that it is a
+       row of empty buttons and several pixels shorter than it ends up. */
+    window.setTimeout(() => { syncFurnitureHeight(); replaceReading(); }, 0);
 
     // Auto dismiss tap toast after 3 seconds
     setTimeout(() => {
@@ -1250,7 +1253,17 @@
        a full stop whenever one is close enough to it, and a passage never asks for more than
        five taps however long it runs. Under twenty words there are no steps at all: a short
        verse is already one breath, which is exactly why the short ones read cleanly. */
-    const CHUNK_MAX_WORDS = 6;
+    /* ---------- a break only ever falls on punctuation ----------
+       This used to close a clause at punctuation OR at six words, whichever came first, so any
+       unpunctuated stretch was cut wherever the sixth word happened to fall — in the middle of
+       a phrase, and often in the middle of a thought. Scripture is already written in clauses;
+       the commas and the colons are where the sense turns, and they are the only places a part
+       is allowed to end.
+
+       The cap that is left is a safety net, not a rule. Twenty-eight words without a mark of
+       any kind does not occur in the ninety-four, and if it ever did the alternative would be
+       a single tap carrying half a psalm. */
+    const CLAUSE_HARD_CAP = 28;
     const STEP_WHOLE_UNDER = 26;   /* shorter than this and the verse arrives entire */
     const STEP_TARGET_WORDS = 15;
     const STEP_MAX = 5;
@@ -1280,7 +1293,7 @@
       open.cells.push(c);
       open.words += c.n;
       const punct = closesClause(c.raw);
-      if (punct || open.words >= CHUNK_MAX_WORDS) {
+      if (punct || open.words >= CLAUSE_HARD_CAP) {
         open.stop = punct && endsSentence(c.raw);
         open = null;
       }
@@ -1685,12 +1698,27 @@
     };
   }
 
+  /* ---------- how much of the screen the furniture actually owns ----------
+     This used to add the reference's height to the bar's height and then add forty pixels for
+     the gaps between them. Measured, that came to 117px when the reference's own top edge was
+     232px off the bottom of the screen — it was not counting the frame's padding, the bar's
+     margin, its top padding, its rule, or the safe area. Everything downstream believed it: the
+     mask began fading the passage 115px too late and the rule that keeps arriving words clear
+     of the foot let them run underneath the reference and halfway into the bar. Which is
+     exactly what it looked like.
+
+     So measure the gap rather than build it out of parts: from the top of the topmost piece of
+     furniture to the bottom of the overlay, plus a little air. One number, and it cannot drift
+     out of step with the sheet. */
   function syncFurnitureHeight() {
-    if (!elements.storyOverlay) return;
-    const ref = document.querySelector('.story-ref-row'), bar = document.querySelector('.story-bottom-bar');
-    const h = (ref ? ref.getBoundingClientRect().height : 0) +
-              (bar ? bar.getBoundingClientRect().height : 0) + 40;
-    elements.storyOverlay.style.setProperty('--furniture-h', Math.round(h) + 'px');
+    const o = elements.storyOverlay;
+    if (!o) return;
+    const anchor = document.querySelector('.story-ref-row') ||
+                   document.querySelector('.story-bottom-bar');
+    if (!anchor) return;
+    const gap = o.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top;
+    if (gap <= 0) return;              /* laid out at zero — measure again later */
+    o.style.setProperty('--furniture-h', Math.round(gap + 8) + 'px');
   }
 
   /* The scroller is the full height of the screen so the cube's two faces stay the same box,
@@ -1705,8 +1733,12 @@
   /* ---------- one part of the passage ----------
      Appended, not revealed: the column genuinely grows, which is what lets it be scrolled. The
      span goes in already transparent, one forced reflow settles that as its starting value, and
-     taking the class off runs the transition. No rAF, so it cannot be left half-done by a
-     frame that never came. */
+     taking the class off runs the transition. No rAF, so it cannot be left half-done by a frame
+     that never came.
+
+     The arriving part takes the underline from the one before it. That rule is the reason the
+     page can hold still: the reader is led to the new words by a mark rather than by having
+     everything they have already read moved out from under them. */
   function addStep(animate) {
     const col = elements.verseColumn;
     if (!col || stage.shown >= stage.steps.length) return false;
@@ -1718,31 +1750,155 @@
     col.appendChild(span);
     stage.shown++;
     if (animate) { void span.offsetWidth; span.classList.remove('is-fresh'); }
+    markCurrent();
     syncTicks();
     return true;
   }
 
-  /* Rects rather than `offsetTop`: the parts are INLINE, so the thing to line up is the first
-     line box of the new run, and only `getClientRects()` knows where that is. */
-  function placeReading(mode, smooth) {
-    const box = elements.verseScroll, col = elements.verseColumn;
-    if (!box || !col) return;
-    const behave = (smooth && !reducedMotion()) ? 'smooth' : 'auto';
-    const boxTop = box.getBoundingClientRect().top;
-    const well = wellHeight(box);
-    let delta;
-    if (mode === 'centre') {
-      const r = col.getBoundingClientRect();
-      delta = (r.top + r.height / 2) - (boxTop + well / 2);
-    } else if (mode === 'start') {
-      delta = col.getBoundingClientRect().top - (boxTop + well * 0.22);
-    } else {
-      const last = col.querySelector('.vs:last-of-type');
-      const r = last ? (last.getClientRects()[0] || last.getBoundingClientRect())
-                     : col.getBoundingClientRect();
-      delta = r.top - (boxTop + well * READING_LINE);
+  /* Going back inside a passage takes the last part off the end, the same way it arrived. The
+     node is marked doomed the moment it starts leaving, so a second tap during the fade reaches
+     the part BEFORE it rather than the one already on its way out. */
+  function removeStep() {
+    const col = elements.verseColumn;
+    if (!col || stage.shown <= 1) return false;
+    const live = col.querySelectorAll('.vs:not([data-doomed])');
+    const last = live[live.length - 1];
+    if (!last) return false;
+    stage.shown--;
+    last.dataset.doomed = '1';
+    last.classList.add('is-fading');
+    markCurrent();
+    syncTicks();
+    const drop = () => {
+      const space = last.previousSibling;
+      last.remove();
+      if (space && space.nodeType === 3) space.remove();
+      ensureVisible(true);
+    };
+    if (reducedMotion()) drop(); else window.setTimeout(drop, 300);
+    return true;
+  }
+
+  /* Exactly one part carries the rule, and only when there is more than one part to tell apart.
+     A verse that arrives entire is a single statement and underlining the whole of it says
+     nothing. */
+  function markCurrent() {
+    const col = elements.verseColumn;
+    if (!col) return;
+    const live = col.querySelectorAll('.vs:not([data-doomed])');
+    live.forEach(el => el.classList.remove('is-current'));
+    if (stage.steps.length > 1 && live.length) {
+      live[live.length - 1].classList.add('is-current');
     }
-    box.scrollTo({ top: Math.max(0, box.scrollTop + delta), behavior: behave });
+  }
+
+  /* ---------- where the passage sits ----------
+     `open`   a verse arriving. One part alone is centred; a passage that will grow starts high
+              enough that most of them never need to scroll at all.
+     `whole`  a verse coming back from the history, complete, positioned at its beginning.
+     `ensure` the rule for every tap after the first, and it is a rule about NOT moving: the
+              page holds still unless the arriving words would land in the fade at the foot of
+              the screen, and then it moves by the smallest amount that clears them.
+
+     Rects rather than `offsetTop` throughout: the parts are inline, and only `getClientRects`
+     knows where a run of inline text actually begins. */
+  /* Where a growing passage opens, as a fraction of the well — and it depends on how much
+     growing it has to do. A two-part verse can afford to start near the middle; a five-part one
+     has most of a screen still to come and starting there would force a scroll on every tap.
+     Set from the part count, the longest passages need about ten pixels of movement in total
+     rather than two hundred, and the short ones still open where a verse ought to. */
+  const OPEN_TOP = { 2: 0.28, 3: 0.23, 4: 0.18, 5: 0.13 };
+  const WHOLE_TOP = 0.14;
+
+  function wellMetrics() {
+    const box = elements.verseScroll;
+    if (!box) return null;
+    const rect = box.getBoundingClientRect();
+    const furniture = parseFloat(
+      getComputedStyle(elements.storyOverlay).getPropertyValue('--furniture-h')) || 112;
+    const well = Math.max(160, box.clientHeight - furniture);
+    return {
+      box: box, top: rect.top, well: well,
+      /* Where the fade begins eating the words. This number and the `- 2.6rem` stop in the
+         mask are the same number and have to stay that way: this is the rule that keeps
+         arriving words out of the fade, and the fade is what stops them reaching the bar. */
+      bottomSafe: rect.top + box.clientHeight - furniture - 42,
+      topSafe: rect.top + 60
+    };
+  }
+
+  function placeReading(mode, smooth) {
+    const m = wellMetrics(), col = elements.verseColumn;
+    if (!m || !col) return;
+    const behave = (smooth && !reducedMotion()) ? 'smooth' : 'auto';
+    let delta = 0;
+
+    /* The column carries the scroll reach as padding, so its own rect is a third of a screen
+       taller than the words in it. What every placement below is talking about is the TEXT, so
+       that is measured from the parts themselves. */
+    const live = col.querySelectorAll('.vs:not([data-doomed])');
+    const textTop = live.length ? live[0].getBoundingClientRect().top
+                                : col.getBoundingClientRect().top;
+    const textBottom = live.length ? live[live.length - 1].getBoundingClientRect().bottom
+                                   : col.getBoundingClientRect().bottom;
+
+    if (mode === 'ensure') {
+      const last = live[live.length - 1];
+      if (!last) return;
+      const r = last.getBoundingClientRect();
+      if (r.bottom > m.bottomSafe) {
+        /* Enough to clear the fade — but never so much that the arriving words' own first line
+           is pushed up into the fade at the top instead. */
+        delta = Math.max(0, Math.min(r.bottom - m.bottomSafe, r.top - m.topSafe));
+      } else if (r.top < m.topSafe) {
+        delta = r.top - m.topSafe;
+      }
+      if (Math.abs(delta) < 2) return;
+    } else if (mode === 'centre') {
+      delta = (textTop + (textBottom - textTop) / 2) - (m.top + m.well / 2);
+    } else if (mode === 'whole') {
+      delta = textTop - (m.top + m.well * WHOLE_TOP);
+    } else {
+      delta = textTop - (m.top + m.well * OPEN_TOP);
+    }
+    m.box.scrollTo({ top: Math.max(0, m.box.scrollTop + delta), behavior: behave });
+  }
+
+  function ensureVisible(smooth) { placeReading('ensure', smooth); }
+
+  /* ---------- opening a passage ----------
+     Where the first words sit is set as the column's own top padding rather than scrolled to.
+     Scrolling to it cannot work: a passage plus its padding is shorter than the screen, so the
+     scroller has no range at all until enough parts have been added, and the opening scroll
+     silently did nothing — measured, the first part opened 178px below where it was asked to,
+     and then every tap scrolled to make up the difference, which is precisely the movement all
+     of this is here to stop. As padding it is simply where the passage begins. */
+  function openAt(mode) {
+    const m = wellMetrics(), col = elements.verseColumn;
+    if (!m || !col) return;
+    const live = col.querySelectorAll('.vs:not([data-doomed])');
+    if (!live.length) return;
+    const h = live[live.length - 1].getBoundingClientRect().bottom -
+              live[0].getBoundingClientRect().top;
+    let top;
+    if (mode === 'centre') top = Math.max(m.well * 0.12, m.well / 2 - h / 2);
+    else if (mode === 'whole') top = m.well * WHOLE_TOP;
+    else top = m.well * (OPEN_TOP[Math.min(5, Math.max(2, stage.steps.length))] || 0.23);
+    col.style.paddingTop = Math.round(top) + 'px';
+    m.box.scrollTop = 0;
+  }
+
+  /* What a resize, a font landing, or the study closing should restore: not a fixed line — there
+     is no fixed line any more — but the same "is it still readable" rule every tap uses. */
+  /* What a resize, a face landing late, or the study closing has to restore. Before anything
+     has been uncovered that is the opening position, which depends on a well whose height may
+     just have changed; after that it is the same "are the newest words still clear of the
+     fade" rule every tap uses, and nothing else moves. */
+  function replaceReading() {
+    if (!state.isStoriesMode) return;
+    syncFurnitureHeight();
+    if (stage.shown <= 1) openAt(stage.steps.length > 1 ? 'open' : 'centre');
+    else ensureVisible(false);
   }
 
   /* One tick per part, filled as far as the reader has come. With the ghosted preview gone this
@@ -1807,13 +1963,16 @@
     syncFurniture(item);
     if (opts.whole) {
       while (addStep(false)) {}
-      placeReading('start', false);
+      markCurrent();
+      openAt('whole');
     } else {
       addStep(opts.animate !== false);
-      /* A verse that arrives entire is centred, because nothing will ever be added to it and
-         there is no reading line to keep faith with. One that comes in parts opens on the line
-         its later parts will land on. */
-      placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
+      /* A verse that arrives entire is centred; nothing will ever be added to it. One that comes
+         in parts opens HIGH — a quarter of the way down rather than halfway — because everything
+         after it is going to be added underneath, and the whole point is that the page should
+         not have to move to make room. At this height a five-part passage fits without
+         scrolling once. */
+      openAt(stage.steps.length > 1 ? 'open' : 'centre');
     }
     state.storyHasRendered = true;
   }
@@ -1823,9 +1982,14 @@
   function readOn() {
     if (stage.shown >= stage.steps.length) return false;
     addStep(true);
-    placeReading('reading', true);
+    ensureVisible(true);
     return true;
   }
+
+  /* Back inside the passage before back through the passages. Going back used to leave a verse
+     the reader was halfway through, which is the wrong answer to "undo that tap" — the tap they
+     want back is the one that uncovered the last part, not the one that brought them here. */
+  function readBack() { return removeStep(); }
 
   function nextVerse() {
     const cur = stage.item;
@@ -1855,7 +2019,8 @@
     syncFurniture(item);
     const want = Math.max(1, Math.min(stage.steps.length, was));
     while (stage.shown < want) addStep(false);
-    placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
+    openAt(stage.steps.length > 1 ? 'open' : 'centre');
+    if (stage.shown > 1) ensureVisible(false);
   }
 
   /* The hint goes on the reader's first tap, whether that tap turned the page or only read on
@@ -2194,7 +2359,7 @@
         if (cube.open) return;      /* in the chapter a tap is a scroll or a link, not a turn */
         const w = elements.storyOverlay.clientWidth || window.innerWidth;
         dismissTapToast();
-        if (e.clientX < w * TAP_BACK_FRACTION) prevVerse();
+        if (e.clientX < w * TAP_BACK_FRACTION) { if (!readBack()) prevVerse(); }
         else if (!readOn()) nextVerse();
       });
     }
@@ -2473,7 +2638,7 @@
           if (!readOn()) nextVerse();
         } else if (e.key === 'ArrowLeft') {
           e.preventDefault();
-          renderPreviousStorySlide();
+          if (!readBack()) renderPreviousStorySlide();
         }
         return;
       }

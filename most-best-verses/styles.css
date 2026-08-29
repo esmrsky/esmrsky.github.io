@@ -2547,13 +2547,12 @@ button {
    gradient. Every form now paints in --story-hl, which the slide sets from the verse's own
    theme colour, so a slide is its text colour and one highlight and nothing else. The forms
    differ in *shape* — italic, caps, underline, scale, mono — not in hue. */
+/* No underline of its own any more. Every arriving part now carries one as a tracking rule,
+   and a second heavier line under two words inside it read as a mistake rather than as
+   emphasis. Colour and weight do the work. */
 .fx-accent {
   color: var(--story-hl);
   font-weight: 900;
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--story-hl) 52%, transparent);
-  text-decoration-thickness: 3px;
-  text-underline-offset: 4px;
 }
 
 /* The gradient is itself the highlight — two tones of the same family, not a rainbow — and a
@@ -4088,27 +4087,13 @@ input:focus-visible,
 .verse-scroll {
   flex: 1;
   min-width: 0;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
-  /* ---------- reach ----------
-     Not air: this is what lets ANY part of the passage be scrolled to the reading line,
-     including the first, which has nothing above it, and the last, which has nothing below.
-
-     The two numbers are derived, not chosen. To push the first part DOWN to the line the
-     padding above it must be at least the line's own offset, 0.38 of the well. To pull the
-     last part UP to the line the padding below it must be at least everything from the line to
-     the bottom of the scroller — and the shorter that final part is, the more of it is needed:
-     `clientHeight - line - partHeight`, which for a one-line part is about 0.69 of the box.
-     The old bottom value was 46vh plus the bar, ~0.56 of the box, and the arithmetic says that
-     is short by a hundred pixels — which is exactly what it did: the closing part of a passage
-     landed 20-30px low because the scroller had simply run out of room, and no amount of
-     asking for the right position could get it there.
-
-     They are in `dvh` because the scroller is the full height of the overlay, so these scale
-     with the box they have to cover — including in landscape, where a fixed `vh` would not. */
-  padding: calc(42dvh + env(safe-area-inset-top)) var(--gutter) 74dvh;
+  /* Gutters only. The vertical reach belongs to the COLUMN — see the note on it below. */
+  padding: 0 var(--gutter);
   box-sizing: border-box;
   /* The column runs past both ends of the well, so both ends need an edge. The top one says
      there is more above; the bottom one stops the passage from sliding under the controls,
@@ -4116,13 +4101,13 @@ input:focus-visible,
   -webkit-mask-image: linear-gradient(to bottom,
       transparent 0,
       #000 3.4rem,
-      #000 calc(100% - var(--furniture-h, 7rem)),
-      transparent calc(100% - var(--furniture-h, 7rem) + 2rem));
+      #000 calc(100% - var(--furniture-h, 7rem) - 2.6rem),
+      transparent calc(100% - var(--furniture-h, 7rem)));
   mask-image: linear-gradient(to bottom,
       transparent 0,
       #000 3.4rem,
-      #000 calc(100% - var(--furniture-h, 7rem)),
-      transparent calc(100% - var(--furniture-h, 7rem) + 2rem));
+      #000 calc(100% - var(--furniture-h, 7rem) - 2.6rem),
+      transparent calc(100% - var(--furniture-h, 7rem)));
   scrollbar-width: none;
 }
 
@@ -4146,6 +4131,33 @@ input:focus-visible,
   margin-inline: auto;
   min-width: 0;
   box-sizing: border-box;
+  /* ---------- reach, and why it is HERE and not on the scroller ----------
+     This is what lets the passage be scrolled: room above it to push the opening words down
+     the screen, and room below to bring the closing ones up clear of the controls.
+
+     It was on `.verse-scroll` and it could not stay there. A flex item will not shrink below
+     its own content-based minimum and, under `box-sizing: border-box`, that minimum includes
+     its padding — so a scroller carrying 116dvh of padding sized ITSELF to 116% of the screen
+     inside a face that is 100% of it. Measured: a 942px box in an 812px frame. `min-height: 0`
+     cannot fix it, because padding is not something a box can be compressed out of.
+
+     Nothing looked broken, because the face clips the overflow. What broke was every
+     measurement taken against that box: `100%` in the mask meant 942px, so the fade that ends
+     the passage above the controls began at y=806 — six pixels above the clip, which is no
+     fade at all — and the words ran on underneath the reference and halfway into the bar. That
+     was the "text overlaid by the bottom UI stuff". On the column, which is a plain block, the
+     same padding is simply scrollable room and the scroller stays the size of the screen.
+
+     The TOP is written by script, per passage, and is the opening position itself rather than
+     room to scroll into it — a passage plus two thirds of a screen of padding is shorter than
+     the screen, so there is nothing to scroll and the opening scroll silently did nothing. Set
+     as padding it needs no scroll at all, and the reader cannot scroll above the first word.
+     The value here is only what shows if the script never runs.
+
+     The BOTTOM is the distance from the fade to the foot of the box: the least room in which
+     the closing words can still be brought up clear of the controls. */
+  padding-block: 24dvh 24dvh;
+
   /* The fallback only. A `.story-style-*` class on this same element outranks it, and one is
      always put there — this is what shows if a face has not been chosen yet. */
   font-family: var(--app-font, var(--font-serif));
@@ -4296,19 +4308,48 @@ input:focus-visible,
 /* ---------- a part of the passage ----------
    The steps are inline, not blocks. A passage broken into stacked boxes stops reading as one
    sentence — the joins become gaps, and a verse is not a list. Inline, the new words simply
-   continue the paragraph and the paragraph grows, which is what "it moves up" actually is.
+   continue the paragraph and the paragraph grows.
 
-   Only opacity animates. An inline element cannot be translated without breaking its own line
-   box, and it does not need to be: the movement the reader sees is the column scrolling. */
+   ---------- the underline is the tracking, and it is why nothing has to move ----------
+   The column used to scroll every arriving part onto a fixed line, so the reader's eye could
+   stay put. Measured, that cost 150px of the whole block travelling in about 130ms while the
+   new words were still at 15-44% opacity — every tap moved everything already read, under a
+   half-drawn arrival, and that is the flicker. Nothing dimmed; the page simply lurched.
+
+   So the text stays where it is and the NEW PART is underlined instead. The eye is led by the
+   rule rather than by the position, the page holds still, and the only time anything scrolls
+   is when the arriving words would otherwise land in the fade at the foot of the screen —
+   and then by the smallest amount that clears it, not to a line.
+
+   The rule is declared on every part and painted only on the current one, because
+   `text-decoration-color` interpolates and `text-decoration-line` does not: a line that is
+   always there and only sometimes visible can fade from one part to the next, where a line
+   that is added and removed can only blink. */
 .vs {
   opacity: 1;
-  transition: opacity 380ms ease;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.26em;
+  text-decoration-skip-ink: auto;
+  transition: opacity 380ms ease, text-decoration-color 420ms ease;
 }
 
-.vs.is-fresh { opacity: 0; }
+.vs.is-current {
+  text-decoration-color: color-mix(in srgb, var(--story-hl) 60%, transparent);
+}
+
+/* Arriving, and leaving. Going back takes a part off the end, and it leaves the way it came:
+   the same fade, run backwards, so the two directions are one gesture rather than one
+   animation and one deletion. */
+.vs.is-fresh,
+.vs.is-fading { opacity: 0; }
+
+.vs.is-fading { text-decoration-color: transparent; }
 
 @media (prefers-reduced-motion: reduce) {
   .vs, .vs.is-fresh { opacity: 1; transition: none; }
+  .vs.is-fading { opacity: 0; }
 }
 
 /* ---------- the ticks ----------
