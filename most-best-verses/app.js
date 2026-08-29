@@ -747,7 +747,7 @@
     if (!elements.storyDeepPanel) return;
     elements.storyDeepPanel.hidden = false;
     elements.storyDeepPanel.scrollTop = 0;
-    if (elements.storyReel) elements.storyReel.hidden = true;
+    if (elements.verseScroll) elements.verseScroll.hidden = true;
     if (elements.storyOverlay) elements.storyOverlay.classList.add('is-deep');
     if (elements.storyContainer) elements.storyContainer.classList.add('is-deep');
     syncDeepTheme();
@@ -756,7 +756,7 @@
 
   function hideDeepPanel() {
     if (elements.storyDeepPanel) elements.storyDeepPanel.hidden = true;
-    if (elements.storyReel) elements.storyReel.hidden = false;
+    if (elements.verseScroll) elements.verseScroll.hidden = false;
     if (elements.storyOverlay) elements.storyOverlay.classList.remove('is-deep');
     if (elements.storyContainer) elements.storyContainer.classList.remove('is-deep');
     syncDeepTheme();
@@ -1355,7 +1355,6 @@
      which is the one that should. */
   const TAP_BACK_FRACTION = 1 / 3;   /* the left third goes back; the rest reads on */
   const DRAG_SLOP_PX = 6;            /* how far a finger travels before it stops being a tap */
-  const DRAG_COMMIT_VELOCITY = 0.45;
 
   /* ---------- the reading line ----------
      Where the first line of a newly arrived part comes to rest, as a fraction of the well. The
@@ -1439,6 +1438,21 @@
 
   /* Opens the chapter for whatever verse is on screen. The reference the dataset carries is
      already the human-readable form the shared parser accepts, so nothing is translated. */
+  /* Fetches the chapter for whatever verse is on screen, once per verse. The face is visible
+     for the whole of a turn, and it used to be loaded only when the turn COMMITTED — so a
+     reader dragging towards the chapter watched a stale header the entire way across, and then
+     saw it correct itself on arrival. Priming when the gesture declares itself horizontal means
+     the face is already the right chapter by the time it comes round. */
+  function primeReaderFace() {
+    const verse = state.storyCurrentVerse;
+    if (!verse) return;
+    if (cube.primed === verse.ref && cube.primedVer === (cube.ver || state.storyCurrentVer)) return;
+    cube.primed = verse.ref;
+    cube.primedVer = cube.ver || state.storyCurrentVer;
+    cube.radius = READER_RADIUS_START;
+    loadReaderFace();
+  }
+
   function openCube(animated) {
     if (cube.open || !elements.storyCube || !state.storyCurrentVerse) return;
     cube.open = true;
@@ -1447,7 +1461,7 @@
     if (elements.storyOverlay) elements.storyOverlay.classList.add('is-reader');
     if (elements.storyReader) elements.storyReader.removeAttribute('aria-hidden');
     setCubeAngle(-90, animated !== false);
-    loadReaderFace();
+    primeReaderFace();
   }
 
   function closeCube(animated) {
@@ -1581,7 +1595,7 @@
      is the entire state of the stage. There is no second slide, no forward stack of half-drawn
      items, no entrance to be mid-way through — which is most of what used to be able to go
      wrong here. */
-  const stage = { item: null, steps: [], shown: 0 };
+  const stage = { item: null, steps: [], shown: 0, whole: false };
 
   /* Verses already read, and verses walked back past. Both come back whole: the steps are a
      reading pace, not a lock, and re-earning a passage on the way back would be a tax. */
@@ -1682,10 +1696,21 @@
 
   /* One item is everything a passage is: which verse, in which translation, in which face.
      Drawn once and kept. */
+  /* The ground is drawn from the verse's category and theme colour, and with eight categories
+     across ninety-four verses a straight shuffle deals the same ground twice in a row often
+     enough to notice — the light stops being the thing that changes when the verse changes.
+     So the pool is not popped blindly: take the topmost verse whose ground differs from the one
+     on screen. It is still a shuffle, it just never repeats itself back to back. */
+  function groundKey(v) { return v ? v.category + '|' + v.themeColor : ''; }
+
   function drawItem(verse) {
     if (!verse) {
       if (!state.storyShufflePool.length) resetStoriesShufflePool();
-      verse = state.storyShufflePool.pop();
+      const pool = state.storyShufflePool;
+      const here = groundKey(state.storyCurrentVerse);
+      let i = pool.length - 1;
+      while (i >= 0 && groundKey(pool[i]) === here) i--;
+      verse = pool.splice(i >= 0 ? i : pool.length - 1, 1)[0];
     }
     /* Cold, this is a short list and the first few passages repeat a face. That is the right
        trade: a face the reader has already seen beats one that changes shape under them. */
@@ -1750,7 +1775,7 @@
     col.appendChild(span);
     stage.shown++;
     if (animate) { void span.offsetWidth; span.classList.remove('is-fresh'); }
-    markCurrent();
+    markProgress();
     syncTicks();
     return true;
   }
@@ -1767,7 +1792,7 @@
     stage.shown--;
     last.dataset.doomed = '1';
     last.classList.add('is-fading');
-    markCurrent();
+    markProgress();
     syncTicks();
     const drop = () => {
       const space = last.previousSibling;
@@ -1779,17 +1804,14 @@
     return true;
   }
 
-  /* Exactly one part carries the rule, and only when there is more than one part to tell apart.
-     A verse that arrives entire is a single statement and underlining the whole of it says
-     nothing. */
-  function markCurrent() {
+  /* Everything before the newest part is read, and reads dim. A verse that arrives entire has
+     nothing to dim — it is one statement, and the reader is looking at all of it. */
+  function markProgress() {
     const col = elements.verseColumn;
     if (!col) return;
     const live = col.querySelectorAll('.vs:not([data-doomed])');
-    live.forEach(el => el.classList.remove('is-current'));
-    if (stage.steps.length > 1 && live.length) {
-      live[live.length - 1].classList.add('is-current');
-    }
+    live.forEach((el, i) => el.classList.toggle('is-past', i < live.length - 1));
+    col.classList.toggle('is-whole', !!stage.whole);
   }
 
   /* ---------- where the passage sits ----------
@@ -1911,8 +1933,9 @@
     if (n <= 1) { el.textContent = ''; return; }
     if (el.childElementCount !== n) el.innerHTML = new Array(n).fill('<i></i>').join('');
     Array.from(el.children).forEach((t, i) => {
-      t.classList.toggle('is-read', i < stage.shown - 1);
-      t.classList.toggle('is-here', i === stage.shown - 1);
+      /* Lit end to end, the passage is not "at" any one part any more — it is all of it. */
+      t.classList.toggle('is-read', stage.whole || i < stage.shown - 1);
+      t.classList.toggle('is-here', !stage.whole && i === stage.shown - 1);
     });
   }
 
@@ -1943,7 +1966,8 @@
     }
     setGround(verse);
     if (isDeepOpen()) { renderStudyFor(verse, state.storyCurrentVer); syncDeepTheme(); }
-    if (cube.open) { cube.radius = READER_RADIUS_START; loadReaderFace(); }
+    cube.primed = null;
+    if (cube.open) { cube.radius = READER_RADIUS_START; primeReaderFace(); }
   }
 
   /* Draws a verse from nothing. `whole` is for a passage the reader has already been through —
@@ -1956,6 +1980,7 @@
     const text = verse.translations[item.ver] || verse.translations.NIV;
     stage.steps = splitPassage(text, verse, EFFECT_FORM[item.style] || 'fx-accent');
     stage.shown = 0;
+    stage.whole = !!opts.whole;
     col.textContent = '';
     /* The face rides on the column itself, so one class swap re-sets the passage and nothing
        else on the page has to know which typeface it is in. */
@@ -1963,10 +1988,18 @@
     syncFurniture(item);
     if (opts.whole) {
       while (addStep(false)) {}
-      markCurrent();
+      markProgress();
       openAt('whole');
     } else {
-      addStep(opts.animate !== false);
+      /* NOT faded in. Measured over a screencast, clearing the old passage and fading the new
+         one up from zero left the screen at 5% ink for about seventy milliseconds — three
+         frames with essentially nothing on them, which is the "it flashes like something is
+         loading". It reads worst when the ground is also changing, because then the blank
+         frame is the only thing on a moving field, which is exactly when it was reported.
+
+         A verse arrives at once. The fade belongs to the parts revealed WITHIN a passage,
+         where there is already text on the screen for the new words to arrive over. */
+      addStep(false);
       /* A verse that arrives entire is centred; nothing will ever be added to it. One that comes
          in parts opens HIGH — a quarter of the way down rather than halfway — because everything
          after it is going to be added underneath, and the whole point is that the page should
@@ -1979,17 +2012,36 @@
 
   /* The forward tap, in order: read on if there is more of this verse, and only turn to the
      next one when there is not. */
+  /* A forward tap does, in order: bring the next part, then light the whole verse, and only
+     then go looking for another one. The middle step is the passage's own ending — the reader
+     has been through it a statement at a time and now sees it entire. */
   function readOn() {
-    if (stage.shown >= stage.steps.length) return false;
-    addStep(true);
-    ensureVisible(true);
-    return true;
+    if (stage.shown < stage.steps.length) {
+      addStep(true);
+      ensureVisible(true);
+      return true;
+    }
+    if (stage.steps.length > 1 && !stage.whole) {
+      stage.whole = true;
+      markProgress();
+      syncTicks();
+      return true;
+    }
+    return false;
   }
 
-  /* Back inside the passage before back through the passages. Going back used to leave a verse
-     the reader was halfway through, which is the wrong answer to "undo that tap" — the tap they
-     want back is the one that uncovered the last part, not the one that brought them here. */
-  function readBack() { return removeStep(); }
+  /* And back is the same list read backwards. Going back used to leave a verse the reader was
+     halfway through, which is the wrong answer to "undo that tap" — the tap they want back is
+     the one that just changed something here. */
+  function readBack() {
+    if (stage.whole) {
+      stage.whole = false;
+      markProgress();
+      syncTicks();
+      return true;
+    }
+    return removeStep();
+  }
 
   function nextVerse() {
     const cur = stage.item;
@@ -2400,7 +2452,10 @@
              switch mid-drag would scroll the passage AND turn the box, which is two things
              nobody asked for. Vertical is handed straight back to the browser. */
           turn.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-          if (turn.axis === 'x') { try { gestureEl.setPointerCapture(turn.id); } catch (err) {} }
+          if (turn.axis === 'x') {
+            try { gestureEl.setPointerCapture(turn.id); } catch (err) {}
+            if (!cube.open) primeReaderFace();
+          }
         }
         if (turn.axis !== 'x') return;
 
@@ -2419,8 +2474,16 @@
         try { gestureEl.releasePointerCapture(turn.id); } catch (err) {}
         if (turn.axis === 'x') {
           const W = gestureEl.clientWidth || window.innerWidth;
-          const past = Math.abs(turn.dx) > W * 0.28;
-          const flick = Math.abs(turn.vx) > DRAG_COMMIT_VELOCITY;
+          /* ---------- a flick has to be a flick, not a twitch ----------
+             This used to commit on velocity ALONE, at 0.45px/ms — a threshold any deliberate
+             swipe crosses within two frames of leaving the slop. So the turn was decided before
+             the reader had moved a centimetre: they started a gesture and the box had already
+             flipped, which is the opposite of a gesture you are driving. A flick now has to
+             have gone somewhere as well as gone fast, and the distance alone has to be past a
+             third of the screen rather than a quarter. Short of both it springs back, which is
+             the answer to "I was only looking". */
+          const past = Math.abs(turn.dx) > W * 0.36;
+          const flick = Math.abs(turn.vx) > 0.6 && Math.abs(turn.dx) > W * 0.14;
           const towardReader = turn.dx < 0;
           if ((past || flick) && towardReader !== cube.open) {
             if (cube.open) closeCube(true); else openCube(true);

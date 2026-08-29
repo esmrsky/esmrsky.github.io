@@ -2498,16 +2498,17 @@ button {
 
 /* Fullscreen Story Container */
 .story-container {
-  /* replaced per slide from the verse's theme colour; these are the fallback */
+  /* replaced per verse from its theme colour; these are the fallback */
   --story-hl: #b45309;
   --story-hl-2: #9a3412;
-  position: relative;
+  /* Absolute inside the verse face, over the column. It was a flex child of the overlay,
+     outside the cube — which is why it did not turn. */
+  position: absolute;
+  inset: 0;
   z-index: 10;
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  height: 100%;
-  height: 100dvh;
   background: transparent;
   display: flex;
   flex-direction: column;
@@ -4077,7 +4078,8 @@ input:focus-visible,
   cursor: pointer;
 }
 
-.verse-face[hidden] { display: none; }
+.verse-face[hidden],
+.verse-scroll[hidden] { display: none; }
 
 /* ---------- the well ----------
    `padding-block: 46vh` is not air, it is REACH: it is what lets any part of the passage be
@@ -4310,45 +4312,42 @@ input:focus-visible,
    sentence — the joins become gaps, and a verse is not a list. Inline, the new words simply
    continue the paragraph and the paragraph grows.
 
-   ---------- the underline is the tracking, and it is why nothing has to move ----------
-   The column used to scroll every arriving part onto a fixed line, so the reader's eye could
+   ---------- what has been read dims, and the whole thing lights at the end ----------
+   The column used to scroll every arriving part onto a fixed line so the reader's eye could
    stay put. Measured, that cost 150px of the whole block travelling in about 130ms while the
-   new words were still at 15-44% opacity — every tap moved everything already read, under a
-   half-drawn arrival, and that is the flicker. Nothing dimmed; the page simply lurched.
+   new words were still half drawn — every tap moved everything already read, and that is what
+   read as a flicker. Then it was an underline, which held the page still but put a rule under
+   every line of the newest part.
 
-   So the text stays where it is and the NEW PART is underlined instead. The eye is led by the
-   rule rather than by the position, the page holds still, and the only time anything scrolls
-   is when the arriving words would otherwise land in the fade at the foot of the screen —
-   and then by the smallest amount that clears it, not to a line.
+   It is light now. What has arrived is lit; what has already been read falls back to two fifths
+   and stays legible as context. The reader is led by the one bright thing on the screen, the
+   page never moves, and there is nothing drawn over the words.
 
-   The rule is declared on every part and painted only on the current one, because
-   `text-decoration-color` interpolates and `text-decoration-line` does not: a line that is
-   always there and only sometimes visible can fade from one part to the next, where a line
-   that is added and removed can only blink. */
+   And the passage ends on a beat: once the last part is out, one more tap takes the dimming off
+   everything and the verse stands whole, lit end to end, before the next one comes. That is the
+   only moment the reader sees the thing entire. */
 .vs {
   opacity: 1;
-  text-decoration-line: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.26em;
-  text-decoration-skip-ink: auto;
-  transition: opacity 380ms ease, text-decoration-color 420ms ease;
+  transition: opacity 420ms ease;
 }
 
-.vs.is-current {
-  text-decoration-color: color-mix(in srgb, var(--story-hl) 60%, transparent);
-}
+/* Read, but not gone. */
+.vs.is-past { opacity: 0.4; }
 
-/* Arriving, and leaving. Going back takes a part off the end, and it leaves the way it came:
+/* The last tap of a passage. One class on the COLUMN rather than a class removed from every
+   part, so the whole verse comes up together on one transition instead of a dozen. */
+.story-passage-text.is-whole .vs.is-past { opacity: 1; }
+
+/* Arriving, and leaving. Going back takes a part off the end and it leaves the way it came:
    the same fade, run backwards, so the two directions are one gesture rather than one
    animation and one deletion. */
 .vs.is-fresh,
 .vs.is-fading { opacity: 0; }
 
-.vs.is-fading { text-decoration-color: transparent; }
-
 @media (prefers-reduced-motion: reduce) {
   .vs, .vs.is-fresh { opacity: 1; transition: none; }
+  .vs.is-past { opacity: 0.4; }
+  .story-passage-text.is-whole .vs.is-past { opacity: 1; }
   .vs.is-fading { opacity: 0; }
 }
 
@@ -4397,7 +4396,7 @@ input:focus-visible,
 
 /* The study is a full-screen surface, and while it is up the passage behind it neither scrolls
    nor answers anything. */
-.story-overlay.is-deep .verse-face { pointer-events: none; }
+.story-overlay.is-deep .verse-scroll { pointer-events: none; }
 
 /* ==========================================================================
    THE FRAME IS NOT THE CARD ANY MORE
@@ -4636,13 +4635,11 @@ input:focus-visible,
 }
 
 /* The reference and the controls name the verse and act on it, so they belong to the verse
-   face — floating over the chapter they are furniture for a room you have left. They fade
-   with the turn rather than cutting, so the two faces read as one movement. */
-.story-overlay.is-reader .story-container {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 260ms ease;
-}
-
-.story-container { transition: opacity 260ms ease; }
+   face — and they are now inside it, so they simply turn with it. This used to fade them out
+   instead, which only ever fired on a COMMITTED turn: for the whole of a finger-tracked drag
+   both sets of controls were on screen at once, crossing over each other. Nothing left to fade;
+   what remains is only making sure a control facing away cannot still be pressed, since
+   `.story-container > *` re-enables pointers that the turned-away face had switched off. */
+.story-stage.is-reader .cube-face-verse .story-container,
+.story-stage.is-reader .cube-face-verse .story-container > * { pointer-events: none; }
 
