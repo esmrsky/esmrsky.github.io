@@ -45,8 +45,8 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=4.3.0">
-  <script src="icons.js?v=1.1.0" defer></script>
+  <link rel="stylesheet" href="styles.css?v=4.4.0">
+  <script src="icons.js?v=1.2.0" defer></script>
 </head>
 <body>
 
@@ -264,7 +264,32 @@
             </div>
           </div>
 
-          <button class="story-version-pill story-version-cycle-btn" id="storyActiveVerBadge" title="Click to cycle translation (NIV / AMP / NKJV / TPT / NLT / NASB)">NIV</button>
+          <!-- The type dials. Size and leading, the two things a reader actually wants to change
+             about a page of scripture, on the same kind of pill as the appearance control. -->
+        <div class="story-type" id="storyType">
+          <button class="story-nav-btn story-type-btn" id="storyTypeBtn" type="button" aria-haspopup="menu" aria-expanded="false" title="Text size and spacing" aria-label="Text size and spacing">
+            <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
+          </button>
+          <div class="story-type-menu" id="storyTypeMenu" role="menu" aria-label="Text size and spacing" hidden>
+            <div class="story-menu-head">Text size</div>
+            <div class="story-dial" role="group" aria-label="Text size">
+              <button type="button" class="story-dial-opt" data-size="0.84">S</button>
+              <button type="button" class="story-dial-opt" data-size="0.92">M</button>
+              <button type="button" class="story-dial-opt is-active" data-size="1">L</button>
+              <button type="button" class="story-dial-opt" data-size="1.1">XL</button>
+              <button type="button" class="story-dial-opt" data-size="1.22">XXL</button>
+            </div>
+            <div class="story-menu-rule" role="separator"></div>
+            <div class="story-menu-head">Line spacing</div>
+            <div class="story-dial" role="group" aria-label="Line spacing">
+              <button type="button" class="story-dial-opt" data-lead="1.26">Tight</button>
+              <button type="button" class="story-dial-opt is-active" data-lead="1.42">Normal</button>
+              <button type="button" class="story-dial-opt" data-lead="1.62">Loose</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="story-version-pill story-version-cycle-btn" id="storyActiveVerBadge" title="Click to cycle translation (NIV / AMP / NKJV / TPT / NLT / NASB)">NIV</button>
         </div>
       </div>
         </section>
@@ -286,6 +311,11 @@
           <footer class="reader-face-foot">
             <button class="story-nav-btn" id="btnReaderMore" type="button">
               <i data-lucide="chevron-down" style="width: 15px; height: 15px;"></i><span>MORE CONTEXT</span>
+            </button>
+            <!-- Off by default. A chapter read for its sense does not want a number every
+                 fifteen words; a chapter read to find a verse does. -->
+            <button class="story-nav-btn" id="btnReaderNums" type="button" aria-pressed="false">
+              <i data-lucide="list-ordered" style="width: 15px; height: 15px;"></i><span id="readerNumsText">SHOW VERSE NUMBERS</span>
             </button>
             <button class="story-version-pill" id="readerFaceVer" type="button" title="Cycle translation">NIV</button>
           </footer>
@@ -487,7 +517,7 @@
 
   <!-- Data and Application Scripts -->
   <script src="verses-data.js?v=2.5.0"></script>
-  <script src="app.js?v=4.3.0"></script>
+  <script src="app.js?v=4.4.0"></script>
 
 </body>
 </html>

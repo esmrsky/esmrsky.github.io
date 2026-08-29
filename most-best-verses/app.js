@@ -62,6 +62,11 @@
        time it came round and no two verses in a row were in the same voice. */
     storyCurrentVer: localStorage.getItem('agy_bible_version') || 'NIV',
 
+    /* How the page is set, and what is on the chapter. All three outlive the session. */
+    verseSize: localStorage.getItem('agy_verse_size') || '1',
+    verseLead: localStorage.getItem('agy_verse_lead') || '1.42',
+    verseNums: localStorage.getItem('agy_verse_nums') === '1',
+
     storyHasRendered: false
   };
 
@@ -192,6 +197,9 @@
       verseScroll: document.getElementById('verseScroll'),
       verseColumn: document.getElementById('verseColumn'),
       storyTicks: document.getElementById('storyTicks'),
+      storyType: document.getElementById('storyType'),
+      storyTypeBtn: document.getElementById('storyTypeBtn'),
+      storyTypeMenu: document.getElementById('storyTypeMenu'),
       storyMotionMenu: document.getElementById('storyMotionMenu'),
       storyStage: document.getElementById('storyStage'),
       storyCube: document.getElementById('storyCube'),
@@ -231,6 +239,8 @@
     applyViewMode(state.viewMode);
     setBibleVersion(state.version);
     syncSlideModeUI();
+    applyVerseType();
+    syncVerseNumbers();
 
     updateCategoryCounts();
     render();
@@ -1334,6 +1344,73 @@
   }
 
   // 6-Tier Adaptive Base Font Sizing based on character length
+
+  /* ==========================================================================
+     THE TYPE DIALS, AND THE VERSE NUMBERS
+     ==========================================================================
+     Two preferences about how the page is set, and one about what is on it. All three outlive
+     the session, because a reader who has decided their text is too small has decided it for
+     good and should not have to decide again.
+
+     Size and leading are custom properties on the overlay rather than declarations on the
+     passage: the chapter reads the same two, so one choice governs the verse and the chapter it
+     lives in — which is the point, since they are two distances from the same words. */
+  const VERSE_SIZES = ['0.84', '0.92', '1', '1.1', '1.22'];
+  const VERSE_LEADS = ['1.26', '1.42', '1.62'];
+
+  function applyVerseType() {
+    const o = elements.storyOverlay;
+    if (!o) return;
+    o.style.setProperty('--verse-size', state.verseSize);
+    o.style.setProperty('--verse-leading', state.verseLead);
+    document.querySelectorAll('.story-dial-opt[data-size]').forEach(b => {
+      b.classList.toggle('is-active', b.getAttribute('data-size') === state.verseSize);
+    });
+    document.querySelectorAll('.story-dial-opt[data-lead]').forEach(b => {
+      b.classList.toggle('is-active', b.getAttribute('data-lead') === state.verseLead);
+    });
+  }
+
+  /* Changing the type re-wraps the passage, which moves it — the one time that is allowed,
+     because the reader asked for it. Put the reading position back afterwards. */
+  function setVerseType(size, lead) {
+    if (size && VERSE_SIZES.includes(size)) state.verseSize = size;
+    if (lead && VERSE_LEADS.includes(lead)) state.verseLead = lead;
+    try {
+      localStorage.setItem('agy_verse_size', state.verseSize);
+      localStorage.setItem('agy_verse_lead', state.verseLead);
+    } catch (e) {}
+    applyVerseType();
+    replaceReading();
+    if (cube.open) centreSelectedVerse();
+  }
+
+  function setTypeMenuOpen(open) {
+    if (!elements.storyTypeMenu || !elements.storyTypeBtn) return;
+    elements.storyTypeMenu.hidden = !open;
+    elements.storyTypeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (elements.storyType) elements.storyType.classList.toggle('is-open', !!open);
+  }
+
+  /* The chapter's verse numbers. Off unless asked for — see the note in the sheet. */
+  function syncVerseNumbers() {
+    if (elements.readerFaceBody) {
+      elements.readerFaceBody.classList.toggle('show-nums', !!state.verseNums);
+    }
+    const btn = document.getElementById('btnReaderNums');
+    const label = document.getElementById('readerNumsText');
+    if (label) label.textContent = state.verseNums ? 'HIDE VERSE NUMBERS' : 'SHOW VERSE NUMBERS';
+    if (btn) btn.setAttribute('aria-pressed', state.verseNums ? 'true' : 'false');
+  }
+
+  function toggleVerseNumbers() {
+    state.verseNums = !state.verseNums;
+    try { localStorage.setItem('agy_verse_nums', state.verseNums ? '1' : '0'); } catch (e) {}
+    syncVerseNumbers();
+    /* The numbers occupy space, so putting them back moves the chapter under the reader. */
+    centreSelectedVerse();
+  }
+
   /* ==========================================================================
      THE STAGE — one column of scripture, read a few words at a tap
      ==========================================================================
@@ -1421,6 +1498,23 @@
   }
 
   /* Swaps the quarter turn for the 2D translate it ended on. Same picture, live element. */
+  /* Puts the verse the reader came in on in the middle of the chapter. Called after every
+     fetch, and again when the box lands — the face is rotated for the whole of a turn, and a
+     scroll asked for against a rotated box does not always end where it should. */
+  function centreSelectedVerse() {
+    const body = elements.readerFaceBody;
+    if (!body) return;
+    const sel = body.querySelector('.is-selected');
+    if (!sel) return;
+    /* Rects, not `offsetTop`. The scroller is not positioned, so a verse's `offsetParent` is
+       the cube face and its `offsetTop` is measured from there — which put the passage ninety
+       pixels off centre. A rect delta needs to know nothing about the ancestry. */
+    const b = body.getBoundingClientRect();
+    const r = sel.getBoundingClientRect();
+    const delta = (r.top + r.height / 2) - (b.top + body.clientHeight / 2);
+    body.scrollTop = Math.max(0, body.scrollTop + delta);
+  }
+
   function landCube() {
     const el = elements.storyCube;
     if (!el) return;
@@ -1430,6 +1524,7 @@
     el.style.removeProperty('--cube-deg');
     void el.offsetWidth;                 /* land the swap before transitions come back */
     el.classList.remove('no-transition');
+    if (cube.open) centreSelectedVerse();
   }
 
   function readerAvailable() {
@@ -1506,8 +1601,8 @@
       .then(html => {
         if (mine !== cube.seq) return;
         elements.readerFaceBody.innerHTML = html;
-        const sel = elements.readerFaceBody.querySelector('.is-selected');
-        if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'center' });
+        syncVerseNumbers();
+        centreSelectedVerse();
       })
       .catch(() => {
         if (mine !== cube.seq) return;
@@ -2405,7 +2500,8 @@
          scroll gesture, so this only ever sees real taps. */
       elements.storyOverlay.addEventListener('click', (e) => {
         if (isDeepOpen()) return;   /* in here a tap is a scroll or a link, not a page turn */
-        if (e.target.closest('#storyMode') || e.target.closest('#storyActiveVerBadge') ||
+        if (e.target.closest('#storyMode') || e.target.closest('#storyType') ||
+            e.target.closest('#storyActiveVerBadge') ||
             e.target.closest('#btnStoryDeeper') || e.target.closest('.story-bottom-bar')) return;
         if (turn.moved) return;     /* the click that follows a horizontal drag is not a tap */
         if (cube.open) return;      /* in the chapter a tap is a scroll or a link, not a turn */
@@ -2434,7 +2530,12 @@
 
       gestureEl.addEventListener('pointerdown', (e) => {
         if (isDeepOpen() || cube.turning) return;
-        if (e.target.closest('.story-bottom-bar') || e.target.closest('#storyMode')) return;
+        /* Only the two open menus are out of bounds — a drag inside a list of options is
+           choosing an option, not turning the box. Everywhere else, including the controls
+           themselves, starts a turn: the gesture belongs to the whole face, and a drag that
+           begins on a button is still a drag. A tap on one is unaffected, because a real drag
+           lifts somewhere the button is not and the browser fires no click for it. */
+        if (e.target.closest('#storyModeMenu') || e.target.closest('#storyTypeMenu')) return;
         turn.on = true; turn.moved = false; turn.axis = null; turn.id = e.pointerId;
         turn.x0 = turn.lastX = e.clientX; turn.y0 = e.clientY;
         turn.dx = 0; turn.vx = 0; turn.lastT = e.timeStamp || Date.now();
@@ -2497,8 +2598,49 @@
       };
       gestureEl.addEventListener('pointerup', endTurn);
       gestureEl.addEventListener('pointercancel', endTurn);
+
+      /* ---------- the turn has to work from anywhere on the face ----------
+         `touch-action: pan-y` tells the browser the only pan here is vertical, but it still
+         decides for itself on the first move or two, and if it decides to pan it takes the
+         pointer stream away — `pointercancel` — which the turn reads as a gesture that ended
+         where it began, and springs back. That is why a swipe worked from the bars and died in
+         the middle of the text: the bars are not inside anything that scrolls.
+
+         Once the gesture is known to be horizontal there is nothing for the browser to pan, so
+         say so. It has to be a non-passive `touchmove` listener; `preventDefault` in a passive
+         one is ignored. */
+      gestureEl.addEventListener('touchmove', (e) => {
+        if (turn.on && turn.axis === 'x' && e.cancelable) e.preventDefault();
+      }, { passive: false });
     }
+    /* ---------- the type dials ---------- */
+    if (elements.storyTypeBtn && elements.storyTypeMenu) {
+      elements.storyTypeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setTypeMenuOpen(elements.storyTypeMenu.hidden);
+        setSlideModeMenuOpen(false);
+      });
+      elements.storyTypeMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const opt = e.target.closest('.story-dial-opt');
+        if (!opt) return;
+        /* The menu stays open: the point of a dial is trying it, and closing after every step
+           would make choosing a size four taps instead of one. */
+        setVerseType(opt.getAttribute('data-size'), opt.getAttribute('data-lead'));
+      });
+      document.addEventListener('click', (e) => {
+        if (elements.storyTypeMenu.hidden) return;
+        if (e.target.closest('#storyType')) return;
+        setTypeMenuOpen(false);
+      });
+    }
+
     /* ---------- the reader face ---------- */
+    const btnNums = document.getElementById('btnReaderNums');
+    if (btnNums) {
+      btnNums.addEventListener('click', (e) => { e.stopPropagation(); toggleVerseNumbers(); });
+    }
+
     if (elements.btnReaderClose) {
       elements.btnReaderClose.addEventListener('click', (e) => { e.stopPropagation(); closeCube(true); });
     }
