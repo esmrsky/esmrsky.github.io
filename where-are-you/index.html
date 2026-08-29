@@ -566,14 +566,47 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
 .tal i{
   display:block;font-family:var(--mono);font-style:normal;font-size:.5625rem;
   letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-top:.6rem;
+  /* five names over two lines orphaned the last one; balance splits them */
+  text-wrap:balance;
 }
-/* the measure goes on the child: .band already sets margin-inline:auto, so a
-   max-width here would centre the paragraph instead of setting it from the
-   gutter like every other line of body copy in the section */
-.wall__close{padding:1.6rem var(--gutter) 0}
+/* The section's conclusion, and it has to look like one. As a bare paragraph
+   on the ink ground between the tally and the siren it read as an orphan, and
+   with no bottom padding its last line ran into the siren band — the one place
+   on this page where a block's own padding does the spacing, because the two
+   neighbours here are inside a section rather than either side of a seam.
+
+   Padded on all four sides, and split like the register above it: .78fr for
+   the kicker, the rest for the statement, on the same 2.25rem gap. That puts
+   the statement's left edge exactly where the register's chip column starts,
+   so the line that explains the gap in that column begins on it.
+
+   The measure goes on the child. .band sets margin-inline:auto, so a max-width
+   on the block itself would centre the paragraph rather than set it from the
+   gutter like every other line of body copy in the section. */
+.wall__close{
+  padding:clamp(2.25rem,4.5vw,3.5rem) var(--gutter);
+  display:grid;grid-template-columns:1fr;gap:1rem;
+  align-items:start;
+}
+@media (min-width:940px){
+  .wall__close{grid-template-columns:minmax(0,.78fr) minmax(0,2.62fr);gap:0 2.25rem}
+}
+.wall__close b{
+  font-family:var(--mono);font-size:.625rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.68;
+  display:flex;align-items:center;gap:.45rem;line-height:1.2;
+}
+/* only once the kicker sits BESIDE the statement: it drops the 10px label onto
+   the first line of the 21px text rather than the top of its ascent. Stacked,
+   there is nothing to align to and the row gap already does the spacing. */
+@media (min-width:940px){ .wall__close b{padding-top:.45rem} }
+/* the square is the page's own kicker idiom — see .opener__b h3, which uses
+   pink for it. Pink here too, and not this section's yellow: the panel inverts,
+   and --yellow on the near-paper ground dark mode gives it all but disappears. */
+.wall__close b::before{content:"";width:10px;height:10px;flex:none;background:var(--pink)}
 .wall__close p{
-  font-size:clamp(1rem,1.5vw,1.1875rem);font-weight:500;
-  letter-spacing:-.02em;line-height:1.4;max-width:58ch;
+  font-size:clamp(1.0625rem,1.6vw,1.3125rem);font-weight:500;
+  letter-spacing:-.02em;line-height:1.4;max-width:54ch;
 }
 
 .siren{
@@ -1129,6 +1162,7 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
     </div>
 
     <div class="wall__close band rise">
+      <b>Reading the gap</b>
       <p>
         Three of the four with no room for this were built for the first half of
         the journey — a maintenance diagram, a growth survey and a next-step
