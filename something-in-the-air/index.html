@@ -684,6 +684,29 @@ h3.sub:first-of-type{margin-top:1.4em}
 .band--night .opener::first-letter{color:#E4A6CB}
 
 /* ————— icons ————— */
+/* ————— section 11's three carried texts. A card sets its own foreground
+   because it sets its own background — see the .tcard note above. ————— */
+.carry{display:grid;grid-template-columns:repeat(auto-fit,minmax(256px,1fr));gap:clamp(14px,2vw,20px);margin-top:clamp(26px,4vw,38px)}
+/* four cards in a three-up grid strand one alone on row 2 — pair them instead */
+.carry--pair{grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))}
+.cy{
+  --a:var(--haze); --a-ink:var(--haze-ink);
+  border:1px solid color-mix(in srgb,var(--a) 34%,transparent);border-radius:12px;
+  background:color-mix(in srgb,var(--cream) 76%,transparent);color:var(--ink);
+  padding:clamp(18px,2.4vw,24px);display:flex;flex-direction:column;gap:.5em;
+}
+.cy--cyan  {--a:var(--cyan);  --a-ink:var(--cyan-ink)}
+.cy--sodium{--a:var(--sodium);--a-ink:var(--sodium-ink)}
+.cy--flare {--a:var(--flare); --a-ink:var(--flare-ink)}
+.cy .cyi{
+  width:32px;height:32px;display:grid;place-items:center;border-radius:50%;margin-bottom:.25em;
+  background:color-mix(in srgb,var(--a) 22%,transparent);color:var(--a-ink);
+}
+.cy .cyi svg{width:17px;height:17px}
+.cy .cyr{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--a-ink)}
+.cy h4{font-family:var(--display);font-weight:400;font-size:clamp(19px,2.4vw,24px);letter-spacing:-.01em;line-height:1.12}
+.cy p{margin:0;max-width:none;font-size:.93rem;line-height:1.56;color:var(--ink-2)}
+
 .sprite{position:absolute;width:0;height:0;overflow:hidden}
 .eyebrow>svg{width:15px;height:15px;flex:none;margin-right:-3px}
 .icon{width:1em;height:1em;vertical-align:-.13em}
@@ -855,6 +878,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <symbol id="i-quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6.2C6.8 7.5 5.2 10 5.2 13.6v4.2h5.6v-5.6H8.1c0-1.9.7-3.2 2.6-4.1L10 6.2Z"/><path d="M19.6 6.2c-3.2 1.3-4.8 3.8-4.8 7.4v4.2h5.6v-5.6h-2.7c0-1.9.7-3.2 2.6-4.1l-.7-1.9Z"/></symbol>
 <symbol id="i-water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.6c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/><path d="M2 12.4c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/><path d="M2 18.2c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/></symbol>
 <symbol id="i-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="3.8" r="1.8"/><path d="M12 5.6v3.2"/><path d="M4.4 18.4v-6a3 3 0 0 1 3-3h9.2a3 3 0 0 1 3 3v6"/><path d="M12 8.8v9.6"/><circle cx="4.4" cy="20.2" r="1.8"/><circle cx="12" cy="20.2" r="1.8"/><circle cx="19.6" cy="20.2" r="1.8"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.2l10-2v12.6"/><ellipse cx="6.4" cy="18.2" rx="2.6" ry="2.2"/><ellipse cx="16.4" cy="15.8" rx="2.6" ry="2.2"/></symbol>
 <symbol id="i-ear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 9.2a5.9 5.9 0 1 1 11.8 0c0 3-2.2 4.1-3.4 5.3-1 1-1.1 2-1.1 3.1a2.9 2.9 0 0 1-5.1 1.8"/><path d="M9.4 9.4a2.6 2.6 0 0 1 5.2 0c0 1.7-1.7 2.1-2.3 3.1"/></symbol>
 <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 2.8v6.4L4.3 18.5a2 2 0 0 0 1.7 3h12a2 2 0 0 0 1.7-3L14.4 9.2V2.8"/><path d="M8.1 2.8h7.8"/><path d="M7 15.2h10"/></symbol>
 </defs></svg>
@@ -1055,14 +1079,20 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-layers"/></svg><span class="n">03</span> Why both answers are wrong in the same way</div>
     <h2 class="beat rise">You were handed a shelf <em>short</em></h2>
 
-    <div class="rise">
+    <div class="spread rise">
       <p class="lead">In 1982 a missiologist named Paul Hiebert published a short essay that explains almost everything about how this conversation goes, and it is still the most useful thing written on the subject.</p>
 
-      <p>Hiebert had been a missionary in India. A man came to him about a sick child, having already been to a local magician. Hiebert could talk about God &mdash; prayer, providence, the world to come. He could talk about medicine &mdash; infection, treatment, what the clinic was for. What he found he could not do was say anything at all about the thing the man had actually come to ask about, which sat squarely between those two.</p>
+      <p class="opener">Hiebert had been a missionary in India. A man came to him about a sick child, having already been to a local magician. Hiebert could talk about God &mdash; prayer, providence, the world to come. He could talk about medicine &mdash; infection, treatment, what the clinic was for. What he found he could not do was say anything at all about the thing the man had actually come to ask about, which sat squarely between those two.</p>
 
-      <p>He went looking for the gap in his own head and found it. The Western picture of reality has <b>two shelves</b>. On the top shelf are God, angels, the afterlife, ultimate meaning &mdash; and that shelf is labelled <i>religion</i>, and reached by faith. On the bottom shelf are rocks, germs, weather, wiring, blood sugar &mdash; labelled <i>science</i>, and reached by the senses. Between them, in most of the world and through most of history, there is a third shelf: the spirits of a place, the ancestors, the evil eye, the local powers, the unseen operating inside ordinary daily life.</p>
+      <aside class="aside aside--ink">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-book"/></svg>The frame</span>
+        <span class="fig">13<small>pages &middot; Missiology, 1982</small></span>
+        <p>If you read one thing off this entire page, read that one. It explains why this argument keeps happening between people who cannot hear each other.</p>
+      </aside>
 
-      <p>Hiebert called what happened to that shelf <b>the flaw of the excluded middle</b>. Not denied &mdash; <em>excluded</em>. It was never argued away. There was simply no longer anywhere to put it.</p>
+      <p>He went looking for the gap in his own head and found it, and it is drawn below. The Western picture of reality has <b>two shelves</b> where most of the world and most of history have three &mdash; and the missing one is the shelf every experience on this page actually lives on.</p>
+
+      <p>Hiebert called what happened to it <b>the flaw of the excluded middle</b>. Not denied &mdash; <em>excluded</em>. It was never argued away. There was simply no longer anywhere to put it.</p>
     </div>
 
     <div class="tiers rise" role="img" aria-label="Three tiers of reality: the transcendent on top, the empirical at the bottom, and the middle tier excluded from the Western picture">
@@ -1095,14 +1125,20 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     </div>
     <p class="fine rise" style="margin-top:1.1em">Hiebert, <i>The Flaw of the Excluded Middle</i>, Missiology 10 (1982), 35&ndash;47. The middle row is where every experience on this page actually lives.</p>
 
-    <div class="rise">
+    <div class="spread rise">
       <p class="pull">A thing with no shelf does not stay unfiled. It gets forced onto one of the two shelves you <em>do</em> have.</p>
 
       <p>That is the whole mechanism, and once you see it you will see it every time. Somebody walks out of a room and reports a middle-shelf experience. There is no middle shelf. So it goes <b>down</b> &mdash; &ldquo;it smells weird in there, you&rsquo;re tired&rdquo; &mdash; or it goes <b>up</b> &mdash; &ldquo;there is a principality over this city.&rdquo; The two answers sound like opposite worldviews having an argument. They are the same filing error, made in opposite directions, by two people who were handed the same shelf short.</p>
 
+      <aside class="aside aside--flare">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-alert"/></svg>What Hiebert did not claim</span>
+        <p>That everything on the middle shelf is <b>real</b>. The evil eye and a territorial spirit are not established by having a shelf to sit on.</p>
+        <cite>He spent the rest of his career warning against swapping a rationalist blind spot for a credulous one.</cite>
+      </aside>
+
       <p>And notice what the missing shelf costs you: it is not mainly that you believe the wrong thing. It is that <b>you cannot investigate</b>. A category you do not have is a category you can neither affirm nor test nor rule out. The reason this subject is so full of people who are certain in both directions is that almost nobody has anywhere to put a maybe.</p>
 
-      <p>Two things worth saying quickly, because Hiebert&rsquo;s point gets stretched in both directions by people who like it. He was <em>not</em> claiming everything on the middle shelf is real &mdash; the evil eye and a territorial spirit are not thereby established, and he spent the rest of his career warning against swapping a rationalist blind spot for a credulous one. And the two-tier picture is not human nature. It is local, recent and unusual: the Bible does not carve reality that way, the church did not for most of its history, and most of the world does not now. If the framework feels obvious to you, that is worth noticing about the framework.</p>
+      <p>One more thing worth saying quickly. The two-tier picture is not human nature &mdash; it is local, recent and unusual. The Bible does not carve reality that way, the church did not for most of its history, and most of the world does not now. If the framework feels obvious to you, that is worth noticing about the framework.</p>
     </div>
   </div>
 </section>
@@ -1151,16 +1187,35 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <div class="rise">
       <p class="lead">The intuition that the unseen world is organised the way the seen one is &mdash; jurisdictions, seniority, a chain of command, someone in charge of a region &mdash; is not a modern invention borrowed from fantasy novels. It is in the vocabulary, and once you see it you cannot unsee it.</p>
 
+    </div>
+
+    <div class="spread rise">
       <h3 class="sub">First, the allotment</h3>
-      <p>Deuteronomy 32:8&ndash;9 says that when the Most High gave the nations their inheritance and divided humanity, he fixed their boundaries &ldquo;according to the number of&rdquo; &mdash; and here the manuscripts part company. The Masoretic Hebrew reads <i>the sons of Israel</i>. The Dead Sea Scrolls copy reads <i>the sons of God</i>. The Septuagint reads <i>the angels of God</i>. Most modern critical translations, the ESV and NRSV among them, follow the scrolls, on the straightforward reasoning that a scribe might well soften &ldquo;sons of God&rdquo; into something safer, and would have no motive at all to go the other way.</p>
+      <p class="opener">Deuteronomy 32:8&ndash;9 says that when the Most High gave the nations their inheritance and divided humanity, he fixed their boundaries &ldquo;according to the number of&rdquo; &mdash; and here the manuscripts part company. The Masoretic Hebrew reads <i>the sons of Israel</i>. The Dead Sea Scrolls copy reads <i>the sons of God</i>. The Septuagint reads <i>the angels of God</i>. Most modern critical translations, the ESV and NRSV among them, follow the scrolls, on the straightforward reasoning that a scribe might well soften &ldquo;sons of God&rdquo; into something safer, and would have no motive at all to go the other way.</p>
       <p class="fine" style="margin-bottom:1.6em">You can watch this happen. Tap the reference above, then change the translation in the footer. The NIV and NASB read <i>sons of Israel</i>; the KJV reads <i>children of Israel</i>; the ESV reads <i>sons of God</i>; and the NLT skips the argument and renders it <i>the number in his heavenly court</i>. One verse, four committees, one manuscript decision each.</p>
 
       <p>Read that way, the verse is doing something specific: at the scattering, the nations were <b>apportioned</b> &mdash; and the next line says the LORD&rsquo;s own portion was Jacob. Israel is the exception in a system where everyone else got assigned to somebody.</p>
-      <p>Psalm 82 then convenes the thing: God stands in the divine assembly and passes judgment among the gods, for judging unjustly and showing partiality to the wicked. The sentence is that they will die like men. Whatever these beings are, they held a delegated administrative responsibility, they abused it, and they are held accountable for a region&rsquo;s justice.</p>
 
+      <aside class="aside aside--ink">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-scale"/></svg>And then it is audited</span>
+        <p><b>Psalm 82.</b> God stands in the divine assembly and passes judgment among the gods, for judging unjustly and showing partiality to the wicked. The sentence is that <b>they will die like men</b>.</p>
+        <cite>A delegated administrative responsibility, abused, and held to account for a region&rsquo;s justice.</cite>
+      </aside>
+
+      <p>Whatever these beings are, the accounting is the point: the office is real enough to be answerable.</p>
+    </div>
+
+    <div class="spread rise">
       <h3 class="sub">Then, the clearest text in the Bible on this</h3>
       <p>Daniel 10. An angel arrives three weeks late and explains why: &ldquo;the prince of the kingdom of Persia withstood me twenty-one days, but Michael, one of the chief princes, came to help me.&rdquo; He then says he is going back to fight the prince of Persia, and that <b>the prince of Greece will come</b>.</p>
-      <p>That is a named spiritual authority, attached to a political territory, in conflict with another spiritual authority, on a timetable that tracks the succession of empires. There is nothing metaphorical available here. If you want a biblical basis for the idea that something stands over a place, this is it, and it is one chapter.</p>
+
+      <aside class="aside aside--cyan">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-pin"/></svg>Four things in one chapter</span>
+        <p>A <b>named</b> spiritual authority. Attached to a <b>political territory</b>. In conflict with <b>another</b> such authority. On a timetable that tracks the <b>succession of empires</b>.</p>
+        <cite>There is nothing metaphorical available here.</cite>
+      </aside>
+
+      <p>If you want a biblical basis for the idea that something stands over a place, this is it &mdash; and it is one chapter.</p>
     </div>
 
     <h3 class="sub rise">Now the vocabulary Paul uses for them</h3>
@@ -1286,23 +1341,53 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       </div>
     </div>
 
-    <div class="rise">
+    <div class="spread rise">
       <p style="margin-top:clamp(28px,4vw,40px)">Notice what these have in common. In every case the spiritual character of the place is tied to <b>what is being done there</b> &mdash; worship, trade, oppression, bloodshed, an encounter with God. It is not a property of the soil. Ephesus feels like Artemis because Ephesus is full of people serving Artemis and getting paid for it. That is not a deflation of the claim. It is the shape of the claim.</p>
+
+      <aside class="aside">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-target"/></svg>The rule these six share</span>
+        <p>Not the soil &mdash; the <b>practice</b>. Worship, trade, oppression, bloodshed, an encounter with God.</p>
+        <cite>Which is why the ordinary version needs no gift: a workplace organised around fear feels like fear.</cite>
+      </aside>
+
       <h3 class="sub">And then there is the sea</h3>
 
-      <p>Water is the one people ask about most &mdash; the flat indifference of open ocean, the hush over a lake at dusk, the specific unease of water you cannot see the bottom of. It is also where Scripture has the most to say and where the modern literalisation has travelled furthest, so it is worth doing properly.</p>
+      <p class="opener">Water is the one people ask about most &mdash; the flat indifference of open ocean, the hush over a lake at dusk, the specific unease of water you cannot see the bottom of. It is also where Scripture has the most to say and where the modern literalisation has travelled furthest, so it is worth doing properly.</p>
+    </div>
 
-      <p><b>What the text does.</b> From the third sentence of the Bible the sea is not scenery. The earth is formless and void, darkness is over the face of <i>tehom</i> &mdash; the deep &mdash; and the Spirit hovers over the waters. Creation then proceeds by God ordering and bounding that. Israel&rsquo;s neighbours told this as a fight: Baal against Yamm at Ugarit, Marduk splitting Tiamat in the <i>Enuma Elish</i>. Scripture keeps the imagery and drops the struggle. God shatters the heads of Leviathan in the waters (Psalm 74:14), pierces the fleeing serpent (Isaiah 27:1), and in Job 41 Leviathan is simply a creature &mdash; unmasterable by men, entirely unremarkable to God.</p>
+    <div class="spread rise">
+      <p><b>What the text does.</b> From the third sentence of the Bible the sea is not scenery. The earth is formless and void, darkness is over the face of <i>tehom</i> &mdash; the deep &mdash; and the Spirit hovers over the waters. Creation then proceeds by God ordering and bounding that. Israel&rsquo;s neighbours told the same story as a <em>fight</em>. Scripture keeps the imagery and drops the struggle: God shatters the heads of Leviathan in the waters (Psalm 74:14), pierces the fleeing serpent (Isaiah 27:1), and in Job 41 Leviathan is simply a creature &mdash; unmasterable by men, entirely unremarkable to God.</p>
+
+      <aside class="aside aside--ink">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-water"/></svg>The neighbours&rsquo; version</span>
+        <p><b>Baal against Yamm</b> at Ugarit.<br><b>Marduk splitting Tiamat</b> in the <i>Enuma Elish</i>.</p>
+        <cite>Scripture borrows the imagery and drops the combat. Nothing is wrestled; the deep is bounded.</cite>
+      </aside>
 
       <p>And the sea keeps meaning that. Daniel&rsquo;s four beasts come up <em>out of the sea</em>. Revelation&rsquo;s beast rises from it. When Jesus rebukes the wind and tells the sea to be still (Mark 4:39) and walks across it (Matthew 14:25), he is doing in a boat what the Psalms say God does to the deep &mdash; which is precisely why the disciples&rsquo; response is not gratitude but <em>&ldquo;who then is this?&rdquo;</em> Then the last word on it: &ldquo;the sea was no more&rdquo; (Revelation 21:1). That is not hydrology. It is the announcement that chaos is finished &mdash; and what replaces it is a river, clear as crystal.</p>
+    </div>
 
+    <div class="spread rise">
       <p class="pull">So yes, water carries something in Scripture. What it carries is a <em>meaning</em>.</p>
 
-      <p><b>Now watch the same move happen again.</b> Out of all that, contemporary deliverance teaching has grown a taxonomy: &ldquo;marine spirits&rdquo; and a &ldquo;marine kingdom&rdquo; &mdash; a distinct rank of demons resident in physical bodies of water, held responsible for lust, poverty, infertility and marital breakdown, anchored through ancestral covenants and bloodlines, and routinely mapped onto Mami Wata, La Sir&egrave;ne and the water deities of Yoruba and Vodou tradition. John Eckhardt&rsquo;s <i>Marine Demons</i> is the best-known text; Job 41:34, where Leviathan is &ldquo;king over all the children of pride,&rdquo; is the usual anchor verse.</p>
+      <p><b>Now watch the same move happen again.</b> Out of all that, contemporary deliverance teaching has grown a taxonomy: &ldquo;marine spirits&rdquo; and a &ldquo;marine kingdom&rdquo;, a distinct rank of demons resident in physical bodies of water.</p>
 
-      <p>That is exactly what happened with territorial spirits in section&nbsp;07, performed on different material. <b>A symbol became a species.</b> In Scripture the sea is what chaos and death and rebellion are <em>like</em>; it is not a habitat with a population and a management structure. And this version carries an extra cost the territorial version does not: it takes another culture&rsquo;s water deities and files them as a demonic sub-rank, which is syncretism running in the opposite direction from the one it warns everybody else about.</p>
+      <aside class="aside aside--flare">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-alert"/></svg>A symbol became a species</span>
+        <p>Held responsible for <b>lust, poverty, infertility and marital breakdown</b>, anchored through ancestral covenants, and mapped onto Mami Wata and the water deities of Yoruba and Vodou tradition.</p>
+        <cite>John Eckhardt, <i>Marine Demons</i>. Anchor verse: Job 41:34.</cite>
+      </aside>
 
-      <p>The page&rsquo;s own rule holds here. Place matters, and it matters because of what is done there and what it means. <b>A lake is not a jurisdiction.</b> And if you feel something standing at the edge of open water at dusk &mdash; you are not making it up, and there are at least four ordinary reasons queuing ahead of any spirit: the scale, the horizon, the sound, and the very old and entirely sensible knowledge that you cannot see the bottom.</p>
+      <p>That is exactly what happened with territorial spirits in section&nbsp;07, performed on different material. In Scripture the sea is what chaos and death and rebellion are <em>like</em>; it is not a habitat with a population and a management structure. And this version carries an extra cost the territorial version does not: it takes another culture&rsquo;s water deities and files them as a demonic sub-rank, which is syncretism running in the opposite direction from the one it warns everybody else about.</p>
+    </div>
+
+    <div class="spread rise">
+      <p>The page&rsquo;s own rule holds here. Place matters, and it matters because of what is done there and what it means. <b>A lake is not a jurisdiction.</b> And if you feel something standing at the edge of open water at dusk, you are not making it up &mdash; there are simply several ordinary reasons queuing ahead of any spirit.</p>
+
+      <aside class="aside aside--sodium">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-pulse"/></svg>Queuing ahead of a spirit</span>
+        <p><b>The scale.</b> <b>The horizon.</b> <b>The sound.</b> And the very old, entirely sensible knowledge that <b>you cannot see the bottom</b>.</p>
+      </aside>
 
       <p>Which means the ordinary version is available to you constantly, with no gift required. A workplace organised around fear feels like fear. A house where something is being denied feels like the denial. You are not imagining that, and you do not need a vision to read it &mdash; you need to be willing to say out loud what the place is actually for.</p>
     </div>
@@ -1316,22 +1401,58 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <h2 class="beat rise">Nobody in the Bible ever <em>maps</em> one</h2>
 
     <div class="rise">
-      <p class="lead">This is the part that gets skipped, and it is the part that decides whether any of the above is safe to hold.</p>
-
-      <p><b>Daniel does not confront the prince of Persia.</b> He does not name him, bind him, rebuke him, or research him. He mourns and fasts for three weeks without knowing anything is happening, an angel handles it, and Daniel is told about the fight <em>afterwards</em>, as background. The clearest territorial-spirit passage in Scripture contains no territorial-spirit technique at all.</p>
-
-      <p><b>Michael would not do it either.</b> Disputing with the devil over the body of Moses, the archangel &ldquo;did not presume to pronounce a blasphemous judgment, but said, &lsquo;The Lord rebuke you.&rsquo;&rdquo; A great deal of contemporary warfare teaching is more forward with a principality than Michael was with Satan.</p>
-
-      <p><b>The strongholds verse is about arguments.</b> 2 Corinthians 10:4&ndash;5 is quoted over cities constantly, and the sentence finishes: &ldquo;we destroy arguments and every lofty opinion raised against the knowledge of God, and take every thought captive to obey Christ.&rdquo; The strongholds are <i>logismoi</i> &mdash; reasonings. It is the most-cited text in this whole field and it is about what people believe, not where they live.</p>
-
-      <p><b>And Paul, in the most spiritually loaded city in Acts, holds lectures.</b> Two years of daily reasoning in the hall of Tyrannus. He does not survey Ephesus, name Artemis&rsquo; principality or hold a march. The city changes because the word spreads and people burn their own books &mdash; and the cautionary tale about borrowed authority, the sons of Sceva, is in the same chapter, twenty verses earlier, apparently on purpose.</p>
+      <p class="lead">This is the part that gets skipped, and it is the part that decides whether any of the above is safe to hold. Four passages that everybody quotes, and the thing not one of them contains.</p>
     </div>
 
-    <h3 class="sub rise">The movement that went the other way</h3>
-    <div class="rise">
-      <p>From the mid-1980s a serious missiological programme was built on these texts. C. Peter Wagner&rsquo;s <i>Spiritual Power and Church Growth</i> (1986) launched what became &ldquo;strategic-level spiritual warfare&rdquo;; George Otis Jr. developed <b>spiritual mapping</b>, the practice of researching a place&rsquo;s history and religious past in order to identify the spirit holding it; Cindy Jacobs and Ed Silvoso built prayer campaigns on it; Wagner answered his critics in <i>Confronting the Powers</i> (1996).</p>
+    <div class="carry carry--pair rise">
+      <article class="cy cy--cyan">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-clock"/></svg></span>
+        <div class="cyr">Daniel 10</div>
+        <h4>Daniel never confronts the prince of Persia</h4>
+        <p>He does not name him, bind him, rebuke him, or research him. He mourns and fasts for three weeks without knowing anything is happening, an angel handles it, and Daniel is told about the fight <em>afterwards</em>, as background. <b>The clearest territorial-spirit passage in Scripture contains no territorial-spirit technique at all.</b></p>
+      </article>
+      <article class="cy cy--cyan">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-scale"/></svg></span>
+        <div class="cyr">Jude 9</div>
+        <h4>Michael would not do it either</h4>
+        <p>Disputing with the devil over the body of Moses, the archangel &ldquo;did not presume to pronounce a blasphemous judgment, but said, &lsquo;The Lord rebuke you.&rsquo;&rdquo; <b>A great deal of contemporary warfare teaching is more forward with a principality than Michael was with Satan.</b></p>
+      </article>
+      <article class="cy cy--cyan">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-quote"/></svg></span>
+        <div class="cyr">2 Corinthians 10:4&ndash;5</div>
+        <h4>The strongholds verse is about arguments</h4>
+        <p>Quoted over cities constantly &mdash; and the sentence finishes: &ldquo;we destroy arguments and every lofty opinion raised against the knowledge of God, and take every thought captive to obey Christ.&rdquo; The strongholds are <i>logismoi</i>, reasonings. <b>The most-cited text in this whole field is about what people believe, not where they live.</b></p>
+      </article>
+      <article class="cy cy--cyan">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-scroll"/></svg></span>
+        <div class="cyr">Acts 19</div>
+        <h4>In the most loaded city in Acts, Paul holds lectures</h4>
+        <p>Two years of daily reasoning in the hall of Tyrannus. He does not survey Ephesus, name Artemis&rsquo; principality or hold a march. The city changes because the word spreads and people burn their own books &mdash; and the cautionary tale about borrowed authority, the sons of Sceva, sits <b>twenty verses earlier in the same chapter</b>, apparently on purpose.</p>
+      </article>
+    </div>
+
+    <div class="spread rise">
+      <h3 class="sub">The movement that went the other way</h3>
+
+      <p class="opener">From the mid-1980s a serious missiological programme was built on these texts. Its central practice was <b>spiritual mapping</b> &mdash; researching a place&rsquo;s history and religious past in order to identify the spirit holding it.</p>
+
+      <aside class="aside aside--sodium">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-clock"/></svg>How it was built</span>
+        <p><b>1986</b> &mdash; C. Peter Wagner, <i>Spiritual Power and Church Growth</i>, launching &ldquo;strategic-level spiritual warfare&rdquo;.<br><b>George Otis Jr.</b> develops spiritual mapping.<br><b>Cindy Jacobs</b> and <b>Ed Silvoso</b> build prayer campaigns on it.<br><b>1996</b> &mdash; Wagner answers his critics in <i>Confronting the Powers</i>.</p>
+      </aside>
+
       <p>It was answered at length. Chuck Lowe&rsquo;s <i>Territorial Spirits and World Evangelisation?</i> is a biblical, historical and missiological critique of the whole programme. And the Lausanne Movement published its own assessment, written by A. Scott Moreau, which is worth reading precisely because it is <em>not</em> a hatchet job.</p>
-      <p>Moreau credits the movement with real gains: it took the powers seriously in a discipline that had gone managerial, it put prayer above strategy, it made church unity a spiritual issue, it named the domination systems inside cultures, and it recovered corporate repentance. Then it says the hard things. Requiring practitioners to discover and name territorial spirits comes uncomfortably close to <b>&ldquo;Christian animism&rdquo;</b>. Spiritual mapping is too subjective to identify anything reliably. And the core strategy is not found in Scripture or church history &ldquo;at least not without some serious stretching.&rdquo; It closes on Clinton Arnold&rsquo;s summary: Christians have no biblical warrant to bind or expel a territorial spirit directly, though they may certainly <em>ask God</em> to restrain its influence so the gospel can run.</p>
+    </div>
+
+    <div class="spread rise">
+      <p>Moreau credits the movement with real gains before he says anything hard &mdash; and the list of gains is not short. Then: requiring practitioners to discover and name territorial spirits comes uncomfortably close to <b>&ldquo;Christian animism&rdquo;</b>. Spiritual mapping is too subjective to identify anything reliably. And the core strategy is not found in Scripture or church history &ldquo;at least not without some serious stretching.&rdquo; It closes on Clinton Arnold&rsquo;s summary: Christians have no biblical warrant to bind or expel a territorial spirit directly, though they may certainly <em>ask God</em> to restrain its influence so the gospel can run.</p>
+
+      <aside class="aside aside--cyan">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-check"/></svg>What Moreau credits it with</span>
+        <p>Taking the powers <b>seriously</b> in a discipline that had gone managerial. Putting <b>prayer above strategy</b>. Making <b>church unity</b> a spiritual issue. Naming the <b>domination systems</b> inside cultures. Recovering <b>corporate repentance</b>.</p>
+        <cite>Five gains, stated first. The balanced source is the one worth quoting in both directions.</cite>
+      </aside>
+
       <p class="fine">Worth knowing that a quite different reading exists: Walter Wink&rsquo;s <i>Naming the Powers</i> takes the powers as the <em>interiority</em> of institutions &mdash; a regime, a corporation or a school really does have a spirit, which is neither merely a figure of speech nor a separate personal being. It is a contested reading and it does not have the last word, but it accounts for something the other two readings keep tripping over: why the powers language in Paul is so relentlessly political.</p>
     </div>
 
@@ -1360,12 +1481,17 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-eye"/></svg><span class="n">08</span> The people who say they can see it</div>
     <h2 class="beat rise">Scripture is oddly <em>uninterested</em> in how much you saw</h2>
 
-    <div class="rise">
+    <div class="spread rise">
       <p class="lead">Some people report seeing the realm directly rather than sensing it. The Bible has this category, treats it as real, and hedges it far more carefully than its modern admirers do.</p>
 
-      <p>Elisha&rsquo;s servant panics at an army surrounding the city; Elisha prays, &ldquo;LORD, open his eyes,&rdquo; and the hills are full of horses and chariots of fire. Read the mechanics of that: the reality was there the whole time, the servant was a believer standing next to a prophet, <b>and he still could not see it until someone asked God to let him</b>. Sight is granted, in a moment, for a purpose. It is not equipment you own.</p>
+      <p class="opener">Elisha&rsquo;s servant panics at an army surrounding the city; Elisha prays, &ldquo;LORD, open his eyes,&rdquo; and the hills are full of horses and chariots of fire. Read the mechanics of that: the reality was there the whole time, the servant was a believer standing next to a prophet, <b>and he still could not see it until someone asked God to let him</b>. Sight is granted, in a moment, for a purpose. It is not equipment you own.</p>
 
-      <p>Micaiah, hauled in front of two kings, reports a council scene &mdash; the LORD on his throne and the host of heaven standing to his right and left, deliberating. Balaam&rsquo;s eyes are uncovered. Ezekiel is taken. John is in the Spirit on the Lord&rsquo;s Day. And Paul lists <i>diakriseis pneumat&#333;n</i>, &ldquo;discernings of spirits&rdquo;, among the gifts distributed &ldquo;as he wills&rdquo; &mdash; plural, given out unevenly, and sitting in a chapter whose entire argument is that no one member gets to be the body.</p>
+      <aside class="aside">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-eye"/></svg>The others it records</span>
+        <p><b>Micaiah</b>, hauled before two kings, reports a council scene &mdash; the LORD on his throne, the host of heaven to his right and left, deliberating.<br><b>Balaam&rsquo;s</b> eyes are uncovered. <b>Ezekiel</b> is taken. <b>John</b> is in the Spirit on the Lord&rsquo;s Day.</p>
+      </aside>
+
+      <p>And Paul lists <i>diakriseis pneumat&#333;n</i>, &ldquo;discernings of spirits&rdquo;, among the gifts distributed &ldquo;as he wills&rdquo; &mdash; plural, given out unevenly, and sitting in a chapter whose entire argument is that no one member gets to be the body.</p>
     </div>
 
     <h3 class="sub rise">Who is actually in this conversation</h3>
@@ -1572,21 +1698,53 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <p class="lead">If section&nbsp;03 is right &mdash; the middle shelf was excluded rather than refuted &mdash; then traditions that never lost it should have developed a way of working there. They did. Twice, in detail, and both are more careful than almost anything said on either side of the modern argument.</p>
     </div>
 
-    <h3 class="sub rise">The desert: sort the thought by where it came from</h3>
-    <div class="rise">
-      <p>Evagrius Ponticus (c.&nbsp;346&ndash;399) went out to the Egyptian desert and produced a diagnostic scheme of eight generic <i>logismoi</i> &mdash; thoughts &mdash; from which he held all sin proceeds: gluttony, lust, avarice, sadness, anger, sloth, vainglory, pride. John Cassian carried the list west and it eventually became the seven deadly sins, which is the only part most people have heard of.</p>
+    <div class="spread rise">
+      <h3 class="sub">The desert: sort the thought by where it came from</h3>
 
-      <p>The list is not the interesting part. The interesting part is the question he attached to it. Evagrius worked at discriminating thoughts that arise <b>from the person</b>, thoughts that come <b>from demons</b>, and thoughts that come <b>from angels</b> &mdash; not by how the thought felt, but by what it did, where it led, and what it left behind. That is exactly the modern question &mdash; <em>is this me, or the room, or something else?</em> &mdash; asked in the fourth century, with a working method attached and centuries of case notes.</p>
+      <p class="opener">Evagrius Ponticus (c.&nbsp;346&ndash;399) went out to the Egyptian desert and produced a diagnostic scheme of eight generic <i>logismoi</i> &mdash; thoughts &mdash; from which he held all sin proceeds. John Cassian carried the list west and it eventually became the seven deadly sins, which is the only part most people have heard of.</p>
 
-      <p>And notice the word. When Paul says the weapons of our warfare demolish strongholds, the strongholds are <i>logismous</i> &mdash; reasonings. <b>The same word.</b> That is not a claim that Evagrius took it from 2&nbsp;Corinthians&nbsp;10:5, and it should not be stretched into one. It is worth sitting with anyway: the single text most often stretched over cities is about the exact thing the desert tradition spent three centuries learning to read, one thought at a time, in a room by yourself.</p>
+      <aside class="aside">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-scroll"/></svg>The eight <i>logismoi</i></span>
+        <p class="wordlist">gluttony &middot; lust &middot; avarice &middot; sadness &middot; anger &middot; sloth &middot; vainglory &middot; pride</p>
+        <cite>The list is the part that survived. The method attached to it is the part worth having.</cite>
+      </aside>
+
+      <p>Because the list is not the interesting part. The interesting part is the question he attached to it. Evagrius worked at discriminating thoughts that arise <b>from the person</b>, thoughts that come <b>from demons</b>, and thoughts that come <b>from angels</b> &mdash; not by how the thought felt, but by what it did, where it led, and what it left behind. That is exactly the modern question &mdash; <em>is this me, or the room, or something else?</em> &mdash; asked in the fourth century, with a working method attached and centuries of case notes.</p>
+    </div>
+
+    <div class="spread rise">
+      <p>And notice the word. When Paul says the weapons of our warfare demolish strongholds, the strongholds are <i>logismous</i> &mdash; reasonings. <b>The same word.</b> The single text most often stretched over cities is about the exact thing the desert tradition spent three centuries learning to read, one thought at a time, in a room by yourself.</p>
+
+      <aside class="aside aside--flare">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-alert"/></svg>A resonance, not a lineage</span>
+        <p>This is <b>not</b> a claim that Evagrius took the term from 2&nbsp;Corinthians&nbsp;10:5, and it should not be stretched into one. No source establishes dependence.</p>
+      </aside>
+
+      <p>It is worth sitting with anyway.</p>
     </div>
 
     <h3 class="sub rise">Ignatius: read the direction, not the feeling</h3>
     <div class="rise">
       <p>The second discipline arrives eleven hundred years later and is astonishingly practical. Ignatius of Loyola&rsquo;s <i>Rules for the Discernment of Spirits</i> &mdash; fourteen of them for the First Week of the Exercises, a second set for the Second &mdash; give two names to what this page has been calling a vibe.</p>
 
-      <p><b>Consolation</b> is any increase of faith, hope and love; interior joy that draws toward heavenly things; a quieting of the soul, giving it peace in its Creator. <b>Desolation</b> is the contrary: darkness of soul, disturbance, a movement toward what is low and earthly, the unquiet of agitations and temptations, want of confidence, hopelessness, lovelessness, finding oneself lazy and tepid and sad and as if separated from God.</p>
+    </div>
 
+    <div class="carry rise">
+      <article class="cy cy--cyan">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+        <div class="cyr">Consolation</div>
+        <h4>Toward</h4>
+        <p>Any increase of faith, hope and love. Interior joy that draws toward heavenly things. A quieting of the soul, giving it <b>peace in its Creator</b>.</p>
+      </article>
+      <article class="cy cy--flare">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-alert"/></svg></span>
+        <div class="cyr">Desolation</div>
+        <h4>Away</h4>
+        <p>Darkness of soul, disturbance, a movement toward what is low and earthly. The unquiet of agitations and temptations, want of confidence, hopelessness, lovelessness &mdash; finding oneself lazy and tepid and sad and <b>as if separated from God</b>.</p>
+      </article>
+    </div>
+
+    <div class="rise">
       <p class="pull">Read those again and notice: they are <em>directions</em>, not sensations.</p>
 
       <p>Ignatius is not asking whether you feel good. Plenty of desolation is comfortable and a fair amount of consolation is not. He is asking <b>which way you are being moved</b>. That single distinction would defuse most of the modern argument on its own, because almost everyone in it is reporting a sensation and calling it a diagnosis.</p>
@@ -1597,14 +1755,31 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
       <p>Hold whatever you decided before it came. His reasoning is precise and worth having: in consolation it is chiefly the good spirit guiding and counselling, and in desolation the counsel is not one by which we can take a course to decide rightly. So the desolation may be telling you something true, and you are still not fit to act on it while you are inside it.</p>
 
-      <p>And immediately after, the rule that stops this becoming passivity: <b>although we ought not to change our resolutions, it is very helpful to change ourselves intensely against the desolation</b> &mdash; more prayer, more examination, more deliberate attention. Change your effort, not your decisions.</p>
+      <p>And immediately after comes the rule that stops this becoming passivity.</p>
+    </div>
+
+    <div class="spread rise">
+      <p>Change your <em>effort</em>, not your decisions &mdash; more prayer, more examination, more deliberate attention, aimed squarely at the thing sitting on you.</p>
+
+      <aside class="aside aside--cyan">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-check"/></svg>Rule 6, in his words</span>
+        <p>&ldquo;Although we ought not to change our resolutions, <b>it is very helpful to change ourselves intensely against the desolation</b>.&rdquo;</p>
+      </aside>
 
       <p>That is a five-hundred-year-old protocol for precisely what this page is about, and it beats most of what has been said since for one specific reason: <b>it tells you what to do without requiring you to first name what you are feeling.</b> You do not have to settle whether it was the room, your blood sugar or a principality. You have to not decide anything while it is on you.</p>
     </div>
 
-    <h3 class="sub rise">And people keep rediscovering it</h3>
-    <div class="rise">
-      <p>Here is the part that ought to settle the question of whether any of this is still live. Contemporary charismatic teaching on hearing God routinely arrives at a <b>three-way sort</b> &mdash; is this thought from God, from me, or from the enemy? &mdash; and at a set of tells for the third: urgency, anxiety, condemnation, confusion, a push to act right now. Against which it sets peace, clarity and conviction without panic.</p>
+    <div class="spread rise">
+      <h3 class="sub">And people keep rediscovering it</h3>
+
+      <p class="opener">Here is the part that ought to settle the question of whether any of this is still live. Contemporary charismatic teaching on hearing God routinely arrives at a <b>three-way sort</b> &mdash; is this thought from God, from me, or from the enemy? &mdash; and at a set of tells for the third.</p>
+
+      <aside class="aside aside--flare">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-alert"/></svg>The tells, as taught now</span>
+        <p class="wordlist">urgency &middot; anxiety &middot; condemnation &middot; confusion &middot; a push to act right now</p>
+        <cite>Against which it sets peace, clarity, and conviction without panic. Evagrius&rsquo; three origins and Ignatius&rsquo; fifth rule, arrived at without the lineage.</cite>
+      </aside>
+
 
       <p>That is Evagrius&rsquo; three origins and Ignatius&rsquo; fifth rule, arrived at independently, apparently without the lineage. And the convergence is worth more than either party&rsquo;s claim to it: two disciplines separated by eleven hundred years, and a podcast separated from both by another five, keep producing <b>the same warning about urgency</b>. Something is being noticed repeatedly, by people with no reason to agree.</p>
 
@@ -1758,10 +1933,31 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <div class="rise">
       <p class="lead">This entire page has treated you as a receiver &mdash; an instrument walking into rooms, taking readings, working out what is in the air. That is half of it, and it is the flattering half.</p>
 
-      <p>Scripture spends at least as much attention on the other direction. In Luke 10 the disciples are sent out and told to say &ldquo;peace be to this house&rdquo; on entry: if a son of peace is there, the peace <b>rests on him</b>; if not, it <b>returns to you</b>. Read that as physics for a second. Peace is portable, it is carried by a person, it lands on a place, and if the place will not hold it, it comes back &mdash; undiminished, still yours. Whatever else is happening in that sentence, someone walking into a building is being described as a source and not only a sensor.</p>
+      <p class="opener">Scripture spends at least as much attention on the other direction, and it says so three times, in three different registers. In each one somebody walking into a building is described as a <b>source</b> and not only a sensor.</p>
+    </div>
 
-      <p>When the spirit tormented Saul, David played, and it lifted. One person, one instrument, and the atmosphere of a room changed. And Paul, reaching for a way to say what Christians are doing as they move through the world, chooses the least abstract sense there is: <b>an aroma</b>. &ldquo;We are the aroma of Christ&rdquo; &mdash; to some a fragrance from life to life, to others from death to death. The same smell. Two reactions. Nobody in that verse can name what they are smelling.</p>
+    <div class="carry rise">
+      <article class="cy">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-radiate"/></svg></span>
+        <div class="cyr">Luke 10:5&ndash;6</div>
+        <h4>Peace is portable</h4>
+        <p>The disciples are sent out and told to say &ldquo;peace be to this house&rdquo; on entry. If a son of peace is there, the peace <b>rests on him</b>; if not, it <b>returns to you</b>. Read it as physics for a second: it is carried by a person, it lands on a place, and if the place will not hold it, it comes back &mdash; undiminished, still yours.</p>
+      </article>
+      <article class="cy">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-note"/></svg></span>
+        <div class="cyr">1 Samuel 16:23</div>
+        <h4>One person changed the room</h4>
+        <p>When the spirit tormented Saul, David played, and it lifted. One person, one instrument, and the atmosphere of a room changed &mdash; which is the smallest and least deniable version of everything this page has been describing.</p>
+      </article>
+      <article class="cy">
+        <span class="cyi" aria-hidden="true"><svg><use href="#i-wind"/></svg></span>
+        <div class="cyr">2 Corinthians 2:15&ndash;16</div>
+        <h4>You are an aroma</h4>
+        <p>Reaching for a way to say what Christians are doing as they move through the world, Paul chooses the least abstract sense there is. &ldquo;We are the aroma of Christ&rdquo; &mdash; to some a fragrance from life to life, to others from death to death. The same smell. Two reactions. <b>Nobody in that verse can name what they are smelling.</b></p>
+      </article>
+    </div>
 
+    <div class="rise">
       <p class="pull">&ldquo;That coffee shop is not a vibe&rdquo; &mdash; and the smell they cannot place might be <em>you</em>.</p>
 
       <p>Which loops back to where this started. Someone walks out of a room and says it smelled weird in there. Sometimes it did. Sometimes they were tired. Sometimes six people had been tense for an hour before they arrived, and sometimes the place runs on something they would rather not name out loud, and sometimes &mdash; rarely, and never on demand &mdash; there is something there that was there before any of them turned up, and Scripture is not embarrassed about saying so.</p>
