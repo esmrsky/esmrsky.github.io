@@ -63,8 +63,8 @@
     storyCurrentVer: localStorage.getItem('agy_bible_version') || 'NIV',
 
     /* How the page is set, and what is on the chapter. All three outlive the session. */
-    verseSize: localStorage.getItem('agy_verse_size') || '1',
-    verseLead: localStorage.getItem('agy_verse_lead') || '1.42',
+    verseSize: localStorage.getItem('agy_chapter_size') || '1',
+    verseLead: localStorage.getItem('agy_chapter_lead') || '1.85',
     verseNums: localStorage.getItem('agy_verse_nums') === '1',
 
     storyHasRendered: false
@@ -1352,17 +1352,18 @@
      the session, because a reader who has decided their text is too small has decided it for
      good and should not have to decide again.
 
-     Size and leading are custom properties on the overlay rather than declarations on the
-     passage: the chapter reads the same two, so one choice governs the verse and the chapter it
-     lives in — which is the point, since they are two distances from the same words. */
-  const VERSE_SIZES = ['0.84', '0.92', '1', '1.1', '1.22'];
-  const VERSE_LEADS = ['1.26', '1.42', '1.62'];
+     They govern the CHAPTER only. The verse is a few lines set to fill a screen and there is
+     nothing about it for a dial to change; the chapter is a page of continuous reading, which is
+     the one surface where size and leading are worth having — and it is where the controls now
+     live, in its own header. */
+  const CHAPTER_SIZES = ['0.84', '0.92', '1', '1.12', '1.26'];
+  const CHAPTER_LEADS = ['1.62', '1.85', '2.1'];
 
   function applyVerseType() {
     const o = elements.storyOverlay;
     if (!o) return;
-    o.style.setProperty('--verse-size', state.verseSize);
-    o.style.setProperty('--verse-leading', state.verseLead);
+    o.style.setProperty('--chapter-size', state.verseSize);
+    o.style.setProperty('--chapter-leading', state.verseLead);
     document.querySelectorAll('.story-dial-opt[data-size]').forEach(b => {
       b.classList.toggle('is-active', b.getAttribute('data-size') === state.verseSize);
     });
@@ -1374,14 +1375,15 @@
   /* Changing the type re-wraps the passage, which moves it — the one time that is allowed,
      because the reader asked for it. Put the reading position back afterwards. */
   function setVerseType(size, lead) {
-    if (size && VERSE_SIZES.includes(size)) state.verseSize = size;
-    if (lead && VERSE_LEADS.includes(lead)) state.verseLead = lead;
+    if (size && CHAPTER_SIZES.includes(size)) state.verseSize = size;
+    if (lead && CHAPTER_LEADS.includes(lead)) state.verseLead = lead;
     try {
-      localStorage.setItem('agy_verse_size', state.verseSize);
-      localStorage.setItem('agy_verse_lead', state.verseLead);
+      localStorage.setItem('agy_chapter_size', state.verseSize);
+      localStorage.setItem('agy_chapter_lead', state.verseLead);
     } catch (e) {}
     applyVerseType();
-    replaceReading();
+    /* Re-setting the chapter moves the passage inside it, which is the one time that is
+       allowed, because the reader asked for it. Put it back in the middle. */
     if (cube.open) centreSelectedVerse();
   }
 
@@ -2500,8 +2502,7 @@
          scroll gesture, so this only ever sees real taps. */
       elements.storyOverlay.addEventListener('click', (e) => {
         if (isDeepOpen()) return;   /* in here a tap is a scroll or a link, not a page turn */
-        if (e.target.closest('#storyMode') || e.target.closest('#storyType') ||
-            e.target.closest('#storyActiveVerBadge') ||
+        if (e.target.closest('#storyMode') || e.target.closest('#storyActiveVerBadge') ||
             e.target.closest('#btnStoryDeeper') || e.target.closest('.story-bottom-bar')) return;
         if (turn.moved) return;     /* the click that follows a horizontal drag is not a tap */
         if (cube.open) return;      /* in the chapter a tap is a scroll or a link, not a turn */

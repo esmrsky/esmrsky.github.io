@@ -334,7 +334,6 @@ h1, h2, h3, h4, h5, h6,
 .hero-tagline,
 .reader-sticky-header h3,
 .bento-verse-text,
-.story-passage-text,
 .grace-core-quote,
 .grace-quote,
 .context-chapter-header h4,
@@ -4174,13 +4173,26 @@ input:focus-visible,
   /* The fallback only. A `.story-style-*` class on this same element outranks it, and one is
      always put there — this is what shows if a face has not been chosen yet. */
   font-family: var(--app-font, var(--font-serif));
-  /* The two dials in the bar. The base is still the fluid clamp; the reader scales it. */
-  font-size: calc(clamp(1.6rem, 6.8vw, 2.45rem) * var(--verse-size, 1));
-  line-height: var(--verse-leading, 1.42);
+  /* Standard, and not adjustable. The verse is a few lines set to fill a screen; there is
+     nothing here for a dial to do. The dials live in the chapter, which is the page of
+     continuous reading. */
+  font-size: clamp(1.6rem, 6.8vw, 2.45rem);
+  line-height: 1.42;
   font-weight: 600;
   letter-spacing: -0.005em;
   text-align: left;
-  text-wrap: pretty;
+  /* ---------- plain greedy wrapping, and it matters ----------
+     `pretty` re-balances the last few lines of a block to avoid an orphan, and `balance` (which
+     the typographic defaults near the top of this sheet apply to `.story-passage-text`) does the
+     same to the whole of it. Both re-decide line breaks the reader has ALREADY READ every time
+     the paragraph grows — measured, a five-line opening part became four lines the moment the
+     second part was appended, with words jumping up a line behind the reader's eye.
+
+     Greedy wrapping fills each line to capacity without looking ahead, so appending to the end
+     of a paragraph can only ever change the line the join lands on, and never one above it.
+     That is the property this whole design rests on. An occasional short last line is the price
+     and it is worth paying. */
+  text-wrap: wrap;
   overflow-wrap: break-word;
   color: var(--text-primary);
 }
@@ -4459,12 +4471,32 @@ input:focus-visible,
    ==========================================================================
    Size and leading, on the same pill and the same menu as the appearance control, because they
    are the same kind of thing: a preference about how this page is set, kept for the session.
-   The passage reads them as `--verse-size` and `--verse-leading`, and so does the chapter, so
-   one choice governs both distances the reader can be at from the same words. */
+   They belong to the CHAPTER and live in its header. The verse is four lines set to fill a
+   screen — there is nothing there for a dial to change — but the chapter is a page of
+   continuous reading, and that is the only surface where size and leading earn a control. */
 .story-type {
   position: relative;
   flex: 0 0 auto;
   z-index: 60;
+}
+
+/* The header is a row of [title] [translation] [dials] [close]; the controls keep together at
+   the end, and the title takes whatever is left. */
+.reader-face-head #readerFaceVer { margin-left: auto; flex-shrink: 0; }
+.reader-face-head .story-type { flex-shrink: 0; }
+.reader-face-head > div:first-child { min-width: 0; }
+
+/* Two labelled buttons, sharing the width and neither of them losing its words. */
+.reader-face-foot .story-nav-btn {
+  min-width: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.reader-face-foot .story-nav-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .story-type-btn {
@@ -4481,8 +4513,11 @@ input:focus-visible,
 
 .story-type-menu {
   position: absolute;
-  bottom: calc(100% + 0.45rem);
+  /* Down, not up: it hangs off a button in the chapter's header now rather than one in a bar
+     at the foot of the screen. */
+  top: calc(100% + 0.45rem);
   right: 0;
+  z-index: 20;
   min-width: 14rem;
   padding: 0.5rem;
   border-radius: 14px;
@@ -4709,8 +4744,8 @@ input:focus-visible,
 .reader-face-body .esv-ctx-passage {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: calc(1.06rem * var(--verse-size, 1));
-  line-height: calc(var(--verse-leading, 1.42) * 1.3);
+  font-size: calc(1.06rem * var(--chapter-size, 1));
+  line-height: var(--chapter-leading, 1.85);
   color: var(--text-primary);
 }
 
