@@ -509,11 +509,37 @@ h3.sub:first-of-type{margin-top:1.4em}
    entry carries a caution rather than a verdict; adjudicating a stranger's
    inner life is not something a web page gets to do.
    ========================================================================== */
-.lanes{margin-top:clamp(26px,4vw,38px);display:grid;gap:clamp(30px,5vw,52px)}
-.lane-head{
-  border-top:1px solid rgba(255,255,255,.22);padding-top:clamp(14px,2vw,18px);
-  margin-bottom:clamp(16px,2.4vw,22px);max-width:64ch;
+.lanes{margin-top:clamp(26px,4vw,38px);display:grid;gap:clamp(6px,1vw,12px)}
+
+/* Each lane opens and closes. Lane 1 ships open because it carries the worked
+   example; the rest keep their heading, their one-line description and a
+   count visible in the summary, so the map still reads as four lanes with
+   nothing collapsed away except the entries themselves. */
+.lane{border-top:1px solid rgba(255,255,255,.22)}
+.lane>summary{
+  list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;
+  gap:clamp(16px,3vw,32px);align-items:start;
+  padding:clamp(15px,2.2vw,20px) 0 clamp(16px,2.4vw,22px);min-height:64px;
 }
+.lane>summary::-webkit-details-marker{display:none}
+.lane>summary:focus-visible{outline:3px solid var(--haze);outline-offset:2px;border-radius:3px}
+.lane-tog{display:flex;align-items:center;gap:12px;flex:none;padding-top:3px}
+.lane-count{
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:#8E9AA4;white-space:nowrap;
+}
+.lplus{width:22px;height:22px;flex:none;color:#9AA6B0;display:block}
+.lplus svg{width:100%;height:100%;transition:transform .34s cubic-bezier(.22,.68,.28,1)}
+.lane[open] .lplus svg{transform:rotate(45deg)}
+.lane>summary:hover .lane-count,.lane>summary:hover .lplus{color:#E4A6CB}
+.lane[open]>summary{padding-bottom:clamp(14px,2vw,18px)}
+.lane .voices{padding-bottom:clamp(22px,3.4vw,34px)}
+@media (prefers-reduced-motion:reduce){.lplus svg{transition:none}}
+@media (max-width:560px){
+  .lane>summary{grid-template-columns:1fr;gap:.9em}
+  .lane-tog{padding-top:0}
+}
+.lane-head{max-width:64ch}
 .lane-n{
   font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:#E4A6CB;display:flex;align-items:center;gap:8px;margin-bottom:.7em;
@@ -571,6 +597,22 @@ h3.sub:first-of-type{margin-top:1.4em}
   font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
   color:var(--ink-3);display:block;margin-bottom:.4em;
 }
+
+/* the sources are reference, not argument, so they fold. This one is on a
+   paper band, so its toggle needs its own clothes rather than the lanes'. */
+.srcbox{margin-top:clamp(20px,3vw,28px);border-top:1px solid var(--hair);max-width:880px}
+.srcbox>summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:clamp(15px,2.2vw,20px) 0;min-height:64px;
+}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary:focus-visible{outline:3px solid var(--haze);outline-offset:2px;border-radius:3px}
+.srclab{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.srcbox .lane-count{color:var(--ink-3)}
+.srcbox .lplus{color:var(--ink-3)}
+.srcbox[open] .lplus svg{transform:rotate(45deg)}
+.srcbox>summary:hover .lane-count,.srcbox>summary:hover .lplus{color:var(--haze-ink)}
+.srcbox .srcs{margin-top:0;border-top:1px solid var(--hair-2);padding-bottom:clamp(10px,1.6vw,16px)}
 
 /* ————— foot ————— */
 .foot{background:var(--ink);color:#93A0AA;padding:clamp(44px,6vw,72px) 0}
@@ -1682,12 +1724,15 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
     <div class="lanes rise">
 
-      <section class="lane">
+      <details class="lane" open>
+        <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-eye"/></svg>Lane 1</span>
           <h4>They say they see it</h4>
           <p>First-person reports of direct sight. The primary material, and the least testable.</p>
         </div>
+        <span class="lane-tog"><span class="lane-count">3 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
+        </summary>
         <div class="voices">
           <article class="voice">
             <h5>Micah Turnbo</h5>
@@ -1710,14 +1755,17 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
             <div class="vfor"><b>Take from it</b> a distinction it draws that most of its critics do not: a <b>seer</b> sees and declares; a <b>discerner</b> perceives the <em>source</em> of a thing. Different gifts, different jobs &mdash; and conflating them is most of the confusion.</div>
           </article>
         </div>
-      </section>
+      </details>
 
-      <section class="lane">
+      <details class="lane">
+        <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-ear"/></svg>Lane 2</span>
           <h4>They take the unseen seriously, at length</h4>
           <p>Long-form audio is where this subject actually lives now. These differ enormously in rigour, and the difference is the thing to track.</p>
         </div>
+        <span class="lane-tog"><span class="lane-count">4 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
+        </summary>
         <div class="voices">
           <article class="voice">
             <h5>The Deep End</h5>
@@ -1745,14 +1793,17 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
             <div class="vfor"><b>Start here</b> if the ledger in section&nbsp;05 was the part that interested you.</div>
           </article>
         </div>
-      </section>
+      </details>
 
-      <section class="lane">
+      <details class="lane">
+        <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-book"/></svg>Lane 3</span>
           <h4>They did the scholarship</h4>
           <p>Slower, duller, and the reason anything on this page can be checked at all.</p>
         </div>
+        <span class="lane-tog"><span class="lane-count">3 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
+        </summary>
         <div class="voices">
           <article class="voice">
             <h5>Paul Hiebert</h5>
@@ -1771,14 +1822,17 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
             <p>Four positions worth knowing, disagreeing productively: Arnold on what Paul&rsquo;s vocabulary meant, Lowe&rsquo;s critique of strategic-level warfare, Moreau&rsquo;s balanced Lausanne assessment, and Wink reading the powers as the interiority of institutions. Section&nbsp;07 is built out of these four.</p>
           </article>
         </div>
-      </section>
+      </details>
 
-      <section class="lane">
+      <details class="lane">
+        <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-alert"/></svg>Lane 4</span>
           <h4>They apply the brakes</h4>
           <p>The most useful lane and the emptiest. Correction from inside a practice is worth more than correction from outside it.</p>
         </div>
+        <span class="lane-tog"><span class="lane-count">3 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
+        </summary>
         <div class="voices">
           <article class="voice">
             <h5>The Remnant Radio</h5>
@@ -1799,7 +1853,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
             <div class="vfor"><b>Read them for</b> accountability pressure, which they supply better than anyone. Not for a model of the realm, which they are not trying to give you &mdash; and be warned that traffic between these camps runs hot and yields far more heat than findings.</div>
           </article>
         </div>
-      </section>
+      </details>
 
     </div>
 
@@ -2157,7 +2211,12 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <h2 class="beat rise" style="font-size:clamp(30px,5vw,52px)">Sources</h2>
     <p class="fine rise" style="margin-top:1.2em">Every empirical claim above is one of these. Where a study is weaker than its reputation, the card said so.</p>
 
-    <ul class="srcs rise">
+    <details class="srcbox rise">
+      <summary>
+        <span class="srclab">All twenty-one sources</span>
+        <span class="lane-tog"><span class="lane-count">open the list</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
+      </summary>
+    <ul class="srcs">
       <li><span class="kind">The frame &mdash; read this one first</span><b>Hiebert, P. G. (1982).</b> The flaw of the excluded middle. <i>Missiology: An International Review</i> 10, 35&ndash;47. <a href="https://journals.sagepub.com/doi/10.1177/009182968201000103" target="_blank" rel="noopener">Sage</a> &middot; <a href="https://kingdomupgrowth.com/wp-content/uploads/2021/07/p-hiebert-flaw-of-excluded-middle.pdf" target="_blank" rel="noopener">PDF</a></li>
       <li><span class="kind">The room, measured</span><b>Wiseman, R., Watt, C., Stevens, P., Greening, E. &amp; O&rsquo;Keeffe, C. (2003).</b> An investigation into alleged &lsquo;hauntings&rsquo;. <i>British Journal of Psychology</i> 94, 195&ndash;211. <a href="https://pubmed.ncbi.nlm.nih.gov/12803815/" target="_blank" rel="noopener">PubMed</a> &middot; <a href="http://www.richardwiseman.com/resources/BJP-hauntings.pdf" target="_blank" rel="noopener">full text</a></li>
       <li><span class="kind">The control condition</span><b>French, C. C., Haque, U., Bunton-Stasyshyn, R. &amp; Davis, R. (2009).</b> The &ldquo;Haunt&rdquo; project: an attempt to build a &ldquo;haunted&rdquo; room by manipulating complex electromagnetic fields and infrasound. <i>Cortex</i> 45. <a href="https://research.gold.ac.uk/id/eprint/4209/" target="_blank" rel="noopener">Goldsmiths repository</a></li>
@@ -2180,6 +2239,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <li><span class="kind">Lane 4 &middot; the brakes</span><b>The Remnant Radio</b> &mdash; <a href="https://www.theremnantradio.com/video/deliverance-ministry-without-the-weird" target="_blank" rel="noopener">Deliverance Ministry Without the Weird</a>, which takes on spiritual mapping from inside the charismatic practice. <b>Prophetic Standards Statement</b> (April 2021) &mdash; ~85 signatories, drafted by Michael Brown and Joseph Mattera after the failed 2020 election prophecies. <a href="https://propheticstandards.com/" target="_blank" rel="noopener">propheticstandards.com</a></li>
       <li><span class="kind">The slang</span><b>Aura, aura points, aura farming.</b> First on TikTok in January 2024, mainstream by mid-2025. Included as evidence about folk theories, not as a spiritual claim.</li>
     </ul>
+    </details>
   </div>
 </section>
 
