@@ -442,6 +442,13 @@ h3.sub:first-of-type{margin-top:1.4em}
   gap:clamp(13px,2vw,20px);align-items:center;padding:clamp(15px,2.2vw,20px) clamp(16px,2.4vw,22px);
   min-height:64px;
 }
+/* four children now, so four tracks — a fourth child in a three-track grid
+   wraps into row 2 and sizes the auto track to its own max-content. */
+.rung>summary{grid-template-columns:auto auto 1fr auto}
+.rung .rico{display:grid;place-items:center;width:22px;height:22px;flex:none;color:var(--ink-3)}
+.rung .rico svg{width:100%;height:100%}
+.rung[open] .rico{color:var(--haze-ink)}
+@media (max-width:520px){.rung .rico{display:none}.rung>summary{grid-template-columns:auto 1fr auto}}
 .rung>summary::-webkit-details-marker{display:none}
 .rung>summary:hover{background:color-mix(in srgb,var(--haze) 7%,transparent)}
 .rung .no{
@@ -509,8 +516,9 @@ h3.sub:first-of-type{margin-top:1.4em}
 }
 .lane-n{
   font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:#E4A6CB;display:block;margin-bottom:.7em;
+  text-transform:uppercase;color:#E4A6CB;display:flex;align-items:center;gap:8px;margin-bottom:.7em;
 }
+.lane-n svg{width:15px;height:15px;flex:none}
 .lane-head h4{
   font-family:var(--display);font-weight:400;letter-spacing:-.012em;
   font-size:clamp(24px,3.6vw,38px);color:#F2EFEC;margin-bottom:.4em;
@@ -575,6 +583,110 @@ h3.sub:first-of-type{margin-top:1.4em}
 .js-reveal .rise{opacity:0;transform:translateY(14px)}
 .js-reveal .rise.in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s cubic-bezier(.22,.68,.28,1)}
 @media (prefers-reduced-motion:reduce){.js-reveal .rise{opacity:1;transform:none}}
+
+
+/* ==========================================================================
+   THE MARGIN RAIL
+   543px of the 1180px wrap sat empty beside every paragraph while the prose
+   ran in a 66ch strip down the left for thousands of pixels at a time. The
+   measure is right; the emptiness beside it was the problem. So the prose
+   keeps 66ch and everything that was being crammed INTO that measure — the
+   statistic, the caution, the citation, the aside — moves out beside it.
+
+   Placement is pure CSS: an .aside written immediately AFTER the paragraph
+   it annotates lands on that paragraph's own row, because a grid item with a
+   definite column is placed at the auto-placement cursor's current row. It
+   spans two rows so a slightly tall one does not push the prose down.
+
+   THE RULE IS ONE .aside PER .spread. A second one in the same grid wants the
+   row the first is still spanning, so it drops a row and stops pointing at its
+   own paragraph — and nothing about the result looks broken enough to notice.
+   Prose that needs three notes gets three consecutive .spread blocks; they
+   cost nothing and the paragraph margins run through them seamlessly.
+
+   Below 960px the second column collapses and every aside becomes a tinted
+   card in the flow. Same information, in the shape a phone can carry.
+   ========================================================================== */
+.spread{
+  display:grid;
+  grid-template-columns:minmax(0,var(--col)) minmax(0,1fr);
+  column-gap:clamp(26px,4vw,64px);
+  align-items:start;
+}
+.spread>*{grid-column:1;min-width:0}
+.spread>.aside{grid-column:2;grid-row:span 2;margin:.2em 0 1.1em}
+@media (max-width:960px){
+  .spread{display:block}
+  .spread>.aside{margin:1.6em 0;max-width:none}
+}
+
+/* the rail card itself — four tints, and the tint is never decorative:
+   it names which of the page's four claims-about-knowledge the note is. */
+.aside{
+  --a:var(--haze); --a-ink:var(--haze-ink); --a-on:#E4A6CB;
+  border:1px solid color-mix(in srgb,var(--a) 30%,transparent);
+  border-left:3px solid var(--a);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--a) 7%,var(--cream));
+  padding:clamp(13px,1.6vw,17px) clamp(14px,1.8vw,18px);
+  font-size:.87rem;line-height:1.58;color:var(--ink-2);
+  max-width:40ch;
+}
+.aside--sodium{--a:var(--sodium);--a-ink:var(--sodium-ink);--a-on:#E7A24E}
+.aside--cyan  {--a:var(--cyan);  --a-ink:var(--cyan-ink);  --a-on:#6FD3E6}
+.aside--flare {--a:var(--flare); --a-ink:var(--flare-ink); --a-on:#EF8072}
+.aside--ink   {--a:var(--ink-3); --a-ink:var(--ink);       --a-on:#C9C6C3}
+
+.aside .lbl{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--a-ink);margin-bottom:.75em;
+}
+.aside .lbl svg{width:13px;height:13px;flex:none}
+.aside .fig{
+  display:block;font-family:var(--display);font-weight:400;letter-spacing:-.022em;
+  font-size:clamp(30px,4.4vw,42px);line-height:.95;color:var(--a-ink);margin-bottom:.34em;
+}
+.aside .fig small{
+  display:block;font-family:var(--mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+  margin-top:.75em;line-height:1.5;
+}
+.aside p{margin:0;max-width:none;font-size:inherit;line-height:inherit;color:inherit}
+.aside .wordlist{font-family:var(--serif);font-style:italic;font-size:1.02rem;line-height:1.7;color:var(--a-ink)}
+.band--night .aside .wordlist{color:var(--a-on)}
+.aside p+p{margin-top:.72em}
+.aside b{color:var(--ink);font-weight:600}
+.aside em{color:var(--a-ink);font-style:italic}
+.aside cite{
+  display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;
+  line-height:1.5;letter-spacing:.02em;color:var(--ink-3);
+  margin-top:.9em;padding-top:.75em;
+  border-top:1px dotted color-mix(in srgb,var(--a) 36%,var(--hair));
+}
+/* a rail card on a night band keeps its hue and turns its own clothes over */
+.band--night .aside{
+  background:color-mix(in srgb,var(--a) 13%,rgba(255,255,255,.035));
+  border-color:color-mix(in srgb,var(--a) 40%,transparent);
+  color:#C4C2C0;
+}
+.band--night .aside .lbl,.band--night .aside .fig,.band--night .aside em{color:var(--a-on)}
+.band--night .aside b{color:#F2EFEC}
+.band--night .aside .fig small{color:#93A0AA}
+.band--night .aside cite{color:#93A0AA;border-top-color:rgba(255,255,255,.2)}
+
+/* ————— the opener: one drop cap per prose run, as an entry point ————— */
+.opener::first-letter{
+  float:left;font-family:var(--display);font-weight:400;
+  font-size:3.35em;line-height:.78;padding:.06em .09em 0 0;
+  color:var(--haze-ink);
+}
+.band--night .opener::first-letter{color:#E4A6CB}
+
+/* ————— icons ————— */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.eyebrow>svg{width:15px;height:15px;flex:none;margin-right:-3px}
+.icon{width:1em;height:1em;vertical-align:-.13em}
 
 /* ==========================================================================
    THE SCRIPTURE LAYER — behaviour comes from /assets/scripture-popover.js,
@@ -714,6 +826,39 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
   document.documentElement.classList.add("js-reveal");
 </script>
 
+<!-- Icon set. Decorative throughout: every icon repeats a label that is already
+     in text beside it, so nothing here is the only carrier of any meaning.
+     .no-reflink keeps the scripture walker out — it cannot wrap a reference
+     inside an SVG <text> and the result renders as nothing. -->
+<svg class="sprite no-reflink" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9a3 3 0 1 0-3-3"/><path d="M3 12h13a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2.6-7.5 4.2 15L15.6 12H22"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="4.6" rx="1.2"/><rect x="3" y="9.7" width="18" height="4.6" rx="1.2"/><rect x="3" y="16.4" width="18" height="4.6" rx="1.2"/></symbol>
+<symbol id="i-fork" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v7"/><path d="M12 10 5.5 16.5M12 10l6.5 6.5"/><path d="M5.5 12.5v4h4"/><path d="M18.5 12.5v4h-4"/></symbol>
+<symbol id="i-columns" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 21h19"/><path d="M4.5 21V9.5M9.5 21V9.5M14.5 21V9.5M19.5 21V9.5"/><path d="M2.5 9.5h19L12 3.2 2.5 9.5Z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s7-6.4 7-11.2a7 7 0 1 0-14 0c0 4.8 7 11.2 7 11.2Z"/><circle cx="12" cy="9.8" r="2.6"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4v17.2M8 20.6h8"/><path d="M4.6 7.4h14.8"/><path d="M4.6 7.4 1.8 13.6h5.6L4.6 7.4Z"/><path d="M19.4 7.4l-2.8 6.2h5.6l-2.8-6.2Z"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.8-6.4 10-6.4S22 12 22 12s-3.8 6.4-10 6.4S2 12 2 12Z"/><circle cx="12" cy="12" r="2.9"/></symbol>
+<symbol id="i-scroll" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3H17a2 2 0 0 1 2 2v13a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5.5A2.5 2.5 0 0 1 6.5 3Z"/><path d="M8 8.5h7M8 12.2h7M8 15.9h4.2"/></symbol>
+<symbol id="i-steps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3.8h-5.4v5.4h-5.4v5.4H4.8v5.6H2.6"/></symbol>
+<symbol id="i-radiate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.4"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8"/><path d="M5 4.8a10 10 0 0 0 0 14.4M19 4.8a10 10 0 0 1 0 14.4"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.8A2.8 2.8 0 0 1 6.8 2H20v16.4H6.8A2.8 2.8 0 0 0 4 21.2Z"/><path d="M4 18.4A2.8 2.8 0 0 1 6.8 21.2H20"/></symbol>
+<symbol id="i-body" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.6" r="2.6"/><path d="M12 7.4v7.4"/><path d="M7.6 10.2 12 8.8l4.4 1.4"/><path d="M8.6 21l3.4-6.2 3.4 6.2"/></symbol>
+<symbol id="i-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 21V3.9a1 1 0 0 1 1-1h12.8a1 1 0 0 1 1 1V21"/><path d="M2.6 21h18.8"/><circle cx="16" cy="12.4" r="1"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7.8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M16.4 5a3.2 3.2 0 0 1 0 5.6"/><path d="M17.4 14.2A6.2 6.2 0 0 1 21.2 20"/></symbol>
+<symbol id="i-mirror" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v18.8"/><path d="M8.6 5.6 4.8 12l3.8 6.4"/><path d="M15.4 5.6 19.2 12l-3.8 6.4"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r=".9"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.4V12l4 2.3"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.6c3.9 0 6.4-2.7 6.4-6.2 0-4.6-4.2-6.6-3.2-11.8-2.6 1.4-6.2 4.6-6.2 8.2 0 1.6.6 2.6.6 2.6s-1.6-.8-2.2-3.2c-1 1.3-1.8 3-1.8 4.9 0 3.1 2.5 5.5 6.4 5.5Z"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4 1.9 20.6h20.2L12 3.4Z"/><path d="M12 10v4.6"/><path d="M12 17.7v.1"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.9 12.3l2.8 2.8L16.1 9.7"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6.2C6.8 7.5 5.2 10 5.2 13.6v4.2h5.6v-5.6H8.1c0-1.9.7-3.2 2.6-4.1L10 6.2Z"/><path d="M19.6 6.2c-3.2 1.3-4.8 3.8-4.8 7.4v4.2h5.6v-5.6h-2.7c0-1.9.7-3.2 2.6-4.1l-.7-1.9Z"/></symbol>
+<symbol id="i-water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.6c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/><path d="M2 12.4c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/><path d="M2 18.2c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/></symbol>
+<symbol id="i-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="3.8" r="1.8"/><path d="M12 5.6v3.2"/><path d="M4.4 18.4v-6a3 3 0 0 1 3-3h9.2a3 3 0 0 1 3 3v6"/><path d="M12 8.8v9.6"/><circle cx="4.4" cy="20.2" r="1.8"/><circle cx="12" cy="20.2" r="1.8"/><circle cx="19.6" cy="20.2" r="1.8"/></symbol>
+<symbol id="i-ear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 9.2a5.9 5.9 0 1 1 11.8 0c0 3-2.2 4.1-3.4 5.3-1 1-1.1 2-1.1 3.1a2.9 2.9 0 0 1-5.1 1.8"/><path d="M9.4 9.4a2.6 2.6 0 0 1 5.2 0c0 1.7-1.7 2.1-2.3 3.1"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 2.8v6.4L4.3 18.5a2 2 0 0 0 1.7 3h12a2 2 0 0 0 1.7-3L14.4 9.2V2.8"/><path d="M8.1 2.8h7.8"/><path d="M7 15.2h10"/></symbol>
+</defs></svg>
+
 <!-- ══════════════════════════════════════════════════════ HERO ══════════ -->
 <header class="hero">
   <div class="hero-haze" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -739,24 +884,38 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 01 · EVERYBODY ════════ -->
 <section class="band">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">01</span> Everybody does this</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-wind"/></svg><span class="n">01</span> Everybody does this</div>
     <h2 class="beat rise">You knew before <em>anyone</em> spoke</h2>
 
-    <div class="rise">
+    <div class="spread rise">
       <p class="lead">Walk into a house you are thinking of renting and you will know in about four seconds. Walk into a family kitchen ten minutes after an argument and you will know before you have looked at a face.</p>
 
-      <p>This is not a fringe experience or a spiritual gift. It is the most ordinary thing in the world, and every language on earth has words for it. A city has a feeling &mdash; you can be dropped into one blindfolded and something will register before the first sign is read. Bodies of water have it: the flat indifference of open sea, the hush over a still lake at dusk, the particular unease of water you cannot see the bottom of. Buildings have it. Hospitals at 3am have it. So do the two identical branches of the same chain coffee shop, one of which you go back to and one of which you do not, for reasons you have never once managed to put into a sentence.</p>
+      <p class="opener">This is not a fringe experience or a spiritual gift. It is the most ordinary thing in the world, and every language on earth has words for it.</p>
 
-      <p>And the newest slang has made the whole thing quantitative. A generation that grew up online now measures charisma in <b>aura</b> &mdash; aura points scored and lost, aura farmed by looking unbothered on purpose. The word arrived on TikTok in January 2024 and was everywhere by the middle of 2025. It is not a spiritual claim. But notice its <em>shape</em>: a field around a person, of variable strength, which other people can read at a distance and which the person can cultivate or squander. That is a folk theory, and it is remarkably specific for something everyone insists is just a joke.</p>
+      <aside class="aside">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-pin"/></svg>Where people report it</span>
+        <p><b>A city</b>, read blindfolded before the first sign. <b>Open sea</b>, flat and indifferent. <b>A lake at dusk.</b> Water you cannot see the bottom of. <b>Buildings.</b> Hospitals at 3am.</p>
+        <cite>And the two identical branches of one chain coffee shop &mdash; one you go back to, one you do not, for reasons you have never managed to put in a sentence.</cite>
+      </aside>
+
+      <p>And the newest slang has made the whole thing quantitative. A generation that grew up online now measures charisma in <b>aura</b>. It is not a spiritual claim. But notice its <em>shape</em>: a field around a person, of variable strength, which other people can read at a distance and which the person can cultivate or squander. That is a folk theory, and it is remarkably specific for something everyone insists is just a joke.</p>
     </div>
 
-    <h3 class="sub rise">Now listen to the words</h3>
-    <p class="rise">Here is the actual vocabulary people use for it. Tap one.</p>
+    <div class="spread rise">
+      <h3 class="sub">Now listen to the words</h3>
+      <p>Here is the actual vocabulary people use for it. Tap one.</p>
+      <aside class="aside">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-wind"/></svg>The slang, dated</span>
+        <span class="fig">Jan 2024<small>first on TikTok &middot; mainstream by mid-2025</small></span>
+        <p><b>Aura points</b> scored and lost. <b>Aura farming</b> &mdash; looking unbothered on purpose.</p>
+        <cite>Included as evidence about folk theories, not as a spiritual claim.</cite>
+      </aside>
 
-    <div class="vocab rise" id="vocab" role="group" aria-label="Words people use for the feeling of a place"></div>
-    <div class="vocab-out rise" id="vocabOut" aria-live="polite">
-      <span class="sense">Borrowed from</span>
-      <p>Pick a word above and this will tell you which part of the physical world it was stolen from.</p>
+      <div class="vocab" id="vocab" role="group" aria-label="Words people use for the feeling of a place"></div>
+      <div class="vocab-out" id="vocabOut" aria-live="polite">
+        <span class="sense">Borrowed from</span>
+        <p>Pick a word above and this will tell you which part of the physical world it was stolen from.</p>
+      </div>
     </div>
 
     <div class="rise">
@@ -764,23 +923,47 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <p>Nobody says &ldquo;I detected a moderate anomaly on entry.&rdquo; They say <em>heavy</em>. They say <em>thick</em>, <em>cold</em>, <em>off</em>, <em>close</em>. The report arrives in the body, in the language of physics, before the mind has any account of it &mdash; and that is the single most important fact on this page, because it is exactly what makes the next step so easy to get wrong. A reading you receive as a body sensation is a reading you will explain with whatever cause is nearest to hand. If you are a materialist, that will be the air conditioning. If you are charismatic, that will be a spirit. Neither of you checked.</p>
     </div>
 
-    <h3 class="sub rise">Aura, taken literally</h3>
-    <div class="rise">
-      <p>The slang is a joke. There is a non-joking version, and it makes a different kind of claim: a coloured field around the body, of variable strength, readable by a sensitive, indicating personality or health. That is not a metaphor. It is a physical claim about a detectable field &mdash; which means, unlike almost everything else on this page, <b>it can be tested directly</b>.</p>
+    <div class="spread rise">
+      <h3 class="sub">Aura, taken literally</h3>
+      <p class="opener">The slang is a joke. There is a non-joking version, and it makes a different kind of claim: a coloured field around the body, of variable strength, readable by a sensitive, indicating personality or health. That is not a metaphor. It is a physical claim about a detectable field &mdash; which means, unlike almost everything else on this page, <b>it can be tested directly</b>.</p>
 
-      <p>It was, by a nine-year-old. For a fourth-grade science project, Emily Rosa sat twenty-one experienced therapeutic-touch practitioners &mdash; people who work professionally with what they describe as the human energy field &mdash; on the far side of a cardboard screen with their hands through two holes. She held her own hand a few inches above one of theirs, at random, and asked which. They could not tell above chance. It ran in <i>JAMA</i> in 1998, and the journal&rsquo;s editor told patients to save their money.</p>
+      <p>It was, by a nine-year-old. Emily Rosa sat twenty-one experienced therapeutic-touch practitioners &mdash; people who work professionally with what they describe as the human energy field &mdash; on the far side of a cardboard screen with their hands through two holes. She held her own hand a few inches above one of theirs, at random, and asked which. They could not tell above chance, and the journal&rsquo;s editor told patients to save their money.</p>
+
+      <aside class="aside aside--cyan">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-flask"/></svg>The one claim anybody tested</span>
+        <span class="fig">21<small>practitioners &middot; no better than chance</small></span>
+        <p>A cardboard screen, two holes, a hand held a few inches above one of theirs. Designed as a <b>fourth-grade science project</b>.</p>
+        <cite>Rosa, Rosa, Sarner &amp; Barrett, <i>JAMA</i> 279 (1998).</cite>
+      </aside>
 
       <p>Be precise about what that settles, because it is routinely over-claimed in both directions. It tests <em>one</em> specific, physical, well-specified claim, and that claim failed cleanly. It says nothing whatever about discernment, about the unseen realm, or about whether you can read a room &mdash; those are not detectable-field claims and were never on the screen. Anyone using this result to close the larger question is making the same filing error as everyone else, just quickly.</p>
 
-      <p>The more interesting point is that <b>Scripture does not have this category either</b>. There is no doctrine of coloured human energy fields anywhere in it. What it does have is a completely different vocabulary for what surrounds a person and what fills a place: presence, glory, spirit, peace, fear, holiness, defilement, oppression, light, darkness, aroma. Not one of those is a field. They are relations and moral conditions &mdash; things that exist <em>between</em> parties rather than radiating from one.</p>
+    </div>
+
+    <div class="spread rise">
+      <p>The more interesting point is that <b>Scripture does not have this category either</b>. There is no doctrine of coloured human energy fields anywhere in it. What it has instead is a completely different vocabulary &mdash; and not one word of it is a field. They are relations and moral conditions, things that exist <em>between</em> parties rather than radiating from one.</p>
+
+      <aside class="aside">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-quote"/></svg>What Scripture says instead</span>
+        <p class="wordlist">presence &middot; glory &middot; spirit &middot; peace &middot; fear &middot; holiness &middot; defilement &middot; oppression &middot; light &middot; darkness &middot; aroma</p>
+        <cite>Eleven words for what surrounds a person and fills a place. None of them is a field.</cite>
+      </aside>
 
       <p class="pull">So the useful question was never <em>&ldquo;is aura real?&rdquo;</em> It is: what are you trying to describe, and does one of those words fit it better?</p>
 
       <p>Usually one does, and usually it is more specific than the word it replaces.</p>
+    </div>
 
+    <div class="spread rise">
       <h3 class="sub">And the same move, in newer clothes</h3>
 
-      <p>Watch for <b>frequency</b>, <b>vibration</b>, <b>resonance</b> and <b>energy</b>, which now turn up constantly in Christian teaching about atmosphere and perception &mdash; including in the title of a popular podcast episode about hearing God. Sometimes these are plainly metaphors. Sometimes they appear to be meant literally. The two are almost never distinguished, and the distinction is the whole thing, because it decides what would count as evidence.</p>
+      <p>Watch for four words that now turn up constantly in Christian teaching about atmosphere and perception &mdash; including in the title of a popular podcast episode about hearing God. Sometimes they are plainly metaphors. Sometimes they appear to be meant literally. The two are almost never distinguished, and the distinction is the whole thing, because it decides what would count as evidence.</p>
+
+      <aside class="aside aside--flare">
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-alert"/></svg>Borrowed authority</span>
+        <p class="wordlist">frequency &middot; vibration &middot; resonance &middot; energy</p>
+        <cite>In physics each of these names a measurable quantity with units. Used of a room or a spirit, the units come along for the ride and nothing is being measured.</cite>
+      </aside>
 
       <p>In physics these words name measurable quantities with units. Nothing in the biblical vocabulary above maps onto them, and no experiment of the Emily Rosa kind has established the ones being invoked. A metaphor cannot be wrong, which is a fine thing for a metaphor to be. A physics claim can be wrong, and ought to be phrased so that it could be. <b>The word does borrowed work either way</b> &mdash; it arrives carrying the authority of a laboratory &mdash; and noticing that is most of what you need.</p>
     </div>
@@ -790,7 +973,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 02 · THE MEASURABLE FLOOR ══ -->
 <section class="band band--night">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">02</span> What you were probably doing</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-pulse"/></svg><span class="n">02</span> What you were probably doing</div>
     <h2 class="beat rise">Most of it is the <em>room</em>, and you</h2>
 
     <div class="rise">
@@ -869,7 +1052,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 03 · THE MISSING MIDDLE ═══ -->
 <section class="band band--hair">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">03</span> Why both answers are wrong in the same way</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-layers"/></svg><span class="n">03</span> Why both answers are wrong in the same way</div>
     <h2 class="beat rise">You were handed a shelf <em>short</em></h2>
 
     <div class="rise">
@@ -927,7 +1110,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 03 · THE TWO EXITS ════ -->
 <section class="band band--paper2">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">04</span> The two cheap exits</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-fork"/></svg><span class="n">04</span> The two cheap exits</div>
     <h2 class="beat rise">Both of these are the <em>same</em> move</h2>
 
     <div class="rise">
@@ -962,7 +1145,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 04 · THE REALM IS STRUCTURED -->
 <section class="band band--night">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">05</span> What the text actually claims</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-columns"/></svg><span class="n">05</span> What the text actually claims</div>
     <h2 class="beat rise">There are <em>offices</em> up there</h2>
 
     <div class="rise">
@@ -1063,7 +1246,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 05 · LOCATED ══════════ -->
 <section class="band">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">06</span> And it is located</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-pin"/></svg><span class="n">06</span> And it is located</div>
     <h2 class="beat rise">Places carry what is <em>done</em> in them</h2>
 
     <div class="rise">
@@ -1129,7 +1312,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 06 · THE DISCIPLINE ═══════ -->
 <section class="band band--haze">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">07</span> What the text conspicuously does not do</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-scale"/></svg><span class="n">07</span> What the text conspicuously does not do</div>
     <h2 class="beat rise">Nobody in the Bible ever <em>maps</em> one</h2>
 
     <div class="rise">
@@ -1174,7 +1357,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 07 · THE SEERS ════════ -->
 <section class="band band--night">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">08</span> The people who say they can see it</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-eye"/></svg><span class="n">08</span> The people who say they can see it</div>
     <h2 class="beat rise">Scripture is oddly <em>uninterested</em> in how much you saw</h2>
 
     <div class="rise">
@@ -1194,7 +1377,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
       <section class="lane">
         <div class="lane-head">
-          <span class="lane-n">Lane 1</span>
+          <span class="lane-n"><svg aria-hidden="true"><use href="#i-eye"/></svg>Lane 1</span>
           <h4>They say they see it</h4>
           <p>First-person reports of direct sight. The primary material, and the least testable.</p>
         </div>
@@ -1224,7 +1407,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
       <section class="lane">
         <div class="lane-head">
-          <span class="lane-n">Lane 2</span>
+          <span class="lane-n"><svg aria-hidden="true"><use href="#i-ear"/></svg>Lane 2</span>
           <h4>They take the unseen seriously, at length</h4>
           <p>Long-form audio is where this subject actually lives now. These differ enormously in rigour, and the difference is the thing to track.</p>
         </div>
@@ -1259,7 +1442,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
       <section class="lane">
         <div class="lane-head">
-          <span class="lane-n">Lane 3</span>
+          <span class="lane-n"><svg aria-hidden="true"><use href="#i-book"/></svg>Lane 3</span>
           <h4>They did the scholarship</h4>
           <p>Slower, duller, and the reason anything on this page can be checked at all.</p>
         </div>
@@ -1285,7 +1468,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
       <section class="lane">
         <div class="lane-head">
-          <span class="lane-n">Lane 4</span>
+          <span class="lane-n"><svg aria-hidden="true"><use href="#i-alert"/></svg>Lane 4</span>
           <h4>They apply the brakes</h4>
           <p>The most useful lane and the emptiest. Correction from inside a practice is worth more than correction from outside it.</p>
         </div>
@@ -1382,7 +1565,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 09 · THE OLD DISCIPLINES ══ -->
 <section class="band band--paper2">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">09</span> Somebody already built this</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-scroll"/></svg><span class="n">09</span> Somebody already built this</div>
     <h2 class="beat rise">Two disciplines for the <em>missing</em> shelf</h2>
 
     <div class="rise">
@@ -1450,7 +1633,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 08 · THE LADDER ═══════ -->
 <section class="band">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">10</span> The working tool</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-steps"/></svg><span class="n">10</span> The working tool</div>
     <h2 class="beat rise">You walked in. Something is off. <em>Now work down.</em></h2>
 
     <div class="rise">
@@ -1461,7 +1644,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">1</span>
-          <span class="name">Your body<small>Slept, eaten, ill, in pain, over-caffeinated</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-body"/></svg></span><span class="name">Your body<small>Slept, eaten, ill, in pain, over-caffeinated</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1475,7 +1658,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">2</span>
-          <span class="name">The room itself<small>Light, air, sound, sightlines, your back to the door</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-door"/></svg></span><span class="name">The room itself<small>Light, air, sound, sightlines, your back to the door</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1489,7 +1672,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">3</span>
-          <span class="name">The people<small>Whose tension did you just walk into the middle of</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-users"/></svg></span><span class="name">The people<small>Whose tension did you just walk into the middle of</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1503,7 +1686,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">4</span>
-          <span class="name">You<small>What did this place remind you of</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-mirror"/></svg></span><span class="name">You<small>What did this place remind you of</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1517,7 +1700,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">5</span>
-          <span class="name">What is being done here<small>Present tense &mdash; what is this place for</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-target"/></svg></span><span class="name">What is being done here<small>Present tense &mdash; what is this place for</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1531,7 +1714,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">6</span>
-          <span class="name">Its history<small>What happened here, and is it being denied</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><span class="name">Its history<small>What happened here, and is it being denied</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1545,7 +1728,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <details class="rung">
         <summary>
           <span class="no">7</span>
-          <span class="name">The realm<small>Only now, and held loosely</small></span>
+          <span class="rico"><svg aria-hidden="true"><use href="#i-flame"/></svg></span><span class="name">The realm<small>Only now, and held loosely</small></span>
           <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </summary>
         <div class="rung-body">
@@ -1569,7 +1752,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 09 · THE CLOSE ════════ -->
 <section class="band band--haze band--hair">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">11</span> The part nobody asks about</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-radiate"/></svg><span class="n">11</span> The part nobody asks about</div>
     <h2 class="beat rise">You are one of the <em>vibes</em></h2>
 
     <div class="rise">
@@ -1593,7 +1776,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════════ SOURCES ═══════════ -->
 <section class="band band--paper2">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">&nbsp;&mdash;&nbsp;</span> Where this comes from</div>
+    <div class="eyebrow rise"><svg aria-hidden="true"><use href="#i-book"/></svg><span class="n">&nbsp;&mdash;&nbsp;</span> Where this comes from</div>
     <h2 class="beat rise" style="font-size:clamp(30px,5vw,52px)">Sources</h2>
     <p class="fine rise" style="margin-top:1.2em">Every empirical claim above is one of these. Where a study is weaker than its reputation, the card said so.</p>
 
