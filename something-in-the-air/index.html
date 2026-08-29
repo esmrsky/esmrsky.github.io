@@ -434,12 +434,12 @@ h3.sub:first-of-type{margin-top:1.4em}
    The rungs are numbered and the numbers matter: the argument is that you
    descend in order and are not allowed to stop early.
    ========================================================================== */
-.ladder{margin-top:clamp(28px,4vw,40px);max-width:900px;counter-reset:rung}
+.ladder{--rung-pad:clamp(16px,2.4vw,22px);margin-top:clamp(28px,4vw,40px);max-width:900px;counter-reset:rung}
 .rung{border:1px solid var(--hair);border-radius:12px;background:var(--cream);margin-bottom:10px;overflow:hidden}
 .rung[open]{border-color:var(--haze)}
 .rung>summary{
   list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;
-  gap:clamp(13px,2vw,20px);align-items:center;padding:clamp(15px,2.2vw,20px) clamp(16px,2.4vw,22px);
+  gap:clamp(13px,2vw,20px);align-items:center;padding:clamp(15px,2.2vw,20px) var(--rung-pad);
   min-height:64px;
 }
 /* four children now, so four tracks — a fourth child in a three-track grid
@@ -462,7 +462,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .rung .plus{width:22px;height:22px;flex:none;color:var(--ink-3)}
 .rung .plus svg{width:100%;height:100%;transition:transform .34s cubic-bezier(.22,.68,.28,1)}
 .rung[open] .plus svg{transform:rotate(45deg)}
-.rung-body{padding:0 clamp(16px,2.4vw,22px) clamp(18px,2.6vw,24px) calc(clamp(16px,2.4vw,22px) + 30px + clamp(13px,2vw,20px))}
+.rung-body{padding:0 var(--rung-pad) clamp(18px,2.6vw,24px) calc(var(--rung-pad) + 30px + clamp(13px,2vw,20px))}
 .rung-body p{font-size:.97rem;line-height:1.6;color:var(--ink-2);max-width:58ch}
 .rung-body p:last-child{margin-bottom:0}
 .rung-body .look{
@@ -475,7 +475,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   font-size:.95rem;line-height:1.55;color:var(--ink-2);max-width:56ch;
 }
 .rung-body .do b{color:var(--cyan-ink);font-weight:600}
-@media (max-width:600px){.rung-body{padding-left:clamp(16px,2.4vw,22px)}}
+@media (max-width:600px){.rung-body{padding-left:var(--rung-pad)}}
 .ladder-rule{
   margin-top:clamp(24px,3.4vw,32px);padding:clamp(18px,2.6vw,26px);
   border:2px solid var(--ink);border-radius:12px;background:var(--ink);color:#F2EFEC;max-width:760px;
@@ -674,6 +674,139 @@ h3.sub:first-of-type{margin-top:1.4em}
 .band--night .aside b{color:#F2EFEC}
 .band--night .aside .fig small{color:#93A0AA}
 .band--night .aside cite{color:#93A0AA;border-top-color:rgba(255,255,255,.2)}
+
+/* ==========================================================================
+   FIGURES
+   All built in HTML, not SVG, on purpose: the scripture walker wraps
+   references in an HTML <span>, and dropped inside an SVG <text> that renders
+   as nothing at all — getBBox() reports 0x0 while textContent still reads
+   correctly, so the reference vanishes and the DOM looks fine. Any decorative
+   rule or arrow is inline SVG marked .no-reflink; nothing carrying a word is.
+   ========================================================================== */
+
+/* ————— fig 1 · the Haunt project's 2×2. The argument is that all four cells
+   read the same, so the cells are deliberately identical apart from the sham
+   one, which is marked because it is the cell that does the work. ————— */
+.factor{
+  margin-top:clamp(20px,2.8vw,28px);display:grid;
+  grid-template-columns:auto 1fr 1fr;gap:7px;max-width:620px;
+}
+.fx-head,.fx-side{
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;
+}
+.fx-head{justify-content:center;text-align:center;padding-bottom:2px}
+.fx-side{max-width:8ch;line-height:1.35;padding-right:9px}
+.fx-cell{
+  border:1px solid var(--hair);border-radius:9px;background:var(--cream);color:var(--ink);
+  padding:clamp(11px,1.7vw,15px);text-align:center;
+}
+.fx-cell b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(23px,3.4vw,31px);line-height:1;letter-spacing:-.02em}
+.fx-cell span{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:.6em;line-height:1.4}
+.fx-cell i{
+  display:block;font-style:normal;font-family:var(--mono);font-size:8.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--flare-ink);margin-top:.55em;
+}
+.fx-cell--sham{border:1.6px solid var(--flare);background:color-mix(in srgb,var(--flare) 9%,var(--cream))}
+.band--night .fx-head,.band--night .fx-side{color:#9AA6B0}
+.band--night .fx-cell{background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.17);color:#F2EFEC}
+.band--night .fx-cell span{color:#9AA6B0}
+.band--night .fx-cell i{color:#EF8072}
+.band--night .fx-cell--sham{border:1.6px solid #EF8072;background:rgba(212,72,58,.17)}
+.fx-note{
+  grid-column:1/-1;margin:6px 0 0;max-width:none;font-family:var(--mono);font-size:9.5px;
+  line-height:1.65;letter-spacing:.05em;color:var(--ink-3);
+}
+.band--night .fx-note{color:#9AA6B0}
+.fx-note b{color:var(--sodium-ink);font-weight:700}
+.band--night .fx-note b{color:#E7A24E}
+@media (max-width:560px){
+  .factor{grid-template-columns:auto 1fr}
+  .fx-corner,.fx-head{display:none}
+  .fx-side{max-width:none;padding:6px 0 0}
+  .fx-cell{text-align:left}
+}
+
+.factor{margin-bottom:1.15em}
+
+/* ————— fig 2 · the Deuteronomy 32:8 fork. The connector lines share the
+   SAME grid template as the cards, so the arms meet the card centres by
+   derivation rather than by a second guess at where those centres are —
+   two independent clamps that are supposed to agree will not. ————— */
+.fork{--fk-gap:clamp(12px,1.8vw,18px);margin-top:clamp(24px,3.4vw,32px);max-width:900px}
+.fk-stem{
+  border:1.5px solid var(--hair);border-radius:11px;background:var(--cream);color:var(--ink);
+  padding:clamp(14px,2vw,18px);text-align:center;max-width:420px;margin:0 auto;
+}
+.fk-stem .fk-said{font-family:var(--display);font-size:clamp(19px,2.6vw,25px);line-height:1.2;display:block}
+.fk-stem .fk-src{
+  display:block;margin-top:.6em;font-family:var(--mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.fk-arms{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--fk-gap);height:30px}
+.fk-arms i{position:relative;display:block}
+.fk-arms i::before{content:"";position:absolute;left:50%;top:15px;bottom:0;width:1.5px;background:var(--hair);transform:translateX(-50%)}
+.fk-arms i:nth-child(2)::before{top:0}
+.fk-arms i:nth-child(2)::after{
+  content:"";position:absolute;top:15px;height:1.5px;background:var(--hair);
+  left:calc(-50% - var(--fk-gap));right:calc(-50% - var(--fk-gap));
+}
+.fk-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--fk-gap)}
+.fk{
+  border:1px solid var(--hair);border-radius:11px;background:var(--cream);color:var(--ink);
+  padding:clamp(14px,2vw,18px);display:flex;flex-direction:column;gap:.5em;
+}
+.fk .fk-ms{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.45}
+.fk b{font-family:var(--display);font-weight:400;font-size:clamp(18px,2.3vw,23px);line-height:1.16;letter-spacing:-.01em}
+.fk .fk-who{margin-top:auto;padding-top:.7em;border-top:1px dotted var(--hair);font-family:var(--mono);font-size:9.5px;line-height:1.55;letter-spacing:.04em;color:var(--ink-3)}
+.fk--pick{border:1.6px solid var(--haze);background:color-mix(in srgb,var(--haze) 9%,var(--cream))}
+.fk--pick .fk-ms,.fk--pick .fk-who{color:var(--haze-ink)}
+.fk--pick .fk-who{border-top-color:color-mix(in srgb,var(--haze) 34%,transparent)}
+.fk-note{margin:clamp(14px,2vw,18px) 0 clamp(30px,4.4vw,48px);max-width:none;font-family:var(--mono);font-size:9.5px;line-height:1.7;letter-spacing:.04em;color:var(--ink-3)}
+.fk-note b{color:var(--ink);font-weight:700}
+/* on a night band the fork turns its clothes over — it sets its own paper,
+   so it sets its own ink. See the .tcard note. */
+.band--night .fk-stem,.band--night .fk{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.17);color:#F2EFEC}
+.band--night .fk-stem .fk-src,.band--night .fk .fk-ms,.band--night .fk .fk-who,.band--night .fk-note{color:#9AA6B0}
+.band--night .fk .fk-who{border-top-color:rgba(255,255,255,.18)}
+.band--night .fk-arms i::before,.band--night .fk-arms i:nth-child(2)::after{background:rgba(255,255,255,.24)}
+.band--night .fk--pick{border:1.6px solid #E4A6CB;background:rgba(228,166,203,.11)}
+.band--night .fk--pick .fk-ms,.band--night .fk--pick .fk-who{color:#E4A6CB}
+.band--night .fk--pick .fk-who{border-top-color:rgba(228,166,203,.34)}
+.band--night .fk-note b{color:#F2EFEC}
+@media (max-width:720px){
+  .fk-arms{display:none}
+  .fk-row{grid-template-columns:1fr}
+  .fk-stem{max-width:none;margin-bottom:var(--fk-gap)}
+}
+
+/* ————— fig 3 · the middle shelf has no method of its own, only two
+   directions it gets shoved in. That is the whole argument of section 03,
+   so it is drawn on the tier rather than left to the prose below. ————— */
+.thow--push{display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.push{
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+  font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--haze-ink);
+  border:1.3px solid color-mix(in srgb,var(--haze) 52%,transparent);
+  background:color-mix(in srgb,var(--haze) 11%,transparent);
+  border-radius:99px;padding:5px 12px 5px 10px;gap:7px;
+}
+.push svg{width:12px;height:12px;flex:none}
+@media (max-width:720px){.thow--push{flex-direction:row;align-items:flex-start;flex-wrap:wrap}}
+
+/* ————— fig 4 · the ladder gets a rail. The spine is positioned from the
+   SAME custom property the summary pads with, so the line and the numbered
+   circles cannot drift apart at some width nobody measured. It is painted
+   behind the rungs, so it shows only in the 10px gaps between them. ————— */
+.ladder{position:relative}
+.ladder::before{
+  content:"";position:absolute;z-index:0;left:calc(1px + var(--rung-pad) + 15px);
+  top:32px;bottom:0;width:2px;margin-left:-1px;
+  background:var(--hair);
+}
+.rung{position:relative;z-index:1}
+.rung:last-of-type{margin-bottom:0}
 
 /* ————— the opener: one drop cap per prose run, as an entry point ————— */
 .opener::first-letter{
@@ -879,6 +1012,8 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <symbol id="i-water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.6c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/><path d="M2 12.4c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/><path d="M2 18.2c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"/></symbol>
 <symbol id="i-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="3.8" r="1.8"/><path d="M12 5.6v3.2"/><path d="M4.4 18.4v-6a3 3 0 0 1 3-3h9.2a3 3 0 0 1 3 3v6"/><path d="M12 8.8v9.6"/><circle cx="4.4" cy="20.2" r="1.8"/><circle cx="12" cy="20.2" r="1.8"/><circle cx="19.6" cy="20.2" r="1.8"/></symbol>
 <symbol id="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.2l10-2v12.6"/><ellipse cx="6.4" cy="18.2" rx="2.6" ry="2.2"/><ellipse cx="16.4" cy="15.8" rx="2.6" ry="2.2"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.5V4.5"/><path d="M5.5 11 12 4.5l6.5 6.5"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5v15"/><path d="M5.5 13 12 19.5 18.5 13"/></symbol>
 <symbol id="i-ear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 9.2a5.9 5.9 0 1 1 11.8 0c0 3-2.2 4.1-3.4 5.3-1 1-1.1 2-1.1 3.1a2.9 2.9 0 0 1-5.1 1.8"/><path d="M9.4 9.4a2.6 2.6 0 0 1 5.2 0c0 1.7-1.7 2.1-2.3 3.1"/></symbol>
 <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 2.8v6.4L4.3 18.5a2 2 0 0 0 1.7 3h12a2 2 0 0 0 1.7-3L14.4 9.2V2.8"/><path d="M8.1 2.8h7.8"/><path d="M7 15.2h10"/></symbol>
 </defs></svg>
@@ -1059,8 +1194,23 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <div class="turn rise">
       <span class="lbl">The result that spoils it for everyone</span>
       <p class="big">They built a haunted room on purpose. The room did nothing.</p>
-      <p>Seventy-nine people spent fifty minutes each in a purpose-built chamber, exposed to infrasound, to complex electromagnetic fields, to both, or to <b>neither</b> &mdash; and neither they nor the experimenters knew which. Roughly four in five reported feeling dizzy, odd, watched, or a presence.</p>
-      <p>The infrasound made no difference. The electromagnetic fields made no difference. The one thing that predicted an anomalous experience was <b>how suggestible the person was</b> &mdash; and a large share of the reports came from the sham condition, where nothing at all was switched on.</p>
+      <p>Seventy-nine people spent fifty minutes each in a purpose-built chamber, exposed to infrasound, to complex electromagnetic fields, to both, or to <b>neither</b> &mdash; and neither they nor the experimenters knew which.</p>
+
+      <div class="factor" role="img" aria-label="The four conditions of the Haunt project: neither field, infrasound only, electromagnetic fields only, and both. Roughly four in five participants reported an anomalous experience in every one of the four conditions, including the sham condition in which nothing at all was switched on.">
+        <span class="fx-corner" aria-hidden="true"></span>
+        <span class="fx-head">No infrasound</span>
+        <span class="fx-head">Infrasound</span>
+
+        <span class="fx-side">No EM field</span>
+        <div class="fx-cell fx-cell--sham"><b>~80%</b><span>reported something</span><i>sham &mdash; nothing on</i></div>
+        <div class="fx-cell"><b>~80%</b><span>reported something</span></div>
+
+        <span class="fx-side">EM field</span>
+        <div class="fx-cell"><b>~80%</b><span>reported something</span></div>
+        <div class="fx-cell"><b>~80%</b><span>reported something</span></div>
+
+        <p class="fx-note">Four conditions, one result &mdash; dizzy, odd, watched, or a presence. The infrasound made no difference and the electromagnetic fields made no difference. The only thing that predicted an anomalous experience was <b>how suggestible the person was</b>.</p>
+      </div>
       <p class="fine">French, Haque, Bunton-Stasyshyn &amp; Davis, <i>The &ldquo;Haunt&rdquo; project</i>, Cortex, 2009.</p>
     </div>
 
@@ -1095,7 +1245,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <p>Hiebert called what happened to it <b>the flaw of the excluded middle</b>. Not denied &mdash; <em>excluded</em>. It was never argued away. There was simply no longer anywhere to put it.</p>
     </div>
 
-    <div class="tiers rise" role="img" aria-label="Three tiers of reality: the transcendent on top, the empirical at the bottom, and the middle tier excluded from the Western picture">
+    <div class="tiers rise" role="img" aria-label="Three tiers of reality: the transcendent on top, reached by faith; the empirical at the bottom, reached by the senses; and between them the middle tier, excluded from the Western picture, which has no method of its own — a report from it is forced up onto the top shelf or down onto the bottom one">
       <div class="tier tier--top">
         <span class="tlabel">Top shelf</span>
         <div class="tbody">
@@ -1111,7 +1261,10 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
           <b>The unseen, in ordinary life</b>
           <p>The spirits of a place. Ancestors. The evil eye. Local powers. Whatever is in the air of a room. Everything this page is about.</p>
         </div>
-        <div class="thow">Reached by <b>&mdash;&mdash;</b><span>no shelf</span></div>
+        <div class="thow thow--push">
+          <span class="push"><svg aria-hidden="true"><use href="#i-up"/></svg>forced up</span>
+          <span class="push"><svg aria-hidden="true"><use href="#i-down"/></svg>forced down</span>
+        </div>
       </div>
 
       <div class="tier tier--bot">
@@ -1191,18 +1344,46 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 
     <div class="spread rise">
       <h3 class="sub">First, the allotment</h3>
-      <p class="opener">Deuteronomy 32:8&ndash;9 says that when the Most High gave the nations their inheritance and divided humanity, he fixed their boundaries &ldquo;according to the number of&rdquo; &mdash; and here the manuscripts part company. The Masoretic Hebrew reads <i>the sons of Israel</i>. The Dead Sea Scrolls copy reads <i>the sons of God</i>. The Septuagint reads <i>the angels of God</i>. Most modern critical translations, the ESV and NRSV among them, follow the scrolls, on the straightforward reasoning that a scribe might well soften &ldquo;sons of God&rdquo; into something safer, and would have no motive at all to go the other way.</p>
-      <p class="fine" style="margin-bottom:1.6em">You can watch this happen. Tap the reference above, then change the translation in the footer. The NIV and NASB read <i>sons of Israel</i>; the KJV reads <i>children of Israel</i>; the ESV reads <i>sons of God</i>; and the NLT skips the argument and renders it <i>the number in his heavenly court</i>. One verse, four committees, one manuscript decision each.</p>
+      <p class="opener">Deuteronomy 32:8&ndash;9 says that when the Most High gave the nations their inheritance and divided humanity, he fixed their boundaries &ldquo;according to the number of&rdquo; &mdash; and here the manuscripts part company. Most modern critical translations follow the scrolls, on the straightforward reasoning that a scribe might well soften &ldquo;sons of God&rdquo; into something safer, and would have no motive at all to go the other way.</p>
+    </div>
+
+    <div class="fork rise" role="img" aria-label="Deuteronomy 32:8 divides three ways in the manuscripts. The Masoretic Hebrew reads the sons of Israel and is followed by the NIV and NASB. The Dead Sea Scrolls copy 4QDeut-j reads the sons of God and is followed by the ESV and NRSV and most modern critical translations. The Septuagint reads the angels of God.">
+      <div class="fk-stem">
+        <span class="fk-said">&ldquo;&hellip;according to the number of&hellip;&rdquo;</span>
+        <span class="fk-src">Deuteronomy 32:8</span>
+      </div>
+      <div class="fk-arms" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="fk-row">
+        <article class="fk">
+          <span class="fk-ms">Masoretic Hebrew</span>
+          <b>the sons of Israel</b>
+          <span class="fk-who">NIV &middot; NASB<br>KJV: <i>children of Israel</i></span>
+        </article>
+        <article class="fk fk--pick">
+          <span class="fk-ms">Dead Sea Scrolls &middot; 4QDeut<sup>j</sup></span>
+          <b>the sons of God</b>
+          <span class="fk-who">ESV &middot; NRSV &mdash; and most modern critical translations</span>
+        </article>
+        <article class="fk">
+          <span class="fk-ms">Septuagint &middot; Greek</span>
+          <b>the angels of God</b>
+          <span class="fk-who">generally read as reflecting the same Hebrew text as the scrolls</span>
+        </article>
+      </div>
+      <p class="fk-note"><b>You can watch this happen.</b> Tap the reference above, then change the translation in the footer. The NLT skips the argument entirely and renders it <i>the number in his heavenly court</i>. One verse, four committees, one manuscript decision each.</p>
+    </div>
+
+    <div class="spread rise">
 
       <p>Read that way, the verse is doing something specific: at the scattering, the nations were <b>apportioned</b> &mdash; and the next line says the LORD&rsquo;s own portion was Jacob. Israel is the exception in a system where everyone else got assigned to somebody.</p>
 
       <aside class="aside aside--ink">
         <span class="lbl"><svg aria-hidden="true"><use href="#i-scale"/></svg>And then it is audited</span>
         <p><b>Psalm 82.</b> God stands in the divine assembly and passes judgment among the gods, for judging unjustly and showing partiality to the wicked. The sentence is that <b>they will die like men</b>.</p>
-        <cite>A delegated administrative responsibility, abused, and held to account for a region&rsquo;s justice.</cite>
+        <cite>Delegated authority, abused, and held to account.</cite>
       </aside>
 
-      <p>Whatever these beings are, the accounting is the point: the office is real enough to be answerable.</p>
+      <p>Whatever these beings are, the accounting is the point. They held a delegated responsibility over a region&rsquo;s justice, they abused it, and they are answerable for it. The office is real enough to be audited, which is a stranger claim than either of the two cheap exits has room for.</p>
     </div>
 
     <div class="spread rise">
@@ -2084,7 +2265,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
   if (S){
     S.init({
       key: "something-in-the-air",
-      scan: ".wrap > p, .band p, .place .cite, .tcard .ref, .lrow .refs, .vr .claim, .rung-body p, .rung-body .do, .vfor, .srcs li"
+      scan: ".wrap > p, .band p, .place .cite, .tcard .ref, .lrow .refs, .vr .claim, .rung-body p, .rung-body .do, .vfor, .srcs li, .fk-src, .cy .cyr"
     });
     var host = document.getElementById("pickerHost");
     if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses in"); }
