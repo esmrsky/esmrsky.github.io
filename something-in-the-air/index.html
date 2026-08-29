@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Something in the Air — vibes, auras, and the powers over a place</title>
-<meta name="description" content="Everyone reads a room before anyone speaks. Some of that is infrasound, thin-slicing and your own blood sugar; some of it is a realm the Bible describes in the ordinary Greek vocabulary of civil government. A field guide to telling them apart — and to the discipline that keeps you from cheating in either direction.">
+<meta name="description" content="Everyone reads a room before anyone speaks. Some of that is infrasound, thin-slicing and your own blood sugar; some of it is a realm the Bible describes in the ordinary Greek vocabulary of civil government. A field guide to telling them apart, a map of everyone actually in the conversation, and the discipline that keeps you from cheating in either direction.">
 <meta name="color-scheme" content="light">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Something in the Air">
@@ -289,6 +289,49 @@ h3.sub:first-of-type{margin-top:1.4em}
 .exit .cost b{color:var(--flare-ink)}
 
 /* ==========================================================================
+   THE EXCLUDED MIDDLE — Hiebert's two shelves, with the missing one drawn in
+   between them. Built in HTML rather than SVG on purpose: the verse linker
+   walks text nodes and cannot wrap a reference inside an SVG <text>, and this
+   also lets the rows reflow to one column on a phone.
+   ========================================================================== */
+.tiers{margin-top:clamp(26px,4vw,38px);max-width:880px;display:grid;gap:10px}
+.tier{
+  display:grid;grid-template-columns:minmax(92px,.5fr) 1fr minmax(150px,.62fr);
+  gap:clamp(12px,2.2vw,26px);align-items:center;
+  border:1.5px solid var(--hair);border-radius:12px;background:var(--cream);
+  padding:clamp(15px,2.2vw,20px) clamp(16px,2.4vw,22px);
+}
+.tier .tlabel{
+  font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+.tier .tbody b{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(15px,1.9vw,18px);margin-bottom:.32em}
+.tier .tbody p{margin:0;font-size:.9rem;line-height:1.5;color:var(--ink-2);max-width:46ch}
+.tier .thow{
+  font-family:var(--mono);font-size:10.5px;line-height:1.5;color:var(--ink-3);
+  text-align:right;letter-spacing:.02em;
+}
+.tier .thow b{display:block;color:var(--ink);font-weight:700;font-size:11.5px;margin-bottom:.3em}
+.tier .thow span{display:block;opacity:.8}
+
+/* the two shelves that exist are solid; the one that does not is a dashed
+   outline with nothing filled in, which is the entire argument */
+.tier--top,.tier--bot{border-color:var(--ink-3)}
+.tier--mid{
+  border-style:dashed;border-color:var(--haze);
+  background:repeating-linear-gradient(-45deg,transparent 0 9px,color-mix(in srgb,var(--haze) 9%,transparent) 9px 18px);
+}
+.tier--mid .tlabel{color:var(--haze-ink)}
+.tier--mid .tbody b{color:var(--haze-ink)}
+.tier--mid .thow b{color:var(--haze-ink);letter-spacing:.1em}
+@media (max-width:720px){
+  .tier{grid-template-columns:1fr;gap:.7em;text-align:left}
+  .tier .thow{text-align:left}
+  .tier .thow b{display:inline;margin-right:.5em}
+  .tier .thow span{display:inline}
+}
+
+/* ==========================================================================
    THE POWERS LEDGER — Paul's vocabulary for the realm, one row per word.
    Built as a real table on wide screens and stacked cards on narrow ones,
    because the fourth column is an argument and must not be truncated.
@@ -424,13 +467,54 @@ h3.sub:first-of-type{margin-top:1.4em}
 .tcard p{font-size:.94rem;line-height:1.56;color:var(--ink-2);margin:0;max-width:56ch}
 @media (max-width:560px){.tcard{grid-template-columns:1fr;gap:.7em}.tcard .ref{padding-top:0}}
 
-/* ————— people making the claim today ————— */
-.seers{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(16px,2.4vw,22px);margin-top:clamp(24px,3.6vw,34px)}
-.seer{border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:clamp(18px,2.5vw,24px);background:rgba(255,255,255,.045)}
-.seer h4{font-family:var(--display);font-weight:400;font-size:clamp(21px,2.7vw,27px);color:#F2EFEC;margin-bottom:.5em;letter-spacing:-.01em}
-.seer .handle{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:#E4A6CB;display:block;margin-bottom:1em}
-.seer p{font-size:.94rem;line-height:1.56;color:#C4C2C0;max-width:none}
-.seer p:last-child{margin-bottom:0}
+/* ==========================================================================
+   THE VOICES MAP — four lanes, because the useful question about anyone in
+   this conversation is not "are they right" but "what are they FOR". Each
+   entry carries a caution rather than a verdict; adjudicating a stranger's
+   inner life is not something a web page gets to do.
+   ========================================================================== */
+.lanes{margin-top:clamp(26px,4vw,38px);display:grid;gap:clamp(30px,5vw,52px)}
+.lane-head{
+  border-top:1px solid rgba(255,255,255,.22);padding-top:clamp(14px,2vw,18px);
+  margin-bottom:clamp(16px,2.4vw,22px);max-width:64ch;
+}
+.lane-n{
+  font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:#E4A6CB;display:block;margin-bottom:.7em;
+}
+.lane-head h4{
+  font-family:var(--display);font-weight:400;letter-spacing:-.012em;
+  font-size:clamp(24px,3.6vw,38px);color:#F2EFEC;margin-bottom:.4em;
+}
+.lane-head p{font-size:.95rem;line-height:1.55;color:#9AA6B0;max-width:56ch;margin:0}
+.voices{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(14px,2.2vw,20px)}
+.voice{
+  border:1px solid rgba(255,255,255,.16);border-radius:12px;
+  padding:clamp(17px,2.4vw,22px);background:rgba(255,255,255,.045);
+  display:flex;flex-direction:column;
+}
+.voice h5{
+  font-family:var(--serif);font-weight:600;font-size:clamp(16px,2vw,19px);
+  color:#F2EFEC;margin:0 0 .4em;letter-spacing:-.008em;
+}
+.vmeta{
+  font-family:var(--mono);font-size:10px;line-height:1.5;letter-spacing:.05em;
+  color:#E4A6CB;display:block;margin-bottom:1em;
+}
+.voice p{font-size:.92rem;line-height:1.56;color:#C4C2C0;max-width:none;margin-bottom:0}
+.vfor{
+  margin-top:auto;padding-top:.95em;border-top:1px dotted rgba(255,255,255,.2);
+  margin-block-start:1.1em;font-size:.87rem;line-height:1.52;color:#AFBAC3;
+}
+/* inline emphasis inside the caution stays inline … */
+.vfor b{font-weight:600;color:#EFECE9}
+/* … and only the LEADING b is the mono label. Scoping this to `> b:first-child`
+   matters: the seer/discerner card uses <b> mid-sentence, and the label rule
+   was chopping that sentence into uppercase fragments. */
+.vfor > b:first-child{
+  display:block;font-family:var(--mono);font-size:9px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:#E4A6CB;margin-bottom:.5em;
+}
 
 /* ————— sources ————— */
 .srcs{display:grid;gap:0;margin-top:clamp(22px,3.2vw,30px);border-top:1px solid var(--hair);max-width:880px}
@@ -723,14 +807,72 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ 03 · THE MISSING MIDDLE ═══ -->
+<section class="band band--hair">
+  <div class="wrap">
+    <div class="eyebrow rise"><span class="n">03</span> Why both answers are wrong in the same way</div>
+    <h2 class="beat rise">You were handed a shelf <em>short</em></h2>
+
+    <div class="rise">
+      <p class="lead">In 1982 a missiologist named Paul Hiebert published a short essay that explains almost everything about how this conversation goes, and it is still the most useful thing written on the subject.</p>
+
+      <p>Hiebert had been a missionary in India. A man came to him about a sick child, having already been to a local magician. Hiebert could talk about God &mdash; prayer, providence, the world to come. He could talk about medicine &mdash; infection, treatment, what the clinic was for. What he found he could not do was say anything at all about the thing the man had actually come to ask about, which sat squarely between those two.</p>
+
+      <p>He went looking for the gap in his own head and found it. The Western picture of reality has <b>two shelves</b>. On the top shelf are God, angels, the afterlife, ultimate meaning &mdash; and that shelf is labelled <i>religion</i>, and reached by faith. On the bottom shelf are rocks, germs, weather, wiring, blood sugar &mdash; labelled <i>science</i>, and reached by the senses. Between them, in most of the world and through most of history, there is a third shelf: the spirits of a place, the ancestors, the evil eye, the local powers, the unseen operating inside ordinary daily life.</p>
+
+      <p>Hiebert called what happened to that shelf <b>the flaw of the excluded middle</b>. Not denied &mdash; <em>excluded</em>. It was never argued away. There was simply no longer anywhere to put it.</p>
+    </div>
+
+    <div class="tiers rise" role="img" aria-label="Three tiers of reality: the transcendent on top, the empirical at the bottom, and the middle tier excluded from the Western picture">
+      <div class="tier tier--top">
+        <span class="tlabel">Top shelf</span>
+        <div class="tbody">
+          <b>The transcendent</b>
+          <p>God, angels, the afterlife, ultimate meaning, the end of history.</p>
+        </div>
+        <div class="thow">Reached by <b>faith</b><span>filed under religion</span></div>
+      </div>
+
+      <div class="tier tier--mid">
+        <span class="tlabel">The middle</span>
+        <div class="tbody">
+          <b>The unseen, in ordinary life</b>
+          <p>The spirits of a place. Ancestors. The evil eye. Local powers. Whatever is in the air of a room. Everything this page is about.</p>
+        </div>
+        <div class="thow">Reached by <b>&mdash;&mdash;</b><span>no shelf</span></div>
+      </div>
+
+      <div class="tier tier--bot">
+        <span class="tlabel">Bottom shelf</span>
+        <div class="tbody">
+          <b>The empirical</b>
+          <p>Rocks, germs, weather, wiring, infrasound, blood sugar, whether you slept.</p>
+        </div>
+        <div class="thow">Reached by <b>the senses</b><span>filed under science</span></div>
+      </div>
+    </div>
+    <p class="fine rise" style="margin-top:1.1em">Hiebert, <i>The Flaw of the Excluded Middle</i>, Missiology 10 (1982), 35&ndash;47. The middle row is where every experience on this page actually lives.</p>
+
+    <div class="rise">
+      <p class="pull">A thing with no shelf does not stay unfiled. It gets forced onto one of the two shelves you <em>do</em> have.</p>
+
+      <p>That is the whole mechanism, and once you see it you will see it every time. Somebody walks out of a room and reports a middle-shelf experience. There is no middle shelf. So it goes <b>down</b> &mdash; &ldquo;it smells weird in there, you&rsquo;re tired&rdquo; &mdash; or it goes <b>up</b> &mdash; &ldquo;there is a principality over this city.&rdquo; The two answers sound like opposite worldviews having an argument. They are the same filing error, made in opposite directions, by two people who were handed the same shelf short.</p>
+
+      <p>And notice what the missing shelf costs you: it is not mainly that you believe the wrong thing. It is that <b>you cannot investigate</b>. A category you do not have is a category you can neither affirm nor test nor rule out. The reason this subject is so full of people who are certain in both directions is that almost nobody has anywhere to put a maybe.</p>
+
+      <p>Two things worth saying quickly, because Hiebert&rsquo;s point gets stretched in both directions by people who like it. He was <em>not</em> claiming everything on the middle shelf is real &mdash; the evil eye and a territorial spirit are not thereby established, and he spent the rest of his career warning against swapping a rationalist blind spot for a credulous one. And the two-tier picture is not human nature. It is local, recent and unusual: the Bible does not carve reality that way, the church did not for most of its history, and most of the world does not now. If the framework feels obvious to you, that is worth noticing about the framework.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════════════════════════ 03 · THE TWO EXITS ════ -->
 <section class="band band--paper2">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">03</span> The two cheap exits</div>
+    <div class="eyebrow rise"><span class="n">04</span> The two cheap exits</div>
     <h2 class="beat rise">Both of these are the <em>same</em> move</h2>
 
     <div class="rise">
-      <p class="lead">There are two ways to get out of thinking about this, and they look like opposites. They are not. They are the same refusal, facing different directions.</p>
+      <p class="lead">Here are the two exits the missing shelf produces. They look like opposite worldviews. They are the same refusal, facing different directions.</p>
     </div>
 
     <div class="exits rise">
@@ -761,7 +903,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 04 · THE REALM IS STRUCTURED -->
 <section class="band band--night">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">04</span> What the text actually claims</div>
+    <div class="eyebrow rise"><span class="n">05</span> What the text actually claims</div>
     <h2 class="beat rise">There are <em>offices</em> up there</h2>
 
     <div class="rise">
@@ -862,7 +1004,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 05 · LOCATED ══════════ -->
 <section class="band">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">05</span> And it is located</div>
+    <div class="eyebrow rise"><span class="n">06</span> And it is located</div>
     <h2 class="beat rise">Places carry what is <em>done</em> in them</h2>
 
     <div class="rise">
@@ -912,7 +1054,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════ 06 · THE DISCIPLINE ═══════ -->
 <section class="band band--haze">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">06</span> What the text conspicuously does not do</div>
+    <div class="eyebrow rise"><span class="n">07</span> What the text conspicuously does not do</div>
     <h2 class="beat rise">Nobody in the Bible ever <em>maps</em> one</h2>
 
     <div class="rise">
@@ -957,7 +1099,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 07 · THE SEERS ════════ -->
 <section class="band band--night">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">07</span> The people who say they can see it</div>
+    <div class="eyebrow rise"><span class="n">08</span> The people who say they can see it</div>
     <h2 class="beat rise">Scripture is oddly <em>uninterested</em> in how much you saw</h2>
 
     <div class="rise">
@@ -968,30 +1110,135 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <p>Micaiah, hauled in front of two kings, reports a council scene &mdash; the LORD on his throne and the host of heaven standing to his right and left, deliberating. Balaam&rsquo;s eyes are uncovered. Ezekiel is taken. John is in the Spirit on the Lord&rsquo;s Day. And Paul lists <i>diakriseis pneumat&#333;n</i>, &ldquo;discernings of spirits&rdquo;, among the gifts distributed &ldquo;as he wills&rdquo; &mdash; plural, given out unevenly, and sitting in a chapter whose entire argument is that no one member gets to be the body.</p>
     </div>
 
-    <h3 class="sub rise">The live version of the question</h3>
+    <h3 class="sub rise">Who is actually in this conversation</h3>
     <div class="rise">
-      <p style="max-width:62ch">The claim is not historical. It is being made now, publicly, at scale, by people with real audiences &mdash; and this page would be dodging if it discussed the category without naming anyone in it.</p>
+      <p style="max-width:62ch">The claim is not historical. It is being made now, at scale, by people with real audiences &mdash; and it is being answered, refined and disciplined by other people with real audiences. Here is the map, sorted by what each one is actually <em>for</em>. Nobody on it is endorsed and nobody is dismissed; the lane and the caution are the useful part.</p>
     </div>
 
-    <div class="seers rise">
-      <article class="seer">
-        <h4>Micah Turnbo</h4>
-        <span class="handle">Behold Wonder &middot; Vineyard Church Northwest, Cincinnati</span>
-        <p>Describes himself as a seer prophet who perceives the spirit realm much as he perceives the physical one, and reports a lifetime of it &mdash; dreams, visions, encounters with angels and with demons &mdash; beginning in childhood. He serves as pastor of prophetic ministry at his church, and collected the accounts in a book, <i>The Invitation</i>.</p>
-        <p>He is also contested: his more unusual accounts circulate as much among critics as among followers, which is a fact about the claim&rsquo;s reception rather than about its truth, and worth knowing either way.</p>
-      </article>
+    <div class="lanes rise">
 
-      <article class="seer">
-        <h4>Phoenix</h4>
-        <span class="handle">@phoenixfromphoenix &middot; TikTok</span>
-        <p>Posts as a prophetic seer on spiritual warfare, and specifically on what stands over places &mdash; the spiritual weight of particular cities and regions, and how that connects to Ephesians&rsquo; wrestling &ldquo;not against flesh and blood.&rdquo; This is the territorial claim in its most direct contemporary form.</p>
-        <p>The platform&rsquo;s own related searches include the word <i>debunked</i>, which is a fair summary of the situation: the material travels fast, and so does the pushback, and neither travels with a way of settling it.</p>
-      </article>
+      <section class="lane">
+        <div class="lane-head">
+          <span class="lane-n">Lane 1</span>
+          <h4>They say they see it</h4>
+          <p>First-person reports of direct sight. The primary material, and the least testable.</p>
+        </div>
+        <div class="voices">
+          <article class="voice">
+            <h5>Micah Turnbo</h5>
+            <span class="vmeta">Behold Wonder &middot; Vineyard Church Northwest, Cincinnati</span>
+            <p>A seer prophet who says he perceives the spirit realm much as he perceives the physical one, and has since childhood &mdash; dreams, visions, angels, demons. Collected in his book <i>The Invitation</i>. He turns up across the podcasts below: The Deep End ep.&nbsp;020, Blurry Creatures ep.&nbsp;89 &ldquo;I See Angels&rdquo;.</p>
+            <div class="vfor"><b>Watch for</b> his more unusual accounts circulate as much among critics as among followers &mdash; a fact about reception rather than about truth, but worth knowing before meeting one out of context.</div>
+          </article>
+          <article class="voice">
+            <h5>Phoenix</h5>
+            <span class="vmeta">@phoenixfromphoenix &middot; TikTok</span>
+            <p>Posts as a prophetic seer, and specifically on what stands over places &mdash; the spiritual weight of particular cities and regions, tied back to wrestling &ldquo;not against flesh and blood.&rdquo; This is the territorial claim in its most direct contemporary form, delivered in ninety-second clips.</p>
+            <div class="vfor"><b>Watch for</b> the platform&rsquo;s own related searches include the word <i>debunked</i>. The material travels fast and so does the pushback, and neither travels with a way of settling it.</div>
+          </article>
+          <article class="voice">
+            <h5>The wider seer-ministry world</h5>
+            <span class="vmeta">Doug Overmyer / SeersSee &middot; Jennifer LeClaire on the &ldquo;seer anointing&rdquo;</span>
+            <p>An established body of teaching, training and books aimed at people who believe they have this gift &mdash; and at their families, pastors and therapists, which is a more sober framing than outsiders tend to expect.</p>
+            <div class="vfor"><b>Take from it</b> a distinction it draws that most of its critics do not: a <b>seer</b> sees and declares; a <b>discerner</b> perceives the <em>source</em> of a thing. Different gifts, different jobs &mdash; and conflating them is most of the confusion.</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lane">
+        <div class="lane-head">
+          <span class="lane-n">Lane 2</span>
+          <h4>They take the unseen seriously, at length</h4>
+          <p>Long-form audio is where this subject actually lives now. These differ enormously in rigour, and the difference is the thing to track.</p>
+        </div>
+        <div class="voices">
+          <article class="voice">
+            <h5>The Deep End</h5>
+            <span class="vmeta">Taylor Welch &middot; ~1,000 episodes &middot; with NOVOS Network</span>
+            <p>&ldquo;Deep conversations on taboo &amp; controversial topics that will challenge the beliefs you&rsquo;ve grown up with&rdquo; &mdash; a wide-ranging show running at the seam where business, psychology and spirituality meet. Micah Turnbo&rsquo;s episode&nbsp;020 is the seeing-into-the-spirit-realm one. Welch&rsquo;s companion platform NOVOS Network describes itself as blending &ldquo;neuroscience and cognitive behavioral training with integrated spiritual awakening,&rdquo; and runs a Kairos membership, Deep Dive courses and in-person workshops.</p>
+            <div class="vfor"><b>Watch for</b> the frame is leadership and personal transformation, not exegesis &mdash; and the spiritual material arrives attached to a development product. Take the questions seriously; notice the packaging.</div>
+          </article>
+          <article class="voice">
+            <h5>Blurry Creatures</h5>
+            <span class="vmeta">Luke Rodgers &amp; Nate Henry</span>
+            <p>The Nephilim, the Watchers, the sons of God, the divine council and cosmic geography &mdash; alongside cryptids, ancient giants and UFO lore, all through a biblical lens. It takes the strange seriously instead of laughing at it, which is rarer than it should be.</p>
+            <div class="vfor"><b>Watch for</b> a very wide aperture. Signal-to-speculation varies sharply by episode and by guest, and the show does not always mark the join.</div>
+          </article>
+          <article class="voice">
+            <h5>The Lord of Spirits</h5>
+            <span class="vmeta">Fr. Andrew Stephen Damick &amp; Fr. Stephen De Young &middot; Ancient Faith, since 2020</span>
+            <p>Two Orthodox priests on gods, angels, demons and the union of the seen and unseen, worked out from Scripture and the Fathers. The most rooted thing on this list by a distance: it is not <em>rediscovering</em> the unseen realm, because that tradition never filed it away. There is a book of the same name.</p>
+            <div class="vfor"><b>Read it for</b> the shock of finding that nearly everything treated as fringe here has been ordinary, carefully governed doctrine somewhere, for a very long time.</div>
+          </article>
+          <article class="voice">
+            <h5>Naked Bible &middot; and BibleProject</h5>
+            <span class="vmeta">Michael S. Heiser (458 eps, ended Jan 2023) &middot; Tim Mackie, Spiritual Beings series</span>
+            <p>The scholarly end of the podcast lane. Heiser worked the divine council from the Hebrew and the Second Temple literature until weeks before his death in February 2023; the archive stands. BibleProject&rsquo;s Spiritual Beings series is the gentlest on-ramp there is &mdash; <i>elohim</i> as a title rather than a name, the council as God&rsquo;s staff, and Deuteronomy 32:8&ndash;9 laid out slowly.</p>
+            <div class="vfor"><b>Start here</b> if the ledger in section&nbsp;05 was the part that interested you.</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lane">
+        <div class="lane-head">
+          <span class="lane-n">Lane 3</span>
+          <h4>They did the scholarship</h4>
+          <p>Slower, duller, and the reason anything on this page can be checked at all.</p>
+        </div>
+        <div class="voices">
+          <article class="voice">
+            <h5>Paul Hiebert</h5>
+            <span class="vmeta">&ldquo;The Flaw of the Excluded Middle&rdquo;, 1982</span>
+            <p>Section&nbsp;03 is his. Thirteen pages, and it explains why this argument keeps happening between people who cannot hear each other. If you read one thing off this entire page, read that one.</p>
+          </article>
+          <article class="voice">
+            <h5>Michael S. Heiser</h5>
+            <span class="vmeta"><i>The Unseen Realm</i>, 2015</span>
+            <p>The book that put the divine council in front of a general readership. His doctorate was on precisely this &mdash; the council in late canonical and Second Temple Jewish literature &mdash; so the popular book has real machinery underneath it.</p>
+            <div class="vfor"><b>Watch for</b> how fast it gets stretched. A careful argument about ancient cosmology is routinely cited downstream as a licence for things Heiser himself declined to claim.</div>
+          </article>
+          <article class="voice">
+            <h5>The powers debate</h5>
+            <span class="vmeta">Clinton Arnold &middot; Chuck Lowe &middot; A. Scott Moreau &middot; Walter Wink</span>
+            <p>Four positions worth knowing, disagreeing productively: Arnold on what Paul&rsquo;s vocabulary meant, Lowe&rsquo;s critique of strategic-level warfare, Moreau&rsquo;s balanced Lausanne assessment, and Wink reading the powers as the interiority of institutions. Section&nbsp;07 is built out of these four.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="lane">
+        <div class="lane-head">
+          <span class="lane-n">Lane 4</span>
+          <h4>They apply the brakes</h4>
+          <p>The most useful lane and the emptiest. Correction from inside a practice is worth more than correction from outside it.</p>
+        </div>
+        <div class="voices">
+          <article class="voice">
+            <h5>The Remnant Radio</h5>
+            <span class="vmeta">Joshua Lewis, Michael Miller &amp; Michael Rowntree</span>
+            <p>Charismatic, practising, unembarrassed about the gifts &mdash; and in an episode called <i>Deliverance Ministry Without the Weird</i> they take on territorial spirits and spiritual mapping directly, cautioning against speculative demonic taxonomy and against a focus on the demonic that displaces the gospel.</p>
+            <div class="vfor"><b>Why it matters</b> this is the rarest position available: inside the practice, with the brakes on. It also lands almost exactly on the three verdicts in section&nbsp;07.</div>
+          </article>
+          <article class="voice">
+            <h5>The Prophetic Standards Statement</h5>
+            <span class="vmeta">April 2021 &middot; drafted by Michael Brown &amp; Joseph Mattera</span>
+            <p>After a conspicuous run of failed prophecies about the 2020 US election, around eighty-five charismatic leaders, academics, ministry heads and revivalists signed a four-page call for prophetic accountability &mdash; standards for how a word is given, weighed, and retracted when it fails.</p>
+            <div class="vfor"><b>Why it matters</b> it is the movement disciplining itself in public. That is exactly what 1 Corinthians 14:29 asks for, and exactly what critics usually say never happens.</div>
+          </article>
+          <article class="voice">
+            <h5>The cessationist critics</h5>
+            <span class="vmeta">e.g. Justin Peters, and the discernment-ministry world</span>
+            <p>They hold that the revelatory gifts have ceased, so they do not weigh the claims in lane&nbsp;1 &mdash; they reject the category. That is a real theological position with a real argument behind it, and it is not the same move as the flat exit in section&nbsp;04.</p>
+            <div class="vfor"><b>Read them for</b> accountability pressure, which they supply better than anyone. Not for a model of the realm, which they are not trying to give you &mdash; and be warned that traffic between these camps runs hot and yields far more heat than findings.</div>
+          </article>
+        </div>
+      </section>
+
     </div>
 
     <div class="rise">
       <p class="pull">The question is not <em>&ldquo;is this person lying?&rdquo;</em> It is what test you would run if they weren&rsquo;t.</p>
-      <p>This page is not going to hand out a verdict on either of them, because that is not something a website can responsibly do about a stranger&rsquo;s inner life. What it can do is hand over the tests, which are old, specific, and mostly ignored in both directions &mdash; by people who accept everything and by people who dismiss everything, who between them have skipped the same seven instructions.</p>
+      <p>This page is not going to hand out verdicts on the people in lane&nbsp;1, because adjudicating a stranger&rsquo;s inner life is not something a website can responsibly do. What it can do is hand over the tests &mdash; which are old, specific, and mostly ignored in both directions, by people who accept everything and by people who dismiss everything, who between them have skipped the same seven instructions.</p>
+      <p>And notice the shape of that map. The lanes are not ranked by how much they believe. Lane&nbsp;4 believes as much as lane&nbsp;1 &mdash; it simply has somewhere to put a maybe, which, per section&nbsp;03, is the thing most people were never given.</p>
     </div>
 
     <div class="tests rise">
@@ -1055,7 +1302,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 08 · THE LADDER ═══════ -->
 <section class="band">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">08</span> The working tool</div>
+    <div class="eyebrow rise"><span class="n">09</span> The working tool</div>
     <h2 class="beat rise">You walked in. Something is off. <em>Now work down.</em></h2>
 
     <div class="rise">
@@ -1174,7 +1421,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <!-- ══════════════════════════════════════════════ 09 · THE CLOSE ════════ -->
 <section class="band band--haze band--hair">
   <div class="wrap">
-    <div class="eyebrow rise"><span class="n">09</span> The part nobody asks about</div>
+    <div class="eyebrow rise"><span class="n">10</span> The part nobody asks about</div>
     <h2 class="beat rise">You are one of the <em>vibes</em></h2>
 
     <div class="rise">
@@ -1203,6 +1450,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
     <p class="fine rise" style="margin-top:1.2em">Every empirical claim above is one of these. Where a study is weaker than its reputation, the card said so.</p>
 
     <ul class="srcs rise">
+      <li><span class="kind">The frame &mdash; read this one first</span><b>Hiebert, P. G. (1982).</b> The flaw of the excluded middle. <i>Missiology: An International Review</i> 10, 35&ndash;47. <a href="https://journals.sagepub.com/doi/10.1177/009182968201000103" target="_blank" rel="noopener">Sage</a> &middot; <a href="https://kingdomupgrowth.com/wp-content/uploads/2021/07/p-hiebert-flaw-of-excluded-middle.pdf" target="_blank" rel="noopener">PDF</a></li>
       <li><span class="kind">The room, measured</span><b>Wiseman, R., Watt, C., Stevens, P., Greening, E. &amp; O&rsquo;Keeffe, C. (2003).</b> An investigation into alleged &lsquo;hauntings&rsquo;. <i>British Journal of Psychology</i> 94, 195&ndash;211. <a href="https://pubmed.ncbi.nlm.nih.gov/12803815/" target="_blank" rel="noopener">PubMed</a> &middot; <a href="http://www.richardwiseman.com/resources/BJP-hauntings.pdf" target="_blank" rel="noopener">full text</a></li>
       <li><span class="kind">The control condition</span><b>French, C. C., Haque, U., Bunton-Stasyshyn, R. &amp; Davis, R. (2009).</b> The &ldquo;Haunt&rdquo; project: an attempt to build a &ldquo;haunted&rdquo; room by manipulating complex electromagnetic fields and infrasound. <i>Cortex</i> 45. <a href="https://research.gold.ac.uk/id/eprint/4209/" target="_blank" rel="noopener">Goldsmiths repository</a></li>
       <li><span class="kind">Infrasound</span><b>Tandy, V. &amp; Lawrence, T.</b> The ghost in the machine, and <i>Something in the Cellar</i>. <i>Journal of the Society for Psychical Research</i>. <a href="http://www.richardwiseman.com/resources/Something-in-the-Cellar.pdf" target="_blank" rel="noopener">&ldquo;Something in the Cellar&rdquo; (PDF)</a></li>
@@ -1214,7 +1462,9 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <li><span class="kind">The balanced assessment</span><b>Moreau, A. S. (2000).</b> Gaining perspective on territorial spirits. Lausanne Movement. Credits the movement&rsquo;s gains, warns about &ldquo;Christian animism&rdquo;, and closes on Clinton Arnold&rsquo;s eight points. <a href="https://lausanne.org/content/territorial-spirits" target="_blank" rel="noopener">lausanne.org</a></li>
       <li><span class="kind">A third reading</span><b>Wink, W.</b> <i>Naming the Powers</i> &mdash; the powers as the interiority of institutions. Contested, and it explains something the other readings do not.</li>
       <li><span class="kind">The text-critical point</span><b>Deuteronomy 32:8.</b> 4QDeut&#7522; reads <i>b&#601;n&#234; &#8217;el&#333;h&#238;m</i>; the Septuagint reads <i>angels of God</i>; the Masoretic Text reads <i>sons of Israel</i>. Michael S. Heiser&rsquo;s treatment in <i>Bibliotheca Sacra</i> lays out the case. <a href="https://www.thedivinecouncil.com/DT32BibSac.pdf" target="_blank" rel="noopener">PDF</a></li>
-      <li><span class="kind">Seers, contemporary</span><b>Micah Turnbo</b> &mdash; Behold Wonder; pastor of prophetic ministry, Vineyard Church Northwest, Cincinnati; <i>The Invitation</i>. <b>Phoenix</b> &mdash; <a href="https://www.tiktok.com/@phoenixfromphoenix" target="_blank" rel="noopener">@phoenixfromphoenix</a> on TikTok. Described here, not endorsed and not dismissed; the tests in section 07 are the point.</li>
+      <li><span class="kind">Lane 1 &middot; the seers</span><b>Micah Turnbo</b> &mdash; Behold Wonder; pastor of prophetic ministry, Vineyard Church Northwest, Cincinnati; <i>The Invitation</i>. <b>Phoenix</b> &mdash; <a href="https://www.tiktok.com/@phoenixfromphoenix" target="_blank" rel="noopener">@phoenixfromphoenix</a>. <b>Doug Overmyer</b> &mdash; <a href="https://seerssee.com/" target="_blank" rel="noopener">SeersSee</a>, source of the seer/discerner distinction. Described, not endorsed and not dismissed; the tests in section 08 are the point.</li>
+      <li><span class="kind">Lane 2 &middot; the podcasts</span><b>The Deep End</b> w/ Taylor Welch (~1,000 eps; Micah Turnbo on ep.&nbsp;020) and <a href="https://novosnetwork.com/" target="_blank" rel="noopener">NOVOS Network</a>, its companion platform. <b>Blurry Creatures</b> &mdash; Luke Rodgers &amp; Nate Henry. <b>The Lord of Spirits</b> &mdash; Fr. Andrew Stephen Damick &amp; Fr. Stephen De Young, <a href="https://www.ancientfaith.com/podcasts/lordofspirits/" target="_blank" rel="noopener">Ancient Faith</a>, since 2020. <b>The Naked Bible Podcast</b> &mdash; Michael S. Heiser, 458 episodes to Jan 2023. <b>BibleProject</b> &mdash; the <a href="https://bibleproject.com/explore/video/divine-council/" target="_blank" rel="noopener">Spiritual Beings series</a>.</li>
+      <li><span class="kind">Lane 4 &middot; the brakes</span><b>The Remnant Radio</b> &mdash; <a href="https://www.theremnantradio.com/video/deliverance-ministry-without-the-weird" target="_blank" rel="noopener">Deliverance Ministry Without the Weird</a>, which takes on spiritual mapping from inside the charismatic practice. <b>Prophetic Standards Statement</b> (April 2021) &mdash; ~85 signatories, drafted by Michael Brown and Joseph Mattera after the failed 2020 election prophecies. <a href="https://propheticstandards.com/" target="_blank" rel="noopener">propheticstandards.com</a></li>
       <li><span class="kind">The slang</span><b>Aura, aura points, aura farming.</b> First on TikTok in January 2024, mainstream by mid-2025. Included as evidence about folk theories, not as a spiritual claim.</li>
     </ul>
   </div>
@@ -1227,7 +1477,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       <span>Something in the Air</span>
       <span id="pickerHost"></span>
     </div>
-    <p>Scripture references are tappable. Translations are fetched live; nothing on this page is stored about you. Written as a field guide rather than a position paper &mdash; the three verdicts in section&nbsp;06 are the closest it comes to an argument.</p>
+    <p>Scripture references are tappable. Translations are fetched live; nothing on this page is stored about you. Written as a field guide rather than a position paper &mdash; the three verdicts in section&nbsp;07 are the closest it comes to an argument.</p>
   </div>
 </footer>
 
@@ -1302,7 +1552,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
   if (S){
     S.init({
       key: "something-in-the-air",
-      scan: ".wrap > p, .band p, .place .cite, .tcard .ref, .lrow .refs, .vr .claim, .rung-body p, .rung-body .do, .srcs li"
+      scan: ".wrap > p, .band p, .place .cite, .tcard .ref, .lrow .refs, .vr .claim, .rung-body p, .rung-body .do, .vfor, .srcs li"
     });
     var host = document.getElementById("pickerHost");
     if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses in"); }
