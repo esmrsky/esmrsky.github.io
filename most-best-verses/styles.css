@@ -4092,11 +4092,23 @@ input:focus-visible,
   overscroll-behavior: contain;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
-  /* The scroller is the full height of the cube face so both faces stay the same box, which
-     means its last inch is underneath the bar. The furniture's own height is added to the
-     bottom reach so the closing words of a passage can still be brought up to the reading
-     line rather than stopping behind the controls. */
-  padding: calc(46vh + env(safe-area-inset-top)) var(--gutter) calc(46vh + var(--furniture-h, 7rem));
+  /* ---------- reach ----------
+     Not air: this is what lets ANY part of the passage be scrolled to the reading line,
+     including the first, which has nothing above it, and the last, which has nothing below.
+
+     The two numbers are derived, not chosen. To push the first part DOWN to the line the
+     padding above it must be at least the line's own offset, 0.38 of the well. To pull the
+     last part UP to the line the padding below it must be at least everything from the line to
+     the bottom of the scroller — and the shorter that final part is, the more of it is needed:
+     `clientHeight - line - partHeight`, which for a one-line part is about 0.69 of the box.
+     The old bottom value was 46vh plus the bar, ~0.56 of the box, and the arithmetic says that
+     is short by a hundred pixels — which is exactly what it did: the closing part of a passage
+     landed 20-30px low because the scroller had simply run out of room, and no amount of
+     asking for the right position could get it there.
+
+     They are in `dvh` because the scroller is the full height of the overlay, so these scale
+     with the box they have to cover — including in landscape, where a fixed `vh` would not. */
+  padding: calc(42dvh + env(safe-area-inset-top)) var(--gutter) 74dvh;
   box-sizing: border-box;
   /* The column runs past both ends of the well, so both ends need an edge. The top one says
      there is more above; the bottom one stops the passage from sliding under the controls,
@@ -4134,6 +4146,8 @@ input:focus-visible,
   margin-inline: auto;
   min-width: 0;
   box-sizing: border-box;
+  /* The fallback only. A `.story-style-*` class on this same element outranks it, and one is
+     always put there — this is what shows if a face has not been chosen yet. */
   font-family: var(--app-font, var(--font-serif));
   font-size: clamp(1.6rem, 6.8vw, 2.45rem);
   line-height: 1.42;
@@ -4143,6 +4157,140 @@ input:focus-visible,
   text-wrap: pretty;
   overflow-wrap: break-word;
   color: var(--text-primary);
+}
+
+/* ==========================================================================
+   THE SEVENTEEN FACES
+   ==========================================================================
+   The passage is set in a different typeface per verse. It was that before the rebuild, it was
+   taken out with everything else that re-rolled per tap, and it is back because it is the one
+   piece of that variety worth having: the verse is a different verse, and it is allowed to look
+   like one. What is NOT back is a new face every time you tap — a face belongs to a passage now
+   and is carried with it into the history, so walking back gives you the page you read.
+
+   Two things the old blocks did that these do not. They set `text-align` per face, half of them
+   to `center`: in a column that grows a few words at a time, a centred last line moves sideways
+   every time the reader taps, and the left edge they are reading down stops being an edge. They
+   are all ranged left. And they each carried their own `line-height`, tuned against a font-size
+   ladder that no longer exists; the size is one number now, so the leading is too. What is left
+   is what actually distinguishes a face: the family, the weight and the tracking. */
+
+.story-passage-text.story-style-swiss {
+  font-family: var(--font-instrument);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.story-passage-text.story-style-neobrutalism {
+  font-family: var(--font-space);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.story-passage-text.story-style-bricolage {
+  font-family: var(--font-bricolage);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.story-passage-text.story-style-outfit {
+  font-family: var(--font-outfit);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.story-passage-text.story-style-sora {
+  font-family: var(--font-sora);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.story-passage-text.story-style-epilogue {
+  font-family: var(--font-epilogue);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.story-passage-text.story-style-gabarito {
+  font-family: var(--font-gabarito);
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+
+.story-passage-text.story-style-jakarta {
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+
+.story-passage-text.story-style-dm-serif {
+  font-family: var(--font-dm-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.story-passage-text.story-style-fraunces {
+  font-family: var(--font-fraunces);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.story-passage-text.story-style-playfair {
+  font-family: var(--font-playfair);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.story-passage-text.story-style-spectral {
+  font-family: var(--font-spectral);
+  font-weight: 600;
+  letter-spacing: 0.002em;
+}
+
+.story-passage-text.story-style-alegreya {
+  font-family: var(--font-alegreya);
+  font-weight: 700;
+  letter-spacing: 0.004em;
+}
+
+.story-passage-text.story-style-lora {
+  font-family: var(--font-lora);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+.story-passage-text.story-style-newsreader {
+  font-family: var(--font-newsreader);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+.story-passage-text.story-style-source {
+  font-family: var(--font-source-serif);
+  font-weight: 600;
+  letter-spacing: 0.004em;
+}
+
+.story-passage-text.story-style-merriweather {
+  font-family: var(--font-merriweather);
+  font-weight: 700;
+  letter-spacing: 0.005em;
+}
+
+
+/* ---------- the emphasis ----------
+   The form is paired to the face rather than picked at random: a serif passage takes its
+   emphasis in an italic sans and a sans passage takes it in an italic serif, which is the
+   oldest pairing there is and the one that reads as emphasis rather than as highlighting.
+
+   `.fx-sans-italic` is the new one. Instrument Sans has real italics at 500 and 700 — they are
+   in the font request in the head — so this is a drawn italic and not a slanted upright. */
+.fx-sans-italic {
+  font-family: var(--font-instrument);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--story-hl);
 }
 
 /* ---------- a part of the passage ----------

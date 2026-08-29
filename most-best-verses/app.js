@@ -252,13 +252,26 @@
     window.addEventListener('resize', () => {
       if (!state.isStoriesMode) return;
       syncFurnitureHeight();
-      placeReading(stage.shown > 1 ? 'reading' : 'centre', false);
+      placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
     });
 
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        if (state.isStoriesMode) placeReading(stage.shown > 1 ? 'reading' : 'centre', false);
-      });
+    /* Nineteen faces, asked for once the page is up. Until one has answered, `drawItem` will
+       not choose it — which is what stops a passage being set in the fallback and then re-set
+       in the real face a moment later. */
+    preloadPassageFaces();
+    /* `styleIsReady` will not choose a face the browser does not have, but on a cold load it
+       has none of them — the pool falls back to all seventeen and the first passage or two are
+       set in whatever arrives. When the real face lands the paragraph re-wraps, and a passage
+       that re-wraps under an anchored scroll position leaves that anchor pointing at the wrong
+       line: measured on a cold load, the reading line landed 22px and once 150px low, and only
+       on the first verses of a session. Both events put it back. Cheap now — there is nothing
+       to re-fit, only a scroll offset to recompute. */
+    const replace = () => {
+      if (state.isStoriesMode) placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(replace);
+    if (document.fonts && document.fonts.addEventListener) {
+      document.fonts.addEventListener('loadingdone', replace);
     }
   }
 
@@ -751,7 +764,7 @@
     /* The well had no height while the study was up, so any scroll position taken while it was
        open was measured against a box of nothing. Put the reading line back now that there is
        something to measure. */
-    placeReading(stage.shown > 1 ? 'reading' : 'centre', false);
+    placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
     if (window.location.hash.startsWith('#verse=')) history.replaceState(null, null, ' ');
   }
 
@@ -1178,8 +1191,8 @@
 
      One emphasis form, not seventeen. There used to be a form per typeface, because there was a
      typeface per verse; with one face the shape of the emphasis is a decision to make once. */
-  function splitPassage(rawText, verse) {
-    const form = 'fx-accent';
+  function splitPassage(rawText, verse, form) {
+    form = form || 'fx-accent';
     const words = rawText.split(/\s+/);
     const keys = emphasisKeys(verse);
     const hit = words.map(w => {
@@ -1331,10 +1344,21 @@
   const DRAG_SLOP_PX = 6;            /* how far a finger travels before it stops being a tap */
   const DRAG_COMMIT_VELOCITY = 0.45;
 
-  /* Where a newly arrived part of the passage comes to rest, as a fraction of the well. Not
-     the middle: what has just arrived wants the rest of the screen underneath it to grow into,
-     and the words before it want to still be readable above. */
-  const READING_LINE = 0.34;
+  /* ---------- the reading line ----------
+     Where the first line of a newly arrived part comes to rest, as a fraction of the well. The
+     number matters less than the fact that there is only ONE of it.
+
+     The first part used to be CENTRED and every part after it anchored here, which put the
+     first line of a passage at y=337 and the second at y=262 — measured. So the second tap
+     moved the reader's eye 83px up the screen and every tap after it moved nothing, which is
+     exactly the "you have to read from a slightly higher zone" of it: not a drift, a single
+     lurch on the second tap. Every part of a multi-part passage now starts on the same line,
+     including the first, so the eye can stay where it is and just keep tapping.
+
+     0.38 rather than the old 0.34 because the first part now has to look right sitting alone
+     there: three lines starting at 38% of the well are centred on it to within thirty pixels,
+     which is the "big in the middle" the passage opens on. */
+  const READING_LINE = 0.38;
 
 
   /* ==========================================================================
@@ -1544,15 +1568,121 @@
      is the entire state of the stage. There is no second slide, no forward stack of half-drawn
      items, no entrance to be mid-way through — which is most of what used to be able to go
      wrong here. */
-  const stage = { steps: [], shown: 0 };
+  const stage = { item: null, steps: [], shown: 0 };
 
   /* Verses already read, and verses walked back past. Both come back whole: the steps are a
      reading pace, not a lock, and re-earning a passage on the way back would be a tax. */
   const storyForward = [];
 
-  function drawVerse() {
-    if (!state.storyShufflePool.length) resetStoriesShufflePool();
-    return state.storyShufflePool.pop();
+  /* ==========================================================================
+     THE FACES, AND THE VOICE
+     ==========================================================================
+     A verse is set in one of seventeen typefaces, in one of six translations. Both are drawn
+     when the verse is drawn — ONCE, and then carried with it — which is the whole difference
+     from what this used to be. Before, they were re-rolled on every tap, so a passage changed
+     face halfway through being read and the same verse came back a different way every time.
+     Now the face belongs to the passage: it is chosen when the passage is, it stays for as long
+     as the reader is on it, and it goes into the history with it, so walking back gives you the
+     page you actually read. */
+  const STORY_VERSIONS = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
+
+  const STORY_STYLES = [
+    'story-style-swiss', 'story-style-neobrutalism', 'story-style-bricolage',
+    'story-style-outfit', 'story-style-sora', 'story-style-epilogue',
+    'story-style-gabarito', 'story-style-jakarta', 'story-style-dm-serif',
+    'story-style-fraunces', 'story-style-playfair', 'story-style-spectral',
+    'story-style-alegreya', 'story-style-lora', 'story-style-newsreader',
+    'story-style-source', 'story-style-merriweather'
+  ];
+
+  /* Serif takes its emphasis in an italic sans and sans takes it in an italic serif — the
+     oldest pairing there is, and the one that reads as emphasis rather than as highlighting.
+     A handful of the sans faces take one of the other shapes instead so the set is not one
+     idea repeated seventeen times. */
+  const EFFECT_FORM = {
+    'story-style-swiss':        'fx-italic',
+    'story-style-neobrutalism': 'fx-accent',
+    'story-style-bricolage':    'fx-italic',
+    'story-style-outfit':       'fx-gradient',
+    'story-style-sora':         'fx-gradient',
+    'story-style-epilogue':     'fx-caps',
+    'story-style-gabarito':     'fx-italic',
+    'story-style-jakarta':      'fx-scale',
+    'story-style-dm-serif':     'fx-sans-italic',
+    'story-style-fraunces':     'fx-sans-italic',
+    'story-style-playfair':     'fx-sans-italic',
+    'story-style-spectral':     'fx-sans-italic',
+    'story-style-alegreya':     'fx-sans-italic',
+    'story-style-lora':         'fx-sans-italic',
+    'story-style-newsreader':   'fx-sans-italic',
+    'story-style-source':       'fx-sans-italic',
+    'story-style-merriweather': 'fx-accent'
+  };
+
+  /* ---------- a face is never chosen before the browser has it ----------
+     Each family is fetched on first use, so a draw could land on one that had not arrived.
+     `font-display: swap` then sets the passage in the fallback, the real face turns up a moment
+     later, and the words re-set themselves underneath the reader — a paragraph visibly
+     reflowing a beat after the tap. Both halves are fixed here: ask for every face once the
+     page is up, and until one has answered, do not choose it. */
+  const STYLE_FONT = {
+    'story-style-swiss':        '700 24px "Instrument Sans"',
+    'story-style-neobrutalism': '700 24px "Space Grotesk"',
+    'story-style-bricolage':    '800 24px "Bricolage Grotesque"',
+    'story-style-outfit':       '700 24px "Outfit"',
+    'story-style-sora':         '700 24px "Sora"',
+    'story-style-epilogue':     '800 24px "Epilogue"',
+    'story-style-gabarito':     '700 24px "Gabarito"',
+    'story-style-jakarta':      '700 24px "Plus Jakarta Sans"',
+    'story-style-dm-serif':     '400 24px "DM Serif Display"',
+    'story-style-fraunces':     '600 24px "Fraunces"',
+    'story-style-playfair':     '700 24px "Playfair Display"',
+    'story-style-spectral':     '600 24px "Spectral"',
+    'story-style-alegreya':     '700 24px "Alegreya"',
+    'story-style-lora':         '500 24px "Lora"',
+    'story-style-newsreader':   '500 24px "Newsreader"',
+    'story-style-source':       '600 24px "Source Serif 4"',
+    'story-style-merriweather': '700 24px "Merriweather"'
+  };
+
+  /* The emphasis is set in a face of its own — an italic the passage's family may not even
+     have — so it is a seventeenth and eighteenth request that the per-style gate cannot see,
+     since it belongs to the emphasis rather than to the style. Left out, it arrives on its own
+     schedule and re-wraps the line it is on. */
+  const EMPHASIS_FONTS = ['700 italic 24px "Instrument Sans"', '600 italic 24px "Lora"'];
+
+  function styleIsReady(style) {
+    const face = STYLE_FONT[style];
+    if (!face || !document.fonts || !document.fonts.check) return true;
+    try { return document.fonts.check(face); } catch (e) { return true; }
+  }
+
+  /* After first paint, not during it: these are nineteen requests and the verse on screen is
+     worth more than the one after it. */
+  function preloadPassageFaces() {
+    if (!document.fonts || !document.fonts.load) return;
+    const ask = () => Object.keys(STYLE_FONT).map(k => STYLE_FONT[k]).concat(EMPHASIS_FONTS)
+      .forEach(f => { try { document.fonts.load(f); } catch (e) {} });
+    if (window.requestIdleCallback) window.requestIdleCallback(ask, { timeout: 1200 });
+    else window.setTimeout(ask, 400);
+  }
+
+  /* One item is everything a passage is: which verse, in which translation, in which face.
+     Drawn once and kept. */
+  function drawItem(verse) {
+    if (!verse) {
+      if (!state.storyShufflePool.length) resetStoriesShufflePool();
+      verse = state.storyShufflePool.pop();
+    }
+    /* Cold, this is a short list and the first few passages repeat a face. That is the right
+       trade: a face the reader has already seen beats one that changes shape under them. */
+    const ready = STORY_STYLES.filter(styleIsReady);
+    const pool = ready.length ? ready : STORY_STYLES;
+    return {
+      verse: verse,
+      ver: STORY_VERSIONS[Math.floor(Math.random() * STORY_VERSIONS.length)],
+      style: pool[Math.floor(Math.random() * pool.length)]
+    };
   }
 
   function syncFurnitureHeight() {
@@ -1633,10 +1763,13 @@
   /* The furniture follows the verse: its reference, its translation, its colour, and the
      ground's palette. The light-or-dark class on the frame is the SITE's theme now, so it
      changes when the reader changes it and at no other time. */
-  function syncFurniture(verse) {
+  function syncFurniture(item) {
+    const verse = item.verse;
+    stage.item = item;
     state.storyCurrentVerse = verse;
+    state.storyCurrentVer = item.ver;
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = verse.ref;
-    if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = state.storyCurrentVer;
+    if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = item.ver;
 
     const dark = stageIsDark();
     const hi = STORY_HIGHLIGHTS[dark ? 'dark' : 'light'];
@@ -1659,22 +1792,28 @@
 
   /* Draws a verse from nothing. `whole` is for a passage the reader has already been through —
      it comes back complete and positioned at its beginning, ready to be re-read. */
-  function showVerse(verse, opts) {
+  function showVerse(item, opts) {
     opts = opts || {};
     const col = elements.verseColumn;
-    if (!verse || !col) return;
-    state.storyCurrentVerse = verse;
-    const text = verse.translations[state.storyCurrentVer] || verse.translations.NIV;
-    stage.steps = splitPassage(text, verse);
+    if (!item || !item.verse || !col) return;
+    const verse = item.verse;
+    const text = verse.translations[item.ver] || verse.translations.NIV;
+    stage.steps = splitPassage(text, verse, EFFECT_FORM[item.style] || 'fx-accent');
     stage.shown = 0;
     col.textContent = '';
-    syncFurniture(verse);
+    /* The face rides on the column itself, so one class swap re-sets the passage and nothing
+       else on the page has to know which typeface it is in. */
+    col.className = 'story-passage-text ' + item.style;
+    syncFurniture(item);
     if (opts.whole) {
       while (addStep(false)) {}
       placeReading('start', false);
     } else {
       addStep(opts.animate !== false);
-      placeReading('centre', false);
+      /* A verse that arrives entire is centred, because nothing will ever be added to it and
+         there is no reading line to keep faith with. One that comes in parts opens on the line
+         its later parts will land on. */
+      placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
     }
     state.storyHasRendered = true;
   }
@@ -1689,16 +1828,15 @@
   }
 
   function nextVerse() {
-    const cur = state.storyCurrentVerse;
+    const cur = stage.item;
     const back = storyForward.length ? storyForward.pop() : null;
     if (cur) state.storyHistory.push(cur);
-    showVerse(back || drawVerse(), { whole: !!back });
+    showVerse(back || drawItem(), { whole: !!back });
   }
 
   function prevVerse() {
     if (!state.storyHistory.length) return;
-    const cur = state.storyCurrentVerse;
-    if (cur) storyForward.push(cur);
+    if (stage.item) storyForward.push(stage.item);
     showVerse(state.storyHistory.pop(), { whole: true });
   }
 
@@ -1706,17 +1844,18 @@
      the reader had uncovered is kept, clamped to what the new text actually has, so changing
      the translation mid-verse does not hand them the rest of it or take back what they read. */
   function repaintVerse() {
-    const verse = state.storyCurrentVerse, col = elements.verseColumn;
-    if (!verse || !col) return;
+    const item = stage.item, col = elements.verseColumn;
+    if (!item || !col) return;
     const was = stage.shown;
-    const text = verse.translations[state.storyCurrentVer] || verse.translations.NIV;
-    stage.steps = splitPassage(text, verse);
+    const text = item.verse.translations[item.ver] || item.verse.translations.NIV;
+    stage.steps = splitPassage(text, item.verse, EFFECT_FORM[item.style] || 'fx-accent');
     stage.shown = 0;
     col.textContent = '';
-    syncFurniture(verse);
+    col.className = 'story-passage-text ' + item.style;
+    syncFurniture(item);
     const want = Math.max(1, Math.min(stage.steps.length, was));
     while (stage.shown < want) addStep(false);
-    placeReading(stage.shown > 1 ? 'reading' : 'centre', false);
+    placeReading(stage.steps.length > 1 ? 'reading' : 'centre', false);
   }
 
   /* The hint goes on the reader's first tap, whether that tap turned the page or only read on
@@ -1731,8 +1870,8 @@
      verse without knowing any of the above. */
   function renderNextStorySlide(forcedVerse = null) {
     if (forcedVerse) {
-      if (state.storyCurrentVerse) state.storyHistory.push(state.storyCurrentVerse);
-      showVerse(forcedVerse, {});
+      if (stage.item) state.storyHistory.push(stage.item);
+      showVerse(drawItem(forcedVerse), {});
       return;
     }
     nextVerse();
@@ -2209,11 +2348,10 @@
     if (elements.storyActiveVerBadge) {
       elements.storyActiveVerBadge.addEventListener('click', (e) => {
         e.stopPropagation();
-        const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
-        const nextIdx = (versions.indexOf(state.storyCurrentVer) + 1) % versions.length;
-        const nextVer = versions[nextIdx];
-        state.storyCurrentVer = nextVer;
-        if (state.storyCurrentVerse) repaintVerse();
+        if (!stage.item) return;
+        const i = (STORY_VERSIONS.indexOf(stage.item.ver) + 1) % STORY_VERSIONS.length;
+        stage.item.ver = STORY_VERSIONS[i];
+        repaintVerse();
       });
     }
 
