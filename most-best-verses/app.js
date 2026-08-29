@@ -90,8 +90,13 @@
        and that choice outlives the session. */
     slideMode: 'shuffle',
 
-    /* How a drag feels: snap, scrub or glide. See REEL_MOTIONS. */
-    reelMotion: 'snap',
+    /* How a drag feels: snap, scrub or glide. See REEL_MOTIONS.
+       Scrub is the default now. It was snap while a drag brought a whole verse and assembling
+       ninety words under a thumb was a toll; a drag brings ONE STEP, so what assembles is a
+       clause or three and the gesture reading as the timeline is the point rather than the
+       price. A reader who had already chosen otherwise keeps their choice — this is only the
+       value used when there is nothing saved. */
+    reelMotion: 'scrub',
     storyHasRendered: false
   };
 
@@ -1285,38 +1290,94 @@
       esc[0] = '"' + esc[0];
       esc[esc.length - 1] = esc[esc.length - 1] + '"';
     }
-    /* ---------- the unit of arrival is a CLAUSE, not a word ----------
+    /* ---------- the unit of arrival is a CLAUSE, and the unit of a TAP is a STEP ----------
        Word by word, a passage arrives as ninety separate events, and ninety things asking for
        attention one after another is not reading, it is a ticker. Scripture is already written
        in clauses — the commas and the colons are where the sense turns — so those are the
        joints to move at. Every word inside a clause shares one index and therefore lands
-       together; the reader gets a phrase, reads it, and the next arrives.
+       together.
 
        A clause is punctuation OR six words, whichever comes first, because an unpunctuated
-       stretch has to break somewhere and six is about as much as lands as one thought. */
+       stretch has to break somewhere and six is about as much as lands as one thought.
+
+       Clauses are then gathered into STEPS, and a step is what one tap brings. Six words a tap
+       is a ticker with a thumb attached; a whole verse a tap is the wall this is here to fix.
+       Around fifteen words is a line of reading — so fifteen is the target, the cut is taken at
+       a full stop whenever one is close enough to it, and a passage never asks for more than
+       five taps however long it runs. Under twenty words there are no steps at all: a short
+       verse is already one breath, which is exactly why the short ones read cleanly. */
     const CHUNK_MAX_WORDS = 6;
+    const STEP_WHOLE_UNDER = 26;   /* shorter than this and the verse arrives entire */
+    const STEP_TARGET_WORDS = 15;
+    const STEP_MAX = 5;
     const closesClause = w => /[,;:.!?—–]["'”’)]?$/.test(w);
+    const endsSentence = w => /[.!?]["'”’)]?$/.test(w);
 
-    let chunk = 0, inChunk = 0;
-    const cell = (inner, raw) => {
-      if (inChunk >= CHUNK_MAX_WORDS) { chunk++; inChunk = 0; }
-      const html = '<span class="sw" style="--i:' + chunk + '">' + inner + '</span>';
-      inChunk++;
-      if (raw && closesClause(raw)) { chunk++; inChunk = 0; }
-      return html;
-    };
-
-    const out = [];
+    /* One pass to lay the words out as cells, so the grouping below can look at the whole
+       passage instead of deciding as it goes. An emphasised phrase is already one unit and
+       stays one: it reads as a single gesture and must not be broken across two arrivals. */
+    const cells = [];
     let i = 0;
     spans.forEach(span => {
-      while (i < span[0]) { out.push(cell(esc[i], words[i])); i++; }
-      /* An emphasised phrase is already one unit and stays one: it reads as a single gesture
-         and must not be broken across two arrivals. */
-      out.push(cell('<span class="' + form + '">' + esc.slice(span[0], span[1]).join(' ') + '</span>',
-                    words[span[1] - 1]));
+      while (i < span[0]) { cells.push({ html: esc[i], raw: words[i], n: 1 }); i++; }
+      cells.push({
+        html: '<span class="' + form + '">' + esc.slice(span[0], span[1]).join(' ') + '</span>',
+        raw: words[span[1] - 1],
+        n: span[1] - span[0]
+      });
       i = span[1];
     });
-    while (i < words.length) { out.push(cell(esc[i], words[i])); i++; }
+    while (i < words.length) { cells.push({ html: esc[i], raw: words[i], n: 1 }); i++; }
+
+    const clauses = [];
+    let open = null;
+    cells.forEach(c => {
+      if (!open) { open = { cells: [], words: 0, stop: false }; clauses.push(open); }
+      open.cells.push(c);
+      open.words += c.n;
+      const punct = closesClause(c.raw);
+      if (punct || open.words >= CHUNK_MAX_WORDS) {
+        open.stop = punct && endsSentence(c.raw);
+        open = null;
+      }
+    });
+
+    const totalWords = clauses.reduce((a, c) => a + c.words, 0);
+    let nSteps = 1;
+    if (totalWords > STEP_WHOLE_UNDER && clauses.length > 1) {
+      nSteps = Math.max(2, Math.min(STEP_MAX, Math.round(totalWords / STEP_TARGET_WORDS)));
+      nSteps = Math.min(nSteps, clauses.length);
+    }
+    const target = totalWords / nSteps;
+
+    let step = 0, acc = 0;
+    clauses.forEach((cl, idx) => {
+      cl.step = step;
+      acc += cl.words;
+      const stepsLeft = nSteps - step - 1;
+      const clausesLeft = clauses.length - idx - 1;
+      if (stepsLeft <= 0) return;
+      /* Never strand a step with nothing in it: once there are exactly as many clauses left as
+         there are steps left, every one of them has to start a step of its own. */
+      if (clausesLeft <= stepsLeft) { step++; acc = 0; return; }
+      /* Otherwise cut at the target — or early, at a full stop, since a sentence boundary is
+         worth two or three words of the budget. */
+      if (acc >= target || (cl.stop && acc >= target * 0.55)) { step++; acc = 0; }
+    });
+
+    /* `--i` is the clause's index inside its OWN step. The stagger then belongs to the step
+       rather than to the passage, so the fourth tap's clauses land as promptly as the first
+       tap's rather than a second and a half late. */
+    const out = [];
+    let seen = -1, within = 0;
+    clauses.forEach(cl => {
+      if (cl.step !== seen) { seen = cl.step; within = 0; }
+      cl.cells.forEach(c => {
+        out.push('<span class="sw" data-step="' + cl.step + '" style="--i:' + within + '">' +
+                 c.html + '</span>');
+      });
+      within++;
+    });
     return out.join(' ');
   }
 
@@ -1466,7 +1527,7 @@
     scrub: { step: 200, span: 2600 },
     glide: { step: 330, span: 4200 }
   };
-  const WORD_FADE_MS = 300;
+  const WORD_FADE_MS = 380;   /* must match `--sw-fade` in the sheet */
   const GLIDE_MIN_MS = 320;
   const GLIDE_MAX_MS = 940;
 
@@ -1775,6 +1836,132 @@
     }
   };
 
+  /* ---------- how much of the passage is lit ----------
+     `n` is a count of STEPS, not of clauses or words. Everything below step `n` is lit and
+     everything from it on stays ghosted, and the CSS does the rest: a span that gains
+     `.is-lit` runs its fade, a span that has it already is untouched. Idempotent, so it is
+     safe to call with the same number twice. */
+  function setShown(el, n) {
+    if (!el) return;
+    const passage = el.querySelector('.story-passage-text');
+    if (!passage) return;
+    const total = parseInt(el.dataset.steps, 10) || 1;
+    n = Math.max(1, Math.min(total, n));
+    el.dataset.shown = n;
+    passage.querySelectorAll('.sw').forEach(c => {
+      c.classList.toggle('is-lit', (parseInt(c.dataset.step, 10) || 0) < n);
+    });
+  }
+
+  /* A forward tap lights the next step if there is one, and only turns the page when there is
+     not. Returns whether it took the tap, so the caller knows not to advance. */
+  function revealMore() {
+    const el = currentSlide();
+    if (!el || !el.classList.contains('is-stepped')) return false;
+    const total = parseInt(el.dataset.steps, 10) || 1;
+    const shown = parseInt(el.dataset.shown, 10) || total;
+    if (shown >= total) return false;
+    setShown(el, shown + 1);
+    /* The passage grows into space the fitter already allowed for — the ghost was laid out at
+       full size from the first frame — so nothing needs re-fitting and nothing moves. */
+    return true;
+  }
+
+
+  /* ==========================================================================
+     THE GROUND'S COLOURS
+     ==========================================================================
+     The field itself never changes — it is one element with three blurred blobs on three long
+     clocks, and it is behind everything for the whole session. What a verse changes is four
+     colours, and those are registered `<color>` properties on the overlay, so the browser can
+     interpolate them.
+
+     Two ways in, and the difference between them is the whole point:
+
+       setGround    a tap, or whatever is left of a committed drag. Writes the destination and
+                    lets the 760ms transition on `.story-overlay` carry it. The text has
+                    already changed; the light takes its time catching up, which is what makes
+                    a tap read as a place turning rather than a slide being replaced.
+       trackGround  a drag. Interpolates in script from how far the thumb has travelled and
+                    writes the result with the easing switched off. The gesture IS the
+                    timeline — the scrollytelling half of what a drag does here.
+
+     `groundNow` is the palette the ground is TRAVELLING FROM and is deliberately not touched
+     while a drag is in flight: it is what an abandoned drag has to ease back to, and reading
+     the interpolated value off the element instead would make every abandoned gesture leave
+     the ground a little further from where it started. */
+  const GROUND_VARS = ['--bg-base', '--bg-a', '--bg-b', '--bg-c'];
+  let groundNow = null;
+
+  /* Base from the category's gradient, the two blobs that carry the colour from the highlight
+     pair. It has to be the highlights: the category gradients are pastel on the light side —
+     three of those under a 0.68 veil composite to a screen that is very nearly white, which is
+     precisely the "nothing is happening" the field exists to fix. The highlight pair is the
+     saturated end of the same palette in both modes, and it is the colour the emphasised
+     phrase is already set in, so the light and the words it falls on agree. */
+  function groundPalette(item) {
+    if (!item || !item.verse) return null;
+    const dark = !!item.isDark;
+    const table = SLIDE_GRADIENTS[dark ? 'dark' : 'light'];
+    const g = table[item.verse.category] || table['joy-presence'];
+    const stops = g.match(/#[0-9a-fA-F]{6}/g) || ['#12100e'];
+    const hi = STORY_HIGHLIGHTS[dark ? 'dark' : 'light'];
+    const hl = hi[item.verse.themeColor] || hi.amber;
+    const s = i => stops[i] || stops[0];
+    return [s(0), hl[0], hl[1], s(2)];
+  }
+
+  const hexRgb = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  const rgbCss = c => 'rgb(' + c[0] + ' ' + c[1] + ' ' + c[2] + ')';
+
+  function writeGround(cols) {
+    const o = elements.storyOverlay;
+    if (!o || !cols) return;
+    GROUND_VARS.forEach((v, i) => o.style.setProperty(v, rgbCss(cols[i])));
+  }
+
+  function setGround(item) {
+    const pal = groundPalette(item);
+    if (!pal) return;
+    if (elements.storyOverlay) elements.storyOverlay.classList.remove('is-bg-tracking');
+    groundNow = pal.map(hexRgb);
+    writeGround(groundNow);
+  }
+
+  function trackGround(item, p) {
+    const pal = groundPalette(item);
+    if (!pal || !groundNow || !elements.storyOverlay) return;
+    const to = pal.map(hexRgb);
+    const t = Math.max(0, Math.min(1, p));
+    elements.storyOverlay.classList.add('is-bg-tracking');
+    writeGround(groundNow.map((c, i) => [
+      Math.round(c[0] + (to[i][0] - c[0]) * t),
+      Math.round(c[1] + (to[i][1] - c[1]) * t),
+      Math.round(c[2] + (to[i][2] - c[2]) * t)
+    ]));
+  }
+
+  /* An abandoned drag. Easing back on, then the ORIGINAL palette written over the interpolated
+     one, so it travels home over 760ms instead of snapping there. */
+  function homeGround() {
+    if (elements.storyOverlay) elements.storyOverlay.classList.remove('is-bg-tracking');
+    if (groundNow) writeGround(groundNow);
+  }
+
+  /* The field lags the pair rather than travelling with them. A tenth of the distance is
+     enough to read as depth and little enough that it never looks like a third slide. */
+  function shiftGround(px) {
+    const b = elements.storyBackdrop;
+    if (!b) return;
+    if (px === 0) {
+      b.classList.remove('is-tracking');
+      b.style.removeProperty('--bg-shift');
+      return;
+    }
+    b.classList.add('is-tracking');
+    b.style.setProperty('--bg-shift', Math.round(px * 0.1) + 'px');
+  }
+
   /* Writes an item onto a slide. The style, size and theme classes go on the SLIDE now rather
      than on the frame, which is what lets two of them exist at once with different faces and
      different grounds — every selector in the sheet reads them from an ancestor, so none of
@@ -1797,27 +1984,35 @@
     const hl = table[item.verse.themeColor] || table.amber;
     el.style.setProperty('--story-hl', hl[0]);
     el.style.setProperty('--story-hl-2', hl[1]);
-    el.style.setProperty('--slide-bg',
-      SLIDE_GRADIENTS[item.isDark ? 'dark' : 'light'][item.verse.category] ||
-      SLIDE_GRADIENTS[item.isDark ? 'dark' : 'light']['joy-presence']);
+    /* No ground here any more. The gradient the verse used to carry is now the shared field's
+       palette, and it is set from `syncFurniture` — once, for whichever slide is actually in
+       front — rather than twice, on both slides, from here. */
 
     const passage = el.querySelector('.story-passage-text');
     if (passage) {
       passage.innerHTML = formatStoryTextWithEffects(text, item.style, item.verse);
-      /* Clauses, not words: the arrival index is shared within a clause, so what matters is
-         how many distinct indices there are. */
+      /* Two counts come back out of the markup rather than being threaded through from the
+         formatter: how many steps the passage was cut into, and the longest run of clauses
+         inside any one of them — which is what the stagger has to fit. */
       const cells = passage.querySelectorAll('.sw');
-      let units = 1;
+      let steps = 1, widest = 1, first = 1;
       cells.forEach(c => {
-        const i = parseInt(c.style.getPropertyValue('--i'), 10);
-        if (!isNaN(i) && i + 1 > units) units = i + 1;
+        const st = parseInt(c.dataset.step, 10) || 0;
+        const i = parseInt(c.style.getPropertyValue('--i'), 10) || 0;
+        if (st + 1 > steps) steps = st + 1;
+        if (i + 1 > widest) widest = i + 1;
+        if (st === 0 && i + 1 > first) first = i + 1;
       });
       const pace = MOTION_PACE[state.reelMotion] || MOTION_PACE.snap;
-      const step = units > 1 ? Math.min(pace.step, pace.span / (units - 1)) : pace.step;
+      const step = widest > 1 ? Math.min(pace.step, pace.span / (widest - 1)) : pace.step;
       el.style.setProperty('--sw-step', step.toFixed(1) + 'ms');
-      el.dataset.clauses = units;
-      /* A scrub has to span the whole assembly, so it is measured rather than assumed. */
-      el.dataset.scrubMs = Math.round(step * (units - 1) + WORD_FADE_MS);
+      el.dataset.steps = steps;
+      /* A scrub spans the FIRST step, because the first step is all a drag brings. */
+      el.dataset.scrubMs = Math.round(step * (first - 1) + WORD_FADE_MS);
+      el.classList.add('is-stepped');
+      /* A verse the reader has already been through comes back whole — the steps are a
+         reading pace, not a lock, and re-earning them on the way back would be a tax. */
+      setShown(el, item.shown === 'all' ? steps : (parseInt(item.shown, 10) || 1));
     }
     el.dataset.enter = REEL_ENTERS[Math.floor(Math.random() * REEL_ENTERS.length)];
     autoFitStoryText(el);
@@ -1838,6 +2033,10 @@
     if (elements.storyPassageRef) elements.storyPassageRef.textContent = item.verse.ref;
     if (elements.storyActiveVerBadge) elements.storyActiveVerBadge.textContent = item.ver;
 
+    /* The field belongs to the verse in front, and this is the one place that knows which that
+       is — paintSlide runs twice, once for a slide nobody is looking at yet. */
+    setGround(item);
+
     const cont = elements.storyContainer;
     if (cont) {
       cont.classList.toggle('story-theme-dark', !!item.isDark);
@@ -1856,7 +2055,16 @@
     const passage = el.querySelector('.story-passage-text');
     el.classList.remove('is-playing');
     if (passage) passage.classList.remove(...REEL_ENTERS);
+    /* The words are lit at paint time, which is the whole point on a tap — a couple of clauses
+       fading up is what a tap should look like. But a drag paints the slide the moment the
+       direction is settled and only lands it a gesture later, so by then the fade has long
+       finished and the verse arrives already assembled. Taking `.is-lit` off and putting it
+       straight back restarts the animation; both happen inside one style pass, so there is no
+       frame in which the passage is dark. */
+    const lit = passage ? Array.from(passage.querySelectorAll('.sw.is-lit')) : [];
+    lit.forEach(c => c.classList.remove('is-lit'));
     void el.offsetWidth;
+    lit.forEach(c => c.classList.add('is-lit'));
     if (passage && el.dataset.enter) passage.classList.add(el.dataset.enter);
     el.classList.add('is-playing');
   }
@@ -1868,6 +2076,14 @@
     el.style.removeProperty('--scrub');
     delete el.dataset.scrubMs;
     if (passage) passage.classList.remove(...REEL_ENTERS);
+  }
+
+  /* The hint goes on the reader's first tap, whether that tap turned the page or only read on
+     into the verse they are already on. */
+  function dismissTapToast() {
+    if (state.hasTappedStoryOnce) return;
+    state.hasTappedStoryOnce = true;
+    if (elements.storyTapToast) elements.storyTapToast.classList.add('dismissed');
   }
 
   /* The one way a verse changes. `animated` is the whole difference between a tap and a flick:
@@ -1882,10 +2098,7 @@
     const cur = currentSlide(), off = offstageSlide();
     if (!cur || !off) return;
 
-    if (!state.hasTappedStoryOnce) {
-      state.hasTappedStoryOnce = true;
-      if (elements.storyTapToast) elements.storyTapToast.classList.add('dismissed');
-    }
+    dismissTapToast();
 
     let item;
     if (forcedVerse) {
@@ -1969,7 +2182,10 @@
       verse: state.storyCurrentVerse,
       ver: state.storyCurrentVer,
       style: state.storyCurrentStyle,
-      isDark: !!state.storyCurrentIsDark
+      isDark: !!state.storyCurrentIsDark,
+      /* This is only ever built to be PUT somewhere — the back stack or the forward stack —
+         and everything on either of those has already been read. It comes back lit. */
+      shown: 'all'
     };
   }
 
@@ -1987,6 +2203,9 @@
   const SPRING_MS = 220;
 
   function reelSpringBack() {
+    /* Whatever the drag carried the colours to, they came from here. */
+    homeGround();
+    shiftGround(0);
     const cur = currentSlide(), off = offstageSlide();
     const H = (elements.storyReel && elements.storyReel.clientHeight) || window.innerHeight;
     const dir = reel.dir || 1;
@@ -2021,6 +2240,12 @@
     item.isDark = state.slideMode === 'dark' ? true
                 : state.slideMode === 'light' ? false
                 : item.isDark;
+    /* `currentItem()` is built for the history stacks, where everything is read and comes back
+       whole. This is the same verse still on screen — changing its appearance must not hand
+       the reader the rest of it. */
+    const steps = parseInt(cur.dataset.steps, 10) || 1;
+    const shown = parseInt(cur.dataset.shown, 10) || steps;
+    item.shown = shown >= steps ? 'all' : shown;
     clearEntrance(cur);
     paintSlide(cur, item);
     syncFurniture(item);
@@ -2342,7 +2567,11 @@
         if (reel.dragging || reel.settling || reel.moved) return;
         if (cube.open) return;      /* in the chapter a tap is a scroll or a link, not a turn */
         const w = elements.storyOverlay.clientWidth || window.innerWidth;
-        reelAdvance(e.clientX < w * TAP_BACK_FRACTION ? -1 : 1, false);
+        const dir = e.clientX < w * TAP_BACK_FRACTION ? -1 : 1;
+        /* A forward tap reads the rest of THIS verse before it goes looking for another one.
+           The page only turns when there is nothing left to light. */
+        if (dir > 0 && revealMore()) { dismissTapToast(); return; }
+        reelAdvance(dir, false);
       });
     }
 
@@ -2454,7 +2683,16 @@
           }
           off.style.transform = 'translate3d(0,' + (reel.dy - reel.dir * H) + 'px,0)';
           if (scrubbing() && !reducedMotion()) scrubSlide(off, Math.abs(reel.dy) / H);
+          /* The ground morphs towards the arriving verse in step with the thumb, whatever the
+             motion mode is — this is not one of the three drag feels, it is what a drag looks
+             like here. The slides carry only their own veil now, so this is the transition. */
+          if (off.dataset.armed === String(reel.dir)) {
+            trackGround(reel.dir < 0
+              ? state.storyHistory[state.storyHistory.length - 1]
+              : reel.armedItem, Math.abs(reel.dy) / H);
+          }
         }
+        shiftGround(reel.dy);
       });
 
       const endDrag = (e) => {
@@ -2465,7 +2703,7 @@
         try { gestureEl.releasePointerCapture(reel.pointerId); } catch (err) {}
         const off = offstageSlide();
         if (off) delete off.dataset.armed;
-        if (!reel.moved) { reel.dy = 0; return; }
+        if (!reel.moved) { reel.dy = 0; shiftGround(0); return; }
 
         if (reel.axis === 'y' && cube.open) { reel.dy = 0; reel.moved = false; return; }
 
@@ -2503,6 +2741,7 @@
           if (reel.armedItem) reelForward.push(reel.armedItem);
           reelSpringBack();
         }
+        shiftGround(0);
         reel.armedItem = null;
         /* The click that follows a drag has to be swallowed, or the gesture turns two pages. */
         window.setTimeout(() => { reel.moved = false; }, 0);
@@ -2734,7 +2973,9 @@
       if (state.isStoriesMode) {
         if (e.key === ' ' || e.key === 'ArrowRight') {
           e.preventDefault();
-          renderNextStorySlide();
+          /* Same rule as the tap: read on first, turn the page after. */
+          if (!revealMore()) renderNextStorySlide();
+          dismissTapToast();
         } else if (e.key === 'ArrowLeft') {
           e.preventDefault();
           renderPreviousStorySlide();

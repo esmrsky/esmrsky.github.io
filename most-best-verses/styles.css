@@ -2182,7 +2182,7 @@ button {
   height: 100%;
   height: 100dvh;
   z-index: 1000;
-  background: #000;
+  background: var(--bg-base, #000);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2192,43 +2192,115 @@ button {
   user-select: none;
   cursor: pointer;
   box-sizing: border-box;
+  /* The verse's colours live here and are inherited by the ground. This one line is the whole
+     difference between a tap that cuts to a new palette and a tap that travels to one. */
+  transition: --bg-base 760ms cubic-bezier(0.32, 0.72, 0, 1),
+              --bg-a    760ms cubic-bezier(0.32, 0.72, 0, 1),
+              --bg-b    760ms cubic-bezier(0.32, 0.72, 0, 1),
+              --bg-c    760ms cubic-bezier(0.32, 0.72, 0, 1);
 }
+
+/* A drag writes the four colours on every pointermove, interpolated in script from how far the
+   thumb has gone. Each write would otherwise start its own 760ms transition and the ground
+   would run a third of a second behind the finger — so while the thumb is down the easing is
+   off and the gesture IS the timeline. Letting go turns it back on, and whatever is left of the
+   journey eases home. */
+.story-overlay.is-bg-tracking { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .story-overlay { transition: none; }
+}
+
+/* ==========================================================================
+   THE GROUND
+   ==========================================================================
+   One field for the whole reel. It is never swapped, never translated with a slide and never
+   repainted from scratch — the verse changes only the four colours below, and everything that
+   reads them follows.
+
+   ---------- why these are registered ----------
+   A custom property is an untyped string until it is registered, and an untyped string cannot
+   be interpolated: `transition: --bg-a 700ms` on a plain `--bg-a` is accepted by the parser
+   and silently does nothing. Declaring them `<color>` is what makes the tap a glide instead of
+   a cut. They are declared on `.story-overlay` and inherited down, so the transition runs in
+   one place and the orbs, which only ever `var()` them, come along for free. */
+@property --bg-base { syntax: "<color>"; inherits: true; initial-value: #0e0d12; }
+@property --bg-a    { syntax: "<color>"; inherits: true; initial-value: #f59e0b; }
+@property --bg-b    { syntax: "<color>"; inherits: true; initial-value: #ec4899; }
+@property --bg-c    { syntax: "<color>"; inherits: true; initial-value: #8b5cf6; }
 
 .story-backdrop {
   position: absolute;
-  inset: 0;
-  background: var(--story-bg-gradient);
-  background-size: 300% 300%;
-  animation: gradientShift 10s ease infinite alternate;
+  /* Taller than the screen on both sides, because it MOVES: a field pinned to the viewport and
+     then parallaxed eighty pixels leaves eighty pixels of bare overlay at whichever edge it
+     travelled away from. The overrun is where it travels into. */
+  inset: -14% 0;
   z-index: 1;
-  overflow: hidden !important;
-  contain: strict;
-  transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg-base);
+  /* The field lags the thumb rather than tracking it. A ground that travelled with the text
+     would be a third slide; a ground that moves a tenth as far reads as depth. */
+  transform: translate3d(0, var(--bg-shift, 0px), 0);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 50% 100%; }
-}
+/* While the thumb is down the shift is written every frame, so a transition on it would put
+   the field a third of a second behind the finger. */
+.story-backdrop.is-tracking { transition: none; }
 
 .story-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.52;
   pointer-events: none;
-  animation: orbFloat 12s ease-in-out infinite alternate;
+  /* Big and soft. Under the slide veil only the broad shape of the light survives, so a small
+     sharp blob reads as nothing at all. */
+  filter: blur(80px);
+  will-change: transform;
 }
 
-.story-orb-1 { top: 6%; left: 10%; width: 360px; height: 360px; background: #f59e0b; }
-.story-orb-2 { bottom: 8%; right: 10%; width: 420px; height: 420px; background: #ec4899; animation-delay: -4s; }
-.story-orb-3 { top: 45%; left: 50%; width: 320px; height: 320px; background: #8b5cf6; animation-delay: -8s; }
+/* Three clocks, none of them a multiple of another, so the field never repeats inside a
+   reading. All three are transform-only and ride on the compositor: no paint, no layout. */
+.story-orb-1 {
+  top: -14%; left: -10%;
+  width: 68vmax; height: 68vmax;
+  background: var(--bg-a);
+  opacity: 0.55;
+  animation: orbDriftA 31s ease-in-out infinite alternate;
+}
 
-@keyframes orbFloat {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(35px, -25px) scale(1.15); }
-  100% { transform: translate(-25px, 35px) scale(0.95); }
+.story-orb-2 {
+  bottom: -18%; right: -12%;
+  width: 74vmax; height: 74vmax;
+  background: var(--bg-b);
+  opacity: 0.48;
+  animation: orbDriftB 43s ease-in-out infinite alternate;
+}
+
+.story-orb-3 {
+  top: 26%; left: 22%;
+  width: 56vmax; height: 56vmax;
+  background: var(--bg-c);
+  opacity: 0.42;
+  animation: orbDriftC 37s ease-in-out infinite alternate;
+}
+
+@keyframes orbDriftA {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(16vw, 13vh, 0) scale(1.26); }
+}
+@keyframes orbDriftB {
+  from { transform: translate3d(0, 0, 0) scale(1.14); }
+  to   { transform: translate3d(-15vw, -11vh, 0) scale(0.9); }
+}
+@keyframes orbDriftC {
+  from { transform: translate3d(0, 0, 0) scale(0.94); }
+  to   { transform: translate3d(11vw, -17vh, 0) scale(1.22); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-orb { animation: none; }
+  .story-backdrop { transition: none; }
 }
 
 /* ---------- Appearance lock ----------
@@ -4274,28 +4346,46 @@ input:focus-visible,
   box-sizing: border-box;
   padding: max(2rem, env(safe-area-inset-top)) 1.65rem var(--furniture-h, 7rem);
   color: var(--text-primary);
-  background: var(--slide-bg, transparent);
-  /* Oversized so there is somewhere to drift TO. The ground moves slowly enough that you
-     never catch it moving, only notice it is not where it was. */
-  background-size: 190% 190%;
-  background-position: 0% 50%;
-  animation: slideDrift 26s ease-in-out infinite alternate;
+  /* ---------- the slide is a veil, not a ground ----------
+     It used to be opaque, which is what forced every verse to bring its own gradient and made
+     a drag two grounds crossing at a hard edge. What travels with the text now is only a
+     wash of its own paper: enough to guarantee the contrast the passage needs wherever the
+     living field underneath happens to be, and thin enough that the field reads through it.
+
+     The numbers are not decorative, and the two things they are balancing pull opposite ways:
+     thick enough and the passage is legible over any palette the field might be carrying
+     mid-drag, thin enough and there is something to look at. Every combination was worked
+     through — including the awkward one, a slide of one polarity over a field that has already
+     travelled to the other — and the worst of them, the corner of a dark slide over a fully
+     light field, measures 6:1. In the middle, where the text actually is, none is under 10:1.
+     The corners are thinnest because that is where the fitter never puts a word, so that is
+     where most of the colour comes through. */
   will-change: transform;
   backface-visibility: hidden;
 }
 
-@keyframes slideDrift {
-  from { background-position: 0% 40%; }
-  to   { background-position: 100% 60%; }
-}
+/* ---------- the veil is a layer, so that it can be feathered ----------
+   It cannot live on the slide's own `background`, because the thing that has to happen to it
+   is a mask, and a mask on the slide would take the passage with it.
 
-/* A moving slide holds still inside itself. Drifting a full-screen gradient repaints every
-   frame, and doing that underneath a transform that is already animating is the one moment it
-   would actually cost something — and the one moment nobody can see it. */
-.story-reel.is-dragging .reel-slide,
-.reel-slide.is-settling,
-.reel-slide.is-springing {
-  animation-play-state: paused;
+   Why feather at all: the veil travels with its text, so where two slides meet during a drag
+   their two washes meet as well — and two flat tones meeting is a straight line across the
+   screen whatever is underneath them. That line is the last of the old hard seam. Fading each
+   veil out over the top eighth and the bottom eighth means the pair meet at nothing and the
+   shared field is what shows through the join.
+
+   It costs no contrast. The slide's own padding is 2rem at the top and the furniture's height
+   at the foot, and the fitter adds up to 44px more on each side — so the eighth of the screen
+   this thins away is a band the passage is never set in. */
+.reel-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--slide-veil, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 9%, #000 89%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 9%, #000 89%, transparent 100%);
 }
 
 /* Only the slide on screen is reachable; the other is parked a screen away and must never
@@ -4343,65 +4433,12 @@ input:focus-visible,
   background: transparent !important;
 }
 
-/* The ground moved onto the slides, so the shared backdrop and the three floating orbs are
-   painting underneath two opaque panels where nothing can see them — an animated gradient and
-   three 90px blurs repainting every frame for no one. The bloom belongs to the slide now. */
-.story-backdrop,
-.story-orb { display: none; }
-
-/* Each slide carries its own, behind its own text. Same drifting light the orbs gave, at a
-   third of the cost and in the slide's own colours rather than one set shared by all of them. */
-/* The bloom belongs to a slide that is STANDING STILL. It is anchored to its own slide, so
-   while the pair travels there are two of them crossing — the outgoing one's bottom-right
-   patch and the incoming one's top-left — each appearing or vanishing at the seam. Two bright
-   spots sweeping past each other across a hard edge is the flash; neither gradient is at
-   fault, the fact that they move is.
-
-   So nothing blooms while anything moves. During a drag or a settle there are two clean
-   grounds crossing, and the light comes back up on the verse once it has arrived. */
-.reel-slide::before {
-  content: '';
-  position: absolute;
-  inset: -12%;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  transition: opacity 240ms ease;
-  background:
-    radial-gradient(38% 34% at 16% 14%, var(--story-hl, #f59e0b) 0%, transparent 68%),
-    radial-gradient(42% 36% at 84% 88%, var(--story-hl-2, #ec4899) 0%, transparent 70%);
-  filter: blur(58px);
-  animation: reelBloom 16s ease-in-out infinite alternate;
-}
-
-/* A second light on its own clock and its own path. One drifting blur reads as a gradient that
-   happens to move; two, at different periods, read as light — they pass through each other and
-   the pattern never repeats within a reading. Both are transform-only, so they ride on the
-   compositor and cost no paint at all. */
-.reel-slide::after {
-  content: '';
-  position: absolute;
-  inset: -18%;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.34;
-  background:
-    radial-gradient(34% 30% at 78% 22%, var(--story-hl-2, #ec4899) 0%, transparent 66%),
-    radial-gradient(30% 26% at 22% 76%, var(--story-hl, #f59e0b) 0%, transparent 68%);
-  filter: blur(64px);
-  transition: opacity 240ms ease;
-  animation: reelBloomB 23s ease-in-out infinite alternate;
-}
-
-@keyframes reelBloom {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(5%, -4%, 0) scale(1.14); }
-}
-
-@keyframes reelBloomB {
-  from { transform: translate3d(0, 0, 0) scale(1.08); }
-  to   { transform: translate3d(-6%, 5%, 0) scale(0.94); }
-}
+/* The two per-slide blooms that used to live here are gone. They were three quarters of a
+   ground apiece — a 58px and a 64px blur on every slide, two of them on screen at once — and
+   they existed only because there was no shared field to bloom instead. There is one now, it
+   is behind both slides at all times, and a second set of lights on top of it would only
+   fight it. The `--story-hl` pair they were painted in still does its real job: it is the
+   colour of the emphasised phrase, and it is what the ground's own palette is drawn from. */
 
 .reel-slide > * { position: relative; z-index: 1; }
 
@@ -4431,14 +4468,47 @@ input:focus-visible,
 
    Fail-safe by construction: a slide is fully visible with no class on it. These start from
    a hidden state and end visible, so if the class is never added nothing is stranded. */
-.reel-slide.is-playing .story-passage-text .sw {
-  animation: reelWordIn 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  /* `--scrub` is how far into the entrance the drag has carried it. A NEGATIVE delay is the
-     whole scrubbing mechanism: an animation with `both` fill and a delay of -p x duration
-     renders the frame at progress p, so setting one number per pointermove seeks every word
-     of the passage at once, in sequence, with no per-word bookkeeping. Zero when nothing is
-     scrubbing, which is what the fallback is for. */
-  animation-delay: calc(var(--i, 0) * var(--sw-step, 20ms) - var(--scrub, 0ms));
+/* ==========================================================================
+   THE PASSAGE ARRIVES A FEW WORDS AT A TIME
+   ==========================================================================
+   A whole verse landing at once is the wrong unit. The short ones in the set read cleanly
+   because a short one IS one breath; the ninety-word ones arrived as a wall and had to be
+   re-read from the top. So the passage is cut into STEPS — a couple of clauses, ten to
+   eighteen words, ending at a full stop wherever one is near — and a tap lights the next one
+   rather than turning the page. The page turns when there is nothing left to light.
+
+   The words that have not arrived yet are not hidden, they are GHOSTED. That is the whole
+   affordance: without them the reader has no way to know whether the next tap continues this
+   verse or leaves it, and with them the shape of what is coming is already on the screen.
+
+   ---------- fail-safe ----------
+   `.is-stepped` is added by script, never by the markup. A slide with no class on it is fully
+   lit, so if the script never runs, nothing is dimmed and nothing is stranded. */
+.reel-slide.is-stepped .story-passage-text .sw {
+  opacity: 0.13;
+  transition: opacity 520ms ease;
+}
+
+.reel-slide.is-stepped .story-passage-text .sw.is-lit {
+  opacity: 1;
+  animation: reelWordIn var(--sw-fade, 380ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* `--i` is the clause's index WITHIN ITS STEP, not within the passage — so every step
+     assembles from its own first clause and a step is never staggered by however much text
+     happened to precede it. */
+  animation-delay: calc(var(--i, 0) * var(--sw-step, 90ms));
+}
+
+/* `--scrub` is how far into the entrance the drag has carried it. A NEGATIVE delay is the
+   whole scrubbing mechanism: an animation with `both` fill and a delay of -p x duration
+   renders the frame at progress p, so setting one number per pointermove seeks a step's
+   clauses at once, in sequence, with no per-word bookkeeping.
+
+   It applies to the FIRST step only. That is the one the drag is bringing on; the steps after
+   it are lit by later taps, seconds away, and offsetting those by a value left over from a
+   gesture that is long finished would make them appear with no fade at all. The attribute
+   selector is what scopes it — same rule otherwise, one unit of specificity higher. */
+.reel-slide.is-stepped .story-passage-text .sw.is-lit[data-step="0"] {
+  animation-delay: calc(var(--i, 0) * var(--sw-step, 90ms) - var(--scrub, 0ms));
 }
 
 /* `.is-scrubbing` rides ALONGSIDE `.is-playing` and does exactly one thing: hold the animation
@@ -4457,8 +4527,10 @@ input:focus-visible,
   animation-play-state: paused;
 }
 
+/* From the ghost, not from nothing — a step that faded up from zero would flash the line
+   underneath it, since the ghost is already painted there. */
 @keyframes reelWordIn {
-  from { opacity: 0; }
+  from { opacity: 0.13; }
   to   { opacity: 1; }
 }
 
@@ -4506,7 +4578,7 @@ input:focus-visible,
 /* The stagger is all delay and the global reduced-motion rule only collapses durations, so
    the belt as well as the braces: nothing animates at all under it. */
 @media (prefers-reduced-motion: reduce) {
-  .reel-slide.is-playing .story-passage-text .sw,
+  .reel-slide.is-stepped .story-passage-text .sw.is-lit,
   .reel-slide.is-scrubbing .story-passage-text .sw,
   .reel-slide.is-playing .enter-rise,
   .reel-slide.is-playing .enter-focus,
@@ -4526,6 +4598,25 @@ input:focus-visible,
    back on a pale ground and dark text on a dark one. That contrast was fixed once already
    (1.04:1 across 12 of 28 combinations); this is the same fix, re-aimed at where the text
    actually lives now. The bar keeps the container rules: the frame still mirrors the class. */
+/* ---------- the two veils ----------
+   A radial rather than a flat fill, so the wash is heaviest where the passage sits and lets go
+   towards the corners. `at 50% 44%` rather than dead centre because the well is pushed up by
+   the furniture at the foot of the screen, and the text is centred in the well, not the
+   viewport. */
+.reel-slide.story-theme-dark {
+  --slide-veil: radial-gradient(135% 100% at 50% 44%,
+                  rgba(7, 9, 15, 0.62) 0%,
+                  rgba(7, 9, 15, 0.56) 46%,
+                  rgba(7, 9, 15, 0.46) 100%);
+}
+
+.reel-slide.story-theme-light {
+  --slide-veil: radial-gradient(135% 100% at 50% 44%,
+                  rgba(255, 253, 249, 0.68) 0%,
+                  rgba(255, 253, 249, 0.62) 46%,
+                  rgba(255, 253, 249, 0.44) 100%);
+}
+
 .reel-slide.story-theme-dark { color: #ffffff; }
 
 .reel-slide.story-theme-dark .story-passage-text {
@@ -4557,6 +4648,17 @@ input:focus-visible,
        altogether — laid out, correctly coloured, real bounding boxes, and simply not drawn.
        The card is 92-94% opaque, so the blur was buying a few percent of a ground nobody can
        see through anyway. */
+  }
+
+  /* On a wide screen the passage sits in a 92%-opaque card, so the card is the contrast and
+     the veil has nothing left to do but hide the field. It thins to a tint, and the light
+     around the card is most of what there is to look at. */
+  .reel-slide.story-theme-dark {
+    --slide-veil: linear-gradient(rgba(7, 9, 15, 0.34), rgba(7, 9, 15, 0.34));
+  }
+
+  .reel-slide.story-theme-light {
+    --slide-veil: linear-gradient(rgba(255, 253, 249, 0.40), rgba(255, 253, 249, 0.40));
   }
 
   .reel-slide.story-theme-dark .story-content-wrapper {
