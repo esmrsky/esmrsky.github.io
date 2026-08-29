@@ -45,7 +45,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=3.9.1">
+  <link rel="stylesheet" href="styles.css?v=4.0.0">
   <script src="icons.js?v=1.1.0" defer></script>
 </head>
 <body>
@@ -80,43 +80,32 @@
 
     <!-- Temporary Auto-Dismissing Tap Hint Toast -->
     <div class="story-tap-toast" id="storyTapToast">
-      <i data-lucide="pointer" style="width: 14px; height: 14px;"></i> Tap right to read on &middot; left to go back
+      <i data-lucide="pointer" style="width: 14px; height: 14px;"></i> Tap right to read on &middot; left for the verse before
     </div>
 
     <!-- ======================================================================
-         THE REEL — two slides, never more
+         THE STAGE — one column of scripture, read a few words at a tap
          ======================================================================
-         Reels and Stories both settle one item per flick; neither free-scrolls through a
-         stack. So this is not a scroller: it is the outgoing slide and the incoming one,
-         translated together under the finger, and there is never a third. That is what lets
-         the drag track a thumb exactly without a recycling scheme, and why `touch-action:
-         none` is safe here — nothing underneath this wants to scroll.
+         There used to be two slides here that traded places, and everything that made this
+         page feel unsettled came from that: a tap replaced one screen of text with another,
+         so every arrival had to be animated, and the type had to be shrunk to whatever size
+         made the whole verse fit a screen it could never leave.
 
-         A tap swaps the two in place with nothing playing over it. A drag moves the pair, and
-         the slide that lands plays one of the entrances. Same content, two speeds. -->
-    <!-- ======================================================================
-         THE STAGE
-         ======================================================================
-         The verse and its chapter are two faces of the same box. Vertical moves THROUGH the
-         verses; horizontal turns to the one you are on and shows it where it lives. That is
-         the whole reason the cube is not decoration here: it encodes which way you came, so
-         swiping back is the same gesture reversed rather than a button you have to find. -->
+         There is one column now, and it SCROLLS. The first few words arrive large and in the
+         middle of the screen; each tap adds the next few underneath and the column travels up
+         to meet them. Nothing is replaced, so nothing has to cross-fade — and because it can
+         run past the bottom of the screen, the type does not have to give way to the length
+         of the passage. A reader can scroll back through what they have already been given.
+
+         The verse and its chapter are still two faces of one box: vertical reads, horizontal
+         turns to the chapter and shows the passage where it lives. -->
     <div class="story-stage" id="storyStage">
       <div class="story-cube" id="storyCube">
-    <div class="story-reel cube-face cube-face-verse" id="storyReel">
-      <article class="reel-slide is-current" data-slot="a">
-        <div class="story-content-wrapper">
-          <blockquote class="story-passage-text">
-            "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."
-          </blockquote>
-        </div>
-      </article>
-      <article class="reel-slide is-offstage" data-slot="b" aria-hidden="true">
-        <div class="story-content-wrapper">
-          <blockquote class="story-passage-text"></blockquote>
-        </div>
-      </article>
-    </div>
+        <section class="verse-face cube-face cube-face-verse" id="storyReel" aria-label="The verse">
+          <div class="verse-scroll" id="verseScroll">
+            <blockquote class="story-passage-text" id="verseColumn" aria-live="polite"></blockquote>
+          </div>
+        </section>
 
         <!-- The chapter the verse is in, on the face to its right. The passage itself is
              marked inside it, so turning back and forth is reading the same words at two
@@ -258,7 +247,13 @@
 
       <!-- The reference belongs to the scripture, so it sits with it, above the rule — the bar
            below is controls only: Prev left, Go Deeper filling the middle, translation right. -->
-      <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
+      <!-- The reference, and beside it one tick per part of the passage. With the ghost
+           preview gone this is the only thing telling a reader that the next tap continues
+           the verse they are on rather than leaving it, so it is not decoration. -->
+      <div class="story-ref-row">
+        <div class="story-passage-ref" id="storyPassageRef">Psalm 16:11</div>
+        <div class="story-ticks" id="storyTicks" aria-hidden="true"></div>
+      </div>
 
       <div class="story-bottom-bar">
         <div class="story-bottom-center-actions">
@@ -268,37 +263,24 @@
           </button>
         </div>
 
-        <!-- Slides alternate light and dark on their own. This lets a reader who prefers one of
-             them lock it. It rides in the bar with the rest of the controls; nothing sits in a
-             corner, so the passage has the whole screen and the study has it too. -->
+        <!-- One appearance for the whole session, not one per verse. This used to offer
+             "shuffle", which re-rolled light or dark on every single tap — together with the
+             typeface, the translation and the entrance, that was five things re-deciding
+             themselves under the reader every time they moved. It sets the site's own theme
+             now, so the verse, the chapter and the study all agree. -->
         <div class="story-mode" id="storyMode">
           <button class="story-nav-btn story-mode-btn" id="storyModeBtn" type="button" aria-haspopup="menu" aria-expanded="false" title="Appearance" aria-label="Appearance">
-            <i data-lucide="sun-moon" id="storyModeIcon" style="width: 16px; height: 16px;"></i>
+            <i data-lucide="sun" id="storyModeIcon" style="width: 16px; height: 16px;"></i>
           </button>
           <div class="story-mode-menu" id="storyModeMenu" role="menu" aria-label="Appearance" hidden>
-            <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="false" data-mode="light">
+            <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="true" data-mode="light">
               <i data-lucide="sun" style="width: 15px; height: 15px;"></i><span>Light</span>
+            </button>
+            <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="false" data-mode="warm">
+              <i data-lucide="coffee" style="width: 15px; height: 15px;"></i><span>Warm</span>
             </button>
             <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="false" data-mode="dark">
               <i data-lucide="moon" style="width: 15px; height: 15px;"></i><span>Dark</span>
-            </button>
-            <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="true" data-mode="shuffle">
-              <i data-lucide="sun-moon" style="width: 15px; height: 15px;"></i><span>Shuffle</span>
-            </button>
-
-            <!-- Three ways a drag can feel, side by side so they can be compared rather than
-                 argued about. Snap runs the entrance after the drag commits; scrub seeks it
-                 with the thumb; glide does the same but spends the release on momentum. -->
-            <div class="story-menu-rule" role="separator"></div>
-            <div class="story-menu-head">Motion</div>
-            <button class="story-motion-opt" type="button" role="menuitemradio" aria-checked="false" data-motion="snap">
-              <i data-lucide="zap" style="width: 15px; height: 15px;"></i><span>Snap</span>
-            </button>
-            <button class="story-motion-opt" type="button" role="menuitemradio" aria-checked="true" data-motion="scrub">
-              <i data-lucide="sliders" style="width: 15px; height: 15px;"></i><span>Scrub</span>
-            </button>
-            <button class="story-motion-opt" type="button" role="menuitemradio" aria-checked="false" data-motion="glide">
-              <i data-lucide="wind" style="width: 15px; height: 15px;"></i><span>Glide</span>
             </button>
           </div>
         </div>
@@ -500,7 +482,7 @@
 
   <!-- Data and Application Scripts -->
   <script src="verses-data.js?v=2.5.0"></script>
-  <script src="app.js?v=3.2.0"></script>
+  <script src="app.js?v=4.0.0"></script>
 
 </body>
 </html>
