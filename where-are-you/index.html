@@ -485,30 +485,96 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
   opacity:.85;
 }
 
-/* six cells, alternating 9% / 18% of their accent into the ink. Checks out at
-   1, 2 and 3 columns: no two orthogonal neighbours land on the same value. */
-.wgrid{display:grid;grid-template-columns:1fr}
-@media (min-width:720px){ .wgrid{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:1120px){ .wgrid{grid-template-columns:repeat(3,1fr)} }
-.wcell{
-  --wc:var(--paper);
-  background:color-mix(in srgb, var(--wc) 9%, var(--ink));
+/* The register. This section used to be six cells that re-stated Position 04's
+   card — the trap row, the door row, the do and don't rows and the verses,
+   several of them word for word, one screen after the reader had them. A
+   section that repeats the thing above it is worse than no section: it teaches
+   the reader that scrolling here costs nothing, which is exactly what you do
+   not want a page to teach at the point it is making its central claim.
+
+   What goes here instead is the one cut of this material section 05 cannot
+   give you. 05 lists eleven frameworks one card at a time, and nobody reading
+   eleven cards in sequence can see that they bend in the same place. So: the
+   same spot on all eleven, oldest first, with what each one calls it and the
+   one thing only that one sees. The four with no name for it are IN the list
+   and marked, because the gap in the colour column is the argument — you can
+   see 1,900 years of maps agreeing, and see which four were built for a
+   journey that doesn't include this.
+
+   Rows alternate two values of the ground rather than two hues: the hue in
+   this component is load-bearing (it marks the maps that have a room) and a
+   striped background would compete with it. Value alternation still satisfies
+   the seam rule at the one column this ever collapses to. */
+.reg{display:grid;grid-template-columns:1fr}
+.reg__r{
+  background:color-mix(in srgb, var(--paper) 9%, var(--ink));
   color:var(--paper);
-  padding:1.65rem var(--gutter) 1.8rem;
-  display:flex;flex-direction:column;gap:.7rem;
-  min-width:0;
+  padding:1.15rem var(--gutter) 1.3rem;
+  display:grid;grid-template-columns:1fr;gap:.5rem;
+  align-items:start;min-width:0;
 }
-.wgrid > .wcell:nth-child(even){background:color-mix(in srgb, var(--wc) 20%, var(--ink))}
-.wcell h4{
+.reg > .reg__r:nth-child(even){background:color-mix(in srgb, var(--paper) 18%, var(--ink))}
+/* three columns only once the insight column can hold a sensible measure;
+   below that the row stacks date+name, label, insight, which is the reading
+   order anyway */
+@media (min-width:940px){
+  .reg__r{grid-template-columns:minmax(0,.78fr) minmax(0,.92fr) minmax(0,1.7fr);gap:0 2.25rem}
+}
+.reg__yr{
   font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
-  display:flex;align-items:center;gap:.5rem;color:var(--paper);
+  opacity:.62;display:block;margin-bottom:.3rem;
 }
-.wcell h4 i{width:22px;height:22px;flex:none;display:grid;place-items:center;background:var(--wc);color:var(--ink)}
-.wcell h4 i svg{width:13px;height:13px;display:block}
-.wcell p{font-size:.875rem;line-height:1.55;opacity:.86}
-.wcell--warn{--wc:var(--pink)}
-.wcell--do{--wc:var(--green)}
-.wcell--verse p{font-family:var(--serif);font-style:italic;font-size:.9375rem;opacity:.95}
+.reg__nm{font-size:.9375rem;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+/* The name each tradition gives this room is a solid chip, not coloured text.
+   This panel inverts with the theme — near-black ground in light, near-paper
+   in dark — and an accent as INK has to clear both, which yellow and violet
+   cannot do at once. As a slab each hue carries its own paired --on token and
+   the pairing holds in either theme. It also states the point better: eleven
+   labels for one place, marching down the column. */
+.reg__c{
+  /* justify-self, because a grid item blockifies and would otherwise stretch to
+     the column: equal-width bars read as a chart, and these are labels of very
+     unequal length, not quantities */
+  justify-self:start;
+  background:var(--rc);color:var(--rc-on);
+  padding:.32rem .5rem;font-size:.875rem;font-weight:700;letter-spacing:-.015em;
+  line-height:1.25;
+}
+.reg__d{font-size:.875rem;line-height:1.55;opacity:.86;min-width:0}
+/* the four with no room: no chip, so the colour column simply stops */
+.reg__r--none .reg__c{
+  background:none;color:var(--paper);opacity:.58;
+  font-weight:500;font-style:italic;padding-inline:0;
+}
+.reg__r--none .reg__nm{opacity:.72}
+
+/* The tally. The lede claims five of eleven; this is the claim counted out,
+   and the third cell is the one that earns the section — the maps with no room
+   for this are not sloppy, they are first-half tools, and saying so is the
+   difference between a register and an argument. */
+.tally{display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .tally{grid-template-columns:repeat(3,1fr)} }
+.tal{
+  background:var(--tc,var(--yellow));color:var(--tc-on,var(--on-yellow));
+  padding:1.35rem var(--gutter) 1.5rem;min-width:0;
+}
+.tal--quiet{
+  background:color-mix(in srgb, var(--paper) 28%, var(--ink));color:var(--paper);
+}
+.tal b{display:block;font-size:2.25rem;font-weight:800;letter-spacing:-.05em;line-height:.9}
+.tal span{display:block;font-size:.875rem;line-height:1.45;margin-top:.5rem;max-width:32ch}
+.tal i{
+  display:block;font-family:var(--mono);font-style:normal;font-size:.5625rem;
+  letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-top:.6rem;
+}
+/* the measure goes on the child: .band already sets margin-inline:auto, so a
+   max-width here would centre the paragraph instead of setting it from the
+   gutter like every other line of body copy in the section */
+.wall__close{padding:1.6rem var(--gutter) 0}
+.wall__close p{
+  font-size:clamp(1rem,1.5vw,1.1875rem);font-weight:500;
+  letter-spacing:-.02em;line-height:1.4;max-width:58ch;
+}
 
 .siren{
   display:flex;gap:1rem;align-items:flex-start;
@@ -981,38 +1047,95 @@ footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spaci
         <h2>The Wall</h2>
       </div>
       <p class="wall__lede">
-        The machinery stops. You can't tell from the inside whether you're losing your
-        faith or <span class="hl">finally finding it</span>. Five of the eleven frameworks here think this is the
-        most important thing that will ever happen to you.
+        Eleven maps, eighteen centuries, no shared vocabulary — and they disagree
+        about nearly everything except this. There is a place where the machinery
+        stops, and <span class="hl">it is not a malfunction</span>. Here is the same
+        spot on every one of them.
       </p>
     </div>
 
   </div>
-    <div class="wgrid band stagger">
-      <div class="wcell wcell--warn">
-        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></i>Wrong exit 01 — bypass</h4>
-        <p>Sprint back to Position 03. More service, louder certainty, a new programme. Works for about eighteen months. The wall is still there, and it's taller.</p>
+    <div class="reg band stagger">
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">c. AD 90</span><h4 class="reg__nm">1 John 2:12–14</h4></div>
+        <p class="reg__c">no room for it</p>
+        <p class="reg__d">Three groups, sorted by what they know. John sets “young men” beside “fathers” and never describes the crossing — the oldest map here has the gap in it and no name for it.</p>
       </div>
-      <div class="wcell wcell--warn">
-        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></i>Wrong exit 02 — walk out</h4>
-        <p>Decide the whole thing was a lie and take the bitterness with you. Understandable, frequently earned, and it costs you the one thing the wall was about to give you.</p>
+      <div class="reg__r">
+        <div><span class="reg__yr">3rd–16th c.</span><h4 class="reg__nm">The Three Ways · Interior Castle</h4></div>
+        <p class="reg__c" style="--rc:var(--aqua);--rc-on:var(--on-aqua)">The passive purifications</p>
+        <p class="reg__d">Mansions four to six, where prayer stops being something you do and becomes something done to you. The only tradition that treats losing control of your own prayer as the mechanism rather than the obstacle.</p>
       </div>
-      <div class="wcell">
-        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2H3v12h6"/><path d="M11.6 5.6L14.4 8l-2.8 2.4M14 8H6.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>There's no technique, only a posture</h4>
-        <p>Stay in physical contact with a few people who aren't asking you for anything. Keep the body: show up to a table even when you can't sing. Tell exactly one person the unedited truth. Lower the bar on prayer until it fits — a psalm read aloud counts. Stop trying to resolve it on a deadline; the traditions that map this best measure it in years.</p>
+      <div class="reg__r">
+        <div><span class="reg__yr">c. 1578</span><h4 class="reg__nm">John of the Cross — Dark Night</h4></div>
+        <p class="reg__c" style="--rc:var(--violet);--rc-on:var(--on-violet)">The night of sense, then of spirit</p>
+        <p class="reg__d">Two nights, not one, and they need different answers: the first strips the sweetness off prayer, the second takes apart the self that was praying. Still the most exact vocabulary anyone has produced, written from a prison cell.</p>
       </div>
-      <div class="wcell wcell--do">
-        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 8.4l3.4 3.4L13.5 4.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Walking with someone here — do</h4>
-        <p>Stay, and show up on a schedule they can predict without asking. Say “I don't know” out loud. Keep inviting them to things with no expectation that they come. Let them be furious in front of you without flinching.</p>
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">1930s</span><h4 class="reg__nm">The Navigators' Wheel</h4></div>
+        <p class="reg__c">no room for it</p>
+        <p class="reg__d">A hub and four spokes with no time axis at all. It can tell you which spoke is slack. It has nothing to say about the year the wheel will not turn.</p>
       </div>
-      <div class="wcell wcell--warn">
-        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><path d="M4.2 11.8l7.6-7.6" stroke-linecap="round"/></svg></i>Walking with someone here — don't</h4>
-        <p>Don't fix it, quote at it, or interpret it as sin until they say it is. Never say “you just need to get back in the Word.” Don't treat their questions as rebellion — that's the response that turns a wall into an exit. And don't disappear because it makes you uncomfortable; your discomfort isn't the emergency.</p>
+      <div class="reg__r">
+        <div><span class="reg__yr">1981</span><h4 class="reg__nm">Fowler — Stages of Faith</h4></div>
+        <p class="reg__c" style="--rc:var(--green);--rc-on:var(--on-green)">Stage 4 · individuative-reflective</p>
+        <p class="reg__d">The only one that frames this as authority relocating rather than faith failing — you stop holding the group's beliefs and start holding your own. Fowler is candid about the price: costly, and often lonely.</p>
       </div>
-      <div class="wcell wcell--verse">
-        <h4><i aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 3h4a2 2 0 012 2v8a1.6 1.6 0 00-1.6-1.6H2.5V3z"/><path d="M13.5 3h-4a2 2 0 00-2 2v8a1.6 1.6 0 011.6-1.6h4.4V3z"/></svg></i>Scripture for this position</h4>
-        <p>Psalm 88, the only psalm that ends in darkness with no turn · Job 23:8–9 · Matthew 27:46 · John 15:2, every branch that bears fruit he prunes · 1 Kings 19:4, Elijah right after the greatest success of his life.</p>
+      <div class="reg__r">
+        <div><span class="reg__yr">1987</span><h4 class="reg__nm">Peck — The Different Drum</h4></div>
+        <p class="reg__c" style="--rc:var(--orange);--rc-on:var(--on-orange)">Stage 3 · skeptic, individual</p>
+        <p class="reg__d">A psychiatrist's addition, and the most useful sentence on this page: from outside, stage 4 is indistinguishable from stage 2. The people furthest through get mistaken for the people who never left.</p>
       </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">1989</span><h4 class="reg__nm">Hagberg &amp; Guelich</h4></div>
+        <p class="reg__c" style="--rc:var(--yellow);--rc-on:var(--on-yellow)">The Wall</p>
+        <p class="reg__d">The only map that refuses to make it a stage — it is drawn as a passage cutting across 3 into 4. Their verb is the giveaway. The stages humble, ground, reward, unsettle, transform and transcend us; the Wall <em>unmasks</em> us.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">2006</span><h4 class="reg__nm">Scazzero — Emotionally Healthy</h4></div>
+        <p class="reg__c" style="--rc:var(--pink);--rc-on:var(--on-pink)">Stage 4 · the wall and the inward journey</p>
+        <p class="reg__d">Welds this to emotional maturity — the argument that ordinary discipleship leaves the deep parts of a life untouched — and then does the unglamorous thing, prescribing a rule of life sturdy enough to survive the crossing.</p>
+      </div>
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">2007</span><h4 class="reg__nm">REVEAL — Willow Creek</h4></div>
+        <p class="reg__c">no room for it</p>
+        <p class="reg__d">A four-point continuum with no crisis anywhere on it — and then its own survey walked into one. Church activity predicts growth early and stops predicting it later, at about the point every other map here puts the Wall.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">2011</span><h4 class="reg__nm">Rohr — Falling Upward</h4></div>
+        <p class="reg__c" style="--rc:var(--aqua);--rc-on:var(--on-aqua)">The necessary fall</p>
+        <p class="reg__d">The strongest form of the claim: the container is not damaged by breaking, it is finished by it. The first half of life builds the thing; the second half finds out what it was for.</p>
+      </div>
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">2014</span><h4 class="reg__nm">Spader — 4 Chair Discipling</h4></div>
+        <p class="reg__c">no room for it</p>
+        <p class="reg__d">Four chairs, straight up, built to answer what you do on Tuesday. It is the best next-step tool here, and it has no chair for the person who has stopped being able to sit in any of them.</p>
+      </div>
+    </div>
+
+    <div class="tally band stagger">
+      <div class="tal" style="--tc:var(--yellow);--tc-on:var(--on-yellow)">
+        <b>5</b><span>build their whole account of maturity around this room.</span>
+        <i>Teresa · John of the Cross · Hagberg · Scazzero · Rohr</i>
+      </div>
+      <div class="tal" style="--tc:var(--aqua);--tc-on:var(--on-aqua)">
+        <b>2</b><span>have a room for it, and treat it as a stage you pass through.</span>
+        <i>Fowler · Peck</i>
+      </div>
+      <div class="tal tal--quiet">
+        <b>4</b><span>have nowhere to put it at all.</span>
+        <i>1 John · Navigators · REVEAL · Spader</i>
+      </div>
+    </div>
+
+    <div class="wall__close band rise">
+      <p>
+        Three of the four with no room for this were built for the first half of
+        the journey — a maintenance diagram, a growth survey and a next-step
+        ladder. Each is very good at the job it took, and each stops being about
+        you at exactly the place where you are. The fourth is two verses long,
+        and it was written before anyone thought the question needed a diagram.
+      </p>
     </div>
 
     <div class="siren band rise">
