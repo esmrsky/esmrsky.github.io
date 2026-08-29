@@ -332,11 +332,33 @@ a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
    about 1.15em — while cap height is only .72em, so roughly a fifth of an em
    of empty colour sat above every capital. It read as a mis-set block, and at
    the opener's tight leading the box on one line nearly touched the line above.
-   Anchoring .95em to the bottom keeps descenders covered and takes the slack
-   off the top, which is the only side that had any. */
+   Bottom-anchoring the band keeps descenders covered and takes the slack off
+   the top, which is the only side that had any.
+
+   A percentage of the inline box, NOT .95em. An em is measured against the
+   font-size the stylesheet asked for, and that is not always the size the
+   glyphs are drawn at: a tablet report came back with the band at about .66em
+   of a 1.15em glyph box, line-height tracking the drawn text while the em-sized
+   band stayed behind at the size the sheet named — the signature of a browser
+   or OS text-scaling factor reaching the type but not the lengths. Every letter
+   top in the opener's highlights then sat outside the band, and outside it the
+   highlight ink is the same near-black as the inverted panel it sits on, so the
+   tops did not fall out of the block, they vanished into the background. A
+   percentage resolves against the inline box, and the inline box is built from
+   the metrics of the font as drawn, so the band cannot be left behind: whatever
+   size the text ends up, the block is that tall.
+
+   92 is measured, not chosen: what there is to trim is the headroom between the
+   font's ascent and the ink of its tallest ascender, and that is only .177em in
+   Roboto and Arial (ascent .927 / .905, ascender .75 / .728) — 15% of the box,
+   and nearer 10% in the DejaVu a Linux browser substitutes. 8% off the top sits
+   inside every one of them, and still opens the gap between one line's block
+   and the next from .07em to .16em, which is what the leading note above was
+   really about. Lower it and you are cutting into letters again; measure the
+   ink against the band before you do. */
 .hl{
   --hlc:var(--yellow);
-  background:linear-gradient(var(--hlc),var(--hlc)) 0 100%/100% .95em no-repeat;
+  background:linear-gradient(var(--hlc),var(--hlc)) 0 100%/100% 92% no-repeat;
   color:var(--on-yellow);
   padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
 }
