@@ -64,6 +64,9 @@
 }
 
 *{box-sizing:border-box}
+/* Lets block-size animate to and from `auto`, which is what makes the
+   ::details-content transitions below ease rather than snap. */
+:root{interpolate-size:allow-keywords}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
@@ -235,19 +238,25 @@ h3.sub:first-of-type{margin-top:1.4em}
    well it is actually established, because two of these are much weaker than
    the way they get quoted.
    ========================================================================== */
-.mechs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,2vw,20px);margin-top:clamp(26px,4vw,38px)}
+/* Seven cards in a three-track grid left two empty cells and stretched every
+   card in a row to the tallest one — measured 220px of dead space inside the
+   short ones. Multicol packs them by height instead, so no row has a ragged
+   bottom and the seventh card does not sit alone. Order runs down a column
+   then across, which is what these are: independent entries, not a sequence. */
+.mechs{columns:3 290px;column-gap:clamp(14px,2vw,20px);margin-top:clamp(26px,4vw,38px)}
+.mechs>.mech{break-inside:avoid;margin:0 0 clamp(14px,2vw,20px)}
 .mech{
   border:1px solid var(--hair);border-radius:12px;padding:clamp(18px,2.4vw,24px);
   background:var(--cream);display:flex;flex-direction:column;gap:.8em;
 }
 .band--night .mech{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.14)}
-.mech-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mech-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .mech h4{font-size:1.06rem;max-width:16ch}
 .mech p{margin:0;font-size:.95rem;line-height:1.56;color:var(--ink-2);max-width:none}
 .band--night .mech p{color:#C4C2C0}
 .mech .src{
   font-family:var(--mono);font-size:10px;line-height:1.55;letter-spacing:.02em;
-  color:var(--ink-3);border-top:1px dotted var(--hair);padding-top:.85em;margin-top:auto;
+  color:var(--ink-3);border-top:1px dotted var(--hair);padding-top:.85em;margin-top:.4em;
 }
 .band--night .mech .src{color:#8E9AA4;border-top-color:rgba(255,255,255,.16)}
 
@@ -435,8 +444,21 @@ h3.sub:first-of-type{margin-top:1.4em}
    descend in order and are not allowed to stop early.
    ========================================================================== */
 .ladder{--rung-pad:clamp(16px,2.4vw,22px);margin-top:clamp(28px,4vw,40px);max-width:900px;counter-reset:rung}
-.rung{border:1px solid var(--hair);border-radius:12px;background:var(--cream);margin-bottom:10px;overflow:hidden}
-.rung[open]{border-color:var(--haze)}
+/* The ladder descends from the measurable floor to the realm, so its colour
+   descends the page's own three gels in step: sodium (what a room and a body
+   physically do) through cyan (what you can actually check) to haze (the
+   perception itself). The four intermediate tones are mixed from those three
+   in oklab rather than picked, so nothing here is a fourth invented hue. */
+.rung{--a:var(--sodium);--a-ink:var(--sodium-ink);
+  border:1px solid var(--hair);border-radius:12px;background:var(--cream);margin-bottom:10px;overflow:hidden;
+  transition:border-color .3s ease}
+.rung:nth-of-type(2){--a:color-mix(in oklab,var(--sodium),var(--cyan) 34%);--a-ink:color-mix(in oklab,var(--sodium-ink),var(--cyan-ink) 34%)}
+.rung:nth-of-type(3){--a:color-mix(in oklab,var(--sodium),var(--cyan) 67%);--a-ink:color-mix(in oklab,var(--sodium-ink),var(--cyan-ink) 67%)}
+.rung:nth-of-type(4){--a:var(--cyan);--a-ink:var(--cyan-ink)}
+.rung:nth-of-type(5){--a:color-mix(in oklab,var(--cyan),var(--haze) 34%);--a-ink:color-mix(in oklab,var(--cyan-ink),var(--haze-ink) 34%)}
+.rung:nth-of-type(6){--a:color-mix(in oklab,var(--cyan),var(--haze) 67%);--a-ink:color-mix(in oklab,var(--cyan-ink),var(--haze-ink) 67%)}
+.rung:nth-of-type(7){--a:var(--haze);--a-ink:var(--haze-ink)}
+.rung[open]{border-color:var(--a)}
 .rung>summary{
   list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;
   gap:clamp(13px,2vw,20px);align-items:center;padding:clamp(15px,2.2vw,20px) var(--rung-pad);
@@ -445,36 +467,44 @@ h3.sub:first-of-type{margin-top:1.4em}
 /* four children now, so four tracks — a fourth child in a three-track grid
    wraps into row 2 and sizes the auto track to its own max-content. */
 .rung>summary{grid-template-columns:auto auto 1fr auto}
-.rung .rico{display:grid;place-items:center;width:22px;height:22px;flex:none;color:var(--ink-3)}
+.rung .rico{display:grid;place-items:center;width:22px;height:22px;flex:none;color:var(--a-ink)}
 .rung .rico svg{width:100%;height:100%}
-.rung[open] .rico{color:var(--haze-ink)}
+.rung .plus{transition:color .3s ease}
+.rung[open] .plus{color:var(--a-ink)}
 @media (max-width:520px){.rung .rico{display:none}.rung>summary{grid-template-columns:auto 1fr auto}}
 .rung>summary::-webkit-details-marker{display:none}
-.rung>summary:hover{background:color-mix(in srgb,var(--haze) 7%,transparent)}
+.rung>summary:hover{background:color-mix(in srgb,var(--a) 8%,transparent)}
 .rung .no{
   font-family:var(--mono);font-size:12px;font-weight:700;width:30px;height:30px;flex:none;
   display:grid;place-items:center;border-radius:50%;
-  background:var(--ink);color:var(--paper);
+  background:var(--a-ink);color:var(--paper);
 }
-.rung[open] .no{background:var(--haze-ink)}
 .rung .name{font-family:var(--serif);font-weight:600;font-size:clamp(16px,2vw,20px);letter-spacing:-.008em}
 .rung .name small{display:block;font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin-top:.35em}
 .rung .plus{width:22px;height:22px;flex:none;color:var(--ink-3)}
 .rung .plus svg{width:100%;height:100%;transition:transform .34s cubic-bezier(.22,.68,.28,1)}
 .rung[open] .plus svg{transform:rotate(45deg)}
 .rung-body{padding:0 var(--rung-pad) clamp(18px,2.6vw,24px) calc(var(--rung-pad) + 30px + clamp(13px,2vw,20px))}
+/* The action sat under 58ch of prose in a 900px card, leaving 301px of the
+   rung empty. It moves to its own column and spans the body's rows. */
+@media (min-width:840px){
+  .rung-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,292px);column-gap:clamp(22px,3vw,38px);align-items:start}
+  .rung-body>*{grid-column:1}
+  .rung-body .do{grid-column:2;grid-row:1/span 99;margin-top:0}
+}
 .rung-body p{font-size:.97rem;line-height:1.6;color:var(--ink-2);max-width:58ch}
 .rung-body p:last-child{margin-bottom:0}
 .rung-body .look{
   font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--cyan-ink);display:block;margin:1.4em 0 .5em;
+  text-transform:uppercase;color:var(--a-ink);display:block;margin:1.4em 0 .5em;
 }
 .rung-body .look:first-child{margin-top:0}
 .rung-body .do{
-  border-left:3px solid var(--cyan);padding-left:14px;margin-top:1.3em;
+  border-left:3px solid var(--a);padding:12px 15px;border-radius:0 9px 9px 0;
+  background:color-mix(in srgb,var(--a) 8%,transparent);margin-top:1.3em;
   font-size:.95rem;line-height:1.55;color:var(--ink-2);max-width:56ch;
 }
-.rung-body .do b{color:var(--cyan-ink);font-weight:600}
+.rung-body .do b{color:var(--a-ink);font-weight:600}
 @media (max-width:600px){.rung-body{padding-left:var(--rung-pad)}}
 .ladder-rule{
   margin-top:clamp(24px,3.4vw,32px);padding:clamp(18px,2.6vw,26px);
@@ -485,14 +515,16 @@ h3.sub:first-of-type{margin-top:1.4em}
 .ladder-rule .big em{font-style:italic;color:#E4A6CB}
 
 /* ————— the tests: a numbered stack, mono-labelled ————— */
-.tests{display:grid;gap:clamp(12px,1.8vw,16px);margin-top:clamp(26px,4vw,36px);max-width:880px}
+.tests{display:grid;gap:clamp(12px,1.8vw,16px);margin-top:clamp(26px,4vw,36px);max-width:1080px}
 /* This card paints its own cream background inside a NIGHT band, so it has to
    restate its own foreground too. Without this, .q — which declares no colour —
    inherited the band's #E7E4E1 and rendered at 1.21:1 on cream. A component that
    supplies its own background must supply its own text colour. */
 .tcard{
-  display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.2vw,22px);align-items:start;
-  border:1px solid var(--hair);border-radius:12px;padding:clamp(16px,2.3vw,22px);background:var(--cream);
+  display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:clamp(14px,2.2vw,26px);align-items:start;
+  border:1px solid color-mix(in srgb,var(--cyan) 30%,transparent);border-left:3px solid var(--cyan);
+  border-radius:12px;padding:clamp(16px,2.3vw,22px);
+  background:color-mix(in srgb,var(--cyan) 7%,var(--cream));
   color:var(--ink);
 }
 .tcard .ref{
@@ -500,8 +532,8 @@ h3.sub:first-of-type{margin-top:1.4em}
   color:var(--cyan-ink);white-space:nowrap;padding-top:.28em;
 }
 .tcard .q{font-family:var(--display);font-size:clamp(18px,2.3vw,23px);line-height:1.25;margin-bottom:.45em}
-.tcard p{font-size:.94rem;line-height:1.56;color:var(--ink-2);margin:0;max-width:56ch}
-@media (max-width:560px){.tcard{grid-template-columns:1fr;gap:.7em}.tcard .ref{padding-top:0}}
+.tcard p{font-size:.94rem;line-height:1.56;color:var(--ink-2);margin:0;max-width:72ch}
+@media (max-width:620px){.tcard{grid-template-columns:1fr;gap:.7em}.tcard .ref{padding-top:0}}
 
 /* ==========================================================================
    THE VOICES MAP — four lanes, because the useful question about anyone in
@@ -550,7 +582,10 @@ h3.sub:first-of-type{margin-top:1.4em}
   font-size:clamp(24px,3.6vw,38px);color:#F2EFEC;margin-bottom:.4em;
 }
 .lane-head p{font-size:.95rem;line-height:1.55;color:#9AA6B0;max-width:56ch;margin:0}
-.voices{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(14px,2.2vw,20px)}
+/* Same treatment: lane 2 held a 994px card beside a 422px one — 572px of
+   stretched emptiness in one row. */
+.voices{columns:3 290px;column-gap:clamp(14px,2.2vw,20px)}
+.voices>.voice{break-inside:avoid;margin:0 0 clamp(14px,2.2vw,20px)}
 .voice{
   border:1px solid rgba(255,255,255,.16);border-radius:12px;
   padding:clamp(17px,2.4vw,22px);background:rgba(255,255,255,.045);
@@ -568,7 +603,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 /* cards grew to two and three paragraphs; without this they run together */
 .voice p + p{margin-top:.95em}
 .vfor{
-  margin-top:auto;padding-top:.95em;border-top:1px dotted rgba(255,255,255,.2);
+  margin-top:.4em;padding-top:.95em;border-top:1px dotted rgba(255,255,255,.2);
   margin-block-start:1.1em;font-size:.87rem;line-height:1.52;color:#AFBAC3;
 }
 /* inline emphasis inside the caution stays inline … */
@@ -620,6 +655,29 @@ h3.sub:first-of-type{margin-top:1.4em}
 .foot .fl{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em}
 .foot .home{display:inline-flex;align-items:center;gap:8px;min-height:44px}
 .foot p{max-width:62ch;font-size:.9rem;line-height:1.6;margin-top:1.4em;color:#8E9AA4}
+
+/* ==========================================================================
+   EVERY DISCLOSURE EASES
+   The seven ladder rungs, the four lanes and the sources open and close on
+   the same curve. ::details-content is the only way to do this without a
+   wrapper element and a JS height measurement; where it is unsupported the
+   panels simply snap, which is the old behaviour and not a failure.
+   `content-visibility ... allow-discrete` is what keeps the content painted
+   for the length of the CLOSING transition — without it the panel empties on
+   the first frame and only an empty box animates shut.
+   ========================================================================== */
+.rung::details-content,.lane::details-content,.srcbox::details-content{
+  block-size:0;overflow:clip;opacity:.35;
+  transition:block-size .42s cubic-bezier(.22,.68,.28,1),
+             opacity .3s ease,
+             content-visibility .42s allow-discrete;
+}
+.rung[open]::details-content,.lane[open]::details-content,.srcbox[open]::details-content{
+  block-size:auto;opacity:1;
+}
+@media (prefers-reduced-motion:reduce){
+  .rung::details-content,.lane::details-content,.srcbox::details-content{transition:none;opacity:1}
+}
 
 /* ————— the reveal, gated behind JS so a stalled observer cannot strand text — */
 .js-reveal .rise{opacity:0;transform:translateY(14px)}
@@ -845,7 +903,8 @@ h3.sub:first-of-type{margin-top:1.4em}
 .ladder::before{
   content:"";position:absolute;z-index:0;left:calc(1px + var(--rung-pad) + 15px);
   top:32px;bottom:0;width:2px;margin-left:-1px;
-  background:var(--hair);
+  background:linear-gradient(to bottom,var(--sodium),var(--cyan) 52%,var(--haze));
+  opacity:.6;
 }
 .rung{position:relative;z-index:1}
 .rung:last-of-type{margin-bottom:0}
@@ -1001,6 +1060,34 @@ h3.sub:first-of-type{margin-top:1.4em}
    A second button that throws the reader out to another site is noise. */
 .esv-tip-out,.esv-ctx-out{display:none !important}
 .esv-tip-actions{border-top:0;padding-top:0;margin-top:11px}
+
+/* ————— the other two things that switch —————
+   The picker menu is toggled by the `hidden` attribute and the popover by a
+   display swap, so neither had anything to transition FROM — an opacity
+   transition across a display change simply does not run. @starting-style
+   supplies the first frame, which is the only way to ease something in from
+   display:none without taking `hidden` away from the accessibility tree.
+   Both close instantly, which is what a menu should do. */
+.esv-pick-menu{
+  transition:opacity .18s ease,transform .2s cubic-bezier(.22,.68,.28,1);
+  opacity:1;transform:none;transform-origin:top right;
+}
+@starting-style{
+  .esv-pick-menu{opacity:0;transform:translateY(-7px) scale(.98)}
+}
+.esv-tip.open{transition:opacity .17s ease,transform .2s cubic-bezier(.22,.68,.28,1);transform:none}
+@starting-style{
+  .esv-tip.open{opacity:0;transform:translateY(-5px)}
+}
+.esv-ctx[open]{transition:opacity .2s ease,transform .24s cubic-bezier(.22,.68,.28,1);opacity:1;transform:none}
+@starting-style{
+  .esv-ctx[open]{opacity:0;transform:translateY(10px) scale(.99)}
+}
+.esv-ctx::backdrop{transition:opacity .2s ease;opacity:1}
+@starting-style{ .esv-ctx::backdrop{opacity:0} }
+@media (prefers-reduced-motion:reduce){
+  .esv-pick-menu,.esv-tip.open,.esv-ctx[open],.esv-ctx::backdrop{transition:none}
+}
 
 /* the picker sits in the dark footer, so its paper clothes are turned over */
 .foot .esv-pick-btn{border-color:rgba(255,255,255,.28);color:#E7E4E1}
@@ -1564,8 +1651,8 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
       </div>
     </div>
 
-    <div class="spread rise">
-      <p style="margin-top:clamp(28px,4vw,40px)">Notice what these have in common. In every case the spiritual character of the place is tied to <b>what is being done there</b> &mdash; worship, trade, oppression, bloodshed, an encounter with God. It is not a property of the soil. Ephesus feels like Artemis because Ephesus is full of people serving Artemis and getting paid for it. That is not a deflation of the claim. It is the shape of the claim.</p>
+    <div class="spread rise" style="margin-top:clamp(30px,4.4vw,46px)">
+      <p>Notice what these have in common. In every case the spiritual character of the place is tied to <b>what is being done there</b> &mdash; worship, trade, oppression, bloodshed, an encounter with God. It is not a property of the soil. Ephesus feels like Artemis because Ephesus is full of people serving Artemis and getting paid for it. That is not a deflation of the claim. It is the shape of the claim.</p>
 
       <aside class="aside">
         <span class="lbl"><svg aria-hidden="true"><use href="#i-target"/></svg>The rule these six share</span>

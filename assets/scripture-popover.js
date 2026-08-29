@@ -129,6 +129,13 @@
   var BOOK_ONLY_RE = new RegExp('^(?:[123]\\s)?(?:' + NAME_PATTERN + ')\\.?');
   var CONT_RE = /(\s*[·;,]\s*)(\d+:\d+(?:[-–]\d+)?)/g;
 
+  /* Obadiah, Philemon, 2 John, 3 John and Jude have exactly one chapter, so a
+     reference like "Jude 9" is book + VERSE, not book + chapter. Read as a
+     chapter it asks the API for Jude 9, which does not exist, and the popover
+     says "Verse not found" — which looks like a dead network rather than a
+     parse bug. An explicit "Jude 1:9" still parses the ordinary way. */
+  var ONE_CHAPTER = { 31: 1, 57: 1, 63: 1, 64: 1, 65: 1 };
+
   function parseReference(refStr) {
     var match = String(refStr).trim().match(PARSE_RE);
     if (!match) return null;
@@ -142,9 +149,14 @@
       : slot[0] !== undefined ? slot[0]
         : slot[Object.keys(slot)[0]];
     if (!bookId) return null;
+    var first = parseInt(match[3], 10);
+    /* one number, and the book only has one chapter -> that number is the verse */
+    if (ONE_CHAPTER[bookId] && !match[4]) {
+      return { bookId: bookId, chapter: 1, verseStart: first, verseEnd: null };
+    }
     return {
       bookId: bookId,
-      chapter: parseInt(match[3], 10),
+      chapter: first,
       verseStart: match[4] ? parseInt(match[4], 10) : null,
       verseEnd: match[5] ? parseInt(match[5], 10) : null
     };
