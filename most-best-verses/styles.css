@@ -1545,8 +1545,8 @@ button {
   background: var(--bg-surface-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.25rem 1.65rem;
-  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.9rem;
 }
 
 .context-chapter-icon {
@@ -1633,7 +1633,7 @@ button {
 .study-sub-section {
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 0.95rem;
 }
 
 .study-sub-heading {
@@ -1667,7 +1667,7 @@ button {
   background: var(--bg-surface-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.5rem 1.65rem;
+  padding: 1.1rem 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1721,10 +1721,10 @@ button {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.07), rgba(236, 72, 153, 0.07));
   border: 1px solid rgba(99, 102, 241, 0.25);
   border-radius: var(--radius-xl);
-  padding: 1.85rem 2.15rem;
+  padding: 1.3rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.95rem;
   box-shadow: var(--shadow-sm);
   text-align: left;
 }
@@ -1793,7 +1793,7 @@ button {
   background: var(--bg-surface-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.65rem 1.85rem;
+  padding: 1.1rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -1949,7 +1949,7 @@ button {
   background: var(--bg-surface-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.65rem 1.75rem;
+  padding: 1.1rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -2138,7 +2138,7 @@ button {
   background: var(--bg-surface-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1.35rem 1.5rem;
+  padding: 0.95rem 1.15rem;
   cursor: pointer;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
@@ -2186,7 +2186,18 @@ button {
   align-items: center;
   justify-content: center;
   opacity: 1;
-  overflow: hidden !important;
+  /* ---------- `clip`, not `hidden`, and the difference is the whole bug ----------
+     `overflow: hidden` makes a box a SCROLL CONTAINER that a reader cannot scroll. The browser
+     still can, and does: focusing anything near the foot of the screen scrolls a hidden box to
+     bring it into view, and every control on this page is in a bar down there. One Tab to the
+     study button and the entire site sat 112px up the screen — a strip of bare ground under the
+     bar, the top of the passage cut off above the glass. The 112px is `.story-backdrop`, which
+     overhangs the bottom edge by 14% of the height so it has somewhere to parallax into; an
+     overhang at the END edge counts towards scrollable overflow, which is the same trap a 9px
+     notch on a menu hit once before.
+     `overflow: clip` clips identically and creates no scroll container, so there is nothing to
+     scroll and the backdrop can overhang as far as it likes. */
+  overflow: clip !important;
   contain: strict;
   user-select: none;
   cursor: pointer;
@@ -2199,10 +2210,19 @@ button {
   --gutter: max(1.25rem, calc((100% - 680px) / 2));
   /* The verse's colours live here and are inherited by the ground. This one line is the whole
      difference between a tap that cuts to a new palette and a tap that travels to one. */
+  /* The two chapter dials ride here for exactly the same reason the four ground colours do:
+     a registered custom property is the only kind that can be interpolated, and interpolating
+     the NUMBER is what makes `calc(1.06rem * var(--chapter-size))` a glide rather than a jump.
+     Pressing A+ used to re-set the whole chapter between one frame and the next; now the type
+     grows into its new size and the leading opens with it. It is a scoped reflow — one block,
+     not the document — which is why it can be a plain transition and does not need a view
+     transition. See the note in the workspace rules on which mechanism goes with which scope. */
   transition: --bg-base 760ms cubic-bezier(0.32, 0.72, 0, 1),
               --bg-a    760ms cubic-bezier(0.32, 0.72, 0, 1),
               --bg-b    760ms cubic-bezier(0.32, 0.72, 0, 1),
-              --bg-c    760ms cubic-bezier(0.32, 0.72, 0, 1);
+              --bg-c    760ms cubic-bezier(0.32, 0.72, 0, 1),
+              --chapter-size    320ms cubic-bezier(0.32, 0.72, 0, 1),
+              --chapter-leading 320ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* A drag writes the four colours on every pointermove, interpolated in script from how far the
@@ -2233,6 +2253,16 @@ button {
 @property --bg-a    { syntax: "<color>"; inherits: true; initial-value: #f59e0b; }
 @property --bg-b    { syntax: "<color>"; inherits: true; initial-value: #ec4899; }
 @property --bg-c    { syntax: "<color>"; inherits: true; initial-value: #8b5cf6; }
+
+/* Numbers, and registered for the same reason: unregistered, the transition list above would
+   parse, be accepted, and silently do nothing. */
+@property --chapter-size    { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --chapter-leading { syntax: "<number>"; inherits: true; initial-value: 1.85; }
+
+/* ---------- the ink a part of the passage is drawn in ----------
+   `<length>`, because it is a stroke width. It is what lets the read text go THINNER as it
+   dims — see the long note on `.vs` below for why it cannot be `font-weight`. */
+@property --vs-ink { syntax: "<length>"; inherits: true; initial-value: 0px; }
 
 .story-backdrop {
   position: absolute;
@@ -2474,7 +2504,7 @@ button {
 
 .story-deep-panel .reader-body {
   padding: 0.2rem 0 1.4rem;
-  gap: 2.4rem;
+  gap: 1.9rem;
 }
 
 .story-deep-panel[hidden] { display: none; }
@@ -3996,7 +4026,7 @@ input:focus-visible,
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    padding: 1.75rem 2.25rem max(1.75rem, env(safe-area-inset-bottom));
+    padding: 1.5rem 1.75rem max(1.5rem, env(safe-area-inset-bottom));
   }
 }
 
@@ -4008,7 +4038,7 @@ input:focus-visible,
 .story-container.is-deep .story-passage-ref,
 .story-container.is-deep .story-bottom-bar {
   width: 100%;
-  max-width: 1040px;
+  max-width: 1240px;
   margin-inline: auto;
 }
 
@@ -4350,20 +4380,51 @@ input:focus-visible,
    And the passage ends on a beat: once the last part is out, one more tap takes the dimming off
    everything and the verse stands whole, lit end to end, before the next one comes. That is the
    only moment the reader sees the thing entire. */
+/* ---------- what has been read gets LIGHTER, in both senses ----------
+   The dim was opacity alone and it should not have been: dimmed text at the same weight reads
+   as the same text turned down, where what is wanted is text that has stepped back. Weight is
+   the right signal and `font-weight` is the wrong way to send it — measured, 700 to 300 in Plus
+   Jakarta Sans narrowed every line in the run (259→254, 303→297, 299→286), because a weight
+   change alters every advance width in the face. Words shift on every tap and wherever a line
+   sits near its limit the break moves and everything below it walks. That is the one thing this
+   design will not do.
+
+   A stroke does not touch a single advance width. `-webkit-text-stroke` is drawn on the glyph
+   outline after layout is settled, so adding it thickens the letters and changes NOTHING about
+   where they are. So the lit part carries a little extra ink and what has been read gives it
+   back: the newest statement is the heaviest thing on the screen, the context behind it is
+   drawn thin, and the two are one interpolation of one registered `<length>` rather than two
+   different typefaces. The stroke goes to nothing on `.is-past` — it cannot go NEGATIVE, so the
+   face's own declared weight is the thin end and the lit end is what is built on top of it.
+
+   `em`, not `px`: the passage is set between 1.6rem and 2.45rem depending on the width, and a
+   fixed stroke that is right on a phone is invisible on a desktop. */
 .vs {
   opacity: 1;
-  transition: opacity 420ms ease;
+  --vs-ink: 0.019em;
+  -webkit-text-stroke: var(--vs-ink) currentColor;
+  transition: opacity 420ms ease, --vs-ink 420ms ease;
 }
 
 /* Read, but not gone. Two fifths was not enough of a step to make the next statement obviously
-   the one to read; a quarter is. It cannot be done with `font-weight` instead, which is the
-   other way to say "lighter" — a weight change alters every advance width in the run, so the
-   passage re-wraps and the words move, which is the one thing this design will not do. */
-.vs.is-past { opacity: 0.26; }
+   the one to read; a quarter is — and now the weight steps back with it. */
+.vs.is-past {
+  opacity: 0.26;
+  --vs-ink: 0px;
+}
 
-/* The last tap of a passage. One class on the COLUMN rather than a class removed from every
-   part, so the whole verse comes up together on one transition instead of a dozen. */
-.story-passage-text.is-whole .vs.is-past { opacity: 1; }
+/* The last tap of a passage: the dim comes off AND the ink comes back, so the verse stands
+   whole at one weight end to end. One class on the COLUMN rather than a class removed from
+   every part, so it comes up together on one transition instead of a dozen. */
+.story-passage-text.is-whole .vs.is-past {
+  opacity: 1;
+  --vs-ink: 0.019em;
+}
+
+/* A gradient-filled phrase paints through `-webkit-text-fill-color: transparent`, and a stroke
+   in `currentColor` would paint straight over the top of it — the gradient would vanish and the
+   phrase would come out solid. It keeps its weight from the face. */
+.fx-gradient { -webkit-text-stroke-width: 0; }
 
 /* Arriving, and leaving. Going back takes a part off the end and it leaves the way it came:
    the same fade, run backwards, so the two directions are one gesture rather than one
@@ -4480,25 +4541,6 @@ input:focus-visible,
   z-index: 60;
 }
 
-/* The header is a row of [title] [translation] [dials] [close]; the controls keep together at
-   the end, and the title takes whatever is left. */
-.reader-face-head #readerFaceVer { margin-left: auto; flex-shrink: 0; }
-.reader-face-head .story-type { flex-shrink: 0; }
-.reader-face-head > div:first-child { min-width: 0; }
-
-/* Two labelled buttons, sharing the width and neither of them losing its words. */
-.reader-face-foot .story-nav-btn {
-  min-width: 0;
-  flex: 1 1 auto;
-  justify-content: center;
-}
-
-.reader-face-foot .story-nav-btn span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .story-type-btn {
   width: 44px;
   min-width: 44px;
@@ -4513,10 +4555,14 @@ input:focus-visible,
 
 .story-type-menu {
   position: absolute;
-  /* Down, not up: it hangs off a button in the chapter's header now rather than one in a bar
-     at the foot of the screen. */
-  top: calc(100% + 0.45rem);
+  /* Up, not down: the button moved to the footer with the rest of the controls, so the menu
+     opens out of it the same way the appearance menu opens out of the bar on the verse face. */
+  bottom: calc(100% + 0.5rem);
   right: 0;
+  /* It is wider than the 44px button it hangs from, so at a phone's width `right: 0` alone
+     would be enough — but on a wide face the footer is centred in a 720px measure and the
+     menu must not run off the near edge either. */
+  max-width: min(20rem, calc(100vw - 2rem));
   z-index: 20;
   min-width: 14rem;
   padding: 0.5rem;
@@ -4534,8 +4580,11 @@ input:focus-visible,
 
 .story-type-menu[hidden] { display: none; }
 
-/* A row of steps rather than a slider: five sizes and three leadings is the whole useful range,
-   and a step you can hit with a thumb beats a track you have to aim at. */
+/* A row of steps rather than a slider: a step you can hit with a thumb beats a track you have
+   to aim at. What is IN the steps is a shape wherever a shape can say it — two A's for the
+   size, three rules at three spacings for the leading, the same sun and moon the appearance
+   control has always used. "Tight / Normal / Loose" are three words that all mean the same
+   thing until you have tried them; the picture is the trying. */
 .story-dial {
   display: flex;
   gap: 0.25rem;
@@ -4554,9 +4603,99 @@ input:focus-visible,
   font-size: 0.76rem;
   font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ---------- text size: smaller, larger ----------
+   Five named rungs (S M L XL XXL) asked the reader to hold a scale in their head and then
+   pick a point on it. Two buttons ask them to look at the page and press until it is right,
+   which is the thing they were actually doing. Nothing sits between them: a read-out of which
+   rung you are on is an answer to a question nobody asked — the page is the read-out, and the
+   buttons going quiet at the ends is the only edge of the range worth marking. */
+.story-dial-size { align-items: stretch; }
+
+.dial-a {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dial-a-sm { font-size: 0.95rem; }
+.dial-a-lg { font-size: 1.6rem; }
+
+/* A step that has run out of range is not hidden — a control that disappears at the end of its
+   travel reads as a bug. It goes quiet and stops answering. */
+.story-dial-opt[disabled] {
+  opacity: 0.32;
+  cursor: default;
+}
+
+/* ---------- line spacing ----------
+   Three rules in a box, at the three spacings on offer. The glyph is the setting. */
+.story-lead-opt svg {
+  width: 24px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ---------- the toggle row ----------
+   Verse numbers are not a dial and not a mode, so they are neither a row of steps nor an item
+   in a radio list: one line that is either on or off, with a switch that says which. */
+.story-menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.6rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) {
+  .story-menu-toggle:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+}
+
+.story-menu-toggle[aria-checked="true"] { color: #ffffff; }
+
+.story-menu-switch {
+  position: relative;
+  margin-left: auto;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background var(--transition-fast);
+}
+
+.story-menu-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform var(--transition-fast);
+}
+
+.story-menu-toggle[aria-checked="true"] .story-menu-switch { background: #f59e0b; }
+.story-menu-toggle[aria-checked="true"] .story-menu-switch::after { transform: translateX(14px); }
 
 @media (hover: hover) {
   .story-dial-opt:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
@@ -4670,13 +4809,11 @@ input:focus-visible,
   }
 }
 
+/* Not a control bar any more — see the note in the markup. A block with a title and a line
+   under it, and every button that used to crowd it is in the footer at thumb height. */
 .reader-face-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
   flex-shrink: 0;
-  padding-bottom: 0.9rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -4692,14 +4829,6 @@ input:focus-visible,
   margin: 0.2rem 0 0;
   font-size: 0.78rem;
   color: var(--text-secondary);
-}
-
-.reader-face-close {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  justify-content: center;
 }
 
 /* The one scrolling surface on this face. `overscroll-behavior: contain` stops a flick that
@@ -4719,14 +4848,43 @@ input:focus-visible,
   mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6rem), transparent 100%);
 }
 
+/* [ + ] ......... [ NIV ] [ dials ] [ back ]. The spacer, not `space-between`, so the three
+   controls on the right stay a group with one gap between them however wide the face gets —
+   `space-between` on four children spreads them across the whole width and they stop reading
+   as belonging together. */
 .reader-face-foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
+  gap: 0.45rem;
   flex-shrink: 0;
-  padding-top: 0.9rem;
+  padding-top: 0.85rem;
   border-top: 1px solid var(--border-subtle);
+}
+
+.reader-foot-spacer { flex: 1 1 auto; min-width: 0.5rem; }
+
+/* Icon-only, and square. The old MORE CONTEXT was a labelled pill set to `flex: 1` beside a
+   second labelled pill, so its text sat in the middle of a very wide button with a thumb's
+   width of empty pill to the left of it — which is what read as the whole row being shoved
+   right. A plus is the same instruction in 44px. */
+.reader-more-btn,
+.reader-face-close {
+  flex: 0 0 auto;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+}
+
+/* The translation pill is 28px tall wherever else it appears, which was defensible when it was
+   a badge in a header. In a row of thumb targets it is a button like the others. */
+.reader-face-foot .story-version-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  min-height: 44px;
 }
 
 /* Verse numbers are off unless asked for. A chapter read for its sense does not want a
@@ -4802,3 +4960,89 @@ input:focus-visible,
 .story-stage.is-reader .cube-face-verse .story-container,
 .story-stage.is-reader .cube-face-verse .story-container > * { pointer-events: none; }
 
+
+
+/* ==========================================================================
+   THE STUDY GETS ITS WIDTH BACK
+   ==========================================================================
+   The study is the one page on this site made of many short things — six translations, eight
+   case studies, a dozen lexicon terms, a table of cross-references — and it was reading them
+   in a 1040px column two abreast, which is a tall thin scroll of cards each padded like a
+   full-width panel. Two answers, both about the same thing: the cards got their padding cut to
+   what the type needs, and above 1180px the SHORT card types take a third column. The
+   translations do not — a translation card is a paragraph of scripture and three of them
+   abreast is nine words to the line.
+
+   Scoped to `.is-deep`, because these grids belong to the study and nothing else on the site
+   renders them. */
+@media (min-width: 1180px) {
+  .story-container.is-deep .case-studies-grid,
+  .story-container.is-deep .lexicon-terms-grid,
+  .story-container.is-deep .cross-refs-rich-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* The gaps were sized against the old padding and read as trenches beside the tighter cards. */
+.story-container.is-deep .translations-grid,
+.story-container.is-deep .case-studies-grid,
+.story-container.is-deep .lexicon-terms-grid,
+.story-container.is-deep .cross-refs-rich-grid {
+  gap: 0.85rem;
+}
+
+/* A card in a three-up row is narrower than the heading above it, so its own inner rhythm has
+   to come in too or the header rule and the text below it stop looking related. */
+.story-container.is-deep .trans-card,
+.story-container.is-deep .case-study-card,
+.story-container.is-deep .lexicon-term-card {
+  gap: 0.6rem;
+}
+
+/* ---------- the cards got the width; the PROSE must not ----------
+   A grid of short cards is better three abreast at 1240px. A paragraph is not: the chapter,
+   the lexicon summary, the TPT note and the copyright notices are continuous reading, and at
+   the full measure they run to about 130 characters a line, which is roughly twice what an eye
+   can track back from. They keep a measure of their own inside the wide column — which is what
+   an editorial page does with a wide figure and a narrow text block, and it reads as one page
+   rather than as two decisions. */
+.story-container.is-deep .lexicon-theological-depth,
+.story-container.is-deep .tpt-notes-box,
+.story-container.is-deep .scripture-credits,
+.story-container.is-deep .context-chapter-summary {
+  max-width: 86ch;
+}
+
+/* ---------- BACK is a button, not a bar ----------
+   GO DEEPER fills the width on the verse face because it is the one thing to do there. In the
+   study it is the way out, sitting under a page the reader has just scrolled, and at 1085px it
+   read as a horizontal rule someone had put a word in the middle of. On a phone the full width
+   is still right — there is nothing else in the bar and a thumb should not have to aim. */
+@media (min-width: 900px) {
+  .story-container.is-deep .story-deeper-btn {
+    /* `width: auto` alone does nothing here: the button is `flex: 1 1 auto` and grows into
+       whatever the row has spare. The grow has to be the thing that is turned off. */
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 13rem;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+  }
+
+  /* With the button no longer eating the row, put it in the middle of it. */
+  .story-container.is-deep .story-bottom-center-actions { justify-content: center; }
+}
+
+/* The chapter inside the study is a run of inline `.ctx-verse` spans with no block of their own
+   to cap, and the block they sit in is a card whose full width is right. So the measure is made
+   out of the card's own padding: the text column is centred inside it and the card stays the
+   width of everything beside it.
+
+   `em`, not `ch`. `ch` is the advance of a zero, which in a serif at this size is 0.62em — so a
+   cap of "86ch" measured out to 1093px and about a hundred and seven characters a line, which is
+   the opposite of what it was for. 38em is roughly seventy-five. */
+@media (min-width: 900px) {
+  .story-container.is-deep .inline-passage-block {
+    padding-inline: max(2.65rem, calc((100% - 38em) / 2));
+  }
+}

@@ -45,8 +45,8 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=4.5.0">
-  <script src="icons.js?v=1.2.0" defer></script>
+  <link rel="stylesheet" href="styles.css?v=4.7.0">
+  <script src="icons.js?v=1.3.0" defer></script>
 </head>
 <body>
 
@@ -261,6 +261,14 @@
               <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="false" data-mode="dark">
                 <i data-lucide="moon" style="width: 15px; height: 15px;"></i><span>Dark</span>
               </button>
+              <!-- Shuffle is back, but as a FOURTH answer to "what appearance", not as a thing
+                   that re-rolls under the reader. It changes with the PASSAGE — the same rule the
+                   typeface and the translation follow — and it never deals the same one twice in
+                   a row, so the light is always something the tap did. -->
+              <div class="story-menu-rule" role="separator"></div>
+              <button class="story-mode-opt" type="button" role="menuitemradio" aria-checked="false" data-mode="shuffle">
+                <i data-lucide="shuffle" style="width: 15px; height: 15px;"></i><span>Shuffle</span>
+              </button>
             </div>
           </div>
 
@@ -273,54 +281,78 @@
              marked inside it, so turning back and forth is reading the same words at two
              distances rather than moving between two documents. -->
         <section class="story-reader cube-face cube-face-reader" id="storyReader" aria-label="Chapter" aria-hidden="true">
+          <!-- The header names the chapter and does nothing else. It used to carry the
+               translation, the dials and the way back as well — four controls in a row above a
+               two-line title, on a phone — and every one of them is a thing you reach for while
+               reading, which is to say with a thumb, which is to say at the BOTTOM of the
+               screen. They are all in the footer now and the head is a heading again. -->
           <header class="reader-face-head">
-            <div>
-              <h2 class="reader-face-title" id="readerFaceTitle">Psalm 16</h2>
-              <p class="reader-face-sub" id="readerFaceSub">The passage in its chapter</p>
-            </div>
-            <!-- The translation comes up here with the dials. The foot of the chapter now carries
-                 two labelled buttons and could not hold a third control without one of them
-                 losing its words. -->
+            <h2 class="reader-face-title" id="readerFaceTitle">Psalm 16</h2>
+            <p class="reader-face-sub" id="readerFaceSub">The passage in its chapter</p>
+          </header>
+          <div class="reader-face-body" id="readerFaceBody" aria-live="polite"></div>
+          <!-- Four controls, one row, thumb height: more of the chapter on the left, and the
+               three that act on how it is set gathered at the right. MORE CONTEXT was a labelled
+               pill sharing the width with SHOW VERSE NUMBERS, which is why the pair sat wide and
+               off-centre with a hand's width of dead space inside each one. It is a plus now —
+               it adds chapter, which is the one thing a plus means — and the verse numbers moved
+               into the settings, where the rest of the reading preferences already were. -->
+          <footer class="reader-face-foot">
+            <button class="story-nav-btn reader-more-btn" id="btnReaderMore" type="button" title="Show more of the chapter" aria-label="Show more of the chapter">
+              <i data-lucide="plus" style="width: 17px; height: 17px;"></i>
+            </button>
+            <div class="reader-foot-spacer"></div>
             <button class="story-version-pill" id="readerFaceVer" type="button" title="Cycle translation">NIV</button>
-            <!-- The type dials belong to the CHAPTER, not to the verse. The verse is four lines
-                 set to fill a screen and there is nothing to tune about it; the chapter is a
-                 page of continuous reading, which is the only place size and leading are worth
-                 having. -->
             <div class="story-type" id="storyType">
-              <button class="story-nav-btn story-type-btn" id="storyTypeBtn" type="button" aria-haspopup="menu" aria-expanded="false" title="Text size and spacing" aria-label="Text size and spacing">
+              <button class="story-nav-btn story-type-btn" id="storyTypeBtn" type="button" aria-haspopup="menu" aria-expanded="false" title="Reading settings" aria-label="Reading settings">
                 <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
               </button>
-              <div class="story-type-menu" id="storyTypeMenu" role="menu" aria-label="Text size and spacing" hidden>
+              <!-- Everything about how the chapter is set, in one place: its size, its leading,
+                   whether it carries verse numbers, and the light IT is read in. Nothing here is
+                   spelled out in words where a shape says it better — two A's for the size,
+                   three rules at three spacings for the leading. -->
+              <div class="story-type-menu" id="storyTypeMenu" role="menu" aria-label="Reading settings" hidden>
                 <div class="story-menu-head">Text size</div>
-                <div class="story-dial" role="group" aria-label="Text size">
-                  <button type="button" class="story-dial-opt" data-size="0.84">S</button>
-                  <button type="button" class="story-dial-opt" data-size="0.92">M</button>
-                  <button type="button" class="story-dial-opt is-active" data-size="1">L</button>
-                  <button type="button" class="story-dial-opt" data-size="1.12">XL</button>
-                  <button type="button" class="story-dial-opt" data-size="1.26">XXL</button>
+                <div class="story-dial story-dial-size" role="group" aria-label="Text size">
+                  <button type="button" class="story-dial-opt story-size-step" data-size-step="-1" aria-label="Smaller text"><span class="dial-a dial-a-sm">A</span></button>
+                  <button type="button" class="story-dial-opt story-size-step" data-size-step="1" aria-label="Larger text"><span class="dial-a dial-a-lg">A</span></button>
                 </div>
                 <div class="story-menu-rule" role="separator"></div>
                 <div class="story-menu-head">Line spacing</div>
                 <div class="story-dial" role="group" aria-label="Line spacing">
-                  <button type="button" class="story-dial-opt" data-lead="1.62">Tight</button>
-                  <button type="button" class="story-dial-opt is-active" data-lead="1.85">Normal</button>
-                  <button type="button" class="story-dial-opt" data-lead="2.1">Loose</button>
+                  <button type="button" class="story-dial-opt story-lead-opt" data-lead="1.62" aria-label="Tight line spacing" title="Tight">
+                    <svg viewBox="0 0 24 18" aria-hidden="true" focusable="false"><rect x="3" y="6.5" width="18" height="1.7" rx="0.85"/><rect x="3" y="9" width="18" height="1.7" rx="0.85"/><rect x="3" y="11.5" width="18" height="1.7" rx="0.85"/></svg>
+                  </button>
+                  <button type="button" class="story-dial-opt story-lead-opt is-active" data-lead="1.85" aria-label="Normal line spacing" title="Normal">
+                    <svg viewBox="0 0 24 18" aria-hidden="true" focusable="false"><rect x="3" y="3.9" width="18" height="1.7" rx="0.85"/><rect x="3" y="9" width="18" height="1.7" rx="0.85"/><rect x="3" y="14.1" width="18" height="1.7" rx="0.85"/></svg>
+                  </button>
+                  <button type="button" class="story-dial-opt story-lead-opt" data-lead="2.1" aria-label="Loose line spacing" title="Loose">
+                    <svg viewBox="0 0 24 18" aria-hidden="true" focusable="false"><rect x="3" y="0.6" width="18" height="1.7" rx="0.85"/><rect x="3" y="9" width="18" height="1.7" rx="0.85"/><rect x="3" y="17.4" width="18" height="1.7" rx="0.85"/></svg>
+                  </button>
                 </div>
+                <div class="story-menu-rule" role="separator"></div>
+                <!-- The chapter's OWN light, not the site's. A reader can leave the verses
+                     shuffling their ground behind them and still read the chapter on plain
+                     paper, or the other way round. No Shuffle here: shuffle deals a light per
+                     PASSAGE, and the chapter is one chapter for as long as you are in it. -->
+                <div class="story-menu-head">Chapter appearance</div>
+                <div class="story-dial" role="group" aria-label="Chapter appearance">
+                  <button type="button" class="story-dial-opt story-reader-theme-opt" data-rmode="light" aria-label="Light" title="Light"><i data-lucide="sun" style="width: 16px; height: 16px;"></i></button>
+                  <button type="button" class="story-dial-opt story-reader-theme-opt" data-rmode="warm" aria-label="Warm" title="Warm"><i data-lucide="coffee" style="width: 16px; height: 16px;"></i></button>
+                  <button type="button" class="story-dial-opt story-reader-theme-opt" data-rmode="dark" aria-label="Dark" title="Dark"><i data-lucide="moon" style="width: 16px; height: 16px;"></i></button>
+                </div>
+                <div class="story-menu-rule" role="separator"></div>
+                <!-- Off by default. A chapter read for its sense does not want a number every
+                     fifteen words; a chapter read to find a verse does. -->
+                <button class="story-menu-toggle" id="btnReaderNums" type="button" role="menuitemcheckbox" aria-checked="false">
+                  <i data-lucide="list-ordered" style="width: 16px; height: 16px;"></i>
+                  <span id="readerNumsText">Verse numbers</span>
+                  <span class="story-menu-switch" aria-hidden="true"></span>
+                </button>
               </div>
             </div>
             <button class="story-nav-btn reader-face-close" id="btnReaderClose" type="button" title="Back to the verse" aria-label="Back to the verse">
-              <i data-lucide="chevron-left" style="width: 15px; height: 15px;"></i>
-            </button>
-          </header>
-          <div class="reader-face-body" id="readerFaceBody" aria-live="polite"></div>
-          <footer class="reader-face-foot">
-            <button class="story-nav-btn" id="btnReaderMore" type="button">
-              <i data-lucide="chevron-down" style="width: 15px; height: 15px;"></i><span>MORE CONTEXT</span>
-            </button>
-            <!-- Off by default. A chapter read for its sense does not want a number every
-                 fifteen words; a chapter read to find a verse does. -->
-            <button class="story-nav-btn" id="btnReaderNums" type="button" aria-pressed="false">
-              <i data-lucide="list-ordered" style="width: 15px; height: 15px;"></i><span id="readerNumsText">SHOW VERSE NUMBERS</span>
+              <i data-lucide="chevron-left" style="width: 17px; height: 17px;"></i>
             </button>
           </footer>
         </section>
@@ -490,24 +522,24 @@
       </div>
       <div class="shortcut-list" style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Launch Full Screen Mode</span>
-          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">S</kbd>
+          <span>Read on / take a part back</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">→ / ←</kbd>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Toggle Theme (Light / Warm / Dark)</span>
+          <span>Appearance (Light / Warm / Dark / Shuffle)</span>
           <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">T</kbd>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Cycle Bible Version (NIV / AMP / NKJV / TPT / NLT / NASB)</span>
+          <span>Cycle this passage&rsquo;s translation (NIV / AMP / NKJV / TPT / NLT / NASB)</span>
           <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">V</kbd>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Next / Previous Verse (Reader / Stories)</span>
-          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">← / →</kbd>
+          <span>Close a menu, the study, or this panel</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">Esc</kbd>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Close Modals / Overlays</span>
-          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">Esc</kbd>
+          <span>This panel</span>
+          <kbd style="padding: 0.2rem 0.6rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); border-radius: 4px; font-weight: 700;">?</kbd>
         </div>
       </div>
     </div>
@@ -521,7 +553,7 @@
 
   <!-- Data and Application Scripts -->
   <script src="verses-data.js?v=2.5.0"></script>
-  <script src="app.js?v=4.5.0"></script>
+  <script src="app.js?v=4.7.0"></script>
 
 </body>
 </html>

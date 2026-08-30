@@ -62,6 +62,23 @@
        time it came round and no two verses in a row were in the same voice. */
     storyCurrentVer: localStorage.getItem('agy_bible_version') || 'NIV',
 
+    /* What the reader asked for, which is not the same as what is on the screen: 'shuffle' is a
+       standing instruction and `state.theme` is whichever light it dealt for this passage. */
+    appearance: localStorage.getItem('agy_bible_appearance') ||
+                localStorage.getItem('agy_bible_theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+
+    /* ---------- and the chapter's own, which is a different question ----------
+       The verse face and the chapter are two surfaces with two jobs. The verses are a field of
+       moving colour that a reader taps through; the chapter is a page they sit and read. Wanting
+       the first to shuffle its ground and the second to be plain paper is not a contradiction,
+       and until now there was one switch for both. This one belongs to the chapter alone. It
+       starts wherever the site starts, so nothing is surprising on a first load, and from the
+       first time it is touched the two are independent. */
+    readerAppearance: localStorage.getItem('agy_reader_appearance') ||
+                      localStorage.getItem('agy_bible_theme') ||
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+
     /* How the page is set, and what is on the chapter. All three outlive the session. */
     verseSize: localStorage.getItem('agy_chapter_size') || '1',
     verseLead: localStorage.getItem('agy_chapter_lead') || '1.85',
@@ -239,6 +256,8 @@
     applyViewMode(state.viewMode);
     setBibleVersion(state.version);
     syncSlideModeUI();
+    applyReaderTheme(state.readerAppearance);
+    syncSizeReadout();
     applyVerseType();
     syncVerseNumbers();
 
@@ -642,7 +661,7 @@
     applyFontStyle('lora');
     applyFontSize(1.22, true);
     applyLineHeight('1.7', true);
-    applyTheme('light');
+    setSlideMode('light');
     setBibleVersion('NIV');
   }
 
@@ -684,25 +703,37 @@
     if (elements.storyMode) elements.storyMode.classList.toggle('is-open', !!open);
   }
 
-  /* Shuffle wears a sun rather than the two crossed arrows. The arrows are the icon for
-     reordering a list, which is not what this does — it alternates the light and dark slide —
-     and next to Light's sun and Dark's moon they read as belonging to a different control.
-     `sun-moon` is a sun with the crescent taken out of it, so it sits in the same family as
-     its two neighbours without being mistaken for Light's plain sun. */
-  const SLIDE_MODE_ICON = { light: 'sun', warm: 'coffee', dark: 'moon' };
+  /* ---------- Shuffle, restored, and on the passage's clock ----------
+     It was taken out because it re-rolled the light on every single TAP — together with the
+     typeface, the translation and the entrance, five things re-deciding themselves under a
+     reader who had only moved one statement forward. That is a different objection from
+     "variety is bad", and the answer the rest of this page already uses applies here too: draw
+     it once, per PASSAGE, and carry it on the item. So the light changes when the verse does,
+     never mid-verse, never twice for one tap; it goes into the history with the passage, so
+     walking back gives the page you actually read; and it never deals the same light twice in a
+     row, for the same reason the ground never does — a change you cannot see is not a change. */
+  const APPEARANCES = ['light', 'warm', 'dark', 'shuffle'];
+  const THEMES = ['light', 'warm', 'dark'];
+
+  function rollTheme() {
+    const pool = THEMES.filter(t => t !== state.theme);
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  const SLIDE_MODE_ICON = { light: 'sun', warm: 'coffee', dark: 'moon', shuffle: 'shuffle' };
 
   function syncSlideModeUI() {
     if (elements.storyModeMenu) {
       elements.storyModeMenu.querySelectorAll('.story-mode-opt').forEach(btn => {
-        const on = btn.getAttribute('data-mode') === state.theme;
+        const on = btn.getAttribute('data-mode') === state.appearance;
         btn.setAttribute('aria-checked', on ? 'true' : 'false');
         btn.classList.toggle('is-active', on);
       });
     }
     if (elements.storyModeBtn) {
-      const name = SLIDE_MODE_ICON[state.theme] || 'sun';
-      elements.storyModeBtn.title = 'Appearance: ' + state.theme;
-      elements.storyModeBtn.setAttribute('aria-label', 'Appearance: ' + state.theme);
+      const name = SLIDE_MODE_ICON[state.appearance] || 'sun';
+      elements.storyModeBtn.title = 'Appearance: ' + state.appearance;
+      elements.storyModeBtn.setAttribute('aria-label', 'Appearance: ' + state.appearance);
       /* createIcons() replaces the <i> with an <svg>, so the live node is whatever is in
          there now — set the attribute on it and let refreshIcons() redraw. */
       const icon = elements.storyModeBtn.querySelector('svg, i');
@@ -718,14 +749,55 @@
     }
   }
 
-  /* There is no per-slide appearance any more, so this is the site's own theme. One control,
-     one answer, and the verse, the chapter and the study all agree with each other — which they
-     could not while the slide picked light or dark for itself on every tap. */
+  /* One control, one answer: the verse, the chapter and the study all agree with each other.
+     Four answers now — the three lights, and Shuffle, which is a standing instruction to deal
+     a different one with every passage rather than a fourth appearance of its own.
+
+     ---------- the bug this used to be ----------
+     `syncFurniture` takes the ITEM (`{verse, ver, style}`) and this handed it `storyCurrentVerse`,
+     which is the VERSE. So `item.verse` was undefined and the first line of the function threw
+     on `verse.ref` — every single time the appearance was changed. `applyTheme` had already run,
+     so the document's own colours flipped and the text went dark; everything after the throw did
+     not, so the ground kept the palette it was mixed for, the light/dark class on the frame never
+     turned over, and the menu was left open because the handler never got to close it. That is
+     the whole of "the text changes but the background stays dark". */
   function setSlideMode(mode) {
-    if (!['light', 'warm', 'dark'].includes(mode)) return;
-    applyTheme(mode);
+    if (!APPEARANCES.includes(mode)) return;
+    state.appearance = mode;
+    try { localStorage.setItem('agy_bible_appearance', mode); } catch (e) {}
+    /* Shuffle has no light of its own. Turning it on deals one for the passage on screen so the
+       instruction takes effect where the reader is looking, rather than at the next tap. */
+    applyTheme(mode === 'shuffle' ? rollTheme() : mode);
+    if (mode === 'shuffle' && stage.item) stage.item.theme = state.theme;
     syncSlideModeUI();
-    if (state.storyCurrentVerse) { syncFurniture(state.storyCurrentVerse); syncDeepTheme(); }
+    if (stage.item) { syncFurniture(stage.item); syncDeepTheme(); }
+  }
+
+  /* ---------- the chapter's light ----------
+     Scoped, not global: `data-theme` goes on `.story-reader` itself rather than on `<html>`, and
+     because every one of the three palettes is written as a plain `[data-theme="..."]` attribute
+     rule, the tokens simply resolve on that element and inherit down through the face. The verse
+     face, the ground and the study go on reading `<html>` and are untouched.
+
+     The light block has to exist for this to work in both directions — a `data-theme="light"`
+     that had no rules of its own could not undo a dark `<html>` above it. It does exist. */
+  const READER_THEMES = ['light', 'warm', 'dark'];
+
+  function applyReaderTheme(mode) {
+    if (mode === 'mud') mode = 'warm';
+    if (!READER_THEMES.includes(mode)) return;
+    state.readerAppearance = mode;
+    try { localStorage.setItem('agy_reader_appearance', mode); } catch (e) {}
+    if (elements.storyReader) elements.storyReader.setAttribute('data-theme', mode);
+    syncReaderThemeUI();
+  }
+
+  function syncReaderThemeUI() {
+    document.querySelectorAll('.story-reader-theme-opt').forEach(btn => {
+      const on = btn.getAttribute('data-rmode') === state.readerAppearance;
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.classList.toggle('is-active', on);
+    });
   }
 
   function isDeepOpen() {
@@ -1359,21 +1431,50 @@
   const CHAPTER_SIZES = ['0.84', '0.92', '1', '1.12', '1.26'];
   const CHAPTER_LEADS = ['1.62', '1.85', '2.1'];
 
+  /* Two buttons and no read-out. The page is the read-out. The only thing the control has to
+     say for itself is when it has run out of ladder — and a step with nowhere left to go goes
+     quiet rather than disappearing, because a control that vanishes at the end of its travel
+     reads as a fault. */
+  function syncSizeReadout() {
+    const i = CHAPTER_SIZES.indexOf(state.verseSize);
+    document.querySelectorAll('.story-size-step').forEach(b => {
+      const dir = parseInt(b.getAttribute('data-size-step'), 10) || 0;
+      const next = i + dir;
+      b.disabled = next < 0 || next >= CHAPTER_SIZES.length;
+    });
+  }
+
   function applyVerseType() {
     const o = elements.storyOverlay;
     if (!o) return;
     o.style.setProperty('--chapter-size', state.verseSize);
     o.style.setProperty('--chapter-leading', state.verseLead);
-    document.querySelectorAll('.story-dial-opt[data-size]').forEach(b => {
-      b.classList.toggle('is-active', b.getAttribute('data-size') === state.verseSize);
-    });
     document.querySelectorAll('.story-dial-opt[data-lead]').forEach(b => {
       b.classList.toggle('is-active', b.getAttribute('data-lead') === state.verseLead);
     });
+    syncSizeReadout();
   }
 
-  /* Changing the type re-wraps the passage, which moves it — the one time that is allowed,
-     because the reader asked for it. Put the reading position back afterwards. */
+  /* ---------- the dial is a glide, and the passage is held through it ----------
+     `--chapter-size` and `--chapter-leading` are registered `<number>`s with a transition on the
+     overlay, so setting them here does not re-set the chapter between two frames: the type grows
+     into its new size over about a third of a second. That means the passage inside it is moving
+     for that whole third of a second, and re-centring once — which is what this did — would put
+     it right for one frame and wrong for the other nineteen. So the reading position is held
+     every frame until the glide is done. It is one scroll write per frame against a scroller
+     that is already laying out; there is nothing else running while a thumb is on a dial. */
+  let dialHold = 0;
+  function holdReadingPosition(ms) {
+    if (!cube.open) return;
+    const until = performance.now() + ms;
+    if (dialHold) cancelAnimationFrame(dialHold);
+    const tick = () => {
+      centreSelectedVerse();
+      dialHold = performance.now() < until ? requestAnimationFrame(tick) : 0;
+    };
+    dialHold = requestAnimationFrame(tick);
+  }
+
   function setVerseType(size, lead) {
     if (size && CHAPTER_SIZES.includes(size)) state.verseSize = size;
     if (lead && CHAPTER_LEADS.includes(lead)) state.verseLead = lead;
@@ -1382,9 +1483,16 @@
       localStorage.setItem('agy_chapter_lead', state.verseLead);
     } catch (e) {}
     applyVerseType();
-    /* Re-setting the chapter moves the passage inside it, which is the one time that is
-       allowed, because the reader asked for it. Put it back in the middle. */
-    if (cube.open) centreSelectedVerse();
+    /* Matches the 320ms on the overlay, plus a frame to land on. */
+    holdReadingPosition(360);
+  }
+
+  /* Smaller, larger. The ladder is unchanged — this is a different way of walking it. */
+  function stepVerseSize(dir) {
+    const i = CHAPTER_SIZES.indexOf(state.verseSize);
+    const next = (i < 0 ? 2 : i) + dir;
+    if (next < 0 || next >= CHAPTER_SIZES.length) return;
+    setVerseType(CHAPTER_SIZES[next], null);
   }
 
   function setTypeMenuOpen(open) {
@@ -1394,15 +1502,16 @@
     if (elements.storyType) elements.storyType.classList.toggle('is-open', !!open);
   }
 
-  /* The chapter's verse numbers. Off unless asked for — see the note in the sheet. */
+  /* The chapter's verse numbers. Off unless asked for — see the note in the sheet. It is a
+     switch in the settings now rather than a labelled button in the footer, so the label stays
+     put and the switch is what says which way it is set; a control whose words change under
+     the finger that pressed it is the thing that makes a reader check whether it worked. */
   function syncVerseNumbers() {
     if (elements.readerFaceBody) {
       elements.readerFaceBody.classList.toggle('show-nums', !!state.verseNums);
     }
     const btn = document.getElementById('btnReaderNums');
-    const label = document.getElementById('readerNumsText');
-    if (label) label.textContent = state.verseNums ? 'HIDE VERSE NUMBERS' : 'SHOW VERSE NUMBERS';
-    if (btn) btn.setAttribute('aria-pressed', state.verseNums ? 'true' : 'false');
+    if (btn) btn.setAttribute('aria-checked', state.verseNums ? 'true' : 'false');
   }
 
   function toggleVerseNumbers() {
@@ -1816,7 +1925,10 @@
     return {
       verse: verse,
       ver: STORY_VERSIONS[Math.floor(Math.random() * STORY_VERSIONS.length)],
-      style: pool[Math.floor(Math.random() * pool.length)]
+      style: pool[Math.floor(Math.random() * pool.length)],
+      /* Drawn here with the face and the voice, and for the same reason: once, and then carried.
+         `null` when the reader has picked a fixed light, and `showVerse` leaves the page alone. */
+      theme: state.appearance === 'shuffle' ? rollTheme() : null
     };
   }
 
@@ -2082,6 +2194,9 @@
     /* The face rides on the column itself, so one class swap re-sets the passage and nothing
        else on the page has to know which typeface it is in. */
     col.className = 'story-passage-text ' + item.style;
+    /* Before `syncFurniture`, which is what mixes the ground from `state.theme`. A passage
+       walked back to brings the light it was read in with it. */
+    if (state.appearance === 'shuffle' && item.theme && item.theme !== state.theme) applyTheme(item.theme);
     syncFurniture(item);
     if (opts.whole) {
       while (addStep(false)) {}
@@ -2368,7 +2483,7 @@
         const btn = e.target.closest('.segmented-btn');
         if (btn) {
           const themeVal = btn.getAttribute('data-theme-val');
-          if (themeVal) applyTheme(themeVal);
+          if (themeVal) setSlideMode(themeVal === 'mud' ? 'warm' : themeVal);
         }
       });
     }
@@ -2625,9 +2740,14 @@
         e.stopPropagation();
         const opt = e.target.closest('.story-dial-opt');
         if (!opt) return;
-        /* The menu stays open: the point of a dial is trying it, and closing after every step
-           would make choosing a size four taps instead of one. */
-        setVerseType(opt.getAttribute('data-size'), opt.getAttribute('data-lead'));
+        /* The menu stays open whatever is pressed in it: the point of a dial is trying it, and
+           closing after every step would make choosing a size four taps instead of one. That
+           goes for the light as well — it is the same kind of decision. */
+        const step = opt.getAttribute('data-size-step');
+        const rmode = opt.getAttribute('data-rmode');
+        if (step) stepVerseSize(parseInt(step, 10));
+        else if (rmode) applyReaderTheme(rmode);
+        else setVerseType(null, opt.getAttribute('data-lead'));
       });
       document.addEventListener('click', (e) => {
         if (elements.storyTypeMenu.hidden) return;
@@ -2636,7 +2756,9 @@
       });
     }
 
-    /* ---------- the reader face ---------- */
+    /* ---------- the reader face ----------
+       The verse-number switch sits inside the settings menu now, so its own handler has to stop
+       the event before the menu's delegate sees it — otherwise one press is read twice. */
     const btnNums = document.getElementById('btnReaderNums');
     if (btnNums) {
       btnNums.addEventListener('click', (e) => { e.stopPropagation(); toggleVerseNumbers(); });
@@ -2821,6 +2943,19 @@
       /* Escape backs out one layer at a time and stops at the verses — there is nothing behind
          them to escape to. */
       if (e.key === 'Escape') {
+        /* The two menus are the innermost layer, so they go first — and they were not on this
+           list at all, which meant Escape inside an open settings menu closed the study behind
+           it instead. Anything that opens has to close the way everything else does. */
+        if (elements.storyTypeMenu && !elements.storyTypeMenu.hidden) {
+          setTypeMenuOpen(false);
+          if (elements.storyTypeBtn) elements.storyTypeBtn.focus();
+          return;
+        }
+        if (elements.storyModeMenu && !elements.storyModeMenu.hidden) {
+          setSlideModeMenuOpen(false);
+          if (elements.storyModeBtn) elements.storyModeBtn.focus();
+          return;
+        }
         if (elements.typeSettingsDrawer && elements.typeSettingsDrawer.classList.contains('active')) {
           closeTypeSettings();
           return;
@@ -2835,18 +2970,23 @@
         }
       }
 
-      // Stories Navigation
+      /* Stories Navigation. It returns only for the keys it actually took: this used to return
+         unconditionally, and since the site is never anything BUT stories mode, that swallowed
+         every other shortcut on the page. T, V, S and ? were all dead — including the ? that
+         opens the panel advertising them. */
       if (state.isStoriesMode) {
         if (e.key === ' ' || e.key === 'ArrowRight') {
           e.preventDefault();
           /* Same rule as the tap: read on first, turn to the next verse after. */
           dismissTapToast();
           if (!readOn()) nextVerse();
-        } else if (e.key === 'ArrowLeft') {
+          return;
+        }
+        if (e.key === 'ArrowLeft') {
           e.preventDefault();
           if (!readBack()) renderPreviousStorySlide();
+          return;
         }
-        return;
       }
 
       // Reader Navigation (the shortcuts panel advertises these)
@@ -2877,15 +3017,23 @@
 
       if (typeof e.key !== 'string') return;
 
-      if (e.key.toLowerCase() === 's') openStoriesMode();
-      else if (e.key.toLowerCase() === 't') {
-        const nextTheme = state.theme === 'light' ? 'warm' : (state.theme === 'warm' ? 'dark' : 'light');
-        applyTheme(nextTheme);
+      /* No `s`. It called `openStoriesMode()`, which resets the history and deals a fresh verse
+         — and since the site is always in stories mode, "launch full screen" was in practice a
+         key that threw away where you were. */
+      if (e.key.toLowerCase() === 'v') {
+        /* The same path the translation pill takes, so the key and the pill cannot disagree:
+           it cycles THIS passage's translation, not the grid's stored preference. */
+        if (stage.item) {
+          const i = (STORY_VERSIONS.indexOf(stage.item.ver) + 1) % STORY_VERSIONS.length;
+          stage.item.ver = STORY_VERSIONS[i];
+          repaintVerse();
+        }
       }
-      else if (e.key.toLowerCase() === 'v') {
-        const versions = ['NIV', 'AMP', 'NKJV', 'TPT', 'NLT', 'NASB'];
-        const nextVer = versions[(versions.indexOf(state.version) + 1) % versions.length];
-        setBibleVersion(nextVer);
+      else if (e.key.toLowerCase() === 't') {
+        /* Through `setSlideMode`, not `applyTheme`: the keyboard and the menu have to be the
+           same control or pressing T leaves Shuffle still ticked in a menu it has overridden. */
+        const i = APPEARANCES.indexOf(state.appearance);
+        setSlideMode(APPEARANCES[(i + 1) % APPEARANCES.length]);
       }
       else if (e.key === '?') {
         if (elements.shortcutsModal) elements.shortcutsModal.classList.toggle('active');
