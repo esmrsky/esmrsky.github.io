@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Compare · Something in the Air</title>
+<style>
+  :root{color-scheme:dark;--night:#101A24;--paper:#FBF9F8;--haze:#C77DAE;--muted:#9AA6B0}
+  *{box-sizing:border-box}
+  html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--night)}
+  iframe{display:block;width:100%;height:100%;border:0;background:var(--paper)}
+  .switch{
+    position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));z-index:10;transform:translateX(-50%);
+    display:flex;align-items:center;gap:4px;padding:5px;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+    background:rgba(16,26,36,.92);box-shadow:0 10px 34px rgba(0,0,0,.32);backdrop-filter:blur(12px)
+  }
+  .switch span{padding:0 9px;font:700 9px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  button{min-width:72px;min-height:40px;border:0;border-radius:999px;background:transparent;color:#D7D4D1;cursor:pointer;font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase}
+  button[aria-pressed="true"]{background:var(--paper);color:var(--night)}
+  button:hover:not([aria-pressed="true"]){color:#E4A6CB;background:rgba(199,125,174,.12)}
+  button:focus-visible{outline:3px solid var(--haze);outline-offset:2px}
+  @media(max-width:520px){.switch span{display:none}.switch{bottom:max(9px,env(safe-area-inset-bottom))}button{min-width:68px}}
+</style>
+</head>
+<body>
+<iframe id="article" title="Something in the Air article comparison"></iframe>
+<div class="switch" role="group" aria-label="Choose article version">
+  <span>Compare</span>
+  <button id="old" type="button" aria-pressed="false">Old</button>
+  <button id="new" type="button" aria-pressed="false">New</button>
+</div>
+<script>
+  const frame = document.getElementById("article");
+  const buttons = {old:document.getElementById("old"),new:document.getElementById("new")};
+  function show(view, push){
+    view = view === "old" ? "old" : "new";
+    frame.src = view === "old" ? "index.html" : "index-v2.html";
+    buttons.old.setAttribute("aria-pressed", String(view === "old"));
+    buttons.new.setAttribute("aria-pressed", String(view === "new"));
+    if (push) history.replaceState(null, "", "?view=" + view);
+    document.title = (view === "old" ? "Old" : "New") + " · Something in the Air";
+  }
+  buttons.old.addEventListener("click",()=>show("old",true));
+  buttons.new.addEventListener("click",()=>show("new",true));
+  show(new URLSearchParams(location.search).get("view"),false);
+</script>
+</body>
+</html>
