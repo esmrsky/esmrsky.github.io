@@ -47,6 +47,13 @@
   --hair-2:#E2DBD8;
   --shadow-soft:rgba(16,26,36,.13);
 
+  /* FROZEN. The hero, the night bands, the ladder rule and the footer are dark
+     because the design says so, not because the page is in light mode — so they
+     must not follow --ink when the palette turns. Painting them with --ink made
+     them go light in dark mode while their hardcoded light text stayed light. */
+  --night:#101A24;
+  --haze-band:linear-gradient(178deg,#F0E2EC 0%,#EBD8E6 100%);
+
   --serif:"Literata",Georgia,"Times New Roman",serif;
   --display:"Instrument Serif","Literata",Georgia,serif;
   --sans:"Literata",Georgia,serif;
@@ -61,6 +68,42 @@
   --gut:clamp(18px,4.6vw,58px);
   --maxw:1180px;
   --col:66ch;
+
+  /* ————— the dark palette, declared once —————
+     Both selectors below only MAP these onto the live token names, so a value
+     is never written twice and the two modes cannot drift apart. Ordering is
+     deliberate: --night (#101A24) stays the darkest thing on the page, so the
+     night bands still read as darker than the paper around them.
+     The four accent -ink tokens become their on-dark variants — the same four
+     values the .band--night rules have always used. */
+  --d-ink:#EEEAE6;   --d-ink-2:#C3C0BC;  --d-ink-3:#98A0A8;
+  --d-paper:#171E27; --d-paper-2:#121922; --d-cream:#1E2731;
+  --d-hair:#2E3843;  --d-hair-2:#262F39;
+  --d-haze-ink:#E4A6CB; --d-sodium-ink:#E7A24E;
+  --d-cyan-ink:#6FD3E6; --d-flare-ink:#EF8072;
+  --d-shadow:rgba(0,0,0,.55);
+  --d-haze-band:linear-gradient(178deg,#221A20 0%,#2A1F28 100%);
+}
+
+/* Three states: no attribute follows the system, and either attribute wins
+   over it in both directions. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:var(--d-ink); --ink-2:var(--d-ink-2); --ink-3:var(--d-ink-3);
+    --paper:var(--d-paper); --paper-2:var(--d-paper-2); --cream:var(--d-cream);
+    --hair:var(--d-hair); --hair-2:var(--d-hair-2);
+    --haze-ink:var(--d-haze-ink); --sodium-ink:var(--d-sodium-ink);
+    --cyan-ink:var(--d-cyan-ink); --flare-ink:var(--d-flare-ink);
+    --shadow-soft:var(--d-shadow); --haze-band:var(--d-haze-band);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:var(--d-ink); --ink-2:var(--d-ink-2); --ink-3:var(--d-ink-3);
+  --paper:var(--d-paper); --paper-2:var(--d-paper-2); --cream:var(--d-cream);
+  --hair:var(--d-hair); --hair-2:var(--d-hair-2);
+  --haze-ink:var(--d-haze-ink); --sodium-ink:var(--d-sodium-ink);
+  --cyan-ink:var(--d-cyan-ink); --flare-ink:var(--d-flare-ink);
+  --shadow-soft:var(--d-shadow); --haze-band:var(--d-haze-band);
 }
 
 *{box-sizing:border-box}
@@ -96,10 +139,10 @@ button,summary,a,label,[role="button"]{touch-action:manipulation}
 
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
 .band{padding:clamp(58px,9vw,124px) 0;position:relative}
-.band--night{background:var(--ink);color:#E7E4E1}
+.band--night{background:var(--night);color:#E7E4E1}
 .band--night p{color:#CDCBC9}
 .band--paper2{background:var(--paper-2)}
-.band--haze{background:linear-gradient(178deg,#F0E2EC 0%,#EBD8E6 100%)}
+.band--haze{background:var(--haze-band)}
 .band--hair{border-top:1px solid var(--hair)}
 
 /* ————— structural labels ————— */
@@ -114,7 +157,7 @@ button,summary,a,label,[role="button"]{touch-action:manipulation}
   font-variant-numeric:tabular-nums;padding:3px 7px;border-radius:3px;
   background:var(--ink);color:var(--paper);letter-spacing:.08em;
 }
-.band--night .eyebrow .n{background:#E7E4E1;color:var(--ink)}
+.band--night .eyebrow .n{background:#E7E4E1;color:var(--night)}
 
 h2.beat{font-size:clamp(38px,7.4vw,84px);margin:0 0 .42em;max-width:16ch}
 h2.beat em{font-style:italic;color:var(--haze-ink)}
@@ -155,7 +198,7 @@ h3.sub:first-of-type{margin-top:1.4em}
    place on two lines so the eye lands on "in the air" twice.
    ========================================================================== */
 .hero{
-  background:var(--ink);color:#F2EFEC;position:relative;overflow:hidden;
+  background:var(--night);color:#F2EFEC;position:relative;overflow:hidden;
   padding:clamp(76px,13vw,150px) 0 clamp(52px,8vw,96px);
 }
 /* the haze: three soft fields, drifting. Purely decorative, and it is drawn on
@@ -288,7 +331,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--flare-ink);display:block;margin-bottom:.9em;
 }
-.exit h4{font-size:clamp(19px,2.4vw,25px);font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin-bottom:.5em}
+.exit h4{font-size:clamp(19px,2.4vw,24px);font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin-bottom:.5em}
 .exit p{font-size:.97rem;line-height:1.58;color:var(--ink-2);max-width:none}
 .exit .says{
   font-family:var(--display);font-size:1.16rem;font-style:italic;color:var(--ink);
@@ -369,7 +412,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .lrow.only .gk::after{
   content:"only here";display:inline-block;vertical-align:middle;margin-left:9px;
   font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink);background:#E4A6CB;
+  text-transform:uppercase;color:var(--night);background:#E4A6CB;
   padding:2px 6px;border-radius:3px;
 }
 @media (max-width:860px){
@@ -508,9 +551,9 @@ h3.sub:first-of-type{margin-top:1.4em}
 @media (max-width:600px){.rung-body{padding-left:var(--rung-pad)}}
 .ladder-rule{
   margin-top:clamp(24px,3.4vw,32px);padding:clamp(18px,2.6vw,26px);
-  border:2px solid var(--ink);border-radius:12px;background:var(--ink);color:#F2EFEC;max-width:760px;
+  border:2px solid var(--night);border-radius:12px;background:var(--night);color:#F2EFEC;max-width:760px;
 }
-.ladder-rule p{color:#D6D3D0;margin-bottom:0;max-width:none;font-size:.98rem;line-height:1.6}
+.ladder-rule p{color:#D6D3D0;margin-bottom:0;max-width:70ch;font-size:.98rem;line-height:1.6}
 .ladder-rule .big{font-family:var(--display);font-size:clamp(21px,3.2vw,32px);line-height:1.16;color:#F2EFEC;margin-bottom:.55em;max-width:22ch}
 .ladder-rule .big em{font-style:italic;color:#E4A6CB}
 
@@ -577,7 +620,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   text-transform:uppercase;color:#E4A6CB;display:flex;align-items:center;gap:8px;margin-bottom:.7em;
 }
 .lane-n svg{width:15px;height:15px;flex:none}
-.lane-head h4{
+.lane-head h3{
   font-family:var(--display);font-weight:400;letter-spacing:-.012em;
   font-size:clamp(24px,3.6vw,38px);color:#F2EFEC;margin-bottom:.4em;
 }
@@ -591,7 +634,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   padding:clamp(17px,2.4vw,22px);background:rgba(255,255,255,.045);
   display:flex;flex-direction:column;
 }
-.voice h5{
+.voice h4{
   font-family:var(--serif);font-weight:600;font-size:clamp(16px,2vw,19px);
   color:#F2EFEC;margin:0 0 .4em;letter-spacing:-.008em;
 }
@@ -618,7 +661,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 
 /* ————— sources ————— */
 .srcs{display:grid;gap:0;margin-top:clamp(22px,3.2vw,30px);border-top:1px solid var(--hair);max-width:880px}
-.srcs li{list-style:none;padding:clamp(13px,1.9vw,17px) 0;border-bottom:1px solid var(--hair-2);font-size:.92rem;line-height:1.55;color:var(--ink-2)}
+.srcs li{list-style:none;padding:clamp(13px,1.9vw,17px) 0;border-bottom:1px solid var(--hair-2);font-size:.92rem;line-height:1.55;color:var(--ink-2);max-width:78ch}
 .srcs{padding-left:0;margin-left:0}
 .srcs li b{color:var(--ink);font-weight:600}
 .srcs li a{color:var(--haze-ink);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--haze-ink) 40%,transparent);text-underline-offset:3px}
@@ -650,7 +693,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .srcbox .srcs{margin-top:0;border-top:1px solid var(--hair-2);padding-bottom:clamp(10px,1.6vw,16px)}
 
 /* ————— foot ————— */
-.foot{background:var(--ink);color:#93A0AA;padding:clamp(44px,6vw,72px) 0}
+.foot{background:var(--night);color:#93A0AA;padding:clamp(44px,6vw,72px) 0}
 .foot a{color:#E4A6CB;text-decoration:underline;text-underline-offset:3px}
 .foot .fl{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em}
 .foot .home{display:inline-flex;align-items:center;gap:8px;min-height:44px}
@@ -814,7 +857,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .band--night .fx-cell i{color:#EF8072}
 .band--night .fx-cell--sham{border:1.6px solid #EF8072;background:rgba(212,72,58,.17)}
 .fx-note{
-  grid-column:1/-1;margin:6px 0 0;max-width:none;font-family:var(--mono);font-size:9.5px;
+  grid-column:1/-1;margin:6px 0 0;max-width:78ch;font-family:var(--mono);font-size:9.5px;
   line-height:1.65;letter-spacing:.05em;color:var(--ink-3);
 }
 .band--night .fx-note{color:#9AA6B0}
@@ -862,7 +905,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .fk--pick{border:1.6px solid var(--haze);background:color-mix(in srgb,var(--haze) 9%,var(--cream))}
 .fk--pick .fk-ms,.fk--pick .fk-who{color:var(--haze-ink)}
 .fk--pick .fk-who{border-top-color:color-mix(in srgb,var(--haze) 34%,transparent)}
-.fk-note{margin:clamp(14px,2vw,18px) 0 clamp(30px,4.4vw,48px);max-width:none;font-family:var(--mono);font-size:9.5px;line-height:1.7;letter-spacing:.04em;color:var(--ink-3)}
+.fk-note{margin:clamp(14px,2vw,18px) 0 clamp(30px,4.4vw,48px);max-width:92ch;font-family:var(--mono);font-size:9.5px;line-height:1.7;letter-spacing:.04em;color:var(--ink-3)}
 .fk-note b{color:var(--ink);font-weight:700}
 /* on a night band the fork turns its clothes over — it sets its own paper,
    so it sets its own ink. See the .tcard note. */
@@ -916,6 +959,42 @@ h3.sub:first-of-type{margin-top:1.4em}
   color:var(--haze-ink);
 }
 .band--night .opener::first-letter{color:#E4A6CB}
+
+/* ————— the theme toggle —————
+   Fixed, because the page is 36,000px and a control in the footer is not a
+   control. It paints its own background from the tokens so it stays legible
+   over the dark hero, the night bands and the paper alike. */
+.tt{
+  position:fixed;top:clamp(10px,1.6vw,16px);right:clamp(10px,1.6vw,16px);z-index:90;
+  width:44px;height:44px;display:grid;place-items:center;
+  border:1px solid color-mix(in srgb,var(--night) 22%,transparent);
+  border-radius:50%;background:color-mix(in srgb,var(--cream) 88%,transparent);
+  color:var(--ink-2);cursor:pointer;
+  -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+  transition:color .2s ease,border-color .2s ease,background-color .2s ease;
+}
+.tt:hover{color:var(--haze-ink);border-color:var(--haze)}
+.tt svg{width:19px;height:19px;grid-area:1/1;transition:opacity .22s ease,transform .34s cubic-bezier(.22,.68,.28,1)}
+.tt .ic-sun{opacity:0;transform:rotate(-70deg) scale(.6)}
+.tt .ic-moon{opacity:1;transform:none}
+:root[data-theme="dark"] .tt .ic-sun{opacity:1;transform:none}
+:root[data-theme="dark"] .tt .ic-moon{opacity:0;transform:rotate(70deg) scale(.6)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .tt .ic-sun{opacity:1;transform:none}
+  :root:not([data-theme="light"]) .tt .ic-moon{opacity:0;transform:rotate(70deg) scale(.6)}
+}
+@media (prefers-reduced-motion:reduce){.tt svg{transition:none}}
+
+/* The palette swap goes behind a view transition rather than an interpolated
+   one. A `transition` on the colour tokens re-resolves inherited style for the
+   whole tree every frame — measured elsewhere in this estate at 182ms of style
+   recalc inside a 340ms ease, which readers feel as a stutter. A view
+   transition snapshots the VIEWPORT once and cross-fades on the GPU, so the
+   cost does not scale with the 36,000px document. */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.26s}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+}
 
 /* ————— icons ————— */
 /* ————— section 11's three carried texts. A card sets its own foreground
@@ -1041,9 +1120,23 @@ h3.sub:first-of-type{margin-top:1.4em}
 .esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--hair);border-radius:50%;background:none;color:var(--ink-3);font-size:18px;line-height:1;cursor:pointer}
 .esv-ctx-close:hover{color:var(--ink);border-color:var(--ink-3)}
 .esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--serif);font-size:1.06rem;line-height:1.62}
-.esv-ctx-verse{display:block;margin-bottom:.5em}
-.esv-ctx-num{font-family:var(--mono);font-size:.6rem;color:var(--ink-3);margin-right:.5em;vertical-align:.25em}
-.esv-ctx-t.is-target{background:color-mix(in srgb,var(--sift) 20%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sift) 20%,transparent)}
+/* The passage dialog is a READER, so it reads as prose: the verse numbers go
+   and the verses run on instead of stacking one per line. The target verse is
+   still found by its highlight, and because the number is gone that highlight
+   is now one unbroken run rather than a series of gaps. */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-t{margin-right:.28em}
+/* The shared script marks the verse you clicked as .esv-ctx-verse.is-selected;
+   this block used to target .esv-ctx-t.is-target, which matches nothing, so the
+   reader never highlighted anything. Marking the WHOLE verse rather than its
+   text span also means a multi-verse selection is one unbroken run instead of
+   a series of gaps — which is what the hidden numbers make possible. */
+.esv-ctx-verse.is-selected{
+  background:color-mix(in srgb,var(--sift) 22%,transparent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--sift) 22%,transparent);
+  border-radius:2px;
+}
 .esv-ctx-passage{margin:0}
 .esv-ctx-loading{color:var(--ink-3);font-family:var(--mono);font-size:.72rem}
 .esv-ctx-foot{padding:12px 22px 16px;border-top:1px solid var(--hair);display:flex;gap:8px;flex-wrap:wrap}
@@ -1109,6 +1202,12 @@ h3.sub:first-of-type{margin-top:1.4em}
    or throws before the observer is wired — every word is simply visible. */
 if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
   document.documentElement.classList.add("js-reveal");
+/* Theme, before first paint, so a dark reader never gets a white flash. No
+   attribute at all means "follow the system", which is the third state. */
+try {
+  var t = localStorage.getItem("sita-theme");
+  if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+} catch (e) {}
 </script>
 
 <!-- Icon set. Decorative throughout: every icon repeats a label that is already
@@ -1148,6 +1247,11 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 </defs></svg>
 
 <!-- ══════════════════════════════════════════════════════ HERO ══════════ -->
+<button class="tt" id="themeToggle" type="button" aria-live="polite">
+  <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.9 6.9 0 0 0 10.8 10.8Z"/></svg>
+  <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.4 12h2.4M19.2 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+</button>
+
 <header class="hero">
   <div class="hero-haze" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
@@ -1815,28 +1919,28 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
         <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-eye"/></svg>Lane 1</span>
-          <h4>They say they see it</h4>
+          <h3>They say they see it</h3>
           <p>First-person reports of direct sight. The primary material, and the least testable.</p>
         </div>
         <span class="lane-tog"><span class="lane-count">3 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
         </summary>
         <div class="voices">
           <article class="voice">
-            <h5>Micah Turnbo</h5>
+            <h4>Micah Turnbo</h4>
             <span class="vmeta">Behold Wonder &middot; formerly Vineyard Church Northwest, Cincinnati</span>
             <p>A seer prophet who said he perceived the spirit realm much as he perceived the physical one, and had since childhood &mdash; dreams, visions, angels, demons. Collected in <i>The Invitation</i>, and carried across the podcasts below: The Deep End ep.&nbsp;020, Blurry Creatures ep.&nbsp;89 &ldquo;I See Angels&rdquo;.</p>
             <p><b>Then the tests in this section ran, in public.</b> In 2025 the apologist Mike Winger published a detailed warning, objecting less to the fact of the visions than to their content &mdash; casual, domestic depictions of God and of angels that he argued could not be squared with how Scripture describes such encounters. Concerns spread through the wider Vineyard movement. His senior pastor defended him, then withdrew the defence.</p>
             <div class="vfor"><b>How it ended</b> in May 2025 Turnbo, Vineyard Northwest and Vineyard USA &ldquo;together decided that Micah will take an extended leave from public ministry to rest, reflect, and seek guidance.&rdquo; His accounts went dark. His own statement: <em>&ldquo;I recognize that some of my writings and interview comments have included statements that do not align with Scripture.&rdquo;</em> Read that as what it is &mdash; a body weighed it, and the man conceded rather than doubling down, which is rarer than either the accusation or the defence.</div>
           </article>
           <article class="voice">
-            <h5>Phoenix Steinfeldt</h5>
+            <h4>Phoenix Steinfeldt</h4>
             <span class="vmeta">@phoenixfromphoenix &middot; Redeem Eden, with Cody Parker</span>
             <p>Posts as a prophetic seer on what stands over places. Redeem Eden states the claim about as plainly as it can be stated: he is described as having the gift to distinguish between spirits and to see the spirit realm through sight and visions, and they &ldquo;pray against principalities that are spiritually oppressing different geographical territories all over the Earth.&rdquo; They also sell a 1.5&ndash;2 hour Christ-centred life-coaching and deliverance session.</p>
             <p>Their own framing is more careful than either their followers or their critics tend to be: &ldquo;We are not theologians. We are not pastors or preachers. We never went to seminary. We are not psychics. We are not mediums. We are not fortune tellers.&rdquo; That disclaims the clerical category and the occult one in the same breath, and leaves them standing on the gift alone.</p>
             <div class="vfor"><b>Watch for</b> that is precisely the third claim in section&nbsp;07 &mdash; the one marked <em>not attested</em> &mdash; offered as a service. Note too that the platform&rsquo;s own related searches include the word <i>debunked</i>: the material travels fast and so does the pushback, and neither travels with a way of settling it.</div>
           </article>
           <article class="voice">
-            <h5>The wider seer-ministry world</h5>
+            <h4>The wider seer-ministry world</h4>
             <span class="vmeta">Doug Overmyer / SeersSee &middot; Jennifer LeClaire on the &ldquo;seer anointing&rdquo;</span>
             <p>An established body of teaching, training and books aimed at people who believe they have this gift &mdash; and at their families, pastors and therapists, which is a more sober framing than outsiders tend to expect.</p>
             <div class="vfor"><b>Take from it</b> a distinction it draws that most of its critics do not: a <b>seer</b> sees and declares; a <b>discerner</b> perceives the <em>source</em> of a thing. Different gifts, different jobs &mdash; and conflating them is most of the confusion.</div>
@@ -1848,33 +1952,33 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
         <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-ear"/></svg>Lane 2</span>
-          <h4>They take the unseen seriously, at length</h4>
+          <h3>They take the unseen seriously, at length</h3>
           <p>Long-form audio is where this subject actually lives now. These differ enormously in rigour, and the difference is the thing to track.</p>
         </div>
         <span class="lane-tog"><span class="lane-count">4 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
         </summary>
         <div class="voices">
           <article class="voice">
-            <h5>The Deep End</h5>
+            <h4>The Deep End</h4>
             <span class="vmeta">Taylor Welch &middot; ~1,000 episodes &middot; with NOVOS Network</span>
             <p>&ldquo;Deep conversations on taboo &amp; controversial topics that will challenge the beliefs you&rsquo;ve grown up with&rdquo; &mdash; a wide-ranging show running at the seam where business, psychology and spirituality meet. Micah Turnbo&rsquo;s episode&nbsp;020 is the seeing-into-the-spirit-realm one. Welch&rsquo;s companion platform NOVOS Network describes itself as blending &ldquo;neuroscience and cognitive behavioral training with integrated spiritual awakening.&rdquo;</p>
             <p><b>His actual thesis deserves stating properly</b>, because it is the most sophisticated version of the position this page is arguing with. Welch holds that vibes, atmospheres and resonance are not New Age imports at all &mdash; they are real created mechanics that the occult counterfeited and the church abandoned, so that reclaiming them is recovering stolen property rather than importing anything. On that much, this page substantially agrees: sections&nbsp;01 to&nbsp;03 say the faculty is real and that dismissing it is its own error.</p>
             <div class="vfor"><b>Where it parts company</b> is the appeal to laboratory evidence. Newberg&rsquo;s neuroimaging of glossolalia is real published work; &ldquo;the brain has circuitry designed to yield control to the Holy Spirit&rdquo; is an interpretation the scans cannot carry, and heart-coherence claims are further out still. The thesis does not need them &mdash; it is a theological claim and it stands or falls as one. Borrowing a laboratory&rsquo;s authority is exactly the move section&nbsp;01 flags, and it is the one thing here worth resisting.</div>
           </article>
           <article class="voice">
-            <h5>Blurry Creatures</h5>
+            <h4>Blurry Creatures</h4>
             <span class="vmeta">Luke Rodgers &amp; Nate Henry</span>
             <p>The Nephilim, the Watchers, the sons of God, the divine council and cosmic geography &mdash; alongside cryptids, ancient giants and UFO lore, all through a biblical lens. It takes the strange seriously instead of laughing at it, which is rarer than it should be.</p>
             <div class="vfor"><b>Watch for</b> a very wide aperture. Signal-to-speculation varies sharply by episode and by guest, and the show does not always mark the join.</div>
           </article>
           <article class="voice">
-            <h5>The Lord of Spirits</h5>
+            <h4>The Lord of Spirits</h4>
             <span class="vmeta">Fr. Andrew Stephen Damick &amp; Fr. Stephen De Young &middot; Ancient Faith, since 2020</span>
             <p>Two Orthodox priests on gods, angels, demons and the union of the seen and unseen, worked out from Scripture and the Fathers. The most rooted thing on this list by a distance: it is not <em>rediscovering</em> the unseen realm, because that tradition never filed it away. There is a book of the same name.</p>
             <div class="vfor"><b>Read it for</b> the shock of finding that nearly everything treated as fringe here has been ordinary, carefully governed doctrine somewhere, for a very long time.</div>
           </article>
           <article class="voice">
-            <h5>Naked Bible &middot; and BibleProject</h5>
+            <h4>Naked Bible &middot; and BibleProject</h4>
             <span class="vmeta">Michael S. Heiser (458 eps, ended Jan 2023) &middot; Tim Mackie, Spiritual Beings series</span>
             <p>The scholarly end of the podcast lane. Heiser worked the divine council from the Hebrew and the Second Temple literature until weeks before his death in February 2023; the archive stands. BibleProject&rsquo;s Spiritual Beings series is the gentlest on-ramp there is &mdash; <i>elohim</i> as a title rather than a name, the council as God&rsquo;s staff, and Deuteronomy 32:8&ndash;9 laid out slowly.</p>
             <div class="vfor"><b>Start here</b> if the ledger in section&nbsp;05 was the part that interested you.</div>
@@ -1886,25 +1990,25 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
         <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-book"/></svg>Lane 3</span>
-          <h4>They did the scholarship</h4>
+          <h3>They did the scholarship</h3>
           <p>Slower, duller, and the reason anything on this page can be checked at all.</p>
         </div>
         <span class="lane-tog"><span class="lane-count">3 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
         </summary>
         <div class="voices">
           <article class="voice">
-            <h5>Paul Hiebert</h5>
+            <h4>Paul Hiebert</h4>
             <span class="vmeta">&ldquo;The Flaw of the Excluded Middle&rdquo;, 1982</span>
             <p>Section&nbsp;03 is his. Thirteen pages, and it explains why this argument keeps happening between people who cannot hear each other. If you read one thing off this entire page, read that one.</p>
           </article>
           <article class="voice">
-            <h5>Michael S. Heiser</h5>
+            <h4>Michael S. Heiser</h4>
             <span class="vmeta"><i>The Unseen Realm</i>, 2015</span>
             <p>The book that put the divine council in front of a general readership. His doctorate was on precisely this &mdash; the council in late canonical and Second Temple Jewish literature &mdash; so the popular book has real machinery underneath it.</p>
             <div class="vfor"><b>Watch for</b> how fast it gets stretched. A careful argument about ancient cosmology is routinely cited downstream as a licence for things Heiser himself declined to claim.</div>
           </article>
           <article class="voice">
-            <h5>The powers debate</h5>
+            <h4>The powers debate</h4>
             <span class="vmeta">Clinton Arnold &middot; Chuck Lowe &middot; A. Scott Moreau &middot; Walter Wink</span>
             <p>Four positions worth knowing, disagreeing productively: Arnold on what Paul&rsquo;s vocabulary meant, Lowe&rsquo;s critique of strategic-level warfare, Moreau&rsquo;s balanced Lausanne assessment, and Wink reading the powers as the interiority of institutions. Section&nbsp;07 is built out of these four.</p>
           </article>
@@ -1915,26 +2019,26 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
         <summary>
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-alert"/></svg>Lane 4</span>
-          <h4>They apply the brakes</h4>
+          <h3>They apply the brakes</h3>
           <p>The most useful lane and the emptiest. Correction from inside a practice is worth more than correction from outside it.</p>
         </div>
         <span class="lane-tog"><span class="lane-count">3 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
         </summary>
         <div class="voices">
           <article class="voice">
-            <h5>The Remnant Radio</h5>
+            <h4>The Remnant Radio</h4>
             <span class="vmeta">Joshua Lewis, Michael Miller &amp; Michael Rowntree</span>
             <p>Charismatic, practising, unembarrassed about the gifts &mdash; and in an episode called <i>Deliverance Ministry Without the Weird</i> they take on territorial spirits and spiritual mapping directly, cautioning against speculative demonic taxonomy and against a focus on the demonic that displaces the gospel.</p>
             <div class="vfor"><b>Why it matters</b> this is the rarest position available: inside the practice, with the brakes on. It also lands almost exactly on the three verdicts in section&nbsp;07.</div>
           </article>
           <article class="voice">
-            <h5>The Prophetic Standards Statement</h5>
+            <h4>The Prophetic Standards Statement</h4>
             <span class="vmeta">April 2021 &middot; drafted by Michael Brown &amp; Joseph Mattera</span>
             <p>After a conspicuous run of failed prophecies about the 2020 US election, around eighty-five charismatic leaders, academics, ministry heads and revivalists signed a four-page call for prophetic accountability &mdash; standards for how a word is given, weighed, and retracted when it fails.</p>
             <div class="vfor"><b>Why it matters</b> it is the movement disciplining itself in public. That is exactly what 1 Corinthians 14:29 asks for, and exactly what critics usually say never happens.</div>
           </article>
           <article class="voice">
-            <h5>The cessationist critics</h5>
+            <h4>The cessationist critics</h4>
             <span class="vmeta">e.g. Justin Peters, and the discernment-ministry world</span>
             <p>They hold that the revelatory gifts have ceased, so they do not weigh the claims in lane&nbsp;1 &mdash; they reject the category. That is a real theological position with a real argument behind it, and it is not the same move as the flat exit in section&nbsp;04.</p>
             <div class="vfor"><b>Read them for</b> accountability pressure, which they supply better than anyone. Not for a model of the realm, which they are not trying to give you &mdash; and be warned that traffic between these camps runs hot and yields far more heat than findings.</div>
@@ -2345,6 +2449,55 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches)
 <script>
 (function(){
   "use strict";
+
+  /* ——————————————————————————————————————————————— the theme ————————————
+     Three states: an explicit choice in either direction, or no attribute at
+     all, which follows the system and keeps following it if the reader changes
+     it. Only the two explicit states are stored.
+
+     The swap runs inside document.startViewTransition — but NOT unconditionally.
+     For as long as one is animating the document is a photograph of itself and
+     is not hit-tested at all, so a press lands on <html> rather than on the
+     control under it, and any outside-click handler reads that as "clicked
+     somewhere else". The verse picker's own handler lives in the shared script
+     and cannot be taught about this, so the rule here is simpler: if anything
+     is open, swap instantly and skip the animation entirely. Presses while one
+     is already running are coalesced, because starting a second aborts the
+     first and throws InvalidStateError. */
+  var root = document.documentElement;
+  var toggle = document.getElementById("themeToggle");
+  var inVT = false;
+
+  function currentTheme(){
+    var set = root.getAttribute("data-theme");
+    if (set) return set;
+    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  function label(){
+    var now = currentTheme();
+    if (toggle) toggle.setAttribute("aria-label",
+      now === "dark" ? "Switch to the light palette" : "Switch to the dark palette");
+  }
+  function apply(next){
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("sita-theme", next); } catch (e) {}
+    label();
+  }
+  if (toggle){
+    label();
+    toggle.addEventListener("click", function(){
+      var next = currentTheme() === "dark" ? "light" : "dark";
+      var busy = document.querySelector(".esv-pick.open, .esv-tip.open, .esv-ctx[open]");
+      var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (inVT) return;
+      if (!document.startViewTransition || busy || still){ apply(next); return; }
+      inVT = true;
+      var vt = document.startViewTransition(function(){ apply(next); });
+      vt.finished.then(function(){ inVT = false; }, function(){ inVT = false; });
+    });
+    /* a reader who has never chosen keeps following the system */
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", label);
+  }
 
   /* ————————————————————————————————————————— the vocabulary grid ————————
      Sixteen words people actually use, and where each one was borrowed from.
