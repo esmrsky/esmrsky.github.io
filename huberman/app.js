@@ -1,6 +1,6 @@
 'use strict';
 
-const COLORS = {lime:'#d3f985',mint:'#8fd9b6',amber:'#f2c27c',lilac:'#bfaff0',blue:'#a3cbee'};
+const COLORS = {lime:'var(--lime)',mint:'var(--mint)',amber:'var(--amber)',lilac:'var(--lilac)',blue:'var(--blue)'};
 const ICONS = {
   drop:'<path d="M12 3C10 7 5 11 5 15a7 7 0 0 0 14 0c0-4-5-8-7-12Z"/><path d="M8 15a4 4 0 0 0 4 4"/>',
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',
@@ -37,69 +37,75 @@ function matchingProtocols(query,category){
 }
 
 let activeFilter='all';
+const expandedProtocols=new Set();
+function protocolDetail(p){
+  return `<section class="detail-block"><h4>In the episode</h4><p>${escapeHtml(p.episode)}</p></section><section class="detail-block"><h4>Try this · practical synthesis</h4><ol>${p.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol></section><section class="detail-block"><h4>Why it might help</h4><p>${escapeHtml(p.why)}</p></section><section class="detail-block"><h4>Evidence check</h4><p>${escapeHtml(p.evidence)}</p></section>${p.caution?`<section class="detail-block safety"><h4>Keep in mind</h4><p>${escapeHtml(p.caution)}</p></section>`:''}<div class="protocol-source"><strong>Trace the source</strong><p>${p.pages?`Research companion v2.1, pp. ${escapeHtml(p.pages)}. `:'Personal-development discussion; no dedicated PDF review. '}Transcript, non-empty lines ${escapeHtml(p.lines)}.</p>${p.link?`<p><a href="${escapeHtml(p.link)}" target="_blank" rel="noopener">${escapeHtml(p.linkLabel)} ↗</a></p>`:''}<p>Related: ${p.related.map(id=>`<a href="#p-${id}" data-protocol="${id}">${escapeHtml(protocolById.get(id).title)}</a>`).join(' · ')}</p></div>`;
+}
 function renderProtocols(){
   const matches=matchingProtocols($('#protocol-search').value,activeFilter);
-  $('#protocol-grid').innerHTML=matches.map(p=>`<article class="protocol-card" id="p-${p.id}" style="--card-color:${COLORS[p.color]}"><div class="card-eyebrow"><span class="protocol-icon">${icon(p.icon)}</span><span>${p.number==='EXTENSION'?'PRACTICAL EXTENSION':`ANCHOR ${p.number}`}</span></div><h3>${escapeHtml(p.title)}</h3><p class="card-summary">${escapeHtml(p.summary)}</p><div class="card-bottom"><div><span class="pill ${p.tone}">${escapeHtml(p.status)}</span><div class="card-meta">${escapeHtml(p.time)}</div></div><button class="open-protocol" data-open-id="${p.id}" aria-label="Read protocol: ${escapeHtml(p.title)}">↗</button></div></article>`).join('');
+  $('#protocol-grid').innerHTML=matches.map(p=>`<details class="protocol-card" id="p-${p.id}" data-protocol-id="${p.id}" style="--card-color:${COLORS[p.color]}"${expandedProtocols.has(p.id)?' open':''}><summary><div class="card-eyebrow"><span class="protocol-icon">${icon(p.icon)}</span><span>${p.number==='EXTENSION'?'PRACTICAL EXTENSION':`ANCHOR ${p.number}`}</span></div><h3>${escapeHtml(p.title)}</h3><p class="card-summary">${escapeHtml(p.summary)}</p><div class="card-bottom"><div><span class="pill ${p.tone}">${escapeHtml(p.status)}</span><div class="card-meta">${escapeHtml(p.time)}</div></div><span class="expand" aria-hidden="true">+</span></div><span class="card-action"><span class="when-closed">Explore protocol</span><span class="when-open">Close protocol</span></span></summary><div class="protocol-detail">${protocolDetail(p)}</div></details>`).join('');
+  $$('.protocol-card').forEach(card=>card.addEventListener('toggle',()=>{
+    if(!card.isConnected) return;
+    const id=card.dataset.protocolId;
+    if(card.open) expandedProtocols.add(id); else expandedProtocols.delete(id);
+  }));
   $('#result-count').textContent=`${matches.length} of ${PROTOCOLS.length} field notes${activeFilter==='all'?'':` · ${activeFilter}`}`;
   $('#no-results').hidden=matches.length!==0;
 }
-$('#protocol-search').addEventListener('input',renderProtocols);
+// Capture open states before a search re-renders the library (toggle events are queued).
+function refreshProtocols(){
+  $$('.protocol-card').forEach(card=>{if(card.open) expandedProtocols.add(card.dataset.protocolId);else expandedProtocols.delete(card.dataset.protocolId);});
+  renderProtocols();
+}
+$('#protocol-search').addEventListener('input',refreshProtocols);
 $$('.filter').forEach(button=>button.addEventListener('click',()=>{
   activeFilter=button.dataset.filter;
   $$('.filter').forEach(b=>{b.classList.toggle('selected',b===button);b.setAttribute('aria-pressed',String(b===button));});
-  renderProtocols();
+  refreshProtocols();
 }));
 $('#clear-search').addEventListener('click',()=>{
   $('#protocol-search').value='';
   $('[data-filter="all"]').click();
   $('#protocol-search').focus();
 });
-
-const dialog=$('#protocol-dialog');
-let returnFocus=null;
 function openProtocol(id,updateHistory=true){
-  const p=protocolById.get(id);
-  if(!p) return;
-  const alreadyOpen=dialog.open;
-  if(!alreadyOpen) returnFocus=document.activeElement;
-  dialog.style.setProperty('--card-color',COLORS[p.color]);
-  $('#dialog-body').innerHTML=`<div class="dialog-head"><span class="protocol-icon">${icon(p.icon)}</span><div><p class="eyebrow">${p.number==='EXTENSION'?'PRACTICAL EXTENSION':`DAILY ANCHOR ${p.number}`} · ${escapeHtml(p.time)}</p><span class="pill ${p.tone}">${escapeHtml(p.status)}</span></div></div><h2 id="dialog-title">${escapeHtml(p.title)}</h2><p class="dialog-summary">${escapeHtml(p.summary)}</p><section class="detail-block"><h3>In the episode</h3><p>${escapeHtml(p.episode)}</p></section><section class="detail-block"><h3>Try this · practical synthesis</h3><ol>${p.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol></section><section class="detail-block"><h3>Why it might help</h3><p>${escapeHtml(p.why)}</p></section><section class="detail-block"><h3>Evidence check</h3><p>${escapeHtml(p.evidence)}</p></section>${p.caution?`<section class="detail-block safety"><h3>Keep in mind</h3><p>${escapeHtml(p.caution)}</p></section>`:''}<div class="dialog-source"><strong>Trace the source</strong><p>${p.pages?`Research companion v2.1, pp. ${escapeHtml(p.pages)}. `:'Personal-development discussion; no dedicated PDF review. '}Transcript, non-empty lines ${escapeHtml(p.lines)}.</p>${p.link?`<p><a href="${escapeHtml(p.link)}" target="_blank" rel="noopener">${escapeHtml(p.linkLabel)} ↗</a></p>`:''}<p>Related: ${p.related.map(id=>`<a href="#p-${id}" data-protocol="${id}">${escapeHtml(protocolById.get(id).title)}</a>`).join(' · ')}</p></div>`;
-  if(updateHistory){
-    const method=alreadyOpen?'replaceState':'pushState';
-    history[method]({hubermanProtocol:id},'',`#p-${id}`);
+  if(!protocolById.has(id)) return;
+  if(!$(`#p-${id}`)){
+    $('#protocol-search').value='';
+    $('[data-filter="all"]').click();
   }
-  if(!alreadyOpen){dialog.showModal();document.body.classList.add('modal-open');}
-  dialog.scrollTop=0;
-  $('#dialog-close').focus();
+  const card=$(`#p-${id}`);
+  expandedProtocols.add(id);
+  card.open=true;
+  if(updateHistory) history.pushState(null,'',`#p-${id}`);
+  card.scrollIntoView({block:'start'});
+  $('summary',card).focus({preventScroll:true});
 }
-function closeProtocol(){
-  if(location.hash.startsWith('#p-')) history.replaceState(null,'',`${location.pathname}${location.search}#protocols`);
-  dialog.close();
-}
-$('#dialog-close').addEventListener('click',closeProtocol);
-dialog.addEventListener('cancel',event=>{event.preventDefault();closeProtocol();});
-dialog.addEventListener('close',()=>{
-  document.body.classList.remove('modal-open');
-  if(returnFocus?.isConnected) returnFocus.focus({preventScroll:true});
-});
-// Only an actual backdrop click closes the sheet, not a click in its padding.
-dialog.addEventListener('click',event=>{
-  if(event.target!==dialog) return;
-  const rect=dialog.getBoundingClientRect();
-  if(event.clientX<rect.left || event.clientX>rect.right || event.clientY<rect.top || event.clientY>rect.bottom) closeProtocol();
-});
 document.addEventListener('click',event=>{
-  const trigger=event.target.closest('[data-open-id],[data-protocol]');
-  if(!trigger) return;
+  const trigger=event.target.closest('[data-protocol]');
+  if(!trigger || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   event.preventDefault();
-  openProtocol(trigger.dataset.openId || trigger.dataset.protocol);
+  openProtocol(trigger.dataset.protocol);
 });
 function syncProtocolHash(){
   const id=location.hash.startsWith('#p-')?location.hash.slice(3):null;
   if(protocolById.has(id)) openProtocol(id,false);
-  else if(dialog.open) dialog.close();
 }
 window.addEventListener('hashchange',syncProtocolHash);
+
+function setTheme(theme){
+  document.documentElement.dataset.theme=theme;
+  const isLight=theme==='light';
+  $('#theme-toggle').innerHTML=`<span aria-hidden="true">${isLight?'☾':'☼'}</span> ${isLight?'Dark mode':'Light mode'}`;
+  $('#theme-toggle').setAttribute('aria-label',`Switch to ${isLight?'dark':'light'} mode`);
+  $('meta[name="theme-color"]').setAttribute('content',isLight?'#f6f7ef':'#101715');
+}
+$('#theme-toggle').addEventListener('click',()=>{
+  const theme=document.documentElement.dataset.theme==='light'?'dark':'light';
+  setTheme(theme);
+  try{localStorage.setItem('brain-body-theme',theme);}catch{}
+});
+setTheme(document.documentElement.dataset.theme==='light'?'light':'dark');
 
 function selectPhase(key){
   const phase=PHASES[key];
@@ -159,6 +165,7 @@ $('#breath-start').addEventListener('click',()=>{
   $('#breath-start').textContent='Stop demonstration';
   nextBreathStep();
 });
+$('.breath-panel').addEventListener('toggle',()=>{if(!$('.breath-panel').open && breathRunning) stopBreathing();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden && breathRunning) stopBreathing();});
 if('IntersectionObserver' in window){
   const breathingVisibility=new IntersectionObserver(entries=>{if(!entries[0].isIntersecting && breathRunning) stopBreathing();},{threshold:.15});
@@ -181,16 +188,25 @@ function updateArousal(){
 }
 $('#arousal-slider').addEventListener('input',updateArousal);
 
-function selectTraining(index){
-  const day=TRAINING[index];
-  $$('.training-day').forEach((button,i)=>{button.classList.toggle('selected',i===index);button.setAttribute('aria-pressed',String(i===index));});
-  $('#training-detail').innerHTML=`<div><p class="eyebrow" style="color:${COLORS[day.color]}">${day.day} · EXAMPLE PLACEMENT</p><h3>${day.title}</h3></div><p>${day.description}</p>`;
-}
-$('#training-week').innerHTML=TRAINING.map((day,i)=>`<button class="training-day" style="--day-color:${COLORS[day.color]}" data-training="${i}" aria-pressed="${i===0}"><small>${day.day}</small><strong>${day.name}</strong><span>${day.meta}</span></button>`).join('');
-$$('.training-day').forEach(button=>button.addEventListener('click',()=>selectTraining(Number(button.dataset.training))));
+$('#training-week').innerHTML=TRAINING.map(day=>`<details class="training-day" style="--day-color:${COLORS[day.color]}"><summary><small>${day.day}</small><strong>${day.name}</strong><span>${day.meta}</span><span class="expand" aria-hidden="true">+</span></summary><div class="training-detail"><h3>${day.title}</h3><p>${day.description}</p></div></details>`).join('');
 
 // Deep-note HTML is curated static source content, never user input.
 $('#deeper-grid').innerHTML=DEEP_NOTES.map(note=>`<details class="deep-note${note.featured?' featured':''}" id="note-${note.id}"${note.featured?' open':''}><summary><span class="pill ${note.tone}">${note.label}</span><h3>${note.title}</h3><p class="deep-preview">${note.preview}</p><span class="expand" aria-hidden="true">+</span></summary><div class="deep-content">${note.body.map(paragraph=>paragraph.startsWith('<div')?paragraph:`<p>${paragraph}</p>`).join('')}<p class="source-line">${note.source}${note.links?'<br>'+note.links.map(([label,url])=>`<a href="${url}" target="_blank" rel="noopener">${label} ↗</a>`).join(' · '):''}</p></div></details>`).join('');
+$('#episode-grid').innerHTML=RECENT_EPISODES.map(episode=>`<details class="episode-card" id="episode-${episode.id}" style="--episode-color:${COLORS[episode.color]};--card-color:${COLORS[episode.color]}"><summary><div class="episode-meta"><span class="pill">${escapeHtml(episode.format)}</span><time datetime="${episode.date}">${episode.displayDate}</time></div><p class="episode-guest">${escapeHtml(episode.guest)} · ${escapeHtml(episode.topic)}</p><h3>${escapeHtml(episode.title)}</h3><p>${escapeHtml(episode.summary)}</p><span class="expand" aria-hidden="true">+</span><span class="card-action"><span class="when-closed">Explore 3 takeaways</span><span class="when-open">Close takeaways</span></span></summary><div class="episode-body"><p class="eyebrow">TRY THIS · PRACTICAL SYNTHESIS</p><ol class="episode-steps">${episode.steps.map(([title,body],i)=>`<li><h4>0${i+1} / ${escapeHtml(title)}</h4><p>${escapeHtml(body)}</p></li>`).join('')}</ol><p class="episode-check"><strong>Evidence & context</strong>${escapeHtml(episode.check)}</p><p class="fine-print">${escapeHtml(episode.chapters)}. Chapter times can shift with inserted ads.</p><p class="episode-links">${episode.links.map(([label,url])=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} ↗</a>`).join('')}</p></div></details>`).join('');
+function revealLinkedCard(id){
+  let target=document.getElementById(id);
+  while(target){
+    if(target.tagName==='DETAILS') target.open=true;
+    target=target.parentElement;
+  }
+}
+function revealHashCard(){revealLinkedCard(location.hash.slice(1));}
+window.addEventListener('hashchange',revealHashCard);
+document.addEventListener('click',event=>{
+  const link=event.target.closest('a[href^="#"]');
+  if(link && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) revealLinkedCard(link.getAttribute('href').slice(1));
+});
+revealHashCard();
 $('#source-links').innerHTML=SOURCES.map(source=>`<a href="${source.url}" target="_blank" rel="noopener">${source.title} ↗<small>${source.detail}</small></a>`).join('');
 
 let questionIndex=0;
@@ -209,6 +225,9 @@ function renderQuestion(){
 }
 $('#quiz-prev').addEventListener('click',()=>{if(questionIndex>0){questionIndex--;renderQuestion();}});
 $('#quiz-next').addEventListener('click',()=>{if(questionIndex<QUIZ.length-1){questionIndex++;renderQuestion();}});
+let starterBeforePrint=null;
+window.addEventListener('beforeprint',()=>{const plan=$('.starter-plan');starterBeforePrint=plan.open;plan.open=true;});
+window.addEventListener('afterprint',()=>{if(starterBeforePrint!==null) $('.starter-plan').open=starterBeforePrint;starterBeforePrint=null;});
 $('#print-guide').addEventListener('click',()=>window.print());
 
 // Mark the current section without trapping normal anchor navigation.
@@ -229,7 +248,7 @@ if('IntersectionObserver' in window){
 
 renderProtocols();
 selectPhase('morning');
-selectTraining(0);
+
 setMotion(motionPaused);
 updateArousal();
 renderQuestion();

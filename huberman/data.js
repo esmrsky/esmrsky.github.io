@@ -299,3 +299,213 @@ const SOURCES = [
   {title:'Vitamin D: intakes, upper limits, and risks',detail:'NIH Office of Dietary Supplements · clinical reference',url:'https://ods.od.nih.gov/factsheets/VITAMIND/HealthProfessional/'},
   {title:'Unapproved GLP-1 products and retatrutide',detail:'FDA · regulatory and safety reference',url:'https://www.fda.gov/drugs/drug-alerts-and-statements/fdas-concerns-unapproved-glp-1-drugs-used-weight-loss'}
 ];
+
+// Recent episode notes: practical synthesis; replay dates refer to the clip release.
+const RECENT_EPISODES = [
+  {
+    "id": "meaning",
+    "color": "lilac",
+    "icon": "spark",
+    "topic": "Meaning & motivation",
+    "guest": "Tony Robbins",
+    "date": "2026-08-28",
+    "displayDate": "28 AUG 2026",
+    "format": "Replay clip",
+    "title": "Make room for a meaningful life.",
+    "summary": "Achievement can leave connection underfed. Robbins uses his six-needs framework to examine what is driving your choices.",
+    "chapters": "Replay: 00:00–08:55; 16:30–19:35",
+    "steps": [
+      [
+        "Map your current priorities",
+        "Consider certainty, variety, significance, connection, growth, and contribution. Which two get most of your time? Which two would you like to prioritize?"
+      ],
+      [
+        "Change one way you meet a need",
+        "If recognition sends you scrolling or comparing, try a direct conversation or useful contribution. Choose a behavior you can actually repeat."
+      ],
+      [
+        "Put meaning on the calendar",
+        "Our exercise: schedule one moment of connection and one small act of service this week. Reflect on how they felt, without turning them into another performance score."
+      ]
+    ],
+    "check": "This is a coaching framework and reflection exercise, not a validated diagnostic model. Difficult circumstances and trauma are not explained away by choosing different priorities.",
+    "links": [
+      [
+        "Listen to the replay",
+        "https://podcasts.apple.com/ca/podcast/most-replayed-moment-tony-robbins-reveals-the-key-to/id1291423644?i=1000786433892"
+      ],
+      [
+        "Episode transcript",
+        "https://podscripts.co/podcasts/the-diary-of-a-ceo-with-steven-bartlett/most-replayed-moment-tony-robbins-reveals-the-key-to-a-meaningful-life"
+      ],
+      [
+        "Robbins’s framework",
+        "https://live.tonyrobbins.com/blog/do-you-need-to-feel-significant"
+      ]
+    ]
+  },
+  {
+    "id": "parenthood",
+    "color": "mint",
+    "icon": "circle",
+    "topic": "Relationships & parenthood",
+    "guest": "Dr Darby Saxbe",
+    "date": "2026-08-24",
+    "displayDate": "24 AUG 2026",
+    "format": "Full conversation",
+    "title": "Prepare the partnership, too.",
+    "summary": "Saxbe’s parenthood conversation offers concrete ways to share care, build support, and protect connection during a major life change.",
+    "chapters": "01:05:51–01:15:08 · care, support, communication",
+    "steps": [
+      [
+        "Make the division of care visible",
+        "Before a baby arrives, list recurring jobs and agree who owns them. Revisit the plan after birth as feeding, leave, and recovery change what is realistic."
+      ],
+      [
+        "Build support beyond your partner",
+        "Name people or local parent groups you can turn to. Make help specific: a meal, an errand, a walk together, or a chance to rest."
+      ],
+      [
+        "Keep learning each other",
+        "Take hands-on opportunities to bond with the baby. Our exercise: a brief weekly check-in about what feels hard and one adjustment that would help each person."
+      ]
+    ],
+    "check": "These are relationship practices adapted from the conversation, not a guaranteed outcome. Brain-volume findings do not, by themselves, establish cognitive decline or prove improved efficiency.",
+    "links": [
+      [
+        "Episode & transcript",
+        "https://podscripts.co/podcasts/the-diary-of-a-ceo-with-steven-bartlett/the-scientist-who-scans-fathers-brains-parenthood-shrinks-your-brain-and-drops-testosterone-25"
+      ],
+      [
+        "Saxbe’s research lab",
+        "https://dornsife.usc.edu/nestlab/"
+      ]
+    ]
+  },
+  {
+    "id": "recovery",
+    "color": "blue",
+    "icon": "moon",
+    "topic": "Sleep & recovery",
+    "guest": "Dr Kristen Holmes",
+    "date": "2026-08-21",
+    "displayDate": "21 AUG 2026",
+    "format": "Replay clip",
+    "title": "Make recovery more repeatable.",
+    "summary": "The useful thread in this replay: sleep quality depends on everyday timing and habits as well as time in bed.",
+    "chapters": "Replay: 06:16–15:50; 18:26–20:21",
+    "steps": [
+      [
+        "Anchor a realistic sleep schedule",
+        "Keep bed and wake times as consistent as your responsibilities allow, including weekends. Preserve enough sleep opportunity; consistency does not replace duration."
+      ],
+      [
+        "Move caffeine earlier",
+        "Holmes suggests avoiding caffeine within 8–12 hours of sleep. Treat that as her suggestion, not a universal cutoff. Start by moving afternoon caffeine earlier and note any change."
+      ],
+      [
+        "Notice alcohol’s effect",
+        "Avoid alcohol near bedtime. Our exercise: record bedtime, awakenings, caffeine timing, and morning energy for a week to spot patterns without chasing a wearable score."
+      ]
+    ],
+    "check": "CDC supports regular schedules and avoiding late caffeine and bedtime alcohol; adults 18–60 generally need at least 7 hours. The replay’s sweeping lifespan and mental-health statistics are not used as established facts here.",
+    "links": [
+      [
+        "Listen to the replay",
+        "https://podcasts.apple.com/ca/podcast/most-replayed-moment-better-sleep-doesnt-always-mean/id1291423644?i=1000784723071"
+      ],
+      [
+        "Episode transcript",
+        "https://podscripts.co/podcasts/the-diary-of-a-ceo-with-steven-bartlett/most-replayed-moment-better-sleep-doesnt-always-mean-longer-sleep-fix-these-habits-today"
+      ],
+      [
+        "CDC sleep guidance",
+        "https://www.cdc.gov/sleep/about/index.html"
+      ]
+    ]
+  },
+  {
+    "id": "fear",
+    "color": "amber",
+    "icon": "steps",
+    "topic": "Confidence & fear",
+    "guest": "Alex Honnold",
+    "date": "2026-08-14",
+    "displayDate": "14 AUG 2026",
+    "format": "Replay clip",
+    "title": "Practice the manageable version.",
+    "summary": "Honnold describes years of preparation and repeated experience. His account of public speaking offers a useful everyday application.",
+    "chapters": "Replay: 02:38–08:10 · practice and fear",
+    "steps": [
+      [
+        "Choose a safe, specific situation",
+        "Try asking a question in a meeting or speaking to a small group. Separate ordinary discomfort from an activity that is actually dangerous."
+      ],
+      [
+        "Build a small ladder",
+        "Our example: rehearse aloud → explain to a friend → speak briefly to a group. Begin with a manageable step and repeat it before increasing difficulty."
+      ],
+      [
+        "Compare the prediction with the outcome",
+        "Write what you expected, what happened, and what you learned. Progress means building experience; it does not require feeling completely fearless."
+      ]
+    ],
+    "check": "NHS guidance supports gradually facing safe feared situations. Honnold’s experience is not a clinical trial or a reason to copy high-risk climbing. Seek qualified support for severe anxiety or trauma-related fears.",
+    "links": [
+      [
+        "Listen to the replay",
+        "https://podcasts.apple.com/my/podcast/most-replayed-moment-fear-is-a-skill-you-can-train/id1291423644?i=1000783252101"
+      ],
+      [
+        "Episode transcript",
+        "https://podscripts.co/podcasts/the-diary-of-a-ceo-with-steven-bartlett/most-replayed-moment-fear-is-a-skill-you-can-train-lessons-from-the-worlds-greatest-climber"
+      ],
+      [
+        "NHS: facing fears",
+        "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/facing-your-fears/"
+      ]
+    ]
+  },
+  {
+    "id": "sleep-quality",
+    "color": "lime",
+    "icon": "focus",
+    "topic": "Sleep quality & nutrition",
+    "guest": "Dr Andy Galpin",
+    "date": "2026-08-13",
+    "displayDate": "13 AUG 2026",
+    "format": "Full conversation",
+    "title": "Investigate the bottleneck.",
+    "summary": "More tracking and more supplements can miss the real problem. Galpin discusses sleep disorders, wearable limits, and basic nutrition.",
+    "chapters": "08:33–20:30 · sleep; 01:02:35–01:13:55 · cholesterol",
+    "steps": [
+      [
+        "Bring persistent symptoms to a clinician",
+        "Frequent loud snoring, witnessed breathing pauses, gasping, or persistent daytime sleepiness deserve assessment. A questionnaire or wearable can flag a concern; neither replaces diagnosis."
+      ],
+      [
+        "Use the tracker as a clue",
+        "Look at broad patterns alongside how you feel. Avoid treating a single night’s deep-sleep or REM estimate as a precise measurement or a verdict on your health."
+      ],
+      [
+        "Add a food source of fibre",
+        "Try oats, beans, lentils, vegetables, or whole grains in a usual meal. The companion corrects his approximate fibre target to 14 g per 1,000 kcal; increase gradually as tolerated."
+      ]
+    ],
+    "check": "The research companion qualifies wearable accuracy by device and study. Fibre can modestly help cholesterol; it does not replace indicated medication. Sleep symptoms require clinical evaluation, not a supplement stack.",
+    "links": [
+      [
+        "Listen to the episode",
+        "https://podcasts.apple.com/de/podcast/fat-loss-scientist-its-easy-to-lose-weight-but-heres/id1291423644?i=1000783070620"
+      ],
+      [
+        "DOAC research · pp. 3–7, 19–20",
+        "https://stevenbartlett.com/wp-content/uploads/2026/08/DOAC-Andy-Galpin-Independent-Research-Further-Reading.pdf"
+      ],
+      [
+        "NIH: sleep-apnea symptoms",
+        "https://www.nhlbi.nih.gov/health/sleep-apnea/symptoms"
+      ]
+    ]
+  }
+];
