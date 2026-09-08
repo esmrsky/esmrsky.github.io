@@ -54,6 +54,7 @@ function renderProtocols(){
 }
 // Capture open states before a search re-renders the library (toggle events are queued).
 function refreshProtocols(){
+  finishCardAnimations();
   $$('.protocol-card').forEach(card=>{if(card.open) expandedProtocols.add(card.dataset.protocolId);else expandedProtocols.delete(card.dataset.protocolId);});
   renderProtocols();
 }
@@ -226,7 +227,7 @@ function renderQuestion(){
 $('#quiz-prev').addEventListener('click',()=>{if(questionIndex>0){questionIndex--;renderQuestion();}});
 $('#quiz-next').addEventListener('click',()=>{if(questionIndex<QUIZ.length-1){questionIndex++;renderQuestion();}});
 let starterBeforePrint=null;
-window.addEventListener('beforeprint',()=>{const plan=$('.starter-plan');starterBeforePrint=plan.open;plan.open=true;});
+window.addEventListener('beforeprint',()=>{finishCardAnimations();const plan=$('.starter-plan');starterBeforePrint=plan.open;plan.open=true;});
 window.addEventListener('afterprint',()=>{if(starterBeforePrint!==null) $('.starter-plan').open=starterBeforePrint;starterBeforePrint=null;});
 $('#print-guide').addEventListener('click',()=>window.print());
 
@@ -253,3 +254,46 @@ setMotion(motionPaused);
 updateArousal();
 renderQuestion();
 syncProtocolHash();
+
+// Animate the card's measured height in both directions, including quick reversals.
+const cardAnimations=new WeakMap();
+function animateCard(card){
+  const previous=cardAnimations.get(card);
+  const expanding=previous?!previous.expanding:!card.open;
+  const from=card.getBoundingClientRect().height;
+  previous?.animation.cancel();
+  card.style.height='';
+  card.open=expanding;
+  const to=card.getBoundingClientRect().height;
+  card.open=true;
+  const summary=card.firstElementChild;
+  summary.setAttribute('aria-expanded',String(expanding));
+  card.classList.add('card-transitioning');
+  const animation=card.animate([{height:`${from}px`},{height:`${to}px`}],{
+    duration:Math.min(440,280+Math.abs(to-from)*.12),easing:'cubic-bezier(.22,1,.36,1)',fill:'both'
+  });
+  const state={animation,expanding,finish(){
+    if(cardAnimations.get(card)!==state) return;
+    card.open=expanding;
+    animation.cancel();
+    card.classList.remove('card-transitioning');
+    summary.removeAttribute('aria-expanded');
+    cardAnimations.delete(card);
+  }};
+  cardAnimations.set(card,state);
+  animation.onfinish=state.finish;
+}
+document.addEventListener('click',event=>{
+  const summary=event.target.closest('summary');
+  const card=summary?.parentElement;
+  if(!card || card.tagName!=='DETAILS' || event.defaultPrevented || event.target.closest('a,button,input')) return;
+  if(!card.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('motion-paused')) return;
+  event.preventDefault();
+  animateCard(card);
+});
+function finishCardAnimations(){
+  $$('details').forEach(card=>cardAnimations.get(card)?.finish());
+}
+window.addEventListener('resize',finishCardAnimations);
+$$('.motion-control').forEach(button=>button.addEventListener('click',finishCardAnimations));
+window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',finishCardAnimations);
