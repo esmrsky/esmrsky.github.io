@@ -14,6 +14,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#F3EFEC" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14111B" media="(prefers-color-scheme: dark)">
+<script>document.documentElement.className+=" js"</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -68,6 +69,26 @@ a{color:var(--wine-ink);text-decoration-thickness:1px;text-underline-offset:3px}
 a:hover{text-decoration-thickness:2px}
 b,strong{font-weight:600}
 q{font-style:normal}
+/* Every passage on the page is a slot the translation picker fills. What is baked
+   into the markup is the King James, which is public domain: it is what a reader
+   without JavaScript gets, and the fallback when the API can't be reached. With
+   JavaScript on, the slot is a quiet placeholder until the chosen translation
+   lands, so nobody reads a translation they didn't pick. */
+html.js .lv:not(.is-live),html.js .vtext:not(.is-live){
+  color:transparent;background:var(--sunk);border-radius:.32em;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  animation:lvwait 1.6s ease-in-out infinite}
+html.js .lv:not(.is-live)::selection,html.js .vtext:not(.is-live)::selection{background:transparent}
+html.js q.lv:empty::before{content:"Reading\2026"}
+@keyframes lvwait{0%,100%{opacity:.5}50%{opacity:.8}}
+@media (prefers-reduced-motion: reduce){html.js .lv:not(.is-live),html.js .vtext:not(.is-live){animation:none}}
+.lv-off{color:var(--ink-3);font-family:var(--display);font-size:.86rem}
+/* When a translation can't be fetched the King James stands in, and says so. */
+.lv-mark{font-family:var(--display);font-size:.68em;font-weight:700;letter-spacing:.03em;color:var(--wine-ink);vertical-align:.32em;white-space:nowrap}
+/* The reference after a written-out passage. It used to be a parenthesis before
+   the closing full stop; now the verse brings its own punctuation. */
+cite.rr{font-style:normal;font-family:var(--display);font-size:.82rem;font-weight:600;color:var(--ink-3);white-space:nowrap}
+cite.rr::before{content:"\2014\00a0"}
 :focus-visible{outline:2.5px solid var(--wine);outline-offset:3px;border-radius:4px}
 ::selection{background:var(--gold-wash);color:var(--ink)}
 [id]{scroll-margin-top:76px}
@@ -230,12 +251,15 @@ h2.h{font-weight:700;font-size:clamp(1.95rem,4.6vw,3.15rem);letter-spacing:-.025
 .pair{display:grid;grid-template-columns:minmax(0,1fr);gap:14px 28px;margin:.3em 0 .9em}
 .pair h4{font-size:1rem;font-weight:650;margin-bottom:.35em}
 .pair ul{list-style:none;padding:0!important;margin:0}
-.pair li{padding:.4em 0;border-top:1px solid var(--hair-2);margin:0}
+.pair li{display:flex;flex-direction:column;gap:.2em;padding:.55em 0;border-top:1px solid var(--hair-2);margin:0}
+.pair li .g{font-weight:650}
+.pair li .lv{font-family:var(--read);font-size:.97rem;line-height:1.5}
 @media (min-width:640px){.pair{grid-template-columns:1fr 1fr}}
 .pair .from h4{color:var(--dusk-ink)} .pair .to h4{color:var(--gold-ink)}
 
 .given{list-style:none;margin:clamp(20px,3vw,28px) 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:0 clamp(24px,4vw,40px);border-top:2px solid var(--gold)}
-.given li{display:flex;justify-content:space-between;align-items:baseline;gap:6px 14px;flex-wrap:wrap;padding:11px 0;border-bottom:1px solid var(--hair)}
+.given li{display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:13px 0;border-bottom:1px solid var(--hair)}
+.given li .lv{font-family:var(--read);font-size:1rem;line-height:1.5;color:var(--ink-2)}
 .given .g{font-family:var(--display);font-weight:600;font-size:1.04rem;line-height:1.3}
 @media (min-width:720px){.given{grid-template-columns:1fr 1fr}}
 
@@ -252,9 +276,11 @@ h2.h{font-weight:700;font-size:clamp(1.95rem,4.6vw,3.15rem);letter-spacing:-.025
 .lbar .do{background:var(--wine-wash);color:var(--ink)}
 .letter p{margin:6px 0 0;font-size:1rem;color:var(--ink-2)}
 
-.names{display:flex;flex-wrap:wrap;gap:8px;margin:.3em 0 .6em;padding:0;list-style:none}
-.names li{margin:0;padding:8px 14px;border-radius:999px;background:var(--panel);border:1px solid var(--hair);font-family:var(--display);font-weight:650;font-size:1rem;line-height:1.25}
-.names li .r{margin-left:6px}
+.names{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:.3em 0 .6em;padding:0;list-style:none}
+@media (min-width:640px){.names{grid-template-columns:1fr 1fr}}
+.names li{display:flex;flex-direction:column;gap:5px;margin:0;padding:11px 15px;border-radius:12px;background:var(--panel);border:1px solid var(--hair);line-height:1.4}
+.names li .g{font-family:var(--display);font-weight:650;font-size:1rem}
+.names li .lv{font-family:var(--read);font-size:.97rem;color:var(--ink-2)}
 
 .arrows{display:grid;gap:12px;margin:.3em 0 1em}
 .arrow-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
@@ -445,7 +471,7 @@ footer.foot .home{margin-top:10px}
         <rect class="sill" x="72" y="312" width="156" height="9"/>
         <path class="spill" d="M98 321 H202 L298 390 H2 Z" fill="url(#gSpill)"/>
       </svg>
-      <figcaption><q data-v="John 10:9">I am the door: by me if any man enter in, he shall be saved</q><span class="r">John 10:9</span></figcaption>
+      <figcaption><q class="lv esv-skip" data-verse="John 10:9">I am the door: by me if any man enter in, he shall be saved</q><span class="r">John 10:9</span></figcaption>
     </figure>
   </div>
 </section>
@@ -467,64 +493,64 @@ footer.foot .home{margin-top:10px}
         <div class="row still">
           <div class="row-l">God’s love</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">Loved. <span class="still-tag">Never moves</span></span><span class="note"><q data-v="Romans 5:8">while we were yet sinners, Christ died for us</q> Romans 5:8</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">Loved. <span class="still-tag">Never moves</span></span><span class="note"><q data-v="1 John 3:1">Behold, what manner of love the Father hath bestowed upon us</q> 1 John 3:1</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">Loved. <span class="still-tag">Never moves</span></span><span class="note"><q class="lv esv-skip" data-verse="Romans 5:8">while we were yet sinners, Christ died for us</q> Romans 5:8</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">Loved. <span class="still-tag">Never moves</span></span><span class="note"><q class="lv esv-skip" data-verse="1 John 3:1">Behold, what manner of love the Father hath bestowed upon us</q> 1 John 3:1</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">Your sins</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">Paid for.</span><span class="note">He died <q data-v="1 John 2:2">for the sins of the whole world</q> 1 John 2:2</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">Paid for, and forgiven.</span><span class="note"><q data-v="Colossians 2:13">having forgiven you all trespasses</q> Colossians 2:13</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">Paid for.</span><span class="note"><q class="lv esv-skip" data-verse="1 John 2:2">for the sins of the whole world</q> 1 John 2:2</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">Paid for, and forgiven.</span><span class="note"><q class="lv esv-skip" data-verse="Colossians 2:13">having forgiven you all trespasses</q> Colossians 2:13</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">Your standing</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">Condemned already, for one reason.</span><span class="note"><q data-v="John 3:18">because he hath not believed</q> John 3:18</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">No condemnation.</span><span class="note"><q data-v="Romans 8:1">There is therefore now no condemnation to them which are in Christ Jesus</q> Romans 8:1</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">Condemned already, for one reason.</span><span class="note"><q class="lv esv-skip" data-verse="John 3:18">because he hath not believed</q> John 3:18</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">No condemnation.</span><span class="note"><q class="lv esv-skip" data-verse="Romans 8:1">There is therefore now no condemnation to them which are in Christ Jesus</q> Romans 8:1</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">Your life</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">Dead in sins.</span><span class="note"><q data-v="Ephesians 2:1">dead in trespasses and sins</q> Ephesians 2:1</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">Alive.</span><span class="note"><q data-v="John 5:24">is passed from death unto life</q> John 5:24</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">Dead in sins.</span><span class="note"><q class="lv esv-skip" data-verse="Ephesians 2:1">dead in trespasses and sins</q> Ephesians 2:1</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">Alive.</span><span class="note"><q class="lv esv-skip" data-verse="John 5:24">is passed from death unto life</q> John 5:24</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">Your nature</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">In Adam.</span><span class="note"><q data-v="1 Corinthians 15:22">in Adam all die</q> 1 Corinthians 15:22</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">A new creature.</span><span class="note"><q data-v="2 Corinthians 5:17">old things are passed away</q> 2 Corinthians 5:17</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">In Adam.</span><span class="note"><q class="lv esv-skip" data-verse="1 Corinthians 15:22">in Adam all die</q> 1 Corinthians 15:22</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">A new creature.</span><span class="note"><q class="lv esv-skip" data-verse="2 Corinthians 5:17">old things are passed away</q> 2 Corinthians 5:17</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">Your name</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">His offspring.</span><span class="note"><q data-v="Acts 17:28">For we are also his offspring</q> Acts 17:28</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">His child.</span><span class="note"><q data-v="John 1:12">to them gave he power to become the sons of God</q> John 1:12</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">His offspring.</span><span class="note"><q class="lv esv-skip" data-verse="Acts 17:28">For we are also his offspring</q> Acts 17:28</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">His child.</span><span class="note"><q class="lv esv-skip" data-verse="John 1:12">to them gave he power to become the sons of God</q> John 1:12</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">How he sees you</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">A son a long way off, watched for.</span><span class="note"><q data-v="Luke 15:20">when he was yet a great way off, his father saw him</q> Luke 15:20</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">In his Son.</span><span class="note"><q data-v="1 John 4:17">as he is, so are we in this world</q> 1 John 4:17</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">A son a long way off, watched for.</span><span class="note"><q class="lv esv-skip" data-verse="Luke 15:20">when he was yet a great way off, his father saw him</q> Luke 15:20</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">In his Son.</span><span class="note"><q class="lv esv-skip" data-verse="1 John 4:17">as he is, so are we in this world</q> 1 John 4:17</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">What stands between</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">One thing: not coming.</span><span class="note"><q data-v="John 5:40">ye will not come to me, that ye might have life</q> John 5:40</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">Nothing.</span><span class="note">Nothing <q data-v="Romans 8:39">shall be able to separate us from the love of God</q> Romans 8:39</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">One thing: not coming.</span><span class="note"><q class="lv esv-skip" data-verse="John 5:40">ye will not come to me, that ye might have life</q> John 5:40</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">Nothing.</span><span class="note"><q class="lv esv-skip" data-verse="Romans 8:39">shall be able to separate us from the love of God</q> Romans 8:39</span></div>
           </div>
         </div>
         <div class="row">
           <div class="row-l">His word to you</div>
           <div class="cell">
-            <div class="side out"><span class="tag">Outside</span><span class="val">Come.</span><span class="note"><q data-v="2 Corinthians 5:20">be ye reconciled to God</q> 2 Corinthians 5:20</span></div>
-            <div class="side in"><span class="tag">Through</span><span class="val">Go.</span><span class="note"><q data-v="2 Corinthians 5:20">we are ambassadors for Christ</q> 2 Corinthians 5:20</span></div>
+            <div class="side out"><span class="tag">Outside</span><span class="val">Come.</span><span class="note"><q class="lv esv-skip" data-verse="2 Corinthians 5:20">be ye reconciled to God</q> 2 Corinthians 5:20</span></div>
+            <div class="side in"><span class="tag">Through</span><span class="val">Go.</span><span class="note"><q class="lv esv-skip" data-verse="Matthew 28:19">Go ye therefore, and teach all nations</q> Matthew 28:19</span></div>
           </div>
         </div>
       </div>
@@ -564,7 +590,7 @@ footer.foot .home{margin-top:10px}
       <h2 class="h">What is salvation?</h2>
       <div class="top">
         <p class="lede">The Greek word is <span class="gk">sōzō</span>: to rescue, to make safe, to heal. It’s the word for pulling someone out of the sea.</p>
-        <p>The name Jesus is the Hebrew <span class="gk">Yeshua</span>, a short form of <span class="gk">Yehoshua</span>: “the LORD saves.” The angel said what from: <q data-v="Matthew 1:21">he shall save his people from their sins</q> (Matthew 1:21). Salvation isn’t a status upgrade, or a ticket. It’s being pulled out of something you couldn’t get out of, by someone who could.</p>
+        <p>The name Jesus is the Hebrew <span class="gk">Yeshua</span>, a short form of <span class="gk">Yehoshua</span>: “the LORD saves.” The angel said what from: <q class="lv esv-skip" data-verse="Matthew 1:21">he shall save his people from their sins</q> <cite class="rr">Matthew 1:21</cite> Salvation isn’t a status upgrade, or a ticket. It’s being pulled out of something you couldn’t get out of, by someone who could.</p>
       </div>
       <div class="drawers">
         <details class="deep" id="from-to">
@@ -573,18 +599,18 @@ footer.foot .home{margin-top:10px}
             <div class="m t"><span class="m-l">The text</span>
               <div class="pair">
                 <div class="from"><h4>Rescued from</h4><ul>
-                  <li>The debt of sin <span class="r">Colossians 2:14</span></li>
-                  <li>The power of sin <span class="r">Romans 6:6, 6:14</span></li>
-                  <li>Death <span class="r">Romans 6:23</span></li>
-                  <li>Wrath <span class="r">Romans 5:9</span></li>
-                  <li>The power of darkness <span class="r">Colossians 1:13</span></li>
+                  <li><span class="g">The debt of sin</span><q class="lv esv-skip" data-verse="Colossians 2:14"></q><span class="r">Colossians 2:14</span></li>
+                  <li><span class="g">The power of sin</span><q class="lv esv-skip" data-verse="Romans 6:6"></q><span class="r">Romans 6:6, 6:14</span></li>
+                  <li><span class="g">Death</span><q class="lv esv-skip" data-verse="Romans 6:23"></q><span class="r">Romans 6:23</span></li>
+                  <li><span class="g">Wrath</span><q class="lv esv-skip" data-verse="Romans 5:9"></q><span class="r">Romans 5:9</span></li>
+                  <li><span class="g">The power of darkness</span><q class="lv esv-skip" data-verse="Colossians 1:13"></q><span class="r">Colossians 1:13</span></li>
                 </ul></div>
                 <div class="to"><h4>Brought into</h4><ul>
-                  <li>Life <span class="r">John 5:24</span></li>
-                  <li>Righteousness <span class="r">2 Corinthians 5:21</span></li>
-                  <li>Peace with God <span class="r">Romans 5:1</span></li>
-                  <li>The family <span class="r">Galatians 4:6-7</span></li>
-                  <li>The kingdom of his Son <span class="r">Colossians 1:13</span></li>
+                  <li><span class="g">Life</span><q class="lv esv-skip" data-verse="John 5:24"></q><span class="r">John 5:24</span></li>
+                  <li><span class="g">Righteousness</span><q class="lv esv-skip" data-verse="2 Corinthians 5:21"></q><span class="r">2 Corinthians 5:21</span></li>
+                  <li><span class="g">Peace with God</span><q class="lv esv-skip" data-verse="Romans 5:1"></q><span class="r">Romans 5:1</span></li>
+                  <li><span class="g">The family</span><q class="lv esv-skip" data-verse="Galatians 4:6-7"></q><span class="r">Galatians 4:6-7</span></li>
+                  <li><span class="g">The kingdom of his Son</span><q class="lv esv-skip" data-verse="Colossians 1:13"></q><span class="r">Colossians 1:13</span></li>
                 </ul></div>
               </div>
               <p>Both lists come from a handful of letters. “Saved” isn’t a mood. It has a from and a to.</p>
@@ -595,9 +621,9 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Three tenses of one rescue</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">Saved, being saved, will be saved. Most of the worry lives in mixing them up.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>You <b>have been</b> saved: <q data-v="Ephesians 2:8">by grace are ye saved through faith</q> (Ephesians 2:8). In Greek that’s a perfect tense: done, and still standing.</p>
-              <p>You <b>are being</b> saved: Paul speaks of <q data-v="1 Corinthians 1:18">us which are saved</q> (1 Corinthians 1:18), and the Greek is a present participle, “us who are being saved.”</p>
-              <p>You <b>will be</b> saved: <q data-v="Romans 5:9">we shall be saved from wrath through him</q> (Romans 5:9).</p>
+              <p>You <b>have been</b> saved: <q class="lv esv-skip" data-verse="Ephesians 2:8">by grace are ye saved through faith</q> <cite class="rr">Ephesians 2:8</cite> In Greek that’s a perfect tense: done, and still standing.</p>
+              <p>You <b>are being</b> saved: <q class="lv esv-skip" data-verse="1 Corinthians 1:18">us which are saved</q> <cite class="rr">1 Corinthians 1:18</cite> Where Paul says “saved” there, the Greek is a present participle: “us who are being saved.”</p>
+              <p>You <b>will be</b> saved: <q class="lv esv-skip" data-verse="Romans 5:9">we shall be saved from wrath through him</q> <cite class="rr">Romans 5:9</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>The past tense is the one that answers “am I saved?” The present tense is your soul being renewed, which is unfinished in everyone. The future tense is your body raised. Most people who doubt their salvation are looking at the middle tense and asking it a question only the first one can answer.</p>
@@ -609,7 +635,7 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">The word in Jesus’ mouth</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">He used it for things that arrived that day.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>To a woman who had brought nothing but tears and ointment: <q data-v="Luke 7:50">Thy faith hath saved thee; go in peace</q> (Luke 7:50). To a tax collector who had just climbed down from a tree: <q data-v="Luke 19:9">This day is salvation come to this house</q> (Luke 19:9). And his own summary of why he came: <q data-v="Luke 19:10">to seek and to save that which was lost</q> (Luke 19:10).</p>
+              <p>To a woman who had brought nothing but tears and ointment: <q class="lv esv-skip" data-verse="Luke 7:50">Thy faith hath saved thee; go in peace</q> <cite class="rr">Luke 7:50</cite> To a tax collector who had just climbed down from a tree: <q class="lv esv-skip" data-verse="Luke 19:9">This day is salvation come to this house</q> <cite class="rr">Luke 19:9</cite> And his own summary of why he came: <q class="lv esv-skip" data-verse="Luke 19:10">to seek and to save that which was lost</q> <cite class="rr">Luke 19:10</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>The same verb heals a blind man (Mark 10:52) and forgives a sinner. In his mouth, salvation wasn’t a course you enrolled in. It arrived.</p>
@@ -632,26 +658,26 @@ footer.foot .home{margin-top:10px}
         <p>None of them are feelings. Almost all of them are written in the past tense. You don’t grow into them. You’re told them.</p>
       </div>
       <ul class="given">
-        <li><span class="g">Born of God</span><span class="r">John 1:13</span></li>
-        <li><span class="g">A new creature</span><span class="r">2 Corinthians 5:17</span></li>
-        <li><span class="g">Justified, declared righteous</span><span class="r">Romans 5:1</span></li>
-        <li><span class="g">The righteousness of God in him</span><span class="r">2 Corinthians 5:21</span></li>
-        <li><span class="g">Forgiven all trespasses</span><span class="r">Colossians 2:13</span></li>
-        <li><span class="g">No condemnation</span><span class="r">Romans 8:1</span></li>
-        <li><span class="g">Adopted: you call him Abba</span><span class="r">Romans 8:15</span></li>
-        <li><span class="g">Sealed with the Spirit</span><span class="r">Ephesians 1:13</span></li>
-        <li><span class="g">The Spirit lives in you</span><span class="r">1 Corinthians 6:19</span></li>
-        <li><span class="g">One spirit with the Lord</span><span class="r">1 Corinthians 6:17</span></li>
-        <li><span class="g">Dead to sin, alive to God</span><span class="r">Romans 6:11</span></li>
-        <li><span class="g">Moved into the kingdom of his Son</span><span class="r">Colossians 1:13</span></li>
-        <li><span class="g">Seated with him</span><span class="r">Ephesians 2:6</span></li>
-        <li><span class="g">Hidden with Christ in God</span><span class="r">Colossians 3:3</span></li>
-        <li><span class="g">A saint</span><span class="r">1 Corinthians 1:2</span></li>
-        <li><span class="g">Light, not just in the light</span><span class="r">Ephesians 5:8</span></li>
-        <li><span class="g">A partaker of the divine nature</span><span class="r">2 Peter 1:4</span></li>
-        <li><span class="g">Passed from death to life</span><span class="r">John 5:24</span></li>
-        <li><span class="g">Accepted in the beloved</span><span class="r">Ephesians 1:6</span></li>
-        <li><span class="g">Kept</span><span class="r">1 Peter 1:5</span></li>
+        <li><span class="g">Born of God</span><q class="lv esv-skip" data-verse="John 1:13"></q><span class="r">John 1:13</span></li>
+        <li><span class="g">A new creature</span><q class="lv esv-skip" data-verse="2 Corinthians 5:17"></q><span class="r">2 Corinthians 5:17</span></li>
+        <li><span class="g">Justified, declared righteous</span><q class="lv esv-skip" data-verse="Romans 5:1"></q><span class="r">Romans 5:1</span></li>
+        <li><span class="g">The righteousness of God in him</span><q class="lv esv-skip" data-verse="2 Corinthians 5:21"></q><span class="r">2 Corinthians 5:21</span></li>
+        <li><span class="g">Forgiven all trespasses</span><q class="lv esv-skip" data-verse="Colossians 2:13"></q><span class="r">Colossians 2:13</span></li>
+        <li><span class="g">No condemnation</span><q class="lv esv-skip" data-verse="Romans 8:1"></q><span class="r">Romans 8:1</span></li>
+        <li><span class="g">Adopted: you call him Abba</span><q class="lv esv-skip" data-verse="Romans 8:15"></q><span class="r">Romans 8:15</span></li>
+        <li><span class="g">Sealed with the Spirit</span><q class="lv esv-skip" data-verse="Ephesians 1:13"></q><span class="r">Ephesians 1:13</span></li>
+        <li><span class="g">The Spirit lives in you</span><q class="lv esv-skip" data-verse="1 Corinthians 6:19"></q><span class="r">1 Corinthians 6:19</span></li>
+        <li><span class="g">One spirit with the Lord</span><q class="lv esv-skip" data-verse="1 Corinthians 6:17"></q><span class="r">1 Corinthians 6:17</span></li>
+        <li><span class="g">Dead to sin, alive to God</span><q class="lv esv-skip" data-verse="Romans 6:11"></q><span class="r">Romans 6:11</span></li>
+        <li><span class="g">Moved into the kingdom of his Son</span><q class="lv esv-skip" data-verse="Colossians 1:13"></q><span class="r">Colossians 1:13</span></li>
+        <li><span class="g">Seated with him</span><q class="lv esv-skip" data-verse="Ephesians 2:6"></q><span class="r">Ephesians 2:6</span></li>
+        <li><span class="g">Hidden with Christ in God</span><q class="lv esv-skip" data-verse="Colossians 3:3"></q><span class="r">Colossians 3:3</span></li>
+        <li><span class="g">A saint</span><q class="lv esv-skip" data-verse="1 Corinthians 1:2"></q><span class="r">1 Corinthians 1:2</span></li>
+        <li><span class="g">Light, not just in the light</span><q class="lv esv-skip" data-verse="Ephesians 5:8"></q><span class="r">Ephesians 5:8</span></li>
+        <li><span class="g">A partaker of the divine nature</span><q class="lv esv-skip" data-verse="2 Peter 1:4"></q><span class="r">2 Peter 1:4</span></li>
+        <li><span class="g">Passed from death to life</span><q class="lv esv-skip" data-verse="John 5:24"></q><span class="r">John 5:24</span></li>
+        <li><span class="g">Accepted in the beloved</span><q class="lv esv-skip" data-verse="Ephesians 1:6"></q><span class="r">Ephesians 1:6</span></li>
+        <li><span class="g">Kept</span><q class="lv esv-skip" data-verse="1 Peter 1:5"></q><span class="r">1 Peter 1:5</span></li>
       </ul>
       <div class="drawers" style="max-width:44rem">
         <details class="deep" id="unchanged">
@@ -666,8 +692,8 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Was it instant?</span><span class="chips"><span class="mk t">Text</span><span class="mk d">Disputed</span><span class="mk r">Reading</span></span><span class="teaser">A thief with no time, no baptism, and one sentence.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>A dying thief said <q data-v="Luke 23:42">Lord, remember me when thou comest into thy kingdom</q>, and heard <q data-v="Luke 23:43">To day shalt thou be with me in paradise</q> (Luke 23:42-43). No baptism, no works, no time to ask twice.</p>
-              <p>At Cornelius’s house <q data-v="Acts 10:44">the Holy Ghost fell on all them which heard the word</q>, before anyone had been baptised (Acts 10:44-48).</p>
+              <p>A dying thief asked for one thing: <q class="lv esv-skip" data-verse="Luke 23:42">Lord, remember me when thou comest into thy kingdom</q> <cite class="rr">Luke 23:42</cite> The answer came the same day: <q class="lv esv-skip" data-verse="Luke 23:43">To day shalt thou be with me in paradise</q> <cite class="rr">Luke 23:43</cite> No baptism, no works, no time to ask twice.</p>
+              <p>At Cornelius’s house the Spirit arrived before the water did: <q class="lv esv-skip" data-verse="Acts 10:44">the Holy Ghost fell on all them which heard the word</q> <cite class="rr">Acts 10:44</cite> The baptising is four verses later <cite class="rr">Acts 10:47-48</cite></p>
             </div>
             <div class="m d"><span class="m-l">Where Christians differ</span>
               <p>Churches differ on baptism’s part. Some read Acts 2:38 and 1 Peter 3:21 as making baptism the moment of new birth. Others read Ephesians 2:8-9 and the thief as placing that moment at faith, with baptism as the public sign that follows.</p>
@@ -694,8 +720,8 @@ footer.foot .home{margin-top:10px}
           <figcaption class="vmeta"><span class="vref">Ephesians 2:8–9</span><span class="vver">KJV</span></figcaption>
         </figure>
         <p class="lede">Yes. And the reason matters: if you could earn it, it would be wages, and wages can be docked.</p>
-        <p>Paul puts it bluntly: <q data-v="Romans 4:5">to him that worketh not, but believeth on him that justifieth the ungodly, his faith is counted for righteousness</q> (Romans 4:5).</p>
-        <p>But “believe” is where people slip. The word is <span class="gk">pisteuō</span>: to trust, to rely on, to lean your weight on. <q data-v="James 2:19">the devils also believe, and tremble</q> (James 2:19). Agreeing that God exists isn’t the door. Trusting him is.</p>
+        <p>Paul puts it bluntly: <q class="lv esv-skip" data-verse="Romans 4:5">to him that worketh not, but believeth on him that justifieth the ungodly, his faith is counted for righteousness</q> <cite class="rr">Romans 4:5</cite></p>
+        <p>But “believe” is where people slip. The word is <span class="gk">pisteuō</span>: to trust, to rely on, to lean your weight on. <q class="lv esv-skip" data-verse="James 2:19">the devils also believe, and tremble</q> <cite class="rr">James 2:19</cite> Agreeing that God exists isn’t the door. Trusting him is.</p>
       </div>
       <div class="drawers">
         <details class="deep" id="closed">
@@ -703,19 +729,19 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="Romans 3:24">Being justified freely by his grace</q> <span class="r">Romans 3:24</span></li>
-                <li><q data-v="Romans 3:28">a man is justified by faith without the deeds of the law</q> <span class="r">Romans 3:28</span></li>
-                <li><q data-v="Romans 11:6">if by grace, then is it no more of works: otherwise grace is no more grace</q> <span class="r">Romans 11:6</span></li>
-                <li><q data-v="Galatians 2:16">a man is not justified by the works of the law, but by the faith of Jesus Christ</q> <span class="r">Galatians 2:16</span></li>
-                <li><q data-v="Galatians 2:21">if righteousness come by the law, then Christ is dead in vain</q> <span class="r">Galatians 2:21</span></li>
-                <li><q data-v="Galatians 3:3">having begun in the Spirit, are ye now made perfect by the flesh?</q> <span class="r">Galatians 3:3</span></li>
-                <li><q data-v="Titus 3:5">Not by works of righteousness which we have done, but according to his mercy he saved us</q> <span class="r">Titus 3:5</span></li>
-                <li><q data-v="Philippians 3:9">not having mine own righteousness, which is of the law, but that which is through the faith of Christ</q> <span class="r">Philippians 3:9</span></li>
-                <li><q data-v="Luke 18:14">this man went down to his house justified rather than the other</q> <span class="r">Luke 18:14</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 3:24">Being justified freely by his grace</q> <span class="r">Romans 3:24</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 3:28">a man is justified by faith without the deeds of the law</q> <span class="r">Romans 3:28</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 11:6">if by grace, then is it no more of works: otherwise grace is no more grace</q> <span class="r">Romans 11:6</span></li>
+                <li><q class="lv esv-skip" data-verse="Galatians 2:16">a man is not justified by the works of the law, but by the faith of Jesus Christ</q> <span class="r">Galatians 2:16</span></li>
+                <li><q class="lv esv-skip" data-verse="Galatians 2:21">if righteousness come by the law, then Christ is dead in vain</q> <span class="r">Galatians 2:21</span></li>
+                <li><q class="lv esv-skip" data-verse="Galatians 3:3">having begun in the Spirit, are ye now made perfect by the flesh?</q> <span class="r">Galatians 3:3</span></li>
+                <li><q class="lv esv-skip" data-verse="Titus 3:5">Not by works of righteousness which we have done, but according to his mercy he saved us</q> <span class="r">Titus 3:5</span></li>
+                <li><q class="lv esv-skip" data-verse="Philippians 3:9">not having mine own righteousness, which is of the law, but that which is through the faith of Christ</q> <span class="r">Philippians 3:9</span></li>
+                <li><q class="lv esv-skip" data-verse="Luke 18:14">this man went down to his house justified rather than the other</q> <span class="r">Luke 18:14</span></li>
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p>The last one is a story. The man with a list of good deeds went home unchanged. The man who could only say <q data-v="Luke 18:13">God be merciful to me a sinner</q> went home justified.</p>
+              <p>The last one is a story. The man with a list of good deeds went home unchanged. The other one could manage a single sentence: <q class="lv esv-skip" data-verse="Luke 18:13">God be merciful to me a sinner</q> <cite class="rr">Luke 18:13</cite> He went home justified.</p>
             </div>
           </div></div>
         </details>
@@ -723,7 +749,7 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">“This is the work of God”</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">They asked what works to do. He named one.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>They asked him, <q data-v="John 6:28">What shall we do, that we might work the works of God?</q> He answered, <q data-v="John 6:29">This is the work of God, that ye believe on him whom he hath sent</q> (John 6:28-29).</p>
+              <p>A crowd put the question to him directly, and he answered it with one item: <q class="lv esv-skip" data-verse="John 6:28">What shall we do, that we might work the works of God?</q> <q class="lv esv-skip" data-verse="John 6:29">This is the work of God, that ye believe on him whom he hath sent</q> <cite class="rr">John 6:28-29</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>The only work God asks for, to be saved, is to stop working for it and trust. How faith itself works, where it comes from and what the Greek says, is the whole subject of <a href="/faith/">FAITH</a>, so this page won’t repeat it.</p>
@@ -734,13 +760,13 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Then what about James?</span><span class="chips"><span class="mk t">Text</span><span class="mk d">Disputed</span><span class="mk r">Reading</span></span><span class="teaser">“Faith without works is dead.” The first objection anyone raises.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="James 2:17">Even so faith, if it hath not works, is dead, being alone</q> (James 2:17). And James says Abraham was <q data-v="James 2:21">justified by works, when he had offered Isaac</q> (James 2:21).</p>
+              <p><q class="lv esv-skip" data-verse="James 2:17">Even so faith, if it hath not works, is dead, being alone</q> <cite class="rr">James 2:17</cite> And of Abraham he asks: <q class="lv esv-skip" data-verse="James 2:21">justified by works, when he had offered Isaac</q> <cite class="rr">James 2:21</cite></p>
             </div>
             <div class="m d"><span class="m-l">Where Christians differ</span>
-              <p>Some read James as saying works complete your justification before God. Others read him using “justified” the way Jesus did in <q data-v="Matthew 11:19">wisdom is justified of her children</q> (Matthew 11:19): shown to be right, proven by what it produces.</p>
+              <p>Some read James as saying works complete your justification before God. Others read him using “justified” the way Jesus used it at the end of Matthew 11: <q class="lv esv-skip" data-verse="Matthew 11:19">wisdom is justified of her children</q> <cite class="rr">Matthew 11:19</cite> There it means shown to be right — proven by what it produces.</p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p>We hold the second, and the order of events settles it. Paul quotes Genesis 15:6, <q data-v="Genesis 15:6">he believed in the LORD; and he counted it to him for righteousness</q>. James points to Genesis 22, the offering of Isaac, which comes years later. Abraham was declared righteous when he trusted. The offering showed what kind of trust it was.</p>
+              <p>We hold the second, and the order of events settles it. Paul quotes Genesis 15:6: <q class="lv esv-skip" data-verse="Genesis 15:6">he believed in the LORD; and he counted it to him for righteousness</q> <cite class="rr">Genesis 15:6</cite> James points to Genesis 22, the offering of Isaac, which comes years later. Abraham was declared righteous when he trusted. The offering showed what kind of trust it was.</p>
               <p>Works are the fruit on the tree. They’re never its root.</p>
             </div>
           </div></div>
@@ -749,8 +775,8 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">What trust looks like</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">Trust is when you stop checking.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>A Roman officer told Jesus, <q data-v="Matthew 8:8">speak the word only, and my servant shall be healed</q>, and went home (Matthew 8:8-13).</p>
-              <p><q data-v="Romans 10:9">if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved</q> (Romans 10:9).</p>
+              <p>A Roman officer sent word rather than come himself: <q class="lv esv-skip" data-verse="Matthew 8:8">speak the word only, and my servant shall be healed</q> <cite class="rr">Matthew 8:8</cite> Then he went home, and the servant was well <cite class="rr">Matthew 8:13</cite></p>
+              <p><q class="lv esv-skip" data-verse="Romans 10:9">if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved</q> <cite class="rr">Romans 10:9</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>Believing, in the New Testament’s sense, is resting your whole weight on something that’s already true. You sit in a chair without testing it first. That’s the posture.</p>
@@ -775,7 +801,7 @@ footer.foot .home{margin-top:10px}
           <figcaption class="vmeta"><span class="vref">Matthew 12:31–32</span><span class="vver">KJV</span></figcaption>
         </figure>
         <p class="lede">Our reading: the one thing that can’t be forgiven is refusing the forgiveness.</p>
-        <p>Jesus said the Spirit would convict the world <q data-v="John 16:9">Of sin, because they believe not on me</q> (John 16:8-9). Every other sin has a remedy. This one is the rejection of the remedy. If you push away the one who brings you to the door, there’s no other door.</p>
+        <p>Jesus named what the Spirit convicts the world of, and gave the reason: <q class="lv esv-skip" data-verse="John 16:9">Of sin, because they believe not on me</q> <cite class="rr">John 16:9</cite> Every other sin has a remedy. This one is the rejection of the remedy. If you push away the one who brings you to the door, there’s no other door.</p>
         <p>That’s why unbelief isn’t one sin among many. It’s the sin that keeps all the others.</p>
         <p class="assure">If you’re afraid you’ve committed it, you haven’t.<span>The fear is the Spirit still at work in you. A hardened heart doesn’t lie awake worrying that it’s hard.</span></p>
       </div>
@@ -784,8 +810,8 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">What he said, and why he said it</span><span class="chips"><span class="mk t">Text</span></span><span class="teaser">Mark tells you what the Pharisees had just done.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>Mark gives the same saying, and then the reason for it: <q data-v="Mark 3:29">he that shall blaspheme against the Holy Ghost hath never forgiveness</q>, <q data-v="Mark 3:30">Because they said, He hath an unclean spirit</q> (Mark 3:28-30). They had watched the Spirit set a man free, and called it the devil’s work.</p>
-              <p>Hebrews uses different words for the same shape: <q data-v="Hebrews 3:19">they could not enter in because of unbelief</q> (Hebrews 3:19). And John: <q data-v="John 3:18">he that believeth not is condemned already, because he hath not believed in the name of the only begotten Son of God</q> (John 3:18).</p>
+              <p>Mark gives the same saying, and then the reason for it: <q class="lv esv-skip" data-verse="Mark 3:29">he that shall blaspheme against the Holy Ghost hath never forgiveness</q> <q class="lv esv-skip" data-verse="Mark 3:30">Because they said, He hath an unclean spirit</q> <cite class="rr">Mark 3:28-30</cite> They had watched the Spirit set a man free, and called it the devil’s work.</p>
+              <p>Hebrews uses different words for the same shape: <q class="lv esv-skip" data-verse="Hebrews 3:19">they could not enter in because of unbelief</q> <cite class="rr">Hebrews 3:19</cite> And John: <q class="lv esv-skip" data-verse="John 3:18">he that believeth not is condemned already, because he hath not believed in the name of the only begotten Son of God</q> <cite class="rr">John 3:18</cite></p>
             </div>
           </div></div>
         </details>
@@ -797,7 +823,7 @@ footer.foot .home{margin-top:10px}
               <p>So “unbelief is the unforgivable sin” is true in this sense: not that God refuses to forgive it, but that it’s the one place forgiveness can’t be received. It’s why belief is the only way. Not because God is narrow. Because there is one door, and this is standing outside it with your arms folded.</p>
             </div>
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="Revelation 22:17">whosoever will, let him take the water of life freely</q> (Revelation 22:17). The only thing between anyone and the water is the taking.</p>
+              <p><q class="lv esv-skip" data-verse="Revelation 22:17">whosoever will, let him take the water of life freely</q> <cite class="rr">Revelation 22:17</cite> The only thing between anyone and the water is the taking.</p>
             </div>
           </div></div>
         </details>
@@ -856,7 +882,7 @@ footer.foot .home{margin-top:10px}
           <blockquote class="vtext">For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life. For God sent not his Son into the world to condemn the world; but that the world through him might be saved. He that believeth on him is not condemned: but he that believeth not is condemned already, because he hath not believed in the name of the only begotten Son of God.</blockquote>
           <figcaption class="vmeta"><span class="vref">John 3:16–18</span><span class="vver">KJV</span></figcaption>
         </figure>
-        <p><q data-v="Romans 5:8">God commendeth his love toward us, in that, while we were yet sinners, Christ died for us</q> (Romans 5:8). Before, you were loved as his creature, even as his enemy (Romans 5:10), the runaway watched for from the road. After, you’re loved as his child: <q data-v="1 John 3:1">that we should be called the sons of God</q> (1 John 3:1).</p>
+        <p><q class="lv esv-skip" data-verse="Romans 5:8">God commendeth his love toward us, in that, while we were yet sinners, Christ died for us</q> <cite class="rr">Romans 5:8</cite> Before, you were loved as his creature, even as his enemy (Romans 5:10), the runaway watched for from the road. After, you’re loved as his child: <q class="lv esv-skip" data-verse="1 John 3:1">that we should be called the sons of God</q> <cite class="rr">1 John 3:1</cite></p>
         <p>Same love. New name.</p>
       </div>
       <div class="drawers">
@@ -864,9 +890,9 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Everyone is his offspring. Not everyone is his child.</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">Made by him isn’t the same as born of him.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>Paul told a crowd of pagans in Athens, <q data-v="Acts 17:28">For we are also his offspring</q> (Acts 17:28).</p>
-              <p>John writes about becoming: <q data-v="John 1:12">But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name</q>, <q data-v="John 1:13">Which were born, not of blood, nor of the will of the flesh, nor of the will of man, but of God</q> (John 1:12-13).</p>
-              <p>And Paul again: <q data-v="Galatians 3:26">ye are all the children of God by faith in Christ Jesus</q> (Galatians 3:26).</p>
+              <p>Paul told a crowd of pagans in Athens: <q class="lv esv-skip" data-verse="Acts 17:28">For we are also his offspring</q> <cite class="rr">Acts 17:28</cite></p>
+              <p>John writes about becoming: <q class="lv esv-skip" data-verse="John 1:12">But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name</q> <q class="lv esv-skip" data-verse="John 1:13">Which were born, not of blood, nor of the will of the flesh, nor of the will of man, but of God</q> <cite class="rr">John 1:12-13</cite></p>
+              <p>And Paul again: <q class="lv esv-skip" data-verse="Galatians 3:26">ye are all the children of God by faith in Christ Jesus</q> <cite class="rr">Galatians 3:26</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>By creation, everyone belongs to God. By birth, only the born again are his children. Being a child is something you become, and John says how: by receiving him.</p>
@@ -879,17 +905,17 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="Psalms 5:5">thou hatest all workers of iniquity</q> <span class="r">Psalm 5:5</span></li>
-                <li><q data-v="Romans 9:13">Jacob have I loved, but Esau have I hated</q> <span class="r">Romans 9:13, quoting Malachi 1:2-3</span></li>
-                <li><q data-v="Ephesians 2:3">and were by nature the children of wrath, even as others</q> <span class="r">Ephesians 2:3</span></li>
+                <li><q class="lv esv-skip" data-verse="Psalms 5:5">thou hatest all workers of iniquity</q> <span class="r">Psalm 5:5</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 9:13">Jacob have I loved, but Esau have I hated</q> <span class="r">Romans 9:13, quoting Malachi 1:2-3</span></li>
+                <li><q class="lv esv-skip" data-verse="Ephesians 2:3">and were by nature the children of wrath, even as others</q> <span class="r">Ephesians 2:3</span></li>
               </ul>
             </div>
             <div class="m d"><span class="m-l">Where Christians differ</span>
               <p>Reformed readers take some of these at face value: God’s saving love is particular, and not everyone is inside it. Others read them as covenant language and Hebrew idiom.</p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p>We hold the second, and the idiom is easy to see. In Hebrew, and in the Greek that borrows from it, “son of” something means “marked by” it. James and John are <q data-v="Mark 3:17">The sons of thunder</q> (Mark 3:17). Barnabas is <q data-v="Acts 4:36">The son of consolation</q> (Acts 4:36). The disobedient are, in the Greek of Ephesians 2:2, “the sons of disobedience.”</p>
-              <p>So “children of wrath” names a condition, not a father, and the very next verse says so: <q data-v="Ephesians 2:4">But God, who is rich in mercy, for his great love wherewith he loved us</q> (Ephesians 2:4). Jacob and Esau in Malachi are two nations and a covenant choice. Psalm 5 is what God feels about the doing of evil. None of them cancel John 3:16.</p>
+              <p>We hold the second, and the idiom is easy to see. In Hebrew, and in the Greek that borrows from it, “son of” something means “marked by” it. Mark hands James and John a name built that way: <q class="lv esv-skip" data-verse="Mark 3:17">The sons of thunder</q> <cite class="rr">Mark 3:17</cite> Luke does the same for Barnabas: <q class="lv esv-skip" data-verse="Acts 4:36">The son of consolation</q> <cite class="rr">Acts 4:36</cite> Neither name says anything about who fathered them. The disobedient are, in the Greek of Ephesians 2:2, “the sons of disobedience” by exactly the same idiom.</p>
+              <p>So “children of wrath” names a condition, not a father, and the very next verse says so: <q class="lv esv-skip" data-verse="Ephesians 2:4">But God, who is rich in mercy, for his great love wherewith he loved us</q> <cite class="rr">Ephesians 2:4</cite> Jacob and Esau in Malachi are two nations and a covenant choice. Psalm 5 is what God feels about the doing of evil. None of them cancel John 3:16.</p>
             </div>
           </div></div>
         </details>
@@ -898,11 +924,11 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="John 3:16">For God so loved the world, that he gave his only begotten Son</q> <span class="r">John 3:16</span></li>
-                <li><q data-v="1 Timothy 2:4">Who will have all men to be saved</q> <span class="r">1 Timothy 2:4</span></li>
-                <li><q data-v="1 Timothy 4:10">the Saviour of all men, specially of those that believe</q> <span class="r">1 Timothy 4:10</span></li>
-                <li><q data-v="2 Peter 3:9">not willing that any should perish, but that all should come to repentance</q> <span class="r">2 Peter 3:9</span></li>
-                <li><q data-v="Titus 2:11">the grace of God that bringeth salvation hath appeared to all men</q> <span class="r">Titus 2:11</span></li>
+                <li><q class="lv esv-skip" data-verse="John 3:16">For God so loved the world, that he gave his only begotten Son</q> <span class="r">John 3:16</span></li>
+                <li><q class="lv esv-skip" data-verse="1 Timothy 2:4">Who will have all men to be saved</q> <span class="r">1 Timothy 2:4</span></li>
+                <li><q class="lv esv-skip" data-verse="1 Timothy 4:10">the Saviour of all men, specially of those that believe</q> <span class="r">1 Timothy 4:10</span></li>
+                <li><q class="lv esv-skip" data-verse="2 Peter 3:9">not willing that any should perish, but that all should come to repentance</q> <span class="r">2 Peter 3:9</span></li>
+                <li><q class="lv esv-skip" data-verse="Titus 2:11">the grace of God that bringeth salvation hath appeared to all men</q> <span class="r">Titus 2:11</span></li>
               </ul>
             </div>
           </div></div>
@@ -912,11 +938,11 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="Ephesians 1:6">he hath made us accepted in the beloved</q> <span class="r">Ephesians 1:6</span></li>
-                <li><q data-v="1 John 4:17">as he is, so are we in this world</q> <span class="r">1 John 4:17</span></li>
-                <li><q data-v="John 17:23">and hast loved them, as thou hast loved me</q> <span class="r">John 17:23</span></li>
-                <li><q data-v="Colossians 1:22">to present you holy and unblameable and unreproveable in his sight</q> <span class="r">Colossians 1:22</span></li>
-                <li><q data-v="John 14:20">I am in my Father, and ye in me, and I in you</q> <span class="r">John 14:20</span></li>
+                <li><q class="lv esv-skip" data-verse="Ephesians 1:6">he hath made us accepted in the beloved</q> <span class="r">Ephesians 1:6</span></li>
+                <li><q class="lv esv-skip" data-verse="1 John 4:17">as he is, so are we in this world</q> <span class="r">1 John 4:17</span></li>
+                <li><q class="lv esv-skip" data-verse="John 17:23">and hast loved them, as thou hast loved me</q> <span class="r">John 17:23</span></li>
+                <li><q class="lv esv-skip" data-verse="Colossians 1:22">to present you holy and unblameable and unreproveable in his sight</q> <span class="r">Colossians 1:22</span></li>
+                <li><q class="lv esv-skip" data-verse="John 14:20">I am in my Father, and ye in me, and I in you</q> <span class="r">John 14:20</span></li>
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
@@ -941,7 +967,7 @@ footer.foot .home{margin-top:10px}
           <figcaption class="vmeta"><span class="vref">2 Corinthians 5:19–20</span><span class="vver">KJV</span></figcaption>
         </figure>
         <p class="lede">Both halves are true. The reconciling is done, from God’s side, for everyone. The receiving isn’t automatic, or Paul wouldn’t be pleading.</p>
-        <p>A pardon with your name on it is yours. It still has to be taken. <q data-v="Romans 5:17">they which receive abundance of grace and of the gift of righteousness shall reign in life</q> (Romans 5:17). The gift is given. The ones who reign are the ones who receive.</p>
+        <p>A pardon with your name on it is yours. It still has to be taken. <q class="lv esv-skip" data-verse="Romans 5:17">they which receive abundance of grace and of the gift of righteousness shall reign in life</q> <cite class="rr">Romans 5:17</cite> The gift is given. The ones who reign are the ones who receive.</p>
       </div>
       <div class="drawers">
         <details class="deep" id="universal">
@@ -949,11 +975,11 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="1 John 2:2">he is the propitiation for our sins: and not for ours only, but also for the sins of the whole world</q> <span class="r">1 John 2:2</span></li>
-                <li><q data-v="Isaiah 53:6">the LORD hath laid on him the iniquity of us all</q> <span class="r">Isaiah 53:6</span></li>
-                <li><q data-v="Hebrews 2:9">that he by the grace of God should taste death for every man</q> <span class="r">Hebrews 2:9</span></li>
-                <li><q data-v="Romans 5:18">the free gift came upon all men unto justification of life</q> <span class="r">Romans 5:18</span></li>
-                <li><q data-v="Colossians 1:20">by him to reconcile all things unto himself</q> <span class="r">Colossians 1:20</span></li>
+                <li><q class="lv esv-skip" data-verse="1 John 2:2">he is the propitiation for our sins: and not for ours only, but also for the sins of the whole world</q> <span class="r">1 John 2:2</span></li>
+                <li><q class="lv esv-skip" data-verse="Isaiah 53:6">the LORD hath laid on him the iniquity of us all</q> <span class="r">Isaiah 53:6</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 2:9">that he by the grace of God should taste death for every man</q> <span class="r">Hebrews 2:9</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 5:18">the free gift came upon all men unto justification of life</q> <span class="r">Romans 5:18</span></li>
+                <li><q class="lv esv-skip" data-verse="Colossians 1:20">by him to reconcile all things unto himself</q> <span class="r">Colossians 1:20</span></li>
               </ul>
             </div>
           </div></div>
@@ -995,9 +1021,10 @@ footer.foot .home{margin-top:10px}
     <div class="body">
       <h2 class="h">Do I really look like Jesus?</h2>
       <div class="top">
-        <p class="lede"><q data-v="1 John 4:17">as he is, so are we in this world</q>. Not will be. Are.</p>
+        <p class="lede"><q class="lv esv-skip" data-verse="1 John 4:17">as he is, so are we in this world</q> <cite class="rr">1 John 4:17</cite></p>
+        <p class="beat">Not will be. Are.</p>
         <p>In the part of you that was born again, you are as righteous, as accepted and as alive as he is, because that part of you is joined to him (1 Corinthians 6:17, Galatians 2:20).</p>
-        <p>Paul wrote to the worst-behaved church in the New Testament and opened by calling them <q data-v="1 Corinthians 1:2">saints</q>. Five chapters later he wrote <q data-v="1 Corinthians 6:11">such were some of you: but ye are washed, but ye are sanctified, but ye are justified</q> (1 Corinthians 6:11). He didn’t call them saints because of how they behaved. He called them saints, and argued from there.</p>
+        <p>Paul wrote to the worst-behaved church in the New Testament, and his opening line calls them holy: <q class="lv esv-skip" data-verse="1 Corinthians 1:2">saints</q> <cite class="rr">1 Corinthians 1:2</cite> Five chapters later, after a list of what they had been: <q class="lv esv-skip" data-verse="1 Corinthians 6:11">such were some of you: but ye are washed, but ye are sanctified, but ye are justified</q> <cite class="rr">1 Corinthians 6:11</cite> He didn’t call them saints because of how they behaved. He called them saints, and argued from there.</p>
       </div>
       <div class="drawers">
         <details class="deep" id="ssb">
@@ -1005,9 +1032,9 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <div class="strips">
-                <div class="strip"><h4>Spirit: complete now</h4><p><q data-v="1 Peter 1:23">Being born again, not of corruptible seed, but of incorruptible</q> <span class="r">1 Peter 1:23</span></p><p><q data-v="1 Corinthians 6:17">he that is joined unto the Lord is one spirit</q> <span class="r">1 Corinthians 6:17</span></p></div>
-                <div class="strip"><h4>Soul: mind, will and emotions, being renewed</h4><p><q data-v="2 Corinthians 4:16">the inward man is renewed day by day</q> <span class="r">2 Corinthians 4:16</span></p><p><q data-v="Romans 12:2">be ye transformed by the renewing of your mind</q> <span class="r">Romans 12:2</span></p></div>
-                <div class="strip"><h4>Body: waiting</h4><p><q data-v="Romans 8:23">waiting for the adoption, to wit, the redemption of our body</q> <span class="r">Romans 8:23</span></p></div>
+                <div class="strip"><h4>Spirit: complete now</h4><p><q class="lv esv-skip" data-verse="1 Peter 1:23">Being born again, not of corruptible seed, but of incorruptible</q> <span class="r">1 Peter 1:23</span></p><p><q class="lv esv-skip" data-verse="1 Corinthians 6:17">he that is joined unto the Lord is one spirit</q> <span class="r">1 Corinthians 6:17</span></p></div>
+                <div class="strip"><h4>Soul: mind, will and emotions, being renewed</h4><p><q class="lv esv-skip" data-verse="2 Corinthians 4:16">the inward man is renewed day by day</q> <span class="r">2 Corinthians 4:16</span></p><p><q class="lv esv-skip" data-verse="Romans 12:2">be ye transformed by the renewing of your mind</q> <span class="r">Romans 12:2</span></p></div>
+                <div class="strip"><h4>Body: waiting</h4><p><q class="lv esv-skip" data-verse="Romans 8:23">waiting for the adoption, to wit, the redemption of our body</q> <span class="r">Romans 8:23</span></p></div>
               </div>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
@@ -1020,9 +1047,9 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <div class="letters">
-                <div class="letter"><h4>Ephesians</h4><div class="lbar"><span class="be" style="flex:3">1–3 who you are</span><span class="do" style="flex:3">4–6 how to walk</span></div><p>The hinge: <q data-v="Ephesians 4:1">walk worthy of the vocation wherewith ye are called</q> <span class="r">Ephesians 4:1</span></p></div>
-                <div class="letter"><h4>Colossians</h4><div class="lbar"><span class="be" style="flex:2">1–2 who you are</span><span class="do" style="flex:2">3–4 how to walk</span></div><p>The hinge: <q data-v="Colossians 3:1">If ye then be risen with Christ, seek those things which are above</q> <span class="r">Colossians 3:1</span></p></div>
-                <div class="letter"><h4>Romans</h4><div class="lbar"><span class="be" style="flex:11">1–11 who you are</span><span class="do" style="flex:5">12–16 how to walk</span></div><p>The hinge: <q data-v="Romans 12:1">I beseech you therefore, brethren, by the mercies of God</q> <span class="r">Romans 12:1</span></p></div>
+                <div class="letter"><h4>Ephesians</h4><div class="lbar"><span class="be" style="flex:3">1–3 who you are</span><span class="do" style="flex:3">4–6 how to walk</span></div><p>The hinge: <q class="lv esv-skip" data-verse="Ephesians 4:1">walk worthy of the vocation wherewith ye are called</q> <span class="r">Ephesians 4:1</span></p></div>
+                <div class="letter"><h4>Colossians</h4><div class="lbar"><span class="be" style="flex:2">1–2 who you are</span><span class="do" style="flex:2">3–4 how to walk</span></div><p>The hinge: <q class="lv esv-skip" data-verse="Colossians 3:1">If ye then be risen with Christ, seek those things which are above</q> <span class="r">Colossians 3:1</span></p></div>
+                <div class="letter"><h4>Romans</h4><div class="lbar"><span class="be" style="flex:11">1–11 who you are</span><span class="do" style="flex:5">12–16 how to walk</span></div><p>The hinge: <q class="lv esv-skip" data-verse="Romans 12:1">I beseech you therefore, brethren, by the mercies of God</q> <span class="r">Romans 12:1</span></p></div>
               </div>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
@@ -1035,16 +1062,16 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="names">
-                <li>Child<span class="r">1 John 3:1</span></li>
-                <li>Heir<span class="r">Romans 8:17</span></li>
-                <li>Friend<span class="r">John 15:15</span></li>
-                <li>Saint<span class="r">Ephesians 1:1</span></li>
-                <li>Royal priesthood<span class="r">1 Peter 2:9</span></li>
-                <li>Temple<span class="r">1 Corinthians 6:19</span></li>
-                <li>Light<span class="r">Ephesians 5:8</span></li>
-                <li>His workmanship<span class="r">Ephesians 2:10</span></li>
-                <li>A letter from Christ<span class="r">2 Corinthians 3:3</span></li>
-                <li>His body<span class="r">1 Corinthians 12:27</span></li>
+                <li><span class="g">Child</span><q class="lv esv-skip" data-verse="1 John 3:1"></q><span class="r">1 John 3:1</span></li>
+                <li><span class="g">Heir</span><q class="lv esv-skip" data-verse="Romans 8:17"></q><span class="r">Romans 8:17</span></li>
+                <li><span class="g">Friend</span><q class="lv esv-skip" data-verse="John 15:15"></q><span class="r">John 15:15</span></li>
+                <li><span class="g">Saint</span><q class="lv esv-skip" data-verse="Ephesians 1:1"></q><span class="r">Ephesians 1:1</span></li>
+                <li><span class="g">Royal priesthood</span><q class="lv esv-skip" data-verse="1 Peter 2:9"></q><span class="r">1 Peter 2:9</span></li>
+                <li><span class="g">Temple</span><q class="lv esv-skip" data-verse="1 Corinthians 6:19"></q><span class="r">1 Corinthians 6:19</span></li>
+                <li><span class="g">Light</span><q class="lv esv-skip" data-verse="Ephesians 5:8"></q><span class="r">Ephesians 5:8</span></li>
+                <li><span class="g">His workmanship</span><q class="lv esv-skip" data-verse="Ephesians 2:10"></q><span class="r">Ephesians 2:10</span></li>
+                <li><span class="g">A letter from Christ</span><q class="lv esv-skip" data-verse="2 Corinthians 3:3"></q><span class="r">2 Corinthians 3:3</span></li>
+                <li><span class="g">His body</span><q class="lv esv-skip" data-verse="1 Corinthians 12:27"></q><span class="r">1 Corinthians 12:27</span></li>
               </ul>
             </div>
           </div></div>
@@ -1062,7 +1089,7 @@ footer.foot .home{margin-top:10px}
       <h2 class="h">Then why do I still sin?</h2>
       <div class="top">
         <p class="lede">Because the rescue changed your nature and your standing. It hasn’t yet changed your habits, your body, or the world you wake up in.</p>
-        <p>Paul, who wrote <q data-v="Romans 8:1">There is therefore now no condemnation</q>, also wrote <q data-v="Romans 7:15">what I hate, that do I</q>, and put them a few verses apart (Romans 7:15, 8:1).</p>
+        <p>Paul wrote both of these, a few verses apart. First the struggle: <q class="lv esv-skip" data-verse="Romans 7:15">what I hate, that do I</q> <cite class="rr">Romans 7:15</cite> Then the standing: <q class="lv esv-skip" data-verse="Romans 8:1">There is therefore now no condemnation</q> <cite class="rr">Romans 8:1</cite></p>
         <p>Sin is no longer who you are. It’s still what you practised for years. A freed prisoner still flinches at the sound of keys.</p>
       </div>
       <div class="drawers">
@@ -1071,13 +1098,13 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <div class="strips">
-                <div class="strip"><h4>Romans 6: you died with him, so sin isn’t your master</h4><p><q data-v="Romans 6:14">For sin shall not have dominion over you: for ye are not under the law, but under grace</q></p></div>
-                <div class="strip"><h4>Romans 7: the flesh is still there, and willpower loses to it</h4><p><q data-v="Romans 7:24">O wretched man that I am! who shall deliver me from the body of this death?</q></p></div>
-                <div class="strip"><h4>Romans 8: the Spirit does what willpower couldn’t</h4><p><q data-v="Romans 8:2">the law of the Spirit of life in Christ Jesus hath made me free from the law of sin and death</q></p></div>
+                <div class="strip"><h4>Romans 6: you died with him, so sin isn’t your master</h4><p><q class="lv esv-skip" data-verse="Romans 6:14">For sin shall not have dominion over you: for ye are not under the law, but under grace</q></p></div>
+                <div class="strip"><h4>Romans 7: the flesh is still there, and willpower loses to it</h4><p><q class="lv esv-skip" data-verse="Romans 7:24">O wretched man that I am! who shall deliver me from the body of this death?</q></p></div>
+                <div class="strip"><h4>Romans 8: the Spirit does what willpower couldn’t</h4><p><q class="lv esv-skip" data-verse="Romans 8:2">the law of the Spirit of life in Christ Jesus hath made me free from the law of sin and death</q></p></div>
               </div>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p>Romans 7 isn’t the end of the story. It sits between two chapters that say you’re free, on purpose. And the wretched man gets his answer in the very next verse: <q data-v="Romans 7:25">I thank God through Jesus Christ our Lord</q>.</p>
+              <p>Romans 7 isn’t the end of the story. It sits between two chapters that say you’re free, on purpose. And the wretched man gets his answer in the very next verse: <q class="lv esv-skip" data-verse="Romans 7:25">I thank God through Jesus Christ our Lord</q> <cite class="rr">Romans 7:25</cite></p>
             </div>
           </div></div>
         </details>
@@ -1085,7 +1112,7 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Flesh and Spirit</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">The fight is real. Notice which side your wanting is on.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="Galatians 5:17">For the flesh lusteth against the Spirit, and the Spirit against the flesh: and these are contrary the one to the other: so that ye cannot do the things that ye would</q> (Galatians 5:17).</p>
+              <p><q class="lv esv-skip" data-verse="Galatians 5:17">For the flesh lusteth against the Spirit, and the Spirit against the flesh: and these are contrary the one to the other: so that ye cannot do the things that ye would</q> <cite class="rr">Galatians 5:17</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>The fight is between what you now want and what you used to practise. It isn’t two equal selves. Read the verse again: the flesh stops you doing what you <i>would</i>. A believer’s wanting has already changed sides.</p>
@@ -1110,9 +1137,9 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="Galatians 6:7">whatsoever a man soweth, that shall he also reap</q> <span class="r">Galatians 6:7</span></li>
-                <li><q data-v="Hebrews 12:7">God dealeth with you as with sons</q> <span class="r">Hebrews 12:7</span></li>
-                <li><q data-v="Ephesians 4:30">grieve not the holy Spirit of God, whereby ye are sealed unto the day of redemption</q> <span class="r">Ephesians 4:30</span></li>
+                <li><q class="lv esv-skip" data-verse="Galatians 6:7">whatsoever a man soweth, that shall he also reap</q> <span class="r">Galatians 6:7</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 12:7">God dealeth with you as with sons</q> <span class="r">Hebrews 12:7</span></li>
+                <li><q class="lv esv-skip" data-verse="Ephesians 4:30">grieve not the holy Spirit of God, whereby ye are sealed unto the day of redemption</q> <span class="r">Ephesians 4:30</span></li>
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
@@ -1125,8 +1152,8 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Does sinning prove I was never saved?</span><span class="chips"><span class="mk t">Text</span><span class="mk d">Disputed</span><span class="mk r">Reading</span></span><span class="teaser">1 John 3 read three ways.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="1 John 3:9">Whosoever is born of God doth not commit sin</q> (1 John 3:9).</p>
-              <p>And earlier in the same letter: <q data-v="1 John 1:8">If we say that we have no sin, we deceive ourselves</q> (1 John 1:8), and <q data-v="1 John 2:1">if any man sin, we have an advocate with the Father, Jesus Christ the righteous</q> (1 John 2:1).</p>
+              <p><q class="lv esv-skip" data-verse="1 John 3:9">Whosoever is born of God doth not commit sin</q> <cite class="rr">1 John 3:9</cite></p>
+              <p>And earlier in the same letter, twice: <q class="lv esv-skip" data-verse="1 John 1:8">If we say that we have no sin, we deceive ourselves</q> <cite class="rr">1 John 1:8</cite> <q class="lv esv-skip" data-verse="1 John 2:1">if any man sin, we have an advocate with the Father, Jesus Christ the righteous</q> <cite class="rr">1 John 2:1</cite></p>
             </div>
             <div class="m d"><span class="m-l">Where Christians differ</span>
               <ul class="qlist">
@@ -1136,7 +1163,7 @@ footer.foot .home{margin-top:10px}
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p>The same letter says believers sin, and that they have an advocate when they do. You can’t have an advocate for a case that ends your adoption. John wrote so that his readers <q data-v="1 John 5:13">may know that ye have eternal life</q> (1 John 5:13), not so they’d spend it wondering.</p>
+              <p>The same letter says believers sin, and that they have an advocate when they do. You can’t have an advocate for a case that ends your adoption. John says plainly why he wrote the letter: <q class="lv esv-skip" data-verse="1 John 5:13">may know that ye have eternal life</q> <cite class="rr">1 John 5:13</cite> Knowing, not wondering.</p>
             </div>
           </div></div>
         </details>
@@ -1154,16 +1181,16 @@ footer.foot .home{margin-top:10px}
       <div class="top">
         <p class="lede">The Greek is <span class="gk">metanoia</span>, a change of mind. The Hebrew is <span class="gk">shuv</span> (<span class="he" lang="he">שׁוּב</span>), to turn around, to come home.</p>
         <p>Neither word means grovelling, and neither means paying something back. Repentance is the turn itself: from trusting yourself to trusting him.</p>
-        <p>And Paul says what produces it: <q data-v="Romans 2:4">the goodness of God leadeth thee to repentance</q> (Romans 2:4). Not his threats. His kindness.</p>
+        <p>And Paul says what produces it: <q class="lv esv-skip" data-verse="Romans 2:4">the goodness of God leadeth thee to repentance</q> <cite class="rr">Romans 2:4</cite> Not his threats. His kindness.</p>
       </div>
       <div class="drawers">
         <details class="deep" id="metanoia">
           <summary class="esv-skip"><span class="st"><span class="dt">The word, and what it isn’t</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">Judas regretted. That’s a different word.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="Mark 1:15">repent ye, and believe the gospel</q> (Mark 1:15).</p>
-              <p>When Judas <q data-v="Matthew 27:3">repented himself</q> (Matthew 27:3), Matthew uses a different verb, <span class="gk">metamelomai</span>: to regret, to feel sorry afterwards. It changed nothing.</p>
-              <p>Paul draws the line: <q data-v="2 Corinthians 7:10">godly sorrow worketh repentance to salvation not to be repented of: but the sorrow of the world worketh death</q> (2 Corinthians 7:10).</p>
+              <p><q class="lv esv-skip" data-verse="Mark 1:15">repent ye, and believe the gospel</q> <cite class="rr">Mark 1:15</cite></p>
+              <p>Of Judas, Matthew writes: <q class="lv esv-skip" data-verse="Matthew 27:3">repented himself</q> <cite class="rr">Matthew 27:3</cite> The verb there is a different one, <span class="gk">metamelomai</span>: to regret, to feel sorry afterwards. It changed nothing.</p>
+              <p>Paul draws the line: <q class="lv esv-skip" data-verse="2 Corinthians 7:10">godly sorrow worketh repentance to salvation not to be repented of: but the sorrow of the world worketh death</q> <cite class="rr">2 Corinthians 7:10</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>Sorrow can lead to repentance. It isn’t repentance. Repentance is the turning, and it can happen with dry eyes.</p>
@@ -1174,7 +1201,7 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Repentance from what, to what</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">The first turn is away from rescuing yourself.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>Paul preached <q data-v="Acts 20:21">repentance toward God, and faith toward our Lord Jesus Christ</q> (Acts 20:21). Hebrews calls it <q data-v="Hebrews 6:1">repentance from dead works, and of faith toward God</q> (Hebrews 6:1).</p>
+              <p>Paul summed up his whole preaching in one pair: <q class="lv esv-skip" data-verse="Acts 20:21">repentance toward God, and faith toward our Lord Jesus Christ</q> <cite class="rr">Acts 20:21</cite> Hebrews lays the same pair in the foundation: <q class="lv esv-skip" data-verse="Hebrews 6:1">repentance from dead works, and of faith toward God</q> <cite class="rr">Hebrews 6:1</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>Repentance and faith are one movement with two names: turning from, and trusting to. The first repentance isn’t swapping a list of bad things for a list of good ones. It’s turning from dead works, the attempt to save yourself, to faith in the one who already has.</p>
@@ -1190,8 +1217,8 @@ footer.foot .home{margin-top:10px}
               <figcaption class="vmeta"><span class="vref">Luke 15:20–22</span><span class="vver">KJV</span></figcaption>
             </figure>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p><q data-v="Luke 15:17">he came to himself</q> is the change of mind. <q data-v="Luke 15:20">he arose, and came to his father</q> is the turn.</p>
-              <p>He had rehearsed a speech that ended <q data-v="Luke 15:19">make me as one of thy hired servants</q> (Luke 15:19), which is the works road in one sentence. He never gets to that line. The father talks over it.</p>
+              <p>The change of mind is one verse: <q class="lv esv-skip" data-verse="Luke 15:17">he came to himself</q> <cite class="rr">Luke 15:17</cite> The turn is three verses later: <q class="lv esv-skip" data-verse="Luke 15:20">he arose, and came to his father</q> <cite class="rr">Luke 15:20</cite></p>
+              <p>In between, he rehearses a speech, and its last line is the works road in one sentence: <q class="lv esv-skip" data-verse="Luke 15:19">make me as one of thy hired servants</q> <cite class="rr">Luke 15:19</cite> He never gets to that line. The father talks over it.</p>
               <p>The robe, the ring and the shoes are <a href="#believe">question 02’s list</a>, told as a story.</p>
             </div>
           </div></div>
@@ -1200,11 +1227,11 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Repenting after you believe</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">A child turning back toward a Father who never left.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p>Jesus told Peter, on the night Peter would deny him, <q data-v="Luke 22:32">when thou art converted, strengthen thy brethren</q> (Luke 22:32). And of the seven churches in Revelation, he told five to repent (Revelation 2-3).</p>
+              <p>Jesus said this to Peter on the night Peter would deny him: <q class="lv esv-skip" data-verse="Luke 22:32">when thou art converted, strengthen thy brethren</q> <cite class="rr">Luke 22:32</cite> And of the seven churches in Revelation, he told five to repent (Revelation 2-3).</p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>Believers keep turning. The direction is set, and the small corrections go on. But it’s a child turning back toward a Father who never left, not a stranger applying to get in again.</p>
-              <p><q data-v="Matthew 3:8">fruits meet for repentance</q> (Matthew 3:8) is what the turn looks like from the outside.</p>
+              <p>What the turn looks like from the outside, John the Baptist put in three words: <q class="lv esv-skip" data-verse="Matthew 3:8">fruits meet for repentance</q> <cite class="rr">Matthew 3:8</cite></p>
             </div>
           </div></div>
         </details>
@@ -1226,7 +1253,7 @@ footer.foot .home{margin-top:10px}
           <figcaption class="vmeta"><span class="vref">Colossians 2:13–14</span><span class="vver">KJV</span></figcaption>
         </figure>
         <p>Telling God the truth about your sin afterwards is honesty between a child and a Father. It isn’t a fresh application for a pardon you already have.</p>
-        <p>So if you sin and die before you get to say sorry, you go home. <q data-v="Romans 8:1">There is therefore now no condemnation to them which are in Christ Jesus</q> (Romans 8:1) has no footnote about timing. He died for us <q data-v="1 Thessalonians 5:10">that, whether we wake or sleep, we should live together with him</q> (1 Thessalonians 5:10).</p>
+        <p>So if you sin and die before you get to say sorry, you go home. The sentence that settles it carries no footnote about timing: <q class="lv esv-skip" data-verse="Romans 8:1">There is therefore now no condemnation to them which are in Christ Jesus</q> <cite class="rr">Romans 8:1</cite> And Paul covers the gap directly: <q class="lv esv-skip" data-verse="1 Thessalonians 5:10">that, whether we wake or sleep, we should live together with him</q> <cite class="rr">1 Thessalonians 5:10</cite></p>
       </div>
 
       <div class="ladder" aria-labelledby="ladderTitle">
@@ -1243,22 +1270,22 @@ footer.foot .home{margin-top:10px}
         <div class="answers" aria-live="polite">
           <p class="ans-none">Your answer will show here, with the verse it rests on.</p>
           <div class="ans" id="ans-die"><h4>I sinned and died before I asked</h4>
-            <p>You go home. You aren’t kept by the speed of your apologies. You’re kept by him: <q data-v="John 10:28">they shall never perish, neither shall any man pluck them out of my hand</q> (John 10:28). The thief on the cross had no time to confess anything after “remember me,” and he was in paradise that day.</p>
+            <p>You go home. You aren’t kept by the speed of your apologies. You’re kept by him: <q class="lv esv-skip" data-verse="John 10:28">they shall never perish, neither shall any man pluck them out of my hand</q> <cite class="rr">John 10:28</cite> The thief on the cross had no time to confess anything after “remember me,” and he was in paradise that day.</p>
             <a class="more" href="#die">If I sin and die before I ask</a></div>
           <div class="ans" id="ans-feel"><h4>I don’t feel saved</h4>
-            <p>Feelings report on your soul, which is still being renewed. Your standing is a fact about your spirit. John wrote a whole letter so that believers <q data-v="1 John 5:13">may know that ye have eternal life</q> (1 John 5:13), from what God said, not from how today felt.</p>
+            <p>Feelings report on your soul, which is still being renewed. Your standing is a fact about your spirit. John wrote a whole letter to settle that question, and said so: <q class="lv esv-skip" data-verse="1 John 5:13">may know that ye have eternal life</q> <cite class="rr">1 John 5:13</cite> Known from what God said, not from how today felt.</p>
             <a class="more" href="#tenses">Three tenses of one rescue</a></div>
           <div class="ans" id="ans-again"><h4>I keep doing the same thing</h4>
-            <p>Then you’re in Romans 7, which sits between Romans 6 and 8 on purpose. The flesh is well practised, but your wanting has changed sides. Look up, not in: <q data-v="1 John 2:1">we have an advocate with the Father</q> (1 John 2:1).</p>
+            <p>Then you’re in Romans 7, which sits between Romans 6 and 8 on purpose. The flesh is well practised, but your wanting has changed sides. Look up, not in: <q class="lv esv-skip" data-verse="1 John 2:1">we have an advocate with the Father</q> <cite class="rr">1 John 2:1</cite></p>
             <a class="more" href="#six-seven-eight">Romans 6, 7 and 8</a></div>
           <div class="ans" id="ans-fear"><h4>I’m afraid I committed the unforgivable sin</h4>
-            <p>You haven’t. That sin is a settled refusal of the Spirit’s witness to Jesus, and the person committing it isn’t afraid of it. Your fear is the Spirit still speaking, and you still listening. <q data-v="John 6:37">him that cometh to me I will in no wise cast out</q> (John 6:37).</p>
+            <p>You haven’t. That sin is a settled refusal of the Spirit’s witness to Jesus, and the person committing it isn’t afraid of it. Your fear is the Spirit still speaking, and you still listening. <q class="lv esv-skip" data-verse="John 6:37">him that cometh to me I will in no wise cast out</q> <cite class="rr">John 6:37</cite></p>
             <a class="more" href="#readings">Three readings, one agreement</a></div>
           <div class="ans" id="ans-daily"><h4>Do I have to confess every day?</h4>
-            <p>Confess, yes. It’s honest, it’s good, and it keeps you close. But confession isn’t what keeps you saved. The forgiveness was given once, for all of it: <q data-v="Hebrews 10:18">where remission of these is, there is no more offering for sin</q> (Hebrews 10:18).</p>
+            <p>Confess, yes. It’s honest, it’s good, and it keeps you close. But confession isn’t what keeps you saved. The forgiveness was given once, for all of it: <q class="lv esv-skip" data-verse="Hebrews 10:18">where remission of these is, there is no more offering for sin</q> <cite class="rr">Hebrews 10:18</cite></p>
             <a class="more" href="#confess">What 1 John 1:9 means</a></div>
           <div class="ans" id="ans-lose"><h4>Can I lose it?</h4>
-            <p>This is the most disputed question on the page, and both sides are shown below. We hold that those born of God are kept: <q data-v="Philippians 1:6">he which hath begun a good work in you will perform it until the day of Jesus Christ</q> (Philippians 1:6).</p>
+            <p>This is the most disputed question on the page, and both sides are shown below. We hold that those born of God are kept: <q class="lv esv-skip" data-verse="Philippians 1:6">he which hath begun a good work in you will perform it until the day of Jesus Christ</q> <cite class="rr">Philippians 1:6</cite></p>
             <a class="more" href="#lose">Both sides, at full strength</a></div>
         </div>
       </div>
@@ -1269,12 +1296,12 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="Hebrews 10:12">after he had offered one sacrifice for sins for ever, sat down</q> <span class="r">Hebrews 10:12</span></li>
-                <li><q data-v="Hebrews 10:17">their sins and iniquities will I remember no more</q> <span class="r">Hebrews 10:17</span></li>
-                <li><q data-v="Hebrews 10:18">where remission of these is, there is no more offering for sin</q> <span class="r">Hebrews 10:18</span></li>
-                <li><q data-v="Hebrews 9:26">once in the end of the world hath he appeared to put away sin by the sacrifice of himself</q> <span class="r">Hebrews 9:26</span></li>
-                <li><q data-v="Psalms 103:12">As far as the east is from the west, so far hath he removed our transgressions from us</q> <span class="r">Psalm 103:12</span></li>
-                <li><q data-v="Romans 4:8">Blessed is the man to whom the Lord will not impute sin</q> <span class="r">Romans 4:8</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 10:12">after he had offered one sacrifice for sins for ever, sat down</q> <span class="r">Hebrews 10:12</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 10:17">their sins and iniquities will I remember no more</q> <span class="r">Hebrews 10:17</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 10:18">where remission of these is, there is no more offering for sin</q> <span class="r">Hebrews 10:18</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 9:26">once in the end of the world hath he appeared to put away sin by the sacrifice of himself</q> <span class="r">Hebrews 9:26</span></li>
+                <li><q class="lv esv-skip" data-verse="Psalms 103:12">As far as the east is from the west, so far hath he removed our transgressions from us</q> <span class="r">Psalm 103:12</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 4:8">Blessed is the man to whom the Lord will not impute sin</q> <span class="r">Romans 4:8</span></li>
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
@@ -1293,7 +1320,7 @@ footer.foot .home{margin-top:10px}
             <div class="m d"><span class="m-l">Where Christians differ</span>
               <ul class="qlist">
                 <li><b>Fellowship.</b> Your salvation is settled, but confessing each sin restores closeness with God and receives fresh forgiveness for it. This is the most common evangelical reading, and many Christians live it well.</li>
-                <li><b>An invitation in.</b> John is writing to a mixed room that includes people who say <q data-v="1 John 1:8">we have no sin</q> (1 John 1:8). Verse 9 is the door in for them. To believers he writes <q data-v="1 John 2:12">your sins are forgiven you for his name's sake</q> (1 John 2:12).</li>
+                <li><b>An invitation in.</b> John is writing to a mixed room, and verse 8 is aimed at the people in it who claim to be clean already: <q class="lv esv-skip" data-verse="1 John 1:8">we have no sin</q> <cite class="rr">1 John 1:8</cite> Verse 9 is the door in for them. To the believers in the room he writes something else: <q class="lv esv-skip" data-verse="1 John 2:12">your sins are forgiven you for his name’s sake</q> <cite class="rr">1 John 2:12</cite></li>
                 <li><b>Agreement.</b> The Greek for confess, <span class="gk">homologeō</span>, means to say the same thing. Confessing is agreeing with God about what happened, not paying for it.</li>
               </ul>
             </div>
@@ -1307,13 +1334,13 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">The Lord’s Prayer, and the servant who wouldn’t forgive</span><span class="chips"><span class="mk t">Text</span><span class="mk d">Disputed</span><span class="mk r">Reading</span></span><span class="teaser">“Forgive us, as we forgive.” Before the cross, and after it.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="Matthew 6:12">forgive us our debts, as we forgive our debtors</q>, and then <q data-v="Matthew 6:15">if ye forgive not men their trespasses, neither will your Father forgive your trespasses</q> (Matthew 6:12, 6:15). The parable of the unforgiving servant ends the same way (Matthew 18:23-35).</p>
+              <p>The prayer he taught asks for it on a condition: <q class="lv esv-skip" data-verse="Matthew 6:12">forgive us our debts, as we forgive our debtors</q> <cite class="rr">Matthew 6:12</cite> And three verses on, the condition is stated the other way round: <q class="lv esv-skip" data-verse="Matthew 6:15">if ye forgive not men their trespasses, neither will your Father forgive your trespasses</q> <cite class="rr">Matthew 6:15</cite> The parable of the unforgiving servant ends the same way (Matthew 18:23-35).</p>
             </div>
             <div class="m d"><span class="m-l">Where Christians differ</span>
               <p>Some read Matthew 6:15 as a standing condition: God’s forgiveness depends on your forgiving others. Others note Jesus taught it before the cross, and read it as describing what a forgiven person becomes.</p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
-              <p>We read it through Paul, writing after the cross: <q data-v="Ephesians 4:32">forgiving one another, even as God for Christ's sake hath forgiven you</q> (Ephesians 4:32). Forgiven, therefore forgive. Not forgive, in order to be forgiven.</p>
+              <p>We read it through Paul, writing after the cross: <q class="lv esv-skip" data-verse="Ephesians 4:32">forgiving one another, even as God for Christ's sake hath forgiven you</q> <cite class="rr">Ephesians 4:32</cite> Forgiven, therefore forgive. Not forgive, in order to be forgiven.</p>
               <p>An unforgiving believer is a real problem. But it’s a symptom of forgetting the debt, not a trapdoor.</p>
             </div>
           </div></div>
@@ -1323,15 +1350,15 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="Romans 8:38">neither death, nor life</q>, nothing <q data-v="Romans 8:39">shall be able to separate us from the love of God, which is in Christ Jesus our Lord</q> <span class="r">Romans 8:38-39</span></li>
-                <li><q data-v="John 5:24">shall not come into condemnation; but is passed from death unto life</q> <span class="r">John 5:24</span></li>
-                <li><q data-v="Hebrews 7:25">he ever liveth to make intercession for them</q> <span class="r">Hebrews 7:25</span></li>
-                <li><q data-v="Jude 1:24">Now unto him that is able to keep you from falling</q> <span class="r">Jude 24</span></li>
+                <li><q class="lv esv-skip" data-verse="Romans 8:38">neither death, nor life</q> <q class="lv esv-skip" data-verse="Romans 8:39">shall be able to separate us from the love of God, which is in Christ Jesus our Lord</q> <span class="r">Romans 8:38-39</span></li>
+                <li><q class="lv esv-skip" data-verse="John 5:24">shall not come into condemnation; but is passed from death unto life</q> <span class="r">John 5:24</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 7:25">he ever liveth to make intercession for them</q> <span class="r">Hebrews 7:25</span></li>
+                <li><q class="lv esv-skip" data-verse="Jude 1:24">Now unto him that is able to keep you from falling</q> <span class="r">Jude 24</span></li>
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>A salvation that could be lost in the gap between a sin and a prayer would be salvation by works, on a timer.</p>
-              <p>The thief on the cross had no time to confess anything after <q data-v="Luke 23:42">Lord, remember me</q>. He was in paradise that day. You aren’t kept by how quickly you apologise. You’re kept by him.</p>
+              <p>The thief on the cross got one sentence out: <q class="lv esv-skip" data-verse="Luke 23:42">Lord, remember me</q> <cite class="rr">Luke 23:42</cite> There was no time to confess anything after it. He was in paradise that day. You aren’t kept by how quickly you apologise. You’re kept by him.</p>
             </div>
           </div></div>
         </details>
@@ -1341,17 +1368,17 @@ footer.foot .home{margin-top:10px}
             <div class="m t"><span class="m-l">The text</span>
               <div class="two-col">
                 <div><h4>Kept</h4><ul class="qlist">
-                  <li><q data-v="John 6:37">him that cometh to me I will in no wise cast out</q> <span class="r">John 6:37</span></li>
-                  <li><q data-v="John 10:28">they shall never perish</q> <span class="r">John 10:28</span></li>
-                  <li><q data-v="Philippians 1:6">he which hath begun a good work in you will perform it</q> <span class="r">Philippians 1:6</span></li>
-                  <li>Sealed until the day of redemption <span class="r">Ephesians 1:13-14</span></li>
-                  <li>Nothing can separate <span class="r">Romans 8:29-39</span></li>
+                  <li><q class="lv esv-skip" data-verse="John 6:37">him that cometh to me I will in no wise cast out</q> <span class="r">John 6:37</span></li>
+                  <li><q class="lv esv-skip" data-verse="John 10:28">they shall never perish</q> <span class="r">John 10:28</span></li>
+                  <li><q class="lv esv-skip" data-verse="Philippians 1:6">he which hath begun a good work in you will perform it</q> <span class="r">Philippians 1:6</span></li>
+                  <li><q class="lv esv-skip" data-verse="Ephesians 1:13-14"></q> <span class="r">Ephesians 1:13-14</span></li>
+                  <li><q class="lv esv-skip" data-verse="Romans 8:38-39"></q> <span class="r">Romans 8:38-39</span></li>
                 </ul></div>
                 <div><h4>Can be walked away from</h4><ul class="qlist">
-                  <li><q data-v="Hebrews 6:6">If they shall fall away, to renew them again unto repentance</q> <span class="r">Hebrews 6:4-6</span></li>
-                  <li><q data-v="Hebrews 10:26">if we sin wilfully after that we have received the knowledge of the truth, there remaineth no more sacrifice for sins</q> <span class="r">Hebrews 10:26</span></li>
-                  <li><q data-v="John 15:6">If a man abide not in me, he is cast forth as a branch</q> <span class="r">John 15:6</span></li>
-                  <li><q data-v="Romans 11:22">otherwise thou also shalt be cut off</q> <span class="r">Romans 11:22</span></li>
+                  <li><q class="lv esv-skip" data-verse="Hebrews 6:6">If they shall fall away, to renew them again unto repentance</q> <span class="r">Hebrews 6:4-6</span></li>
+                  <li><q class="lv esv-skip" data-verse="Hebrews 10:26">if we sin wilfully after that we have received the knowledge of the truth, there remaineth no more sacrifice for sins</q> <span class="r">Hebrews 10:26</span></li>
+                  <li><q class="lv esv-skip" data-verse="John 15:6">If a man abide not in me, he is cast forth as a branch</q> <span class="r">John 15:6</span></li>
+                  <li><q class="lv esv-skip" data-verse="Romans 11:22">otherwise thou also shalt be cut off</q> <span class="r">Romans 11:22</span></li>
                 </ul></div>
               </div>
             </div>
@@ -1377,9 +1404,9 @@ footer.foot .home{margin-top:10px}
       <h2 class="h">How do I live it out?</h2>
       <div class="top">
         <p class="lede">Not by trying harder. By believing what’s already true, and moving from there.</p>
-        <p><q data-v="Romans 6:11">reckon ye also yourselves to be dead indeed unto sin, but alive unto God</q> (Romans 6:11): count it so.</p>
-        <p><q data-v="Galatians 5:16">Walk in the Spirit, and ye shall not fulfil the lust of the flesh</q> (Galatians 5:16): that’s a promise, not a threat.</p>
-        <p><q data-v="Philippians 2:12">work out your own salvation</q>, <q data-v="Philippians 2:13">For it is God which worketh in you</q> (Philippians 2:12-13): out, not for.</p>
+        <p><q class="lv esv-skip" data-verse="Romans 6:11">reckon ye also yourselves to be dead indeed unto sin, but alive unto God</q> <cite class="rr">Romans 6:11</cite> Count it so.</p>
+        <p><q class="lv esv-skip" data-verse="Galatians 5:16">Walk in the Spirit, and ye shall not fulfil the lust of the flesh</q> <cite class="rr">Galatians 5:16</cite> That’s a promise, not a threat.</p>
+        <p><q class="lv esv-skip" data-verse="Philippians 2:12">work out your own salvation</q> <q class="lv esv-skip" data-verse="Philippians 2:13">For it is God which worketh in you</q> <cite class="rr">Philippians 2:12-13</cite> Out, not for.</p>
         <p>You aren’t becoming God’s child by behaving. You’re learning to behave like the child you already are.</p>
       </div>
       <div class="drawers">
@@ -1401,10 +1428,10 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text, and what each verb asks</span>
               <ul class="qlist">
-                <li><b>Reckon.</b> <q data-v="Romans 6:11">reckon ye also yourselves to be dead indeed unto sin</q> <span class="r">Romans 6:11</span><br>Count what God says as true, before you feel it.</li>
-                <li><b>Yield.</b> <q data-v="Romans 6:13">yield yourselves unto God, as those that are alive from the dead</q> <span class="r">Romans 6:13</span><br>Report to your new master, like a freed man turning up for his first day.</li>
-                <li><b>Walk.</b> <q data-v="Galatians 5:25">If we live in the Spirit, let us also walk in the Spirit</q> <span class="r">Galatians 5:25</span><br>One step, then another. Walking is ordinary.</li>
-                <li><b>Abide.</b> <q data-v="John 15:4">As the branch cannot bear fruit of itself, except it abide in the vine; no more can ye, except ye abide in me</q> <span class="r">John 15:4</span><br>Fruit is what a branch does when it stays attached.</li>
+                <li><b>Reckon.</b> <q class="lv esv-skip" data-verse="Romans 6:11">reckon ye also yourselves to be dead indeed unto sin</q> <span class="r">Romans 6:11</span><br>Count what God says as true, before you feel it.</li>
+                <li><b>Yield.</b> <q class="lv esv-skip" data-verse="Romans 6:13">yield yourselves unto God, as those that are alive from the dead</q> <span class="r">Romans 6:13</span><br>Report to your new master, like a freed man turning up for his first day.</li>
+                <li><b>Walk.</b> <q class="lv esv-skip" data-verse="Galatians 5:25">If we live in the Spirit, let us also walk in the Spirit</q> <span class="r">Galatians 5:25</span><br>One step, then another. Walking is ordinary.</li>
+                <li><b>Abide.</b> <q class="lv esv-skip" data-verse="John 15:4">As the branch cannot bear fruit of itself, except it abide in the vine; no more can ye, except ye abide in me</q> <span class="r">John 15:4</span><br>Fruit is what a branch does when it stays attached.</li>
               </ul>
             </div>
           </div></div>
@@ -1414,9 +1441,9 @@ footer.foot .home{margin-top:10px}
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
               <ul class="qlist">
-                <li><q data-v="1 John 2:1">if any man sin, we have an advocate with the Father</q> <span class="r">1 John 2:1</span></li>
-                <li><q data-v="Hebrews 4:16">Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need</q> <span class="r">Hebrews 4:16</span></li>
-                <li><q data-v="Proverbs 24:16">For a just man falleth seven times, and riseth up again</q> <span class="r">Proverbs 24:16</span></li>
+                <li><q class="lv esv-skip" data-verse="1 John 2:1">if any man sin, we have an advocate with the Father</q> <span class="r">1 John 2:1</span></li>
+                <li><q class="lv esv-skip" data-verse="Hebrews 4:16">Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need</q> <span class="r">Hebrews 4:16</span></li>
+                <li><q class="lv esv-skip" data-verse="Proverbs 24:16">For a just man falleth seven times, and riseth up again</q> <span class="r">Proverbs 24:16</span></li>
               </ul>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
@@ -1429,7 +1456,7 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">Renewing the mind is the slow part</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">The soul catches up at the speed of looking at him.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="2 Corinthians 3:18">beholding as in a glass the glory of the Lord, are changed into the same image from glory to glory</q> (2 Corinthians 3:18).</p>
+              <p><q class="lv esv-skip" data-verse="2 Corinthians 3:18">beholding as in a glass the glory of the Lord, are changed into the same image from glory to glory</q> <cite class="rr">2 Corinthians 3:18</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>Change comes from looking at him, not from inspecting your progress.</p>
@@ -1441,7 +1468,7 @@ footer.foot .home{margin-top:10px}
           <summary class="esv-skip"><span class="st"><span class="dt">What it looks like from the outside</span><span class="chips"><span class="mk t">Text</span><span class="mk r">Reading</span></span><span class="teaser">Fruit, singular, and it belongs to the Spirit.</span></span><span class="plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg></span></summary>
           <div class="deep-body"><div class="deep-in">
             <div class="m t"><span class="m-l">The text</span>
-              <p><q data-v="Galatians 5:22">But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith</q>, <q data-v="Galatians 5:23">Meekness, temperance</q> (Galatians 5:22-23).</p>
+              <p><q class="lv esv-skip" data-verse="Galatians 5:22">But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith</q> <q class="lv esv-skip" data-verse="Galatians 5:23">Meekness, temperance</q> <cite class="rr">Galatians 5:22-23</cite></p>
             </div>
             <div class="m r"><span class="m-l">Our reading</span>
               <p>It’s one fruit, not nine, and it’s the Spirit’s, not yours. The list describes someone who is safe. It isn’t the exam you pass to become safe.</p>
@@ -1510,7 +1537,7 @@ footer.foot .home{margin-top:10px}
 
 <footer class="foot">
   <div class="page">
-    <p>Passages written out in full, and every reference you tap, read in the translation chosen at the top of the page: NIV unless you pick NASB, NLT or TPT. The short quotations in the running text are from the King James Version, which is in the public domain.</p>
+    <p>Every passage on this page is written out in full and read in the translation chosen at the top of the page: NIV unless you pick NASB, NLT or TPT. That includes the quotations in the running text, the lists, and every reference you tap. The King James Version, which is in the public domain, is baked into the page as the reading for browsers without JavaScript, and as the fallback if a translation can’t be fetched — where it stands in, it is labelled.</p>
     <a class="home" href="https://esmrsky.github.io/">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V3h12v18"/><path d="M6 3l6 2.2V21" /><circle cx="10.4" cy="12.4" r=".6" fill="currentColor"/></svg>
       Back to esmrsky
@@ -1618,22 +1645,22 @@ if (lad){
 addEventListener("beforeprint", function(){ d.querySelectorAll("details").forEach(function(x){ x.open = true; }); });
 
 /* ---- the scripture layer ------------------------------------------------ */
-/* Written-out passages and every tapped reference read in the chosen translation,
-   NIV unless the reader picks NASB, NLT or TPT. The passages are baked in the KJV
-   only as a fallback for when the text can't be fetched. */
+/* Every passage on this page — the set pieces, the quotations in the running text
+   and the lists alike — is a [data-verse] slot the picker fills, written out in
+   full and read in the chosen translation: NIV unless the reader picks NASB, NLT
+   or TPT. What is baked into the markup is the King James, which is public
+   domain. That copy is the page without JavaScript, and the fallback when the
+   text can't be fetched; it says so, in the slot, when it stands in. */
 var S = window.EsmrskyScripture;
 if (S){
   S.init({ key:"salvation", scan:"#read", versions:["NIV","NASB","NLT","TPT"] });
   var host = d.getElementById("pickerHost");
   if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses read in"); }
 
-  var decode = function(t){
-    t = String(t || "");
-    if (t.indexOf("&") === -1) return t;
-    var ta = d.createElement("textarea"); ta.innerHTML = t; return ta.value;
-  };
+  /* bolls ships some passages with the printed section heading on its own first
+     line. It is the publisher's furniture, not the verse, so it goes. */
   var stripHeading = function(text){
-    var parts = decode(text).split("\n");
+    var parts = String(text || "").split("\n");
     if (parts.length > 1){
       var head = parts[0].trim();
       if (head && head.length < 60 && !/[.!?”’:;,]$/.test(head)) parts.shift();
@@ -1642,25 +1669,59 @@ if (S){
   };
   /* the client resolves failures to a sentence rather than rejecting */
   var FAILED = /^(Reference not recognized|Verse not found|Could not retrieve)/;
-  var blocks = d.querySelectorAll(".vb[data-verse]");
-  blocks.forEach(function(b){ b.dataset.kjv = b.querySelector(".vtext").textContent; });
+
+  var slots = [].slice.call(d.querySelectorAll("[data-verse]"));
+  slots.forEach(function(el){
+    el._t = el.querySelector(".vtext") || el;
+    el._tag = el.querySelector(".vver");
+    el._kjv = el._t.innerHTML.trim();
+  });
+
   var gen = 0;
+  var fill = function(el){
+    var v = S.getVersion(), g = gen, t = el._t, tag = el._tag;
+    S.loadVerse(el.dataset.verse, v).then(function(raw){
+      if (g !== gen) return;
+      var note = "";
+      var cut = String(raw).indexOf('<span class="esv-note">');
+      if (cut > -1){ note = raw.slice(cut).replace(/<[^>]+>/g, "").trim(); raw = raw.slice(0, cut); }
+      var text = stripHeading(raw);
+      t.classList.add("is-live");
+      if (!text || FAILED.test(text)){
+        /* Never pass the King James off as the translation that was asked for.
+           The set pieces carry a caption that can say so; a quotation in the
+           running text gets a mark of its own, because a title attribute is
+           nothing at all on a phone. */
+        t.innerHTML = el._kjv
+          ? el._kjv + (tag ? "" : ' <span class="lv-mark">KJV</span>')
+          : '<span class="lv-off">' + v + " unavailable</span>";
+        if (tag) tag.textContent = el._kjv ? "KJV, " + v + " unavailable" : v + " unavailable";
+        else if (el._kjv) el.title = "King James Version — " + v + " could not be loaded";
+        return;
+      }
+      el.removeAttribute("title");
+      t.innerHTML = text;
+      if (tag) tag.textContent = note ? note : v;
+    });
+  };
+
+  /* Two hundred slots across some seventy chapters is not a page load's worth of
+     requests, and most of them start inside a closed drawer. So a slot is fetched
+     when it is about to be seen, and again only if the translation changes. */
+  var seen = ("IntersectionObserver" in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      seen.unobserve(e.target);
+      fill(e.target);
+    });
+  }, { rootMargin: "400px 0px" }) : null;
+
   var paint = function(){
-    var v = S.getVersion(), g = ++gen;
-    blocks.forEach(function(b){
-      var t = b.querySelector(".vtext"), tag = b.querySelector(".vver");
-      t.classList.add("is-loading");
-      S.loadVerse(b.dataset.verse, v).then(function(raw){
-        if (g !== gen) return;
-        var note = "";
-        var cut = String(raw).indexOf('<span class="esv-note">');
-        if (cut > -1){ note = raw.slice(cut).replace(/<[^>]+>/g, "").trim(); raw = raw.slice(0, cut); }
-        var text = stripHeading(raw);
-        t.classList.remove("is-loading");
-        if (!text || FAILED.test(text)){ t.textContent = b.dataset.kjv; tag.textContent = "KJV, " + v + " unavailable"; return; }
-        t.textContent = text;
-        tag.textContent = note ? note : v;
-      });
+    gen++;
+    slots.forEach(function(el){
+      if (!seen){ fill(el); return; }
+      seen.unobserve(el);
+      seen.observe(el);
     });
   };
   paint();

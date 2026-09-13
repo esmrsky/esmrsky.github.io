@@ -551,6 +551,95 @@
   var ctxReq = 0;
   var ctxPicker = null;
 
+  /* ----------------------------------------------------- background scroll */
+  /* A pop-up that lets the page slide about underneath it reads as a fault: the
+     thing you opened drifts off while the text behind it moves. So whenever the
+     context dialog is open, or a verse pop-up is pinned, the document is held
+     still and the scrolling happens inside the viewer.
+
+     `position: fixed` on the body, rather than `overflow: hidden`, is what iOS
+     actually honours. Offsetting the body by the scroll position we froze at
+     keeps the view exactly where it was, and keeps the pop-up there too: it is
+     absolutely positioned in document coordinates, and a body pinned at
+     -scrollY puts those coordinates back under the same pixels.
+
+     The depth counter matters because "see in context" locks the dialog while
+     the pop-up that opened it is still unlocking on its 200ms timer. */
+  var lockDepth = 0;
+  var lockTop = 0;
+  var lockLeft = 0;
+  var lockPrev = null;
+  var tipLocked = false;
+  var ctxLocked = false;
+
+  /* While the body is fixed the window reports a scroll of 0, so anything that
+     positions against the document has to ask for the frozen offset instead. */
+  function docScrollY() { return lockDepth ? lockTop : (window.scrollY || window.pageYOffset || 0); }
+  function docScrollX() { return lockDepth ? lockLeft : (window.scrollX || window.pageXOffset || 0); }
+
+  function lockScroll() {
+    if (lockDepth++) return;
+    var doc = document.documentElement;
+    var body = document.body;
+    lockTop = window.scrollY || window.pageYOffset || 0;
+    lockLeft = window.scrollX || window.pageXOffset || 0;
+    /* Taking the scrollbar away would shift the whole page sideways under the
+       pop-up, so its width is handed back as padding. */
+    var gutter = window.innerWidth - doc.clientWidth;
+    lockPrev = {
+      position: body.style.position, top: body.style.top, left: body.style.left,
+      right: body.style.right, paddingRight: body.style.paddingRight
+    };
+    body.style.position = 'fixed';
+    body.style.top = -lockTop + 'px';
+    body.style.left = -lockLeft + 'px';
+    body.style.right = '0';
+    if (gutter > 0) body.style.paddingRight = gutter + 'px';
+    doc.classList.add('esv-scroll-locked');
+  }
+
+  function unlockScroll() {
+    if (!lockDepth || --lockDepth) return;
+    var body = document.body;
+    if (lockPrev) {
+      body.style.position = lockPrev.position;
+      body.style.top = lockPrev.top;
+      body.style.left = lockPrev.left;
+      body.style.right = lockPrev.right;
+      body.style.paddingRight = lockPrev.paddingRight;
+      lockPrev = null;
+    }
+    document.documentElement.classList.remove('esv-scroll-locked');
+    /* Pages set `scroll-behavior: smooth`, which would animate the restore into
+       a visible lurch. Ask for the jump, and fall back where the enum is unknown. */
+    try { window.scrollTo({ top: lockTop, left: lockLeft, behavior: 'instant' }); }
+    catch (e) { window.scrollTo(lockLeft, lockTop); }
+  }
+
+  function setTipLock(on) { if (on !== tipLocked) { tipLocked = on; if (on) lockScroll(); else unlockScroll(); } }
+  function setCtxLock(on) { if (on !== ctxLocked) { ctxLocked = on; if (on) lockScroll(); else unlockScroll(); } }
+
+  /* The estate's pages own every colour, font and radius the pop-ups use. These
+     rules are not that: they are the scrolling behaviour itself, and every page
+     that loads this file wants them, so they ship with it. Appended to <head>
+     after the host's own <style>, so an equal-specificity rule there still wins
+     on anything it actually sets. */
+  var BEHAVIOUR_CSS =
+    'html.esv-scroll-locked{overflow:hidden!important}' +
+    '.esv-tip{max-height:min(70dvh,620px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
+    /* so "see in context" stays reachable once the verse starts scrolling */
+    '.esv-tip-actions{position:sticky;bottom:0;background:inherit}' +
+    '.esv-ctx,.esv-ctx-body,.esv-pick-menu{overscroll-behavior:contain}' +
+    '.esv-ctx-body{-webkit-overflow-scrolling:touch}';
+
+  function ensureBehaviourCss() {
+    if (document.getElementById('esv-behaviour')) return;
+    var style = document.createElement('style');
+    style.id = 'esv-behaviour';
+    style.textContent = BEHAVIOUR_CSS;
+    (document.head || document.documentElement).appendChild(style);
+  }
+
   function fullTitle(ref) {
     var parsed = parseReference(ref);
     var table = isRu() ? RU_FULL_BY_ID : FULL_BY_ID;
@@ -566,13 +655,14 @@
 
   function position(anchor) {
     var rect = anchor.getBoundingClientRect();
-    var sy = window.scrollY || window.pageYOffset;
-    var sx = window.scrollX || window.pageXOffset;
+    var sy = docScrollY();
+    var sx = docScrollX();
     var width = Math.min(360, window.innerWidth - 28);
     /* Anchoring to the link's own edges lets the box grow when the verse arrives
        without moving: below it grows down, above translateY(-100%) grows it up. */
     var roomBelow = window.innerHeight - rect.bottom;
-    if (roomBelow > 200 || roomBelow > rect.top) {
+    var below = roomBelow > 200 || roomBelow > rect.top;
+    if (below) {
       tip.style.top = (sy + rect.bottom + 8) + 'px';
       tip.style.transform = 'none';
     } else {
@@ -580,6 +670,11 @@
       tip.style.transform = 'translateY(-100%)';
     }
     tip.style.left = Math.max(sx + 14, Math.min(sx + rect.left, sx + window.innerWidth - width - 14)) + 'px';
+    /* A pinned pop-up freezes the page, so anything of it hanging below the fold
+       would be unreachable — including its own buttons. Give it only the room it
+       actually has and let the verse scroll inside it. */
+    var room = (below ? roomBelow : rect.top) - 22;
+    tip.style.maxHeight = Math.max(168, Math.min(620, Math.round(window.innerHeight * 0.7), room)) + 'px';
   }
 
   function fill(ref, version, id) {
@@ -617,6 +712,10 @@
       t('Open', 'Открыть') + ' ↗</a></div>';
     tip.classList.toggle('is-pinned', pinned);
     tip.classList.add('open');
+    /* Positioned first, frozen second: locking zeroes the window's scroll, and a
+       pop-up measured after that would land at the top of the page. */
+    setTipLock(pinned);
+    tip.scrollTop = 0;
     fill(ref, active, id);
   }
 
@@ -624,6 +723,7 @@
     if (pinned && !force) return;
     tipTimer = setTimeout(function () {
       pinned = false;
+      setTipLock(false);
       tip.classList.remove('open');
       tip.classList.remove('is-pinned');
     }, 200);
@@ -685,6 +785,7 @@
       if (typeof dialog.showModal === 'function') dialog.showModal();
       else dialog.setAttribute('open', '');
     }
+    setCtxLock(true);
     refreshContext(false);
   }
 
@@ -749,7 +850,7 @@
       dialog.dataset.radius = String((parseInt(dialog.dataset.radius, 10) || 4) + 6);
       refreshContext(true);
     });
-    dialog.addEventListener('close', function () { if (ctxPicker) ctxPicker.close(); });
+    dialog.addEventListener('close', function () { setCtxLock(false); if (ctxPicker) ctxPicker.close(); });
     dialog.addEventListener('click', function (ev) { if (ev.target === dialog) dialog.close(); });
 
     /* The pop-up is positioned against the document, so it has to be re-anchored
@@ -779,6 +880,7 @@
       var saved = lsGet(cfg.key + '-scripture-version');
       if (saved && VERSIONS.some(function (v) { return v.code === saved; })) active = saved;
     }
+    ensureBehaviourCss();
     build();
     linkAll();
   }

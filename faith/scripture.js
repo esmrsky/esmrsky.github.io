@@ -556,6 +556,76 @@
   var tooltipEl = null;
   var tooltipTimer = null;
   var tooltipPinned = false;
+
+  /* ----------------------------------------------------- background scroll */
+  /* A pop-up that lets the page slide about underneath it reads as a fault. So
+     while the context dialog is open, or a verse pop-up is pinned, the document
+     is held still and the scrolling happens inside the viewer. `position: fixed`
+     on the body, rather than `overflow: hidden`, is what iOS honours; offsetting
+     it by the frozen scroll keeps the view — and the pop-up, which is positioned
+     in document coordinates — exactly where they were. The depth counter matters
+     because "see in context" locks the dialog while the pop-up that opened it is
+     still unlocking on its timer. */
+  var lockDepth = 0;
+  var lockTop = 0;
+  var lockLeft = 0;
+  var lockPrev = null;
+  var tipLocked = false;
+  var ctxLocked = false;
+
+  function docScrollY() { return lockDepth ? lockTop : (window.scrollY || window.pageYOffset || 0); }
+  function docScrollX() { return lockDepth ? lockLeft : (window.scrollX || window.pageXOffset || 0); }
+
+  function lockScroll() {
+    if (lockDepth++) return;
+    var doc = document.documentElement;
+    var body = document.body;
+    lockTop = window.scrollY || window.pageYOffset || 0;
+    lockLeft = window.scrollX || window.pageXOffset || 0;
+    var gutter = window.innerWidth - doc.clientWidth;
+    lockPrev = {
+      position: body.style.position, top: body.style.top, left: body.style.left,
+      right: body.style.right, paddingRight: body.style.paddingRight
+    };
+    body.style.position = 'fixed';
+    body.style.top = -lockTop + 'px';
+    body.style.left = -lockLeft + 'px';
+    body.style.right = '0';
+    if (gutter > 0) body.style.paddingRight = gutter + 'px';
+    doc.classList.add('esv-scroll-locked');
+  }
+
+  function unlockScroll() {
+    if (!lockDepth || --lockDepth) return;
+    var body = document.body;
+    if (lockPrev) {
+      body.style.position = lockPrev.position;
+      body.style.top = lockPrev.top;
+      body.style.left = lockPrev.left;
+      body.style.right = lockPrev.right;
+      body.style.paddingRight = lockPrev.paddingRight;
+      lockPrev = null;
+    }
+    document.documentElement.classList.remove('esv-scroll-locked');
+    try { window.scrollTo({ top: lockTop, left: lockLeft, behavior: 'instant' }); }
+    catch (e) { window.scrollTo(lockLeft, lockTop); }
+  }
+
+  function setTipLock(on) { if (on !== tipLocked) { tipLocked = on; if (on) lockScroll(); else unlockScroll(); } }
+  function setCtxLock(on) { if (on !== ctxLocked) { ctxLocked = on; if (on) lockScroll(); else unlockScroll(); } }
+
+  function ensureScrollBehaviourCss() {
+    if (document.getElementById('esv-behaviour')) return;
+    var style = document.createElement('style');
+    style.id = 'esv-behaviour';
+    style.textContent =
+      'html.esv-scroll-locked{overflow:hidden!important}' +
+      '.verse-tooltip{max-height:min(70dvh,620px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
+      '.tooltip-actions,.verse-tooltip-actions{position:sticky;bottom:0;background:inherit}' +
+      '.verse-context-dialog,.context-dialog-body,.verpick-menu{overscroll-behavior:contain}' +
+      '.context-dialog-body{-webkit-overflow-scrolling:touch}';
+    (document.head || document.documentElement).appendChild(style);
+  }
   var tooltipRequestId = 0;
   var tooltipLink = null;
   var tooltipRef = '';
@@ -837,6 +907,7 @@
       refreshVerseContext(true);
     });
     contextDialogEl.addEventListener('close', function () {
+      setCtxLock(false);
       if (contextVersionPicker) contextVersionPicker.close();
     });
     contextDialogEl.addEventListener('click', function (ev) {
@@ -852,8 +923,8 @@
 
   function positionTooltip(link) {
     var rect = link.getBoundingClientRect();
-    var scrollY = window.scrollY || window.pageYOffset;
-    var scrollX = window.scrollX || window.pageXOffset;
+    var scrollY = docScrollY();
+    var scrollX = docScrollX();
     var width = Math.min(350, window.innerWidth - 28);
     var roomBelow = window.innerHeight - rect.bottom;
     var below = roomBelow > 190 || roomBelow > rect.top;
@@ -865,6 +936,11 @@
       tooltipEl.style.transform = 'translateY(-100%)';
     }
     tooltipEl.style.left = Math.max(scrollX + 14, Math.min(scrollX + rect.left, scrollX + window.innerWidth - width - 14)) + 'px';
+    /* A pinned pop-up freezes the page, so anything of it hanging below the fold
+       would be unreachable — its own buttons included. Give it the room it has
+       and let the verse scroll inside it. */
+    var room = (below ? roomBelow : rect.top) - 22;
+    tooltipEl.style.maxHeight = Math.max(168, Math.min(620, Math.round(window.innerHeight * 0.7), room)) + 'px';
   }
 
   function fillTooltip(ref, version, requestId) {
@@ -905,6 +981,10 @@
       tooltipActionHtml(ref, version);
     tooltipEl.classList.toggle('is-pinned', tooltipPinned);
     tooltipEl.classList.add('open');
+    /* Positioned first, frozen second: locking zeroes the window's scroll, and a
+       pop-up measured after that would land at the top of the page. */
+    setTipLock(tooltipPinned);
+    tooltipEl.scrollTop = 0;
     fillTooltip(ref, version, requestId);
   }
 
@@ -912,6 +992,7 @@
     if (tooltipPinned && !force) return;
     tooltipTimer = setTimeout(function () {
       tooltipPinned = false;
+      setTipLock(false);
       tooltipEl.classList.remove('open');
       tooltipEl.classList.remove('is-pinned');
     }, HOVER_CAPABLE ? 60 : 200);
@@ -969,6 +1050,7 @@
       if (typeof contextDialogEl.showModal === 'function') contextDialogEl.showModal();
       else contextDialogEl.setAttribute('open', '');
     }
+    setCtxLock(true);
     contextDialogEl.focus({ preventScroll: true });
     refreshVerseContext(false);
   }
@@ -1041,6 +1123,7 @@
   function init() {
     var saved = lsGet('faith-version');
     if (saved && VERSIONS.some(function (v) { return v.code === saved; })) ACTIVE_VERSION = saved;
+    ensureScrollBehaviourCss();
     document.querySelectorAll('[data-autolink]').forEach(function (el) { autoLink(el); });
     initTooltip();
     initNavVersionPicker();

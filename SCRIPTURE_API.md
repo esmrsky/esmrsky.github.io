@@ -21,3 +21,49 @@ const passage = await window.ESMRSKY_SCRIPTURE_API.getPassage(111, 'JHN.3.16');
 ```
 
 `getPassage` expects a YouVersion Bible ID and a USFM reference. The public client never contains the YouVersion app key. Add any new production or preview origins to `ALLOWED_ORIGINS` in `/scripture-api/wrangler.jsonc` before deploying.
+
+## Live passages on a page
+
+A page that wants its scripture to follow the translation picker marks each
+passage with `data-verse` and lets the shared layer fill it:
+
+```html
+<q class="lv esv-skip" data-verse="Romans 5:8">…King James fallback…</q>
+```
+
+Three rules hold across the estate:
+
+1. **The markup holds the fallback, not the reading.** What ships in the file is
+   the King James, which is public domain. It is what a reader without
+   JavaScript gets, and what stands in when bolls.life can't be reached. Where
+   it stands in, the page says so — a caption reading `KJV, NIV unavailable`, or
+   a `KJV` mark on an inline quotation. It is never passed off as the
+   translation the reader chose.
+2. **`esv-skip` on the slot.** Scripture text is not somewhere the reference
+   auto-linker should go hunting; the reference beside the passage is what gets
+   linked.
+3. **Fetch when it is about to be seen.** `/salvation/` carries over two hundred
+   slots across some seventy chapters. Painting them all on load is a burst of
+   requests for text most readers never scroll to, so slots are observed and
+   filled as they come into view, and re-filled only when the picker changes.
+
+To bake a different translation into the markup — `/the-word/` and `/ecclesia/`
+ship NIV rather than KJV — run the generator from a machine that can reach
+bolls.life and read the diff before committing:
+
+```sh
+node tools/bake-verses.mjs salvation/index.html                 # dry run, NIV
+node tools/bake-verses.mjs salvation/index.html --write
+node tools/bake-verses.mjs salvation/index.html --version NASB --write
+```
+
+## Pop-ups hold the page still
+
+While the context dialog is open, or a verse pop-up is pinned, the document is
+frozen and the scrolling happens inside the viewer. The mechanism lives in
+`/assets/scripture-popover.js` (and its `faith/scripture.js` fork), so every page
+that loads the layer gets it: the body is pinned with `position: fixed` at the
+scroll offset it froze at, `overscroll-behavior: contain` stops the viewer's own
+scrolling chaining out to the page, and a pinned pop-up is capped to the room it
+actually has so nothing of it — its buttons included — can end up below a fold
+the reader can no longer scroll to.
