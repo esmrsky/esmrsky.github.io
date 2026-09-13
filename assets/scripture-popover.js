@@ -12,6 +12,8 @@
 
    Usage:
      EsmrskyScripture.init({ key: 'the-word', scan: '.source, .note b' });
+     EsmrskyScripture.init({ key: 'salvation', scan: '#read', versions: ['NIV', 'NASB', 'NLT', 'TPT'] });
+       (`versions` is optional: a subset in the page's order, first one is the default)
 */
 (function () {
   'use strict';
@@ -764,6 +766,14 @@
     cfg.scan = options.scan || '';
     cfg.lang = options.lang || document.documentElement.getAttribute('data-lang') || 'en';
     VERSIONS = isRu() ? RU_VERSIONS : EN_VERSIONS;
+    /* A page may offer a subset, in its own order; the first code is its default.
+       Unknown codes are ignored, and an empty result falls back to the full list. */
+    if (!isRu() && options.versions && options.versions.length) {
+      var offered = options.versions.map(function (code) {
+        return EN_VERSIONS.filter(function (v) { return v.code === code; })[0];
+      }).filter(Boolean);
+      if (offered.length) VERSIONS = offered;
+    }
     active = VERSIONS[0].code;
     if (!isRu()) {
       var saved = lsGet(cfg.key + '-scripture-version');

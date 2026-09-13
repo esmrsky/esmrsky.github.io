@@ -1100,7 +1100,7 @@ footer.foot .home{margin-top:10px}
               <figcaption class="vmeta"><span class="vref">Hebrews 10:14</span><span class="vver">KJV</span></figcaption>
             </figure>
             <div class="m t"><span class="m-l">The text</span>
-              <p>In Greek, “perfected” is <span class="gk">teteleiōken</span>, a perfect tense: finished, and it stays finished. “Them that are sanctified” is <span class="gk">tous hagiazomenous</span>, a present participle: those who are being made holy.</p>
+              <p>In Greek, the word for perfected is <span class="gk">teteleiōken</span>, a perfect tense: finished, and it stays finished. The word for the people is <span class="gk">tous hagiazomenous</span>, a present participle: those who are being made holy. Translations that say “are sanctified” are accurate, but they hide the tense.</p>
               <p>One offering, one group of people, one sentence. You are complete and in progress at the same time, and neither cancels the other.</p>
             </div>
           </div></div>
@@ -1510,7 +1510,7 @@ footer.foot .home{margin-top:10px}
 
 <footer class="foot">
   <div class="page">
-    <p>Scripture quoted in the running text is from the King James Version, which is in the public domain. Passages written out in full load in whichever translation you choose at the top of the page. Tap any reference to read it.</p>
+    <p>Passages written out in full, and every reference you tap, read in the translation chosen at the top of the page: NIV unless you pick NASB, NLT or TPT. The short quotations in the running text are from the King James Version, which is in the public domain.</p>
     <a class="home" href="https://esmrsky.github.io/">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V3h12v18"/><path d="M6 3l6 2.2V21" /><circle cx="10.4" cy="12.4" r=".6" fill="currentColor"/></svg>
       Back to esmrsky
@@ -1618,15 +1618,12 @@ if (lad){
 addEventListener("beforeprint", function(){ d.querySelectorAll("details").forEach(function(x){ x.open = true; }); });
 
 /* ---- the scripture layer ------------------------------------------------ */
-/* The running text quotes the KJV, so the page reads in the KJV until a reader
-   picks something else. The written-out passages are baked in KJV and only
-   fetched when another translation is chosen. */
+/* Written-out passages and every tapped reference read in the chosen translation,
+   NIV unless the reader picks NASB, NLT or TPT. The passages are baked in the KJV
+   only as a fallback for when the text can't be fetched. */
 var S = window.EsmrskyScripture;
 if (S){
-  var saved = null;
-  try { saved = localStorage.getItem("salvation-scripture-version"); } catch(e){}
-  S.init({ key:"salvation", scan:"#read" });
-  if (!saved) S.setVersion("KJV");
+  S.init({ key:"salvation", scan:"#read", versions:["NIV","NASB","NLT","TPT"] });
   var host = d.getElementById("pickerHost");
   if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses read in"); }
 
@@ -1643,6 +1640,8 @@ if (S){
     }
     return parts.join("\n").trim();
   };
+  /* the client resolves failures to a sentence rather than rejecting */
+  var FAILED = /^(Reference not recognized|Verse not found|Could not retrieve)/;
   var blocks = d.querySelectorAll(".vb[data-verse]");
   blocks.forEach(function(b){ b.dataset.kjv = b.querySelector(".vtext").textContent; });
   var gen = 0;
@@ -1650,13 +1649,17 @@ if (S){
     var v = S.getVersion(), g = ++gen;
     blocks.forEach(function(b){
       var t = b.querySelector(".vtext"), tag = b.querySelector(".vver");
-      if (v === "KJV"){ t.textContent = b.dataset.kjv; t.classList.remove("is-loading"); tag.textContent = "KJV"; return; }
       t.classList.add("is-loading");
-      S.loadVerse(b.dataset.verse, v).then(function(text){
+      S.loadVerse(b.dataset.verse, v).then(function(raw){
         if (g !== gen) return;
-        t.textContent = stripHeading(text);
+        var note = "";
+        var cut = String(raw).indexOf('<span class="esv-note">');
+        if (cut > -1){ note = raw.slice(cut).replace(/<[^>]+>/g, "").trim(); raw = raw.slice(0, cut); }
+        var text = stripHeading(raw);
         t.classList.remove("is-loading");
-        tag.textContent = v;
+        if (!text || FAILED.test(text)){ t.textContent = b.dataset.kjv; tag.textContent = "KJV, " + v + " unavailable"; return; }
+        t.textContent = text;
+        tag.textContent = note ? note : v;
       });
     });
   };
