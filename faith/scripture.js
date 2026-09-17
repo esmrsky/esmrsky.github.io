@@ -1058,6 +1058,27 @@
   /* ---------- live verses: [data-verse] blocks follow the picker ---------- */
   var liveVerseEls = [];
 
+  /* A whole verse brings its own speech marks, and the slot wraps it in another pair.
+     When speech opens the verse, the outer pair stands in for it. When a narrator
+     leads in ("He said, “Why…?”"), the speech nests as single quotes, and a quote
+     that runs on into the next verse is closed here. A verse that ends mid-sentence
+     ends on a full stop. */
+  function nestQuotes(text) {
+    var o = (text.match(/“/g) || []).length;
+    var c = (text.match(/”/g) || []).length;
+    var startQ = /^“/.test(text), endQ = /”$/.test(text);
+    if (startQ && (endQ ? o === c : o === c + 1)) {
+      text = text.replace(/^“/, '').replace(/”$/, '');
+    } else {
+      /* a close with no open belongs to speech begun in an earlier verse */
+      if (endQ && c > o) { text = text.slice(0, -1); c--; }
+      var runsOn = o > c;
+      text = text.replace(/“/g, '‘').replace(/”/g, '’');
+      if (runsOn) text += '’';
+    }
+    return text.replace(/[,;:](’?)$/, '.$1');
+  }
+
   function swapVerse(el, version) {
     var ref = el.dataset.verse;
     if (!ref) return;
@@ -1076,7 +1097,7 @@
       var parts = splitHeading(text.replace(/<span class="verse-fallback-note">[\s\S]*?<\/span>/, ''));
       var flowed = flowText(parts.body);
       var note = /verse-fallback-note/.test(text) ? TPT_FALLBACK_NOTE : '';
-      el.innerHTML = '“' + flowed.replace(/^[“"]+|[”"]+$/g, '') + '”' + note;
+      el.innerHTML = '“' + nestQuotes(flowed) + '”' + note;
       el.dataset.loaded = version;
       el.classList.remove('is-swapping');
     }).catch(function () {

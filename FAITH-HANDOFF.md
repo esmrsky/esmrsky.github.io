@@ -1,7 +1,7 @@
 # FAITH — handoff
 
 Working notes for `/faith/`, written to be picked up on a local machine. **State** is
-below; the *how* for the one open task is under [NIV in the running text](#the-open-task-niv-in-the-running-text).
+below; how the NIV pass was done is under [NIV in the running text](#done-niv-in-the-running-text).
 Companion docs: `SCRIPTURE_API.md` (the shared verse layer), `TRANSLATION-ROUTINE.md` (RU pass, unrelated).
 
 All paths are relative to the repo root.
@@ -13,9 +13,7 @@ All paths are relative to the repo root.
 | | |
 |---|---|
 | Live | `https://esmrsky.github.io/faith/` |
-| Published SHA | `2b9ea2c` on `main` |
-| Branch | `claude/logos-rhema-miracles-xaenuf` (identical to `main`) |
-| Pages build | run #248, success |
+| Published SHA | see `git log -- faith/` on `main` |
 | Page size | ~190 KB, 13 sections |
 
 Pages serves `main` directly — no workflow file, `.nojekyll` at root. Publishing is
@@ -78,92 +76,43 @@ Trauma Resusc Emerg Med 2020 · Tegmark decoherence estimate.
 
 ---
 
-## The open task: NIV in the running text
+## Done: NIV in the running text
 
-**The ask:** every verse on the page reads in the translation picked in the nav, which
-opens on NIV. **Status: half done, and the half that is missing cannot be done from a
-cloud session.**
+Every verse quoted on the page now follows the picker. There are 151 `data-verse` slots, up
+from 39. Each holds the **whole King James verse** as its fallback, because only a whole verse
+can be fetched. About 150 lead-ins were rewritten to introduce a verse rather than run into a
+clause, following `1af076f` on `/salvation/`. The footer hedge is gone.
 
-### What already works
+How it was done, so later edits keep the shape:
 
-`faith/scripture.js` sets `ACTIVE_VERSION = 'NIV'`. The 39 set-piece slots carrying
-`data-verse` are observed by `initLiveVerses()` and filled from bolls.life as they scroll
-into view, so they honour the picker today.
+- **Inline:** `(Ref): <em data-verse="Ref">“KJV whole verse.”</em>`. The reference comes
+  before the verse, so the verse ends the sentence with its own punctuation.
+  **Set pieces** (`.m-quote`, `.step-verse`) use `<span data-verse>`.
+- **Short lists, tables and callbacks** (the brief lists, the fear/faith mirror, a verse
+  already written out nearby) paraphrase with the reference and use **no quote marks**. The
+  reference still pops up in the reader's translation.
+- A King James verse that ends on `,` `;` or `:` ends on a full stop in the fallback.
+  `swapVerse()` does the same for the fetched text, and its new `nestQuotes()` turns a
+  verse's own speech marks into single quotes when a narrator leads in.
 
-### What does not
+**Stays King James on purpose:** the `#greek` word study quotes the King James with the Greek
+noun put back in ("the *logos* of God…"), and says so. Phrases worded the same in NIV
+("great faith", "their faith", "And God said") and the footer motto stay as they are.
 
-About 124 verses are quoted *inside sentences* as King James baked into the markup. They
-stay King James whatever the reader picks. This is the same defect `/salvation/` had
-before `1af076f`; read that commit message first, it is the spec for this job.
+**Manuscript differences the prose now names.** Don't "fix" these back to the King James
+wording. Each was checked against TR and Tischendorf on bolls.life:
+Romans 4:19 (TR *ou katenoēsen* "considered not"; the older text omits *ou*, so NIV has
+"faced the fact"). Mark 11:24 (TR *lambanete* "receive"; older *elabete* "have received",
+which is what the page's past-tense point rests on). Mark 11:23 ("say" three times in TR,
+twice in the shorter text). Matthew 17:20 (TR *apistia* "unbelief"; older *oligopistia*
+"little faith").
 
-| section | picker-following slots | inline, still KJV |
-|---|---|---|
-| `#ground` | 6 | 10 |
-| `#word` | 6 | 2 |
-| `#greek` | 2 | 16 |
-| `#fear` | 4 | 28 |
-| `#mechanics` | 1 | 12 |
-| `#jesus` | 3 | 18 |
-| `#cases` | 1 | 11 |
-| `#notyet` | 1 | 10 |
-| `#science` | 3 | 6 |
-| `#mechanism` | 3 | 1 |
-| `#miracles` | 0 | 0 |
-| `#authority` | 5 | 5 |
-| `#walk` | 2 | 5 |
-| **total** | **37** | **~124** |
+**Not done, deliberately:** baking NIV into the markup (`tools/bake-verses.mjs --write`). The
+fallback stays King James, as on `/salvation/`, because NIV is copyrighted. Also, that
+tool's inline branch drops the curly quotes, which `swapVerse()` expects.
 
-Counts are reproducible with the inventory script under **Verifying**. The two remaining
-`data-verse` slots (39 in total) sit in the `.grand` pull-quotes outside these sections. The
-inline column is an estimate: it counts curly-quoted runs of 25+ characters that have a
-scripture reference within ~160 characters, so it catches a little prose and misses a
-quotation whose reference is further away.
-
-### Why it is blocked in the cloud
-
-The egress gateway 403s `bolls.life` on CONNECT. That kills both halves:
-
-- `tools/bake-verses.mjs` needs it, and `SCRIPTURE_API.md` says to run it "from a machine
-  that can reach bolls.life."
-- The real fix needs whole-verse text per reference, because — as `1af076f` puts it — *a
-  clause quoted mid-sentence can't be swapped between translations: only a whole verse can
-  be fetched.* Of 183 distinct references cited inline, **38** have verified verse text
-  somewhere in this repo and **145** do not. Writing 145 verses from memory onto a
-  scripture site is not acceptable, so it was left.
-
-### Procedure, locally
-
-```sh
-# 0. confirm you can reach the API at all
-curl -s "https://bolls.life/get-text/NIV/45/10/" | head -c 200
-
-# 1. cheap win first — bake the 39 existing slots, read the diff, commit separately
-node tools/bake-verses.mjs faith/index.html            # dry run, NIV
-node tools/bake-verses.mjs faith/index.html --write
-git diff faith/index.html                              # the point of baking is that the
-                                                       # text is right when JS is not there
-```
-
-Then the inline pass, section by section from the table above (`#fear` and `#jesus` are the
-big ones). For each quotation:
-
-1. Decide whether a **whole verse** can stand where the clause stands. Usually it cannot —
-   rewrite the lead-in to introduce the verse rather than run into it. `1af076f` rewrote
-   about thirty lead-ins for 165 quotes; expect a similar ratio.
-2. Wrap it: `<span data-verse="Book C:V">“…KJV whole verse…”</span>`.
-   **Quote marks go inside the element.** `swapVerse()` sets
-   `el.innerHTML = '“' + text + '”'`, so the fallback must match that shape or the page
-   flickers from quoted to unquoted.
-3. Leave KJV in the markup as the fallback. That is deliberate estate policy — public
-   domain, and it is what a reader without JS gets.
-4. When a section is done, re-run the inventory script in **Verifying** below and watch
-   the inline count drop.
-
-Finally, revert the footer hedge in `faith/index.html` (the sentence beginning "Verses
-quoted inside a sentence are the King James") once the running text honours the picker.
-It exists only to stop the page claiming something it does not do.
-
----
+**Known limit:** bolls.life rate-limits (HTTP 429) a burst of chapter fetches. A slot whose
+fetch fails keeps its King James text. A reader scrolling normally stays well under the limit.
 
 ## Landmines
 
@@ -201,7 +150,7 @@ Inventory (drives the table above):
 python3 - <<'PY'
 import io, re
 s = io.open('faith/index.html', encoding='utf-8').read()
-stripped = re.sub(r'<(blockquote|q|span|p)[^>]*data-verse="[^"]*"[^>]*>.*?</\1>', '', s, flags=re.S)
+stripped = re.sub(r'<(blockquote|q|span|p|em)[^>]*data-verse="[^"]*"[^>]*>.*?</\1>', '', s, flags=re.S)
 print('picker-following slots:', len(re.findall(r'data-verse="', s)))
 print('quoted runs in prose  :', len(re.findall(r'“([^”]{25,})”', stripped)))
 PY
@@ -214,4 +163,4 @@ way — `chromium` is fine, force `.reveal` open first per landmine 4.
 
 ---
 
-*Last updated 2026-09-17 against `2b9ea2c`.*
+*Last updated September 17, 2026, after the NIV pass.*
