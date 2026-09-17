@@ -1,7 +1,7 @@
 /* ============================================================
    FAITH — scripture system
-   Ported from the-thread (esmrsky): bolls.life chapter API for
-   NIV/NASB/NKJV/NLT, the esmrsky scripture worker for TPT,
+   Ported from the-thread (esmrsky): the esmrsky scripture worker
+   (YouVersion) for NIV and TPT, bolls.life for NASB/NKJV/NLT,
    hover verse pop-ups, a click-to-open passage dialog, and a
    translation picker. Default version: NIV.
    ============================================================ */
@@ -411,14 +411,58 @@
     return !parsed || TPT_MISSING_BOOKS.indexOf(parsed.bookId) === -1;
   }
 
-  function getBollsChapter(version, bookId, chapter) {
+  /* NIV comes from YouVersion through the Worker: the current NIV, under the estate's app
+     key, a chapter at a time. Its HTML marks every verse (<span class="yv-v" v="23">), so
+     the chapter splits into the same [{verse, text}] list bolls returns, with <br> where a
+     line or paragraph breaks. bolls.life supplies the other translations, and stands in
+     for NIV only when the Worker can't be reached. */
+  var NIV_VERSION_ID = 111;
+
+  function splitYouVersionChapter(html) {
+    var parts = String(html)
+      .replace(/<span class="yv-vlbl">[\s\S]*?<\/span>/g, '')
+      .split(/<span class="yv-v" v="(\d+)[^"]*"><\/span>/);
+    var verses = [];
+    for (var i = 1; i < parts.length; i += 2) {
+      var text = parts[i + 1]
+        .replace(/<\/div>\s*<div\b[^>]*>/g, '<br>')
+        .replace(/<\/?(?:div|span)\b[^>]*>/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"').replace(/&#0?39;|&#x27;/g, "'").replace(/&amp;/g, '&')
+        .replace(/^(?:\s*<br>)+|(?:<br>\s*)+$/g, '')
+        .trim();
+      if (text) verses.push({ verse: Number(parts[i]), text: text });
+    }
+    return verses;
+  }
+
+  function fetchYouVersionChapter(bookId, chapter) {
+    var book = YOUVERSION_USFM_BOOKS[bookId];
+    if (!book) return Promise.reject(new Error('Reference not recognized.'));
+    var url = SCRIPTURE_API_BASE + '/passage?version=' + NIV_VERSION_ID + '&passage=' + book + '.' + chapter + '&format=html';
+    return fetch(url, { headers: { Accept: 'application/json' } }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (body) {
+        if (!response.ok || !body.content) throw new Error(body.message || 'NIV could not be loaded.');
+        var verses = splitYouVersionChapter(body.content);
+        if (!verses.length) throw new Error('NIV chapter was empty.');
+        return verses;
+      });
+    });
+  }
+
+  function fetchBollsChapter(version, bookId, chapter) {
+    return fetch('https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/').then(function (res) {
+      if (!res.ok) throw new Error('API error');
+      return res.json();
+    });
+  }
+
+  function getChapter(version, bookId, chapter) {
     var cacheKey = version + '-' + bookId + '-' + chapter;
     if (!chapterCache[cacheKey]) {
-      var url = 'https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/';
-      chapterCache[cacheKey] = fetch(url).then(function (res) {
-        if (!res.ok) throw new Error('API error');
-        return res.json();
-      }).catch(function (e) {
+      chapterCache[cacheKey] = (version === 'NIV'
+        ? fetchYouVersionChapter(bookId, chapter).catch(function () { return fetchBollsChapter('NIV', bookId, chapter); })
+        : fetchBollsChapter(version, bookId, chapter)
+      ).catch(function (e) {
         delete chapterCache[cacheKey];
         throw e;
       });
@@ -429,7 +473,7 @@
   function fetchFromBolls(ref, version) {
     var parsed = parseReference(ref);
     if (!parsed) return Promise.resolve('Reference not recognized.');
-    return getBollsChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
+    return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) return 'Verse not found.';
       var filtered;
       if (parsed.verseStart !== null) {
@@ -462,7 +506,7 @@
   var CONTEXT_RADIUS = 9;
 
   function loadBollsContext(parsed, version, radius) {
-    return getBollsChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
+    return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) throw new Error('Verse not found.');
       var selectedStart = parsed.verseStart === null ? 1 : parsed.verseStart;
       var selectedEnd = parsed.verseEnd || selectedStart;
@@ -475,7 +519,7 @@
       var pre = Promise.resolve();
       /* A passage does not stop where the chapter file does. */
       if (rangeStart < 1 && parsed.chapter > 1) {
-        pre = getBollsChapter(version, parsed.bookId, parsed.chapter - 1).catch(function () { return null; })
+        pre = getChapter(version, parsed.bookId, parsed.chapter - 1).catch(function () { return null; })
           .then(function (prev) {
             if (prev && prev.length) {
               var wanted = 1 - rangeStart;
@@ -486,7 +530,7 @@
       }
       var post = Promise.resolve();
       if (rangeEnd > verses.length) {
-        post = getBollsChapter(version, parsed.bookId, parsed.chapter + 1).catch(function () { return null; })
+        post = getChapter(version, parsed.bookId, parsed.chapter + 1).catch(function () { return null; })
           .then(function (next) {
             if (next && next.length) {
               var headRows = next.slice(0, rangeEnd - verses.length);
@@ -1068,7 +1112,8 @@
     var c = (text.match(/”/g) || []).length;
     var startQ = /^“/.test(text), endQ = /”$/.test(text);
     if (startQ && (endQ ? o === c : o === c + 1)) {
-      text = text.replace(/^“/, '').replace(/”$/, '');
+      /* YouVersion sets a space between stacked marks (“ ‘If you can’?”) */
+      text = text.replace(/^“\s*/, '').replace(/”$/, '');
     } else {
       /* a close with no open belongs to speech begun in an earlier verse */
       if (endQ && c > o) { text = text.slice(0, -1); c--; }

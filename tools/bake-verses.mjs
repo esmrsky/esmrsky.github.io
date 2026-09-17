@@ -4,9 +4,9 @@
  * The pages fetch their scripture at runtime, so what sits in the markup is only
  * the fallback: what a reader without JavaScript gets, and what stands in when
  * bolls.life can't be reached. That fallback ships as the King James, which is
- * public domain. If you would rather it were the NIV — as /the-word/ and
- * /ecclesia/ already do — run this from a machine that can reach bolls.life and
- * it will rewrite every slot in place.
+ * public domain. If you would rather it were the NIV — as the estate now ships —
+ * run this from a machine that can reach the Worker and bolls.life and it will
+ * rewrite every slot in place. NIV is read from YouVersion through the Worker.
  *
  *   node tools/bake-verses.mjs salvation/index.html            # dry run, NIV
  *   node tools/bake-verses.mjs salvation/index.html --write
@@ -70,11 +70,31 @@ function parseRef(ref) {
   return { id, chapter: first, from, to: m[4] ? Number(m[4]) : from };
 }
 
+/* NIV comes from YouVersion through the estate's Worker (the current NIV; bolls.life's NIV
+   is the 1984 edition). Its HTML marks every verse, so a chapter splits into the same
+   [{verse, text}] list bolls returns. Every other version still comes from bolls. */
+const USFM = 'GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH EST JOB PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON MIC NAM HAB ZEP HAG ZEC MAL MAT MRK LUK JHN ACT ROM 1CO 2CO GAL EPH PHP COL 1TH 2TH 1TI 2TI TIT PHM HEB JAS 1PE 2PE 1JN 2JN 3JN JUD REV'.split(' ');
+async function youVersionChapter(id, ch) {
+  const r = await fetch(`https://esmrsky-scripture-api.esmrsky.workers.dev/passage?version=111&passage=${USFM[id - 1]}.${ch}&format=html`,
+    { headers: { Origin: 'https://esmrsky.github.io', Accept: 'application/json' } });
+  const b = await r.json().catch(() => ({}));
+  if (!r.ok || !b.content) throw new Error(`${r.status} for NIV ${USFM[id - 1]}.${ch}`);
+  const parts = b.content.replace(/<span class="yv-vlbl">[\s\S]*?<\/span>/g, '').split(/<span class="yv-v" v="(\d+)[^"]*"><\/span>/);
+  const verses = [];
+  for (let i = 1; i < parts.length; i += 2) {
+    const text = parts[i + 1].replace(/<\/div>\s*<div\b[^>]*>/g, '<br>').replace(/<\/?(?:div|span)\b[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"').replace(/&#0?39;|&#x27;/g, "'").replace(/&amp;/g, '&')
+      .replace(/^(?:\s*<br>)+|(?:<br>\s*)+$/g, '').trim();
+    if (text) verses.push({ verse: Number(parts[i]), text });
+  }
+  return verses;
+}
+
 const chapters = new Map();
 async function chapter(id, ch) {
   const key = `${version}/${id}/${ch}`;
   if (!chapters.has(key)) {
-    chapters.set(key, fetch(`https://bolls.life/get-text/${version}/${id}/${ch}/`)
+    chapters.set(key, version === 'NIV' ? youVersionChapter(id, ch) : fetch(`https://bolls.life/get-text/${version}/${id}/${ch}/`)
       .then((r) => { if (!r.ok) throw new Error(`${r.status} for ${key}`); return r.json(); }));
   }
   return chapters.get(key);

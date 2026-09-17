@@ -49,8 +49,11 @@ Three rules hold across the estate:
    filled as they come into view, and re-filled only when the picker changes.
 
 To bake the markup — `/the-word/`, `/ecclesia/`, `/salvation/` and `/faith/` all
-ship NIV — run the generator from a machine that can reach bolls.life and read
-the diff before committing. (`/faith/` and `/salvation/` were baked from what their
+ship NIV — run the generator from a machine that can reach the Worker and bolls.life
+and read the diff before committing. NIV comes from YouVersion through the Worker
+(`/passage?version=111&passage=COL.3&format=html`, split on its verse markers): it is the
+current NIV, where bolls.life's `NIV` is the 1984 edition. bolls.life supplies every other
+English translation, and stands in for NIV only when the Worker can't be reached. (`/faith/` and `/salvation/` were baked from what their
 own scripts render, so the baked text and the live text are identical; the
 generator does not strip bolls's section headings or add `/faith/`'s quote marks.)
 

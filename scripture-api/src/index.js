@@ -113,6 +113,9 @@ async function handlePassage(request, env, ctx, origin) {
   const url = new URL(request.url);
   const versionId = url.searchParams.get('version') || '';
   const passage = (url.searchParams.get('passage') || '').toUpperCase();
+  /* Plain text by default. `format=html` keeps YouVersion's verse markers
+     (<span class="yv-v" v="N">), which is how a client splits a chapter into numbered verses. */
+  const format = url.searchParams.get('format') === 'html' ? 'html' : 'text';
 
   if (!/^\d{1,6}$/.test(versionId) || !PASSAGE_PATTERN.test(passage)) {
     return json({ message: 'A valid version and USFM passage are required.' }, 400, origin, env);
@@ -122,13 +125,14 @@ async function handlePassage(request, env, ctx, origin) {
   const canonicalUrl = new URL(url.origin + url.pathname);
   canonicalUrl.searchParams.set('version', versionId);
   canonicalUrl.searchParams.set('passage', passage);
+  if (format === 'html') canonicalUrl.searchParams.set('format', 'html');
   canonicalUrl.searchParams.set('_origin', origin);
   const cacheKey = new Request(canonicalUrl.toString(), { method: 'GET' });
   const cached = await cache.match(cacheKey);
   if (cached) return cached;
 
   const upstream = await readUpstream(
-    await youVersionRequest(`/bibles/${versionId}/passages/${encodeURIComponent(passage)}?format=text`, env)
+    await youVersionRequest(`/bibles/${versionId}/passages/${encodeURIComponent(passage)}?format=${format}`, env)
   );
   const response = json(
     { id: upstream.id, content: upstream.content, reference: upstream.reference },

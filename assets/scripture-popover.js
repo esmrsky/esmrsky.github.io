@@ -7,8 +7,10 @@
    do not share a design language.
 
    Two suppliers, same as the rest of the estate:
-     bolls.life  — NIV/NASB/ESV/KJV/NLT/AMP/MSG, and НРП on the Russian pages. CORS *, no key.
-     the Worker  — TPT only (YouVersion); bolls does not carry it.
+     the Worker  — NIV and TPT, from YouVersion under the estate's app key. NIV is the
+                   current text; bolls.life's NIV is the 1984 edition.
+     bolls.life  — NASB/ESV/KJV/NLT/AMP/MSG, НРП on the Russian pages, and NIV only when
+                   the Worker can't be reached. CORS *, no key.
 
    Usage:
      EsmrskyScripture.init({ key: 'the-word', scan: '.source, .note b' });
@@ -20,6 +22,7 @@
 
   var WORKER = 'https://esmrsky-scripture-api.esmrsky.workers.dev';
   var TPT_ID = 1849;
+  var NIV_ID = 111;
 
   /* ---------------------------------------------------------------- books */
   /* One table drives all four consumers: the link regex, the bolls book id, the
@@ -235,11 +238,53 @@
   var chapterCache = {};
   var tptCache = {};
 
-  function bollsChapter(version, bookId, chapter) {
+  /* NIV arrives a chapter at a time as YouVersion HTML, which marks every verse
+     (<span class="yv-v" v="23">). Split on the markers and it becomes the same
+     [{verse, text}] list bolls returns, with <br> where a line or paragraph breaks,
+     so everything downstream reads both suppliers alike. */
+  function splitYvChapter(html) {
+    var parts = String(html)
+      .replace(/<span class="yv-vlbl">[\s\S]*?<\/span>/g, '')
+      .split(/<span class="yv-v" v="(\d+)[^"]*"><\/span>/);
+    var verses = [];
+    for (var i = 1; i < parts.length; i += 2) {
+      var text = parts[i + 1]
+        .replace(/<\/div>\s*<div\b[^>]*>/g, '<br>')
+        .replace(/<\/?(?:div|span)\b[^>]*>/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"').replace(/&#0?39;|&#x27;/g, "'").replace(/&amp;/g, '&')
+        .replace(/^(?:\s*<br>)+|(?:<br>\s*)+$/g, '')
+        .trim();
+      if (text) verses.push({ verse: Number(parts[i]), text: text });
+    }
+    return verses;
+  }
+
+  function yvChapter(bookId, chapter) {
+    var book = USFM_BY_ID[bookId];
+    if (!book) return Promise.reject(new Error('unknown book'));
+    return fetch(WORKER + '/passage?version=' + NIV_ID + '&passage=' + book + '.' + chapter + '&format=html',
+      { headers: { Accept: 'application/json' } })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (b) {
+          if (!r.ok || !b.content) throw new Error(b.message || 'NIV could not be loaded.');
+          var verses = splitYvChapter(b.content);
+          if (!verses.length) throw new Error('empty chapter');
+          return verses;
+        });
+      });
+  }
+
+  function bollsFetch(version, bookId, chapter) {
+    return fetch('https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/')
+      .then(function (r) { if (!r.ok) throw new Error('API error'); return r.json(); });
+  }
+
+  function getChapter(version, bookId, chapter) {
     var key = version + '-' + bookId + '-' + chapter;
     if (!chapterCache[key]) {
-      chapterCache[key] = fetch('https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/')
-        .then(function (r) { if (!r.ok) throw new Error('API error'); return r.json(); })
+      chapterCache[key] = (version === 'NIV'
+        ? yvChapter(bookId, chapter).catch(function () { return bollsFetch('NIV', bookId, chapter); })
+        : bollsFetch(version, bookId, chapter))
         .catch(function (e) { delete chapterCache[key]; throw e; });
     }
     return chapterCache[key];
@@ -320,7 +365,7 @@
   }
 
   function fromBolls(parsed, version) {
-    return bollsChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
+    return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) return t('Verse not found.', 'Стих не найден.');
       var picked;
       if (parsed.verseStart !== null) {
@@ -343,7 +388,7 @@
     if (!parsed) return Promise.reject(new Error('bad reference'));
     var code = version === 'TPT' ? FALLBACK : bollsCode(version);
     var note = version === 'TPT' ? '<p class="esv-ctx-note">' + fallbackNote() + '</p>' : '';
-    return bollsChapter(code, parsed.bookId, parsed.chapter).then(function (verses) {
+    return getChapter(code, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) throw new Error('empty chapter');
       var selStart = parsed.verseStart === null ? 1 : parsed.verseStart;
       var selEnd = parsed.verseEnd || selStart;
@@ -352,10 +397,10 @@
       var rows = verses.filter(function (v) { return v.verse >= from && v.verse <= to; })
         .map(function (v) { return { chapter: parsed.chapter, verse: v.verse, text: v.text }; });
       var pre = (from < 1 && parsed.chapter > 1)
-        ? bollsChapter(code, parsed.bookId, parsed.chapter - 1).catch(function () { return null; })
+        ? getChapter(code, parsed.bookId, parsed.chapter - 1).catch(function () { return null; })
         : Promise.resolve(null);
       var post = (to > verses.length)
-        ? bollsChapter(code, parsed.bookId, parsed.chapter + 1).catch(function () { return null; })
+        ? getChapter(code, parsed.bookId, parsed.chapter + 1).catch(function () { return null; })
         : Promise.resolve(null);
       return Promise.all([pre, post]).then(function (extra) {
         if (extra[0] && extra[0].length) {
