@@ -28,17 +28,18 @@ A page that wants its scripture to follow the translation picker marks each
 passage with `data-verse` and lets the shared layer fill it:
 
 ```html
-<q class="lv esv-skip" data-verse="Romans 5:8">…King James fallback…</q>
+<q class="lv esv-skip" data-verse="Romans 5:8">…NIV, written out…</q>
 ```
 
 Three rules hold across the estate:
 
-1. **The markup holds the fallback, not the reading.** What ships in the file is
-   the King James, which is public domain. It is what a reader without
-   JavaScript gets, and what stands in when bolls.life can't be reached. Where
-   it stands in, the page says so — a caption reading `KJV, NIV unavailable`, or
-   a `KJV` mark on an inline quotation. It is never passed off as the
-   translation the reader chose.
+1. **The markup holds the NIV, the estate's default.** What ships in the file is
+   the NIV, so a first-time reader gets it without JavaScript and without a
+   fetch. When a reader picks another translation and it can't be reached, the
+   NIV stands in and the page says so — a caption reading `NIV, NASB unavailable`,
+   or an `NIV` mark on an inline quotation. It is never passed off as the
+   translation the reader chose. A page that quotes NIV carries Biblica's
+   permission notice (copy it from `/the-word/`).
 2. **`esv-skip` on the slot.** Scripture text is not somewhere the reference
    auto-linker should go hunting; the reference beside the passage is what gets
    linked.
@@ -47,9 +48,11 @@ Three rules hold across the estate:
    requests for text most readers never scroll to, so slots are observed and
    filled as they come into view, and re-filled only when the picker changes.
 
-To bake a different translation into the markup — `/the-word/` and `/ecclesia/`
-ship NIV rather than KJV — run the generator from a machine that can reach
-bolls.life and read the diff before committing:
+To bake the markup — `/the-word/`, `/ecclesia/`, `/salvation/` and `/faith/` all
+ship NIV — run the generator from a machine that can reach bolls.life and read
+the diff before committing. (`/faith/` and `/salvation/` were baked from what their
+own scripts render, so the baked text and the live text are identical; the
+generator does not strip bolls's section headings or add `/faith/`'s quote marks.)
 
 ```sh
 node tools/bake-verses.mjs salvation/index.html                 # dry run, NIV

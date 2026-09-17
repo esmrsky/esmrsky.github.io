@@ -1105,28 +1105,43 @@
     });
   }
 
+  var liveVerseIo = null;
+
+  /* Slots already read in some translation re-fetch as they come near the viewport,
+     not all at once: a page of verses is dozens of chapters, and bolls.life turns a
+     burst away. */
   function refreshLiveVerses() {
     var version = getVersion();
     liveVerseEls.forEach(function (el) {
-      if (el.dataset.loaded && el.dataset.loaded !== version) swapVerse(el, version);
+      if (!el.dataset.loaded || el.dataset.loaded === version) return;
+      if (liveVerseIo) liveVerseIo.observe(el);
+      else swapVerse(el, version);
     });
   }
 
   function initLiveVerses() {
     liveVerseEls = Array.from(document.querySelectorAll('[data-verse]'));
     if (!liveVerseEls.length) return;
+    /* A page can ship its verses written out in one translation (<html data-verse-baked="NIV">).
+       A reader on that translation fetches nothing. */
+    var baked = document.documentElement.getAttribute('data-verse-baked');
+    if (baked) liveVerseEls.forEach(function (el) { el.dataset.loaded = baked; });
     if (!('IntersectionObserver' in window)) {
-      liveVerseEls.forEach(function (el) { swapVerse(el, getVersion()); });
+      liveVerseEls.forEach(function (el) {
+        if (el.dataset.loaded !== getVersion()) swapVerse(el, getVersion());
+      });
       return;
     }
-    var io = new IntersectionObserver(function (entries) {
+    liveVerseIo = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        io.unobserve(entry.target);
-        swapVerse(entry.target, getVersion());
+        liveVerseIo.unobserve(entry.target);
+        if (entry.target.dataset.loaded !== getVersion()) swapVerse(entry.target, getVersion());
       });
     }, { rootMargin: '600px 0px' });
-    liveVerseEls.forEach(function (el) { io.observe(el); });
+    liveVerseEls.forEach(function (el) {
+      if (el.dataset.loaded !== getVersion()) liveVerseIo.observe(el);
+    });
   }
 
   /* ---------- boot ---------- */
