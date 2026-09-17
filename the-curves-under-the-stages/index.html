@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The curves under the stages</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Life stages are not containers. They are the visible surface of a handful of continuous gradients running at once on one axis, peaking at different points and crossing on the way. Seven of them, charted from 10 to 80.">
+<link rel="canonical" href="https://esmrsky.github.io/the-curves-under-the-stages/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The curves under the stages">
+<meta property="og:description" content="Novelty seeking, self-regulation, openness, dominance, warmth, social vitality and felt time remaining — seven gradients across the lifespan, and why the stages you notice are a reading artifact.">
+<meta property="og:url" content="https://esmrsky.github.io/the-curves-under-the-stages/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#EEF1F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C1214" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#EEF1F1; --surface:#FFFFFF; --sunken:#E3E8E8;
+  --ink:#10171A; --ink-2:#3C4A4F; --ink-3:#6C7C81;
+  --rule:#CDD6D6; --rule-soft:#DEE5E5;
+  --accent:#12657F; --accent-soft:#DCEAEF; --accent-ink:#0A4557;
+  --drive:#D8351C; --control:#12657F; --open:#7331B0; --mature:#3C7A32; --horizon:#B4185C;
+  --vital:#9A6300; --domin:#2F4BA0;
+  --warn:#9A5B00; --warn-bg:#F7EDDC;
+  --ok:#2F6B3A; --ok-bg:#E3EFE4;
+  --bad:#8E2A2A; --bad-bg:#F5E4E2;
+  --sans:"Bricolage Grotesque",system-ui,-apple-system,Segoe UI,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --measure:64ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C1214; --surface:#141D20; --sunken:#0A0F11;
+    --ink:#E7EEED; --ink-2:#AFBEC0; --ink-3:#7D8F92;
+    --rule:#263437; --rule-soft:#1C282B;
+    --accent:#63BCD9; --accent-soft:#132A33; --accent-ink:#9AD6EB;
+    --drive:#FF7D62; --control:#63BCD9; --open:#BC8BF0; --mature:#79C46B; --horizon:#F2699F;
+    --vital:#E8B25C; --domin:#93A6F2;
+    --warn:#E0A94E; --warn-bg:#2A2114;
+    --ok:#7FC18C; --ok-bg:#16251A;
+    --bad:#E68C86; --bad-bg:#2A1917;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1214; --surface:#141D20; --sunken:#0A0F11;
+  --ink:#E7EEED; --ink-2:#AFBEC0; --ink-3:#7D8F92;
+  --rule:#263437; --rule-soft:#1C282B;
+  --accent:#63BCD9; --accent-soft:#132A33; --accent-ink:#9AD6EB;
+  --drive:#FF7D62; --control:#63BCD9; --open:#BC8BF0; --mature:#79C46B; --horizon:#F2699F;
+  --vital:#E8B25C; --domin:#93A6F2;
+  --warn:#E0A94E; --warn-bg:#2A2114;
+  --ok:#7FC18C; --ok-bg:#16251A;
+  --bad:#E68C86; --bad-bg:#2A1917;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--serif); font-size:18px; line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-tap-highlight-color:transparent;
+}
+::selection{background:var(--accent-soft); color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+
+.wrap{max-width:1140px; margin:0 auto; padding:0 28px}
+@media(max-width:640px){ .wrap{padding:0 18px} body{font-size:17px} }
+
+h1,h2,h3,.ui{font-family:var(--sans); font-variation-settings:"wdth" 92}
+h1{
+  font-size:clamp(2.6rem,7vw,5.1rem); line-height:.96; font-weight:800;
+  letter-spacing:-.025em; margin:0 0 .5rem; text-wrap:balance; max-width:16ch;
+}
+h2{
+  font-size:clamp(1.55rem,3.4vw,2.35rem); line-height:1.08; font-weight:700;
+  letter-spacing:-.018em; margin:0 0 .65rem; text-wrap:balance; max-width:22ch;
+}
+h3{font-size:1.02rem; font-weight:600; letter-spacing:-.005em; margin:0 0 .3rem}
+p{margin:0 0 1.05rem; text-wrap:pretty; max-width:var(--measure)}
+a{color:var(--accent); text-underline-offset:3px; text-decoration-thickness:1px}
+strong{font-weight:600}
+em{font-style:italic}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(3rem,7vw,6rem) 0 0; border-bottom:1px solid var(--rule)}
+.deck{font-size:clamp(1.05rem,2vw,1.28rem); color:var(--ink-2); max-width:56ch; margin:0 0 2.2rem; line-height:1.48}
+.topbar{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-bottom:clamp(2rem,5vw,3.4rem)}
+.sig{font-family:var(--sans); font-weight:600; font-size:.83rem; color:var(--ink-3); letter-spacing:.01em}
+.sig a{color:var(--ink-3); text-decoration:none}
+.sig a:hover{color:var(--ink)}
+.site-link{font-size:.88rem; color:var(--ink-3); margin-top:1.6rem}
+.tog{
+  font-family:var(--sans); font-size:.8rem; font-weight:500; color:var(--ink-2);
+  background:transparent; border:1px solid var(--rule); border-radius:100px;
+  padding:.3rem .8rem; cursor:pointer; line-height:1.4;
+}
+.tog:hover{border-color:var(--ink-3); color:var(--ink)}
+
+/* ---------- sections ---------- */
+section{padding:clamp(3.2rem,6vw,5.2rem) 0; border-bottom:1px solid var(--rule-soft)}
+section:last-of-type{border-bottom:0}
+.head{display:flex; flex-wrap:wrap; align-items:baseline; gap:.6rem 1rem; margin-bottom:1.6rem}
+.head h2{flex:1 1 20ch; margin-bottom:0}
+.stand{color:var(--ink-2); font-size:1.02rem; max-width:58ch; margin:.55rem 0 0}
+
+.tag{
+  font-family:var(--sans); font-size:.72rem; font-weight:600; letter-spacing:.01em;
+  padding:.24rem .6rem; border-radius:3px; white-space:nowrap; line-height:1.5;
+}
+.tag.ok{background:var(--ok-bg); color:var(--ok)}
+.tag.mid{background:var(--warn-bg); color:var(--warn)}
+.tag.no{background:var(--bad-bg); color:var(--bad)}
+.tag.sch{background:var(--sunken); color:var(--ink-3)}
+
+/* ---------- figures ---------- */
+figure{margin:2rem 0 1.6rem}
+.fig-frame{
+  background:var(--surface); border:1px solid var(--rule);
+  border-radius:6px; padding:clamp(.9rem,2.2vw,1.5rem);
+}
+.fig-frame svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{
+  font-family:var(--sans); font-size:.82rem; line-height:1.5; color:var(--ink-3);
+  margin-top:.8rem; max-width:72ch;
+}
+
+/* ---------- controls ---------- */
+.ctl{display:flex; flex-wrap:wrap; gap:.7rem 1.4rem; align-items:center; margin-top:1.1rem;
+     padding-top:1rem; border-top:1px solid var(--rule-soft)}
+.ctl-row{display:flex; align-items:center; gap:.65rem; flex:1 1 260px; min-width:0}
+.ctl-lab{font-family:var(--sans); font-size:.82rem; font-weight:500; color:var(--ink-2); white-space:nowrap}
+.ctl-val{font-family:var(--sans); font-size:.82rem; font-weight:600; color:var(--ink);
+         min-width:5.2ch; text-align:right; font-variant-numeric:tabular-nums}
+
+/* Narrow phones: "Peers present, reward immediate" is a nowrap label ~230px
+   wide, and the slider's own min-width is 90px, so the row's minimum content
+   ran 30px past a 360px viewport and put the whole page in horizontal scroll.
+   Give the label its own line below 560px and the slider keeps its travel. */
+@media(max-width:560px){
+  .ctl-row{flex-wrap:wrap}
+  .ctl-row > .ctl-lab{white-space:normal; flex:1 1 100%}
+}
+input[type=range]{-webkit-appearance:none; appearance:none; background:transparent; flex:1; min-width:90px; height:20px; margin:0; cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:3px; background:var(--rule); border-radius:2px}
+input[type=range]::-moz-range-track{height:3px; background:var(--rule); border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:17px; height:17px; border-radius:50%;
+  background:var(--accent); border:2px solid var(--surface); margin-top:-7px}
+input[type=range]::-moz-range-thumb{width:13px; height:13px; border-radius:50%; background:var(--accent); border:2px solid var(--surface)}
+
+.btn{
+  font-family:var(--sans); font-size:.79rem; font-weight:500; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--rule); border-radius:100px;
+  padding:.32rem .8rem; cursor:pointer; line-height:1.45;
+}
+.btn:hover{border-color:var(--ink-3); color:var(--ink)}
+.btn[aria-pressed=true]{background:var(--accent-soft); border-color:var(--accent); color:var(--accent-ink)}
+.btn-set{display:flex; flex-wrap:wrap; gap:.4rem}
+
+/* ---------- legend ---------- */
+.legend{display:flex; flex-wrap:wrap; gap:.45rem .95rem; margin-bottom:.9rem}
+.lg{display:flex; align-items:center; gap:.4rem; font-family:var(--sans); font-size:.78rem;
+    font-weight:500; color:var(--ink-2); background:none; border:0; padding:.15rem 0; cursor:pointer}
+.lg:hover{color:var(--ink)}
+.lg[aria-pressed=false]{opacity:.34}
+.lg i{display:block; width:22px; height:0; border-top-width:2.5px; border-top-style:solid; border-radius:2px; flex:none}
+
+/* The legend rows are the only way to switch a curve off, and the site marker
+   is the only way back up; both compute to ~16-20px tall. Grow the hit area
+   on touch only. */
+@media (pointer: coarse){
+  .lg{min-height:44px; padding:.15rem 0}
+  .sig a{display:inline-flex; align-items:center; min-height:44px}
+}
+
+/* ---------- readout panel ---------- */
+.panel{display:grid; grid-template-columns:repeat(auto-fit,minmax(152px,1fr)); gap:.5rem; margin-top:1rem}
+.cell{background:var(--sunken); border-radius:5px; padding:.6rem .7rem}
+.cell b{display:block; font-family:var(--sans); font-size:.75rem; font-weight:600; color:var(--ink-2); margin-bottom:.3rem}
+.cell .bar{height:5px; border-radius:3px; background:var(--rule); overflow:hidden}
+.cell .bar span{display:block; height:100%; border-radius:3px; transition:width .18s ease}
+.cell .n{font-family:var(--sans); font-size:.73rem; color:var(--ink-3); margin-top:.28rem; display:block}
+
+.note{
+  background:var(--sunken); border-left:2px solid var(--accent); border-radius:0;
+  padding:.85rem 1.05rem; margin:1.6rem 0; font-size:.94rem; color:var(--ink-2);
+}
+.note p{margin:0; max-width:none}
+.note p + p{margin-top:.6rem}
+
+.svg-lab{font-family:var(--sans); font-size:12px; font-weight:500; fill:var(--ink-3)}
+.svg-lab.hi{fill:var(--ink); font-weight:600}
+.svg-ax{stroke:var(--rule-soft); stroke-width:1}
+.svg-base{stroke:var(--rule); stroke-width:1}
+.curve{fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; transition:opacity .2s}
+.curve.dim{opacity:.13}
+
+footer{padding:3rem 0 4.5rem; color:var(--ink-3); font-size:.92rem}
+footer h3{color:var(--ink-2)}
+footer ul{padding-left:1.1rem; margin:0 0 1.2rem; max-width:72ch}
+footer li{margin-bottom:.4rem}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar">
+      <span class="sig"><a href="/">&larr; esmrsky</a> &middot; Tendencies across the lifespan</span>
+      <button class="tog" id="theme" type="button">Switch theme</button>
+    </div>
+    <h1>The curves under the stages</h1>
+    <p class="deck">The life stages you notice in other people are not containers. They are the visible surface of a handful of continuous gradients, all running at once on the same axis, peaking at different points and crossing each other on the way.</p>
+  </div>
+  <div class="wrap">
+    <div class="legend" id="heroLegend"></div>
+    <div class="fig-frame" style="border-left:0;border-right:0;border-radius:0;margin:0">
+      <svg id="heroChart" viewBox="0 0 900 330" role="img" aria-label="Seven psychological gradients plotted from age 10 to 80: novelty seeking peaks near 19; social vitality peaks in late adolescence and declines lifelong; social dominance rises to about 40; self-regulation rises to a plateau near 45; openness peaks in the early twenties, holds through midlife and drops after 60; diligence and warmth rise steadily into later life; and felt time remaining is flat until 40 then falls sharply."></svg>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="s-premise">
+  <div class="wrap">
+    <div class="head">
+      <h2>Stages are a reading artifact</h2>
+      <span class="tag sch">Curve shapes directional, heights schematic</span>
+    </div>
+    <p class="stand">Drag through the axis. Nothing switches on or off anywhere. What changes is which gradients are high, which are moving fastest, and which two are furthest apart.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="scrubChart" viewBox="0 0 900 330" role="img" aria-label="The same seven gradients with a movable age marker and a readout of each gradient's level at the selected age."></svg>
+        <div class="ctl">
+          <div class="ctl-row">
+            <span class="ctl-lab">Age</span>
+            <input type="range" id="scrubAge" min="10" max="80" step="1" value="16" aria-label="Age">
+            <span class="ctl-val" id="scrubAgeV">16</span>
+          </div>
+        </div>
+        <div class="panel" id="scrubPanel"></div>
+        <p id="scrubRead" style="font-family:var(--sans);font-size:.92rem;color:var(--ink-2);margin:.9rem 0 0;max-width:none;line-height:1.55"></p>
+      </div>
+      <figcaption>Gradient values are normalised to a shared 0–1 range so the shapes can be compared on one axis. The shapes and inflection points follow the literature; the exact heights are illustrative and no single dataset produces all five.</figcaption>
+    </figure>
+
+    <p>Two things follow from the shape of this. The first is that your stage labels are naming crossings. "Teenager" is where drive is near its ceiling and regulation has not caught up. The late-twenties self-improvement phase feels like a project because openness is at its peak while the maturity traits are climbing at their fastest rate — two curves moving at once, in the same person, in different directions.</p>
+
+    <p>The second is harder on the model, and there is a number for it. Across representative samples, chronological age accounts for roughly 2 to 6 per cent of the variance in Big Five traits, averaging about 3.6 per cent. The other 96 per cent is differences between people of the same age. Two randomly chosen 40-year-olds typically differ more in conscientiousness than the average 30-year-old differs from the average 60-year-old.</p>
+
+    <p>Age does better where the machinery is raw: it accounts for something in the range of 20 to 35 per cent of the variance in processing speed and novel problem-solving. So it is a fair index of how fast the hardware runs, and a poor one of almost everything you would actually want to predict about a person. These curves describe populations moving. Nothing on them licenses a prediction about the individual in front of you.</p>
+  </div>
+</section>
+
+<section id="s-teen">
+  <div class="wrap">
+    <div class="head">
+      <h2>The teenage engine is a timing problem</h2>
+      <span class="tag ok">Well replicated</span>
+    </div>
+    <p class="stand">The common reading is that adolescents misjudge risk. They mostly don't. What changes with context is how much a correctly-judged risk gets discounted.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="hotChart" viewBox="0 0 900 330" role="img" aria-label="Risky-choice propensity by age under two conditions. Alone and deliberate, the curve is nearly flat across ages. With peers present and rewards immediate, a large adolescent spike appears between about 13 and 20."></svg>
+        <div class="ctl">
+          <div class="ctl-row">
+            <span class="ctl-lab">Peers present, reward immediate</span>
+            <input type="range" id="heat" min="0" max="100" step="1" value="0" aria-label="Contextual heat, from alone and deliberate to peers present and reward immediate">
+            <span class="ctl-val" id="heatV">0%</span>
+          </div>
+          <div class="btn-set">
+            <button class="btn" type="button" data-heat="0">Alone, deliberate</button>
+            <button class="btn" type="button" data-heat="100">With friends, now</button>
+          </div>
+        </div>
+      </div>
+      <figcaption>Schematic rendering of the dual-systems pattern. In cold, solitary, deliberative tasks, adolescent risk assessment is close to adult. The divergence appears under peer observation, emotional arousal and immediate reward.</figcaption>
+    </figure>
+
+    <p>Sensation-seeking is driven by a reward system that matures quickly after puberty. Self-regulation is governed by a control system that matures slowly and does not finish until the mid-twenties. Neither is broken. They are simply on different schedules, and the interval between them is what adolescence is made of. The same staggered maturation shows up in adolescent rodents and birds, which is a decent hint that it is doing something rather than failing at something.</p>
+
+    <p>One caveat on the model itself, since the chart above presents it cleanly. The strict dual-systems picture — two modular circuits maturing at different rates and competing for control — has been softened considerably since about 2015. Functional connectivity across the default mode, salience and frontoparietal networks develops continuously rather than as isolated systems racing each other. The cold/hot dissociation is solid. The two-boxes-fighting story underneath it is a simplification that its own authors have moved away from.</p>
+
+    <div class="note">
+      <p>This is where the 25-year-old's frustration mislocates itself. He reads the behaviour as a values problem, something a good conversation could fix. It is a timing mismatch between two systems, and his own closed six years ago. He is not arguing with a philosophy. He is arguing with an interval he has already crossed and cannot feel any more.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s-eohi">
+  <div class="wrap">
+    <div class="head">
+      <h2>Why 25 feels like the finish line</h2>
+      <span class="tag ok">Large sample, replicated</span>
+    </div>
+    <p class="stand">At every age, people report large change over the past decade and predict small change for the next one. The prediction is wrong at every age, by roughly the same amount.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="eohiChart" viewBox="0 0 900 330" role="img" aria-label="Two declining lines across ages 18 to 68. The upper line is the amount of personal change people report over the previous decade. The lower line is the amount they predict for the coming decade. The predicted line sits below the reported line at every age."></svg>
+        <div class="ctl">
+          <div class="ctl-row">
+            <span class="ctl-lab">Compare at age</span>
+            <input type="range" id="eohiAge" min="18" max="58" step="1" value="25" aria-label="Age to compare">
+            <span class="ctl-val" id="eohiAgeV">25</span>
+          </div>
+        </div>
+        <p id="eohiRead" style="font-family:var(--sans);font-size:.92rem;color:var(--ink-2);margin:.9rem 0 0;max-width:none;line-height:1.55"></p>
+      </div>
+      <figcaption>Schematic reconstruction of the end-of-history illusion. The original work surveyed roughly nineteen thousand people across personality traits, core values and preferences, and found the same asymmetry in all three.</figcaption>
+    </figure>
+
+    <p>Everyone is standing at what feels like the finished version of themselves, looking back at a stretch of obvious change and forward at a stretch of apparent stability. The 25-year-old is not at a vantage point above the 15-year-old. He is at a point the 35-year-old will regard exactly the way he regards the 15-year-old, and he will find this as surprising then as the 15-year-old would find it now.</p>
+
+    <p>His earnest self-improvement is not evidence that he has escaped the pattern. It is a stage-typical behaviour with a peak and a decline of its own, sitting right where openness tops out.</p>
+
+    <h3 style="font-size:1.28rem;margin:2.6rem 0 .5rem">And the same asymmetry runs backwards</h3>
+    <p>The forward error has a mirror image. Adults across five preregistered studies reported that today's young people are in decline — and which decline they perceived depended on what the adult was personally good at. Pick an adult below and watch which bar moves.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="ktdChart" viewBox="0 0 900 272" role="img" aria-label="Three bars showing how strongly an adult perceives decline in today's youth across reading, intelligence and respect for authority. Selecting a different kind of adult moves only the bar matching that adult's own strength."></svg>
+        <div class="ctl">
+          <span class="ctl-lab">An adult who is</span>
+          <div class="btn-set" role="group" aria-label="Kind of adult">
+            <button class="btn" type="button" data-ktd="read" aria-pressed="true">a heavy reader</button>
+            <button class="btn" type="button" data-ktd="iq" aria-pressed="false">high-scoring on tests</button>
+            <button class="btn" type="button" data-ktd="auth" aria-pressed="false">high in deference to authority</button>
+          </div>
+        </div>
+        <p id="ktdRead" style="font-family:var(--sans);font-size:.92rem;color:var(--ink-2);margin:.9rem 0 0;max-width:none;line-height:1.55"></p>
+      </div>
+      <figcaption>Schematic rendering of the domain specificity reported by Protzko and Schooler across five preregistered studies, N ≈ 3,458. The perception of generational decline is not general. It is tightly indexed to the perceiver's own strength.</figcaption>
+    </figure>
+
+    <p>The mechanism is a memory distortion, and it is unflattering. Adults project their <em>current</em> abilities backward onto their recollection of their own childhood and their childhood peers. Someone who reads seriously at 40 misremembers himself and his friends at 14 as readers. That fabricated baseline is what today's teenagers get measured against, and they lose to a version of the past that never happened.</p>
+
+    <div class="note">
+      <p>Put the two together and the asymmetry you notice has a complete two-sided mechanism. Forward, the 25-year-old overestimates how finished he is. Backward, he misremembers what he was. The gap he perceives between himself and a 15-year-old is inflated at both ends, by two independent errors, neither of which he can feel.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s-future">
+  <div class="wrap">
+    <div class="head">
+      <h2>The variable is the future, and there are three ways to lose it</h2>
+      <span class="tag ok">Each route independently manipulable</span>
+    </div>
+    <p class="stand">A four-year-old grabbing the marshmallow and a seventy-year-old pruning their address book get filed as opposite problems — one a failure of control, one a sign of wisdom. They are the same computation coming out the same way for three different reasons.</p>
+
+    <p>Weighting a future reward against a present one requires three things to hold at once. You have to be able to picture the future vividly enough for it to compete with what is in the room. You have to believe the promise will actually be kept. And you have to expect to be there when it arrives. Knock out any one and the present wins.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <div class="ctl" style="border-top:0;padding-top:0;margin-top:0;margin-bottom:1.1rem">
+          <div class="ctl-row">
+            <span class="ctl-lab">Can picture it</span>
+            <input type="range" id="fVivid" min="5" max="100" step="1" value="90" aria-label="How vividly the future can be imagined">
+            <span class="ctl-val" id="fVividV">90</span>
+          </div>
+          <div class="ctl-row">
+            <span class="ctl-lab">Has been reliable</span>
+            <input type="range" id="fRely" min="5" max="100" step="1" value="85" aria-label="How often promised future rewards have actually arrived">
+            <span class="ctl-val" id="fRelyV">85</span>
+          </div>
+          <div class="ctl-row">
+            <span class="ctl-lab">Expects to be there</span>
+            <input type="range" id="fHor" min="5" max="100" step="1" value="100" aria-label="How much of the future the person expects to be present for">
+            <span class="ctl-val" id="fHorV">100</span>
+          </div>
+        </div>
+        <svg id="futChart" viewBox="0 0 900 332" role="img" aria-label="The value a promised reward retains as the delay before it grows, from zero to twenty-four months. A ghost curve shows the patient reference case. Three input indicators show which of picturing, believing and expecting to be present is the current bottleneck."></svg>
+        <div class="ctl">
+          <div class="btn-set">
+            <button class="btn" type="button" data-fut="25,90,100">Age 5, stable home</button>
+            <button class="btn" type="button" data-fut="25,20,100">Age 5, unreliable adults</button>
+            <button class="btn" type="button" data-fut="90,85,100">Age 25, open horizon</button>
+            <button class="btn" type="button" data-fut="90,85,12">Age 25, after a diagnosis</button>
+            <button class="btn" type="button" data-fut="85,85,18">Age 72, typical</button>
+          </div>
+        </div>
+        <p id="futRead" style="font-family:var(--sans);font-size:.92rem;color:var(--ink-2);margin:.9rem 0 0;max-width:none;line-height:1.55"></p>
+      </div>
+      <figcaption>A hyperbolic discounting model driven by three inputs. Cycle the presets: the five-year-old with unreliable adults, the twenty-five-year-old after a diagnosis and the seventy-two-year-old produce nearly the same curve by three unrelated routes.</figcaption>
+    </figure>
+
+    <p>Each route has been manipulated directly, which is what makes this more than a metaphor. Helping children build a vivid, specific mental simulation of a future event measurably reduces their preference for the immediate reward. Exposing preschoolers to an adult who breaks a promise, minutes before a marshmallow-style task, sharply shortens how long they wait. And shrinking or expanding a perceived horizon shifts adults of any age toward or away from present-weighting.</p>
+
+    <div class="note">
+      <p>The middle one deserves its own sentence. In the reliability experiment, the children who grabbed the treat were not failing at self-control. They had just watched an adult break a promise, and they updated correctly. In an environment where "later" has historically meant "never," taking it now is the right answer.</p>
+      <p>Which means a substantial share of what gets scored as a trait — impatience, impulsivity, short-termism — is a reasonable inference about the environment, being read as a property of the person.</p>
+    </div>
+
+    <p>The three routes are not interchangeable for every outcome, though. They converge on present-weighting, but only the horizon input drives the other well-known shift — the move from expanding your world to deepening it.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <div class="ctl" style="border-top:0;padding-top:0;margin-top:0;margin-bottom:1.1rem">
+          <div class="ctl-row">
+            <span class="ctl-lab">Chronological age</span>
+            <input type="range" id="hAge" min="18" max="85" step="1" value="25" aria-label="Chronological age">
+            <span class="ctl-val" id="hAgeV">25</span>
+          </div>
+          <div class="ctl-row">
+            <span class="ctl-lab">Time you feel you have</span>
+            <input type="range" id="hHor" min="1" max="60" step="1" value="55" aria-label="Perceived years remaining">
+            <span class="ctl-val" id="hHorV">55y</span>
+          </div>
+        </div>
+        <svg id="horChart" viewBox="0 0 900 300" role="img" aria-label="Goal priority split between seeking new information and seeking emotional meaning, alongside a social network composed of close ties and peripheral ties. Both respond to perceived time remaining rather than to chronological age."></svg>
+        <div class="ctl">
+          <div class="btn-set">
+            <button class="btn" type="button" data-hor="25,55">25, open horizon</button>
+            <button class="btn" type="button" data-hor="25,4">25, horizon closed</button>
+            <button class="btn" type="button" data-hor="72,6">72, typical</button>
+            <button class="btn" type="button" data-hor="72,40">72, horizon reopened</button>
+          </div>
+        </div>
+        <p id="horRead" style="font-family:var(--sans);font-size:.92rem;color:var(--ink-2);margin:.9rem 0 0;max-width:none;line-height:1.55"></p>
+      </div>
+      <figcaption>Move age alone and almost nothing happens. Move horizon alone and everything does. In the underlying experiments, horizon has been manipulated with imminent emigration, terminal diagnosis, city-wide disruption and, in the other direction, hypothetical grants of extra healthy years — and the goal shift follows the manipulation, not the birth date.</figcaption>
+    </figure>
+
+    <p>Notice what the network does. Close ties barely move. The pruning happens almost entirely in the peripheral band — acquaintances, weak professional ties, people who were interesting rather than important. That is not withdrawal. It is a reallocation that follows directly from a shortened horizon, and young people with shortened horizons do it too.</p>
+
+    <div class="note">
+      <p>This is the part with practical bite. Age is not a lever. All three inputs above are, and none of them is visible from outside. What you can see is the behaviour, which looks identical whichever input failed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s-culture">
+  <div class="wrap">
+    <div class="head">
+      <h2>Culture sets the clock, not the shape</h2>
+      <span class="tag ok">62 nations, ~884,000 people</span>
+    </div>
+    <p class="stand">Conscientiousness and agreeableness rise and neuroticism falls almost everywhere. What varies is when the rise starts, and it starts when adult responsibilities do.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="cultChart" viewBox="0 0 900 332" role="img" aria-label="The maturity curve shifting left or right as the typical age of adult role onset changes, while its shape stays the same."></svg>
+        <div class="ctl">
+          <div class="ctl-row">
+            <span class="ctl-lab">Typical age adult roles begin</span>
+            <input type="range" id="onset" min="17" max="31" step="1" value="22" aria-label="Typical age of adult role onset">
+            <span class="ctl-val" id="onsetV">22</span>
+          </div>
+        </div>
+      </div>
+      <figcaption>Cultures with earlier onset of work, marriage and parenthood show correspondingly earlier increases in agreeableness and conscientiousness. Role-transition timing accounts for roughly a fifth of the cross-cultural variance in these age effects.</figcaption>
+    </figure>
+
+    <p>So the answer to whether this is an American thing is: the direction is not, the timetable is. The long, loose, identity-exploring stretch from 18 to 29 that reads as a life stage in the United States is largely a product of extended schooling and delayed family formation. Where those conditions hold it is real and it is long. Where they don't, it compresses or disappears, and the curve simply starts earlier.</p>
+
+    <h3 style="font-size:1.28rem;margin:2.6rem 0 .5rem">And capacity is not a scalar either</h3>
+    <p>The same applies below the personality level, to the thing everyone treats as a fixed quantity a child either has or lacks. A preregistered study ran a marshmallow-style task with children in Japan and the United States, using two rewards: food, and a wrapped gift.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="jpChart" viewBox="0 0 900 276" role="img" aria-label="Median waiting times in a delay-of-gratification task. Children in Japan waited about fifteen minutes for food and about five for a gift. Children in the United States showed the reverse, waiting about five minutes for food and about fourteen for a gift."></svg>
+      </div>
+      <figcaption>Yanaoka et al., Psychological Science 2022; preregistered, 80 children in Japan and 58 in the United States, fifteen-minute ceiling. Japanese children waited roughly three times longer for food than for a gift; US children waited nearly four times longer for a gift than for food.</figcaption>
+    </figure>
+
+    <p>Neither group has more self-control. Each has a rehearsed waiting routine in one domain and not the other — waiting until everyone is served before eating, in Japan; waiting to unwrap, in the United States. Move the reward across the domain boundary and the apparent trait reverses. Which means the marshmallow test, in any given country, is partly measuring how often that country makes children wait for that particular thing.</p>
+
+    <p>The point extends further than one task. Work associated with Barbara Rogoff documents a pattern in a number of Indigenous and Indigenous-heritage communities of the Americas in which children are included in consequential family and community activity from young ages, observing closely and contributing according to developing ability, rather than being sorted into child-specific activities. Studies of Mexican-heritage children have found correspondingly sophisticated collaboration and sustained attentiveness in sibling pairs aged six to ten.</p>
+
+    <div class="note">
+      <p>That is the uncomfortable version of the WEIRD caveat, and it is worth stating plainly because every chart on this page inherits it. The profile everyone recognises — children can't sustain attention, want entertainment, need adults to direct them — is measured almost entirely in societies that entertain children, direct their attention, separate work from play, and keep them out of anything consequential. Some of what reads as childhood is the niche, not the child.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s-wellbeing">
+  <div class="wrap">
+    <div class="head">
+      <h2>Wellbeing does not have one curve</h2>
+      <span class="tag mid">Components solid, the famous U contested</span>
+    </div>
+    <p class="stand">The midlife crisis argument stalled because both sides were averaging over three measures that move in three different directions. Separate them and the picture resolves.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="wbChart" viewBox="0 0 900 332" role="img" aria-label="Three wellbeing measures across ages 10 to 90. Life satisfaction bottoms near 16, rises to a peak near 70, then drops sharply. Positive affect declines continuously across the whole lifespan. Negative affect peaks near 22, falls to a low near 60, then rises modestly. An optional overlay shows the residualised U-shaped curve produced by econometric models."></svg>
+        <div class="ctl">
+          <div class="btn-set" role="group" aria-label="Overlay">
+            <button class="btn" type="button" data-wb="off" aria-pressed="true">The three measured components</button>
+            <button class="btn" type="button" data-wb="on" aria-pressed="false">Add the econometric U</button>
+          </div>
+        </div>
+        <p id="wbRead" style="font-family:var(--sans);font-size:.92rem;color:var(--ink-2);margin:.9rem 0 0;max-width:none;line-height:1.55"></p>
+      </div>
+      <figcaption>Schematic rendering of a longitudinal meta-analysis covering 443 samples and 460,902 participants, with the econometric curve shown for comparison. All three components are normalised to a shared axis; the vertical positions are not comparable between series.</figcaption>
+    </figure>
+
+    <p>Life satisfaction does not dip in midlife. It bottoms at sixteen, climbs steadily for fifty years, peaks around seventy, and then falls hard — a terminal decline driven by frailty, cognitive impairment and the loss of a social network, not by turning seventy-five.</p>
+
+    <p>Positive affect is the one that genuinely declines, and it declines the entire way, from age nine to age ninety-four, without a rebound anywhere. What is draining out is specifically the high-arousal band: excitement, exuberance, the thing that makes a fifteen-year-old sprint between activities. It is replaced by low-arousal contentment, which scores as wellbeing on a life-satisfaction item and feels like nothing much on a Tuesday.</p>
+
+    <p>Negative affect peaks around twenty-two, falls through adulthood to a low near sixty, and rises modestly after that. So the twenties are the high-negative-affect decade, not the forties.</p>
+
+    <div class="note">
+      <p>Where did the famous U come from, then? From controlling for the wrong things. The trough appears when models hold income, employment, marriage and health constant — but those are consequences of ageing, not confounds to be removed from it. Controlling for health and marital status when you assess seventy-year-olds means evaluating a hypothetical person who reached seventy with a thirty-year-old's body and domestic arrangements. That inflates the late-life end and manufactures the dip.</p>
+      <p>When panel studies follow the same individuals for decades with fixed effects, the dip flattens or disappears. And in cohorts entering adulthood after 2012 the empirical nadir has moved from midlife to the late teens and early twenties, which is a different finding entirely and a more worrying one.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s-explore">
+  <div class="wrap">
+    <div class="head">
+      <h2>What children are actually better at</h2>
+      <span class="tag mid">Robust in specific tasks, contested as a general claim</span>
+    </div>
+    <p class="stand">Your closing intuition has a defensible version, and it is narrower and more interesting than "be more playful." Children search their hypothesis space at a higher temperature than is locally optimal — and when the correct rule is improbable, that wins.</p>
+
+    <figure>
+      <div class="fig-frame">
+        <svg id="expChart" viewBox="0 0 900 380" role="img" aria-label="A hypothesis space with a dense region of prior-plausible ideas and one correct rule located away from it. Samples scatter from the prior centre; raising the search temperature spreads them wider and increases the chance of landing on the correct rule."></svg>
+        <div class="ctl">
+          <div class="ctl-row">
+            <span class="ctl-lab">Search temperature</span>
+            <input type="range" id="temp" min="5" max="100" step="1" value="22" aria-label="Search temperature">
+            <span class="ctl-val" id="tempV">0.22</span>
+          </div>
+          <div class="btn-set">
+            <button class="btn" type="button" data-temp="22">Typical adult</button>
+            <button class="btn" type="button" data-temp="70">Typical 5-year-old</button>
+            <button class="btn" type="button" id="resample">Resample</button>
+          </div>
+        </div>
+        <div class="panel" id="expPanel"></div>
+      </div>
+      <figcaption>A sampling model of the exploration–exploitation trade-off, not a reproduction of any specific experiment. In causal-learning tasks where the true rule is unusual, four- and five-year-olds outperform adults, because adults discard the improbable hypothesis before testing it.</figcaption>
+    </figure>
+
+    <p>Drag the temperature down and you get efficiency: almost every sample lands somewhere plausible, and almost none land on the answer. Drag it up and the waste climbs, but the answer becomes reachable. Adult expertise is a compression. It is genuinely valuable and it genuinely discards live options, and which of those matters depends entirely on whether the answer was inside the compressed region.</p>
+
+    <p>Openness also peaks in the early twenties and declines for the remaining sixty years. That is a slow, real, measurable narrowing of the sampled region, and it is the strongest evidence for your instinct that something is being lost rather than merely traded.</p>
+
+    <p>There is a correction to make here to the obvious bound. The instinct is to say: borrow the curiosity, leave the recklessness. But those turn out to be dissociable in a more specific way. Romer's lifespan wisdom model separates <em>impulsive</em> risk-taking — acting without thinking — which declines steadily from childhood onward, from <em>exploratory</em> risk-taking, which is deliberate novelty pursuit and peaks in adolescence precisely because it builds real-world competence. Adolescent risk behaviour is not one undifferentiated failure of control. Most of what looks alarming from outside is the second kind.</p>
+
+    <div class="note">
+      <p>So the bound is narrower than it first looks. The thing not worth borrowing is the impulsive component, which was already declining before adolescence and has nothing to recommend it. The exploratory component — high-temperature sampling, deliberately chosen, costs accepted — is the part that peaks in adolescence and the part an adult can actually reinstate. Borrow that.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s-end">
+  <div class="wrap">
+    <div class="head">
+      <h2>Where this leaves you</h2>
+    </div>
+    <p>The stage model has one durable use and one bad failure. It is a decent shorthand for populations. It is a terrible predictor of the person in front of you, and it is at its worst exactly where you noticed it — when someone uses their stage as a vantage point on someone else's.</p>
+
+    <p>Two variables do most of the work the stage model was doing, and unlike age, both are things a person can inspect in themselves:</p>
+
+    <p><strong>How much time you feel you have.</strong> Not how much you have. The felt estimate is what drives the shift from expansion to depth, it is frequently wrong, and it is the one place where the research gives you a lever instead of a description.</p>
+
+    <p><strong>How aggressively you prune before testing.</strong> Expertise is a prior, and a prior is a set of hypotheses you have stopped sampling. The cost is invisible from inside, because the discarded options never come up.</p>
+
+    <p>That is thinner than a theory of life stages. It is also load-bearing in a way the stage model isn't, and it has the useful property of pointing at yourself rather than at teenagers.</p>
+
+    <p>There is also a correction to make to the question that started this. "Depth" was defined throughout as reflective, verbal, disclosing conversation — the thing a 25-year-old wants from a teenager. What the lifespan research actually supports is increasing prioritisation of <em>emotional significance</em>, which is not the same object. Someone can be relationally deep without being verbally introspective: working alongside you, feeding you, telling the same story a sixth time, reliably being there. Doing something together while conversation happens sideways is not a lesser form of the verbal version. For a large share of people and cultures it is the primary form, and the verbal one is the local dialect.</p>
+
+    <p>One more thing worth holding onto, because it cuts against the direction of travel here. Complex emotion recognition and theory of mind do not peak until the mid-forties to mid-fifties. It is the one capacity on this whole page that peaks in late middle age. Whatever the 25-year-old thinks he is bringing to the conversation, reading the other person is not yet it.</p>
+
+    <div class="note">
+      <p>The honest limit on all of this: nobody has actually studied the thing you noticed. Research on interpersonal communication splits into parent–child work and gerontological work, with essentially nothing on how twenty-somethings and teenagers talk to each other. The claim that one group wants reflective conversation while the other wants immediacy rests on practitioner commentary and qualitative observation, not controlled study.</p>
+      <p>Everything above is assembled from findings about the two cohorts separately and then pointed at the gap between them. That inference is reasonable. It is not a measurement, and it should not be treated as one.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h3>What is measured and what is drawn</h3>
+    <p style="max-width:72ch">Sample sizes, effect-size ranges and variance figures quoted in the text are as reported in the source literature. Every chart is a schematic rendering. Curve shapes, directions and inflection points follow published findings; specific heights and values are illustrative, normalised for comparison, and do not come from a single dataset. Nothing on this page should be read off as a measurement.</p>
+    <h3>Underlying work</h3>
+    <ul>
+      <li>Dual-systems model of adolescent risk, and the cold/hot cognition distinction — Steinberg and colleagues.</li>
+      <li>The maturity principle in Big Five traits across adulthood — Roberts, Walton &amp; Viechtbauer meta-analysis.</li>
+      <li>Cross-cultural personality maturation and role-transition timing — Bleidorn et al., 62 nations, N ≈ 884,000.</li>
+      <li>The end-of-history illusion — Quoidbach, Gilbert &amp; Wilson.</li>
+      <li>Socioemotional selectivity theory and horizon manipulation — Carstensen and colleagues.</li>
+      <li>High-temperature hypothesis search in young children — Gopnik, Lucas and colleagues.</li>
+      <li>Delay of gratification as a response to environmental reliability — Kidd, Palmeri &amp; Aslin, "Rational snacking."</li>
+      <li>Culturally rehearsed waiting routines and domain-specific delay — Yanaoka et al., Psychological Science 2022, preregistered, N = 138.</li>
+      <li>Episodic future thinking and reduced delay discounting in children.</li>
+      <li>Learning by Observing and Pitching In; sibling collaboration in Mexican-heritage children — Rogoff and colleagues.</li>
+      <li>Wellbeing components across the lifespan — longitudinal meta-analysis, 443 samples, N ≈ 460,902.</li>
+      <li>The U-shaped wellbeing curve, the bad-controls critique, and its recent disappearance — Blanchflower &amp; Bryson; Bartram; Frijters.</li>
+      <li>The kids-these-days effect and its domain specificity — Protzko &amp; Schooler, five preregistered studies, N ≈ 3,458.</li>
+      <li>Impulsive versus exploratory risk-taking — Romer's lifespan wisdom model.</li>
+      <li>Variance in Big Five traits attributable to chronological age (R² ≈ 0.02–0.06, mean ≈ 0.036) — representative-sample analyses.</li>
+    </ul>
+    <p class="site-link">Part of <a href="/">esmrsky.github.io</a>.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- theme ---------- */
+var root = document.documentElement;
+try{ var saved = localStorage.getItem("esmrsky-theme"); if(saved) root.setAttribute("data-theme", saved); }catch(e){}
+document.getElementById("theme").addEventListener("click", function(){
+  var cur = root.getAttribute("data-theme");
+  if(!cur){ cur = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+  var next = cur === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", next);
+  try{ localStorage.setItem("esmrsky-theme", next); }catch(e){}
+});
+
+/* ---------- helpers ---------- */
+var NS = "http://www.w3.org/2000/svg";
+function el(n, a){ var e = document.createElementNS(NS, n); for(var k in a){ if(a[k] !== null && a[k] !== undefined) e.setAttribute(k, a[k]); } return e; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function lerpSeries(s, x){
+  if(x <= s[0][0]) return s[0][1];
+  if(x >= s[s.length-1][0]) return s[s.length-1][1];
+  for(var i=0;i<s.length-1;i++){
+    if(x >= s[i][0] && x <= s[i+1][0]){
+      var t = (x - s[i][0]) / (s[i+1][0] - s[i][0]);
+      t = t*t*(3-2*t);
+      return s[i][1] + t*(s[i+1][1] - s[i][1]);
+    }
+  }
+  return s[s.length-1][1];
+}
+function smooth(pts){
+  if(pts.length < 2) return "";
+  var d = "M" + pts[0][0].toFixed(1) + "," + pts[0][1].toFixed(1);
+  for(var i=0;i<pts.length-1;i++){
+    var p0 = pts[i-1] || pts[i], p1 = pts[i], p2 = pts[i+1], p3 = pts[i+2] || p2;
+    var c1x = p1[0] + (p2[0]-p0[0])/6, c1y = p1[1] + (p2[1]-p0[1])/6;
+    var c2x = p2[0] - (p3[0]-p1[0])/6, c2y = p2[1] - (p3[1]-p1[1])/6;
+    d += "C" + c1x.toFixed(1) + "," + c1y.toFixed(1) + " " + c2x.toFixed(1) + "," + c2y.toFixed(1) + " " + p2[0].toFixed(1) + "," + p2[1].toFixed(1);
+  }
+  return d;
+}
+
+/* shared plot frame */
+var PL = 56, PR = 884, PT = 26, PB = 278;
+function ageX(a, lo, hi){ lo = lo||10; hi = hi||80; return PL + (a-lo)/(hi-lo)*(PR-PL); }
+function valY(v){ return PB - v*(PB-PT); }
+
+function drawFrame(svg, ticks, lo, hi, topLab, botLab){
+  var i, x;
+  for(i=0;i<ticks.length;i++){
+    x = ageX(ticks[i], lo, hi);
+    svg.appendChild(el("line",{x1:x,y1:PT-4,x2:x,y2:PB,"class":"svg-ax"}));
+    var t = el("text",{x:x,y:PB+20,"class":"svg-lab","text-anchor":"middle"});
+    t.textContent = ticks[i];
+    svg.appendChild(t);
+  }
+  svg.appendChild(el("line",{x1:PL,y1:PB,x2:PR,y2:PB,"class":"svg-base"}));
+  if(topLab){ var a = el("text",{x:PL-10,y:PT+4,"class":"svg-lab","text-anchor":"end"}); a.textContent = topLab; svg.appendChild(a); }
+  if(botLab){ var b = el("text",{x:PL-10,y:PB,"class":"svg-lab","text-anchor":"end"}); b.textContent = botLab; svg.appendChild(b); }
+  var ax = el("text",{x:(PL+PR)/2,y:PB+44,"class":"svg-lab","text-anchor":"middle"});
+  ax.textContent = "age";
+  svg.appendChild(ax);
+}
+
+/* ---------- gradient data (schematic) ---------- */
+var G = [
+  { key:"drive",   name:"novelty seeking",  css:"--drive",   dash:null,
+    d:[[10,.35],[13,.55],[16,.82],[19,.95],[22,.88],[25,.78],[30,.62],[35,.53],[40,.45],[50,.34],[60,.25],[70,.18],[80,.13]],
+    hi:"pulling hard toward the new", lo:"rarely reaching for the unfamiliar" },
+  { key:"vital",   name:"social vitality",  css:"--vital",   dash:"5 3",
+    d:[[10,.62],[14,.78],[17,.88],[19,.90],[22,.86],[25,.81],[30,.74],[35,.69],[40,.64],[50,.55],[60,.47],[70,.38],[80,.30]],
+    hi:"loud, gregarious, exuberant", lo:"sociable in a quieter register" },
+  { key:"domin",   name:"social dominance", css:"--domin",   dash:"9 3 2 3",
+    d:[[10,.28],[14,.32],[18,.40],[22,.50],[25,.57],[30,.67],[35,.74],[40,.78],[45,.78],[50,.76],[60,.71],[70,.64],[80,.56]],
+    hi:"assertive, willing to lead", lo:"still deferring by default" },
+  { key:"control", name:"self-regulation",  css:"--control", dash:"7 4",
+    d:[[10,.25],[13,.32],[16,.42],[19,.52],[22,.63],[25,.72],[30,.82],[35,.86],[40,.88],[50,.90],[60,.88],[70,.83],[80,.76]],
+    hi:"able to sit on an impulse", lo:"impulse arrives before the brake" },
+  { key:"open",    name:"openness",         css:"--open",    dash:"2 4",
+    d:[[10,.45],[13,.55],[16,.66],[19,.76],[22,.80],[25,.80],[30,.79],[35,.78],[40,.77],[45,.77],[50,.75],[55,.73],[60,.71],[65,.64],[70,.56],[75,.48],[80,.41]],
+    hi:"taking new frames seriously", lo:"frames mostly settled" },
+  { key:"mature",  name:"diligence and warmth", css:"--mature", dash:"11 4 2 4",
+    d:[[10,.32],[14,.27],[19,.34],[22,.41],[25,.48],[30,.58],[35,.63],[40,.68],[50,.76],[60,.82],[70,.85],[80,.85]],
+    hi:"reliable, accommodating", lo:"still assembling both" },
+  { key:"horizon", name:"felt time left",   css:"--horizon", dash:"1 5",
+    d:[[10,.97],[16,.96],[20,.95],[25,.93],[30,.90],[35,.85],[40,.80],[45,.74],[50,.66],[55,.58],[60,.48],[65,.39],[70,.30],[75,.22],[80,.14]],
+    hi:"time feels unbounded", lo:"time feels counted" }
+];
+function gradPts(g){
+  var pts = [], a;
+  for(a=10;a<=80;a+=2){ pts.push([ageX(a), valY(lerpSeries(g.d, a))]); }
+  return pts;
+}
+
+/* ---------- hero ---------- */
+var heroSvg = document.getElementById("heroChart");
+var heroOn = {};
+var heroPaths = {};
+(function(){
+  drawFrame(heroSvg, [10,20,30,40,50,60,70,80], 10, 80, "higher", "lower");
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  G.forEach(function(g, i){
+    heroOn[g.key] = true;
+    var p = el("path",{d:smooth(gradPts(g)),"class":"curve",stroke:"var("+g.css+")","stroke-dasharray":g.dash||null});
+    heroSvg.appendChild(p);
+    heroPaths[g.key] = p;
+    if(!reduce){
+      try{
+        var L = p.getTotalLength();
+        p.style.strokeDasharray = L + " " + L;
+        p.style.strokeDashoffset = L;
+        p.animate([{strokeDashoffset:L},{strokeDashoffset:0}],{duration:1000,delay:110*i,easing:"cubic-bezier(.4,0,.2,1)",fill:"forwards"});
+        (function(path){
+          setTimeout(function(){ path.style.strokeDasharray=""; path.style.strokeDashoffset=""; }, 1000+110*i+40);
+        })(p);
+      }catch(e){}
+    }
+  });
+  var lg = document.getElementById("heroLegend");
+  G.forEach(function(g){
+    var b = document.createElement("button");
+    b.className = "lg"; b.type = "button"; b.setAttribute("aria-pressed","true");
+    var sw = document.createElement("i");
+    sw.style.borderTopColor = "var("+g.css+")";
+    sw.style.borderTopStyle = g.dash ? "dashed" : "solid";
+    b.appendChild(sw);
+    b.appendChild(document.createTextNode(g.name));
+    b.addEventListener("click", function(){
+      heroOn[g.key] = !heroOn[g.key];
+      b.setAttribute("aria-pressed", String(heroOn[g.key]));
+      heroPaths[g.key].classList.toggle("dim", !heroOn[g.key]);
+      if(scrubPaths[g.key]) scrubPaths[g.key].classList.toggle("dim", !heroOn[g.key]);
+      if(scrubDots[g.key]) scrubDots[g.key].style.opacity = heroOn[g.key] ? "1" : ".13";
+    });
+    lg.appendChild(b);
+  });
+})();
+
+/* ---------- scrubber ---------- */
+var scrubSvg = document.getElementById("scrubChart");
+var scrubPaths = {}, scrubDots = {}, scrubLine, scrubTag;
+(function(){
+  drawFrame(scrubSvg, [10,20,30,40,50,60,70,80], 10, 80, "higher", "lower");
+  scrubLine = el("line",{x1:0,y1:PT-4,x2:0,y2:PB,stroke:"var(--ink-3)","stroke-width":1});
+  scrubSvg.appendChild(scrubLine);
+  G.forEach(function(g){
+    var p = el("path",{d:smooth(gradPts(g)),"class":"curve",stroke:"var("+g.css+")","stroke-dasharray":g.dash||null});
+    scrubSvg.appendChild(p); scrubPaths[g.key] = p;
+  });
+  G.forEach(function(g){
+    var c = el("circle",{r:5,fill:"var("+g.css+")",stroke:"var(--surface)","stroke-width":2});
+    scrubSvg.appendChild(c); scrubDots[g.key] = c;
+  });
+  scrubTag = el("text",{"class":"svg-lab hi","text-anchor":"middle",y:PT-12});
+  scrubSvg.appendChild(scrubTag);
+
+  var panel = document.getElementById("scrubPanel");
+  G.forEach(function(g){
+    var c = document.createElement("div"); c.className = "cell";
+    c.innerHTML = '<b>'+g.name+'</b><div class="bar"><span id="sb-'+g.key+'"></span></div><span class="n" id="sn-'+g.key+'"></span>';
+    panel.appendChild(c);
+  });
+
+  var phases = [
+    {to:19, t:"Novelty seeking and social vitality are both at ceiling and regulation is furthest behind them. Felt time is effectively infinite. This is the widest that gap ever gets."},
+    {to:25, t:"Regulation is climbing fast and openness has just topped out. Social vitality has already begun the decline it never reverses."},
+    {to:33, t:"Drive and vitality falling, dominance and diligence climbing at their steepest, openness holding flat. High capacity, narrowing sample."},
+    {to:45, t:"Dominance peaks and regulation plateaus. Openness is still flat — it does not start dropping for another fifteen years. Felt time begins its real decline."},
+    {to:60, t:"Diligence and warmth still rising, everything else descending. Openness turns over here, and horizon is falling faster than anything else on the chart."},
+    {to:80, t:"Only diligence and warmth stay high. Horizon is the dominant moving variable now, and it drives most of what changes from here."}
+  ];
+  function read(a){
+    for(var i=0;i<phases.length;i++){ if(a <= phases[i].to) return phases[i].t; }
+    return phases[phases.length-1].t;
+  }
+
+  var slider = document.getElementById("scrubAge");
+  function update(){
+    var a = +slider.value;
+    document.getElementById("scrubAgeV").textContent = a;
+    var x = ageX(a);
+    scrubLine.setAttribute("x1", x); scrubLine.setAttribute("x2", x);
+    scrubTag.setAttribute("x", clamp(x, PL+18, PR-18));
+    scrubTag.textContent = "age " + a;
+    G.forEach(function(g){
+      var v = lerpSeries(g.d, a);
+      scrubDots[g.key].setAttribute("cx", x);
+      scrubDots[g.key].setAttribute("cy", valY(v));
+      var bar = document.getElementById("sb-"+g.key);
+      bar.style.width = Math.round(v*100) + "%";
+      bar.style.background = "var("+g.css+")";
+      document.getElementById("sn-"+g.key).textContent = (v >= .55 ? g.hi : g.lo);
+    });
+    document.getElementById("scrubRead").textContent = read(a);
+  }
+  slider.addEventListener("input", update);
+  update();
+})();
+
+/* ---------- hot / cold ---------- */
+(function(){
+  var svg = document.getElementById("hotChart");
+  var lo = 10, hi = 60;
+  drawFrame(svg, [10,20,30,40,50,60], lo, hi, "more risk taken", "less");
+  var cold = [[10,.42],[14,.44],[16,.43],[18,.42],[21,.40],[25,.38],[30,.36],[40,.33],[50,.30],[60,.27]];
+  var hot  = [[10,.48],[14,.72],[16,.82],[18,.78],[21,.62],[25,.50],[30,.42],[40,.36],[50,.31],[60,.28]];
+  function pts(s, k){
+    var out = [], a;
+    for(a=lo;a<=hi;a+=1){
+      var v = lerpSeries(cold,a) + k*(lerpSeries(hot,a) - lerpSeries(cold,a));
+      out.push([ageX(a,lo,hi), valY(v*1.05)]);
+    }
+    return out;
+  }
+  var ghost = el("path",{d:smooth(pts(null,0)),"class":"curve",stroke:"var(--ink-3)","stroke-width":1.2,"stroke-dasharray":"3 5",opacity:".55"});
+  svg.appendChild(ghost);
+  var live = el("path",{d:smooth(pts(null,0)),"class":"curve",stroke:"var(--drive)"});
+  svg.appendChild(live);
+  var gl = el("text",{"class":"svg-lab",x:PR-4,"text-anchor":"end",y:valY(lerpSeries(cold,60)*1.05)-12});
+  gl.textContent = "alone, deliberate";
+  svg.appendChild(gl);
+
+  var slider = document.getElementById("heat");
+  function update(){
+    var k = +slider.value/100;
+    document.getElementById("heatV").textContent = Math.round(k*100) + "%";
+    live.setAttribute("d", smooth(pts(null,k)));
+    Array.prototype.forEach.call(document.querySelectorAll("[data-heat]"), function(b){
+      b.setAttribute("aria-pressed", String(Math.round(k*100) === +b.dataset.heat));
+    });
+  }
+  slider.addEventListener("input", update);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-heat]"), function(b){
+    b.addEventListener("click", function(){ slider.value = b.dataset.heat; update(); });
+  });
+  update();
+})();
+
+/* ---------- end-of-history illusion ---------- */
+(function(){
+  var svg = document.getElementById("eohiChart");
+  var lo = 18, hi = 68;
+  drawFrame(svg, [18,28,38,48,58,68], lo, hi, "more change", "less");
+  var back = [[18,.82],[23,.72],[28,.64],[33,.58],[38,.52],[43,.47],[48,.44],[53,.41],[58,.38],[63,.36],[68,.35]];
+  var fwd  = [[18,.50],[23,.44],[28,.39],[33,.36],[38,.33],[43,.30],[48,.28],[53,.27],[58,.25],[63,.24],[68,.22]];
+  function pts(s){ var o=[],a; for(a=lo;a<=hi;a+=2){ o.push([ageX(a,lo,hi), valY(lerpSeries(s,a))]); } return o; }
+  svg.appendChild(el("path",{d:smooth(pts(back)),"class":"curve",stroke:"var(--open)"}));
+  svg.appendChild(el("path",{d:smooth(pts(fwd)),"class":"curve",stroke:"var(--control)","stroke-dasharray":"7 4"}));
+  var l1 = el("text",{"class":"svg-lab",x:ageX(40,lo,hi),y:valY(lerpSeries(back,40))-14,"text-anchor":"middle",fill:"var(--open)"});
+  l1.textContent = "change they report over the last 10 years";
+  svg.appendChild(l1);
+  var l2 = el("text",{"class":"svg-lab",x:ageX(40,lo,hi),y:valY(lerpSeries(fwd,40))+26,"text-anchor":"middle",fill:"var(--control)"});
+  l2.textContent = "change they predict for the next 10";
+  svg.appendChild(l2);
+
+  var link = el("line",{stroke:"var(--ink-3)","stroke-width":1,"stroke-dasharray":"2 3"});
+  svg.appendChild(link);
+  var dA = el("circle",{r:5.5,fill:"var(--control)",stroke:"var(--surface)","stroke-width":2});
+  var dB = el("circle",{r:5.5,fill:"var(--open)",stroke:"var(--surface)","stroke-width":2});
+  svg.appendChild(dA); svg.appendChild(dB);
+
+  var slider = document.getElementById("eohiAge");
+  function update(){
+    var a = +slider.value, b = a + 10;
+    document.getElementById("eohiAgeV").textContent = a;
+    var xa = ageX(a,lo,hi), xb = ageX(b,lo,hi);
+    var ya = valY(lerpSeries(fwd,a)), yb = valY(lerpSeries(back,b));
+    dA.setAttribute("cx",xa); dA.setAttribute("cy",ya);
+    dB.setAttribute("cx",xb); dB.setAttribute("cy",yb);
+    link.setAttribute("x1",xa); link.setAttribute("y1",ya);
+    link.setAttribute("x2",xb); link.setAttribute("y2",yb);
+    var ratio = lerpSeries(back,b) / lerpSeries(fwd,a);
+    document.getElementById("eohiRead").textContent =
+      "At " + a + ", people expect to change a certain amount by " + b + ". People who are already " + b +
+      " report having changed about " + ratio.toFixed(1) + "× that much over the same decade. The forecast is low at every age on this axis.";
+  }
+  slider.addEventListener("input", update);
+  update();
+})();
+
+/* ---------- the future discount: three routes, one curve ---------- */
+(function(){
+  var svg = document.getElementById("futChart");
+  var MAX = 24;
+  function dX(m){ return PL + m/MAX*(PR-PL); }
+  [0,3,6,12,18,24].forEach(function(m){
+    var x = dX(m);
+    svg.appendChild(el("line",{x1:x,y1:PT-4,x2:x,y2:PB,"class":"svg-ax"}));
+    var t = el("text",{x:x,y:PB+20,"class":"svg-lab","text-anchor":"middle"});
+    t.textContent = m === 0 ? "now" : m;
+    svg.appendChild(t);
+  });
+  svg.appendChild(el("line",{x1:PL,y1:PB,x2:PR,y2:PB,"class":"svg-base"}));
+  var yTop = el("text",{x:PL-10,y:PT+4,"class":"svg-lab","text-anchor":"end"}); yTop.textContent = "full value"; svg.appendChild(yTop);
+  var yBot = el("text",{x:PL-10,y:PB,"class":"svg-lab","text-anchor":"end"}); yBot.textContent = "worthless"; svg.appendChild(yBot);
+  var xLab = el("text",{x:(PL+PR)/2,y:PB+44,"class":"svg-lab","text-anchor":"middle"});
+  xLab.textContent = "months until the promised reward arrives";
+  svg.appendChild(xLab);
+
+  function curve(k){
+    var o = [], m;
+    for(m=0;m<=MAX;m+=0.5){ o.push([dX(m), valY(1/(1+k*m))]); }
+    return o;
+  }
+  svg.appendChild(el("path",{d:smooth(curve(0.04)),"class":"curve",stroke:"var(--ink-3)","stroke-width":1.3,"stroke-dasharray":"3 5",opacity:".55"}));
+  var live = el("path",{d:smooth(curve(0.04)),"class":"curve",stroke:"var(--horizon)"});
+  svg.appendChild(live);
+  var ghostLab = el("text",{x:PR-4,y:valY(1/(1+0.04*MAX))-14,"class":"svg-lab","text-anchor":"end"});
+  ghostLab.textContent = "all three inputs intact";
+  svg.appendChild(ghostLab);
+
+  var indNames = ["can picture it","has been reliable","expects to be there"];
+  var indBars = [], indY = [44,70,96];
+  indNames.forEach(function(n,i){
+    var t = el("text",{x:680,y:indY[i]+5,"class":"svg-lab","text-anchor":"end"});
+    t.textContent = n; svg.appendChild(t);
+    svg.appendChild(el("rect",{x:690,y:indY[i]-4,width:180,height:9,rx:4,fill:"var(--rule)"}));
+    var b = el("rect",{x:690,y:indY[i]-4,width:180,height:9,rx:4,fill:"var(--accent)"});
+    svg.appendChild(b); indBars.push(b);
+  });
+
+  var sv = document.getElementById("fVivid"), sr = document.getElementById("fRely"), sh = document.getElementById("fHor");
+  function update(){
+    var v = +sv.value/100, r = +sr.value/100, h = +sh.value/100;
+    document.getElementById("fVividV").textContent = sv.value;
+    document.getElementById("fRelyV").textContent = sr.value;
+    document.getElementById("fHorV").textContent = sh.value;
+    [v,r,h].forEach(function(n,i){ indBars[i].setAttribute("width", Math.max(3, 180*n)); });
+    var lowest = Math.min(v,r,h);
+    [v,r,h].forEach(function(n,i){
+      indBars[i].setAttribute("fill", (n === lowest && lowest < 0.75) ? "var(--horizon)" : "var(--accent)");
+    });
+
+    var w = Math.pow(v*r*h, 0.45);
+    var k = 0.04 + 2.6*Math.pow(1-w, 2.2);
+    live.setAttribute("d", smooth(curve(k)));
+
+    var six = Math.round(100/(1+k*6));
+    var why;
+    if(lowest > 0.7) why = "All three inputs are intact, so the future competes on close to even terms.";
+    else if(lowest === v) why = "The bottleneck is simulation. The future is not vivid enough to compete with what is in the room — and making a future event concrete and specific measurably reduces this in children.";
+    else if(lowest === r) why = "The bottleneck is credibility. This person has learned that promises don't arrive. Taking it now is the correct inference, not a failure of character.";
+    else why = "The bottleneck is horizon. The future is vivid and the promises are good; this person simply doesn't expect to be there for much of it.";
+    document.getElementById("futRead").textContent =
+      "A promise six months out holds about " + six + "% of its immediate value here. " + why;
+
+    var sig = sv.value + "," + sr.value + "," + sh.value;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-fut]"), function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.fut === sig));
+    });
+  }
+  [sv,sr,sh].forEach(function(x){ x.addEventListener("input", update); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-fut]"), function(b){
+    b.addEventListener("click", function(){
+      var p = b.dataset.fut.split(",");
+      sv.value = p[0]; sr.value = p[1]; sh.value = p[2]; update();
+    });
+  });
+  update();
+})();
+
+/* ---------- horizon ---------- */
+(function(){
+  var svg = document.getElementById("horChart");
+  var W = 900;
+  var barX = 56, barW = 788;
+
+  var goalY = 56, goalH = 34;
+  var netY = 178, netH = 34;
+
+  var t1 = el("text",{x:barX,y:goalY-14,"class":"svg-lab"}); t1.textContent = "what goals get priority"; svg.appendChild(t1);
+  var gInfo = el("rect",{x:barX,y:goalY,height:goalH,rx:3,fill:"var(--open)"});
+  var gMean = el("rect",{y:goalY,height:goalH,rx:3,fill:"var(--horizon)"});
+  svg.appendChild(gInfo); svg.appendChild(gMean);
+  var gL1 = el("text",{y:goalY+goalH+20,"class":"svg-lab",fill:"var(--open)"});
+  var gL2 = el("text",{y:goalY+goalH+20,"class":"svg-lab",fill:"var(--horizon)","text-anchor":"end"});
+  svg.appendChild(gL1); svg.appendChild(gL2);
+
+  var t2 = el("text",{x:barX,y:netY-14,"class":"svg-lab"}); t2.textContent = "who stays in the network"; svg.appendChild(t2);
+  var nClose = el("rect",{x:barX,y:netY,height:netH,rx:3,fill:"var(--mature)"});
+  var nPeri  = el("rect",{y:netY,height:netH,rx:3,fill:"var(--ink-3)",opacity:".45"});
+  svg.appendChild(nClose); svg.appendChild(nPeri);
+  var nL1 = el("text",{y:netY+netH+20,"class":"svg-lab",fill:"var(--mature)"});
+  var nL2 = el("text",{y:netY+netH+20,"class":"svg-lab"});
+  svg.appendChild(nL1); svg.appendChild(nL2);
+
+  var track = el("line",{x1:barX,y1:262,x2:barX+barW,y2:262,stroke:"var(--rule)","stroke-width":2});
+  svg.appendChild(track);
+  var fill = el("line",{x1:barX,y1:262,x2:barX,y2:262,stroke:"var(--accent)","stroke-width":2});
+  svg.appendChild(fill);
+  var tl = el("text",{x:barX,y:284,"class":"svg-lab"}); tl.textContent = "horizon closed"; svg.appendChild(tl);
+  var tr = el("text",{x:barX+barW,y:284,"class":"svg-lab","text-anchor":"end"}); tr.textContent = "horizon open"; svg.appendChild(tr);
+
+  var sAge = document.getElementById("hAge"), sHor = document.getElementById("hHor");
+  function update(){
+    var age = +sAge.value, hor = +sHor.value;
+    document.getElementById("hAgeV").textContent = age;
+    document.getElementById("hHorV").textContent = hor + "y";
+    var hn = clamp(hor/55, 0, 1);
+
+    var info = 0.12 + 0.72*hn;
+    var wi = barW*info, wm = barW - wi;
+    gInfo.setAttribute("width", Math.max(2,wi));
+    gMean.setAttribute("x", barX+wi); gMean.setAttribute("width", Math.max(2,wm));
+    gL1.setAttribute("x", barX); gL1.textContent = "new information " + Math.round(info*100) + "%";
+    gL2.setAttribute("x", barX+barW); gL2.textContent = "emotional meaning " + Math.round((1-info)*100) + "%";
+
+    var close = 5, peri = Math.round(3 + 25*hn);
+    var unit = barW / 34;
+    var wc = close*unit, wp = peri*unit;
+    nClose.setAttribute("width", wc);
+    nPeri.setAttribute("x", barX+wc+3); nPeri.setAttribute("width", Math.max(2,wp-3));
+    nL1.setAttribute("x", barX); nL1.textContent = close + " close ties";
+    nL2.setAttribute("x", barX+wc+9); nL2.textContent = peri + " peripheral ties";
+
+    fill.setAttribute("x2", barX + barW*hn);
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-hor]"), function(b){
+      var p = b.dataset.hor.split(",");
+      b.setAttribute("aria-pressed", String(+p[0] === age && +p[1] === hor));
+    });
+
+    var msg;
+    if(hn > .7) msg = "Expansion mode: gather, meet, try, defer the payoff. This is what an open horizon looks like at any age.";
+    else if(hn > .35) msg = "Mid-transition. The peripheral band is thinning and the payoff window is starting to feel finite.";
+    else msg = "Depth mode: prune the periphery, weight the known relationships, prefer meaning over information. Age " + age + " produces this profile whenever the horizon closes.";
+    document.getElementById("horRead").textContent = msg;
+  }
+  sAge.addEventListener("input", update);
+  sHor.addEventListener("input", update);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-hor]"), function(b){
+    b.addEventListener("click", function(){
+      var p = b.dataset.hor.split(",");
+      sAge.value = p[0]; sHor.value = p[1]; update();
+    });
+  });
+  update();
+})();
+
+/* ---------- cultural offset ---------- */
+(function(){
+  var svg = document.getElementById("cultChart");
+  var lo = 14, hi = 60;
+  drawFrame(svg, [15,20,25,30,35,40,45,50,55,60], lo, hi, "higher", "lower");
+  var base = G.filter(function(g){ return g.key === "mature"; })[0].d;
+  function pts(shift){
+    var o = [], a;
+    for(a=lo;a<=hi;a+=1){ o.push([ageX(a,lo,hi), valY(lerpSeries(base, a - shift))]); }
+    return o;
+  }
+  var ghost = el("path",{d:smooth(pts(0)),"class":"curve",stroke:"var(--ink-3)","stroke-width":1.2,"stroke-dasharray":"3 5",opacity:".5"});
+  svg.appendChild(ghost);
+  var live = el("path",{d:smooth(pts(0)),"class":"curve",stroke:"var(--mature)"});
+  svg.appendChild(live);
+  var mark = el("line",{y1:PT-4,y2:PB,stroke:"var(--mature)","stroke-width":1,"stroke-dasharray":"2 4"});
+  svg.appendChild(mark);
+  var ml = el("text",{"class":"svg-lab hi",y:PT-12,"text-anchor":"middle",fill:"var(--mature)"});
+  svg.appendChild(ml);
+  var ref = el("text",{"class":"svg-lab",x:PR-4,y:PT+12,"text-anchor":"end"});
+  ref.textContent = "reference curve, onset 22";
+  svg.appendChild(ref);
+
+  var slider = document.getElementById("onset");
+  function update(){
+    var on = +slider.value, shift = on - 22;
+    document.getElementById("onsetV").textContent = on;
+    live.setAttribute("d", smooth(pts(shift)));
+    var x = ageX(on, lo, hi);
+    mark.setAttribute("x1",x); mark.setAttribute("x2",x);
+    ml.setAttribute("x", clamp(x, PL+40, PR-40));
+    ml.textContent = "roles begin at " + on;
+  }
+  slider.addEventListener("input", update);
+  update();
+})();
+
+/* ---------- wellbeing components ---------- */
+(function(){
+  var svg = document.getElementById("wbChart");
+  var lo = 10, hi = 90;
+  drawFrame(svg, [10,20,30,40,50,60,70,80,90], lo, hi, "higher", "lower");
+  var lifeSat = [[10,.70],[13,.62],[16,.55],[20,.61],[25,.65],[30,.68],[40,.72],[50,.76],[60,.81],[70,.85],[75,.83],[80,.75],[85,.65],[90,.55]];
+  var posAff  = [[10,.88],[16,.84],[22,.79],[30,.73],[40,.68],[50,.63],[60,.57],[70,.51],[80,.44],[90,.36]];
+  var negAff  = [[10,.46],[14,.55],[18,.60],[22,.62],[26,.58],[30,.54],[40,.46],[50,.40],[60,.35],[70,.40],[80,.46],[90,.54]];
+  var econU   = [[18,.74],[25,.67],[30,.63],[35,.59],[40,.56],[45,.53],[48,.52],[52,.52],[58,.57],[65,.64],[70,.69],[75,.71],[80,.70],[85,.68],[90,.66]];
+  function pts(s, from){
+    var o = [], a, start = from || lo;
+    for(a=start;a<=hi;a+=2){ o.push([ageX(a,lo,hi), valY(lerpSeries(s,a))]); }
+    return o;
+  }
+  var pU = el("path",{d:smooth(pts(econU,18)),"class":"curve",stroke:"var(--ink-3)","stroke-width":1.6,"stroke-dasharray":"3 5",opacity:"0"});
+  svg.appendChild(pU);
+  svg.appendChild(el("path",{d:smooth(pts(lifeSat)),"class":"curve",stroke:"var(--mature)"}));
+  svg.appendChild(el("path",{d:smooth(pts(posAff)),"class":"curve",stroke:"var(--drive)","stroke-dasharray":"7 4"}));
+  svg.appendChild(el("path",{d:smooth(pts(negAff)),"class":"curve",stroke:"var(--control)","stroke-dasharray":"2 4"}));
+
+  function lab(text, age, v, dy, colour){
+    var t = el("text",{x:ageX(age,lo,hi),y:valY(v)+dy,"class":"svg-lab","text-anchor":"middle",fill:colour});
+    t.textContent = text; svg.appendChild(t); return t;
+  }
+  lab("life satisfaction", 56, lerpSeries(lifeSat,56), -14, "var(--mature)");
+  lab("positive affect", 28, lerpSeries(posAff,28), -14, "var(--drive)");
+  lab("negative affect", 44, lerpSeries(negAff,44), 24, "var(--control)");
+  var uLab = lab("the econometric U, after controls", 68, lerpSeries(econU,68), 26, "var(--ink-3)");
+  uLab.style.opacity = "0";
+
+  function set(on){
+    pU.style.opacity = on ? "1" : "0";
+    uLab.style.opacity = on ? "1" : "0";
+    document.getElementById("wbRead").textContent = on
+      ? "The dashed grey line is not a fourth measurement. It is life satisfaction with income, employment, marriage and health partialled out — and those are consequences of ageing, so removing them invents a person who never existed."
+      : "Three components, three shapes, none of them a U. Averaging across them is what produced fifteen years of argument about the midlife crisis.";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-wb]"), function(b){
+      b.setAttribute("aria-pressed", String((b.dataset.wb === "on") === on));
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-wb]"), function(b){
+    b.addEventListener("click", function(){ set(b.dataset.wb === "on"); });
+  });
+  set(false);
+})();
+
+/* ---------- kids these days ---------- */
+(function(){
+  var svg = document.getElementById("ktdChart");
+  var base = 232, top = 58, span = base - top;
+  var xs = [145, 375, 605], W = 150;
+  var names = ["reading", "intelligence", "respect for elders"];
+  var vals = { read:[.78,.16,.14], iq:[.18,.74,.15], auth:[.15,.17,.80] };
+  var copy = {
+    read:"A heavy reader sees a reading collapse and very little else. The verdict tracks the reader, not the generation.",
+    iq:"Someone who scores well on cognitive tests sees youth getting less intelligent, and barely registers a reading problem at all.",
+    auth:"Someone high in deference to authority sees disrespect everywhere and no intellectual decline whatsoever. Same generation, three incompatible diagnoses."
+  };
+  var t0 = el("text",{x:xs[0],y:36,"class":"svg-lab"});
+  t0.textContent = "how strongly this adult believes today's youth have declined";
+  svg.appendChild(t0);
+  svg.appendChild(el("line",{x1:xs[0]-24,y1:base,x2:xs[2]+W+24,y2:base,"class":"svg-base"}));
+
+  var bars = [], caps = [];
+  xs.forEach(function(x, i){
+    var r = el("rect",{x:x,y:base,width:W,height:0,rx:4,fill:"var(--ink-3)",opacity:".3"});
+    r.style.transition = "y .28s ease, height .28s ease, opacity .28s ease, fill .28s ease";
+    svg.appendChild(r); bars.push(r);
+    var c = el("text",{x:x+W/2,y:base-8,"class":"svg-lab","text-anchor":"middle"});
+    svg.appendChild(c); caps.push(c);
+    var n = el("text",{x:x+W/2,y:base+22,"class":"svg-lab","text-anchor":"middle"});
+    n.textContent = names[i]; svg.appendChild(n);
+  });
+
+  function set(kind){
+    var v = vals[kind];
+    var lead = v.indexOf(Math.max(v[0],v[1],v[2]));
+    v.forEach(function(n, i){
+      var h = n*span;
+      bars[i].setAttribute("y", base - h);
+      bars[i].setAttribute("height", h);
+      bars[i].setAttribute("fill", i === lead ? "var(--open)" : "var(--ink-3)");
+      bars[i].setAttribute("opacity", i === lead ? "1" : ".3");
+      caps[i].setAttribute("y", base - h - 10);
+      caps[i].textContent = Math.round(n*100) + "%";
+      caps[i].setAttribute("class", i === lead ? "svg-lab hi" : "svg-lab");
+    });
+    document.getElementById("ktdRead").textContent = copy[kind];
+    Array.prototype.forEach.call(document.querySelectorAll("[data-ktd]"), function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.ktd === kind));
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ktd]"), function(b){
+    b.addEventListener("click", function(){ set(b.dataset.ktd); });
+  });
+  set("read");
+})();
+
+/* ---------- culturally rehearsed waiting ---------- */
+(function(){
+  var svg = document.getElementById("jpChart");
+  var base = 212, top = 62, span = base - top, MAXM = 16;
+  var groups = [
+    { label:"children in Japan", bars:[{n:"food",v:15,c:"--drive"},{n:"gift",v:5,c:"--open"}] },
+    { label:"children in the US", bars:[{n:"food",v:5,c:"--drive"},{n:"gift",v:14,c:"--open"}] }
+  ];
+  var t = el("text",{x:150,y:38,"class":"svg-lab"});
+  t.textContent = "median minutes waited, out of a fifteen-minute ceiling";
+  svg.appendChild(t);
+  svg.appendChild(el("line",{x1:126,y1:base,x2:790,y2:base,"class":"svg-base"}));
+  var gx = [150, 510], BW = 110, GAP = 130;
+  groups.forEach(function(g, gi){
+    g.bars.forEach(function(b, bi){
+      var x = gx[gi] + bi*GAP;
+      var h = b.v/MAXM*span;
+      svg.appendChild(el("rect",{x:x,y:base-h,width:BW,height:h,rx:4,fill:"var("+b.c+")",opacity:bi===0?"1":".85"}));
+      var vt = el("text",{x:x+BW/2,y:base-h-10,"class":"svg-lab hi","text-anchor":"middle"});
+      vt.textContent = b.v + " min"; svg.appendChild(vt);
+      var nt = el("text",{x:x+BW/2,y:base+20,"class":"svg-lab","text-anchor":"middle"});
+      nt.textContent = b.n; svg.appendChild(nt);
+    });
+    var gt = el("text",{x:gx[gi]+(GAP+BW)/2,y:base+44,"class":"svg-lab hi","text-anchor":"middle"});
+    gt.textContent = g.label; svg.appendChild(gt);
+  });
+})();
+
+/* ---------- exploration temperature ---------- */
+(function(){
+  var svg = document.getElementById("expChart");
+  var X0 = 56, Y0 = 20, W = 788, H = 300;
+  svg.appendChild(el("rect",{x:X0,y:Y0,width:W,height:H,rx:5,fill:"var(--sunken)",stroke:"var(--rule)"}));
+
+  var pcx = X0 + W*0.28, pcy = Y0 + H*0.64;
+  svg.appendChild(el("ellipse",{cx:pcx,cy:pcy,rx:112,ry:76,fill:"var(--control)",opacity:".12"}));
+  svg.appendChild(el("ellipse",{cx:pcx,cy:pcy,rx:112,ry:76,fill:"none",stroke:"var(--control)","stroke-width":1,"stroke-dasharray":"3 4",opacity:".5"}));
+  var pl = el("text",{x:pcx,y:pcy+104,"class":"svg-lab","text-anchor":"middle",fill:"var(--control)"});
+  pl.textContent = "hypotheses the prior rates as plausible";
+  svg.appendChild(pl);
+
+  var tcx = X0 + W*0.74, tcy = Y0 + H*0.22, TR = 32;
+  svg.appendChild(el("circle",{cx:tcx,cy:tcy,r:TR,fill:"var(--mature)",opacity:".18"}));
+  svg.appendChild(el("circle",{cx:tcx,cy:tcy,r:TR,fill:"none",stroke:"var(--mature)","stroke-width":1.5}));
+  var tl = el("text",{x:tcx,y:tcy-TR-10,"class":"svg-lab hi","text-anchor":"middle",fill:"var(--mature)"});
+  tl.textContent = "the rule that is actually true";
+  svg.appendChild(tl);
+
+  var dotsG = el("g",{}); svg.appendChild(dotsG);
+
+  var panel = document.getElementById("expPanel");
+  panel.innerHTML =
+    '<div class="cell"><b>Landed on the answer</b><div class="bar"><span id="e-hit"></span></div><span class="n" id="e-hitn"></span></div>' +
+    '<div class="cell"><b>Landed somewhere plausible</b><div class="bar"><span id="e-pl"></span></div><span class="n" id="e-pln"></span></div>' +
+    '<div class="cell"><b>Landed nowhere useful</b><div class="bar"><span id="e-wa"></span></div><span class="n" id="e-wan"></span></div>';
+
+  var seed = 20260917;
+  function rnd(){ seed = (seed*1664525 + 1013904223) % 4294967296; return seed/4294967296; }
+  function gauss(){
+    var u = 1-rnd(), v = rnd();
+    return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+  }
+
+  var N = 150;
+  function draw(){
+    var t = +document.getElementById("temp").value/100;
+    document.getElementById("tempV").textContent = t.toFixed(2);
+    while(dotsG.firstChild) dotsG.removeChild(dotsG.firstChild);
+    var sx = 30 + t*300, sy = 22 + t*190;
+    var hits = 0, plaus = 0, waste = 0;
+    for(var i=0;i<N;i++){
+      var x = pcx + gauss()*sx, y = pcy + gauss()*sy;
+      x = clamp(x, X0+4, X0+W-4); y = clamp(y, Y0+4, Y0+H-4);
+      var dh = Math.hypot(x-tcx, y-tcy);
+      var dp = Math.hypot((x-pcx)/112, (y-pcy)/76);
+      var col, op, kind;
+      if(dh < TR){ hits++; col = "var(--mature)"; op = 1; }
+      else if(dp < 1){ plaus++; col = "var(--control)"; op = .6; }
+      else { waste++; col = "var(--ink-3)"; op = .32; }
+      dotsG.appendChild(el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:dh<TR?3.6:2.6,fill:col,opacity:op}));
+    }
+    function setCell(id, n, col){
+      var pct = Math.round(n/N*100);
+      var b = document.getElementById("e-"+id);
+      b.style.width = pct + "%"; b.style.background = col;
+      document.getElementById("e-"+id+"n").textContent = n + " of " + N + " samples (" + pct + "%)";
+    }
+    setCell("hit", hits, "var(--mature)");
+    setCell("pl", plaus, "var(--control)");
+    setCell("wa", waste, "var(--ink-3)");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-temp]"), function(b){
+      b.setAttribute("aria-pressed", String(Math.round(t*100) === +b.dataset.temp));
+    });
+  }
+  document.getElementById("temp").addEventListener("input", draw);
+  document.getElementById("resample").addEventListener("click", function(){ seed = (seed + 7919) % 4294967296; draw(); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-temp]"), function(b){
+    b.addEventListener("click", function(){ document.getElementById("temp").value = b.dataset.temp; draw(); });
+  });
+  draw();
+})();
+
+})();
+</script>
+</body>
+</html>
