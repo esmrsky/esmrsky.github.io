@@ -1,3 +1,5 @@
+import { unjoinHtml, flatten } from './unjoin.js';
+
 const YOUVERSION_BASE_URL = 'https://api.youversion.com/v1';
 const DEFAULT_ORIGINS = ['https://esmrsky.github.io'];
 const TARGET_TRANSLATIONS = /^(NIV|TPT|NASB2020)$/i;
@@ -114,7 +116,9 @@ async function handlePassage(request, env, ctx, origin) {
   const versionId = url.searchParams.get('version') || '';
   const passage = (url.searchParams.get('passage') || '').toUpperCase();
   /* Plain text by default. `format=html` keeps YouVersion's verse markers
-     (<span class="yv-v" v="N">), which is how a client splits a chapter into numbered verses. */
+     (<span class="yv-v" v="N">), which is how a client splits a chapter into numbered verses.
+     Either way the Worker asks YouVersion for HTML, repairs the words its footnote removal
+     runs together, and flattens it for a plain-text request (see unjoin.js). */
   const format = url.searchParams.get('format') === 'html' ? 'html' : 'text';
 
   if (!/^\d{1,6}$/.test(versionId) || !PASSAGE_PATTERN.test(passage)) {
@@ -127,15 +131,18 @@ async function handlePassage(request, env, ctx, origin) {
   canonicalUrl.searchParams.set('passage', passage);
   if (format === 'html') canonicalUrl.searchParams.set('format', 'html');
   canonicalUrl.searchParams.set('_origin', origin);
+  /* bump when the repair changes, so the edge stops serving copies made before it */
+  canonicalUrl.searchParams.set('_repair', '1');
   const cacheKey = new Request(canonicalUrl.toString(), { method: 'GET' });
   const cached = await cache.match(cacheKey);
   if (cached) return cached;
 
   const upstream = await readUpstream(
-    await youVersionRequest(`/bibles/${versionId}/passages/${encodeURIComponent(passage)}?format=${format}`, env)
+    await youVersionRequest(`/bibles/${versionId}/passages/${encodeURIComponent(passage)}?format=html`, env)
   );
+  const repaired = unjoinHtml(upstream.content || '');
   const response = json(
-    { id: upstream.id, content: upstream.content, reference: upstream.reference },
+    { id: upstream.id, content: format === 'html' ? repaired : flatten(repaired), reference: upstream.reference },
     200,
     origin,
     env,

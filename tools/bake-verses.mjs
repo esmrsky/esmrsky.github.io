@@ -74,17 +74,9 @@ function parseRef(ref) {
    is the 1984 edition). Its HTML marks every verse, so a chapter splits into the same
    [{verse, text}] list bolls returns. Every other version still comes from bolls. */
 const USFM = 'GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH EST JOB PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON MIC NAM HAB ZEP HAG ZEC MAL MAT MRK LUK JHN ACT ROM 1CO 2CO GAL EPH PHP COL 1TH 2TH 1TI 2TI TIT PHM HEB JAS 1PE 2PE 1JN 2JN 3JN JUD REV'.split(' ');
-/* YouVersion drops its footnote markers without leaving the space that stood beside
-   them, so a word runs into the next one ("inChrist", "sinfor"). A lowercase letter
-   straight into a capital never happens in the NIV, so that case is split everywhere.
-   The all-lowercase joins can't be told from real words, so each one found is listed
-   here. Found on salvation/ on September 18, 2026 with a dictionary scan of every slot. */
-const YV_JOINS = [['sinfor', 'sin for'], ['naturea', 'nature a'], ['contemplatethe', 'contemplate the']];
-function unjoin(text) {
-  let t = text.replace(/([a-z])([A-Z])/g, '$1 $2');
-  for (const [joined, split] of YV_JOINS) t = t.replace(new RegExp(`\\b${joined}\\b`, 'g'), split);
-  return t;
-}
+/* YouVersion runs words together where it drops a footnote marker ("inChrist",
+   "Lordfrom"). The Worker repairs that before anything reaches here, one list for every
+   reader: see scripture-api/src/unjoin.js. */
 async function youVersionChapter(id, ch) {
   const r = await fetch(`https://esmrsky-scripture-api.esmrsky.workers.dev/passage?version=111&passage=${USFM[id - 1]}.${ch}&format=html`,
     { headers: { Origin: 'https://esmrsky.github.io', Accept: 'application/json' } });
@@ -96,7 +88,7 @@ async function youVersionChapter(id, ch) {
     const text = parts[i + 1].replace(/<\/div>\s*<div\b[^>]*>/g, '<br>').replace(/<\/?(?:div|span)\b[^>]*>/g, '')
       .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"').replace(/&#0?39;|&#x27;/g, "'").replace(/&amp;/g, '&')
       .replace(/^(?:\s*<br>)+|(?:<br>\s*)+$/g, '').trim();
-    if (text) verses.push({ verse: Number(parts[i]), text: unjoin(text) });
+    if (text) verses.push({ verse: Number(parts[i]), text });
   }
   return verses;
 }
