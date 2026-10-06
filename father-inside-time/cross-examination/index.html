@@ -7,6 +7,13 @@
 <title>The Cross-Examination</title>
 <meta name="description" content="Sixteen claims from Biblical Foundations Lesson 1, each tried from Scripture: the case for, the case against, and a verdict with a confidence note.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141B2E'/%3E%3Cpath d='M10 40h44' stroke='%23C7CEDB' stroke-width='3'/%3E%3Ccircle cx='32' cy='40' r='9' fill='%23D99A1B'/%3E%3C/svg%3E">
+<style>
+/* what the artifact wrapper used to supply */
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);-webkit-text-size-adjust:100%}
+img{max-width:100%}
+[hidden]:not([hidden=until-found i]){display:none!important}
+</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: a verdict board up top, then one case file per claim. Each case: his claim, two columns (for / against) built from Scripture, a cross-examination strip, a verdict bar. */
@@ -62,7 +69,8 @@ nav a{text-decoration:none;font-family:var(--f-mono);font-size:12.5px;letter-spa
 nav a:hover,nav a:focus-visible{color:var(--ink);background:var(--bg-2);outline:none}
 
 /* scale */
-.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;border-radius:8px;overflow:hidden;margin-top:8px}
+.scale{display:flex;flex-wrap:wrap;gap:2px;border-radius:8px;overflow:hidden;margin-top:8px}
+.scale div{flex:1 1 auto;text-align:center}
 .scale div{padding:10px 12px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--card)}
 .v1{background:var(--home)}.v2{background:#6d8f3f}.v3{background:var(--time)}.v4{background:#b5602f}.v5{background:var(--court)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .v2{background:#7fa14f}:root:not([data-theme="light"]) .v4{background:#c7794a}}
@@ -78,6 +86,7 @@ nav a:hover,nav a:focus-visible{color:var(--ink);background:var(--bg-2);outline:
 .row:hover .lab,.row:focus-visible .lab{border-color:var(--ink)}
 .board-head{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(5,minmax(0,1fr));gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 .board-head div{padding:0 12px 6px}
+.row .vt{display:none;align-self:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-radius:5px;color:var(--card);white-space:nowrap}
 
 /* case */
 .case{padding-block:72px 0}
@@ -91,10 +100,13 @@ nav a:hover,nav a:focus-visible{color:var(--ink);background:var(--bg-2);outline:
 .col{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:22px;display:grid;gap:12px;align-content:start;min-width:0}
 .col h3{font-size:24px;line-height:1.05}
 .col.for h3{color:var(--home)}.col.against h3{color:var(--court)}
-.col ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
-.col li{display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:15px;line-height:1.45}
-.col li .r{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);padding-top:3px;white-space:nowrap}
-.col li .r.w{white-space:normal;max-width:9em}
+.col ul{margin:0;padding:0;list-style:none;display:grid;gap:0}
+/* the reference sits above its note, so a long citation never squeezes the text beside it */
+.col li{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;font-size:15px;line-height:1.45;padding-block:12px;border-top:1px solid var(--rule)}
+.col li:first-child{border-top:0;padding-top:0}
+.col li:last-child{padding-bottom:0}
+.col li .r{font-family:var(--f-mono);font-size:12px;letter-spacing:.02em;color:var(--ink-2)}
+.col.for li .r{color:var(--home)}.col.against li .r{color:var(--court)}
 .col li i{color:var(--ink-2)}
 .xx{margin-top:14px;background:var(--strain-soft);border-radius:10px;padding:22px;display:grid;gap:12px}
 .xx h3{font-size:22px;color:var(--strain)}
@@ -124,19 +136,27 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--rule);display
   header .l,header .r,.case-head .n,.case-head .t{grid-column:1/-1}
   .case-head .n{display:none}
   .cols,.small-list,footer{grid-template-columns:1fr}
-  .row,.board-head{grid-template-columns:minmax(0,1fr) repeat(5,24px)}
-  .board-head div:not(:first-child){display:none}
-  .scale{grid-template-columns:1fr}
+  .row{grid-template-columns:minmax(0,1fr) 7.4em}
+  .row .vt{text-align:center}
+  .row .cell{display:none}
+  .row .vt{display:block}
+  .board-head{display:none}
   .verdict{grid-template-columns:1fr}
 }
-@media (max-width:520px){body{font-size:16px}.col li{grid-template-columns:1fr}.col li .r{white-space:normal}}
+@media (max-width:520px){
+  body{font-size:16px}
+  .col,.xx{padding:18px}
+  .ask{grid-template-columns:1fr;gap:4px}
+  .verdict{padding:16px 18px}
+  .case{padding-top:56px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
   <div class="l">
-    <div class="eyebrow" style="margin-bottom:18px"><b>Biblical Foundations</b> · Lesson 1 · companion to <i>A Father Inside Time</i></div>
+    <div class="eyebrow" style="margin-bottom:18px"><b>Biblical Foundations</b> · Lesson 1 · companion to <a href="/father-inside-time/"><i>A Father Inside Time</i></a></div>
     <h1>The <em>cross</em>-examination</h1>
   </div>
   <div class="r">
@@ -169,28 +189,29 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--rule);display
   <a href="#c16">Ladder</a>
   <a href="#small">Small errors</a>
   <a href="#ps139">Psalm 139</a>
+  <a href="/father-inside-time/" style="margin-left:auto;color:var(--strain)">A Father Inside Time →</a>
 </nav>
 
 <section id="board" style="padding-top:48px">
   <div class="eyebrow"><b>Verdict board</b> · tap a row to open its case</div>
   <div class="board-head" style="margin-top:14px"><div>Claim</div><div>Holds</div><div>Repair</div><div>Open</div><div>Over</div><div>Fails</div></div>
   <div class="board">
-    <a class="row" href="#c1"><div class="lab"><b>01</b>Biblical theology beats systematic theology</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c2"><div class="lab"><b>02</b>Classical theology is Greek philosophy in disguise</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c3"><div class="lab"><b>03</b>One world, created heavens, God fills all</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c4"><div class="lab"><b>04</b>"God is love" requires the Trinity</div><div class="cell v1 on"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c5"><div class="lab"><b>05</b>Only Moses was two-sided; wrath appears only there</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5 on"></div></a>
-    <a class="row" href="#c6"><div class="lab"><b>06</b>God is in time, not outside it</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3 on"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c7"><div class="lab"><b>07</b>God changes his mind, plans, and will</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c8"><div class="lab"><b>08</b>God knows everything knowable; the future is partly open</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3 on"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c9"><div class="lab"><b>09</b>Prayer changes what God does</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c10"><div class="lab"><b>10</b>Foreknowledge would make God cruel (the marriage argument)</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5 on"></div></a>
-    <a class="row" href="#c11"><div class="lab"><b>11</b>Born innocent, not depraved</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3 on"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c12"><div class="lab"><b>12</b>Jesus died for all and already forgave all</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c13"><div class="lab"><b>13</b>The dead sleep in a two-chambered grave</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c14"><div class="lab"><b>14</b>God needs a man; you can limit God on earth</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c15"><div class="lab"><b>15</b>Jesus grew in knowledge</div><div class="cell v1 on"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
-    <a class="row" href="#c16"><div class="lab"><b>16</b>Every human bond rehearses a bond with God</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div></a>
+    <a class="row" href="#c1"><div class="lab"><b>01</b>Biblical theology beats systematic theology</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div><span class="vt v4">Overstated</span></a>
+    <a class="row" href="#c2"><div class="lab"><b>02</b>Classical theology is Greek philosophy in disguise</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div><span class="vt v4">Overstated</span></a>
+    <a class="row" href="#c3"><div class="lab"><b>03</b>One world, created heavens, God fills all</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v2">Repair</span></a>
+    <a class="row" href="#c4"><div class="lab"><b>04</b>"God is love" requires the Trinity</div><div class="cell v1 on"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v1">Holds</span></a>
+    <a class="row" href="#c5"><div class="lab"><b>05</b>Only Moses was two-sided; wrath appears only there</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5 on"></div><span class="vt v5">Fails</span></a>
+    <a class="row" href="#c6"><div class="lab"><b>06</b>God is in time, not outside it</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3 on"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v3">Open</span></a>
+    <a class="row" href="#c7"><div class="lab"><b>07</b>God changes his mind, plans, and will</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v2">Repair</span></a>
+    <a class="row" href="#c8"><div class="lab"><b>08</b>God knows everything knowable; the future is partly open</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3 on"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v3">Open</span></a>
+    <a class="row" href="#c9"><div class="lab"><b>09</b>Prayer changes what God does</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v2">Repair</span></a>
+    <a class="row" href="#c10"><div class="lab"><b>10</b>Foreknowledge would make God cruel (the marriage argument)</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5 on"></div><span class="vt v5">Fails</span></a>
+    <a class="row" href="#c11"><div class="lab"><b>11</b>Born innocent, not depraved</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3 on"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v3">Open</span></a>
+    <a class="row" href="#c12"><div class="lab"><b>12</b>Jesus died for all and already forgave all</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v2">Repair</span></a>
+    <a class="row" href="#c13"><div class="lab"><b>13</b>The dead sleep in a two-chambered grave</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div><span class="vt v4">Overstated</span></a>
+    <a class="row" href="#c14"><div class="lab"><b>14</b>God needs a man; you can limit God on earth</div><div class="cell v1"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4 on"></div><div class="cell v5"></div><span class="vt v4">Overstated</span></a>
+    <a class="row" href="#c15"><div class="lab"><b>15</b>Jesus grew in knowledge</div><div class="cell v1 on"></div><div class="cell v2"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v1">Holds</span></a>
+    <a class="row" href="#c16"><div class="lab"><b>16</b>Every human bond rehearses a bond with God</div><div class="cell v1"></div><div class="cell v2 on"></div><div class="cell v3"></div><div class="cell v4"></div><div class="cell v5"></div><span class="vt v2">Repair</span></a>
   </div>
   <p class="sm muted" style="margin-top:18px">Pattern worth noticing before the detail: his cosmology, Trinity, atonement, and Christology claims hold. His history claims are overstated. His three time claims are open questions he presented as settled. His two claims about the Mosaic covenant and about suffering fail on his own evidence. The pastoral conclusion he wants survives all of this; the route he takes to it does not.</p>
 </section>
@@ -743,6 +764,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--rule);display
   </ol></div>
   <div class="verdict"><span class="pill v2">Holds with repair</span><p>Each image is biblical and the method (argue from human bonds to God's) is Scripture's own. The repair: write in singleness and childlessness as full paths, and present the ladder as a reading of the metaphors rather than a revealed structure.<span class="conf">Confidence: high.</span></p></div>
   <div class="ask"><b>Ask in class</b><span>"Where are Jesus and Paul on the ladder?"</span></div>
+  <p class="sm muted" style="margin-top:14px">The repaired version, built from Galatians 4 with the overlaps written in, is <a href="/father-inside-time/#seasons">Same heart, different approach</a> in the companion page.</p>
 </section>
 
 <section class="case" id="small" style="padding-top:72px">
