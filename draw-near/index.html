@@ -479,7 +479,11 @@ details.deep.anim.closing>.in{opacity:0}
 .verses-btn:hover{border-color:var(--ember)}
 .verses-btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 @media (max-width:700px){.verses-btn{padding:0}.verses-btn .lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
-html.verses-on{overflow-anchor:none}
+/* The page holds the reader's line itself (JS: hold), so the browser's own
+   scroll anchoring is off everywhere. Left on, Chrome would pick a node inside
+   a box that is swapping and jump the page to keep it still; Safari has none. */
+html{overflow-anchor:none}
+html.verses-on{scroll-behavior:auto}
 .vx{display:block;margin:.6em 0 .9em;padding:.15em 0 .15em 1em;border-left:2px solid color-mix(in srgb,var(--ember) 45%,var(--hair));font-family:var(--serif);font-size:.94em;line-height:1.6;color:var(--ink-2);text-wrap:pretty;max-width:62ch}
 .vx p{margin:0 0 .55em}
 .vx p:last-child{margin-bottom:0}
@@ -1432,7 +1436,40 @@ html.verses-on{overflow-anchor:none}
 "use strict";
 var d = document, root = d.documentElement;
 var still = function(){ return matchMedia("(prefers-reduced-motion: reduce)").matches; };
-var glide = function(){ return still() ? "auto" : "smooth"; };
+var glide = function(){ return still() || root.classList.contains("verses-on") ? "auto" : "smooth"; };
+
+/* Keep the line the reader is on where it is while something above it changes
+   height. Measured from the first thing below the sticky bar. */
+function readingAnchor(){
+  /* the element whose top sits nearest below the sticky bar; anything that grows
+     above it moves it, and hold() moves the page back by the same amount */
+  var bar = d.querySelector(".bar"), y = (bar ? bar.getBoundingClientRect().bottom : 0) - 1;
+  var best = null, bestTop = Infinity;
+  d.querySelectorAll("#read h2,#read h3,#read p,#read li,#read figure,#read .s-num,#read .vx,#read .rail,#read .vtabs,#read .arc-ctl,#read .btn").forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if (r.height && r.top >= y && r.top < bestTop){ best = el; bestTop = r.top; }
+  });
+  return best ? { el: best, top: bestTop } : null;
+}
+function hold(fn){
+  var a = readingAnchor();
+  fn();
+  if (a && a.el.isConnected){
+    var dy = a.el.getBoundingClientRect().top - a.top;
+    if (Math.abs(dy) > .5) scrollBy(0, dy);
+  }
+}
+/* The verse pop-up and the context window freeze the page (body fixed) and put
+   the scroll back when they close. Anything that changes height while frozen
+   would make that return land on the wrong line, so it waits. */
+function locked(){ return d.body.style.position === "fixed"; }
+var afterUnlock = [];
+new MutationObserver(function(){
+  if (locked() || !afterUnlock.length) return;
+  var q = afterUnlock; afterUnlock = [];
+  requestAnimationFrame(function(){ q.forEach(function(fn){ fn(); }); });
+}).observe(d.body, { attributes: true, attributeFilter: ["style"] });
+function whenFree(fn){ if (locked()) afterUnlock.push(fn); else fn(); }
 
 /* Swap content inside a box without the page jumping: hold the box at the
    height it has now (mid-animation included), make the change, then ease to
@@ -1707,20 +1744,29 @@ if (S){
   function vRefs(){ return [].slice.call(d.querySelectorAll("#read .esv-ref")).filter(function(a){
     if (a.closest(".vx")) return false;
     var r = S.parseReference(a.dataset.ref || a.textContent); return r && r.verseStart !== null; }); }
+  /* bolls.life answers a burst with 429s, so passages are fetched four at a
+     time; chapters already fetched come back from the client's cache. */
+  var vRun = 0, vWait = [];
+  function vLoad(ref, v){
+    return new Promise(function(done){
+      var go = function(){ vRun++; S.loadVerse(ref, v).then(function(x){ vRun--; done(x); if (vWait.length) vWait.shift()(); }); };
+      if (vRun < 4) go(); else vWait.push(go);
+    });
+  }
   function vFill(box){
     var g = vGen, v = S.getVersion();
     box.querySelectorAll(".vx-t").forEach(function(t){
       t.classList.add("is-loading");
-      S.loadVerse(t.dataset.ref, v).then(function(text){
+      vLoad(t.dataset.ref, v).then(function(text){
         if (g !== vGen) return;
-        /* A passage that grows above the screen would push the reader's line
-           down. Safari has no scroll anchoring, so hold the place by hand
-           (native anchoring is switched off below so the two never stack). */
-        var r0 = box.getBoundingClientRect(), above = r0.bottom <= 64;
-        t.classList.remove("is-loading");
-        t.innerHTML = text;
-        t.previousSibling.textContent = S.fullTitle(t.dataset.ref) + " · " + v;
-        if (above) scrollBy(0, box.getBoundingClientRect().height - r0.height);
+        whenFree(function(){
+          if (g !== vGen) return;
+          hold(function(){
+            t.classList.remove("is-loading");
+            t.innerHTML = text;
+            t.previousSibling.textContent = S.fullTitle(t.dataset.ref) + " · " + v;
+          });
+        });
       });
     });
   }
@@ -1755,17 +1801,9 @@ if (S){
     if (on) vBuild();
     if (save){ try { localStorage.setItem("draw-near-verses", on ? "1" : "0"); } catch(e){} }
   }
-  vBtn.addEventListener("click", function(){
-    /* keep what the reader is looking at in place while text appears above it */
-    var anchor = null, top = 0;
-    d.querySelectorAll("#read h2, #read h3, #read p").forEach(function(el){
-      if (anchor) return; var r = el.getBoundingClientRect(); if (r.top >= 70){ anchor = el; top = r.top; }
-    });
-    vSet(!vOn, true);
-    if (anchor) scrollBy(0, anchor.getBoundingClientRect().top - top);
-  });
-  S.onChange(function(){ if (!vOn) return; vGen++; d.querySelectorAll(".vx").forEach(function(box){
-    if (vSeen){ vSeen.unobserve(box); vSeen.observe(box); } else vFill(box); }); });
+  vBtn.addEventListener("click", function(){ hold(function(){ vSet(!vOn, true); }); });
+  S.onChange(function(){ if (!vOn) return; vGen++; whenFree(function(){ d.querySelectorAll(".vx").forEach(function(box){
+    if (vSeen){ vSeen.unobserve(box); vSeen.observe(box); } else vFill(box); }); }); });
   try { if (localStorage.getItem("draw-near-verses") === "1") vSet(true, false); } catch(e){}
 }
 })();
