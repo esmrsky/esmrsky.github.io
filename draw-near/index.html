@@ -473,6 +473,23 @@ details.deep.anim.closing>.in{opacity:0}
 /* the theme change is one cross-fade of the whole page (JS: startViewTransition) */
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:ease}
 
+/* ---------- every verse, written out ---------- */
+.verses-btn{display:inline-flex;align-items:center;gap:7px;min-height:44px;min-width:44px;justify-content:center;padding:0 14px;border:1px solid var(--hair);border-radius:999px;background:none;font-family:var(--sans);font-size:.86rem;font-weight:700;color:var(--ink);cursor:pointer;flex:none;transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.verses-btn svg{width:16px;height:16px;flex:none}
+.verses-btn:hover{border-color:var(--ember)}
+.verses-btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+@media (max-width:700px){.verses-btn{padding:0}.verses-btn .lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+html.verses-on{overflow-anchor:none}
+.vx{display:block;margin:.6em 0 .9em;padding:.15em 0 .15em 1em;border-left:2px solid color-mix(in srgb,var(--ember) 45%,var(--hair));font-family:var(--serif);font-size:.94em;line-height:1.6;color:var(--ink-2);text-wrap:pretty;max-width:62ch}
+.vx p{margin:0 0 .55em}
+.vx p:last-child{margin-bottom:0}
+.vx b{font-family:var(--sans);font-size:.72em;font-weight:700;letter-spacing:.04em;color:var(--ember-ink);margin-right:.5em;white-space:nowrap}
+.vx .vx-t.is-loading{opacity:.45}
+.answer .vx{color:#d9cdbb;border-left-color:#ee8a6f}
+.answer .vx b{color:#ee8a6f}
+@media (prefers-reduced-motion: no-preference){.vx{animation:rise .38s var(--ease) both}}
+@media print{.verses-btn{display:none!important}}
+
 /* ==========================================================================
    THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
    which ships no colors on purpose. These are this page's clothes for it.
@@ -526,9 +543,11 @@ details.deep.anim.closing>.in{opacity:0}
 .esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--hair);border-radius:50%;background:none;color:var(--ink-2);font-size:18px;line-height:1;cursor:pointer}
 .esv-ctx-close:hover{color:var(--ink);border-color:var(--ink-3)}
 .esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--serif);font-size:1.08rem;line-height:1.65}
-.esv-ctx-verse{display:block;margin-bottom:.5em}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
 .esv-ctx-num{font-family:var(--sans);font-size:.72rem;font-weight:700;color:var(--ink-3);margin-right:.5em;vertical-align:.25em}
-.esv-ctx-t.is-target{background:color-mix(in srgb,var(--gold) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 30%,transparent)}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--gold) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 30%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
 .esv-ctx-passage{margin:0}
 .esv-ctx-loading{color:var(--ink-3);font-family:var(--sans);font-size:.9rem}
 .esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--hair);display:flex;gap:8px;flex-wrap:wrap}
@@ -562,6 +581,10 @@ details.deep.anim.closing>.in{opacity:0}
     <a class="bar-link" href="#story">The story</a>
     <a class="bar-link" href="#time">Time</a>
     <a class="cta" href="#check">Where am I?</a>
+    <button class="verses-btn" type="button" id="versesBtn" aria-pressed="false" title="Write every verse out under the text that cites it">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 10h16M4 14h10M4 18h13"/></svg>
+      <span class="lab">Show verses</span>
+    </button>
     <div id="pickerHost"></div>
     <button class="theme-btn" type="button" id="themeBtn" aria-label="Switch between light and dark">
       <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
@@ -1673,6 +1696,77 @@ if (S){
   S.init({ key:"draw-near", scan:"#read", versions:["NIV","NASB","NLT","TPT","KJV"] });
   var host = d.getElementById("pickerHost");
   if (host){ host.innerHTML = S.pickerHtml("Bible translation"); S.wirePicker(host, "Verses read in"); }
+
+  /* ---- every verse, written out ---------------------------------------- */
+  /* One switch writes each cited passage out, as running prose, under the
+     paragraph or list item that cites it. Passages load as their section
+     nears the screen, follow the translation picker, and go away again when
+     the switch is turned off. Whole-chapter references are left as links. */
+  var vBtn = d.getElementById("versesBtn"), vOn = false, vGen = 0, vSeen = null;
+  var HOST = "p,li,figcaption,.verb,.vgrid>div,.samechap>div,.band-row>div,.band-open,.st-way";
+  function vRefs(){ return [].slice.call(d.querySelectorAll("#read .esv-ref")).filter(function(a){
+    if (a.closest(".vx")) return false;
+    var r = S.parseReference(a.dataset.ref || a.textContent); return r && r.verseStart !== null; }); }
+  function vFill(box){
+    var g = vGen, v = S.getVersion();
+    box.querySelectorAll(".vx-t").forEach(function(t){
+      t.classList.add("is-loading");
+      S.loadVerse(t.dataset.ref, v).then(function(text){
+        if (g !== vGen) return;
+        /* A passage that grows above the screen would push the reader's line
+           down. Safari has no scroll anchoring, so hold the place by hand
+           (native anchoring is switched off below so the two never stack). */
+        var r0 = box.getBoundingClientRect(), above = r0.bottom <= 64;
+        t.classList.remove("is-loading");
+        t.innerHTML = text;
+        t.previousSibling.textContent = S.fullTitle(t.dataset.ref) + " · " + v;
+        if (above) scrollBy(0, box.getBoundingClientRect().height - r0.height);
+      });
+    });
+  }
+  function vBuild(){
+    var hosts = new Map();
+    vRefs().forEach(function(a){
+      var h = a.closest(HOST) || a.parentElement;
+      if (!hosts.has(h)) hosts.set(h, []);
+      var list = hosts.get(h), ref = a.dataset.ref || a.textContent;
+      if (list.indexOf(ref) < 0) list.push(ref);
+    });
+    vSeen = ("IntersectionObserver" in window) ? new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ vSeen.unobserve(e.target); vFill(e.target); } });
+    }, { rootMargin: "600px 0px" }) : null;
+    hosts.forEach(function(refs, h){
+      var box = d.createElement(h.tagName === "LI" ? "span" : "div");
+      box.className = "vx esv-skip";
+      box.innerHTML = refs.map(function(r){
+        return '<p><b>' + S.fullTitle(r) + '</b><span class="vx-t is-loading" data-ref="' + r.replace(/"/g, "&quot;") + '">…</span></p>';
+      }).join("");
+      if (h.tagName === "P" || h.tagName === "FIGCAPTION") h.after(box); else h.appendChild(box);
+      if (vSeen) vSeen.observe(box); else vFill(box);
+    });
+  }
+  function vClear(){ if (vSeen) vSeen.disconnect(); d.querySelectorAll(".vx").forEach(function(x){ x.remove(); }); }
+  function vSet(on, save){
+    vOn = on; vGen++;
+    vBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    vBtn.querySelector(".lab").textContent = on ? "Hide verses" : "Show verses";
+    vClear();
+    root.classList.toggle("verses-on", on);
+    if (on) vBuild();
+    if (save){ try { localStorage.setItem("draw-near-verses", on ? "1" : "0"); } catch(e){} }
+  }
+  vBtn.addEventListener("click", function(){
+    /* keep what the reader is looking at in place while text appears above it */
+    var anchor = null, top = 0;
+    d.querySelectorAll("#read h2, #read h3, #read p").forEach(function(el){
+      if (anchor) return; var r = el.getBoundingClientRect(); if (r.top >= 70){ anchor = el; top = r.top; }
+    });
+    vSet(!vOn, true);
+    if (anchor) scrollBy(0, anchor.getBoundingClientRect().top - top);
+  });
+  S.onChange(function(){ if (!vOn) return; vGen++; d.querySelectorAll(".vx").forEach(function(box){
+    if (vSeen){ vSeen.unobserve(box); vSeen.observe(box); } else vFill(box); }); });
+  try { if (localStorage.getItem("draw-near-verses") === "1") vSet(true, false); } catch(e){}
 }
 })();
 </script>

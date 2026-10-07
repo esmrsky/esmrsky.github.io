@@ -313,6 +313,14 @@
       .trim();
   }
 
+  /* Scripture reads like a book on every page: one run of prose, no poetry line
+     breaks, the way the original manuscripts ran (verse numbers came in the 1500s).
+     The translations' line breaks are folded into spaces here, once, so no host
+     page can bring them back with `white-space: pre-line`. Decided October 7, 2026. */
+  function flow(text) {
+    return String(text).replace(/\s*\n+\s*/g, ' ').replace(/[ \t]{2,}/g, ' ').trim();
+  }
+
   function toUsfm(parsed) {
     var book = USFM_BY_ID[parsed.bookId];
     if (!book) return '';
@@ -355,11 +363,11 @@
     if (!parsed) return Promise.resolve(t('Reference not recognized.', 'Ссылка не распознана.'));
     if (version === 'TPT') {
       if (TPT_MISSING.indexOf(parsed.bookId) === -1) {
-        return tptPassage(toUsfm(parsed)).then(esc).catch(function () {
-          return fromBolls(parsed, FALLBACK).then(function (text) { return text + '\n' + fallbackNote(); });
+        return tptPassage(toUsfm(parsed)).then(function (text) { return flow(esc(text)); }).catch(function () {
+          return fromBolls(parsed, FALLBACK).then(function (text) { return text + ' ' + fallbackNote(); });
         });
       }
-      return fromBolls(parsed, FALLBACK).then(function (text) { return text + '\n' + fallbackNote(); });
+      return fromBolls(parsed, FALLBACK).then(function (text) { return text + ' ' + fallbackNote(); });
     }
     return fromBolls(parsed, bollsCode(version));
   }
@@ -375,7 +383,7 @@
         picked = verses.slice(0, 3);
       }
       if (!picked.length) return t('Verse not found.', 'Стих не найден.');
-      return picked.map(function (v) { return cleanBolls(v.text); }).join(' ');
+      return flow(picked.map(function (v) { return cleanBolls(v.text); }).join(' '));
     }).catch(function () {
       return t('Could not retrieve scripture text.', 'Не удалось загрузить текст Писания.');
     });
@@ -419,7 +427,7 @@
           var num = v.chapter === parsed.chapter ? String(v.verse) : v.chapter + ':' + v.verse;
           return '<span class="esv-ctx-verse' + (on ? ' is-selected' : '') + '">' +
             '<sup class="esv-ctx-num">' + num + '</sup><span class="esv-ctx-t">' +
-            cleanBolls(v.text) + '</span></span>';
+            flow(cleanBolls(v.text)) + '</span></span>';
         }).join(' ') + '</p>' + note;
       });
     });
