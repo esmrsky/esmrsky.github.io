@@ -1074,7 +1074,7 @@ html.verses-on{scroll-behavior:auto}
     </div>
 
     <details class="deep" id="verbs">
-      <summary><span class="t">What God does in the story<small>Fifteen things the text says he does that need a before and an after</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <summary class="esv-skip"><span class="t">What God does in the story<small>Fifteen things the text says he does that need a before and an after</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
       <div class="in prose">
         <p>Abraham Heschel called this “divine pathos”: the God of the prophets is affected by what people do (<i>The Prophets</i>, 1962). Read these the plain way first, and then ask what any other reading has to explain away.</p>
         <div class="verbs">
@@ -1098,7 +1098,7 @@ html.verses-on{scroll-behavior:auto}
     </details>
 
     <details class="deep" id="knows">
-      <summary><span class="t">What God knows<small>The other set of texts, which any honest reading has to hold too</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <summary class="esv-skip"><span class="t">What God knows<small>The other set of texts, which any honest reading has to hold too</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
       <div class="in prose">
         <div class="verbs know">
           <div class="verb"><b>Declares the end from the beginning</b><span class="refs">Isaiah 46:9-11</span></div>
@@ -1116,7 +1116,7 @@ html.verses-on{scroll-behavior:auto}
     </details>
 
     <details class="deep" id="samechap">
-      <summary><span class="t">One chapter that will not let either side off<small>1 Samuel 15 uses the same Hebrew word three times</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <summary class="esv-skip"><span class="t">One chapter that will not let either side off<small>1 Samuel 15 uses the same Hebrew word three times</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
       <div class="in prose">
         <p>The word is <span class="hb">נחם</span>, nacham: to regret, to relent, to change one’s mind. The narrator of 1 Samuel 15 uses it three times in twenty-five verses, about the same God and the same decision.</p>
         <div class="samechap">
@@ -1129,7 +1129,7 @@ html.verses-on{scroll-behavior:auto}
     </details>
 
     <details class="deep" id="four" open>
-      <summary><span class="t">Four answers people have given<small>From fully outside time to an open future, with who holds each</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+      <summary class="esv-skip"><span class="t">Four answers people have given<small>From fully outside time to an open future, with who holds each</small></span><span class="pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
       <div class="in">
         <div class="spectrum" aria-hidden="true"></div>
         <div class="spectrum-lab"><span>Outside time</span><span>Inside time</span></div>
@@ -1143,7 +1143,7 @@ html.verses-on{scroll-behavior:auto}
         <div class="vtest">
           <h3 style="font-size:1.4rem;font-weight:500">Eight verses, four readings</h3>
           <p class="note" style="margin:6px 0 0">Choose a verse. Every answer has to say what it means. The red rule marks the answer that has to work hardest on it, where one does.</p>
-          <div class="vtabs" role="tablist" aria-label="Choose a verse">
+          <div class="vtabs esv-skip" role="tablist" aria-label="Choose a verse">
             <button role="tab" data-v="v1" aria-selected="true">Genesis 22:12</button>
             <button role="tab" data-v="v2" aria-selected="false">Isaiah 46:10</button>
             <button role="tab" data-v="v3" aria-selected="false">Exodus 32:14</button>
@@ -1740,9 +1740,9 @@ if (S){
      nears the screen, follow the translation picker, and go away again when
      the switch is turned off. Whole-chapter references are left as links. */
   var vBtn = d.getElementById("versesBtn"), vOn = false, vGen = 0, vSeen = null;
-  var HOST = "p,li,figcaption,.verb,.vgrid>div,.samechap>div,.band-row>div,.band-open,.st-way";
+  var HOST = "p,li,figcaption,.vr,.verb,.vgrid>div,.samechap>div,.band-row>div,.band-open,.st-way";
   function vRefs(){ return [].slice.call(d.querySelectorAll("#read .esv-ref")).filter(function(a){
-    if (a.closest(".vx")) return false;
+    if (a.closest(".vx") || !a.closest(HOST) || a.closest("button,summary,label,[role=tab]")) return false;
     var r = S.parseReference(a.dataset.ref || a.textContent); return r && r.verseStart !== null; }); }
   /* bolls.life answers a burst with 429s, so passages are fetched four at a
      time; chapters already fetched come back from the client's cache. */
@@ -1773,7 +1773,7 @@ if (S){
   function vBuild(){
     var hosts = new Map();
     vRefs().forEach(function(a){
-      var h = a.closest(HOST) || a.parentElement;
+      var h = a.closest(HOST);
       if (!hosts.has(h)) hosts.set(h, []);
       var list = hosts.get(h), ref = a.dataset.ref || a.textContent;
       if (list.indexOf(ref) < 0) list.push(ref);
@@ -1787,7 +1787,7 @@ if (S){
       box.innerHTML = refs.map(function(r){
         return '<p><b>' + S.fullTitle(r) + '</b><span class="vx-t is-loading" data-ref="' + r.replace(/"/g, "&quot;") + '">…</span></p>';
       }).join("");
-      if (h.tagName === "P" || h.tagName === "FIGCAPTION") h.after(box); else h.appendChild(box);
+      if (h.tagName === "P" || h.tagName === "FIGCAPTION" || h.classList.contains("vr")) h.after(box); else h.appendChild(box);
       if (vSeen) vSeen.observe(box); else vFill(box);
     });
   }
