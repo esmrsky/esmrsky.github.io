@@ -206,10 +206,6 @@ section.s{padding:clamp(56px,9vw,120px) 0;border-top:1px solid var(--hair-2)}
 .st-way{margin-top:22px;padding:16px 18px;border-radius:10px;background:color-mix(in srgb,var(--c) 9%,transparent);border:1px solid color-mix(in srgb,var(--c) 26%,transparent)}
 .st-way h4{font-family:var(--sans);font-size:.74rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--c);margin-bottom:6px}
 .st-way p{margin:0;font-size:1rem}
-.st-nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
-.st-nav button{min-height:44px;padding:0 14px;border:1px solid var(--hair);border-radius:999px;background:none;font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--ink-2);cursor:pointer;transition:border-color .18s ease,color .18s ease,opacity .18s ease}
-.st-nav button:hover{border-color:var(--ink-3);color:var(--ink)}
-.st-nav button:disabled{opacity:.35;cursor:default}
 .no-js-only{display:none}
 .status-note{margin-top:28px;padding:22px 24px;border:1px dashed var(--hair);border-radius:14px}
 .status-note h3{font-size:1.3rem;font-weight:500;margin-bottom:8px}
@@ -283,11 +279,6 @@ section.s{padding:clamp(56px,9vw,120px) 0;border-top:1px solid var(--hair-2)}
 .arc-svg .pt.on text{fill:var(--ink)}
 .arc-svg.narrow .axis,.arc-svg.narrow .pt text{font-size:16px}
 .arc-svg.narrow .heart-lab{font-size:16px}
-.arc-ctl{display:flex;align-items:center;gap:10px;margin-top:14px}
-.arc-ctl button{width:44px;height:44px;border:1px solid var(--hair);border-radius:50%;background:none;cursor:pointer;display:grid;place-items:center;flex:none;transition:border-color .18s ease}
-.arc-ctl button:hover{border-color:var(--ink-3)}
-.arc-ctl button svg{width:18px;height:18px}
-.arc-ctl .count{font-family:var(--sans);font-size:.82rem;color:var(--ink-3);margin-left:auto}
 .beats{list-style:none;padding:0;margin:18px 0 0}
 .beat{padding:18px 0;border-top:1px solid var(--hair-2)}
 .js .beats .beat:not(.on){display:none}
@@ -382,7 +373,7 @@ details.deep>summary .t small{display:block;font-family:var(--sans);font-size:.8
 details.deep>summary .pm{margin-left:auto;width:36px;height:36px;flex:none;border:1px solid var(--hair);border-radius:50%;display:grid;place-items:center;transition:transform var(--t) var(--ease),border-color .18s ease}
 details.deep>summary:hover .pm{border-color:var(--ink-3)}
 details.deep>summary .pm svg{width:14px;height:14px}
-details.deep[open]:not(.closing)>summary .pm{transform:rotate(45deg)}
+details.deep[open]:not(.shutting)>summary .pm{transform:rotate(45deg)}
 /* spacing lives inside the body, not on it, so the body can ease all the way to 0 */
 details.deep>.in{padding:0}
 details.deep>.in>:first-child{margin-top:4px}
@@ -464,12 +455,12 @@ footer.foot .home{display:inline-flex;align-items:center;min-height:44px;margin-
 .morphing{overflow:hidden;transition:height var(--t) var(--ease)}
 details.deep>.in{overflow:hidden}
 details.deep.anim>.in{transition:height var(--t) var(--ease),opacity .26s ease}
-details.deep.anim.closing>.in{opacity:0}
-@keyframes rise{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+details.deep.anim.shutting>.in{opacity:0}
+@keyframes rise{from{opacity:0;translate:var(--dx,0px) var(--dy,8px)}to{opacity:1;translate:0 0}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion: no-preference){
   .js .station.on,.js .beats .beat.on,.js .vpanel.on,.result:not([hidden]),.check:not([hidden]),#resetWrap:not([hidden]){animation:rise .38s var(--ease) both}
-  details.deep.anim:not(.closing)>.in>*{animation:fadein .4s ease both}
+  details.deep.anim:not(.shutting)>.in>*{animation:fadein .4s ease both}
 }
 @media (prefers-reduced-motion: reduce){
   .morphing,details.deep.anim>.in{transition:none}
@@ -527,12 +518,12 @@ details.more>summary::-webkit-details-marker{display:none}
 .more-ic{margin-left:auto;width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--sec,var(--ember)) 13%,transparent);transition:transform var(--t) var(--ease),background-color .2s ease}
 .more-ic svg{width:15px;height:15px}
 details.more>summary:hover .more-ic{background:color-mix(in srgb,var(--sec,var(--ember)) 22%,transparent)}
-details.more[open]:not(.closing)>summary .more-ic{transform:rotate(180deg)}
+details.more[open]:not(.shutting)>summary .more-ic{transform:rotate(180deg)}
 details.more>.in{overflow:hidden}
 details.more>.in::after{content:"";display:block;height:10px}
 details.more.anim>.in{transition:height var(--t) var(--ease),opacity .26s ease}
-details.more.anim.closing>.in{opacity:0}
-@media (prefers-reduced-motion: no-preference){details.more.anim:not(.closing)>.in>*{animation:fadein .4s ease both}}
+details.more.anim.shutting>.in{opacity:0}
+@media (prefers-reduced-motion: no-preference){details.more.anim:not(.shutting)>.in>*{animation:fadein .4s ease both}}
 @media (prefers-reduced-motion: reduce){details.more.anim>.in{transition:none}}
 .station details.more .st-grid{margin-top:6px}
 
@@ -560,6 +551,24 @@ details.more.anim.closing>.in{opacity:0}
   .station{scroll-margin-top:calc(var(--bar-h) + 92px)}
 }
 @media (max-width:420px){.rail button{font-size:.56rem;letter-spacing:0}}
+
+/* one pager for everything you step through. It sits under what it turns and
+   waits at the bottom of the screen while that part is on screen, so the next
+   step is always under your thumb. Each arrow names where it goes. */
+.pager{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:15;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:2px;width:min(100%,520px);margin:20px auto 0;padding:4px;border:1px solid color-mix(in srgb,var(--sec) 32%,var(--hair));border-radius:999px;background:color-mix(in srgb,var(--panel) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 10px 28px var(--shadow-soft)}
+.pg-b{display:flex;align-items:center;gap:8px;min-width:0;min-height:52px;padding:0 14px 0 10px;border:0;border-radius:999px;background:none;color:var(--ink);font-family:var(--sans);text-align:left;cursor:pointer;transition:background-color .18s ease,opacity .2s ease}
+.pg-next{justify-content:flex-end;text-align:right;padding:0 10px 0 14px}
+.pg-b svg{width:20px;height:20px;flex:none;color:var(--bc,var(--sec-ink));transition:color .3s ease,translate .2s var(--ease)}
+.pg-t{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.pg-t small{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.pg-t b{font-size:.98rem;font-weight:700;color:var(--bc,var(--sec-ink));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s ease}
+.pg-b:hover{background:color-mix(in srgb,var(--bc,var(--sec)) 11%,transparent)}
+.pg-prev:hover svg{translate:-2px 0}
+.pg-next:hover svg{translate:2px 0}
+.pg-b:disabled{opacity:.32;cursor:default;background:none}
+.pg-b:disabled svg{translate:0 0}
+.pg-n{padding:0 8px;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:420px){.pg-b{gap:5px;padding:0 10px 0 6px}.pg-next{padding:0 6px 0 10px}.pg-t b{font-size:.9rem}.pg-n{padding:0 4px;font-size:.74rem}}
 
 /* §1 the meeting */
 .meet{margin:30px 0 10px;max-width:780px}
@@ -778,10 +787,10 @@ details.more.anim.closing>.in{opacity:0}
 
 /* ---------- press states on touch ---------- */
 @media (pointer:coarse){
-  .btn:active,.rail button:active,.vtabs button:active,.focus-btns button:active,.st-nav button:active,.arc-ctl button:active,.q label:active,.sibs a:active,.esv-pick-btn:active{scale:.975}
+  .btn:active,.rail button:active,.vtabs button:active,.focus-btns button:active,.pg-b:active,.q label:active,.sibs a:active,.esv-pick-btn:active{scale:.975}
 }
 @media print{
-  .bar,.rail,.st-nav,.arc-ctl,.vtabs,.focus-btns,.check,.check-foot{display:none!important}
+  .bar,.rail,.pager,.vtabs,.focus-btns,.check,.check-foot{display:none!important}
   .js .station,.js .beat,.js .vpanel{display:block!important}
   body{background:#fff;color:#000}
 }
@@ -959,7 +968,6 @@ details.more.anim.closing>.in{opacity:0}
               <h4>How God treats enemies</h4>
               <p>He sends them rain and sun (Matthew 5:44-45). He died for them while they were still enemies (Romans 5:8-10). Then he sends messengers to ask them to make peace (2 Corinthians 5:18-20). Scripture can say God “opposes the proud” (James 4:6), but even the harshest line, that he “turned and became their enemy,” is followed at once by him remembering the days of old (Isaiah 63:10-11).</p>
             </div></div></div></details>
-          <div class="st-nav"><button type="button" data-go="-1" disabled>← Farther</button><button type="button" data-go="1">Nearer →</button></div>
         </article>
 
         <!-- FAR OFF -->
@@ -983,7 +991,6 @@ details.more.anim.closing>.in{opacity:0}
               <h4>How God treats strangers</h4>
               <p>He puts people where they can reach for him, “though he is not far from any one of us” (Acts 17:26-27). He notices the outsider’s prayers and alms (Acts 10:4). He preached peace “to you who were far away” (Ephesians 2:17). His law kept telling Israel to love the stranger, because they had been strangers too (Deuteronomy 10:18-19).</p>
             </div></div></div></details>
-          <div class="st-nav"><button type="button" data-go="-1">← Farther</button><button type="button" data-go="1">Nearer →</button></div>
         </article>
 
         <!-- SERVANT -->
@@ -1015,7 +1022,6 @@ details.more.anim.closing>.in{opacity:0}
               <h4>How God treats servants</h4>
               <p>He brings them out to bring them close: “I carried you on eagles’ wings and brought you to myself” (Exodus 19:4). He calls the freed slaves “my servants,” so that nobody else can own them (Leviticus 25:42). He gives clear rules to people who are not yet ready for reasons. And he goes out to plead with the angry son who won’t come in (Luke 15:28).</p>
             </div></div></div></details>
-          <div class="st-nav"><button type="button" data-go="-1">← Farther</button><button type="button" data-go="1">Nearer →</button></div>
         </article>
 
         <!-- CHILD -->
@@ -1040,7 +1046,6 @@ details.more.anim.closing>.in{opacity:0}
               <h4>How God treats children</h4>
               <p>He provides before they ask (Matthew 6:31-32), and gives good things, never stones (Matthew 7:9-11). He carries them “as a father carries his son” (Deuteronomy 1:31). He trains them, and the Greek word is the one for raising a child, not for punishing a criminal (Hebrews 12:5-11). Young children get milk, not because he loves them less, but because they can’t take more yet (1 Corinthians 3:1-2, Hebrews 5:12-14).</p>
             </div></div></div></details>
-          <div class="st-nav"><button type="button" data-go="-1">← Farther</button><button type="button" data-go="1">Nearer →</button></div>
         </article>
 
         <!-- FRIEND -->
@@ -1065,7 +1070,6 @@ details.more.anim.closing>.in{opacity:0}
               <h4>How God treats friends</h4>
               <p>He confides. “Shall I hide from Abraham what I am about to do?” (Genesis 18:17). The Hebrew <span class="hb">סוֹד</span> in Psalm 25:14 is the inner circle where plans are discussed. He lets friends argue: Abraham bargains over Sodom (Genesis 18:23-33), Moses talks him out of a judgment, and “the LORD relented” (Exodus 32:10-14). He gives friends what they ask (John 15:7, 16).</p>
             </div></div></div></details>
-          <div class="st-nav"><button type="button" data-go="-1">← Farther</button><button type="button" data-go="1">Nearer →</button></div>
         </article>
 
         <!-- BELOVED -->
@@ -1089,10 +1093,10 @@ details.more.anim.closing>.in{opacity:0}
               <h4>How God treats the beloved</h4>
               <p>He lets them rest on him (John 13:23-25). He trusts them with what he loves most: from the cross, Jesus gave John his own mother (John 19:26-27). And the end of the story is a wedding. Hosea saw the day Israel would call God “my husband” (<span class="hb">אִישִׁי</span>) and no longer “my master” (Hosea 2:16), and the Bible closes with a bride (Revelation 19:7, 21:2).</p>
             </div></div></div></details>
-          <div class="st-nav"><button type="button" data-go="-1">← Farther</button><button type="button" data-go="1" disabled>Nearer →</button></div>
         </article>
 
         </div>
+        <nav class="pager" id="stPager" aria-label="Step between the six distances" hidden><button type="button" class="pg-b pg-prev" data-go="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg><span class="pg-t"><small>Farther</small><b></b></span></button><span class="pg-n" aria-live="polite"></span><button type="button" class="pg-b pg-next" data-go="1"><span class="pg-t"><small>Nearer</small><b></b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></nav>
 
         <div class="status-note">
           <h3>Standing is given. Nearness is lived.</h3>
@@ -1214,11 +1218,6 @@ details.more.anim.closing>.in{opacity:0}
     </div>
     <div class="arc-wrap">
       <svg class="arc-svg esv-skip" id="arcSvg" viewBox="0 0 1000 380" role="group" aria-label="How near people stood to God across the Bible's story, against his unchanging heart" hidden></svg>
-      <div class="arc-ctl" id="arcCtl" hidden>
-        <button type="button" data-step="-1" aria-label="Previous moment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
-        <button type="button" data-step="1" aria-label="Next moment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
-        <span class="count" id="arcCount"></span>
-      </div>
       <ol class="beats" id="beats">
         <li class="beat" data-y="5" data-short="Eden"><span class="era sc">Genesis 2–3</span><h3>He walked with them</h3><p>The first picture of God with people is a walk in a garden “in the cool of the day” (Genesis 3:8). No temple, no veil, no go-between. This is the “from the beginning” Jesus keeps pointing back to (Matthew 19:8).</p></li>
         <li class="beat" data-y="1.9" data-short="Hiding"><span class="era sc">Genesis 3</span><h3>The first distance was ours</h3><p>The first move away is made by people: “I was afraid … so I hid” (Genesis 3:10). God’s first move is to come looking with a question, “Where are you?” (Genesis 3:9). He did not ask because he didn’t know the location. He asked because they needed to say where they stood.</p></li>
@@ -1236,6 +1235,7 @@ details.more.anim.closing>.in{opacity:0}
         <li class="beat" data-y="4.8" data-short="Spirit"><span class="era sc">Acts 2 →</span><h3>Inside, not beside</h3><p>Jesus had promised that the Spirit “lives with you and will be in you” (John 14:17), and that he and the Father would “make our home” with anyone who loves him (John 14:23). At Pentecost the presence that once sat behind a curtain moves into people (Acts 2:1-4).</p></li>
         <li class="beat" data-y="5" data-short="City"><span class="era sc">Revelation 21–22</span><h3>Face to face</h3><p>The story ends where it began, only bigger: “God’s dwelling place is now among the people” (Revelation 21:3), and “they will see his face” (Revelation 22:4). The garden has become a city, and nobody stands far off anymore.</p></li>
       </ol>
+      <nav class="pager" id="arcPager" aria-label="Step through the story" hidden><button type="button" class="pg-b pg-prev" data-go="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg><span class="pg-t"><small>Earlier</small><b></b></span></button><span class="pg-n" aria-live="polite"></span><button type="button" class="pg-b pg-next" data-go="1"><span class="pg-t"><small>Later</small><b></b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></nav>
       <p class="note" style="margin:16px 0 0">The heights are a reading of the story, not a measurement. What the chart shows is the shape: one line moves a great deal and the other never moves at all.</p>
     </div>
   </div>
@@ -1662,7 +1662,7 @@ function readingAnchor(){
      above it moves it, and hold() moves the page back by the same amount */
   var bar = d.querySelector(".bar"), y = (bar ? bar.getBoundingClientRect().bottom : 0) - 1;
   var best = null, bestTop = Infinity;
-  d.querySelectorAll("#read h2,#read h3,#read p,#read li,#read figure,#read .s-num,#read .vx,#read .rail,#read .vtabs,#read .arc-ctl,#read .btn").forEach(function(el){
+  d.querySelectorAll("#read h2,#read h3,#read p,#read li,#read figure,#read .s-num,#read .vx,#read .rail,#read .vtabs,#read .btn").forEach(function(el){
     var r = el.getBoundingClientRect();
     if (r.height && r.top >= y && r.top < bestTop){ best = el; bestTop = r.top; }
   });
@@ -1715,26 +1715,26 @@ function morph(box, change){
 d.querySelectorAll("details.deep, details.more").forEach(function(det){
   var sum = det.querySelector("summary"), body = det.querySelector(".in"), timer = null;
   if (!sum || !body) return;
-  function settle(){ clearTimeout(timer); det.classList.remove("anim","closing"); body.style.height = ""; }
+  function settle(){ clearTimeout(timer); det.classList.remove("anim","shutting"); body.style.height = ""; }
   sum.addEventListener("click", function(ev){
     if (still()) return;
     ev.preventDefault();
     /* a closed <details> can still report its content's height, so closed means 0 */
     var now = det.open ? body.getBoundingClientRect().height : 0;
     clearTimeout(timer);
-    var closing = det.open && !det.classList.contains("closing");
+    var closing = det.open && !det.classList.contains("shutting");
     /* The start height is committed with the transition off, so only the
        move to the target is animated. */
     det.classList.remove("anim");
     if (closing){
       body.style.height = now + "px";
       void body.offsetHeight;
-      det.classList.add("anim","closing");
+      det.classList.add("anim","shutting");
       body.style.height = "0px";
       timer = setTimeout(function(){ det.open = false; settle(); }, 360);
     } else {
       det.open = true;
-      det.classList.remove("closing");
+      det.classList.remove("shutting");
       body.style.height = "";
       var full = body.scrollHeight;
       body.style.height = now + "px";
@@ -1769,17 +1769,58 @@ themeBtn.addEventListener("click", function(){
   d.startViewTransition(apply).finished.finally(function(){ fading = false; want = null; });
 });
 
+/* ---- pagers and swipes ------------------------------------------------- */
+/* Each arrow says where it goes; at either end that arrow rests, dimmed. */
+function pagerSet(pg, i, n, info){
+  pg.querySelectorAll(".pg-b").forEach(function(b){
+    var j = i + Number(b.dataset.go), ok = j >= 0 && j < n, it = ok ? info(j) : ["", ""];
+    var label = b.querySelector("small").textContent;
+    b.disabled = !ok;
+    b.querySelector("b").textContent = it[0];
+    if (it[1]) b.style.setProperty("--bc", it[1]); else b.style.removeProperty("--bc");
+    b.setAttribute("aria-label", ok ? label + ": " + it[0] : label);
+  });
+  pg.querySelector(".pg-n").textContent = (i + 1) + " / " + n;
+}
+/* The next panel slides in from the side you are heading toward. */
+function slideFrom(box, dir){
+  box.style.setProperty("--dx", dir ? dir * 28 + "px" : "0px");
+  box.style.setProperty("--dy", dir ? "0px" : "8px");
+}
+/* A sideways swipe across a panel turns it: left for the next one, right for
+   the one before. Mostly-vertical drags are scrolling and are left alone. */
+function swipe(box, step){
+  var x0 = null, y0 = 0, t0 = 0;
+  box.addEventListener("touchstart", function(e){
+    if (e.touches.length !== 1){ x0 = null; return; }
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now();
+  }, { passive: true });
+  box.addEventListener("touchend", function(e){
+    if (x0 === null) return;
+    var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    x0 = null;
+    if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.8 && Date.now() - t0 < 800 && !String(getSelection())) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+  box.addEventListener("touchcancel", function(){ x0 = null; }, { passive: true });
+}
+
 /* ---- §2 the six stations ----------------------------------------------- */
 var ORDER = ["enemy","far","servant","child","friend","beloved"];
 var stations = {}, railBtns = d.querySelectorAll(".rail button"), rings = d.querySelectorAll(".ring");
 d.querySelectorAll(".station").forEach(function(el){ stations[el.dataset.st] = el; });
-var stationBox = d.getElementById("stations");
+var stationBox = d.getElementById("stations"), stPager = d.getElementById("stPager"), curSt = null;
+var RC = {enemy:"var(--d1)",far:"var(--d2)",servant:"var(--d3)",child:"var(--d4)",friend:"var(--d5)",beloved:"var(--d6)"};
 function showStation(st, focusPanel){
-  if (!stations[st].classList.contains("on")) morph(stationBox, function(){ ORDER.forEach(function(k){ stations[k].classList.toggle("on", k === st); }); });
+  if (!stations[st].classList.contains("on")){
+    slideFrom(stationBox, curSt && showStation.ready ? Math.sign(ORDER.indexOf(st) - ORDER.indexOf(curSt)) : 0);
+    morph(stationBox, function(){ ORDER.forEach(function(k){ stations[k].classList.toggle("on", k === st); }); });
+  }
+  curSt = st;
+  pagerSet(stPager, ORDER.indexOf(st), ORDER.length, function(j){ return [stations[ORDER[j]].querySelector("h3").textContent, RC[ORDER[j]]]; });
   railBtns.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.st === st ? "true" : "false"); b.tabIndex = b.dataset.st === st ? 0 : -1; });
   rings.forEach(function(r){ r.classList.toggle("on", r.dataset.st === st); r.setAttribute("aria-pressed", r.dataset.st === st ? "true" : "false"); });
   /* the figure says which ring is open, and a ripple runs out to it */
-  var col = "var(" + {enemy:"--d1",far:"--d2",servant:"--d3",child:"--d4",friend:"--d5",beloved:"--d6"}[st] + ")";
+  var col = RC[st];
   var fig = d.querySelector(".rings-fig");
   fig.style.setProperty("--rc", col);
   d.getElementById("ringNow").textContent = stations[st].querySelector("h3").textContent;
@@ -1817,13 +1858,13 @@ rings.forEach(function(r){
   r.addEventListener("click", go);
   r.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); go(); } });
 });
-d.querySelectorAll(".st-nav button").forEach(function(b){
-  b.addEventListener("click", function(){
-    var cur = b.closest(".station").dataset.st;
-    var n = ORDER[ORDER.indexOf(cur) + Number(b.dataset.go)];
-    if (n){ showStation(n, true); }
-  });
-});
+function stepStation(by){
+  var n = ORDER[ORDER.indexOf(curSt) + by];
+  if (n) showStation(n, true);
+}
+stPager.querySelectorAll(".pg-b").forEach(function(b){ b.addEventListener("click", function(){ stepStation(Number(b.dataset.go)); }); });
+stPager.hidden = false;
+swipe(stationBox, stepStation);
 showStation("child");
 
 /* ---- §4 the painting --------------------------------------------------- */
@@ -1851,7 +1892,7 @@ if ("IntersectionObserver" in window){
 /* ---- §5 the long story: the list is the data, the chart is drawn from it */
 var beats = [].slice.call(d.querySelectorAll("#beats .beat"));
 var svg = d.getElementById("arcSvg"), NS = "http://www.w3.org/2000/svg";
-var cur = 0, count = d.getElementById("arcCount"), ptEls = [], mode = "";
+var cur = 0, arcPager = d.getElementById("arcPager"), beatBox = d.getElementById("beats"), ptEls = [], mode = "";
 function el(tag, attrs, parent){ var n = d.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; }
 /* a gentle curve through the points (Catmull-Rom → Bézier), its handles held
    inside the chart so the line never pretends anyone got nearer than "near" */
@@ -1902,14 +1943,25 @@ function drawArc(){
   });
   showBeat(cur);
 }
-function showBeat(i){
+function showBeat(i, reveal){
+  var was = cur;
   cur = Math.max(0, Math.min(beats.length - 1, i));
-  if (!beats[cur].classList.contains("on")) morph(d.getElementById("beats"), function(){ beats.forEach(function(b, j){ b.classList.toggle("on", j === cur); }); });
+  if (!beats[cur].classList.contains("on")){
+    slideFrom(beatBox, Math.sign(cur - was));
+    morph(beatBox, function(){ beats.forEach(function(b, j){ b.classList.toggle("on", j === cur); }); });
+  }
   ptEls.forEach(function(g, j){ g.classList.toggle("on", j === cur); g.setAttribute("aria-pressed", j === cur ? "true" : "false"); });
-  count.textContent = (cur + 1) + " of " + beats.length;
+  pagerSet(arcPager, cur, beats.length, function(j){ return [beats[j].dataset.short, ""]; });
+  /* stepping from the pager: if the new moment starts above the bar, bring it back */
+  if (reveal){
+    var bar = d.querySelector(".bar"), lim = (bar ? bar.getBoundingClientRect().bottom : 0) + 4;
+    if (beats[cur].getBoundingClientRect().top < lim) beats[cur].scrollIntoView({block:"start", behavior: glide()});
+  }
 }
-d.querySelectorAll("#arcCtl button").forEach(function(b){ b.addEventListener("click", function(){ showBeat(cur + Number(b.dataset.step)); }); });
-svg.removeAttribute("hidden"); d.getElementById("arcCtl").hidden = false;
+function stepBeat(by){ if (cur + by >= 0 && cur + by < beats.length) showBeat(cur + by, true); }
+arcPager.querySelectorAll(".pg-b").forEach(function(b){ b.addEventListener("click", function(){ stepBeat(Number(b.dataset.go)); }); });
+swipe(beatBox, stepBeat);
+svg.removeAttribute("hidden"); arcPager.hidden = false;
 svg.closest(".arc-wrap").setAttribute("data-anim", "");
 drawArc();
 addEventListener("resize", drawArc);
