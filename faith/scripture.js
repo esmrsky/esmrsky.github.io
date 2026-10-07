@@ -404,7 +404,18 @@
   /* The TPT source has no Pentateuch — those books read NIV instead, with a line saying so. */
   var TPT_MISSING_BOOKS = [2, 3, 4, 5];
   var TPT_FALLBACK_VERSION = 'NIV';
-  var TPT_FALLBACK_NOTE = '<span class="verse-fallback-note">TPT does not carry this book — showing ' + TPT_FALLBACK_VERSION + '.</span>';
+  /* The World English Bible stands in for NIV when the Worker can't be reached: public
+     domain, modern, and labeled. bolls.life's own NIV is no longer Scripture (see
+     fetchBollsChapter), so it is never the stand-in. */
+  var NIV_STANDIN = 'WEB';
+
+  /* One line beside any passage that is not the translation the reader picked. `why` is
+     'missing' (TPT has no such book) or 'failed'. A WEB stand-in is marked is-standin so
+     the running text can keep its built-in NIV instead of swapping in a stand-in. */
+  function swapNote(asked, shown, why) {
+    var lead = why === 'missing' ? asked + ' does not carry this book' : asked + ' could not be loaded';
+    return '<span class="verse-fallback-note' + (shown === NIV_STANDIN ? ' is-standin' : '') + '">' + lead + ' — showing ' + shown + '.</span>';
+  }
 
   function tptCoversBook(ref) {
     var parsed = parseReference(ref);
@@ -449,10 +460,25 @@
     });
   }
 
+  /* bolls.life sometimes answers with a notice where the text should be: since October
+     2026 every NIV chapter is one "verse" saying Biblica has prohibited it. Every chapter in
+     the Bible has at least two verses, so a single entry about the translation is a notice,
+     and so is any response with that wording. A notice is a failure, never Scripture. */
+  function isNotice(verses) {
+    if (!Array.isArray(verses) || !verses.length) return false;
+    var all = verses.map(function (v) { return (v && v.text) || ''; }).join(' ');
+    if (/prohibited me from using|has prohibited (?:me|us|the use)/i.test(all)) return true;
+    return verses.length === 1 && /\btranslation\b/i.test(all) &&
+      /prohibit|copyright|licen[cs]|removed|no longer/i.test(all);
+  }
+
   function fetchBollsChapter(version, bookId, chapter) {
     return fetch('https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/').then(function (res) {
       if (!res.ok) throw new Error('API error');
       return res.json();
+    }).then(function (verses) {
+      if (isNotice(verses)) throw new Error('bolls.life sent a notice, not ' + version);
+      return verses;
     });
   }
 
@@ -460,7 +486,15 @@
     var cacheKey = version + '-' + bookId + '-' + chapter;
     if (!chapterCache[cacheKey]) {
       chapterCache[cacheKey] = (version === 'NIV'
-        ? fetchYouVersionChapter(bookId, chapter).catch(function () { return fetchBollsChapter('NIV', bookId, chapter); })
+        ? fetchYouVersionChapter(bookId, chapter).catch(function () {
+            /* not kept under the NIV key, so the next passage tries the Worker again */
+            return getChapter(NIV_STANDIN, bookId, chapter).then(function (verses) {
+              delete chapterCache[cacheKey];
+              var shown = verses.slice();
+              shown.standIn = NIV_STANDIN;
+              return shown;
+            });
+          })
         : fetchBollsChapter(version, bookId, chapter)
       ).catch(function (e) {
         delete chapterCache[cacheKey];
@@ -470,7 +504,8 @@
     return chapterCache[cacheKey];
   }
 
-  function fetchFromBolls(ref, version) {
+  /* `asked`/`why` are set when this read is already a stand-in (TPT reading NIV). */
+  function fetchFromBolls(ref, version, asked, why) {
     var parsed = parseReference(ref);
     if (!parsed) return Promise.resolve('Reference not recognized.');
     return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
@@ -486,7 +521,9 @@
         filtered = verses.slice(0, 3);
       }
       if (!filtered.length) return 'Verse not found in ' + version + '.';
-      return filtered.map(function (v) { return cleanBollsText(v.text); }).join(' ');
+      var shown = verses.standIn || version;
+      var note = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
+      return filtered.map(function (v) { return cleanBollsText(v.text); }).join(' ') + (note ? '\n' + note : '');
     }, function () {
       return 'Could not retrieve scripture text.';
     });
@@ -496,18 +533,20 @@
     if (version !== 'TPT') return fetchFromBolls(ref, version);
     if (tptCoversBook(ref)) {
       return fetchTptFromYouVersion(ref).catch(function () {
-        return fetchFromBolls(ref, TPT_FALLBACK_VERSION).then(function (t) { return t + '\n' + TPT_FALLBACK_NOTE; });
+        return fetchFromBolls(ref, TPT_FALLBACK_VERSION, 'TPT', 'failed');
       });
     }
-    return fetchFromBolls(ref, TPT_FALLBACK_VERSION).then(function (t) { return t + '\n' + TPT_FALLBACK_NOTE; });
+    return fetchFromBolls(ref, TPT_FALLBACK_VERSION, 'TPT', 'missing');
   }
 
   /* ---------- passage context (the lightbox body) ---------- */
   var CONTEXT_RADIUS = 9;
 
-  function loadBollsContext(parsed, version, radius) {
+  function loadBollsContext(parsed, version, radius, asked, why) {
     return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) throw new Error('Verse not found.');
+      var shown = verses.standIn || version;
+      var swap = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
       var selectedStart = parsed.verseStart === null ? 1 : parsed.verseStart;
       var selectedEnd = parsed.verseEnd || selectedStart;
       var rangeStart = selectedStart - radius;
@@ -546,7 +585,7 @@
           return (parts.heading ? '<b class="context-heading">' + parts.heading + '</b>' : '') +
             '<span class="context-verse' + (selected ? ' is-selected' : '') + '"><sup class="context-verse-number">' + num +
             '</sup><span class="ctx-t">' + parts.body + '</span></span>';
-        }).join(' ') + '</p>';
+        }).join(' ') + '</p>' + (swap ? '<p class="context-fallback-note">' + swap + '</p>' : '');
       });
     });
   }
@@ -586,14 +625,10 @@
     if (version !== 'TPT') return loadBollsContext(parsed, version, radius);
     if (TPT_MISSING_BOOKS.indexOf(parsed.bookId) === -1) {
       return loadTptContext(parsed, radius).catch(function () {
-        return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius).then(function (html) {
-          return html + '<p class="context-fallback-note">' + TPT_FALLBACK_NOTE + '</p>';
-        });
+        return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius, 'TPT', 'failed');
       });
     }
-    return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius).then(function (html) {
-      return html + '<p class="context-fallback-note">' + TPT_FALLBACK_NOTE + '</p>';
-    });
+    return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius, 'TPT', 'missing');
   }
 
   /* ---------- tooltip + dialog ---------- */
@@ -1137,11 +1172,18 @@
         el.classList.remove('is-swapping');
         return;
       }
+      /* The markup already holds NIV, so a WEB stand-in for NIV would only make the page
+         worse: keep the built-in text, the same as an error. */
+      if (version === 'NIV' && /is-standin/.test(text)) {
+        el.classList.remove('is-swapping');
+        return;
+      }
       /* A translation's section heading rides inside the first verse ("By Faith<br/>Now
          faith is…") — folded into a flowing quote it reads as stray words. Strip it. */
-      var parts = splitHeading(text.replace(/<span class="verse-fallback-note">[\s\S]*?<\/span>/, ''));
+      var noteMatch = text.match(/<span class="verse-fallback-note[^"]*">[\s\S]*?<\/span>/);
+      var parts = splitHeading(noteMatch ? text.replace(noteMatch[0], '') : text);
       var flowed = flowText(parts.body);
-      var note = /verse-fallback-note/.test(text) ? TPT_FALLBACK_NOTE : '';
+      var note = noteMatch ? noteMatch[0] : '';
       el.innerHTML = '“' + nestQuotes(flowed) + '”' + note;
       el.dataset.loaded = version;
       el.classList.remove('is-swapping');

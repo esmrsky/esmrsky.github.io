@@ -1,7 +1,7 @@
 /* ============================================================
    FAITH — scripture system
    Ported from the-thread (esmrsky): bolls.life chapter API for
-   NIV/NASB/NKJV/NLT, the esmrsky scripture worker for TPT,
+   NASB/NKJV/NLT, the esmrsky scripture worker for NIV and TPT,
    hover verse pop-ups, a click-to-open passage dialog, and a
    translation picker. Default version: NIV.
    ============================================================ */
@@ -404,7 +404,63 @@
   /* The TPT source has no Pentateuch — those books read NIV instead, with a line saying so. */
   var TPT_MISSING_BOOKS = [2, 3, 4, 5];
   var TPT_FALLBACK_VERSION = 'NIV';
-  var TPT_FALLBACK_NOTE = '<span class="verse-fallback-note">TPT does not carry this book — showing ' + TPT_FALLBACK_VERSION + '.</span>';
+  /* This copy is frozen for its design, not its data. Its NIV used to come straight from
+     bolls.life, which since October 2026 answers every NIV request with a notice instead of
+     the text, so NIV now comes from the Worker like the live /faith/, and the World English
+     Bible stands in, labeled, when the Worker can't be reached. */
+  var NIV_VERSION_ID = 111;
+  var NIV_STANDIN = 'WEB';
+
+  /* One line beside any passage that is not the translation the reader picked. `why` is
+     'missing' (TPT has no such book) or 'failed'. */
+  function swapNote(asked, shown, why) {
+    var lead = why === 'missing' ? asked + ' does not carry this book' : asked + ' could not be loaded';
+    return '<span class="verse-fallback-note' + (shown === NIV_STANDIN ? ' is-standin' : '') + '">' + lead + ' — showing ' + shown + '.</span>';
+  }
+
+  /* bolls.life sometimes answers with a notice where the text should be. Every chapter in
+     the Bible has at least two verses, so a single entry about the translation is a notice,
+     and so is any response with the known wording. */
+  function isNotice(verses) {
+    if (!Array.isArray(verses) || !verses.length) return false;
+    var all = verses.map(function (v) { return (v && v.text) || ''; }).join(' ');
+    if (/prohibited me from using|has prohibited (?:me|us|the use)/i.test(all)) return true;
+    return verses.length === 1 && /\btranslation\b/i.test(all) &&
+      /prohibit|copyright|licen[cs]|removed|no longer/i.test(all);
+  }
+
+  /* YouVersion's chapter HTML marks every verse; split on the markers into the same
+     [{verse, text}] list bolls returns. */
+  function splitYouVersionChapter(html) {
+    var parts = String(html)
+      .replace(/<span class="yv-vlbl">[\s\S]*?<\/span>/g, '')
+      .split(/<span class="yv-v" v="(\d+)[^"]*"><\/span>/);
+    var verses = [];
+    for (var i = 1; i < parts.length; i += 2) {
+      var text = parts[i + 1]
+        .replace(/<\/div>\s*<div\b[^>]*>/g, '<br>')
+        .replace(/<\/?(?:div|span)\b[^>]*>/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"').replace(/&#0?39;|&#x27;/g, "'").replace(/&amp;/g, '&')
+        .replace(/^(?:\s*<br>)+|(?:<br>\s*)+$/g, '')
+        .trim();
+      if (text) verses.push({ verse: Number(parts[i]), text: text });
+    }
+    return verses;
+  }
+
+  function fetchNivChapter(bookId, chapter) {
+    var book = YOUVERSION_USFM_BOOKS[bookId];
+    if (!book) return Promise.reject(new Error('Reference not recognized.'));
+    var url = SCRIPTURE_API_BASE + '/passage?version=' + NIV_VERSION_ID + '&passage=' + book + '.' + chapter + '&format=html';
+    return fetch(url, { headers: { Accept: 'application/json' } }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (body) {
+        if (!response.ok || !body.content) throw new Error(body.message || 'NIV could not be loaded.');
+        var verses = splitYouVersionChapter(body.content);
+        if (!verses.length) throw new Error('NIV chapter was empty.');
+        return verses;
+      });
+    });
+  }
 
   function tptCoversBook(ref) {
     var parsed = parseReference(ref);
@@ -415,10 +471,23 @@
     var cacheKey = version + '-' + bookId + '-' + chapter;
     if (!chapterCache[cacheKey]) {
       var url = 'https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/';
-      chapterCache[cacheKey] = fetch(url).then(function (res) {
-        if (!res.ok) throw new Error('API error');
-        return res.json();
-      }).catch(function (e) {
+      chapterCache[cacheKey] = (version === 'NIV'
+        ? fetchNivChapter(bookId, chapter).catch(function () {
+            return getBollsChapter(NIV_STANDIN, bookId, chapter).then(function (verses) {
+              delete chapterCache[cacheKey];
+              var shown = verses.slice();
+              shown.standIn = NIV_STANDIN;
+              return shown;
+            });
+          })
+        : fetch(url).then(function (res) {
+            if (!res.ok) throw new Error('API error');
+            return res.json();
+          }).then(function (verses) {
+            if (isNotice(verses)) throw new Error('bolls.life sent a notice, not ' + version);
+            return verses;
+          })
+      ).catch(function (e) {
         delete chapterCache[cacheKey];
         throw e;
       });
@@ -426,7 +495,7 @@
     return chapterCache[cacheKey];
   }
 
-  function fetchFromBolls(ref, version) {
+  function fetchFromBolls(ref, version, asked, why) {
     var parsed = parseReference(ref);
     if (!parsed) return Promise.resolve('Reference not recognized.');
     return getBollsChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
@@ -442,7 +511,9 @@
         filtered = verses.slice(0, 3);
       }
       if (!filtered.length) return 'Verse not found in ' + version + '.';
-      return filtered.map(function (v) { return cleanBollsText(v.text); }).join(' ');
+      var shown = verses.standIn || version;
+      var note = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
+      return filtered.map(function (v) { return cleanBollsText(v.text); }).join(' ') + (note ? '\n' + note : '');
     }, function () {
       return 'Could not retrieve scripture text.';
     });
@@ -452,18 +523,20 @@
     if (version !== 'TPT') return fetchFromBolls(ref, version);
     if (tptCoversBook(ref)) {
       return fetchTptFromYouVersion(ref).catch(function () {
-        return fetchFromBolls(ref, TPT_FALLBACK_VERSION).then(function (t) { return t + '\n' + TPT_FALLBACK_NOTE; });
+        return fetchFromBolls(ref, TPT_FALLBACK_VERSION, 'TPT', 'failed');
       });
     }
-    return fetchFromBolls(ref, TPT_FALLBACK_VERSION).then(function (t) { return t + '\n' + TPT_FALLBACK_NOTE; });
+    return fetchFromBolls(ref, TPT_FALLBACK_VERSION, 'TPT', 'missing');
   }
 
   /* ---------- passage context (the lightbox body) ---------- */
   var CONTEXT_RADIUS = 9;
 
-  function loadBollsContext(parsed, version, radius) {
+  function loadBollsContext(parsed, version, radius, asked, why) {
     return getBollsChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) throw new Error('Verse not found.');
+      var shown = verses.standIn || version;
+      var swap = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
       var selectedStart = parsed.verseStart === null ? 1 : parsed.verseStart;
       var selectedEnd = parsed.verseEnd || selectedStart;
       var rangeStart = selectedStart - radius;
@@ -502,7 +575,7 @@
           return (parts.heading ? '<b class="context-heading">' + parts.heading + '</b>' : '') +
             '<span class="context-verse' + (selected ? ' is-selected' : '') + '"><sup class="context-verse-number">' + num +
             '</sup><span class="ctx-t">' + parts.body + '</span></span>';
-        }).join(' ') + '</p>';
+        }).join(' ') + '</p>' + (swap ? '<p class="context-fallback-note">' + swap + '</p>' : '');
       });
     });
   }
@@ -542,14 +615,10 @@
     if (version !== 'TPT') return loadBollsContext(parsed, version, radius);
     if (TPT_MISSING_BOOKS.indexOf(parsed.bookId) === -1) {
       return loadTptContext(parsed, radius).catch(function () {
-        return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius).then(function (html) {
-          return html + '<p class="context-fallback-note">' + TPT_FALLBACK_NOTE + '</p>';
-        });
+        return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius, 'TPT', 'failed');
       });
     }
-    return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius).then(function (html) {
-      return html + '<p class="context-fallback-note">' + TPT_FALLBACK_NOTE + '</p>';
-    });
+    return loadBollsContext(parsed, TPT_FALLBACK_VERSION, radius, 'TPT', 'missing');
   }
 
   /* ---------- tooltip + dialog ---------- */
@@ -926,11 +995,17 @@
         el.classList.remove('is-swapping');
         return;
       }
+      /* a WEB stand-in for NIV is no better than the built-in text: keep that */
+      if (version === 'NIV' && /is-standin/.test(text)) {
+        el.classList.remove('is-swapping');
+        return;
+      }
       /* A translation's section heading rides inside the first verse ("By Faith<br/>Now
          faith is…") — folded into a flowing quote it reads as stray words. Strip it. */
-      var parts = splitHeading(text.replace(/<span class="verse-fallback-note">[\s\S]*?<\/span>/, ''));
+      var noteMatch = text.match(/<span class="verse-fallback-note[^"]*">[\s\S]*?<\/span>/);
+      var parts = splitHeading(noteMatch ? text.replace(noteMatch[0], '') : text);
       var flowed = flowText(parts.body);
-      var note = /verse-fallback-note/.test(text) ? TPT_FALLBACK_NOTE : '';
+      var note = noteMatch ? noteMatch[0] : '';
       el.innerHTML = '“' + flowed.replace(/^[“"]+|[”"]+$/g, '') + '”' + note;
       el.dataset.loaded = version;
       el.classList.remove('is-swapping');

@@ -93,12 +93,25 @@ async function youVersionChapter(id, ch) {
   return verses;
 }
 
+/* bolls.life sometimes answers with a notice where the text should be: since October 2026
+   every NIV chapter comes back as one "verse" saying Biblica has prohibited it. Baked text is
+   what a reader gets when nothing else loads, so a notice must stop the bake, never land in a
+   page. Every chapter in the Bible has at least two verses, so a single entry about the
+   translation is a notice, and so is any response with that wording. */
+function isNotice(verses) {
+  if (!Array.isArray(verses) || !verses.length) return false;
+  const all = verses.map((v) => (v && v.text) || '').join(' ');
+  if (/prohibited me from using|has prohibited (?:me|us|the use)/i.test(all)) return true;
+  return verses.length === 1 && /\btranslation\b/i.test(all) && /prohibit|copyright|licen[cs]|removed|no longer/i.test(all);
+}
+
 const chapters = new Map();
 async function chapter(id, ch) {
   const key = `${version}/${id}/${ch}`;
   if (!chapters.has(key)) {
     chapters.set(key, version === 'NIV' ? youVersionChapter(id, ch) : fetch(`https://bolls.life/get-text/${version}/${id}/${ch}/`)
-      .then((r) => { if (!r.ok) throw new Error(`${r.status} for ${key}`); return r.json(); }));
+      .then((r) => { if (!r.ok) throw new Error(`${r.status} for ${key}`); return r.json(); })
+      .then((verses) => { if (isNotice(verses)) throw new Error(`bolls.life sent a notice instead of ${key}`); return verses; }));
   }
   return chapters.get(key);
 }

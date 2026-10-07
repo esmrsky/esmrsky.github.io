@@ -1273,7 +1273,7 @@ themeBtn.addEventListener("click", function(){
 /* ---- §6 the practice: read slowly, stop where it touches you ------------- */
 (function(){
   var P = D.practice, box = $("#practice"); if (!box || !P) return;
-  var reader = $("#reader"), pick = null, pickLabel = "", phrases = [], i = -1, timer = null, spent = [], t0 = 0, wanted = 0;
+  var reader = $("#reader"), pick = null, pickLabel = "", swapLine = "", phrases = [], i = -1, timer = null, spent = [], t0 = 0, wanted = 0;
   var pass = $$(".passage", box), begin = $("#prBegin");
   pass.forEach(function(b){
     b.addEventListener("click", function(){
@@ -1295,9 +1295,16 @@ themeBtn.addEventListener("click", function(){
     });
     return out;
   }
-  function plain(html){ var t = d.createElement("div"); t.innerHTML = html; $$(".esv-note", t).forEach(function(n){ n.remove(); }); return t.textContent; }
+  /* The passage's own words, without the line the shared client adds when it had to read a
+     stand-in ("NIV could not be loaded — showing WEB"); that line goes in the header instead. */
+  function plain(html){
+    var t = d.createElement("div"); t.innerHTML = html;
+    var n = t.querySelector(".esv-note"); swapLine = n ? n.textContent.trim() : "";
+    $$(".esv-note", t).forEach(function(x){ x.remove(); });
+    return t.textContent;
+  }
   function tick(){ if (i >= 0 && i < phrases.length && t0){ spent[i] = (spent[i] || 0) + (Date.now() - t0); } t0 = Date.now(); }
-  function where(){ return '<div class="where"><span><b>' + esc(pickLabel) + '</b> · ' + esc(S ? S.getVersion() : "NIV") + '</span><span>' + (i >= 0 ? (i + 1) + " / " + phrases.length : "") + '</span></div>'; }
+  function where(){ return '<div class="where"><span><b>' + esc(pickLabel) + '</b> · ' + esc(swapLine || (S ? S.getVersion() : "NIV")) + '</span><span>' + (i >= 0 ? (i + 1) + " / " + phrases.length : "") + '</span></div>'; }
   function ctrl(){
     return '<div class="pr-ctrl">' +
       '<button type="button" class="btn" data-a="back"' + (i <= 0 ? " disabled" : "") + '>' + esc(P.back) + '</button>' +

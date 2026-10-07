@@ -9,8 +9,9 @@
    Two suppliers, same as the rest of the estate:
      the Worker  — NIV and TPT, from YouVersion under the estate's app key. NIV is the
                    current text; bolls.life's NIV is the 1984 edition.
-     bolls.life  — NASB/ESV/KJV/NLT/AMP/MSG, НРП on the Russian pages, and NIV only when
-                   the Worker can't be reached. CORS *, no key.
+     bolls.life  — NASB/ESV/KJV/NLT/AMP/MSG, НРП on the Russian pages, CORS *, no key.
+                   When the Worker can't be reached, NIV readers get the WEB from here,
+                   labeled. bolls.life's own NIV is no longer Scripture (see bollsFetch).
 
    Usage:
      EsmrskyScripture.init({ key: 'the-word', scan: '.source, .note b' });
@@ -274,16 +275,45 @@
       });
   }
 
+  /* bolls.life sometimes answers with a notice where the text should be. Since October
+     2026 every NIV chapter comes back as one "verse" saying Biblica has prohibited it, and a
+     notice must never be shown as Scripture. Every chapter in the Bible has at least two
+     verses (Psalm 117 is the shortest), so a single entry that talks about the translation
+     is a notice, and so is any response carrying that wording. */
+  function isNotice(verses) {
+    if (!Array.isArray(verses) || !verses.length) return false;
+    var all = verses.map(function (v) { return (v && v.text) || ''; }).join(' ');
+    if (/prohibited me from using|has prohibited (?:me|us|the use)/i.test(all)) return true;
+    return verses.length === 1 && /\btranslation\b/i.test(all) &&
+      /prohibit|copyright|licen[cs]|removed|no longer/i.test(all);
+  }
+
   function bollsFetch(version, bookId, chapter) {
     return fetch('https://bolls.life/get-text/' + version + '/' + bookId + '/' + chapter + '/')
-      .then(function (r) { if (!r.ok) throw new Error('API error'); return r.json(); });
+      .then(function (r) { if (!r.ok) throw new Error('API error'); return r.json(); })
+      .then(function (verses) {
+        if (isNotice(verses)) throw new Error('bolls.life sent a notice, not ' + version);
+        return verses;
+      });
   }
+
+  /* When the Worker can't be reached, NIV readers get the World English Bible, a
+     public-domain modern translation, with a line saying so. The stand-in is not kept
+     under the NIV key, so the next passage tries the Worker again. */
+  var NIV_STANDIN = 'WEB';
 
   function getChapter(version, bookId, chapter) {
     var key = version + '-' + bookId + '-' + chapter;
     if (!chapterCache[key]) {
       chapterCache[key] = (version === 'NIV'
-        ? yvChapter(bookId, chapter).catch(function () { return bollsFetch('NIV', bookId, chapter); })
+        ? yvChapter(bookId, chapter).catch(function () {
+            return getChapter(NIV_STANDIN, bookId, chapter).then(function (verses) {
+              delete chapterCache[key];
+              var shown = verses.slice();
+              shown.standIn = NIV_STANDIN;
+              return shown;
+            });
+          })
         : bollsFetch(version, bookId, chapter))
         .catch(function (e) { delete chapterCache[key]; throw e; });
     }
@@ -352,10 +382,17 @@
   var TPT_MISSING = [2, 3, 4, 5];
   var FALLBACK = 'NIV';
 
-  function fallbackNote() {
-    return '<span class="esv-note">' + t(
-      'TPT does not carry this book — showing ' + FALLBACK + '.',
-      'В TPT этой книги нет — показан ' + FALLBACK + '.') + '</span>';
+  /* One line beside any passage that is not the translation the reader picked, naming
+     what is shown instead. `why` is 'missing' (TPT has no such book), 'context' (TPT
+     can't show surrounding verses) or 'failed' (the supplier couldn't be reached). */
+  function swapNote(asked, shown, why) {
+    var en = why === 'missing' ? asked + ' does not carry this book'
+      : why === 'context' ? asked + ' can’t show the surrounding verses'
+      : asked + ' could not be loaded';
+    var ru = why === 'missing' ? 'В ' + asked + ' этой книги нет'
+      : why === 'context' ? asked + ' не показывает соседние стихи'
+      : asked + ' не удалось загрузить';
+    return '<span class="esv-note">' + t(en + ' — showing ' + shown + '.', ru + ' — показан ' + shown + '.') + '</span>';
   }
 
   function loadVerse(ref, version) {
@@ -364,15 +401,17 @@
     if (version === 'TPT') {
       if (TPT_MISSING.indexOf(parsed.bookId) === -1) {
         return tptPassage(toUsfm(parsed)).then(function (text) { return flow(esc(text)); }).catch(function () {
-          return fromBolls(parsed, FALLBACK).then(function (text) { return text + ' ' + fallbackNote(); });
+          return fromBolls(parsed, FALLBACK, 'TPT', 'failed');
         });
       }
-      return fromBolls(parsed, FALLBACK).then(function (text) { return text + ' ' + fallbackNote(); });
+      return fromBolls(parsed, FALLBACK, 'TPT', 'missing');
     }
     return fromBolls(parsed, bollsCode(version));
   }
 
-  function fromBolls(parsed, version) {
+  /* `asked`/`why` are set when this read is already a stand-in (TPT reading NIV); the note
+     then names what was asked for and what actually came back, which may be the WEB. */
+  function fromBolls(parsed, version, asked, why) {
     return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) return t('Verse not found.', 'Стих не найден.');
       var picked;
@@ -383,7 +422,9 @@
         picked = verses.slice(0, 3);
       }
       if (!picked.length) return t('Verse not found.', 'Стих не найден.');
-      return flow(picked.map(function (v) { return cleanBolls(v.text); }).join(' '));
+      var shown = verses.standIn || version;
+      var note = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
+      return flow(picked.map(function (v) { return cleanBolls(v.text); }).join(' ')) + (note ? ' ' + note : '');
     }).catch(function () {
       return t('Could not retrieve scripture text.', 'Не удалось загрузить текст Писания.');
     });
@@ -395,9 +436,12 @@
     var parsed = parseReference(ref);
     if (!parsed) return Promise.reject(new Error('bad reference'));
     var code = version === 'TPT' ? FALLBACK : bollsCode(version);
-    var note = version === 'TPT' ? '<p class="esv-ctx-note">' + fallbackNote() + '</p>' : '';
     return getChapter(code, parsed.bookId, parsed.chapter).then(function (verses) {
       if (!verses || !verses.length) throw new Error('empty chapter');
+      var shown = verses.standIn || code;
+      var swap = version === 'TPT' ? swapNote('TPT', shown, TPT_MISSING.indexOf(parsed.bookId) > -1 ? 'missing' : 'context')
+        : shown !== code ? swapNote(code, shown, 'failed') : '';
+      var note = swap ? '<p class="esv-ctx-note">' + swap + '</p>' : '';
       var selStart = parsed.verseStart === null ? 1 : parsed.verseStart;
       var selEnd = parsed.verseEnd || selStart;
       var from = selStart - radius;
