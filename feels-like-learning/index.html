@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feels Like Learning</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Rereading and having AI explain things feel like learning. Pulling it back out of your own head is what makes it stick. Run the classic memory experiment on yourself, schedule reviews on a forgetting curve, and give AI the ten jobs that make you do the work.">
+<link rel="canonical" href="https://esmrsky.github.io/feels-like-learning/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Feels Like Learning">
+<meta property="og:description" content="Why rereading wins at five minutes and loses at a week, a memory experiment you run on yourself, and ten jobs to give an AI so it helps you learn instead of doing the learning for you.">
+<meta property="og:url" content="https://esmrsky.github.io/feels-like-learning/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#F6F4EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1013" media="(prefers-color-scheme: dark)">
+<script>
+/* Before first paint: the site-wide theme and learn-mode choices, so neither flashes. */
+try {
+  var t = localStorage.getItem('esmrsky-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  if (localStorage.getItem('esmrsky-learn') === 'off') document.documentElement.setAttribute('data-learn', 'off');
+} catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F4EE;
+  --paper-2:#EDE9DF;
+  --card:#FFFFFF;
+  --ink:#16161A;
+  --ink-2:#45454E;
+  --ink-3:#66656E;
+  --rule:#DDD8CC;
+  --rule-2:#C9C3B5;
+
+  /* The page's one encoding: orange is what feels like learning,
+     blue is what is learning. Validated as a pair for CVD and contrast. */
+  --consume:#D9661F;
+  --produce:#2563C9;
+  --consume-ink:#A9480E;
+  --produce-ink:#1F57B3;
+  --base:#8C897F;
+  --hi:#FFE15A;
+  --ok:#23773A;
+  --bad:#B42318;
+
+  --display:'Bricolage Grotesque','Inter',system-ui,sans-serif;
+  --serif:'Source Serif 4',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+
+  --maxw:44rem;
+  --wide:62rem;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1013;
+    --paper-2:#16171A;
+    --card:#1B1C20;
+    --ink:#EFEDE7;
+    --ink-2:#BDBBB3;
+    --ink-3:#8F8D86;
+    --rule:#2C2D32;
+    --rule-2:#3B3C42;
+    --consume:#E2702C;
+    --produce:#5B93F0;
+    --consume-ink:#F29A5E;
+    --produce-ink:#8AB4F8;
+    --base:#77756F;
+    --hi:#8A7A1E;
+    --ok:#5CC27A;
+    --bad:#F07167;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1013;
+  --paper-2:#16171A;
+  --card:#1B1C20;
+  --ink:#EFEDE7;
+  --ink-2:#BDBBB3;
+  --ink-3:#8F8D86;
+  --rule:#2C2D32;
+  --rule-2:#3B3C42;
+  --consume:#E2702C;
+  --produce:#5B93F0;
+  --consume-ink:#F29A5E;
+  --produce-ink:#8AB4F8;
+  --base:#77756F;
+  --hi:#8A7A1E;
+  --ok:#5CC27A;
+  --bad:#F07167;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:18px;line-height:1.62;
+  padding:0 16px 5rem;overflow-x:hidden;
+}
+[hidden]{display:none !important;}
+.wrap{max-width:var(--wide);margin:0 auto;}
+.prose{max-width:var(--maxw);}
+p{text-wrap:pretty;margin:0 0 1.05rem;}
+h1,h2,h3,h4{text-wrap:balance;margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.01em;}
+a{color:var(--produce-ink);text-underline-offset:.15em;}
+a:hover{color:var(--ink);}
+strong{font-weight:600;}
+button,input,select,textarea{font:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--produce);outline-offset:2px;border-radius:6px;}
+
+/* ---------- topbar ---------- */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:1.15rem 0 0;flex-wrap:wrap;}
+.topbar .home{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;}
+.topbar .home:hover{color:var(--ink);}
+.topbar .right{display:flex;gap:.5rem;align-items:center;}
+.tog{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);
+  background:transparent;border:1px solid var(--rule);border-radius:100px;padding:.36rem .8rem;cursor:pointer;line-height:1.3;
+  display:inline-flex;align-items:center;gap:.45rem;
+}
+.tog:hover{border-color:var(--ink-3);color:var(--ink);}
+.tog svg{width:16px;height:16px;flex:none;}
+.tog.learn[aria-pressed="true"]{border-color:var(--produce);color:var(--produce-ink);background:color-mix(in srgb,var(--produce) 8%,transparent);}
+@media (pointer: coarse){
+  .topbar .home{display:inline-flex;align-items:center;min-height:44px;}
+  .tog{min-height:44px;padding:.36rem 1rem;}
+}
+
+/* ---------- return banner (delayed test ready) ---------- */
+.banner{
+  margin:1rem 0 0;padding:.8rem 1rem;border-radius:12px;font-family:var(--sans);font-size:.95rem;
+  background:color-mix(in srgb,var(--produce) 10%,var(--card));border:1px solid color-mix(in srgb,var(--produce) 40%,transparent);
+  display:flex;gap:.8rem;align-items:center;justify-content:space-between;flex-wrap:wrap;
+}
+.banner a{font-weight:600;}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.2rem 0 1.4rem;max-width:var(--maxw);}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;}
+h1{font-size:clamp(2.7rem,9vw,5rem);line-height:.98;letter-spacing:-.03em;}
+h1 mark{
+  color:inherit;padding:0 .08em;margin:0 -.04em;
+  background:linear-gradient(100deg,transparent .4%,var(--hi) 2%,var(--hi) 97%,transparent 99.5%);
+  background-size:100% 46%;background-repeat:no-repeat;background-position:0 78%;
+}
+.standfirst{font-size:1.24rem;line-height:1.5;color:var(--ink-2);margin-top:1.2rem;max-width:38rem;}
+.legend-key{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-family:var(--sans);font-size:.88rem;color:var(--ink-2);margin:1.2rem 0 0;}
+.legend-key span{display:inline-flex;align-items:center;gap:.45rem;}
+.sw{display:inline-block;width:18px;height:4px;border-radius:2px;}
+.sw.c{background:var(--consume);} .sw.p{background:var(--produce);} .sw.b{background:var(--base);}
+
+.learn-note{
+  margin:1.6rem 0 0;padding:1rem 1.1rem;border-radius:12px;background:var(--card);border:1px solid var(--rule);
+  font-family:var(--sans);font-size:.92rem;line-height:1.55;color:var(--ink-2);display:flex;gap:.8rem;align-items:flex-start;max-width:var(--maxw);
+}
+.learn-note svg{width:22px;height:22px;flex:none;color:var(--produce);margin-top:.1rem;}
+.learn-note .off-text{display:none;}
+html[data-learn="off"] .learn-note .on-text{display:none;}
+html[data-learn="off"] .learn-note .off-text{display:inline;}
+html[data-learn="off"] .learn-note svg{color:var(--ink-3);}
+
+/* ---------- toc ---------- */
+nav.toc{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .9rem;margin:2.2rem 0 1rem;padding:1rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font-family:var(--sans);font-size:.88rem;}
+nav.toc a{color:var(--ink-2);text-decoration:none;padding:.2rem 0;display:flex;gap:.55rem;align-items:baseline;}
+nav.toc a b{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--ink-3);}
+nav.toc a:hover{color:var(--ink);}
+@media (min-width:46rem){nav.toc{grid-template-columns:repeat(3,1fr);}}
+@media (pointer: coarse){nav.toc a{min-height:40px;align-items:center;}}
+
+/* ---------- sections ---------- */
+section.sec{padding:3.4rem 0 0;scroll-margin-top:1rem;}
+.sec-num{display:block;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.6rem;}
+.sec h2{font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.08;margin-bottom:.8rem;max-width:var(--maxw);}
+.lede{font-size:1.14rem;color:var(--ink-2);max-width:var(--maxw);}
+.sec h3{font-size:1.25rem;line-height:1.2;margin:2rem 0 .6rem;}
+
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:1.2rem;margin:1.4rem 0;font-family:var(--sans);font-size:.98rem;line-height:1.55;}
+@media (min-width:46rem){.panel{padding:1.6rem 1.8rem;}}
+.panel h3{margin-top:0;}
+.panel p{margin-bottom:.8rem;}
+.kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .5rem;}
+.muted{color:var(--ink-3);}
+.small{font-size:.86rem;}
+.callout{border-left:3px solid var(--produce);padding:.2rem 0 .2rem 1rem;margin:1.4rem 0;max-width:var(--maxw);font-size:1.1rem;}
+.callout p:last-child{margin-bottom:0;}
+
+/* ---------- buttons, chips ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:44px;padding:.55rem 1.1rem;
+  border-radius:100px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  font-family:var(--sans);font-weight:600;font-size:.94rem;cursor:pointer;line-height:1.2;text-decoration:none;
+}
+.btn:hover{opacity:.9;color:var(--paper);}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-2);}
+.btn.ghost:hover{border-color:var(--ink-3);color:var(--ink);}
+.btn.blue{background:var(--produce);border-color:var(--produce);color:#fff;}
+.btn.sm{min-height:36px;padding:.35rem .85rem;font-size:.86rem;}
+@media (pointer: coarse){.btn.sm{min-height:44px;}}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn-row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1rem;}
+.linkbtn{background:none;border:0;padding:.3rem 0;color:var(--ink-3);text-decoration:underline;text-underline-offset:.15em;cursor:pointer;font-family:var(--sans);font-size:.88rem;min-height:36px;}
+.linkbtn:hover{color:var(--ink);}
+
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;}
+.chip{
+  font-family:var(--sans);font-size:.88rem;font-weight:500;padding:.45rem .9rem;min-height:40px;border-radius:100px;cursor:pointer;
+  border:1px solid var(--rule-2);background:var(--card);color:var(--ink-2);display:inline-flex;align-items:center;gap:.4rem;
+}
+.chip:hover{border-color:var(--ink-3);color:var(--ink);}
+.chip[aria-pressed="true"],.chip[aria-checked="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+@media (pointer: coarse){.chip{min-height:44px;}}
+
+/* ---------- checkpoints (learn mode) ---------- */
+.checkpoint{
+  margin:2rem 0 0;padding:1.1rem 1.2rem;border-radius:var(--radius);max-width:var(--maxw);font-family:var(--sans);font-size:.98rem;
+  background:color-mix(in srgb,var(--produce) 6%,var(--card));border:1px dashed color-mix(in srgb,var(--produce) 55%,transparent);
+}
+.cp-head{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--produce-ink);margin-bottom:.5rem;}
+.cp-head svg{width:18px;height:18px;}
+.cp-q{font-weight:600;font-size:1.05rem;margin:0 0 .7rem;line-height:1.4;}
+.cp-a{width:100%;min-height:3.2rem;padding:.6rem .75rem;border-radius:10px;border:1px solid var(--rule-2);background:var(--card);resize:vertical;font-size:.95rem;}
+.cp-ans{margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--rule);color:var(--ink-2);}
+.cp-ans p:last-child{margin-bottom:0;}
+html[data-learn="off"] .checkpoint{display:none;}
+
+/* ---------- 01 predict ---------- */
+.q-block{margin:0 0 1.1rem;}
+.q-block .q{font-weight:600;margin:0 0 .5rem;}
+.chart{position:relative;width:100%;}
+.chart svg{display:block;width:100%;overflow:visible;}
+.chart text{font-family:var(--sans);fill:var(--ink-2);}
+.chart .axis-label{fill:var(--ink-3);font-size:12px;}
+.chart .grid{stroke:var(--rule);stroke-width:1;}
+.chart .val{fill:var(--ink);font-weight:600;font-size:13px;}
+.chart .lab{fill:var(--ink-2);font-size:12.5px;}
+.chart .leader{stroke:var(--rule-2);stroke-width:1;}
+.s-consume{stroke:var(--consume);} .f-consume{fill:var(--consume);}
+.s-produce{stroke:var(--produce);} .f-produce{fill:var(--produce);}
+.s-base{stroke:var(--base);} .f-base{fill:var(--base);}
+.line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;}
+.line.thin{stroke-width:1.5;}
+.dot{stroke:var(--card);stroke-width:2;}
+.crosshair{stroke:var(--ink-3);stroke-width:1;}
+.tip{
+  position:absolute;pointer-events:none;z-index:5;min-width:9rem;padding:.55rem .7rem;border-radius:10px;
+  background:var(--card);border:1px solid var(--rule-2);box-shadow:0 6px 24px rgba(0,0,0,.12);
+  font-family:var(--sans);font-size:.82rem;line-height:1.4;color:var(--ink-2);
+}
+.tip .t-head{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.25rem;}
+.tip .row{display:flex;align-items:center;gap:.45rem;white-space:nowrap;}
+.tip .row b{color:var(--ink);font-weight:600;min-width:2.6rem;}
+.tip .key{display:inline-block;width:12px;height:2px;border-radius:1px;}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-size:.86rem;color:var(--ink-2);margin:.2rem 0 .8rem;}
+.chart-legend span{display:inline-flex;align-items:center;gap:.45rem;}
+.chart-legend .ln{display:inline-block;width:16px;height:2px;border-radius:1px;}
+.verdicts{margin-top:1rem;display:grid;gap:.5rem;}
+.verdict{padding:.65rem .8rem;border-radius:10px;background:var(--paper-2);font-size:.94rem;}
+.mark-ok{color:var(--ok);font-weight:700;}
+.mark-bad{color:var(--bad);font-weight:700;}
+table.data{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:.88rem;margin-top:.8rem;}
+table.data th,table.data td{text-align:left;padding:.45rem .5rem;border-bottom:1px solid var(--rule);}
+table.data th{font-weight:600;color:var(--ink-2);}
+table.data td.num,table.data th.num{text-align:right;font-variant-numeric:tabular-nums;}
+.table-wrap{overflow-x:auto;}
+.source-line{font-size:.82rem;color:var(--ink-3);margin-top:.8rem;}
+
+/* ---------- 02 experiment ---------- */
+#exp{min-height:16rem;}
+.exp-progress{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;gap:.5rem;flex-wrap:wrap;}
+.exp-card{text-align:center;padding:1.6rem .8rem 1.2rem;border-radius:12px;background:var(--paper-2);}
+.exp-card .swa{font-family:var(--display);font-weight:800;font-size:clamp(2rem,8vw,2.8rem);line-height:1.1;letter-spacing:-.01em;}
+.exp-card .eng{font-family:var(--serif);font-size:1.35rem;color:var(--ink-2);margin-top:.35rem;}
+.exp-card .mode{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8rem;display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .6rem;border-radius:100px;}
+.mode.re{color:var(--consume-ink);background:color-mix(in srgb,var(--consume) 12%,transparent);}
+.mode.rc{color:var(--produce-ink);background:color-mix(in srgb,var(--produce) 12%,transparent);}
+.mode.st{color:var(--ink-2);background:color-mix(in srgb,var(--ink) 7%,transparent);}
+.timer{height:4px;border-radius:2px;background:var(--rule);margin:1.1rem auto 0;max-width:16rem;overflow:hidden;}
+.timer i{display:block;height:100%;width:100%;background:var(--ink-3);transform-origin:left;}
+.timer.run i{animation:drain linear forwards;}
+@keyframes drain{from{transform:scaleX(1);}to{transform:scaleX(0);}}
+.answer-row{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap;}
+.answer-row input{width:min(16rem,100%);min-height:44px;padding:.5rem .8rem;border-radius:10px;border:1px solid var(--rule-2);background:var(--card);font-family:var(--sans);font-size:1.05rem;text-align:center;}
+.feedback{margin-top:.9rem;font-family:var(--sans);font-size:1rem;min-height:1.6rem;}
+.stepper{display:flex;align-items:center;gap:.6rem;margin:.4rem 0 1rem;}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;font-size:1.2rem;line-height:1;}
+.stepper output{font-family:var(--sans);font-weight:700;font-size:1.4rem;min-width:2.2rem;text-align:center;}
+.pred-grid{display:grid;gap:.4rem 1.6rem;}
+@media (min-width:40rem){.pred-grid{grid-template-columns:1fr 1fr;}}
+.pred-grid .lbl{display:flex;align-items:center;gap:.5rem;font-weight:600;}
+.res-bars{display:grid;gap:1rem;margin:1rem 0 .4rem;}
+.res-bar .top{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;font-size:.92rem;margin-bottom:.35rem;}
+.res-bar .top b{font-size:1.25rem;}
+.res-track{position:relative;height:24px;border-radius:0 4px 4px 0;background:var(--paper-2);}
+.res-fill{height:100%;border-radius:0 4px 4px 0;}
+.res-fill.re{background:var(--consume);} .res-fill.rc{background:var(--produce);}
+.res-pred{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);}
+.res-pred span{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;font-size:.72rem;color:var(--ink-3);white-space:nowrap;}
+.word-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:.35rem .9rem;font-size:.88rem;margin-top:1.4rem;}
+.word-list div{display:flex;gap:.4rem;align-items:baseline;padding:.2rem 0;border-bottom:1px solid var(--rule);}
+.word-list .g{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:.05rem .35rem;border-radius:4px;}
+.word-list .g.re{color:var(--consume-ink);background:color-mix(in srgb,var(--consume) 12%,transparent);}
+.word-list .g.rc{color:var(--produce-ink);background:color-mix(in srgb,var(--produce) 12%,transparent);}
+
+/* ---------- 03 sorter ---------- */
+.sort-list{list-style:none;margin:0;padding:0;display:grid;gap:.6rem;}
+.sort-item{padding:.8rem .9rem;border-radius:12px;border:1px solid var(--rule);background:var(--paper);}
+.sort-item .what{font-weight:600;margin-bottom:.5rem;}
+.sort-item .chips .chip{font-size:.84rem;}
+.sort-item .reveal{margin-top:.6rem;font-size:.9rem;color:var(--ink-2);}
+.tag{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;padding:.1rem .45rem;border-radius:4px;margin-right:.35rem;vertical-align:.1em;}
+.tag.hi{color:var(--produce-ink);background:color-mix(in srgb,var(--produce) 12%,transparent);}
+.tag.mod{color:var(--ink-2);background:color-mix(in srgb,var(--ink) 8%,transparent);}
+.tag.lo{color:var(--consume-ink);background:color-mix(in srgb,var(--consume) 12%,transparent);}
+
+/* ---------- 04 spacing ---------- */
+.ctrl-grid{display:grid;gap:.8rem;margin-bottom:1rem;}
+@media (min-width:44rem){.ctrl-grid{grid-template-columns:1fr 1fr;}}
+.ctrl label{display:flex;align-items:center;gap:.5rem;font-size:.86rem;font-weight:600;margin-bottom:.3rem;}
+.ctrl select{width:100%;min-height:44px;padding:.4rem .6rem;border-radius:10px;border:1px solid var(--rule-2);background:var(--card);font-size:.92rem;}
+.range-row{display:flex;align-items:center;gap:.8rem;margin:.6rem 0 0;flex-wrap:wrap;font-size:.9rem;}
+.range-row input[type=range]{flex:1;min-width:10rem;accent-color:var(--ink);height:32px;}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:1rem;}
+.tile{padding:.7rem .8rem;border-radius:12px;background:var(--paper-2);}
+.tile .lbl{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--ink-2);line-height:1.25;}
+.tile .v{font-family:var(--sans);font-weight:700;font-size:1.6rem;line-height:1.1;margin-top:.25rem;}
+#curve{touch-action:manipulation;cursor:crosshair;}
+
+/* ---------- 05 roles ---------- */
+.role-grid{display:grid;gap:1rem;margin-top:1.2rem;}
+@media (min-width:44rem){.role-grid{grid-template-columns:1fr 1fr;}}
+.role{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:1.1rem 1.15rem;font-family:var(--sans);font-size:.94rem;display:flex;flex-direction:column;gap:.6rem;}
+.role header{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;}
+.role h3{margin:0;font-size:1.2rem;}
+.role .n{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);}
+.role .when{color:var(--ink-2);margin:0;}
+.meter{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--ink-3);}
+.meter .pips{display:inline-flex;gap:3px;}
+.meter .pips i{width:14px;height:6px;border-radius:2px;background:var(--rule);}
+.meter .pips i.on{background:var(--produce);}
+.meter .pips.low i.on{background:var(--consume);}
+.prompt{position:relative;background:var(--paper-2);border-radius:10px;padding:.75rem .8rem 2.6rem;font-family:var(--mono);font-size:.78rem;line-height:1.55;white-space:pre-wrap;color:var(--ink);margin:0;}
+.copy{position:absolute;right:.5rem;bottom:.45rem;}
+.role .watch{font-size:.88rem;color:var(--ink-2);margin:0;}
+.role .watch b{color:var(--bad);font-weight:600;}
+.role-grid .role[hidden]{display:none;}
+.filter-label{font-family:var(--sans);font-size:.86rem;color:var(--ink-3);margin:1.2rem 0 .5rem;}
+
+/* ---------- 06 evidence ---------- */
+.ev-grid{display:grid;gap:1rem;margin-top:1.2rem;}
+@media (min-width:46rem){.ev-grid{grid-template-columns:repeat(3,1fr);}}
+.ev{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:1rem 1.1rem;font-family:var(--sans);font-size:.92rem;}
+.ev .fig{font-family:var(--sans);font-weight:700;font-size:2rem;line-height:1.05;margin:.2rem 0 .3rem;}
+.ev .fig.bad{color:var(--bad);} .ev .fig.good{color:var(--ok);}
+.ev .cite{font-size:.78rem;color:var(--ink-3);margin-top:.6rem;}
+.rules{counter-reset:r;list-style:none;padding:0;margin:1.4rem 0 0;display:grid;gap:.8rem;max-width:var(--maxw);}
+.rules li{counter-increment:r;position:relative;padding-left:2.6rem;}
+.rules li::before{content:counter(r);position:absolute;left:0;top:.05rem;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
+
+/* ---------- 07 tools ---------- */
+.tool-hero{border-top:4px solid var(--produce);}
+.feature-table td:first-child{font-weight:600;}
+.pill{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;padding:.12rem .45rem;border-radius:100px;white-space:nowrap;}
+.pill.c{color:var(--consume-ink);background:color-mix(in srgb,var(--consume) 12%,transparent);}
+.pill.p{color:var(--produce-ink);background:color-mix(in srgb,var(--produce) 12%,transparent);}
+.steps{counter-reset:s;list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.7rem;}
+.steps li{counter-increment:s;position:relative;padding-left:2.2rem;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;font-family:var(--mono);font-weight:600;font-size:.8rem;width:1.6rem;height:1.6rem;border-radius:6px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;}
+.tool-grid{display:grid;gap:1rem;margin-top:1rem;}
+@media (min-width:44rem){.tool-grid{grid-template-columns:1fr 1fr;}}
+.tool{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:1rem 1.1rem;font-family:var(--sans);font-size:.92rem;}
+.tool h3{font-size:1.1rem;margin:0 0 .4rem;}
+.tool p{margin:0 0 .5rem;}
+.tool .meta{font-size:.8rem;color:var(--ink-3);}
+
+/* ---------- 08 claim check ---------- */
+.claims{display:grid;gap:.7rem;margin-top:1.2rem;}
+.claim{display:grid;grid-template-columns:1fr;gap:.35rem;padding:.9rem 1rem;border-radius:12px;background:var(--card);border:1px solid var(--rule);font-family:var(--sans);font-size:.92rem;}
+@media (min-width:44rem){.claim{grid-template-columns:7.5rem 1fr;gap:1rem;}}
+.claim .said{font-family:var(--serif);font-style:italic;font-size:1rem;margin:0 0 .3rem;}
+.claim p{margin:0;}
+.tier{align-self:start;justify-self:start;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .55rem;border-radius:6px;display:inline-flex;align-items:center;gap:.35rem;}
+.tier::before{content:"";width:8px;height:8px;border-radius:50%;}
+.tier.solid{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent);}
+.tier.solid::before{background:var(--ok);}
+.tier.prom{color:var(--produce-ink);background:color-mix(in srgb,var(--produce) 12%,transparent);}
+.tier.prom::before{background:var(--produce);}
+.tier.mixed{color:var(--ink-2);background:color-mix(in srgb,var(--ink) 8%,transparent);}
+.tier.mixed::before{background:var(--ink-3);}
+.tier.over{color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent);}
+.tier.over::before{background:var(--bad);}
+
+/* ---------- 09 moves ---------- */
+.moves{display:grid;gap:1rem;margin-top:1.2rem;}
+@media (min-width:44rem){.moves{grid-template-columns:1fr 1fr;}}
+.move{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:1rem 1.1rem;font-family:var(--sans);font-size:.92rem;}
+.move h3{font-size:1.1rem;margin:0 0 .4rem;}
+.move p{margin:0 0 .5rem;}
+.move .try{font-size:.88rem;padding:.55rem .7rem;border-radius:8px;background:var(--paper-2);margin-top:.6rem;}
+.move .try b{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--produce-ink);display:block;margin-bottom:.15rem;}
+.move .cite{font-size:.78rem;color:var(--ink-3);}
+
+/* ---------- 10 close ---------- */
+.recall-box{width:100%;min-height:8rem;padding:.8rem .9rem;border-radius:12px;border:1px solid var(--rule-2);background:var(--card);font-family:var(--serif);font-size:1.02rem;line-height:1.55;resize:vertical;}
+.check-list{list-style:none;padding:0;margin:.8rem 0 0;display:grid;gap:.5rem;}
+.check-list label{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem .7rem;border-radius:10px;background:var(--paper-2);cursor:pointer;}
+.check-list input{width:20px;height:20px;margin-top:.15rem;flex:none;accent-color:var(--produce);}
+.plan-week{display:grid;grid-template-columns:repeat(auto-fill,minmax(9rem,1fr));gap:.6rem;margin-top:1rem;}
+.plan-week div{padding:.7rem .8rem;border-radius:12px;background:var(--paper-2);font-size:.88rem;}
+.plan-week b{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.2rem;}
+
+/* ---------- sources & footer ---------- */
+.sources{font-family:var(--sans);font-size:.86rem;color:var(--ink-2);max-width:var(--maxw);padding-left:1.2rem;}
+.sources li{margin-bottom:.55rem;}
+footer{margin-top:4rem;padding-top:1.6rem;border-top:3px solid var(--ink);font-family:var(--sans);font-size:.9rem;color:var(--ink-3);max-width:var(--maxw);}
+footer p{margin-bottom:.65rem;}
+.site-link a{color:var(--ink-2);}
+
+.toast{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);padding:.5rem 1rem;border-radius:100px;background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:.88rem;z-index:20;}
+
+@media (min-width:46rem){body{padding:0 2.25rem 6rem;}}
+@media (prefers-reduced-motion: reduce){
+  .timer.run i{animation:none;transform:scaleX(0);}
+  .line{transition:none !important;}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9.5 12 4.5l10 5-10 5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 11.5v4.6c0 1.5 2.7 2.9 6 2.9s6-1.4 6-2.9v-4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M22 9.5v5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</svg>
+<div class="wrap">
+
+<div class="topbar">
+  <a class="home" href="/">&larr; esmrsky</a>
+  <div class="right">
+    <button class="tog learn" id="learnToggle" type="button" aria-pressed="true" title="Learn mode: checkpoints that ask before they tell"><svg aria-hidden="true"><use href="#i-cap"/></svg><span>Learn mode <span class="state">on</span></span></button>
+    <button class="tog" id="themeToggle" type="button">Theme</button>
+  </div>
+</div>
+
+<div class="banner" id="readyBanner" hidden>
+  <span><b>Your word test is ready.</b> <span id="readyAgo"></span></span>
+  <a href="#try">Take it &rarr;</a>
+</div>
+
+<header class="masthead">
+  <div class="eyebrow">Field guide · memory · AI · practice</div>
+  <h1><mark>Feels</mark> Like Learning</h1>
+  <p class="standfirst">Rereading, rewatching and having AI explain it again all feel like learning. Pulling it back out of your own head is what makes it stick. This page lets you test that on yourself, then shows how to make AI do the second thing instead of the first.</p>
+  <div class="legend-key" aria-label="Colour key used on this page">
+    <span><i class="sw c"></i>Orange: feels like learning</span>
+    <span><i class="sw p"></i>Blue: is learning</span>
+  </div>
+</header>
+
+<div class="learn-note" role="note">
+  <svg aria-hidden="true"><use href="#i-cap"/></svg>
+  <div><span class="on-text"><b>Learn mode is on.</b> Checkpoints will ask you something before you scroll on. Answer first, even just in your head, then reveal. Turn it off at the top if you only want to read.</span><span class="off-text"><b>Learn mode is off.</b> The checkpoints are hidden. Turn it back on at the top to be asked as you go.</span></div>
+</div>
+
+<noscript><p class="panel">The experiments on this page need JavaScript. The text reads fine without it.</p></noscript>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#predict"><b>01</b> Make a guess</a>
+  <a href="#try"><b>02</b> Test yourself</a>
+  <a href="#why"><b>03</b> Why easy misleads</a>
+  <a href="#spacing"><b>04</b> When to review</a>
+  <a href="#roles"><b>05</b> Ten jobs for an AI</a>
+  <a href="#catch"><b>06</b> The catch</a>
+  <a href="#tools"><b>07</b> Tools</a>
+  <a href="#claims"><b>08</b> Checking the video</a>
+  <a href="#moves"><b>09</b> More moves</a>
+  <a href="#close"><b>10</b> Close it and explain it</a>
+</nav>
+
+<!-- 01 ============================================================ -->
+<section class="sec" id="predict">
+  <span class="sec-num">01 · Predict</span>
+  <h2>Make a guess first</h2>
+  <p class="lede">Guessing before you're told is itself a study technique, so start there. Two groups of students get the same short science passage and the same total time with it.</p>
+
+  <div class="panel" id="predictPanel">
+    <p><b>Group A</b> reads the passage four times. <b>Group B</b> reads it once, then three times writes down everything they can remember, with no feedback.</p>
+    <div class="q-block">
+      <p class="q">Five minutes later, which group remembers more?</p>
+      <div class="chips" role="radiogroup" aria-label="Five minutes later" data-q="p5">
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="re">Group A (reread)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="rc">Group B (recalled)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="eq">About the same</button>
+      </div>
+    </div>
+    <div class="q-block">
+      <p class="q">One week later?</p>
+      <div class="chips" role="radiogroup" aria-label="One week later" data-q="p7">
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="re">Group A (reread)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="rc">Group B (recalled)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="eq">About the same</button>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" id="revealSlope" type="button">Show me the study</button></div>
+  </div>
+
+  <div class="panel" id="slopePanel" hidden>
+    <p class="kicker">Share of the passage recalled</p>
+    <div class="chart-legend" aria-hidden="true">
+      <span><i class="ln" style="background:var(--consume)"></i>Read 4×</span>
+      <span><i class="ln" style="background:var(--base)"></i>Read 3×, recall 1×</span>
+      <span><i class="ln" style="background:var(--produce)"></i>Read 1×, recall 3×</span>
+    </div>
+    <div class="chart" id="slope" role="img" aria-label="Slope chart. After five minutes: read four times 83 percent, read three times and recall once 78 percent, read once and recall three times 71 percent. After one week: 40, 56 and 61 percent."></div>
+    <div class="verdicts" id="slopeVerdicts"></div>
+    <p class="source-line">Roediger &amp; Karpicke (2006), <i>Psychological Science</i>, Experiment 2: 180 college students, 30 per group, short science passages, recall written from memory without feedback. <button class="linkbtn" type="button" data-table-toggle="slopeTable" aria-expanded="false">Show as a table</button></p>
+    <div class="table-wrap" id="slopeTable" hidden>
+      <table class="data">
+        <thead><tr><th>Condition</th><th class="num">After 5 minutes</th><th class="num">After 1 week</th><th class="num">Lost</th></tr></thead>
+        <tbody>
+          <tr><td>Read 4×</td><td class="num">83%</td><td class="num">40%</td><td class="num">−43 pts</td></tr>
+          <tr><td>Read 3×, recall 1×</td><td class="num">78%</td><td class="num">56%</td><td class="num">−22 pts</td></tr>
+          <tr><td>Read 1×, recall 3×</td><td class="num">71%</td><td class="num">61%</td><td class="num">−10 pts</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="prose" id="slopeAfter" hidden>
+    <p>Rereading wins at five minutes. A week later it has lost about half of what it had, while the recall group lost about a seventh. The lines cross. That crossing is the whole problem: the moment you check yourself is usually the moment rereading looks best.</p>
+    <p>There's a second result in the same study. Asked how much they'd remember in a week, the rereaders rated their chances highest (4.8 on a 1–7 scale, against 4.0 for the recall group). They had been through the passage about fourteen times; the recall group, about three. All that reading felt like knowing it.</p>
+  </div>
+</section>
+
+<!-- 02 ============================================================ -->
+<section class="sec" id="try">
+  <span class="sec-num">02 · Test yourself</span>
+  <h2>Run the experiment on yourself</h2>
+  <p class="lede">The same design researchers use, shrunk to twelve Swahili words. You'll see each word once. Then you'll reread half of them and try to recall the other half. Then the page tests you, ideally tomorrow.</p>
+  <div class="panel" id="exp" aria-live="polite"></div>
+  <p class="small muted prose">Your words and answers stay in this browser. Nothing is sent anywhere. With six words in each group, one lucky guess can swing your result. The research effect comes from many people and many items, so treat yours as a demonstration, not a measurement.</p>
+</section>
+
+<!-- 03 ============================================================ -->
+<section class="sec" id="why">
+  <span class="sec-num">03 · Why easy misleads</span>
+  <h2>Why the easy way feels better</h2>
+  <div class="prose">
+    <p>Reading something the second time is smooth. It's familiar, so you process it faster, and that speed registers as "I know this." Researchers call it a fluency illusion: you're measuring how easy the page is to read, not whether you could produce it without the page.</p>
+    <p>The illusion is easy to trigger. In one study, people shown words in a large font predicted they'd remember them better than words in a small font. Font size made no difference to what they actually remembered. Anything that makes the material easier to take in feels like learning.</p>
+    <p>Recall is the opposite. It's slow, you get things wrong, and it feels like failing. But digging something out of memory strengthens the route back to it. Recall doesn't just read a memory out; it changes the memory. That is the video's central claim, and it's right.</p>
+    <p>One correction to the strong version: rereading isn't useless. It helps a little; it just does much less than recall for the same time.</p>
+  </div>
+  <div class="callout">
+    <p><b>Rule of thumb:</b> if it feels easy, you're probably taking in. If it feels a bit too hard, you're probably learning. Not every difficulty helps (a badly written textbook is just hard). The useful kind is having to produce the answer yourself.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Sort ten study habits</h3>
+    <p class="muted small">For each one: does it mainly build memory that lasts, or does it mainly feel productive? Then check against the research.</p>
+    <ul class="sort-list" id="sorter"></ul>
+    <div class="btn-row"><button class="btn" id="sortCheck" type="button">Check my sort</button><span class="small muted" id="sortScore" aria-live="polite"></span></div>
+    <p class="source-line">Ratings from Dunlosky et al. (2013), a review of ten common techniques. Items marked "not rated" weren't in that review; their verdict is this page's reading of the same evidence.</p>
+  </div>
+
+  <aside class="checkpoint" data-cp>
+    <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
+    <p class="cp-q">In the study in section 01, why does rereading win at five minutes but lose at a week?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p>At five minutes you're still running on familiarity, and rereading tops that up best. After a week, what survives is what you practised pulling out of memory, and the rereaders never practised that.</p></div>
+  </aside>
+</section>
+
+<!-- 04 ============================================================ -->
+<section class="sec" id="spacing">
+  <span class="sec-num">04 · When to review</span>
+  <h2>When you review matters as much as whether</h2>
+  <div class="prose">
+    <p>Memory fades fast at first, then more slowly. Hermann Ebbinghaus measured this on himself in the 1880s, timing how long it took to relearn lists of nonsense syllables, and a 2015 replication (again one researcher, on himself) got nearly the same curve. Each successful recall makes the next fade slower, and a recall that takes some effort buys more than an effortless one. So the same four reviews do very different things depending on when you do them.</p>
+  </div>
+
+  <div class="panel">
+    <div class="ctrl-grid">
+      <div class="ctrl">
+        <label for="planA"><i class="sw c"></i>Plan A</label>
+        <select id="planA"></select>
+      </div>
+      <div class="ctrl">
+        <label for="planB"><i class="sw p"></i>Plan B</label>
+        <select id="planB"></select>
+      </div>
+    </div>
+    <div class="chart-legend" aria-hidden="true">
+      <span><i class="ln" style="background:var(--consume)"></i>Plan A</span>
+      <span><i class="ln" style="background:var(--produce)"></i>Plan B</span>
+      <span><i class="ln" style="background:var(--base)"></i>No review</span>
+      <span class="muted">Each jump is a recall attempt. Tap the chart to add or remove a Plan B review.</span>
+    </div>
+    <div class="chart" id="curve" role="img" aria-label="Forgetting curves for two review plans and no review, over 30 days. Use the table view for the values."></div>
+    <div class="range-row">
+      <label for="checkDay"><b>Check on day</b></label>
+      <input type="range" id="checkDay" min="1" max="30" step="1" value="30">
+      <output id="checkDayOut" for="checkDay">30</output>
+    </div>
+    <div class="tiles" aria-live="polite">
+      <div class="tile"><div class="lbl"><i class="sw c"></i>Plan A</div><div class="v" id="tileA">–</div></div>
+      <div class="tile"><div class="lbl"><i class="sw p"></i>Plan B</div><div class="v" id="tileB">–</div></div>
+      <div class="tile"><div class="lbl"><i class="sw b"></i>No review</div><div class="v" id="tileN">–</div></div>
+    </div>
+    <p class="source-line">A schematic, not data. The curve shape is the one the FSRS flashcard scheduler uses, with the numbers set by hand to match the shapes in the research. Compare plans with it; don't read your own percentages off it. <button class="linkbtn" type="button" data-table-toggle="curveTable" aria-expanded="false">Show as a table</button></p>
+    <div class="table-wrap" id="curveTable" hidden></div>
+  </div>
+
+  <div class="prose">
+    <p>Start with Plan A, four reviews crammed the night before a day-7 test, against Plan B, the same four spread over two weeks. Set the check day to 7: the crammer looks fine. Now drag it to 30.</p>
+    <p><b>How far apart?</b> One study of more than 1,300 people found the best gap grows with how long you need to remember. To remember something for a week, review it after about 3 days. For a month, after about 8 days. For a year, after about 4 weeks. As a share of the time you need it for, that's 20–40% for a week, falling to 5–10% for a year. If you'd rather not do the arithmetic, let a flashcard app schedule it (more in section 07).</p>
+  </div>
+
+  <aside class="checkpoint" data-cp>
+    <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
+    <p class="cp-q">You have a test in ten days and time for four reviews. Roughly when do you do them, and what do you do in each one?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p>Spread them, with gaps that grow and the last one a day or two before the test, something like days 1, 3, 6 and 9. Each one is a recall attempt, not a reread: cover the answers, try, then check. Cramming all four the night before gets you through the test and leaves little a month later.</p></div>
+  </aside>
+</section>
+
+<!-- 05 ============================================================ -->
+<section class="sec" id="roles">
+  <span class="sec-num">05 · Ten jobs for an AI</span>
+  <h2>Ten jobs to give an AI</h2>
+  <p class="lede">Most people use AI as an explainer, the one job that's pure taking in. The video names nine more. Here they are, each with a prompt to copy, how much of the work it leaves to you, and where it goes wrong.</p>
+  <p class="filter-label" id="stageLabel">Where are you with the subject?</p>
+  <div class="chips" role="radiogroup" aria-labelledby="stageLabel" id="stageFilter">
+    <button class="chip" type="button" role="radio" aria-checked="true" data-stage="all">All ten</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="start">Just starting</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="stuck">Stuck</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="think">Think I get it</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="prove">Want to prove it</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="perform">Have to perform it</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="keep">Want to keep it</button>
+  </div>
+  <div class="role-grid" id="roleGrid"></div>
+  <p class="source-line prose">The roles are the video's. The prompts are rewritten with guardrails (one question at a time, attempt before answer, grade against a source). "You do" is this page's judgment of how much of the producing the role leaves to you, not a measured number.</p>
+
+  <aside class="checkpoint" data-cp>
+    <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
+    <p class="cp-q">You've just read a chapter and think you get it. Which two jobs would you give the AI, and why not the explainer?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p>The Socratic questioner (it asks, you answer) and the listener (you explain it from memory, it grades you against the chapter). Either one makes you produce. The explainer would hand you another smooth read, which is exactly the thing that feels like knowing it.</p></div>
+  </aside>
+</section>
+
+<!-- 06 ============================================================ -->
+<section class="sec" id="catch">
+  <span class="sec-num">06 · The catch</span>
+  <h2>The same AI can make you better or worse</h2>
+  <p class="lede">The video saves its most important point for the end: learning happens in the struggle, and AI makes it very easy to skip the struggle. Here's the evidence behind that, and the rules that follow from it.</p>
+
+  <div class="ev-grid">
+    <div class="ev">
+      <p class="kicker">Plain chatbot vs. hint-only tutor</p>
+      <div class="fig bad">−17%</div>
+      <p>High-school maths students who practised with a plain chatbot did much better during practice (+48%), then scored 17% <em>lower</em> than students with no AI on an exam without it. They didn't notice the harm. A version built to give hints instead of answers lifted practice even more (+127%) and removed the exam harm, though it added no gain.</p>
+      <p class="cite">Bastani et al. (2025), <i>PNAS</i>. Nearly 1,000 students in one Turkish high school, randomised by class. Short-term results.</p>
+    </div>
+    <div class="ev">
+      <p class="kicker">A tutor built to make you work</p>
+      <div class="fig good">2×</div>
+      <p>Physics students using an AI tutor designed around good teaching practice (one step at a time, the student does the thinking) had median learning gains more than double those from an active-learning class, in less time: 49 minutes against 60.</p>
+      <p class="cite">Kestin et al. (2025), <i>Scientific Reports</i>. 194 Harvard students, crossover design. Tested right after the lesson, so it says nothing yet about retention.</p>
+    </div>
+    <div class="ev">
+      <p class="kicker">The GPS comparison</p>
+      <div class="fig">3 years</div>
+      <p>Drivers who used GPS more had worse spatial memory in a virtual navigation test. Thirteen of them retested about three years later showed steeper decline with heavier use. And the heavy users didn't think their sense of direction was any worse.</p>
+      <p class="cite">Dahmani &amp; Bohbot (2020), <i>Scientific Reports</i>. 50 drivers; 13 followed up. Correlational.</p>
+    </div>
+  </div>
+
+  <div class="prose small muted" style="margin-top:1rem">
+    <p><b>Elsewhere, both directions.</b> A World Bank trial in Nigeria found six weeks of after-school English tutoring with a GPT-4 assistant raised test scores by about 0.3 standard deviations (working paper, 2025). A 2026 working paper with about 2,400 US undergraduates found that access to an AI tutor lowered final grades (not yet peer-reviewed). The widely shared "Your Brain on ChatGPT" EEG study is a preprint with 54 people, and its authors have asked readers not to describe it as brain damage.</p>
+  </div>
+
+  <div class="prose" style="margin-top:1.6rem">
+    <p>The difference isn't the model. It's who does the work. When the AI produces the answer, you get a smooth read and a good feeling. When it makes you produce the answer, you get the learning.</p>
+  </div>
+  <ol class="rules">
+    <li><b>Attempt first.</b> Ask only once you're stuck, and say exactly where.</li>
+    <li><b>Ask for the next hint, not the answer.</b> "Give me one hint" keeps the last step yours.</li>
+    <li><b>Redo it without help.</b> After you've got there with AI, go back to the start and do the whole thing alone. The video says this takes 10–15% more time. It's the step that makes it yours.</li>
+    <li><b>Grade against a source, not the AI's opinion.</b> Chatbots tend to agree with you when you're half right, and they can invent numbers. Give it the text and tell it to grade against that.</li>
+  </ol>
+
+  <aside class="checkpoint" data-cp>
+    <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
+    <p class="cp-q">In the high-school study, why did the plain chatbot hurt exam scores when the hint-only version mostly didn't?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p>Students used the plain chatbot to get answers during practice, so they skipped the attempts and mistakes that build the skill. With the AI gone, the skill wasn't there. The hint-only tutor kept the work with the student.</p></div>
+  </aside>
+</section>
+
+<!-- 07 ============================================================ -->
+<section class="sec" id="tools">
+  <span class="sec-num">07 · Tools</span>
+  <h2>Tools, and what each one actually trains</h2>
+  <p class="lede">Every tool below can be used to take in or to produce. The feature you click decides which.</p>
+
+  <div class="panel tool-hero" id="gemini-notebook">
+    <p class="kicker">The underrated one</p>
+    <h3>Gemini Notebook <span class="muted" style="font-weight:600">(NotebookLM until July 2026)</span></h3>
+    <p>Gemini Notebook answers from the sources you give it (a chapter, a lecture transcript, your notes, a web page) and cites the passage behind each claim. That fixes the two biggest problems with using a chatbot to study: it inventing things, and it grading you against its own opinion instead of your material.</p>
+    <div class="table-wrap">
+      <table class="data feature-table">
+        <thead><tr><th>Feature</th><th>Job it does</th><th>You…</th></tr></thead>
+        <tbody>
+          <tr><td>Chat with citations</td><td>Explainer, kept to your sources</td><td><span class="pill c">Take in</span> click the citation to check it</td></tr>
+          <tr><td>Learning Guide chat</td><td>Socratic questioner</td><td><span class="pill p">Produce</span></td></tr>
+          <tr><td>Quizzes</td><td>Examiner</td><td><span class="pill p">Produce</span> short-answer and fill-in-the-blank beat multiple choice</td></tr>
+          <tr><td>Flashcards</td><td>Recall practice</td><td><span class="pill p">Produce</span> if you answer before flipping</td></tr>
+          <tr><td>Mind map</td><td>Mapmaker</td><td><span class="pill c">Take in</span> good on day one</td></tr>
+          <tr><td>Audio and Video Overviews</td><td>Explainer</td><td><span class="pill c">Take in</span> a first pass, nothing more</td></tr>
+          <tr><td>Interactive audio ("Join")</td><td>Sparring, lightly</td><td><span class="pill p">Produce</span> only if you ask</td></tr>
+          <tr><td>Interactive report (Learning Overview)</td><td>Clerk plus examiner</td><td><span class="pill p">Produce</span> in its embedded quizzes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:1.6rem">A study session in six steps</h3>
+    <ol class="steps">
+      <li><b>One notebook per subject.</b> Load only sources you trust: the chapter, the lecture transcript, your notes. This page works too; add its address as a source and try the steps on it.</li>
+      <li><b>Open the mind map</b> and pick the branch you know least. That's your map.</li>
+      <li><b>One pass of taking in.</b> Read it, or play the Audio Overview once. You can steer the overview with a prompt ("chapters 3 and 4, assume I'm a beginner"). This is the only consumption step.</li>
+      <li><b>Close everything and explain it.</b> Type your explanation into the chat from memory and ask it to grade you against the sources, with citations. There's no built-in grader for this; the prompt below does the job.</li>
+      <li><b>Get questioned.</b> Set the chat to Learning Guide, or make a quiz on hard difficulty and answer without peeking. Use "Explain" on what you miss, retake only the missed ones, then ask the chat where your misses cluster.</li>
+      <li><b>Keep it.</b> The app has flashcards but no stated review schedule. Download them as a CSV, import them into Anki, and let it schedule them.</li>
+    </ol>
+    <p class="kicker" style="margin-top:1.4rem">Prompt for step 4</p>
+    <pre class="prompt" id="nlmPrompt">I'm going to explain this topic from memory. Grade my explanation only against the sources in this notebook, not general knowledge. List what I got right, what I left out, and anything I said that the sources don't support, citing the passage each time. Don't rewrite my explanation for me.<button class="btn sm ghost copy" type="button" data-copy="nlmPrompt">Copy</button></pre>
+    <p class="small muted" style="margin-top:.9rem">Three cautions. A citation shows where an answer came from, not that the answer reads it correctly, so click through on anything that matters. Notebooks opened inside the regular Gemini app may also use web search; for grading against your sources only, use Gemini Notebook itself. And an Audio Overview is a podcast about your material: pleasant, and as passive as rereading. The free tier allows 50 sources per notebook.</p>
+  </div>
+
+  <h3>Others worth knowing</h3>
+  <div class="tool-grid">
+    <div class="tool">
+      <h3>Gemini: Guided Learning</h3>
+      <p>A mode in the Gemini app that breaks a problem into steps, asks you open questions, and checks your understanding with quizzes instead of handing over the answer. Gemini's newer study notebooks start with a diagnostic quiz, which does the interviewer's job for you.</p>
+      <p class="meta">Socratic questioner, examiner, interviewer</p>
+    </div>
+    <div class="tool">
+      <h3>ChatGPT: Study mode</h3>
+      <p>On every plan. Type <code>@study</code> or pick Study from the + menu, and ChatGPT asks questions and gives hints instead of answers. OpenAI notes it runs on instructions, so it can slip; tell it to stay in role. It now makes flashcards too, without a review schedule.</p>
+      <p class="meta">Socratic questioner, examiner</p>
+    </div>
+    <div class="tool">
+      <h3>Claude: learning mode</h3>
+      <p>Guides you with questions instead of handing over answers: the Socratic questioner as a setting. It started in Claude for Education and reached everyone as a response style in 2025; Anthropic has since been moving styles into skills, so look in the style or skills menu. Claude Code has a matching Learning style that leaves the key pieces of code for you to write, then reviews them. Can't find the switch? Put the Socratic prompt from section 05 in a project's instructions.</p>
+      <p class="meta">Socratic questioner, checker</p>
+    </div>
+    <div class="tool">
+      <h3>Anki</h3>
+      <p>Free flashcard software (AnkiMobile on iPhone is paid) that schedules each card for just before you'd forget it. Switch on FSRS at the bottom of the deck options; it's the modern scheduler behind the curve in section 04. Have AI draft the cards, then you answer them.</p>
+      <p class="meta">Spaced review</p>
+    </div>
+    <div class="tool">
+      <h3>Google: Learn Your Way</h3>
+      <p>A Google Labs experiment that rewrites textbook chapters for your level and interests, with quizzes built in. In Google's own small study (60 students), it beat a standard digital reader on a test 3–5 days later, 78% to 67%.</p>
+      <p class="meta">Explainer with an examiner attached</p>
+    </div>
+  </div>
+  <p class="small muted prose" id="toolsAsOf">Checked in October 2026. These products change monthly; names, limits and menus may have moved since.</p>
+
+  <aside class="checkpoint" data-cp>
+    <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
+    <p class="cp-q">Which Gemini Notebook feature feels like studying but is really taking in, and what should you switch to after it?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p>The Audio and Video Overviews. Fine for a first pass on a commute. After that, switch to something that makes you produce: explain it back for grading, the Learning Guide, a quiz, or flashcards.</p></div>
+  </aside>
+</section>
+
+<!-- 08 ============================================================ -->
+<section class="sec" id="claims">
+  <span class="sec-num">08 · Checking the video</span>
+  <h2>What the video gets right, and what it oversells</h2>
+  <p class="lede">The core is solid and mainstream. Some of the numbers are sales talk. Here's each claim against the research.</p>
+  <div class="claims">
+    <div class="claim"><span class="tier solid">Solid</span><div><p class="said">"You learn through production, not consumption."</p><p>Recalling, explaining and attempting beat rereading and re-watching. One of the best-replicated findings in learning research.</p></div></div>
+    <div class="claim"><span class="tier solid">Solid</span><div><p class="said">"Reread four times: 40% after a week. Read once, test three times: 61%."</p><p>Accurate to the study (section 01). Worth knowing it was short science passages and 180 college students, and that rereading won at five minutes.</p></div></div>
+    <div class="claim"><span class="tier solid">Solid</span><div><p class="said">"Spaced repetition: review just as you're about to forget."</p><p>The spacing effect is as solid as the testing effect, and the two stack.</p></div></div>
+    <div class="claim"><span class="tier over">Oversold</span><div><p class="said">"Spaced repetition makes you five to ten times more efficient."</p><p>No source given, and no standard figure like it. The benefit is real; its size depends on the material, the gaps and how long you need to remember.</p></div></div>
+    <div class="claim"><span class="tier over">Oversold</span><div><p class="said">"Learn in a day what takes others weeks." "We use 10–20% of our potential."</p><p>Opening hooks, not findings. Nobody has measured a percentage of potential.</p></div></div>
+    <div class="claim"><span class="tier mixed">Mixed</span><div><p class="said">"Engage all your senses. Say it, draw it, write it."</p><p>Drawing and explaining in your own words do help, because both make you produce. But the idea that people learn best in their own preferred style (visual, auditory) has not held up when tested.</p></div></div>
+    <div class="claim"><span class="tier mixed">Mixed</span><div><p class="said">"Lectures were developed thousands of years ago and don't scale."</p><p>Lecture-only teaching does lose to active learning on average: across 225 studies in science courses, failure rates were 34% under lecturing against 22% with active learning. "Thousands of years" is decoration.</p></div></div>
+    <div class="claim"><span class="tier prom">Promising</span><div><p class="said">"GPS weakens your mental map, and AI may do the same to your reasoning."</p><p>The GPS study is real but small and correlational, run on virtual mazes. For AI, the best evidence so far (section 06) says it depends on whether the tool lets you skip the work.</p></div></div>
+    <div class="claim"><span class="tier prom">Promising</span><div><p class="said">"AI can examine you like a thesis defence."</p><p>Yes, with a catch the video mentions only once: chatbots lean toward agreeing with you. Ground the examiner in a source (section 07).</p></div></div>
+    <div class="claim"><span class="tier mixed">Mixed</span><div><p class="said">"Have the AI read your last hundred conversations and find your recurring mistake."</p><p>Depends on whether your tool can search its chat history at all, and it can see patterns that aren't there. Pasting in your own list of mistakes is more reliable.</p></div></div>
+  </div>
+</section>
+
+<!-- 09 ============================================================ -->
+<section class="sec" id="moves">
+  <span class="sec-num">09 · More moves</span>
+  <h2>Seven moves the video didn't cover</h2>
+  <p class="lede">All of them come back to the same idea, making yourself produce, applied from different angles.</p>
+  <div class="moves">
+    <div class="move"><h3>Guess before you're taught</h3><p>Trying to answer before you've learned something, even getting it wrong, makes the later lesson stick better. In one study, questions people had attempted (and missed) before reading were answered 75% of the time afterward, against 56% for extra reading time. You did this in section 01.</p><div class="try"><b>Try it</b>Before reading a chapter, have AI write you five questions on it. Answer them cold.</div><p class="cite">Richland, Kornell &amp; Kao (2009); Kornell, Hays &amp; Bjork (2009)</p></div>
+    <div class="move"><h3>Mix the problem types</h3><p>Practising A, B, C mixed together beats doing all the A's, then all the B's, because you have to work out which method each problem needs. In a trial with 787 seventh-graders, mixed practice scored 61% against 38% a month later. It also feels worse: in another study, most learners did better mixed yet rated blocked practice as just as good.</p><div class="try"><b>Try it</b>Ask for a quiz that mixes three topics in random order, without labels.</div><p class="cite">Rohrer et al. (2020); Kornell &amp; Bjork (2008)</p></div>
+    <div class="move"><h3>Ask "why is that true?"</h3><p>Stopping to explain why a fact holds, in terms of what you already know, ties it to more of your memory.</p><div class="try"><b>Try it</b>After each paragraph, answer "why would that be?" before reading on.</div><p class="cite">Dunlosky et al. (2013): moderate utility</p></div>
+    <div class="move"><h3>Explain each step to yourself</h3><p>Learners who explain worked examples to themselves line by line learn more than those who just read them.</p><div class="try"><b>Try it</b>Cover a worked solution and say what each step does and why before uncovering it.</div><p class="cite">Chi et al. (1989, 1994)</p></div>
+    <div class="move"><h3>Draw it from memory</h3><p>Sketching how something works, without looking, is a form of recall. It also exposes gaps that words cover over.</p><div class="try"><b>Try it</b>Draw the forgetting curve from section 04 with both plans. Then scroll up and compare.</div><p class="cite">Fiorella &amp; Mayer (2016): generative learning</p></div>
+    <div class="move"><h3>Predict your score first</h3><p>Before any quiz, write down how many you'll get. The gap between your guess and your score is your fluency illusion, measured.</p><div class="try"><b>Try it</b>You did this in section 02. Compare your prediction with your result.</div><p class="cite">Koriat &amp; Bjork (2005); Kornell et al. (2011)</p></div>
+    <div class="move"><h3>Put the questions inside the reading</h3><p>An essay can carry its own spaced review: questions embedded in the text that come back days, then weeks later. Quantum Country, a quantum-computing primer, was built this way, with 112 questions in its first essay. It's the model for a learn mode across this site.</p><div class="try"><b>Try it</b>Read the first chapter of quantumcountry.com and answer its cards when they come back.</div><p class="cite">Matuschak &amp; Nielsen (2019)</p></div>
+  </div>
+</section>
+
+<!-- 10 ============================================================ -->
+<section class="sec" id="close">
+  <span class="sec-num">10 · Close it and explain it</span>
+  <h2>Now close it and explain it</h2>
+  <p class="lede">Don't scroll up. In three or four sentences, write what you'd tell a friend about this page. Then compare it with the page's version.</p>
+  <div class="panel">
+    <label for="recallBox" class="kicker">From memory</label>
+    <textarea class="recall-box" id="recallBox" placeholder="The main idea is…"></textarea>
+    <div class="btn-row"><button class="btn" type="button" id="recallReveal">Compare with the page</button></div>
+    <div id="recallCompare" hidden>
+      <p style="margin-top:1.2rem"><b>Tick the ones you had</b>, even in other words:</p>
+      <ul class="check-list" id="keyIdeas">
+        <li><label><input type="checkbox"> <span>Learning happens when you pull information out (recall, explain, attempt), not when you put it in (reread, watch, have it explained).</span></label></li>
+        <li><label><input type="checkbox"> <span>Ease is a false signal: rereading feels better and even wins at five minutes, then loses after a week.</span></label></li>
+        <li><label><input type="checkbox"> <span>Space the recall out, with each review coming when it's a little hard.</span></label></li>
+        <li><label><input type="checkbox"> <span>Give AI jobs that make you produce (questioner, examiner, listener, sparring partner), and ask for hints, not answers.</span></label></li>
+        <li><label><input type="checkbox"> <span>Ground AI in a source and grade against it, then redo the task without help.</span></label></li>
+      </ul>
+      <p class="small" id="recallScore" aria-live="polite" style="margin-top:.8rem"></p>
+      <p class="kicker" style="margin-top:1.4rem">Or have an AI grade it</p>
+      <pre class="prompt" id="gradePrompt">Here is my summary of the page at https://esmrsky.github.io/feels-like-learning/, written from memory. Grade it against the page only. List the main ideas I captured, the ones I missed, and anything I got wrong. Then ask me one question about the idea I missed.
+
+My summary:
+[paste it here]<button class="btn sm ghost copy" type="button" data-copy="gradePrompt">Copy</button></pre>
+    </div>
+  </div>
+
+  <h3>Your next week</h3>
+  <div class="plan-week">
+    <div><b>Today</b>Pick one subject. Run the interviewer and mapmaker prompts.</div>
+    <div><b>Day 1</b>Take the word test in section 02. Recall yesterday's map before you open it.</div>
+    <div><b>Day 3</b>Have it quiz you, one question at a time, harder each time.</div>
+    <div><b>Day 7</b>Explain the whole thing out loud from memory. Grade it against the source.</div>
+    <div><b>Day 14</b>Redo something hard from scratch, with no help.</div>
+  </div>
+</section>
+
+<section class="sec" id="sources">
+  <span class="sec-num">Sources</span>
+  <h2>Where this comes from</h2>
+  <ol class="sources" id="sourceList">
+    <li>Roediger, H. L., &amp; Karpicke, J. D. (2006). Test-enhanced learning. <i>Psychological Science</i>, 17(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x">doi</a></li>
+    <li>Karpicke, J. D., &amp; Roediger, H. L. (2008). The critical importance of retrieval for learning. <i>Science</i>, 319, 966–968. <a href="https://doi.org/10.1126/science.1152408">doi</a> · Replicated, with the caveat that restudying also helps, by Soderstrom, Kerr &amp; Bjork (2016), <i>Psychological Science</i>, 27, 223–230. <a href="https://doi.org/10.1177/0956797615617778">doi</a></li>
+    <li>Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., &amp; Willingham, D. T. (2013). Improving students' learning with effective learning techniques. <i>Psychological Science in the Public Interest</i>, 14(1), 4–58. <a href="https://doi.org/10.1177/1529100612453266">doi</a></li>
+    <li>Cepeda, N. J., Vul, E., Rohrer, D., Wixted, J. T., &amp; Pashler, H. (2008). Spacing effects in learning: A temporal ridgeline of optimal retention. <i>Psychological Science</i>, 19(11), 1095–1102. <a href="https://doi.org/10.1111/j.1467-9280.2008.02209.x">doi</a></li>
+    <li>Murre, J. M. J., &amp; Dros, J. (2015). Replication and analysis of Ebbinghaus' forgetting curve. <i>PLOS ONE</i>, 10(7), e0120644. <a href="https://doi.org/10.1371/journal.pone.0120644">doi</a></li>
+    <li>Kornell, N., Rhodes, M. G., Castel, A. D., &amp; Tauber, S. K. (2011). The ease-of-processing heuristic and the stability bias. <i>Psychological Science</i>, 22(6), 787–794. <a href="https://doi.org/10.1177/0956797611407929">doi</a> · Koriat, A., &amp; Bjork, R. A. (2005). Illusions of competence in monitoring one's knowledge during study. <i>JEP: Learning, Memory, and Cognition</i>, 31(2), 187–194. <a href="https://doi.org/10.1037/0278-7393.31.2.187">doi</a></li>
+    <li>Bjork, E. L., &amp; Bjork, R. A. (2011). Making things hard on yourself, but in a good way: Creating desirable difficulties to enhance learning. In <i>Psychology and the Real World</i> (pp. 56–64). Worth. <a href="https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/04/EBjork_RBjork_2011.pdf">pdf</a></li>
+    <li>Bastani, H., Bastani, O., Sungu, A., Ge, H., Kabakcı, Ö., &amp; Mariman, R. (2025). Generative AI without guardrails can harm learning: Evidence from high school mathematics. <i>PNAS</i>, 122(26), e2422633122. <a href="https://doi.org/10.1073/pnas.2422633122">doi</a></li>
+    <li>Kestin, G., Miller, K., Klales, A., Milbourne, T., &amp; Ponti, G. (2025). AI tutoring outperforms in-class active learning. <i>Scientific Reports</i>, 15, 17458. <a href="https://doi.org/10.1038/s41598-025-97652-6">doi</a></li>
+    <li>Dahmani, L., &amp; Bohbot, V. D. (2020). Habitual use of GPS negatively impacts spatial memory during self-guided navigation. <i>Scientific Reports</i>, 10, 6310. <a href="https://doi.org/10.1038/s41598-020-62877-0">doi</a></li>
+    <li>De Simone, M., et al. (2025). From chalkboards to chatbots: Evaluating the impact of generative AI on learning outcomes in Nigeria. World Bank Policy Research Working Paper 11125. <a href="https://openknowledge.worldbank.org/entities/publication/15e1ff08-15ae-4f7a-b2a8-d146e6c113ee">link</a> · Liu et al. (2026), EdWorkingPaper 26-1598, not peer-reviewed. <a href="https://edworkingpapers.com/ai26-1598">link</a> · Kosmyna, N., et al. (2025). Your brain on ChatGPT. arXiv preprint 2506.08872. <a href="https://arxiv.org/abs/2506.08872">link</a></li>
+    <li>Pashler, H., McDaniel, M., Rohrer, D., &amp; Bjork, R. (2008). Learning styles: Concepts and evidence. <i>Psychological Science in the Public Interest</i>, 9(3), 105–119. <a href="https://doi.org/10.1111/j.1539-6053.2009.01038.x">doi</a></li>
+    <li>Freeman, S., et al. (2014). Active learning increases student performance in science, engineering, and mathematics. <i>PNAS</i>, 111(23), 8410–8415. <a href="https://doi.org/10.1073/pnas.1319030111">doi</a></li>
+    <li>Rohrer, D., Dedrick, R. F., Hartwig, M. K., &amp; Cheung, C.-N. (2020). A randomized controlled trial of interleaved mathematics practice. <i>Journal of Educational Psychology</i>, 112(1), 40–52. <a href="https://doi.org/10.1037/edu0000367">doi</a> · Kornell, N., &amp; Bjork, R. A. (2008). Learning concepts and categories: Is spacing the "enemy of induction"? <i>Psychological Science</i>, 19(6), 585–592. <a href="https://doi.org/10.1111/j.1467-9280.2008.02127.x">doi</a></li>
+    <li>Richland, L. E., Kornell, N., &amp; Kao, L. S. (2009). The pretesting effect. <i>JEP: Applied</i>, 15(3), 243–257. <a href="https://doi.org/10.1037/a0016496">doi</a> · Kornell, N., Hays, M. J., &amp; Bjork, R. A. (2009). Unsuccessful retrieval attempts enhance subsequent learning. <i>JEP: Learning, Memory, and Cognition</i>, 35(4), 989–998. <a href="https://doi.org/10.1037/a0015729">doi</a></li>
+    <li>Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P., &amp; Glaser, R. (1989). Self-explanations. <i>Cognitive Science</i>, 13, 145–182. <a href="https://doi.org/10.1207/s15516709cog1302_1">doi</a> · Chi, M. T. H., de Leeuw, N., Chiu, M.-H., &amp; LaVancher, C. (1994). Eliciting self-explanations improves understanding. <i>Cognitive Science</i>, 18, 439–477. <a href="https://doi.org/10.1207/s15516709cog1803_3">doi</a></li>
+    <li>Fiorella, L., &amp; Mayer, R. E. (2016). Eight ways to promote generative learning. <i>Educational Psychology Review</i>, 28, 717–741. <a href="https://doi.org/10.1007/s10648-015-9348-9">doi</a></li>
+    <li>Matuschak, A., &amp; Nielsen, M. (2019). <a href="https://quantum.country">Quantum Country</a> and <a href="https://numinous.productions/ttft/">How can we develop transformative tools for thought?</a> Self-published; its retention data are informal.</li>
+    <li>Tools: <a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/">NotebookLM is now Gemini Notebook</a> (Google, July 2026) and its <a href="https://support.google.com/gemininotebook">help centre</a>; <a href="https://blog.google/outreach-initiatives/education/guided-learning/">Gemini Guided Learning</a>; <a href="https://help.openai.com/en/articles/11780217">ChatGPT Study mode</a>; <a href="https://code.claude.com/docs/en/output-styles">Claude Code output styles</a>; <a href="https://docs.ankiweb.net/deck-options.html">Anki deck options and FSRS</a>; <a href="https://research.google/blog/learn-your-way-reimagining-textbooks-with-generative-ai/">Learn Your Way</a>.</li>
+  </ol>
+</section>
+
+<footer>
+  <p>Starting point: a video on learning with AI. Its claims are checked in section 08, and its prompts are rewritten in section 05.</p>
+  <p>This page is also the pilot for Learn mode, the graduation-cap switch at the top, which is planned for the rest of the site.</p>
+  <p class="site-link">Part of <a href="/">esmrsky.github.io</a>.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var NS = 'http://www.w3.org/2000/svg';
+  var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } },
+    del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+  function h(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'text') n.textContent = attrs[k];
+      else if (k === 'cls') n.className = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c) n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function s(tag, attrs, parent) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function stext(parent, x, y, str, cls, anchor) {
+    var t = s('text', { x: x, y: y, 'class': cls || '', 'text-anchor': anchor || 'start' }, parent);
+    t.textContent = str;
+    return t;
+  }
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  var toastTimer;
+  function toast(msg) {
+    var t = $('.toast') || document.body.appendChild(h('div', { cls: 'toast', role: 'status' }));
+    t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 1600);
+  }
+
+  /* ---------------- theme (same key as the site index) ---------------- */
+  $('#themeToggle').addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store.set('esmrsky-theme', next);
+  });
+
+  /* ---------------- learn mode (site-wide key, piloted here) ---------------- */
+  var learnBtn = $('#learnToggle');
+  function setLearn(on) {
+    if (on) root.removeAttribute('data-learn'); else root.setAttribute('data-learn', 'off');
+    learnBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    $('.state', learnBtn).textContent = on ? 'on' : 'off';
+  }
+  setLearn(root.getAttribute('data-learn') !== 'off');
+  learnBtn.addEventListener('click', function () {
+    var on = root.getAttribute('data-learn') === 'off';
+    setLearn(on);
+    store.set('esmrsky-learn', on ? 'on' : 'off');
+  });
+
+  /* ---------------- checkpoints ---------------- */
+  $$('[data-cp-reveal]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var cp = b.closest('[data-cp]');
+      $('.cp-ans', cp).hidden = false;
+      b.hidden = true;
+    });
+  });
+
+  /* ---------------- copy buttons ---------------- */
+  $$('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var src = document.getElementById(b.getAttribute('data-copy'));
+      var text = '';
+      src.childNodes.forEach(function (n) { if (n.nodeType === 3) text += n.nodeValue; });
+      text = text.trim();
+      function done() { toast('Copied'); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text); done(); });
+      } else { fallback(text); done(); }
+    });
+  });
+  function fallback(text) {
+    var ta = h('textarea', { 'aria-hidden': 'true', style: 'position:fixed;opacity:0;top:0;left:0' });
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  /* ---------------- table toggles ---------------- */
+  $$('[data-table-toggle]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = document.getElementById(b.getAttribute('data-table-toggle'));
+      t.hidden = !t.hidden;
+      b.setAttribute('aria-expanded', t.hidden ? 'false' : 'true');
+      b.textContent = t.hidden ? 'Show as a table' : 'Hide the table';
+    });
+  });
+
+  /* ---------------- radio chips ---------------- */
+  function radioGroup(group, onChange) {
+    var opts = $$('[role="radio"]', group);
+    opts.forEach(function (o, i) {
+      o.setAttribute('tabindex', o.getAttribute('aria-checked') === 'true' || (i === 0 && !opts.some(function (x) { return x.getAttribute('aria-checked') === 'true'; })) ? '0' : '-1');
+      o.addEventListener('click', function () { pick(o); });
+      o.addEventListener('keydown', function (e) {
+        var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var n = opts[(i + d + opts.length) % opts.length]; n.focus(); pick(n);
+      });
+    });
+    function pick(o) {
+      opts.forEach(function (x) { x.setAttribute('aria-checked', x === o ? 'true' : 'false'); x.setAttribute('tabindex', x === o ? '0' : '-1'); });
+      onChange(o.getAttribute('data-v') || o.getAttribute('data-stage'));
+    }
+  }
+
+  /* ---------------- resize helper ---------------- */
+  function onResize(el, fn) {
+    var last = 0;
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(function () { var w = el.clientWidth; if (w && w !== last) { last = w; fn(); } }).observe(el);
+    } else { window.addEventListener('resize', fn); fn(); }
+  }
+
+  /* ---------------- tooltip ---------------- */
+  function makeTip(host) {
+    var tip = h('div', { cls: 'tip', role: 'presentation' }); tip.hidden = true; host.appendChild(tip);
+    return {
+      show: function (title, rows, x, y) {
+        tip.textContent = '';
+        tip.appendChild(h('div', { cls: 't-head', text: title }));
+        rows.forEach(function (r) {
+          var key = h('i', { cls: 'key', style: 'background:var(' + r.color + ')' });
+          tip.appendChild(h('div', { cls: 'row' }, [key, h('b', { text: r.value }), h('span', { text: r.label })]));
+        });
+        tip.hidden = false;
+        var W = host.clientWidth, tw = tip.offsetWidth, th = tip.offsetHeight;
+        var left = x + 14; if (left + tw > W) left = x - tw - 14; if (left < 0) left = 0;
+        var top = y - th / 2; if (top < 0) top = 0;
+        tip.style.left = left + 'px'; tip.style.top = top + 'px';
+      },
+      hide: function () { tip.hidden = true; }
+    };
+  }
+
+  /* ---------------- labels that refuse to collide ---------------- */
+  function spread(items, minGap, lo, hi) {
+    items.sort(function (a, b) { return a.y - b.y; });
+    for (var i = 1; i < items.length; i++) if (items[i].ly - items[i - 1].ly < minGap) items[i].ly = items[i - 1].ly + minGap;
+    var over = items.length ? items[items.length - 1].ly - hi : 0;
+    if (over > 0) items.forEach(function (it) { it.ly -= over; });
+    for (var j = items.length - 2; j >= 0; j--) if (items[j + 1].ly - items[j].ly < minGap) items[j].ly = items[j + 1].ly - minGap;
+    if (items.length && items[0].ly < lo) { var d = lo - items[0].ly; items.forEach(function (it) { it.ly += d; }); }
+    return items;
+  }
+
+  /* =====================================================================
+     01 · Predict, then the Roediger & Karpicke slope chart
+     ===================================================================== */
+  var RK = [
+    { label: 'Read 4×', short: 'Read 4×', a: 83, b: 40, color: '--consume', cls: 'consume' },
+    { label: 'Read 3×, recall 1×', short: 'Read 3×, recall 1×', a: 78, b: 56, color: '--base', cls: 'base' },
+    { label: 'Read 1×, recall 3×', short: 'Recall 3×', a: 71, b: 61, color: '--produce', cls: 'produce' }
+  ];
+  var preds = {};
+  $$('#predictPanel [role="radiogroup"]').forEach(function (g) {
+    radioGroup(g, function (v) { preds[g.getAttribute('data-q')] = v; updateRevealLabel(); });
+  });
+  function updateRevealLabel() {
+    $('#revealSlope').textContent = (preds.p5 && preds.p7) ? 'Show me the study' : 'Skip the guess and show me';
+  }
+  updateRevealLabel();
+  var slopeRevealed = false;
+  $('#revealSlope').addEventListener('click', function () {
+    slopeRevealed = true;
+    $('#slopePanel').hidden = false; $('#slopeAfter').hidden = false;
+    $('#revealSlope').disabled = true;
+    $$('#predictPanel [role="radio"]').forEach(function (b) { b.disabled = true; });
+    drawSlope(true);
+    var v = $('#slopeVerdicts'); v.textContent = '';
+    var truth = { p5: 're', p7: 'rc' };
+    var names = { re: 'Group A (reread)', rc: 'Group B (recalled)', eq: 'about the same' };
+    [['p5', 'After five minutes', 'Rereading wins, 83% to 71%.'], ['p7', 'After a week', 'Recall wins, 61% to 40%.']].forEach(function (r) {
+      var p = preds[r[0]];
+      var line = h('div', { cls: 'verdict' });
+      line.appendChild(h('b', { text: r[1] + ': ' }));
+      line.appendChild(document.createTextNode(r[2] + ' '));
+      if (p) {
+        var ok = p === truth[r[0]];
+        line.appendChild(h('span', { cls: ok ? 'mark-ok' : 'mark-bad', text: ok ? '✓ You called it.' : '✗ You said ' + names[p] + '.' }));
+      }
+      v.appendChild(line);
+    });
+    $('#slopePanel').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  });
+
+  var slopeTip;
+  function drawSlope(animate) {
+    var host = $('#slope'); if (!slopeRevealed) return;
+    var W = host.clientWidth; if (!W) return;
+    var narrow = W < 520;
+    var H = narrow ? 300 : 330;
+    var m = { t: 18, r: narrow ? 120 : 170, b: 34, l: narrow ? 44 : 60 };
+    var pw = W - m.l - m.r, ph = H - m.t - m.b;
+    var x0 = m.l, x1 = m.l + pw;
+    function y(v) { return m.t + ph * (1 - v / 100); }
+    $$('svg', host).forEach(function (n) { n.remove(); });
+    var svg = s('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true' });
+    [0, 25, 50, 75, 100].forEach(function (g) {
+      s('line', { x1: x0, x2: x1, y1: y(g), y2: y(g), 'class': 'grid' }, svg);
+    });
+    stext(svg, (x0 + x1) / 2, y(100) - 6, '100%', 'axis-label', 'middle');
+    stext(svg, (x0 + x1) / 2, y(0) - 6, '0%', 'axis-label', 'middle');
+    stext(svg, x0, H - 10, 'After 5 min', 'axis-label', 'middle');
+    stext(svg, x1, H - 10, 'After 1 week', 'axis-label', 'middle');
+    var lines = [];
+    RK.forEach(function (d) {
+      var ln = s('line', { x1: x0, y1: y(d.a), x2: x1, y2: y(d.b), 'class': 'line s-' + d.cls + (d.cls === 'base' ? ' thin' : '') }, svg);
+      lines.push(ln);
+    });
+    RK.forEach(function (d) {
+      s('circle', { cx: x0, cy: y(d.a), r: 5, 'class': 'dot f-' + d.cls }, svg);
+      s('circle', { cx: x1, cy: y(d.b), r: 5, 'class': 'dot f-' + d.cls }, svg);
+    });
+    var right = spread(RK.map(function (d) { return { d: d, y: y(d.b), ly: y(d.b) }; }), 17, m.t, m.t + ph);
+    right.forEach(function (it) {
+      if (Math.abs(it.ly - it.y) > 1) s('line', { x1: x1 + 7, y1: it.y, x2: x1 + 18, y2: it.ly, 'class': 'leader' }, svg);
+      var t = stext(svg, x1 + 22, it.ly + 4, '', 'lab');
+      var v = s('tspan', { 'class': 'val' }, t); v.textContent = it.d.b + '% ';
+      var l = s('tspan', {}, t); l.textContent = narrow ? it.d.short : it.d.label;
+    });
+    var left = spread(RK.map(function (d) { return { d: d, y: y(d.a), ly: y(d.a) }; }), 17, m.t, m.t + ph);
+    left.forEach(function (it) {
+      if (Math.abs(it.ly - it.y) > 1) s('line', { x1: x0 - 7, y1: it.y, x2: x0 - 13, y2: it.ly, 'class': 'leader' }, svg);
+      stext(svg, x0 - 16, it.ly + 4, it.d.a + '%', 'val', 'end');
+    });
+    // hover: two columns
+    var hit = s('rect', { x: 0, y: 0, width: W, height: H, fill: 'transparent' }, svg);
+    var cross = s('line', { x1: 0, x2: 0, y1: m.t, y2: m.t + ph, 'class': 'crosshair', opacity: 0 }, svg);
+    host.appendChild(svg);
+    if (!slopeTip) slopeTip = makeTip(host);
+    function move(e) {
+      var r = svg.getBoundingClientRect(); var px = e.clientX - r.left;
+      var isRight = px > (x0 + x1) / 2; var cx = isRight ? x1 : x0;
+      cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('opacity', 1);
+      slopeTip.show(isRight ? 'After 1 week' : 'After 5 minutes', RK.slice().sort(function (a, b) { return (isRight ? b.b - a.b : b.a - a.a); }).map(function (d) {
+        return { color: d.color, value: (isRight ? d.b : d.a) + '%', label: d.label };
+      }), cx, e.clientY - r.top);
+    }
+    hit.addEventListener('pointermove', move);
+    hit.addEventListener('pointerleave', function () { cross.setAttribute('opacity', 0); slopeTip.hide(); });
+    if (animate && !reduceMotion) {
+      lines.forEach(function (ln) {
+        var len = Math.hypot(x1 - x0, ln.y2.baseVal.value - ln.y1.baseVal.value);
+        ln.style.strokeDasharray = len; ln.style.strokeDashoffset = len;
+        ln.getBoundingClientRect();
+        ln.style.transition = 'stroke-dashoffset 1.1s ease-out';
+        ln.style.strokeDashoffset = 0;
+      });
+    }
+  }
+  onResize($('#slope'), function () { drawSlope(false); });
+
+  /* =====================================================================
+     02 · The Swahili experiment (Karpicke & Roediger 2008, shrunk)
+     ===================================================================== */
+  var SETS = {
+    A: [['nyumba', ['house', 'home']], ['mbwa', ['dog']], ['kitabu', ['book']], ['kioo', ['mirror', 'glass']], ['mti', ['tree']], ['samaki', ['fish']],
+        ['mlango', ['door', 'doorway']], ['kalamu', ['pen']], ['ndege', ['bird', 'plane', 'airplane', 'aeroplane']], ['mvua', ['rain']], ['nyota', ['star']], ['jiwe', ['stone', 'rock']]],
+    B: [['maji', ['water']], ['jua', ['sun']], ['moto', ['fire']], ['ziwa', ['lake']], ['mkate', ['bread', 'loaf']], ['chumvi', ['salt']],
+        ['kiti', ['chair', 'seat']], ['dirisha', ['window']], ['barabara', ['road', 'street', 'highway']], ['tembo', ['elephant']], ['kisu', ['knife']], ['mlima', ['mountain', 'hill']]]
+  };
+  var KEY = 'fll-swahili-v1';
+  var READY_MS = 20 * 3600 * 1000;
+  var EXPOSE_MS = 5000;
+  var exp = load() || fresh('A');
+  var expTimer = null;
+
+  function fresh(set) {
+    return { v: 1, set: set, phase: 'intro', done: (exp && exp.done) || [] };
+  }
+  function load() {
+    try { var x = JSON.parse(store.get(KEY) || 'null'); return x && x.v === 1 ? x : null; } catch (e) { return null; }
+  }
+  function save() { return store.set(KEY, JSON.stringify(exp)); }
+  function words() { return SETS[exp.set]; }
+  function norm(t) {
+    return (t || '').toLowerCase().replace(/[^a-z\s-]/g, '').replace(/^\s*(a|an|the|to)\s+/, '').trim();
+  }
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    for (i = 0; i <= m; i++) { d[i] = [i]; }
+    for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function correct(idx, answer) {
+    var a = norm(answer); if (!a) return false;
+    return words()[idx][1].some(function (ok) { return a === ok || (ok.length >= 5 && lev(a, ok) <= 1); });
+  }
+  function ago(ms) {
+    var m = Math.round(ms / 60000);
+    if (m < 60) return m <= 1 ? 'about a minute' : m + ' minutes';
+    var hrs = Math.floor(m / 60);
+    if (hrs < 24) return hrs + (hrs === 1 ? ' hour' : ' hours');
+    var d = Math.floor(hrs / 24), rh = hrs % 24;
+    return d + (d === 1 ? ' day' : ' days') + (rh ? ' ' + rh + (rh === 1 ? ' hour' : ' hours') : '');
+  }
+
+  var stage = $('#exp');
+  function clearTimer() { if (expTimer) { clearTimeout(expTimer); expTimer = null; } }
+  function render() {
+    clearTimer();
+    stage.textContent = '';
+    ({ intro: rIntro, study: rStudy, practice: rPractice, predict: rPredict, choose: rChoose, waiting: rWaiting, test: rTest, results: rResults }[exp.phase] || rIntro)();
+    updateBanner();
+  }
+  function progress(label, i, n) {
+    return h('div', { cls: 'exp-progress' }, [h('span', { text: label }), h('span', { text: (i + 1) + ' of ' + n })]);
+  }
+  function timerBar(ms) {
+    var t = h('div', { cls: 'timer' }, [h('i')]);
+    requestAnimationFrame(function () { t.firstChild.style.animationDuration = ms + 'ms'; t.classList.add('run'); });
+    return t;
+  }
+
+  function rIntro() {
+    var other = exp.set === 'A' ? 'B' : 'A';
+    stage.appendChild(h('p', { cls: 'kicker', text: 'Word set ' + exp.set + ' · about 3 minutes' }));
+    stage.appendChild(h('h3', { text: 'Twelve words, three steps' }));
+    stage.appendChild(h('ol', { cls: 'steps' }, [
+      h('li', {}, [h('b', { text: 'See' }), ' each Swahili word with its English meaning, once.']),
+      h('li', {}, [h('b', { text: 'Practise' }), ': six words you just read again, six you try to recall. The page picks which at random.']),
+      h('li', {}, [h('b', { text: 'Get tested' }), ' on all twelve, ideally tomorrow. The page remembers your words.'])
+    ]));
+    var row = h('div', { cls: 'btn-row' });
+    var go = h('button', { cls: 'btn blue', type: 'button', text: 'Start' });
+    go.addEventListener('click', function () {
+      var idx = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+      exp.assign = {}; idx.forEach(function (w, k) { exp.assign[w] = k < 6 ? 're' : 'rc'; });
+      exp.order = shuffle(idx); exp.i = 0; exp.practiceOrder = shuffle(idx); exp.practice = {};
+      exp.phase = 'study'; render();
+    });
+    row.appendChild(go);
+    if (exp.done.indexOf(exp.set) !== -1) {
+      var sw = h('button', { cls: 'btn ghost', type: 'button', text: 'Use word set ' + other + ' instead' });
+      sw.addEventListener('click', function () { exp.set = other; render(); });
+      row.appendChild(sw);
+      stage.appendChild(h('p', { cls: 'small muted', text: 'You have already been tested on set ' + exp.set + '. A fresh set gives a cleaner result.' }));
+    }
+    stage.appendChild(row);
+  }
+
+  function rStudy() {
+    var w = words()[exp.order[exp.i]];
+    stage.appendChild(progress('Step 1 · See each word', exp.i, 12));
+    var card = h('div', { cls: 'exp-card' }, [
+      h('div', { cls: 'mode st', text: 'New word' }),
+      h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
+      h('div', { cls: 'eng', text: w[1][0] }),
+      timerBar(EXPOSE_MS)
+    ]);
+    stage.appendChild(card);
+    var next = h('button', { cls: 'btn ghost sm', type: 'button', text: 'Next' });
+    next.addEventListener('click', advance);
+    stage.appendChild(h('div', { cls: 'btn-row', style: 'justify-content:center' }, [next]));
+    expTimer = setTimeout(advance, EXPOSE_MS);
+    function advance() {
+      clearTimer();
+      exp.i++;
+      if (exp.i >= 12) { exp.i = 0; exp.phase = 'practice'; }
+      render();
+    }
+  }
+
+  function rPractice() {
+    var idx = exp.practiceOrder[exp.i], w = words()[idx], mode = exp.assign[idx];
+    stage.appendChild(progress('Step 2 · Practise', exp.i, 12));
+    var row = h('div', { cls: 'btn-row', style: 'justify-content:center' });
+    var next = h('button', { cls: 'btn ghost sm', type: 'button', text: 'Next' });
+    next.addEventListener('click', advance);
+    if (mode === 're') {
+      stage.appendChild(h('div', { cls: 'exp-card' }, [
+        h('div', { cls: 'mode re', text: 'Read it again' }),
+        h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
+        h('div', { cls: 'eng', text: w[1][0] }),
+        timerBar(EXPOSE_MS)
+      ]));
+      row.appendChild(next); stage.appendChild(row);
+      expTimer = setTimeout(advance, EXPOSE_MS);
+    } else {
+      var input = h('input', { type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'English meaning of ' + w[0], placeholder: 'English?' });
+      var check = h('button', { cls: 'btn blue sm', type: 'button', text: 'Check' });
+      var fb = h('div', { cls: 'feedback', 'aria-live': 'polite' });
+      stage.appendChild(h('div', { cls: 'exp-card' }, [
+        h('div', { cls: 'mode rc', text: 'Recall it' }),
+        h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
+        h('div', { cls: 'answer-row' }, [input, check]),
+        fb
+      ]));
+      var checked = false;
+      function doCheck() {
+        if (checked) { advance(); return; }
+        checked = true; input.disabled = true; check.hidden = true;
+        var ok = correct(idx, input.value);
+        exp.practice[idx] = ok;
+        fb.textContent = '';
+        if (ok) fb.appendChild(h('span', { cls: 'mark-ok', text: '✓ ' + w[1][0] }));
+        else {
+          fb.appendChild(h('span', { cls: 'mark-bad', text: '✗ ' }));
+          fb.appendChild(document.createTextNode('It means '));
+          fb.appendChild(h('b', { text: w[1][0] }));
+          fb.appendChild(document.createTextNode('. '));
+          if (norm(input.value)) {
+            var mine = h('button', { cls: 'linkbtn', type: 'button', text: 'I meant that' });
+            mine.addEventListener('click', function () { exp.practice[idx] = true; mine.remove(); fb.appendChild(h('span', { cls: 'mark-ok', text: '✓ counted' })); });
+            fb.appendChild(mine);
+          }
+        }
+        row.appendChild(next); next.focus();
+      }
+      check.addEventListener('click', doCheck);
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); doCheck(); } });
+      stage.appendChild(row);
+      setTimeout(function () { input.focus({ preventScroll: true }); }, 30);
+    }
+    function advance() {
+      clearTimer();
+      exp.i++;
+      if (exp.i >= 12) { exp.i = 0; exp.phase = 'predict'; exp.studiedAt = Date.now(); exp.predict = { re: 3, rc: 3 }; save(); }
+      render();
+    }
+  }
+
+  function stepper(key, label, cls) {
+    var out = h('output', { text: String(exp.predict[key]) });
+    function set(v) { exp.predict[key] = Math.max(0, Math.min(6, v)); out.textContent = exp.predict[key]; }
+    var minus = h('button', { type: 'button', 'aria-label': 'Fewer', text: '−' });
+    var plus = h('button', { type: 'button', 'aria-label': 'More', text: '+' });
+    minus.addEventListener('click', function () { set(exp.predict[key] - 1); });
+    plus.addEventListener('click', function () { set(exp.predict[key] + 1); });
+    return h('div', {}, [h('div', { cls: 'lbl' }, [h('i', { cls: 'sw ' + cls }), label]), h('div', { cls: 'stepper' }, [minus, out, plus, h('span', { cls: 'muted small', text: 'of 6' })])]);
+  }
+  function rPredict() {
+    stage.appendChild(h('p', { cls: 'kicker', text: 'Before the test' }));
+    stage.appendChild(h('h3', { text: 'How many will you get?' }));
+    stage.appendChild(h('p', { text: 'You read six of the words a second time and tried to recall the other six. On the test, how many of each will you get right?' }));
+    stage.appendChild(h('div', { cls: 'pred-grid' }, [stepper('re', 'The six you reread', 'c'), stepper('rc', 'The six you recalled', 'p')]));
+    var go = h('button', { cls: 'btn', type: 'button', text: 'Save my prediction' });
+    go.addEventListener('click', function () { exp.phase = 'choose'; save(); render(); });
+    stage.appendChild(h('div', { cls: 'btn-row' }, [go]));
+  }
+
+  function rChoose() {
+    var canSave = save();
+    stage.appendChild(h('p', { cls: 'kicker', text: 'When to test' }));
+    stage.appendChild(h('h3', { text: 'Now, or tomorrow?' }));
+    stage.appendChild(h('p', { text: 'Tested right away, the two groups usually come out about even, or rereading wins: that’s the five-minute result from section 01. The gap opens after a day or more. The honest version is to come back tomorrow.' }));
+    var later = h('button', { cls: 'btn blue', type: 'button', text: 'Test me tomorrow' });
+    var now = h('button', { cls: 'btn ghost', type: 'button', text: 'Test me now' });
+    later.addEventListener('click', function () { exp.phase = 'waiting'; save(); render(); });
+    now.addEventListener('click', startTest);
+    if (!canSave) {
+      later.disabled = true;
+      stage.appendChild(h('p', { cls: 'small muted', text: 'This browser isn’t letting the page save anything, so testing tomorrow won’t work here. Test now, or keep this tab open and come back to it.' }));
+    }
+    stage.appendChild(h('div', { cls: 'btn-row' }, [later, now]));
+  }
+
+  function rWaiting() {
+    var since = Date.now() - exp.studiedAt, left = READY_MS - since;
+    stage.appendChild(h('p', { cls: 'kicker', text: 'Saved · word set ' + exp.set }));
+    if (left <= 0) {
+      stage.appendChild(h('h3', { text: 'Your test is ready' }));
+      stage.appendChild(h('p', { text: 'You studied these words ' + ago(since) + ' ago. Twelve words, one at a time, no hints. Type the English meaning; leave it blank if nothing comes.' }));
+      var go = h('button', { cls: 'btn blue', type: 'button', text: 'Start the test' });
+      go.addEventListener('click', startTest);
+      stage.appendChild(h('div', { cls: 'btn-row' }, [go]));
+    } else {
+      stage.appendChild(h('h3', { text: 'Come back tomorrow' }));
+      stage.appendChild(h('p', { text: 'Your test unlocks in about ' + ago(left) + '. Come back to this page any time after that; a note will appear at the top.' }));
+      var anyway = h('button', { cls: 'btn ghost', type: 'button', text: 'I can’t wait, test me now' });
+      anyway.addEventListener('click', startTest);
+      stage.appendChild(h('div', { cls: 'btn-row' }, [anyway, resetBtn()]));
+      expTimer = setTimeout(render, Math.min(left + 1000, 60000));
+    }
+  }
+
+  function startTest() {
+    exp.testOrder = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]); exp.i = 0; exp.test = {}; exp.phase = 'test';
+    save(); render();
+  }
+  function rTest() {
+    var idx = exp.testOrder[exp.i], w = words()[idx];
+    stage.appendChild(progress('The test', exp.i, 12));
+    var input = h('input', { type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'English meaning of ' + w[0], placeholder: 'English?' });
+    var next = h('button', { cls: 'btn blue sm', type: 'button', text: exp.i === 11 ? 'Finish' : 'Next' });
+    stage.appendChild(h('div', { cls: 'exp-card' }, [
+      h('div', { cls: 'mode st', text: 'No hints' }),
+      h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
+      h('div', { cls: 'answer-row' }, [input, next])
+    ]));
+    function go() {
+      exp.test[idx] = { ans: input.value.trim().slice(0, 40), ok: correct(idx, input.value) };
+      exp.i++;
+      if (exp.i >= 12) {
+        exp.testAt = Date.now(); exp.phase = 'results';
+        if (exp.done.indexOf(exp.set) === -1) exp.done.push(exp.set);
+      }
+      save(); render();
+    }
+    next.addEventListener('click', go);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+    setTimeout(function () { input.focus({ preventScroll: true }); }, 30);
+  }
+
+  function resBar(label, cls, got, pred) {
+    var track = h('div', { cls: 'res-track' }, [h('div', { cls: 'res-fill ' + cls, style: 'width:' + Math.max(got / 6 * 100, got ? 0 : 0.6) + '%' })]);
+    var tick = h('div', { cls: 'res-pred', style: 'left:calc(' + (pred / 6 * 100) + '% - 1px)' }, [h('span', { text: 'you guessed ' + pred })]);
+    track.appendChild(tick);
+    return h('div', { cls: 'res-bar' }, [h('div', { cls: 'top' }, [h('span', { text: label }), h('b', { text: got + ' of 6' })]), track]);
+  }
+  function rResults() {
+    var re = 0, rc = 0;
+    Object.keys(exp.test).forEach(function (k) { if (exp.test[k].ok) { if (exp.assign[k] === 're') re++; else rc++; } });
+    var delay = exp.testAt - exp.studiedAt, long = delay >= 2 * 3600 * 1000;
+    stage.appendChild(h('p', { cls: 'kicker', text: 'Your result · tested ' + ago(delay) + ' after studying' }));
+    stage.appendChild(h('div', { cls: 'res-bars' }, [resBar('Words you reread', 're', re, exp.predict.re), resBar('Words you recalled', 'rc', rc, exp.predict.rc)]));
+    var msg = [];
+    if (rc > re) msg.push('Recall won, ' + rc + ' to ' + re + '.');
+    else if (rc === re) msg.push('A tie, ' + rc + ' each.');
+    else msg.push('Rereading won this time, ' + re + ' to ' + rc + '.');
+    if (!long) msg.push('After a short delay that’s normal: rereading is still propped up by familiarity. The research gap appears after a day or more. Try a fresh set and wait a day.');
+    else if (rc >= re) msg.push('That’s the direction the research predicts once a day or more has passed.');
+    else msg.push('With six words per group, one or two lucky guesses swing it. In the research, recall wins on average across many people and items, not every time for every person.');
+    if (exp.predict.re >= exp.predict.rc) msg.push('You predicted rereading would do at least as well as recall. So did the students in the original studies: their predictions didn\u2019t track what actually helped. That\u2019s the fluency illusion in a single guess.');
+    else msg.push('You predicted recall would win. In the original studies, students\u2019 predictions didn\u2019t track what actually helped, so that guess puts you ahead of them.');
+    msg.forEach(function (t) { stage.appendChild(h('p', { text: t })); });
+    var list = h('div', { cls: 'word-list' });
+    exp.testOrder.forEach(function (k) {
+      var w = words()[k], r = exp.test[k];
+      list.appendChild(h('div', {}, [
+        h('span', { cls: r.ok ? 'mark-ok' : 'mark-bad', text: r.ok ? '✓' : '✗' }),
+        h('b', { text: w[0], lang: 'sw' }), document.createTextNode(' ' + w[1][0] + ' '),
+        h('span', { cls: 'g ' + exp.assign[k], text: exp.assign[k] === 're' ? 'reread' : 'recalled' }),
+        r.ok || !r.ans ? null : h('span', { cls: 'muted', text: '(you: ' + r.ans + ')' })
+      ]));
+    });
+    stage.appendChild(list);
+    var other = exp.set === 'A' ? 'B' : 'A';
+    var again = h('button', { cls: 'btn', type: 'button', text: 'Run it again with new words' });
+    again.addEventListener('click', function () { var d = exp.done; exp = { v: 1, set: other, phase: 'intro', done: d }; save(); render(); });
+    stage.appendChild(h('div', { cls: 'btn-row' }, [again, resetBtn()]));
+  }
+  function resetBtn() {
+    var b = h('button', { cls: 'linkbtn', type: 'button', text: 'Start over and forget my words' });
+    b.addEventListener('click', function () { store.del(KEY); exp = { v: 1, set: 'A', phase: 'intro', done: [] }; render(); });
+    return b;
+  }
+  function updateBanner() {
+    var b = $('#readyBanner');
+    var ready = exp.phase === 'waiting' && Date.now() - exp.studiedAt >= READY_MS;
+    b.hidden = !ready;
+    if (ready) $('#readyAgo').textContent = 'You studied the words ' + ago(Date.now() - exp.studiedAt) + ' ago.';
+  }
+  if (exp.phase === 'study' || exp.phase === 'practice') exp.phase = 'intro';
+  if (!exp.done) exp.done = [];
+  render();
+
+  /* =====================================================================
+     03 · Sort ten study habits
+     ===================================================================== */
+  var HABITS = [
+    { t: 'Rereading your notes or the chapter', a: 'feel', tag: 'lo', tagText: 'Low utility', why: 'Feels like progress because it gets smoother each time. Rated low: small benefits, and less than testing for the same time.' },
+    { t: 'Highlighting or underlining as you read', a: 'feel', tag: 'lo', tagText: 'Low utility', why: 'Rated low. It can even get in the way of seeing how ideas connect.' },
+    { t: 'Answering practice questions before checking the answers', a: 'build', tag: 'hi', tagText: 'High utility', why: 'Practice testing, one of only two techniques rated high. Works across ages, materials and test formats.' },
+    { t: 'Spreading study over several days instead of one long session', a: 'build', tag: 'hi', tagText: 'High utility', why: 'Distributed practice, the other high-rated technique. Same total time, much better retention.' },
+    { t: 'Writing a summary of the chapter', a: 'feel', tag: 'lo', tagText: 'Low utility', why: 'Rated low overall, mainly because most people summarise badly without training. Summarising from memory turns it into recall, which helps.' },
+    { t: 'Asking yourself "why would that be true?" as you read', a: 'build', tag: 'mod', tagText: 'Moderate utility', why: 'Elaborative interrogation. Rated moderate: good for facts, less tested on complex material.' },
+    { t: 'Mixing different kinds of problems in one practice session', a: 'build', tag: 'mod', tagText: 'Moderate utility', why: 'Interleaved practice. Feels worse than doing one type at a time, and usually works better.' },
+    { t: 'Watching an AI-made video or audio overview of the material', a: 'feel', tag: 'mod', tagText: 'Not rated', why: 'Not in the review. It is a well-made re-exposure, so by the same evidence it behaves like rereading: good as a first pass, weak as study.' },
+    { t: 'Asking AI to explain it again, more simply', a: 'feel', tag: 'mod', tagText: 'Not rated', why: 'Not in the review. Helps when you’re truly stuck on one step. As a habit it’s another fluent read, unless you redo the problem without help afterward.' },
+    { t: 'Redoing a problem from scratch, without help, after seeing the solution', a: 'build', tag: 'mod', tagText: 'Not rated', why: 'Not in the review as such, but it is retrieval practice: you produce the whole method from memory. The video’s best tip.' }
+  ];
+  var sortAns = {};
+  var sorter = $('#sorter');
+  HABITS.forEach(function (it, i) {
+    var li = h('li', { cls: 'sort-item' });
+    li.appendChild(h('div', { cls: 'what', text: it.t, id: 'hab' + i }));
+    var g = h('div', { cls: 'chips', role: 'radiogroup', 'aria-labelledby': 'hab' + i });
+    [['build', 'Builds lasting memory'], ['feel', 'Mostly feels productive']].forEach(function (o) {
+      g.appendChild(h('button', { cls: 'chip', type: 'button', role: 'radio', 'aria-checked': 'false', 'data-v': o[0], text: o[1] }));
+    });
+    radioGroup(g, function (v) { sortAns[i] = v; });
+    li.appendChild(g);
+    li.appendChild(h('div', { cls: 'reveal', hidden: '' }));
+    sorter.appendChild(li);
+  });
+  $('#sortCheck').addEventListener('click', function () {
+    var n = 0, right = 0;
+    HABITS.forEach(function (it, i) {
+      var li = sorter.children[i], r = $('.reveal', li);
+      r.textContent = ''; r.hidden = false;
+      var mine = sortAns[i];
+      if (mine) { n++; if (mine === it.a) right++; }
+      r.appendChild(h('span', { cls: mine ? (mine === it.a ? 'mark-ok' : 'mark-bad') : 'muted', text: mine ? (mine === it.a ? '✓ ' : '✗ ') : '· ' }));
+      r.appendChild(h('span', { cls: 'tag ' + it.tag, text: it.tagText }));
+      r.appendChild(h('b', { text: (it.a === 'build' ? 'Builds memory. ' : 'Mostly feels productive. ') }));
+      r.appendChild(document.createTextNode(it.why));
+    });
+    $('#sortScore').textContent = n ? right + ' of ' + n + ' sorted the way the research does.' : 'Answers shown below.';
+  });
+
+  /* =====================================================================
+     04 · Spacing: a schematic forgetting curve you can schedule
+     Power-law curve R(t) = (1 + 19/81 · t/S)^-0.5, as in FSRS. Each review is a
+     recall attempt: success raises stability more the lower R was (desirable
+     difficulty); failure relearns from a fraction. Expected stability is the
+     R-weighted mix of the two. Parameters set by hand; schematic only.
+     ===================================================================== */
+  var MODEL = { S0: 0.15, A: 1.6, k: 3.0, p: 0.2, lapse: 0.3 };
+  function Rf(t, S) { return Math.pow(1 + (19 / 81) * t / S, -0.5); }
+  function stepS(S, ret) {
+    var succ = S * (1 + MODEL.A * Math.pow(S, -MODEL.p) * (Math.exp(MODEL.k * (1 - ret)) - 1));
+    var lapse = Math.max(MODEL.S0, S * MODEL.lapse);
+    return ret * succ + (1 - ret) * lapse;
+  }
+  function retention(days, d) {
+    var S = MODEL.S0, last = 0;
+    for (var i = 0; i < days.length; i++) { var r = days[i]; if (r > d) break; S = stepS(S, Rf(r - last, S)); last = r; }
+    return Rf(d - last, S);
+  }
+  var PLANS = [
+    { id: 'cram0', label: 'Cram: 4 reviews on day 0', days: [2 / 24, 4 / 24, 6 / 24, 8 / 24] },
+    { id: 'cram6', label: 'Cram: 4 reviews the night before a day-7 test', days: [6, 6 + 2 / 24, 6 + 4 / 24, 6 + 6 / 24] },
+    { id: 'spread', label: 'Spread: days 1, 3, 7, 14', days: [1, 3, 7, 14] },
+    { id: 'even', label: 'Even: days 6, 12, 18, 24', days: [6, 12, 18, 24] },
+    { id: 'none', label: 'No reviews', days: [] },
+    { id: 'custom', label: 'Your own (tap the chart)', days: [] }
+  ];
+  var planState = { A: 'cram6', B: 'spread', customA: [], customB: [1, 3, 7, 14] };
+  function daysFor(which) {
+    var id = planState[which];
+    if (id === 'custom') return planState['custom' + which].slice().sort(function (a, b) { return a - b; });
+    for (var i = 0; i < PLANS.length; i++) if (PLANS[i].id === id) return PLANS[i].days;
+    return [];
+  }
+  ['A', 'B'].forEach(function (w) {
+    var sel = $('#plan' + w);
+    PLANS.forEach(function (p) { var o = h('option', { value: p.id, text: p.label }); if (p.id === planState[w]) o.selected = true; sel.appendChild(o); });
+    sel.addEventListener('change', function () {
+      if (sel.value === 'custom' && planState[w] !== 'custom' && w === 'B') planState.customB = daysFor('B').slice();
+      planState[w] = sel.value; drawCurve();
+    });
+  });
+  var checkDay = $('#checkDay');
+  checkDay.addEventListener('input', function () { $('#checkDayOut').textContent = checkDay.value; drawCurve(); });
+
+  function pathFor(days, xs, ys, maxD) {
+    var pts = [], S = MODEL.S0, last = 0, from = 0, step = 0.04;
+    function seg(a, b) { for (var t = a; t < b; t += step) pts.push([t, Rf(t - last, S)]); pts.push([b, Rf(b - last, S)]); }
+    days.forEach(function (r) { if (r > maxD) return; seg(from, r); S = stepS(S, Rf(r - last, S)); last = r; from = r; pts.push([r, 1]); });
+    seg(from, maxD);
+    return 'M' + pts.map(function (p) { return xs(p[0]).toFixed(1) + ',' + ys(p[1] * 100).toFixed(1); }).join('L');
+  }
+  var curveTip;
+  function pct(v) { return Math.round(v * 100) + '%'; }
+  function drawCurve() {
+    var host = $('#curve'); var W = host.clientWidth; if (!W) return;
+    var narrow = W < 520, H = narrow ? 280 : 320, MAXD = 30;
+    var m = { t: 14, r: narrow ? 12 : 20, b: 34, l: narrow ? 40 : 48 };
+    var pw = W - m.l - m.r, ph = H - m.t - m.b;
+    function xs(d) { return m.l + pw * d / MAXD; }
+    function ys(v) { return m.t + ph * (1 - v / 100); }
+    $$('svg', host).forEach(function (n) { n.remove(); });
+    var svg = s('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true' });
+    [0, 25, 50, 75, 100].forEach(function (g) {
+      s('line', { x1: m.l, x2: m.l + pw, y1: ys(g), y2: ys(g), 'class': 'grid' }, svg);
+      stext(svg, m.l - 8, ys(g) + 4, g + '%', 'axis-label', 'end');
+    });
+    (narrow ? [0, 7, 14, 21, 30] : [0, 3, 7, 14, 21, 30]).forEach(function (d) {
+      stext(svg, xs(d), H - 12, d === 0 ? 'Day 0' : String(d), 'axis-label', 'middle');
+    });
+    var cd = +checkDay.value;
+    s('line', { x1: xs(cd), x2: xs(cd), y1: m.t, y2: m.t + ph, 'class': 'crosshair' }, svg);
+    var A = daysFor('A'), B = daysFor('B');
+    s('path', { d: pathFor([], xs, ys, MAXD), 'class': 'line thin s-base' }, svg);
+    s('path', { d: pathFor(A, xs, ys, MAXD), 'class': 'line s-consume' }, svg);
+    s('path', { d: pathFor(B, xs, ys, MAXD), 'class': 'line s-produce' }, svg);
+    A.forEach(function (d) { s('circle', { cx: xs(d), cy: ys(100), r: 4, 'class': 'dot f-consume' }, svg); });
+    B.forEach(function (d) { s('circle', { cx: xs(d), cy: ys(100), r: 4, 'class': 'dot f-produce' }, svg); });
+    var vA = retention(A, cd), vB = retention(B, cd), vN = retention([], cd);
+    $('#tileA').textContent = pct(vA); $('#tileB').textContent = pct(vB); $('#tileN').textContent = pct(vN);
+    var cross = s('line', { x1: 0, x2: 0, y1: m.t, y2: m.t + ph, 'class': 'crosshair', opacity: 0 }, svg);
+    var hit = s('rect', { x: m.l, y: 0, width: pw, height: H, fill: 'transparent' }, svg);
+    host.appendChild(svg);
+    if (!curveTip) curveTip = makeTip(host);
+    function dayAt(e) { var r = svg.getBoundingClientRect(); var d = (e.clientX - r.left - m.l) / pw * MAXD; return { d: Math.max(0, Math.min(MAXD, d)), y: e.clientY - r.top }; }
+    hit.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var p = dayAt(e), d = Math.round(p.d * 2) / 2;
+      cross.setAttribute('x1', xs(d)); cross.setAttribute('x2', xs(d)); cross.setAttribute('opacity', 1);
+      curveTip.show('Day ' + d, [
+        { color: '--produce', value: pct(retention(B, d)), label: 'Plan B' },
+        { color: '--consume', value: pct(retention(A, d)), label: 'Plan A' },
+        { color: '--base', value: pct(retention([], d)), label: 'No review' }
+      ].sort(function (a, b) { return parseInt(b.value, 10) - parseInt(a.value, 10); }), xs(d), p.y);
+    });
+    hit.addEventListener('pointerleave', function () { cross.setAttribute('opacity', 0); curveTip.hide(); });
+    hit.addEventListener('click', function (e) {
+      var d = Math.round(dayAt(e).d * 2) / 2; if (d <= 0) d = 0.5;
+      if (planState.B !== 'custom') { planState.customB = daysFor('B').slice(); planState.B = 'custom'; $('#planB').value = 'custom'; }
+      var arr = planState.customB, hitI = -1;
+      arr.forEach(function (x, i) { if (Math.abs(x - d) <= 0.6) hitI = i; });
+      if (hitI >= 0) arr.splice(hitI, 1); else if (arr.length < 8) arr.push(d); else toast('Eight reviews is the limit here');
+      curveTip.hide(); drawCurve();
+    });
+    // table view
+    var tw = $('#curveTable'); tw.textContent = '';
+    var tbl = h('table', { cls: 'data' });
+    var thr = h('tr', {}, [h('th', { text: 'Day' }), h('th', { cls: 'num', text: 'Plan A' }), h('th', { cls: 'num', text: 'Plan B' }), h('th', { cls: 'num', text: 'No review' })]);
+    tbl.appendChild(h('thead', {}, [thr]));
+    var tb = h('tbody');
+    [1, 3, 7, 14, 21, 30].forEach(function (d) {
+      tb.appendChild(h('tr', {}, [h('td', { text: String(d) }), h('td', { cls: 'num', text: pct(retention(A, d)) }), h('td', { cls: 'num', text: pct(retention(B, d)) }), h('td', { cls: 'num', text: pct(retention([], d)) })]));
+    });
+    tbl.appendChild(tb); tw.appendChild(tbl);
+  }
+  onResize($('#curve'), drawCurve);
+
+  /* =====================================================================
+     05 · Ten jobs for an AI
+     ===================================================================== */
+  var ROLES = [
+    { n: 'Interviewer', stages: ['start'], you: 2, when: 'You don’t yet know what you don’t know.',
+      prompt: 'Before you teach me anything about [topic], interview me. Ask one question at a time about my goal, my deadline, how I’ll be tested or use it, and what I already know. Push me to be specific. After 6–10 questions, tell me what I actually need to learn and what I can skip.',
+      watch: 'Vague answers get a vague plan. "Pass a live coding interview in three weeks, I know basic Python" beats "learn coding".' },
+    { n: 'Mapmaker', stages: ['start'], you: 1, when: 'The subject feels shapeless and you need a route.',
+      prompt: 'Map [topic] for someone whose goal is [goal]. List the 5–9 core parts in the order they depend on each other, mark where people usually get stuck, and give one check question per part that would show I’ve got it. Don’t explain the parts yet.',
+      watch: 'A map is a plan, not learning. Keep the check questions; they become your tests.' },
+    { n: 'Explainer', stages: ['stuck'], you: 1, when: 'You tried and you’re stuck on one specific step.',
+      prompt: 'I tried [task] and got stuck at [exact step]. Explain only that step, at my level ([level]). Don’t solve the rest. When I’ve got it I’ll go back and redo the whole thing from the start without help.',
+      watch: 'The default use, and pure taking in. It only counts if you redo the task without help afterward.' },
+    { n: 'Socratic questioner', stages: ['think'], you: 4, when: 'You think you understand it. Claude\u2019s learning mode, ChatGPT\u2019s Study mode and Gemini\u2019s Guided Learning are this job built in as a setting.',
+      prompt: 'I want to understand [topic]. Don’t give me answers. Ask me one question at a time, starting easy. When I’m wrong or vague, ask a follow-up that helps me find the gap myself. Only explain after I’ve made two real attempts.',
+      watch: 'It will cave and give the answer if you ask. Don’t ask.' },
+    { n: 'Examiner', stages: ['prove'], you: 5, when: 'You’ve covered it and want to know how much you have.',
+      prompt: 'Quiz me on [topic] using only [source]. One question at a time; wait for my answer. Make each question harder than the last until I miss two in a row. Then tell me the level where I broke and what to study next.',
+      watch: 'Without a source, it can mark a wrong answer right. Paste the material in.' },
+    { n: 'Checker', stages: ['prove', 'stuck'], you: 4, when: 'You made something: a proof, an essay, code, a calculation.',
+      prompt: 'Here’s my work for [problem]. Check each step of my reasoning, not just the answer. Point to the first step that’s wrong or missing, and tell me if there’s a shorter route. Don’t rewrite it for me.',
+      watch: '"Don’t rewrite it" matters. A rewritten version is the AI’s work, not yours.' },
+    { n: 'Listener', stages: ['think', 'prove'], you: 5, when: 'You want to know if you can explain it, not just recognise it.',
+      prompt: 'I’m going to explain [idea] from memory, in my own words. Grade my explanation against [source], not against your own view. List what I got right, what I left out, and anything I said that the source doesn’t support.',
+      watch: 'Explain first, paste the source second, so you can’t lean on it. Talk it out loud or sketch it too.' },
+    { n: 'Diagnostician', stages: ['stuck', 'keep'], you: 3, when: 'The same kind of mistake keeps coming back.',
+      prompt: 'Here are the mistakes I’ve made on [topic] lately: [list them]. What single misunderstanding could explain most of them? Give me one question that would test whether that’s really the problem.',
+      watch: 'It will find a pattern even when there isn’t one. Test its diagnosis with the question before you believe it.' },
+    { n: 'Sparring partner', stages: ['perform'], you: 5, when: 'The skill is live: an interview, a sales call, a talk, a hard conversation.',
+      prompt: 'Play a tough [hiring manager / sceptical client / examiner] for [situation]. One question at a time. Push back when my answer is vague. I’ll answer within 30 seconds. At the end, score me and name my two weakest answers.',
+      watch: 'It’s a rehearsal, not the real thing. Raise the difficulty each round.' },
+    { n: 'Clerk', stages: ['keep'], you: 1, when: 'Your notes are a mess and you want to keep what you learned.',
+      prompt: 'Turn my messy notes below into a clean outline. Don’t add anything I didn’t write. Then turn each main point into a flashcard: a question on one line, the answer on the next.',
+      watch: 'Organising is taking in. The flashcards only work once you answer them before flipping, on a schedule.' }
+  ];
+  var grid = $('#roleGrid');
+  ROLES.forEach(function (r, i) {
+    var pid = 'rolePrompt' + i;
+    var pips = h('span', { cls: 'pips' + (r.you <= 2 ? ' low' : '') });
+    for (var k = 1; k <= 5; k++) pips.appendChild(h('i', { cls: k <= r.you ? 'on' : '' }));
+    var pre = h('pre', { cls: 'prompt', id: pid }, [r.prompt]);
+    var copy = h('button', { cls: 'btn sm ghost copy', type: 'button', 'data-copy': pid, text: 'Copy', 'aria-label': 'Copy the ' + r.n + ' prompt' });
+    pre.appendChild(copy);
+    var card = h('article', { cls: 'role', 'data-stages': r.stages.join(' ') }, [
+      h('header', {}, [h('h3', { text: r.n }), h('span', { cls: 'n', text: String(i + 1).padStart(2, '0') })]),
+      h('p', { cls: 'when', text: r.when }),
+      h('div', { cls: 'meter' }, [h('span', { text: 'You do' }), pips, h('span', { text: ['', 'very little', 'a little', 'some', 'most', 'all of it'][r.you] })]),
+      pre,
+      h('p', { cls: 'watch' }, [h('b', { text: 'Watch out: ' }), r.watch])
+    ]);
+    grid.appendChild(card);
+    copy.addEventListener('click', function () {
+      var text = r.prompt;
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast('Copied'); }, function () { fallback(text); toast('Copied'); });
+      else { fallback(text); toast('Copied'); }
+    });
+  });
+  radioGroup($('#stageFilter'), function (st) {
+    $$('.role', grid).forEach(function (c) { c.hidden = !(st === 'all' || c.getAttribute('data-stages').split(' ').indexOf(st) !== -1); });
+  });
+
+  /* =====================================================================
+     10 · Close it and explain it
+     ===================================================================== */
+  $('#recallReveal').addEventListener('click', function () {
+    $('#recallCompare').hidden = false;
+    $('#recallReveal').hidden = true;
+    $('#recallBox').readOnly = true;
+  });
+  $$('#keyIdeas input').forEach(function (c) {
+    c.addEventListener('change', function () {
+      var n = $$('#keyIdeas input').filter(function (x) { return x.checked; }).length;
+      $('#recallScore').textContent = n + ' of 5. ' + (n >= 4 ? 'That’s most of the page, from memory.' : n >= 2 ? 'Read the ones you missed once, then try again tomorrow without looking.' : 'Normal on a first pass. Try again tomorrow: the second recall is the one that sticks.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
