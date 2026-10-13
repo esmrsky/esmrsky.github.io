@@ -593,6 +593,7 @@ footer p{margin-bottom:.65rem;}
         <select id="planB"></select>
       </div>
     </div>
+    <p class="kicker">Chance you'd still recall it · schematic</p>
     <div class="chart-legend" aria-hidden="true">
       <span><i class="ln" style="background:var(--consume)"></i>Plan A</span>
       <span><i class="ln" style="background:var(--produce)"></i>Plan B</span>
@@ -721,7 +722,7 @@ footer p{margin-bottom:.65rem;}
         <tbody>
           <tr><td>Chat with citations</td><td>Explainer, kept to your sources</td><td><span class="pill c">Take in</span> click the citation to check it</td></tr>
           <tr><td>Learning Guide chat</td><td>Socratic questioner</td><td><span class="pill p">Produce</span></td></tr>
-          <tr><td>Quizzes</td><td>Examiner</td><td><span class="pill p">Produce</span> short-answer and fill-in-the-blank beat multiple choice</td></tr>
+          <tr><td>Quizzes</td><td>Examiner</td><td><span class="pill p">Produce</span> short-answer makes you recall; multiple choice only asks you to recognise</td></tr>
           <tr><td>Flashcards</td><td>Recall practice</td><td><span class="pill p">Produce</span> if you answer before flipping</td></tr>
           <tr><td>Mind map</td><td>Mapmaker</td><td><span class="pill c">Take in</span> good on day one</td></tr>
           <tr><td>Audio and Video Overviews</td><td>Explainer</td><td><span class="pill c">Take in</span> a first pass, nothing more</td></tr>
@@ -1061,9 +1062,9 @@ My summary:
      01 · Predict, then the Roediger & Karpicke slope chart
      ===================================================================== */
   var RK = [
-    { label: 'Read 4×', short: 'Read 4×', a: 83, b: 40, color: '--consume', cls: 'consume' },
-    { label: 'Read 3×, recall 1×', short: 'Read 3×, recall 1×', a: 78, b: 56, color: '--base', cls: 'base' },
-    { label: 'Read 1×, recall 3×', short: 'Recall 3×', a: 71, b: 61, color: '--produce', cls: 'produce' }
+    { label: 'Read 4×', a: 83, b: 40, color: '--consume', cls: 'consume' },
+    { label: 'Read 3×, recall 1×', a: 78, b: 56, color: '--base', cls: 'base' },
+    { label: 'Read 1×, recall 3×', a: 71, b: 61, color: '--produce', cls: 'produce' }
   ];
   var preds = {};
   $$('#predictPanel [role="radiogroup"]').forEach(function (g) {
@@ -1103,7 +1104,7 @@ My summary:
     var W = host.clientWidth; if (!W) return;
     var narrow = W < 520;
     var H = narrow ? 300 : 330;
-    var m = { t: 18, r: narrow ? 120 : 170, b: 34, l: narrow ? 44 : 60 };
+    var m = { t: 18, r: narrow ? 52 : 170, b: 34, l: narrow ? 54 : 60 };
     var pw = W - m.l - m.r, ph = H - m.t - m.b;
     var x0 = m.l, x1 = m.l + pw;
     function y(v) { return m.t + ph * (1 - v / 100); }
@@ -1130,7 +1131,7 @@ My summary:
       if (Math.abs(it.ly - it.y) > 1) s('line', { x1: x1 + 7, y1: it.y, x2: x1 + 18, y2: it.ly, 'class': 'leader' }, svg);
       var t = stext(svg, x1 + 22, it.ly + 4, '', 'lab');
       var v = s('tspan', { 'class': 'val' }, t); v.textContent = it.d.b + '% ';
-      var l = s('tspan', {}, t); l.textContent = narrow ? it.d.short : it.d.label;
+      if (!narrow) { var l = s('tspan', {}, t); l.textContent = it.d.label; } // phones: the legend above names the lines
     });
     var left = spread(RK.map(function (d) { return { d: d, y: y(d.a), ly: y(d.a) }; }), 17, m.t, m.t + ph);
     left.forEach(function (it) {
@@ -1433,7 +1434,8 @@ My summary:
     if (rc > re) msg.push('Recall won, ' + rc + ' to ' + re + '.');
     else if (rc === re) msg.push('A tie, ' + rc + ' each.');
     else msg.push('Rereading won this time, ' + re + ' to ' + rc + '.');
-    if (!long) msg.push('After a short delay that’s normal: rereading is still propped up by familiarity. The research gap appears after a day or more. Try a fresh set and wait a day.');
+    if (!long && re >= rc) msg.push('After a short delay that’s normal: rereading is still propped up by familiarity. The research gap appears after a day or more. Try a fresh set and wait a day.');
+    else if (!long) msg.push('Recall is already ahead after a short delay. In the research the gap widens after a day or more. Try a fresh set and wait a day.');
     else if (rc >= re) msg.push('That’s the direction the research predicts once a day or more has passed.');
     else msg.push('With six words per group, one or two lucky guesses swing it. In the research, recall wins on average across many people and items, not every time for every person.');
     if (exp.predict.re >= exp.predict.rc) msg.push('You predicted rereading would do at least as well as recall. So did the students in the original studies: their predictions didn\u2019t track what actually helped. That\u2019s the fluency illusion in a single guess.');
@@ -1590,8 +1592,11 @@ My summary:
     s('path', { d: pathFor([], xs, ys, MAXD), 'class': 'line thin s-base' }, svg);
     s('path', { d: pathFor(A, xs, ys, MAXD), 'class': 'line s-consume' }, svg);
     s('path', { d: pathFor(B, xs, ys, MAXD), 'class': 'line s-produce' }, svg);
-    A.forEach(function (d) { s('circle', { cx: xs(d), cy: ys(100), r: 4, 'class': 'dot f-consume' }, svg); });
-    B.forEach(function (d) { s('circle', { cx: xs(d), cy: ys(100), r: 4, 'class': 'dot f-produce' }, svg); });
+    // one marker per review session: reviews hours apart (a cram) share a dot
+    [[A, 'f-consume'], [B, 'f-produce']].forEach(function (pl) {
+      var lastD = -9;
+      pl[0].forEach(function (d) { if (d - lastD < 0.5) return; lastD = d; s('circle', { cx: xs(d), cy: ys(100), r: 4, 'class': 'dot ' + pl[1] }, svg); });
+    });
     var vA = retention(A, cd), vB = retention(B, cd), vN = retention([], cd);
     $('#tileA').textContent = pct(vA); $('#tileB').textContent = pct(vB); $('#tileN').textContent = pct(vN);
     var cross = s('line', { x1: 0, x2: 0, y1: m.t, y2: m.t + ph, 'class': 'crosshair', opacity: 0 }, svg);
