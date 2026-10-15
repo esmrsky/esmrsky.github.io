@@ -2,9 +2,12 @@
 
 A graduation-cap switch in every page's top bar. When it's on, a page stops being
 something you read once and starts asking you things. This file is the plan for
-taking it site-wide. Nothing here is built yet except the pilot.
+taking it site-wide.
 
-**Status (2026-10-13):** piloted on `/feels-like-learning/`. Not on any other page.
+**Status (October 14, 2026):** the shared version is built (`assets/learn-mode.{js,css}`) and
+runs on `/word-in-season/` and `/one-accord/`: five checkpoints each, plus close-it with two
+cross-section questions. `/feels-like-learning/` still runs its own hand-written pilot code;
+it has not been switched to the shared files. The review queue is not built.
 
 ## Why
 
@@ -49,22 +52,30 @@ reads straight through.
   `assets/learn-mode.js` and `assets/learn-mode.css`. The script adds the cap
   button to `.topbar`, wires checkpoints, and writes the review queue. Pages
   without a `.topbar` get a small fixed button instead.
+- **Load order.** Link the CSS *before* the page's own `<style>` so the page's mapping wins.
+  Load the script synchronously, after the markup and before the page's own script, so the
+  checkpoints exist before the page measures its sections.
+- **Look.** The shared CSS is structure only. Each page maps its own tokens onto `--lm-accent`,
+  `--lm-ink`, `--lm-panel`, `--lm-rule` and so on, and the switch wears one of the page's own
+  button classes, so a checkpoint reads as part of that page.
 - **Per-page data**, so most pages need no markup surgery: an inline
-  `<script type="application/json" id="learn-data">`:
+  `<script type="application/json" id="learn-data">`. The full field list is at the top of
+  `learn-mode.js`:
 
   ```json
   {
     "page": "how-not-eating-works",
     "title": "How Not Eating Works",
     "checkpoints": [
-      { "id": "hnew-1", "after": "#mech", "q": "…", "a": "…" }
+      { "id": "hnew-1", "in": "#mech", "q": "…", "a": "…" }
     ],
-    "keyIdeas": ["…", "…"]
+    "close": { "after": "#close", "keyIdeas": ["…"], "mixed": [{ "id": "…", "q": "…", "a": "…" }] }
   }
   ```
 
-  The script inserts each checkpoint after the element `after` points to. Pages
-  that hand-write `.checkpoint` markup, like the pilot, keep working.
+  `in` puts the checkpoint at the end of that section's `.wrap`; `after` (any selector)
+  puts it right after an element. The pilot's hand-written `.checkpoint` markup is not read
+  by the shared script; switching the pilot means moving its questions into `learn-data`.
 - **Review queue:** `localStorage['esmrsky-review']`, keyed by checkpoint id:
   `{ page, q, a, due, step, lapses }`. "Got it" moves to the next interval;
   "Missed" goes back to day 1. Fixed expanding intervals are enough for a few dozen
@@ -77,8 +88,9 @@ reads straight through.
 | Phase | What | Size |
 |---|---|---|
 | 0 | Pilot on Feels Like Learning: switch, key, checkpoints, close-it | **done** |
-| 1 | Move the pilot code into `assets/learn-mode.{js,css}` and switch the pilot page over to it, which proves the shared version | small |
-| 2 | Write checkpoints and key ideas for five pages: Throughline, How Not Eating Works, The curves under the stages, Salvation, The Word | mostly writing |
+| 1 | Shared `assets/learn-mode.{js,css}`, proved on A Word in Season and One Accord | **done** |
+| 1b | Switch the pilot page over to the shared files | small |
+| 2 | Write checkpoints and key ideas for five more pages: Throughline, How Not Eating Works, The curves under the stages, Salvation, The Word | mostly writing |
 | 3 | Review queue, homepage "Due for review" card, `/review/` page | medium |
 | 4 | Remaining pages in grid order; a small cap badge on homepage cards that have learn mode | ongoing |
 

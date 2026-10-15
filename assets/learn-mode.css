@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Learn mode, shared across the hub (see learn-mode.js).
+   Structure only. The look comes from the page: each page maps its own
+   tokens onto the --lm-* properties below, so a checkpoint reads as part of
+   that page, not as a widget dropped on it. Fallbacks keep it legible on a
+   page that maps nothing.
+   ========================================================================== */
+.lm-cp,.lm-close,.lm-note,.lm-toggle{
+  --lm-ink:var(--ink,currentColor);
+  --lm-ink-2:var(--ink-2,var(--lm-ink));
+  --lm-ink-3:var(--ink-3,var(--lm-ink-2));
+  --lm-bg:var(--bg,transparent);
+  --lm-panel:var(--panel,transparent);
+  --lm-rule:var(--hair,rgba(127,127,127,.35));
+  --lm-accent:var(--lm-ink);
+  --lm-accent-ink:var(--lm-accent);
+  --lm-serif:var(--serif,Georgia,serif);
+  --lm-sans:var(--sans,system-ui,sans-serif);
+  --lm-col:var(--col,680px);
+  --lm-radius:4px;
+}
+
+/* off: the questions go, the page reads straight through */
+html[data-learn="off"] .lm-cp,
+html[data-learn="off"] .lm-close{display:none}
+
+/* ---- the switch ---- */
+.lm-toggle{flex:none}
+.lm-toggle .lm-cap{width:20px;height:20px;flex:none}
+.lm-toggle[aria-pressed="true"]{color:var(--lm-accent-ink);border-color:color-mix(in srgb,var(--lm-accent) 55%,transparent);background:color-mix(in srgb,var(--lm-accent) 11%,transparent)}
+.lm-toggle[aria-pressed="false"] .lm-cap{opacity:.62}
+.lm-float{position:fixed;right:16px;bottom:16px;z-index:70;width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--lm-rule);border-radius:50%;background:var(--lm-bg);color:var(--lm-ink-2);cursor:pointer}
+
+/* ---- the note under the opening ---- */
+.lm-note{display:flex;gap:12px;align-items:flex-start;max-width:var(--lm-col);margin:28px 0 0;padding:14px 0 0;border-top:1px solid var(--lm-rule);font-family:var(--lm-sans);font-size:.98rem;line-height:1.5;color:var(--lm-ink-2)}
+.lm-note .lm-cap{width:22px;height:22px;flex:none;margin-top:1px;color:var(--lm-accent)}
+.lm-note b{color:var(--lm-ink)}
+.lm-note .lm-off{display:none}
+html[data-learn="off"] .lm-note .lm-on{display:none}
+html[data-learn="off"] .lm-note .lm-off{display:inline}
+html[data-learn="off"] .lm-note .lm-cap{color:var(--lm-ink-3)}
+
+/* ---- a checkpoint ---- */
+.lm-cp{max-width:var(--lm-col);margin:clamp(30px,4vw,48px) 0 0;padding:18px 20px 20px;background:var(--lm-panel);border:1px solid var(--lm-rule);border-top:2px solid var(--lm-accent);border-radius:var(--lm-radius);color:var(--lm-ink)}
+.lm-head{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-family:var(--lm-sans);font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--lm-accent-ink);font-variant-numeric:lining-nums}
+.lm-head .lm-cap{width:18px;height:18px;flex:none}
+.lm-q{margin:0 0 14px;font-family:var(--lm-serif);font-size:1.12em;font-weight:600;line-height:1.38;text-wrap:balance}
+.lm-a,.lm-recall{display:block;width:100%;min-height:3.4rem;padding:10px 12px;border:1px solid var(--lm-rule);border-radius:var(--lm-radius);background:var(--lm-bg);color:var(--lm-ink);font-family:var(--lm-serif);font-size:.94em;line-height:1.5;resize:vertical}
+.lm-a::placeholder,.lm-recall::placeholder{color:var(--lm-ink-3);opacity:1}
+.lm-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+.lm-btn{min-height:44px}
+.lm-ans{margin-top:16px;padding-top:14px;border-top:1px solid var(--lm-rule);outline:none}
+.lm-ans p{margin:0;color:var(--lm-ink-2);line-height:1.55}
+.lm-ans p.lm-k{margin-bottom:6px}
+.lm-k{display:block;margin:0;font-family:var(--lm-sans);font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--lm-ink-3)}
+
+/* ---- close it and explain it ---- */
+.lm-close{padding:clamp(48px,7vw,88px) 0;color:var(--lm-ink)}
+.lm-close-in > *{max-width:var(--lm-col)}
+.lm-close h2{margin:4px 0 0;font-size:clamp(1.9rem,1.4rem + 1.8vw,2.8rem);line-height:1.06}
+.lm-close .lm-sub{margin:clamp(40px,5vw,56px) 0 0;font-size:clamp(1.4rem,1.2rem + .8vw,1.8rem);line-height:1.15}
+.lm-lede{margin:14px 0 0;color:var(--lm-ink-2);line-height:1.5}
+.lm-panel{margin-top:24px;padding:18px 20px 20px;background:var(--lm-panel);border:1px solid var(--lm-rule);border-radius:var(--lm-radius)}
+.lm-panel .lm-k{margin-bottom:8px}
+.lm-recall{min-height:8rem}
+.lm-compare{margin-top:20px;padding-top:16px;border-top:1px solid var(--lm-rule);outline:none}
+.lm-compare > p{margin:0 0 10px}
+.lm-ideas{list-style:none;margin:0;padding:0}
+.lm-ideas li{border-top:1px solid var(--lm-rule)}
+.lm-ideas li:last-child{border-bottom:1px solid var(--lm-rule)}
+.lm-ideas label{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;min-height:44px;padding:11px 0;cursor:pointer;line-height:1.45}
+.lm-ideas input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--lm-accent)}
+.lm-score{min-height:1.5em;margin:12px 0 18px!important;font-family:var(--lm-sans);font-size:.95rem;color:var(--lm-ink-2)}
+.lm-compare .lm-k{margin-bottom:8px}
+.lm-prompt{margin:0;padding:14px 16px;border:1px solid var(--lm-rule);border-radius:var(--lm-radius);background:var(--lm-bg);color:var(--lm-ink-2);font-family:var(--lm-sans);font-size:.92rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.lm-copied{font-family:var(--lm-sans);font-size:.92rem;color:var(--lm-ink-2)}
+.lm-close .lm-cp{margin-top:20px}
+.lm-close .lm-cp + .lm-cp{margin-top:16px}
+
+/* a printed page reads straight through */
+@media print{.lm-toggle,.lm-float,.lm-note,.lm-cp,.lm-close{display:none!important}}

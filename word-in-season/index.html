@@ -21,9 +21,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..800;1,400..800&family=Alegreya+Sans:wght@400;500;700&display=swap">
 <link rel="preload" as="image" href="img/tanner-annunciation-1200.webp" type="image/webp" imagesrcset="img/tanner-annunciation-1200.webp 1200w, img/tanner-annunciation.webp 1800w" imagesizes="(max-width:900px) 100vw, 50vw">
 <script>
-/* The saved theme is applied before first paint so the page never flashes the wrong mode. */
+/* The saved theme and the site-wide learn-mode choice are applied before first paint so neither flashes. */
 try{var t=localStorage.getItem("word-in-season-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}
+try{if(localStorage.getItem("esmrsky-learn")==="off")document.documentElement.setAttribute("data-learn","off")}catch(e){}
 </script>
+<link rel="stylesheet" href="/assets/learn-mode.css">
 <style>
 /* ==========================================================================
    A WORD IN SEASON
@@ -413,6 +415,11 @@ button{font:inherit;color:inherit}
 .esv-tip-out,.esv-ctx-out{display:none!important}
 @media (max-width:520px){.esv-pick-btn{padding:8px 10px}.esv-pick-ic{display:none}}
 
+/* ---- learn mode: the shared /assets/learn-mode.{css,js}, in this page's colors.
+   A checkpoint takes the color of the half it sits in, like the section numbers. */
+.lm-cp,.lm-note,.lm-close{--lm-accent:var(--k,var(--ink-2));--lm-accent-ink:var(--k-ink,var(--ink-2))}
+.lm-toggle{--lm-accent:var(--ink-3);--lm-accent-ink:var(--ink)}
+.lm-close{border-bottom:1px solid var(--hair-2)}
 </style>
 </head>
 <body>
@@ -1004,6 +1011,81 @@ button{font:inherit;color:inherit}
     <span>Nearby: <a href="/tuned/">Tuned</a> · <a href="/inner-room/">The Inner Room</a> · <a href="/where-are-you/">Where Are You?</a> · <a href="/same-fire/">The Same Fire</a></span>
   </div>
 </footer>
+<script type="application/json" id="learn-data">
+{
+ "page": "word-in-season",
+ "apostrophe": "'",
+ "title": "A Word in Season",
+ "url": "https://esmrsky.github.io/word-in-season/",
+ "toggle": {
+  "before": "#themeBtn",
+  "className": "icon-btn",
+  "label": false
+ },
+ "buttonClass": "cbtn",
+ "note": {
+  "after": "#short .halves"
+ },
+ "checkpoints": [
+  {
+   "id": "wis-1",
+   "in": "#stay",
+   "q": "A line stands out halfway through a chapter. What does this page tell you to do with it, and for how long?",
+   "a": "Stop there. Don't read on to find a better one. Stay with it for as long as it is still alive, which can mean days: say it under your breath, hold it up against what happens to you, and pray it back."
+  },
+  {
+   "id": "wis-2",
+   "in": "#become",
+   "q": "How can you tell a word has become yours, and is not just one more line you admire?",
+   "a": "It changes what you do without your trying. It comes back on its own under pressure, a reflex has changed, you can say it briefly in your own words, and you could give it away without pressing. Collecting lines and moving on to the next one is the opposite."
+  },
+  {
+   "id": "wis-3",
+   "in": "#test",
+   "q": "A verse lands and feels aimed right at you. Why doesn't that settle that it is from God, and what do you test instead?",
+   "a": "As Edwards said, the way a verse arrives doesn't settle where it came from, and words that touch your life will always feel aimed at you. Test where it leads over its whole course, whether it fits its chapter and the rest of Scripture, whether it survives a night's sleep, and whether it holds up when you tell someone who is free to disagree."
+  },
+  {
+   "id": "wis-4",
+   "in": "#trap",
+   "q": "In the page's picture of the string, why doesn't pushing your word harder on someone work?",
+   "a": "A string only answers a note it is already tuned to. You can grab it and shake it at your rate, but that is forcing, not resonance: it takes all your effort, it feels like pushing to them, and when you let go it rings at its own note, not yours."
+  },
+  {
+   "id": "wis-5",
+   "in": "#voices",
+   "q": "The accuser in Zechariah 3 is telling the truth: the clothes really are filthy. So what gives him away?",
+   "a": "Not what he gets wrong, but what he wants done with what he gets right. He wants a verdict. God wants a change of clothes. So a hard word aimed at restoration is the advocate's, and a soft word aimed at a verdict is still the accuser's."
+  }
+ ],
+ "close": {
+  "after": "#close",
+  "wrapClass": "wrap",
+  "keyIdeas": [
+   "When a line stands out, stop and stay with it for days, not minutes. Don't read on to find a better one.",
+   "A word is yours when it changes what you do without your trying. Until then you are still eating it.",
+   "Words come in seasons. Most are manna for one day. A few go in the jar and are kept.",
+   "Resonance is a signal, not a verdict. Test where it leads, whether it fits Scripture, and whether it survives a night's sleep.",
+   "What rings in you won't ring in someone tuned to a different note, and pushing harder is forcing, not resonance.",
+   "Hear their season first, as Jesus asked “What things?”, and know which voice you are joining: the accuser or the advocate.",
+   "A testimony is stones for someone else's crossing. It brings them to hear God themselves, not to hear you."
+  ],
+  "mixed": [
+   {
+    "id": "wis-m1",
+    "q": "Emmaus comes up twice on this page. What does Jesus do on that road that the page asks you to do before you speak?",
+    "a": "He asks “What things?” and lets them tell it their way, though he already knew. Only after he had heard where they were did he open the Scriptures. The burning hearts of section 01 came after that question."
+   },
+   {
+    "id": "wis-m2",
+    "q": "How does the town in John 4 answer the trap in section 06?",
+    "a": "They believed first because of the woman's word, then said, “Now we believe, not because of thy saying: for we have heard him ourselves.” A good testimony doesn't need people to ring at your note. It brings them close enough to hear him, and then you are no longer needed."
+   }
+  ]
+ }
+}
+</script>
+<script src="/assets/learn-mode.js"></script>
 <script src="/assets/scripture-popover.js"></script>
 <script>
 (function(){
