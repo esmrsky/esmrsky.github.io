@@ -168,9 +168,19 @@
     var b = e.target.closest && e.target.closest("[data-lm-reveal]");
     if (!b) return;
     var cp = b.closest(".lm-cp"), ans = $(".lm-ans", cp);
+    /* ease the checkpoint to its new height, then fade the answer in, instead
+       of snapping (reduced motion: snap) */
+    var from = cp.getBoundingClientRect().height;
     ans.hidden = false;
     b.parentNode.hidden = true;
     cp.classList.add("is-open");
+    if (cp.animate && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var to = cp.getBoundingClientRect().height;
+      cp.style.overflow = "hidden"; cp.style.boxSizing = "border-box";
+      cp.animate({ height: [from + "px", to + "px"] }, { duration: 340, easing: "cubic-bezier(.22,.68,.28,1)" })
+        .onfinish = function () { cp.style.overflow = ""; cp.style.boxSizing = ""; };
+      ans.animate({ opacity: [0, 1] }, { duration: 300, delay: 80, easing: "ease", fill: "backwards" });
+    }
     ans.focus({ preventScroll: true });
   });
 

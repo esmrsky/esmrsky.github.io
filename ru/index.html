@@ -171,7 +171,7 @@
     font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   .filter-btn:hover {
@@ -212,11 +212,18 @@
   .bento-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 256px;
+    /* minmax, not a flat 256px: the row is the right *floor*, but between the
+       1024px breakpoint and about 1200px the columns are narrow enough that a
+       card's header + title + description + footer stack runs past it, and
+       `overflow: hidden` on the card chopped the footer clean off (the Coding
+       Agents Guide and App Founder Playbook cards lost their pills and arrow
+       entirely at 1040px). Letting a row grow costs ~20px on the two rows that
+       need it and nothing at all from 1200px up, where every row is still 256. */
+    grid-auto-rows: minmax(256px, auto);
     gap: 20px;
     /* Backfill holes left when a 2-wide card can't fit the remaining
-       columns of a row. Card areas total 84 cells over 4 columns, so
-       this packs to exactly 21 rows with no gaps — keep any new card's
+       columns of a row. Card areas total 160 cells over 4 columns, so
+       this packs to exactly 40 rows with no gaps — keep any new card's
        area a multiple of 4 (i.e. one 2x2) or the last row opens a hole. */
     grid-auto-flow: dense;
   }
@@ -361,11 +368,19 @@
     min-width: 0;
   }
 
+  /* line-height 13px, not the inherited 1.5 (14.25px): JetBrains Mono's descent
+     is far deeper than these labels use, so with the inherited leading the
+     cap-to-baseline band landed 0.59px ABOVE the box centre and the text read
+     high. Pinning the line box to the font's own content height and padding it
+     symmetrically brings the band to within 0.03px of centre. Measured by
+     probing the real baseline with a zero-height inline-block and comparing it
+     to the cap height from canvas measureText. */
   .pill {
     font-family: var(--font-mono);
     font-size: 9.5px;
     letter-spacing: 0.04em;
-    padding: 3px 8px;
+    line-height: 13px;
+    padding: 4px 8px;
     border-radius: 100px;
     white-space: nowrap;
     color: var(--fg-dim);
@@ -493,6 +508,8 @@
   }
 
   .theme-return         { --accent: #34C46A; }  /* green */
+  .theme-whole          { --accent: #D16B48; }  /* clay */
+  .theme-throughline    { --accent: #2BB3AD; }  /* aqua */
   .theme-gap            { --accent: #F2A81C; }  /* gap amber */
   .theme-middlec       { --accent: #7C5CF0; }  /* spectral violet */
   .theme-stillawake    { --accent: #2933F0; }  /* riso blue */
@@ -502,7 +519,15 @@
   .theme-graded         { --accent: #D89A18; }  /* gold */
   .theme-soundings      { --accent: #25AEDA; }  /* cyan */
   .theme-whereareyou    { --accent: #FF3D93; }  /* riso pink */
+  .theme-fathertime     { --accent: #A8483F; }  /* oxblood, the courtroom lens it argues with */
+  .theme-drawnear       { --accent: #B83A24; }  /* the father's cloak in the Rembrandt: presence */
+  .theme-innerroom      { --accent: #9C968A; }  /* the gray of Hammershøi's walls: the one quiet card */
+  .theme-samefire       { --accent: #D9542B; }  /* Gauguin's vermilion field: the fire itself */
+  .theme-wordseason     { --accent: #7FA6CF; }  /* first light, the blue hour before the sun */
+  .theme-wordtalk       { --accent: #E7A99D; }  /* the same morning as slides: the blush between the blue hour and the sun */
+  .theme-oneaccord      { --accent: #9AA33A; }  /* the oil of Psalm 133, running down: unity poured, not built */
   .theme-judgment       { --accent: #B5822A; }  /* wheat / threshing gold */
+  .theme-tuned          { --accent: #F0A24A; }  /* tuned amber, the open loop */
   .theme-territories    { --accent: #D59A25; }  /* wilderness gold */
   .theme-anatomyrest    { --accent: #4C6FE7; }  /* cobalt */
   .theme-disguises      { --accent: #8B5CF6; }  /* violet */
@@ -513,11 +538,13 @@
   .theme-loop           { --accent: #F3651C; }  /* orange */
   .theme-thread         { --accent: #E05A66; }  /* thread pink */
   .theme-faith          { --accent: #D9A63C; }  /* illuminated gold */
+  .theme-salvation      { --accent: #B24D6E; }  /* lintel wine: the blood on the door */
   .theme-teach          { --accent: #E4534F; }  /* red */
   .theme-atlas          { --accent: #10B981; }  /* green */
   .theme-atlasv2        { --accent: #DC2626; }  /* red */
   .theme-atlasv3        { --accent: #C99A42; }  /* mirror gold */
   .theme-twelve         { --accent: #E6B85C; }  /* field-guide gold */
+  .theme-huberman       { --accent: #D3F985; }  /* brain and body field guide */
   .theme-mostbest       { --accent: #C8FF74; }  /* living lime */
   .theme-loopportal     { --accent: #F59E0B; }  /* amber */
   .theme-loopatlas      { --accent: #6366F1; }  /* indigo */
@@ -546,6 +573,10 @@
   .theme-appplaybook    { --accent: #C9A227; }  /* gold */
   .theme-promises       { --accent: #EC4899; }  /* radiant rose / gold */
   .theme-specimens      { --accent: #64748B; }  /* slate */
+  .theme-somethingair   { --accent: #C77DAE; }  /* haze mauve */
+  .theme-fasting        { --accent: #E07B39; }  /* salt amber */
+  .theme-curves         { --accent: #2E9EBD; }  /* gradient cyan */
+  .theme-feelslearning  { --accent: #4F8BF0; }  /* recall blue: the colour the page gives retrieval */
 
   /* Mirror of the light-mode problem: on near-black the deep accents (red
      #DC2626, cobalt, indigo) land at ~4.1:1. Lifting the ink 15% toward the
@@ -637,7 +668,7 @@
     font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   .other-toggle:hover {
@@ -722,13 +753,19 @@
   @media (max-width: 1024px) {
     .bento-grid {
       grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 256px;
+      grid-auto-rows: minmax(256px, auto);
     }
     .bento-card.span-2-2 {
       grid-column: span 2;
       grid-row: span 2;
     }
     .bento-card.span-3-1 {
+      grid-column: span 2;
+    }
+    /* Nine 1x1 cards can't tile two columns: one is always left alone beside a hole.
+       Widening the one that lands there squares the tablet grid. The phone query
+       below resets every span with !important, so this stays tablet-only. */
+    .bento-card.theme-counterfeit {
       grid-column: span 2;
     }
   }
@@ -1312,12 +1349,25 @@ h1,h2,h3{text-wrap:balance}
       return (toggle && grid) ? { toggle, grid, cards: [...grid.querySelectorAll('.bento-card')] } : null;
     }).filter(Boolean);
 
+    /* The drawer eases its height from wherever it is to
+       where it is going, so a second press mid-flight reverses from that point.
+       State lives in aria-expanded: `hidden` only lands once a close finishes. */
     const setDrawer = (d, open) => {
-      d.grid.hidden = !open;
+      const g = d.grid;
       d.toggle.setAttribute('aria-expanded', String(open));
+      if (!g.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) { g.hidden = !open; return; }
+      const cs = getComputedStyle(g);
+      const from = g.hidden ? 0 : g.getBoundingClientRect().height;
+      const o0 = g.hidden ? 0 : parseFloat(cs.opacity);
+      if (d.anim) { d.anim.onfinish = null; d.anim.cancel(); }
+      g.hidden = false; g.style.overflow = 'hidden';
+      const to = open ? g.getBoundingClientRect().height : 0;
+      d.anim = g.animate({ height: [from + 'px', to + 'px'], opacity: [o0, open ? 1 : 0] },
+                         { duration: 440, easing: 'cubic-bezier(.22,.68,.28,1)' });
+      d.anim.onfinish = () => { d.anim = null; g.style.overflow = ''; if (!open) g.hidden = true; };
     };
 
-    drawers.forEach(d => d.toggle.addEventListener('click', () => setDrawer(d, d.grid.hidden)));
+    drawers.forEach(d => d.toggle.addEventListener('click', () => setDrawer(d, d.toggle.getAttribute('aria-expanded') !== 'true')));
 
     bentoCards.forEach(card => {
       card.addEventListener('animationend', (e) => {

@@ -218,8 +218,16 @@ function renderQuestion(){
   $('#quiz-prev').disabled=questionIndex===0;
   $('#quiz-next').disabled=questionIndex===QUIZ.length-1;
   $('#reveal-answer').addEventListener('click',event=>{
-    const answer=$('#quiz-answer');
+    const answer=$('#quiz-answer'), box=$('#quiz-container');
+    /* ease the box to its new height instead of snapping (reduced motion: snap) */
+    const from=box.getBoundingClientRect().height;
     answer.hidden=!answer.hidden;
+    if(box.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const to=box.getBoundingClientRect().height;
+      box.style.overflow='hidden';
+      box.animate({height:[from+'px',to+'px']},{duration:340,easing:'cubic-bezier(.22,.68,.28,1)'}).onfinish=()=>{box.style.overflow='';};
+      if(!answer.hidden) answer.animate({opacity:[0,1]},{duration:280,delay:60,easing:'ease',fill:'backwards'});
+    }
     event.currentTarget.setAttribute('aria-expanded',String(!answer.hidden));
     event.currentTarget.innerHTML=answer.hidden?'Reveal the answer <span>↓</span>':'Hide the answer <span>↑</span>';
   });
