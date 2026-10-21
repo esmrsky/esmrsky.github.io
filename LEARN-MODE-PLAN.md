@@ -6,8 +6,8 @@ taking it site-wide.
 
 **Status (October 14, 2026):** the shared version is built (`assets/learn-mode.{js,css}`) and
 runs on `/word-in-season/` and `/one-accord/`: five checkpoints each, plus close-it with two
-cross-section questions. `/feels-like-learning/` still runs its own hand-written pilot code;
-it has not been switched to the shared files. The review queue is not built.
+cross-section questions. `/focus/` (October 21) uses the shared files too, with a guess-first pretest and a page-local review queue (missed questions return on the 1, 3, 7, 14, 30, 60-day ladder under `esmrsky-review`), the first build of phase 3. `/feels-like-learning/` still runs its own hand-written pilot code;
+it has not been switched to the shared files. The site-wide review page and homepage card are not built.
 
 ## Why
 
