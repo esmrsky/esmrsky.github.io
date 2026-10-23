@@ -727,7 +727,107 @@
     /* so "see in context" stays reachable once the verse starts scrolling */
     '.esv-tip-actions{position:sticky;bottom:0;background:inherit}' +
     '.esv-ctx,.esv-ctx-body,.esv-pick-menu{overscroll-behavior:contain}' +
-    '.esv-ctx-body{-webkit-overflow-scrolling:touch}';
+    '.esv-ctx-body{-webkit-overflow-scrolling:touch}' +
+    /* The passage's type answers to the screen the way its box does: width, because that is
+       the line it has to fill, and height, because that is what it has to reach. The floor is
+       hit before phone size, so a phone reads at 1rem and a sliding URL bar moves nothing.
+       --esv-fs and --esv-lh are the reader's own dials (see the reading settings below);
+       `dialog.esv-ctx` outranks a host's plain `.esv-ctx-body` without needing !important. */
+    '.esv-ctx{--esv-fs:1;--esv-lh:1.65;--esv-base:clamp(1rem,0.42rem + 0.45vw + 0.55dvh,1.28rem)}' +
+    'dialog.esv-ctx .esv-ctx-body{font-size:calc(var(--esv-base) * var(--esv-fs));line-height:var(--esv-lh)}' +
+    /* The settings sit in the flow between the passage and the footer, so they can never be
+       clipped by the dialog or cover the text they change. Colour comes from the dialog
+       (currentColor), so every host page's palette is followed without a variable to define. */
+    '.esv-ctx-prefs{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:12px 20px;' +
+      'border-top:1px solid color-mix(in srgb,currentColor 16%,transparent);' +
+      'background:color-mix(in srgb,currentColor 4%,transparent);font-size:.86rem;line-height:1.3;font-family:inherit}' +
+    '.esv-ctx-prefs[hidden]{display:none}' +
+    '.esv-ctx-prefs .esv-pref{display:flex;align-items:center;gap:10px}' +
+    '.esv-ctx-prefs .esv-pref-name{opacity:.72;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase}' +
+    '.esv-ctx-prefs .esv-pref-group{display:inline-flex;border:1px solid color-mix(in srgb,currentColor 24%,transparent);border-radius:999px;overflow:hidden}' +
+    '.esv-ctx-prefs button{min-width:44px;min-height:44px;padding:0 14px;border:0;background:none;color:inherit;font:inherit;cursor:pointer}' +
+    '.esv-ctx-prefs button:hover:not(:disabled){background:color-mix(in srgb,currentColor 10%,transparent)}' +
+    '.esv-ctx-prefs button:disabled{opacity:.3;cursor:default}' +
+    '.esv-ctx-prefs button[aria-pressed="true"]{background:color-mix(in srgb,currentColor 16%,transparent);font-weight:700}' +
+    '.esv-ctx-prefs .esv-fs-val{display:inline-grid;place-items:center;min-width:3.4em;font-variant-numeric:tabular-nums}' +
+    '.esv-ctx-prefs .esv-pref-reset{margin-left:auto;border-radius:999px;text-decoration:underline;text-underline-offset:3px}' +
+    '.esv-ctx-aa[aria-expanded="true"]{background:color-mix(in srgb,currentColor 12%,transparent)}' +
+    '@media (prefers-reduced-motion:no-preference){dialog.esv-ctx .esv-ctx-body{transition:font-size .18s ease,line-height .18s ease,opacity .18s ease}}';
+
+  /* ------------------------------------------------------- reading settings */
+  /* Text size and leading are the reader's, not the page's, and they are kept under the same
+     two keys the-thread uses, so a size chosen there is the size here: the sites share an
+     origin, and a reader should only have to say it once. */
+  var FS_STEPS = [0.86, 0.93, 1, 1.08, 1.16, 1.26, 1.36];
+  var LH_STEPS = { snug: 1.5, normal: 1.65, roomy: 1.9 };
+  var FS_KEY = 'thread-ctx-fs';
+  var LH_KEY = 'thread-ctx-lh';
+  var FS_DEF = 2;
+  var LH_DEF = 'normal';
+  var fsIndex = FS_DEF;
+  var lhName = LH_DEF;
+
+  function readSaved() {
+    var fs = parseInt(lsGet(FS_KEY), 10);
+    fsIndex = fs >= 0 && fs < FS_STEPS.length ? fs : FS_DEF;
+    var lh = lsGet(LH_KEY);
+    lhName = LH_STEPS[lh] ? lh : LH_DEF;
+  }
+
+  function applyReading(save) {
+    if (save) { lsSet(FS_KEY, String(fsIndex)); lsSet(LH_KEY, lhName); }
+    if (!dialog) return;
+    dialog.style.setProperty('--esv-fs', String(FS_STEPS[fsIndex]));
+    dialog.style.setProperty('--esv-lh', String(LH_STEPS[lhName]));
+    var val = dialog.querySelector('.esv-fs-val');
+    if (val) val.textContent = Math.round(FS_STEPS[fsIndex] * 100) + '%';
+    [].forEach.call(dialog.querySelectorAll('.esv-fs-step'), function (b) {
+      var dir = +b.dataset.step;
+      b.disabled = (dir < 0 && fsIndex === 0) || (dir > 0 && fsIndex === FS_STEPS.length - 1);
+    });
+    [].forEach.call(dialog.querySelectorAll('.esv-lh-opt'), function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lh === lhName));
+    });
+  }
+
+  function prefsHtml() {
+    var lhLabels = { snug: t('Snug', 'Плотно'), normal: t('Normal', 'Обычно'), roomy: t('Roomy', 'Свободно') };
+    return '<div class="esv-ctx-prefs" hidden>' +
+      '<div class="esv-pref"><span class="esv-pref-name">' + t('Text size', 'Размер текста') + '</span>' +
+      '<span class="esv-pref-group">' +
+      '<button type="button" class="esv-fs-step" data-step="-1" aria-label="' + t('Smaller passage text', 'Меньше текст') + '">\u2212</button>' +
+      '<span class="esv-fs-val" aria-live="polite">100%</span>' +
+      '<button type="button" class="esv-fs-step" data-step="1" aria-label="' + t('Larger passage text', 'Больше текст') + '">+</button>' +
+      '</span></div>' +
+      '<div class="esv-pref"><span class="esv-pref-name">' + t('Line height', 'Интервал') + '</span>' +
+      '<span class="esv-pref-group">' +
+      Object.keys(LH_STEPS).map(function (k) {
+        return '<button type="button" class="esv-lh-opt" data-lh="' + k + '" aria-pressed="false">' + lhLabels[k] + '</button>';
+      }).join('') + '</span></div>' +
+      '<button type="button" class="esv-pref-reset">' + t('Reset', 'Сбросить') + '</button>' +
+      '</div>';
+  }
+
+  function wirePrefs() {
+    var panel = dialog.querySelector('.esv-ctx-prefs');
+    var toggle = dialog.querySelector('.esv-ctx-aa');
+    toggle.addEventListener('click', function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    panel.addEventListener('click', function (ev) {
+      var step = ev.target.closest('.esv-fs-step');
+      var opt = ev.target.closest('.esv-lh-opt');
+      if (step) fsIndex = Math.max(0, Math.min(FS_STEPS.length - 1, fsIndex + (+step.dataset.step)));
+      else if (opt) lhName = opt.dataset.lh;
+      else if (ev.target.closest('.esv-pref-reset')) { fsIndex = FS_DEF; lhName = LH_DEF; }
+      else return;
+      applyReading(true);
+    });
+    readSaved();
+    applyReading(false);
+  }
 
   function ensureBehaviourCss() {
     if (document.getElementById('esv-behaviour')) return;
@@ -901,11 +1001,15 @@
       '<button class="esv-ctx-close" type="button" aria-label="' + t('Close', 'Закрыть') + '">×</button>' +
       '</div></header>' +
       '<div class="esv-ctx-body" aria-live="polite"></div>' +
+      prefsHtml() +
       '<footer class="esv-ctx-foot">' +
       '<button class="esv-ctx-more" type="button">' + t('Even more context', 'Ещё шире контекст') + '</button>' +
       '<a class="esv-ctx-out" href="#" target="_blank" rel="noopener">' + t('Full chapter', 'Вся глава') + ' ↗</a>' +
+      '<button class="esv-ctx-more esv-ctx-aa" type="button" aria-expanded="false" aria-label="' +
+      t('Reading settings: text size and line height', 'Настройки чтения: размер текста и интервал') + '">Aa</button>' +
       '</footer></div>';
     document.body.appendChild(dialog);
+    wirePrefs();
     ctxPicker = wirePicker(dialog.querySelector('.esv-pick'), t('Read this passage in', 'Читать этот отрывок в'));
 
     tip.addEventListener('mouseenter', function () { if (tipTimer) clearTimeout(tipTimer); });
