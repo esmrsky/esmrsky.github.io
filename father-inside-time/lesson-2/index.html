@@ -293,9 +293,80 @@ footer div{grid-column:span 4;min-width:0}
   .chips li{font-size:19px}
 }
 </style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js, which ships no colors on purpose. These are this page's clothes for it. */
+:root{--ember:var(--time);--ember-ink:var(--home);--gold:var(--time);--hair:var(--rule);--hair-2:var(--rule);--ink-3:var(--ink-2);--panel:var(--card);--sans:var(--f-body);--serif:var(--f-display);--ease:cubic-bezier(.2,.7,.2,1);--shadow-soft:0 12px 32px rgba(20,27,46,.18)}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color .15s ease,text-decoration-color .15s ease}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--ember-ink);text-decoration-color:var(--ember-ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 14px 8px 12px;border:1px solid var(--hair);border-radius:999px;background:none;color:var(--ink);font-family:var(--sans);font-size:.88rem;font-weight:700;cursor:pointer;transition:background-color .16s ease,border-color .16s ease}
+.esv-pick-btn:hover{border-color:var(--ember);background:color-mix(in srgb,var(--ember) 8%,transparent)}
+.esv-pick-ic{width:15px;height:15px;color:var(--ember-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--ink-3);transition:transform .18s ease}
+.esv-pick.open .esv-pick-btn{border-color:var(--ember);background:color-mix(in srgb,var(--ember) 11%,transparent)}
+.esv-pick.open .esv-pick-caret{transform:rotate(180deg)}
+.esv-pick-menu{transition:opacity .18s ease,translate .18s var(--ease),display .18s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;overscroll-behavior:contain;padding:6px;border:1px solid var(--hair);border-radius:14px;background:var(--panel);box-shadow:0 24px 60px var(--shadow-soft)}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--hair-2);color:var(--ink-3);font-family:var(--sans);font-size:.8rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:9px;background:none;color:var(--ink-2);text-align:left;cursor:pointer;transition:background-color .14s ease,color .14s ease}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--ink);font-family:var(--sans);font-size:.84rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--serif);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--ember) 8%,transparent);color:var(--ink)}
+.esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--ember) 14%,transparent)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--ember-ink)}
+.esv-tip{position:absolute;z-index:130;display:none;max-width:360px;padding:15px 17px;border:1px solid var(--hair);border-radius:14px;background:var(--panel);box-shadow:0 24px 64px var(--shadow-soft);color:var(--ink);font-size:1rem;line-height:1.55;opacity:0;transition:opacity .18s ease,translate .18s var(--ease),display .18s allow-discrete}
+.esv-tip.open{display:block;opacity:1;translate:0 0}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--ember-ink);font-family:var(--sans);font-size:.84rem;font-weight:700}
+.esv-tip-text{font-family:var(--serif);white-space:pre-line;min-height:3em;transition:opacity .15s ease;font-size:1.04rem}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--ink-3);font-family:var(--sans);font-size:.8rem}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--hair)}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ember) 34%,var(--hair));background:color-mix(in srgb,var(--ember) 9%,transparent);color:var(--ember-ink);font-family:var(--sans);font-size:.85rem;font-weight:700;cursor:pointer}
+.esv-tip-ctx:hover{background:color-mix(in srgb,var(--ember) 16%,transparent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--hair);border-radius:18px;background:var(--panel);color:var(--ink);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden}
+.esv-ctx{opacity:0;scale:.97;transition:opacity .24s ease,scale .24s var(--ease),display .24s allow-discrete,overlay .24s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.97}}
+.esv-ctx::backdrop{background:rgba(20,27,46,0);transition:background-color .24s ease,display .24s allow-discrete,overlay .24s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(20,27,46,.64)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(20,27,46,0)}}
+@media (prefers-reduced-motion: reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--hair)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--ember-ink);font-family:var(--sans);font-size:.82rem;font-weight:700}
+.esv-ctx-head h3{margin:0;font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.1}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--hair);border-radius:50%;background:none;color:var(--ink-2);font-size:18px;line-height:1;cursor:pointer}
+.esv-ctx-close:hover{color:var(--ink);border-color:var(--ink-3)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--serif);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-num{font-family:var(--sans);font-size:.72rem;font-weight:700;color:var(--ink-3);margin-right:.5em;vertical-align:.25em}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--gold) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 30%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--ink-3);font-family:var(--sans);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--hair);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--hair);background:none;color:var(--ink-2);font-family:var(--sans);font-size:.88rem;font-weight:600;cursor:pointer}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 22px}
+.lsw{display:flex;flex-wrap:wrap;gap:6px}
+.lsw a{display:inline-flex;align-items:baseline;gap:7px;min-height:44px;padding:10px 14px;border:1px solid var(--rule);border-radius:999px;background:var(--card);color:var(--ink-2);font:500 .84rem/1.2 var(--f-body);text-decoration:none;align-items:center}
+.lsw a b{font:500 .7rem/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;opacity:.8}
+.lsw a:hover{border-color:var(--ink-2);color:var(--ink)}
+.lsw a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.lsw a[aria-current="page"] b{opacity:.75}
+</style>
 </head>
 <body>
 <div class="wrap">
+<div class="topbar">
+<div class="lsw" role="navigation" aria-label="Lessons"><a href="/father-inside-time/"><b>Lesson 1</b>Father inside time</a><a href="/father-inside-time/lesson-2/" aria-current="page"><b>Lesson 2</b>Unchanging, not unmoved</a><a href="/father-inside-time/lesson-3/"><b>Lessons 3–4</b>In charge, not in control</a><a href="/father-inside-time/cross-examination/"><b>Cross-examination</b>31 claims tried</a></div>
+<div id="pickerHost"></div>
+</div>
 <header>
   <div class="l">
     <div class="eyebrow" style="margin-bottom:18px"><b>Biblical Foundations</b> · Lesson 2 · a reader's companion</div>
@@ -1016,6 +1087,16 @@ footer div{grid-column:span 4;min-width:0}
   }
   fb.forEach(function(b){b.addEventListener('click',function(){filt(b.dataset.f);});});
   filt('all');
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){
+  var S=window.EsmrskyScripture;
+  if(!S) return;
+  S.init({key:'father-inside-time',scan:'.wrap',versions:['NIV','NASB','NLT','TPT','KJV']});
+  var host=document.getElementById('pickerHost');
+  if(host){host.innerHTML=S.pickerHtml('Bible translation');S.wirePicker(host,'Verses read in');}
 })();
 </script>
 </body>
