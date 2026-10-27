@@ -127,6 +127,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `the-whole` | not started | Project map — its card titles should follow the hub's Russian titles. |
 | `throughline` | not started | Project map, like `the-whole`. |
 | `best-verses-v0` | not started | Probably **n/a** — an earlier draft of `most-best-verses`. Confirm with the owner before spending a run on it. |
+| `given` | not started | Built 2026-10-27. 9 NIV slots (baked), shared reader, a static gift-lists table, case-file tabs, a reflection notebook (`localStorage` key `given-notes`). |
 
 Rows above this line were added on 2026-10-27: 25 sites built since the August runs had no
 row at all. As of that date 15 sites and the hub are translated, and about 38 are not.
