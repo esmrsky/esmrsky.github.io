@@ -102,6 +102,38 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `judgment` | not started | ⚠️ **Attribute collision.** Its five existing `data-ru` attributes are *runtime data* for its own verse picker (`.ruvb[data-ru]` holds the Russian reference to fetch), not translation units — the generator once built an English page at `/judgment/ru/` from them and stripped the attributes the picker reads. `tools/build-ru.py` now skips it by name. Before translating: rename the picker's attribute, then remove the skip. |
 | `the-return` | **n/a** | Redirect stub: it bounces before paint, so a `/ru/` copy would be a URL nobody can reach. The generator skips it by name. Note its target `/the-return-new/` does not exist in this repo. |
 | `the-return.html`, `index-old-return-backup.html` | **n/a** | Same as above — skipped. |
+| `twelve` | not started | Multi-file app (`data.js`, `ultimate-data.js`, `expanded-data.js`, `diagnostic-data.js`, `scripture-data.js` 42 KB): almost all strings are JS-owned. First in the routine's queue. |
+| `most-best-verses` | not started | The whole page is quoted scripture, rendered from JS through the shared reader as a library. |
+| `draw-near` | not started | Loads the shared scripture reader; NIV baked in the markup. |
+| `faith` | not started | Own reader (`faith/scripture.js`), NIV baked. Two subpages (`miracles.html`, `old/`). |
+| `father-inside-time` | not started | Four pages: `/`, `lesson-2/`, `lesson-3/`, `cross-examination/` (~190 KB, the biggest). Shared reader; lesson switcher labels in the hero. |
+| `inner-room` | not started | Shared reader; NIV baked. Large page. |
+| `one-accord` | not started | Shared reader; NIV baked. Uses learn mode (`/assets/learn-mode.js`) — its UI strings need a Russian payload. |
+| `salvation` | not started | Shared reader; 200+ NIV slots across ~70 chapters. Large. |
+| `same-fire` | not started | Shared reader; NIV baked. Large. |
+| `something-in-the-air` | not started | Shared reader; references, few quotes. |
+| `word-in-season` | not started | Shared reader; learn mode. |
+| `word-in-season-talk` | not started | 30 slides; quotes NIV without the shared reader. |
+| `tuned` | not started | Quotes NIV without the shared reader. |
+| `focus` | not started | No quoted scripture found. Learn mode. |
+| `app-playbook` | not started | No scripture. |
+| `feels-like-learning` | not started | No scripture. |
+| `how-not-eating-works` | not started | No scripture. |
+| `huberman` | not started | No scripture. |
+| `sleep-rest-peace` | not started | No scripture found. |
+| `still-awake` | not started | No scripture found. |
+| `the-curves-under-the-stages` | not started | No scripture found. |
+| `the-gap` | not started | No scripture found. |
+| `the-whole` | not started | Project map — its card titles should follow the hub's Russian titles. |
+| `throughline` | not started | Project map, like `the-whole`. |
+| `best-verses-v0` | not started | Probably **n/a** — an earlier draft of `most-best-verses`. Confirm with the owner before spending a run on it. |
+
+Rows above this line were added on 2026-10-27: 25 sites built since the August runs had no
+row at all. As of that date 15 sites and the hub are translated, and about 38 are not.
+
+**bolls.life is reachable from the cloud sandbox as of 2026-10-27** (the routine's probe,
+`curl -s https://bolls.life/get-text/NRT/43/3/`, returned John 3 in НРП). Scripture-quoting
+pages are no longer blocked on egress.
 
 ## Where the 2026-08-19 cloud run left things
 
