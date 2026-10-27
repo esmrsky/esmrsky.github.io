@@ -752,33 +752,90 @@
     '.esv-ctx-prefs .esv-fs-val{display:inline-grid;place-items:center;min-width:3.4em;font-variant-numeric:tabular-nums}' +
     '.esv-ctx-prefs .esv-pref-reset{margin-left:auto;border-radius:999px;text-decoration:underline;text-underline-offset:3px}' +
     '.esv-ctx-aa[aria-expanded="true"]{background:color-mix(in srgb,currentColor 12%,transparent)}' +
+    /* The face reaches the passage only, never the dialog's heading or controls. */
+    'dialog.esv-ctx[data-face]:not([data-face="page"]) .esv-ctx-body{font-family:var(--esv-face)}' +
+    /* Pages hide verse numbers so scripture reads as prose; the reader can ask for them back. */
+    'dialog.esv-ctx[data-nums="on"] .esv-ctx-num{display:inline;margin-right:.3em;font-size:.62em;font-weight:700;' +
+      'vertical-align:.45em;line-height:0;opacity:.62;font-family:inherit}' +
+    '.esv-ctx-prefs .esv-face-opt{font-size:1.02em}' +
+    '@media (max-width:560px){.esv-ctx-prefs{gap:10px 14px;padding:12px 14px;max-height:46dvh;overflow-y:auto}' +
+      '.esv-ctx-prefs .esv-pref-face{flex-wrap:wrap}.esv-ctx-prefs .esv-pref-face .esv-pref-group{flex-wrap:wrap;border-radius:16px}' +
+      '.esv-ctx-prefs .esv-pref{width:100%;justify-content:space-between}.esv-ctx-prefs .esv-pref-name{white-space:nowrap}}' +
+    /* The dialog's footer is a <footer>, so a page's own `footer{margin-top:…}` reached into it
+       and opened a gap above the buttons (the-word). It belongs to the dialog, not the page. */
+    'dialog.esv-ctx .esv-ctx-foot{margin:0}' +
     '@media (prefers-reduced-motion:no-preference){dialog.esv-ctx .esv-ctx-body{transition:font-size .18s ease,line-height .18s ease,opacity .18s ease}}';
 
   /* ------------------------------------------------------- reading settings */
-  /* Text size and leading are the reader's, not the page's, and they are kept under the same
-     two keys the-thread uses, so a size chosen there is the size here: the sites share an
-     origin, and a reader should only have to say it once. */
+  /* The same panel the-thread puts on its passage dialog: typeface, text size, line height
+     and verse numbers. Size, leading and numbers are kept under the-thread's own keys, so a
+     choice made there holds here: the sites share an origin, and a reader should only have to
+     say it once. The typeface is not: the-thread writes its default face back on every visit,
+     which here would replace each page's own face with Literata for anyone who had ever been
+     there. "Page" — the host's face — is the default, and only a choice made here moves it. */
   var FS_STEPS = [0.86, 0.93, 1, 1.08, 1.16, 1.26, 1.36];
   var LH_STEPS = { snug: 1.5, normal: 1.65, roomy: 1.9 };
+  var FACES = {
+    page: { name: 'Page', ru: 'Как на странице', stack: '' },
+    literata: { name: 'Literata', stack: '"Literata",Georgia,serif' },
+    'source-serif': { name: 'Source Serif', stack: '"Source Serif 4",Georgia,serif' },
+    figtree: { name: 'Figtree', stack: '"Figtree",system-ui,sans-serif' },
+    atkinson: { name: 'Atkinson', stack: '"Atkinson Hyperlegible Next",system-ui,sans-serif' }
+  };
+  /* One stylesheet for all four, added the first time the panel opens. It only declares the
+     faces; a file is fetched when a face is actually drawn, so nobody pays for the preview
+     buttons until they ask to see them. */
+  var FACES_CSS = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400..800;1,400..700' +
+    '&family=Figtree:ital,wght@0,400..900;1,400..700&family=Literata:ital,opsz,wght@0,7..72,400..800;1,7..72,400..700' +
+    '&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..800;1,8..60,400..700&display=swap';
   var FS_KEY = 'thread-ctx-fs';
   var LH_KEY = 'thread-ctx-lh';
+  var NUMS_KEY = 'thread-ctx-nums';
+  var FACE_KEY = 'esmrsky-ctx-face';
   var FS_DEF = 2;
   var LH_DEF = 'normal';
+  var FACE_DEF = 'page';
   var fsIndex = FS_DEF;
   var lhName = LH_DEF;
+  var faceName = FACE_DEF;
+  var numsOn = false;
 
   function readSaved() {
     var fs = parseInt(lsGet(FS_KEY), 10);
     fsIndex = fs >= 0 && fs < FS_STEPS.length ? fs : FS_DEF;
     var lh = lsGet(LH_KEY);
     lhName = LH_STEPS[lh] ? lh : LH_DEF;
+    var face = lsGet(FACE_KEY);
+    faceName = FACES[face] ? face : FACE_DEF;
+    numsOn = lsGet(NUMS_KEY) === 'on';
+  }
+
+  function ensureFaces() {
+    if (faceName !== FACE_DEF || (dialog && !dialog.querySelector('.esv-ctx-prefs').hidden)) {
+      if (document.getElementById('esv-faces')) return;
+      var link = document.createElement('link');
+      link.id = 'esv-faces';
+      link.rel = 'stylesheet';
+      link.href = FACES_CSS;
+      (document.head || document.documentElement).appendChild(link);
+    }
   }
 
   function applyReading(save) {
-    if (save) { lsSet(FS_KEY, String(fsIndex)); lsSet(LH_KEY, lhName); }
+    if (save) {
+      lsSet(FS_KEY, String(fsIndex));
+      lsSet(LH_KEY, lhName);
+      lsSet(FACE_KEY, faceName);
+      lsSet(NUMS_KEY, numsOn ? 'on' : 'off');
+    }
     if (!dialog) return;
+    ensureFaces();
     dialog.style.setProperty('--esv-fs', String(FS_STEPS[fsIndex]));
     dialog.style.setProperty('--esv-lh', String(LH_STEPS[lhName]));
+    if (faceName === FACE_DEF) dialog.style.removeProperty('--esv-face');
+    else dialog.style.setProperty('--esv-face', FACES[faceName].stack);
+    dialog.dataset.face = faceName;
+    dialog.dataset.nums = numsOn ? 'on' : 'off';
     var val = dialog.querySelector('.esv-fs-val');
     if (val) val.textContent = Math.round(FS_STEPS[fsIndex] * 100) + '%';
     [].forEach.call(dialog.querySelectorAll('.esv-fs-step'), function (b) {
@@ -788,14 +845,27 @@
     [].forEach.call(dialog.querySelectorAll('.esv-lh-opt'), function (b) {
       b.setAttribute('aria-pressed', String(b.dataset.lh === lhName));
     });
+    [].forEach.call(dialog.querySelectorAll('.esv-face-opt'), function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.face === faceName));
+    });
+    var nums = dialog.querySelector('.esv-nums-opt');
+    if (nums) nums.setAttribute('aria-pressed', String(numsOn));
   }
 
   function prefsHtml() {
     var lhLabels = { snug: t('Snug', 'Плотно'), normal: t('Normal', 'Обычно'), roomy: t('Roomy', 'Свободно') };
     return '<div class="esv-ctx-prefs" hidden>' +
+      '<div class="esv-pref esv-pref-face"><span class="esv-pref-name">' + t('Typeface', 'Шрифт') + '</span>' +
+      '<span class="esv-pref-group">' +
+      Object.keys(FACES).map(function (k) {
+        var f = FACES[k];
+        var label = k === FACE_DEF ? t(f.name, f.ru) : f.name;
+        return '<button type="button" class="esv-face-opt" data-face="' + k + '" aria-pressed="false"' +
+          (f.stack ? ' style="font-family:' + f.stack.replace(/"/g, '&quot;') + '"' : '') + '>' + label + '</button>';
+      }).join('') + '</span></div>' +
       '<div class="esv-pref"><span class="esv-pref-name">' + t('Text size', 'Размер текста') + '</span>' +
       '<span class="esv-pref-group">' +
-      '<button type="button" class="esv-fs-step" data-step="-1" aria-label="' + t('Smaller passage text', 'Меньше текст') + '">\u2212</button>' +
+      '<button type="button" class="esv-fs-step" data-step="-1" aria-label="' + t('Smaller passage text', 'Меньше текст') + '">−</button>' +
       '<span class="esv-fs-val" aria-live="polite">100%</span>' +
       '<button type="button" class="esv-fs-step" data-step="1" aria-label="' + t('Larger passage text', 'Больше текст') + '">+</button>' +
       '</span></div>' +
@@ -804,6 +874,9 @@
       Object.keys(LH_STEPS).map(function (k) {
         return '<button type="button" class="esv-lh-opt" data-lh="' + k + '" aria-pressed="false">' + lhLabels[k] + '</button>';
       }).join('') + '</span></div>' +
+      '<div class="esv-pref"><span class="esv-pref-group">' +
+      '<button type="button" class="esv-nums-opt" aria-pressed="false">' + t('Verse numbers', 'Номера стихов') + '</button>' +
+      '</span></div>' +
       '<button type="button" class="esv-pref-reset">' + t('Reset', 'Сбросить') + '</button>' +
       '</div>';
   }
@@ -815,16 +888,22 @@
       var open = panel.hidden;
       panel.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
+      if (open) ensureFaces();
     });
     panel.addEventListener('click', function (ev) {
       var step = ev.target.closest('.esv-fs-step');
       var opt = ev.target.closest('.esv-lh-opt');
+      var face = ev.target.closest('.esv-face-opt');
       if (step) fsIndex = Math.max(0, Math.min(FS_STEPS.length - 1, fsIndex + (+step.dataset.step)));
       else if (opt) lhName = opt.dataset.lh;
-      else if (ev.target.closest('.esv-pref-reset')) { fsIndex = FS_DEF; lhName = LH_DEF; }
+      else if (face) faceName = face.dataset.face;
+      else if (ev.target.closest('.esv-nums-opt')) numsOn = !numsOn;
+      else if (ev.target.closest('.esv-pref-reset')) { fsIndex = FS_DEF; lhName = LH_DEF; faceName = FACE_DEF; numsOn = false; }
       else return;
       applyReading(true);
     });
+    /* Another tab — or the-thread — may have changed a setting; read it again on each open. */
+    dialog.addEventListener('esv-open', function () { readSaved(); applyReading(false); });
     readSaved();
     applyReading(false);
   }
@@ -983,6 +1062,7 @@
       else dialog.setAttribute('open', '');
     }
     setCtxLock(true);
+    dialog.dispatchEvent(new Event('esv-open'));
     refreshContext(false);
   }
 
