@@ -623,6 +623,12 @@ def rewrite_css_urls(block: str) -> str:
 
 GRID_COLS = 4
 
+# Sites served from their own repositories under this domain that ship their own
+# Russian page at /<site>/ru/. The generator cannot see those folders, so they
+# are named here: their hub cards stay on the Russian grid and links to them
+# move to /<site>/ru/ like any translated site's.
+EXTERNAL_RU = {"the-thread"}
+
 # Below this many surviving cards the "Other projects" drawer is not worth a
 # disclosure control — everything fits in one grid.
 DRAWER_MIN = 12
@@ -927,6 +933,7 @@ def build(pages: list[str], check: bool, known: list[str] | None = None) -> int:
         d, name = os.path.split(rel)
         ru_dirs.add(d)
         by_dir.setdefault(d, set()).add(name)
+    ru_dirs |= EXTERNAL_RU
 
     changed = 0
     stale_total = [0]

@@ -128,6 +128,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `throughline` | not started | Project map, like `the-whole`. |
 | `best-verses-v0` | not started | Probably **n/a** — an earlier draft of `most-best-verses`. Confirm with the owner before spending a run on it. |
 | `given` | not started | Built 2026-10-27. 9 NIV slots (baked), shared reader, a static gift-lists table, case-file tabs, a reflection notebook (`localStorage` key `given-notes`). |
+| `the-thread` | **done** | `/the-thread/ru/`, 2026-10-27. Lives in its own repo (`esmrsky/the-thread`), built by that repo's `build.sh` from `src/ru/` (1,333 data strings, 224 UI strings, 31 shell strings); `tools/check-ru.js` there fails the build on drift. НРП quotes from bolls, СП as the second option. Listed in `EXTERNAL_RU` in `tools/build-ru.py` so its hub card stays on the Russian grid. |
 
 Rows above this line were added on 2026-10-27: 25 sites built since the August runs had no
 row at all. As of that date 15 sites and the hub are translated, and about 38 are not.
