@@ -9,6 +9,8 @@ has had to find by hand more than once:
   tap      no -webkit-tap-highlight-color: phones flash a gray-blue square over
            every tapped control. Fix: the polish pack (copy it from any page
            that has <style id="polish-pack">).
+  wrap     no text-wrap at all: headings break unevenly and paragraphs and
+           labels leave one word alone on the last line. Fix: the polish pack.
   snap     <details> on the page and nothing that eases them, so accordions
            jump open. Fix: <script src="/assets/ease-details.js" defer></script>
   all      transition: all, or a transition with only a duration (which also
@@ -16,7 +18,9 @@ has had to find by hand more than once:
            the homepage before. Fix: name the properties.
 
 and warns (does not block) about em-dashes in the page's own words, which the
-user has banned; quotations are skipped.
+user has banned (quotations are skipped), and about a polish pack older than
+October 30, 2026, which only reached h1-h3, p, li, dd and figcaption, so labels,
+summaries and buttons wrapped raggedly.
 
   python3 tools/baseline-check.py            # the staged pages (what the hook runs)
   python3 tools/baseline-check.py --all      # every English page in this repo
@@ -114,6 +118,10 @@ def check(path):
     hard, soft = [], []
     if "tap-highlight-color" not in blob:
         hard.append("tap   no -webkit-tap-highlight-color (add the polish pack)")
+    if not re.search(r"text-wrap(?:-style)?\s*:\s*(?:pretty|balance)", blob):
+        hard.append("wrap  no text-wrap balance or pretty (add the polish pack)")
+    elif "body{text-wrap-style:pretty}" not in blob:
+        soft.append("pack  polish pack older than Oct 30, 2026 (copy the current one from received/index.html)")
     if re.search(r"<details\b", blob) and not any(m in blob for m in EASED):
         hard.append('snap  <details> with nothing easing them (add <script src="/assets/ease-details.js" defer></script>)')
     bad = sorted(set(transitions_all(css)))
