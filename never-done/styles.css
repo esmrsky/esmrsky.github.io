@@ -52,6 +52,12 @@
   --measure: 68ch;
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
   --chapter-gap: clamp(5rem, 12vh, 9rem);
+
+  /* Motion */
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --t1: .15s;
+  --t2: .3s;
+  --t3: .55s;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -164,7 +170,8 @@ a:hover { color: var(--accent); }
 .toc ol { list-style: none; margin: 0; padding: 0; }
 .toc li { margin: 0; }
 .toc a {
-  display: flex; gap: 0.6rem; align-items: baseline;
+  display: flex; gap: 0.6rem; align-items: center;
+  min-height: 44px;
   padding: 0.42rem 0.6rem;
   color: var(--ink-2);
   text-decoration: none;
@@ -454,7 +461,7 @@ table.data .dim { color: var(--ink-3); }
   width: 10px; height: 10px; border-radius: 50%;
   background: var(--baseline);
   border: 2px solid var(--paper);
-  transition: background-color 0.3s ease;
+  transition: background-color var(--t2) var(--ease);
 }
 @media (min-width: 760px) { .tl-item::before { left: 136px; } }
 .tl-item.is-lit::before { background: var(--accent); }
@@ -509,6 +516,8 @@ table.data .dim { color: var(--ink-3); }
   font-family: var(--font-sans);
 }
 .era-nav a {
+  display: inline-flex; align-items: center;
+  min-height: 44px;
   font-size: 0.8125rem;
   text-decoration: none;
   color: var(--ink-2);
@@ -604,14 +613,14 @@ table.data .dim { color: var(--ink-3); }
 .stat .stat-src a { color: var(--ink-3); }
 
 /* ---------- Reveal on scroll ---------- */
-.reveal {
+.js-reveal .reveal {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition: opacity var(--t3) var(--ease), transform var(--t3) var(--ease);
 }
-.reveal.is-in { opacity: 1; transform: none; }
+.js-reveal .reveal.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
   .progress { transition: none; }
 }
 
@@ -622,6 +631,15 @@ table.data .dim { color: var(--ink-3); }
     animation: loop-flow 1.6s linear infinite;
   }
   @keyframes loop-flow { to { stroke-dashoffset: -16; } }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---------- Footer ---------- */
@@ -635,6 +653,7 @@ table.data .dim { color: var(--ink-3); }
   max-width: var(--measure);
 }
 .site-footer p { margin: 0 0 0.8rem; }
+.site-footer .home { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* ---------- Utility ---------- */
 .small-caps-label {
