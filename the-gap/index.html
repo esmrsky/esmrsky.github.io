@@ -33,6 +33,7 @@
   --f-body:"Newsreader",Georgia,"Times New Roman",serif;
   --f-mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
 
+  --ease:cubic-bezier(.22,.61,.36,1); --t1:.2s; --t2:.35s; --t3:.7s;
   --gut:clamp(18px,4.5vw,56px);
   --maxw:1180px;
 }
@@ -88,12 +89,12 @@ a{color:inherit}
   padding:16px 10px;min-height:70px;
 }
 .gapmid .rail{position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(251,249,244,.22)}
-.gapmid .fill{position:absolute;left:0;top:50%;height:2px;background:var(--amber);width:0;animation:fill 2.6s cubic-bezier(.2,.8,.3,1) .6s forwards}
-@keyframes fill{to{width:100%}}
+.gapmid .fill{position:absolute;left:0;top:50%;height:2px;background:var(--amber);width:100%;transform:scaleX(0);transform-origin:0 50%;animation:fill 2.6s var(--ease) .6s forwards}
+@keyframes fill{to{transform:scaleX(1)}}
 .gapmid .tag{
   position:relative;background:var(--ink);padding:0 10px;font-family:var(--f-mono);
   font-size:10.5px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;
-  opacity:0;animation:pop .5s ease 2.9s forwards;
+  opacity:0;animation:pop var(--t2) var(--ease) 2.9s forwards;
 }
 @keyframes pop{to{opacity:1}}
 .gapcap{font-family:var(--f-mono);font-size:11.5px;opacity:.62;margin-top:18px;letter-spacing:.03em}
@@ -127,7 +128,7 @@ h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-
   margin-top:clamp(30px,5vw,46px);border:2px solid var(--ink);border-radius:10px;
   background:var(--cream);overflow:hidden;
   box-shadow:10px 10px 0 rgba(16,31,41,.12);
-  transition:box-shadow .5s ease;
+  transition:box-shadow var(--t2) var(--ease);
 }
 .m-head{
   padding:14px 18px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;
@@ -142,7 +143,7 @@ h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-
 .facts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;padding:0;list-style:none}
 .facts li{
   font-family:var(--f-mono);font-size:11.5px;padding:6px 10px;border-radius:4px;
-  background:var(--paper-2);border:1.5px solid transparent;transition:border-color .35s ease,background .35s ease;
+  background:var(--paper-2);border:1.5px solid transparent;transition:border-color var(--t2) var(--ease),background-color var(--t2) var(--ease);
 }
 .facts li.hot{border-color:var(--lens,var(--ink));background:color-mix(in srgb,var(--lens,#000) 12%,var(--cream))}
 .factnote{font-family:var(--f-mono);font-size:11px;opacity:.55;margin:10px 0 0}
@@ -151,7 +152,7 @@ h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-
 .lensbtn{
   font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   padding:11px 15px;border-radius:5px;border:2px solid var(--ink);background:transparent;color:var(--ink);
-  cursor:pointer;transition:background .22s ease,color .22s ease,transform .12s ease;flex:1 1 auto;
+  cursor:pointer;min-height:44px;transition:background-color var(--t1) var(--ease),color var(--t1) var(--ease),border-color var(--t1) var(--ease),transform var(--t1) var(--ease);flex:1 1 auto;
 }
 .lensbtn:hover{transform:translateY(-2px)}
 .lensbtn[aria-pressed="true"]{background:var(--btn);border-color:var(--btn);color:var(--cream)}
@@ -160,14 +161,14 @@ h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-
 .readout{
   margin-top:22px;padding:clamp(16px,3vw,24px);border-radius:7px;
   background:color-mix(in srgb,var(--lens,#888) 10%,var(--cream));
-  border-left:6px solid var(--lens,#888);transition:background .45s ease,border-color .45s ease;
+  border-left:6px solid var(--lens,#888);transition:background-color var(--t2) var(--ease),border-color var(--t2) var(--ease);
 }
 .r-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.6;margin-bottom:9px}
 .r-concl{font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.5vw,25px);line-height:1.24;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
 .r-why{font-size:16px;line-height:1.55;margin:0 0 16px;opacity:.88}
 .meter{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em}
 .meter .track{flex:1;height:9px;border-radius:99px;background:rgba(16,31,41,.13);overflow:hidden}
-.meter .bar{height:100%;width:0;background:var(--lens,#888);transition:width .7s cubic-bezier(.2,.8,.3,1)}
+.meter .bar{height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--lens,#888);transition:transform var(--t3) var(--ease),background-color var(--t2) var(--ease)}
 .verdict{
   margin-top:20px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;
   padding-top:16px;border-top:1.5px dashed rgba(16,31,41,.25);
@@ -179,7 +180,7 @@ h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-
 .matrix .mh{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:10px 8px;font-weight:600;display:flex;align-items:flex-end}
 .mcell{
   padding:16px 14px;border:none;text-align:left;cursor:pointer;font-family:var(--f-mono);
-  font-size:12px;line-height:1.4;color:var(--ink);border-radius:4px;transition:transform .15s ease,filter .2s ease;
+  font-size:12px;line-height:1.4;color:var(--ink);border-radius:4px;transition:transform var(--t1) var(--ease),filter var(--t1) var(--ease);
 }
 .mcell:hover{transform:scale(1.02)}
 .mcell strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px;opacity:.72}
@@ -212,21 +213,21 @@ h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-
 .loopwrap{display:grid;grid-template-columns:1fr;gap:26px;margin-top:34px;align-items:center}
 @media(min-width:900px){.loopwrap{grid-template-columns:minmax(0,420px) 1fr;gap:44px}}
 .loopsvg{width:100%;height:auto;display:block}
-.lnode circle{transition:fill .35s ease,r .35s ease}
+.lnode circle{transition:fill var(--t2) var(--ease),r var(--t2) var(--ease)}
 .lnode text{font-family:var(--f-mono);font-size:9.4px;letter-spacing:.06em;fill:var(--cream);font-weight:600}
 .lnode.on circle{fill:var(--amber)}
 .lnode.on text{fill:var(--ink)}
 .loopsteps{list-style:none;padding:0;margin:0}
 .loopsteps li{
   padding:13px 0 13px 16px;border-left:3px solid rgba(251,249,244,.22);
-  font-size:16.5px;line-height:1.45;opacity:.42;transition:opacity .35s ease,border-color .35s ease;
+  font-size:16.5px;line-height:1.45;opacity:.42;transition:opacity var(--t2) var(--ease),border-color var(--t2) var(--ease);
 }
 .loopsteps li.on{opacity:1;border-color:var(--amber)}
 .loopsteps li b{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--amber)}
 .playbtn{
   margin-top:20px;font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;padding:11px 18px;border-radius:5px;border:2px solid var(--cream);
-  background:transparent;color:var(--cream);cursor:pointer;transition:background .2s,color .2s;
+  background:transparent;color:var(--cream);cursor:pointer;min-height:44px;transition:background-color var(--t1) var(--ease),color var(--t1) var(--ease);
 }
 .playbtn:hover{background:var(--cream);color:var(--ink)}
 
@@ -271,7 +272,7 @@ details{
 summary{
   cursor:pointer;list-style:none;position:relative;padding:15px 0 15px 34px;
   font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
-  transition:opacity .25s ease;
+  transition:opacity var(--t1) var(--ease);
 }
 summary::-webkit-details-marker{display:none}
 summary:hover{opacity:.7}
@@ -280,12 +281,12 @@ summary::before{
   content:"";position:absolute;left:0;top:50%;width:22px;height:22px;margin-top:-11px;
   border:1.5px solid currentColor;border-radius:99px;opacity:.72;
   background:linear-gradient(currentColor,currentColor) center/10px 1.6px no-repeat;
-  transition:opacity .3s ease,transform .28s cubic-bezier(.32,.72,0,1);
+  transition:opacity var(--t1) var(--ease),transform var(--t1) var(--ease);
 }
 summary::after{
   content:"";position:absolute;left:11px;top:50%;width:1.6px;height:10px;margin:-5px 0 0 -.8px;
   background:currentColor;border-radius:2px;
-  transition:transform .45s cubic-bezier(.34,1.32,.64,1);
+  transition:transform var(--t2) var(--ease);
 }
 summary:hover::before{opacity:1}
 summary:active::before{transform:scale(.9)}
@@ -305,15 +306,92 @@ details .dbody p:last-child{margin-bottom:0}
 .key{display:flex;flex-wrap:wrap;gap:20px;margin-top:20px;font-family:var(--f-mono);font-size:12.5px;line-height:1.5}
 .key div{flex:1 1 210px}
 
-footer{background:var(--ink);color:var(--cream);padding:clamp(46px,7vw,80px) 0;font-family:var(--f-mono);font-size:12.5px;line-height:1.7;opacity:.9}
+footer{background:var(--ink);color:var(--cream);padding:clamp(46px,7vw,80px) 0;font-family:var(--f-mono);font-size:12.5px;line-height:1.7}
+footer .wrap{opacity:.9}
+.foot-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:26px;padding-top:20px;border-top:1px solid rgba(251,249,244,.18)}
+.foot-row .home{display:inline-flex;align-items:center;min-height:44px;color:var(--cream);text-decoration:none;letter-spacing:.06em;transition:color var(--t1) var(--ease)}
+.foot-row .home:hover{color:var(--amber)}
+.foot-pick{display:flex;align-items:center;gap:10px}
+.foot-pick .esv-pick-btn{color:var(--cream);border-color:rgba(251,249,244,.3)}
+.foot-pick .esv-pick-ic{color:var(--amber)}
+.foot-pick .esv-pick-menu{top:auto;bottom:calc(100% + 8px)}
+.foot-fine{margin-top:16px;max-width:60ch;opacity:.6;font-size:11px}
 
 @media (prefers-reduced-motion:reduce){
   /* `*` alone misses ::before/::after, which is where the accordion icon
      lives — without them named it keeps springing under reduced motion. */
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important}
-  .gapmid .fill{width:100%}.gapmid .tag{opacity:1}
+  .gapmid .fill{transform:none}.gapmid .tag{opacity:1}
   html{scroll-behavior:auto}
 }
+</style>
+<style id="scripture-skin">
+/* ==========================================================================
+   THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
+   which ships no colors on purpose. These are this page's clothes for it:
+   the first rule maps the reader's few roles onto this page's own tokens.
+   Opens and closes fade in place; nothing readable slides.
+   ========================================================================== */
+:root{--sr-panel:var(--cream);--sr-ink:var(--ink);--sr-ink2:var(--ink-2);--sr-ink3:rgba(16,31,41,.62);--sr-line:rgba(16,31,41,.18);--sr-accent:var(--teal);--sr-accent-ink:#0B6F66;--sr-hl:var(--amber);--sr-display:var(--f-mono);--sr-read:var(--f-body);--sr-shadow:rgba(16,31,41,.28);--sr-t:var(--t1);--sr-t2:var(--t2);--sr-ease:var(--ease)}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color var(--sr-t) var(--sr-ease),text-decoration-color var(--sr-t) var(--sr-ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--sr-accent-ink);text-decoration-color:var(--sr-accent-ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 14px 8px 12px;border:1px solid var(--sr-line);border-radius:999px;background:var(--sr-chip,transparent);color:var(--sr-ink);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-pick-btn:hover{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 10%,transparent)}
+.esv-pick-ic{width:15px;height:15px;color:var(--sr-accent-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--sr-ink3);transition:rotate var(--sr-t) var(--sr-ease)}
+.esv-pick.open .esv-pick-btn{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 13%,transparent)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;display:block;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;padding:6px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 24px 60px var(--sr-shadow);opacity:1;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--sr-line);color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:9px;background:none;color:var(--sr-ink2);text-align:left;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--sr-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--sr-read);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--sr-accent) 10%,transparent);color:var(--sr-ink)}
+.esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--sr-accent) 17%,transparent)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--sr-accent-ink)}
+.esv-tip{position:absolute;z-index:130;display:none;max-width:min(360px,calc(100vw - 24px));padding:15px 17px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);box-shadow:0 24px 64px var(--sr-shadow);color:var(--sr-ink);font-family:var(--sr-read);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700;letter-spacing:.01em}
+.esv-tip-text{font-family:var(--sr-read);white-space:pre-line;min-height:3em;font-size:1.02rem;transition:opacity var(--sr-t) var(--sr-ease)}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--sr-ink3);font-family:var(--sr-display);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--sr-line)}
+.esv-tip-ctx{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid color-mix(in srgb,var(--sr-accent) 40%,var(--sr-line));background:color-mix(in srgb,var(--sr-accent) 11%,transparent);color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.86rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease)}
+.esv-tip-ctx:hover{background:color-mix(in srgb,var(--sr-accent) 19%,transparent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--sr-line);border-radius:18px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 34px 100px rgba(0,0,0,.45);overflow:hidden;opacity:0;transition:opacity var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]{opacity:1}
+@starting-style{.esv-ctx[open]{opacity:0}}
+.esv-ctx::backdrop{background:rgba(8,8,14,0);transition:background-color var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(8,8,14,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(8,8,14,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--sr-line)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.82rem;font-weight:600}
+.esv-ctx-head h3{margin:0;font-family:var(--sr-display);font-weight:700;font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.12;color:var(--sr-ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--sr-line);border-radius:50%;background:none;color:var(--sr-ink2);font-size:18px;line-height:1;cursor:pointer;transition:color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-ctx-close:hover{color:var(--sr-ink);border-color:var(--sr-ink3)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sr-read);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--sr-hl) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sr-hl) 30%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--sr-line);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--sr-line);background:none;color:var(--sr-ink2);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-ctx-more:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-ctx-note{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;margin-top:.6em;display:block}
+.esv-ctx-prefs{color:var(--sr-ink);font-family:var(--sr-display)}
+/* the pop-up's one action is reading in place, not leaving for another site */
+.esv-tip-out,.esv-ctx-out{display:none!important}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
 </style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -652,9 +730,12 @@ p,li,dd,figcaption{text-wrap:pretty}
       <div><span class="chip mixed">Mixed</span><br>Real effect, contested size or scope. Directionally usable, don't build on it.</div>
       <div><span class="chip thin">Thin</span><br>Descriptively useful, empirically light. A good name for a pattern, not proof of a mechanism.</div>
     </div>
-    <p style="margin-top:26px;max-width:60ch;opacity:.72">Research attributions here are recalled rather than looked up, and are stated at the level of "this is the shape of the finding" rather than citation-exact. Where a claim is interpretation rather than established result, it's labelled in the text. The scripture readings are one reading, offered as such.</p>
+    <p style="margin-top:26px;max-width:60ch;opacity:.72">Research attributions here are recalled rather than looked up, and are stated at the level of "this is the shape of the finding" rather than citation-exact. Where a claim is interpretation rather than established result, it's labeled in the text. The scripture readings are one reading, offered as such.</p>
+    <div class="foot-row"><a class="home" href="https://esmrsky.github.io/">← All projects</a><div class="foot-pick"><span>Verse pop-ups read in</span><span id="pickerHost"></span></div></div>
+    <p class="foot-fine">Verse pop-ups default to the Holy Bible, New International Version®, NIV®. Copyright © 1973, 1978, 1984, 2011 by <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener" style="color:inherit">Biblica, Inc.</a> Used by permission. All rights reserved worldwide.</p>
   </div>
 </footer>
+<script src="/assets/scripture-popover.js"></script>
 
 <script>
 (function(){
@@ -703,7 +784,7 @@ p,li,dd,figcaption{text-wrap:pretty}
         concl.textContent=L.concl;
         why.textContent=L.why;
         lensname.textContent=L.name;
-        bar.style.width=L.pct+"%";
+        bar.style.transform="scaleX("+(L.pct/100)+")";
         pct.textContent=L.pct+"%";
         Array.prototype.forEach.call(facts.children,function(li){
           li.classList.toggle("hot", L.hot.indexOf(li.getAttribute("data-f"))>-1);
@@ -754,7 +835,7 @@ p,li,dd,figcaption{text-wrap:pretty}
         entries.forEach(function(en){
           if(en.isIntersecting && !timer){ start(); io.unobserve(en.target); }
         });
-      },{threshold:.4});
+      },{threshold:0,rootMargin:"0px 0px -35% 0px"});
       io.observe(playbtn.closest(".loopwrap"));
     } else { setStage(0); }
   }
@@ -769,10 +850,10 @@ p,li,dd,figcaption{text-wrap:pretty}
      animated height before cancelling, so a click halfway through an open
      picks up exactly where it is instead of jumping to a boundary.
 
-     Opening leads with speed and settles; closing starts gently, so a panel
-     reads as folding away rather than being yanked shut. */
-  var EASE_OPEN="cubic-bezier(.22,.72,.24,1)",
-      EASE_SHUT="cubic-bezier(.5,0,.2,1)";
+     Both directions use the page's one curve (--ease), so the accordions move
+     like every other control here. */
+  var EASE_OPEN="cubic-bezier(.22,.61,.36,1)",
+      EASE_SHUT=EASE_OPEN;
 
   function Accordion(d){
     this.d=d;
@@ -847,10 +928,10 @@ p,li,dd,figcaption{text-wrap:pretty}
     if(!this.body) return;
     if(this.bodyAnim) this.bodyAnim.cancel();
     this.bodyAnim=this.body.animate(
-      opening ? {opacity:[0,1],transform:["translateY(-9px)","translateY(0)"]}
-              : {opacity:[1,0],transform:["translateY(0)","translateY(-5px)"]},
+      /* opacity only: text being read never slides */
+      opening ? {opacity:[0,1]} : {opacity:[1,0]},
       /* backwards fill keeps the text hidden through the lead-in delay so it
-         rises behind the opening edge rather than flashing at full opacity */
+         appears behind the opening edge rather than flashing at full opacity */
       {duration:opening?360:200,easing:opening?EASE_OPEN:EASE_SHUT,
        delay:opening?80:0,fill:opening?"backwards":"forwards"}
     );
@@ -867,6 +948,10 @@ p,li,dd,figcaption{text-wrap:pretty}
     if(d.querySelector("summary")) new Accordion(d);
   });
 })();
+/* click a reference for the verse and its context */
+(function(){var SR=window.EsmrskyScripture;if(!SR)return;
+  SR.init({key:'the-gap',scan:'.verse .ref, .verse p, details .dbody p',versions:['NIV','NASB','NLT','KJV']});
+  var host=document.getElementById('pickerHost');host.innerHTML=SR.pickerHtml();SR.wirePicker(host.querySelector('.esv-pick'));})();
 </script>
 </body>
 </html>
