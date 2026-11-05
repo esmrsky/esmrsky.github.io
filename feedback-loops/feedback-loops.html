@@ -10,12 +10,32 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0f15'/%3E%3Cpath d='M8 32c5-14 11-14 16 0s11 14 16 0 11-14 16 0' fill='none' stroke='%238f85f3' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Feedback loops — a field guide to habits, motivation and emotional cycles</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css" rel="stylesheet">
 <style>
+@property --bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --card { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --tx { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --tx2 { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --line { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ch { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --cm { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --cr { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ce { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ok { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --warn { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --highlight-glow { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --btn-highlight { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --btn-shadow { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --btn-drop-shadow { syntax: '<color>'; inherits: true; initial-value: transparent; }
 :root {
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --t1: .2s;
+  --t2: .35s;
+  transition: --bg var(--t2) var(--ease), --card var(--t2) var(--ease), --tx var(--t2) var(--ease), --tx2 var(--t2) var(--ease), --line var(--t2) var(--ease), --ch var(--t2) var(--ease), --cm var(--t2) var(--ease), --cr var(--t2) var(--ease), --ce var(--t2) var(--ease), --ok var(--t2) var(--ease), --warn var(--t2) var(--ease), --highlight-glow var(--t2) var(--ease), --btn-highlight var(--t2) var(--ease), --btn-shadow var(--t2) var(--ease), --btn-drop-shadow var(--t2) var(--ease);
   --site-width: 1360px;
   --bg: #0e0f15;
   --card: #161924;
@@ -101,16 +121,6 @@
 * {
   box-sizing: border-box;
   margin: 0;
-}
-/* Smooth transition for theme switching */
-body, article, .cathead, .step, .lg, #toc, .tpill, .cpill, .toc-arrow i, .theme-toggle, .how, .result, .brk {
-  transition: 
-    background-color 0.3s ease,
-    background-image 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.08s ease;
 }
 html {
   scroll-behavior: smooth;
@@ -250,7 +260,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 2;
-  transition: color 0.2s, opacity 0.2s;
+  transition: color var(--t1) var(--ease), opacity var(--t1) var(--ease);
   opacity: 0;
   pointer-events: none;
 }
@@ -261,7 +271,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
   border: 1px solid transparent;
 }
 .toc-arrow.visible {
@@ -294,6 +304,7 @@ body {
   font-size: 13px;
   font-weight: 600;
   padding: 8px 16px;
+  min-height: 44px;
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line));
   background: linear-gradient(to bottom, color-mix(in srgb, var(--c) 8%, var(--card)), color-mix(in srgb, var(--c) 3%, var(--card)));
@@ -306,7 +317,7 @@ body {
     inset 0 1px 0 var(--btn-highlight),
     inset 0 -1px 0 var(--btn-shadow),
     0 2px 4px var(--btn-drop-shadow);
-  transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.08s;
+  transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease), background-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 .tpill i {
   color: var(--c);
@@ -683,13 +694,14 @@ article {
   text-decoration: none;
   display: inline-flex;
   gap: 8px;
-  align-items: baseline;
+  align-items: center;
+  min-height: 44px;
   margin: 0 8px 8px 0;
   box-shadow: 
     inset 0 1px 0 var(--btn-highlight),
     inset 0 -1px 0 var(--btn-shadow),
     0 2px 4px var(--btn-drop-shadow);
-  transition: border-color 0.2s, transform 0.08s, box-shadow 0.08s, background 0.2s, color 0.2s;
+  transition: border-color var(--t1) var(--ease), transform var(--t1) var(--ease), box-shadow var(--t1) var(--ease), background-color var(--t1) var(--ease), color var(--t1) var(--ease);
 }
 .cpill i {
   color: var(--c);
@@ -712,6 +724,13 @@ article {
 .cpill:active {
   transform: translateY(1px);
   box-shadow: inset 0 2px 4px var(--btn-shadow);
+}
+footer .home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--tx2);
+  margin-left: 8px;
 }
 footer {
   color: var(--tx2);
@@ -815,7 +834,7 @@ footer {
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     inset 0 -1px 0 rgba(0, 0, 0, 0.3),
     0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.15s, box-shadow 0.15s, border-color 0.2s, background 0.2s;
+  transition: transform var(--t1) var(--ease), box-shadow var(--t1) var(--ease), border-color var(--t1) var(--ease), background-color var(--t1) var(--ease);
 }
 .theme-toggle:hover {
   transform: scale(1.05);
@@ -833,14 +852,17 @@ footer {
   .theme-toggle {
     bottom: 20px;
     right: 20px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     font-size: 18px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero h1 .dots span {
     animation: none;
+  }
+  *, *::before, *::after {
+    transition: none !important;
   }
 }
 
@@ -871,7 +893,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 </div>
 <nav id="toc" aria-label="Models"></nav>
 <main id="page" class="wrap"></main>
-<div class="wrap"><footer>These are simplified educational models — the anxiety and low-mood loops especially are teaching sketches of CBT ideas, not clinical guidance. Sources are listed with each model. Built with Claude.</footer></div>
+<div class="wrap"><footer>These are simplified educational models — the anxiety and low-mood loops especially are teaching sketches of CBT ideas, not clinical guidance. Sources are listed with each model. Built with Claude. <a class="home" href="https://esmrsky.github.io/">← All projects</a></footer></div>
 <script>
 var CAT={h:{name:'Habits & design',v:'--ch'},m:{name:'Motivation',v:'--cm'},r:{name:'Learning & reward',v:'--cr'},e:{name:'Emotional loops',v:'--ce'}};
 var ANG={3:[-90,30,150],4:[-90,0,90,180]};
