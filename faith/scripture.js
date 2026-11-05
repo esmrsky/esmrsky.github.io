@@ -8,6 +8,12 @@
 (function () {
   'use strict';
 
+  /* The generated Russian page (/faith/ru/) carries <html data-lang="ru">. There the picker
+     offers НРП and СП from bolls.life, references are written the Russian way (Ин. 3:16,
+     4 Цар. 5:14, psalms by the Septuagint count), and every line of chrome follows the page. */
+  var RU = document.documentElement.getAttribute('data-lang') === 'ru';
+  function tr(en, ru) { return RU ? ru : en; }
+
   var BG = 'https://www.biblegateway.com/passage/?search=';
 
   /* One table for every book: the link regex, parseReference's book ids,
@@ -97,25 +103,84 @@
   var REF_RE = new RegExp(
     '\\b((?:[123]\\s)?(?:' + BOOK_NAME_PATTERN + ')\\s\\d+(?::\\d+(?:[-–]\\d+(?::\\d+)?)?(?:,\\s?\\d+(?:[-–]\\d+)?)*)?)', 'g');
 
+  /* Russian names, by book id: [full name for the dialog title, abbreviations...]. Russian
+     counts Samuel and Kings as 1-4 Царств, so those carry their own volume number (rn). */
+  var RU_BOOKS = [
+    [1, 'Бытие', 'Быт', 'Бытие'], [2, 'Исход', 'Исх', 'Исход'], [3, 'Левит', 'Лев', 'Левит'],
+    [4, 'Числа', 'Чис', 'Числа'], [5, 'Второзаконие', 'Втор', 'Второзаконие'], [6, 'Иисус Навин', 'Нав'],
+    [7, 'Судьи', 'Суд', 'Судей'], [8, 'Руфь', 'Руфь'], [9, 'Царств', 'Цар', 'Царств', 1], [10, 'Царств', 'Цар', 'Царств', 2],
+    [11, 'Царств', 'Цар', 'Царств', 3], [12, 'Царств', 'Цар', 'Царств', 4], [13, 'Паралипоменон', 'Пар', 'Паралипоменон', 1],
+    [14, 'Паралипоменон', 'Пар', 'Паралипоменон', 2], [15, 'Ездра', 'Езд', 'Ездры'], [16, 'Неемия', 'Неем', 'Неемии'],
+    [17, 'Есфирь', 'Есф', 'Есфирь'], [18, 'Иов', 'Иов', 'Иова'], [19, 'Псалтирь', 'Пс', 'Псалом', 'Псалтирь'],
+    [20, 'Притчи', 'Притч', 'Притчи'], [21, 'Екклесиаст', 'Еккл', 'Екк', 'Екклесиаст'], [22, 'Песнь Песней', 'Песн'],
+    [23, 'Исаия', 'Ис', 'Исаия'], [24, 'Иеремия', 'Иер', 'Иеремия'], [25, 'Плач Иеремии', 'Плач'],
+    [26, 'Иезекииль', 'Иез', 'Иезекииль'], [27, 'Даниил', 'Дан', 'Даниил'], [28, 'Осия', 'Ос', 'Осия'],
+    [29, 'Иоиль', 'Иоиль'], [30, 'Амос', 'Ам', 'Амос'], [31, 'Авдий', 'Авд', 'Авдия'], [32, 'Иона', 'Иона', 'Ионы'],
+    [33, 'Михей', 'Мих', 'Михей'], [34, 'Наум', 'Наум'], [35, 'Аввакум', 'Авв', 'Аввакум'], [36, 'Софония', 'Соф', 'Софония'],
+    [37, 'Аггей', 'Агг', 'Аггей'], [38, 'Захария', 'Зах', 'Захария'], [39, 'Малахия', 'Мал', 'Малахия'],
+    [40, 'От Матфея', 'Мф', 'Матфея'], [41, 'От Марка', 'Мк', 'Марка'], [42, 'От Луки', 'Лк', 'Луки'],
+    [43, 'От Иоанна', 'Ин', 'Иоанна'], [44, 'Деяния', 'Деян', 'Деяния'], [45, 'Римлянам', 'Рим', 'Римлянам'],
+    [46, 'Коринфянам', 'Кор', 'Коринфянам', 1], [47, 'Коринфянам', 'Кор', 'Коринфянам', 2], [48, 'Галатам', 'Гал', 'Галатам'],
+    [49, 'Ефесянам', 'Еф', 'Ефесянам'], [50, 'Филиппийцам', 'Флп', 'Филиппийцам'], [51, 'Колоссянам', 'Кол', 'Колоссянам'],
+    [52, 'Фессалоникийцам', 'Фес', 'Фессалоникийцам', 1], [53, 'Фессалоникийцам', 'Фес', 'Фессалоникийцам', 2],
+    [54, 'Тимофею', 'Тим', 'Тимофею', 1], [55, 'Тимофею', 'Тим', 'Тимофею', 2], [56, 'Титу', 'Тит', 'Титу'],
+    [57, 'Филимону', 'Флм', 'Филимону'], [58, 'Евреям', 'Евр', 'Евреям'], [59, 'Иакова', 'Иак', 'Иакова'],
+    [60, 'Петра', 'Пет', 'Петра', 1], [61, 'Петра', 'Пет', 'Петра', 2], [62, 'Иоанна', 'Ин', 'Иоанна', 1],
+    [63, 'Иоанна', 'Ин', 'Иоанна', 2], [64, 'Иоанна', 'Ин', 'Иоанна', 3], [65, 'Иуды', 'Иуд', 'Иуды'],
+    [66, 'Откровение', 'Откр', 'Откровение']
+  ];
+  var RU_BY_NAME = {};
+  var RU_FULL_BY_ID = {};
+  RU_BOOKS.forEach(function (b) {
+    var vol = typeof b[b.length - 1] === 'number' ? b[b.length - 1] : 0;
+    var names = b.slice(2).filter(function (x) { return typeof x === 'string'; });
+    RU_FULL_BY_ID[b[0]] = (vol ? vol + ' ' : '') + b[1];
+    names.forEach(function (name) { (RU_BY_NAME[name] || (RU_BY_NAME[name] = {}))[vol] = b[0]; });
+  });
+  var RU_NAME_PATTERN = Object.keys(RU_BY_NAME).sort(function (a, b) { return b.length - a.length; }).join('|');
+  /* Cyrillic has no \b in a non-unicode regex, so a lookbehind keeps «Ин» out of the middle of a word. */
+  if (RU) REF_RE = new RegExp(
+    '(?<![А-Яа-яЁёA-Za-z0-9])((?:[1-4]\\s)?(?:' + RU_NAME_PATTERN + ')\\.?\\s\\d+(?::\\d+(?:[-–]\\d+(?::\\d+)?)?(?:,\\s?\\d+(?:[-–]\\d+)?)*)?)', 'g');
+  var RU_PARSE_RE = new RegExp('^([1-4])?\\s?(' + RU_NAME_PATTERN + ')\\.?\\s(\\d+)(?::(\\d+)(?:-(\\d+))?)?');
+  /* Books with one chapter: «Иуд. 9» is a verse, not a chapter. */
+  var ONE_CHAPTER = { 31: 1, 57: 1, 63: 1, 64: 1, 65: 1 };
+
+  /* The running-text slots keep their English reference (data-verse="Numbers 13:33") on both
+     pages. bolls numbers НРП and СП the Russian way, which differs from the English in a few
+     places; these are the slots on /faith/ where it does, each checked by reading the verse. */
+  var RU_SLOT_MAP = { 'Psalm 107:20': 'Psalm 106:20', 'Numbers 13:33': 'Numbers 13:34', 'Numbers 13:30': 'Numbers 13:31' };
+  function slotRef(ref) { return RU && RU_SLOT_MAP[ref] ? RU_SLOT_MAP[ref] : ref; }
+
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* fine */ } }
 
 
   /* ---------- versions ---------- */
-  var VERSIONS = [
+  var VERSIONS = RU ? [
+    { code: 'NRT', label: 'НРП', full: 'Новый русский перевод', bg: 'NRT' },
+    { code: 'SYNOD', label: 'СП', full: 'Синодальный перевод', bg: 'RUSV' }
+  ] : [
     { code: 'NIV', full: 'New International Version' },
     { code: 'NASB', full: 'New American Standard' },
     { code: 'NKJV', full: 'New King James Version' },
     { code: 'NLT', full: 'New Living Translation' },
     { code: 'TPT', full: 'The Passion Translation' }
   ];
-  var ACTIVE_VERSION = 'NIV';
+  var ACTIVE_VERSION = RU ? 'NRT' : 'NIV';
+  /* Its own key on the Russian page, so neither language overwrites the other's choice. */
+  var VERSION_KEY = RU ? 'faith-version-ru' : 'faith-version';
+  function versionOf(code) {
+    for (var i = 0; i < VERSIONS.length; i++) if (VERSIONS[i].code === code) return VERSIONS[i];
+    return null;
+  }
+  /* What a reader sees: «НРП» rather than bolls.life's code NRT. */
+  function versionLabel(code) { var v = versionOf(code); return v ? (v.label || v.code) : code; }
   function getVersion() { return ACTIVE_VERSION; }
   function applyVersion(code) {
     if (!VERSIONS.some(function (v) { return v.code === code; })) return;
     ACTIVE_VERSION = code;
-    lsSet('faith-version', code);
-    document.querySelectorAll('.verpick-val').forEach(function (val) { val.textContent = code; });
+    lsSet(VERSION_KEY, code);
+    document.querySelectorAll('.verpick-val').forEach(function (val) { val.textContent = versionLabel(code); });
     document.querySelectorAll('.verpick-opt').forEach(function (o) { o.setAttribute('aria-selected', String(o.dataset.v === code)); });
   }
 
@@ -125,7 +190,7 @@
         return '<button class="verpick-opt" type="button" role="option" data-v="' + v.code + '"' +
           ' title="' + v.full + '" aria-label="' + v.full + '"' +
           ' aria-selected="' + (v.code === ACTIVE_VERSION) + '">' +
-          '<span class="code">' + v.code + '</span><span class="full">' + v.full + '</span></button>';
+          '<span class="code">' + (v.label || v.code) + '</span><span class="full">' + v.full + '</span></button>';
       }).join('');
   }
 
@@ -135,7 +200,7 @@
     var val = wrap && wrap.querySelector('.verpick-val');
     if (!wrap || !btn || !menu || !val) return null;
 
-    val.textContent = ACTIVE_VERSION;
+    val.textContent = versionLabel(ACTIVE_VERSION);
     var opts = function () { return Array.from(menu.querySelectorAll('.verpick-opt')); };
     var close = function () {
       wrap.classList.remove('open');
@@ -194,6 +259,7 @@
   /* ---------- reference parsing & auto-linking ---------- */
   function parseReference(refStr) {
     var clean = refStr.replace(/–/g, '-').trim();
+    if (/[А-Яа-яЁё]/.test(clean)) return parseRuReference(clean);
     var match = clean.match(/^([123]\s)?([A-Za-z]+)\s(\d+)(?::(\d+)(?:[-](\d+))?)?/);
     if (!match) return null;
     var numPrefix = match[1] ? match[1].trim() : '';
@@ -211,9 +277,28 @@
     return { bookId: bookId, chapter: chapter, verseStart: verseStart, verseEnd: verseEnd };
   }
 
+  /* A Cyrillic reference is already in the Russian numbering bolls uses for НРП and СП. */
+  function parseRuReference(clean) {
+    var m = clean.match(RU_PARSE_RE);
+    if (!m) return null;
+    var slot = RU_BY_NAME[m[2]];
+    if (!slot) return null;
+    var num = m[1] ? parseInt(m[1], 10) : 0;
+    var bookId = slot[num] !== undefined ? slot[num] : slot[0] !== undefined ? slot[0] : slot[Object.keys(slot)[0]];
+    if (!bookId) return null;
+    var first = parseInt(m[3], 10);
+    if (ONE_CHAPTER[bookId] && !m[4]) return { bookId: bookId, chapter: 1, verseStart: first, verseEnd: null };
+    return {
+      bookId: bookId,
+      chapter: first,
+      verseStart: m[4] ? parseInt(m[4], 10) : null,
+      verseEnd: m[5] ? parseInt(m[5], 10) : null
+    };
+  }
+
   function formatReferenceTitle(refStr) {
     var parsed = parseReference(refStr);
-    var full = parsed && BOOK_FULL_BY_ID[parsed.bookId];
+    var full = parsed && (RU ? RU_FULL_BY_ID : BOOK_FULL_BY_ID)[parsed.bookId];
     if (!full) return refStr;
     var out = full + ' ' + parsed.chapter;
     if (parsed.verseStart !== null) {
@@ -228,10 +313,10 @@
     var lastBook = '';
     var expanded = [];
     parts.forEach(function (part) {
-      var book = part.match(/^((?:[123]\s)?[A-Za-z]+)\s+\d/);
+      var book = part.match(/^((?:[1-4]\s)?[A-Za-zА-Яа-яЁё]+\.?)\s+\d/);
       if (book) lastBook = book[1];
       else if (lastBook && /^\d/.test(part)) part = lastBook + ' ' + part;
-      var commaGroup = part.match(/^((?:[123]\s)?[A-Za-z]+)\s+(\d+):(.+,.+)$/);
+      var commaGroup = part.match(/^((?:[1-4]\s)?[A-Za-zА-Яа-яЁё]+\.?)\s+(\d+):(.+,.+)$/);
       if (commaGroup) {
         commaGroup[3].split(/\s*,\s*/).forEach(function (verse) { expanded.push(commaGroup[1] + ' ' + commaGroup[2] + ':' + verse); });
       } else {
@@ -241,8 +326,20 @@
     return expanded;
   }
 
+  /* Bible Gateway takes English book names; on the Russian page it gets the Russian chapter
+     and verse (its НРП and СП count the psalms the same way) and the picked version. */
+  function bgHref(r) {
+    if (!RU) return BG + encodeURIComponent(r);
+    var p = parseReference(r);
+    var v = versionOf(ACTIVE_VERSION);
+    var ver = '&version=' + (v && v.bg ? v.bg : 'NRT');
+    if (!p) return BG + encodeURIComponent(r) + ver;
+    var q = BOOK_FULL_BY_ID[p.bookId] + ' ' + p.chapter +
+      (p.verseStart !== null ? ':' + p.verseStart + (p.verseEnd !== null ? '-' + p.verseEnd : '') : '');
+    return BG + encodeURIComponent(q) + ver;
+  }
   function singleRefLink(r) {
-    return '<a class="ref-link" target="_blank" rel="noopener" href="' + BG + encodeURIComponent(r) + '" data-ref="' + r + '">' + r + '</a>';
+    return '<a class="ref-link" target="_blank" rel="noopener" href="' + bgHref(r) + '" data-ref="' + r + '">' + r + '</a>';
   }
   function refLink(r) {
     return splitReferenceGroup(r).map(singleRefLink).join('<span class="ref-separator">; </span>');
@@ -316,9 +413,12 @@
       .replace(/<br\s*\/?>/gi, '\n')
       .replace(/<\/?(?:i|em)\b[^>]*>/gi, function (m) { return m.charAt(1) === '/' ? ITALIC_CLOSE : ITALIC_OPEN; })
       .replace(/<[^>]*>/g, '');
+    /* НРП marks translator-supplied words in italics; the Russian page prints them plain, as
+       its baked text does. It also loses the space before a line of dialogue (сказал:— Не). */
+    if (RU) marked = marked.replace(/:—/g, ': —').replace(/([.,!?;])—/g, '$1 —');
     return escapeScriptureText(marked)
-      .split(ITALIC_OPEN).join('<i>')
-      .split(ITALIC_CLOSE).join('</i>')
+      .split(ITALIC_OPEN).join(RU ? '' : '<i>')
+      .split(ITALIC_CLOSE).join(RU ? '' : '</i>')
       .replace(/[ \t]*\n[ \t]*/g, '\n')
       .replace(/\n{3,}/g, '\n\n')
       .replace(/[ \t]{2,}/g, ' ')
@@ -412,8 +512,9 @@
      'missing' (TPT has no such book) or 'failed'. A WEB stand-in is marked is-standin so
      the running text can keep its built-in NIV instead of swapping in a stand-in. */
   function swapNote(asked, shown, why) {
-    var lead = why === 'missing' ? asked + ' does not carry this book' : asked + ' could not be loaded';
-    return '<span class="verse-fallback-note' + (shown === NIV_STANDIN ? ' is-standin' : '') + '">' + lead + ' — showing ' + shown + '.</span>';
+    var lead = RU ? versionLabel(asked) + ' не удалось загрузить'
+      : why === 'missing' ? asked + ' does not carry this book' : asked + ' could not be loaded';
+    return '<span class="verse-fallback-note' + (shown === NIV_STANDIN ? ' is-standin' : '') + '">' + lead + tr(' — showing ', ' — показан ') + versionLabel(shown) + '.</span>';
   }
 
   function tptCoversBook(ref) {
@@ -506,9 +607,9 @@
   /* `asked`/`why` are set when this read is already a stand-in (TPT reading NIV). */
   function fetchFromBolls(ref, version, asked, why) {
     var parsed = parseReference(ref);
-    if (!parsed) return Promise.resolve('Reference not recognized.');
+    if (!parsed) return Promise.resolve(tr('Reference not recognized.', 'Ссылка не распознана.'));
     return getChapter(version, parsed.bookId, parsed.chapter).then(function (verses) {
-      if (!verses || !verses.length) return 'Verse not found.';
+      if (!verses || !verses.length) return tr('Verse not found.', 'Стих не найден.');
       var filtered;
       if (parsed.verseStart !== null) {
         if (parsed.verseEnd !== null) {
@@ -519,12 +620,12 @@
       } else {
         filtered = verses.slice(0, 3);
       }
-      if (!filtered.length) return 'Verse not found in ' + version + '.';
+      if (!filtered.length) return tr('Verse not found in ' + version + '.', 'Стих не найден в ' + versionLabel(version) + '.');
       var shown = verses.standIn || version;
       var note = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
       return filtered.map(function (v) { return cleanBollsText(v.text); }).join(' ') + (note ? '\n' + note : '');
     }, function () {
-      return 'Could not retrieve scripture text.';
+      return tr('Could not retrieve scripture text.', 'Не удалось загрузить текст Писания.');
     });
   }
 
@@ -720,11 +821,12 @@
      Thread that is exactly what made the panel close under a second press. */
   /* Fixed faces, not the page's. See the --read-* tokens in styles.css. */
   var CTX_FACES = [
-    ['text', 'Literata', 'serif, built for screen reading'],
-    ['display', 'Source Serif', 'serif, more contrast'],
-    ['sans', 'Atkinson', 'sans, drawn for low vision']
+    ['text', 'Literata', tr('serif, built for screen reading', 'антиква для чтения с экрана')],
+    ['display', 'Source Serif', tr('serif, more contrast', 'антиква, контрастнее')],
+    ['sans', 'Atkinson', tr('sans, drawn for low vision', 'гротеск для слабого зрения')]
   ];
   var CTX_LH = ['snug', 'normal', 'roomy'];
+  var CTX_LH_LABEL = { snug: tr('snug', 'плотно'), normal: tr('normal', 'обычно'), roomy: tr('roomy', 'свободно') };
   var CTX_FS_STEPS = [0.88, 0.94, 1, 1.08, 1.18, 1.3];
   var ctxType = 'text', ctxLh = 'normal', ctxFsIndex = 2;
   /* Off by default: a verse number every twenty words and a publisher's section heading
@@ -734,28 +836,28 @@
   var ctxNums = false, ctxHeads = false;
 
   function readingPanelHtml() {
-    return '<span class="ctxp-head">Typeface <b class="ctxp-head-val">Literata</b></span>' +
+    return '<span class="ctxp-head">' + tr('Typeface', 'Шрифт') + ' <b class="ctxp-head-val">Literata</b></span>' +
       '<div class="ctxp-faces" data-ctxp="type">' +
       CTX_FACES.map(function (f) {
         return '<button type="button" data-v="' + f[0] + '" data-name="' + f[1] + '" aria-pressed="false"' +
           ' title="' + f[1] + ' \u2014 ' + f[2] + '" aria-label="' + f[1] + ', ' + f[2] + '">' +
           '<b>A</b><i>a</i></button>';
       }).join('') + '</div>' +
-      '<span class="ctxp-head">Line height</span>' +
+      '<span class="ctxp-head">' + tr('Line height', 'Интервал') + '</span>' +
       '<div class="ctxp-seg" data-ctxp="lh">' +
       CTX_LH.map(function (v) {
-        return '<button type="button" data-v="' + v + '" aria-pressed="false">' + v + '</button>';
+        return '<button type="button" data-v="' + v + '" aria-pressed="false">' + CTX_LH_LABEL[v] + '</button>';
       }).join('') + '</div>' +
-      '<span class="ctxp-head">Text size</span>' +
+      '<span class="ctxp-head">' + tr('Text size', 'Размер текста') + '</span>' +
       /* Two equal halves in a pill read as a two-way preset, not as a ladder you can walk.
          A minus, the value you are on, and a plus say what it actually is. */
       '<div class="ctxp-step" data-ctxp="fs">' +
-      '<button type="button" data-step="-1" aria-label="Smaller passage text"><span class="sz-op" aria-hidden="true">\u2212</span></button>' +
+      '<button type="button" data-step="-1" aria-label="' + tr('Smaller passage text', 'Меньше текст') + '"><span class="sz-op" aria-hidden="true">\u2212</span></button>' +
       '<span class="ctxp-val">100%</span>' +
-      '<button type="button" data-step="1" aria-label="Larger passage text"><span class="sz-op" aria-hidden="true">+</span></button>' +
+      '<button type="button" data-step="1" aria-label="' + tr('Larger passage text', 'Больше текст') + '"><span class="sz-op" aria-hidden="true">+</span></button>' +
       '</div>' +
       contextShowsHtml() +
-      '<div class="ctxp-foot"><button class="ctxp-reset" type="button" data-ctxp-reset>Reset</button></div>';
+      '<div class="ctxp-foot"><button class="ctxp-reset" type="button" data-ctxp-reset>' + tr('Reset', 'Сбросить') + '</button></div>';
   }
 
   /* One element, moved rather than duplicated — beside "Even more context" on a desktop
@@ -764,9 +866,9 @@
      on purpose: these are two independent switches, not one choice out of a set, and the
      shape keeps them out of the panel's single-select handler while sitting inside it. */
   function contextShowsHtml() {
-    return '<div class="ctx-shows"><span class="ctxp-head">Show in the passage</span>' +
-      '<button type="button" data-show="nums" aria-pressed="false">Verse numbers</button>' +
-      '<button type="button" data-show="heads" aria-pressed="false">Headings</button>' +
+    return '<div class="ctx-shows"><span class="ctxp-head">' + tr('Show in the passage', 'Показывать в отрывке') + '</span>' +
+      '<button type="button" data-show="nums" aria-pressed="false">' + tr('Verse numbers', 'Номера стихов') + '</button>' +
+      '<button type="button" data-show="heads" aria-pressed="false">' + tr('Headings', 'Заголовки') + '</button>' +
       '</div>';
   }
 
@@ -894,26 +996,26 @@
     contextDialogEl.tabIndex = -1;
     contextDialogEl.innerHTML =
       '<div class="context-dialog-inner">' +
-      '  <header class="context-dialog-head"><div><span class="label smallcaps">See in context</span><h3></h3></div>' +
+      '  <header class="context-dialog-head"><div><span class="label smallcaps">' + tr('See in context', 'В контексте') + '</span><h3></h3></div>' +
       '  <div class="context-dialog-actions"><div class="verpick context-verpick">' +
-      '    <button class="verpick-btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="Bible translation">' +
+      '    <button class="verpick-btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="' + tr('Bible translation', 'Перевод Библии') + '">' +
       BOOK_SVG +
-      '      <span class="verpick-val">' + ACTIVE_VERSION + '</span>' +
+      '      <span class="verpick-val">' + versionLabel(ACTIVE_VERSION) + '</span>' +
       CARET_SVG +
-      '    </button><div class="verpick-menu" role="listbox" aria-label="Bible translation" hidden></div></div>' +
+      '    </button><div class="verpick-menu" role="listbox" aria-label="' + tr('Bible translation', 'Перевод Библии') + '" hidden></div></div>' +
       '    <div class="ctxprefs">' +
-      '      <button class="ctxprefs-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Reading settings" title="Reading settings">' + GEAR_SVG + '</button>' +
-      '      <div class="ctxprefs-menu" role="dialog" aria-label="Reading settings" hidden>' + readingPanelHtml() + '</div>' +
+      '      <button class="ctxprefs-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="' + tr('Reading settings', 'Настройки чтения') + '" title="' + tr('Reading settings', 'Настройки чтения') + '">' + GEAR_SVG + '</button>' +
+      '      <div class="ctxprefs-menu" role="dialog" aria-label="' + tr('Reading settings', 'Настройки чтения') + '" hidden>' + readingPanelHtml() + '</div>' +
       '    </div>' +
-      '    <button class="context-dialog-close" type="button" aria-label="Close">' +
+      '    <button class="context-dialog-close" type="button" aria-label="' + tr('Close', 'Закрыть') + '">' +
       '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6.6 6.6l10.8 10.8M17.4 6.6 6.6 17.4"/></svg>' +
       '    </button></div></header>' +
       '  <div class="context-dialog-body" aria-live="polite"></div>' +
-      '  <footer class="context-dialog-foot"><button class="context-more-button" type="button">Even more context</button></footer>' +
+      '  <footer class="context-dialog-foot"><button class="context-more-button" type="button">' + tr('Even more context', 'Ещё шире контекст') + '</button></footer>' +
       '</div>';
     document.body.appendChild(contextDialogEl);
     var contextPickerWrap = contextDialogEl.querySelector('.context-verpick');
-    contextPickerWrap.querySelector('.verpick-menu').innerHTML = versionMenuHtml('Read in');
+    contextPickerWrap.querySelector('.verpick-menu').innerHTML = versionMenuHtml(tr('Read in', 'Читать в переводе'));
     wireReadingPanel();
     contextVersionPicker = wireVersionPicker(contextPickerWrap, function (code) {
       contextDialogEl.dataset.version = code;
@@ -1020,7 +1122,7 @@
     var box = tooltipEl.querySelector('.tooltip-text');
     if (box) box.classList.add('is-loading');
     var label = tooltipEl.querySelector('.tooltip-ref');
-    if (label) label.textContent = ref + ' (' + version + ')';
+    if (label) label.textContent = ref + ' (' + versionLabel(version) + ')';
     var button = tooltipEl.querySelector('.tooltip-context-button');
     if (button) { button.dataset.ref = ref; button.dataset.version = version; }
     return loadVerseText(ref, version).then(function (text) {
@@ -1030,13 +1132,13 @@
     }).catch(function () {
       if (requestId !== tooltipRequestId) return;
       var b = tooltipEl.querySelector('.tooltip-text');
-      if (b) { b.classList.remove('is-loading'); b.innerHTML = '<span style="color:var(--c-fear)">Unable to load verse.</span>'; }
+      if (b) { b.classList.remove('is-loading'); b.innerHTML = '<span style="color:var(--c-fear)">' + tr('Unable to load verse.', 'Не удалось загрузить стих.') + '</span>'; }
     });
   }
 
   function tooltipActionHtml(ref, version) {
     return '<div class="tooltip-actions"><button class="tooltip-context-button" type="button" data-ref="' +
-      escapeScriptureText(ref) + '" data-version="' + version + '">See in context</button></div>';
+      escapeScriptureText(ref) + '" data-version="' + version + '">' + tr('See in context', 'Показать контекст') + '</button></div>';
   }
 
   function showTooltip(link, ref, pinned) {
@@ -1048,8 +1150,8 @@
     var version = getVersion();
     positionTooltip(link);
     tooltipEl.innerHTML =
-      '<span class="tooltip-ref">' + escapeScriptureText(ref) + ' (' + version + ')</span>' +
-      '<div class="tooltip-text is-loading">Reading…</div>' +
+      '<span class="tooltip-ref">' + escapeScriptureText(ref) + ' (' + versionLabel(version) + ')</span>' +
+      '<div class="tooltip-text is-loading">' + tr('Reading…', 'Читаю…') + '</div>' +
       tooltipActionHtml(ref, version);
     tooltipEl.classList.toggle('is-pinned', tooltipPinned);
     tooltipEl.classList.add('open');
@@ -1088,10 +1190,10 @@
     var selectedBefore = preserveSelection && body.querySelector('.is-selected');
     var selectedOffsetBefore = selectedBefore ? selectedBefore.offsetTop : 0;
     var scrollBefore = body.scrollTop;
-    if (!preserveSelection) body.innerHTML = '<p class="context-loading">Loading surrounding verses…</p>';
+    if (!preserveSelection) body.innerHTML = '<p class="context-loading">' + tr('Loading surrounding verses…', 'Загружаю соседние стихи…') + '</p>';
     else { body.style.minHeight = body.offsetHeight + 'px'; body.classList.add('is-refreshing'); }
     moreButton.disabled = true;
-    moreButton.textContent = preserveSelection ? 'Loading more…' : 'Even more context';
+    moreButton.textContent = preserveSelection ? tr('Loading more…', 'Загружаю ещё…') : tr('Even more context', 'Ещё шире контекст');
 
     loadVerseContext(ref, version, radius).then(function (html) {
       if (requestId !== contextRequestId) return;
@@ -1103,14 +1205,14 @@
         if (selectedAfter) body.scrollTop = scrollBefore + selectedAfter.offsetTop - selectedOffsetBefore;
       }
       moreButton.disabled = false;
-      moreButton.textContent = 'Even more context';
+      moreButton.textContent = tr('Even more context', 'Ещё шире контекст');
     }).catch(function () {
       if (requestId !== contextRequestId) return;
       body.classList.remove('is-refreshing');
       body.style.minHeight = '';
-      body.innerHTML = '<p>Unable to load the surrounding verses right now.</p>';
+      body.innerHTML = '<p>' + tr('Unable to load the surrounding verses right now.', 'Сейчас не удалось загрузить соседние стихи.') + '</p>';
       moreButton.disabled = false;
-      moreButton.textContent = 'Even more context';
+      moreButton.textContent = tr('Even more context', 'Ещё шире контекст');
     });
   }
 
@@ -1185,8 +1287,27 @@
     return text.replace(/[,;:](’?)$/, '.$1');
   }
 
+  /* The same rule in Russian marks: the slot wraps a verse in «», so speech inside it nests as
+     „“, and a verse that opens on a dialogue dash drops it (the guillemets stand in). The baked
+     НРП on /faith/ru/ was written by this rule, so switching back from СП reproduces it exactly. */
+  function nestQuotesRu(text) {
+    var o = (text.match(/«/g) || []).length;
+    var c = (text.match(/»/g) || []).length;
+    var startQ = /^«/.test(text), endQ = /»$/.test(text);
+    if (startQ && (endQ ? o === c : o === c + 1)) {
+      text = text.replace(/^«\s*/, '').replace(/»$/, '');
+    } else {
+      if (endQ && c > o) { text = text.slice(0, -1); c--; }
+      var runsOn = o > c;
+      text = text.replace(/«/g, '„').replace(/»/g, '“');
+      if (runsOn) text += '“';
+    }
+    text = text.replace(/^[—–]\s*/, '');
+    return text.replace(/[,;:](“?)$/, '.$1');
+  }
+
   function swapVerse(el, version) {
-    var ref = el.dataset.verse;
+    var ref = el.dataset.verse && slotRef(el.dataset.verse);
     if (!ref) return;
     el.classList.add('is-swapping');
     var token = version + '|' + ref;
@@ -1194,7 +1315,7 @@
     loadVerseText(ref, version).then(function (text) {
       if (el.dataset.pending !== token) return;
       /* Errors keep the built-in fallback text rather than replacing scripture with an apology. */
-      if (/^(Could not retrieve|Verse not found|Reference not recognized)/.test(text)) {
+      if (/^(Could not retrieve|Verse not found|Reference not recognized|Не удалось загрузить|Стих не найден|Ссылка не распознана)/.test(text)) {
         el.classList.remove('is-swapping');
         return;
       }
@@ -1210,7 +1331,7 @@
       var parts = splitHeading(noteMatch ? text.replace(noteMatch[0], '') : text);
       var flowed = flowText(parts.body);
       var note = noteMatch ? noteMatch[0] : '';
-      el.innerHTML = '“' + nestQuotes(flowed) + '”' + note;
+      el.innerHTML = RU ? '«' + nestQuotesRu(flowed) + '»' + note : '“' + nestQuotes(flowed) + '”' + note;
       el.dataset.loaded = version;
       el.classList.remove('is-swapping');
     }).catch(function () {
@@ -1262,7 +1383,7 @@
     var wrap = document.getElementById('verpick');
     if (!wrap) return;
     var menu = wrap.querySelector('.verpick-menu');
-    if (menu) menu.innerHTML = versionMenuHtml('Verses read in');
+    if (menu) menu.innerHTML = versionMenuHtml(tr('Verses read in', 'Стихи читаются в переводе'));
     wireVersionPicker(wrap, function () {
       refreshPinnedTooltip();
       refreshLiveVerses();
@@ -1270,7 +1391,7 @@
   }
 
   function init() {
-    var saved = lsGet('faith-version');
+    var saved = lsGet(VERSION_KEY);
     if (saved && VERSIONS.some(function (v) { return v.code === saved; })) ACTIVE_VERSION = saved;
     ensureScrollBehaviourCss();
     document.querySelectorAll('[data-autolink]').forEach(function (el) { autoLink(el); });

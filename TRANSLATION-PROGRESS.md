@@ -110,7 +110,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `twelve` | not started | Multi-file app (`data.js`, `ultimate-data.js`, `expanded-data.js`, `diagnostic-data.js`, `scripture-data.js` 42 KB): almost all strings are JS-owned. First in the routine's queue. |
 | `most-best-verses` | not started | The whole page is quoted scripture, rendered from JS through the shared reader as a library. |
 | `draw-near` | not started | Loads the shared scripture reader; NIV baked in the markup. |
-| `faith` | not started | Own reader (`faith/scripture.js`), NIV baked. Two subpages (`miracles.html`, `old/`). |
+| `faith` | **done** | `/faith/ru/` + `ru/miracles.html`, November 5, 2026. 775 units on the main page, 25 on miracles. The page's own reader speaks Russian: `scripture.js` keeps a separate RU version list (НРП default, СП) under its own storage key, parses Russian references (Psalms by the LXX count) and writes its tooltip and context dialog in Russian; all 151 slots are baked НРП from bolls (`RU_SLOT_MAP` covers Пс. 106:20, Чис. 13:31, 13:34). Miracle data in `faith/miracles-ru.js` (196 entries, inert `text/x-ru` on the English page). `switcher.js` names the directions in Russian. Newsreader has no Cyrillic, so RU text runs in Literata. The EN · RU switch moved the nav's wrap point from 1100px to 1240px (English too). `old/` and `new/` untouched. |
 | `father-inside-time` | not started | Four pages: `/`, `lesson-2/`, `lesson-3/`, `cross-examination/` (~190 KB, the biggest). Shared reader; lesson switcher labels in the hero. |
 | `inner-room` | not started | Shared reader; NIV baked. Large page. |
 | `one-accord` | not started | Shared reader; NIV baked. Uses learn mode (`/assets/learn-mode.js`) — its UI strings need a Russian payload. |

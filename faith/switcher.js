@@ -18,14 +18,16 @@
   'use strict';
 
   var KEY = 'faith-dir';
+  /* The Russian page names the directions and the button in Russian. */
+  var RU = document.documentElement.getAttribute('data-lang') === 'ru';
 
   /* swatches are the light-mode values from themes.css, in reading order */
   var DIRECTIONS = [
-    { id: 'original', name: 'Original',  sw: ['#a1761c', '#3c5a96', '#b03a2a'] },
-    { id: 'bulletin', name: 'Bulletin',  sw: ['#2933F0', '#FF3E8A', '#14A06A'] },
-    { id: 'prism',    name: 'Prism',     sw: ['#0B4CFF', '#E23200', '#00875F'] },
-    { id: 'placard',  name: 'Placard',   sw: ['#E8112D', '#0026FF', '#0F0F10'] },
-    { id: 'margin',   name: 'Margin',    sw: ['#1B3BFF', '#D6002E', '#007A5E'] }
+    { id: 'original', name: 'Original', ru: 'Исходное', sw: ['#a1761c', '#3c5a96', '#b03a2a'] },
+    { id: 'bulletin', name: 'Bulletin', ru: 'Бюллетень', sw: ['#2933F0', '#FF3E8A', '#14A06A'] },
+    { id: 'prism',    name: 'Prism',    ru: 'Призма', sw: ['#0B4CFF', '#E23200', '#00875F'] },
+    { id: 'placard',  name: 'Placard',  ru: 'Плакат', sw: ['#E8112D', '#0026FF', '#0F0F10'] },
+    { id: 'margin',   name: 'Margin',   ru: 'Поля', sw: ['#1B3BFF', '#D6002E', '#007A5E'] }
   ];
 
 
@@ -58,8 +60,13 @@
 
     var next = DIRECTIONS[(indexOf(d.id) + 1) % DIRECTIONS.length];
     for (var i = 0; i < 3; i++) btn.style.setProperty('--sw' + (i + 1), d.sw[i]);
-    btn.title = d.name + ' — click for ' + next.name;
-    btn.setAttribute('aria-label', 'Design direction: ' + d.name + '. Click for ' + next.name + '.');
+    if (RU) {
+      btn.title = d.ru + ' — нажми, чтобы выбрать «' + next.ru + '»';
+      btn.setAttribute('aria-label', 'Оформление: ' + d.ru + '. Нажми, чтобы выбрать «' + next.ru + '».');
+    } else {
+      btn.title = d.name + ' — click for ' + next.name;
+      btn.setAttribute('aria-label', 'Design direction: ' + d.name + '. Click for ' + next.name + '.');
+    }
   }
 
   apply(root.dataset.dir || 'original', false);
