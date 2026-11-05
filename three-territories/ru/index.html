@@ -19,6 +19,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
 <style>
+:root{--ease:cubic-bezier(.2,.7,.3,1)}
+
 :root{
   color-scheme:light;
   --ink:#0E0D0B;
@@ -101,9 +103,13 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
 #mode{
   background:var(--ink);color:var(--porcelain);border:1.5px solid var(--ink);
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
-  padding:9px 18px;cursor:pointer;border-radius:999px;transition:background-color .25s,border-color .25s,color .25s;
+  padding:9px 18px;cursor:pointer;border-radius:999px;transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);
 }
 #mode:hover{background:var(--ember);border-color:var(--ember)}
+/* 44px tap targets by hit area, so the slim nav and pill keep their look */
+#mode,.site-nav a{position:relative}
+#mode::after{content:"";position:absolute;inset:-6px 0}
+.site-nav a::after{content:"";position:absolute;inset:-6px -4px}
 #mode:focus-visible{outline:2.5px solid var(--ember);outline-offset:2px}
 
 /* ---------- hero ---------- */
@@ -154,7 +160,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
 .vs-grid{display:grid;grid-template-columns:1fr 84px 1fr;gap:0;align-items:stretch}
 .vs-card{
   border:1.5px solid var(--rule-d);border-radius:22px;padding:44px 38px;
-  background:var(--ink-soft);position:relative;transition:transform .35s ease,border-color .35s ease;
+  background:var(--ink-soft);position:relative;transition:transform .32s var(--ease),border-color .32s var(--ease);
 }
 .vs-card:hover{transform:translateY(-5px);border-color:var(--ember)}
 .vs-card .pos{
@@ -179,7 +185,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
 .trip-card{
   border:1.5px solid var(--ink);border-radius:22px;padding:38px 32px;background:#fff;
   background:rgba(255,255,255,.45);position:relative;overflow:hidden;
-  transition:transform .35s ease;
+  transition:transform .32s var(--ease);
 }
 .trip-card:hover{transform:translateY(-5px)}
 .trip-card::after{content:'';position:absolute;left:0;right:0;bottom:0;height:7px}
@@ -199,7 +205,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
 .texts .row{
   display:grid;grid-template-columns:170px 1fr;gap:26px;align-items:start;
   border:1.5px solid var(--rule-l);border-radius:16px;padding:22px 26px;background:rgba(255,255,255,.3);
-  transition:border-color .3s;
+  transition:border-color .32s var(--ease);
 }
 .texts .row:hover{border-color:var(--ember)}
 .texts .ref{
@@ -215,7 +221,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
 #journey{width:100%;display:block}
 #journey text{font-family:'JetBrains Mono',monospace;text-transform:uppercase}
 .terr-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px}
-.terr-card{border-radius:22px;padding:34px 30px;color:var(--porcelain);position:relative;overflow:hidden;transition:transform .35s ease}
+.terr-card{border-radius:22px;padding:34px 30px;color:var(--porcelain);position:relative;overflow:hidden;transition:transform .32s var(--ease)}
 .terr-card:hover{transform:translateY(-5px)}
 .terr-card.k1{background:var(--nile)}
 .terr-card.k2{background:#D9A12E;background:linear-gradient(150deg,#E3B44E,#D59A25);color:#211809}
@@ -341,7 +347,7 @@ section.sec-drift .lede{color:rgba(242,235,220,.72)}
 .voices-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .voice{
   border:1.5px solid var(--ink);border-radius:22px;padding:36px 32px;background:rgba(255,255,255,.4);
-  display:flex;flex-direction:column;gap:14px;transition:transform .35s ease;
+  display:flex;flex-direction:column;gap:14px;transition:transform .32s var(--ease);
 }
 .voice:hover{transform:translateY(-5px)}
 .voice .head{display:flex;align-items:center;gap:16px}
@@ -373,7 +379,7 @@ section.sec-drift .lede{color:rgba(242,235,220,.72)}
 .claim{
   border:1.5px solid var(--rule-d);border-radius:20px;padding:30px 32px;background:var(--ink-soft);
   display:grid;grid-template-columns:52px 1fr 190px;gap:24px;align-items:start;
-  transition:border-color .3s;
+  transition:border-color .32s var(--ease);
 }
 .claim:hover{border-color:var(--ember)}
 .claim .ic-lg{color:var(--ember);margin-top:2px}
@@ -486,14 +492,19 @@ footer{background:var(--ink);color:var(--porcelain);padding:64px 0}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
 footer p{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-d)}
 footer .marks{display:flex;gap:10px}
+footer .home{display:inline-flex;align-items:center;min-height:44px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--porcelain);text-decoration:none}
+footer .home:hover{color:var(--ember)}
 footer .marks i{width:12px;height:12px;border-radius:50%;display:block}
 footer .marks i:nth-child(1){background:var(--nile)}
 footer .marks i:nth-child(2){background:var(--dune)}
 footer .marks i:nth-child(3){background:var(--canaan)}
 footer .marks i:nth-child(4){background:var(--ember)}
 
+/* ---------- theme cross-fade ---------- */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:var(--ease)}
+
 /* ---------- reveal ---------- */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
@@ -555,6 +566,63 @@ footer .marks i:nth-child(4){background:var(--ember)}
   .sec-dark p,.sec-dark .lede,.stage-grid p,.fourth-note p{color:#333!important}
   .stage,.claim{background:#fff!important;border-color:#555!important}
 }
+</style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior from /assets/scripture-popover.js, which ships no colors; these are this page's clothes for it. */
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,var(--ember) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--ink);text-decoration-color:var(--ink)}
+.esv-tip{position:absolute;z-index:120;display:none;max-width:360px;padding:15px 17px 13px;border:1px solid var(--rule-l);border-radius:4px;background:var(--porcelain);box-shadow:0 22px 60px rgba(14,13,11,.28);color:var(--ink);font-family:'Fraunces',serif;font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--ember);font-family:'Instrument Sans',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-tip-text{min-height:3em;transition:opacity .2s var(--ease)}
+.esv-tip-text.is-loading{opacity:.45}
+.esv-note{display:block;margin-top:8px;color:var(--muted-l);font-family:'Instrument Sans',sans-serif;font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--rule-l-soft)}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--rule-l);border-radius:999px;background:none;color:var(--ember);font-family:'Instrument Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border-color:var(--ember);color:var(--ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--rule-l);border-radius:999px;background:none;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;transition:border-color .2s var(--ease),background-color .2s var(--ease)}
+.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border-color:var(--ember)}
+.esv-pick-ic{width:15px;height:15px;color:var(--ember);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--muted-l);transition:rotate .2s var(--ease)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:130;min-width:250px;max-height:min(62dvh,420px);overflow-y:auto;padding:6px;border:1px solid var(--rule-l);border-radius:4px;background:var(--porcelain);box-shadow:0 22px 60px rgba(14,13,11,.28);opacity:1;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--rule-l-soft);color:var(--muted-l);font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--muted-l);text-align:left;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:.82rem;font-weight:700}
+.esv-pick-opt .full{font-family:'Fraunces',serif;font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--ember) 10%,transparent);color:var(--ink)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--ember)}
+.esv-ctx{width:min(880px,calc(100% - 24px));max-height:min(86dvh,800px);padding:0;border:1px solid var(--rule-l);border-radius:4px;background:var(--porcelain);color:var(--ink);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden;opacity:0;scale:.98;transition:opacity .32s var(--ease),scale .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.98}}
+.esv-ctx::backdrop{background:rgba(14,13,11,0);transition:background-color .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(14,13,11,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(14,13,11,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(86dvh,800px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--rule-l-soft)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--ember);font-family:'Instrument Sans',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-ctx-head h3{margin:0;font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.15;color:var(--ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--rule-l);border-radius:50%;background:none;color:var(--muted-l);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close:hover{color:var(--ink);border-color:var(--ember)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:'Fraunces',serif;text-align:left}
+.esv-ctx-passage{margin:0}
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--ember) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ember) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-note{margin:.8em 0 0;color:var(--muted-l);font-family:'Instrument Sans',sans-serif;font-size:.82rem}
+.esv-ctx-loading{color:var(--muted-l);font-family:'Instrument Sans',sans-serif;font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--rule-l-soft);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--rule-l);border-radius:999px;background:none;color:var(--muted-l);font-family:'Instrument Sans',sans-serif;font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--ember);color:var(--ink)}
+.esv-ctx-more:disabled{opacity:.5;cursor:default}
+@media (max-width:560px){.esv-ctx-head{flex-wrap:wrap}.esv-ctx-body{padding:16px 16px 18px}}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
 </style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -1228,6 +1296,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 <footer>
   <div class="wrap">
     <p>Три территории · Обновлено в августе 2026 · Утверждения размечены, вопросы открыты</p>
+    <a class="home" href="/ru/">← Все проекты</a>
     <div class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   </div>
 </footer>
@@ -1278,19 +1347,33 @@ var RU = document.documentElement.getAttribute('data-lang') === 'ru';
     dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
   apply();
+  /* The theme cross-fades in one view transition. Registered tokens would ease only half of this
+     palette (about thirty dark surfaces are written out per component), and a transition added to
+     those components would replace the ones they already carry. One press, one fade; a press
+     during a fade applies directly instead of starting a second one. */
+  var fading = null;
   mode.addEventListener('click', function(){
     dark = !dark;
-    apply();
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (document.startViewTransition && !still && !fading) {
+      fading = document.startViewTransition(apply);
+      fading.finished.then(function(){ fading = null; }, function(){ fading = null; });
+    } else apply();
     try { localStorage.setItem('three-territories-theme', dark ? 'dark' : 'light'); } catch (e) {}
   });
 
   // reveals
+  /* threshold 0: a percentage of a block taller than the screen is never met; and if the
+     observer never answers, nothing may stay invisible. */
+  var rvs = document.querySelectorAll('.rv');
   var io = new IntersectionObserver(function(entries){
+    window.__rvLive = true;
     entries.forEach(function(e){
       if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
     });
-  }, {threshold:.12});
-  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  }, {threshold:0, rootMargin:'0px 0px -6% 0px'});
+  rvs.forEach(function(el){ io.observe(el); });
+  setTimeout(function(){ if (!window.__rvLive) rvs.forEach(function(el){ el.classList.add('in'); }); }, 2500);
 
   // journey draw + walker
   var line = document.getElementById('jline');
@@ -1303,8 +1386,14 @@ var RU = document.documentElement.getAttribute('data-lang') === 'ru';
         jio.unobserve(e.target);
       }
     });
-  }, {threshold:.35});
+  }, {threshold:0, rootMargin:'0px 0px -25% 0px'});
   jio.observe(document.getElementById('journey'));
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){var S=window.EsmrskyScripture;if(!S)return;
+  S.init({key:"three-territories",scan:".ref,.claim p,.source-list li",versions:["NIV","NASB","ESV","KJV","NLT"]});
 })();
 </script>
 <script>
