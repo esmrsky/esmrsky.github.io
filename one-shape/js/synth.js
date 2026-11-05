@@ -5,6 +5,8 @@
    ============================================================ */
 (function () {
   "use strict";
+  var RU = document.documentElement.getAttribute("data-lang") === "ru", TR = (RU && window.OS_RU_UI) || {};
+  function tr(s) { return TR[s] != null ? TR[s] : s; }
   var INDEX = null, drawer, scrim, lastFocus;
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
   function idx() { if (!INDEX) INDEX = window.buildNeedIndex(); return INDEX; }
@@ -18,14 +20,14 @@
   function renderMap() {
     var c = document.getElementById("need-map");
     if (!c || !window.NEEDS) return;
-    var head = '<div class="needmap-head"><span>Need</span><span>The Pattern</span><span>Love</span><span>Mechanics</span><span>The Way Back</span></div>';
+    var head = '<div class="needmap-head"><span>' + tr("Need") + '</span><span>' + tr("The Pattern") + '</span><span>' + tr("Love") + '</span><span>' + tr("Mechanics") + '</span><span>' + tr("The Way Back") + '</span></div>';
     var rows = window.NEEDS.map(function (n) {
       return '<button class="need-row" data-need="' + n.id + '">' +
         '<span><span class="nm-name">' + esc(n.name) + '</span><span class="nm-q">' + esc(n.q) + "</span></span>" +
         cell(n.lens.pattern, "pattern") + cell(n.lens.love, "love") +
         cell(n.lens.mechanics, "mechanics") + cell(n.lens.wayback, "wayback") + "</button>";
     }).join("");
-    var foot = '<div class="needmap-foot">All four chapters converge on <b>belonging, worth, safety, significance</b> — then each reaches into its own ground (Love → intimacy, Mechanics → provision &amp; renown, The Way Back → all the way to transcendence). Open any need to read it in all four.</div>';
+    var foot = '<div class="needmap-foot">' + tr("needmap-foot") + '</div>';
     c.innerHTML = head + rows + foot;
     c.querySelectorAll(".need-row").forEach(function (b) {
       b.addEventListener("click", function () { openNeed(b.dataset.need); });
@@ -41,18 +43,18 @@
   function buildDrawer(d) {
     var n = d.need, h = "";
     h += '<div class="nd-head"><div class="nd-tt">' +
-      '<span class="nd-eyebrow">the need · seen in every chapter</span>' +
+      '<span class="nd-eyebrow">' + tr("the need · seen in every chapter") + '</span>' +
       "<h2>" + esc(n.name) + "</h2>" +
       '<p class="nd-q">' + esc(n.q) + "</p></div>" +
-      '<button class="nd-close" aria-label="Close">' + X + "</button></div>";
+      '<button class="nd-close" aria-label="' + tr("Close") + '">' + X + "</button></div>";
     h += '<div class="nd-body">';
-    h += '<p class="nd-line"><span class="lab">the ache</span>' + esc(n.ache) + "</p>";
+    h += '<p class="nd-line"><span class="lab">' + tr("the ache") + '</span>' + esc(n.ache) + "</p>";
     h += '<p class="nd-line nd-promise">“' + esc(n.promise) + '”</p>';
-    h += '<p class="nd-line nd-exit"><span class="lab">the way back</span>' + esc(n.exit) + "</p>";
+    h += '<p class="nd-line nd-exit"><span class="lab">' + tr("the way back") + '</span>' + esc(n.exit) + "</p>";
 
     if (d.feelings.length) {
       var words = d.feelings.map(function (f) { return '<span class="nd-word">' + esc(f.feel) + "</span>"; }).join("");
-      h += sec("When it surfaces as a feeling", "the way back", '<div class="nd-words">' + words + "</div>" + jump("#wayback-feel", "Open the feelings router"));
+      h += sec(tr("When it surfaces as a feeling"), tr("the way back"), '<div class="nd-words">' + words + "</div>" + jump("#wayback-feel", tr("Open the feelings router")));
     }
     if (d.loveActs.length || d.loveFeelings.length) {
       var inner = d.loveActs.map(function (a) {
@@ -60,23 +62,23 @@
       }).join("") + d.loveFeelings.map(function (f) {
         return '<div class="nd-mini"><span class="nm-name">' + esc(f.name) + '</span> <span class="nm-sub">— ' + esc(f.sub) + "</span></div>";
       }).join("");
-      h += sec("As a counterfeit of love", "love", inner + jump("#love-acts", "Open the love chapter"));
+      h += sec(tr("As a counterfeit of love"), tr("love"), inner + jump("#love-acts", tr("Open the love chapter")));
     }
     if (d.counterfeits.length) {
       var items = d.counterfeits.map(function (c) {
-        var tag = c.behavioral ? ' <span class="nm-sub">· engineered</span>' : "";
+        var tag = c.behavioral ? ' <span class="nm-sub">' + tr("· engineered") + '</span>' : "";
         return '<div class="nd-mini"><span class="nm-name">' + esc(c.name) + "</span>" + tag +
           '<br><span class="nm-sub">' + esc(c.counterfeitUse) + "</span></div>";
       }).join("");
       var anyB = d.counterfeits.some(function (c) { return c.behavioral; });
-      h += sec("Where it shows up day to day", "everyday life", items +
-        jump("#mech-counterfeits", "Open everyday counterfeits") +
+      h += sec(tr("Where it shows up day to day"), tr("everyday life"), items +
+        jump("#mech-counterfeits", tr("Open everyday counterfeits")) +
         "");
     }
     if (d.axis) {
-      h += sec("On the axis map", "loop mechanics",
+      h += sec(tr("On the axis map"), tr("loop mechanics"),
         '<div class="nd-mini"><span class="nm-name">' + esc(d.axis.title) + '</span><br><span class="nm-sub">' + esc(d.axis.shame) + "</span></div>" +
-        jump("#mech-axes", "Open the axis map"));
+        jump("#mech-axes", tr("Open the axis map")));
     }
     h += '<div class="nd-scripture">“' + esc(n.scripture.line) + "”<cite>" + esc(n.scripture.ref) + "</cite></div>";
     h += "</div>";

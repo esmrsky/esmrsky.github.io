@@ -5,6 +5,8 @@
    ============================================================ */
 (function () {
   "use strict";
+  var RU = document.documentElement.getAttribute("data-lang") === "ru", TR = (RU && window.OS_RU_UI) || {};
+  function tr(s) { return TR[s] != null ? TR[s] : s; }
   function $(id) { return document.getElementById(id); }
 
   /* ---- "When I feel…" re-source plan generator ---- */
@@ -25,21 +27,21 @@
       var need = window.needById ? window.needById(needId) : null;
 
       var L = [];
-      L.push("RE-SOURCE PLAN");
+      L.push(tr("RE-SOURCE PLAN"));
       L.push("");
-      L.push("I feel: " + f.feel);
-      L.push("The felt signal: " + f.signal);
+      L.push(tr("I feel: ") + f.feel);
+      L.push(tr("The felt signal: ") + f.signal);
       L.push("");
-      L.push("The real need under it: " + f.need + (need ? '  →  ' + need.name + ' (“' + need.q + '”)' : ""));
-      L.push("The counterfeit I reach for: " + (run || f.old));
-      if (before) L.push("What happened right before: " + before);
+      L.push(tr("The real need under it: ") + f.need + (need ? '  →  ' + need.name + ' (“' + need.q + '”)' : ""));
+      L.push(tr("The counterfeit I reach for: ") + (run || f.old));
+      if (before) L.push(tr("What happened right before: ") + before);
       L.push("");
-      L.push("Why it loops: it gives a little, never enough — then the need returns sharper, with shame.");
+      L.push(tr("Why it loops: it gives a little, never enough — then the need returns sharper, with shame."));
       L.push("");
-      L.push("The real meal: " + f.real);
-      if (need) L.push("The way back (" + need.name + "): " + need.exit);
+      L.push(tr("The real meal: ") + f.real);
+      if (need) L.push(tr("The way back (") + need.name + "): " + need.exit);
       L.push("");
-      L.push("First faithful move: " + f.move);
+      L.push(tr("First faithful move: ") + f.move);
 
       out.textContent = L.join("\n");
       out.hidden = false;
@@ -50,8 +52,8 @@
     copy.addEventListener("click", function () {
       if (!navigator.clipboard) return;
       navigator.clipboard.writeText(out.textContent).then(function () {
-        copy.textContent = "Copied ✓";
-        setTimeout(function () { copy.textContent = "Copy plan"; }, 1600);
+        copy.textContent = tr("Copied ✓");
+        setTimeout(function () { copy.textContent = tr("Copy plan"); }, 1600);
       });
     });
   }
@@ -62,9 +64,9 @@
   // need + grace exit from the model so a counterfeit verdict knows the
   // way back.
   var SPLIT_META = [
-    { thread: "you're waiting on a feeling instead of choosing an action" },
-    { thread: "it's about relieving your own lack, not their good" },
-    { thread: "their separateness reads as a threat — the selves are fused" }
+    { thread: tr("you're waiting on a feeling instead of choosing an action") },
+    { thread: tr("it's about relieving your own lack, not their good") },
+    { thread: tr("their separateness reads as a threat — the selves are fused") }
   ];
 
   function initDiscriminator() {
@@ -75,7 +77,7 @@
     // Optional idol picker, built from the love acts and tagged to a need.
     var idolSel = $("disc-idol");
     if (idolSel && window.LOVE_ACTS) {
-      var opts = ['<option value="">— skip / not sure</option>'];
+      var opts = ['<option value="">' + tr("— skip / not sure") + '</option>'];
       LOVE_ACTS.forEach(function (a) {
         var m = /<b>(.*?)<\/b>/.exec(a.idol);
         var word = m ? m[1] : a.mech;
@@ -103,21 +105,21 @@
       var cath = leans.filter(function (l) { return l === "cathexis"; }).length;
 
       var tone, label;
-      if (cath === 0) { tone = "love"; label = "This reads like love."; }
-      else if (cath === 3) { tone = "cathexis"; label = "This reads like cathexis, not love."; }
-      else { tone = "mix"; label = cath === 1 ? "Mostly love — with one counterfeit thread." : "Leaning cathexis."; }
+      if (cath === 0) { tone = "love"; label = tr("This reads like love."); }
+      else if (cath === 3) { tone = "cathexis"; label = tr("This reads like cathexis, not love."); }
+      else { tone = "mix"; label = cath === 1 ? tr("Mostly love — with one counterfeit thread.") : tr("Leaning cathexis."); }
 
       var explain;
       if (tone === "love") {
-        explain = "On all three splits this moves like love: a verb, turned toward the other, between two whole selves. Keep protecting their freedom — that's the tell that it's the real thing.";
+        explain = tr("On all three splits this moves like love: a verb, turned toward the other, between two whole selves. Keep protecting their freedom — that's the tell that it's the real thing.");
       } else if (tone === "cathexis") {
-        explain = "On all three splits this moves like cathexis: a feeling you're swept by, about your own deficit, that can't tolerate the other's separateness. The fix isn't loving harder — it's getting filled at the source first, so the other is released from carrying what only God was meant to.";
+        explain = tr("On all three splits this moves like cathexis: a feeling you're swept by, about your own deficit, that can't tolerate the other's separateness. The fix isn't loving harder — it's getting filled at the source first, so the other is released from carrying what only God was meant to.");
       } else {
-        explain = "True love is a verb, turned toward the other, between two whole selves. Watch the threads pulling toward cathexis:";
+        explain = tr("True love is a verb, turned toward the other, between two whole selves. Watch the threads pulling toward cathexis:");
       }
 
       var h = '<div class="disc-result disc-result--' + tone + '">' +
-        '<span class="disc-tag">the read</span><h3>' + label + "</h3>" +
+        '<span class="disc-tag">' + tr("the read") + '</span><h3>' + label + "</h3>" +
         '<p class="disc-explain">' + explain + "</p>";
 
       if (tone === "mix") {
@@ -137,10 +139,10 @@
         var need = window.needById ? window.needById(needId) : null;
         if (need) {
           h += '<div class="disc-need">' +
-            '<p class="erow"><span class="elabel leak">the weight on them</span>' + word + "</p>" +
-            '<p class="erow"><span class="elabel">the real need under it</span>' + need.name + " — “" + need.q + "”</p>" +
-            '<p class="erow real"><span class="elabel well">the way back</span>' + need.exit + "</p>" +
-            '<button class="need-chip" data-need="' + need.id + '" aria-label="See ' + need.name + ' across every lens">' + need.name + "</button>" +
+            '<p class="erow"><span class="elabel leak">' + tr("the weight on them") + '</span>' + word + "</p>" +
+            '<p class="erow"><span class="elabel">' + tr("the real need under it") + '</span>' + need.name + " — “" + need.q + "”</p>" +
+            '<p class="erow real"><span class="elabel well">' + tr("the way back") + '</span>' + need.exit + "</p>" +
+            '<button class="need-chip" data-need="' + need.id + '" aria-label="' + tr("See") + ' ' + need.name + ' ' + tr("across every lens") + '">' + need.name + "</button>" +
             "</div>";
         }
       }
@@ -173,7 +175,7 @@
 
   function poles(title) {
     // "Rejection vs. Acceptance" -> ["Rejection", "Acceptance"]
-    var m = String(title).split(/\s+vs\.?\s+/i);
+    var m = String(title).split(/\s+(?:vs\.?|—)\s+/i);
     return m.length === 2 ? m : [title, ""];
   }
 
@@ -234,7 +236,7 @@
     function chip(needId) {
       if (!needId || !window.needById) return "";
       var n = window.needById(needId); if (!n) return "";
-      return '<button class="need-chip" data-need="' + needId + '" aria-label="See ' + n.name + ' across every lens">' + n.name + "</button>";
+      return '<button class="need-chip" data-need="' + needId + '" aria-label="' + tr("See") + ' ' + n.name + ' ' + tr("across every lens") + '">' + n.name + "</button>";
     }
 
     function render() {
@@ -245,19 +247,19 @@
         var hay = [it.term].concat(it.synonyms, [it.definition, it.theology, it.psychology], it.verses || [], it.topics || []).join(" ").toLowerCase();
         return hay.indexOf(q) !== -1;
       }).map(function (it) {
-        var verses = (it.verses && it.verses.length) ? '<p class="erow gloss-verses"><span class="elabel well">verses</span>' + gEsc(it.verses.join(", ")) + "</p>" : "";
+        var verses = (it.verses && it.verses.length) ? '<p class="erow gloss-verses"><span class="elabel well">' + tr("verses") + '</span>' + gEsc(it.verses.join(", ")) + "</p>" : "";
         var topics = (it.topics && it.topics.length) ? '<p class="gloss-topics">' + gEsc(it.topics.join(" · ")) + "</p>" : "";
-        var pills = it.tags.map(function (t) { return '<span class="gloss-pill">' + gEsc(t) + "</span>"; }).join("");
+        var pills = it.tags.map(function (t) { return '<span class="gloss-pill">' + gEsc(tr(t)) + "</span>"; }).join("");
         return '<div class="ecard gloss-card">' +
           '<div class="ecard-head"><h3>' + gEsc(it.term) + "</h3>" + chip(needForId(it.id)) + "</div>" +
-          '<p class="erow"><span class="elabel">synonyms</span>' + gEsc(it.synonyms.join(", ")) + "</p>" +
-          '<p class="erow"><span class="elabel">definition</span>' + gEsc(it.definition) + "</p>" +
-          '<p class="erow"><span class="elabel">theological</span>' + gEsc(it.theology) + "</p>" +
-          '<p class="erow"><span class="elabel">psychological</span>' + gEsc(it.psychology) + "</p>" +
+          '<p class="erow"><span class="elabel">' + tr("synonyms") + '</span>' + gEsc(it.synonyms.join(", ")) + "</p>" +
+          '<p class="erow"><span class="elabel">' + tr("definition") + '</span>' + gEsc(it.definition) + "</p>" +
+          '<p class="erow"><span class="elabel">' + tr("theological") + '</span>' + gEsc(it.theology) + "</p>" +
+          '<p class="erow"><span class="elabel">' + tr("psychological") + '</span>' + gEsc(it.psychology) + "</p>" +
           verses + topics +
           '<div class="gloss-tagrow">' + pills + "</div></div>";
       }).join("");
-      grid.innerHTML = cards || '<p class="gloss-empty">No matches for “' + gEsc(q) + "”.</p>";
+      grid.innerHTML = cards || '<p class="gloss-empty">' + tr("No matches for") + ' “' + gEsc(q) + "”.</p>";
       // Filtering changes the count, so the last row has a new leftover.
       if (window.osmwBento) window.osmwBento(grid.parentElement || grid);
     }
@@ -300,7 +302,9 @@
       repair: "Put down one task and sit to receive before serving again."
     }
   };
+  if (RU && window.OS_RU_PRESETS) ARCHITECT_PRESETS = window.OS_RU_PRESETS;
   var RISK_WORDS = ["must", "always", "never", "fail", "lazy", "perfect", "worthless", "need to", "try harder", "discipline"];
+  if (RU && window.OS_RU_RISK) RISK_WORDS = window.OS_RU_RISK;
   var WB_FIELDS = ["surface", "counterfeit", "shame", "grace", "repair"];
 
   function initWorkbook() {
@@ -309,13 +313,13 @@
     var needSel = $("wb-need"), needQ = $("wb-need-q"), bp = $("wb-blueprint");
     var lastSuggested = "";
 
-    needSel.innerHTML = '<option value="">— choose a need —</option>' +
+    needSel.innerHTML = '<option value="">' + tr("— choose a need —") + '</option>' +
       window.NEEDS.map(function (n) { return '<option value="' + n.id + '">' + n.name + "</option>"; }).join("");
 
     function wbChip(needId) {
       if (!needId || !window.needById) return "";
       var n = window.needById(needId); if (!n) return "";
-      return '<button class="need-chip" data-need="' + needId + '" aria-label="See ' + n.name + ' across every lens">' + n.name + "</button>";
+      return '<button class="need-chip" data-need="' + needId + '" aria-label="' + tr("See") + ' ' + n.name + ' ' + tr("across every lens") + '">' + n.name + "</button>";
     }
     function val(id) { var el = $("wb-" + id); return el ? el.value.trim() : ""; }
 
@@ -329,10 +333,10 @@
       if (!found.length) { badge.hidden = true; return; }
       badge.hidden = false;
       if (field === "grace") {
-        badge.textContent = "Striving language in the grace anchor — grace is received, not achieved.";
+        badge.textContent = tr("Striving language in the grace anchor — grace is received, not achieved.");
         badge.className = "wb-risk grace-alert";
       } else {
-        badge.textContent = "Striving indicators: " + found.map(function (w) { return "“" + w + "”"; }).join(", ");
+        badge.textContent = tr("Striving indicators: ") + found.map(function (w) { return "“" + w + "”"; }).join(", ");
         badge.className = "wb-risk";
       }
     }
@@ -341,14 +345,14 @@
       var need = needSel.value ? window.needById(needSel.value) : null;
       needQ.textContent = need ? "“" + need.q + "”" : "";
       var rows = [
-        ["surface", "the surface behaviour", val("surface"), "elabel"],
-        ["need", "the real need", need ? need.name + " — “" + need.q + "”" : "", "elabel"],
-        ["counterfeit", "the counterfeit source", val("counterfeit"), "elabel leak"],
-        ["shame", "the shame script", val("shame"), "elabel"],
-        ["grace", "the real meal / way back", val("grace"), "elabel well"],
-        ["repair", "the repair step", val("repair"), "elabel"]
+        ["surface", tr("the surface behaviour"), val("surface"), "elabel"],
+        ["need", tr("the real need"), need ? need.name + " — “" + need.q + "”" : "", "elabel"],
+        ["counterfeit", tr("the counterfeit source"), val("counterfeit"), "elabel leak"],
+        ["shame", tr("the shame script"), val("shame"), "elabel"],
+        ["grace", tr("the real meal / way back"), val("grace"), "elabel well"],
+        ["repair", tr("the repair step"), val("repair"), "elabel"]
       ];
-      var html = '<div class="wb-bp-head"><h4>The re-source plan</h4>' + (need ? wbChip(need.id) : "") + "</div>";
+      var html = '<div class="wb-bp-head"><h4>' + tr("The re-source plan") + '</h4>' + (need ? wbChip(need.id) : "") + "</div>";
       html += rows.map(function (r) {
         var filled = !!r[2];
         var cls = "erow" + (r[0] === "grace" || r[0] === "need" ? " real" : "") + (filled ? "" : " empty");
@@ -393,18 +397,18 @@
 
     $("wb-copy").addEventListener("click", function () {
       var need = needSel.value ? window.needById(needSel.value) : null;
-      var L = ["THE RE-SOURCE PLAN", ""];
-      L.push("1 · Surface behaviour: " + (val("surface") || "—"));
-      L.push("2 · The real need: " + (need ? need.name + " — “" + need.q + "”" : "—"));
-      L.push("3 · Counterfeit source: " + (val("counterfeit") || "—"));
-      L.push("4 · The shame script: " + (val("shame") || "—"));
-      L.push("5 · The real meal / way back: " + (val("grace") || "—"));
-      L.push("6 · The repair step: " + (val("repair") || "—"));
-      L.push("", "Kept from One Shape · Many Wells.");
+      var L = [tr("THE RE-SOURCE PLAN"), ""];
+      L.push(tr("1 · Surface behaviour: ") + (val("surface") || "—"));
+      L.push(tr("2 · The real need: ") + (need ? need.name + " — “" + need.q + "”" : "—"));
+      L.push(tr("3 · Counterfeit source: ") + (val("counterfeit") || "—"));
+      L.push(tr("4 · The shame script: ") + (val("shame") || "—"));
+      L.push(tr("5 · The real meal / way back: ") + (val("grace") || "—"));
+      L.push(tr("6 · The repair step: ") + (val("repair") || "—"));
+      L.push("", tr("Kept from One Shape · Many Wells."));
       if (!navigator.clipboard) return;
       navigator.clipboard.writeText(L.join("\n")).then(function () {
-        var btn = $("wb-copy"); btn.textContent = "Copied ✓";
-        setTimeout(function () { btn.textContent = "Copy plan"; }, 1600);
+        var btn = $("wb-copy"); btn.textContent = tr("Copied ✓");
+        setTimeout(function () { btn.textContent = tr("Copy plan"); }, 1600);
       });
     });
     $("wb-reset").addEventListener("click", function () {

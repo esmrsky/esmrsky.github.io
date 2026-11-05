@@ -5,6 +5,8 @@
    ============================================================ */
 (function () {
   "use strict";
+  var RU = document.documentElement.getAttribute("data-lang") === "ru", TR = (RU && window.OS_RU_UI) || {};
+  function tr(s) { return TR[s] != null ? TR[s] : s; }
   function $(id) { return document.getElementById(id); }
   var CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>';
   var CORE_NEED = { Provision: "provision", Safety: "safety", Belonging: "belonging", Worth: "worth", Agency: "safety", "Comfort / Rest": "comfort", Meaning: "transcendence", Transcendence: "transcendence" };
@@ -13,7 +15,7 @@
     if (!needId || !window.needById) return "";
     var n = window.needById(needId);
     if (!n) return "";
-    return '<button class="need-chip" data-need="' + needId + '" aria-label="See ' + n.name + ' across every lens">' + n.name + "</button>";
+    return '<button class="need-chip" data-need="' + needId + '" aria-label="' + tr("See") + ' ' + n.name + ' ' + tr("across every lens") + '">' + n.name + "</button>";
   }
   var NO = function () { return window.NEED_OF || {}; };
 
@@ -22,8 +24,8 @@
     var c = $("need-grid"); if (!c || !window.WAYBACK_DATA) return;
     c.innerHTML = WAYBACK_DATA.core.map(function (n) {
       return '<div class="ecard"><div class="ecard-head"><h3>' + n.name + '</h3><span class="emeta">' + n.q + "</span></div>" +
-        '<p class="erow"><span class="elabel leak">counterfeit</span>' + n.bad + "</p>" +
-        '<p class="erow real"><span class="elabel well">real meal</span>' + n.good + "</p>" + '<div class="chiprow">' + chip(CORE_NEED[n.name]) + "</div></div>";
+        '<p class="erow"><span class="elabel leak">' + tr("counterfeit") + '</span>' + n.bad + "</p>" +
+        '<p class="erow real"><span class="elabel well">' + tr("real meal") + '</span>' + n.good + "</p>" + '<div class="chiprow">' + chip(CORE_NEED[n.key || n.name]) + "</div></div>";
     }).join("");
   }
 
@@ -33,10 +35,10 @@
       return '<details class="fcard"><summary><span class="ftitle">' + f.feel + "</span>" +
         '<span class="fneed">' + f.need + "</span>" + CHEV + "</summary>" +
         '<div class="fbody">' +
-        '<p class="erow"><span class="elabel">signal</span>' + f.signal + "</p>" +
-        '<p class="erow"><span class="elabel leak">counterfeit</span>' + f.old + "</p>" +
-        '<p class="erow real"><span class="elabel well">real meal</span>' + f.real + "</p>" +
-        '<p class="erow real"><span class="elabel">first move</span>' + f.move + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("signal") + '</span>' + f.signal + "</p>" +
+        '<p class="erow"><span class="elabel leak">' + tr("counterfeit") + '</span>' + f.old + "</p>" +
+        '<p class="erow real"><span class="elabel well">' + tr("real meal") + '</span>' + f.real + "</p>" +
+        '<p class="erow real"><span class="elabel">' + tr("first move") + '</span>' + f.move + "</p>" +
         '<div class="chiprow">' + chip(NO().feel ? NO().feel[f.feel] : null) + "</div></div></details>";
     }).join("");
   }
@@ -57,23 +59,23 @@
       var b = e.behavioral;
       return '<div class="ecard"><div class="ecard-head"><h3>' + e.name + "</h3>" +
         '<span class="emeta">' + e.type + (b ? " · " + b.axis : "") + "</span></div>" +
-        '<p class="erow"><span class="elabel leak">counterfeit use</span>' + e.counterfeitUse + "</p>" +
-        '<p class="erow"><span class="elabel">the tell</span>' + e.tell + "</p>" +
-        (e.healthyUse ? '<p class="erow"><span class="elabel">used as a tool</span>' + e.healthyUse + "</p>" : "") +
-        '<p class="erow real"><span class="elabel well">real meal</span>' + e.realMeal + "</p>" +
-        (b ? '<div class="ecard-more"><span class="more-tag">how the loop is built</span>' +
-          '<p class="erow"><span class="elabel">cue</span>' + b.cue + "</p>" +
-          '<p class="erow"><span class="elabel leak">routine</span>' + b.routine + "</p>" +
-          '<p class="erow"><span class="elabel">payoff</span>' + b.reward + "</p>" +
-          '<p class="erow"><span class="elabel">the works trap</span>' + b.worksTrap + "</p>" +
-          '<p class="erow real"><span class="elabel well">grace exit</span>' + b.graceExit + "</p></div>" : "") +
+        '<p class="erow"><span class="elabel leak">' + tr("counterfeit use") + '</span>' + e.counterfeitUse + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("the tell") + '</span>' + e.tell + "</p>" +
+        (e.healthyUse ? '<p class="erow"><span class="elabel">' + tr("used as a tool") + '</span>' + e.healthyUse + "</p>" : "") +
+        '<p class="erow real"><span class="elabel well">' + tr("real meal") + '</span>' + e.realMeal + "</p>" +
+        (b ? '<div class="ecard-more"><span class="more-tag">' + tr("how the loop is built") + '</span>' +
+          '<p class="erow"><span class="elabel">' + tr("cue") + '</span>' + b.cue + "</p>" +
+          '<p class="erow"><span class="elabel leak">' + tr("routine") + '</span>' + b.routine + "</p>" +
+          '<p class="erow"><span class="elabel">' + tr("payoff") + '</span>' + b.reward + "</p>" +
+          '<p class="erow"><span class="elabel">' + tr("the works trap") + '</span>' + b.worksTrap + "</p>" +
+          '<p class="erow real"><span class="elabel well">' + tr("grace exit") + '</span>' + b.graceExit + "</p></div>" : "") +
         '<div class="chiprow">' + chip(e.need) + "</div></div>";
     }).join("");
   }
 
   function renderDeepTable() {
     var c = $("deep-table"); if (!c || !window.WAYBACK_DATA) return;
-    var head = ["Real need", "Counterfeit", "What it gives", "What it can't give", "Why it hooks", "Real meal", "First move"];
+    var head = ["Real need", "Counterfeit", "What it gives", "What it can't give", "Why it hooks", "Real meal", "First move"].map(tr);
     // data-label carries the header down into the card layout the
     // table becomes below 1000px, where seven columns stop working.
     var cell = function (i, v, cls) {
@@ -93,7 +95,7 @@
     c.innerHTML = LOVE_FEELINGS.map(function (f, i) {
       return '<div class="ecard"><div class="ecard-head"><h3>' + f.name + '</h3><span class="emeta">' + f.driver + "</span></div>" +
         '<div class="sub">' + f.sub + "</div>" +
-        '<p class="erow"><span class="elabel">sensation</span>' + f.sensation + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("sensation") + '</span>' + f.sensation + "</p>" +
         '<p class="erow real">' + f.reality + "</p>" +
         '<p class="erow quote">“' + f.example + "”</p>" +
         '<span class="lit">' + f.lit + "</span>" + '<div class="chiprow">' + chip(NO().loveFeel ? NO().loveFeel[i] : null) + "</div></div>";
@@ -102,7 +104,7 @@
 
   function renderFamily2() {
     var c = $("family-2"); if (!c || !window.LOVE_ACTS) return;
-    var keys = ["Wound", "Offer", "Idol", "Altar", "Structure"];
+    var keys = ["Wound", "Offer", "Idol", "Altar", "Structure"].map(tr);
     c.innerHTML = LOVE_ACTS.map(function (d) {
       var beats = d.loop.map(function (v, i) {
         return '<div class="beat' + (i === 2 ? " idol-beat" : "") + '"><span class="bk">' + keys[i] + '</span><span class="bv">' + v + "</span></div>";
@@ -112,12 +114,12 @@
         '<p class="erow" style="margin-top:.5rem">' + d.need + "</p>" +
         '<p class="tell">“' + d.tell + "”</p>" +
         '<div class="beats">' + beats + "</div>" +
-        '<p class="idol"><span class="elabel leak">the idol</span> ' + d.idol + "</p>" +
-        '<details class="depth" style="margin:.6rem 0 0"><summary><span class="tag">in romance / parenting</span>' + CHEV + "</summary>" +
-        '<div class="depth-body"><p class="erow"><span class="elabel">romantic</span>' + d.romantic + "</p>" +
-        '<p class="erow"><span class="elabel">parenting</span>' + d.parenting + "</p>" +
-        '<p class="erow"><span class="elabel">the echo</span>' + d.echo + "</p></div></details>" +
-        '<p class="turn"><span class="elabel well">the true turn</span> ' + d.turn + "</p>" +
+        '<p class="idol"><span class="elabel leak">' + tr("the idol") + '</span> ' + d.idol + "</p>" +
+        '<details class="depth" style="margin:.6rem 0 0"><summary><span class="tag">' + tr("in romance / parenting") + '</span>' + CHEV + "</summary>" +
+        '<div class="depth-body"><p class="erow"><span class="elabel">' + tr("romantic") + '</span>' + d.romantic + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("parenting") + '</span>' + d.parenting + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("the echo") + '</span>' + d.echo + "</p></div></details>" +
+        '<p class="turn"><span class="elabel well">' + tr("the true turn") + '</span> ' + d.turn + "</p>" +
         '<div class="chiprow">' + chip(NO().loveAct ? NO().loveAct[d.num] : null) + "</div></div>";
     }).join("");
   }
@@ -139,11 +141,11 @@
                    performance_standing: "violet", obscurity_renown: "teal" };
       return '<div class="ecard tint-' + (TINT[k] || "blue") + '" id="axis-card-' + k + '" data-axis="' + k + '"><div class="ecard-head"><h3>' + a.title + "</h3></div>" +
         '<span class="emeta">' + a.hunger + "</span>" +
-        '<p class="erow"><span class="elabel">cue</span>' + a.cue + "</p>" +
-        '<p class="erow"><span class="elabel leak">counterfeit</span>' + a.counterfeit + "</p>" +
-        '<p class="erow"><span class="elabel">why it leaks</span>' + a.leak + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("cue") + '</span>' + a.cue + "</p>" +
+        '<p class="erow"><span class="elabel leak">' + tr("counterfeit") + '</span>' + a.counterfeit + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("why it leaks") + '</span>' + a.leak + "</p>" +
         '<p class="erow quote">' + a.shame + "</p>" +
-        '<p class="erow real"><span class="elabel well">the exit</span>' + a.exit + "</p>" +
+        '<p class="erow real"><span class="elabel well">' + tr("the exit") + '</span>' + a.exit + "</p>" +
         '<div class="chiprow">' + chip(NO().axis ? NO().axis[k] : null) + "</div></div>";
     }).join("");
   }
@@ -154,9 +156,9 @@
       var a = ARCHETYPES_DATA[k];
       return '<div class="ecard"><div class="ecard-head"><h3>' + a.name + "</h3></div>" +
         '<div class="sub">' + a.calling + "</div>" +
-        '<p class="erow"><span class="elabel leak">point of attack</span>' + a.inverse + "</p>" +
-        '<p class="erow"><span class="elabel">the failure</span>' + a.failure + "</p>" +
-        '<p class="erow"><span class="elabel">generational echo</span>' + a.legacy + "</p></div>";
+        '<p class="erow"><span class="elabel leak">' + tr("point of attack") + '</span>' + a.inverse + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("the failure") + '</span>' + a.failure + "</p>" +
+        '<p class="erow"><span class="elabel">' + tr("generational echo") + '</span>' + a.legacy + "</p></div>";
     }).join("");
   }
 
