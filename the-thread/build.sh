@@ -5,8 +5,8 @@
 set -e
 cd "$(dirname "$0")"
 
-# Both pages name each other, so a search engine can offer the right one. There is no language
-# switch on either page and no redirect: Russian is reached at /the-thread/ru/ (standing decision
+# Both pages name each other, so a search engine can offer the right one. The language
+# switch is the EN · RU pair in the top bar; no redirect (standing decision
 # in esmrsky.github.io/TRANSLATION-ROUTINE.md).
 HREFLANG='<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/the-thread/">\n<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/the-thread/ru/">\n<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/the-thread/">\n'
 
