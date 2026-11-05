@@ -1,3 +1,16 @@
+// Russian: on /combo-stern-loop-love/ru/ (data-lang="ru") ru-data.js has already swapped the glossary-data.js
+// tables and defined LB_RU. TXT(key, english, ...args) returns the Russian string when there is one.
+const IS_RU = document.documentElement.getAttribute("data-lang") === "ru";
+const LB_RU = window.LB_RU || { ui: {}, tags: {}, types: {}, cats: {} };
+function TXT(key, en, ...args) {
+  if (!IS_RU) return en;
+  const v = LB_RU.ui[key];
+  if (v === undefined) { console.warn("combo-stern-loop-love: no Russian for", key); return en; }
+  return typeof v === "function" ? v(...args) : v;
+}
+// display name of a data value that stays English as a filter key (tag, type, category)
+function NAME(map, v) { return IS_RU ? (LB_RU[map][v] || v) : v; }
+
 // ============================================================
 // APP ENTRY POINT & STATE MANAGEMENT
 // ============================================================
@@ -57,7 +70,7 @@ function initTheme() {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
     updateThemeIcon(newTheme);
-    showToast(`Switched to ${newTheme === "dark" ? "Dark Slate-Emerald" : "Light Paper Cream"} Mode`, "success");
+    showToast(TXT("themeToast", `Switched to ${newTheme === "dark" ? "Dark Slate-Emerald" : "Light Paper Cream"} Mode`, newTheme), "success");
     
     // Redraw simulator chart if active
     if (document.getElementById("tab-mechanics").classList.contains("active")) {
@@ -107,7 +120,7 @@ function initGlobalNavigation() {
       }
       
       window.scrollTo({ top: 0, behavior: "instant" });
-      showToast(`Navigated to: ${btn.querySelector(".bottom-nav-lbl").innerText}`, "info");
+      { const lbl = btn.querySelector(".bottom-nav-lbl").innerText; showToast(TXT("navigated", `Navigated to: ${lbl}`, lbl), "info"); }
     });
   });
   
@@ -178,9 +191,9 @@ function initStages() {
     if (prevBtn) prevBtn.disabled = index === 0;
     if (nextBtn) {
       if (index === slides.length - 1) {
-        nextBtn.innerText = "Restart Tour";
+        nextBtn.innerText = TXT("restartTour", "Restart Tour");
       } else {
-        nextBtn.innerText = "Next Stage";
+        nextBtn.innerText = TXT("nextStage", "Next Stage");
       }
     }
     
@@ -308,9 +321,9 @@ function initLeakFinder() {
     nextBtn.disabled = !isStepValid;
     
     if (currentDiagStep === 2) {
-      nextBtn.innerText = "Submit";
+      nextBtn.innerText = TXT("submit", "Submit");
     } else {
-      nextBtn.innerText = "Next";
+      nextBtn.innerText = TXT("next", "Next");
     }
   }
   
@@ -327,7 +340,7 @@ function initLeakFinder() {
           btn.removeAttribute("aria-pressed");
         } else {
           if (DIAG_STATE.surface.length >= 3) {
-            showToast("Please select at most 3 surface behaviors.", "error");
+            showToast(TXT("maxSurface", "Please select at most 3 surface behaviors."), "error");
             return;
           }
           DIAG_STATE.surface.push(choiceId);
@@ -458,7 +471,7 @@ function calculateDiagnosticResults() {
     prefillWorkbookFromDiagnostic(primaryLeak);
   };
   
-  showToast("Diagnostic completed!", "success");
+  showToast(TXT("diagDone", "Diagnostic completed!"), "success");
   content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -494,10 +507,10 @@ function resetDiagnosticForm() {
   if (prevBtn) prevBtn.disabled = true;
   if (nextBtn) {
     nextBtn.disabled = true;
-    nextBtn.innerText = "Next";
+    nextBtn.innerText = TXT("next", "Next");
   }
   
-  showToast("Diagnostic reset", "info");
+  showToast(TXT("diagReset", "Diagnostic reset"), "info");
 }
 
 function prefillWorkbookFromDiagnostic(leakKey) {
@@ -508,8 +521,8 @@ function prefillWorkbookFromDiagnostic(leakKey) {
   document.getElementById("arch-in-cistern").value = leak.t;
   document.getElementById("arch-in-counterfeit").value = leak.counterfeit;
   document.getElementById("arch-in-habit").value = leak.loop;
-  document.getElementById("arch-in-shame").value = `Shame rules if the leak runs dry: ${leak.sub}`;
-  document.getElementById("arch-in-grace").value = `${leak.receive} (Move: ${leak.ifThen})`;
+  document.getElementById("arch-in-shame").value = TXT("shameRules", `Shame rules if the leak runs dry: ${leak.sub}`, leak.sub);
+  document.getElementById("arch-in-grace").value = TXT("graceFill", `${leak.receive} (Move: ${leak.ifThen})`, leak.receive, leak.ifThen);
   
   // Trigger tab switch to Healing section
   document.querySelector('.bottom-nav-btn[data-tab="healing"]').dispatchEvent(new Event("click"));
@@ -526,7 +539,7 @@ function prefillWorkbookFromDiagnostic(leakKey) {
   
   // Regenerate blueprint text
   updateWorkbookBlueprint();
-  showToast(`Workbook pre-filled with ${leak.t} plan!`, "success");
+  showToast(TXT("workbookFilled", `Workbook pre-filled with ${leak.t} plan!`, leak.t), "success");
 }
 
 // ============================================================
@@ -553,8 +566,8 @@ function initLoopVisualizer() {
     flowPath.setAttribute("stroke", "var(--rust)");
     flowPath.classList.add("gflow");
     
-    noteEl.innerHTML = `<strong>The Closed Striving Loop:</strong> Under anxiety, your willpower draws from its own bucket. You perform a counterfeit routine to get quick relief. The relief leaks away, leaving shame and stress higher, forcing you to run the treadmill again.`;
-    showToast("Switched loop to Striving Mode", "info");
+    noteEl.innerHTML = TXT("loopWorks", `<strong>The Closed Striving Loop:</strong> Under anxiety, your willpower draws from its own bucket. You perform a counterfeit routine to get quick relief. The relief leaks away, leaving shame and stress higher, forcing you to run the treadmill again.`);
+    showToast(TXT("loopWorksToast", "Switched loop to Striving Mode"), "info");
   });
   
   graceBtn.addEventListener("click", () => {
@@ -571,8 +584,8 @@ function initLoopVisualizer() {
     flowPath.setAttribute("stroke", "var(--jade)");
     flowPath.classList.add("gflow");
     
-    noteEl.innerHTML = `<strong>The Received Grace Loop:</strong> Worth is pre-established. The stress alarm sounds, but instead of white-knuckling a performance score, you receive your status as a gift. The counterfeit looks empty; you choose a proper means, breaking the compulsion cycle.`;
-    showToast("Switched loop to Received Grace Mode", "success");
+    noteEl.innerHTML = TXT("loopGrace", `<strong>The Received Grace Loop:</strong> Worth is pre-established. The stress alarm sounds, but instead of white-knuckling a performance score, you receive your status as a gift. The counterfeit looks empty; you choose a proper means, breaking the compulsion cycle.`);
+    showToast(TXT("loopGraceToast", "Switched loop to Received Grace Mode"), "success");
   });
   
   // Set default
@@ -598,19 +611,19 @@ function initArchetypes() {
       </div>
       <div class="ap-full-body" style="display:flex; flex-direction:column; gap:12px; margin-top:12px;">
         <div class="ap-full-block calling" style="border-left:3px solid var(--gold); background:var(--bg); padding:12px; border-radius:var(--radius-sm); font-size:var(--step--1);">
-          <span class="ap-full-lbl" style="color:var(--gold); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Spiritual Calling</span>
+          <span class="ap-full-lbl" style="color:var(--gold); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">${TXT("spiritualCalling", "Spiritual Calling")}</span>
           <p class="ap-full-val" style="color:var(--text);">${data.calling}</p>
         </div>
         <div class="ap-full-block inverse" style="border-left:3px solid var(--gold-soft); background:var(--bg); padding:12px; border-radius:var(--radius-sm); font-size:var(--step--1);">
-          <span class="ap-full-lbl" style="color:var(--gold-soft); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Inverse Frequency</span>
+          <span class="ap-full-lbl" style="color:var(--gold-soft); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">${TXT("inverseFrequency", "Inverse Frequency")}</span>
           <p class="ap-full-val" style="color:var(--text-muted);">${data.inverse}</p>
         </div>
         <div class="ap-full-block failure" style="border-left:3px solid var(--rust); background:var(--bg); padding:12px; border-radius:var(--radius-sm); font-size:var(--step--1);">
-          <span class="ap-full-lbl" style="color:var(--rust-soft); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Point of Attack / Failure</span>
+          <span class="ap-full-lbl" style="color:var(--rust-soft); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">${TXT("pointOfAttack", "Point of Attack / Failure")}</span>
           <p class="ap-full-val" style="color:var(--text-muted);">${data.failure}</p>
         </div>
         <div class="ap-full-block legacy" style="border-left:3px solid var(--purple); background:var(--bg); padding:12px; border-radius:var(--radius-sm); font-size:var(--step--1);">
-          <span class="ap-full-lbl" style="color:var(--purple-soft); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Generational Script (Legacy)</span>
+          <span class="ap-full-lbl" style="color:var(--purple-soft); font-family:var(--font-mono); font-size:var(--step--2); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">${TXT("generationalScript", "Generational Script (Legacy)")}</span>
           <p class="ap-full-val" style="color:var(--text-muted);">${data.legacy}</p>
         </div>
       </div>
@@ -662,7 +675,7 @@ function initDopamineSimulator() {
   // Striving Actions
   document.getElementById("btn-inject-striving").addEventListener("click", () => {
     if (!simRunning) {
-      showToast("Start the simulator engine first to inject striving.", "error");
+      showToast(TXT("startFirstStriving", "Start the simulator engine first to inject striving."), "error");
       return;
     }
     const profile = SIM_LOOPS_DATA[profileSelect.value];
@@ -672,14 +685,14 @@ function initDopamineSimulator() {
     simStress = Math.max(0, Math.min(100, simStress + profile.strivingDelta.S));
     simShame = Math.max(0, Math.min(100, simShame + profile.strivingDelta.SH));
     
-    logSimulatorTerminal(`⚡ [Striving Action] ${profile.strivingMsg}`, "color: var(--rust-soft)");
+    logSimulatorTerminal(`⚡ ${TXT("strivingTag", "[Striving Action]")} ${profile.strivingMsg}`, "color: var(--rust-soft)");
     updateSimulatorUI();
     drawSimulatorChart();
   });
   
   document.getElementById("btn-apply-exit").addEventListener("click", () => {
     if (!simRunning) {
-      showToast("Start the simulator engine first to apply a Grace exit.", "error");
+      showToast(TXT("startFirstExit", "Start the simulator engine first to apply a Grace exit."), "error");
       return;
     }
     const profile = SIM_LOOPS_DATA[profileSelect.value];
@@ -690,7 +703,7 @@ function initDopamineSimulator() {
     simShame = Math.max(0, Math.min(100, simShame + profile.exitDelta.SH));
     
     setSimulatorParadigm("grace");
-    logSimulatorTerminal(`🌱 [Grace Exit] ${profile.exitMsg}`, "color: var(--jade-soft); font-weight: bold;");
+    logSimulatorTerminal(`🌱 ${TXT("exitTag", "[Grace Exit]")} ${profile.exitMsg}`, "color: var(--jade-soft); font-weight: bold;");
     updateSimulatorUI();
     drawSimulatorChart();
   });
@@ -709,7 +722,7 @@ function loadSimulatorProfile(profileKey) {
   simStress = profile.initial.S;
   simShame = profile.initial.SH;
   
-  document.getElementById("sim-profile-desc").innerHTML = `<strong>Metrics:</strong> Willpower: ${simWillpower}, Stress: ${simStress}, Shame: ${simShame}.`;
+  document.getElementById("sim-profile-desc").innerHTML = TXT("startingMetrics", `<strong>Metrics:</strong> Willpower: ${simWillpower}, Stress: ${simStress}, Shame: ${simShame}.`, simWillpower, simStress, simShame);
   
   // sliders
   document.getElementById("param-leak").value = profile.params.leak;
@@ -720,7 +733,7 @@ function loadSimulatorProfile(profileKey) {
   updateSimulatorUI();
   
   const term = document.getElementById("sim-terminal-logs");
-  term.innerHTML = `<div class="mono" style="font-size:0.75rem; color: var(--text-faint)">[System] Selected profile: ${profile.title}. Ready.</div>`;
+  term.innerHTML = `<div class="mono" style="font-size:0.75rem; color: var(--text-faint)">${TXT("selectedProfile", `[System] Selected profile: ${profile.title}. Ready.`, profile.title)}</div>`;
   setSimulatorParadigm("works");
   
   simDataPoints = [];
@@ -770,10 +783,10 @@ function setSimulatorParadigm(paradigm) {
   
   if (paradigm === "works") {
     worksBtn.classList.add("active");
-    logSimulatorTerminal("Mode switched to closed Performance Striving.", "color: var(--rust)");
+    logSimulatorTerminal(TXT("paraWorks", "Mode switched to closed Performance Striving."), "color: var(--rust)");
   } else {
     graceBtn.classList.add("active");
-    logSimulatorTerminal("Mode switched to Received Grace/Sabbath rest.", "color: var(--jade)");
+    logSimulatorTerminal(TXT("paraGrace", "Mode switched to Received Grace/Sabbath rest."), "color: var(--jade)");
   }
 }
 
@@ -783,7 +796,7 @@ function startSimulator() {
   document.getElementById("sim-btn-start").disabled = true;
   document.getElementById("sim-btn-pause").disabled = false;
   
-  logSimulatorTerminal("🚀 Engine running.", "color: var(--text)");
+  logSimulatorTerminal(TXT("logRun", "🚀 Engine running."), "color: var(--text)");
   
   simInterval = setInterval(() => {
     if (simParadigm === "works") {
@@ -795,7 +808,7 @@ function startSimulator() {
         simShame = Math.min(100, simShame + 1.1 * F_shame);
         simStress = Math.min(100, simStress + 0.8 * F_shame);
         if (Math.random() < 0.15) {
-          logSimulatorTerminal("💥 Willpower critically low. Self-condemnation alarm.", "color: var(--rust-soft); font-weight: bold;");
+          logSimulatorTerminal(TXT("logCritical", "💥 Willpower critically low. Self-condemnation alarm."), "color: var(--rust-soft); font-weight: bold;");
         }
       }
     } else {
@@ -820,7 +833,7 @@ function pauseSimulator() {
   clearInterval(simInterval);
   document.getElementById("sim-btn-start").disabled = false;
   document.getElementById("sim-btn-pause").disabled = true;
-  logSimulatorTerminal("⏸️ Engine paused.", "color: var(--text-faint)");
+  logSimulatorTerminal(TXT("logPause", "⏸️ Engine paused."), "color: var(--text-faint)");
 }
 
 function resetSimulator() {
@@ -971,9 +984,9 @@ function initCathexisDiagnostic() {
     nextBtn.disabled = !hasAnswer;
     
     if (currentCathStep === 2) {
-      nextBtn.innerText = "Evaluate";
+      nextBtn.innerText = TXT("evaluate", "Evaluate");
     } else {
-      nextBtn.innerText = "Next";
+      nextBtn.innerText = TXT("next", "Next");
     }
   }
   
@@ -1050,19 +1063,19 @@ function calculateCathexisResult() {
   let profileType = "";
   
   if (isVerb && isThem && isFree) {
-    title.innerText = "True Care (Healthy Posture)";
+    title.innerText = TXT("cathTrueTitle", "True Care (Healthy Posture)");
     title.style.color = "var(--jade)";
-    text.innerHTML = `Your profile shows mature love. According to **M. Scott Peck** (*The Road Less Traveled*), love is an active choice to nurture another's separate growth. You do not borrow their validation to regulate your peace.`;
+    text.innerHTML = TXT("cathTrueText", `Your profile shows mature love. According to **M. Scott Peck** (*The Road Less Traveled*), love is an active choice to nurture another's separate growth. You do not borrow their validation to regulate your peace.`);
     profileType = "true_care";
   } else if (!isVerb && !isThem && !isFree) {
-    title.innerText = "Compulsive Cathexis (Extraction)";
+    title.innerText = TXT("cathCathexisTitle", "Compulsive Cathexis (Extraction)");
     title.style.color = "var(--rust)";
-    text.innerHTML = `Your profile maps to a high-extraction loop. According to **Dorothy Tennov** (*Limerence*) and **Erich Fromm** (*The Art of Loving*), you are using the other as an emotional stabilizer, sacrificing their freedom for your comfort.`;
+    text.innerHTML = TXT("cathCathexisText", `Your profile maps to a high-extraction loop. According to **Dorothy Tennov** (*Limerence*) and **Erich Fromm** (*The Art of Loving*), you are using the other as an emotional stabilizer, sacrificing their freedom for your comfort.`);
     profileType = "cathexis";
   } else {
-    title.innerText = "Mixed Attachment Striving";
+    title.innerText = TXT("cathMixedTitle", "Mixed Attachment Striving");
     title.style.color = "var(--gold)";
-    text.innerHTML = `Your relationship exhibits conflicting patterns. Gift-love is starting to curdle into Need-love. **C.S. Lewis** (*The Four Loves*) warns against demanding to remain needed, turning the other into your savior platform.`;
+    text.innerHTML = TXT("cathMixedText", `Your relationship exhibits conflicting patterns. Gift-love is starting to curdle into Need-love. **C.S. Lewis** (*The Four Loves*) warns against demanding to remain needed, turning the other into your savior platform.`);
     profileType = "mixed";
   }
   
@@ -1073,7 +1086,7 @@ function calculateCathexisResult() {
     };
   }
   
-  showToast("Evaluation completed!", "success");
+  showToast(TXT("cathDone", "Evaluation completed!"), "success");
   if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -1104,6 +1117,8 @@ function prefillWorkbookFromCathexis(profileType) {
     grace = "Continue walking in received worth, honoring boundaries, and choosing true care daily.";
   }
   
+  if (IS_RU) ({ cistern, counterfeit, loop, shame, grace } = LB_RU.cathPresets[profileType]);
+
   // Fill workbook form fields
   document.getElementById("arch-in-cistern").value = cistern;
   document.getElementById("arch-in-counterfeit").value = counterfeit;
@@ -1125,7 +1140,7 @@ function prefillWorkbookFromCathexis(profileType) {
   }, 100);
   
   updateWorkbookBlueprint();
-  showToast("Cathexis diagnostic plan sent to Personal Architect!", "success");
+  showToast(TXT("cathSent", "Cathexis diagnostic plan sent to Personal Architect!"), "success");
 }
 
 function resetCathexisTest() {
@@ -1162,10 +1177,10 @@ function resetCathexisTest() {
   if (prevBtn) prevBtn.disabled = true;
   if (nextBtn) {
     nextBtn.disabled = true;
-    nextBtn.innerText = "Next";
+    nextBtn.innerText = TXT("next", "Next");
   }
   
-  showToast("Cathexis test reset", "info");
+  showToast(TXT("cathReset", "Cathexis test reset"), "info");
 }
 
 // ============================================================
@@ -1204,7 +1219,7 @@ function renderCounterfeitsMatrix() {
     return matchesCat && matchesQuery;
   });
   
-  document.getElementById("matrix-count").innerText = `${rows.length} / ${DATA_COUNTERFEITS.length} directories`;
+  document.getElementById("matrix-count").innerText = TXT("mCount", `${rows.length} / ${DATA_COUNTERFEITS.length} directories`, rows.length, DATA_COUNTERFEITS.length);
   
   rows.forEach(item => {
     const card = document.createElement("article");
@@ -1212,27 +1227,27 @@ function renderCounterfeitsMatrix() {
     const tagClass = item.type.toLowerCase();
     
     card.innerHTML = `
-      <span class="matrix-tag ${tagClass}">${item.type}</span>
+      <span class="matrix-tag ${tagClass}">${NAME("types", item.type)}</span>
       <h3>${item.name}</h3>
       <dl class="matrix-dl">
         <div>
-          <dt>Underlying Need</dt>
+          <dt>${TXT("mUnderlyingNeed", "Underlying Need")}</dt>
           <dd>${item.need}</dd>
         </div>
         <div>
-          <dt>Counterfeit / Loop</dt>
+          <dt>${TXT("mCounterfeitLoop", "Counterfeit / Loop")}</dt>
           <dd>${item.counterfeit}</dd>
         </div>
         <div>
-          <dt>Warning Signal</dt>
+          <dt>${TXT("mWarningSignal", "Warning Signal")}</dt>
           <dd><i>${item.signal}</i></dd>
         </div>
         <div>
-          <dt>Grace Turning Point</dt>
+          <dt>${TXT("mGracePoint", "Grace Turning Point")}</dt>
           <dd><b>${item.healthy}</b></dd>
         </div>
         <div>
-          <dt>Real Meal / Means</dt>
+          <dt>${TXT("mRealMeal", "Real Meal / Means")}</dt>
           <dd>${item.realMeal}</dd>
         </div>
       </dl>
@@ -1242,7 +1257,7 @@ function renderCounterfeitsMatrix() {
   });
   
   if (container.children.length === 0) {
-    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-faint);font-family:var(--font-mono);font-size:var(--step--1);">✕ No matching counterfeits found.</div>`;
+    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-faint);font-family:var(--font-mono);font-size:var(--step--1);">${TXT("mNone", "✕ No matching counterfeits found.")}</div>`;
   }
 }
 
@@ -1266,8 +1281,8 @@ function initQuickPlanner() {
   document.getElementById("btn-quick-copy").addEventListener("click", () => {
     const text = document.getElementById("quick-output-text").textContent;
     navigator.clipboard.writeText(text)
-      .then(() => showToast("Plan copied to clipboard!", "success"))
-      .catch(() => showToast("Failed to copy", "error"));
+      .then(() => showToast(TXT("planCopied", "Plan copied to clipboard!"), "success"))
+      .catch(() => showToast(TXT("copyFailed", "Failed to copy"), "error"));
   });
   
   document.getElementById("btn-quick-send-workbook").addEventListener("click", () => {
@@ -1280,11 +1295,11 @@ function initQuickPlanner() {
     const customOld = behaviorVal || feel.old;
     
     // Fill workbook form fields
-    document.getElementById("arch-in-cistern").value = `Feeling ${feel.feel} (${feel.category})`;
+    document.getElementById("arch-in-cistern").value = TXT("qFeeling", `Feeling ${feel.feel} (${feel.category})`, feel.feel, NAME("cats", feel.category));
     document.getElementById("arch-in-counterfeit").value = customOld;
-    document.getElementById("arch-in-habit").value = `Trigger signal: ${feel.signal}. I run to the counterfeit to soothe it.`;
-    document.getElementById("arch-in-shame").value = contextVal ? `Trigger context: ${contextVal}` : "Running the empty loop when stress sounds.";
-    document.getElementById("arch-in-grace").value = `Real Meal: ${feel.real}. First Move: ${feel.move}`;
+    document.getElementById("arch-in-habit").value = TXT("qHabit", `Trigger signal: ${feel.signal}. I run to the counterfeit to soothe it.`, feel.signal);
+    document.getElementById("arch-in-shame").value = contextVal ? TXT("qContext", `Trigger context: ${contextVal}`, contextVal) : TXT("qShameDefault", "Running the empty loop when stress sounds.");
+    document.getElementById("arch-in-grace").value = TXT("qGrace", `Real Meal: ${feel.real}. First Move: ${feel.move}`, feel.real, feel.move);
     
     // Trigger tab switch to Healing section
     document.querySelector('.bottom-nav-btn[data-tab="healing"]').dispatchEvent(new Event("click"));
@@ -1300,7 +1315,7 @@ function initQuickPlanner() {
     }, 100);
     
     updateWorkbookBlueprint();
-    showToast(`Planner plan sent to Personal Architect!`, "success");
+    showToast(TXT("qSent", `Planner plan sent to Personal Architect!`), "success");
   });
   
   generateQuickPlanText();
@@ -1319,31 +1334,31 @@ function generateQuickPlanText() {
   const behavior = behaviorInput.value.trim();
   const context = contextInput.value.trim();
   const oldPath = behavior || feel.old;
-  const contextBlock = context ? `\nContext / What happened before:\n${context}\n` : "";
+  const contextBlock = context ? `\n${TXT("planContext", "Context / What happened before:")}\n${context}\n` : "";
   
   output.textContent = 
-`QUICK RE-SOURCE PLAN
+`${TXT("planTitle", "QUICK RE-SOURCE PLAN")}
 
-Feeling:
-${feel.feel} (${feel.category})
+${TXT("planFeeling", "Feeling:")}
+${feel.feel} (${NAME("cats", feel.category)})
 
-Felt Signal:
+${TXT("planSignal", "Felt Signal:")}
 ${feel.signal}
 
-What my body is asking for:
+${TXT("planNeed", "What my body is asking for:")}
 ${feel.need}
 ${contextBlock}
-Old Pathway / Counterfeit:
+${TXT("planOld", "Old Pathway / Counterfeit:")}
 ${oldPath}
 
-Real Meal / Proper Means:
+${TXT("planReal", "Real Meal / Proper Means:")}
 ${feel.real}
 
-First Faithful Move:
+${TXT("planMove", "First Faithful Move:")}
 ${feel.move}
 
-Short Prayer:
-Father, I bring the real need of my heart to You instead of demanding life from a broken cistern. Help me choose the next faithful move without shame. Amen.`;
+${TXT("planPrayer", "Short Prayer:")}
+${TXT("planPrayerText", "Father, I bring the real need of my heart to You instead of demanding life from a broken cistern. Help me choose the next faithful move without shame. Amen.")}`;
 }
 
 // ============================================================
@@ -1357,7 +1372,8 @@ function initFeelingsDirectory() {
   
   // Fill category selector options
   const cats = [...new Set(DATA_FEELINGS.map(item => item.category))].sort();
-  select.innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join("");
+  if (IS_RU) cats.sort((x, y) => NAME("cats", x).localeCompare(NAME("cats", y), "ru"));
+  select.innerHTML = `<option value="">${TXT("allCategories", "All Categories")}</option>` + cats.map(c => `<option value="${c}">${NAME("cats", c)}</option>`).join("");
   
   search.addEventListener("input", renderFeelingsDirectory);
   select.addEventListener("change", renderFeelingsDirectory);
@@ -1387,7 +1403,7 @@ function renderFeelingsDirectory() {
     return matchesCat && matchesQuery;
   });
   
-  document.getElementById("feelings-count").innerText = `${rows.length} / ${DATA_FEELINGS.length} feelings`;
+  document.getElementById("feelings-count").innerText = TXT("fCount", `${rows.length} / ${DATA_FEELINGS.length} feelings`, rows.length, DATA_FEELINGS.length);
   
   rows.forEach(item => {
     const card = document.createElement("article");
@@ -1400,23 +1416,23 @@ function renderFeelingsDirectory() {
           <p>${item.signal}</p>
         </div>
         <div class="feel-move-cell">
-          <b>First Faithful Move</b>
+          <b>${TXT("fMove", "First Faithful Move")}</b>
           <span>${item.move}</span>
         </div>
       </div>
       <details>
-        <summary>Diagnose this feeling more deeply</summary>
+        <summary>${TXT("fDiagnose", "Diagnose this feeling more deeply")}</summary>
         <div class="feel-details-grid">
           <div class="feel-details-col">
-            <b>Old Pathway / Counterfeit</b>
+            <b>${TXT("fOld", "Old Pathway / Counterfeit")}</b>
             <span>${item.old}</span>
           </div>
           <div class="feel-details-col">
-            <b>Real Need</b>
+            <b>${TXT("fNeed", "Real Need")}</b>
             <span>${item.need}</span>
           </div>
           <div class="feel-details-col">
-            <b>Real Meal / Proper Means</b>
+            <b>${TXT("fReal", "Real Meal / Proper Means")}</b>
             <span>${item.real}</span>
           </div>
         </div>
@@ -1427,7 +1443,7 @@ function renderFeelingsDirectory() {
   });
   
   if (container.children.length === 0) {
-    container.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text-faint);font-family:var(--font-mono);font-size:var(--step--1);">✕ No matching feelings found.</div>`;
+    container.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text-faint);font-family:var(--font-mono);font-size:var(--step--1);">${TXT("fNone", "✕ No matching feelings found.")}</div>`;
   }
 }
 
@@ -1457,24 +1473,24 @@ function updateWorkbookBlueprint() {
   const grc = document.getElementById("arch-in-grace").value.trim() || "—";
   
   const blueprintText = 
-`📋 MY DE-ESCALATION BLUEPRINT
+`${TXT("bpTitle", "📋 MY DE-ESCALATION BLUEPRINT")}
 
-1. MY BROKEN CISTERN (THE VOID):
+${TXT("bp1", "1. MY BROKEN CISTERN (THE VOID):")}
    ${cis}
 
-2. MY COUNTERFEIT SOURCE (THE SALT WATER):
+${TXT("bp2", "2. MY COUNTERFEIT SOURCE (THE SALT WATER):")}
    ${cnt}
 
-3. MY COMPULSION LOOP SEQUENCE:
+${TXT("bp3", "3. MY COMPULSION LOOP SEQUENCE:")}
    ${hab}
 
-4. THE ACCUSATION / SHAME TRAP:
+${TXT("bp4", "4. THE ACCUSATION / SHAME TRAP:")}
    ${shm}
 
-5. MY GRACE ANCHOR (THE REAL MEAL):
+${TXT("bp5", "5. MY GRACE ANCHOR (THE REAL MEAL):")}
    ${grc}
 
-Constructed with the Loop Breaker & Way Back Portal.`;
+${TXT("bpFoot", "Constructed with the Loop Breaker & Way Back Portal.")}`;
 
   document.getElementById("blueprint-output-text").textContent = blueprintText;
 }
@@ -1485,14 +1501,14 @@ function resetWorkbookForm() {
     document.getElementById(`arch-in-${f}`).value = "";
   });
   updateWorkbookBlueprint();
-  showToast("Workbook form cleared.", "info");
+  showToast(TXT("wbCleared", "Workbook form cleared."), "info");
 }
 
 function copyWorkbookBlueprint() {
   const text = document.getElementById("blueprint-output-text").textContent;
   navigator.clipboard.writeText(text)
-    .then(() => showToast("Blueprint copied to clipboard!", "success"))
-    .catch(() => showToast("Failed to copy", "error"));
+    .then(() => showToast(TXT("bpCopied", "Blueprint copied to clipboard!"), "success"))
+    .catch(() => showToast(TXT("copyFailed", "Failed to copy"), "error"));
 }
 
 function downloadWorkbookBlueprint() {
@@ -1506,7 +1522,7 @@ function downloadWorkbookBlueprint() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast("Blueprint file downloaded successfully!", "success");
+  showToast(TXT("bpDownloaded", "Blueprint file downloaded successfully!"), "success");
 }
 
 // ============================================================
@@ -1563,28 +1579,28 @@ function renderGlossary() {
       : "";
       
     const synonymsHTML = item.synonyms.length > 0
-      ? `<p class="glossary-synonyms"><strong>Synonyms:</strong> ${item.synonyms.join(", ")}</p>`
+      ? `<p class="glossary-synonyms"><strong>${TXT("gSynonyms", "Synonyms:")}</strong> ${item.synonyms.join(", ")}</p>`
       : "";
       
     card.innerHTML = `
-      <h3>${item.term} <span class="glossary-term-badge">${item.tags[0]}</span></h3>
+      <h3>${item.term} <span class="glossary-term-badge">${NAME("tags", item.tags[0])}</span></h3>
       ${synonymsHTML}
       <div class="glossary-grid">
         <div class="glossary-block">
-          <strong>Definition</strong>
+          <strong>${TXT("gDefinition", "Definition")}</strong>
           <p>${item.definition}</p>
         </div>
         <div class="glossary-block">
-          <strong>Theological Context</strong>
+          <strong>${TXT("gTheology", "Theological Context")}</strong>
           <p>${item.theology}</p>
         </div>
         <div class="glossary-block">
-          <strong>Psychological Mapping</strong>
+          <strong>${TXT("gPsychology", "Psychological Mapping")}</strong>
           <p>${item.psychology}</p>
         </div>
       </div>
       <div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border); padding-top: 12px; flex-wrap: wrap; gap: 8px;">
-        <div style="font-size: var(--step--2); color: var(--text-faint);"><strong>Topics:</strong> ${item.topics.join(" · ")}</div>
+        <div style="font-size: var(--step--2); color: var(--text-faint);"><strong>${TXT("gTopics", "Topics:")}</strong> ${item.topics.join(" · ")}</div>
         ${versesHTML}
       </div>
     `;
@@ -1593,7 +1609,7 @@ function renderGlossary() {
   });
   
   if (container.children.length === 0) {
-    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-faint);font-family:var(--font-mono);font-size:var(--step--1);">✕ No glossary matches found.</div>`;
+    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-faint);font-family:var(--font-mono);font-size:var(--step--1);">${TXT("gNone", "✕ No glossary matches found.")}</div>`;
   }
 }
 
@@ -1740,3 +1756,10 @@ const DATA_COUNTERFEITS = [
   { name: "Love as Debt (Transaction)", type: "Relationships", subtype: "Dynamic", need: "Trust, justice, relational assurance", counterfeit: "Ledgers and scorekeeping. Love advanced to be owed. Sacrifice quietly weaponized into leverage.", healthy: "Grace received—unearned and free—dissolving the relational ledger.", signal: "There's an invisible ledger, and I'm always reading it.", realMeal: "Grace meditation, unprompted anonymous giving, boundaries." },
   { name: "Love as Rescue (The Project)", type: "Relationships", subtype: "Dynamic", need: "Significance, worth, avoiding own wound", counterfeit: "The fixer dynamic. Falling for potential; managing another's life to remain needed.", healthy: "Worth not contingent on being needed, allowing you to support without engulfing.", signal: "I need you to need me.", realMeal: "Hidden local service, vocational counseling, therapy." }
 ];
+
+// Russian: swap the text fields of the tables defined above (length / order asserted in ru-data.js)
+if (IS_RU) {
+  LB_RU.merge(ROOTS, LB_RU.roots);
+  LB_RU.mergeArr(DATA_FEELINGS, LB_RU.feelings, "feel", "DATA_FEELINGS");
+  LB_RU.mergeArr(DATA_COUNTERFEITS, LB_RU.counterfeits, "name", "DATA_COUNTERFEITS");
+}
