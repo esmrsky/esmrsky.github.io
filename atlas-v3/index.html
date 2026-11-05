@@ -21,6 +21,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
+:root{--ease:cubic-bezier(.2,.7,.3,1)}
+
 /* ============ tokens ============ */
 :root{
   --paper:#F6F1E7; --paper-2:#EFE8D8; --card:#FFFDF7; --ink:#211D17; --ink-soft:#57503F;
@@ -38,6 +40,23 @@
   --greek:"EB Garamond",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,monospace;
   --seam:linear-gradient(180deg,var(--gold-line),var(--blood-line));
 }
+/* The core palette is registered so a theme swap eases (an unregistered token cannot be
+   transitioned); html.theme-eases is added on the first press only. */
+@property --paper{syntax:"<color>";inherits:true;initial-value:#F6F1E7}
+@property --paper-2{syntax:"<color>";inherits:true;initial-value:#EFE8D8}
+@property --card{syntax:"<color>";inherits:true;initial-value:#FFFDF7}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#211D17}
+@property --ink-soft{syntax:"<color>";inherits:true;initial-value:#57503F}
+@property --line{syntax:"<color>";inherits:true;initial-value:#DCD2BC}
+@property --line-soft{syntax:"<color>";inherits:true;initial-value:#E8E0CE}
+@property --gold{syntax:"<color>";inherits:true;initial-value:#8A6A1F}
+@property --gold-strong{syntax:"<color>";inherits:true;initial-value:#6E5416}
+@property --gold-wash{syntax:"<color>";inherits:true;initial-value:#F1E6C8}
+@property --gold-line{syntax:"<color>";inherits:true;initial-value:#C9A94E}
+@property --blood{syntax:"<color>";inherits:true;initial-value:#8C2F26}
+@property --true-pane{syntax:"<color>";inherits:true;initial-value:#FBF7EC}
+@property --false-pane{syntax:"<color>";inherits:true;initial-value:#2A2522}
+html.theme-eases{transition:--paper .32s var(--ease),--paper-2 .32s var(--ease),--card .32s var(--ease),--ink .32s var(--ease),--ink-soft .32s var(--ease),--line .32s var(--ease),--line-soft .32s var(--ease),--gold .32s var(--ease),--gold-strong .32s var(--ease),--gold-wash .32s var(--ease),--gold-line .32s var(--ease),--blood .32s var(--ease),--true-pane .32s var(--ease),--false-pane .32s var(--ease)}
 :root[data-theme="dark"]{
   --paper:#12100D; --paper-2:#1A1713; --card:#1E1A15; --ink:#EDE6D8; --ink-soft:#B0A691;
   --line:#3A342A; --line-soft:#2B2620;
@@ -73,7 +92,14 @@ h1,h2,h3{font-family:var(--serif);line-height:1.08;font-weight:560;letter-spacin
 .ref{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--ink-soft);white-space:nowrap}
 blockquote.kjv{font-family:var(--greek);font-size:1.07rem;line-height:1.6;color:var(--ink);border-left:2px solid var(--gold-line);padding:.15rem 0 .15rem 1rem;margin:.6rem 0}
 blockquote.kjv em{font-style:italic}
-blockquote.kjv .ref{display:block;margin-top:.45rem;font-style:normal}
+blockquote.kjv .ref{display:block;margin-top:.45rem;font-style:normal;white-space:normal}
+/* ============ panels open and close in place ============ */
+/* Every panel here was display:none -> block, so it snapped. It now fades and grows (height:auto
+   interpolates where the browser allows it; elsewhere it just fades), and closing eases back. */
+:root{interpolate-size:allow-keywords}
+.mp-detail,.work-detail,.door-body,.trin-detail,.web-panel,#mobile-panel{opacity:0;height:0;overflow:clip;transition:opacity .32s var(--ease),height .32s var(--ease),display .32s allow-discrete}
+.mirror-pair.open .mp-detail,.work-detail.open,.door-row.open .door-body,.trin-row.open .trin-detail,.web-panel.open,#mobile-panel.open{opacity:1;height:auto}
+@starting-style{.mirror-pair.open .mp-detail,.work-detail.open,.door-row.open .door-body,.trin-row.open .trin-detail,.web-panel.open,#mobile-panel.open{opacity:0;height:0}}
 /* ============ tier badges ============ */
 .tier{display:inline-flex;align-items:center;gap:.4em;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.28em .7em;border-radius:999px;border:1px solid transparent;vertical-align:middle}
 .tier.t-text{color:var(--tier-text);background:var(--tier-text-wash);border-color:color-mix(in srgb,var(--tier-text) 35%,transparent)}
@@ -142,7 +168,7 @@ nav.desktop + .hdr-actions{margin-left:0}
 .pane.p-false .rf{color:var(--false-soft)}
 .mp-seam{position:relative;background:linear-gradient(180deg,var(--true-pane) 0%,var(--false-pane) 100%)}
 .mp-seam::before{content:"";position:absolute;inset:0;left:50%;width:1px;background:var(--seam)}
-.mp-seam .lens{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gold);transition:transform .25s;z-index:1}
+.mp-seam .lens{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gold);transition:transform .2s var(--ease);z-index:1}
 .mp-seam .lens{transform:translate(-50%,-50%)}
 .mp-btn:hover .mp-seam .lens{transform:translate(-50%,-50%) scale(1.12)}
 .mp-detail{display:none;border-top:1px solid var(--line-soft);padding:clamp(18px,3vw,28px);background:var(--paper)}
@@ -166,7 +192,7 @@ nav.desktop + .hdr-actions{margin-left:0}
 .wheel-card{border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow);padding:clamp(14px,2.5vw,24px)}
 .wheel-card .hint{text-align:center;font-size:.8rem;color:var(--ink-soft);margin-top:.4rem}
 #fruit-wheel .seg{cursor:pointer}
-#fruit-wheel .seg path.wedge{fill:var(--paper-2);stroke:var(--card);stroke-width:2;transition:fill .2s}
+#fruit-wheel .seg path.wedge{fill:var(--paper-2);stroke:var(--card);stroke-width:2;transition:fill .2s var(--ease)}
 #fruit-wheel .seg:hover path.wedge{fill:var(--gold-wash)}
 #fruit-wheel .seg.is-active path.wedge{fill:var(--gold-wash);stroke:var(--gold-line)}
 #fruit-wheel .seg text{fill:var(--ink);font-family:var(--sans);font-size:13.5px;font-weight:600;pointer-events:none}
@@ -222,7 +248,7 @@ ul.fd-list li::before{content:"·";position:absolute;left:.2rem;color:var(--gold
 .door-btn .num{font-family:var(--serif);font-style:italic;font-size:1.6rem;color:var(--gold);width:1.4ch;flex:none}
 .door-btn .door-name{font-family:var(--serif);font-size:clamp(1.15rem,2.6vw,1.5rem);font-weight:560}
 .door-btn .door-gk{font-family:var(--greek);color:var(--ink-soft);font-size:.95rem}
-.door-btn .chev{margin-left:auto;color:var(--ink-soft);transition:transform .2s}
+.door-btn .chev{margin-left:auto;color:var(--ink-soft);transition:transform .2s var(--ease)}
 .door-row.open .door-btn .chev{transform:rotate(180deg)}
 .door-body{display:none;border-top:1px solid var(--line-soft);padding:clamp(16px,3vw,26px)}
 .door-row.open .door-body{display:block}
@@ -251,6 +277,8 @@ ul.fd-list li::before{content:"·";position:absolute;left:.2rem;color:var(--gold
 .chip{border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;min-height:44px;display:inline-flex;align-items:center;gap:.45rem;font-size:.85rem;font-weight:500;color:var(--ink-soft);background:var(--paper)}
 .chip:hover{color:var(--ink);box-shadow:var(--shadow)}
 .chip.is-active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip{position:relative}
+.chip::after{content:"";position:absolute;inset:-4px 0}
 .chip .dot{width:.55em;height:.55em;border-radius:50%}
 .web-scroll{overflow-x:auto;border-radius:12px}
 #web-svg{width:100%;height:auto;min-width:820px}
@@ -297,6 +325,63 @@ footer .fine{margin-top:2.2rem;padding-top:1.2rem;border-top:1px solid var(--lin
 .section-pad{padding:clamp(44px,7vw,88px) 0}
 .divider{height:1px;background:var(--line-soft);margin:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior from /assets/scripture-popover.js, which ships no colors; these are this page's clothes for it. */
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,var(--gold) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--gold-strong);text-decoration-color:var(--gold-strong)}
+.esv-tip{position:absolute;z-index:120;display:none;max-width:360px;padding:15px 17px 13px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow-lift);color:var(--ink);font-family:var(--greek);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--gold);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-tip-text{min-height:3em;transition:opacity .2s var(--ease)}
+.esv-tip-text.is-loading{opacity:.45}
+.esv-note{display:block;margin-top:8px;color:var(--ink-soft);font-family:var(--sans);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--gold);font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border-color:var(--gold);color:var(--gold-strong)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--ink);font-family:var(--sans);font-size:.84rem;font-weight:700;cursor:pointer;transition:border-color .2s var(--ease),background-color .2s var(--ease)}
+.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border-color:var(--gold)}
+.esv-pick-ic{width:15px;height:15px;color:var(--gold);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--ink-soft);transition:rotate .2s var(--ease)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:130;min-width:250px;max-height:min(62dvh,420px);overflow-y:auto;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow-lift);opacity:1;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft);font-family:var(--sans);font-size:.78rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--ink-soft);text-align:left;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--ink);font-family:var(--sans);font-size:.82rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--greek);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--gold) 10%,transparent);color:var(--ink)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--gold)}
+.esv-ctx{width:min(880px,calc(100% - 24px));max-height:min(86dvh,800px);padding:0;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden;opacity:0;scale:.98;transition:opacity .32s var(--ease),scale .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.98}}
+.esv-ctx::backdrop{background:rgba(18,16,13,0);transition:background-color .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(18,16,13,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(18,16,13,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(86dvh,800px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--line-soft)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--gold);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-ctx-head h3{margin:0;font-family:var(--greek);font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.15;color:var(--ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:none;color:var(--ink-soft);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close:hover{color:var(--ink);border-color:var(--gold)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--greek);text-align:left}
+.esv-ctx-passage{margin:0}
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--gold) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-note{margin:.8em 0 0;color:var(--ink-soft);font-family:var(--sans);font-size:.82rem}
+.esv-ctx-loading{color:var(--ink-soft);font-family:var(--sans);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--line-soft);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--gold);color:var(--ink)}
+.esv-ctx-more:disabled{opacity:.5;cursor:default}
+@media (max-width:560px){.esv-ctx-head{flex-wrap:wrap}.esv-ctx-body{padding:16px 16px 18px}}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
 </style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -483,7 +568,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <div class="web-shell">
       <div class="web-filters" id="web-filters" role="group" aria-label="Filter connections by evidence tier"></div>
       <div class="web-scroll"><svg id="web-svg" viewBox="0 0 960 780" role="group" aria-label="Constellation of originals and counterfeits. Select a node to list its connections."></svg></div>
-      <p class="web-caption">Gold lines are echoes inside the truth (shared Greek roots, quoted structures). Dashed red lines cross the seam — each one a forgery of the node it points at. Grey lines are membership. Tap any node, or use the list below.</p>
+      <p class="web-caption">Gold lines are echoes inside the truth (shared Greek roots, quoted structures). Dashed red lines cross the seam — each one a forgery of the node it points at. Gray lines are membership. Tap any node, or use the list below.</p>
       <div class="web-panel" id="web-panel"></div>
     </div>
   </div></section>
@@ -897,7 +982,7 @@ const DOOR_NOTES = [
   { h:'Luke keeps Eden’s order', tier:'mirror',
     p:`Genesis: good for food → pleasant to the eyes → desired to make wise. Luke: bread → kingdoms shown → temple leap. The sequences align door for door (Matthew reports the same three with the last two swapped). The alignment of each temptation to each phrase of 1 John 2:16 is the old traditional reading — the shared <em>structure</em> is on the page; the labels are a map.`},
   { h:'The two Adams', tier:'mirror',
-    p:`“The first man Adam was made a living soul; the last Adam was made a quickening spirit” (1 Cor 15:45). The first Adam met the doors full, in a garden, with everything permitted but one tree — and fell. The last Adam met them after forty days of fasting, in a wilderness — and stood. The rematch was staged uneven, in the enemy's favour, and he still lost it.`},
+    p:`“The first man Adam was made a living soul; the last Adam was made a quickening spirit” (1 Cor 15:45). The first Adam met the doors full, in a garden, with everything permitted but one tree — and fell. The last Adam met them after forty days of fasting, in a wilderness — and stood. The rematch was staged uneven, in the enemy's favor, and he still lost it.`},
   { h:'Every parry from one book', tier:'map',
     p:`All three answers come from Deuteronomy 6–8 — Moses' wilderness debrief, the record of the tests Israel flunked (manna, Massah, other gods). Jesus stands exactly where Israel fell, quoting Israel's own homework. He wins the wilderness with the wilderness book.`},
   { h:'The chain, and the standing exit', tier:'text',
@@ -1315,6 +1400,7 @@ function renderCreed(){
 /* ---- header ---- */
 function wireHeader(){
   $('#theme-btn').addEventListener('click',()=>{
+    document.documentElement.classList.add('theme-eases');
     const cur=document.documentElement.getAttribute('data-theme');
     const next=cur==='dark'?'light':'dark';
     document.documentElement.setAttribute('data-theme',next);
@@ -1356,6 +1442,20 @@ renderTrinity();
 buildWeb();
 renderCreed();
 wireHeader();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){var S=window.EsmrskyScripture;if(!S)return;
+  S.init({key:"atlas-v3",scan:".ref,.note-card p,.fd-list li,.trin-detail .note,.mp-detail .note,.fruit-detail p,.door-body p,.foot-grid li",versions:["NIV","NASB","ESV","KJV","NLT"]});
+})();
+</script>
+<script>
+/* The atlas renders by innerHTML and re-renders a detail panel on every pick, so references are
+   linked again whenever new nodes arrive (linkAll skips hosts it has already done). */
+(function(){var S=window.EsmrskyScripture;if(!S||!window.MutationObserver)return;var q=0;
+  new MutationObserver(function(){if(q)return;q=requestAnimationFrame(function(){q=0;S.linkAll();});})
+    .observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
+})();
 </script>
 </body>
 </html>
