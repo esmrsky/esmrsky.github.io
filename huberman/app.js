@@ -1,5 +1,10 @@
 'use strict';
 
+// Russian page: the generator sets window.esmrskyLang and html[lang=ru]; data.ru.js has already swapped the data text.
+const RU = window.esmrskyLang === 'ru' || document.documentElement.lang === 'ru';
+const L = (en, ru) => RU ? ru : en;
+const FILTER_RU = {light:'свет',movement:'движение',mind:'ум',food:'еда',sleep:'сон'};
+
 const COLORS = {lime:'var(--lime)',mint:'var(--mint)',amber:'var(--amber)',lilac:'var(--lilac)',blue:'var(--blue)'};
 const ICONS = {
   drop:'<path d="M12 3C10 7 5 11 5 15a7 7 0 0 0 14 0c0-4-5-8-7-12Z"/><path d="M8 15a4 4 0 0 0 4 4"/>',
@@ -39,17 +44,17 @@ function matchingProtocols(query,category){
 let activeFilter='all';
 const expandedProtocols=new Set();
 function protocolDetail(p){
-  return `<section class="detail-block"><h4>In the episode</h4><p>${escapeHtml(p.episode)}</p></section><section class="detail-block"><h4>Try this · practical synthesis</h4><ol>${p.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol></section><section class="detail-block"><h4>Why it might help</h4><p>${escapeHtml(p.why)}</p></section><section class="detail-block"><h4>Evidence check</h4><p>${escapeHtml(p.evidence)}</p></section>${p.caution?`<section class="detail-block safety"><h4>Keep in mind</h4><p>${escapeHtml(p.caution)}</p></section>`:''}<div class="protocol-source"><strong>Trace the source</strong><p>${p.pages?`Research companion v2.1, pp. ${escapeHtml(p.pages)}. `:'Personal-development discussion; no dedicated PDF review. '}Transcript, non-empty lines ${escapeHtml(p.lines)}.</p>${p.link?`<p><a href="${escapeHtml(p.link)}" target="_blank" rel="noopener">${escapeHtml(p.linkLabel)} ↗</a></p>`:''}<p>Related: ${p.related.map(id=>`<a href="#p-${id}" data-protocol="${id}">${escapeHtml(protocolById.get(id).title)}</a>`).join(' · ')}</p></div>`;
+  return `<section class="detail-block"><h4>${L('In the episode','В выпуске')}</h4><p>${escapeHtml(p.episode)}</p></section><section class="detail-block"><h4>${L('Try this · practical synthesis','Попробуйте · практический вывод')}</h4><ol>${p.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol></section><section class="detail-block"><h4>${L('Why it might help','Почему это может помочь')}</h4><p>${escapeHtml(p.why)}</p></section><section class="detail-block"><h4>${L('Evidence check','Проверка доказательств')}</h4><p>${escapeHtml(p.evidence)}</p></section>${p.caution?`<section class="detail-block safety"><h4>${L('Keep in mind','Имейте в виду')}</h4><p>${escapeHtml(p.caution)}</p></section>`:''}<div class="protocol-source"><strong>${L('Trace the source','Откуда это')}</strong><p>${p.pages?L(`Research companion v2.1, pp. ${escapeHtml(p.pages)}. `,`Исследовательский разбор v2.1, с. ${escapeHtml(p.pages)}. `):L('Personal-development discussion; no dedicated PDF review. ','Разговор о личном росте; отдельного разбора в PDF нет. ')}${L('Transcript, non-empty lines','Расшифровка, непустые строки')} ${escapeHtml(p.lines)}.</p>${p.link?`<p><a href="${escapeHtml(p.link)}" target="_blank" rel="noopener">${escapeHtml(p.linkLabel)} ↗</a></p>`:''}<p>${L('Related','Связано')}: ${p.related.map(id=>`<a href="#p-${id}" data-protocol="${id}">${escapeHtml(protocolById.get(id).title)}</a>`).join(' · ')}</p></div>`;
 }
 function renderProtocols(){
   const matches=matchingProtocols($('#protocol-search').value,activeFilter);
-  $('#protocol-grid').innerHTML=matches.map(p=>`<details class="protocol-card" id="p-${p.id}" data-protocol-id="${p.id}" style="--card-color:${COLORS[p.color]}"${expandedProtocols.has(p.id)?' open':''}><summary><div class="card-eyebrow"><span class="protocol-icon">${icon(p.icon)}</span><span>${p.number==='EXTENSION'?'PRACTICAL EXTENSION':`ANCHOR ${p.number}`}</span></div><h3>${escapeHtml(p.title)}</h3><p class="card-summary">${escapeHtml(p.summary)}</p><div class="card-bottom"><div><span class="pill ${p.tone}">${escapeHtml(p.status)}</span><div class="card-meta">${escapeHtml(p.time)}</div></div><span class="expand" aria-hidden="true">+</span></div><span class="card-action"><span class="when-closed">Explore protocol</span><span class="when-open">Close protocol</span></span></summary><div class="protocol-detail">${protocolDetail(p)}</div></details>`).join('');
+  $('#protocol-grid').innerHTML=matches.map(p=>`<details class="protocol-card" id="p-${p.id}" data-protocol-id="${p.id}" style="--card-color:${COLORS[p.color]}"${expandedProtocols.has(p.id)?' open':''}><summary><div class="card-eyebrow"><span class="protocol-icon">${icon(p.icon)}</span><span>${p.number==='EXTENSION'?L('PRACTICAL EXTENSION','ПРАКТИЧЕСКОЕ ДОПОЛНЕНИЕ'):`${L('ANCHOR','ОПОРА')} ${p.number}`}</span></div><h3>${escapeHtml(p.title)}</h3><p class="card-summary">${escapeHtml(p.summary)}</p><div class="card-bottom"><div><span class="pill ${p.tone}">${escapeHtml(p.status)}</span><div class="card-meta">${escapeHtml(p.time)}</div></div><span class="expand" aria-hidden="true">+</span></div><span class="card-action"><span class="when-closed">${L('Explore protocol','Открыть протокол')}</span><span class="when-open">${L('Close protocol','Свернуть протокол')}</span></span></summary><div class="protocol-detail">${protocolDetail(p)}</div></details>`).join('');
   $$('.protocol-card').forEach(card=>card.addEventListener('toggle',()=>{
     if(!card.isConnected) return;
     const id=card.dataset.protocolId;
     if(card.open) expandedProtocols.add(id); else expandedProtocols.delete(id);
   }));
-  $('#result-count').textContent=`${matches.length} of ${PROTOCOLS.length} field notes${activeFilter==='all'?'':` · ${activeFilter}`}`;
+  $('#result-count').textContent=L(`${matches.length} of ${PROTOCOLS.length} field notes${activeFilter==='all'?'':` · ${activeFilter}`}`,`${matches.length} из ${PROTOCOLS.length} заметок${activeFilter==='all'?'':` · ${FILTER_RU[activeFilter]}`}`);
   $('#no-results').hidden=matches.length!==0;
 }
 // Capture open states before a search re-renders the library (toggle events are queued).
@@ -97,8 +102,8 @@ window.addEventListener('hashchange',syncProtocolHash);
 function setTheme(theme){
   document.documentElement.dataset.theme=theme;
   const isLight=theme==='light';
-  $('#theme-toggle').innerHTML=`<span aria-hidden="true">${isLight?'☾':'☼'}</span> ${isLight?'Dark mode':'Light mode'}`;
-  $('#theme-toggle').setAttribute('aria-label',`Switch to ${isLight?'dark':'light'} mode`);
+  $('#theme-toggle').innerHTML=`<span aria-hidden="true">${isLight?'☾':'☼'}</span> ${isLight?L('Dark mode','Тёмная тема'):L('Light mode','Светлая тема')}`;
+  $('#theme-toggle').setAttribute('aria-label',isLight?L('Switch to dark mode','Включить тёмную тему'):L('Switch to light mode','Включить светлую тему'));
   $('meta[name="theme-color"]').setAttribute('content',isLight?'#f6f7ef':'#101715');
 }
 $('#theme-toggle').addEventListener('click',()=>{
@@ -123,14 +128,14 @@ function setMotion(paused){
   document.documentElement.classList.toggle('motion-paused',paused);
   $$('.motion-control').forEach(button=>{
     button.setAttribute('aria-pressed',String(paused));
-    button.textContent=button.id==='motion-mobile'?(paused?'Motion off':'Motion on'):(paused?'Resume ambient motion  ▷':'Pause ambient motion  Ⅱ');
+    button.textContent=button.id==='motion-mobile'?(paused?L('Motion off','Анимация выкл.'):L('Motion on','Анимация вкл.')):(paused?L('Resume ambient motion  ▷','Включить фоновую анимацию  ▷'):L('Pause ambient motion  Ⅱ','Остановить фоновую анимацию  Ⅱ'));
   });
 }
 $$('.motion-control').forEach(button=>button.addEventListener('click',()=>setMotion(!motionPaused)));
 window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',event=>setMotion(event.matches));
 
 // This is a short, user-started demonstration. Durations are cues, not dose claims.
-const BREATH_PHASES=[{label:'Inhale gently',sub:'Through your nose',duration:3000,scale:1},{label:'A small top-up',sub:'One more gentle nasal inhale',duration:1000,scale:1.1},{label:'Exhale slowly',sub:'Let it leave through your mouth',duration:6000,scale:.72}];
+const BREATH_PHASES=[{label:L('Inhale gently','Спокойный вдох'),sub:L('Through your nose','Через нос'),duration:3000,scale:1},{label:L('A small top-up','Небольшой добор'),sub:L('One more gentle nasal inhale','Ещё один мягкий вдох носом'),duration:1000,scale:1.1},{label:L('Exhale slowly','Медленный выдох'),sub:L('Let it leave through your mouth','Выпустите воздух через рот'),duration:6000,scale:.72}];
 let breathTimer=null;
 let breathRunning=false;
 let breathStep=0;
@@ -138,21 +143,21 @@ function stopBreathing(completed=false){
   clearTimeout(breathTimer);
   breathTimer=null;
   breathRunning=false;
-  $('#breath-start').innerHTML=`${completed?'Try again':'Try 3 gentle cycles'} <span>↗</span>`;
-  $('#breath-label').textContent=completed?'Let breathing be natural.':'Make a little space.';
-  $('#breath-sub').textContent=completed?'Notice how you feel. No score to chase.':'A guided demonstration';
+  $('#breath-start').innerHTML=`${completed?L('Try again','Ещё раз'):L('Try 3 gentle cycles','Попробовать 3 спокойных цикла')} <span>↗</span>`;
+  $('#breath-label').textContent=completed?L('Let breathing be natural.','Дышите как обычно.'):L('Make a little space.','Освободите немного места.');
+  $('#breath-sub').textContent=completed?L('Notice how you feel. No score to chase.','Заметьте, как вы себя чувствуете. Никаких баллов.'):L('A guided demonstration','Демонстрация с подсказками');
   $('#breath-orb').style.transform='scale(.82)';
   $('#breath-orb').style.transition='transform 1s ease';
   $$('.breath-steps span').forEach(step=>step.classList.remove('current'));
-  $('#breath-status').textContent=completed?'Three cycles complete. Return to natural breathing.':'Breathing demonstration stopped.';
+  $('#breath-status').textContent=completed?L('Three cycles complete. Return to natural breathing.','Три цикла пройдены. Вернитесь к обычному дыханию.'):L('Breathing demonstration stopped.','Демонстрация дыхания остановлена.');
 }
 function nextBreathStep(){
   if(breathStep>=9){stopBreathing(true);return;}
   const phaseIndex=breathStep%3;
   const phase=BREATH_PHASES[phaseIndex];
   $('#breath-label').textContent=phase.label;
-  $('#breath-sub').textContent=`${phase.sub} · ${Math.floor(breathStep/3)+1} of 3`;
-  $('#breath-status').textContent=`${phase.label}. ${phase.sub}. Cycle ${Math.floor(breathStep/3)+1} of 3.`;
+  $('#breath-sub').textContent=`${phase.sub} · ${Math.floor(breathStep/3)+1} ${L('of','из')} 3`;
+  $('#breath-status').textContent=`${phase.label}. ${phase.sub}. ${L('Cycle','Цикл')} ${Math.floor(breathStep/3)+1} ${L('of','из')} 3.`;
   const orb=$('#breath-orb');
   orb.style.transition=`transform ${phase.duration}ms ease-in-out`;
   orb.style.transform=`scale(${phase.scale})`;
@@ -163,7 +168,7 @@ function nextBreathStep(){
 $('#breath-start').addEventListener('click',()=>{
   if(breathRunning){stopBreathing();return;}
   breathRunning=true;breathStep=0;
-  $('#breath-start').textContent='Stop demonstration';
+  $('#breath-start').textContent=L('Stop demonstration','Остановить демонстрацию');
   nextBreathStep();
 });
 $('.breath-panel').addEventListener('toggle',()=>{if(!$('.breath-panel').open && breathRunning) stopBreathing();});
@@ -181,11 +186,11 @@ function updateArousal(){
   const bezier=axis=>((1-t)**3*points[0][axis]+3*(1-t)**2*t*points[1][axis]+3*(1-t)*t*t*points[2][axis]+t**3*points[3][axis]);
   $('#arousal-dot').setAttribute('cx',bezier(0).toFixed(2));
   $('#arousal-dot').setAttribute('cy',bezier(1).toFixed(2));
-  const state=value<30?['Low','Not enough activation.','Try a brief movement break, daylight if appropriate for your schedule, or a smaller, clearer first step. If you are sleep-deprived, protect recovery.']:value>70?['High','More energy than the task can use.','Pause, try a comfortable long exhale, and reduce competing demands. An upsetting message may not need an immediate answer.']:['Balanced','Engaged, with room to think.','Choose one task. Make genuine attempts, notice errors, and keep going at a manageable level.'];
+  const state=value<30?L(['Low','Not enough activation.','Try a brief movement break, daylight if appropriate for your schedule, or a smaller, clearer first step. If you are sleep-deprived, protect recovery.'],['Низко','Не хватает активации.','Сделайте короткий перерыв на движение, выйдите на свет, если это вписывается в ваш график, или выберите первый шаг поменьше и попонятнее. Если вы не выспались, берегите восстановление.']):value>70?L(['High','More energy than the task can use.','Pause, try a comfortable long exhale, and reduce competing demands. An upsetting message may not need an immediate answer.'],['Высоко','Энергии больше, чем нужно задаче.','Сделайте паузу, попробуйте спокойный долгий выдох и уберите конкурирующие дела. На неприятное сообщение не обязательно отвечать сразу.']):L(['Balanced','Engaged, with room to think.','Choose one task. Make genuine attempts, notice errors, and keep going at a manageable level.'],['В балансе','Вовлечены, и есть место подумать.','Выберите одну задачу. Делайте честные попытки, замечайте ошибки и продолжайте в посильном темпе.']);
   $('#arousal-value').textContent=state[0];
   $('#arousal-title').textContent=state[1];
   $('#arousal-advice').textContent=state[2];
-  $('#arousal-slider').setAttribute('aria-valuetext',`${state[0]} alertness in the illustrative model`);
+  $('#arousal-slider').setAttribute('aria-valuetext',L(`${state[0]} alertness in the illustrative model`,`Бодрость: ${state[0].toLowerCase()} (условная модель)`));
 }
 $('#arousal-slider').addEventListener('input',updateArousal);
 
@@ -193,7 +198,7 @@ $('#training-week').innerHTML=TRAINING.map(day=>`<details class="training-day" s
 
 // Deep-note HTML is curated static source content, never user input.
 $('#deeper-grid').innerHTML=DEEP_NOTES.map(note=>`<details class="deep-note${note.featured?' featured':''}" id="note-${note.id}"${note.featured?' open':''}><summary><span class="pill ${note.tone}">${note.label}</span><h3>${note.title}</h3><p class="deep-preview">${note.preview}</p><span class="expand" aria-hidden="true">+</span></summary><div class="deep-content">${note.body.map(paragraph=>paragraph.startsWith('<div')?paragraph:`<p>${paragraph}</p>`).join('')}<p class="source-line">${note.source}${note.links?'<br>'+note.links.map(([label,url])=>`<a href="${url}" target="_blank" rel="noopener">${label} ↗</a>`).join(' · '):''}</p></div></details>`).join('');
-$('#episode-grid').innerHTML=RECENT_EPISODES.map(episode=>`<details class="episode-card" id="episode-${episode.id}" style="--episode-color:${COLORS[episode.color]};--card-color:${COLORS[episode.color]}"><summary><div class="episode-meta"><span class="pill">${escapeHtml(episode.format)}</span><time datetime="${episode.date}">${episode.displayDate}</time></div><p class="episode-guest">${escapeHtml(episode.guest)} · ${escapeHtml(episode.topic)}</p><h3>${escapeHtml(episode.title)}</h3><p>${escapeHtml(episode.summary)}</p><span class="expand" aria-hidden="true">+</span><span class="card-action"><span class="when-closed">Explore 3 takeaways</span><span class="when-open">Close takeaways</span></span></summary><div class="episode-body"><p class="eyebrow">TRY THIS · PRACTICAL SYNTHESIS</p><ol class="episode-steps">${episode.steps.map(([title,body],i)=>`<li><h4>0${i+1} / ${escapeHtml(title)}</h4><p>${escapeHtml(body)}</p></li>`).join('')}</ol><p class="episode-check"><strong>Evidence & context</strong>${escapeHtml(episode.check)}</p><p class="fine-print">${escapeHtml(episode.chapters)}. Chapter times can shift with inserted ads.</p><p class="episode-links">${episode.links.map(([label,url])=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} ↗</a>`).join('')}</p></div></details>`).join('');
+$('#episode-grid').innerHTML=RECENT_EPISODES.map(episode=>`<details class="episode-card" id="episode-${episode.id}" style="--episode-color:${COLORS[episode.color]};--card-color:${COLORS[episode.color]}"><summary><div class="episode-meta"><span class="pill">${escapeHtml(episode.format)}</span><time datetime="${episode.date}">${episode.displayDate}</time></div><p class="episode-guest">${escapeHtml(episode.guest)} · ${escapeHtml(episode.topic)}</p><h3>${escapeHtml(episode.title)}</h3><p>${escapeHtml(episode.summary)}</p><span class="expand" aria-hidden="true">+</span><span class="card-action"><span class="when-closed">${L('Explore 3 takeaways','Открыть 3 вывода')}</span><span class="when-open">${L('Close takeaways','Свернуть выводы')}</span></span></summary><div class="episode-body"><p class="eyebrow">${L('TRY THIS · PRACTICAL SYNTHESIS','ПОПРОБУЙТЕ · ПРАКТИЧЕСКИЙ ВЫВОД')}</p><ol class="episode-steps">${episode.steps.map(([title,body],i)=>`<li><h4>0${i+1} / ${escapeHtml(title)}</h4><p>${escapeHtml(body)}</p></li>`).join('')}</ol><p class="episode-check"><strong>${L('Evidence & context','Доказательства и контекст')}</strong>${escapeHtml(episode.check)}</p><p class="fine-print">${escapeHtml(episode.chapters)}. ${L('Chapter times can shift with inserted ads.','Время глав может сдвигаться из-за вставленной рекламы.')}</p><p class="episode-links">${episode.links.map(([label,url])=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} ↗</a>`).join('')}</p></div></details>`).join('');
 function revealLinkedCard(id){
   let target=document.getElementById(id);
   while(target){
@@ -213,7 +218,7 @@ $('#source-links').innerHTML=SOURCES.map(source=>`<a href="${source.url}" target
 let questionIndex=0;
 function renderQuestion(){
   const question=QUIZ[questionIndex];
-  $('#quiz-container').innerHTML=`<p class="quiz-question">${escapeHtml(question.q)}</p><button class="button" id="reveal-answer" aria-expanded="false" aria-controls="quiz-answer">Reveal the answer <span>↓</span></button><div class="quiz-answer" id="quiz-answer" hidden><p>${escapeHtml(question.a)}</p></div>`;
+  $('#quiz-container').innerHTML=`<p class="quiz-question">${escapeHtml(question.q)}</p><button class="button" id="reveal-answer" aria-expanded="false" aria-controls="quiz-answer">${L('Reveal the answer','Показать ответ')} <span>↓</span></button><div class="quiz-answer" id="quiz-answer" hidden><p>${escapeHtml(question.a)}</p></div>`;
   $('#quiz-count').textContent=`${questionIndex+1} / ${QUIZ.length}`;
   $('#quiz-prev').disabled=questionIndex===0;
   $('#quiz-next').disabled=questionIndex===QUIZ.length-1;
@@ -229,7 +234,7 @@ function renderQuestion(){
       if(!answer.hidden) answer.animate({opacity:[0,1]},{duration:280,delay:60,easing:'ease',fill:'backwards'});
     }
     event.currentTarget.setAttribute('aria-expanded',String(!answer.hidden));
-    event.currentTarget.innerHTML=answer.hidden?'Reveal the answer <span>↓</span>':'Hide the answer <span>↑</span>';
+    event.currentTarget.innerHTML=answer.hidden?L('Reveal the answer','Показать ответ')+' <span>↓</span>':L('Hide the answer','Скрыть ответ')+' <span>↑</span>';
   });
 }
 $('#quiz-prev').addEventListener('click',()=>{if(questionIndex>0){questionIndex--;renderQuestion();}});
