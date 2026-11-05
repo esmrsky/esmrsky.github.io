@@ -27,6 +27,10 @@
   --cyan: #39c5cf;
   --cyan-bg: rgba(57, 197, 207, 0.12);
 
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --t1: .15s;
+  --t2: .25s;
+
   --radius: 12px;
   --radius-sm: 8px;
   --maxw: 1100px;
@@ -88,6 +92,9 @@ code, .mono {
   background-clip: text;
   color: transparent;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .nav-logo:hover { text-decoration: none; }
 
@@ -99,10 +106,13 @@ code, .mono {
 
 .nav-links a {
   color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   font-size: 0.92rem;
-  transition: color 0.15s, background 0.15s;
+  transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease), border-color var(--t1) var(--ease);
 }
 
 .nav-links a:hover {
@@ -207,8 +217,9 @@ code, .mono {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.35rem 0.95rem;
+  min-height: 44px;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+  transition: color var(--t1) var(--ease), border-color var(--t1) var(--ease), background-color var(--t1) var(--ease);
 }
 
 .chip:hover { color: var(--text); border-color: var(--text-faint); }
@@ -231,8 +242,9 @@ code, .mono {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.7rem 1rem;
+  min-height: 44px;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color var(--t1) var(--ease);
 }
 .search:focus { border-color: var(--accent); }
 .search::placeholder { color: var(--text-faint); }
@@ -252,6 +264,9 @@ details.deeper summary {
   font-weight: 600;
   list-style: none;
   user-select: none;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
 }
 details.deeper summary::-webkit-details-marker { display: none; }
 details.deeper summary::before { content: "▸ "; }
@@ -306,7 +321,7 @@ details.deeper .deeper-body {
   border-radius: var(--radius);
   padding: 1.4rem;
   color: var(--text);
-  transition: transform 0.15s, border-color 0.15s;
+  transition: transform var(--t2) var(--ease), border-color var(--t1) var(--ease);
 }
 
 .section-card:hover {
@@ -519,3 +534,18 @@ details.deeper .deeper-body {
 
 /* reading comfort: balance display text */
 h1, h2, h3 { text-wrap: balance; }
+
+.footer .home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

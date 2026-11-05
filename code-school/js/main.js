@@ -31,6 +31,7 @@
   const footer = document.createElement("footer");
   footer.className = "footer";
   footer.innerHTML = `Built as a living guide — all content lives in <code>data/*.js</code>.
-    Ask Claude Code to update it when the landscape shifts.`;
+    Ask Claude Code to update it when the landscape shifts.<br />
+    <a class="home" href="https://esmrsky.github.io/">← All projects</a>`;
   document.body.append(footer);
 })();
