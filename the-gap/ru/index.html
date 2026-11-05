@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/the-gap/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/the-gap/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/the-gap/">
+<!-- lang-alt:end -->
+<title>Разрыв — как на самом деле работает додумывание</title>
+<meta name="description" content="Между тем, что человек сделал, и тем, что он, как ты «знаешь», имел в виду, лежит разрыв, и ты ни разу не ощутил его как разрыв. Путеводитель по механике, которой мозг достраивает пробелы: линза, которая переписывает вывод, асимметрия с утяжелёнными кубиками и петля, которая сама производит себе доказательства.">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Разрыв — как на самом деле работает додумывание">
+<meta property="og:description" content="Одни и те же данные, три уверенности. Почему мозг заполняет разрыв между тем, что человек сделал, и тем, что он имел в виду, раньше, чем ты успеваешь заметить, что разрыв вообще был, — и что с этим делать.">
+<meta property="og:url" content="https://esmrsky.github.io/the-gap/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://esmrsky.github.io/the-gap/ru/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23101F29'/%3E%3Crect x='2' y='10.5' width='7' height='3' fill='%23EDEBE4'/%3E%3Crect x='15' y='10.5' width='7' height='3' fill='%23EDEBE4'/%3E%3Crect x='10' y='10.5' width='4' height='3' fill='%23F2A81C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* gels — each concept owns a hue */
+  --ink:#101F29;
+  --ink-2:#1B3140;
+  --paper:#EDEBE4;
+  --paper-2:#E2DFD5;
+  --amber:#F2A81C;   /* the gap / ambiguity */
+  --flare:#E2482A;   /* offense / threat lens */
+  --violet:#7B4BE8;  /* limerence / idealization lens */
+  --teal:#0FA093;    /* clarity / practice */
+  --cream:#FBF9F4;
+
+  --f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
+
+  --ease:cubic-bezier(.22,.61,.36,1); --t1:.2s; --t2:.35s; --t3:.7s;
+  --gut:clamp(18px,4.5vw,56px);
+  --maxw:1180px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f-body);font-size:clamp(17px,1.15vw,19px);line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+p{text-wrap:pretty;margin:0 0 1.1em}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.025em;line-height:.98}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
+.band{padding:clamp(56px,9vw,120px) 0;position:relative}
+.band--dark{background:var(--ink);color:var(--cream)}
+.band--amber{background:var(--amber);color:var(--ink)}
+.band--paper2{background:var(--paper-2)}
+
+/* ————— eyebrow / structural labels ————— */
+.eyebrow{
+  font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:26px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:currentColor;opacity:.28}
+.beatno{
+  font-family:var(--f-mono);font-weight:600;font-size:11px;letter-spacing:.1em;
+  padding:4px 8px;border-radius:3px;background:var(--ink);color:var(--cream);
+}
+.band--dark .beatno{background:var(--cream);color:var(--ink)}
+
+/* ————— hero ————— */
+.hero{background:var(--ink);color:var(--cream);padding:clamp(70px,12vw,140px) 0 clamp(50px,8vw,90px);overflow:hidden}
+.hero h1{
+  font-size:clamp(46px,11.5vw,132px);font-weight:800;letter-spacing:-.045em;
+  margin:0 0 .35em;
+}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero .lede{font-size:clamp(19px,2.2vw,27px);line-height:1.42;max-width:24ch;font-weight:300;opacity:.92}
+
+.hero-top{display:flex;justify-content:flex-end;margin:calc(clamp(70px,12vw,140px)*-.5) 0 22px}
+.lang-switch{position:relative;display:inline-flex;align-items:center;height:44px;border-radius:999px;overflow:hidden;flex:0 0 auto}
+.lang-switch::after{content:"";position:absolute;inset:0;border:1px solid rgba(251,249,244,.3);border-radius:inherit;pointer-events:none}
+.lang-opt{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 .7rem;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-decoration:none;color:rgba(251,249,244,.6);transition:color var(--t1) var(--ease),background-color var(--t1) var(--ease)}
+.lang-opt:hover{color:var(--amber)}
+.lang-opt[aria-current="page"]{background:rgba(251,249,244,.14);color:var(--cream);pointer-events:none}
+.lang-opt:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+/* Russian: the display and body faces have no Cyrillic, so the lines run longer */
+:lang(ru) .hero .lede{max-width:30ch}
+:lang(ru) h2.beat{max-width:20ch}
+
+/* the gap diagram */
+.gapfig{margin-top:clamp(40px,7vw,70px);border-top:1px solid rgba(251,249,244,.2);padding-top:26px}
+.gapline{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.gapbox{
+  border:1.5px solid rgba(251,249,244,.5);padding:16px 18px;border-radius:4px;
+  font-family:var(--f-mono);font-size:12px;line-height:1.5;flex:1 1 180px;min-width:0;
+}
+.gapbox b{display:block;font-size:10px;letter-spacing:.2em;opacity:.6;margin-bottom:7px;font-weight:600}
+.gapmid{
+  flex:1 1 200px;position:relative;display:flex;align-items:center;justify-content:center;
+  padding:16px 10px;min-height:70px;
+}
+.gapmid .rail{position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(251,249,244,.22)}
+.gapmid .fill{position:absolute;left:0;top:50%;height:2px;background:var(--amber);width:100%;transform:scaleX(0);transform-origin:0 50%;animation:fill 2.6s var(--ease) .6s forwards}
+@keyframes fill{to{transform:scaleX(1)}}
+.gapmid .tag{
+  position:relative;background:var(--ink);padding:0 10px;font-family:var(--f-mono);
+  font-size:10.5px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;
+  opacity:0;animation:pop var(--t2) var(--ease) 2.9s forwards;
+}
+@keyframes pop{to{opacity:1}}
+.gapcap{font-family:var(--f-mono);font-size:11.5px;opacity:.62;margin-top:18px;letter-spacing:.03em}
+
+/* ————— typography blocks ————— */
+h2.beat{font-size:clamp(32px,6.4vw,66px);font-weight:800;margin:0 0 .5em;max-width:17ch}
+h3.sub{font-size:clamp(20px,2.6vw,28px);font-weight:600;margin:2.2em 0 .6em;max-width:24ch}
+.col{max-width:64ch}
+.lead{font-size:clamp(19px,2vw,23px);line-height:1.5;max-width:44ch;font-weight:300}
+.pull{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(22px,3.4vw,38px);
+  line-height:1.12;letter-spacing:-.02em;margin:1.4em 0;max-width:20ch;text-wrap:balance;
+}
+
+/* ————— evidence chips ————— */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;
+  font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:99px;
+  border:1.5px solid currentColor;white-space:nowrap;vertical-align:2px;
+}
+.chip::before{content:"";width:6px;height:6px;border-radius:99px;background:currentColor}
+.chip.solid{color:var(--teal)}
+.chip.mixed{color:#B07B12}
+.chip.thin{color:var(--flare)}
+.band--dark .chip.mixed{color:var(--amber)}
+.band--amber .chip.solid{color:#0B6B62}
+.band--amber .chip.mixed{color:var(--ink)}
+
+/* ————— lens machine (signature) ————— */
+.machine{
+  margin-top:clamp(30px,5vw,46px);border:2px solid var(--ink);border-radius:10px;
+  background:var(--cream);overflow:hidden;
+  box-shadow:10px 10px 0 rgba(16,31,41,.12);
+  transition:box-shadow var(--t2) var(--ease);
+}
+.m-head{
+  padding:14px 18px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;
+  align-items:center;gap:12px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;
+  text-transform:uppercase;font-weight:600;flex-wrap:wrap;
+}
+.m-body{padding:clamp(18px,3.4vw,30px)}
+.evt{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(19px,2.7vw,27px);line-height:1.24;
+  letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance;
+}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;padding:0;list-style:none}
+.facts li{
+  font-family:var(--f-mono);font-size:11.5px;padding:6px 10px;border-radius:4px;
+  background:var(--paper-2);border:1.5px solid transparent;transition:border-color var(--t2) var(--ease),background-color var(--t2) var(--ease);
+}
+.facts li.hot{border-color:var(--lens,var(--ink));background:color-mix(in srgb,var(--lens,#000) 12%,var(--cream))}
+.factnote{font-family:var(--f-mono);font-size:11px;opacity:.55;margin:10px 0 0}
+
+.lensbar{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 0}
+.lensbtn{
+  font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 15px;border-radius:5px;border:2px solid var(--ink);background:transparent;color:var(--ink);
+  cursor:pointer;min-height:44px;transition:background-color var(--t1) var(--ease),color var(--t1) var(--ease),border-color var(--t1) var(--ease),transform var(--t1) var(--ease);flex:1 1 auto;
+}
+.lensbtn:hover{transform:translateY(-2px)}
+.lensbtn[aria-pressed="true"]{background:var(--btn);border-color:var(--btn);color:var(--cream)}
+.lensbtn[data-lens="curious"][aria-pressed="true"]{color:var(--ink)}
+
+.readout{
+  margin-top:22px;padding:clamp(16px,3vw,24px);border-radius:7px;
+  background:color-mix(in srgb,var(--lens,#888) 10%,var(--cream));
+  border-left:6px solid var(--lens,#888);transition:background-color var(--t2) var(--ease),border-color var(--t2) var(--ease);
+}
+.r-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.6;margin-bottom:9px}
+.r-concl{font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.5vw,25px);line-height:1.24;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+.r-why{font-size:16px;line-height:1.55;margin:0 0 16px;opacity:.88}
+.meter{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em}
+.meter .track{flex:1;height:9px;border-radius:99px;background:rgba(16,31,41,.13);overflow:hidden}
+.meter .bar{height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--lens,#888);transition:transform var(--t3) var(--ease),background-color var(--t2) var(--ease)}
+.verdict{
+  margin-top:20px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;
+  padding-top:16px;border-top:1.5px dashed rgba(16,31,41,.25);
+}
+.verdict b{color:var(--flare)}
+
+/* ————— cost matrix ————— */
+.matrix{display:grid;grid-template-columns:auto 1fr 1fr;gap:2px;margin-top:30px;font-family:var(--f-mono)}
+.matrix .mh{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:10px 8px;font-weight:600;display:flex;align-items:flex-end}
+.mcell{
+  padding:16px 14px;border:none;text-align:left;cursor:pointer;font-family:var(--f-mono);
+  font-size:12px;line-height:1.4;color:var(--ink);border-radius:4px;transition:transform var(--t1) var(--ease),filter var(--t1) var(--ease);
+}
+.mcell:hover{transform:scale(1.02)}
+.mcell strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px;opacity:.72}
+.mcell[data-cost="fatal"]{background:var(--flare);color:var(--cream)}
+.mcell[data-cost="cheap"]{background:rgba(16,31,41,.14)}
+.mcell[data-cost="good"]{background:rgba(15,160,147,.28)}
+.mcell[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
+.mout{
+  margin-top:16px;padding:16px 18px;background:rgba(16,31,41,.09);border-radius:6px;
+  font-size:16px;line-height:1.5;min-height:74px;
+}
+
+/* ————— mirrored lenses ————— */
+.mirror{display:grid;grid-template-columns:1fr;gap:18px;margin-top:34px}
+@media(min-width:820px){.mirror{grid-template-columns:1fr 1fr;gap:22px}}
+.mcard{border-radius:10px;padding:clamp(20px,3.2vw,30px);color:var(--cream);position:relative;overflow:hidden}
+.mcard--flare{background:var(--flare)}
+.mcard--violet{background:var(--violet)}
+.mcard h3{font-size:clamp(24px,3.4vw,36px);font-weight:800;margin-bottom:6px;letter-spacing:-.03em}
+.mcard .need{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.8;margin-bottom:20px}
+.mrow{display:flex;gap:12px;padding:11px 0;border-top:1px solid rgba(251,249,244,.28);font-size:15.5px;line-height:1.42}
+.mrow span:first-child{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.72;flex:0 0 84px;padding-top:4px}
+.spine{
+  margin-top:22px;padding:clamp(18px,3vw,26px);background:var(--ink);color:var(--cream);border-radius:10px;
+}
+.spine .r-label{opacity:.55}
+.spine ol{margin:0;padding-left:1.1em;font-family:var(--f-mono);font-size:13px;line-height:1.85;letter-spacing:.02em}
+
+/* ————— loop ————— */
+.loopwrap{display:grid;grid-template-columns:1fr;gap:26px;margin-top:34px;align-items:center}
+@media(min-width:900px){.loopwrap{grid-template-columns:minmax(0,420px) 1fr;gap:44px}}
+.loopsvg{width:100%;height:auto;display:block}
+.lnode circle{transition:fill var(--t2) var(--ease),r var(--t2) var(--ease)}
+.lnode text{font-family:var(--f-mono);font-size:9.4px;letter-spacing:.06em;fill:var(--cream);font-weight:600}
+.lnode.on circle{fill:var(--amber)}
+.lnode.on text{fill:var(--ink)}
+.loopsteps{list-style:none;padding:0;margin:0}
+.loopsteps li{
+  padding:13px 0 13px 16px;border-left:3px solid rgba(251,249,244,.22);
+  font-size:16.5px;line-height:1.45;opacity:.42;transition:opacity var(--t2) var(--ease),border-color var(--t2) var(--ease);
+}
+.loopsteps li.on{opacity:1;border-color:var(--amber)}
+.loopsteps li b{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--amber)}
+.playbtn{
+  margin-top:20px;font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;padding:11px 18px;border-radius:5px;border:2px solid var(--cream);
+  background:transparent;color:var(--cream);cursor:pointer;min-height:44px;transition:background-color var(--t1) var(--ease),color var(--t1) var(--ease);
+}
+.playbtn:hover{background:var(--cream);color:var(--ink)}
+
+/* ————— scripture ————— */
+.verses{display:grid;grid-template-columns:1fr;gap:2px;margin-top:32px}
+@media(min-width:760px){.verses{grid-template-columns:1fr 1fr}}
+.verse{padding:22px;background:rgba(251,249,244,.06);border-radius:6px}
+.verse .ref{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:10px}
+.verse p{margin:0;font-size:16.5px;line-height:1.5}
+.verse p em{color:var(--amber);font-style:normal}
+
+/* ————— practice ————— */
+.steps{counter-reset:s;list-style:none;padding:0;margin:34px 0 0}
+.steps li{
+  counter-increment:s;position:relative;padding:24px 0 24px 62px;border-top:2px solid rgba(16,31,41,.16);
+}
+.steps li::before{
+  content:counter(s,decimal-leading-zero);position:absolute;left:0;top:24px;
+  font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--teal);
+  border:2px solid var(--teal);border-radius:99px;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+}
+.steps h4{font-family:var(--f-display);font-size:clamp(19px,2.4vw,25px);font-weight:600;margin:0 0 8px;letter-spacing:-.02em}
+.steps p{margin:0 0 .6em}
+.script{
+  font-family:var(--f-mono);font-size:13.5px;line-height:1.6;background:var(--ink);color:var(--cream);
+  padding:14px 16px;border-radius:6px;margin-top:12px;
+}
+.script b{color:var(--amber);font-weight:500}
+
+/* ————— details / accordions —————
+   Height is animated in JS (see the accordion controller at the foot of the
+   document) because `details` has no openable box to transition — the browser
+   flips display on the whole subtree in one frame. The icon is pure CSS: a
+   ring with a horizontal bar baked into its background (::before) and a
+   vertical bar (::after) that rotates down onto it. Nothing swaps glyphs, so
+   plus → minus is one continuous move instead of a flicker. */
+details{
+  margin:18px 0;border-top:1.5px solid rgba(16,31,41,.22);
+}
+.band--dark details{border-color:rgba(251,249,244,.22)}
+summary{
+  cursor:pointer;list-style:none;position:relative;padding:15px 0 15px 34px;
+  font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  transition:opacity var(--t1) var(--ease);
+}
+summary::-webkit-details-marker{display:none}
+summary:hover{opacity:.7}
+
+summary::before{
+  content:"";position:absolute;left:0;top:50%;width:22px;height:22px;margin-top:-11px;
+  border:1.5px solid currentColor;border-radius:99px;opacity:.72;
+  background:linear-gradient(currentColor,currentColor) center/10px 1.6px no-repeat;
+  transition:opacity var(--t1) var(--ease),transform var(--t1) var(--ease);
+}
+summary::after{
+  content:"";position:absolute;left:11px;top:50%;width:1.6px;height:10px;margin:-5px 0 0 -.8px;
+  background:currentColor;border-radius:2px;
+  transition:transform var(--t2) var(--ease);
+}
+summary:hover::before{opacity:1}
+summary:active::before{transform:scale(.9)}
+details[open] summary::before{opacity:1}
+details[open] summary::after{transform:rotate(90deg)}
+/* While JS holds a panel open through its closing animation, `[open]` is still
+   true — these let the bar lead the movement instead of snapping once the
+   height lands. Same specificity as the rule above, so they must stay below
+   it. Only the bar: leaving the ring bright until the panel has finished
+   closing keeps hover from fighting them. */
+details.acc-shut summary::after{transform:none}
+details.acc-open summary::after{transform:rotate(90deg)}
+
+details .dbody{padding:2px 0 22px;max-width:62ch;font-size:16.5px}
+details .dbody p:last-child{margin-bottom:0}
+
+.key{display:flex;flex-wrap:wrap;gap:20px;margin-top:20px;font-family:var(--f-mono);font-size:12.5px;line-height:1.5}
+.key div{flex:1 1 210px}
+
+footer{background:var(--ink);color:var(--cream);padding:clamp(46px,7vw,80px) 0;font-family:var(--f-mono);font-size:12.5px;line-height:1.7}
+footer .wrap{opacity:.9}
+.foot-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:26px;padding-top:20px;border-top:1px solid rgba(251,249,244,.18)}
+.foot-row .home{display:inline-flex;align-items:center;min-height:44px;color:var(--cream);text-decoration:none;letter-spacing:.06em;transition:color var(--t1) var(--ease)}
+.foot-row .home:hover{color:var(--amber)}
+.foot-pick{display:flex;align-items:center;gap:10px}
+.foot-pick .esv-pick-btn{color:var(--cream);border-color:rgba(251,249,244,.3)}
+.foot-pick .esv-pick-ic{color:var(--amber)}
+.foot-pick .esv-pick-menu{top:auto;bottom:calc(100% + 8px)}
+.foot-fine{margin-top:16px;max-width:60ch;opacity:.6;font-size:11px}
+
+@media (prefers-reduced-motion:reduce){
+  /* `*` alone misses ::before/::after, which is where the accordion icon
+     lives — without them named it keeps springing under reduced motion. */
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important}
+  .gapmid .fill{transform:none}.gapmid .tag{opacity:1}
+  html{scroll-behavior:auto}
+}
+</style>
+<style id="scripture-skin">
+/* ==========================================================================
+   THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
+   which ships no colors on purpose. These are this page's clothes for it:
+   the first rule maps the reader's few roles onto this page's own tokens.
+   Opens and closes fade in place; nothing readable slides.
+   ========================================================================== */
+:root{--sr-panel:var(--cream);--sr-ink:var(--ink);--sr-ink2:var(--ink-2);--sr-ink3:rgba(16,31,41,.62);--sr-line:rgba(16,31,41,.18);--sr-accent:var(--teal);--sr-accent-ink:#0B6F66;--sr-hl:var(--amber);--sr-display:var(--f-mono);--sr-read:var(--f-body);--sr-shadow:rgba(16,31,41,.28);--sr-t:var(--t1);--sr-t2:var(--t2);--sr-ease:var(--ease)}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color var(--sr-t) var(--sr-ease),text-decoration-color var(--sr-t) var(--sr-ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--sr-accent-ink);text-decoration-color:var(--sr-accent-ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 14px 8px 12px;border:1px solid var(--sr-line);border-radius:999px;background:var(--sr-chip,transparent);color:var(--sr-ink);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-pick-btn:hover{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 10%,transparent)}
+.esv-pick-ic{width:15px;height:15px;color:var(--sr-accent-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--sr-ink3);transition:rotate var(--sr-t) var(--sr-ease)}
+.esv-pick.open .esv-pick-btn{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 13%,transparent)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;display:block;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;padding:6px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 24px 60px var(--sr-shadow);opacity:1;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--sr-line);color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:9px;background:none;color:var(--sr-ink2);text-align:left;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--sr-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--sr-read);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--sr-accent) 10%,transparent);color:var(--sr-ink)}
+.esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--sr-accent) 17%,transparent)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--sr-accent-ink)}
+.esv-tip{position:absolute;z-index:130;display:none;max-width:min(360px,calc(100vw - 24px));padding:15px 17px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);box-shadow:0 24px 64px var(--sr-shadow);color:var(--sr-ink);font-family:var(--sr-read);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700;letter-spacing:.01em}
+.esv-tip-text{font-family:var(--sr-read);white-space:pre-line;min-height:3em;font-size:1.02rem;transition:opacity var(--sr-t) var(--sr-ease)}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--sr-ink3);font-family:var(--sr-display);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--sr-line)}
+.esv-tip-ctx{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid color-mix(in srgb,var(--sr-accent) 40%,var(--sr-line));background:color-mix(in srgb,var(--sr-accent) 11%,transparent);color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.86rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease)}
+.esv-tip-ctx:hover{background:color-mix(in srgb,var(--sr-accent) 19%,transparent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--sr-line);border-radius:18px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 34px 100px rgba(0,0,0,.45);overflow:hidden;opacity:0;transition:opacity var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]{opacity:1}
+@starting-style{.esv-ctx[open]{opacity:0}}
+.esv-ctx::backdrop{background:rgba(8,8,14,0);transition:background-color var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(8,8,14,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(8,8,14,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--sr-line)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.82rem;font-weight:600}
+.esv-ctx-head h3{margin:0;font-family:var(--sr-display);font-weight:700;font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.12;color:var(--sr-ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--sr-line);border-radius:50%;background:none;color:var(--sr-ink2);font-size:18px;line-height:1;cursor:pointer;transition:color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-ctx-close:hover{color:var(--sr-ink);border-color:var(--sr-ink3)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sr-read);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--sr-hl) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sr-hl) 30%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--sr-line);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--sr-line);background:none;color:var(--sr-ink2);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-ctx-more:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-ctx-note{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;margin-top:.6em;display:block}
+.esv-ctx-prefs{color:var(--sr-ink);font-family:var(--sr-display)}
+/* the pop-up's one action is reading in place, not leaving for another site */
+.esv-tip-out,.esv-ctx-out{display:none!important}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top"><div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/the-gap/" lang="en" hreflang="en" aria-current="false">EN</a><a class="lang-opt" href="/the-gap/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div></div>
+    <div class="eyebrow">Путеводитель по механике, которой мозг достраивает пробелы</div>
+    <h1>Ты никогда<br>не видишь <em>разрыв</em>.</h1>
+    <p class="lede">Между тем, что человек на самом деле сделал, и тем, что он, как ты «знаешь», имел в виду, есть разрыв. Ты ни разу не ощутил его как разрыв.</p>
+
+    <div class="gapfig">
+      <div class="gapline">
+        <div class="gapbox"><b>НАБЛЮДАЕМОЕ</b>Она прочитала сообщение.<br>Прошло три часа.<br>Ответа нет.</div>
+        <div class="gapmid">
+          <div class="rail"></div><div class="fill"></div>
+          <div class="tag">заполнено раньше, чем ты заметил</div>
+        </div>
+        <div class="gapbox"><b>ВОСПРИНИМАЕТСЯ КАК ФАКТ</b>«Она меня игнорирует»<br>или<br>«Она думает обо мне»</div>
+      </div>
+      <p class="gapcap">Разрыв реален. Ощущение, будто ты его пересёк, — нет. В этом вся проблема.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ 01 LENS MACHINE ══════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">01</span> Машина линз</div>
+    <h2 class="beat">Одни и те же данные. Три уверенности.</h2>
+    <p class="lead">Цветной светофильтр не меняет сцену. Он меняет то, что до тебя доходит. Выбери линзу и смотри, как вывод переписывается сам, пока факты остаются на месте.</p>
+
+    <div class="machine" id="machine">
+      <div class="m-head">
+        <span>Журнал событий · без правок</span>
+        <span id="lensname">no lens selected</span>
+      </div>
+      <div class="m-body">
+        <p class="evt">Твоё сообщение ушло в 9:14. Оно прочитано. Сейчас 12:20, ответа нет. В 11:03 она выложила сторис, и это попалось тебе на глаза.</p>
+        <ul class="facts" id="facts">
+          <li data-f="read">прочитано · 9:16</li>
+          <li data-f="gap">прошло · 3 ч 06 мин</li>
+          <li data-f="story">сторис · 11:03</li>
+          <li data-f="prior">последние 40 ответов · до 20 мин</li>
+        </ul>
+        <p class="factnote">Эти четыре пункта не меняются. Ничто ниже не добавляет к ним информации.</p>
+
+        <div class="lensbar" role="group" aria-label="Выбери линзу">
+          <button class="lensbtn" data-lens="offended" aria-pressed="false" style="--btn:var(--flare)">Обида</button>
+          <button class="lensbtn" data-lens="limerent" aria-pressed="false" style="--btn:var(--violet)">Лимеренция</button>
+          <button class="lensbtn" data-lens="curious" aria-pressed="false" style="--btn:var(--amber)">Любопытство</button>
+        </div>
+
+        <div class="readout" id="readout">
+          <div class="r-label">Что, как ты готов поклясться, ты видишь</div>
+          <p class="r-concl" id="concl">Choose a lens above.</p>
+          <p class="r-why" id="why">Each one produces a conclusion that feels like observation, not like a guess. That feeling is the thing worth distrusting.</p>
+          <div class="meter">
+            <span>УВЕРЕННОСТЬ</span>
+            <span class="track"><span class="bar" id="bar"></span></span>
+            <span id="pct">—</span>
+          </div>
+          <div class="verdict" id="verdict">New information gathered: <b>zero</b>.</div>
+        </div>
+      </div>
+    </div>
+
+    <details>
+      <summary>Копнуть глубже · почему это не метафора</summary>
+      <div class="dbody">
+        <p>Народная модель мышления выглядит так: <em>увидел → истолковал → заключил</em>. Ведущая модель в когнитивной науке устроена наоборот: мозг строит предсказанный мир, а входящие данные от органов чувств нужны ему в основном для того, чтобы эту картину поправлять. <span class="chip mixed">Неоднозначно</span> Предиктивная обработка — одна из ведущих теорий, а не установленный факт, но практический вывод сохраняется при любом подходе.</p>
+        <p>Неприятнее всего следствие. Если истолкование происходит <em>до</em> осознания, то момента, когда сырые данные лежат перед тобой и ждут оценки, просто не бывает. Ты не переживаешь «я делаю вывод о холодности из-за задержки». Ты переживаешь холодное сообщение. Между «вижу» и «додумываю» нет разницы на ощупь, и именно поэтому совет «просто будь объективнее к людям» не работает. Нельзя быть объективным в отношении шага, который ты ни разу не заметил за собой.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ 02 THE FILL IS NEVER NEUTRAL ══════════ -->
+<section class="band band--amber">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">02</span> Заполнение никогда не нейтрально</div>
+    <h2 class="beat">Твой мозг создан для выживания, а не для точности.</h2>
+    <div class="col">
+      <p>Если бы разрыв заполнялся случайно, ты ошибался бы во все стороны одинаково. Но это не так. Ошибки идут в определённых направлениях: к угрозе, к умыслу, к тому, что всё это про тебя. Это не поломка. Это замысел.</p>
+      <p>Строгая версия истории про пещерного человека — <strong>теория управления ошибками</strong>: когда ложная тревога и промах стоят по-разному, оптимальная система намеренно смещена, а не точна. <span class="chip solid">Надёжная логика</span> <span class="chip mixed">Спорно в деталях</span> Математика обнаружения сигналов возражений не вызывает; эволюционные истории вокруг неё проверить гораздо труднее.</p>
+    </div>
+
+    <div class="matrix" id="matrix">
+      <div class="mh"></div>
+      <div class="mh">Правда: безобидно</div>
+      <div class="mh">Правда: враждебно</div>
+      <div class="mh">Ты считаешь<br>враждебным</div>
+      <button class="mcell" data-cost="cheap" data-msg="Вышло грубо: человек ничего такого не имел в виду. Цена: лёгкая неловкость, дружба чуть остыла, возможно, потом придётся извиниться. Это переживаемо. Такую ошибку твой мозг готов совершать тысячу раз." aria-pressed="false"><strong>Ложная тревога</strong>Неловко. Дёшево.</button>
+      <button class="mcell" data-cost="good" data-msg="Прочтение верное. Ты защищён. Мозг заносит это в графу «система работает», и доверие ко всему механизму незаметно растёт." aria-pressed="false"><strong>Попадание</strong>Под защитой.</button>
+      <div class="mh">Ты считаешь<br>безобидным</div>
+      <button class="mcell" data-cost="good" data-msg="Прочтение верное. Открытость к тому, кто её заслуживал, оправдала себя. Заметь: такой исход почти никогда не запоминается, поэтому твоя внутренняя статистика собственной точности перекошена." aria-pressed="false"><strong>Верный пропуск</strong>Открытость. Верно.</button>
+      <button class="mcell" data-cost="fatal" data-msg="Доверие досталось тому, кто желал зла. Исторически именно эта ошибка обрывает роды. Твоя нервная система настроена обходить эту клетку почти любой ценой — в том числе ценой постоянных ошибок насчёт порядочных людей." aria-pressed="false"><strong>Промах</strong>Возможно, фатально.</button>
+    </div>
+    <p class="mout" id="mout">Tap any cell. The asymmetry between the bottom-right box and the top-left box is the entire reason you assume the worst.</p>
+
+    <p class="pull">Система, заточенная под несимметричные издержки, будет нарочно врать тебе в одну сторону.</p>
+
+    <details>
+      <summary>Копнуть глубже · три утяжелённых кубика</summary>
+      <div class="dbody">
+        <p><strong>Склонность к негативу.</strong> Негативная информация весит больше, чем равная ей по силе позитивная, — во внимании, памяти и формировании впечатления. <span class="chip solid">Надёжно</span> Один сухой ответ перевешивает десять тёплых.</p>
+        <p><strong>Склонность видеть умысел.</strong> Когда не хватает времени или внимания, люди чаще принимают случайные поступки за намеренные. Читать события как <em>направленные</em> — похоже, быстрый режим по умолчанию; «это вышло случайно» — поправка, которая требует усилий. <span class="chip mixed">Неоднозначно</span></p>
+        <p><strong>Фундаментальная ошибка атрибуции</strong> — та, которую популярная психология раздувает сильнее всего. Хрестоматийное утверждение: других мы объясняем характером, а себя — обстоятельствами. Метаанализы показали, что асимметрия «действующий — наблюдатель» намного слабее, чем предполагала классическая литература, а при некоторых условиях даже разворачивается; кросс-культурные выборки ослабляют её ещё сильнее. <span class="chip mixed">Неоднозначно</span> Что-то настоящее там есть. Но это не тот универсальный закон, каким его принято цитировать.</p>
+        <p style="opacity:.75"><em>Примечание о точности: детали исследований здесь приведены по памяти, а не по источникам. Считай, что направление указано верно, но на точность цитат полагаться не стоит.</em></p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ 03 TWO GELS ONE MACHINE ══════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">03</span> Два фильтра, одна машина</div>
+    <h2 class="beat">Обида и одержимость — один и тот же двигатель, подключённый наоборот.</h2>
+    <p class="lead">Одна превращает любой нейтральный поступок в нападение. Другая — в знак. Ни одна не добавляет информации. Обе запускают одно и то же заполнение на одном и том же разрыве.</p>
+
+    <div class="mirror">
+      <div class="mcard mcard--flare">
+        <h3>Обида</h3>
+        <div class="need">Кем они должны быть для тебя: врагом</div>
+        <div class="mrow"><span>Фильтр</span><span>Враждебная атрибуция. Неопределённость разрешается в сторону злого умысла.</span></div>
+        <div class="mrow"><span>В жизни</span><span>Она не заняла тебе место. В прошлом месяце заняла бы. Это послание.</span></div>
+        <div class="mrow"><span>Выгода</span><span>Быть обиженным — логично. Это объясняет твою боль и даёт ей адрес.</span></div>
+        <div class="mrow"><span>Цена</span><span>Человека теряешь, а папку с делом оставляешь себе.</span></div>
+      </div>
+      <div class="mcard mcard--violet">
+        <h3>Лимеренция</h3>
+        <div class="need">Кем они должны быть для тебя: источником</div>
+        <div class="mrow"><span>Фильтр</span><span>Доброжелательная атрибуция. Неопределённость разрешается в сторону значимости.</span></div>
+        <div class="mrow"><span>В жизни</span><span>Он лайкнул фото из 2019-го. В час ночи. Это не просто так. У тебя есть теории.</span></div>
+        <div class="mrow"><span>Выгода</span><span>Выдуманный человек вмещает всё, что тебе нужно. Настоящий — нет.</span></div>
+        <div class="mrow"><span>Цена</span><span>Ты досконально знаешь модель и почти не знаешь самого человека.</span></div>
+      </div>
+    </div>
+
+    <div class="spine">
+      <div class="r-label" style="color:var(--cream)">Общий каркас</div>
+      <ol>
+        <li>Высокая эмоциональная ставка</li>
+        <li>Мало реальной информации</li>
+        <li>Уверенность, которая обгоняет и то и другое</li>
+      </ol>
+    </div>
+
+    <h3 class="sub">Странное топливо: лимеренция работает <em>на</em> неизвестности.</h3>
+    <div class="col">
+      <p>Обида хотя бы обычно хочет развязки. Лимеренция устроена страннее. Это состояние усиливается от прерывистых, двусмысленных сигналов и, как правило, спадает от определённости в <em>любую</em> сторону. Полная взаимность его растворяет. Чёткий отказ растворяет. Неопределённость — не терпимый побочный эффект, а топливо. <span class="chip thin">Мало данных</span></p>
+      <p>Поэтому это самый эффективный генератор домыслов из всех. Оно само ищет условия, при которых мозг производит больше всего содержания, и переживает это производство как близость.</p>
+      <p><strong>Признак:</strong> ты можешь предсказать, что они скажут, и раз за разом удивляешься, когда они и правда говорят. Родственный признак — отношения лучше работают в их отсутствие, чем в присутствии, потому что в отсутствие конструкцию никто не оспаривает.</p>
+    </div>
+
+    <details>
+      <summary>Копнуть глубже · что такое лимеренция и чем она не является</summary>
+      <div class="dbody">
+        <p>Лимеренция — не формальное клиническое понятие. Оно пришло из работы Дороти Теннов 1970-х годов, построенной на интервью, и эмпирическая база за ним остаётся скудной. <span class="chip thin">Мало данных</span> Относись к нему как к хорошо описанной закономерности, а не как к проверенному механизму. Описание полезно именно потому, что называет то, что люди узнают сразу; но узнавание — это ещё не доказательство.</p>
+        <p><strong>Идеализация — не всегда изъян.</strong> Есть довольно убедительные данные, что партнёры, которые видят друг друга чуть лучше, чем строго заслуженно, со временем сообщают о большей удовлетворённости. <span class="chip mixed">Неоднозначно</span> Щедрый взгляд — не причина поломки.</p>
+        <p>Поломка начинается, когда человек становится <em>несущей конструкцией</em> твоего чувства собственной ценности. Тогда ты не можешь позволить себе точность, потому что точность угрожает поставкам.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ 04 THE LOOP ══════════ -->
+<section class="band band--dark">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">04</span> Петля</div>
+    <h2 class="beat">Твои допущения сами производят себе доказательства.</h2>
+    <p class="lead" style="opacity:.9">Это та часть, которую списки когнитивных искажений пропускают, и именно она на самом деле стоит тебе отношений.</p>
+
+    <div class="loopwrap">
+      <div>
+        <svg class="loopsvg" viewBox="0 0 400 400" role="img" aria-label="Цикл из четырёх стадий: допущение, твоё поведение, их реакция, подтверждение, которое снова питает допущение">
+          <circle cx="200" cy="200" r="132" fill="none" stroke="rgba(251,249,244,.18)" stroke-width="2"/>
+          <g class="lnode" data-i="0"><circle cx="200" cy="68" r="46" fill="#2A4658"/><text x="200" y="65" text-anchor="middle">РЕШАЕШЬ</text><text x="200" y="78" text-anchor="middle" opacity=".7">они остыли</text></g>
+          <g class="lnode" data-i="1"><circle cx="332" cy="200" r="46" fill="#2A4658"/><text x="332" y="197" text-anchor="middle">ТЫ ДЕЙСТВУЕШЬ</text><text x="332" y="210" text-anchor="middle" opacity=".7">настороженно</text></g>
+          <g class="lnode" data-i="2"><circle cx="200" cy="332" r="46" fill="#2A4658"/><text x="200" y="329" text-anchor="middle">ОНА ЗАМЕЧАЕТ</text><text x="200" y="342" text-anchor="middle" opacity=".7">отдаляется</text></g>
+          <g class="lnode" data-i="3"><circle cx="68" cy="200" r="46" fill="#2A4658"/><text x="68" y="197" text-anchor="middle">ПОДТВЕРЖДЕНО</text><text x="68" y="210" text-anchor="middle" opacity=".7">«так и знал»</text></g>
+        </svg>
+      </div>
+      <div>
+        <ol class="loopsteps" id="loopsteps">
+          <li data-i="0"><b>Стадия первая</b>Ты решаешь без всяких доказательств, что она к тебе охладела.</li>
+          <li data-i="1"><b>Стадия вторая</b>Ты чуть закрываешься. Ответы короче. Ты перестаёшь начинать разговор. Ничего драматичного.</li>
+          <li data-i="2"><b>Стадия третья</b>Она замечает дистанцию и отвечает тем же, потому что так делают люди.</li>
+          <li data-i="3"><b>Стадия четвёртая</b>Теперь она заметно холоднее. Твоё прочтение подтвердилось. Ошибки в оценке не было. Это твоих рук дело.</li>
+        </ol>
+        <button class="playbtn" id="playbtn">Run the loop</button>
+      </div>
+    </div>
+
+    <p class="pull" style="color:var(--amber)">Твоя статистика попаданий в оценке людей — испорченный набор данных. Ты сам проверял свою домашнюю работу.</p>
+
+    <details>
+      <summary>Копнуть глубже · почему изнутри это не проверить</summary>
+      <div class="dbody">
+        <p><strong>Поведенческое подтверждение.</strong> Ожидания формируют поведение, оно формирует поведение другого человека, а то подтверждает ожидание. <span class="chip mixed">Неоднозначно</span> Эффект настоящий, но скромный, а несколько известных ранних исследований были небольшими и маломощными. Сам механизм защитить проще, чем любой отдельный громкий результат.</p>
+        <p><strong>Склонность к подтверждению</strong> потом закрывает дело. Как только прочтение сложилось, подходящие детали замечаются и запоминаются, а неподходящие объясняются или вовсе не кодируются. <span class="chip solid">Надёжно</span></p>
+        <p><strong>Слепое пятно предвзятости</strong> — завершающая ловушка. Люди легко замечают эти искажения у других и стабильно не видят их в себе. <span class="chip solid">Надёжно</span> Это значит, что чтение такой страницы улучшает твою способность диагностировать чужие допущения заметно сильнее, чем свои. Знание терминов может поднять твою уверенность, не поднимая точность.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ 05 THE VOID ══════════ -->
+<section class="band band--paper2">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">05</span> Почему оно не отпускает</div>
+    <h2 class="beat">Два разных вопроса — два разных ответа.</h2>
+    <div class="col">
+      <p>Их стоит разделить, потому что лечатся они по-разному, а люди постоянно сливают их в один.</p>
+      <p><strong>Нехватка информации объясняет, почему ты ошибаешься.</strong> Скудные данные плюс высокие ставки означают, что большая часть того, что ты «знаешь», была сгенерирована, а не получена. Это случается и с устойчивыми, цельными, благополучными людьми. Одной нехватки достаточно.</p>
+      <p><strong>Несущая потребность объясняет, почему ошибка переживает исправление.</strong> Если человек — твой источник принятия или если обида на него — твой источник связности, то точная информация не подарок, а угроза поставкам. Исправление ощущается не как обучение, а как потеря.</p>
+      <p>Это различие важно на практике: совет <em>«просто узнай их получше»</em> ничего не даёт, пока жива вторая причина. Новые данные сразу встраиваются в готовую модель. Можно провести с человеком год и знать его хуже, чем знал бы незнакомец после часа честного разговора.</p>
+      <p class="pull">Кумира приходится воображать: настоящий человек этого груза никогда бы не вынес.</p>
+      <p>Здесь язык пустот оправдывает своё место. Допущение — прежде всего не ошибка мышления. Это путь нагрузки. А путь нагрузки не чинят спором с ним — с него снимают вес.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 06 SCRIPTURE ══════════ -->
+<section class="band band--dark">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">06</span> Что на самом деле утверждает текст</div>
+    <h2 class="beat">Хождение в истине не даёт дара читать сердца.</h2>
+    <p class="lead" style="opacity:.92">Соблазнительный вывод: если я стою на истине, то перестану ошибаться в людях. Писание на удивление прямо говорит, что именно этого умения нам никогда не давали.</p>
+
+    <div class="verses">
+      <div class="verse">
+        <div class="ref">1 Цар. 16:7</div>
+        <p>Самуил — настоящий пророк, который напрямую слышал Бога, — посмотрел на Элиава и решил: <em>конечно, это он</em>. Он ошибся. Поправка: человек смотрит на внешность, а Господь смотрит на сердце. Духовное положение не дало ему точности в оценке человека, стоявшего прямо перед ним.</p>
+      </div>
+      <div class="verse">
+        <div class="ref">1 Кор. 4:3–5</div>
+        <p>Павел говорит им не судить ни о чём заранее, потому что скрытые намерения раскроются <em>позже</em>, и не ими. Он идёт дальше: не доверяет даже собственному приговору о себе.</p>
+      </div>
+      <div class="verse">
+        <div class="ref">1 Кор. 13:12</div>
+        <p>Мы знаем лишь отчасти. Мы видим неясно. Это написано верующим на пике духовной силы, а не как описание незрелых.</p>
+      </div>
+      <div class="verse">
+        <div class="ref">Притч. 18:13 и 18:17</div>
+        <p>Отвечать, не выслушав, названо глупостью — это провал компетентности, а не зрелости. А первая версия любой истории звучит безупречно, <em>пока кто-нибудь её не проверит</em>.</p>
+      </div>
+      <div class="verse">
+        <div class="ref">Деян. 10</div>
+        <p>Петру, уже много времени спустя после Пятидесятницы, понадобилось прямое видение, чтобы опрокинуть его допущение о целой категории людей. То, что он был наполнен Духом, не очистило его исходные установки заранее.</p>
+      </div>
+      <div class="verse">
+        <div class="ref">Иов 4–37</div>
+        <p>Трое уверенных, красноречивых, богословски подкованных мужчин около тридцати глав ошибались насчёт сердца одного человека. Гладкая речь — не точность.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Так что же меняется?</h3>
+    <div class="col" style="opacity:.93">
+      <p>Не твоя доля попаданий. Твоё <strong>значение по умолчанию в разрыве</strong>. Когда информация заканчивается — а она всегда заканчивается, — вопрос в том, чем заполняется пустота, и именно этой части касается духовное формирование.</p>
+      <p>Любовь не помнит зла и всему верит (1 Кор. 13:5–7). Будь готов скорее слушать, чем говорить, и не спеши гневаться (Иак. 1:19). А предупреждения об обиде не сентиментальные, а структурные: неулаженный гнев даёт дьяволу место (Еф. 4:26–27), а горечь описана как <em>корень</em>, который прорастает и оскверняет многих (Евр. 12:15). Это точное описание того, как фильтр застывает в убеждение, а потом в личность.</p>
+      <p class="pull" style="color:var(--teal)">Плод не в том, чтобы никогда не ошибаться. А в том, чтобы не заводить дело с самого начала и быстро закрывать его, когда оказывается, что ошибка есть.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 07 PRACTICE ══════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow"><span class="beatno">07</span> Практика</div>
+    <h2 class="beat">Не додумывать ты не сможешь. Но можешь перестать так быстро себе верить.</h2>
+    <p class="lead">Цель не в том, чтобы мозг не строил догадок. Такого мозга не существует. Цель — сократить путь от догадки до проверки.</p>
+
+    <ol class="steps">
+      <li>
+        <h4>Раздели фразу</h4>
+        <p>Скажи обе половины вслух, по отдельности. Разрыв становится виден в ту секунду, когда его нужно проговорить как два высказывания, а не как одно.</p>
+        <div class="script"><b>Наблюдение:</b> она прочитала и три часа не отвечает.<br><b>Вывод:</b> она меня игнорирует.<br><b>Замечено:</b> это не одно и то же предложение.</div>
+      </li>
+      <li>
+        <h4>Спроси, а не додумывай усерднее</h4>
+        <p>Вывод здесь по-настоящему полезен: <em>воображать</em> чужую точку зрения не повышает точность надёжно, зато может повысить уверенность, не повышая точности. А вот <em>получить</em> её, то есть реально спросить, — повышает. <span class="chip solid">Надёжно</span></p>
+        <div class="script"><b>Не так:</b> «давай-ка я хорошенько подумаю, откуда она исходит».<br><b>А так:</b> «слушай, ты притихла — у нас всё в порядке?»</div>
+      </li>
+      <li>
+        <h4>Попробуй противоположное</h4>
+        <p>Намеренно построй лучшую версию того прочтения, которое ты отверг. Не из вежливости, а как испытание на прочность. <span class="chip mixed">Неоднозначно</span> Если не получается собрать правдоподобную невинную версию, это информация о твоём фильтре, а не о них.</p>
+      </li>
+      <li>
+        <h4>Проверь нагрузку раньше, чем факты</h4>
+        <p>Спроси себя, кем тебе <em>нужно</em>, чтобы был этот человек. Если честный ответ — «доказательством, что меня можно принять» или «причиной, почему моя жизнь трудна», значит, вот почему модель не обновляется. Сними вес, прежде чем спорить с выводом.</p>
+      </li>
+      <li>
+        <h4>Тест на согласие</h4>
+        <p>Смог бы ты изложить их сторону их словами так, чтобы они сказали: <em>да, именно так</em>? Если нет, у тебя нет прочтения. У тебя набросок, который ты сам нарисовал.</p>
+      </li>
+      <li>
+        <h4>Отложи вердикт намеренно</h4>
+        <p>Больше всего вреда случается в промежутке между тем, как прочтение сложилось, и тем, как ты начал действовать. Растяни этот промежуток — и петля из четвёртого раздела просто не успеет запуститься. Настороженный ответ, который ты не отправил, и есть всё вмешательство.</p>
+      </li>
+      <li>
+        <h4>Допусти, что ты внутри этого прямо сейчас</h4>
+        <p>Слепое пятно предвзятости гарантирует, что эта страница читается как описание других людей. Выбери одного конкретного человека, в котором ты сейчас уверен, и считай эту уверенность вещественным доказательством.</p>
+      </li>
+    </ol>
+
+    <details>
+      <summary>Копнуть глубже · что не работает</summary>
+      <div class="dbody">
+        <p><strong>Стараться быть объективнее.</strong> Это разобрано в первом разделе: нельзя исправить шаг, которого ты ни разу не заметил за собой.</p>
+        <p><strong>Учить больше названий искажений.</strong> Это улучшает диагностику других, а не себя. Эта страница — не исключение.</p>
+        <p><strong>Собирать больше доказательств, пока фильтр включён.</strong> Новые данные попадают в готовую модель и выходят подтверждением. Больше времени с человеком — не обязательно больше знания о нём.</p>
+        <p><strong>Ждать, пока уверенность спадёт.</strong> Уверенность порождается заполнением, а не фактами. Первой она не упадёт. Действовать против неё нужно, пока она ещё высока.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER / KEY ══════════ -->
+<footer>
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--amber)">Ключ к доказательствам</div>
+    <div class="key">
+      <div><span class="chip solid">Надёжно</span><br>Многократно воспроизведено, широкая поддержка, на это можно опираться.</div>
+      <div><span class="chip mixed">Неоднозначно</span><br>Эффект настоящий, но его размер или границы спорны. Для ориентира годится, строить на нём нельзя.</div>
+      <div><span class="chip thin">Мало данных</span><br>Для описания полезно, эмпирически слабо. Хорошее имя для закономерности, но не доказательство механизма.</div>
+    </div>
+    <p style="margin-top:26px;max-width:60ch;opacity:.72">Ссылки на исследования здесь приведены по памяти, а не по источникам, и сформулированы на уровне «вот общая форма результата», а не с точностью до цитаты. Там, где утверждение — толкование, а не установленный результат, это отмечено в тексте. Прочтения Писания — это одно из возможных прочтений, и подаются они как таковое.</p>
+    <div class="foot-row"><a class="home" href="/ru/">← Все проекты</a><div class="foot-pick"><span>Стихи во всплывающих окнах:</span><span id="pickerHost"></span></div></div>
+    <p class="foot-fine">Стихи во всплывающих окнах приводятся по Новому русскому переводу (НРП®) © <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener" style="color:inherit">Biblica, Inc.</a>® Используется по разрешению. Все права защищены.</p>
+  </div>
+</footer>
+<script src="/assets/scripture-popover.js"></script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Russian payload for the strings this script writes itself. Named TXT, never L
+     (the click handler below has a local L). */
+  var isRu = document.documentElement.getAttribute("data-lang")==="ru" || window.esmrskyLang==="ru";
+  function TXT(en, ru){ return isRu ? ru : en; }
+
+  /* ——— Lens machine ——— */
+  var LENSES = {
+    offended:{
+      color:"var(--flare)", name:"gel: offense",
+      concl:"She's icing me out. And she's doing it where I can see it.",
+      why:"The story at 11:03 becomes the proof — she had time, she chose others. The 20-minute reply history becomes the baseline she's now violating on purpose. The read receipt becomes intent.",
+      pct:91, hot:["story","prior","read"]
+    },
+    limerent:{
+      color:"var(--violet)", name:"gel: limerence",
+      concl:"She's taking her time because it matters to her what she says back.",
+      why:"The same delay becomes care. The story becomes a signal posted for you. The 20-minute history becomes evidence that this message is different — she replies fast to everyone else, so the pause means weight.",
+      pct:88, hot:["gap","prior","story"]
+    },
+    curious:{
+      color:"var(--amber)", name:"gel: none — question logged",
+      concl:"I don't know why she hasn't replied. I do know I feel exposed.",
+      why:"The four facts are compatible with a bad day, a dead battery, a hard week, a draft she deleted twice, or something genuinely wrong between you. Nothing available distinguishes them. What's actually observable right now is your own state.",
+      pct:12, hot:[]
+    }
+  };
+
+  var LENS_RU = {
+    offended:{
+      name:"фильтр: обида",
+      concl:"Она меня демонстративно игнорирует. И делает это у меня на глазах.",
+      why:"Сторис в 11:03 становится доказательством: время у неё было, она выбрала других. Привычка отвечать минут за двадцать превращается в норму, которую она теперь нарушает нарочно. А «прочитано» превращается в умысел."
+    },
+    limerent:{
+      name:"фильтр: лимеренция",
+      concl:"Она не торопится, потому что для неё важно, что мне ответить.",
+      why:"Та же пауза становится заботой. Сторис — знаком, выложенным для тебя. А привычка отвечать быстро — доказательством, что это сообщение особенное: всем остальным она отвечает сразу, значит, эта пауза что-то весит."
+    },
+    curious:{
+      name:"фильтра нет — вопрос записан",
+      concl:"Я не знаю, почему она не ответила. Зато знаю, что мне не по себе.",
+      why:"Эти четыре факта сходятся и с плохим днём, и с севшей батарейкой, и с тяжёлой неделей, и с черновиком, который она дважды стёрла, и с тем, что между вами правда что-то не так. Ничто из доступного не позволяет их различить. Единственное, что сейчас можно наблюдать, — твоё собственное состояние."
+    }
+  };
+  if(isRu){
+    Object.keys(LENSES).forEach(function(k){
+      if(!LENS_RU[k]) throw new Error("missing RU lens "+k);
+      LENSES[k].name=LENS_RU[k].name; LENSES[k].concl=LENS_RU[k].concl; LENSES[k].why=LENS_RU[k].why;
+    });
+    if(Object.keys(LENS_RU).length!==Object.keys(LENSES).length) throw new Error("RU lens count");
+  }
+
+  var machine=document.getElementById("machine");
+  if(machine){
+    var btns=machine.querySelectorAll(".lensbtn"),
+        readout=document.getElementById("readout"),
+        facts=document.getElementById("facts"),
+        concl=document.getElementById("concl"),
+        why=document.getElementById("why"),
+        bar=document.getElementById("bar"),
+        pct=document.getElementById("pct"),
+        lensname=document.getElementById("lensname"),
+        verdict=document.getElementById("verdict");
+
+    /* the elements this script rewrites carry no data-ru; their first state is set here */
+    if(isRu){
+      lensname.textContent="линза не выбрана";
+      concl.textContent="Выбери линзу выше.";
+      why.textContent="Каждая даёт вывод, который ощущается как наблюдение, а не как догадка. Именно этому ощущению и стоит не доверять.";
+      verdict.innerHTML="Новой информации получено: <b>ноль</b>.";
+    }
+
+    Array.prototype.forEach.call(btns,function(b){
+      b.addEventListener("click",function(){
+        var key=b.getAttribute("data-lens"), L=LENSES[key];
+        Array.prototype.forEach.call(btns,function(o){o.setAttribute("aria-pressed", o===b?"true":"false");});
+        readout.style.setProperty("--lens",L.color);
+        facts.style.setProperty("--lens",L.color);
+        concl.textContent=L.concl;
+        why.textContent=L.why;
+        lensname.textContent=L.name;
+        bar.style.transform="scaleX("+(L.pct/100)+")";
+        pct.textContent=L.pct+"%";
+        Array.prototype.forEach.call(facts.children,function(li){
+          li.classList.toggle("hot", L.hot.indexOf(li.getAttribute("data-f"))>-1);
+        });
+        verdict.innerHTML = key==="curious"
+          ? TXT('New information gathered: <b>zero</b> — but the certainty dropped instead of the facts changing.',
+                'Новой информации получено: <b>ноль</b>, но уверенность упала, хотя факты те же.')
+          : TXT('New information gathered: <b>zero</b>. Only the highlighting changed.',
+                'Новой информации получено: <b>ноль</b>. Изменилась только подсветка.');
+      });
+    });
+  }
+
+  /* ——— Cost matrix ——— */
+  var matrix=document.getElementById("matrix"), mout=document.getElementById("mout");
+  if(matrix&&mout){
+    if(isRu) mout.textContent="Нажми на любую клетку. Асимметрия между правой нижней и левой верхней клеткой — вся причина, по которой ты ждёшь худшего.";
+    matrix.addEventListener("click",function(e){
+      var cell=e.target.closest(".mcell"); if(!cell) return;
+      Array.prototype.forEach.call(matrix.querySelectorAll(".mcell"),function(c){
+        c.setAttribute("aria-pressed", c===cell?"true":"false");
+      });
+      mout.textContent=cell.getAttribute("data-msg");
+    });
+  }
+
+  /* ——— Loop animation ——— */
+  var playbtn=document.getElementById("playbtn"),
+      nodes=document.querySelectorAll(".lnode"),
+      steps=document.querySelectorAll("#loopsteps li"),
+      timer=null, idx=-1;
+
+  function setStage(i){
+    Array.prototype.forEach.call(nodes,function(n){ n.classList.toggle("on", +n.getAttribute("data-i")===i); });
+    Array.prototype.forEach.call(steps,function(s){ s.classList.toggle("on", +s.getAttribute("data-i")===i); });
+  }
+  function stop(){ clearInterval(timer); timer=null; if(playbtn) playbtn.textContent=TXT("Run the loop","Запустить петлю"); }
+  function start(){
+    idx=-1;
+    if(playbtn) playbtn.textContent=TXT("Stop","Стоп");
+    timer=setInterval(function(){
+      idx=(idx+1)%4; setStage(idx);
+    },1500);
+    idx=0; setStage(0);
+  }
+  if(playbtn){
+    if(isRu) playbtn.textContent="Запустить петлю";
+    playbtn.addEventListener("click",function(){ timer?stop():start(); });
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if("IntersectionObserver" in window && !reduce){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && !timer){ start(); io.unobserve(en.target); }
+        });
+      },{threshold:0,rootMargin:"0px 0px -35% 0px"});
+      io.observe(playbtn.closest(".loopwrap"));
+    } else { setStage(0); }
+  }
+
+  /* ——— Accordions ———
+     `details` gives you no box to transition: opening flips the subtree from
+     display:none to laid-out in a single frame, so height has nowhere to
+     travel from. So measure both ends ourselves and animate the element
+     between them, holding the panel open until a close has finished playing.
+
+     Reversal mid-flight is the case that usually breaks: we read the CURRENT
+     animated height before cancelling, so a click halfway through an open
+     picks up exactly where it is instead of jumping to a boundary.
+
+     Both directions use the page's one curve (--ease), so the accordions move
+     like every other control here. */
+  var EASE_OPEN="cubic-bezier(.22,.61,.36,1)",
+      EASE_SHUT=EASE_OPEN;
+
+  function Accordion(d){
+    this.d=d;
+    this.sum=d.querySelector("summary");
+    this.body=d.querySelector(".dbody");
+    this.anim=null; this.bodyAnim=null; this.state="idle";
+    var self=this;
+    this.sum.addEventListener("click",function(e){ self.onClick(e); });
+  }
+
+  Accordion.prototype.reduced=function(){
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
+  /* Height of the element with the panel folded away: chrome plus the summary.
+     Cheaper and steadier than toggling `open` twice to measure it. */
+  Accordion.prototype.shutHeight=function(){
+    var cs=getComputedStyle(this.d);
+    return this.sum.offsetHeight
+      + parseFloat(cs.borderTopWidth||0) + parseFloat(cs.borderBottomWidth||0)
+      + parseFloat(cs.paddingTop||0) + parseFloat(cs.paddingBottom||0);
+  };
+
+  Accordion.prototype.onClick=function(e){
+    if(this.reduced() || !this.d.animate){
+      /* Hand it back to the browser — but drop the forwards-filling fade from
+         a close that ran before reduced motion was turned on, or the panel
+         would open onto invisible text. */
+      if(this.bodyAnim){ this.bodyAnim.cancel(); this.bodyAnim=null; }
+      return;
+    }
+    e.preventDefault();
+    this.d.style.overflow="hidden";
+    var opening = this.state==="closing" || (this.state!=="opening" && !this.d.open);
+    if(opening) this.open(); else this.close();
+  };
+
+  Accordion.prototype.open=function(){
+    var from=this.d.offsetHeight;                 /* mid-flight value, if any */
+    if(this.anim) this.anim.cancel();
+    this.state="opening";
+    this.d.classList.remove("acc-shut");
+    this.d.classList.add("acc-open");
+    this.d.open=true;
+    this.run(from,this.d.offsetHeight,true);
+    this.fade(true);
+  };
+
+  Accordion.prototype.close=function(){
+    var from=this.d.offsetHeight;
+    if(this.anim) this.anim.cancel();
+    this.state="closing";
+    this.d.classList.remove("acc-open");
+    this.d.classList.add("acc-shut");
+    this.run(from,this.shutHeight(),false);
+    this.fade(false);
+  };
+
+  Accordion.prototype.run=function(from,to,opening){
+    var self=this;
+    /* Duration follows the square root of the distance, not the distance
+       itself: linear scaling makes a short panel crawl and a long one race,
+       because perceived speed isn't linear in travel. Clamped either side. */
+    var dur=Math.max(260,Math.min(520,200+Math.sqrt(Math.abs(to-from))*9));
+    this.anim=this.d.animate({height:[from+"px",to+"px"]},
+      {duration:dur,easing:opening?EASE_OPEN:EASE_SHUT});
+    this.anim.onfinish=function(){ self.settle(); };
+    this.anim.oncancel=function(){ if(self.anim===this) self.anim=null; };
+  };
+
+  Accordion.prototype.fade=function(opening){
+    if(!this.body) return;
+    if(this.bodyAnim) this.bodyAnim.cancel();
+    this.bodyAnim=this.body.animate(
+      /* opacity only: text being read never slides */
+      opening ? {opacity:[0,1]} : {opacity:[1,0]},
+      /* backwards fill keeps the text hidden through the lead-in delay so it
+         appears behind the opening edge rather than flashing at full opacity */
+      {duration:opening?360:200,easing:opening?EASE_OPEN:EASE_SHUT,
+       delay:opening?80:0,fill:opening?"backwards":"forwards"}
+    );
+  };
+
+  Accordion.prototype.settle=function(){
+    if(this.state==="closing") this.d.open=false;
+    this.state="idle"; this.anim=null;
+    this.d.classList.remove("acc-open","acc-shut");
+    this.d.style.overflow="";
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll("details"),function(d){
+    if(d.querySelector("summary")) new Accordion(d);
+  });
+})();
+/* click a reference for the verse and its context */
+(function(){var SR=window.EsmrskyScripture;if(!SR)return;
+  SR.init({key:'the-gap',scan:'.verse .ref, .verse p, details .dbody p',versions:['NIV','NASB','NLT','KJV']});
+  var host=document.getElementById('pickerHost');host.innerHTML=SR.pickerHtml();SR.wirePicker(host.querySelector('.esv-pick'));})();
+</script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>

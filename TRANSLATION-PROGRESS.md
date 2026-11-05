@@ -124,7 +124,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `sleep-rest-peace` | not started | No scripture found. |
 | `still-awake` | not started | No scripture found. |
 | `the-curves-under-the-stages` | not started | No scripture found. |
-| `the-gap` | not started | No scripture found. |
+| `the-gap` | **done** | `/the-gap/ru/`, November 5, 2026. About 150 markup units, including the eight SVG `<text>` labels, plus a Russian payload (`TXT`, never `L`) for the lens objects, verdict lines, matrix output and play button. No quoted scripture; references convert to Russian abbreviations (1 Цар. 16:7, 1 Кор. 4:3–5, 13:12, Притч. 18:13, 18:17, Деян. 10, Иов 4–37). Bricolage Grotesque and Newsreader have no Cyrillic, so RU falls back to system faces; `:lang(ru)` widens the hero lede and `h2.beat`. EN · RU switch in the hero top row. |
 | `the-whole` | not started | Project map — its card titles should follow the hub's Russian titles. |
 | `throughline` | not started | Project map, like `the-whole`. |
 | `best-verses-v0` | not started | Probably **n/a** — an earlier draft of `most-best-verses`. Confirm with the owner before spending a run on it. |
