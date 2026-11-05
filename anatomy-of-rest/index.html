@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/anatomy-of-rest/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/anatomy-of-rest/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/anatomy-of-rest/">
+<!-- lang-alt:end -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E0D0B'/%3E%3Ccircle cx='30' cy='32' r='20' fill='%23FF6A2B'/%3E%3Ccircle cx='42' cy='26' r='18' fill='%230E0D0B'/%3E%3C/svg%3E">
-<title>The Anatomy of Rest</title>
+<title data-ru="Анатомия отдыха" data-ru-src="670d6f20fc">The Anatomy of Rest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -138,8 +143,15 @@
      ============================================================ */
   .progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: var(--ember); z-index: 90; box-shadow: 0 0 8px color-mix(in srgb, var(--ember) 60%, transparent); }
 
+  .top-ctl { position: fixed; top: 1.1rem; right: 1.1rem; z-index: 100; display: flex; align-items: center; gap: .5rem; }
+  .lang-switch { position: relative; display: inline-flex; align-items: center; height: 44px; border-radius: 100px; overflow: hidden; background: var(--panel-solid); backdrop-filter: blur(8px); flex: 0 0 auto; }
+  .lang-switch::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--hair-strong); border-radius: inherit; pointer-events: none; }
+  .lang-opt { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 .75rem; font-family: "JetBrains Mono", monospace; font-size: .68rem; letter-spacing: .12em; text-decoration: none; color: var(--fg-dim); transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease); }
+  .lang-opt:hover { color: var(--fg); }
+  .lang-opt[aria-current="page"] { background: color-mix(in srgb, var(--ember) 16%, transparent); color: var(--fg); pointer-events: none; }
+  .lang-opt:focus-visible { outline: 2px solid var(--ember); outline-offset: -3px; }
   .toggle {
-    position: fixed; top: 1.1rem; right: 1.1rem; z-index: 100;
+    position: relative;
     display: inline-flex; align-items: center; gap: .55rem;
     background: var(--panel-solid); border: 1px solid var(--hair-strong);
     color: var(--fg); padding: .5rem .8rem; border-radius: 100px;
@@ -223,7 +235,8 @@
 
   /* evidence grade tag */
   .grade { display: inline-flex; align-items: center; gap: .45rem; font-family: "JetBrains Mono", monospace; font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; padding: .22rem .55rem; border-radius: 5px; border: 1px solid var(--hair-strong); color: var(--fg-dim); white-space: nowrap; }
-  .grade::before { content: ""; width: 6px; height: 6px; border-radius: 2px; }
+  .grade::before { content: ""; width: 6px; height: 6px; border-radius: 2px; flex: 0 0 auto; }
+  :lang(ru) .grade { white-space: normal; max-width: 100%; text-align: left; }
   .grade.g-strong::before { background: var(--real); }
   .grade.g-mod::before    { background: var(--scripture); }
   .grade.g-weak::before   { background: var(--counterfeit); }
@@ -571,28 +584,31 @@ p,li,dd,figcaption{text-wrap:pretty}
 
 <div class="progress" id="progress"></div>
 
-<button class="toggle" id="toggle" aria-label="Switch between dark and light mode">
+<div class="top-ctl">
+<div class="lang-switch" role="group" aria-label="Language" data-ru-aria-label="Язык"><a class="lang-opt" href="/anatomy-of-rest/" data-ru-href="/anatomy-of-rest/" lang="en" hreflang="en" aria-current="page" data-ru-aria-current="false">EN</a><a class="lang-opt" href="/anatomy-of-rest/ru/" data-ru-href="/anatomy-of-rest/ru/" lang="ru" hreflang="ru" data-ru-aria-current="page">RU</a></div>
+<button data-ru-aria-label="Переключить тёмную и светлую тему" class="toggle" id="toggle" aria-label="Switch between dark and light mode">
   <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
   <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5Z"/></svg>
-  <span class="lbl-dark">DARK</span><span class="lbl-light">LIGHT</span>
+  <span data-ru="ТЁМНАЯ" data-ru-src="9fdc9ad167" class="lbl-dark">DARK</span><span data-ru="СВЕТЛАЯ" data-ru-src="5818428b08" class="lbl-light">LIGHT</span>
 </button>
+</div>
 
 <!-- ============================ HERO ============================ -->
 <header class="hero">
   <canvas class="hero__canvas" id="heroWave" aria-hidden="true"></canvas>
   <div class="hero__grad"></div>
   <div class="hero__inner wrap">
-    <p class="eyebrow">The Anatomy of Rest &nbsp;·&nbsp; Neuroscience ⟡ Scripture</p>
-    <h1>Rest is not <span class="accent">one thing.</span></h1>
-    <p class="hero__sub">Two different processes hide under a single word. One restores you in twenty minutes with your eyes closed. The other cleans your brain while you sleep — and <b>nothing else can do its job.</b> Most of what we call "rest" does neither.</p>
+    <p data-ru="Анатомия отдыха &nbsp;·&nbsp; Нейронаука ⟡ Писание" data-ru-src="298be23c6d" class="eyebrow">The Anatomy of Rest &nbsp;·&nbsp; Neuroscience ⟡ Scripture</p>
+    <h1 data-ru="Отдых — это не <span class=&quot;accent&quot;>что-то одно.</span>" data-ru-src="e8ac9083f8">Rest is not <span class="accent">one thing.</span></h1>
+    <p data-ru="Под одним словом прячутся два разных процесса. Один восстанавливает тебя за двадцать минут с закрытыми глазами. Другой чистит мозг, пока ты спишь, — и <b>его работу не сделает ничто другое.</b> А почти всё, что мы называем «отдыхом», не делает ни того ни другого." data-ru-src="fbe1995210" class="hero__sub">Two different processes hide under a single word. One restores you in twenty minutes with your eyes closed. The other cleans your brain while you sleep — and <b>nothing else can do its job.</b> Most of what we call "rest" does neither.</p>
     <div class="hero__meta">
-      <span class="chip"><span class="dot" style="background:var(--nsdr)"></span>Non-sleep deep rest</span>
-      <span class="chip"><span class="dot" style="background:var(--sleep)"></span>The glymphatic night shift</span>
-      <span class="chip"><span class="dot" style="background:var(--counterfeit)"></span>Fake rest vs. real rest</span>
-      <span class="chip"><span class="dot" style="background:var(--scripture)"></span>The older map</span>
+      <span data-ru="<span class=&quot;dot&quot; style=&quot;background:var(--nsdr)&quot;></span>Глубокий отдых без сна" data-ru-src="8403309fe1" class="chip"><span class="dot" style="background:var(--nsdr)"></span>Non-sleep deep rest</span>
+      <span data-ru="<span class=&quot;dot&quot; style=&quot;background:var(--sleep)&quot;></span>Ночная смена глимфатической системы" data-ru-src="2f2a8da78a" class="chip"><span class="dot" style="background:var(--sleep)"></span>The glymphatic night shift</span>
+      <span data-ru="<span class=&quot;dot&quot; style=&quot;background:var(--counterfeit)&quot;></span>Ложный отдых и настоящий" data-ru-src="d98443c039" class="chip"><span class="dot" style="background:var(--counterfeit)"></span>Fake rest vs. real rest</span>
+      <span data-ru="<span class=&quot;dot&quot; style=&quot;background:var(--scripture)&quot;></span>Более древняя карта" data-ru-src="c9fc9b378d" class="chip"><span class="dot" style="background:var(--scripture)"></span>The older map</span>
     </div>
   </div>
-  <div class="scrollcue"><span></span>Scroll</div>
+  <div data-ru="<span></span>Листай" data-ru-src="e3af60a4cc" class="scrollcue"><span></span>Scroll</div>
 </header>
 
 <main>
@@ -601,41 +617,41 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="spectrum">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">01 — The Spectrum</span>
-      <h2>Awake and asleep is not a switch.</h2>
-      <p class="lede">It's a dial. And there's a deep, restorative setting in the middle that you can reach on purpose — conscious, but downshifted.</p>
+      <span data-ru="01 — Спектр" data-ru-src="bde43f67a6" class="movement__num">01 — The Spectrum</span>
+      <h2 data-ru="Бодрствование и сон — это не выключатель." data-ru-src="2610936130">Awake and asleep is not a switch.</h2>
+      <p data-ru="Это скорее регулятор. И посередине у него есть глубокое восстанавливающее положение, до которого можно дойти намеренно: ты в сознании, но на пониженной передаче." data-ru-src="47b56d97bc" class="lede">It's a dial. And there's a deep, restorative setting in the middle that you can reach on purpose — conscious, but downshifted.</p>
     </div>
 
     <div class="prose measure r">
-      <p>We treat consciousness as binary: on, or off. The neuroscience says it's a <strong>spectrum of brain states</strong>, sorted by how fast the brain's electrical rhythm runs. Fast and shallow means alert. Slow and deep means asleep. In between sits a band most people only pass through on the way down — a state you can learn to hold.</p>
+      <p data-ru="Мы привыкли считать сознание двоичным: включено или выключено. Нейронаука же говорит, что это <strong>спектр состояний мозга</strong>, упорядоченных по тому, насколько быстро идёт его электрический ритм. Быстрый и поверхностный — значит, ты бодр. Медленный и глубокий — значит, спишь. Между ними лежит полоса, через которую большинство людей лишь проскальзывает по пути вниз, — и в этом состоянии можно научиться задерживаться." data-ru-src="6346f373f1">We treat consciousness as binary: on, or off. The neuroscience says it's a <strong>spectrum of brain states</strong>, sorted by how fast the brain's electrical rhythm runs. Fast and shallow means alert. Slow and deep means asleep. In between sits a band most people only pass through on the way down — a state you can learn to hold.</p>
     </div>
 
-    <div class="panel spectrum r" style="margin-top:2.4rem" role="img" aria-label="Four brainwave bands from fast, low-amplitude Beta (awake) down to slow, high-amplitude Delta (deep sleep). NSDR occupies the Alpha–Theta middle zone.">
+    <div data-ru-aria-label="Четыре диапазона мозговых волн: от быстрых низкоамплитудных бета-волн (бодрствование) до медленных высокоамплитудных дельта-волн (глубокий сон). NSDR занимает среднюю зону, между альфа- и тета-ритмом." class="panel spectrum r" style="margin-top:2.4rem" role="img" aria-label="Four brainwave bands from fast, low-amplitude Beta (awake) down to slow, high-amplitude Delta (deep sleep). NSDR occupies the Alpha–Theta middle zone.">
       <div class="panel__cap">
-        <span class="panel__title">The brainwave gradient</span>
-        <span class="figtag">fig. 01 · faster → slower ↓</span>
+        <span data-ru="Градиент мозговых волн" data-ru-src="7dd0492e45" class="panel__title">The brainwave gradient</span>
+        <span data-ru="рис. 01 · быстрее → медленнее ↓" data-ru-src="85a3886771" class="figtag">fig. 01 · faster → slower ↓</span>
       </div>
       <div class="spectrum__lanes" id="lanes">
         <div class="lane-row">
-          <div class="lane-label"><span class="band">Beta</span><span class="hz">13–30 Hz</span><span class="state">Awake · alert</span></div>
+          <div data-ru="<span class=&quot;band&quot;>Бета</span><span class=&quot;hz&quot;>13–30 Гц</span><span class=&quot;state&quot;>Бодрость · внимание</span>" data-ru-src="17a0400eca" class="lane-label"><span class="band">Beta</span><span class="hz">13–30 Hz</span><span class="state">Awake · alert</span></div>
           <div class="wave-box" data-band="beta" data-amp="6"  data-k="10" data-dur="4"  data-color="var(--counterfeit)"></div>
         </div>
         <div class="lane-row">
-          <div class="lane-label"><span class="band">Alpha</span><span class="hz">8–13 Hz</span><span class="state">Relaxed · eyes closed</span></div>
+          <div data-ru="<span class=&quot;band&quot;>Альфа</span><span class=&quot;hz&quot;>8–13 Гц</span><span class=&quot;state&quot;>Расслабление · глаза закрыты</span>" data-ru-src="079ac93863" class="lane-label"><span class="band">Alpha</span><span class="hz">8–13 Hz</span><span class="state">Relaxed · eyes closed</span></div>
           <div class="wave-box" data-band="alpha" data-amp="12" data-k="6"  data-dur="6"  data-color="var(--nsdr)"></div>
         </div>
         <div class="lane-row">
-          <div class="lane-label"><span class="band">Theta</span><span class="hz">4–8 Hz</span><span class="state">Deep NSDR · light sleep</span></div>
+          <div data-ru="<span class=&quot;band&quot;>Тета</span><span class=&quot;hz&quot;>4–8 Гц</span><span class=&quot;state&quot;>Глубокий NSDR · лёгкий сон</span>" data-ru-src="b201c7beda" class="lane-label"><span class="band">Theta</span><span class="hz">4–8 Hz</span><span class="state">Deep NSDR · light sleep</span></div>
           <div class="wave-box" data-band="theta" data-amp="20" data-k="3"  data-dur="9"  data-color="var(--sleep)"></div>
         </div>
         <div class="lane-row">
-          <div class="lane-label"><span class="band">Delta</span><span class="hz">0.5–4 Hz</span><span class="state">Deep sleep · the night shift</span></div>
+          <div data-ru="<span class=&quot;band&quot;>Дельта</span><span class=&quot;hz&quot;>0,5–4 Гц</span><span class=&quot;state&quot;>Глубокий сон · ночная смена</span>" data-ru-src="7f73f620b1" class="lane-label"><span class="band">Delta</span><span class="hz">0.5–4 Hz</span><span class="state">Deep sleep · the night shift</span></div>
           <div class="wave-box" data-band="delta" data-amp="30" data-k="1"  data-dur="14" data-color="var(--sleep)"></div>
         </div>
       </div>
       <div class="spectrum__zone">
         <span class="zone-swatch"></span>
-        <span><strong style="color:var(--fg)">This middle zone — alpha into theta — is where non-sleep deep rest lives.</strong> You're aware. You're not producing anything. Your physiology has already begun to recover.</span>
+        <span data-ru="<strong style=&quot;color:var(--fg)&quot;>Эта средняя зона — от альфы к тете — и есть территория глубокого отдыха без сна.</strong> Ты в сознании. Ты ничего не производишь. А организм уже начал восстанавливаться." data-ru-src="12990b4a46"><strong style="color:var(--fg)">This middle zone — alpha into theta — is where non-sleep deep rest lives.</strong> You're aware. You're not producing anything. Your physiology has already begun to recover.</span>
       </div>
     </div>
   </div>
@@ -645,45 +661,45 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="nsdr">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">02 — Non-Sleep Deep Rest</span>
-      <h2>Rest with your eyes open.</h2>
-      <p class="lede">A ten-to-twenty-minute protocol that walks the brain down the dial on purpose — and starts refilling the tank while you're still awake.</p>
+      <span data-ru="02 — Глубокий отдых без сна" data-ru-src="80bf6fb866" class="movement__num">02 — Non-Sleep Deep Rest</span>
+      <h2 data-ru="Отдых наяву." data-ru-src="5e124ad74f">Rest with your eyes open.</h2>
+      <p data-ru="Протокол на десять–двадцать минут, который намеренно проводит мозг вниз по шкале — и начинает заполнять бак, пока ты ещё не спишь." data-ru-src="89cd8bb1c4" class="lede">A ten-to-twenty-minute protocol that walks the brain down the dial on purpose — and starts refilling the tank while you're still awake.</p>
     </div>
 
-    <div class="acronym r" role="img" aria-label="N S D R stands for Non-Sleep Deep Rest.">
-      <div><b>N</b><span>Non</span></div>
-      <div><b>S</b><span>Sleep</span></div>
-      <div><b>D</b><span>Deep</span></div>
-      <div><b>R</b><span>Rest</span></div>
+    <div data-ru-aria-label="N S D R расшифровывается как Non-Sleep Deep Rest — глубокий отдых без сна." class="acronym r" role="img" aria-label="N S D R stands for Non-Sleep Deep Rest.">
+      <div><b>N</b><span data-ru="не" data-ru-src="7f62496b0c">Non</span></div>
+      <div><b>S</b><span data-ru="сон" data-ru-src="d466bcf52e">Sleep</span></div>
+      <div><b>D</b><span data-ru="глубокий" data-ru-src="c54e362546">Deep</span></div>
+      <div><b>R</b><span data-ru="отдых" data-ru-src="05863ec2c3">Rest</span></div>
     </div>
 
     <div class="split">
       <div class="r">
         <div class="prose">
-          <p><strong>What it is.</strong> Lie down. Close your eyes. A voice guides a slow scan through the body while you lengthen each exhale. That's it. The state it induces is drawn from <strong>yoga nidra</strong>, an old contemplative practice; the label "NSDR" was coined by neuroscientist Andrew Huberman in 2022 to keep the mechanism and drop the metaphysics. One boundary before anything else: <strong>NSDR supplements sleep — it never substitutes for it.</strong> Sleep is the meal; this is what keeps you upright between meals.</p>
+          <p data-ru="<strong>Что это такое.</strong> Ляг. Закрой глаза. Голос медленно ведёт тебя по телу, а ты удлиняешь каждый выдох. Вот и всё. Состояние, которое так возникает, взято из <strong>йога-нидры</strong>, древней созерцательной практики; ярлык «NSDR» придумал нейробиолог Эндрю Хуберман в 2022 году, чтобы сохранить механизм и отбросить метафизику. И одна граница прежде всего остального: <strong>NSDR дополняет сон, но никогда его не заменяет.</strong> Сон — это полноценная еда; NSDR — то, что держит тебя на ногах между приёмами пищи." data-ru-src="ca66c8c5aa"><strong>What it is.</strong> Lie down. Close your eyes. A voice guides a slow scan through the body while you lengthen each exhale. That's it. The state it induces is drawn from <strong>yoga nidra</strong>, an old contemplative practice; the label "NSDR" was coined by neuroscientist Andrew Huberman in 2022 to keep the mechanism and drop the metaphysics. One boundary before anything else: <strong>NSDR supplements sleep — it never substitutes for it.</strong> Sleep is the meal; this is what keeps you upright between meals.</p>
         </div>
         <div class="callout note r">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
-          <p><b style="color:var(--fg)">An honest note on origins.</b> Yoga nidra carries yogic and tantric religious framing. NSDR keeps only the physiological move — the parasympathetic downshift — which is separable from any belief system attached to it. The practice of stopping is older and wider than any one tradition.</p>
+          <p data-ru="<b style=&quot;color:var(--fg)&quot;>Честно о происхождении.</b> Йога-нидра несёт в себе йогическую и тантрическую религиозную рамку. NSDR оставляет только физиологический ход — парасимпатическое переключение, — а его можно отделить от любой системы верований, которая к нему прилагается. Практика остановки старше и шире любой отдельной традиции." data-ru-src="941ae1b15c"><b style="color:var(--fg)">An honest note on origins.</b> Yoga nidra carries yogic and tantric religious framing. NSDR keeps only the physiological move — the parasympathetic downshift — which is separable from any belief system attached to it. The practice of stopping is older and wider than any one tradition.</p>
         </div>
         <ol class="steps r">
-          <li><b>Sympathetic → parasympathetic.</b><br><span>The long exhale tips the autonomic balance from "fight-or-flight" toward "rest-and-digest."</span></li>
-          <li><b>Cortisol falls.</b><br><span>Structured yoga-nidra protocols measurably shift diurnal cortisol and lower perceived stress.</span></li>
-          <li><b>Dopamine is replenished.</b><br><span>Not a spike — a refill of baseline reserves that motivation and focus draw from.</span></li>
-          <li><b>Attention recovers.</b><br><span>A brief practice sharpens focus and working memory afterward — useful before hard cognitive work.</span></li>
+          <li data-ru="<b>Симпатика → парасимпатика.</b><br><span>Долгий выдох смещает вегетативный баланс от режима «бей или беги» к режиму «отдыхай и переваривай».</span>" data-ru-src="60a4694035"><b>Sympathetic → parasympathetic.</b><br><span>The long exhale tips the autonomic balance from "fight-or-flight" toward "rest-and-digest."</span></li>
+          <li data-ru="<b>Кортизол снижается.</b><br><span>Структурированные протоколы йога-нидры заметно сдвигают суточный ритм кортизола и снижают ощущение стресса.</span>" data-ru-src="99bb9e29d4"><b>Cortisol falls.</b><br><span>Structured yoga-nidra protocols measurably shift diurnal cortisol and lower perceived stress.</span></li>
+          <li data-ru="<b>Запас дофамина пополняется.</b><br><span>Не всплеск, а пополнение базового резерва, из которого черпают мотивация и концентрация.</span>" data-ru-src="26de89aba5"><b>Dopamine is replenished.</b><br><span>Not a spike — a refill of baseline reserves that motivation and focus draw from.</span></li>
+          <li data-ru="<b>Внимание восстанавливается.</b><br><span>Короткая практика обостряет концентрацию и рабочую память — полезно перед трудной умственной работой.</span>" data-ru-src="da017ae612"><b>Attention recovers.</b><br><span>A brief practice sharpens focus and working memory afterward — useful before hard cognitive work.</span></li>
         </ol>
       </div>
 
       <div class="r">
         <div class="panel" id="dopaPanel">
           <div class="panel__cap">
-            <span class="panel__title">Dopamine: a refill, not a hit</span>
-            <span class="figtag">fig. 02</span>
+            <span data-ru="Дофамин: пополнение, а не доза" data-ru-src="9b75db4dab" class="panel__title">Dopamine: a refill, not a hit</span>
+            <span data-ru="рис. 02" data-ru-src="5456eb224b" class="figtag">fig. 02</span>
           </div>
-          <svg viewBox="0 0 360 220" style="width:100%;height:auto" role="img" aria-label="Two dopamine curves over time relative to a baseline. Stimulation spikes sharply then crashes below baseline. NSDR rises gently and stays above baseline.">
+          <svg data-ru-aria-label="Две кривые дофамина во времени относительно базового уровня. Стимуляция резко взлетает, а затем проваливается ниже базового уровня. NSDR поднимается плавно и держится выше него." viewBox="0 0 360 220" style="width:100%;height:auto" role="img" aria-label="Two dopamine curves over time relative to a baseline. Stimulation spikes sharply then crashes below baseline. NSDR rises gently and stays above baseline.">
             <!-- baseline -->
             <line x1="20" y1="130" x2="345" y2="130" stroke="var(--hair-strong)" stroke-width="1" stroke-dasharray="2 4"/>
-            <text x="24" y="124" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1">BASELINE</text>
+            <text data-ru="БАЗОВЫЙ УРОВЕНЬ" data-ru-src="678bf03b47" x="24" y="124" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1">BASELINE</text>
             <!-- stimulation: spike then crash -->
             <path class="draw" style="--len:680"
               d="M20,130 L70,128 C95,126 105,52 120,50 C132,49 138,120 150,150 C162,180 185,178 210,172 C250,162 300,150 345,146"
@@ -694,21 +710,21 @@ p,li,dd,figcaption{text-wrap:pretty}
               fill="none" stroke="var(--nsdr)" stroke-width="2.4" stroke-linecap="round"/>
             <circle r="4" fill="var(--nsdr)"><animateMotion dur="6s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" path="M20,130 C70,128 90,120 130,104 C175,86 210,82 260,80 C300,79 330,80 345,80"/></circle>
             <!-- axis hint -->
-            <text x="20" y="212" font-family="JetBrains Mono" font-size="8.5" fill="var(--fg-faint)" letter-spacing="1">TIME →</text>
+            <text data-ru="ВРЕМЯ →" data-ru-src="e77d96249e" x="20" y="212" font-family="JetBrains Mono" font-size="8.5" fill="var(--fg-faint)" letter-spacing="1">TIME →</text>
           </svg>
           <div class="curve-legend">
-            <div><i style="background:var(--counterfeit)"></i>Stimulation — spike, then trough</div>
-            <div><i style="background:var(--nsdr)"></i>NSDR — sustained above baseline</div>
+            <div data-ru="<i style=&quot;background:var(--counterfeit)&quot;></i>Стимуляция — всплеск, затем провал" data-ru-src="b5351d8b7c"><i style="background:var(--counterfeit)"></i>Stimulation — spike, then trough</div>
+            <div data-ru="<i style=&quot;background:var(--nsdr)&quot;></i>NSDR — устойчиво выше базового уровня" data-ru-src="374924fe2e"><i style="background:var(--nsdr)"></i>NSDR — sustained above baseline</div>
           </div>
           <div class="callout warn" style="margin-top:1.2rem">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
-            <p><b style="color:var(--fg)">The famous "65%" — read the fine print.</b> A 2002 PET study (Kjaer et&nbsp;al.) found roughly 65% more endogenous dopamine in the reward center during yoga nidra. But: <b style="color:var(--fg)">n&nbsp;=&nbsp;8</b>, all experienced practitioners, and the figure is <em>calculated</em> from a ~8% drop in receptor binding — not dopamine measured directly. The direction is real; the magnitude for a beginner is almost certainly smaller.</p>
+            <p data-ru="<b style=&quot;color:var(--fg)&quot;>Знаменитые «65%» — читай мелкий шрифт.</b> ПЭТ-исследование 2002 года (Kjaer et&nbsp;al.) обнаружило во время йога-нидры примерно на 65% больше эндогенного дофамина в центре вознаграждения. Но: <b style=&quot;color:var(--fg)&quot;>n&nbsp;=&nbsp;8</b>, все участники — опытные практики, а цифра <em>вычислена</em> из падения связывания рецепторов примерно на 8%, а не получена прямым измерением дофамина. Направление эффекта реально; у новичка величина почти наверняка меньше." data-ru-src="f40d931bfc"><b style="color:var(--fg)">The famous "65%" — read the fine print.</b> A 2002 PET study (Kjaer et&nbsp;al.) found roughly 65% more endogenous dopamine in the reward center during yoga nidra. But: <b style="color:var(--fg)">n&nbsp;=&nbsp;8</b>, all experienced practitioners, and the figure is <em>calculated</em> from a ~8% drop in receptor binding — not dopamine measured directly. The direction is real; the magnitude for a beginner is almost certainly smaller.</p>
           </div>
           <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-            <span class="grade g-weak">Dopamine · small study</span>
-            <span class="grade g-strong">Stress / anxiety · RCT-backed*</span>
+            <span data-ru="Дофамин · маленькое исследование" data-ru-src="91863ddd90" class="grade g-weak">Dopamine · small study</span>
+            <span data-ru="Стресс / тревога · подтверждено РКИ*" data-ru-src="90e9e00dd3" class="grade g-strong">Stress / anxiety · RCT-backed*</span>
           </div>
-          <p style="font-size:.74rem;color:var(--fg-faint);margin-top:.9rem;font-family:'JetBrains Mono',monospace;line-height:1.5">*The stronger evidence is for <em>structured yoga&nbsp;nidra</em>. A 2026 meta-analysis pooled 73 studies and 5,201 participants, finding real effects on stress, anxiety and sleep onset — while cautioning the sizes are likely inflated by weak study quality. A random 10-minute audio labeled "NSDR" is not the same as the studied protocol.</p>
+          <p data-ru="*Более сильные данные есть для <em>структурированной йога-нидры</em>. Метаанализ 2026 года объединил 73 исследования и 5&nbsp;201 участника и нашёл реальные эффекты для стресса, тревоги и засыпания — с оговоркой, что их величина, скорее всего, завышена из-за слабого качества исследований. Случайная 10-минутная аудиозапись с пометкой «NSDR» — не то же самое, что изученный протокол." data-ru-src="c4afc318d3" style="font-size:.74rem;color:var(--fg-faint);margin-top:.9rem;font-family:'JetBrains Mono',monospace;line-height:1.5">*The stronger evidence is for <em>structured yoga&nbsp;nidra</em>. A 2026 meta-analysis pooled 73 studies and 5,201 participants, finding real effects on stress, anxiety and sleep onset — while cautioning the sizes are likely inflated by weak study quality. A random 10-minute audio labeled "NSDR" is not the same as the studied protocol.</p>
         </div>
       </div>
     </div>
@@ -719,16 +735,16 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="glymph-sec">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">03 — What Sleep Does That NSDR Can't</span>
-      <h2>The brain runs a night shift.</h2>
-      <p class="lede">Deep sleep is not deep relaxation. It's plumbing. And it only runs in a state you cannot fake awake.</p>
+      <span data-ru="03 — Что делает сон и чего не может NSDR" data-ru-src="25efa197c9" class="movement__num">03 — What Sleep Does That NSDR Can't</span>
+      <h2 data-ru="У мозга есть ночная смена." data-ru-src="00a35b8cdf">The brain runs a night shift.</h2>
+      <p data-ru="Глубокий сон — это не глубокое расслабление. Это сантехника. И она работает только в состоянии, которое наяву не изобразишь." data-ru-src="0417560391" class="lede">Deep sleep is not deep relaxation. It's plumbing. And it only runs in a state you cannot fake awake.</p>
     </div>
 
     <div class="glymph">
-      <div class="panel r" role="img" aria-label="Diagram of the glymphatic system: during slow-wave sleep, neurons shrink, opening channels around blood vessels through which cerebrospinal fluid flows and carries out metabolic waste.">
+      <div data-ru-aria-label="Схема глимфатической системы: во время медленного сна нейроны сжимаются и открывают каналы вокруг кровеносных сосудов, по которым течёт спинномозговая жидкость и уносит продукты обмена." class="panel r" role="img" aria-label="Diagram of the glymphatic system: during slow-wave sleep, neurons shrink, opening channels around blood vessels through which cerebrospinal fluid flows and carries out metabolic waste.">
         <div class="panel__cap">
-          <span class="panel__title">The glymphatic power-wash</span>
-          <span class="figtag">fig. 03 · slow-wave sleep only</span>
+          <span data-ru="Глимфатическая промывка" data-ru-src="459121c21c" class="panel__title">The glymphatic power-wash</span>
+          <span data-ru="рис. 03 · только в медленном сне" data-ru-src="240b45a42e" class="figtag">fig. 03 · slow-wave sleep only</span>
         </div>
         <svg viewBox="0 0 380 260" style="width:100%;height:auto">
           <defs>
@@ -741,7 +757,7 @@ p,li,dd,figcaption{text-wrap:pretty}
           <!-- perivascular channel (the vessel + fluid space) -->
           <path d="M30,130 C120,90 260,90 350,130" fill="none" stroke="color-mix(in srgb,var(--sleep) 25%, transparent)" stroke-width="18" stroke-linecap="round"/>
           <path class="csf-flow" d="M30,130 C120,90 260,90 350,130" fill="none" stroke="var(--sleep)" stroke-width="3" stroke-linecap="round"/>
-          <text x="30" y="112" font-family="JetBrains Mono" font-size="9" fill="var(--sleep)" letter-spacing="1">CSF FLOW →</text>
+          <text data-ru="ТОК ЛИКВОРА →" data-ru-src="2e092edd70" x="30" y="112" font-family="JetBrains Mono" font-size="9" fill="var(--sleep)" letter-spacing="1">CSF FLOW →</text>
           <!-- neurons that shrink to open the channels -->
           <g fill="none" stroke="var(--fg-dim)" stroke-width="1.5">
             <circle class="neuron" style="animation-delay:0s"   cx="70"  cy="185" r="18"/>
@@ -750,7 +766,7 @@ p,li,dd,figcaption{text-wrap:pretty}
             <circle class="neuron" style="animation-delay:1.4s" cx="255" cy="208" r="19"/>
             <circle class="neuron" style="animation-delay:.8s"  cx="315" cy="186" r="18"/>
           </g>
-          <text x="30" y="250" font-family="JetBrains Mono" font-size="8.5" fill="var(--fg-faint)" letter-spacing="1">NEURONS SHRINK → INTERSTITIAL SPACE OPENS ~60%</text>
+          <text data-ru="НЕЙРОНЫ СЖИМАЮТСЯ → ПРОСВЕТЫ ШИРЕ НА ~60%" data-ru-src="44bd24ece6" x="30" y="250" font-family="JetBrains Mono" font-size="8.5" fill="var(--fg-faint)" letter-spacing="1">NEURONS SHRINK → INTERSTITIAL SPACE OPENS ~60%</text>
           <!-- waste particles carried out along the channel -->
           <g fill="var(--counterfeit)">
             <circle class="waste" style="offset-path:path('M40,128 C120,92 260,92 350,128'); animation-delay:0s"   r="3.2"/>
@@ -758,28 +774,28 @@ p,li,dd,figcaption{text-wrap:pretty}
             <circle class="waste" style="offset-path:path('M40,128 C120,92 260,92 350,128'); animation-delay:3.2s" r="3"/>
           </g>
         </svg>
-        <p style="font-size:.8rem;color:var(--fg-faint);margin-top:.8rem;font-family:'JetBrains Mono',monospace;line-height:1.55">Amyloid-β &amp; tau (rust) flush out along the vessel. In deep sleep, brain cells contract, cerebrospinal fluid rushes the widened channels, and metabolic waste is carried away.</p>
+        <p data-ru="Амилоид-β и тау (ржавые точки) вымываются вдоль сосуда. В глубоком сне клетки мозга сжимаются, спинномозговая жидкость устремляется в расширившиеся каналы и уносит продукты обмена." data-ru-src="1b65fd8cf1" style="font-size:.8rem;color:var(--fg-faint);margin-top:.8rem;font-family:'JetBrains Mono',monospace;line-height:1.55">Amyloid-β &amp; tau (rust) flush out along the vessel. In deep sleep, brain cells contract, cerebrospinal fluid rushes the widened channels, and metabolic waste is carried away.</p>
       </div>
 
       <div class="r">
         <div class="prose">
-          <p>During <strong>slow-wave (deep) sleep</strong>, brain cells physically shrink — opening the spaces between them by as much as 60%. Cerebrospinal fluid floods through like a power-wash, clearing out the day's metabolic waste, including the amyloid-β and tau proteins tied to Alzheimer's.</p>
-          <p>Newer work from Nedergaard's lab (<em>Cell</em>, 2025) shows what may drive it: slow, synchronized waves of <strong>norepinephrine</strong> that squeeze the blood vessels about once a minute, pumping fluid through the tissue. Tellingly, the same study found a common sleep drug — <strong>zolpidem</strong> — flattened those waves and cut clearance. Sedation is not the night shift.</p>
+          <p data-ru="Во время <strong>медленного (глубокого) сна</strong> клетки мозга физически сжимаются — и промежутки между ними расширяются вплоть до 60%. Спинномозговая жидкость проходит через них, как мойка под давлением, и вычищает метаболические отходы дня, включая белки амилоид-β и тау, связанные с болезнью Альцгеймера." data-ru-src="9ff88a0130">During <strong>slow-wave (deep) sleep</strong>, brain cells physically shrink — opening the spaces between them by as much as 60%. Cerebrospinal fluid floods through like a power-wash, clearing out the day's metabolic waste, including the amyloid-β and tau proteins tied to Alzheimer's.</p>
+          <p data-ru="Новая работа лаборатории Майкен Недергард (<em>Cell</em>, 2025) показывает, что может приводить это в движение: медленные синхронные волны <strong>норадреналина</strong>, которые примерно раз в минуту сжимают сосуды и прокачивают жидкость сквозь ткань. Показательно, что в том же исследовании распространённое снотворное — <strong>золпидем</strong> — сглаживало эти волны и снижало очистку. Седация — это не ночная смена." data-ru-src="1c73fbeae3">Newer work from Nedergaard's lab (<em>Cell</em>, 2025) shows what may drive it: slow, synchronized waves of <strong>norepinephrine</strong> that squeeze the blood vessels about once a minute, pumping fluid through the tissue. Tellingly, the same study found a common sleep drug — <strong>zolpidem</strong> — flattened those waves and cut clearance. Sedation is not the night shift.</p>
         </div>
         <div class="statbar">
-          <div><span class="n c-sleep">~60%</span><span class="k">interstitial space opens in deep sleep</span></div>
-          <div><span class="n c-ember">~1/min</span><span class="k">norepinephrine waves that pump the fluid</span></div>
-          <div><span class="n c-nsdr">✕</span><span class="k">NSDR does not run this cycle</span></div>
+          <div><span class="n c-sleep">~60%</span><span data-ru="настолько расширяется межклеточное пространство в глубоком сне" data-ru-src="0c0c6801b3" class="k">interstitial space opens in deep sleep</span></div>
+          <div><span data-ru="~1/мин" data-ru-src="b12cf8825f" class="n c-ember">~1/min</span><span data-ru="волны норадреналина, которые качают жидкость" data-ru-src="ff9e5a3241" class="k">norepinephrine waves that pump the fluid</span></div>
+          <div><span class="n c-nsdr">✕</span><span data-ru="NSDR этот цикл не запускает" data-ru-src="975ddc80ca" class="k">NSDR does not run this cycle</span></div>
         </div>
         <div class="callout warn" style="margin-top:1.4rem">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
-          <p><b style="color:var(--fg)">This is genuinely contested.</b> Most direct evidence is from mice. A 2024 study (Franks &amp; Wisden, Imperial College) measured dye movement directly and argued clearance may <em>slow</em> during sleep, not speed up — Nedergaard called the method misleading. Human confirmation is early and the mechanism is unsettled. That's why it's graded below as <em>mechanism</em>, not fact.</p>
+          <p data-ru="<b style=&quot;color:var(--fg)&quot;>Здесь действительно идёт спор.</b> Большая часть прямых данных получена на мышах. Исследование 2024 года (Franks &amp; Wisden, Imperial College) напрямую измерило движение красителя и пришло к выводу, что во сне очистка может <em>замедляться</em>, а не ускоряться, — Недергард назвала этот метод вводящим в заблуждение. Подтверждение на людях пока только начинается, механизм не установлен. Поэтому ниже это помечено как <em>механизм</em>, а не факт." data-ru-src="095207ef94"><b style="color:var(--fg)">This is genuinely contested.</b> Most direct evidence is from mice. A 2024 study (Franks &amp; Wisden, Imperial College) measured dye movement directly and argued clearance may <em>slow</em> during sleep, not speed up — Nedergaard called the method misleading. Human confirmation is early and the mechanism is unsettled. That's why it's graded below as <em>mechanism</em>, not fact.</p>
         </div>
         <div style="margin-top:1.2rem;display:flex;gap:.5rem;flex-wrap:wrap">
-          <span class="grade g-mech">Mechanism · strong in mice · contested in humans</span>
+          <span data-ru="Механизм · сильно на мышах · спорно у людей" data-ru-src="e9b74f4ad8" class="grade g-mech">Mechanism · strong in mice · contested in humans</span>
         </div>
-        <p class="pull">You can borrow alertness from NSDR. You cannot borrow the night shift.</p>
-        <div class="prose"><p style="font-size:.95rem">Memory consolidation, growth-hormone release, immune calibration — filed under the same roof. NSDR downshifts you. It does not clean the house.</p></div>
+        <p data-ru="Бодрость можно одолжить у NSDR. Ночную смену — нельзя." data-ru-src="db1a9b9a47" class="pull">You can borrow alertness from NSDR. You cannot borrow the night shift.</p>
+        <div class="prose"><p data-ru="Закрепление памяти, выброс гормона роста, настройка иммунитета — всё это под той же крышей. NSDR снижает обороты. Но дом он не убирает." data-ru-src="d10742db27" style="font-size:.95rem">Memory consolidation, growth-hormone release, immune calibration — filed under the same roof. NSDR downshifts you. It does not clean the house.</p></div>
       </div>
     </div>
   </div>
@@ -789,23 +805,23 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="quality">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">04 — Quality Over Quantity</span>
-      <h2>Why you wake up tired after "enough."</h2>
-      <p class="lede">Eight broken hours can lose to seven whole ones. The number on the clock says almost nothing about whether the night shift actually ran.</p>
+      <span data-ru="04 — Качество важнее количества" data-ru-src="dd249c6b21" class="movement__num">04 — Quality Over Quantity</span>
+      <h2 data-ru="Почему после «достаточного» сна просыпаешься без сил." data-ru-src="45d98eaa24">Why you wake up tired after "enough."</h2>
+      <p data-ru="Восемь рваных часов могут проиграть семи цельным. Цифра на часах почти ничего не говорит о том, отработала ли ночная смена на самом деле." data-ru-src="f81063fe4e" class="lede">Eight broken hours can lose to seven whole ones. The number on the clock says almost nothing about whether the night shift actually ran.</p>
     </div>
 
     <div class="prose measure r">
-      <p>Deep sleep is only about <strong>13–23% of a night</strong>, and it has to arrive in sustained "trains" of slow waves — coordinated bursts of recovery. Fragment those trains with micro-awakenings and sleep feels unrestorative <em>even when the total minutes look normal.</em> Research is consistent on this: fragmentation damages sleep quality more than simply sleeping less.</p>
+      <p data-ru="Глубокий сон занимает всего <strong>13–23% ночи</strong>, и приходить он должен устойчивыми «цепочками» медленных волн — согласованными всплесками восстановления. Разбей эти цепочки микропробуждениями — и сон перестаёт восстанавливать, <em>даже если общее число минут выглядит нормальным.</em> Исследования здесь сходятся: фрагментация вредит качеству сна сильнее, чем просто короткий сон." data-ru-src="f26b0a4ba2">Deep sleep is only about <strong>13–23% of a night</strong>, and it has to arrive in sustained "trains" of slow waves — coordinated bursts of recovery. Fragment those trains with micro-awakenings and sleep feels unrestorative <em>even when the total minutes look normal.</em> Research is consistent on this: fragmentation damages sleep quality more than simply sleeping less.</p>
     </div>
 
-    <div class="panel r" style="margin-top:2rem" role="img" aria-label="Two sleep-architecture strips. The consolidated night shows long unbroken blocks of deep sleep. The fragmented night shows the same total time broken by frequent awakenings, with little sustained deep sleep.">
+    <div data-ru-aria-label="Две полосы архитектуры сна. В цельной ночи видны длинные непрерывные блоки глубокого сна. Во фрагментированной — то же общее время, разбитое частыми пробуждениями, почти без устойчивого глубокого сна." class="panel r" style="margin-top:2rem" role="img" aria-label="Two sleep-architecture strips. The consolidated night shows long unbroken blocks of deep sleep. The fragmented night shows the same total time broken by frequent awakenings, with little sustained deep sleep.">
       <div class="panel__cap">
-        <span class="panel__title">Same hours in bed · different night</span>
-        <span class="figtag">fig. 04 · illustrative</span>
+        <span data-ru="Те же часы в постели · другая ночь" data-ru-src="1a360c8b61" class="panel__title">Same hours in bed · different night</span>
+        <span data-ru="рис. 04 · иллюстрация" data-ru-src="9116e0a4db" class="figtag">fig. 04 · illustrative</span>
       </div>
       <div class="archi">
         <div class="archi-row">
-          <div class="archi-cap"><span>Consolidated — ~7h</span><span style="color:var(--real)">deep sleep in long trains ✓</span></div>
+          <div class="archi-cap"><span data-ru="Цельная — ~7 ч" data-ru-src="73114d901e">Consolidated — ~7h</span><span data-ru="глубокий сон длинными цепочками ✓" data-ru-src="c2a1470065" style="color:var(--real)">deep sleep in long trains ✓</span></div>
           <div class="hyp">
             <span class="light" style="width:14%"></span>
             <span class="deep"  style="width:20%"></span>
@@ -817,7 +833,7 @@ p,li,dd,figcaption{text-wrap:pretty}
           </div>
         </div>
         <div class="archi-row">
-          <div class="archi-cap"><span>Fragmented — ~8h in bed</span><span style="color:var(--counterfeit)">deep sleep never sustains ✕</span></div>
+          <div class="archi-cap"><span data-ru="Рваная — ~8 ч в постели" data-ru-src="6c91d3b51d">Fragmented — ~8h in bed</span><span data-ru="глубокий сон не держится ✕" data-ru-src="9899671aa8" style="color:var(--counterfeit)">deep sleep never sustains ✕</span></div>
           <div class="hyp">
             <span class="awake" style="width:7%"></span>
             <span class="light" style="width:12%"></span>
@@ -835,16 +851,16 @@ p,li,dd,figcaption{text-wrap:pretty}
         </div>
       </div>
       <div class="hyp-legend">
-        <div><i style="background:color-mix(in srgb,var(--sleep) 68%, transparent)"></i>Deep (slow-wave)</div>
-        <div><i style="background:color-mix(in srgb,var(--sleep) 22%, transparent)"></i>Light</div>
-        <div><i style="background:color-mix(in srgb,var(--nsdr) 42%, transparent)"></i>REM</div>
-        <div><i style="background:repeating-linear-gradient(90deg,var(--counterfeit) 0 3px,transparent 3px 6px)"></i>Awake / micro-arousal</div>
+        <div data-ru="<i style=&quot;background:color-mix(in srgb,var(--sleep) 68%, transparent)&quot;></i>Глубокий (медленный)" data-ru-src="14f880e3c5"><i style="background:color-mix(in srgb,var(--sleep) 68%, transparent)"></i>Deep (slow-wave)</div>
+        <div data-ru="<i style=&quot;background:color-mix(in srgb,var(--sleep) 22%, transparent)&quot;></i>Лёгкий" data-ru-src="0272435c51"><i style="background:color-mix(in srgb,var(--sleep) 22%, transparent)"></i>Light</div>
+        <div data-ru="<i style=&quot;background:color-mix(in srgb,var(--nsdr) 42%, transparent)&quot;></i>Быстрый (REM)" data-ru-src="8c7882830b"><i style="background:color-mix(in srgb,var(--nsdr) 42%, transparent)"></i>REM</div>
+        <div data-ru="<i style=&quot;background:repeating-linear-gradient(90deg,var(--counterfeit) 0 3px,transparent 3px 6px)&quot;></i>Бодрствование / микропробуждение" data-ru-src="7c9e2549c5"><i style="background:repeating-linear-gradient(90deg,var(--counterfeit) 0 3px,transparent 3px 6px)"></i>Awake / micro-arousal</div>
       </div>
     </div>
 
     <div class="callout note r" style="margin-top:1.8rem;max-width:52rem">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/><path d="M12 7v5l3 2"/></svg>
-      <p><b style="color:var(--fg)">Here's where NSDR genuinely wins.</b> After a broken night, a 20-minute NSDR session can leave you <em>more refreshed than the sleep did</em> — not because it beats sleep, but because it delivers the real downshift the fragmented night never completed. NSDR doesn't out-perform good sleep. It out-performs <em>bad</em> sleep at the one thing bad sleep failed to do.</p>
+      <p data-ru="<b style=&quot;color:var(--fg)&quot;>Вот где NSDR действительно выигрывает.</b> После рваной ночи 20-минутная сессия NSDR может оставить тебя <em>отдохнувшим сильнее, чем сам сон</em>, — не потому, что она лучше сна, а потому, что даёт настоящее переключение вниз, которого рваная ночь так и не завершила. NSDR не превосходит хороший сон. Он превосходит <em>плохой</em> сон в том единственном, с чем плохой сон не справился." data-ru-src="f45ce2adc2"><b style="color:var(--fg)">Here's where NSDR genuinely wins.</b> After a broken night, a 20-minute NSDR session can leave you <em>more refreshed than the sleep did</em> — not because it beats sleep, but because it delivers the real downshift the fragmented night never completed. NSDR doesn't out-perform good sleep. It out-performs <em>bad</em> sleep at the one thing bad sleep failed to do.</p>
     </div>
   </div>
 </section>
@@ -853,43 +869,49 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="discern">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">05 — Fake Rest / Real Rest</span>
-      <h2>Most "rest" is stimulation in disguise.</h2>
-      <p class="lede">The scroll, the binge, the vegging-out. It wears the costume of rest while keeping the whole system switched on.</p>
+      <span data-ru="05 — Ложный отдых / настоящий отдых" data-ru-src="b0e2905f47" class="movement__num">05 — Fake Rest / Real Rest</span>
+      <h2 data-ru="Большая часть «отдыха» — это замаскированная стимуляция." data-ru-src="41f9021e46">Most "rest" is stimulation in disguise.</h2>
+      <p data-ru="Лента, сериал запоем, «овощной» вечер на диване. Всё это надевает костюм отдыха, а вся система при этом остаётся включённой." data-ru-src="9a33644217" class="lede">The scroll, the binge, the vegging-out. It wears the costume of rest while keeping the whole system switched on.</p>
     </div>
 
     <div class="versus">
       <div class="vcard fake r">
-        <h3>
+        <h3 data-ru="
+          <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 3 2 20h20L12 3Z&quot;/><path d=&quot;M12 10v4M12 17h.01&quot;/></svg>
+          Поддельный отдых
+        " data-ru-src="ef501c80a3">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
           Counterfeit rest
         </h3>
-        <p style="color:var(--fg-dim);font-size:.95rem;margin-top:.4rem">Feels like rest. Physiologically, it isn't. The sympathetic system stays engaged; dopamine spikes and crashes below baseline; you get up more depleted, and craving more.</p>
+        <p data-ru="Похоже на отдых. Физиологически — нет. Симпатическая система остаётся включённой; дофамин взлетает и проваливается ниже базового уровня; встаёшь, а сил ещё меньше — и тянет ещё сильнее." data-ru-src="0501505a39" style="color:var(--fg-dim);font-size:.95rem;margin-top:.4rem">Feels like rest. Physiologically, it isn't. The sympathetic system stays engaged; dopamine spikes and crashes below baseline; you get up more depleted, and craving more.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>You reach for it reflexively, without deciding.</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>It <em>accelerates</em> — one more episode, one more scroll.</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Afterward you feel foggy, wired, or vaguely worse.</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>It can't survive stillness — it needs input.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M18 6 6 18M6 6l12 12&quot;/></svg>Ты тянешься к нему рефлекторно, не решая." data-ru-src="0c194326d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>You reach for it reflexively, without deciding.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M18 6 6 18M6 6l12 12&quot;/></svg>Он <em>ускоряется</em>: ещё одна серия, ещё один свайп." data-ru-src="a9034aaf96"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>It <em>accelerates</em> — one more episode, one more scroll.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M18 6 6 18M6 6l12 12&quot;/></svg>Потом в голове туман, ты взвинчен или тебе смутно хуже." data-ru-src="5cc6f148cb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Afterward you feel foggy, wired, or vaguely worse.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M18 6 6 18M6 6l12 12&quot;/></svg>Он не выдерживает неподвижности — ему нужен входящий поток." data-ru-src="c91736c1a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>It can't survive stillness — it needs input.</li>
         </ul>
       </div>
       <div class="vcard reeal r">
-        <h3>
+        <h3 data-ru="
+          <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9.2&quot;/><path d=&quot;M8 12.5l2.6 2.5L16 9.5&quot;/></svg>
+          Настоящий отдых
+        " data-ru-src="b1e91f772a">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M8 12.5l2.6 2.5L16 9.5"/></svg>
           Real rest
         </h3>
-        <p style="color:var(--fg-dim);font-size:.95rem;margin-top:.4rem">Genuine downregulation — sleep or NSDR. The marker isn't "not working." It's a measurable physiological downshift: slower rhythm, lower stress tone, recovery underway.</p>
+        <p data-ru="Подлинное снижение активации — сон или NSDR. Признак не в том, что ты «не работаешь». Это измеримое физиологическое переключение вниз: ритм медленнее, тонус стресса ниже, восстановление идёт." data-ru-src="17795e3582" style="color:var(--fg-dim);font-size:.95rem;margin-top:.4rem">Genuine downregulation — sleep or NSDR. The marker isn't "not working." It's a measurable physiological downshift: slower rhythm, lower stress tone, recovery underway.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>You enter it deliberately.</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>It <em>decelerates</em> — the system winds down.</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Afterward you feel clearer and calmer.</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>It survives silence — it releases attention.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M20 6 9 17l-5-5&quot;/></svg>Ты входишь в него осознанно." data-ru-src="dfba12fab7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>You enter it deliberately.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M20 6 9 17l-5-5&quot;/></svg>Он <em>замедляет</em> — система постепенно затихает." data-ru-src="522859a30f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>It <em>decelerates</em> — the system winds down.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M20 6 9 17l-5-5&quot;/></svg>Потом в голове ясно и спокойно." data-ru-src="8a88c0cbbc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Afterward you feel clearer and calmer.</li>
+          <li data-ru="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M20 6 9 17l-5-5&quot;/></svg>Он выдерживает тишину — он отпускает внимание." data-ru-src="30d805860d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>It survives silence — it releases attention.</li>
         </ul>
       </div>
     </div>
 
     <div class="loops">
-      <div class="panel r" role="img" aria-label="The counterfeit loop: stimulus leads to brief relief, then deeper depletion, then stronger craving, back to stimulus.">
-        <div class="panel__cap"><span class="panel__title" style="color:var(--counterfeit)">The counterfeit loop</span><span class="figtag">closed cycle</span></div>
+      <div data-ru-aria-label="Замкнутый круг подделки: стимул ведёт к краткому облегчению, затем к ещё большему истощению, затем к ещё более сильной тяге — и снова к стимулу." class="panel r" role="img" aria-label="The counterfeit loop: stimulus leads to brief relief, then deeper depletion, then stronger craving, back to stimulus.">
+        <div class="panel__cap"><span data-ru="Круг подделки" data-ru-src="6ed2fa25f3" class="panel__title" style="color:var(--counterfeit)">The counterfeit loop</span><span data-ru="замкнутый цикл" data-ru-src="c4923d39ae" class="figtag">closed cycle</span></div>
         <svg viewBox="0 0 280 200" style="width:100%;height:auto">
           <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M1.5 1.5 L6.5 4.5 L1.5 7.5" fill="none" stroke="var(--counterfeit)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
           <circle cx="140" cy="100" r="54" fill="none" stroke="var(--hair-strong)" stroke-width="1.5"/>
@@ -904,16 +926,16 @@ p,li,dd,figcaption{text-wrap:pretty}
           <g fill="var(--counterfeit)"><circle cx="140" cy="46" r="3.4"/><circle cx="194" cy="100" r="3.4"/><circle cx="140" cy="154" r="3.4"/><circle cx="86" cy="100" r="3.4"/></g>
           <!-- labels, clear of the ring -->
           <g font-family="Instrument Sans" font-size="12" font-weight="500" fill="var(--fg)">
-            <text x="140" y="28" text-anchor="middle">Stimulus</text>
-            <text x="206" y="104" text-anchor="start">Brief relief</text>
-            <text x="140" y="184" text-anchor="middle">Depletion</text>
-            <text x="74" y="104" text-anchor="end">Craving</text>
+            <text data-ru="Стимул" data-ru-src="0fac3cba12" x="140" y="28" text-anchor="middle">Stimulus</text>
+            <text data-ru="Облегчение" data-ru-src="a0e9220898" x="206" y="104" text-anchor="start">Brief relief</text>
+            <text data-ru="Истощение" data-ru-src="09250eded1" x="140" y="184" text-anchor="middle">Depletion</text>
+            <text data-ru="Тяга" data-ru-src="30af9993ad" x="74" y="104" text-anchor="end">Craving</text>
           </g>
           <circle r="4.5" fill="var(--counterfeit)"><animateMotion dur="6s" repeatCount="indefinite" path="M140 46 A54 54 0 0 1 194 100 A54 54 0 0 1 140 154 A54 54 0 0 1 86 100 A54 54 0 0 1 140 46"/></circle>
         </svg>
       </div>
-      <div class="panel r" role="img" aria-label="The real-rest path: stop, then downshift, then restore — a line that settles rather than a loop.">
-        <div class="panel__cap"><span class="panel__title" style="color:var(--real)">The real-rest path</span><span class="figtag">it settles</span></div>
+      <div data-ru-aria-label="Путь настоящего отдыха: остановка, затем замедление, затем восстановление — линия, которая успокаивается, а не замыкается в круг." class="panel r" role="img" aria-label="The real-rest path: stop, then downshift, then restore — a line that settles rather than a loop.">
+        <div class="panel__cap"><span data-ru="Путь настоящего отдыха" data-ru-src="1ee270be05" class="panel__title" style="color:var(--real)">The real-rest path</span><span data-ru="всё затихает" data-ru-src="1acaac6a86" class="figtag">it settles</span></div>
         <svg viewBox="0 0 280 200" style="width:100%;height:auto">
           <!-- settled floor -->
           <line x1="26" y1="150" x2="256" y2="150" stroke="var(--hair-strong)" stroke-width="1.5" stroke-dasharray="2 5"/>
@@ -924,9 +946,9 @@ p,li,dd,figcaption{text-wrap:pretty}
           <circle cx="112" cy="120" r="5" fill="none" stroke="var(--real)" stroke-width="2"/>
           <circle cx="220" cy="150" r="5.5" fill="var(--real)"/>
           <g font-family="Instrument Sans" font-size="12" font-weight="500" fill="var(--fg)">
-            <text x="40" y="44" text-anchor="middle">Stop</text>
-            <text x="108" y="108" text-anchor="middle">Downshift</text>
-            <text x="224" y="176" text-anchor="middle">Restore</text>
+            <text data-ru="Стоп" data-ru-src="cae7d57bc0" x="40" y="44" text-anchor="middle">Stop</text>
+            <text data-ru="Замедление" data-ru-src="329991fcd9" x="108" y="108" text-anchor="middle">Downshift</text>
+            <text data-ru="Восстановление" data-ru-src="a76e13b983" x="224" y="176" text-anchor="middle">Restore</text>
           </g>
           <circle r="4.5" fill="var(--real)"><animateMotion dur="4.4s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.82;1" calcMode="linear" path="M40 58 C 92 58, 96 150, 150 150 L 254 150"/></circle>
         </svg>
@@ -934,8 +956,8 @@ p,li,dd,figcaption{text-wrap:pretty}
     </div>
 
     <div class="test r">
-      <div class="k">The one-line test</div>
-      <p class="q">"Could I do this with my eyes closed, doing nothing? If not — it may be stimulation wearing rest's clothes."</p>
+      <div data-ru="Тест в одну строку" data-ru-src="de2f3cfff3" class="k">The one-line test</div>
+      <p data-ru="«Могу ли я делать это с закрытыми глазами, ничего не делая? Если нет — возможно, это стимуляция, переодетая отдыхом»." data-ru-src="d1a5220bed" class="q">"Could I do this with my eyes closed, doing nothing? If not — it may be stimulation wearing rest's clothes."</p>
     </div>
   </div>
 </section>
@@ -944,57 +966,57 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="scripture">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">06 — The Older Map</span>
-      <h2>One tradition made rest a law of reality.</h2>
-      <p class="lede">Long before the labs, Scripture built rest into the structure of the week — and drew, in its own vocabulary, exactly the distinctions the neuroscience keeps rediscovering.</p>
+      <span data-ru="06 — Более древняя карта" data-ru-src="9842de822a" class="movement__num">06 — The Older Map</span>
+      <h2 data-ru="Одна традиция сделала покой законом реальности." data-ru-src="7eab69cc33">One tradition made rest a law of reality.</h2>
+      <p data-ru="Задолго до лабораторий Писание встроило покой в саму структуру недели — и на своём языке провело ровно те различия, которые нейронаука открывает заново." data-ru-src="a343e5e026" class="lede">Long before the labs, Scripture built rest into the structure of the week — and drew, in its own vocabulary, exactly the distinctions the neuroscience keeps rediscovering.</p>
     </div>
 
     <div class="r" style="margin-top:1rem">
       <div class="term">
-        <div class="term__word">שָׁבַת<span class="translit">shabbat</span></div>
+        <div class="term__word">שָׁבַת<span data-ru="шаббат" data-ru-src="da46639093" class="translit">shabbat</span></div>
         <div>
-          <p class="term__gloss">To <b>cease</b>. To stop. Rest begins not with a feeling but with a <b>boundary</b> — a hard edge where production ends. On the seventh day God rests: not from exhaustion, but as completion, blessing, and setting-apart.</p>
-          <span class="term__ref">Genesis 2:2–3</span>
+          <p data-ru="<b>Прекратить</b>. Остановиться. Покой начинается не с чувства, а с <b>границы</b> — жёсткой черты, где заканчивается производство. В седьмой день Бог покоится: не от усталости, а как завершение, благословение и отделение." data-ru-src="e74dde3899" class="term__gloss">To <b>cease</b>. To stop. Rest begins not with a feeling but with a <b>boundary</b> — a hard edge where production ends. On the seventh day God rests: not from exhaustion, but as completion, blessing, and setting-apart.</p>
+          <span data-ru="Быт. 2:2–3" data-ru-src="ac37a9c550" class="term__ref">Genesis 2:2–3</span>
         </div>
       </div>
       <div class="term">
-        <div class="term__word">מְנוּחָה<span class="translit">menuchah</span></div>
+        <div class="term__word">מְנוּחָה<span data-ru="менуха" data-ru-src="5e2f8d893c" class="translit">menuchah</span></div>
         <div>
-          <p class="term__gloss">Settled <b>repose</b> — tranquility, not merely the absence of work. This is rest as a <b>state you enter</b>. "He leads me beside quiet waters" — <em>mei menuchot</em>, waters of rest.</p>
-          <span class="term__ref">Psalm 23:2</span>
+          <p data-ru="Устоявшийся <b>покой</b> — безмятежность, а не просто отсутствие работы. Это покой как <b>состояние, в которое входишь</b>. «Он покоит меня на зеленых пастбищах и водит меня к тихим водам» — <em>мей менухот</em>, воды покоя." data-ru-src="d2af9cb4e7" class="term__gloss">Settled <b>repose</b> — tranquility, not merely the absence of work. This is rest as a <b>state you enter</b>. "He leads me beside quiet waters" — <em>mei menuchot</em>, waters of rest.</p>
+          <span data-ru="Пс. 22:2" data-ru-src="fa7614e34a" class="term__ref">Psalm 23:2</span>
         </div>
       </div>
       <div class="term">
-        <div class="term__word">Two groundings<span class="translit">why we rest</span></div>
+        <div data-ru="Два основания<span class=&quot;translit&quot;>зачем нам покой</span>" data-ru-src="fa6e69a9ea" class="term__word">Two groundings<span class="translit">why we rest</span></div>
         <div>
-          <p class="term__gloss">Exodus roots the Sabbath in <b>creation's rhythm</b>; Deuteronomy roots it in <b>liberation</b> — "remember you were slaves in Egypt." Egypt is the anti-Sabbath: endless brick-quotas, production that never ceases. Rest is what freedom looks like.</p>
-          <span class="term__ref">Exodus 20:8–11 · Deuteronomy 5:12–15</span>
+          <p data-ru="Исход укореняет субботу в <b>ритме творения</b>, Второзаконие — в <b>освобождении</b>: «Помни, что ты был рабом в Египте». Египет — это антисуббота: бесконечные нормы по кирпичам, производство, которое никогда не прекращается. Покой — вот как выглядит свобода." data-ru-src="ffa02a3c47" class="term__gloss">Exodus roots the Sabbath in <b>creation's rhythm</b>; Deuteronomy roots it in <b>liberation</b> — "remember you were slaves in Egypt." Egypt is the anti-Sabbath: endless brick-quotas, production that never ceases. Rest is what freedom looks like.</p>
+          <span data-ru="Исх. 20:8–11 · Втор. 5:12–15" data-ru-src="ec6dfb7e2e" class="term__ref">Exodus 20:8–11 · Deuteronomy 5:12–15</span>
         </div>
       </div>
       <div class="term">
-        <div class="term__word">The gift<span class="translit">release of control</span></div>
+        <div data-ru="Дар<span class=&quot;translit&quot;>отказ от контроля</span>" data-ru-src="c129e10d63" class="term__word">The gift<span class="translit">release of control</span></div>
         <div>
-          <p class="term__gloss">"In vain you rise early and stay up late, toiling for food to eat — for he grants <b>sleep</b> to those he loves." You cannot manufacture sleep. You can only stop, and receive it. (Every insomniac knows: the harder you try, the more it flees.)</p>
-          <span class="term__ref">Psalm 127:2</span>
+          <p data-ru="«Напрасно вы встаете рано и сидите допоздна, тяжелым трудом добывая себе еду, потому что возлюбленному Своему посылает Он <b>сон</b>». Сон невозможно изготовить. Можно только остановиться — и принять его. (Любой, кто страдал бессонницей, знает: чем сильнее стараешься, тем дальше он убегает.)" data-ru-src="890cd5e059" class="term__gloss">"In vain you rise early and stay up late, toiling for food to eat — for he grants <b>sleep</b> to those he loves." You cannot manufacture sleep. You can only stop, and receive it. (Every insomniac knows: the harder you try, the more it flees.)</p>
+          <span data-ru="Пс. 126:2" data-ru-src="3a871bb972" class="term__ref">Psalm 127:2</span>
         </div>
       </div>
       <div class="term">
-        <div class="term__word">The easy yoke<span class="translit">rest through form</span></div>
+        <div data-ru="Лёгкое ярмо<span class=&quot;translit&quot;>покой через форму</span>" data-ru-src="c68c1fc34d" class="term__word">The easy yoke<span class="translit">rest through form</span></div>
         <div>
-          <p class="term__gloss">"Come to me, all you who are weary… and I will give you rest. Take my yoke… and you will find rest for your souls." The paradox: rest not as the <em>absence</em> of a burden, but the <b>right</b> burden, rightly carried. Freedom through form, not formlessness.</p>
-          <span class="term__ref">Matthew 11:28–30</span>
+          <p data-ru="«Придите ко Мне, все уставшие и обремененные, и Я успокою вас. Возьмите на себя ярмо Мое… и вы найдете покой вашим душам». Парадокс: покой не как <em>отсутствие</em> ноши, а как <b>правильная</b> ноша, которую правильно несут. Свобода через форму, а не через бесформенность." data-ru-src="d9b0557d95" class="term__gloss">"Come to me, all you who are weary… and I will give you rest. Take my yoke… and you will find rest for your souls." The paradox: rest not as the <em>absence</em> of a burden, but the <b>right</b> burden, rightly carried. Freedom through form, not formlessness.</p>
+          <span data-ru="Мф. 11:28–30" data-ru-src="571a006843" class="term__ref">Matthew 11:28–30</span>
         </div>
       </div>
     </div>
 
     <div class="rings-wrap">
       <div class="ring-legend r">
-        <p style="color:var(--fg-dim);font-size:.98rem;max-width:34ch">The tradition layers rest at every scale — nested rhythms, each a different tempo of the same command to stop.</p>
-        <div><span class="rl-dot" style="background:var(--sleep)"></span><span><span class="rl-t">Sleep</span><span class="rl-s">nightly · the body's night shift</span></span></div>
-        <div><span class="rl-dot" style="background:var(--scripture)"></span><span><span class="rl-t">Sabbath</span><span class="rl-s">weekly · the week's boundary</span></span></div>
-        <div><span class="rl-dot" style="background:var(--ember)"></span><span><span class="rl-t">A rest that remains</span><span class="rl-s">a Sabbath-rest still open · Hebrews 4</span></span></div>
+        <p data-ru="Традиция выстраивает покой на каждом масштабе: это вложенные ритмы, и у каждого свой темп одной и той же заповеди — остановиться." data-ru-src="128dbc360c" style="color:var(--fg-dim);font-size:.98rem;max-width:34ch">The tradition layers rest at every scale — nested rhythms, each a different tempo of the same command to stop.</p>
+        <div><span class="rl-dot" style="background:var(--sleep)"></span><span><span data-ru="Сон" data-ru-src="d466bcf52e" class="rl-t">Sleep</span><span data-ru="каждую ночь · ночная смена тела" data-ru-src="0984534858" class="rl-s">nightly · the body's night shift</span></span></div>
+        <div><span class="rl-dot" style="background:var(--scripture)"></span><span><span data-ru="Суббота" data-ru-src="548623b7f5" class="rl-t">Sabbath</span><span data-ru="каждую неделю · граница недели" data-ru-src="143527fa4d" class="rl-s">weekly · the week's boundary</span></span></div>
+        <div><span class="rl-dot" style="background:var(--ember)"></span><span><span data-ru="Покой, который остаётся" data-ru-src="b963d8d23f" class="rl-t">A rest that remains</span><span data-ru="субботний покой ещё открыт · Евр. 4" data-ru-src="e246aaaa45" class="rl-s">a Sabbath-rest still open · Hebrews 4</span></span></div>
       </div>
-      <div class="panel r" role="img" aria-label="Three concentric rings representing nested rhythms of rest: nightly sleep, weekly Sabbath, and an ongoing eschatological rest, each turning at a different speed.">
+      <div data-ru-aria-label="Три концентрических кольца — вложенные ритмы покоя: ночной сон, еженедельная суббота и непрекращающийся эсхатологический покой; каждое вращается со своей скоростью." class="panel r" role="img" aria-label="Three concentric rings representing nested rhythms of rest: nightly sleep, weekly Sabbath, and an ongoing eschatological rest, each turning at a different speed.">
         <svg viewBox="0 0 300 300" style="width:100%;height:auto;max-width:340px;margin-inline:auto;display:block">
           <g fill="none" stroke-width="1.4">
             <circle cx="150" cy="150" r="55"  stroke="color-mix(in srgb,var(--sleep) 55%, transparent)"/>
@@ -1006,7 +1028,7 @@ p,li,dd,figcaption{text-wrap:pretty}
           <circle cx="245" cy="150" r="5" fill="var(--scripture)"><animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" dur="16s" repeatCount="indefinite"/></circle>
           <circle cx="285" cy="150" r="5" fill="var(--ember)"><animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" dur="34s" repeatCount="indefinite"/></circle>
           <circle cx="150" cy="150" r="26" fill="var(--fg)"/>
-          <text x="150" y="154.5" font-family="JetBrains Mono" font-size="12" fill="var(--bg)" text-anchor="middle" font-weight="700" letter-spacing="1">REST</text>
+          <text data-ru="ПОКОЙ" data-ru-src="fecd5681dc" x="150" y="154.5" font-family="JetBrains Mono" font-size="12" fill="var(--bg)" text-anchor="middle" font-weight="700" letter-spacing="1">REST</text>
         </svg>
       </div>
     </div>
@@ -1017,28 +1039,28 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="shalom">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">07 — Shalom</span>
-      <h2>Peace is not quiet. It's wholeness.</h2>
-      <p class="lede">The Bible's word for peace — <em>shalom</em> — doesn't mean the absence of noise. It means nothing missing, nothing broken. Rest is what wholeness feels like.</p>
+      <span data-ru="07 — Шалом" data-ru-src="adf696eac8" class="movement__num">07 — Shalom</span>
+      <h2 data-ru="Мир — это не тишина. Это целостность." data-ru-src="1c72e8da94">Peace is not quiet. It's wholeness.</h2>
+      <p data-ru="Библейское слово для мира — <em>шалом</em> — означает не отсутствие шума. Оно означает: ничего не недостаёт, ничего не сломано. Покой — это то, как ощущается целостность." data-ru-src="e90f6688d7" class="lede">The Bible's word for peace — <em>shalom</em> — doesn't mean the absence of noise. It means nothing missing, nothing broken. Rest is what wholeness feels like.</p>
     </div>
 
     <div class="prose measure r">
-      <p>The Hebrew root <strong>sh-l-m</strong> carries the idea of completeness. The same root repays a debt (<em>shillem</em> — to make whole), names the king who built the temple (<em>Shlomo</em>, Solomon), and greets a friend on the street — because the greeting is literally a question about wholeness: <em>is anything missing? is anything broken?</em></p>
-      <p>That changes what "peace" means. The world's version is subtraction: remove the noise, the conflict, the demands — and call the silence peace. Shalom is addition: presence, repair, completion. It's why Gideon could build an altar named <strong>"The LORD is Peace"</strong> while a war was still coming <span class="ref-inline">(Judges 6:24)</span>, and why Jesus could hand his friends peace on the worst night of their lives — <em>"my peace I give you; I do not give to you as the world gives"</em> <span class="ref-inline">(John 14:27)</span>.</p>
+      <p data-ru="Еврейский корень <strong>ш-л-м</strong> несёт идею полноты. Тот же корень означает «вернуть долг» (<em>шиллем</em> — восполнить), даёт имя царю, построившему храм (<em>Шломо</em>, Соломон), и звучит в приветствии на улице — потому что это приветствие буквально вопрос о целостности: <em>всё ли на месте? ничего не сломано?</em>" data-ru-src="2f167b43a7">The Hebrew root <strong>sh-l-m</strong> carries the idea of completeness. The same root repays a debt (<em>shillem</em> — to make whole), names the king who built the temple (<em>Shlomo</em>, Solomon), and greets a friend on the street — because the greeting is literally a question about wholeness: <em>is anything missing? is anything broken?</em></p>
+      <p data-ru="Это меняет смысл слова «мир». Мирская версия — вычитание: убрать шум, конфликт, требования — и назвать тишину миром. Шалом — сложение: присутствие, починка, завершённость. Поэтому Гедеон мог построить жертвенник с названием <strong>«Господь — это мир»</strong>, когда война ещё только надвигалась <span class=&quot;ref-inline&quot;>(Суд. 6:24)</span>, а Иисус мог дать друзьям мир в самую страшную ночь их жизни: <em>«Мой мир Я даю вам. Я даю вам не так, как дает этот мир»</em> <span class=&quot;ref-inline&quot;>(Ин. 14:27)</span>." data-ru-src="e2be492c22">That changes what "peace" means. The world's version is subtraction: remove the noise, the conflict, the demands — and call the silence peace. Shalom is addition: presence, repair, completion. It's why Gideon could build an altar named <strong>"The LORD is Peace"</strong> while a war was still coming <span class="ref-inline">(Judges 6:24)</span>, and why Jesus could hand his friends peace on the worst night of their lives — <em>"my peace I give you; I do not give to you as the world gives"</em> <span class="ref-inline">(John 14:27)</span>.</p>
     </div>
 
-    <div class="panel r" style="margin-top:2.4rem" role="img" aria-label="Two ideas of peace compared. The world's peace: a faint, empty flat line — noise removed, absence. Shalom: a circle of joined pieces completing itself — every piece present, wholeness.">
+    <div data-ru-aria-label="Сравнение двух представлений о мире. Мир по-мирски: бледная пустая ровная линия — шум убран, пустота. Шалом: круг из соединённых частей, который замыкается сам, — все части на месте, целостность." class="panel r" style="margin-top:2.4rem" role="img" aria-label="Two ideas of peace compared. The world's peace: a faint, empty flat line — noise removed, absence. Shalom: a circle of joined pieces completing itself — every piece present, wholeness.">
       <div class="panel__cap">
-        <span class="panel__title">Two ideas of peace</span>
-        <span class="figtag">fig. 05</span>
+        <span data-ru="Два представления о мире" data-ru-src="5f1db588cf" class="panel__title">Two ideas of peace</span>
+        <span data-ru="рис. 05" data-ru-src="1a47f01cbc" class="figtag">fig. 05</span>
       </div>
       <div class="shalom-grid">
         <div class="shalom-cell">
           <svg viewBox="0 0 200 150">
             <line x1="34" y1="72" x2="166" y2="72" stroke="var(--hair-strong)" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/>
-            <text x="100" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1.5">ABSENCE · NOISE REMOVED</text>
+            <text data-ru="ОТСУТСТВИЕ · ШУМ УБРАН" data-ru-src="8ba259ca5d" x="100" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1.5">ABSENCE · NOISE REMOVED</text>
           </svg>
-          <p><strong>The world's peace.</strong> Subtraction. Quiet as the goal — and fragile, because any noise ends it.</p>
+          <p data-ru="<strong>Мир по-мирски.</strong> Вычитание. Тишина как цель — и она хрупка, потому что её обрывает любой шум." data-ru-src="578c5e7434"><strong>The world's peace.</strong> Subtraction. Quiet as the goal — and fragile, because any noise ends it.</p>
         </div>
         <div class="shalom-cell">
           <svg viewBox="0 0 200 150">
@@ -1050,38 +1072,38 @@ p,li,dd,figcaption{text-wrap:pretty}
               <circle cx="100" cy="28" r="4"/><circle cx="144" cy="72" r="4"/>
               <circle cx="100" cy="116" r="4"/><circle cx="56" cy="72" r="4"/>
             </g>
-            <text x="100" y="145" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1.5">PRESENCE · EVERY PIECE JOINED</text>
+            <text data-ru="ПРИСУТСТВИЕ · ВСЁ СОЕДИНЕНО" data-ru-src="2bdd7603d8" x="100" y="145" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--fg-faint)" letter-spacing="1.5">PRESENCE · EVERY PIECE JOINED</text>
           </svg>
-          <p><strong>Shalom.</strong> Addition. Every piece present and joined — peace that holds even when it isn't quiet.</p>
+          <p data-ru="<strong>Шалом.</strong> Сложение. Каждая часть на месте и соединена с другими — мир, который держится, даже когда вокруг не тихо." data-ru-src="0f328c509b"><strong>Shalom.</strong> Addition. Every piece present and joined — peace that holds even when it isn't quiet.</p>
         </div>
       </div>
     </div>
 
     <div class="r" style="margin-top:2.6rem">
       <div class="term">
-        <div class="term__word">שָׁלוֹם<span class="translit">shalom</span></div>
+        <div class="term__word">שָׁלוֹם<span data-ru="шалом" data-ru-src="7fcd3df7dc" class="translit">shalom</span></div>
         <div>
-          <p class="term__gloss"><b>Wholeness as a kept state.</b> "You will keep in perfect peace" — the Hebrew doubles the word, <em>shalom shalom</em> — "those whose minds are steadfast, <b>because they trust</b>." Peace isn't the absence of the storm; it's the presence of the anchor.</p>
-          <span class="term__ref">Isaiah 26:3</span>
+          <p data-ru="<b>Целостность как хранимое состояние.</b> «Твердого духом Ты хранишь в совершенном мире» — в еврейском слово здесь удвоено, <em>шалом шалом</em>, — «потому что он <b>верит Тебе</b>». Мир — это не отсутствие бури, а присутствие якоря." data-ru-src="5f7337531d" class="term__gloss"><b>Wholeness as a kept state.</b> "You will keep in perfect peace" — the Hebrew doubles the word, <em>shalom shalom</em> — "those whose minds are steadfast, <b>because they trust</b>." Peace isn't the absence of the storm; it's the presence of the anchor.</p>
+          <span data-ru="Ис. 26:3" data-ru-src="5eb692268a" class="term__ref">Isaiah 26:3</span>
         </div>
       </div>
       <div class="term">
-        <div class="term__word">The benediction<span class="translit">where blessing lands</span></div>
+        <div data-ru="Благословение<span class=&quot;translit&quot;>куда оно ведёт</span>" data-ru-src="6765a0c6ee" class="term__word">The benediction<span class="translit">where blessing lands</span></div>
         <div>
-          <p class="term__gloss">"The LORD bless you and keep you… and give you <b>shalom</b>." The oldest blessing in Scripture walks six lines to a single destination — and the destination isn't wealth or safety. Everything ends at wholeness.</p>
-          <span class="term__ref">Numbers 6:24–26</span>
+          <p data-ru="«Да благословит тебя Господь и сохранит тебя… и дарует тебе <b>мир</b>». «Мир» здесь — это <em>шалом</em>. Древнейшее благословение Писания проходит шесть строк к единственной цели — и эта цель не богатство и не безопасность. Всё заканчивается целостностью." data-ru-src="696bd57cce" class="term__gloss">"The LORD bless you and keep you… and give you <b>shalom</b>." The oldest blessing in Scripture walks six lines to a single destination — and the destination isn't wealth or safety. Everything ends at wholeness.</p>
+          <span data-ru="Чис. 6:24–26" data-ru-src="5190eb3f0e" class="term__ref">Numbers 6:24–26</span>
         </div>
       </div>
       <div class="term">
-        <div class="term__word">Sleep as trust<span class="translit">shalom, embodied</span></div>
+        <div data-ru="Сон как доверие<span class=&quot;translit&quot;>шалом во плоти</span>" data-ru-src="1e6fe2a4b8" class="term__word">Sleep as trust<span class="translit">shalom, embodied</span></div>
         <div>
-          <p class="term__gloss">"In <b>shalom</b> I will lie down and sleep, for you alone, LORD, make me dwell in safety." David wrote that while being hunted — and slept mid-rebellion <span class="ref-inline">(Ps 3:5)</span>. Falling asleep is the body's act of trust: the one thing you cannot do while defending yourself. The night shift of §03 is what the brain does with that surrender.</p>
-          <span class="term__ref">Psalm 4:8</span>
+          <p data-ru="«Я лягу и с <b>миром</b> засну, потому что, Господи, только Ты даешь мне жить в безопасности». Давид написал это, когда за ним охотились, — и спал посреди мятежа <span class=&quot;ref-inline&quot;>(Пс. 3:6)</span>. Уснуть — это акт доверия со стороны тела: единственное, чего нельзя сделать, пока защищаешься. Ночная смена из §03 — это то, что мозг делает с этой сдачей." data-ru-src="2d644d5867" class="term__gloss">"In <b>shalom</b> I will lie down and sleep, for you alone, LORD, make me dwell in safety." David wrote that while being hunted — and slept mid-rebellion <span class="ref-inline">(Ps 3:5)</span>. Falling asleep is the body's act of trust: the one thing you cannot do while defending yourself. The night shift of §03 is what the brain does with that surrender.</p>
+          <span data-ru="Пс. 4:9" data-ru-src="ec61db9c5f" class="term__ref">Psalm 4:8</span>
         </div>
       </div>
     </div>
 
-    <p class="pull r">Sleep is nightly trust. Sabbath is weekly trust. Shalom is what trust feels like when it settles.</p>
+    <p data-ru="Сон — это доверие каждую ночь. Суббота — доверие каждую неделю. Шалом — то, каким становится доверие, когда оно улеглось." data-ru-src="adf40566b2" class="pull r">Sleep is nightly trust. Sabbath is weekly trust. Shalom is what trust feels like when it settles.</p>
   </div>
 </section>
 
@@ -1089,43 +1111,43 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="convergence">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">08 — The Convergence</span>
-      <h2>Where the two maps agree.</h2>
-      <p class="lede">Not the lab confirming the text, nor the text predicting the lab. Two very different traditions — one empirical, one liturgical — arriving at the same structure of a human being.</p>
+      <span data-ru="08 — Схождение" data-ru-src="3aede01644" class="movement__num">08 — The Convergence</span>
+      <h2 data-ru="Где две карты совпадают." data-ru-src="7cb81e9ea3">Where the two maps agree.</h2>
+      <p data-ru="Не лаборатория подтверждает текст и не текст предсказывает лабораторию. Две очень разные традиции — одна эмпирическая, другая литургическая — приходят к одному и тому же устройству человека." data-ru-src="b10c998cf4" class="lede">Not the lab confirming the text, nor the text predicting the lab. Two very different traditions — one empirical, one liturgical — arriving at the same structure of a human being.</p>
     </div>
 
     <div class="callout note r conv-note" style="max-width:52rem;margin-bottom:.4rem">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
-      <p><b style="color:var(--fg)">Read this as synthesis, not proof.</b> Ancient wisdom and modern neuroscience use different methods and answer different questions. That they converge on the same practical shape is striking and useful — but it's an interpretation drawn across two domains, not a scientific finding. <span class="grade g-interp" style="margin-left:.3rem">Interpretation</span></p>
+      <p data-ru="<b style=&quot;color:var(--fg)&quot;>Читай это как синтез, а не как доказательство.</b> Древняя мудрость и современная нейронаука пользуются разными методами и отвечают на разные вопросы. То, что они сходятся в одной практической форме, поразительно и полезно, — но это интерпретация, проведённая через две области, а не научный вывод. <span class=&quot;grade g-interp&quot; style=&quot;margin-left:.3rem&quot;>Интерпретация</span>" data-ru-src="41b49e8179"><b style="color:var(--fg)">Read this as synthesis, not proof.</b> Ancient wisdom and modern neuroscience use different methods and answer different questions. That they converge on the same practical shape is striking and useful — but it's an interpretation drawn across two domains, not a scientific finding. <span class="grade g-interp" style="margin-left:.3rem">Interpretation</span></p>
     </div>
 
     <div class="conv">
       <div class="ccard r">
-        <div class="ccard__top"><h3>Stopping is the prerequisite.</h3></div>
+        <div class="ccard__top"><h3 data-ru="Остановка — обязательное условие." data-ru-src="0f1013d531">Stopping is the prerequisite.</h3></div>
         <div class="ccard__pair">
-          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>No downshift without a hard boundary. NSDR begins by lying down and doing nothing — the recovery can't start until the input stops.</p></div>
-          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p><em>Shabbat</em> means <em>cease</em>. Rest is defined first by its edge — the stopping — before any of its content.</p></div>
+          <div class="ccard__cell"><div data-ru="Нейронаука" data-ru-src="c545a856f1" class="ccard__tag sci">Neuroscience</div><p data-ru="Без жёсткой границы нет переключения вниз. NSDR начинается с того, что ты ложишься и ничего не делаешь: восстановление не может начаться, пока не прекратится входящий поток." data-ru-src="6949f2a320">No downshift without a hard boundary. NSDR begins by lying down and doing nothing — the recovery can't start until the input stops.</p></div>
+          <div class="ccard__cell"><div data-ru="Писание" data-ru-src="9bfc2da1e0" class="ccard__tag scr">Scripture</div><p data-ru="<em>Шаббат</em> значит <em>прекратить</em>. Покой определяется прежде всего своей границей — остановкой — и только потом своим содержанием." data-ru-src="2ec5ef109b"><em>Shabbat</em> means <em>cease</em>. Rest is defined first by its edge — the stopping — before any of its content.</p></div>
         </div>
       </div>
       <div class="ccard r">
-        <div class="ccard__top"><h3>Rest is a state, not an absence.</h3></div>
+        <div class="ccard__top"><h3 data-ru="Покой — это состояние, а не отсутствие." data-ru-src="95033e723d">Rest is a state, not an absence.</h3></div>
         <div class="ccard__pair">
-          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>Real rest is an active parasympathetic shift you induce — a positive physiological state, not merely "off the clock."</p></div>
-          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p><em>Menuchah</em> — quiet waters, settled repose. A place you're led <em>into</em>, with its own texture and peace.</p></div>
+          <div class="ccard__cell"><div data-ru="Нейронаука" data-ru-src="c545a856f1" class="ccard__tag sci">Neuroscience</div><p data-ru="Настоящий отдых — это активное парасимпатическое переключение, которое ты вызываешь сам: положительное физиологическое состояние, а не просто «нерабочее время»." data-ru-src="9e11057577">Real rest is an active parasympathetic shift you induce — a positive physiological state, not merely "off the clock."</p></div>
+          <div class="ccard__cell"><div data-ru="Писание" data-ru-src="9bfc2da1e0" class="ccard__tag scr">Scripture</div><p data-ru="<em>Менуха</em> — тихие воды, устоявшийся покой. Место, <em>в которое</em> тебя приводят, со своей фактурой и своим миром." data-ru-src="b648d787a9"><em>Menuchah</em> — quiet waters, settled repose. A place you're led <em>into</em>, with its own texture and peace.</p></div>
         </div>
       </div>
       <div class="ccard r">
-        <div class="ccard__top"><h3>You can't force it — only release.</h3></div>
+        <div class="ccard__top"><h3 data-ru="Его нельзя заставить — только отпустить." data-ru-src="28c217e96e">You can't force it — only release.</h3></div>
         <div class="ccard__pair">
-          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>Trying harder to sleep drives it away. NSDR works precisely by ceasing to <em>do</em> sleep and letting it arrive.</p></div>
-          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p>"He grants sleep to those he loves." Rest is received, not achieved — a gift that follows the release of control.</p></div>
+          <div class="ccard__cell"><div data-ru="Нейронаука" data-ru-src="c545a856f1" class="ccard__tag sci">Neuroscience</div><p data-ru="Чем сильнее стараешься уснуть, тем дальше уходит сон. NSDR работает именно потому, что ты перестаёшь <em>делать</em> сон и позволяешь ему прийти." data-ru-src="725e11aa89">Trying harder to sleep drives it away. NSDR works precisely by ceasing to <em>do</em> sleep and letting it arrive.</p></div>
+          <div class="ccard__cell"><div data-ru="Писание" data-ru-src="9bfc2da1e0" class="ccard__tag scr">Scripture</div><p data-ru="«Возлюбленному Своему посылает Он сон». Покой получают, а не добиваются: это дар, который приходит вслед за отказом от контроля." data-ru-src="8cd826e5ed">"He grants sleep to those he loves." Rest is received, not achieved — a gift that follows the release of control.</p></div>
         </div>
       </div>
       <div class="ccard r">
-        <div class="ccard__top"><h3>The counterfeit is ancient.</h3></div>
+        <div class="ccard__top"><h3 data-ru="Подделка стара как мир." data-ru-src="b77521e2a8">The counterfeit is ancient.</h3></div>
         <div class="ccard__pair">
-          <div class="ccard__cell"><div class="ccard__tag sci">Neuroscience</div><p>Stimulation dressed as rest: the dopamine spike-and-crash that leaves you more depleted and craving more.</p></div>
-          <div class="ccard__cell"><div class="ccard__tag scr">Scripture</div><p>"Toiling for food to eat" — Pharaoh's quota that never lets up. Restlessness disguised as life.</p></div>
+          <div class="ccard__cell"><div data-ru="Нейронаука" data-ru-src="c545a856f1" class="ccard__tag sci">Neuroscience</div><p data-ru="Стимуляция, переодетая отдыхом: дофаминовый всплеск и обвал, после которых сил ещё меньше, а тяга ещё сильнее." data-ru-src="b320552675">Stimulation dressed as rest: the dopamine spike-and-crash that leaves you more depleted and craving more.</p></div>
+          <div class="ccard__cell"><div data-ru="Писание" data-ru-src="9bfc2da1e0" class="ccard__tag scr">Scripture</div><p data-ru="«Тяжелым трудом добывая себе еду» — норма фараона, которая никогда не ослабевает. Беспокойство, выдающее себя за жизнь." data-ru-src="9f847f716c">"Toiling for food to eat" — Pharaoh's quota that never lets up. Restlessness disguised as life.</p></div>
         </div>
       </div>
     </div>
@@ -1136,45 +1158,45 @@ p,li,dd,figcaption{text-wrap:pretty}
 <section class="movement" id="practice">
   <div class="wrap">
     <div class="movement__head r">
-      <span class="movement__num">09 — The Practice</span>
-      <h2>What to actually do.</h2>
-      <p class="lede">Four moves. Maximum signal.</p>
+      <span data-ru="09 — Практика" data-ru-src="5974b9c0cd" class="movement__num">09 — The Practice</span>
+      <h2 data-ru="Что делать на самом деле." data-ru-src="400485e1d9">What to actually do.</h2>
+      <p data-ru="Четыре шага. Максимум сигнала." data-ru-src="de9191f6cc" class="lede">Four moves. Maximum signal.</p>
     </div>
 
     <div class="practice">
       <div class="todo r">
         <div class="todo__item">
           <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--sleep)" stroke-width="1.7" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5Z"/></svg></div>
-          <div><h3>Protect the night shift</h3><p>Consolidation beats hours. Keep a regular sleep/wake time; cool and dark; defend against fragmentation. Deep sleep can't be rushed — only allowed.</p></div>
+          <div><h3 data-ru="Береги ночную смену" data-ru-src="3e10e6a605">Protect the night shift</h3><p data-ru="Цельность важнее часов. Ложись и вставай в одно и то же время; в спальне прохладно и темно; защищай сон от фрагментации. Глубокий сон нельзя поторопить — ему можно только позволить прийти." data-ru-src="d6fe1ae1f4">Consolidation beats hours. Keep a regular sleep/wake time; cool and dark; defend against fragmentation. Deep sleep can't be rushed — only allowed.</p></div>
         </div>
         <div class="todo__item">
           <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--nsdr)" stroke-width="1.7" stroke-linecap="round"><path d="M2 12s3.5-6 10-6 10 6 10 6M2 12h20"/><circle cx="12" cy="12" r="2.5"/></svg></div>
-          <div><h3>Keep an NSDR in your pocket</h3><p>10–20 min, lying down, eyes closed, exhale-lengthened breathing, a slow body scan. Use it after a bad night, before deep focus, or when you're wired-but-tired. It won't replace sleep; it restores what a broken night didn't.</p></div>
+          <div><h3 data-ru="Держи NSDR в кармане" data-ru-src="36998f0adc">Keep an NSDR in your pocket</h3><p data-ru="10–20 минут лёжа, глаза закрыты, дыхание с удлинённым выдохом, медленное сканирование тела. Пользуйся этим после плохой ночи, перед глубокой концентрацией или когда ты на взводе, но без сил. Сон это не заменит, но восстановит то, чего не дала рваная ночь." data-ru-src="d57c82924e">10–20 min, lying down, eyes closed, exhale-lengthened breathing, a slow body scan. Use it after a bad night, before deep focus, or when you're wired-but-tired. It won't replace sleep; it restores what a broken night didn't.</p></div>
         </div>
         <div class="todo__item">
           <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--counterfeit)" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></div>
-          <div><h3>Refuse the counterfeit</h3><p>Run the one-line test. If it feeds the system instead of quieting it, it isn't rest — no matter how much it feels like a break.</p></div>
+          <div><h3 data-ru="Откажись от подделки" data-ru-src="5d90af1d81">Refuse the counterfeit</h3><p data-ru="Проведи тест в одну строку. Если занятие подпитывает систему, а не успокаивает её, это не отдых — как бы сильно оно ни казалось перерывом." data-ru-src="7dabc5270a">Run the one-line test. If it feeds the system instead of quieting it, it isn't rest — no matter how much it feels like a break.</p></div>
         </div>
         <div class="todo__item">
           <div class="todo__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--scripture)" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-          <div><h3>Build the rhythm</h3><p>Rest isn't a reward you earn once the work is finished. It's a boundary you set so the work has a shape. Stop on purpose — nightly, weekly, deliberately.</p></div>
+          <div><h3 data-ru="Выстрой ритм" data-ru-src="2f1e148241">Build the rhythm</h3><p data-ru="Отдых — это не награда, которую зарабатываешь, когда работа закончена. Это граница, которую ты ставишь, чтобы у работы была форма. Останавливайся намеренно — каждую ночь, каждую неделю, сознательно." data-ru-src="5e5e8a5ff3">Rest isn't a reward you earn once the work is finished. It's a boundary you set so the work has a shape. Stop on purpose — nightly, weekly, deliberately.</p></div>
         </div>
       </div>
 
       <div class="breath r">
         <div class="panel" style="width:100%">
-          <div class="panel__cap"><span class="panel__title">Extended-exhale pacer</span><span class="figtag">4 in · 6 out</span></div>
+          <div class="panel__cap"><span data-ru="Тренажёр долгого выдоха" data-ru-src="76539c57c2" class="panel__title">Extended-exhale pacer</span><span data-ru="4 вдох · 6 выдох" data-ru-src="58e4e52cb0" class="figtag">4 in · 6 out</span></div>
           <div class="breath__stage">
             <div class="breath__ring"></div>
             <div class="breath__halo"></div>
             <div class="breath__core"></div>
           </div>
-          <div class="breath__word" id="breathWord"><b>Breathe with it</b></div>
-          <p class="breath__cap">The long exhale is the lever. Making the out-breath longer than the in-breath tips the nervous system toward rest — the fastest way in.</p>
+          <div class="breath__word" id="breathWord"><b data-ru="Дыши вместе с ним" data-ru-src="0be1c96f86">Breathe with it</b></div>
+          <p data-ru="Рычаг — долгий выдох. Если выдох длиннее вдоха, нервная система смещается к отдыху — это самый быстрый путь внутрь." data-ru-src="715d1ea377" class="breath__cap">The long exhale is the lever. Making the out-breath longer than the in-breath tips the nervous system toward rest — the fastest way in.</p>
           <div style="margin-top:1.1rem;display:flex;justify-content:center">
-            <span class="grade g-strong">Extended-exhale breathing · RCT-backed</span>
+            <span data-ru="Дыхание с удлинённым выдохом · подтверждено РКИ" data-ru-src="3115520e21" class="grade g-strong">Extended-exhale breathing · RCT-backed</span>
           </div>
-          <p class="breath__cap" style="margin-top:.7rem;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--fg-faint)">A 2023 Stanford trial (Balban et&nbsp;al.) found five minutes a day of exhale-extended "cyclic sighing" beat box-breathing <em>and</em> mindfulness for calming mood and slowing the breath.</p>
+          <p data-ru="Стэнфордское исследование 2023 года (Balban et&nbsp;al.) показало: пять минут в день «циклического вздоха» с удлинённым выдохом лучше, чем квадратное дыхание <em>и</em> медитация осознанности, успокаивали настроение и замедляли дыхание." data-ru-src="9d7a83032c" class="breath__cap" style="margin-top:.7rem;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--fg-faint)">A 2023 Stanford trial (Balban et&nbsp;al.) found five minutes a day of exhale-extended "cyclic sighing" beat box-breathing <em>and</em> mindfulness for calming mood and slowing the breath.</p>
         </div>
       </div>
     </div>
@@ -1186,33 +1208,33 @@ p,li,dd,figcaption{text-wrap:pretty}
 <!-- ==================== FOOTER ==================== -->
 <footer>
   <div class="wrap">
-    <p class="signoff">The oldest command and the newest neuroscience say the same thing: <span class="accent">stop, and be restored.</span></p>
+    <p data-ru="Самая древняя заповедь и самая новая нейронаука говорят одно и то же: <span class=&quot;accent&quot;>остановись — и восстановишься.</span>" data-ru-src="d983e6a8f5" class="signoff">The oldest command and the newest neuroscience say the same thing: <span class="accent">stop, and be restored.</span></p>
 
-    <p class="eyebrow">Evidence grades used above</p>
+    <p data-ru="Уровни доказательности на этой странице" data-ru-src="f403e3276e" class="eyebrow">Evidence grades used above</p>
     <div class="legend-grid">
-      <div><i style="background:var(--real)"></i>Strong — RCT / replicated</div>
-      <div><i style="background:var(--scripture)"></i>Moderate — supported</div>
-      <div><i style="background:var(--sleep)"></i>Mechanism — strong in animals</div>
-      <div><i style="background:var(--counterfeit)"></i>Weak — small / single study</div>
-      <div><i style="background:var(--nsdr)"></i>Interpretation — cross-domain</div>
+      <div data-ru="<i style=&quot;background:var(--real)&quot;></i>Сильные — РКИ / воспроизведено" data-ru-src="39607f14f8"><i style="background:var(--real)"></i>Strong — RCT / replicated</div>
+      <div data-ru="<i style=&quot;background:var(--scripture)&quot;></i>Умеренные — есть подтверждение" data-ru-src="bed9096dad"><i style="background:var(--scripture)"></i>Moderate — supported</div>
+      <div data-ru="<i style=&quot;background:var(--sleep)&quot;></i>Механизм — сильно на животных" data-ru-src="60823dbe7c"><i style="background:var(--sleep)"></i>Mechanism — strong in animals</div>
+      <div data-ru="<i style=&quot;background:var(--counterfeit)&quot;></i>Слабые — маленькое / единственное исследование" data-ru-src="e2946cd3e4"><i style="background:var(--counterfeit)"></i>Weak — small / single study</div>
+      <div data-ru="<i style=&quot;background:var(--nsdr)&quot;></i>Интерпретация — на стыке областей" data-ru-src="e29f1b1c92"><i style="background:var(--nsdr)"></i>Interpretation — cross-domain</div>
     </div>
 
-    <p class="eyebrow" style="margin-bottom:1rem">Sources &amp; honest caveats</p>
+    <p data-ru="Источники и честные оговорки" data-ru-src="bde41d654f" class="eyebrow" style="margin-bottom:1rem">Sources &amp; honest caveats</p>
     <div class="sources">
-      <p><b>NSDR / yoga nidra.</b> Term coined by A. Huberman (2022). Most citable evidence is on structured <em>yoga nidra</em>, not branded "NSDR" audio. Ghai et&nbsp;al., <em>Annals of the New York Academy of Sciences</em> (2026): meta-analysis of 73 studies / 5,201 participants — moderate-to-large effects on stress, anxiety and depression, expressly cautioned as likely inflated by low study quality.</p>
-      <p><b>Dopamine +65%.</b> Kjaer et&nbsp;al., <em>Cognitive Brain Research</em> (2002). n&nbsp;=&nbsp;8 experienced practitioners; ¹¹C-raclopride PET; figure is calculated from ~8% reduced receptor binding — not a direct dopamine measurement. Treat magnitude cautiously.</p>
-      <p><b>Attention / mood.</b> Suzuki et&nbsp;al., <em>Behavioral Brain Research</em> (2019): 13-min daily practice improved attention, memory, mood, emotional regulation in non-meditators.</p>
-      <p><b>Glymphatic clearance.</b> Xie et&nbsp;al., <em>Science</em> (2013); Nedergaard lab, <em>Cell</em> (2025) on norepinephrine-driven vasomotion and zolpidem suppressing it; early human evidence reported 2024. <b>Contested:</b> Miao/Franks/Wisden (Imperial, 2024) directly measured dye movement and argued clearance <em>slows</em> in sleep. Strongest in rodents; unsettled in humans.</p>
-      <p><b>Extended-exhale breathing.</b> Balban et&nbsp;al., <em>Cell Reports Medicine</em> (2023): RCT, 108 participants; 5&nbsp;min/day of exhale-extended "cyclic sighing" for 28 days improved mood and lowered respiratory rate more than box breathing or mindfulness meditation.</p>
-      <p><b>Sleep quality vs. quantity.</b> Sleep-architecture &amp; fragmentation literature: fragmentation harms restorative quality more than mild restriction. The "8h/15% vs 6.5h/22% deep sleep" contrast is illustrative from secondary sources; the direction is well-supported.</p>
-      <p><b>Scripture.</b> Genesis 2; Exodus 20; Deuteronomy 5; Numbers 6:24–26; Judges 6:24; Psalms 3–4, 23, 127; Isaiah 26:3; Matthew 11; John 14:27; Hebrews 4. Hebrew: <em>shabbat</em> (cease), <em>menuchah</em> (repose), <em>shalom</em> (wholeness — root <em>sh-l-m</em>, complete/repay/restore). Greek: <em>anapausis</em> (rest), <em>sabbatismos</em> (Sabbath-rest).</p>
-      <p>Scripture quotations are taken from the Holy Bible, New International Version&reg;, NIV&reg;. Copyright &copy; 1973, 1978, 1984, 2011 by <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener">Biblica, Inc.</a> Used by permission. All rights reserved worldwide.</p>
+      <p data-ru="<b>NSDR / йога-нидра.</b> Термин ввёл А. Хуберман (2022). Большая часть цитируемых данных относится к структурированной <em>йога-нидре</em>, а не к фирменным аудиозаписям «NSDR». Ghai et&nbsp;al., <em>Annals of the New York Academy of Sciences</em> (2026): метаанализ 73 исследований / 5&nbsp;201 участника — эффекты от умеренных до сильных для стресса, тревоги и депрессии, с прямой оговоркой, что они, вероятно, завышены из-за низкого качества исследований." data-ru-src="89d4c5a7c0"><b>NSDR / yoga nidra.</b> Term coined by A. Huberman (2022). Most citable evidence is on structured <em>yoga nidra</em>, not branded "NSDR" audio. Ghai et&nbsp;al., <em>Annals of the New York Academy of Sciences</em> (2026): meta-analysis of 73 studies / 5,201 participants — moderate-to-large effects on stress, anxiety and depression, expressly cautioned as likely inflated by low study quality.</p>
+      <p data-ru="<b>Дофамин +65%.</b> Kjaer et&nbsp;al., <em>Cognitive Brain Research</em> (2002). n&nbsp;=&nbsp;8 опытных практиков; ПЭТ с ¹¹C-раклопридом; цифра вычислена из снижения связывания рецепторов примерно на 8% — это не прямое измерение дофамина. К величине эффекта стоит относиться осторожно." data-ru-src="149b37f4d0"><b>Dopamine +65%.</b> Kjaer et&nbsp;al., <em>Cognitive Brain Research</em> (2002). n&nbsp;=&nbsp;8 experienced practitioners; ¹¹C-raclopride PET; figure is calculated from ~8% reduced receptor binding — not a direct dopamine measurement. Treat magnitude cautiously.</p>
+      <p data-ru="<b>Внимание / настроение.</b> Suzuki et&nbsp;al., <em>Behavioral Brain Research</em> (2019): 13-минутная ежедневная практика улучшила внимание, память, настроение и эмоциональную регуляцию у людей, которые раньше не медитировали." data-ru-src="9f4ca3e820"><b>Attention / mood.</b> Suzuki et&nbsp;al., <em>Behavioral Brain Research</em> (2019): 13-min daily practice improved attention, memory, mood, emotional regulation in non-meditators.</p>
+      <p data-ru="<b>Глимфатическая очистка.</b> Xie et&nbsp;al., <em>Science</em> (2013); лаборатория Nedergaard, <em>Cell</em> (2025): вазомоция, которую запускает норадреналин, и её подавление золпидемом; первые данные на людях опубликованы в 2024 году. <b>Спорно:</b> Miao/Franks/Wisden (Imperial, 2024) напрямую измерили движение красителя и пришли к выводу, что во сне очистка <em>замедляется</em>. Сильнее всего данные на грызунах; у людей вопрос не решён." data-ru-src="2a10bf5763"><b>Glymphatic clearance.</b> Xie et&nbsp;al., <em>Science</em> (2013); Nedergaard lab, <em>Cell</em> (2025) on norepinephrine-driven vasomotion and zolpidem suppressing it; early human evidence reported 2024. <b>Contested:</b> Miao/Franks/Wisden (Imperial, 2024) directly measured dye movement and argued clearance <em>slows</em> in sleep. Strongest in rodents; unsettled in humans.</p>
+      <p data-ru="<b>Дыхание с удлинённым выдохом.</b> Balban et&nbsp;al., <em>Cell Reports Medicine</em> (2023): РКИ, 108 участников; 5&nbsp;минут в день «циклического вздоха» с удлинённым выдохом в течение 28 дней улучшали настроение и снижали частоту дыхания сильнее, чем квадратное дыхание или медитация осознанности." data-ru-src="91b9604b07"><b>Extended-exhale breathing.</b> Balban et&nbsp;al., <em>Cell Reports Medicine</em> (2023): RCT, 108 participants; 5&nbsp;min/day of exhale-extended "cyclic sighing" for 28 days improved mood and lowered respiratory rate more than box breathing or mindfulness meditation.</p>
+      <p data-ru="<b>Качество сна и его количество.</b> Литература об архитектуре и фрагментации сна: фрагментация вредит восстановительному качеству сильнее, чем умеренное ограничение сна. Контраст «8 ч / 15% против 6,5 ч / 22% глубокого сна» — иллюстрация из вторичных источников; направление эффекта хорошо подтверждено." data-ru-src="77c7dcbe1f"><b>Sleep quality vs. quantity.</b> Sleep-architecture &amp; fragmentation literature: fragmentation harms restorative quality more than mild restriction. The "8h/15% vs 6.5h/22% deep sleep" contrast is illustrative from secondary sources; the direction is well-supported.</p>
+      <p data-ru="<b>Писание.</b> Быт. 2; Исх. 20; Втор. 5; Чис. 6:24–26; Суд. 6:24; Пс. 3–4, 22, 126; Ис. 26:3; Мф. 11; Ин. 14:27; Евр. 4. Еврейские слова: <em>шаббат</em> (прекратить), <em>менуха</em> (покой), <em>шалом</em> (целостность; корень <em>ш-л-м</em> — полный / возместить / восстановить). Греческие: <em>анапаусис</em> (покой), <em>саббатисмос</em> (субботний покой). Псалмы пронумерованы по русской традиции." data-ru-src="680b23c2d8"><b>Scripture.</b> Genesis 2; Exodus 20; Deuteronomy 5; Numbers 6:24–26; Judges 6:24; Psalms 3–4, 23, 127; Isaiah 26:3; Matthew 11; John 14:27; Hebrews 4. Hebrew: <em>shabbat</em> (cease), <em>menuchah</em> (repose), <em>shalom</em> (wholeness — root <em>sh-l-m</em>, complete/repay/restore). Greek: <em>anapausis</em> (rest), <em>sabbatismos</em> (Sabbath-rest).</p>
+      <p data-ru="Цитаты из Писания приводятся по Новому русскому переводу (НРП®) © <a href=&quot;https://www.biblica.com/permissions/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Biblica, Inc.</a>® Используется по разрешению. Все права защищены." data-ru-src="885a39f121">Scripture quotations are taken from the Holy Bible, New International Version&reg;, NIV&reg;. Copyright &copy; 1973, 1978, 1984, 2011 by <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener">Biblica, Inc.</a> Used by permission. All rights reserved worldwide.</p>
     </div>
 
-    <p class="disclaimer">A teaching artifact, not medical advice. NSDR is a complement to sleep, never a replacement for it. Persistent insomnia, non-restorative sleep, or daytime exhaustion warrant a conversation with a clinician — some causes (sleep apnea, among others) need diagnosis, not just better habits.</p>
+    <p data-ru="Это учебный материал, а не медицинская рекомендация. NSDR дополняет сон и никогда его не заменяет. Стойкая бессонница, сон, который не восстанавливает, или дневное истощение — повод поговорить с врачом: некоторые причины (например, апноэ сна) требуют диагноза, а не просто лучших привычек." data-ru-src="e8df9e2792" class="disclaimer">A teaching artifact, not medical advice. NSDR is a complement to sleep, never a replacement for it. Persistent insomnia, non-restorative sleep, or daytime exhaustion warrant a conversation with a clinician — some causes (sleep apnea, among others) need diagnosis, not just better habits.</p>
     <div class="foot-row">
-      <a class="home" href="https://esmrsky.github.io/">← All projects</a>
-      <div class="foot-pick"><span>Verse pop-ups read in</span><span id="pickerHost"></span></div>
+      <a class="home" href="https://esmrsky.github.io/" data-ru="← Все проекты" data-ru-src="027351de56" data-ru-href="/ru/">← All projects</a>
+      <div class="foot-pick"><span data-ru="Стихи во всплывающих окнах:" data-ru-src="6dbba5ad75">Verse pop-ups read in</span><span id="pickerHost"></span></div>
     </div>
   </div>
 </footer>
@@ -1223,6 +1245,12 @@ p,li,dd,figcaption{text-wrap:pretty}
 (function () {
   "use strict";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Strings this script writes itself. The Russian page (/anatomy-of-rest/ru/) is generated
+     with data-lang="ru"; everything else on it is baked in by tools/build-ru.py. */
+  var RU = document.documentElement.getAttribute("data-lang") === "ru";
+  var TR = { "Sections": "Разделы", "Inhale": "Вдох", "Hold": "Пауза", "Exhale — slow": "Выдох — медленно" };
+  function TXT(s) { return (RU && TR[s]) || s; }
 
   // CSS handles reduced motion for CSS animations; SMIL (animateMotion / animateTransform)
   // needs an explicit pause so the ambient dots don't keep moving.
@@ -1283,7 +1311,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     if (!secs.length) return;
     var nav = document.createElement("nav");
     nav.className = "railnav";
-    nav.setAttribute("aria-label", "Sections");
+    nav.setAttribute("aria-label", TXT("Sections"));
     var map = [];
     secs.forEach(function (s) {
       var num = s.querySelector(".movement__num");
@@ -1410,7 +1438,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     setInterval(function () {
       var m = (performance.now() % CYCLE) / CYCLE; // 0..1
       var label = m < 0.36 ? "Inhale" : (m < 0.5 ? "Hold" : "Exhale — slow");
-      if (label !== phase) { bw.innerHTML = "<b>" + label + "</b>"; phase = label; }
+      if (label !== phase) { bw.innerHTML = "<b>" + TXT(label) + "</b>"; phase = label; }
     }, 250);
   }
 })();
