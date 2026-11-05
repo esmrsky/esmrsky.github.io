@@ -3,14 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Feels Like Learning</title>
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/feels-like-learning/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/feels-like-learning/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/feels-like-learning/">
+<!-- lang-alt:end -->
+<title data-ru="Похоже на учёбу" data-ru-src="b55320895e">Feels Like Learning</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230E1222%22/%3E%3Cg transform=%22translate(8 8) scale(2)%22 fill=%22none%22 stroke=%22%234F8BF0%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 4c1 5 2.5 8 5 9V4c1.5 3.5 3 5.5 6 6V4c2 2.5 4 3.5 7 3.5%22/%3E%3Cpath d=%22M3 20h18%22/%3E%3C/g%3E%3C/svg%3E">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Rereading and having AI explain things feel like learning. Pulling it back out of your own head is what makes it stick. Run the classic memory experiment on yourself, schedule reviews on a forgetting curve, and give AI the ten jobs that make you do the work.">
+<meta name="description" content="Rereading and having AI explain things feel like learning. Pulling it back out of your own head is what makes it stick. Run the classic memory experiment on yourself, schedule reviews on a forgetting curve, and give AI the ten jobs that make you do the work." data-ru-content="Перечитывание и объяснения ИИ ощущаются как учёба. А закрепляет знание другое: достать его обратно из собственной головы. Поставьте на себе классический эксперимент с памятью, распланируйте повторения по кривой забывания и дайте ИИ десять задач, которые заставляют работать вас.">
 <link rel="canonical" href="https://esmrsky.github.io/feels-like-learning/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Feels Like Learning">
-<meta property="og:description" content="Why rereading wins at five minutes and loses at a week, a memory experiment you run on yourself, and ten jobs to give an AI so it helps you learn instead of doing the learning for you.">
+<meta property="og:title" content="Feels Like Learning" data-ru-content="Похоже на учёбу">
+<meta property="og:description" content="Why rereading wins at five minutes and loses at a week, a memory experiment you run on yourself, and ten jobs to give an AI so it helps you learn instead of doing the learning for you." data-ru-content="Почему перечитывание выигрывает через пять минут и проигрывает через неделю, эксперимент с памятью, который вы ставите на себе, и десять задач для ИИ, чтобы он помогал вам учиться, а не учился за вас.">
 <meta property="og:url" content="https://esmrsky.github.io/feels-like-learning/">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#F6F4EE" media="(prefers-color-scheme: light)">
@@ -330,6 +335,9 @@ table.data td.num,table.data th.num{text-align:right;font-variant-numeric:tabula
 .tile{padding:.7rem .8rem;border-radius:12px;background:var(--paper-2);}
 .tile .lbl{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--ink-2);line-height:1.25;}
 .tile .v{font-family:var(--sans);font-weight:700;font-size:1.6rem;line-height:1.1;margin-top:.25rem;}
+/* Russian: «повторений» is wider than a phone tile, so let the columns shrink and the label hyphenate */
+:lang(ru) .tiles{grid-template-columns:repeat(3,minmax(0,1fr));}
+:lang(ru) .tile .lbl{hyphens:auto;}
 #curve{touch-action:manipulation;cursor:crosshair;}
 
 /* ---------- 05 roles ---------- */
@@ -443,6 +451,14 @@ p,li,dd,figcaption{text-wrap:pretty}
 /* 44px touch floor; desktop proportions untouched */
 @media (pointer:coarse){nav.toc a{min-height:44px;display:flex;align-items:center}}
 </style>
+<style id="lang-switch-css">
+/* EN · RU switch: first item on the right of the top bar, in the bar's mono label style */
+.topbar .lang-switch{display:inline-flex;align-items:center;gap:.15rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em}
+.lang-opt{display:inline-flex;align-items:center;justify-content:center;padding:.3rem .25rem;color:var(--ink-3);text-decoration:none;transition:color .2s ease}
+.lang-opt:hover,.lang-opt[aria-current="page"]{color:var(--ink)}
+.lang-sep{color:var(--ink-3)}
+@media (pointer:coarse){.lang-opt{min-height:44px;min-width:44px}}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -453,21 +469,22 @@ p,li,dd,figcaption{text-wrap:pretty}
 <div class="topbar">
   <a class="home" href="/">&larr; esmrsky</a>
   <div class="right">
-    <button class="tog learn" id="learnToggle" type="button" aria-pressed="true" title="Learn mode: checkpoints that ask before they tell"><svg aria-hidden="true"><use href="#i-cap"/></svg><span>Learn mode <span class="state">on</span></span></button>
-    <button class="tog" id="themeToggle" type="button">Theme</button>
+    <div class="lang-switch" role="navigation" aria-label="Language" data-ru-aria-label="Язык"><a class="lang-opt" href="/feels-like-learning/" data-ru-href="/feels-like-learning/" lang="en" hreflang="en" aria-current="page" data-ru-aria-current="false">EN</a><span class="lang-sep" aria-hidden="true">·</span><a class="lang-opt" href="/feels-like-learning/ru/" data-ru-href="/feels-like-learning/ru/" lang="ru" hreflang="ru" data-ru-aria-current="page">RU</a></div>
+    <button class="tog learn" id="learnToggle" type="button" aria-pressed="true" title="Learn mode: checkpoints that ask before they tell" data-ru-title="Режим учёбы: контрольные вопросы, которые спрашивают, прежде чем рассказать"><svg aria-hidden="true"><use href="#i-cap"/></svg><span data-ru="Режим учёбы <span class=&quot;state&quot;>вкл.</span>" data-ru-src="50182e846b">Learn mode <span class="state">on</span></span></button>
+    <button class="tog" id="themeToggle" type="button" data-ru="Тема" data-ru-src="efb52e7172">Theme</button>
   </div>
 </div>
 
-<div class="banner" id="readyBanner" hidden>
+<div class="banner" id="readyBanner" hidden data-ru="<span><b>Ваш тест по словам готов.</b> <span id=&quot;readyAgo&quot;></span></span> <a href=&quot;#try&quot;>Пройти &rarr;</a>" data-ru-src="bc043ab911">
   <span><b>Your word test is ready.</b> <span id="readyAgo"></span></span>
   <a href="#try">Take it &rarr;</a>
 </div>
 
 <header class="masthead">
-  <div class="eyebrow">Field guide · memory · AI · practice</div>
-  <h1><mark>Feels</mark> Like Learning</h1>
-  <p class="standfirst">Rereading, rewatching and having AI explain it again all feel like learning. Pulling it back out of your own head is what makes it stick. This page lets you test that on yourself, then shows how to make AI do the second thing instead of the first.</p>
-  <div class="legend-key" aria-label="Color key used on this page">
+  <div class="eyebrow" data-ru="Полевой гайд · память · ИИ · практика" data-ru-src="47845fc05a">Field guide · memory · AI · practice</div>
+  <h1 data-ru="<mark>Похоже</mark> на учёбу" data-ru-src="25ad8952b7"><mark>Feels</mark> Like Learning</h1>
+  <p class="standfirst" data-ru="Перечитывать, пересматривать и просить ИИ объяснить ещё раз — всё это ощущается как учёба. А закрепляет знание другое: достать его обратно из собственной головы. Эта страница даёт проверить это на себе, а потом показывает, как заставить ИИ делать второе, а не первое." data-ru-src="6ae2f36c03">Rereading, rewatching and having AI explain it again all feel like learning. Pulling it back out of your own head is what makes it stick. This page lets you test that on yourself, then shows how to make AI do the second thing instead of the first.</p>
+  <div class="legend-key" aria-label="Color key used on this page" data-ru-aria-label="Цветовой ключ этой страницы" data-ru="<span><i class=&quot;sw c&quot;></i>Оранжевый: похоже на учёбу</span> <span><i class=&quot;sw p&quot;></i>Синий: это и есть учёба</span>" data-ru-src="43937c96f7">
     <span><i class="sw c"></i>Orange: feels like learning</span>
     <span><i class="sw p"></i>Blue: is learning</span>
   </div>
@@ -475,12 +492,12 @@ p,li,dd,figcaption{text-wrap:pretty}
 
 <div class="learn-note" role="note">
   <svg aria-hidden="true"><use href="#i-cap"/></svg>
-  <div><span class="on-text"><b>Learn mode is on.</b> Checkpoints will ask you something before you scroll on. Answer first, even just in your head, then reveal. Turn it off at the top if you only want to read.</span><span class="off-text"><b>Learn mode is off.</b> The checkpoints are hidden. Turn it back on at the top to be asked as you go.</span></div>
+  <div data-ru="<span class=&quot;on-text&quot;><b>Режим учёбы включён.</b> Контрольные вопросы попросят вас ответить, прежде чем листать дальше. Сначала ответьте, хотя бы мысленно, потом откройте ответ. Выключите режим наверху, если хотите просто читать.</span><span class=&quot;off-text&quot;><b>Режим учёбы выключен.</b> Контрольные вопросы скрыты. Включите его наверху, чтобы вопросы появлялись по ходу чтения.</span>" data-ru-src="57381e8184"><span class="on-text"><b>Learn mode is on.</b> Checkpoints will ask you something before you scroll on. Answer first, even just in your head, then reveal. Turn it off at the top if you only want to read.</span><span class="off-text"><b>Learn mode is off.</b> The checkpoints are hidden. Turn it back on at the top to be asked as you go.</span></div>
 </div>
 
-<noscript><p class="panel">The experiments on this page need JavaScript. The text reads fine without it.</p></noscript>
+<noscript><p class="panel" data-ru="Для экспериментов на этой странице нужен JavaScript. Текст читается и без него." data-ru-src="2a1d20a494">The experiments on this page need JavaScript. The text reads fine without it.</p></noscript>
 
-<nav class="toc" aria-label="Sections">
+<nav class="toc" aria-label="Sections" data-ru-aria-label="Разделы" data-ru="<a href=&quot;#predict&quot;><b>01</b> Сначала угадайте</a> <a href=&quot;#try&quot;><b>02</b> Проверьте себя</a> <a href=&quot;#why&quot;><b>03</b> Почему лёгкое обманывает</a> <a href=&quot;#spacing&quot;><b>04</b> Когда повторять</a> <a href=&quot;#roles&quot;><b>05</b> Десять задач для ИИ</a> <a href=&quot;#catch&quot;><b>06</b> Подвох</a> <a href=&quot;#tools&quot;><b>07</b> Инструменты</a> <a href=&quot;#claims&quot;><b>08</b> Проверка видео</a> <a href=&quot;#moves&quot;><b>09</b> Ещё приёмы</a> <a href=&quot;#close&quot;><b>10</b> Закройте и объясните</a>" data-ru-src="72727c53d8">
   <a href="#predict"><b>01</b> Make a guess</a>
   <a href="#try"><b>02</b> Test yourself</a>
   <a href="#why"><b>03</b> Why easy misleads</a>
@@ -495,388 +512,391 @@ p,li,dd,figcaption{text-wrap:pretty}
 
 <!-- 01 ============================================================ -->
 <section class="sec" id="predict">
-  <span class="sec-num">01 · Predict</span>
-  <h2>Make a guess first</h2>
-  <p class="lede">Guessing before you're told is itself a study technique, so start there. Two groups of students get the same short science passage and the same total time with it.</p>
+  <span class="sec-num" data-ru="01 · Прогноз" data-ru-src="21d126f7b2">01 · Predict</span>
+  <h2 data-ru="Сначала угадайте" data-ru-src="881419722c">Make a guess first</h2>
+  <p class="lede" data-ru="Догадка до того, как вам скажут, — сама по себе приём учёбы, так что начнём с неё. Две группы студентов получают один и тот же короткий научный текст и одинаковое общее время на него." data-ru-src="73fabfd131">Guessing before you're told is itself a study technique, so start there. Two groups of students get the same short science passage and the same total time with it.</p>
 
   <div class="panel" id="predictPanel">
-    <p><b>Group A</b> reads the passage four times. <b>Group B</b> reads it once, then three times writes down everything they can remember, with no feedback.</p>
+    <p data-ru="<b>Группа A</b> читает текст четыре раза. <b>Группа B</b> читает его один раз, а потом трижды записывает всё, что может вспомнить, без обратной связи." data-ru-src="9f18a38ddf"><b>Group A</b> reads the passage four times. <b>Group B</b> reads it once, then three times writes down everything they can remember, with no feedback.</p>
     <div class="q-block">
-      <p class="q">Five minutes later, which group remembers more?</p>
-      <div class="chips" role="radiogroup" aria-label="Five minutes later" data-q="p5">
-        <button class="chip" type="button" role="radio" aria-checked="false" data-v="re">Group A (reread)</button>
-        <button class="chip" type="button" role="radio" aria-checked="false" data-v="rc">Group B (recalled)</button>
-        <button class="chip" type="button" role="radio" aria-checked="false" data-v="eq">About the same</button>
+      <p class="q" data-ru="Через пять минут: какая группа помнит больше?" data-ru-src="790894d95d">Five minutes later, which group remembers more?</p>
+      <div class="chips" role="radiogroup" aria-label="Five minutes later" data-q="p5" data-ru-aria-label="Через пять минут">
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="re" data-ru="Группа A (перечитывала)" data-ru-src="6a90ca6ec2">Group A (reread)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="rc" data-ru="Группа B (вспоминала)" data-ru-src="4f5af0ec41">Group B (recalled)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="eq" data-ru="Примерно одинаково" data-ru-src="e136a08e64">About the same</button>
       </div>
     </div>
     <div class="q-block">
-      <p class="q">One week later?</p>
-      <div class="chips" role="radiogroup" aria-label="One week later" data-q="p7">
-        <button class="chip" type="button" role="radio" aria-checked="false" data-v="re">Group A (reread)</button>
-        <button class="chip" type="button" role="radio" aria-checked="false" data-v="rc">Group B (recalled)</button>
-        <button class="chip" type="button" role="radio" aria-checked="false" data-v="eq">About the same</button>
+      <p class="q" data-ru="А через неделю?" data-ru-src="33ef5fde53">One week later?</p>
+      <div class="chips" role="radiogroup" aria-label="One week later" data-q="p7" data-ru-aria-label="Через неделю">
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="re" data-ru="Группа A (перечитывала)" data-ru-src="6a90ca6ec2">Group A (reread)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="rc" data-ru="Группа B (вспоминала)" data-ru-src="4f5af0ec41">Group B (recalled)</button>
+        <button class="chip" type="button" role="radio" aria-checked="false" data-v="eq" data-ru="Примерно одинаково" data-ru-src="e136a08e64">About the same</button>
       </div>
     </div>
-    <div class="btn-row"><button class="btn" id="revealSlope" type="button">Show me the study</button></div>
+    <div class="btn-row"><button class="btn" id="revealSlope" type="button" data-ru="Показать исследование" data-ru-src="6670f781c4">Show me the study</button></div>
   </div>
 
   <div class="panel" id="slopePanel" hidden>
-    <p class="kicker">Share of the passage recalled</p>
-    <div class="chart-legend" aria-hidden="true">
+    <p class="kicker" data-ru="Доля текста, которую вспомнили" data-ru-src="1c910ba76a">Share of the passage recalled</p>
+    <div class="chart-legend" aria-hidden="true" data-ru="<span><i class=&quot;ln&quot; style=&quot;background:var(--consume)&quot;></i>Чтение 4×</span> <span><i class=&quot;ln&quot; style=&quot;background:var(--base)&quot;></i>Чтение 3×, припоминание 1×</span> <span><i class=&quot;ln&quot; style=&quot;background:var(--produce)&quot;></i>Чтение 1×, припоминание 3×</span>" data-ru-src="5b28795a12">
       <span><i class="ln" style="background:var(--consume)"></i>Read 4×</span>
       <span><i class="ln" style="background:var(--base)"></i>Read 3×, recall 1×</span>
       <span><i class="ln" style="background:var(--produce)"></i>Read 1×, recall 3×</span>
     </div>
-    <div class="chart" id="slope" role="img" aria-label="Slope chart. After five minutes: read four times 83 percent, read three times and recall once 78 percent, read once and recall three times 71 percent. After one week: 40, 56 and 61 percent."></div>
+    <div class="chart" id="slope" role="img" aria-label="Slope chart. After five minutes: read four times 83 percent, read three times and recall once 78 percent, read once and recall three times 71 percent. After one week: 40, 56 and 61 percent." data-ru-aria-label="Наклонный график. Через пять минут: чтение четыре раза — 83 процента, чтение три раза и одно припоминание — 78 процентов, одно чтение и три припоминания — 71 процент. Через неделю: 40, 56 и 61 процент."></div>
     <div class="verdicts" id="slopeVerdicts"></div>
-    <p class="source-line">Roediger &amp; Karpicke (2006), <i>Psychological Science</i>, Experiment 2: 180 college students, 30 per group, short science passages, recall written from memory without feedback. <button class="linkbtn" type="button" data-table-toggle="slopeTable" aria-expanded="false">Show as a table</button></p>
+    <p class="source-line" data-ru="Roediger &amp; Karpicke (2006), <i>Psychological Science</i>, эксперимент 2: 180 студентов колледжа, по 30 в группе, короткие научные тексты, воспоминания записывались по памяти без обратной связи. <button class=&quot;linkbtn&quot; type=&quot;button&quot; data-table-toggle=&quot;slopeTable&quot; aria-expanded=&quot;false&quot;>Показать таблицей</button>" data-ru-src="e257e46167">Roediger &amp; Karpicke (2006), <i>Psychological Science</i>, Experiment 2: 180 college students, 30 per group, short science passages, recall written from memory without feedback. <button class="linkbtn" type="button" data-table-toggle="slopeTable" aria-expanded="false" data-ru="Показать таблицей">Show as a table</button></p>
     <div class="table-wrap" id="slopeTable" hidden>
       <table class="data">
-        <thead><tr><th>Condition</th><th class="num">After 5 minutes</th><th class="num">After 1 week</th><th class="num">Lost</th></tr></thead>
+        <thead><tr><th data-ru="Условие" data-ru-src="39b36d38d6">Condition</th><th class="num" data-ru="Через 5 минут" data-ru-src="2584b3eb33">After 5 minutes</th><th class="num" data-ru="Через неделю" data-ru-src="76aec8f414">After 1 week</th><th class="num" data-ru="Потеряно" data-ru-src="51e1357de8">Lost</th></tr></thead>
         <tbody>
-          <tr><td>Read 4×</td><td class="num">83%</td><td class="num">40%</td><td class="num">−43 pts</td></tr>
-          <tr><td>Read 3×, recall 1×</td><td class="num">78%</td><td class="num">56%</td><td class="num">−22 pts</td></tr>
-          <tr><td>Read 1×, recall 3×</td><td class="num">71%</td><td class="num">61%</td><td class="num">−10 pts</td></tr>
+          <tr><td data-ru="Чтение 4×" data-ru-src="4fc4eaa97b">Read 4×</td><td class="num">83%</td><td class="num">40%</td><td class="num" data-ru="−43 п." data-ru-src="5cb17c5697">−43 pts</td></tr>
+          <tr><td data-ru="Чтение 3×, припоминание 1×" data-ru-src="b608b8169b">Read 3×, recall 1×</td><td class="num">78%</td><td class="num">56%</td><td class="num" data-ru="−22 п." data-ru-src="544b867c44">−22 pts</td></tr>
+          <tr><td data-ru="Чтение 1×, припоминание 3×" data-ru-src="c767d6756a">Read 1×, recall 3×</td><td class="num">71%</td><td class="num">61%</td><td class="num" data-ru="−10 п." data-ru-src="26ff591c0f">−10 pts</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
   <div class="prose" id="slopeAfter" hidden>
-    <p>Rereading wins at five minutes. A week later it has lost about half of what it had, while the recall group lost about a seventh. The lines cross. That crossing is the whole problem: the moment you check yourself is usually the moment rereading looks best.</p>
-    <p>There's a second result in the same study. Asked how much they'd remember in a week, the rereaders rated their chances highest (4.8 on a 1–7 scale, against 4.0 for the recall group). They had been through the passage about fourteen times; the recall group, about three. All that reading felt like knowing it.</p>
+    <p data-ru="Через пять минут выигрывает перечитывание. Через неделю оно теряет примерно половину того, что было, а группа припоминания — примерно седьмую часть. Линии пересекаются. В этом пересечении вся проблема: момент, когда вы себя проверяете, обычно и есть момент, когда перечитывание выглядит лучше всего." data-ru-src="6a0c55644c">Rereading wins at five minutes. A week later it has lost about half of what it had, while the recall group lost about a seventh. The lines cross. That crossing is the whole problem: the moment you check yourself is usually the moment rereading looks best.</p>
+    <p data-ru="В том же исследовании есть и второй результат. Когда участников спросили, сколько они вспомнят через неделю, выше всех свои шансы оценили перечитывавшие (4,8 по шкале от 1 до 7 против 4,0 у группы припоминания). Они прошли текст примерно четырнадцать раз, группа припоминания — около трёх. Всё это чтение ощущалось как знание." data-ru-src="8ac8d9c616">There's a second result in the same study. Asked how much they'd remember in a week, the rereaders rated their chances highest (4.8 on a 1–7 scale, against 4.0 for the recall group). They had been through the passage about fourteen times; the recall group, about three. All that reading felt like knowing it.</p>
   </div>
 </section>
 
 <!-- 02 ============================================================ -->
 <section class="sec" id="try">
-  <span class="sec-num">02 · Test yourself</span>
-  <h2>Run the experiment on yourself</h2>
-  <p class="lede">The same design researchers use, shrunk to twelve Swahili words. You'll see each word once. Then you'll reread half of them and try to recall the other half. Then the page tests you, ideally tomorrow.</p>
+  <span class="sec-num" data-ru="02 · Проверьте себя" data-ru-src="ad5b0f2b93">02 · Test yourself</span>
+  <h2 data-ru="Поставьте эксперимент на себе" data-ru-src="2422f6a0ba">Run the experiment on yourself</h2>
+  <p class="lede" data-ru="Та же схема, что у исследователей, только сжатая до двенадцати слов на суахили. Каждое слово вы увидите один раз. Потом половину перечитаете, а другую половину попробуете вспомнить. Потом страница вас проверит, лучше всего завтра." data-ru-src="475905ae21">The same design researchers use, shrunk to twelve Swahili words. You'll see each word once. Then you'll reread half of them and try to recall the other half. Then the page tests you, ideally tomorrow.</p>
   <div class="panel" id="exp" aria-live="polite"></div>
-  <p class="small muted prose">Your words and answers stay in this browser. Nothing is sent anywhere. With six words in each group, one lucky guess can swing your result. The research effect comes from many people and many items, so treat yours as a demonstration, not a measurement.</p>
+  <p class="small muted prose" data-ru="Ваши слова и ответы остаются в этом браузере. Никуда ничего не отправляется. Когда в каждой группе по шесть слов, одна удачная догадка может перевернуть результат. Эффект в исследованиях получен на многих людях и многих словах, так что считайте свой результат демонстрацией, а не измерением." data-ru-src="e28f5f31f7">Your words and answers stay in this browser. Nothing is sent anywhere. With six words in each group, one lucky guess can swing your result. The research effect comes from many people and many items, so treat yours as a demonstration, not a measurement.</p>
 </section>
 
 <!-- 03 ============================================================ -->
 <section class="sec" id="why">
-  <span class="sec-num">03 · Why easy misleads</span>
-  <h2>Why the easy way feels better</h2>
+  <span class="sec-num" data-ru="03 · Почему лёгкое обманывает" data-ru-src="4f1bff593d">03 · Why easy misleads</span>
+  <h2 data-ru="Почему лёгкий путь кажется лучше" data-ru-src="cd05fe54bf">Why the easy way feels better</h2>
   <div class="prose">
-    <p>Reading something the second time is smooth. It's familiar, so you process it faster, and that speed registers as "I know this." Researchers call it a fluency illusion: you're measuring how easy the page is to read, not whether you could produce it without the page.</p>
-    <p>The illusion is easy to trigger. In one study, people shown words in a large font predicted they'd remember them better than words in a small font. Font size made no difference to what they actually remembered. Anything that makes the material easier to take in feels like learning.</p>
-    <p>Recall is the opposite. It's slow, you get things wrong, and it feels like failing. But digging something out of memory strengthens the route back to it. Recall doesn't just read a memory out; it changes the memory. That is the video's central claim, and it's right.</p>
-    <p>One correction to the strong version: rereading isn't useless. It helps a little; it just does much less than recall for the same time.</p>
+    <p data-ru="Второй раз читать гладко. Текст знакомый, вы обрабатываете его быстрее, и эта скорость воспринимается как «я это знаю». Исследователи называют это иллюзией беглости: вы измеряете, насколько легко читается страница, а не то, сможете ли вы воспроизвести её без страницы." data-ru-src="9b16aeb07a">Reading something the second time is smooth. It's familiar, so you process it faster, and that speed registers as "I know this." Researchers call it a fluency illusion: you're measuring how easy the page is to read, not whether you could produce it without the page.</p>
+    <p data-ru="Эту иллюзию легко вызвать. В одном исследовании люди, которым показывали слова крупным шрифтом, предсказывали, что запомнят их лучше, чем слова мелким шрифтом. На то, что они на самом деле запомнили, размер шрифта не повлиял никак. Всё, что облегчает восприятие материала, ощущается как учёба." data-ru-src="2f672d67af">The illusion is easy to trigger. In one study, people shown words in a large font predicted they'd remember them better than words in a small font. Font size made no difference to what they actually remembered. Anything that makes the material easier to take in feels like learning.</p>
+    <p data-ru="Припоминание — противоположность. Оно медленное, вы ошибаетесь, и ощущается это как провал. Но когда вы выкапываете что-то из памяти, путь обратно к этому укрепляется. Припоминание не просто считывает воспоминание, оно его меняет. Это главный тезис видео, и он верен." data-ru-src="c7332eb398">Recall is the opposite. It's slow, you get things wrong, and it feels like failing. But digging something out of memory strengthens the route back to it. Recall doesn't just read a memory out; it changes the memory. That is the video's central claim, and it's right.</p>
+    <p data-ru="Одна поправка к сильной версии: перечитывание не бесполезно. Оно немного помогает, просто за то же время даёт гораздо меньше, чем припоминание." data-ru-src="ad087b8bc3">One correction to the strong version: rereading isn't useless. It helps a little; it just does much less than recall for the same time.</p>
   </div>
   <div class="callout">
-    <p><b>Rule of thumb:</b> if it feels easy, you're probably taking in. If it feels a bit too hard, you're probably learning. Not every difficulty helps (a badly written textbook is just hard). The useful kind is having to produce the answer yourself.</p>
+    <p data-ru="<b>Простое правило:</b> если легко, вы, скорее всего, потребляете. Если чуть слишком трудно, вы, скорее всего, учитесь. Не всякая трудность полезна (плохо написанный учебник просто трудный). Полезная трудность — когда ответ приходится производить самому." data-ru-src="5a96ceff56"><b>Rule of thumb:</b> if it feels easy, you're probably taking in. If it feels a bit too hard, you're probably learning. Not every difficulty helps (a badly written textbook is just hard). The useful kind is having to produce the answer yourself.</p>
   </div>
 
   <div class="panel">
-    <h3>Sort ten study habits</h3>
-    <p class="muted small">For each one: does it mainly build memory that lasts, or does it mainly feel productive? Then check against the research.</p>
+    <h3 data-ru="Разложите десять учебных привычек" data-ru-src="3f1959f173">Sort ten study habits</h3>
+    <p class="muted small" data-ru="Для каждой: она в основном строит прочную память или в основном кажется продуктивной? Потом сверьтесь с исследованиями." data-ru-src="6dcbc4bde4">For each one: does it mainly build memory that lasts, or does it mainly feel productive? Then check against the research.</p>
     <ul class="sort-list" id="sorter"></ul>
-    <div class="btn-row"><button class="btn" id="sortCheck" type="button">Check my sort</button><span class="small muted" id="sortScore" aria-live="polite"></span></div>
-    <p class="source-line">Ratings from Dunlosky et al. (2013), a review of ten common techniques. Items marked "not rated" weren't in that review; their verdict is this page's reading of the same evidence.</p>
+    <div class="btn-row"><button class="btn" id="sortCheck" type="button" data-ru="Проверить" data-ru-src="58e43f4f49">Check my sort</button><span class="small muted" id="sortScore" aria-live="polite"></span></div>
+    <p class="source-line" data-ru="Оценки из Dunlosky et al. (2013), обзора десяти распространённых техник. Пунктов с пометкой «без оценки» в этом обзоре не было; вердикт по ним — прочтение тех же данных этой страницей." data-ru-src="b8357b06fc">Ratings from Dunlosky et al. (2013), a review of ten common techniques. Items marked "not rated" weren't in that review; their verdict is this page's reading of the same evidence.</p>
   </div>
 
   <aside class="checkpoint" data-cp>
     <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
-    <p class="cp-q">In the study in section 01, why does rereading win at five minutes but lose at a week?</p>
-    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
-    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
-    <div class="cp-ans" hidden><p>At five minutes you're still running on familiarity, and rereading tops that up best. After a week, what survives is what you practiced pulling out of memory, and the rereaders never practiced that.</p></div>
+    <p class="cp-q" data-ru="Почему в исследовании из раздела 01 перечитывание выигрывает через пять минут, но проигрывает через неделю?" data-ru-src="9111f03be9">In the study in section 01, why does rereading win at five minutes but lose at a week?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts." data-ru-placeholder="Ваш ответ. Сказать его про себя тоже считается." data-ru-aria-label="Ваш ответ"></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal data-ru="Я ответил(а). Покажите." data-ru-src="f9238e6bb7">I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p data-ru="Через пять минут вы ещё держитесь на знакомости, а перечитывание подпитывает её лучше всего. Через неделю остаётся то, что вы тренировались доставать из памяти, а перечитывавшие этого не тренировали." data-ru-src="306d6c82c3">At five minutes you're still running on familiarity, and rereading tops that up best. After a week, what survives is what you practiced pulling out of memory, and the rereaders never practiced that.</p></div>
   </aside>
 </section>
 
 <!-- 04 ============================================================ -->
 <section class="sec" id="spacing">
-  <span class="sec-num">04 · When to review</span>
-  <h2>When you review matters as much as whether</h2>
+  <span class="sec-num" data-ru="04 · Когда повторять" data-ru-src="e160722ac1">04 · When to review</span>
+  <h2 data-ru="Когда повторять — так же важно, как повторять ли вообще" data-ru-src="dbce797947">When you review matters as much as whether</h2>
   <div class="prose">
-    <p>Memory fades fast at first, then more slowly. Hermann Ebbinghaus measured this on himself in the 1880s, timing how long it took to relearn lists of nonsense syllables, and a 2015 replication (again one researcher, on himself) got nearly the same curve. Each successful recall makes the next fade slower, and a recall that takes some effort buys more than an effortless one. So the same four reviews do very different things depending on when you do them.</p>
+    <p data-ru="Память сначала угасает быстро, потом медленнее. Герман Эббингауз измерил это на себе в 1880-х, засекая, сколько времени уходит на то, чтобы заново выучить списки бессмысленных слогов, а повторение 2015 года (снова один исследователь, на себе) дало почти ту же кривую. Каждое удачное припоминание замедляет следующее угасание, а припоминание, которое требует усилия, даёт больше, чем лёгкое. Поэтому одни и те же четыре повторения работают совсем по-разному в зависимости от того, когда их делать." data-ru-src="364907a9e7">Memory fades fast at first, then more slowly. Hermann Ebbinghaus measured this on himself in the 1880s, timing how long it took to relearn lists of nonsense syllables, and a 2015 replication (again one researcher, on himself) got nearly the same curve. Each successful recall makes the next fade slower, and a recall that takes some effort buys more than an effortless one. So the same four reviews do very different things depending on when you do them.</p>
   </div>
 
   <div class="panel">
     <div class="ctrl-grid">
       <div class="ctrl">
-        <label for="planA"><i class="sw c"></i>Plan A</label>
+        <label for="planA" data-ru="<i class=&quot;sw c&quot;></i>План A" data-ru-src="2a45e576a9"><i class="sw c"></i>Plan A</label>
         <select id="planA"></select>
       </div>
       <div class="ctrl">
-        <label for="planB"><i class="sw p"></i>Plan B</label>
+        <label for="planB" data-ru="<i class=&quot;sw p&quot;></i>План B" data-ru-src="739e7bba1d"><i class="sw p"></i>Plan B</label>
         <select id="planB"></select>
       </div>
     </div>
-    <p class="kicker">Chance you'd still recall it · schematic</p>
-    <div class="chart-legend" aria-hidden="true">
+    <p class="kicker" data-ru="Шанс, что вы ещё вспомните · схема" data-ru-src="a114f212ec">Chance you'd still recall it · schematic</p>
+    <div class="chart-legend" aria-hidden="true" data-ru="<span><i class=&quot;ln&quot; style=&quot;background:var(--consume)&quot;></i>План A</span> <span><i class=&quot;ln&quot; style=&quot;background:var(--produce)&quot;></i>План B</span> <span><i class=&quot;ln&quot; style=&quot;background:var(--base)&quot;></i>Без повторений</span> <span class=&quot;muted&quot;>Каждый скачок — попытка припоминания. Нажмите на график, чтобы добавить или убрать повторение в плане B.</span>" data-ru-src="3ac5f36b00">
       <span><i class="ln" style="background:var(--consume)"></i>Plan A</span>
       <span><i class="ln" style="background:var(--produce)"></i>Plan B</span>
       <span><i class="ln" style="background:var(--base)"></i>No review</span>
       <span class="muted">Each jump is a recall attempt. Tap the chart to add or remove a Plan B review.</span>
     </div>
-    <div class="chart" id="curve" role="img" aria-label="Forgetting curves for two review plans and no review, over 30 days. Use the table view for the values."></div>
+    <div class="chart" id="curve" role="img" aria-label="Forgetting curves for two review plans and no review, over 30 days. Use the table view for the values." data-ru-aria-label="Кривые забывания для двух планов повторения и без повторений, за 30 дней. Значения — в виде таблицы."></div>
     <div class="range-row">
-      <label for="checkDay"><b>Check on day</b></label>
+      <label for="checkDay" data-ru="<b>Проверка в день</b>" data-ru-src="2f0da669ca"><b>Check on day</b></label>
       <input type="range" id="checkDay" min="1" max="30" step="1" value="30">
       <output id="checkDayOut" for="checkDay">30</output>
     </div>
     <div class="tiles" aria-live="polite">
-      <div class="tile"><div class="lbl"><i class="sw c"></i>Plan A</div><div class="v" id="tileA">–</div></div>
-      <div class="tile"><div class="lbl"><i class="sw p"></i>Plan B</div><div class="v" id="tileB">–</div></div>
-      <div class="tile"><div class="lbl"><i class="sw b"></i>No review</div><div class="v" id="tileN">–</div></div>
+      <div class="tile"><div class="lbl" data-ru="<i class=&quot;sw c&quot;></i>План A" data-ru-src="2a45e576a9"><i class="sw c"></i>Plan A</div><div class="v" id="tileA">–</div></div>
+      <div class="tile"><div class="lbl" data-ru="<i class=&quot;sw p&quot;></i>План B" data-ru-src="739e7bba1d"><i class="sw p"></i>Plan B</div><div class="v" id="tileB">–</div></div>
+      <div class="tile"><div class="lbl" data-ru="<i class=&quot;sw b&quot;></i>Без повторений" data-ru-src="45d1ead3f2"><i class="sw b"></i>No review</div><div class="v" id="tileN">–</div></div>
     </div>
-    <p class="source-line">A schematic, not data. The curve shape is the one the FSRS flashcard scheduler uses, with the numbers set by hand to match the shapes in the research. Compare plans with it; don't read your own percentages off it. <button class="linkbtn" type="button" data-table-toggle="curveTable" aria-expanded="false">Show as a table</button></p>
+    <p class="source-line" data-ru="Это схема, а не данные. Форма кривой — та, которой пользуется планировщик карточек FSRS, а числа подобраны вручную под формы кривых из исследований. Сравнивайте по ней планы, но не считывайте с неё свои проценты. <button class=&quot;linkbtn&quot; type=&quot;button&quot; data-table-toggle=&quot;curveTable&quot; aria-expanded=&quot;false&quot;>Показать таблицей</button>" data-ru-src="bbc57fe9b3">A schematic, not data. The curve shape is the one the FSRS flashcard scheduler uses, with the numbers set by hand to match the shapes in the research. Compare plans with it; don't read your own percentages off it. <button class="linkbtn" type="button" data-table-toggle="curveTable" aria-expanded="false" data-ru="Показать таблицей" data-ru-src="f889227ba6">Show as a table</button></p>
     <div class="table-wrap" id="curveTable" hidden></div>
   </div>
 
   <div class="prose">
-    <p>Start with Plan A, four reviews crammed the night before a day-7 test, against Plan B, the same four spread over two weeks. Set the check day to 7: the crammer looks fine. Now drag it to 30.</p>
-    <p><b>How far apart?</b> One study of more than 1,300 people found the best gap grows with how long you need to remember. To remember something for a week, review it after about 3 days. For a month, after about 8 days. For a year, after about 4 weeks. As a share of the time you need it for, that's 20–40% for a week, falling to 5–10% for a year. If you'd rather not do the arithmetic, let a flashcard app schedule it (more in section 07).</p>
+    <p data-ru="Начните с плана A — четыре повторения, втиснутые в вечер перед тестом на 7-й день, — против плана B, тех же четырёх, растянутых на две недели. Поставьте день проверки на 7: зубрила выглядит неплохо. Теперь передвиньте на 30." data-ru-src="7615719eef">Start with Plan A, four reviews crammed the night before a day-7 test, against Plan B, the same four spread over two weeks. Set the check day to 7: the crammer looks fine. Now drag it to 30.</p>
+    <p data-ru="<b>Какие промежутки?</b> Исследование на более чем 1300 людях показало, что лучший промежуток растёт вместе с тем, как долго нужно помнить. Чтобы помнить неделю, повторите примерно через 3 дня. Месяц — примерно через 8 дней. Год — примерно через 4 недели. В доле от срока, на который нужно запомнить, это 20–40% для недели и 5–10% для года. Если не хочется считать, пусть расписание составит приложение с карточками (подробнее в разделе 07)." data-ru-src="2938f461c6"><b>How far apart?</b> One study of more than 1,300 people found the best gap grows with how long you need to remember. To remember something for a week, review it after about 3 days. For a month, after about 8 days. For a year, after about 4 weeks. As a share of the time you need it for, that's 20–40% for a week, falling to 5–10% for a year. If you'd rather not do the arithmetic, let a flashcard app schedule it (more in section 07).</p>
   </div>
 
   <aside class="checkpoint" data-cp>
     <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
-    <p class="cp-q">You have a test in ten days and time for four reviews. Roughly when do you do them, and what do you do in each one?</p>
-    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
-    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
-    <div class="cp-ans" hidden><p>Spread them, with gaps that grow and the last one a day or two before the test, something like days 1, 3, 6 and 9. Each one is a recall attempt, not a reread: cover the answers, try, then check. Cramming all four the night before gets you through the test and leaves little a month later.</p></div>
+    <p class="cp-q" data-ru="Через десять дней тест, и времени хватает на четыре повторения. Примерно когда вы их сделаете и что будете делать в каждом?" data-ru-src="c83c08bb5e">You have a test in ten days and time for four reviews. Roughly when do you do them, and what do you do in each one?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts." data-ru-placeholder="Ваш ответ. Сказать его про себя тоже считается." data-ru-aria-label="Ваш ответ"></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal data-ru="Я ответил(а). Покажите." data-ru-src="f9238e6bb7">I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p data-ru="Растяните их, с растущими промежутками и последним за день-два до теста: например, в дни 1, 3, 6 и 9. Каждое повторение — попытка припоминания, а не перечитывание: закройте ответы, попробуйте, потом проверьте. Если втиснуть все четыре в вечер перед тестом, тест вы сдадите, но через месяц останется мало." data-ru-src="2c57778ead">Spread them, with gaps that grow and the last one a day or two before the test, something like days 1, 3, 6 and 9. Each one is a recall attempt, not a reread: cover the answers, try, then check. Cramming all four the night before gets you through the test and leaves little a month later.</p></div>
   </aside>
 </section>
 
 <!-- 05 ============================================================ -->
 <section class="sec" id="roles">
-  <span class="sec-num">05 · Ten jobs for an AI</span>
-  <h2>Ten jobs to give an AI</h2>
-  <p class="lede">Most people use AI as an explainer, the one job that's pure taking in. The video names nine more. Here they are, each with a prompt to copy, how much of the work it leaves to you, and where it goes wrong.</p>
-  <p class="filter-label" id="stageLabel">Where are you with the subject?</p>
+  <span class="sec-num" data-ru="05 · Десять задач для ИИ" data-ru-src="e707d572c3">05 · Ten jobs for an AI</span>
+  <h2 data-ru="Десять задач, которые стоит дать ИИ" data-ru-src="a648df9f0b">Ten jobs to give an AI</h2>
+  <p class="lede" data-ru="Большинство людей используют ИИ как объяснителя — единственная из задач, которая целиком сводится к потреблению. Видео называет ещё девять. Вот они, у каждой — промпт для копирования, сколько работы она оставляет вам и где она даёт сбой." data-ru-src="a8998dcef0">Most people use AI as an explainer, the one job that's pure taking in. The video names nine more. Here they are, each with a prompt to copy, how much of the work it leaves to you, and where it goes wrong.</p>
+  <p class="filter-label" id="stageLabel" data-ru="Где вы сейчас с этим предметом?" data-ru-src="7a4b7d54de">Where are you with the subject?</p>
   <div class="chips" role="radiogroup" aria-labelledby="stageLabel" id="stageFilter">
-    <button class="chip" type="button" role="radio" aria-checked="true" data-stage="all">All ten</button>
-    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="start">Just starting</button>
-    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="stuck">Stuck</button>
-    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="think">Think I get it</button>
-    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="prove">Want to prove it</button>
-    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="perform">Have to perform it</button>
-    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="keep">Want to keep it</button>
+    <button class="chip" type="button" role="radio" aria-checked="true" data-stage="all" data-ru="Все десять" data-ru-src="05b2da221c">All ten</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="start" data-ru="Только начинаю" data-ru-src="a24708292c">Just starting</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="stuck" data-ru="Застрял(а)" data-ru-src="577c2254dc">Stuck</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="think" data-ru="Кажется, понимаю" data-ru-src="a4c0608858">Think I get it</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="prove" data-ru="Хочу это доказать" data-ru-src="79dc104197">Want to prove it</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="perform" data-ru="Нужно это применить" data-ru-src="36c82ceade">Have to perform it</button>
+    <button class="chip" type="button" role="radio" aria-checked="false" data-stage="keep" data-ru="Хочу это сохранить" data-ru-src="02c52c91f6">Want to keep it</button>
   </div>
   <div class="role-grid" id="roleGrid"></div>
-  <p class="source-line prose">The roles are the video's. The prompts are rewritten with guardrails (one question at a time, attempt before answer, grade against a source). "You do" is this page's judgment of how much of the producing the role leaves to you, not a measured number.</p>
+  <p class="source-line prose" data-ru="Роли взяты из видео. Промпты переписаны с ограничителями (по одному вопросу, попытка до ответа, оценка по источнику). «Вы делаете» — это оценка самой страницы, какую часть производства роль оставляет вам, а не измеренная величина." data-ru-src="14c4d0fd4e">The roles are the video's. The prompts are rewritten with guardrails (one question at a time, attempt before answer, grade against a source). "You do" is this page's judgment of how much of the producing the role leaves to you, not a measured number.</p>
 
   <aside class="checkpoint" data-cp>
     <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
-    <p class="cp-q">You've just read a chapter and think you get it. Which two jobs would you give the AI, and why not the explainer?</p>
-    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
-    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
-    <div class="cp-ans" hidden><p>The Socratic questioner (it asks, you answer) and the listener (you explain it from memory, it grades you against the chapter). Either one makes you produce. The explainer would hand you another smooth read, which is exactly the thing that feels like knowing it.</p></div>
+    <p class="cp-q" data-ru="Вы только что прочитали главу, и вам кажется, что вы её поняли. Какие две задачи вы дали бы ИИ и почему не объяснителя?" data-ru-src="08aef23077">You've just read a chapter and think you get it. Which two jobs would you give the AI, and why not the explainer?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts." data-ru-placeholder="Ваш ответ. Сказать его про себя тоже считается." data-ru-aria-label="Ваш ответ"></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal data-ru="Я ответил(а). Покажите." data-ru-src="f9238e6bb7">I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p data-ru="Сократического собеседника (он спрашивает, вы отвечаете) и слушателя (вы объясняете по памяти, он оценивает вас по главе). Обе роли заставляют вас производить. Объяснитель выдал бы вам ещё одно гладкое чтение, а это ровно то, что ощущается как знание." data-ru-src="cdbee4dea7">The Socratic questioner (it asks, you answer) and the listener (you explain it from memory, it grades you against the chapter). Either one makes you produce. The explainer would hand you another smooth read, which is exactly the thing that feels like knowing it.</p></div>
   </aside>
 </section>
 
 <!-- 06 ============================================================ -->
 <section class="sec" id="catch">
-  <span class="sec-num">06 · The catch</span>
-  <h2>The same AI can make you better or worse</h2>
-  <p class="lede">The video saves its most important point for the end: learning happens in the struggle, and AI makes it very easy to skip the struggle. Here's the evidence behind that, and the rules that follow from it.</p>
+  <span class="sec-num" data-ru="06 · Подвох" data-ru-src="2da22546fa">06 · The catch</span>
+  <h2 data-ru="Один и тот же ИИ может сделать вас лучше или хуже" data-ru-src="d647cf0222">The same AI can make you better or worse</h2>
+  <p class="lede" data-ru="Самое важное видео оставляет на конец: учёба происходит в борьбе, а ИИ позволяет очень легко эту борьбу пропустить. Вот какие данные за этим стоят и какие правила из них следуют." data-ru-src="8b26de53dd">The video saves its most important point for the end: learning happens in the struggle, and AI makes it very easy to skip the struggle. Here's the evidence behind that, and the rules that follow from it.</p>
 
   <div class="ev-grid">
     <div class="ev">
-      <p class="kicker">Plain chatbot vs. hint-only tutor</p>
+      <p class="kicker" data-ru="Обычный чат-бот против репетитора, который только подсказывает" data-ru-src="d7bf8585d7">Plain chatbot vs. hint-only tutor</p>
       <div class="fig bad">−17%</div>
-      <p>High-school math students who practiced with a plain chatbot did much better during practice (+48%), then scored 17% <em>lower</em> than students with no AI on an exam without it. They didn't notice the harm. A version built to give hints instead of answers lifted practice even more (+127%) and removed the exam harm, though it added no gain.</p>
-      <p class="cite">Bastani et al. (2025), <i>PNAS</i>. Nearly 1,000 students in one Turkish high school, randomised by class. Short-term results.</p>
+      <p data-ru="Старшеклассники, которые тренировались в математике с обычным чат-ботом, на тренировках справлялись гораздо лучше (+48%), а потом на экзамене без ИИ набрали на 17% <em>меньше</em>, чем ученики вообще без ИИ. Вреда они не заметили. Версия, сделанная так, чтобы давать подсказки, а не ответы, подняла результаты на тренировках ещё сильнее (+127%) и убрала вред на экзамене, хотя прироста и не дала." data-ru-src="34a80e54ce">High-school math students who practiced with a plain chatbot did much better during practice (+48%), then scored 17% <em>lower</em> than students with no AI on an exam without it. They didn't notice the harm. A version built to give hints instead of answers lifted practice even more (+127%) and removed the exam harm, though it added no gain.</p>
+      <p class="cite" data-ru="Bastani et al. (2025), <i>PNAS</i>. Почти 1000 учеников одной турецкой старшей школы, рандомизация по классам. Краткосрочные результаты." data-ru-src="4033237ccb">Bastani et al. (2025), <i>PNAS</i>. Nearly 1,000 students in one Turkish high school, randomised by class. Short-term results.</p>
     </div>
     <div class="ev">
-      <p class="kicker">A tutor built to make you work</p>
+      <p class="kicker" data-ru="Репетитор, который заставляет работать" data-ru-src="4aa3f086d6">A tutor built to make you work</p>
       <div class="fig good">2×</div>
-      <p>Physics students using an AI tutor designed around good teaching practice (one step at a time, the student does the thinking) had median learning gains more than double those from an active-learning class, in less time: 49 minutes against 60.</p>
-      <p class="cite">Kestin et al. (2025), <i>Scientific Reports</i>. 194 Harvard students, crossover design. Tested right after the lesson, so it says nothing yet about retention.</p>
+      <p data-ru="Студенты-физики, занимавшиеся с ИИ-репетитором, построенным на хороших педагогических практиках (по одному шагу, думает сам студент), показали медианный прирост знаний более чем вдвое выше, чем на занятии с активным обучением, и за меньшее время: 49 минут против 60." data-ru-src="c7d38ce3a9">Physics students using an AI tutor designed around good teaching practice (one step at a time, the student does the thinking) had median learning gains more than double those from an active-learning class, in less time: 49 minutes against 60.</p>
+      <p class="cite" data-ru="Kestin et al. (2025), <i>Scientific Reports</i>. 194 студента Гарварда, перекрёстный дизайн. Проверка сразу после урока, так что о запоминании это пока ничего не говорит." data-ru-src="ad86e5f9e7">Kestin et al. (2025), <i>Scientific Reports</i>. 194 Harvard students, crossover design. Tested right after the lesson, so it says nothing yet about retention.</p>
     </div>
     <div class="ev">
-      <p class="kicker">The GPS comparison</p>
-      <div class="fig">3 years</div>
-      <p>Drivers who used GPS more had worse spatial memory in a virtual navigation test. Thirteen of them retested about three years later showed steeper decline with heavier use. And the heavy users didn't think their sense of direction was any worse.</p>
-      <p class="cite">Dahmani &amp; Bohbot (2020), <i>Scientific Reports</i>. 50 drivers; 13 followed up. Correlational.</p>
+      <p class="kicker" data-ru="Сравнение с GPS" data-ru-src="9712bf85fd">The GPS comparison</p>
+      <div class="fig" data-ru="3 года" data-ru-src="50a85bc562">3 years</div>
+      <p data-ru="У водителей, которые чаще пользовались GPS, пространственная память в тесте на виртуальную навигацию была хуже. Тринадцать из них, проверенные повторно примерно через три года, показали тем более сильный спад, чем больше пользовались навигатором. И при этом активные пользователи не считали, что ориентируются хуже." data-ru-src="28b572dd93">Drivers who used GPS more had worse spatial memory in a virtual navigation test. Thirteen of them retested about three years later showed steeper decline with heavier use. And the heavy users didn't think their sense of direction was any worse.</p>
+      <p class="cite" data-ru="Dahmani &amp; Bohbot (2020), <i>Scientific Reports</i>. 50 водителей; 13 прошли повторную проверку. Корреляционное исследование." data-ru-src="de2a43c908">Dahmani &amp; Bohbot (2020), <i>Scientific Reports</i>. 50 drivers; 13 followed up. Correlational.</p>
     </div>
   </div>
 
   <div class="prose small muted" style="margin-top:1rem">
-    <p><b>Elsewhere, both directions.</b> A World Bank trial in Nigeria found six weeks of after-school English tutoring with a GPT-4 assistant raised test scores by about 0.3 standard deviations (working paper, 2025). A 2026 working paper with about 2,400 US undergraduates found that access to an AI tutor lowered final grades (not yet peer-reviewed). The widely shared "Your Brain on ChatGPT" EEG study is a preprint with 54 people, and its authors have asked readers not to describe it as brain damage.</p>
+    <p data-ru="<b>В других исследованиях — в обе стороны.</b> Испытание Всемирного банка в Нигерии показало, что шесть недель внеурочных занятий английским с ассистентом на GPT-4 подняли результаты тестов примерно на 0,3 стандартного отклонения (рабочий доклад, 2025). Рабочий доклад 2026 года примерно на 2400 американских студентах показал, что доступ к ИИ-репетитору снизил итоговые оценки (пока без рецензирования). Широко разошедшееся ЭЭГ-исследование «Your Brain on ChatGPT» — препринт на 54 участниках, и его авторы просили не описывать результаты как повреждение мозга." data-ru-src="737f261dd6"><b>Elsewhere, both directions.</b> A World Bank trial in Nigeria found six weeks of after-school English tutoring with a GPT-4 assistant raised test scores by about 0.3 standard deviations (working paper, 2025). A 2026 working paper with about 2,400 US undergraduates found that access to an AI tutor lowered final grades (not yet peer-reviewed). The widely shared "Your Brain on ChatGPT" EEG study is a preprint with 54 people, and its authors have asked readers not to describe it as brain damage.</p>
   </div>
 
   <div class="prose" style="margin-top:1.6rem">
-    <p>The difference isn't the model. It's who does the work. When the AI produces the answer, you get a smooth read and a good feeling. When it makes you produce the answer, you get the learning.</p>
+    <p data-ru="Разница не в модели. Разница в том, кто делает работу. Когда ответ производит ИИ, вы получаете гладкое чтение и приятное чувство. Когда ИИ заставляет произвести ответ вас, вы получаете учёбу." data-ru-src="29f398cd93">The difference isn't the model. It's who does the work. When the AI produces the answer, you get a smooth read and a good feeling. When it makes you produce the answer, you get the learning.</p>
   </div>
   <ol class="rules">
-    <li><b>Attempt first.</b> Ask only once you're stuck, and say exactly where.</li>
-    <li><b>Ask for the next hint, not the answer.</b> "Give me one hint" keeps the last step yours.</li>
-    <li><b>Redo it without help.</b> After you've got there with AI, go back to the start and do the whole thing alone. The video says this takes 10–15% more time. It's the step that makes it yours.</li>
-    <li><b>Grade against a source, not the AI's opinion.</b> Chatbots tend to agree with you when you're half right, and they can invent numbers. Give it the text and tell it to grade against that.</li>
+    <li data-ru="<b>Сначала попытка.</b> Спрашивайте, только когда застряли, и говорите, где именно." data-ru-src="8269479217"><b>Attempt first.</b> Ask only once you're stuck, and say exactly where.</li>
+    <li data-ru="<b>Просите следующую подсказку, а не ответ.</b> «Дай одну подсказку» оставляет последний шаг за вами." data-ru-src="4dfc61690a"><b>Ask for the next hint, not the answer.</b> "Give me one hint" keeps the last step yours.</li>
+    <li data-ru="<b>Сделайте заново без помощи.</b> Когда с ИИ вы дошли до результата, вернитесь к началу и пройдите всё сами. По словам видео, это занимает на 10–15% больше времени. Именно этот шаг делает знание вашим." data-ru-src="8343ea4390"><b>Redo it without help.</b> After you've got there with AI, go back to the start and do the whole thing alone. The video says this takes 10–15% more time. It's the step that makes it yours.</li>
+    <li data-ru="<b>Оценивайте по источнику, а не по мнению ИИ.</b> Чат-боты склонны соглашаться с вами, когда вы правы наполовину, и могут выдумывать числа. Дайте ему текст и велите оценивать по нему." data-ru-src="bb07b8cdf1"><b>Grade against a source, not the AI's opinion.</b> Chatbots tend to agree with you when you're half right, and they can invent numbers. Give it the text and tell it to grade against that.</li>
   </ol>
 
   <aside class="checkpoint" data-cp>
     <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
-    <p class="cp-q">In the high-school study, why did the plain chatbot hurt exam scores when the hint-only version mostly didn't?</p>
-    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
-    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
-    <div class="cp-ans" hidden><p>Students used the plain chatbot to get answers during practice, so they skipped the attempts and mistakes that build the skill. With the AI gone, the skill wasn't there. The hint-only tutor kept the work with the student.</p></div>
+    <p class="cp-q" data-ru="Почему в исследовании со старшеклассниками обычный чат-бот ухудшил оценки на экзамене, а версия с подсказками — в основном нет?" data-ru-src="fa7deed9f1">In the high-school study, why did the plain chatbot hurt exam scores when the hint-only version mostly didn't?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts." data-ru-placeholder="Ваш ответ. Сказать его про себя тоже считается." data-ru-aria-label="Ваш ответ"></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal data-ru="Я ответил(а). Покажите." data-ru-src="f9238e6bb7">I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p data-ru="С обычным чат-ботом ученики на тренировках получали ответы и пропускали те попытки и ошибки, из которых строится навык. Когда ИИ не стало, навыка не оказалось. Репетитор с подсказками оставлял работу ученику." data-ru-src="85365ebc8c">Students used the plain chatbot to get answers during practice, so they skipped the attempts and mistakes that build the skill. With the AI gone, the skill wasn't there. The hint-only tutor kept the work with the student.</p></div>
   </aside>
 </section>
 
 <!-- 07 ============================================================ -->
 <section class="sec" id="tools">
-  <span class="sec-num">07 · Tools</span>
-  <h2>Tools, and what each one actually trains</h2>
-  <p class="lede">Every tool below can be used to take in or to produce. The feature you click decides which.</p>
+  <span class="sec-num" data-ru="07 · Инструменты" data-ru-src="5ea03b84a2">07 · Tools</span>
+  <h2 data-ru="Инструменты и что каждый из них на самом деле тренирует" data-ru-src="ffb8933d32">Tools, and what each one actually trains</h2>
+  <p class="lede" data-ru="Любым инструментом ниже можно и потреблять, и производить. Какое из двух — решает функция, на которую вы нажимаете." data-ru-src="ddf3bf6f9d">Every tool below can be used to take in or to produce. The feature you click decides which.</p>
 
   <div class="panel tool-hero" id="gemini-notebook">
-    <p class="kicker">The underrated one</p>
-    <h3>Gemini Notebook <span class="muted" style="font-weight:600">(NotebookLM until July 2026)</span></h3>
-    <p>Gemini Notebook answers from the sources you give it (a chapter, a lecture transcript, your notes, a web page) and cites the passage behind each claim. That fixes the two biggest problems with using a chatbot to study: it inventing things, and it grading you against its own opinion instead of your material.</p>
+    <p class="kicker" data-ru="Недооценённый" data-ru-src="c8ec2fc307">The underrated one</p>
+    <h3 data-ru="Gemini Notebook <span class=&quot;muted&quot; style=&quot;font-weight:600&quot;>(NotebookLM до июля 2026)</span>" data-ru-src="6d1c743b97">Gemini Notebook <span class="muted" style="font-weight:600">(NotebookLM until July 2026)</span></h3>
+    <p data-ru="Gemini Notebook отвечает по источникам, которые вы ему даёте (глава, расшифровка лекции, ваши заметки, веб-страница), и к каждому утверждению указывает отрывок, на котором оно основано. Это решает две главные проблемы учёбы с чат-ботом: он выдумывает и оценивает вас по собственному мнению, а не по вашему материалу." data-ru-src="774d23cd4d">Gemini Notebook answers from the sources you give it (a chapter, a lecture transcript, your notes, a web page) and cites the passage behind each claim. That fixes the two biggest problems with using a chatbot to study: it inventing things, and it grading you against its own opinion instead of your material.</p>
     <div class="table-wrap">
       <table class="data feature-table">
-        <thead><tr><th>Feature</th><th>Job it does</th><th>You…</th></tr></thead>
+        <thead><tr><th data-ru="Функция" data-ru-src="3d377ae910">Feature</th><th data-ru="Какая это задача" data-ru-src="11e785355a">Job it does</th><th data-ru="Вы…" data-ru-src="ee0ee50273">You…</th></tr></thead>
         <tbody>
-          <tr><td>Chat with citations</td><td>Explainer, kept to your sources</td><td><span class="pill c">Take in</span> click the citation to check it</td></tr>
-          <tr><td>Learning Guide chat</td><td>Socratic questioner</td><td><span class="pill p">Produce</span></td></tr>
-          <tr><td>Quizzes</td><td>Examiner</td><td><span class="pill p">Produce</span> short-answer makes you recall; multiple choice only asks you to recognize</td></tr>
-          <tr><td>Flashcards</td><td>Recall practice</td><td><span class="pill p">Produce</span> if you answer before flipping</td></tr>
-          <tr><td>Mind map</td><td>Mapmaker</td><td><span class="pill c">Take in</span> good on day one</td></tr>
-          <tr><td>Audio and Video Overviews</td><td>Explainer</td><td><span class="pill c">Take in</span> a first pass, nothing more</td></tr>
-          <tr><td>Interactive audio ("Join")</td><td>Sparring, lightly</td><td><span class="pill p">Produce</span> only if you ask</td></tr>
-          <tr><td>Interactive report (Learning Overview)</td><td>Clerk plus examiner</td><td><span class="pill p">Produce</span> in its embedded quizzes</td></tr>
+          <tr><td data-ru="Чат с цитатами" data-ru-src="f81d496ec7">Chat with citations</td><td data-ru="Объяснитель в рамках ваших источников" data-ru-src="9898b7e8b5">Explainer, kept to your sources</td><td data-ru="<span class=&quot;pill c&quot;>Потребляете</span> нажмите на цитату, чтобы её проверить" data-ru-src="ae1c914161"><span class="pill c">Take in</span> click the citation to check it</td></tr>
+          <tr><td data-ru="Чат в режиме Learning Guide" data-ru-src="6cba0c64bc">Learning Guide chat</td><td data-ru="Сократический собеседник" data-ru-src="60541fa847">Socratic questioner</td><td data-ru="<span class=&quot;pill p&quot;>Производите</span>" data-ru-src="15a988aa45"><span class="pill p">Produce</span></td></tr>
+          <tr><td data-ru="Тесты" data-ru-src="f1e638bae6">Quizzes</td><td data-ru="Экзаменатор" data-ru-src="ecaca9264b">Examiner</td><td data-ru="<span class=&quot;pill p&quot;>Производите</span> короткий ответ заставляет вспоминать; выбор из вариантов требует только узнавания" data-ru-src="4ef0c0ba91"><span class="pill p">Produce</span> short-answer makes you recall; multiple choice only asks you to recognize</td></tr>
+          <tr><td data-ru="Карточки" data-ru-src="eac4b70868">Flashcards</td><td data-ru="Практика припоминания" data-ru-src="0a21486d9c">Recall practice</td><td data-ru="<span class=&quot;pill p&quot;>Производите</span> если отвечаете до переворота" data-ru-src="c3dd59a3da"><span class="pill p">Produce</span> if you answer before flipping</td></tr>
+          <tr><td data-ru="Интеллект-карта" data-ru-src="10939a9987">Mind map</td><td data-ru="Картограф" data-ru-src="b1dd7bd69f">Mapmaker</td><td data-ru="<span class=&quot;pill c&quot;>Потребляете</span> хорошо в первый день" data-ru-src="d15ceaf5db"><span class="pill c">Take in</span> good on day one</td></tr>
+          <tr><td data-ru="Аудио- и видеообзоры" data-ru-src="a0f539e175">Audio and Video Overviews</td><td data-ru="Объяснитель" data-ru-src="cccedca506">Explainer</td><td data-ru="<span class=&quot;pill c&quot;>Потребляете</span> первый проход, не больше" data-ru-src="8d4e3770dc"><span class="pill c">Take in</span> a first pass, nothing more</td></tr>
+          <tr><td data-ru="Интерактивное аудио («Join»)" data-ru-src="710e8ec0f4">Interactive audio ("Join")</td><td data-ru="Лёгкий спарринг" data-ru-src="c261266b0a">Sparring, lightly</td><td data-ru="<span class=&quot;pill p&quot;>Производите</span> только если попросите" data-ru-src="509bb37864"><span class="pill p">Produce</span> only if you ask</td></tr>
+          <tr><td data-ru="Интерактивный отчёт (Learning Overview)" data-ru-src="5b44eab423">Interactive report (Learning Overview)</td><td data-ru="Секретарь плюс экзаменатор" data-ru-src="c513a8b71a">Clerk plus examiner</td><td data-ru="<span class=&quot;pill p&quot;>Производите</span> во встроенных тестах" data-ru-src="caa9caa004"><span class="pill p">Produce</span> in its embedded quizzes</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3 style="margin-top:1.6rem">A study session in six steps</h3>
+    <h3 style="margin-top:1.6rem" data-ru="Учебное занятие в шесть шагов" data-ru-src="9e46f1d8b1">A study session in six steps</h3>
     <ol class="steps">
-      <li><b>One notebook per subject.</b> Load only sources you trust: the chapter, the lecture transcript, your notes. This page works too; add its address as a source and try the steps on it.</li>
-      <li><b>Open the mind map</b> and pick the branch you know least. That's your map.</li>
-      <li><b>One pass of taking in.</b> Read it, or play the Audio Overview once. You can steer the overview with a prompt ("chapters 3 and 4, assume I'm a beginner"). This is the only consumption step.</li>
-      <li><b>Close everything and explain it.</b> Type your explanation into the chat from memory and ask it to grade you against the sources, with citations. There's no built-in grader for this; the prompt below does the job.</li>
-      <li><b>Get questioned.</b> Set the chat to Learning Guide, or make a quiz on hard difficulty and answer without peeking. Use "Explain" on what you miss, retake only the missed ones, then ask the chat where your misses cluster.</li>
-      <li><b>Keep it.</b> The app has flashcards but no stated review schedule. Download them as a CSV, import them into Anki, and let it schedule them.</li>
+      <li data-ru="<b>Один блокнот на предмет.</b> Загружайте только источники, которым доверяете: главу, расшифровку лекции, свои заметки. Эта страница тоже подойдёт: добавьте её адрес как источник и попробуйте шаги на ней." data-ru-src="db87e24d43"><b>One notebook per subject.</b> Load only sources you trust: the chapter, the lecture transcript, your notes. This page works too; add its address as a source and try the steps on it.</li>
+      <li data-ru="<b>Откройте интеллект-карту</b> и выберите ветку, которую знаете хуже всего. Это ваша карта." data-ru-src="0b8e24b24c"><b>Open the mind map</b> and pick the branch you know least. That's your map.</li>
+      <li data-ru="<b>Один проход потребления.</b> Прочитайте материал или один раз прослушайте Audio Overview. Обзор можно направить промптом («главы 3 и 4, считай, что я новичок»). Это единственный шаг потребления." data-ru-src="f0e03d68cb"><b>One pass of taking in.</b> Read it, or play the Audio Overview once. You can steer the overview with a prompt ("chapters 3 and 4, assume I'm a beginner"). This is the only consumption step.</li>
+      <li data-ru="<b>Закройте всё и объясните.</b> Напечатайте в чате объяснение по памяти и попросите оценить его по источникам, с цитатами. Встроенной функции оценки для этого нет; с этим справится промпт ниже." data-ru-src="433bad54af"><b>Close everything and explain it.</b> Type your explanation into the chat from memory and ask it to grade you against the sources, with citations. There's no built-in grader for this; the prompt below does the job.</li>
+      <li data-ru="<b>Отвечайте на вопросы.</b> Переключите чат в Learning Guide или сделайте тест на высокой сложности и отвечайте, не подглядывая. На пропущенном нажимайте «Explain», пересдавайте только пропущенные вопросы, а потом спросите в чате, где скапливаются ваши ошибки." data-ru-src="29804200d6"><b>Get questioned.</b> Set the chat to Learning Guide, or make a quiz on hard difficulty and answer without peeking. Use "Explain" on what you miss, retake only the missed ones, then ask the chat where your misses cluster.</li>
+      <li data-ru="<b>Сохраните.</b> В приложении есть карточки, но не указано расписание повторений. Скачайте их в CSV, импортируйте в Anki и пусть расписание составляет она." data-ru-src="cde52c7693"><b>Keep it.</b> The app has flashcards but no stated review schedule. Download them as a CSV, import them into Anki, and let it schedule them.</li>
     </ol>
-    <p class="kicker" style="margin-top:1.4rem">Prompt for step 4</p>
-    <pre class="prompt" id="nlmPrompt">I'm going to explain this topic from memory. Grade my explanation only against the sources in this notebook, not general knowledge. List what I got right, what I left out, and anything I said that the sources don't support, citing the passage each time. Don't rewrite my explanation for me.<button class="btn sm ghost copy" type="button" data-copy="nlmPrompt">Copy</button></pre>
-    <p class="small muted" style="margin-top:.9rem">Three cautions. A citation shows where an answer came from, not that the answer reads it correctly, so click through on anything that matters. Notebooks opened inside the regular Gemini app may also use web search; for grading against your sources only, use Gemini Notebook itself. And an Audio Overview is a podcast about your material: pleasant, and as passive as rereading. The free tier allows 50 sources per notebook.</p>
+    <p class="kicker" style="margin-top:1.4rem" data-ru="Промпт для шага 4" data-ru-src="4309265bef">Prompt for step 4</p>
+    <pre class="prompt" id="nlmPrompt" data-ru="Я объясню эту тему по памяти. Оцени моё объяснение только по источникам в этом блокноте, а не по общим знаниям. Перечисли, что я сказал верно, что упустил и что из сказанного источники не подтверждают, каждый раз ссылаясь на отрывок. Не переписывай моё объяснение за меня.<button class=&quot;btn sm ghost copy&quot; type=&quot;button&quot; data-copy=&quot;nlmPrompt&quot;>Копировать</button>" data-ru-src="498677a5a4">I'm going to explain this topic from memory. Grade my explanation only against the sources in this notebook, not general knowledge. List what I got right, what I left out, and anything I said that the sources don't support, citing the passage each time. Don't rewrite my explanation for me.<button class="btn sm ghost copy" type="button" data-copy="nlmPrompt">Copy</button></pre>
+    <p class="small muted" style="margin-top:.9rem" data-ru="Три предостережения. Цитата показывает, откуда взят ответ, а не то, что ответ правильно её прочитал, так что всё важное проверяйте по ссылке. Блокноты, открытые в обычном приложении Gemini, могут ещё и искать в интернете; чтобы оценка шла только по вашим источникам, пользуйтесь самим Gemini Notebook. И Audio Overview — это подкаст о вашем материале: приятно и так же пассивно, как перечитывание. На бесплатном тарифе — 50 источников на блокнот." data-ru-src="43eb8fb42b">Three cautions. A citation shows where an answer came from, not that the answer reads it correctly, so click through on anything that matters. Notebooks opened inside the regular Gemini app may also use web search; for grading against your sources only, use Gemini Notebook itself. And an Audio Overview is a podcast about your material: pleasant, and as passive as rereading. The free tier allows 50 sources per notebook.</p>
   </div>
 
-  <h3>Others worth knowing</h3>
+  <h3 data-ru="Что ещё стоит знать" data-ru-src="2fd44e1159">Others worth knowing</h3>
   <div class="tool-grid">
     <div class="tool">
-      <h3>Gemini: Guided Learning</h3>
-      <p>A mode in the Gemini app that breaks a problem into steps, asks you open questions, and checks your understanding with quizzes instead of handing over the answer. Gemini's newer study notebooks start with a diagnostic quiz, which does the interviewer's job for you.</p>
-      <p class="meta">Socratic questioner, examiner, interviewer</p>
+      <h3 data-ru="Gemini: Guided Learning" data-ru-src="ce921122b5">Gemini: Guided Learning</h3>
+      <p data-ru="Режим в приложении Gemini, который разбивает задачу на шаги, задаёт открытые вопросы и проверяет понимание тестами вместо того, чтобы выдать ответ. Новые учебные блокноты Gemini начинаются с диагностического теста, который делает работу интервьюера за вас." data-ru-src="613d0a2151">A mode in the Gemini app that breaks a problem into steps, asks you open questions, and checks your understanding with quizzes instead of handing over the answer. Gemini's newer study notebooks start with a diagnostic quiz, which does the interviewer's job for you.</p>
+      <p class="meta" data-ru="Сократический собеседник, экзаменатор, интервьюер" data-ru-src="cc32ade011">Socratic questioner, examiner, interviewer</p>
     </div>
     <div class="tool">
-      <h3>ChatGPT: Study mode</h3>
-      <p>On every plan. Type <code>@study</code> or pick Study from the + menu, and ChatGPT asks questions and gives hints instead of answers. OpenAI notes it runs on instructions, so it can slip; tell it to stay in role. It now makes flashcards too, without a review schedule.</p>
-      <p class="meta">Socratic questioner, examiner</p>
+      <h3 data-ru="ChatGPT: Study mode" data-ru-src="65d8d7cf08">ChatGPT: Study mode</h3>
+      <p data-ru="На любом тарифе. Наберите <code>@study</code> или выберите Study в меню «+», и ChatGPT будет задавать вопросы и давать подсказки вместо ответов. OpenAI отмечает, что режим работает на инструкциях, поэтому может соскальзывать; велите ему держаться роли. Теперь он ещё и делает карточки, но без расписания повторений." data-ru-src="774fcfe7f2">On every plan. Type <code>@study</code> or pick Study from the + menu, and ChatGPT asks questions and gives hints instead of answers. OpenAI notes it runs on instructions, so it can slip; tell it to stay in role. It now makes flashcards too, without a review schedule.</p>
+      <p class="meta" data-ru="Сократический собеседник, экзаменатор" data-ru-src="56d3a0a7a7">Socratic questioner, examiner</p>
     </div>
     <div class="tool">
-      <h3>Claude: learning mode</h3>
-      <p>Guides you with questions instead of handing over answers: the Socratic questioner as a setting. It started in Claude for Education and reached everyone as a response style in 2025; Anthropic has since been moving styles into skills, so look in the style or skills menu. Claude Code has a matching Learning style that leaves the key pieces of code for you to write, then reviews them. Can't find the switch? Put the Socratic prompt from section 05 in a project's instructions.</p>
-      <p class="meta">Socratic questioner, checker</p>
+      <h3 data-ru="Claude: режим обучения" data-ru-src="4c1ab004e9">Claude: learning mode</h3>
+      <p data-ru="Ведёт вас вопросами вместо того, чтобы выдавать ответы: сократический собеседник в виде настройки. Режим появился в Claude for Education и в 2025 году стал доступен всем как стиль ответа; с тех пор Anthropic переносит стили в навыки, так что ищите в меню стилей или навыков. В Claude Code есть похожий стиль Learning: он оставляет ключевые куски кода вам, а потом проверяет их. Не нашли переключатель? Вставьте сократический промпт из раздела 05 в инструкции проекта." data-ru-src="720073d7ec">Guides you with questions instead of handing over answers: the Socratic questioner as a setting. It started in Claude for Education and reached everyone as a response style in 2025; Anthropic has since been moving styles into skills, so look in the style or skills menu. Claude Code has a matching Learning style that leaves the key pieces of code for you to write, then reviews them. Can't find the switch? Put the Socratic prompt from section 05 in a project's instructions.</p>
+      <p class="meta" data-ru="Сократический собеседник, проверяющий" data-ru-src="eb6645b6bc">Socratic questioner, checker</p>
     </div>
     <div class="tool">
-      <h3>Anki</h3>
-      <p>Free flashcard software (AnkiMobile on iPhone is paid) that schedules each card for just before you'd forget it. Switch on FSRS at the bottom of the deck options; it's the modern scheduler behind the curve in section 04. Have AI draft the cards, then you answer them.</p>
-      <p class="meta">Spaced review</p>
+      <h3 data-ru="Anki" data-ru-src="cf5f6a7503">Anki</h3>
+      <p data-ru="Бесплатная программа для карточек (AnkiMobile на iPhone платная), которая ставит каждую карточку на момент чуть раньше, чем вы бы её забыли. Включите FSRS внизу параметров колоды: это современный планировщик, на котором построена кривая из раздела 04. Пусть ИИ составит черновики карточек, а отвечаете на них вы." data-ru-src="dbf854ee60">Free flashcard software (AnkiMobile on iPhone is paid) that schedules each card for just before you'd forget it. Switch on FSRS at the bottom of the deck options; it's the modern scheduler behind the curve in section 04. Have AI draft the cards, then you answer them.</p>
+      <p class="meta" data-ru="Интервальное повторение" data-ru-src="27801fb982">Spaced review</p>
     </div>
     <div class="tool">
-      <h3>Google: Learn Your Way</h3>
-      <p>A Google Labs experiment that rewrites textbook chapters for your level and interests, with quizzes built in. In Google's own small study (60 students), it beat a standard digital reader on a test 3–5 days later, 78% to 67%.</p>
-      <p class="meta">Explainer with an examiner attached</p>
+      <h3 data-ru="Google: Learn Your Way" data-ru-src="46656f820c">Google: Learn Your Way</h3>
+      <p data-ru="Эксперимент Google Labs, который переписывает главы учебников под ваш уровень и интересы, со встроенными тестами. В собственном небольшом исследовании Google (60 учеников) он обошёл обычную электронную читалку в тесте через 3–5 дней: 78% против 67%." data-ru-src="d19ff35d5c">A Google Labs experiment that rewrites textbook chapters for your level and interests, with quizzes built in. In Google's own small study (60 students), it beat a standard digital reader on a test 3–5 days later, 78% to 67%.</p>
+      <p class="meta" data-ru="Объяснитель с прикреплённым экзаменатором" data-ru-src="c1820e30e8">Explainer with an examiner attached</p>
     </div>
   </div>
-  <p class="small muted prose" id="toolsAsOf">Checked in October 2026. These products change monthly; names, limits and menus may have moved since.</p>
+  <p class="small muted prose" id="toolsAsOf" data-ru="Проверено в октябре 2026. Эти продукты меняются каждый месяц; названия, лимиты и меню с тех пор могли сдвинуться." data-ru-src="368a0bf4c4">Checked in October 2026. These products change monthly; names, limits and menus may have moved since.</p>
 
   <aside class="checkpoint" data-cp>
     <div class="cp-head"><svg aria-hidden="true"><use href="#i-cap"/></svg>Checkpoint</div>
-    <p class="cp-q">Which Gemini Notebook feature feels like studying but is really taking in, and what should you switch to after it?</p>
-    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts."></textarea>
-    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal>I've answered. Show me.</button></div>
-    <div class="cp-ans" hidden><p>The Audio and Video Overviews. Fine for a first pass on a commute. After that, switch to something that makes you produce: explain it back for grading, the Learning Guide, a quiz, or flashcards.</p></div>
+    <p class="cp-q" data-ru="Какая функция Gemini Notebook ощущается как учёба, но на деле — потребление, и на что переключиться после неё?" data-ru-src="404544c6b3">Which Gemini Notebook feature feels like studying but is really taking in, and what should you switch to after it?</p>
+    <textarea class="cp-a" aria-label="Your answer" placeholder="Your answer. Saying it in your head counts." data-ru-placeholder="Ваш ответ. Сказать его про себя тоже считается." data-ru-aria-label="Ваш ответ"></textarea>
+    <div class="btn-row"><button class="btn sm ghost" type="button" data-cp-reveal data-ru="Я ответил(а). Покажите." data-ru-src="f9238e6bb7">I've answered. Show me.</button></div>
+    <div class="cp-ans" hidden><p data-ru="Аудио- и видеообзоры. Для первого прохода по дороге на работу — нормально. После этого переключитесь на то, что заставляет производить: объясните материал для оценки, Learning Guide, тест или карточки." data-ru-src="3c336886e5">The Audio and Video Overviews. Fine for a first pass on a commute. After that, switch to something that makes you produce: explain it back for grading, the Learning Guide, a quiz, or flashcards.</p></div>
   </aside>
 </section>
 
 <!-- 08 ============================================================ -->
 <section class="sec" id="claims">
-  <span class="sec-num">08 · Checking the video</span>
-  <h2>What the video gets right, and what it oversells</h2>
-  <p class="lede">The core is solid and mainstream. Some of the numbers are sales talk. Here's each claim against the research.</p>
+  <span class="sec-num" data-ru="08 · Проверка видео" data-ru-src="057c478eea">08 · Checking the video</span>
+  <h2 data-ru="В чём видео право, а что оно перехваливает" data-ru-src="daf5c7902f">What the video gets right, and what it oversells</h2>
+  <p class="lede" data-ru="Основа надёжная и общепринятая. Часть цифр — рекламные приёмы. Вот каждое утверждение против исследований." data-ru-src="0fbbc07e60">The core is solid and mainstream. Some of the numbers are sales talk. Here's each claim against the research.</p>
   <div class="claims">
-    <div class="claim"><span class="tier solid">Solid</span><div><p class="said">"You learn through production, not consumption."</p><p>Recalling, explaining and attempting beat rereading and re-watching. One of the best-replicated findings in learning research.</p></div></div>
-    <div class="claim"><span class="tier solid">Solid</span><div><p class="said">"Reread four times: 40% after a week. Read once, test three times: 61%."</p><p>Accurate to the study (section 01). Worth knowing it was short science passages and 180 college students, and that rereading won at five minutes.</p></div></div>
-    <div class="claim"><span class="tier solid">Solid</span><div><p class="said">"Spaced repetition: review just as you're about to forget."</p><p>The spacing effect is as solid as the testing effect, and the two stack.</p></div></div>
-    <div class="claim"><span class="tier over">Oversold</span><div><p class="said">"Spaced repetition makes you five to ten times more efficient."</p><p>No source given, and no standard figure like it. The benefit is real; its size depends on the material, the gaps and how long you need to remember.</p></div></div>
-    <div class="claim"><span class="tier over">Oversold</span><div><p class="said">"Learn in a day what takes others weeks." "We use 10–20% of our potential."</p><p>Opening hooks, not findings. Nobody has measured a percentage of potential.</p></div></div>
-    <div class="claim"><span class="tier mixed">Mixed</span><div><p class="said">"Engage all your senses. Say it, draw it, write it."</p><p>Drawing and explaining in your own words do help, because both make you produce. But the idea that people learn best in their own preferred style (visual, auditory) has not held up when tested.</p></div></div>
-    <div class="claim"><span class="tier mixed">Mixed</span><div><p class="said">"Lectures were developed thousands of years ago and don't scale."</p><p>Lecture-only teaching does lose to active learning on average: across 225 studies in science courses, failure rates were 34% under lecturing against 22% with active learning. "Thousands of years" is decoration.</p></div></div>
-    <div class="claim"><span class="tier prom">Promising</span><div><p class="said">"GPS weakens your mental map, and AI may do the same to your reasoning."</p><p>The GPS study is real but small and correlational, run on virtual mazes. For AI, the best evidence so far (section 06) says it depends on whether the tool lets you skip the work.</p></div></div>
-    <div class="claim"><span class="tier prom">Promising</span><div><p class="said">"AI can examine you like a thesis defense."</p><p>Yes, with a catch the video mentions only once: chatbots lean toward agreeing with you. Ground the examiner in a source (section 07).</p></div></div>
-    <div class="claim"><span class="tier mixed">Mixed</span><div><p class="said">"Have the AI read your last hundred conversations and find your recurring mistake."</p><p>Depends on whether your tool can search its chat history at all, and it can see patterns that aren't there. Pasting in your own list of mistakes is more reliable.</p></div></div>
+    <div class="claim"><span class="tier solid" data-ru="Надёжно" data-ru-src="b8b311b0f2">Solid</span><div><p class="said" data-ru="«Учатся через производство, а не через потребление»." data-ru-src="5e6dab5289">"You learn through production, not consumption."</p><p data-ru="Припоминание, объяснение и попытки выигрывают у перечитывания и пересмотра. Один из самых воспроизводимых результатов в исследованиях учёбы." data-ru-src="ab0555c9d9">Recalling, explaining and attempting beat rereading and re-watching. One of the best-replicated findings in learning research.</p></div></div>
+    <div class="claim"><span class="tier solid" data-ru="Надёжно" data-ru-src="b8b311b0f2">Solid</span><div><p class="said" data-ru="«Перечитали четыре раза — 40% через неделю. Прочитали раз и трижды проверили себя — 61%»." data-ru-src="520dd0752d">"Reread four times: 40% after a week. Read once, test three times: 61%."</p><p data-ru="Точно по исследованию (раздел 01). Полезно знать, что речь шла о коротких научных текстах и 180 студентах колледжа и что через пять минут выигрывало перечитывание." data-ru-src="ab2d6ced14">Accurate to the study (section 01). Worth knowing it was short science passages and 180 college students, and that rereading won at five minutes.</p></div></div>
+    <div class="claim"><span class="tier solid" data-ru="Надёжно" data-ru-src="b8b311b0f2">Solid</span><div><p class="said" data-ru="«Интервальное повторение: повторяйте, когда вот-вот забудете»." data-ru-src="02cf0b7054">"Spaced repetition: review just as you're about to forget."</p><p data-ru="Эффект интервалов так же надёжен, как эффект тестирования, и они складываются." data-ru-src="934840c17e">The spacing effect is as solid as the testing effect, and the two stack.</p></div></div>
+    <div class="claim"><span class="tier over" data-ru="Перехвалено" data-ru-src="dd4d2d9406">Oversold</span><div><p class="said" data-ru="«Интервальное повторение делает вас в пять–десять раз эффективнее»." data-ru-src="2278619077">"Spaced repetition makes you five to ten times more efficient."</p><p data-ru="Источник не указан, и стандартной цифры такого рода нет. Польза реальна; её размер зависит от материала, промежутков и того, как долго нужно помнить." data-ru-src="184ba09c5a">No source given, and no standard figure like it. The benefit is real; its size depends on the material, the gaps and how long you need to remember.</p></div></div>
+    <div class="claim"><span class="tier over" data-ru="Перехвалено" data-ru-src="dd4d2d9406">Oversold</span><div><p class="said" data-ru="«Выучите за день то, на что у других уходят недели». «Мы используем 10–20% своего потенциала»." data-ru-src="9824b53880">"Learn in a day what takes others weeks." "We use 10–20% of our potential."</p><p data-ru="Зацепки для начала, а не результаты. Процент потенциала никто никогда не измерял." data-ru-src="9657762d7a">Opening hooks, not findings. Nobody has measured a percentage of potential.</p></div></div>
+    <div class="claim"><span class="tier mixed" data-ru="Неоднозначно" data-ru-src="f340b6d6ed">Mixed</span><div><p class="said" data-ru="«Задействуйте все чувства. Проговаривайте, рисуйте, записывайте»." data-ru-src="1fd70c4d54">"Engage all your senses. Say it, draw it, write it."</p><p data-ru="Рисование и объяснение своими словами действительно помогают, потому что и то и другое заставляет производить. А идея, что люди лучше всего учатся в своём предпочитаемом стиле (визуальном, аудиальном), проверки не выдержала." data-ru-src="836430233c">Drawing and explaining in your own words do help, because both make you produce. But the idea that people learn best in their own preferred style (visual, auditory) has not held up when tested.</p></div></div>
+    <div class="claim"><span class="tier mixed" data-ru="Неоднозначно" data-ru-src="f340b6d6ed">Mixed</span><div><p class="said" data-ru="«Лекции придумали тысячи лет назад, и они не масштабируются»." data-ru-src="bf08fc2ce8">"Lectures were developed thousands of years ago and don't scale."</p><p data-ru="Обучение только лекциями в среднем действительно проигрывает активному обучению: по 225 исследованиям естественно-научных курсов доля неудач составила 34% при лекциях против 22% при активном обучении. «Тысячи лет» — украшение." data-ru-src="a5feb05d2b">Lecture-only teaching does lose to active learning on average: across 225 studies in science courses, failure rates were 34% under lecturing against 22% with active learning. "Thousands of years" is decoration.</p></div></div>
+    <div class="claim"><span class="tier prom" data-ru="Многообещающе" data-ru-src="d81ec6103f">Promising</span><div><p class="said" data-ru="«GPS ослабляет вашу мысленную карту, и ИИ может сделать то же с вашим мышлением»." data-ru-src="364963c6b7">"GPS weakens your mental map, and AI may do the same to your reasoning."</p><p data-ru="Исследование про GPS настоящее, но маленькое и корреляционное, на виртуальных лабиринтах. Что касается ИИ, лучшие данные на сегодня (раздел 06) говорят: всё зависит от того, позволяет ли инструмент пропустить работу." data-ru-src="e4ad9879af">The GPS study is real but small and correlational, run on virtual mazes. For AI, the best evidence so far (section 06) says it depends on whether the tool lets you skip the work.</p></div></div>
+    <div class="claim"><span class="tier prom" data-ru="Многообещающе" data-ru-src="d81ec6103f">Promising</span><div><p class="said" data-ru="«ИИ может проэкзаменовать вас, как на защите диссертации»." data-ru-src="65a7fb727b">"AI can examine you like a thesis defense."</p><p data-ru="Да, с подвохом, который видео упоминает лишь однажды: чат-боты склонны с вами соглашаться. Привяжите экзаменатора к источнику (раздел 07)." data-ru-src="62a4add07a">Yes, with a catch the video mentions only once: chatbots lean toward agreeing with you. Ground the examiner in a source (section 07).</p></div></div>
+    <div class="claim"><span class="tier mixed" data-ru="Неоднозначно" data-ru-src="f340b6d6ed">Mixed</span><div><p class="said" data-ru="«Пусть ИИ прочитает ваши последние сто разговоров и найдёт вашу повторяющуюся ошибку»." data-ru-src="0324abbbdc">"Have the AI read your last hundred conversations and find your recurring mistake."</p><p data-ru="Зависит от того, умеет ли ваш инструмент вообще искать по истории чатов, и он может увидеть закономерности, которых нет. Надёжнее вставить собственный список ошибок." data-ru-src="f44d74dd74">Depends on whether your tool can search its chat history at all, and it can see patterns that aren't there. Pasting in your own list of mistakes is more reliable.</p></div></div>
   </div>
 </section>
 
 <!-- 09 ============================================================ -->
 <section class="sec" id="moves">
-  <span class="sec-num">09 · More moves</span>
-  <h2>Seven moves the video didn't cover</h2>
-  <p class="lede">All of them come back to the same idea, making yourself produce, applied from different angles.</p>
+  <span class="sec-num" data-ru="09 · Ещё приёмы" data-ru-src="8ea3e4770a">09 · More moves</span>
+  <h2 data-ru="Семь приёмов, которых нет в видео" data-ru-src="557df994f6">Seven moves the video didn't cover</h2>
+  <p class="lede" data-ru="Все они сводятся к одной идее — заставить себя производить, — просто с разных сторон." data-ru-src="f61e8b27be">All of them come back to the same idea, making yourself produce, applied from different angles.</p>
   <div class="moves">
-    <div class="move"><h3>Guess before you're taught</h3><p>Trying to answer before you've learned something, even getting it wrong, makes the later lesson stick better. In one study, questions people had attempted (and missed) before reading were answered 75% of the time afterward, against 56% for extra reading time. You did this in section 01.</p><div class="try"><b>Try it</b>Before reading a chapter, have AI write you five questions on it. Answer them cold.</div><p class="cite">Richland, Kornell &amp; Kao (2009); Kornell, Hays &amp; Bjork (2009)</p></div>
-    <div class="move"><h3>Mix the problem types</h3><p>Practising A, B, C mixed together beats doing all the A's, then all the B's, because you have to work out which method each problem needs. In a trial with 787 seventh-graders, mixed practice scored 61% against 38% a month later. It also feels worse: in another study, most learners did better mixed yet rated blocked practice as just as good.</p><div class="try"><b>Try it</b>Ask for a quiz that mixes three topics in random order, without labels.</div><p class="cite">Rohrer et al. (2020); Kornell &amp; Bjork (2008)</p></div>
-    <div class="move"><h3>Ask "why is that true?"</h3><p>Stopping to explain why a fact holds, in terms of what you already know, ties it to more of your memory.</p><div class="try"><b>Try it</b>After each paragraph, answer "why would that be?" before reading on.</div><p class="cite">Dunlosky et al. (2013): moderate utility</p></div>
-    <div class="move"><h3>Explain each step to yourself</h3><p>Learners who explain worked examples to themselves line by line learn more than those who just read them.</p><div class="try"><b>Try it</b>Cover a worked solution and say what each step does and why before uncovering it.</div><p class="cite">Chi et al. (1989, 1994)</p></div>
-    <div class="move"><h3>Draw it from memory</h3><p>Sketching how something works, without looking, is a form of recall. It also exposes gaps that words cover over.</p><div class="try"><b>Try it</b>Draw the forgetting curve from section 04 with both plans. Then scroll up and compare.</div><p class="cite">Fiorella &amp; Mayer (2016): generative learning</p></div>
-    <div class="move"><h3>Predict your score first</h3><p>Before any quiz, write down how many you'll get. The gap between your guess and your score is your fluency illusion, measured.</p><div class="try"><b>Try it</b>You did this in section 02. Compare your prediction with your result.</div><p class="cite">Koriat &amp; Bjork (2005); Kornell et al. (2011)</p></div>
-    <div class="move"><h3>Put the questions inside the reading</h3><p>An essay can carry its own spaced review: questions embedded in the text that come back days, then weeks later. Quantum Country, a quantum-computing primer, was built this way, with 112 questions in its first essay. It's the model for a learn mode across this site.</p><div class="try"><b>Try it</b>Read the first chapter of quantumcountry.com and answer its cards when they come back.</div><p class="cite">Matuschak &amp; Nielsen (2019)</p></div>
+    <div class="move"><h3 data-ru="Угадывайте до того, как вас научат" data-ru-src="5e3cf7250b">Guess before you're taught</h3><p data-ru="Попытка ответить до того, как вы что-то выучили, даже неверная, помогает потом лучше запомнить урок. В одном исследовании на вопросы, на которые люди пытались ответить (и ошиблись) до чтения, после чтения отвечали правильно в 75% случаев, против 56% при дополнительном времени на чтение. Вы это уже делали в разделе 01." data-ru-src="0a67283a9f">Trying to answer before you've learned something, even getting it wrong, makes the later lesson stick better. In one study, questions people had attempted (and missed) before reading were answered 75% of the time afterward, against 56% for extra reading time. You did this in section 01.</p><div class="try" data-ru="<b>Попробуйте</b>Перед тем как читать главу, попросите ИИ написать пять вопросов по ней. Ответьте на них вслепую." data-ru-src="62fe375c98"><b>Try it</b>Before reading a chapter, have AI write you five questions on it. Answer them cold.</div><p class="cite">Richland, Kornell &amp; Kao (2009); Kornell, Hays &amp; Bjork (2009)</p></div>
+    <div class="move"><h3 data-ru="Смешивайте типы задач" data-ru-src="bf40b226ea">Mix the problem types</h3><p data-ru="Решать A, B и C вперемешку лучше, чем сначала все A, потом все B, потому что приходится разбираться, какой метод нужен для каждой задачи. В испытании на 787 семиклассниках смешанная практика через месяц дала 61% против 38%. И ощущается она хуже: в другом исследовании большинство учащихся справлялись лучше при смешивании, но оценивали блочную практику как не менее хорошую." data-ru-src="1c23508168">Practising A, B, C mixed together beats doing all the A's, then all the B's, because you have to work out which method each problem needs. In a trial with 787 seventh-graders, mixed practice scored 61% against 38% a month later. It also feels worse: in another study, most learners did better mixed yet rated blocked practice as just as good.</p><div class="try" data-ru="<b>Попробуйте</b>Попросите тест, где три темы перемешаны в случайном порядке и не подписаны." data-ru-src="e5cb18f56b"><b>Try it</b>Ask for a quiz that mixes three topics in random order, without labels.</div><p class="cite">Rohrer et al. (2020); Kornell &amp; Bjork (2008)</p></div>
+    <div class="move"><h3 data-ru="Спрашивайте «почему это правда?»" data-ru-src="f3f5838e2c">Ask "why is that true?"</h3><p data-ru="Если остановиться и объяснить, почему факт верен, через то, что вы уже знаете, он привязывается к большей части вашей памяти." data-ru-src="389b78b14c">Stopping to explain why a fact holds, in terms of what you already know, ties it to more of your memory.</p><div class="try" data-ru="<b>Попробуйте</b>После каждого абзаца, прежде чем читать дальше, ответьте на вопрос «а почему так?»." data-ru-src="e758923930"><b>Try it</b>After each paragraph, answer "why would that be?" before reading on.</div><p class="cite" data-ru="Dunlosky et al. (2013): умеренная польза" data-ru-src="ca2750bcd9">Dunlosky et al. (2013): moderate utility</p></div>
+    <div class="move"><h3 data-ru="Объясняйте себе каждый шаг" data-ru-src="24973c5ffa">Explain each step to yourself</h3><p data-ru="Те, кто строчка за строчкой объясняет себе разобранные примеры, учатся лучше тех, кто их просто читает." data-ru-src="151635dfd2">Learners who explain worked examples to themselves line by line learn more than those who just read them.</p><div class="try" data-ru="<b>Попробуйте</b>Закройте готовое решение и, прежде чем открыть, скажите, что делает каждый шаг и зачем." data-ru-src="7b4eec5fc5"><b>Try it</b>Cover a worked solution and say what each step does and why before uncovering it.</div><p class="cite">Chi et al. (1989, 1994)</p></div>
+    <div class="move"><h3 data-ru="Нарисуйте по памяти" data-ru-src="7f66af6b36">Draw it from memory</h3><p data-ru="Набросать, как что-то устроено, не подглядывая, — тоже форма припоминания. К тому же это вскрывает пробелы, которые слова прикрывают." data-ru-src="da69d5d418">Sketching how something works, without looking, is a form of recall. It also exposes gaps that words cover over.</p><div class="try" data-ru="<b>Попробуйте</b>Нарисуйте кривую забывания из раздела 04 с обоими планами. Потом прокрутите вверх и сравните." data-ru-src="de902ac062"><b>Try it</b>Draw the forgetting curve from section 04 with both plans. Then scroll up and compare.</div><p class="cite" data-ru="Fiorella &amp; Mayer (2016): генеративное обучение" data-ru-src="6c83f56e8d">Fiorella &amp; Mayer (2016): generative learning</p></div>
+    <div class="move"><h3 data-ru="Сначала предскажите результат" data-ru-src="434c2ad634">Predict your score first</h3><p data-ru="Перед любым тестом запишите, сколько ответов будет верными. Разрыв между прогнозом и результатом — это ваша иллюзия беглости в цифрах." data-ru-src="10a6d8547d">Before any quiz, write down how many you'll get. The gap between your guess and your score is your fluency illusion, measured.</p><div class="try" data-ru="<b>Попробуйте</b>Вы это уже делали в разделе 02. Сравните свой прогноз с результатом." data-ru-src="02e7e98e58"><b>Try it</b>You did this in section 02. Compare your prediction with your result.</div><p class="cite">Koriat &amp; Bjork (2005); Kornell et al. (2011)</p></div>
+    <div class="move"><h3 data-ru="Встройте вопросы в само чтение" data-ru-src="3431d9d6ee">Put the questions inside the reading</h3><p data-ru="Эссе может нести в себе собственное интервальное повторение: вопросы, встроенные в текст, которые возвращаются через дни, потом через недели. Так устроен Quantum Country, введение в квантовые вычисления: в первом эссе 112 вопросов. Это образец для режима учёбы на всём этом сайте." data-ru-src="aebf961f36">An essay can carry its own spaced review: questions embedded in the text that come back days, then weeks later. Quantum Country, a quantum-computing primer, was built this way, with 112 questions in its first essay. It's the model for a learn mode across this site.</p><div class="try" data-ru="<b>Попробуйте</b>Прочитайте первую главу quantumcountry.com и отвечайте на её карточки, когда они вернутся." data-ru-src="774b43ae17"><b>Try it</b>Read the first chapter of quantumcountry.com and answer its cards when they come back.</div><p class="cite">Matuschak &amp; Nielsen (2019)</p></div>
   </div>
 </section>
 
 <!-- 10 ============================================================ -->
 <section class="sec" id="close">
-  <span class="sec-num">10 · Close it and explain it</span>
-  <h2>Now close it and explain it</h2>
-  <p class="lede">Don't scroll up. In three or four sentences, write what you'd tell a friend about this page. Then compare it with the page's version.</p>
+  <span class="sec-num" data-ru="10 · Закройте и объясните" data-ru-src="91819863aa">10 · Close it and explain it</span>
+  <h2 data-ru="А теперь закройте и объясните" data-ru-src="8f58beeb21">Now close it and explain it</h2>
+  <p class="lede" data-ru="Не прокручивайте вверх. В трёх-четырёх предложениях напишите, что вы рассказали бы другу об этой странице. Потом сравните с версией страницы." data-ru-src="3bc9882707">Don't scroll up. In three or four sentences, write what you'd tell a friend about this page. Then compare it with the page's version.</p>
   <div class="panel">
-    <label for="recallBox" class="kicker">From memory</label>
-    <textarea class="recall-box" id="recallBox" placeholder="The main idea is…"></textarea>
-    <div class="btn-row"><button class="btn" type="button" id="recallReveal">Compare with the page</button></div>
+    <label for="recallBox" class="kicker" data-ru="По памяти" data-ru-src="3ce3f99162">From memory</label>
+    <textarea class="recall-box" id="recallBox" placeholder="The main idea is…" data-ru-placeholder="Главная идея в том, что…"></textarea>
+    <div class="btn-row"><button class="btn" type="button" id="recallReveal" data-ru="Сравнить со страницей" data-ru-src="c285f470b6">Compare with the page</button></div>
     <div id="recallCompare" hidden>
-      <p style="margin-top:1.2rem"><b>Tick the ones you had</b>, even in other words:</p>
+      <p style="margin-top:1.2rem" data-ru="<b>Отметьте то, что у вас было</b>, пусть и другими словами:" data-ru-src="225eac341c"><b>Tick the ones you had</b>, even in other words:</p>
       <ul class="check-list" id="keyIdeas">
-        <li><label><input type="checkbox"> <span>Learning happens when you pull information out (recall, explain, attempt), not when you put it in (reread, watch, have it explained).</span></label></li>
-        <li><label><input type="checkbox"> <span>Ease is a false signal: rereading feels better and even wins at five minutes, then loses after a week.</span></label></li>
-        <li><label><input type="checkbox"> <span>Space the recall out, with each review coming when it's a little hard.</span></label></li>
-        <li><label><input type="checkbox"> <span>Give AI jobs that make you produce (questioner, examiner, listener, sparring partner), and ask for hints, not answers.</span></label></li>
-        <li><label><input type="checkbox"> <span>Ground AI in a source and grade against it, then redo the task without help.</span></label></li>
+        <li><label><input type="checkbox"> <span data-ru="Учёба происходит, когда вы достаёте информацию (вспоминаете, объясняете, пробуете), а не когда вкладываете её (перечитываете, смотрите, слушаете объяснения)." data-ru-src="d0debb7734">Learning happens when you pull information out (recall, explain, attempt), not when you put it in (reread, watch, have it explained).</span></label></li>
+        <li><label><input type="checkbox"> <span data-ru="Лёгкость — ложный сигнал: перечитывание ощущается лучше и даже выигрывает через пять минут, а через неделю проигрывает." data-ru-src="2c396b12dc">Ease is a false signal: rereading feels better and even wins at five minutes, then loses after a week.</span></label></li>
+        <li><label><input type="checkbox"> <span data-ru="Растягивайте припоминание во времени, чтобы каждое повторение давалось чуть трудно." data-ru-src="faaca3aafd">Space the recall out, with each review coming when it's a little hard.</span></label></li>
+        <li><label><input type="checkbox"> <span data-ru="Давайте ИИ задачи, которые заставляют вас производить (собеседник, экзаменатор, слушатель, спарринг-партнёр), и просите подсказки, а не ответы." data-ru-src="b211c05f5e">Give AI jobs that make you produce (questioner, examiner, listener, sparring partner), and ask for hints, not answers.</span></label></li>
+        <li><label><input type="checkbox"> <span data-ru="Привязывайте ИИ к источнику и оценивайте по нему, а потом сделайте задачу заново без помощи." data-ru-src="ddecab3d40">Ground AI in a source and grade against it, then redo the task without help.</span></label></li>
       </ul>
       <p class="small" id="recallScore" aria-live="polite" style="margin-top:.8rem"></p>
-      <p class="kicker" style="margin-top:1.4rem">Or have an AI grade it</p>
-      <pre class="prompt" id="gradePrompt">Here is my summary of the page at https://esmrsky.github.io/feels-like-learning/, written from memory. Grade it against the page only. List the main ideas I captured, the ones I missed, and anything I got wrong. Then ask me one question about the idea I missed.
+      <p class="kicker" style="margin-top:1.4rem" data-ru="Или пусть оценит ИИ" data-ru-src="73ab96809b">Or have an AI grade it</p>
+      <pre class="prompt" id="gradePrompt" data-ru="Вот мой пересказ страницы https://esmrsky.github.io/feels-like-learning/ru/, написанный по памяти. Оцени его только по этой странице. Перечисли главные идеи, которые я ухватил, те, что упустил, и всё, в чём я ошибся. Потом задай мне один вопрос об упущенной идее.
+
+Мой пересказ:
+[вставьте его сюда]<button class=&quot;btn sm ghost copy&quot; type=&quot;button&quot; data-copy=&quot;gradePrompt&quot;>Копировать</button>" data-ru-src="2454fe57e6">Here is my summary of the page at https://esmrsky.github.io/feels-like-learning/, written from memory. Grade it against the page only. List the main ideas I captured, the ones I missed, and anything I got wrong. Then ask me one question about the idea I missed.
 
 My summary:
 [paste it here]<button class="btn sm ghost copy" type="button" data-copy="gradePrompt">Copy</button></pre>
     </div>
   </div>
 
-  <h3>Your next week</h3>
+  <h3 data-ru="Ваша следующая неделя" data-ru-src="7af959a5a5">Your next week</h3>
   <div class="plan-week">
-    <div><b>Today</b>Pick one subject. Run the interviewer and mapmaker prompts.</div>
-    <div><b>Day 1</b>Take the word test in section 02. Recall yesterday's map before you open it.</div>
-    <div><b>Day 3</b>Have it quiz you, one question at a time, harder each time.</div>
-    <div><b>Day 7</b>Explain the whole thing out loud from memory. Grade it against the source.</div>
-    <div><b>Day 14</b>Redo something hard from scratch, with no help.</div>
+    <div data-ru="<b>Сегодня</b>Выберите один предмет. Запустите промпты интервьюера и картографа." data-ru-src="52b3ac36e4"><b>Today</b>Pick one subject. Run the interviewer and mapmaker prompts.</div>
+    <div data-ru="<b>День 1</b>Пройдите тест по словам в разделе 02. Вспомните вчерашнюю карту, прежде чем её открыть." data-ru-src="2f2707e94b"><b>Day 1</b>Take the word test in section 02. Recall yesterday's map before you open it.</div>
+    <div data-ru="<b>День 3</b>Пусть ИИ проверит вас, по одному вопросу, каждый раз сложнее." data-ru-src="2c462df7a8"><b>Day 3</b>Have it quiz you, one question at a time, harder each time.</div>
+    <div data-ru="<b>День 7</b>Объясните всё вслух по памяти. Оцените по источнику." data-ru-src="bfdd45f5fb"><b>Day 7</b>Explain the whole thing out loud from memory. Grade it against the source.</div>
+    <div data-ru="<b>День 14</b>Сделайте с нуля что-то трудное, без помощи." data-ru-src="70968a0a43"><b>Day 14</b>Redo something hard from scratch, with no help.</div>
   </div>
 </section>
 
 <section class="sec" id="sources">
-  <span class="sec-num">Sources</span>
-  <h2>Where this comes from</h2>
+  <span class="sec-num" data-ru="Источники" data-ru-src="caf85b0888">Sources</span>
+  <h2 data-ru="Откуда это взято" data-ru-src="288a167e99">Where this comes from</h2>
   <ol class="sources" id="sourceList">
     <li>Roediger, H. L., &amp; Karpicke, J. D. (2006). Test-enhanced learning. <i>Psychological Science</i>, 17(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x">doi</a></li>
-    <li>Karpicke, J. D., &amp; Roediger, H. L. (2008). The critical importance of retrieval for learning. <i>Science</i>, 319, 966–968. <a href="https://doi.org/10.1126/science.1152408">doi</a> · Replicated, with the caveat that restudying also helps, by Soderstrom, Kerr &amp; Bjork (2016), <i>Psychological Science</i>, 27, 223–230. <a href="https://doi.org/10.1177/0956797615617778">doi</a></li>
+    <li data-ru="Karpicke, J. D., &amp; Roediger, H. L. (2008). The critical importance of retrieval for learning. <i>Science</i>, 319, 966–968. <a href=&quot;https://doi.org/10.1126/science.1152408&quot;>doi</a> · Воспроизведено с оговоркой, что повторное изучение тоже помогает: Soderstrom, Kerr &amp; Bjork (2016), <i>Psychological Science</i>, 27, 223–230. <a href=&quot;https://doi.org/10.1177/0956797615617778&quot;>doi</a>" data-ru-src="ac162b85f7">Karpicke, J. D., &amp; Roediger, H. L. (2008). The critical importance of retrieval for learning. <i>Science</i>, 319, 966–968. <a href="https://doi.org/10.1126/science.1152408">doi</a> · Replicated, with the caveat that restudying also helps, by Soderstrom, Kerr &amp; Bjork (2016), <i>Psychological Science</i>, 27, 223–230. <a href="https://doi.org/10.1177/0956797615617778">doi</a></li>
     <li>Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J., &amp; Willingham, D. T. (2013). Improving students' learning with effective learning techniques. <i>Psychological Science in the Public Interest</i>, 14(1), 4–58. <a href="https://doi.org/10.1177/1529100612453266">doi</a></li>
     <li>Cepeda, N. J., Vul, E., Rohrer, D., Wixted, J. T., &amp; Pashler, H. (2008). Spacing effects in learning: A temporal ridgeline of optimal retention. <i>Psychological Science</i>, 19(11), 1095–1102. <a href="https://doi.org/10.1111/j.1467-9280.2008.02209.x">doi</a></li>
     <li>Murre, J. M. J., &amp; Dros, J. (2015). Replication and analysis of Ebbinghaus' forgetting curve. <i>PLOS ONE</i>, 10(7), e0120644. <a href="https://doi.org/10.1371/journal.pone.0120644">doi</a></li>
@@ -885,22 +905,22 @@ My summary:
     <li>Bastani, H., Bastani, O., Sungu, A., Ge, H., Kabakcı, Ö., &amp; Mariman, R. (2025). Generative AI without guardrails can harm learning: Evidence from high school mathematics. <i>PNAS</i>, 122(26), e2422633122. <a href="https://doi.org/10.1073/pnas.2422633122">doi</a></li>
     <li>Kestin, G., Miller, K., Klales, A., Milbourne, T., &amp; Ponti, G. (2025). AI tutoring outperforms in-class active learning. <i>Scientific Reports</i>, 15, 17458. <a href="https://doi.org/10.1038/s41598-025-97652-6">doi</a></li>
     <li>Dahmani, L., &amp; Bohbot, V. D. (2020). Habitual use of GPS negatively impacts spatial memory during self-guided navigation. <i>Scientific Reports</i>, 10, 6310. <a href="https://doi.org/10.1038/s41598-020-62877-0">doi</a></li>
-    <li>De Simone, M., et al. (2025). From chalkboards to chatbots: Evaluating the impact of generative AI on learning outcomes in Nigeria. World Bank Policy Research Working Paper 11125. <a href="https://openknowledge.worldbank.org/entities/publication/15e1ff08-15ae-4f7a-b2a8-d146e6c113ee">link</a> · Liu et al. (2026), EdWorkingPaper 26-1598, not peer-reviewed. <a href="https://edworkingpapers.com/ai26-1598">link</a> · Kosmyna, N., et al. (2025). Your brain on ChatGPT. arXiv preprint 2506.08872. <a href="https://arxiv.org/abs/2506.08872">link</a></li>
+    <li data-ru="De Simone, M., et al. (2025). From chalkboards to chatbots: Evaluating the impact of generative AI on learning outcomes in Nigeria. World Bank Policy Research Working Paper 11125. <a href=&quot;https://openknowledge.worldbank.org/entities/publication/15e1ff08-15ae-4f7a-b2a8-d146e6c113ee&quot;>ссылка</a> · Liu et al. (2026), EdWorkingPaper 26-1598, без рецензирования. <a href=&quot;https://edworkingpapers.com/ai26-1598&quot;>ссылка</a> · Kosmyna, N., et al. (2025). Your brain on ChatGPT. arXiv preprint 2506.08872. <a href=&quot;https://arxiv.org/abs/2506.08872&quot;>ссылка</a>" data-ru-src="cb780231b0">De Simone, M., et al. (2025). From chalkboards to chatbots: Evaluating the impact of generative AI on learning outcomes in Nigeria. World Bank Policy Research Working Paper 11125. <a href="https://openknowledge.worldbank.org/entities/publication/15e1ff08-15ae-4f7a-b2a8-d146e6c113ee">link</a> · Liu et al. (2026), EdWorkingPaper 26-1598, not peer-reviewed. <a href="https://edworkingpapers.com/ai26-1598">link</a> · Kosmyna, N., et al. (2025). Your brain on ChatGPT. arXiv preprint 2506.08872. <a href="https://arxiv.org/abs/2506.08872">link</a></li>
     <li>Pashler, H., McDaniel, M., Rohrer, D., &amp; Bjork, R. (2008). Learning styles: Concepts and evidence. <i>Psychological Science in the Public Interest</i>, 9(3), 105–119. <a href="https://doi.org/10.1111/j.1539-6053.2009.01038.x">doi</a></li>
     <li>Freeman, S., et al. (2014). Active learning increases student performance in science, engineering, and mathematics. <i>PNAS</i>, 111(23), 8410–8415. <a href="https://doi.org/10.1073/pnas.1319030111">doi</a></li>
     <li>Rohrer, D., Dedrick, R. F., Hartwig, M. K., &amp; Cheung, C.-N. (2020). A randomized controlled trial of interleaved mathematics practice. <i>Journal of Educational Psychology</i>, 112(1), 40–52. <a href="https://doi.org/10.1037/edu0000367">doi</a> · Kornell, N., &amp; Bjork, R. A. (2008). Learning concepts and categories: Is spacing the "enemy of induction"? <i>Psychological Science</i>, 19(6), 585–592. <a href="https://doi.org/10.1111/j.1467-9280.2008.02127.x">doi</a></li>
     <li>Richland, L. E., Kornell, N., &amp; Kao, L. S. (2009). The pretesting effect. <i>JEP: Applied</i>, 15(3), 243–257. <a href="https://doi.org/10.1037/a0016496">doi</a> · Kornell, N., Hays, M. J., &amp; Bjork, R. A. (2009). Unsuccessful retrieval attempts enhance subsequent learning. <i>JEP: Learning, Memory, and Cognition</i>, 35(4), 989–998. <a href="https://doi.org/10.1037/a0015729">doi</a></li>
     <li>Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P., &amp; Glaser, R. (1989). Self-explanations. <i>Cognitive Science</i>, 13, 145–182. <a href="https://doi.org/10.1207/s15516709cog1302_1">doi</a> · Chi, M. T. H., de Leeuw, N., Chiu, M.-H., &amp; LaVancher, C. (1994). Eliciting self-explanations improves understanding. <i>Cognitive Science</i>, 18, 439–477. <a href="https://doi.org/10.1207/s15516709cog1803_3">doi</a></li>
     <li>Fiorella, L., &amp; Mayer, R. E. (2016). Eight ways to promote generative learning. <i>Educational Psychology Review</i>, 28, 717–741. <a href="https://doi.org/10.1007/s10648-015-9348-9">doi</a></li>
-    <li>Matuschak, A., &amp; Nielsen, M. (2019). <a href="https://quantum.country">Quantum Country</a> and <a href="https://numinous.productions/ttft/">How can we develop transformative tools for thought?</a> Self-published; its retention data are informal.</li>
-    <li>Tools: <a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/">NotebookLM is now Gemini Notebook</a> (Google, July 2026) and its <a href="https://support.google.com/gemininotebook">help center</a>; <a href="https://blog.google/outreach-initiatives/education/guided-learning/">Gemini Guided Learning</a>; <a href="https://help.openai.com/en/articles/11780217">ChatGPT Study mode</a>; <a href="https://code.claude.com/docs/en/output-styles">Claude Code output styles</a>; <a href="https://docs.ankiweb.net/deck-options.html">Anki deck options and FSRS</a>; <a href="https://research.google/blog/learn-your-way-reimagining-textbooks-with-generative-ai/">Learn Your Way</a>.</li>
+    <li data-ru="Matuschak, A., &amp; Nielsen, M. (2019). <a href=&quot;https://quantum.country&quot;>Quantum Country</a> и <a href=&quot;https://numinous.productions/ttft/&quot;>How can we develop transformative tools for thought?</a> Опубликовано самостоятельно; данные о запоминании неформальные." data-ru-src="fae35e805f">Matuschak, A., &amp; Nielsen, M. (2019). <a href="https://quantum.country">Quantum Country</a> and <a href="https://numinous.productions/ttft/">How can we develop transformative tools for thought?</a> Self-published; its retention data are informal.</li>
+    <li data-ru="Инструменты: <a href=&quot;https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/&quot;>NotebookLM теперь называется Gemini Notebook</a> (Google, июль 2026) и его <a href=&quot;https://support.google.com/gemininotebook&quot;>справочный центр</a>; <a href=&quot;https://blog.google/outreach-initiatives/education/guided-learning/&quot;>Gemini Guided Learning</a>; <a href=&quot;https://help.openai.com/en/articles/11780217&quot;>ChatGPT Study mode</a>; <a href=&quot;https://code.claude.com/docs/en/output-styles&quot;>стили вывода Claude Code</a>; <a href=&quot;https://docs.ankiweb.net/deck-options.html&quot;>параметры колоды Anki и FSRS</a>; <a href=&quot;https://research.google/blog/learn-your-way-reimagining-textbooks-with-generative-ai/&quot;>Learn Your Way</a>." data-ru-src="98bcf750cb">Tools: <a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/">NotebookLM is now Gemini Notebook</a> (Google, July 2026) and its <a href="https://support.google.com/gemininotebook">help center</a>; <a href="https://blog.google/outreach-initiatives/education/guided-learning/">Gemini Guided Learning</a>; <a href="https://help.openai.com/en/articles/11780217">ChatGPT Study mode</a>; <a href="https://code.claude.com/docs/en/output-styles">Claude Code output styles</a>; <a href="https://docs.ankiweb.net/deck-options.html">Anki deck options and FSRS</a>; <a href="https://research.google/blog/learn-your-way-reimagining-textbooks-with-generative-ai/">Learn Your Way</a>.</li>
   </ol>
 </section>
 
 <footer>
-  <p>Starting point: a video on learning with AI. Its claims are checked in section 08, and its prompts are rewritten in section 05.</p>
-  <p>This page is also the pilot for Learn mode, the graduation-cap switch at the top, which is planned for the rest of the site.</p>
-  <p class="site-link">Part of <a href="/">esmrsky.github.io</a>.</p>
+  <p data-ru="Отправная точка: видео об учёбе с ИИ. Его утверждения проверены в разделе 08, а промпты переписаны в разделе 05." data-ru-src="79a18c5a94">Starting point: a video on learning with AI. Its claims are checked in section 08, and its prompts are rewritten in section 05.</p>
+  <p data-ru="Эта страница — ещё и пилот режима учёбы: это переключатель с академической шапочкой наверху, который планируется на всём сайте." data-ru-src="e9c47b77db">This page is also the pilot for Learn mode, the graduation-cap switch at the top, which is planned for the rest of the site.</p>
+  <p class="site-link" data-ru="Часть <a href=&quot;/&quot;>esmrsky.github.io</a>." data-ru-src="ffa6dbdb60">Part of <a href="/">esmrsky.github.io</a>.</p>
 </footer>
 
 </div>
@@ -909,6 +929,10 @@ My summary:
 (function () {
   'use strict';
   var root = document.documentElement;
+  /* Russian page: the build sets lang="ru"; every reader-facing string below goes through L(en, ru). */
+  var RU = root.lang === 'ru';
+  function L(en, ru) { return RU ? ru : en; }
+  function pl(n, one, few, many) { var a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many; }
   var NS = 'http://www.w3.org/2000/svg';
   var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   function $(s, c) { return (c || document).querySelector(s); }
@@ -965,7 +989,7 @@ My summary:
   function setLearn(on) {
     if (on) root.removeAttribute('data-learn'); else root.setAttribute('data-learn', 'off');
     learnBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    $('.state', learnBtn).textContent = on ? 'on' : 'off';
+    $('.state', learnBtn).textContent = on ? L('on', 'вкл.') : L('off', 'выкл.');
   }
   setLearn(root.getAttribute('data-learn') !== 'off');
   learnBtn.addEventListener('click', function () {
@@ -990,7 +1014,7 @@ My summary:
       var text = '';
       src.childNodes.forEach(function (n) { if (n.nodeType === 3) text += n.nodeValue; });
       text = text.trim();
-      function done() { toast('Copied'); }
+      function done() { toast(L('Copied', 'Скопировано')); }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, function () { fallback(text); done(); });
       } else { fallback(text); done(); }
@@ -1009,7 +1033,7 @@ My summary:
       var t = document.getElementById(b.getAttribute('data-table-toggle'));
       t.hidden = !t.hidden;
       b.setAttribute('aria-expanded', t.hidden ? 'false' : 'true');
-      b.textContent = t.hidden ? 'Show as a table' : 'Hide the table';
+      b.textContent = t.hidden ? L('Show as a table', 'Показать таблицей') : L('Hide the table', 'Скрыть таблицу');
     });
   });
 
@@ -1076,16 +1100,16 @@ My summary:
      01 · Predict, then the Roediger & Karpicke slope chart
      ===================================================================== */
   var RK = [
-    { label: 'Read 4×', a: 83, b: 40, color: '--consume', cls: 'consume' },
-    { label: 'Read 3×, recall 1×', a: 78, b: 56, color: '--base', cls: 'base' },
-    { label: 'Read 1×, recall 3×', a: 71, b: 61, color: '--produce', cls: 'produce' }
+    { label: L('Read 4×', 'Чтение 4×'), a: 83, b: 40, color: '--consume', cls: 'consume' },
+    { label: L('Read 3×, recall 1×', 'Чтение 3×, припоминание 1×'), a: 78, b: 56, color: '--base', cls: 'base' },
+    { label: L('Read 1×, recall 3×', 'Чтение 1×, припоминание 3×'), a: 71, b: 61, color: '--produce', cls: 'produce' }
   ];
   var preds = {};
   $$('#predictPanel [role="radiogroup"]').forEach(function (g) {
     radioGroup(g, function (v) { preds[g.getAttribute('data-q')] = v; updateRevealLabel(); });
   });
   function updateRevealLabel() {
-    $('#revealSlope').textContent = (preds.p5 && preds.p7) ? 'Show me the study' : 'Skip the guess and show me';
+    $('#revealSlope').textContent = (preds.p5 && preds.p7) ? L('Show me the study', 'Показать исследование') : L('Skip the guess and show me', 'Без догадки, просто покажите');
   }
   updateRevealLabel();
   var slopeRevealed = false;
@@ -1097,15 +1121,15 @@ My summary:
     drawSlope(true);
     var v = $('#slopeVerdicts'); v.textContent = '';
     var truth = { p5: 're', p7: 'rc' };
-    var names = { re: 'Group A (reread)', rc: 'Group B (recalled)', eq: 'about the same' };
-    [['p5', 'After five minutes', 'Rereading wins, 83% to 71%.'], ['p7', 'After a week', 'Recall wins, 61% to 40%.']].forEach(function (r) {
+    var names = { re: L('Group A (reread)', 'группа A (перечитывала)'), rc: L('Group B (recalled)', 'группа B (вспоминала)'), eq: L('about the same', 'примерно одинаково') };
+    [['p5', L('After five minutes', 'Через пять минут'), L('Rereading wins, 83% to 71%.', 'Перечитывание выигрывает, 83% против 71%.')], ['p7', L('After a week', 'Через неделю'), L('Recall wins, 61% to 40%.', 'Припоминание выигрывает, 61% против 40%.')]].forEach(function (r) {
       var p = preds[r[0]];
       var line = h('div', { cls: 'verdict' });
       line.appendChild(h('b', { text: r[1] + ': ' }));
       line.appendChild(document.createTextNode(r[2] + ' '));
       if (p) {
         var ok = p === truth[r[0]];
-        line.appendChild(h('span', { cls: ok ? 'mark-ok' : 'mark-bad', text: ok ? '✓ You called it.' : '✗ You said ' + names[p] + '.' }));
+        line.appendChild(h('span', { cls: ok ? 'mark-ok' : 'mark-bad', text: ok ? L('✓ You called it.', '✓ Вы угадали.') : L('✗ You said ', '✗ Ваш ответ: ') + names[p] + '.' }));
       }
       v.appendChild(line);
     });
@@ -1129,8 +1153,8 @@ My summary:
     });
     stext(svg, (x0 + x1) / 2, y(100) - 6, '100%', 'axis-label', 'middle');
     stext(svg, (x0 + x1) / 2, y(0) - 6, '0%', 'axis-label', 'middle');
-    stext(svg, x0, H - 10, 'After 5 min', 'axis-label', 'middle');
-    stext(svg, x1, H - 10, 'After 1 week', 'axis-label', 'middle');
+    stext(svg, x0, H - 10, L('After 5 min', 'Через 5 мин'), 'axis-label', 'middle');
+    stext(svg, x1, H - 10, L('After 1 week', 'Через неделю'), 'axis-label', 'middle');
     var lines = [];
     RK.forEach(function (d) {
       var ln = s('line', { x1: x0, y1: y(d.a), x2: x1, y2: y(d.b), 'class': 'line s-' + d.cls + (d.cls === 'base' ? ' thin' : '') }, svg);
@@ -1161,7 +1185,7 @@ My summary:
       var r = svg.getBoundingClientRect(); var px = e.clientX - r.left;
       var isRight = px > (x0 + x1) / 2; var cx = isRight ? x1 : x0;
       cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('opacity', 1);
-      slopeTip.show(isRight ? 'After 1 week' : 'After 5 minutes', RK.slice().sort(function (a, b) { return (isRight ? b.b - a.b : b.a - a.a); }).map(function (d) {
+      slopeTip.show(isRight ? L('After 1 week', 'Через неделю') : L('After 5 minutes', 'Через 5 минут'), RK.slice().sort(function (a, b) { return (isRight ? b.b - a.b : b.a - a.a); }).map(function (d) {
         return { color: d.color, value: (isRight ? d.b : d.a) + '%', label: d.label };
       }), cx, e.clientY - r.top);
     }
@@ -1188,6 +1212,13 @@ My summary:
     B: [['maji', ['water']], ['jua', ['sun']], ['moto', ['fire']], ['ziwa', ['lake']], ['mkate', ['bread', 'loaf']], ['chumvi', ['salt']],
         ['kiti', ['chair', 'seat']], ['dirisha', ['window']], ['barabara', ['road', 'street', 'highway']], ['tembo', ['elephant']], ['kisu', ['knife']], ['mlima', ['mountain', 'hill']]]
   };
+  if (RU) {
+    var GLOSS = { nyumba: ['дом'], mbwa: ['собака', 'пес'], kitabu: ['книга'], kioo: ['зеркало', 'стекло'], mti: ['дерево'], samaki: ['рыба'],
+      mlango: ['дверь'], kalamu: ['ручка'], ndege: ['птица', 'самолет'], mvua: ['дождь'], nyota: ['звезда'], jiwe: ['камень'],
+      maji: ['вода'], jua: ['солнце'], moto: ['огонь'], ziwa: ['озеро'], mkate: ['хлеб', 'батон'], chumvi: ['соль'],
+      kiti: ['стул', 'сиденье'], dirisha: ['окно'], barabara: ['дорога', 'улица', 'шоссе'], tembo: ['слон'], kisu: ['нож'], mlima: ['гора', 'холм'] };
+    ['A', 'B'].forEach(function (k) { SETS[k].forEach(function (w) { w[1] = GLOSS[w[0]]; }); });
+  }
   var KEY = 'fll-swahili-v1';
   var READY_MS = 20 * 3600 * 1000;
   var EXPOSE_MS = 5000;
@@ -1203,6 +1234,7 @@ My summary:
   function save() { return store.set(KEY, JSON.stringify(exp)); }
   function words() { return SETS[exp.set]; }
   function norm(t) {
+    if (RU) return (t || '').toLowerCase().replace(/ё/g, 'е').replace(/[^а-я\s-]/g, '').trim();
     return (t || '').toLowerCase().replace(/[^a-z\s-]/g, '').replace(/^\s*(a|an|the|to)\s+/, '').trim();
   }
   function lev(a, b) {
@@ -1218,6 +1250,12 @@ My summary:
   }
   function ago(ms) {
     var m = Math.round(ms / 60000);
+    if (RU) {
+      if (m < 60) return m <= 1 ? 'минуту' : m + ' ' + pl(m, 'минуту', 'минуты', 'минут');
+      var hr = Math.floor(m / 60); if (hr < 24) return hr + ' ' + pl(hr, 'час', 'часа', 'часов');
+      var dd = Math.floor(hr / 24), rr = hr % 24;
+      return dd + ' ' + pl(dd, 'день', 'дня', 'дней') + (rr ? ' ' + rr + ' ' + pl(rr, 'час', 'часа', 'часов') : '');
+    }
     if (m < 60) return m <= 1 ? 'about a minute' : m + ' minutes';
     var hrs = Math.floor(m / 60);
     if (hrs < 24) return hrs + (hrs === 1 ? ' hour' : ' hours');
@@ -1234,7 +1272,7 @@ My summary:
     updateBanner();
   }
   function progress(label, i, n) {
-    return h('div', { cls: 'exp-progress' }, [h('span', { text: label }), h('span', { text: (i + 1) + ' of ' + n })]);
+    return h('div', { cls: 'exp-progress' }, [h('span', { text: label }), h('span', { text: (i + 1) + L(' of ', ' из ') + n })]);
   }
   function timerBar(ms) {
     var t = h('div', { cls: 'timer' }, [h('i')]);
@@ -1244,15 +1282,15 @@ My summary:
 
   function rIntro() {
     var other = exp.set === 'A' ? 'B' : 'A';
-    stage.appendChild(h('p', { cls: 'kicker', text: 'Word set ' + exp.set + ' · about 3 minutes' }));
-    stage.appendChild(h('h3', { text: 'Twelve words, three steps' }));
+    stage.appendChild(h('p', { cls: 'kicker', text: L('Word set ', 'Набор слов ') + exp.set + L(' · about 3 minutes', ' · около 3 минут') }));
+    stage.appendChild(h('h3', { text: L('Twelve words, three steps', 'Двенадцать слов, три шага') }));
     stage.appendChild(h('ol', { cls: 'steps' }, [
-      h('li', {}, [h('b', { text: 'See' }), ' each Swahili word with its English meaning, once.']),
-      h('li', {}, [h('b', { text: 'Practise' }), ': six words you just read again, six you try to recall. The page picks which at random.']),
-      h('li', {}, [h('b', { text: 'Get tested' }), ' on all twelve, ideally tomorrow. The page remembers your words.'])
+      h('li', {}, [h('b', { text: L('See', 'Посмотрите') }), L(' each Swahili word with its English meaning, once.', ' каждое слово на суахили с переводом, один раз.')]),
+      h('li', {}, [h('b', { text: L('Practise', 'Потренируйтесь') }), L(': six words you just read again, six you try to recall. The page picks which at random.', ': шесть слов вы просто перечитываете, шесть пытаетесь вспомнить. Какие именно, страница выбирает случайно.')]),
+      h('li', {}, [h('b', { text: L('Get tested', 'Пройдите тест') }), L(' on all twelve, ideally tomorrow. The page remembers your words.', ' на всех двенадцати, лучше завтра. Страница запомнит ваши слова.')])
     ]));
     var row = h('div', { cls: 'btn-row' });
-    var go = h('button', { cls: 'btn blue', type: 'button', text: 'Start' });
+    var go = h('button', { cls: 'btn blue', type: 'button', text: L('Start', 'Начать') });
     go.addEventListener('click', function () {
       var idx = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
       exp.assign = {}; idx.forEach(function (w, k) { exp.assign[w] = k < 6 ? 're' : 'rc'; });
@@ -1261,25 +1299,25 @@ My summary:
     });
     row.appendChild(go);
     if (exp.done.indexOf(exp.set) !== -1) {
-      var sw = h('button', { cls: 'btn ghost', type: 'button', text: 'Use word set ' + other + ' instead' });
+      var sw = h('button', { cls: 'btn ghost', type: 'button', text: L('Use word set ', 'Взять набор ') + other + L(' instead', ' вместо этого') });
       sw.addEventListener('click', function () { exp.set = other; render(); });
       row.appendChild(sw);
-      stage.appendChild(h('p', { cls: 'small muted', text: 'You have already been tested on set ' + exp.set + '. A fresh set gives a cleaner result.' }));
+      stage.appendChild(h('p', { cls: 'small muted', text: L('You have already been tested on set ', 'Вы уже проходили тест на наборе ') + exp.set + L('. A fresh set gives a cleaner result.', '. Новый набор даст более чистый результат.') }));
     }
     stage.appendChild(row);
   }
 
   function rStudy() {
     var w = words()[exp.order[exp.i]];
-    stage.appendChild(progress('Step 1 · See each word', exp.i, 12));
+    stage.appendChild(progress(L('Step 1 · See each word', 'Шаг 1 · Посмотрите каждое слово'), exp.i, 12));
     var card = h('div', { cls: 'exp-card' }, [
-      h('div', { cls: 'mode st', text: 'New word' }),
+      h('div', { cls: 'mode st', text: L('New word', 'Новое слово') }),
       h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
       h('div', { cls: 'eng', text: w[1][0] }),
       timerBar(EXPOSE_MS)
     ]);
     stage.appendChild(card);
-    var next = h('button', { cls: 'btn ghost sm', type: 'button', text: 'Next' });
+    var next = h('button', { cls: 'btn ghost sm', type: 'button', text: L('Next', 'Дальше') });
     next.addEventListener('click', advance);
     stage.appendChild(h('div', { cls: 'btn-row', style: 'justify-content:center' }, [next]));
     expTimer = setTimeout(advance, EXPOSE_MS);
@@ -1293,13 +1331,13 @@ My summary:
 
   function rPractice() {
     var idx = exp.practiceOrder[exp.i], w = words()[idx], mode = exp.assign[idx];
-    stage.appendChild(progress('Step 2 · Practise', exp.i, 12));
+    stage.appendChild(progress(L('Step 2 · Practise', 'Шаг 2 · Тренировка'), exp.i, 12));
     var row = h('div', { cls: 'btn-row', style: 'justify-content:center' });
-    var next = h('button', { cls: 'btn ghost sm', type: 'button', text: 'Next' });
+    var next = h('button', { cls: 'btn ghost sm', type: 'button', text: L('Next', 'Дальше') });
     next.addEventListener('click', advance);
     if (mode === 're') {
       stage.appendChild(h('div', { cls: 'exp-card' }, [
-        h('div', { cls: 'mode re', text: 'Read it again' }),
+        h('div', { cls: 'mode re', text: L('Read it again', 'Перечитайте') }),
         h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
         h('div', { cls: 'eng', text: w[1][0] }),
         timerBar(EXPOSE_MS)
@@ -1307,11 +1345,11 @@ My summary:
       row.appendChild(next); stage.appendChild(row);
       expTimer = setTimeout(advance, EXPOSE_MS);
     } else {
-      var input = h('input', { type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'English meaning of ' + w[0], placeholder: 'English?' });
-      var check = h('button', { cls: 'btn blue sm', type: 'button', text: 'Check' });
+      var input = h('input', { type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': L('English meaning of ', 'Перевод слова ') + w[0], placeholder: L('English?', 'По-русски?') });
+      var check = h('button', { cls: 'btn blue sm', type: 'button', text: L('Check', 'Проверить') });
       var fb = h('div', { cls: 'feedback', 'aria-live': 'polite' });
       stage.appendChild(h('div', { cls: 'exp-card' }, [
-        h('div', { cls: 'mode rc', text: 'Recall it' }),
+        h('div', { cls: 'mode rc', text: L('Recall it', 'Вспомните') }),
         h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
         h('div', { cls: 'answer-row' }, [input, check]),
         fb
@@ -1326,12 +1364,12 @@ My summary:
         if (ok) fb.appendChild(h('span', { cls: 'mark-ok', text: '✓ ' + w[1][0] }));
         else {
           fb.appendChild(h('span', { cls: 'mark-bad', text: '✗ ' }));
-          fb.appendChild(document.createTextNode('It means '));
+          fb.appendChild(document.createTextNode(L('It means ', 'Это значит ')));
           fb.appendChild(h('b', { text: w[1][0] }));
           fb.appendChild(document.createTextNode('. '));
           if (norm(input.value)) {
-            var mine = h('button', { cls: 'linkbtn', type: 'button', text: 'I meant that' });
-            mine.addEventListener('click', function () { exp.practice[idx] = true; mine.remove(); fb.appendChild(h('span', { cls: 'mark-ok', text: '✓ counted' })); });
+            var mine = h('button', { cls: 'linkbtn', type: 'button', text: L('I meant that', 'Я это и имел в виду') });
+            mine.addEventListener('click', function () { exp.practice[idx] = true; mine.remove(); fb.appendChild(h('span', { cls: 'mark-ok', text: L('✓ counted', '✓ засчитано') })); });
             fb.appendChild(mine);
           }
         }
@@ -1353,51 +1391,51 @@ My summary:
   function stepper(key, label, cls) {
     var out = h('output', { text: String(exp.predict[key]) });
     function set(v) { exp.predict[key] = Math.max(0, Math.min(6, v)); out.textContent = exp.predict[key]; }
-    var minus = h('button', { type: 'button', 'aria-label': 'Fewer', text: '−' });
-    var plus = h('button', { type: 'button', 'aria-label': 'More', text: '+' });
+    var minus = h('button', { type: 'button', 'aria-label': L('Fewer', 'Меньше'), text: '−' });
+    var plus = h('button', { type: 'button', 'aria-label': L('More', 'Больше'), text: '+' });
     minus.addEventListener('click', function () { set(exp.predict[key] - 1); });
     plus.addEventListener('click', function () { set(exp.predict[key] + 1); });
-    return h('div', {}, [h('div', { cls: 'lbl' }, [h('i', { cls: 'sw ' + cls }), label]), h('div', { cls: 'stepper' }, [minus, out, plus, h('span', { cls: 'muted small', text: 'of 6' })])]);
+    return h('div', {}, [h('div', { cls: 'lbl' }, [h('i', { cls: 'sw ' + cls }), label]), h('div', { cls: 'stepper' }, [minus, out, plus, h('span', { cls: 'muted small', text: L('of 6', 'из 6') })])]);
   }
   function rPredict() {
-    stage.appendChild(h('p', { cls: 'kicker', text: 'Before the test' }));
-    stage.appendChild(h('h3', { text: 'How many will you get?' }));
-    stage.appendChild(h('p', { text: 'You read six of the words a second time and tried to recall the other six. On the test, how many of each will you get right?' }));
-    stage.appendChild(h('div', { cls: 'pred-grid' }, [stepper('re', 'The six you reread', 'c'), stepper('rc', 'The six you recalled', 'p')]));
-    var go = h('button', { cls: 'btn', type: 'button', text: 'Save my prediction' });
+    stage.appendChild(h('p', { cls: 'kicker', text: L('Before the test', 'Перед тестом') }));
+    stage.appendChild(h('h3', { text: L('How many will you get?', 'Сколько вы угадаете?') }));
+    stage.appendChild(h('p', { text: L('You read six of the words a second time and tried to recall the other six. On the test, how many of each will you get right?', 'Шесть слов вы прочитали второй раз, а остальные шесть пытались вспомнить. Сколько из каждой группы вы назовёте правильно на тесте?') }));
+    stage.appendChild(h('div', { cls: 'pred-grid' }, [stepper('re', L('The six you reread', 'Шесть перечитанных'), 'c'), stepper('rc', L('The six you recalled', 'Шесть вспомненных'), 'p')]));
+    var go = h('button', { cls: 'btn', type: 'button', text: L('Save my prediction', 'Сохранить прогноз') });
     go.addEventListener('click', function () { exp.phase = 'choose'; save(); render(); });
     stage.appendChild(h('div', { cls: 'btn-row' }, [go]));
   }
 
   function rChoose() {
     var canSave = save();
-    stage.appendChild(h('p', { cls: 'kicker', text: 'When to test' }));
-    stage.appendChild(h('h3', { text: 'Now, or tomorrow?' }));
-    stage.appendChild(h('p', { text: 'Tested right away, the two groups usually come out about even, or rereading wins: that’s the five-minute result from section 01. The gap opens after a day or more. The honest version is to come back tomorrow.' }));
-    var later = h('button', { cls: 'btn blue', type: 'button', text: 'Test me tomorrow' });
-    var now = h('button', { cls: 'btn ghost', type: 'button', text: 'Test me now' });
+    stage.appendChild(h('p', { cls: 'kicker', text: L('When to test', 'Когда проходить тест') }));
+    stage.appendChild(h('h3', { text: L('Now, or tomorrow?', 'Сейчас или завтра?') }));
+    stage.appendChild(h('p', { text: L('Tested right away, the two groups usually come out about even, or rereading wins: that’s the five-minute result from section 01. The gap opens after a day or more. The honest version is to come back tomorrow.', 'Если проверить сразу, обе группы обычно выходят примерно вровень или выигрывает перечитывание: это тот самый результат «через пять минут» из раздела 01. Разрыв появляется через день и больше. Честный вариант — вернуться завтра.') }));
+    var later = h('button', { cls: 'btn blue', type: 'button', text: L('Test me tomorrow', 'Проверить завтра') });
+    var now = h('button', { cls: 'btn ghost', type: 'button', text: L('Test me now', 'Проверить сейчас') });
     later.addEventListener('click', function () { exp.phase = 'waiting'; save(); render(); });
     now.addEventListener('click', startTest);
     if (!canSave) {
       later.disabled = true;
-      stage.appendChild(h('p', { cls: 'small muted', text: 'This browser isn’t letting the page save anything, so testing tomorrow won’t work here. Test now, or keep this tab open and come back to it.' }));
+      stage.appendChild(h('p', { cls: 'small muted', text: L('This browser isn’t letting the page save anything, so testing tomorrow won’t work here. Test now, or keep this tab open and come back to it.', 'Этот браузер не даёт странице ничего сохранять, так что тест завтра здесь не сработает. Пройдите его сейчас или оставьте вкладку открытой и вернитесь к ней.') }));
     }
     stage.appendChild(h('div', { cls: 'btn-row' }, [later, now]));
   }
 
   function rWaiting() {
     var since = Date.now() - exp.studiedAt, left = READY_MS - since;
-    stage.appendChild(h('p', { cls: 'kicker', text: 'Saved · word set ' + exp.set }));
+    stage.appendChild(h('p', { cls: 'kicker', text: L('Saved · word set ', 'Сохранено · набор слов ') + exp.set }));
     if (left <= 0) {
-      stage.appendChild(h('h3', { text: 'Your test is ready' }));
-      stage.appendChild(h('p', { text: 'You studied these words ' + ago(since) + ' ago. Twelve words, one at a time, no hints. Type the English meaning; leave it blank if nothing comes.' }));
-      var go = h('button', { cls: 'btn blue', type: 'button', text: 'Start the test' });
+      stage.appendChild(h('h3', { text: L('Your test is ready', 'Ваш тест готов') }));
+      stage.appendChild(h('p', { text: L('You studied these words ', 'Вы учили эти слова ') + ago(since) + L(' ago. Twelve words, one at a time, no hints. Type the English meaning; leave it blank if nothing comes.', ' назад. Двенадцать слов по одному, без подсказок. Введите перевод; если ничего не вспоминается, оставьте поле пустым.') }));
+      var go = h('button', { cls: 'btn blue', type: 'button', text: L('Start the test', 'Начать тест') });
       go.addEventListener('click', startTest);
       stage.appendChild(h('div', { cls: 'btn-row' }, [go]));
     } else {
-      stage.appendChild(h('h3', { text: 'Come back tomorrow' }));
-      stage.appendChild(h('p', { text: 'Your test unlocks in about ' + ago(left) + '. Come back to this page any time after that; a note will appear at the top.' }));
-      var anyway = h('button', { cls: 'btn ghost', type: 'button', text: 'I can’t wait, test me now' });
+      stage.appendChild(h('h3', { text: L('Come back tomorrow', 'Возвращайтесь завтра') }));
+      stage.appendChild(h('p', { text: L('Your test unlocks in about ', 'Тест откроется примерно через ') + ago(left) + L('. Come back to this page any time after that; a note will appear at the top.', '. Возвращайтесь на эту страницу в любое время после этого; наверху появится напоминание.') }));
+      var anyway = h('button', { cls: 'btn ghost', type: 'button', text: L('I can’t wait, test me now', 'Не могу ждать, проверьте сейчас') });
       anyway.addEventListener('click', startTest);
       stage.appendChild(h('div', { cls: 'btn-row' }, [anyway, resetBtn()]));
       expTimer = setTimeout(render, Math.min(left + 1000, 60000));
@@ -1410,11 +1448,11 @@ My summary:
   }
   function rTest() {
     var idx = exp.testOrder[exp.i], w = words()[idx];
-    stage.appendChild(progress('The test', exp.i, 12));
-    var input = h('input', { type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'English meaning of ' + w[0], placeholder: 'English?' });
-    var next = h('button', { cls: 'btn blue sm', type: 'button', text: exp.i === 11 ? 'Finish' : 'Next' });
+    stage.appendChild(progress(L('The test', 'Тест'), exp.i, 12));
+    var input = h('input', { type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': L('English meaning of ', 'Перевод слова ') + w[0], placeholder: L('English?', 'По-русски?') });
+    var next = h('button', { cls: 'btn blue sm', type: 'button', text: exp.i === 11 ? L('Finish', 'Готово') : L('Next', 'Дальше') });
     stage.appendChild(h('div', { cls: 'exp-card' }, [
-      h('div', { cls: 'mode st', text: 'No hints' }),
+      h('div', { cls: 'mode st', text: L('No hints', 'Без подсказок') }),
       h('div', { cls: 'swa', text: w[0], lang: 'sw' }),
       h('div', { cls: 'answer-row' }, [input, next])
     ]));
@@ -1434,26 +1472,26 @@ My summary:
 
   function resBar(label, cls, got, pred) {
     var track = h('div', { cls: 'res-track' }, [h('div', { cls: 'res-fill ' + cls, style: 'width:' + Math.max(got / 6 * 100, got ? 0 : 0.6) + '%' })]);
-    var tick = h('div', { cls: 'res-pred', style: 'left:calc(' + (pred / 6 * 100) + '% - 1px)' }, [h('span', { text: 'you guessed ' + pred })]);
+    var tick = h('div', { cls: 'res-pred', style: 'left:calc(' + (pred / 6 * 100) + '% - 1px)' }, [h('span', { text: L('you guessed ', 'ваш прогноз: ') + pred })]);
     track.appendChild(tick);
-    return h('div', { cls: 'res-bar' }, [h('div', { cls: 'top' }, [h('span', { text: label }), h('b', { text: got + ' of 6' })]), track]);
+    return h('div', { cls: 'res-bar' }, [h('div', { cls: 'top' }, [h('span', { text: label }), h('b', { text: got + L(' of 6', ' из 6') })]), track]);
   }
   function rResults() {
     var re = 0, rc = 0;
     Object.keys(exp.test).forEach(function (k) { if (exp.test[k].ok) { if (exp.assign[k] === 're') re++; else rc++; } });
     var delay = exp.testAt - exp.studiedAt, long = delay >= 2 * 3600 * 1000;
-    stage.appendChild(h('p', { cls: 'kicker', text: 'Your result · tested ' + ago(delay) + ' after studying' }));
-    stage.appendChild(h('div', { cls: 'res-bars' }, [resBar('Words you reread', 're', re, exp.predict.re), resBar('Words you recalled', 'rc', rc, exp.predict.rc)]));
+    stage.appendChild(h('p', { cls: 'kicker', text: L('Your result · tested ', 'Ваш результат · тест через ') + ago(delay) + L(' after studying', ' после заучивания') }));
+    stage.appendChild(h('div', { cls: 'res-bars' }, [resBar(L('Words you reread', 'Перечитанные слова'), 're', re, exp.predict.re), resBar(L('Words you recalled', 'Вспомненные слова'), 'rc', rc, exp.predict.rc)]));
     var msg = [];
-    if (rc > re) msg.push('Recall won, ' + rc + ' to ' + re + '.');
-    else if (rc === re) msg.push('A tie, ' + rc + ' each.');
-    else msg.push('Rereading won this time, ' + re + ' to ' + rc + '.');
-    if (!long && re >= rc) msg.push('After a short delay that’s normal: rereading is still propped up by familiarity. The research gap appears after a day or more. Try a fresh set and wait a day.');
-    else if (!long) msg.push('Recall is already ahead after a short delay. In the research the gap widens after a day or more. Try a fresh set and wait a day.');
-    else if (rc >= re) msg.push('That’s the direction the research predicts once a day or more has passed.');
-    else msg.push('With six words per group, one or two lucky guesses swing it. In the research, recall wins on average across many people and items, not every time for every person.');
-    if (exp.predict.re >= exp.predict.rc) msg.push('You predicted rereading would do at least as well as recall. So did the students in the original studies: their predictions didn\u2019t track what actually helped. That\u2019s the fluency illusion in a single guess.');
-    else msg.push('You predicted recall would win. In the original studies, students\u2019 predictions didn\u2019t track what actually helped, so that guess puts you ahead of them.');
+    if (rc > re) msg.push(L('Recall won, ', 'Победило припоминание, ') + rc + L(' to ', ' против ') + re + '.');
+    else if (rc === re) msg.push(L('A tie, ', 'Ничья, по ') + rc + L(' each.', '.'));
+    else msg.push(L('Rereading won this time, ', 'На этот раз победило перечитывание, ') + re + L(' to ', ' против ') + rc + '.');
+    if (!long && re >= rc) msg.push(L('After a short delay that’s normal: rereading is still propped up by familiarity. The research gap appears after a day or more. Try a fresh set and wait a day.', 'После короткой паузы это нормально: перечитывание ещё держится на ощущении знакомости. В исследованиях разрыв появляется через день и больше. Попробуйте новый набор и подождите день.'));
+    else if (!long) msg.push(L('Recall is already ahead after a short delay. In the research the gap widens after a day or more. Try a fresh set and wait a day.', 'Припоминание впереди уже после короткой паузы. В исследованиях разрыв растёт через день и больше. Попробуйте новый набор и подождите день.'));
+    else if (rc >= re) msg.push(L('That’s the direction the research predicts once a day or more has passed.', 'Именно этого направления исследования и ожидают, когда проходит день и больше.'));
+    else msg.push(L('With six words per group, one or two lucky guesses swing it. In the research, recall wins on average across many people and items, not every time for every person.', 'Когда в группе по шесть слов, одна-две удачные догадки всё переворачивают. В исследованиях припоминание выигрывает в среднем по многим людям и словам, а не каждый раз у каждого.'));
+    if (exp.predict.re >= exp.predict.rc) msg.push(L('You predicted rereading would do at least as well as recall. So did the students in the original studies: their predictions didn\u2019t track what actually helped. That\u2019s the fluency illusion in a single guess.', 'Вы предсказали, что перечитывание сработает не хуже припоминания. Так же думали и студенты в исходных исследованиях: их прогнозы не совпадали с тем, что на самом деле помогало. Это иллюзия беглости в одной догадке.'));
+    else msg.push(L('You predicted recall would win. In the original studies, students\u2019 predictions didn\u2019t track what actually helped, so that guess puts you ahead of them.', 'Вы предсказали, что победит припоминание. В исходных исследованиях прогнозы студентов не совпадали с тем, что на самом деле помогало, так что этой догадкой вы их обошли.'));
     msg.forEach(function (t) { stage.appendChild(h('p', { text: t })); });
     var list = h('div', { cls: 'word-list' });
     exp.testOrder.forEach(function (k) {
@@ -1461,18 +1499,18 @@ My summary:
       list.appendChild(h('div', {}, [
         h('span', { cls: r.ok ? 'mark-ok' : 'mark-bad', text: r.ok ? '✓' : '✗' }),
         h('b', { text: w[0], lang: 'sw' }), document.createTextNode(' ' + w[1][0] + ' '),
-        h('span', { cls: 'g ' + exp.assign[k], text: exp.assign[k] === 're' ? 'reread' : 'recalled' }),
-        r.ok || !r.ans ? null : h('span', { cls: 'muted', text: '(you: ' + r.ans + ')' })
+        h('span', { cls: 'g ' + exp.assign[k], text: exp.assign[k] === 're' ? L('reread', 'перечитано') : L('recalled', 'вспомнено') }),
+        r.ok || !r.ans ? null : h('span', { cls: 'muted', text: L('(you: ', '(вы: ') + r.ans + ')' })
       ]));
     });
     stage.appendChild(list);
     var other = exp.set === 'A' ? 'B' : 'A';
-    var again = h('button', { cls: 'btn', type: 'button', text: 'Run it again with new words' });
+    var again = h('button', { cls: 'btn', type: 'button', text: L('Run it again with new words', 'Ещё раз, с новыми словами') });
     again.addEventListener('click', function () { var d = exp.done; exp = { v: 1, set: other, phase: 'intro', done: d }; save(); render(); });
     stage.appendChild(h('div', { cls: 'btn-row' }, [again, resetBtn()]));
   }
   function resetBtn() {
-    var b = h('button', { cls: 'linkbtn', type: 'button', text: 'Start over and forget my words' });
+    var b = h('button', { cls: 'linkbtn', type: 'button', text: L('Start over and forget my words', 'Начать заново и забыть мои слова') });
     b.addEventListener('click', function () { store.del(KEY); exp = { v: 1, set: 'A', phase: 'intro', done: [] }; render(); });
     return b;
   }
@@ -1480,7 +1518,7 @@ My summary:
     var b = $('#readyBanner');
     var ready = exp.phase === 'waiting' && Date.now() - exp.studiedAt >= READY_MS;
     b.hidden = !ready;
-    if (ready) $('#readyAgo').textContent = 'You studied the words ' + ago(Date.now() - exp.studiedAt) + ' ago.';
+    if (ready) $('#readyAgo').textContent = L('You studied the words ', 'Вы учили слова ') + ago(Date.now() - exp.studiedAt) + ' ago.';
   }
   if (exp.phase === 'study' || exp.phase === 'practice') exp.phase = 'intro';
   if (!exp.done) exp.done = [];
@@ -1490,16 +1528,16 @@ My summary:
      03 · Sort ten study habits
      ===================================================================== */
   var HABITS = [
-    { t: 'Rereading your notes or the chapter', a: 'feel', tag: 'lo', tagText: 'Low utility', why: 'Feels like progress because it gets smoother each time. Rated low: small benefits, and less than testing for the same time.' },
-    { t: 'Highlighting or underlining as you read', a: 'feel', tag: 'lo', tagText: 'Low utility', why: 'Rated low. It can even get in the way of seeing how ideas connect.' },
-    { t: 'Answering practice questions before checking the answers', a: 'build', tag: 'hi', tagText: 'High utility', why: 'Practice testing, one of only two techniques rated high. Works across ages, materials and test formats.' },
-    { t: 'Spreading study over several days instead of one long session', a: 'build', tag: 'hi', tagText: 'High utility', why: 'Distributed practice, the other high-rated technique. Same total time, much better retention.' },
-    { t: 'Writing a summary of the chapter', a: 'feel', tag: 'lo', tagText: 'Low utility', why: 'Rated low overall, mainly because most people summarise badly without training. Summarising from memory turns it into recall, which helps.' },
-    { t: 'Asking yourself "why would that be true?" as you read', a: 'build', tag: 'mod', tagText: 'Moderate utility', why: 'Elaborative interrogation. Rated moderate: good for facts, less tested on complex material.' },
-    { t: 'Mixing different kinds of problems in one practice session', a: 'build', tag: 'mod', tagText: 'Moderate utility', why: 'Interleaved practice. Feels worse than doing one type at a time, and usually works better.' },
-    { t: 'Watching an AI-made video or audio overview of the material', a: 'feel', tag: 'mod', tagText: 'Not rated', why: 'Not in the review. It is a well-made re-exposure, so by the same evidence it behaves like rereading: good as a first pass, weak as study.' },
-    { t: 'Asking AI to explain it again, more simply', a: 'feel', tag: 'mod', tagText: 'Not rated', why: 'Not in the review. Helps when you’re truly stuck on one step. As a habit it’s another fluent read, unless you redo the problem without help afterward.' },
-    { t: 'Redoing a problem from scratch, without help, after seeing the solution', a: 'build', tag: 'mod', tagText: 'Not rated', why: 'Not in the review as such, but it is retrieval practice: you produce the whole method from memory. The video’s best tip.' }
+    { t: L('Rereading your notes or the chapter', 'Перечитывать конспект или главу'), a: 'feel', tag: 'lo', tagText: L('Low utility', 'Низкая польза'), why: L('Feels like progress because it gets smoother each time. Rated low: small benefits, and less than testing for the same time.', 'Ощущается как прогресс, потому что с каждым разом идёт всё глаже. Оценка низкая: польза небольшая и меньше, чем от тестов за то же время.') },
+    { t: L('Highlighting or underlining as you read', 'Выделять или подчёркивать при чтении'), a: 'feel', tag: 'lo', tagText: L('Low utility', 'Низкая польза'), why: L('Rated low. It can even get in the way of seeing how ideas connect.', 'Оценка низкая. Это может даже мешать видеть, как связаны идеи.') },
+    { t: L('Answering practice questions before checking the answers', 'Отвечать на тренировочные вопросы до того, как смотреть ответы'), a: 'build', tag: 'hi', tagText: L('High utility', 'Высокая польза'), why: L('Practice testing, one of only two techniques rated high. Works across ages, materials and test formats.', 'Тренировочное тестирование — одна из всего двух техник с высокой оценкой. Работает в любом возрасте, на любом материале и в любом формате теста.') },
+    { t: L('Spreading study over several days instead of one long session', 'Распределять учёбу на несколько дней вместо одного долгого занятия'), a: 'build', tag: 'hi', tagText: L('High utility', 'Высокая польза'), why: L('Distributed practice, the other high-rated technique. Same total time, much better retention.', 'Распределённая практика — вторая техника с высокой оценкой. То же общее время, гораздо лучшее запоминание.') },
+    { t: L('Writing a summary of the chapter', 'Писать краткое изложение главы'), a: 'feel', tag: 'lo', tagText: L('Low utility', 'Низкая польза'), why: L('Rated low overall, mainly because most people summarise badly without training. Summarising from memory turns it into recall, which helps.', 'В целом оценка низкая, в основном потому, что без подготовки большинство людей пересказывает плохо. Пересказ по памяти превращает это в припоминание, а это помогает.') },
+    { t: L('Asking yourself "why would that be true?" as you read', 'Спрашивать себя при чтении: «а почему это должно быть правдой?»'), a: 'build', tag: 'mod', tagText: L('Moderate utility', 'Умеренная польза'), why: L('Elaborative interrogation. Rated moderate: good for facts, less tested on complex material.', 'Уточняющие вопросы. Оценка умеренная: хорошо для фактов, хуже проверено на сложном материале.') },
+    { t: L('Mixing different kinds of problems in one practice session', 'Смешивать разные типы задач в одном занятии'), a: 'build', tag: 'mod', tagText: L('Moderate utility', 'Умеренная польза'), why: L('Interleaved practice. Feels worse than doing one type at a time, and usually works better.', 'Чередующаяся практика. Ощущается хуже, чем решать задачи одного типа подряд, а работает обычно лучше.') },
+    { t: L('Watching an AI-made video or audio overview of the material', 'Смотреть видео- или аудиообзор материала, сделанный ИИ'), a: 'feel', tag: 'mod', tagText: L('Not rated', 'Без оценки'), why: L('Not in the review. It is a well-made re-exposure, so by the same evidence it behaves like rereading: good as a first pass, weak as study.', 'В обзоре этого нет. Это хорошо сделанное повторное знакомство, так что по тем же данным оно ведёт себя как перечитывание: хорошо для первого прохода, слабо для учёбы.') },
+    { t: L('Asking AI to explain it again, more simply', 'Просить ИИ объяснить ещё раз, попроще'), a: 'feel', tag: 'mod', tagText: L('Not rated', 'Без оценки'), why: L('Not in the review. Helps when you’re truly stuck on one step. As a habit it’s another fluent read, unless you redo the problem without help afterward.', 'В обзоре этого нет. Помогает, когда вы действительно застряли на одном шаге. Как привычка это ещё одно гладкое чтение, если потом не решить задачу заново без помощи.') },
+    { t: L('Redoing a problem from scratch, without help, after seeing the solution', 'Решить задачу заново с нуля, без помощи, после того как увидели решение'), a: 'build', tag: 'mod', tagText: L('Not rated', 'Без оценки'), why: L('Not in the review as such, but it is retrieval practice: you produce the whole method from memory. The video’s best tip.', 'В обзоре этого нет как такового, но это практика извлечения: вы воспроизводите весь метод по памяти. Лучший совет из видео.') }
   ];
   var sortAns = {};
   var sorter = $('#sorter');
@@ -1507,7 +1545,7 @@ My summary:
     var li = h('li', { cls: 'sort-item' });
     li.appendChild(h('div', { cls: 'what', text: it.t, id: 'hab' + i }));
     var g = h('div', { cls: 'chips', role: 'radiogroup', 'aria-labelledby': 'hab' + i });
-    [['build', 'Builds lasting memory'], ['feel', 'Mostly feels productive']].forEach(function (o) {
+    [['build', L('Builds lasting memory', 'Строит прочную память')], ['feel', L('Mostly feels productive', 'В основном кажется продуктивным')]].forEach(function (o) {
       g.appendChild(h('button', { cls: 'chip', type: 'button', role: 'radio', 'aria-checked': 'false', 'data-v': o[0], text: o[1] }));
     });
     radioGroup(g, function (v) { sortAns[i] = v; });
@@ -1524,10 +1562,10 @@ My summary:
       if (mine) { n++; if (mine === it.a) right++; }
       r.appendChild(h('span', { cls: mine ? (mine === it.a ? 'mark-ok' : 'mark-bad') : 'muted', text: mine ? (mine === it.a ? '✓ ' : '✗ ') : '· ' }));
       r.appendChild(h('span', { cls: 'tag ' + it.tag, text: it.tagText }));
-      r.appendChild(h('b', { text: (it.a === 'build' ? 'Builds memory. ' : 'Mostly feels productive. ') }));
+      r.appendChild(h('b', { text: (it.a === 'build' ? L('Builds memory. ', 'Строит память. ') : L('Mostly feels productive. ', 'В основном кажется продуктивным. ')) }));
       r.appendChild(document.createTextNode(it.why));
     });
-    $('#sortScore').textContent = n ? right + ' of ' + n + ' sorted the way the research does.' : 'Answers shown below.';
+    $('#sortScore').textContent = n ? right + L(' of ', ' из ') + n + L(' sorted the way the research does.', ' разложено так же, как в исследовании.') : L('Answers shown below.', 'Ответы — ниже.');
   });
 
   /* =====================================================================
@@ -1550,12 +1588,12 @@ My summary:
     return Rf(d - last, S);
   }
   var PLANS = [
-    { id: 'cram0', label: 'Cram: 4 reviews on day 0', days: [2 / 24, 4 / 24, 6 / 24, 8 / 24] },
-    { id: 'cram6', label: 'Cram: 4 reviews the night before a day-7 test', days: [6, 6 + 2 / 24, 6 + 4 / 24, 6 + 6 / 24] },
-    { id: 'spread', label: 'Spread: days 1, 3, 7, 14', days: [1, 3, 7, 14] },
-    { id: 'even', label: 'Even: days 6, 12, 18, 24', days: [6, 12, 18, 24] },
-    { id: 'none', label: 'No reviews', days: [] },
-    { id: 'custom', label: 'Your own (tap the chart)', days: [] }
+    { id: 'cram0', label: L('Cram: 4 reviews on day 0', 'Зубрёжка: 4 повторения в день 0'), days: [2 / 24, 4 / 24, 6 / 24, 8 / 24] },
+    { id: 'cram6', label: L('Cram: 4 reviews the night before a day-7 test', 'Зубрёжка: 4 повторения вечером перед тестом на 7-й день'), days: [6, 6 + 2 / 24, 6 + 4 / 24, 6 + 6 / 24] },
+    { id: 'spread', label: L('Spread: days 1, 3, 7, 14', 'Вразбивку: дни 1, 3, 7, 14'), days: [1, 3, 7, 14] },
+    { id: 'even', label: L('Even: days 6, 12, 18, 24', 'Равномерно: дни 6, 12, 18, 24'), days: [6, 12, 18, 24] },
+    { id: 'none', label: L('No reviews', 'Без повторений'), days: [] },
+    { id: 'custom', label: L('Your own (tap the chart)', 'Свой (нажимайте на график)'), days: [] }
   ];
   var planState = { A: 'cram6', B: 'spread', customA: [], customB: [1, 3, 7, 14] };
   function daysFor(which) {
@@ -1598,7 +1636,7 @@ My summary:
       stext(svg, m.l - 8, ys(g) + 4, g + '%', 'axis-label', 'end');
     });
     (narrow ? [0, 7, 14, 21, 30] : [0, 3, 7, 14, 21, 30]).forEach(function (d) {
-      stext(svg, xs(d), H - 12, d === 0 ? 'Day 0' : String(d), 'axis-label', 'middle');
+      stext(svg, xs(d), H - 12, d === 0 ? L('Day 0', 'День 0') : String(d), 'axis-label', 'middle');
     });
     var cd = +checkDay.value;
     s('line', { x1: xs(cd), x2: xs(cd), y1: m.t, y2: m.t + ph, 'class': 'crosshair' }, svg);
@@ -1622,10 +1660,10 @@ My summary:
       if (e.pointerType === 'touch') return;
       var p = dayAt(e), d = Math.round(p.d * 2) / 2;
       cross.setAttribute('x1', xs(d)); cross.setAttribute('x2', xs(d)); cross.setAttribute('opacity', 1);
-      curveTip.show('Day ' + d, [
-        { color: '--produce', value: pct(retention(B, d)), label: 'Plan B' },
-        { color: '--consume', value: pct(retention(A, d)), label: 'Plan A' },
-        { color: '--base', value: pct(retention([], d)), label: 'No review' }
+      curveTip.show(L('Day ', 'День ') + d, [
+        { color: '--produce', value: pct(retention(B, d)), label: L('Plan B', 'План B') },
+        { color: '--consume', value: pct(retention(A, d)), label: L('Plan A', 'План A') },
+        { color: '--base', value: pct(retention([], d)), label: L('No review', 'Без повторений') }
       ].sort(function (a, b) { return parseInt(b.value, 10) - parseInt(a.value, 10); }), xs(d), p.y);
     });
     hit.addEventListener('pointerleave', function () { cross.setAttribute('opacity', 0); curveTip.hide(); });
@@ -1634,13 +1672,13 @@ My summary:
       if (planState.B !== 'custom') { planState.customB = daysFor('B').slice(); planState.B = 'custom'; $('#planB').value = 'custom'; }
       var arr = planState.customB, hitI = -1;
       arr.forEach(function (x, i) { if (Math.abs(x - d) <= 0.6) hitI = i; });
-      if (hitI >= 0) arr.splice(hitI, 1); else if (arr.length < 8) arr.push(d); else toast('Eight reviews is the limit here');
+      if (hitI >= 0) arr.splice(hitI, 1); else if (arr.length < 8) arr.push(d); else toast(L('Eight reviews is the limit here', 'Здесь можно не больше восьми повторений'));
       curveTip.hide(); drawCurve();
     });
     // table view
     var tw = $('#curveTable'); tw.textContent = '';
     var tbl = h('table', { cls: 'data' });
-    var thr = h('tr', {}, [h('th', { text: 'Day' }), h('th', { cls: 'num', text: 'Plan A' }), h('th', { cls: 'num', text: 'Plan B' }), h('th', { cls: 'num', text: 'No review' })]);
+    var thr = h('tr', {}, [h('th', { text: L('Day', 'День') }), h('th', { cls: 'num', text: L('Plan A', 'План A') }), h('th', { cls: 'num', text: L('Plan B', 'План B') }), h('th', { cls: 'num', text: L('No review', 'Без повторений') })]);
     tbl.appendChild(h('thead', {}, [thr]));
     var tb = h('tbody');
     [1, 3, 7, 14, 21, 30].forEach(function (d) {
@@ -1654,36 +1692,36 @@ My summary:
      05 · Ten jobs for an AI
      ===================================================================== */
   var ROLES = [
-    { n: 'Interviewer', stages: ['start'], you: 2, when: 'You don’t yet know what you don’t know.',
-      prompt: 'Before you teach me anything about [topic], interview me. Ask one question at a time about my goal, my deadline, how I’ll be tested or use it, and what I already know. Push me to be specific. After 6–10 questions, tell me what I actually need to learn and what I can skip.',
-      watch: 'Vague answers get a vague plan. "Pass a live coding interview in three weeks, I know basic Python" beats "learn coding".' },
-    { n: 'Mapmaker', stages: ['start'], you: 1, when: 'The subject feels shapeless and you need a route.',
-      prompt: 'Map [topic] for someone whose goal is [goal]. List the 5–9 core parts in the order they depend on each other, mark where people usually get stuck, and give one check question per part that would show I’ve got it. Don’t explain the parts yet.',
-      watch: 'A map is a plan, not learning. Keep the check questions; they become your tests.' },
-    { n: 'Explainer', stages: ['stuck'], you: 1, when: 'You tried and you’re stuck on one specific step.',
-      prompt: 'I tried [task] and got stuck at [exact step]. Explain only that step, at my level ([level]). Don’t solve the rest. When I’ve got it I’ll go back and redo the whole thing from the start without help.',
-      watch: 'The default use, and pure taking in. It only counts if you redo the task without help afterward.' },
-    { n: 'Socratic questioner', stages: ['think'], you: 4, when: 'You think you understand it. Claude\u2019s learning mode, ChatGPT\u2019s Study mode and Gemini\u2019s Guided Learning are this job built in as a setting.',
-      prompt: 'I want to understand [topic]. Don’t give me answers. Ask me one question at a time, starting easy. When I’m wrong or vague, ask a follow-up that helps me find the gap myself. Only explain after I’ve made two real attempts.',
-      watch: 'It will cave and give the answer if you ask. Don’t ask.' },
-    { n: 'Examiner', stages: ['prove'], you: 5, when: 'You’ve covered it and want to know how much you have.',
-      prompt: 'Quiz me on [topic] using only [source]. One question at a time; wait for my answer. Make each question harder than the last until I miss two in a row. Then tell me the level where I broke and what to study next.',
-      watch: 'Without a source, it can mark a wrong answer right. Paste the material in.' },
-    { n: 'Checker', stages: ['prove', 'stuck'], you: 4, when: 'You made something: a proof, an essay, code, a calculation.',
-      prompt: 'Here’s my work for [problem]. Check each step of my reasoning, not just the answer. Point to the first step that’s wrong or missing, and tell me if there’s a shorter route. Don’t rewrite it for me.',
-      watch: '"Don’t rewrite it" matters. A rewritten version is the AI’s work, not yours.' },
-    { n: 'Listener', stages: ['think', 'prove'], you: 5, when: 'You want to know if you can explain it, not just recognise it.',
-      prompt: 'I’m going to explain [idea] from memory, in my own words. Grade my explanation against [source], not against your own view. List what I got right, what I left out, and anything I said that the source doesn’t support.',
-      watch: 'Explain first, paste the source second, so you can’t lean on it. Talk it out loud or sketch it too.' },
-    { n: 'Diagnostician', stages: ['stuck', 'keep'], you: 3, when: 'The same kind of mistake keeps coming back.',
-      prompt: 'Here are the mistakes I’ve made on [topic] lately: [list them]. What single misunderstanding could explain most of them? Give me one question that would test whether that’s really the problem.',
-      watch: 'It will find a pattern even when there isn’t one. Test its diagnosis with the question before you believe it.' },
-    { n: 'Sparring partner', stages: ['perform'], you: 5, when: 'The skill is live: an interview, a sales call, a talk, a hard conversation.',
-      prompt: 'Play a tough [hiring manager / sceptical client / examiner] for [situation]. One question at a time. Push back when my answer is vague. I’ll answer within 30 seconds. At the end, score me and name my two weakest answers.',
-      watch: 'It’s a rehearsal, not the real thing. Raise the difficulty each round.' },
-    { n: 'Clerk', stages: ['keep'], you: 1, when: 'Your notes are a mess and you want to keep what you learned.',
-      prompt: 'Turn my messy notes below into a clean outline. Don’t add anything I didn’t write. Then turn each main point into a flashcard: a question on one line, the answer on the next.',
-      watch: 'Organising is taking in. The flashcards only work once you answer them before flipping, on a schedule.' }
+    { n: L('Interviewer', 'Интервьюер'), stages: ['start'], you: 2, when: L('You don’t yet know what you don’t know.', 'Вы ещё не знаете, чего не знаете.'),
+      prompt: L('Before you teach me anything about [topic], interview me. Ask one question at a time about my goal, my deadline, how I’ll be tested or use it, and what I already know. Push me to be specific. After 6–10 questions, tell me what I actually need to learn and what I can skip.', 'Прежде чем чему-то учить меня по теме [тема], проведи со мной интервью. Задавай по одному вопросу: о моей цели, сроке, о том, как меня будут проверять или как я буду это применять, и о том, что я уже знаю. Требуй конкретики. После 6–10 вопросов скажи, что мне на самом деле нужно выучить и в каком порядке.'),
+      watch: L('Vague answers get a vague plan. "Pass a live coding interview in three weeks, I know basic Python" beats "learn coding".', 'Размытые ответы — размытый план. «Пройти живое собеседование по программированию через три недели, знаю основы Python» лучше, чем «выучить программирование».') },
+    { n: L('Mapmaker', 'Картограф'), stages: ['start'], you: 1, when: L('The subject feels shapeless and you need a route.', 'Предмет кажется бесформенным, и нужен маршрут.'),
+      prompt: L('Map [topic] for someone whose goal is [goal]. List the 5–9 core parts in the order they depend on each other, mark where people usually get stuck, and give one check question per part that would show I’ve got it. Don’t explain the parts yet.', 'Составь карту темы [тема] для человека, чья цель — [цель]. Перечисли 5–9 ключевых частей в том порядке, в каком они зависят друг от друга, отметь, где люди обычно застревают, и дай к каждой части один проверочный вопрос, который показал бы, что я её понял. Сами части пока не объясняй.'),
+      watch: L('A map is a plan, not learning. Keep the check questions; they become your tests.', 'Карта — это план, а не учёба. Сохраните проверочные вопросы: они станут вашими тестами.') },
+    { n: L('Explainer', 'Объяснитель'), stages: ['stuck'], you: 1, when: L('You tried and you’re stuck on one specific step.', 'Вы попробовали и застряли на одном конкретном шаге.'),
+      prompt: L('I tried [task] and got stuck at [exact step]. Explain only that step, at my level ([level]). Don’t solve the rest. When I’ve got it I’ll go back and redo the whole thing from the start without help.', 'Я пробовал [задача] и застрял на [точный шаг]. Объясни только этот шаг, на моём уровне ([уровень]). Остальное не решай. Когда я разберусь, я вернусь и сделаю всё заново с начала без помощи.'),
+      watch: L('The default use, and pure taking in. It only counts if you redo the task without help afterward.', 'Использование по умолчанию и чистое потребление. Засчитывается, только если потом сделать задачу заново без помощи.') },
+    { n: L('Socratic questioner', 'Сократический собеседник'), stages: ['think'], you: 4, when: L('You think you understand it. Claude\u2019s learning mode, ChatGPT\u2019s Study mode and Gemini\u2019s Guided Learning are this job built in as a setting.', 'Вам кажется, что вы это понимаете. Режим обучения в Claude, Study mode в ChatGPT и Guided Learning в Gemini — это та же работа, встроенная как настройка.'),
+      prompt: L('I want to understand [topic]. Don’t give me answers. Ask me one question at a time, starting easy. When I’m wrong or vague, ask a follow-up that helps me find the gap myself. Only explain after I’ve made two real attempts.', 'Я хочу понять [тема]. Не давай мне ответов. Задавай по одному вопросу, начиная с простых. Когда я ошибаюсь или отвечаю расплывчато, задай уточняющий вопрос, который поможет мне самому найти пробел. Объясняй, только когда я сделаю две настоящие попытки.'),
+      watch: L('It will cave and give the answer if you ask. Don’t ask.', 'Он сдастся и выдаст ответ, если попросить. Не просите.') },
+    { n: L('Examiner', 'Экзаменатор'), stages: ['prove'], you: 5, when: L('You’ve covered it and want to know how much you have.', 'Вы прошли материал и хотите понять, сколько усвоили.'),
+      prompt: L('Quiz me on [topic] using only [source]. One question at a time; wait for my answer. Make each question harder than the last until I miss two in a row. Then tell me the level where I broke and what to study next.', 'Проверь меня по теме [тема], используя только [источник]. По одному вопросу; жди моего ответа. Делай каждый вопрос сложнее предыдущего, пока я не ошибусь два раза подряд. Потом скажи, на каком уровне я сломался и что изучать дальше.'),
+      watch: L('Without a source, it can mark a wrong answer right. Paste the material in.', 'Без источника он может засчитать неверный ответ как верный. Вставьте материал.') },
+    { n: L('Checker', 'Проверяющий'), stages: ['prove', 'stuck'], you: 4, when: L('You made something: a proof, an essay, code, a calculation.', 'Вы что-то сделали: доказательство, эссе, код, расчёт.'),
+      prompt: L('Here’s my work for [problem]. Check each step of my reasoning, not just the answer. Point to the first step that’s wrong or missing, and tell me if there’s a shorter route. Don’t rewrite it for me.', 'Вот моя работа по [задача]. Проверь каждый шаг моего рассуждения, а не только ответ. Укажи первый шаг, который неверен или пропущен, и скажи, есть ли путь короче. Не переписывай за меня.'),
+      watch: L('"Don’t rewrite it" matters. A rewritten version is the AI’s work, not yours.', '«Не переписывай» здесь важно. Переписанная версия — работа ИИ, а не ваша.') },
+    { n: L('Listener', 'Слушатель'), stages: ['think', 'prove'], you: 5, when: L('You want to know if you can explain it, not just recognise it.', 'Вы хотите понять, можете ли это объяснить, а не только узнать.'),
+      prompt: L('I’m going to explain [idea] from memory, in my own words. Grade my explanation against [source], not against your own view. List what I got right, what I left out, and anything I said that the source doesn’t support.', 'Я объясню [идея] по памяти, своими словами. Оцени моё объяснение по [источник], а не по своему мнению. Перечисли, что я сказал верно, что упустил и что из сказанного источник не подтверждает.'),
+      watch: L('Explain first, paste the source second, so you can’t lean on it. Talk it out loud or sketch it too.', 'Сначала объясните, потом вставьте источник, чтобы не опираться на него. Проговорите вслух или нарисуйте схему.') },
+    { n: L('Diagnostician', 'Диагност'), stages: ['stuck', 'keep'], you: 3, when: L('The same kind of mistake keeps coming back.', 'Одна и та же ошибка возвращается снова и снова.'),
+      prompt: L('Here are the mistakes I’ve made on [topic] lately: [list them]. What single misunderstanding could explain most of them? Give me one question that would test whether that’s really the problem.', 'Вот ошибки, которые я недавно делал по теме [тема]: [перечислите их]. Какое одно непонимание могло бы объяснить большинство из них? Дай мне один вопрос, который проверит, действительно ли проблема в этом.'),
+      watch: L('It will find a pattern even when there isn’t one. Test its diagnosis with the question before you believe it.', 'Он найдёт закономерность, даже если её нет. Проверьте его диагноз этим вопросом, прежде чем верить.') },
+    { n: L('Sparring partner', 'Спарринг-партнёр'), stages: ['perform'], you: 5, when: L('The skill is live: an interview, a sales call, a talk, a hard conversation.', 'Навык нужен вживую: собеседование, звонок клиенту, выступление, трудный разговор.'),
+      prompt: L('Play a tough [hiring manager / sceptical client / examiner] for [situation]. One question at a time. Push back when my answer is vague. I’ll answer within 30 seconds. At the end, score me and name my two weakest answers.', 'Сыграй жёсткого [нанимающего менеджера / скептичного клиента / экзаменатора] в ситуации [ситуация]. По одному вопросу. Дави, когда мой ответ расплывчатый. Я отвечаю в течение 30 секунд. В конце оцени меня и назови два моих самых слабых ответа.'),
+      watch: L('It’s a rehearsal, not the real thing. Raise the difficulty each round.', 'Это репетиция, а не настоящее дело. Повышайте сложность с каждым раундом.') },
+    { n: L('Clerk', 'Секретарь'), stages: ['keep'], you: 1, when: L('Your notes are a mess and you want to keep what you learned.', 'В заметках бардак, а сохранить выученное хочется.'),
+      prompt: L('Turn my messy notes below into a clean outline. Don’t add anything I didn’t write. Then turn each main point into a flashcard: a question on one line, the answer on the next.', 'Преврати мои беспорядочные заметки ниже в аккуратный план. Не добавляй ничего, чего я не писал. Потом превращай каждый главный пункт в карточку: вопрос на одной строке, ответ на следующей.'),
+      watch: L('Organising is taking in. The flashcards only work once you answer them before flipping, on a schedule.', 'Упорядочивание — это потребление. Карточки работают, только если отвечать на них до переворота и по расписанию.') }
   ];
   var grid = $('#roleGrid');
   ROLES.forEach(function (r, i) {
@@ -1691,20 +1729,20 @@ My summary:
     var pips = h('span', { cls: 'pips' + (r.you <= 2 ? ' low' : '') });
     for (var k = 1; k <= 5; k++) pips.appendChild(h('i', { cls: k <= r.you ? 'on' : '' }));
     var pre = h('pre', { cls: 'prompt', id: pid }, [r.prompt]);
-    var copy = h('button', { cls: 'btn sm ghost copy', type: 'button', 'data-copy': pid, text: 'Copy', 'aria-label': 'Copy the ' + r.n + ' prompt' });
+    var copy = h('button', { cls: 'btn sm ghost copy', type: 'button', 'data-copy': pid, text: L('Copy', 'Копировать'), 'aria-label': L('Copy the ', 'Скопировать промпт «') + r.n + L(' prompt', '»') });
     pre.appendChild(copy);
     var card = h('article', { cls: 'role', 'data-stages': r.stages.join(' ') }, [
       h('header', {}, [h('h3', { text: r.n }), h('span', { cls: 'n', text: String(i + 1).padStart(2, '0') })]),
       h('p', { cls: 'when', text: r.when }),
-      h('div', { cls: 'meter' }, [h('span', { text: 'You do' }), pips, h('span', { text: ['', 'very little', 'a little', 'some', 'most', 'all of it'][r.you] })]),
+      h('div', { cls: 'meter' }, [h('span', { text: L('You do', 'Вы делаете') }), pips, h('span', { text: ['', L('very little', 'совсем мало'), L('a little', 'немного'), L('some', 'часть'), L('most', 'бо́льшую часть'), L('all of it', 'всё')][r.you] })]),
       pre,
-      h('p', { cls: 'watch' }, [h('b', { text: 'Watch out: ' }), r.watch])
+      h('p', { cls: 'watch' }, [h('b', { text: L('Watch out: ', 'Осторожно: ') }), r.watch])
     ]);
     grid.appendChild(card);
     copy.addEventListener('click', function () {
       var text = r.prompt;
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast('Copied'); }, function () { fallback(text); toast('Copied'); });
-      else { fallback(text); toast('Copied'); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast(L('Copied', 'Скопировано')); }, function () { fallback(text); toast(L('Copied', 'Скопировано')); });
+      else { fallback(text); toast(L('Copied', 'Скопировано')); }
     });
   });
   radioGroup($('#stageFilter'), function (st) {
@@ -1722,7 +1760,7 @@ My summary:
   $$('#keyIdeas input').forEach(function (c) {
     c.addEventListener('change', function () {
       var n = $$('#keyIdeas input').filter(function (x) { return x.checked; }).length;
-      $('#recallScore').textContent = n + ' of 5. ' + (n >= 4 ? 'That’s most of the page, from memory.' : n >= 2 ? 'Read the ones you missed once, then try again tomorrow without looking.' : 'Normal on a first pass. Try again tomorrow: the second recall is the one that sticks.');
+      $('#recallScore').textContent = n + L(' of 5. ', ' из 5. ') + (n >= 4 ? L('That’s most of the page, from memory.', 'Это бо́льшая часть страницы — по памяти.') : n >= 2 ? L('Read the ones you missed once, then try again tomorrow without looking.', 'Перечитайте один раз то, что упустили, и завтра попробуйте снова, не подглядывая.') : L('Normal on a first pass. Try again tomorrow: the second recall is the one that sticks.', 'Для первого раза это нормально. Попробуйте завтра ещё раз: второе припоминание — то, что закрепляется.'));
     });
   });
 })();
