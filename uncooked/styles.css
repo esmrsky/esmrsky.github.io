@@ -97,6 +97,25 @@ nav {
 .nav-links a { color: var(--text-dim); display: inline-flex; align-items: center; min-height: 44px; padding: 0; }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
 
+/* ---------- EN · RU switch ---------- */
+.lang-switch { position: relative; display: inline-flex; align-items: center; height: 44px; border-radius: 999px; overflow: hidden; flex: 0 0 auto; }
+.lang-switch::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--border); border-radius: inherit; pointer-events: none; }
+.lang-opt { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 0.7rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; color: var(--text-faint); transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease); }
+.lang-opt:hover { color: var(--text); text-decoration: none; }
+.lang-opt[aria-current="page"] { background: var(--bg-card); color: var(--text); pointer-events: none; }
+.lang-opt:focus-visible { outline: 2px solid var(--cool); outline-offset: -3px; }
+
+:lang(ru) .nav-links a { min-width: 44px; justify-content: center; }
+
+/* Narrow phones: brand + three links + switch cannot share one row (the English nav already overflowed at 320px),
+   so the switch rides beside the brand and the links take the second row. */
+@media (max-width: 479px) {
+  .nav-inner { flex-wrap: wrap; row-gap: 0; column-gap: 12px; padding-top: 6px; padding-bottom: 6px; }
+  .brand { order: 1; }
+  .lang-switch { order: 2; margin-left: auto; }
+  .nav-links { order: 3; flex: 1 0 100%; margin-left: 0; justify-content: space-between; }
+}
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-block;
@@ -346,6 +365,7 @@ details.flyout summary {
   user-select: none;
 }
 details > summary { display: flex; align-items: center; min-height: 44px; }
+:lang(ru) details.flyout summary { overflow-wrap: anywhere; }
 details.flyout summary::-webkit-details-marker { display: none; }
 details.flyout summary strong { color: var(--ember-soft); }
 details.flyout summary:hover { color: var(--text); }
