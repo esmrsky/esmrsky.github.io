@@ -1,0 +1,2263 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/where-are-you/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/where-are-you/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/where-are-you/">
+<!-- lang-alt:end -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FFFFFF'/%3E%3Cpath d='M32 7a16 16 0 0 0-16 16c0 12 16 34 16 34s16-22 16-34A16 16 0 0 0 32 7Z' fill='%23FF2D87'/%3E%3Ccircle cx='32' cy='23' r='6' fill='%23FFFFFF'/%3E%3C/svg%3E">
+<meta name="color-scheme" content="light dark">
+<script>document.documentElement.classList.add("rv-js")</script>
+<title>Где ты? — Полевая карта христианской зрелости</title>
+<meta name="description" content="Шесть позиций христианской зрелости, одиннадцать моделей рядом друг с другом и тест из восьми вопросов.">
+<style>
+:root{--ease:cubic-bezier(.2,.7,.3,1)}
+
+/* minimal reset — supplied by the artifact runtime, inlined here for standalone use */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img,svg,video,canvas{max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+</style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior from /assets/scripture-popover.js, which ships no colors; these are this page's clothes for it. */
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,var(--ink) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--ink);text-decoration-color:var(--ink)}
+.esv-tip{position:absolute;z-index:120;display:none;max-width:360px;padding:15px 17px 13px;border:1px solid transparent;border-radius:0;background:var(--pink);box-shadow:0 14px 34px rgba(17,17,20,.32);color:var(--ink);font-family:var(--sans);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--ink);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-tip-text{min-height:3em;transition:opacity .2s var(--ease)}
+.esv-tip-text.is-loading{opacity:.45}
+.esv-note{display:block;margin-top:8px;color:var(--ink-2);font-family:var(--sans);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid transparent}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid transparent;border-radius:999px;background:none;color:var(--ink);font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border-color:var(--ink);color:var(--ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 14px 0 12px;border:1px solid transparent;border-radius:999px;background:none;color:var(--ink);font-family:var(--sans);font-size:.84rem;font-weight:700;cursor:pointer;transition:border-color .2s var(--ease),background-color .2s var(--ease)}
+.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border-color:var(--ink)}
+.esv-pick-ic{width:15px;height:15px;color:var(--ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--ink-2);transition:rotate .2s var(--ease)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:130;min-width:250px;max-height:min(62dvh,420px);overflow-y:auto;padding:6px;border:1px solid transparent;border-radius:0;background:var(--pink);box-shadow:0 14px 34px rgba(17,17,20,.32);opacity:1;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid transparent;color:var(--ink-2);font-family:var(--sans);font-size:.78rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--ink-2);text-align:left;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--ink);font-family:var(--sans);font-size:.82rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--sans);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--ink)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--ink)}
+.esv-ctx{width:min(880px,calc(100% - 24px));max-height:min(86dvh,800px);padding:0;border:1px solid transparent;border-radius:0;background:var(--paper);color:var(--ink);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden;opacity:0;scale:.98;transition:opacity .32s var(--ease),scale .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.98}}
+.esv-ctx::backdrop{background:rgba(17,17,20,0);transition:background-color .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(17,17,20,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(17,17,20,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(86dvh,800px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid transparent}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--ink);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-ctx-head h3{margin:0;font-family:var(--sans);font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.15;color:var(--ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid transparent;border-radius:50%;background:none;color:var(--ink-2);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close:hover{color:var(--ink);border-color:var(--ink)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sans);text-align:left}
+.esv-ctx-passage{margin:0}
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--ink) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-note{margin:.8em 0 0;color:var(--ink-2);font-family:var(--sans);font-size:.82rem}
+.esv-ctx-loading{color:var(--ink-2);font-family:var(--sans);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid transparent;display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid transparent;border-radius:999px;background:none;color:var(--ink-2);font-family:var(--sans);font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--ink);color:var(--ink)}
+.esv-ctx-more:disabled{opacity:.5;cursor:default}
+@media (max-width:560px){.esv-ctx-head{flex-wrap:wrap}.esv-ctx-body{padding:16px 16px 18px}}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+/* Flat Swiss: square corners, no drawn rules. Edges are seams between fields: the tip is a pink field, the dialog is paper with paper-2 bands. */
+.esv-ref{text-decoration-color:color-mix(in srgb,currentColor 70%,transparent)}
+.esv-ref:hover,.esv-ref:focus-visible{color:inherit;text-decoration-style:solid;text-decoration-color:currentColor}
+.esv-tip{border:0;border-radius:0;background:var(--pink);color:var(--on-pink)}
+.esv-tip-ref{color:var(--on-pink);font-family:var(--mono);font-size:.625rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.esv-note{color:var(--on-pink);opacity:.8}
+.esv-tip-actions{border-top:0;padding-top:0}
+.esv-tip-ctx,.esv-tip-out{border:0;border-radius:0;background:var(--on-pink);color:var(--pink);font-family:var(--mono);font-size:.6875rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border:0;background:var(--paper);color:var(--ink)}
+.esv-ctx{border:0;border-radius:0;box-shadow:0 34px 100px rgba(17,17,20,.4)}
+.esv-ctx-head{background:var(--paper-2);border-bottom:0}
+.esv-ctx-label{color:var(--ink-2);font-family:var(--mono);font-size:.625rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.esv-ctx-head h3{font-family:var(--sans);font-weight:800;letter-spacing:-.03em}
+.esv-ctx-foot{background:var(--paper-2);border-top:0}
+.esv-ctx-close,.esv-ctx-more,.esv-ctx-out,.esv-pick-btn{border:0;border-radius:0;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.6875rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close{border-radius:0}
+.esv-ctx-close:hover,.esv-ctx-more:hover,.esv-ctx-out:hover,.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border:0;background:var(--pink);color:var(--on-pink)}
+.esv-pick-ic,.esv-pick-caret{color:currentColor}
+.esv-pick-menu{border:0;border-radius:0;background:var(--paper-3);color:var(--ink)}
+.esv-pick-head{border-bottom:0;background:var(--paper-2);color:var(--ink-2)}
+.esv-pick-opt{border-radius:0;color:var(--ink-2)}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:var(--pink);color:var(--on-pink)}
+.esv-pick-opt:hover .code,.esv-pick-opt.cursor .code{color:var(--on-pink)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--ink)}
+.esv-ctx-verse.is-selected{background:var(--pink);color:var(--on-pink);box-shadow:0 0 0 3px var(--pink);border-radius:0}
+</style>
+<style id="theme-ease">/* Theme switch eases: the color tokens are registered so they can interpolate; one transition on the root, switched on by the first press of the toggle. */
+@property --paper{syntax:"<color>";inherits:true;initial-value:#FFFFFF}
+@property --paper-2{syntax:"<color>";inherits:true;initial-value:#EFEFEB}
+@property --paper-3{syntax:"<color>";inherits:true;initial-value:#E0E0DA}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --ink-2{syntax:"<color>";inherits:true;initial-value:#4A4A52}
+@property --ink-3{syntax:"<color>";inherits:true;initial-value:#7C7C86}
+@property --pink{syntax:"<color>";inherits:true;initial-value:#FF2D87}
+@property --yellow{syntax:"<color>";inherits:true;initial-value:#FFC700}
+@property --green{syntax:"<color>";inherits:true;initial-value:#00A95C}
+@property --orange{syntax:"<color>";inherits:true;initial-value:#FF5C1F}
+@property --aqua{syntax:"<color>";inherits:true;initial-value:#00B0C7}
+@property --violet{syntax:"<color>";inherits:true;initial-value:#4A3AFF}
+@property --void{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --on-yellow{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --on-green{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --on-orange{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --on-aqua{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --on-violet{syntax:"<color>";inherits:true;initial-value:#FFFFFF}
+@property --on-pink{syntax:"<color>";inherits:true;initial-value:#111114}
+@property --on-void{syntax:"<color>";inherits:true;initial-value:#FFFFFF}
+:root.theme-eases{transition:--paper .32s var(--ease),--paper-2 .32s var(--ease),--paper-3 .32s var(--ease),--ink .32s var(--ease),--ink-2 .32s var(--ease),--ink-3 .32s var(--ease),--pink .32s var(--ease),--yellow .32s var(--ease),--green .32s var(--ease),--orange .32s var(--ease),--aqua .32s var(--ease),--violet .32s var(--ease),--void .32s var(--ease),--on-yellow .32s var(--ease),--on-green .32s var(--ease),--on-orange .32s var(--ease),--on-aqua .32s var(--ease),--on-violet .32s var(--ease),--on-pink .32s var(--ease),--on-void .32s var(--ease)}
+@media (prefers-reduced-motion:reduce){:root.theme-eases{transition:none}}
+</style>
+<style id="lang-switch">
+/* EN · RU: two links, the current one underlined; the generator writes the mirror */
+.lang-switch{display:flex;align-items:center;flex:none}
+.lang-switch .lang-opt{display:inline-grid;place-items:center;min-width:44px;min-height:44px;font-family:var(--mono);font-size:.6875rem;font-weight:600;letter-spacing:.1em;line-height:1;text-transform:uppercase;text-decoration:none;color:color-mix(in srgb,var(--paper) 62%,var(--ink));transition:color .2s var(--ease)}
+.lang-switch .lang-opt:hover{color:var(--paper)}
+.lang-switch .lang-opt[aria-current="page"]{color:var(--paper);text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:1.5px;text-underline-offset:5px;pointer-events:none}
+.lang-switch .lang-sep{font-size:.6875rem;color:color-mix(in srgb,var(--paper) 62%,var(--ink));opacity:.6}
+@media (prefers-reduced-motion:reduce){.lang-switch .lang-opt{transition:none}}
+.top__act .lang-switch{margin-right:.25rem}
+/* at phone width the switch would squeeze the title to its first letter: the color dots step aside (compound
+   selectors, since this block sits before the page stylesheet and a media query adds no specificity) */
+@media (max-width:480px){.top .top__dots{display:none}.top .btn--pink{padding-inline:.6rem}.top__act .lang-switch{margin-right:0}}
+/* at 360px the title still came up 5px short: a tighter bar gap and button padding give it 7px back */
+@media (max-width:380px){.top.top{gap:.5rem}.top .btn--pink{padding-inline:.5rem}}
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+<style>
+/* ==========================================================================
+   WHERE ARE YOU — flat Swiss field map
+
+   No drawn rules anywhere. Every edge on this page is the seam between two
+   colour fields, so any two blocks that touch MUST differ in hue or in value:
+
+     · position cards  — one hue per card (neighbours differ in hue), stepped
+                         7% / 16% / 26% down the card (rows differ in value)
+     · frames, sources,
+       stats, caveats  — a six-hue cycle stamped in DOM order. Six never
+                         collides with a 1-, 2- or 3-column grid, because
+                         neighbours sit ±1, ±2 or ±3 apart and none of those
+                         is ≡0 mod 6. Sources re-stamp on filter, since
+                         filtering changes each card's index.
+     · sections        — alternate --paper / --paper-2, with the topbar, the
+                         Wall, the quiz bar and the footer inverted to --ink.
+                         Sections carry NO bottom padding: the space between
+                         two of them is one field in the incoming colour, so
+                         there is one edge there and not two. See .sec.
+
+   Add anything here and check what it touches. A new block that matches its
+   neighbour is not a subtle bug — the boundary simply vanishes.
+   ========================================================================== */
+:root{
+  --paper:#FFFFFF;
+  --paper-2:#EFEFEB;
+  --paper-3:#E0E0DA;
+  --ink:#111114;
+  --ink-2:#4A4A52;
+  --ink-3:#7C7C86;
+
+  --pink:#FF2D87;
+  --yellow:#FFC700;
+  --green:#00A95C;
+  --orange:#FF5C1F;
+  --aqua:#00B0C7;
+  --violet:#4A3AFF;
+  --void:#111114;
+
+
+  --on-yellow:#111114;
+  --on-green:#111114;
+  --on-orange:#111114;
+  --on-aqua:#111114;
+  --on-violet:#FFFFFF;
+  --on-pink:#111114;
+  --on-void:#FFFFFF;
+
+  --sans:"Helvetica Neue",Helvetica,Arial,"Segoe UI",sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Hoefler Text",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --gutter:clamp(1rem,3.2vw,3rem);
+  --max:1760px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0B0B0E; --paper-2:#17171C; --paper-3:#232329;
+    --ink:#F4F4EF; --ink-2:#B4B4BE; --ink-3:#7E7E8C;
+    --pink:#FF57A2; --yellow:#FFD62E; --green:#1FC97A;
+    --orange:#FF7440; --aqua:#28CCE2; --violet:#7A6DFF;
+    --void:#F4F4EF;
+    --on-yellow:#0B0B0E; --on-green:#0B0B0E; --on-orange:#0B0B0E;
+    --on-aqua:#0B0B0E; --on-violet:#0B0B0E; --on-pink:#0B0B0E;
+    --on-void:#0B0B0E;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B0B0E; --paper-2:#17171C; --paper-3:#232329;
+  --ink:#F4F4EF; --ink-2:#B4B4BE; --ink-3:#7E7E8C;
+  --pink:#FF57A2; --yellow:#FFD62E; --green:#1FC97A;
+  --orange:#FF7440; --aqua:#28CCE2; --violet:#7A6DFF;
+  --void:#F4F4EF;
+  --on-yellow:#0B0B0E; --on-green:#0B0B0E; --on-orange:#0B0B0E;
+  --on-aqua:#0B0B0E; --on-violet:#0B0B0E; --on-pink:#0B0B0E;
+  --on-void:#0B0B0E;
+}
+:root[data-theme="light"]{
+  --paper:#FFFFFF; --paper-2:#EFEFEB; --paper-3:#E0E0DA;
+  --ink:#111114; --ink-2:#4A4A52; --ink-3:#7C7C86;
+  --pink:#FF2D87; --yellow:#FFC700; --green:#00A95C;
+  --orange:#FF5C1F; --aqua:#00B0C7; --violet:#4A3AFF;
+  --void:#111114;
+  --on-yellow:#111114; --on-green:#111114; --on-orange:#111114;
+  --on-aqua:#111114; --on-violet:#FFFFFF; --on-pink:#111114;
+  --on-void:#FFFFFF;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1rem;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:2px}
+
+.shell{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.narrow{max-width:66ch}
+
+/* Full bleed is still the default — the shell is a gutter, not a column, and
+   the grids of cards run to the viewport edge.
+
+   .band is the deliberate exception, and it is used in exactly two places: the
+   Wall and section 04. Pulling those two onto the .shell column makes them read
+   as set pieces rather than as two more bands in the run, which is the whole
+   point of them. Applying it to every band instead just letterboxed the page
+   and lost the full-bleed language. The section background still bleeds either
+   way; it is only the content that comes in. */
+.band{max-width:var(--max);margin-inline:auto}
+
+.mono{font-family:var(--mono)}
+.tag{
+  font-family:var(--mono);font-size:.625rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+}
+
+/* --------------------------------------------------------------- topbar */
+/* inverted, so a sticky bar over scrolling paper always has an edge */
+.top{
+  position:sticky;top:0;z-index:120;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  /* the ink still spans the viewport — a sticky bar that stops at --max leaves
+     content scrolling past beside it, which reads as broken. It is the bar's
+     CONTENTS that are pulled onto the content column. */
+  padding-block:.5rem;
+  padding-inline:max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+  background:var(--ink);color:var(--paper);
+}
+.top__id{display:flex;align-items:center;gap:.6rem;min-width:0}
+.top__dots{display:flex;flex:none}
+.top__dots i{width:12px;height:12px;display:block}
+.top__id b{
+  font-weight:800;letter-spacing:-.03em;font-size:.9375rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.top__act{display:flex;flex:none}
+
+.btn{
+  font-family:var(--mono);font-size:.6875rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);
+  border:0;
+  padding:0 .95rem;min-height:44px;
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  cursor:pointer;
+  transition:background .2s var(--ease),color .2s var(--ease);
+}
+.btn:hover,.btn:active{background:var(--pink);color:var(--on-pink)}
+.btn--pink{background:var(--pink);color:var(--on-pink)}
+.btn--pink:hover,.btn--pink:active{background:var(--ink);color:var(--paper)}
+.btn--icon{width:44px;padding:0}
+.btn[hidden]{display:none}   /* display:inline-flex otherwise beats the UA [hidden] rule */
+.btn--lg{min-height:60px;font-size:.75rem;padding:0 1.7rem}
+.top .btn{background:var(--paper);color:var(--ink)}
+.top .btn:hover{background:var(--pink);color:var(--on-pink)}
+.top .btn--pink{background:var(--pink);color:var(--on-pink)}
+.top .btn--pink:hover{background:var(--paper);color:var(--ink)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+
+/* --------------------------------------------------------------- hero */
+.hero{background:var(--paper)}
+.hero__in{padding-block:clamp(2.5rem,7vw,5.5rem) clamp(2rem,5vw,3.5rem)}
+.hero__kicker{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--ink);color:var(--paper);
+  padding:.45rem .75rem;margin-bottom:1.5rem;
+}
+.hero h1{
+  font-size:clamp(3.1rem,13.5vw,12rem);
+  line-height:.82;
+  letter-spacing:-.055em;
+  font-weight:800;
+  /* .82 leading means the descender of "you" paints well outside the line box,
+     so the gap has to scale with the type, not with the viewport — a rem margin
+     that cleared it at 50px let it land on the subhead at 190px */
+  margin-bottom:.3em;
+}
+.hero h1 .q{color:var(--pink)}
+.hero__sub{
+  font-size:clamp(1.0625rem,2vw,1.5rem);
+  line-height:1.3;max-width:38ch;font-weight:500;
+  letter-spacing:-.02em;
+  margin-bottom:1.9rem;
+}
+/* stacked below 520px instead of left to wrap: the labels are mono and their
+   width varies with whichever mono the device has, so a wrapped row is two
+   ragged widths on one device and one line on the next. Stacked they are two
+   full-bleed blocks that butt vertically — pink then ink, still a seam. */
+.hero__cta{display:grid;grid-template-columns:1fr}
+@media (min-width:520px){
+  .hero__cta{display:flex;flex-wrap:wrap}
+  .hero__cta .btn{flex:0 1 auto;min-width:0}
+}
+
+/* --------------------------------------------------------------- stats */
+/* The colour block is each stat's own cap rather than a separate six-cell bar
+   above them. Six inks over four stats put a seam every 1/6 above a seam every
+   1/4, and only the midpoint ever agreed — the two bands read as two unrelated
+   things stacked. As a ::before inside the cell it cannot drift: it is the same
+   element box, so it aligns at four columns, at two, and at one without a rule
+   per breakpoint. Position 04's stat takes --void, so the black is still in the
+   set and now it is on the stat that is actually about the Wall. */
+.stats{display:grid;grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){ .stats{grid-template-columns:repeat(4,1fr)} }
+.stat{
+  --cap:clamp(18px,3vw,34px);
+  position:relative;
+  padding:calc(1.9rem + var(--cap)) var(--gutter) 2rem;
+  background:color-mix(in srgb, var(--fc) 12%, var(--paper));
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.stat::before{content:"";position:absolute;inset:0 0 auto 0;height:var(--cap);background:var(--fc)}
+.stat b{
+  font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;
+  letter-spacing:-.055em;line-height:.9;
+  font-variant-numeric:tabular-nums;
+}
+.stat span{font-size:.8125rem;line-height:1.4;color:var(--ink-2);max-width:30ch}
+
+/* --------------------------------------------------------------- section */
+/* Top padding only. A section that ends in a full-bleed band used to put its own
+   paper under that band and the next section put a *different* paper under that
+   — two edges 77px apart, which reads as a stray stripe rather than as a seam.
+   With no bottom pad the space between two sections is one field in the incoming
+   section's colour, and the outgoing band butts it directly.
+   .sec--tail opts back in for a section that ends in contained content: there the
+   padding is the same colour as the content's own ground, so it makes no edge,
+   and without it the last element sits 16px off the next section's colour. */
+.sec{padding-block:clamp(4rem,9vw,9rem) 0;background:var(--paper)}
+.sec--tail{padding-bottom:clamp(4rem,9vw,9rem)}
+.sec--alt{background:var(--paper-2)}
+.sec__head{display:flex;flex-wrap:wrap;align-items:flex-start;gap:1rem 2rem;margin-bottom:clamp(2.5rem,5vw,4.5rem)}
+/* Alternating composition, so six section openings are not one opening printed
+   six times: even sections put the number on the far right and the title takes
+   the left. Only above 900px — flex-wrap plus row-reverse stacks the number
+   above the title when it wraps, which reads as a mistake rather than a
+   variation. The text stays left-aligned either way; the number moving is the
+   whole change. */
+@media (min-width:900px){
+  .sec--flip .sec__head{flex-direction:row-reverse;justify-content:space-between}
+}
+/* Masked, so the number rises out of its own box rather than fading in place —
+   see the motion block. The padding is the mask's headroom and it is needed on
+   BOTH sides: at line-height .78 the .78em content box is far shorter than the
+   font's ~1.15em ink box, so the figures overhang it top and bottom. "No
+   descenders" is not the same as "nothing below the baseline" — round figures
+   overshoot it, and a bottom padding of 0 sliced the base off every 0 and 2.
+   The negative margins give the headroom back to the layout so the head's
+   vertical rhythm is unchanged. Measured, not guessed: see the ink-bounds
+   check in the verification notes. */
+.sec__n{
+  font-size:clamp(3.4rem,10vw,8.5rem);font-weight:800;letter-spacing:-.06em;
+  line-height:.78;color:var(--pink);flex:none;
+  overflow:hidden;
+  /* Headroom on all four sides, because overflow:hidden clips both axes and
+     this box is tight on both. Vertically the .78 line box is far shorter than
+     the font's ink. Horizontally, letter-spacing is applied after the LAST
+     character as well, so a -.06em tracking pulls the advance box in by .06em
+     while the final figure's ink still overhangs it — measured at 5.3–6.0px of
+     right overhang and 2.9px of left, at a 136px size. 01 was the only number
+     that survived, because 1 is narrow. Margins hand it all back to the layout
+     so the head's position is unchanged. */
+  padding:.16em .08em .14em .05em;
+  margin:-.16em -.08em -.14em -.05em;
+}
+.sec__t{flex:1 1 22ch;min-width:0}
+.sec__t h2{
+  font-size:clamp(1.75rem,4.4vw,3.1rem);font-weight:800;
+  letter-spacing:-.045em;line-height:.94;text-wrap:balance;
+}
+.sec__t p{font-size:.9375rem;color:var(--ink-2);margin-top:.65rem;max-width:62ch}
+
+/* --------------------------------------------------------------- opener */
+/* 01 was a 60ch column stranded in a full-bleed page with the substance folded
+   away behind a toggle. Both halves are now visible at once and the band runs
+   the width: thesis inverted on ink, the long read alongside it on paper-2. */
+.opener{display:grid;grid-template-columns:1fr}
+@media (min-width:940px){ .opener{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)} }
+.opener__a{
+  background:var(--ink);color:var(--paper);
+  padding:clamp(1.75rem,3.4vw,3rem) var(--gutter) clamp(2rem,4vw,3.5rem);
+  display:flex;flex-direction:column;justify-content:center;gap:1.6rem;
+}
+/* 1.24, not 1.08. At 1.08 the highlight block on one line came within a couple
+   of pixels of the block on the line above, which is what made this read as
+   crammed however much padding sat around it. */
+.opener__a p{
+  font-size:clamp(1.375rem,2.6vw,2.35rem);
+  font-weight:700;letter-spacing:-.035em;line-height:1.24;
+  text-wrap:balance;
+}
+/* Drawn as a bottom-anchored gradient rather than a background colour. An
+   inline background fills the font's whole content box — ascent plus descent,
+   about 1.15em — while cap height is only .72em, so roughly a fifth of an em
+   of empty colour sat above every capital. It read as a mis-set block, and at
+   the opener's tight leading the box on one line nearly touched the line above.
+   Bottom-anchoring the band keeps descenders covered and takes the slack off
+   the top, which is the only side that had any.
+
+   A percentage of the inline box, NOT .95em. An em is measured against the
+   font-size the stylesheet asked for, and that is not always the size the
+   glyphs are drawn at: a tablet report came back with the band at about .66em
+   of a 1.15em glyph box, line-height tracking the drawn text while the em-sized
+   band stayed behind at the size the sheet named — the signature of a browser
+   or OS text-scaling factor reaching the type but not the lengths. Every letter
+   top in the opener's highlights then sat outside the band, and outside it the
+   highlight ink is the same near-black as the inverted panel it sits on, so the
+   tops did not fall out of the block, they vanished into the background. A
+   percentage resolves against the inline box, and the inline box is built from
+   the metrics of the font as drawn, so the band cannot be left behind: whatever
+   size the text ends up, the block is that tall.
+
+   92 is measured, not chosen: what there is to trim is the headroom between the
+   font's ascent and the ink of its tallest ascender, and that is only .177em in
+   Roboto and Arial (ascent .927 / .905, ascender .75 / .728) — 15% of the box,
+   and nearer 10% in the DejaVu a Linux browser substitutes. 8% off the top sits
+   inside every one of them, and still opens the gap between one line's block
+   and the next from .07em to .16em, which is what the leading note above was
+   really about. Lower it and you are cutting into letters again; measure the
+   ink against the band before you do. */
+.hl{
+  --hlc:var(--yellow);
+  background:linear-gradient(var(--hlc),var(--hlc)) 0 100%/100% 92% no-repeat;
+  color:var(--on-yellow);
+  padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+.hl--pink{--hlc:var(--pink);color:var(--on-pink)}
+
+/* paper-3, not paper-2: this block now butts section 02's paper-2 top band
+   directly, and paper-2 on paper-2 is not a seam, it is a vanished edge. */
+.opener__b{
+  background:var(--paper-3);
+  padding:clamp(1.5rem,3vw,2.5rem) var(--gutter);
+}
+.opener__b h3{
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.45rem;
+}
+.opener__b h3::before{content:"";width:10px;height:10px;flex:none;background:var(--pink)}
+.opener__cols > * + *{margin-top:.9rem}
+@media (min-width:1280px){
+  .opener__cols{columns:2;column-gap:2.25rem}
+  .opener__cols > *{break-inside:avoid}
+  .opener__cols > * + *{margin-top:0;padding-top:.9rem}
+}
+.opener__b p{font-size:.9375rem;line-height:1.6;color:var(--ink-2)}
+.opener__b strong{color:var(--ink)}
+
+/* --------------------------------------------------------------- the six positions
+
+   Each card is a subgrid spanning 8 tracks of .map — head, six facts, verse.
+   That is what makes "the tell" in card 01 sit on exactly the same baseline as
+   "the tell" in cards 02 and 03; re-nesting these rows inside a wrapper breaks
+   the subgrid chain and the alignment with it.
+   ------------------------------------------------------------------------ */
+.map{display:grid;grid-template-columns:1fr;align-content:start}
+@media (min-width:720px){ .map{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1120px){ .map{grid-template-columns:repeat(3,1fr)} }
+
+.pos{
+  --c:var(--yellow); --on:var(--on-yellow);
+  display:grid;grid-row:span 8;grid-template-rows:subgrid;
+  color:var(--on);
+  min-width:0;
+}
+@supports not (grid-template-rows:subgrid){
+  .pos{grid-row:auto;display:flex;flex-direction:column}
+}
+/* one flat colour for the whole card. With no shade change between rows the
+   separation is an explicit divider, inset to --gutter so it starts and ends
+   exactly where the text does. */
+.pos > *{background:var(--c);position:relative}
+.pos > * + *::before{
+  content:"";position:absolute;top:0;left:var(--gutter);right:var(--gutter);
+  height:2px;background:var(--on);opacity:.26;
+}
+
+.pos__head{padding:1.7rem var(--gutter) 1.75rem;display:flex;flex-direction:column;gap:.65rem}
+.pos__top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.pos__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;font-weight:500;opacity:.7;padding-top:.5rem}
+.pos__ico{width:40px;height:40px;flex:none}
+.pos__ico svg{width:100%;height:100%;display:block}
+.pos__head h3{font-size:clamp(1.7rem,3.1vw,2.3rem);font-weight:800;letter-spacing:-.045em;line-height:.94}
+.pos__one{font-size:1.0625rem;line-height:1.45;font-weight:600;margin-top:auto}
+
+.fact{
+  padding:1.3rem var(--gutter) 1.45rem;
+  display:flex;flex-direction:column;gap:.6rem;
+  min-width:0;
+}
+.fact h4{
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.55rem;
+}
+/* the chip inverts against the card rather than taking pink/green: on a
+   saturated ground a pink chip on the green card sits at 1.2:1 and vanishes.
+   The glyphs — check, no-entry, warning — carry the do/don't instead. */
+.fact__i{
+  width:24px;height:24px;flex:none;
+  background:var(--on);color:var(--c);
+  display:grid;place-items:center;
+}
+.fact__i svg{width:14px;height:14px;display:block}
+.fact p{font-size:.875rem;line-height:1.6;opacity:.9}
+
+/* three verses, not one: an anchor text and two that come at the position from a
+   different angle. The first stays at 1rem so the row still has a head; the deep
+   bottom pad is what stops a stack of hard-inverted quote blocks from crowding
+   the card edge. */
+.verse{
+  padding:1.5rem var(--gutter) clamp(2.4rem,3.8vw,3.5rem);
+  display:flex;flex-direction:column;gap:1.05rem;
+}
+.verse__v{font-size:.9375rem;line-height:1.5}
+.verse__v:first-child{font-size:1rem}
+/* a highlight, not a footnote: the quote takes a hard inverted block, the way
+   .hl does in 01. Inverting against --on rather than --ink keeps it
+   working on the void card, whose ink IS --ink. */
+.verse q{
+  quotes:none;font-weight:700;letter-spacing:-.02em;
+  background:var(--on);color:var(--c);
+  padding:.1em .3em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+.verse cite{
+  display:block;font-family:var(--mono);font-style:normal;
+  font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
+  opacity:.72;margin-top:.55rem;
+}
+
+/* --------------------------------------------------------------- wall */
+.wall{background:var(--ink);color:var(--paper)}
+.wall__in{padding-block:clamp(4rem,9vw,9rem) 0}
+.wall__top{display:grid;gap:1.5rem 3rem;align-items:end;margin-bottom:clamp(2.5rem,5vw,4rem)}
+@media (min-width:940px){ .wall__top{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+.wall__tag{
+  display:inline-block;background:var(--pink);color:var(--on-pink);
+  padding:.4rem .65rem;margin-bottom:1rem;
+}
+.wall h2{
+  font-size:clamp(3.2rem,12vw,10rem);font-weight:800;
+  letter-spacing:-.06em;line-height:.8;
+}
+.wall__lede{
+  font-size:clamp(1.0625rem,1.7vw,1.375rem);font-weight:500;
+  letter-spacing:-.02em;line-height:1.35;max-width:46ch;
+  opacity:.85;
+}
+
+/* The register. This section used to be six cells that re-stated Position 04's
+   card — the trap row, the door row, the do and don't rows and the verses,
+   several of them word for word, one screen after the reader had them. A
+   section that repeats the thing above it is worse than no section: it teaches
+   the reader that scrolling here costs nothing, which is exactly what you do
+   not want a page to teach at the point it is making its central claim.
+
+   What goes here instead is the one cut of this material section 05 cannot
+   give you. 05 lists eleven frameworks one card at a time, and nobody reading
+   eleven cards in sequence can see that they bend in the same place. So: the
+   same spot on all eleven, oldest first, with what each one calls it and the
+   one thing only that one sees. The four with no name for it are IN the list
+   and marked, because the gap in the colour column is the argument — you can
+   see 1,900 years of maps agreeing, and see which four were built for a
+   journey that doesn't include this.
+
+   Rows alternate two values of the ground rather than two hues: the hue in
+   this component is load-bearing (it marks the maps that have a room) and a
+   striped background would compete with it. Value alternation still satisfies
+   the seam rule at the one column this ever collapses to. */
+.reg{display:grid;grid-template-columns:1fr}
+.reg__r{
+  background:color-mix(in srgb, var(--paper) 9%, var(--ink));
+  color:var(--paper);
+  padding:1.15rem var(--gutter) 1.3rem;
+  display:grid;grid-template-columns:1fr;gap:.5rem;
+  align-items:start;min-width:0;
+}
+.reg > .reg__r:nth-child(even){background:color-mix(in srgb, var(--paper) 18%, var(--ink))}
+/* three columns only once the insight column can hold a sensible measure;
+   below that the row stacks date+name, label, insight, which is the reading
+   order anyway */
+@media (min-width:940px){
+  .reg__r{grid-template-columns:minmax(0,.78fr) minmax(0,.92fr) minmax(0,1.7fr);gap:0 2.25rem}
+}
+.reg__yr{
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+  opacity:.62;display:block;margin-bottom:.3rem;
+}
+.reg__nm{font-size:.9375rem;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+/* The name each tradition gives this room is a solid chip, not coloured text.
+   This panel inverts with the theme — near-black ground in light, near-paper
+   in dark — and an accent as INK has to clear both, which yellow and violet
+   cannot do at once. As a slab each hue carries its own paired --on token and
+   the pairing holds in either theme. It also states the point better: eleven
+   labels for one place, marching down the column. */
+.reg__c{
+  /* justify-self, because a grid item blockifies and would otherwise stretch to
+     the column: equal-width bars read as a chart, and these are labels of very
+     unequal length, not quantities */
+  justify-self:start;
+  background:var(--rc);color:var(--rc-on);
+  padding:.32rem .5rem;font-size:.875rem;font-weight:700;letter-spacing:-.015em;
+  line-height:1.25;
+}
+.reg__d{font-size:.875rem;line-height:1.55;opacity:.86;min-width:0}
+/* the four with no room: no chip, so the colour column simply stops */
+.reg__r--none .reg__c{
+  background:none;color:var(--paper);opacity:.58;
+  font-weight:500;font-style:italic;padding-inline:0;
+}
+.reg__r--none .reg__nm{opacity:.72}
+
+/* The tally. The lede claims five of eleven; this is the claim counted out,
+   and the third cell is the one that earns the section — the maps with no room
+   for this are not sloppy, they are first-half tools, and saying so is the
+   difference between a register and an argument. */
+.tally{display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .tally{grid-template-columns:repeat(3,1fr)} }
+.tal{
+  background:var(--tc,var(--yellow));color:var(--tc-on,var(--on-yellow));
+  padding:1.35rem var(--gutter) 1.5rem;min-width:0;
+}
+.tal--quiet{
+  background:color-mix(in srgb, var(--paper) 28%, var(--ink));color:var(--paper);
+}
+.tal b{display:block;font-size:2.25rem;font-weight:800;letter-spacing:-.05em;line-height:.9}
+.tal span{display:block;font-size:.875rem;line-height:1.45;margin-top:.5rem;max-width:32ch}
+.tal i{
+  display:block;font-family:var(--mono);font-style:normal;font-size:.5625rem;
+  letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-top:.6rem;
+  /* five names over two lines orphaned the last one; balance splits them */
+  text-wrap:balance;
+}
+/* The section's conclusion, and it has to look like one. As a bare paragraph
+   on the ink ground between the tally and the siren it read as an orphan, and
+   with no bottom padding its last line ran into the siren band — the one place
+   on this page where a block's own padding does the spacing, because the two
+   neighbours here are inside a section rather than either side of a seam.
+
+   Padded on all four sides, and split like the register above it: .78fr for
+   the kicker, the rest for the statement, on the same 2.25rem gap. That puts
+   the statement's left edge exactly where the register's chip column starts,
+   so the line that explains the gap in that column begins on it.
+
+   The measure goes on the child. .band sets margin-inline:auto, so a max-width
+   on the block itself would centre the paragraph rather than set it from the
+   gutter like every other line of body copy in the section. */
+.wall__close{
+  padding:clamp(2.25rem,4.5vw,3.5rem) var(--gutter);
+  display:grid;grid-template-columns:1fr;gap:1rem;
+  align-items:start;
+}
+@media (min-width:940px){
+  .wall__close{grid-template-columns:minmax(0,.78fr) minmax(0,2.62fr);gap:0 2.25rem}
+}
+.wall__close b{
+  font-family:var(--mono);font-size:.625rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.68;
+  display:flex;align-items:center;gap:.45rem;line-height:1.2;
+}
+/* only once the kicker sits BESIDE the statement: it drops the 10px label onto
+   the first line of the 21px text rather than the top of its ascent. Stacked,
+   there is nothing to align to and the row gap already does the spacing. */
+@media (min-width:940px){ .wall__close b{padding-top:.45rem} }
+/* the square is the page's own kicker idiom — see .opener__b h3, which uses
+   pink for it. Pink here too, and not this section's yellow: the panel inverts,
+   and --yellow on the near-paper ground dark mode gives it all but disappears. */
+.wall__close b::before{content:"";width:10px;height:10px;flex:none;background:var(--pink)}
+.wall__close p{
+  font-size:clamp(1.0625rem,1.6vw,1.3125rem);font-weight:500;
+  letter-spacing:-.02em;line-height:1.4;max-width:54ch;
+}
+
+.siren{
+  display:flex;gap:1rem;align-items:flex-start;
+  background:color-mix(in srgb, var(--pink) 32%, var(--ink));
+  color:var(--paper);
+  padding:1.65rem var(--gutter) 1.8rem;
+}
+.siren svg{flex:none;margin-top:.1rem;color:var(--pink)}
+.siren p{font-size:.9375rem;line-height:1.55;max-width:64ch}
+.siren b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.35rem;color:var(--pink)}
+
+/* --------------------------------------------------------------- quiz */
+.inst__bar{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.75rem 1.1rem;
+  background:var(--ink);color:var(--paper);
+}
+.pips{display:flex}
+.pips i{width:22px;height:8px;background:color-mix(in srgb, var(--paper) 26%, var(--ink));display:block;margin-right:3px;transition:background .2s var(--ease)}
+.pips i[data-on="1"]{background:var(--pink)}
+.inst__body{padding:clamp(1.5rem,3.5vw,2.5rem) 0 0}
+.q__n{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--pink);display:block;margin-bottom:.7rem}
+.q__t{
+  font-size:clamp(1.5rem,3.4vw,2.5rem);font-weight:800;
+  letter-spacing:-.04em;line-height:1;margin-bottom:1.75rem;max-width:26ch;
+}
+.opts{display:grid;grid-template-columns:1fr}
+@media (min-width:900px){ .opts{grid-template-columns:repeat(2,1fr)} }
+.opt{
+  display:flex;gap:.85rem;align-items:flex-start;
+  background:var(--paper-2);border:0;
+  text-align:left;width:100%;padding:1.15rem 1.2rem;min-height:60px;
+  font-size:.9375rem;line-height:1.4;font-weight:500;cursor:pointer;
+  transition:background .2s var(--ease),color .2s var(--ease);
+}
+/* stacked: plain parity. Two up: 1 and 4 deep, so the checkerboard holds on
+   both axes. One rule cannot serve both column counts — the four options are
+   vertical neighbours at 1fr and diagonal ones at 2fr. */
+.opts > .opt:nth-child(even){background:var(--paper-3)}
+@media (min-width:900px){
+  .opts > .opt:nth-child(even){background:var(--paper-2)}
+  .opts > .opt:nth-child(4n+1),.opts > .opt:nth-child(4n){background:var(--paper-3)}
+}
+.opt:hover,.opt:active{background:var(--pink);color:var(--on-pink)}
+.opt b{font-family:var(--mono);font-size:.6875rem;font-weight:500;padding-top:.2rem;flex:none;opacity:.6}
+
+.res{display:none}
+.res[data-on="1"]{display:block}
+.res__hero{padding:1.5rem 1.35rem;background:var(--c,var(--pink));color:var(--on,var(--on-pink))}
+.res__hero .tag{opacity:.75}
+.res__hero h3{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:800;letter-spacing:-.05em;line-height:.9;margin-top:.4rem}
+.res__grid{display:grid;gap:1.75rem;margin-top:1.75rem}
+@media (min-width:900px){ .res__grid{grid-template-columns:minmax(0,1fr) 320px} }
+.res__say{font-size:1.0625rem;line-height:1.55;color:var(--ink-2)}
+.res__second{margin-top:1.25rem;background:color-mix(in srgb, var(--pink) 14%, var(--paper));padding:1.1rem 1.2rem}
+.res__second b{display:block;font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:.35rem}
+.res__second span{font-size:.875rem;line-height:1.5;color:var(--ink-2)}
+.plot{background:var(--paper-2);padding:1rem}
+.plot__r{display:flex;align-items:center;gap:.6rem;padding:.3rem 0;font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;color:var(--ink-3)}
+.plot__r span:first-child{width:74px;flex:none}
+.plot__b{flex:1;height:14px;background:var(--paper);position:relative;overflow:hidden}
+.plot__b i{position:absolute;inset:0 auto 0 0;width:0;background:var(--pc);transition:width .8s var(--ease)}
+.plot__r[data-top="1"]{color:var(--ink);font-weight:700}
+.res__moves{display:grid;margin-top:1.75rem}
+@media (min-width:820px){ .res__moves{grid-template-columns:1fr 1fr} }
+.res__moves .fact{padding:1.25rem 1.3rem 1.35rem;color:var(--ink)}
+.res__moves .fact--do{--c:var(--green);--on:var(--on-green);background:var(--green)}
+.res__moves .fact--warn{--c:var(--pink);--on:var(--on-pink);background:var(--pink)}
+.res__moves .fact{color:var(--on)}
+
+/* --------------------------------------------------------------- relational
+
+   The ledger is laid out in PAIRS in DOM order — a, b, a, b — not as two
+   stacked lists. At two columns that makes each pair a grid row, so the two
+   halves of a claim sit on one baseline without a subgrid; at one column it
+   collapses to statement, counter-statement, statement, which is the right
+   reading order on a phone and the wrong one for two lists. Cells stay flat
+   colour, so the divider is explicit and inset — and only at two columns,
+   where vertical neighbours share a hue. Stacked, the a/b alternation is
+   already a seam and a rule there would be a drawn line for nothing. */
+.ledger{display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .ledger{grid-template-columns:repeat(2,1fr)} }
+/* Tinted bodies, solid key bars — the same two-part idiom as .frame, and a
+   deliberate correction. These rows were originally solid --aqua and solid
+   --pink. Dark-on-pink measures 5.4:1 so it passed contrast, but #FF2D87 is
+   the highest-chroma ink on the page and a 700px slab of it is the only large
+   full-saturation pink here; every other use is a chip, a button or a hover.
+   It read as glare, not as emphasis. The hue now lives in the key bar and the
+   icon chip, where the area is small, and the statements sit in --ink on a
+   quiet tint. Different percentages per column so the two differ in value as
+   well as hue, since at these strengths hue alone is a thin seam. */
+.ledger > *{
+  --c:var(--aqua); --t:13%;
+  background:color-mix(in srgb, var(--c) var(--t), var(--paper));
+  color:var(--ink);
+  padding:1.35rem var(--gutter) 1.5rem;
+  position:relative;min-width:0;
+  display:flex;align-items:flex-start;gap:.85rem;
+}
+.ledger > .led--b{--c:var(--pink); --t:19%}
+@media (min-width:820px){
+  .ledger > :nth-child(n+3)::before{
+    content:"";position:absolute;top:0;left:var(--gutter);right:var(--gutter);
+    height:2px;background:var(--ink);opacity:.13;
+  }
+}
+.led__i{
+  width:24px;height:24px;flex:none;margin-top:.2rem;
+  background:var(--c);color:var(--on-aqua);display:grid;place-items:center;
+}
+.ledger > .led--b .led__i{color:var(--on-pink)}
+.led__i svg{width:14px;height:14px;display:block}
+.led p{font-size:clamp(1.0625rem,1.7vw,1.375rem);font-weight:700;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+/* compound, so it beats `.ledger > *` on specificity rather than on source
+   order — the house rule after the padding-shorthand collisions elsewhere */
+.ledger > .led__k{background:var(--c);color:var(--on-aqua);padding-block:.95rem}
+.ledger > .led--b.led__k{color:var(--on-pink)}
+.led__k h3{
+  font-family:var(--mono);font-size:.625rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;
+}
+
+.trio{display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .trio{grid-template-columns:repeat(3,1fr)} }
+.tri{
+  --c:var(--yellow); --on:var(--on-yellow);
+  background:var(--c);color:var(--on);
+  padding:1.8rem var(--gutter) 2rem;
+  display:flex;flex-direction:column;gap:.55rem;min-width:0;
+}
+.tri__n{font-family:var(--mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
+.tri h3{font-size:clamp(1.25rem,2.2vw,1.65rem);font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.tri p{font-size:.9375rem;line-height:1.55;opacity:.92}
+
+/* --------------------------------------------------------------- gridset
+   A plain grid, not masonry. The JS masonry packed columns shortest-first and
+   let the last card in each grow to the column's full height — which on the
+   frameworks set left one card stretched over 670px of flat 9% tint. That does
+   not read as a card, it reads as a hole, and it reintroduced the very ragged
+   edge it was there to remove.
+
+   Here rows are as tall as their tallest card and each card absorbs the
+   difference inside its own bottom block (.frame__map, which is a deeper tint
+   than the card), so the field stays solid, nothing is left blank, and the rows
+   line up across cards again.
+
+   The trailing row is filled by span rather than left short: where the item
+   count doesn't divide by the column count, the last card takes the remainder.
+   The count is read straight off the DOM with :last-child:nth-child(), so the
+   filtered source list must have its hidden cards REMOVED, not [hidden] —
+   :nth-child counts hidden children. See draw() in the sources block. */
+.gridset{display:grid;grid-template-columns:1fr}
+@media (min-width:760px){
+  .gridset{grid-template-columns:repeat(2,1fr)}
+  .gridset > :last-child:nth-child(2n+1){grid-column:span 2}
+}
+@media (min-width:1200px){
+  .gridset{grid-template-columns:repeat(3,1fr)}
+  /* the 2-col span rule above still matches at this width; this reset has the
+     same specificity and comes later, so it lands. The two rules under it are
+     equally specific and later again, so they re-win wherever they apply. */
+  .gridset > :last-child:nth-child(2n+1){grid-column:auto}
+  .gridset > :last-child:nth-child(3n+1){grid-column:span 3}
+  .gridset > :last-child:nth-child(3n+2){grid-column:span 2}
+}
+/* Subgrid over the five rows every framework card has — year bar, name, tag,
+   note, stage map — so the tinted .frame__map starts on ONE line across each
+   row band. Stretching the card to the row height was not enough on its own:
+   the notes wrap to three, four or five lines depending on the card, so the
+   tint began at a different height in every column and the band read as
+   ragged. With subgrid the note row takes the tallest note in the band and the
+   shorter ones carry the slack above the tint instead of pushing it down.
+   Same mechanism as .pos in section 02, and the same warning applies — these
+   five must stay DIRECT children. Re-nest them in a wrapper and the subgrid
+   chain breaks and the tint goes ragged again. */
+.frames > .frame{
+  display:grid;grid-row:span 5;grid-template-rows:subgrid;
+  background:color-mix(in srgb, var(--fc) 9%, var(--paper));min-width:0;
+}
+@supports not (grid-template-rows:subgrid){
+  .frames > .frame{grid-row:auto;display:flex;flex-direction:column}
+  .frames > .frame .frame__map{flex:1 1 auto}
+}
+.frame__k{
+  background:var(--fc);color:var(--on-fc);
+  padding:.7rem var(--gutter);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+}
+.frame__k b{font-weight:700;letter-spacing:.1em}
+.frame__id{display:flex;align-items:center;gap:.6rem;min-width:0}
+.frame__ico{width:20px;height:20px;flex:none;display:block}
+.frame__ico svg{width:100%;height:100%;display:block}
+.frame h3{
+  padding:1.55rem var(--gutter) .6rem;
+  font-size:clamp(1.25rem,2vw,1.5rem);font-weight:800;
+  letter-spacing:-.035em;line-height:1.05;text-wrap:balance;
+}
+/* the tag takes ink, not --fc: yellow and aqua at 10px on paper are unreadable.
+   The colour link is carried by a solid swatch, where a low-luminance ink is
+   still perfectly legible as a block. */
+.frame__tag{
+  padding:0 var(--gutter) 1.15rem;
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);font-weight:500;
+  display:flex;align-items:center;gap:.45rem;
+}
+.frame__tag::before{content:"";width:10px;height:10px;flex:none;background:var(--fc)}
+/* capped: the last card in the set spans two or three columns to close the
+   trailing row, and an uncapped measure there would run to 1100px */
+.frame__note{padding:0 var(--gutter) 1.75rem;font-size:.875rem;line-height:1.55;color:var(--ink-2);max-width:66ch}
+/* each framework's own map, in its own vocabulary and its own count — the
+   whole reason the shared six-position axis came out. One value step deeper
+   than the card so the seam holds without a rule. It is the last subgrid row
+   and grid items stretch by default, so it carries the band's height
+   difference on its own — the tint runs to the card's bottom edge instead of
+   leaving a paler strip of .frame under it. (The flex:1 that used to do this
+   now lives only in the no-subgrid fallback.) */
+.frame__map{background:color-mix(in srgb, var(--fc) 22%, var(--paper));padding:1.3rem var(--gutter) 1.55rem}
+.frame__map h4{
+  font-family:var(--mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;
+}
+.frame__map h4::before{content:"";width:8px;height:8px;flex:none;background:var(--fc)}
+/* auto-fill rather than a fixed count: at a normal card width 340px admits one
+   track, and on the wide card that closes the trailing row it admits two, so
+   the stage list reflows into the extra width instead of running down it as one
+   thin ribbon. No span-awareness needed — it reads the width it was given. */
+.frame__map ol{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));
+  gap:.75rem 2rem;align-content:start;
+}
+.frame__map li{display:flex;gap:.65rem;align-items:baseline}
+.frame__no{
+  font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;
+  color:var(--ink);opacity:.45;flex:none;
+}
+.frame__st{min-width:0}
+.frame__st b{display:block;font-size:.875rem;line-height:1.3;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+.frame__st i{display:block;font-style:normal;font-size:.8125rem;line-height:1.45;color:var(--ink-2);margin-top:.15rem}
+
+/* --------------------------------------------------------------- sources */
+/* each chip takes a tint of the kind it filters to, so a wrapping row of them
+   still has a colour change at every seam — parity would not survive the wrap */
+.filters{display:flex;flex-wrap:wrap;margin-bottom:1.75rem}
+.fchip{
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
+  border:0;background:color-mix(in srgb, var(--kc,var(--ink)) 17%, var(--paper));color:var(--ink);
+  padding:0 1rem;min-height:44px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.45rem;
+  transition:background .2s var(--ease),color .2s var(--ease);
+}
+.fchip:hover{background:color-mix(in srgb, var(--kc,var(--ink)) 34%, var(--paper))}
+.fchip[aria-pressed="true"],.fchip[aria-pressed="true"]:hover{background:var(--ink);color:var(--paper)}
+.fchip i{width:11px;height:11px;background:var(--kc,var(--ink));display:block}
+
+.src{
+  padding:1.5rem var(--gutter) 1.7rem;display:flex;flex-direction:column;gap:.45rem;
+  background:color-mix(in srgb, var(--fc) 9%, var(--paper));
+  min-width:0;
+}
+.src__k{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.1rem}
+.pill{
+  font-family:var(--mono);font-size:.5625rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.2rem .45rem;background:var(--k);color:var(--on-k);font-weight:500;
+}
+.src h4{font-size:1.125rem;font-weight:800;letter-spacing:-.03em;line-height:1.12}
+.src__by{font-family:var(--mono);font-size:.625rem;color:var(--ink-3);letter-spacing:.04em}
+.src p{font-size:.8125rem;line-height:1.55;color:var(--ink-2);max-width:66ch}
+.src p b{color:var(--ink)}
+.src__link{
+  font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;
+  margin-top:auto;color:var(--ink);font-weight:700;
+  display:inline-flex;align-items:flex-end;align-self:flex-start;
+  min-height:44px;padding-top:.75rem;
+  text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--pink);
+}
+
+/* flush against the sources above it — a 2.5rem paper margin here made exactly
+   the stray stripe the section paddings used to make, two edges close together
+   in the middle of a field of cards. Flush costs the seam unless the value
+   moves, so the caveats go to 24%: deep enough to hold against .src at 9%
+   whatever hue lands above them, and a fair signal that this row is a different
+   kind of block from the twenty-two it follows. */
+.caveats{display:grid;grid-template-columns:1fr}
+@media (min-width:720px){ .caveats{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1200px){ .caveats{grid-template-columns:repeat(4,1fr)} }
+.cav{padding:1.75rem var(--gutter) 1.9rem;background:color-mix(in srgb, var(--fc) 24%, var(--paper));min-width:0}
+.cav h4{font-size:1.0625rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem}
+.cav p{font-size:.8125rem;line-height:1.55;color:var(--ink-2)}
+.cav__n{font-family:var(--mono);font-size:.625rem;color:var(--ink-2);letter-spacing:.14em;display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem}
+.cav__n::before{content:"";width:9px;height:9px;flex:none;background:var(--fc)}
+
+footer{padding-block:2.5rem 3.5rem;background:var(--ink);color:var(--paper)}
+footer p{font-family:var(--mono);font-size:.6875rem;line-height:1.9;letter-spacing:.03em;opacity:.7;max-width:74ch}
+footer .home{display:inline-flex;align-items:center;min-height:44px;margin-top:1.5rem;padding:0 .95rem;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:.6875rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background-color .2s var(--ease),color .2s var(--ease)}
+footer .home:hover,footer .home:active{background:var(--pink);color:var(--on-pink)}
+
+/* --------------------------------------------------------------- motion */
+/* Only transform, opacity and stroke-dashoffset are animated. The previous set
+   animated the SVG `r` attribute, which the compositor cannot take — at 40px it
+   visibly stepped. transform-box:fill-box makes each shape scale about its own
+   box rather than the SVG origin. */
+@keyframes ic-float{0%,100%{transform:translateY(1.5px)}50%{transform:translateY(-2.5px)}}
+@keyframes ic-cross{0%{transform:translate(-13px,2px);opacity:0}16%{opacity:1}
+  58%,80%{transform:translate(0,0);opacity:1}100%{transform:translate(0,0);opacity:0}}
+@keyframes ic-wave{0%{transform:scale(.5);opacity:0}28%{opacity:1}100%{transform:scale(1.18);opacity:0}}
+@keyframes ic-bar{0%,100%{transform:scaleY(.3)}18%{transform:scaleY(.86)}50%{transform:scaleY(1)}}
+@keyframes ic-driftL{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.8px,1.4px)}}
+@keyframes ic-driftR{0%,100%{transform:translate(0,0)}50%{transform:translate(1.8px,-1.4px)}}
+@keyframes ic-fault{to{stroke-dashoffset:-15}}
+@keyframes ic-trace{0%{stroke-dashoffset:71}100%{stroke-dashoffset:-71}}
+@keyframes ic-ring{0%{transform:scale(.45);opacity:0}26%{opacity:.9}100%{transform:scale(1.3);opacity:0}}
+
+.pos__ico svg [class^="ic-"]{transform-box:fill-box}
+.ic-float{transform-origin:center;animation:ic-float 3.6s ease-in-out infinite}
+.ic-cross{animation:ic-cross 4s cubic-bezier(.4,0,.2,1) infinite}
+.ic-wave{transform-origin:center bottom;animation:ic-wave 3.4s cubic-bezier(.33,0,.2,1) infinite;opacity:0}
+.ic-w2{animation-delay:0s}
+.ic-w3{animation-delay:.62s}
+.ic-bar{transform-origin:center bottom;animation:ic-bar 3.4s cubic-bezier(.34,1.3,.5,1) infinite}
+.ic-b2{animation-delay:.28s}
+.ic-b3{animation-delay:.56s}
+.ic-slabL{animation:ic-driftL 5.2s ease-in-out infinite}
+.ic-slabR{animation:ic-driftR 5.2s ease-in-out infinite}
+.ic-fault{animation:ic-fault 2.4s linear infinite}
+.ic-trace{animation:ic-trace 4.4s cubic-bezier(.5,0,.5,1) infinite}
+.ic-ring{transform-origin:center;animation:ic-ring 3.8s cubic-bezier(.33,0,.2,1) infinite;opacity:0}
+.ic-g2{animation-delay:0s}
+.ic-g3{animation-delay:.7s}
+
+/* Reveals. Nothing fades as a slab any more. A whole-section fade on a section
+   that is 3000px tall finishes long before you have scrolled to the bottom of
+   it, so what you actually saw was the top card animating and the other ten
+   already sitting there — the effect was doing nothing where it mattered. Each
+   band is observed on its own instead and arrives as you reach it.
+
+   Only transform and opacity here, same rule as the icon keyframes above: both
+   are compositor properties, so none of this can drop a frame on a long page.
+   Everything is one-shot — the observer unobserves on first intersection, so
+   nothing re-animates on the way back up, which is the difference between a
+   reveal and a gimmick. */
+.rv-js .rise, .rv-js .stagger > *, .rv-js .sec__head .sec__t > *{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+.rise[data-in="1"], .stagger[data-in="1"] > *, .sec__head[data-in="1"] .sec__t > *{
+  opacity:1;transform:none;
+}
+/* index stamped in JS, capped at 7 — an 11-card band at 60ms a step would run
+   for two thirds of a second and the last cards would still be arriving after
+   you had read the first */
+.stagger > *{transition-delay:calc(min(var(--d,0), 9) * 85ms)}
+/* the head arrives in three beats — number, then title, then lede — so the eye
+   is led down it rather than handed all of it at once */
+.sec__head .sec__t > *{transition-delay:.16s}
+.sec__head .sec__t > * + *{transition-delay:.3s}
+
+/* the number is masked rather than faded — it rises out of its own box. This
+   is the one place a reveal on this page can be graphic rather than apologetic,
+   and it is safe here only because digits have no descenders. */
+/* 145%, not 108%: the mask is now .78em of line box plus .30em of padding, and
+   108% of the line box no longer clears the padded box — it left a few pixels
+   of pink showing above the fold before the reveal ran. */
+.sec__n > i{
+  display:block;font-style:normal;
+}
+.rv-js .sec__n > i{
+  transform:translateY(145%);
+  transition:transform .8s var(--ease);
+}
+.sec__head[data-in="1"] .sec__n > i{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition-duration:.001ms !important}
+  .rv-js .rise,.rv-js .stagger > *,.rv-js .sec__head .sec__t > *{opacity:1;transform:none}
+  .rv-js .sec__n > i{transform:none}
+  /* the ripples idle at opacity:0 and are revealed by their animation — with
+     animation:none they would simply never appear */
+  .ic-wave,.ic-ring{opacity:1;transform:none}
+}
+
+  /* reading comfort: balance display text */
+  h1, h2, h3 { text-wrap: balance; }
+</style>
+
+
+<header class="top">
+  <div class="top__id">
+    <div class="top__dots" aria-hidden="true">
+      <i style="background:var(--yellow)"></i>
+      <i style="background:var(--green)"></i>
+      <i style="background:var(--orange)"></i>
+      <i style="background:var(--aqua)"></i>
+      <i style="background:var(--violet)"></i>
+    </div>
+    <b>Где ты?</b>
+  </div>
+  <div class="top__act">
+    <div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/where-are-you/" lang="en" hreflang="en" aria-current="false">EN</a><span class="lang-sep" aria-hidden="true">·</span><a class="lang-opt" href="/where-are-you/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div>
+    <button class="btn btn--icon" id="theme" aria-label="Сменить цветовую тему">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 3a5 5 0 000 10z" fill="currentColor"/>
+      </svg>
+    </button>
+    <button class="btn btn--pink" data-go="instrument">Узнать</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="shell hero__in">
+    <span class="hero__kicker tag">Полевая карта · 11 моделей · 1900 лет</span>
+    <h1>Где<br>ты<span class="q">?</span></h1>
+    <p class="hero__sub">Шесть позиций христианской зрелости: как понять, <span class="hl">в какой из них ты</span>, что ведёт к следующей и что делать для того, кто в одной из них застрял.</p>
+    <div class="hero__cta">
+      <button class="btn btn--lg btn--pink" data-go="instrument">Пройти тест из 8 вопросов</button>
+      <button class="btn btn--lg" data-go="map">Посмотреть карту</button>
+    </div>
+  </div>
+</section>
+
+<div class="stats stagger" id="stats">
+  <div class="stat" style="--fc:var(--yellow)"><b data-count="1900" data-suffix="">0</b><span>Лет истории у этих карт: от апостола Иоанна до прошлогодних тестов</span></div>
+  <div class="stat" style="--fc:var(--green)"><b data-count="11" data-suffix="">0</b><span>Моделей, кратко описанных здесь, от самых старых к новым</span></div>
+  <div class="stat" style="--fc:var(--void)"><b data-count="5" data-suffix="">0</b><span>Из них считают позицию 04 — стену — <em>главным</em> поворотным пунктом жизни</span></div>
+  <div class="stat" style="--fc:var(--aqua)"><b data-count="57" data-suffix="%">0</b><span>Прихожан из поколения Z и миллениалов выбирают отношения, а не проповеди <span class="mono" style="font-size:.625rem">(Barna)</span></span></div>
+</div>
+
+<section class="sec">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n"><i>01</i></span>
+      <div class="sec__t"><h2>Зрелость — не лестница.</h2></div>
+    </div>
+  </div>
+    <div class="opener stagger">
+      <div class="opener__a">
+        <p>Большинство церковных карт ведут <span class="hl">вверх</span>. Узнавай больше, служи больше, руководи больше.</p>
+        <p>Но каждой модели, которая выдержала время, пришлось добавить комнату для той части пути, где всё <span class="hl hl--pink">перестаёт работать</span>, — и именно в этой комнате на самом деле происходит взросление.</p>
+      </div>
+      <div class="opener__b">
+        <h3>Подробнее</h3>
+        <div class="opener__cols">
+          <p>Писание иногда и правда говорит языком лестницы: Пётр ставит восемь ступеней в трёх стихах. Церкви это любят, потому что лестницу можно преподать, распечатать и измерить.</p>
+          <p>Беда в том, что происходит примерно на пятнадцатом году. Зрелый, послушный, по-настоящему обращённый человек обнаруживает, что практики, которые работали десять лет, перестали работать. Молитва становится плоской. Уверенность утекает. Ничего явно греховного не случилось, а механизм всё равно остановился.</p>
+          <p><strong>Каждая традиция, которая выдержала время, построила для этого комнату.</strong> Иоанн Креста назвал это тёмной ночью. Хагберг и Гьюлих буквально нарисовали это как стену. Тереза поместила это в середину замка, а не за его пределы. Рор называет падение необходимым. Скаццеро построил вокруг этого целую модель ученичества.</p>
+          <p>У большинства церквей для этого нет названия, и они хватаются за ближайшее, что есть: <strong>отступничество</strong>. Одна эта ошибка в названии — один из самых надёжных способов потерять человека, который как раз собирался вырасти.</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="sec sec--alt sec--flip" id="map">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n"><i>02</i></span>
+      <div class="sec__t">
+        <h2>Шесть позиций.</h2>
+        <p>Читай поперёк, а не сверху вниз. На каждой карточке одни и те же шесть строк в одном и том же порядке: как узнать, каково это, где всё идёт не так, выход и что делать и чего не делать, если ты идёшь рядом с тем, кто там.</p>
+      </div>
+    </div>
+  </div>
+    <div class="map stagger" id="mapGrid"></div>
+</section>
+
+<section class="wall" id="wall">
+  <div class="shell wall__in">
+    <div class="wall__top rise">
+      <div>
+        <span class="wall__tag tag">Позиция 04</span>
+        <h2>Стена</h2>
+      </div>
+      <p class="wall__lede">Одиннадцать карт, восемнадцать веков, никакого общего словаря — и они расходятся почти во всём, кроме этого. Есть место, где механизм останавливается, и <span class="hl">это не поломка</span>. Вот одна и та же точка на каждой из них.</p>
+    </div>
+
+  </div>
+    <div class="reg band stagger">
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">ок. 90 г. н. э.</span><h4 class="reg__nm">1 Ин. 2:12–14</h4></div>
+        <p class="reg__c">для этого нет места</p>
+        <p class="reg__d">Три группы, разделённые по тому, что они знают. Иоанн ставит «юношей» рядом с «отцами» и нигде не описывает переход: в самой древней карте здесь этот разрыв есть, а названия у него нет.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">III–XVI вв.</span><h4 class="reg__nm">Три пути · Внутренний замок</h4></div>
+        <p class="reg__c" style="--rc:var(--aqua);--rc-on:var(--on-aqua)">Пассивные очищения</p>
+        <p class="reg__d">Покои с четвёртых по шестые, где молитва перестаёт быть тем, что делаешь ты, и становится тем, что совершается с тобой. Единственная традиция, которая считает потерю контроля над собственной молитвой механизмом, а не препятствием.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">ок. 1578</span><h4 class="reg__nm">Иоанн Креста — Тёмная ночь</h4></div>
+        <p class="reg__c" style="--rc:var(--violet);--rc-on:var(--on-violet)">Ночь чувств, затем ночь духа</p>
+        <p class="reg__d">Две ночи, а не одна, и ответы на них нужны разные: первая снимает с молитвы сладость, вторая разбирает то «я», которое молилось. До сих пор самый точный словарь, какой кому-либо удалось создать, и написан он в тюремной камере.</p>
+      </div>
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">1930-е</span><h4 class="reg__nm">Колесо Навигаторов</h4></div>
+        <p class="reg__c">для этого нет места</p>
+        <p class="reg__d">Ступица и четыре спицы, и никакой оси времени. Колесо может показать, какая спица ослабла. Но ему нечего сказать о годе, когда колесо не проворачивается.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">1981</span><h4 class="reg__nm">Фаулер — Stages of Faith</h4></div>
+        <p class="reg__c" style="--rc:var(--green);--rc-on:var(--on-green)">Стадия 4 · индивидуально-рефлексивная</p>
+        <p class="reg__d">Единственная модель, которая описывает это как перенос авторитета, а не как крушение веры: ты перестаёшь держаться убеждений группы и начинаешь держаться своих. Фаулер честно называет цену: дорого и часто одиноко.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">1987</span><h4 class="reg__nm">Пек — The Different Drum</h4></div>
+        <p class="reg__c" style="--rc:var(--orange);--rc-on:var(--on-orange)">Стадия 3 · скептическая, индивидуальная</p>
+        <p class="reg__d">Добавление психиатра и самая полезная фраза на этой странице: снаружи стадию 4 невозможно отличить от стадии 2. Тех, кто прошёл дальше всех, принимают за тех, кто никуда не уходил.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">1989</span><h4 class="reg__nm">Хагберг и Гьюлих</h4></div>
+        <p class="reg__c" style="--rc:var(--yellow);--rc-on:var(--on-yellow)">Стена</p>
+        <p class="reg__d">Единственная карта, которая отказывается делать из этого стадию: её рисуют как проход, рассекающий путь от 3 к 4. Глагол выдаёт всё. Стадии смиряют нас, дают опору, вознаграждают, выбивают из колеи, преображают и выводят за пределы себя, а стена <em>срывает с нас маску</em>.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">2006</span><h4 class="reg__nm">Скаццеро — эмоциональное здоровье</h4></div>
+        <p class="reg__c" style="--rc:var(--pink);--rc-on:var(--on-pink)">Стадия 4 · стена и путь внутрь</p>
+        <p class="reg__d">Накрепко связывает это с эмоциональной зрелостью, с доводом, что обычное ученичество оставляет глубокие пласты жизни нетронутыми, а затем делает непарадную вещь: прописывает устав жизни, достаточно прочный, чтобы пережить переход.</p>
+      </div>
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">2007</span><h4 class="reg__nm">REVEAL — Willow Creek</h4></div>
+        <p class="reg__c">для этого нет места</p>
+        <p class="reg__d">Шкала из четырёх точек без единого кризиса на ней — а потом собственный опрос наткнулся на кризис. Церковная активность предсказывает рост на раннем этапе и перестаёт предсказывать его позже, примерно там, где все остальные карты здесь ставят Стену.</p>
+      </div>
+      <div class="reg__r">
+        <div><span class="reg__yr">2011</span><h4 class="reg__nm">Рор — Falling Upward</h4></div>
+        <p class="reg__c" style="--rc:var(--aqua);--rc-on:var(--on-aqua)">Необходимое падение</p>
+        <p class="reg__d">Самая сильная форма этого утверждения: сосуд не повреждается, разбиваясь, — разбиваясь, он завершается. Первая половина жизни строит вещь, вторая выясняет, для чего она была.</p>
+      </div>
+      <div class="reg__r reg__r--none">
+        <div><span class="reg__yr">2014</span><h4 class="reg__nm">Спейдер — 4 Chair Discipling</h4></div>
+        <p class="reg__c">для этого нет места</p>
+        <p class="reg__d">Четыре стула, прямо вверх, придуманные, чтобы отвечать, что делать во вторник. Это лучший инструмент для следующего шага здесь, и в нём нет стула для человека, который больше не может сидеть ни на одном из них.</p>
+      </div>
+    </div>
+
+    <div class="tally band stagger">
+      <div class="tal" style="--tc:var(--yellow);--tc-on:var(--on-yellow)">
+        <b>5</b><span>целиком строят своё понимание зрелости вокруг этой комнаты.</span>
+        <i>Тереза · Иоанн Креста · Хагберг · Скаццеро · Рор</i>
+      </div>
+      <div class="tal" style="--tc:var(--aqua);--tc-on:var(--on-aqua)">
+        <b>2</b><span>имеют для этого комнату и считают её стадией, через которую проходят.</span>
+        <i>Фаулер · Пек</i>
+      </div>
+      <div class="tal tal--quiet">
+        <b>4</b><span>вообще не знают, куда это поместить.</span>
+        <i>1 Ин. · Навигаторы · REVEAL · Спейдер</i>
+      </div>
+    </div>
+
+    <div class="wall__close band rise">
+      <b>Как читать этот разрыв</b>
+      <p>Три из четырёх, где для этого нет места, созданы для первой половины пути: схема обслуживания, опрос о росте и лестница следующих шагов. Каждая отлично справляется со своей задачей, и каждая перестаёт быть о тебе ровно там, где ты сейчас. Четвёртая длиной в два стиха, и её написали раньше, чем кому-то пришло в голову, что для этого вопроса нужна схема.</p>
+    </div>
+
+    <div class="siren band rise">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2L19 18H1L10 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M10 8v4.5M10 15v.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <p><b>Прежде чем ставить себе диагноз</b>Разница между тёмной ночью и клинической депрессией — медицинский вопрос, и гадать тут нельзя. Изнутри они выглядят одинаково, а лечатся совершенно по-разному. Духовное наставничество и терапия здесь не соперники: обращайся и туда, и туда, и скажи каждому, что у тебя есть второе.</p>
+    </div>
+</section>
+
+<section class="sec sec--tail" id="instrument">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n"><i>03</i></span>
+      <div class="sec__t">
+        <h2>Найди свою позицию.</h2>
+        <p>Восемь вопросов, намеренно нелестных. Отвечай за последние три месяца, а не за свой лучший год. Ничего не сохраняется и никуда не отправляется.</p>
+      </div>
+    </div>
+    <div class="inst rise">
+      <div class="inst__bar">
+        <span class="tag" id="instState">Question 1 of 8</span>
+        <div class="pips" id="pips" aria-hidden="true"></div>
+      </div>
+      <div class="inst__body">
+        <div id="quiz">
+          <span class="q__n" id="qn">Q1</span>
+          <h3 class="q__t" id="qt">—</h3>
+          <div class="opts" id="opts"></div>
+          <div style="margin-top:1rem"><button class="btn" id="back" hidden>← Назад</button></div>
+        </div>
+        <div class="res" id="res">
+          <div class="res__hero" id="resHero">
+            <span class="tag" id="resCode">—</span>
+            <h3 id="resName">—</h3>
+          </div>
+          <div class="res__grid">
+            <div>
+              <p class="res__say" id="resSay">—</p>
+              <div class="res__second" id="resSecond" hidden><b id="resSecondT">—</b><span id="resSecondB">—</span></div>
+            </div>
+            <div class="plot" id="plot"></div>
+          </div>
+          <div class="res__moves">
+            <div class="fact fact--do"><h4><span class="fact__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8.4l3.4 3.4L13.5 4.2"/></svg></span>Твой следующий шаг</h4><p id="resMove">—</p></div>
+            <div class="fact fact--warn"><h4><span class="fact__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg></span>Что ты сделаешь вместо этого</h4><p id="resTrap">—</p></div>
+          </div>
+          <div style="margin-top:1.25rem;display:flex;gap:.5rem;flex-wrap:wrap">
+            <button class="btn" id="again">Пройти заново</button>
+            <button class="btn btn--pink" id="jump">Открыть мою карточку</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--alt sec--flip" id="relational">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n"><i>04</i></span>
+      <div class="sec__t">
+        <h2>Дело в человеке, а не в программе.</h2>
+        <p>Когда нужно выбрать между проповедью, которая заставляет думать, и крепкими отношениями с другими христианами, <span class="hl hl--pink">57%</span> прихожан из поколения Z и миллениалов выбирают отношения. Среди всех христиан разрыв меньше: 48% против 42%, и 10% не определились. Каждая модель на этой странице приходит примерно в одно и то же место, только с разных сторон, и почти ничего из того, что они описывают, нельзя дать со сцены.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="ledger band stagger">
+      <div class="led__k"><h3>Что может зал</h3></div>
+      <div class="led__k led--b"><h3>Что может только человек</h3></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Научить тебя словарю.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Заметить, какие слова ты тихо перестал произносить.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Вручить тебе модель.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Сказать, какую её часть ты обходишь.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Сказать, что всем бывает трудно.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Сказать, что именно у тебя не всё в порядке.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Быть блестящим каждую неделю.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Быть рядом в ту неделю, когда ты не можешь прийти.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Описать стену снаружи.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Сесть внутри неё и остаться.</p></div>
+
+      <div class="led"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.6" y="2.4" width="12.8" height="8.6"/><path d="M8 11v2.6M5 13.6h6" stroke-linecap="round"/></svg></span><p>Охватить тысячу человек.</p></div>
+      <div class="led led--b"><span class="led__i" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5.2" r="2.7"/><path d="M2.8 14a5.2 5.2 0 0 1 10.4 0" stroke-linecap="round"/></svg></span><p>Позволить одному из них изменить тебя.</p></div>
+    </div>
+
+    <div class="trio band stagger">
+      <div class="tri" style="--c:var(--yellow);--on:var(--on-yellow)">
+        <span class="tri__n">Кто именно · 01</span>
+        <h3>Тот, кто на полшага впереди</h3>
+        <p>Не наставник, назначенный программой. Человек, чья ситуация достаточно близка к твоей, чтобы ответить на второй вопрос, и достаточно непримечательный, чтобы ты этот вопрос действительно задал. В четырёх стульях Спейдера на этом держится весь двигатель: ты учишься, работая <em>рядом</em> с учителем, прежде чем тебя отпустят делать это без него.</p>
+      </div>
+      <div class="tri" style="--c:var(--orange);--on:var(--on-orange)">
+        <span class="tri__n">Кто именно · 02</span>
+        <h3>Тот, кто наравне с тобой</h3>
+        <p>Один человек, который слышит неотредактированную версию — не ту, к которой уже приделан конец, чтобы её можно было вынести вслух. Хагберг и Гьюлих построили свои шесть стадий на интервью, а не на теории, то есть на людях, у которых было где вслух сказать нелестное.</p>
+      </div>
+      <div class="tri" style="--c:var(--violet);--on:var(--on-violet)">
+        <span class="tri__n">Кто именно · 03</span>
+        <h3>Тот, кто позади тебя</h3>
+        <p>Самый быстрый способ узнать, во что ты на самом деле веришь, — когда тебя спрашивает тот, кто начал месяц назад. Это ещё и постоянная поправка к профессиональному риску позиции 05: к презрению к ступени, из которой ты только что вышел, а оно и есть надёжное доказательство, что ты не вышел.</p>
+      </div>
+    </div>
+
+    <div class="siren band rise">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2L19 18H1L10 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M10 8v4.5M10 15v.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <p><b>Как это портят</b>Как только церковь соглашается, что отношения важны, она строит программу под названием «Отношения» — назначенные пары, распределение по группам, сезон гостеприимных мероприятий — и получает форму без содержания. То, что описывает эта цифра, — не мероприятие, которое можно запланировать за другого человека. Это несколько людей, у которых есть право говорить трудное и терпение всё ещё быть рядом через год. Неудобный вывод REVEAL — счёт за то, что всё сделали наоборот: после ранних этапов больше церковной активности уже не предсказывало роста.</p>
+    </div>
+</section>
+
+<section class="sec sec--alt">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n"><i>05</i></span>
+      <div class="sec__t">
+        <h2>Одиннадцать карт, от старых к новым.</h2>
+        <p>Что представляет собой каждая модель, кто её создал и для чего она хороша. Не турнирная таблица: их строили для разных задач, в разные века, для разных залов.</p>
+      </div>
+    </div>
+  </div>
+    <div class="frames gridset stagger" id="fwList"></div>
+</section>
+
+<section class="sec sec--flip">
+  <div class="shell">
+    <div class="sec__head">
+      <span class="sec__n"><i>06</i></span>
+      <div class="sec__t">
+        <h2>Куда идти дальше.</h2>
+        <p>Двадцать два источника, у каждого назван уклон. Отфильтруй по тому, что тебе на самом деле нужно.</p>
+      </div>
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+    <div class="srcs gridset stagger" id="srcList"></div>
+
+    <div class="caveats stagger">
+      <div class="cav" style="--fc:var(--yellow)"><span class="cav__n">Оговорка 01</span><h4>Это не рейтинг Божьей любви</h4><p>Хагберг и Гьюлих настаивают: поздние позиции не означают большей близости к Богу, только другой опыт того же доступа.</p></div>
+      <div class="cav" style="--fc:var(--green)"><span class="cav__n">Оговорка 02</span><h4>Не линейно и не однажды</h4><p>Ты будешь ходить по кругу. Большинство людей входят в стену два-три раза за жизнь и движутся между позициями туда и обратно, а не выпускаются из них.</p></div>
+      <div class="cav" style="--fc:var(--orange)"><span class="cav__n">Оговорка 03</span><h4>Не одинаково во всей жизни</h4><p>Очень часто бывает, что в страдании человек на 05, а в деньгах на 02, или на 06 с чужими и на 01 с собственной семьёй. Определяй себя по каждой сфере отдельно.</p></div>
+      <div class="cav" style="--fc:var(--aqua)"><span class="cav__n">Оговорка 04</span><h4>Не диагноз для кого-то другого</h4><p>Применённое к другому человеку без его приглашения, это становится очень эффективным инструментом снисходительности.</p></div>
+    </div>
+</section>
+
+<footer>
+  <div class="shell">
+    <p>Где ты? — полевая карта христианской зрелости.<br>Синтез одиннадцати опубликованных моделей. Страница не связана ни с одним из упомянутых авторов, издателей или служений.<br>Если ты на позиции 04 и это стало невыносимо, скажи об этом врачу, а не сайту.<br>Русский текст Писания приводится по Новому русскому переводу (НРП®) © <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener">Biblica, Inc.</a>® Используется по разрешению. Все права защищены. Английская сторона страницы цитирует NIV® — тоже по разрешению Biblica, Inc.®</p>
+    <a class="home" href="https://esmrsky.github.io/">← Все проекты</a>
+  </div>
+</footer>
+
+
+<script type="text/javascript" src="/where-are-you/ru-data.js"></script>
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var root = document.documentElement;
+/* interface strings the script writes; the Russian page swaps them, and every data block below, via ru-data.js */
+var RU = root.getAttribute("data-lang") === "ru" && window.WhereAreYouRU || null;
+var U = {pos:function(n){ return "Position 0"+n; },
+ tell:"The tell", feel:"What it feels like", trap:"Where it goes wrong", door:"The doorway out",
+ help:"Helping someone here — do", harm:"Helping someone here — don’t",
+ all:"Everything", open:"Open ↗", pill:function(k){ return k.label.replace(/s$/,""); },
+ qn:function(n){ return "Q"+n; }, letter:function(j){ return String.fromCharCode(65+j); },
+ state:function(i,n){ return "Question "+i+" of "+n; }, complete:"Complete", second:"Secondary reading · ",
+ secWall:"There's a real wall signal underneath the position above. If Position 04 is starting and you read it as a discipline problem, you'll respond by doing more of what stopped working. Read that card before any other.",
+ secTwo:"Your answers sit across two positions, which is normal — most people are at different depths in different parts of life. Read both cards and notice which domains each describes.",
+ plot:function(p){ return p.name.replace(/^The /,""); }, num:function(n){ return n.toLocaleString(); }};
+RU && RU.put("U", U);
+
+/* ---------------------------------------------------------------- data */
+/* Position marks. All motion is transform/opacity or stroke-dashoffset — no
+   animating of SVG geometry attributes (r, width, y), which the compositor
+   cannot take and which visibly steps at these sizes. Each mark states the
+   position's idea rather than decorating it. */
+var ICONS = {
+  1:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+
+      '<path d="M12 32V17a8 8 0 0 1 16 0v15"/>'+
+      '<path d="M6.5 32h27" stroke-width="3.4"/>'+
+      '<circle class="ic-cross" cx="20" cy="24.5" r="3.1" fill="currentColor" stroke="none"/>'+
+    '</svg>',
+  2:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<circle cx="20" cy="31" r="2.6" fill="currentColor" stroke="none"/>'+
+      '<path d="M12 31a8 8 0 0 1 16 0"/>'+
+      '<path class="ic-wave ic-w2" d="M6.5 31a13.5 13.5 0 0 1 27 0"/>'+
+      '<path class="ic-wave ic-w3" d="M2 31a18 18 0 0 1 36 0"/>'+
+    '</svg>',
+  3:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<path d="M4 35h32"/>'+
+      '<rect class="ic-bar ic-b1" x="8" y="21" width="6.5" height="12" fill="currentColor" stroke="none"/>'+
+      '<rect class="ic-bar ic-b2" x="16.7" y="15" width="6.5" height="18" fill="currentColor" stroke="none"/>'+
+      '<rect class="ic-bar ic-b3" x="25.4" y="9" width="6.5" height="24" fill="currentColor" stroke="none"/>'+
+    '</svg>',
+  4:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<g class="ic-slabL"><path d="M4 15h12M4 23h12M4 31h12"/></g>'+
+      '<g class="ic-slabR"><path d="M24 12h12M24 20h12M24 28h12"/></g>'+
+      '<path class="ic-fault" d="M20 4v32" stroke-dasharray="3 4.5"/>'+
+    '</svg>',
+  5:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'+
+      '<path d="M4 13c6.5 0 5 19 16 19s9.5-19 16-19" opacity=".38"/>'+
+      '<path class="ic-trace" d="M4 13c6.5 0 5 19 16 19s9.5-19 16-19" stroke-dasharray="9 62"/>'+
+    '</svg>',
+  /* Radii are bounded by the ring animation, not by the drawing: a scale(1.3)
+     scales the stroke too, so max reach is r*1.3 + 1.43. The old r=18 reached
+     24.8 from center and the SVG root clipped it into a hard square. */
+  6:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2">'+
+      '<circle cx="20" cy="20" r="2.9" fill="currentColor" stroke="none"/>'+
+      '<circle cx="20" cy="20" r="7"/>'+
+      '<circle class="ic-ring ic-g2" cx="20" cy="20" r="10.5"/>'+
+      '<circle class="ic-ring ic-g3" cx="20" cy="20" r="13.5"/>'+
+    '</svg>'
+};
+
+/* One mark per framework — static. Eleven animating marks in a reference grid
+   would be noise; these are identifiers, not focal points. */
+var FW_ICONS = [
+  /* 1 John — three groups */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+  /* Teresa — nested mansions */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19"/><rect x="6.5" y="6.5" width="11" height="11"/><rect x="10.3" y="10.3" width="3.4" height="3.4" fill="currentColor" stroke="none"/></svg>',
+  /* John of the Cross — the night */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 10.2 3.2a6.8 6.8 0 0 0 9.8 11.3z"/></svg>',
+  /* Navigators — hub and spokes */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9.2"/><path d="M12 2.8v18.4M2.8 12h18.4"/><circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"/></svg>',
+  /* Fowler — six steps */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h4v-4h4v-4h4V9h4V5h4"/></svg>',
+  /* Peck — four stages */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" fill="currentColor" stroke="none"/></svg>',
+  /* Hagberg — a path stopped by a wall */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2 19h8"/><path d="M14 19h8"/><path d="M12 3v18"/></svg>',
+  /* Scazzero — two joined loops */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="8.5" cy="12" r="5.8"/><circle cx="15.5" cy="12" r="5.8"/></svg>',
+  /* REVEAL — survey data */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 21h18"/><path d="M6.5 21v-7M12 21V6M17.5 21v-11"/></svg>',
+  /* Rohr — the fall and the turn */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2.5 7c4 0 3 11 9.5 11s5.5-11 9.5-11"/></svg>',
+  /* Spader — four chairs, the last one released */
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 20v-5M9 20v-7M15 20v-9M21 20v-11"/><path d="M2 20h20" opacity=".45"/></svg>'
+];
+
+/* one icon per row of the card, so the six rows are scannable by shape as well
+   as by position. The chip behind each takes the card's ink, except the two
+   warn rows and the two do rows, which keep the pink/green signal. */
+var FACT_ICONS = {
+  tell:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 8s2.6-4.4 7-4.4S15 8 15 8s-2.6 4.4-7 4.4S1 8 1 8z"/><circle cx="8" cy="8" r="1.9"/></svg>',
+  feel:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h2.2l1.9-4.2L7.7 12l1.9-5 1.2 2.4H15"/></svg>',
+  warn:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l6.5 11.5H1.5L8 2z" stroke-linejoin="round"/><path d="M8 6.4v3.2M8 11.3v.7" stroke-linecap="round"/></svg>',
+  door:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2H3v12h6"/><path d="M11.6 5.6L14.4 8l-2.8 2.4M14 8H6.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  do:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8.4l3.4 3.4L13.5 4.2"/></svg>',
+  dont:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><path d="M4.2 11.8l7.6-7.6" stroke-linecap="round"/></svg>'
+};
+function fact(mod, icon, label, body){
+  return '<div class="fact'+(mod ? ' fact--'+mod : '')+'">'+
+           '<h4><span class="fact__i" aria-hidden="true">'+FACT_ICONS[icon]+'</span>'+label+'</h4>'+
+           '<p>'+body+'</p>'+
+         '</div>';
+}
+
+var POS = [
+  { n:1, key:"yellow", name:"The Threshold",
+    alias:"Come and see · Recognition of God · Exploring",
+    one:"God went from an idea you hold to a presence you notice — and nothing has cost you anything yet.",
+    tell:"You've made no irreversible commitment. Everything so far is reversible, private, and free.",
+    feel:"Awake, slightly embarrassed, unsure what the rules are. Reading and listening far more than doing.",
+    trap:"Perpetual tourism. Collecting sermons, podcasts and experiences forever — always at the door, never through it. Consumption feels exactly like movement from the inside.",
+    door:"One act you can't take back, with a witness. Baptism. A named church rather than a streaming habit. One person given standing permission to ask you hard questions.",
+    help:"Give proximity before curriculum — a table, a Tuesday, an ordinary week of your life. Answer the question they asked, not the one you wish they'd asked.",
+    harm:"Handing them a reading list. Rushing a decision. Requiring a certainty they don't have — manufactured certainty here becomes a crisis at Position 04.",
+    verses:[
+      ["Come, and you will see.", "John 1:39 · the whole invitation, and no more than that"],
+      ["Seek the LORD while he may be found; call on him while he is near.", "Isaiah 55:6 · the window is open, and it is not open forever"],
+      ["Taste and see that the LORD is good.", "Psalm 34:8 · first-hand, not second-hand — the one thing nobody can do for you"]
+    ] },
+
+  { n:2, key:"green", name:"The Apprentice",
+    alias:"“Little children” · Milk · Discipleship · Growing in Christ",
+    one:"You have a teacher, a tribe and a vocabulary. Everything is new and everything is certain.",
+    tell:"Your convictions are still borrowed — fluent, but undefended under real pressure. You describe your faith largely through a leader, a church, or one book.",
+    feel:"Belonging. You know the songs, the shorthand, the names. Absorbing at a rate you'll never match again, and it's genuinely wonderful.",
+    trap:"Dependency hardens into identity. Certainty becomes the thing you're actually protecting, so disagreement registers in the body as danger. People spend twenty years here and call it faithfulness.",
+    door:"Own one conviction against resistance. Study something your teacher gets wrong. Serve somewhere nobody who knows you will ever see it.",
+    help:"Give structure generously — they need rails, and rails aren't legalism here. Teach them to read for themselves rather than to quote you.",
+    harm:"Becoming their mediator. If your name appears in their testimony more than Christ's, you've stalled them, and the correction will hurt you both.",
+    verses:[
+      ["Your sins have been forgiven… you know the Father.", "1 John 2:12 · settled before anything has been achieved"],
+      ["Like newborn babies, crave pure spiritual milk, so that by it you may grow up.", "1 Peter 2:2 · also Hebrews 5:12–13 — milk is the right food here, and only here"],
+      ["They devoted themselves to the apostles' teaching and to fellowship, to the breaking of bread and to prayer.", "Acts 2:42 · the four rails, in the order they were laid"]
+    ] },
+
+  { n:3, key:"orange", name:"The Builder",
+    alias:"“You are strong” · The productive life · Fisher of men",
+    one:"Competence. You lead, you teach, you produce. The most rewarded and most dangerous position on the map.",
+    tell:"Your standing with God tracks your output. A missed week of devotions costs you more emotionally than a week of unkindness to the people you live with.",
+    feel:"Traction. Your gifts have found their shape and the results are visible. John's word for this stage is <em>strong</em>, and he means it as praise.",
+    trap:"Institutions promote here and stop developing you, because you're too useful to disturb. God quietly becomes an employer. This is where burnout and the forty-something collapse are manufactured — not from weakness, from unexamined strength.",
+    door:"Subtract. Take a sabbath you actually keep. Do one significant thing anonymously. Let your name come off something you built and watch what that does to you.",
+    help:"Refuse to pay them only in responsibility. Ask about their interior life before their ministry, and keep asking after they deflect the first time.",
+    harm:"Promoting them again. REVEAL found exactly this — past the early stages, more church activity stopped predicting growth.",
+    verses:[
+      ["You are strong, and the word of God lives in you.", "1 John 2:14 · John means it as praise. Read the trap row anyway"],
+      ["Martha, Martha, you are worried and upset about many things, but only one thing is needed.", "Luke 10:41–42 · the rebuke is not of the serving, it is of what the serving had become"],
+      ["Unless the LORD builds the house, the builders labor in vain.", "Psalm 127:1 · the position's whole question, in one line"]
+    ] },
+
+  { n:4, key:"void", name:"The Wall",
+    alias:"Dark night · Journey inward · The fall · Deconstruction",
+    one:"What used to work stops working, and you can't tell if you're losing your faith or finding it.",
+    tell:"You're ashamed of how you're praying and hiding it from the people closest to you. It isn't doubt about doctrine — it's the collapse of the self that was doing the believing.",
+    feel:"Flatness where there used to be voltage. Prayer goes quiet — yours, or God's, and you can't tell which. You feel dishonest in a room you used to lead.",
+    trap:"Two exits, both wrong. <strong>Bypass</strong> — sprint back to 03, louder. <strong>Walk out</strong> — decide it was all a lie and take the bitterness with you.",
+    door:"No technique, only a posture. Lower the bar until it fits. Tell one person the unedited truth. Keep showing up to a table even when you can't sing. And get it checked medically as well as spiritually.",
+    help:"Stay, on a schedule they can predict without asking. Say “I don't know” out loud. Let them be furious in front of you without flinching.",
+    harm:"Fixing, quoting, or calling it sin before they do. “You just need to get back in the Word” is the sentence that turns a wall into an exit.",
+    verses:[
+      ["My God, my God, why have you forsaken me?", "Matthew 27:46 · the sentence is in the book, and it is Christ's"],
+      ["You have taken from me friend and neighbor — darkness is my closest friend.", "Psalm 88:18 · the only psalm that ends in the dark, with no turn"],
+      ["If I go to the east, he is not there; if I go to the west, I do not find him.", "Job 23:8 · looking in every direction is not the same as unbelief"]
+    ] },
+
+  { n:5, key:"aqua", name:"The Return",
+    alias:"Journey outward · Second half of life · Illuminative way",
+    one:"The same work, a different center. You still serve — you just don't need it to hold you up anymore.",
+    tell:"A reduced need to be right. You can hold two true things that don't reconcile. Your compassion has got specific and your certainty has got quiet.",
+    feel:"Quieter, and oddly unafraid. Hagberg's phrase is surrender “with our eyes wide open — aware but unafraid of the consequences.”",
+    trap:"Connoisseurship of your own depth. Contempt for people at 02 and 03 — “I used to be like that.” That contempt is the reliable proof you haven't actually come through, just found a subtler way to be at 03.",
+    door:"Go back for one person — specifically, someone at the stage you're now embarrassed to have occupied. The wall wasn't for you.",
+    help:"Give them room to work without a title. Take their slowness seriously as judgment rather than decline. Ask what they've stopped doing.",
+    harm:"Asking them to run the machine again on the old terms. If your only offer is the job that took them to the wall, they'll say no — and they'll be right.",
+    verses:[
+      ["When you have turned back, strengthen your brothers.", "Luke 22:32 · said to Peter before the failure, not after it"],
+      ["He comforts us in all our troubles, so that we can comfort those in any trouble.", "2 Corinthians 1:4 · the wall was not given to you for you"],
+      ["My grace is sufficient for you, for my power is made perfect in weakness.", "2 Corinthians 12:9 · the thorn stayed. That is the point of the verse"]
+    ] },
+
+  { n:6, key:"violet", name:"The Life of Love",
+    alias:"“Fathers” · Unitive way · Seventh mansion",
+    one:"Presence rather than program. You've met maybe four of these people and you remember every conversation.",
+    tell:"Nobody here describes themselves as here. Time given to people with nothing to offer them. A complete absence of urgency about their own reputation.",
+    feel:"Reportedly, like nothing in particular. John gives this stage the shortest description of the three, and it isn't a list of achievements — <em>you know him who is from the beginning.</em> That's all. Twice.",
+    trap:"Not in them — in us. We build platforms on these people and act shocked when the platform deforms them back to 03. Teresa was blunt that this is not a rank and cannot be earned.",
+    door:"There isn't one you can walk through on purpose. Which is the point.",
+    help:"Ask for their time, not their platform. Sit under them without recording it. Notice what they do with interruptions.",
+    harm:"Making them a brand. Treating this as an attainment is the surest way to miss it.",
+    verses:[
+      ["You know him who is from the beginning.", "1 John 2:13–14 · John says it twice and adds nothing"],
+      ["Love is patient, love is kind… it is not self-seeking.", "1 Corinthians 13:4–5 · a description of a person, not a list of attainments"],
+      ["He must become greater; I must become less.", "John 3:30 · the direction of travel, stated by someone already at the end of it"]
+    ] }
+];
+RU && RU.put("POS", POS);
+
+/* Eleven overviews. No cross-comparison and no shared axis — `stages` is each
+   framework's OWN map, in its own vocabulary and its own count (three groups,
+   four chairs, five nights, six stages, seven mansions). They don't line up,
+   which is the point; forcing them onto one grid is what got cut. Each stage
+   carries a gloss, because a bare stage name teaches nobody anything. */
+var FW = [
+  { yr:"c. AD 90", nm:"1 John 2:12–14", tag:"The oldest map here",
+    note:"Three groups — little children, young men, fathers — defined by what they know rather than what they do. Still the tightest thing written on the subject: two verses, no diagram, no program.",
+    unit:"Three groups",
+    stages:[
+      ["“Little children”","Sins forgiven; you know the Father. The relationship is settled before anything has been achieved."],
+      ["“Young men”","Strong, the word abides in you, you have overcome the evil one. Conviction that now holds under pressure."],
+      ["“Fathers”","You know him who is from the beginning. John says it twice and adds nothing — no list of achievements follows."]
+    ] },
+
+  { yr:"3rd–16th c.", nm:"The Three Ways · Teresa's Interior Castle", tag:"The classical spine",
+    note:"Purgative, illuminative, unitive — the backbone of Western spirituality, mapped by Teresa onto seven mansions. Written by a woman running a reform movement under Inquisition surveillance, which is why it is far more practical than its reputation.",
+    unit:"Three ways · seven mansions",
+    stages:[
+      ["Purgative — mansions 1–3","Turning from sin and disordered attachment. Effort, discipline, and a great deal of self-management."],
+      ["Illuminative — mansions 4–6","Prayer stops being something you do and becomes something done to you. The passive purifications sit here."],
+      ["Unitive — mansion 7","Settled union. Teresa is blunt that it is given rather than earned, and that it is not a rank."]
+    ] },
+
+  { yr:"c. 1578", nm:"John of the Cross — Dark Night", tag:"The night, precisely",
+    note:"Written from a prison cell, and still the most exact description of the place where the machinery stops. Separates the night of sense from the night of spirit — a distinction worth keeping, because they need different responses.",
+    unit:"Beginners to union",
+    stages:[
+      ["Beginners — consolations","God is felt. Prayer is sweet, and the sweetness is doing a good deal of the work."],
+      ["The night of sense","The consolation is withdrawn. What felt like devotion turns out to have been partly appetite."],
+      ["Proficients — the active night","Deliberate stripping of the things you reach for instead of God."],
+      ["The night of spirit","The deeper and rarer one. The self that was doing the believing comes apart."],
+      ["Union","Not an experience but a settled state, described mostly by what is no longer in the way."]
+    ] },
+
+  { yr:"1930s", nm:"The Navigators' Wheel", tag:"A maintenance diagram",
+    note:"Christ the hub; Word, prayer, fellowship and witness the four spokes. Not a stage model at all — a picture of a balanced practice, with no time axis. One of the most-used discipleship tools ever made, and the fastest way to explain a rhythm to someone starting out.",
+    unit:"A hub and four spokes",
+    stages:[
+      ["Christ — the hub","Not a stage. Everything else is a spoke, and spokes carry no load without the center."],
+      ["The Word","Intake and obedience — hearing, reading, studying, memorising, meditating."],
+      ["Prayer","Direct address, in both directions."],
+      ["Fellowship","The other Christians who actually know you, rather than the ones you sit near."],
+      ["Witness","The life and the word, aimed outward."]
+    ] },
+
+  { yr:"1981", nm:"Fowler — Stages of Faith", tag:"The academic standard",
+    note:"Six structural-developmental stages, Piaget applied to belief. Describes how people hold faith rather than what they believe. Heavily criticized as too cognitive and too linear; read the critiques alongside it.",
+    unit:"Six stages",
+    stages:[
+      ["1 · Intuitive-projective","Early childhood. Faith is images, stories and feeling, not yet logic."],
+      ["2 · Mythic-literal","Stories are taken literally and fairness is the organizing rule."],
+      ["3 · Synthetic-conventional","Faith held the way the group holds it. Most adults stay here, and it works until something challenges it."],
+      ["4 · Individuative-reflective","You take responsibility for your own beliefs. Costly, often lonely, and where a lot of deconstruction sits."],
+      ["5 · Conjunctive","You can hold paradox, and take other traditions seriously without losing your own."],
+      ["6 · Universalizing","Rare. A life ordered by a universal compassion, usually at considerable personal cost."]
+    ] },
+
+  { yr:"1987", nm:"Peck — The Different Drum", tag:"From a psychiatrist",
+    note:"Four stages, written by a clinician rather than a theologian. The sharpest account of why people at different stages find each other threatening — and why the furthest-along can look, from outside, exactly like the earliest.",
+    unit:"Four stages",
+    stages:[
+      ["1 · Chaotic, antisocial","No governing principle beyond self-interest. Peck's observation is that movement out of this is often sudden."],
+      ["2 · Formal, institutional","Rules, form and the institution. Stability comes from the structure, so threats to the structure feel like threats to faith."],
+      ["3 · Skeptic, individual","Questioning, often leaving. Peck insists this is forward movement rather than decline."],
+      ["4 · Mystic, communal","At ease with mystery, and drawn back to the community it once left. Looks like stage 2 from outside, and is not."]
+    ] },
+
+  { yr:"1989", nm:"Hagberg & Guelich — The Critical Journey", tag:"The spine of this map",
+    note:"Six stages plus the Wall, built from interviews rather than theory. Their own one-line summary is the best six words on the subject: stage one humbles us, two grounds us, three rewards us, four unsettles us, the wall unmasks us, five transforms us, six transcends us.",
+    unit:"Six stages, and the Wall",
+    stages:[
+      ["1 · Recognition of God","Awe, and the beginning of a relationship. Sometimes conversion, sometimes long before it."],
+      ["2 · The life of discipleship","Learning, belonging, a leader and a community. Security comes from the group."],
+      ["3 · The productive life","Doing the work. Gifts find their shape, responsibility is taken, and identity quietly fuses to output."],
+      ["THE WALL","Not a stage but a passage, cutting across 3 into 4. Your will meets God's will and the machinery stops."],
+      ["4 · The journey inward","Facing what you actually are. Slow, disorienting, and measured in years rather than weeks."],
+      ["5 · The journey outward","The same service, no longer needed to hold you up."],
+      ["6 · The life of love","Reflecting God to others almost without noticing. Rare, and never self-described."]
+    ] },
+
+  { yr:"2006", nm:"Scazzero — Emotionally Healthy Spirituality", tag:"Formation as curriculum",
+    note:"A whole discipleship course built around the piece most formation models leave out: emotional maturity and spiritual maturity are the same project. His charge is that ordinary discipleship leaves deep parts of a life untouched.",
+    unit:"Six stages",
+    stages:[
+      ["1 · Life-changing awareness of God","God becomes real rather than notional."],
+      ["2 · Discipleship","Learning the practices and the vocabulary of a community."],
+      ["3 · The active life","Serving and leading — with the emotional life usually left untouched underneath."],
+      ["4 · The wall and the journey inward","The crisis that forces the interior work, plus a rule of life sturdy enough to survive it."],
+      ["5 · The journey outward","Ministry out of a settled interior rather than out of need."],
+      ["6 · Transformed into love","Depth of love as the measure, in place of output."]
+    ] },
+
+  { yr:"2007", nm:"REVEAL — Willow Creek", tag:"The survey data",
+    note:"A four-point continuum drawn from hundreds of thousands of churchgoers. Its famous result is that church activity drives growth early and stops predicting it later. Self-reported, single-tradition, and a marketing instrument as well as a study — read it as evidence, not verdict.",
+    unit:"A four-point continuum",
+    stages:[
+      ["Exploring Christianity","Believes in God; not yet committed to Christ."],
+      ["Growing in Christ","Committed, and dependent on the church to supply the growth."],
+      ["Close to Christ","Depends on Christ daily. Church activity is still central."],
+      ["Christ-centered","Christ is the organizing center. Here church activity stops predicting movement and personal practice starts."]
+    ] },
+
+  { yr:"2011", nm:"Rohr — Falling Upward", tag:"Two halves of a life",
+    note:"The first half builds the container; the second discovers what it was for. The best short account of why failure is load-bearing rather than incidental. Theologically contested and loose with texts — take the structure, check the exegesis.",
+    unit:"Two halves, and the turn",
+    stages:[
+      ["First half — building the container","Identity, boundaries, security, achievement. Necessary work, and not the point of the work."],
+      ["The necessary fall","A failure, loss or disillusion the container cannot absorb."],
+      ["Second half — the contents","The same life, differently held. Less certainty, more capacity."]
+    ] },
+
+  { yr:"2014", nm:"Spader — 4 Chair Discipling", tag:"What to do on Tuesday",
+    note:"Come and see → follow me → fish for men → go and bear fruit, traced through the four years of Jesus' ministry. The most actionable framework here, and the best answer if what you want is a next step rather than a diagnosis.",
+    unit:"Four chairs",
+    stages:[
+      ["Chair 1 · Come and see","Curious and watching. The invitation is proximity, not commitment."],
+      ["Chair 2 · Follow me","Committed and being taught — rails, habits, and a person to follow."],
+      ["Chair 3 · Fish for men","Trained to serve and to bring others, working alongside the teacher rather than under them."],
+      ["Chair 4 · Go and bear fruit","Released to lead and to reproduce, which includes making other leaders."]
+    ] }
+];
+RU && RU.put("FW", FW);
+
+var SRC = [
+  { k:"book", t:"The Critical Journey", by:"Hagberg & Guelich · 1989, 2nd ed. 2005",
+    d:"<b>The spine of this map.</b> Six stages plus the wall, drawn from interviews rather than theory. Start here if you only read one. <b>Bias:</b> pastoral, light on exegesis." },
+  { k:"book", t:"Emotionally Healthy Discipleship", by:"Peter Scazzero · 2021",
+    d:"Contemplative spirituality welded to practical emotional skill. The clearest modern case that you cannot be spiritually mature and emotionally infantile. <b>Bias:</b> pastor-centric, curriculum-shaped." },
+  { k:"book", t:"Journey of the Soul", by:"Bill &amp; Kristi Gaultiere · 2021",
+    d:"Six stages (their “CHRIST stages”) from a psychologist and a licensed counselor who've done thirty years of therapy and spiritual direction. Pairs with their free assessment. <b>Bias:</b> therapeutic framing." },
+  { k:"book", t:"Interior Castle", by:"Teresa of Ávila · 1577",
+    d:"Seven mansions toward union. Far more practical than its reputation, because she was writing for nuns who had actual jobs. <b>Bias:</b> monastic; assumes a life structure most readers don't have." },
+  { k:"book", t:"Dark Night of the Soul", by:"John of the Cross · c. 1578",
+    d:"The original description of Position 04, written from a prison cell. Splits the night of sense from the night of spirit. <b>Bias:</b> dense — get an annotated edition, not a public-domain scan." },
+  { k:"book", t:"Falling Upward", by:"Richard Rohr · 2011",
+    d:"Two halves of life; the necessary fall. The best short account of why failure is load-bearing. <b>Bias:</b> theologically contested, loose with texts — take the structure." },
+  { k:"book", t:"Renovation of the Heart", by:"Dallas Willard · 2002",
+    d:"The mechanics of change itself: <b>VIM</b> — Vision, Intention, Means. The missing engine under most stage models, which tell you where you are but not how anything actually moves. <b>Bias:</b> philosophical, slow going." },
+  { k:"book", t:"Strengthening the Soul of Your Leadership", by:"Ruth Haley Barton · 2008",
+    d:"Written for leaders who lost track of their own souls somewhere in Position 03. If you're tired and can't say why, this is the one. <b>Bias:</b> aimed squarely at vocational ministry." },
+  { k:"book", t:"Stages of Faith", by:"James Fowler · 1981",
+    d:"The academic standard — six structural stages, Piaget applied to belief. Read the critiques alongside it. <b>Bias:</b> heavily cognitive and criticized as too linear." },
+  { k:"book", t:"The Different Drum", by:"M. Scott Peck · 1987",
+    d:"Four stages from a psychiatrist. The sharpest explanation of why people at different positions find each other threatening. <b>Bias:</b> psychiatric, not theological." },
+  { k:"book", t:"4 Chair Discipling", by:"Dann Spader · 2014 · Sonlife",
+    d:"The most actionable framework here — what to actually do on Tuesday, traced through Jesus' ministry. <b>Bias:</b> mission-first, entirely upward, no wall." },
+  { k:"book", t:"Conversion &amp; Discipleship", by:"Bill Hull · 2016",
+    d:"Argues that the gospel you were converted by determines the disciple you become — he maps six competing gospels and the six kinds of Christian they produce. A different cut at the same question. <b>Bias:</b> polemical by design." },
+  { k:"book", t:"The Soul of Desire", by:"Curt Thompson · 2021",
+    d:"Interpersonal neurobiology meets formation — what's physically happening in a brain being changed. Excellent on shame, which is the actual engine under a lot of Position 02 and 03 behavior. <b>Bias:</b> clinical vocabulary." },
+  { k:"tool", t:"CHRIST Stages Assessment", by:"Soul Shepherding · free, 2–3 min", u:"https://assessments.soulshepherding.org/spiritualgrowthpath/",
+    d:"The best free instrument of this kind. Built on the Gaultieres' model, gives you a report and next steps immediately. <b>Use it to check</b> whatever this page told you." },
+  { k:"tool", t:"The Wheel Illustration", by:"The Navigators · free", u:"https://www.navigators.org/resource/the-wheel-illustration/",
+    d:"Christ the hub; Word, prayer, fellowship, witness the spokes. Ninety years old and still the fastest way to explain a balanced practice to someone at Position 01 or 02." },
+  { k:"tool", t:"Renovaré", by:"Institute &amp; free resources", u:"https://renovare.org/",
+    d:"Foster and Willard's tradition made into an actual curriculum, plus a large free article library. The two-year Institute is the serious version. <b>Bias:</b> ecumenical-contemplative." },
+  { k:"pod", t:"Practicing the Way", by:"John Mark Comer &amp; Tyler Staton",
+    d:"Apprenticeship to Jesus in concrete terms — attention, vocation, community, building a rule of life. The best current audio on moving 02 → 03 → 05 without burning out. <b>Bias:</b> practice-heavy, lighter on the wall itself." },
+  { k:"pod", t:"Being Known", by:"Curt Thompson &amp; Pepper Sweeney",
+    d:"Neuroscience and scripture on why being known is the mechanism of change. Slow, unusually kind, and the best listening if you're at Position 04 and can't read." },
+  { k:"pod", t:"Strengthening the Soul of Your Leadership", by:"Ruth Haley Barton",
+    d:"Barton's own podcast — contemplative practice aimed at people carrying responsibility. Straight at Position 03." },
+  { k:"pod", t:"The Contemplative Pastor", by:"Bryan Rouanzoin &amp; Bethany Allen",
+    d:"Teaching, practical conversation and guided prayer. Newer and smaller than the big formation shows, which is rather the point." },
+  { k:"pod", t:"The Deep End", by:"Taylor Welch · daily",
+    d:"Note the spelling — Welch. Long, confrontational conversations at the seam of God, money and business, with people living unusually costly lives. Sits at the Position 03 edge: strongest on obedience and cost, and reviews split sharply. <b>Bias:</b> entrepreneurial, deliberately provocative — use it for pressure, not doctrine." },
+  { k:"data", t:"Barna — State of the Church", by:"ongoing research", u:"https://www.barna.com/research/five-themes-to-frame-next-gen-discipleship/",
+    d:"The numbers under all of this: Gen Z and Millennials driving a churchgoing resurgence, 57% of them picking relationships over sermons, and Gen Z women now disengaging faster than the men. <b>Bias:</b> survey data, evangelical sample." }
+];
+RU && RU.put("SRC", SRC);
+
+var KINDS = [
+  { id:"book", label:"Books", c:"var(--violet)", on:"var(--on-violet)" },
+  { id:"pod",  label:"Podcasts", c:"var(--pink)", on:"var(--on-pink)" },
+  { id:"tool", label:"Free tools", c:"var(--green)", on:"var(--on-green)" },
+  { id:"data", label:"Research", c:"var(--aqua)", on:"var(--on-aqua)" }
+];
+RU && RU.put("KINDS", KINDS);
+
+/* ---------------------------------------------------------------- helpers */
+function el(tag, cls, html){
+  var e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html != null) e.innerHTML = html;
+  return e;
+}
+function go(id){
+  var t = document.getElementById(id);
+  if(t) t.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-go]");
+  if(b) go(b.getAttribute("data-go"));
+});
+
+/* ------------------------------------------------------------- gridset */
+var INKS = ["yellow","green","orange","aqua","violet","pink"];
+
+/* The set is rebuilt rather than filtered in place. The trailing-row span rule
+   in the CSS counts children with :last-child:nth-child(), which does not skip
+   [hidden] ones, so a hidden card would still be read as the last item and the
+   visible last card would never take the remainder of its row. */
+function fill(host, items){
+  host.textContent = "";
+  items.forEach(function(it){ host.appendChild(it); });
+}
+
+/* Back to the six-hue cycle stamped in DOM order, which a regular grid makes
+   valid again: horizontal neighbors sit 1 apart and vertical neighbors sit
+   1, 2 or 3 apart, and none of those is ≡0 mod 6. The last card spanning the
+   rest of its row doesn't break it either — its left neighbor is still 1 away
+   and the two cells above it are C and C−1 away.
+
+   This replaces a paint that measured getBoundingClientRect() and gave each
+   card the lowest ink no card it touched was using. That was needed only
+   because masonry made adjacency unpredictable, and it was fragile in exactly
+   the way measured layout always is: run it before the grid has its real
+   widths — a zero-width container, an early call — and nothing touches
+   anything, so every card silently takes ink 0. It did. Index arithmetic
+   cannot be early. */
+function paintInOrder(items){
+  items.forEach(function(it, n){
+    var k = n % INKS.length;
+    it.style.setProperty("--fc","var(--"+INKS[k]+")");
+    it.style.setProperty("--on-fc","var(--on-"+INKS[k]+")");
+  });
+}
+
+/* the reveal stagger reads --d off each child; set it here as well as at reveal
+   setup, so a re-filtered source list gets fresh indices rather than the ones
+   its cards happened to hold in the unfiltered set */
+function stampStagger(host){
+  [].forEach.call(host.children, function(c, i){ c.style.setProperty("--d", i); });
+}
+
+function layout(host, items){
+  fill(host, items);
+  paintInOrder(items);
+  stampStagger(host);
+}
+
+/* One synchronous, unconditional call is now the whole story. These cards live
+   only in the JS array until fill() inserts them, so this can never be deferred
+   to a callback — but nothing here reads a measurement any more either, so the
+   ResizeObserver that used to repack and repaint on every width change is gone.
+   Column count, row height and the trailing span are all the stylesheet's job,
+   and it re-solves them at every width on its own. */
+
+/* ---------------------------------------------------------------- theme */
+document.getElementById("theme").addEventListener("click", function(){
+  var sys = matchMedia("(prefers-color-scheme: dark)").matches;
+  var cur = root.getAttribute("data-theme") || (sys ? "dark" : "light");
+  root.classList.add("theme-eases");
+  root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+});
+
+/* ---------------------------------------------------------------- map cards
+
+   Eight flat children per card, no disclosure wrapper. The wrapper is what used
+   to break the subgrid chain and let each card's rows drift out of line with its
+   neighbors' — every row here is a direct child, so .pos can be a subgrid and
+   "the tell" sits on one baseline right across the row band. */
+(function(){
+  var grid = document.getElementById("mapGrid");
+  POS.forEach(function(p){
+    var card = el("article","pos");
+    card.style.setProperty("--c","var(--"+p.key+")");
+    card.style.setProperty("--on","var(--on-"+p.key+")");
+    card.id = "pos-" + p.n;
+
+    card.innerHTML =
+      '<div class="pos__head">'+
+        '<div class="pos__top"><span class="pos__n">'+U.pos(p.n)+'</span>'+
+        '<span class="pos__ico" aria-hidden="true">'+ICONS[p.n]+'</span></div>'+
+        '<h3>'+p.name+'</h3>'+
+        '<p class="pos__one">'+p.one+'</p>'+
+      '</div>'+
+      fact("",     "tell", U.tell, p.tell)+
+      fact("",     "feel", U.feel, p.feel)+
+      fact("warn", "warn", U.trap, p.trap)+
+      fact("do",   "door", U.door, p.door)+
+      fact("do",   "do",   U.help, p.help)+
+      fact("warn", "dont", U.harm, p.harm)+
+      /* still ONE child, so .pos keeps its eight subgrid rows and "the tell"
+         stays on one baseline across the row band */
+      '<div class="verse">'+
+        p.verses.map(function(v){
+          return '<blockquote class="verse__v"><q>'+v[0]+'</q><cite>'+v[1]+'</cite></blockquote>';
+        }).join('')+
+      '</div>';
+
+    grid.appendChild(card);
+  });
+})();
+
+/* ---------------------------------------------------------------- frameworks */
+(function(){
+  var list = document.getElementById("fwList");
+  var cards = [];
+  FW.forEach(function(f, i){
+    var card = el("article","frame");
+    cards.push(card);
+    card.innerHTML =
+      '<div class="frame__k"><span class="frame__id"><span class="frame__ico" aria-hidden="true">'+
+        FW_ICONS[i]+'</span><b>'+f.yr+'</b></span>'+
+        '<span>'+String(i+1).padStart(2,"0")+' / 11</span></div>'+
+      '<h3>'+f.nm+'</h3>'+
+      '<p class="frame__tag">'+f.tag+'</p>'+
+      '<p class="frame__note">'+f.note+'</p>'+
+      '<div class="frame__map"><h4>'+f.unit+'</h4><ol>'+
+        f.stages.map(function(st,n){
+          return '<li><span class="frame__no">'+String(n+1).padStart(2,"0")+'</span>'+
+                 '<span class="frame__st"><b>'+st[0]+'</b><i>'+st[1]+'</i></span></li>';
+        }).join('')+
+      '</ol></div>';
+  });
+  layout(list, cards);
+})();
+
+/* ---------------------------------------------------------------- sources */
+(function(){
+  var wrap = document.getElementById("srcList");
+  var filters = document.getElementById("filters");
+
+  var all = el("button","fchip");
+  all.type="button"; all.setAttribute("aria-pressed","true"); all.dataset.k = "all";
+  all.textContent = U.all;
+  filters.appendChild(all);
+
+  KINDS.forEach(function(k){
+    var b = el("button","fchip");
+    b.type="button"; b.setAttribute("aria-pressed","false"); b.dataset.k = k.id;
+    b.style.setProperty("--kc", k.c);
+    b.innerHTML = '<i></i>' + k.label;
+    filters.appendChild(b);
+  });
+
+  var cards = [];
+  SRC.forEach(function(s){
+    var kind = KINDS.filter(function(k){ return k.id === s.k; })[0];
+    var card = el("article","src");
+    cards.push(card);
+    card.dataset.k = s.k;
+    card.innerHTML =
+      '<div class="src__k"><span class="pill" style="--k:'+kind.c+';--on-k:'+kind.on+'">'+U.pill(kind)+'</span></div>'+
+      '<h4>'+s.t+'</h4>'+
+      '<span class="src__by">'+s.by+'</span>'+
+      '<p>'+s.d+'</p>'+
+      (s.u ? '<a class="src__link" href="'+s.u+'" target="_blank" rel="noopener noreferrer">'+U.open+'</a>' : '');
+  });
+
+  /* Rebuild over the *visible* set: filtering to Podcasts makes cards that were
+     three apart into neighbors, it changes how many rows there are, and it
+     changes which card has to span to close the last one — so both the fill and
+     the hue assignment have to be redone. The filtered-out cards are left out of
+     the DOM entirely rather than hidden, because the span rule counts children. */
+  var kind = "all";
+  function visible(){
+    return cards.filter(function(c){ return kind === "all" || c.dataset.k === kind; });
+  }
+  function draw(){ layout(wrap, visible()); }
+  draw();
+
+  filters.addEventListener("click", function(e){
+    var b = e.target.closest(".fchip"); if(!b) return;
+    kind = b.dataset.k;
+    filters.querySelectorAll(".fchip").forEach(function(c){
+      c.setAttribute("aria-pressed", c === b ? "true" : "false");
+    });
+    draw();
+  });
+})();
+
+/* ---------------------------------------------------------------- counters */
+(function(){
+  var done = false;
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting || done) return;
+      done = true;
+      e.target.querySelectorAll("[data-count]").forEach(function(n){
+        var target = +n.getAttribute("data-count");
+        var suffix = n.getAttribute("data-suffix") || "";
+        if(reduce){ n.textContent = U.num(target) + suffix; return; }
+        var t0 = null, dur = 1100;
+        function step(ts){
+          if(t0 === null) t0 = ts;
+          var k = Math.min(1, (ts - t0) / dur);
+          var eased = 1 - Math.pow(1 - k, 3);
+          n.textContent = U.num(Math.round(target * eased)) + suffix;
+          if(k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    });
+  }, {threshold:0});
+  io.observe(document.getElementById("stats"));
+})();
+
+/* ---------------------------------------------------------------- reveal */
+(function(){
+  document.querySelectorAll(".stagger").forEach(stampStagger);
+  var targets = document.querySelectorAll(".sec__head, .stagger, .rise");
+
+  /* Everything hidden by the reveal CSS must be shown by *something*. If there
+     is no observer there is no reveal, and without this the page renders as a
+     set of empty colored bands rather than degrading to a static one. */
+  function showAll(){
+    root.classList.remove("rv-js");
+    targets.forEach(function(e){ e.setAttribute("data-in","1"); });
+  }
+  if(typeof IntersectionObserver !== "function"){ showAll(); return; }
+
+  var io = new IntersectionObserver(function(es){
+    window.__rvLive = true;
+    es.forEach(function(e){
+      if(e.isIntersecting){ e.target.setAttribute("data-in","1"); io.unobserve(e.target); }
+    });
+  }, {rootMargin:"0px 0px -10% 0px", threshold:0});
+  targets.forEach(function(e){ io.observe(e); });
+  /* backstop: if the observer never calls back, un-hide everything */
+  setTimeout(function(){ if(!window.__rvLive) root.classList.remove("rv-js"); }, 2500);
+})();
+
+/* ---------------------------------------------------------------- instrument */
+(function(){
+  var Q = [
+    { t:"Describe your prayer life over the last three months.", o:[
+      ["Occasional, unstructured, honestly a bit awkward.", {1:3,2:1}],
+      ["Disciplined. I have a plan and I mostly keep it.", {2:3,3:1}],
+      ["Mostly requests attached to things I'm responsible for.", {3:3}],
+      ["Mostly silence — mine, or God's. I can't tell which.", {4:3,5:1}]
+    ]},
+    { t:"Where does your sense of standing with God actually come from?", o:[
+      ["I'm not sure I have one yet.", {1:3}],
+      ["From what I've been taught, and from who taught me.", {2:3}],
+      ["From whether I've been faithful this week.", {3:3,2:1}],
+      ["It doesn't move much anymore, in either direction.", {5:3,6:1}]
+    ]},
+    { t:"Someone you respect states a view of scripture you think is wrong.", o:[
+      ["I assume they're right. They know more than me.", {2:3}],
+      ["I feel the threat in my body before I've finished thinking.", {2:2,3:2}],
+      ["I argue it — and I'm good at arguing it.", {3:3}],
+      ["I'm curious, and it costs me nothing.", {5:3,6:1}]
+    ]},
+    { t:"The last twelve months, in one line.", o:[
+      ["I started paying attention to God again after a long gap.", {1:3}],
+      ["I've grown fast and learned an enormous amount.", {2:3}],
+      ["I took on more responsibility than I have capacity for.", {3:3}],
+      ["Something broke, and it hasn't been put back.", {4:4}]
+    ]},
+    { t:"When a plan you were leading fails, people would say you get —", o:[
+      ["They wouldn't know. I'm not serving alongside anyone.", {1:2,4:1}],
+      ["Deferential. I'd look to whoever is in charge.", {2:3}],
+      ["Tense. I take it personally, and it shows.", {3:3}],
+      ["Steady. I stopped needing it to work.", {5:3}]
+    ]},
+    { t:"Your honest, uncharitable read on people less mature than you.", o:[
+      ["Doesn't apply — I'm the least mature person in the room.", {1:2,2:2}],
+      ["I want what they have. They seem so sure.", {1:1,4:3}],
+      ["Frustrated. They should be further along than this.", {3:3}],
+      ["I remember being there, and it makes me gentle.", {5:3,6:1}]
+    ]},
+    { t:"Rest — a real, protected, non-negotiable day off.", o:[
+      ["I don't work at this enough to need rest from it.", {1:3}],
+      ["I've heard it matters. I haven't actually tried it.", {2:3}],
+      ["I can't. There's too much depending on me.", {3:4}],
+      ["I take it, and the world does not end.", {5:2,6:2}]
+    ]},
+    { t:"“If I stopped doing everything I do for God tomorrow —”", o:[
+      ["…nobody would notice. Including me.", {1:2,4:2}],
+      ["…I'd lose my main community.", {2:3}],
+      ["…I wouldn't know who I am.", {3:4}],
+      ["…I'd still be his, and I actually believe that.", {5:2,6:2}]
+    ]}
+  ];
+
+  var SAY = {
+    1:{ say:"You're awake and honest about being early, which beats a performance of certainty. Nothing needs rushing — but nothing so far has cost you anything either, and growth from here begins at the point of cost.",
+        move:"Make one thing irreversible and public. A named church rather than a streaming habit; baptism; one person given standing permission to interrupt you.",
+        trap:"Read more. Another twelve hours of podcasts, mistaking intake for movement. Tourism feels exactly like progress from the inside." },
+    2:{ say:"You're absorbing faster than you ever will again, and the certainty you feel is a normal feature of this position rather than a sign you've arrived. The work now is converting borrowed convictions into owned ones before something forces the issue for you.",
+        move:"Own one conviction against real resistance. Study something your teacher gets wrong. Serve once where nobody who knows you will hear about it.",
+        trap:"Deepen the dependency and call it loyalty — same teacher, same tribe, same book, with disagreement quietly recoded as danger." },
+    3:{ say:"You are strong, useful and probably tired. This is the position scripture praises and institutions exploit — your gifts have found their shape, and your standing with God has quietly fused to your output. Almost everyone who hits the wall hits it from here.",
+        move:"Subtract something with your name on it. Take a sabbath you actually keep for eight weeks. Do one significant thing anonymously and notice what that costs you.",
+        trap:"Accept another title. Solve the tiredness with better systems, and read the flatness that follows as a discipline problem." },
+    4:{ say:"What used to work has stopped working, and you can't tell from the inside whether you're losing your faith or finally finding it. Five of the eleven frameworks here consider this the most important thing that will ever happen to you. It is not a discipline failure and it is not backsliding.",
+        move:"Lower the bar until it fits — a psalm read aloud counts as prayer. Tell exactly one person the unedited truth. Keep showing up to a table even when you can't sing. And get this checked medically as well as spiritually.",
+        trap:"Bypass — sprint back to Position 03 with more service and louder certainty. Works for about eighteen months, and the wall will still be there, taller." },
+    5:{ say:"Same work, different center. You still serve, but you no longer need the serving to hold you up, and your certainty has gone quiet without going away. From outside almost nothing has changed, which is why this position is invisible to org charts.",
+        move:"Go back for one specific person — ideally someone at the exact stage you're now embarrassed to have occupied. The wall wasn't given to you for you.",
+        trap:"Become a connoisseur of your own depth. Contempt for people at 02 and 03 is the reliable proof you haven't come through — just found a subtler way to be at 03." },
+    6:{ say:"If the test put you here, treat it with suspicion — people at this position reliably don't describe themselves as being at it, and no eight questions can tell settledness from detachment. Read the card and see whether it describes you, or somebody you know.",
+        move:"Give your time to people who have nothing to offer you, and let it stay unrecorded. Notice what you do with an interruption today.",
+        trap:"Accept the platform. It will deform you back to Position 03 within two years, and everyone involved will call that fruitfulness." }
+  };
+  RU && (RU.put("Q", Q), RU.put("SAY", SAY), RU.done());
+
+  var qn=document.getElementById("qn"), qt=document.getElementById("qt"), opts=document.getElementById("opts"),
+      pips=document.getElementById("pips"), state=document.getElementById("instState"),
+      quiz=document.getElementById("quiz"), res=document.getElementById("res"), back=document.getElementById("back");
+
+  Q.forEach(function(){ pips.appendChild(document.createElement("i")); });
+  var bars = pips.querySelectorAll("i");
+  var idx=0, picks=[], finalPos=1;
+
+  function render(){
+    var q = Q[idx];
+    qn.textContent = U.qn(idx+1);
+    qt.textContent = q.t;
+    state.textContent = U.state(idx+1, Q.length);
+    back.hidden = idx === 0;
+    bars.forEach(function(b,i){ b.setAttribute("data-on", i < idx ? "1" : "0"); });
+    opts.innerHTML = "";
+    q.o.forEach(function(o,j){
+      var b = el("button","opt", '<b>'+U.letter(j)+'</b><span>'+o[0]+'</span>');
+      b.type = "button";
+      b.addEventListener("click", function(){
+        picks[idx] = o[1];
+        if(idx < Q.length-1){ idx++; render(); } else finish();
+      });
+      opts.appendChild(b);
+    });
+  }
+  back.addEventListener("click", function(){ if(idx>0){ idx--; render(); } });
+
+  function finish(){
+    var score = {1:0,2:0,3:0,4:0,5:0,6:0};
+    picks.forEach(function(p){ if(p) for(var k in p) score[k] += p[k]; });
+
+    var order = [1,2,3,4,5,6].sort(function(a,b){ return score[b]-score[a]; });
+    var best = order[0];
+    if(score[4] >= 6 && best !== 4 && score[4] >= score[best]*0.8) best = 4;
+    finalPos = best;
+
+    var second = null;
+    for(var i=0;i<order.length;i++){ if(order[i] !== best){ second = order[i]; break; } }
+    if(best !== 4 && score[4] >= 6 && score[4] >= score[best]*0.5) second = 4;
+
+    var P = POS[best-1];
+    var hero = document.getElementById("resHero");
+    hero.style.setProperty("--c","var(--"+P.key+")");
+    hero.style.setProperty("--on","var(--on-"+P.key+")");
+    document.getElementById("resCode").textContent = U.pos(best);
+    document.getElementById("resName").textContent = P.name;
+    document.getElementById("resSay").textContent = SAY[best].say;
+    document.getElementById("resMove").textContent = SAY[best].move;
+    document.getElementById("resTrap").textContent = SAY[best].trap;
+
+    var secEl = document.getElementById("resSecond");
+    if(second && score[second] > 0 && score[second] >= score[best]*0.5){
+      secEl.hidden = false;
+      document.getElementById("resSecondT").textContent = U.second + POS[second-1].name;
+      document.getElementById("resSecondB").textContent = second === 4
+        ? U.secWall
+        : U.secTwo;
+    } else { secEl.hidden = true; }
+
+    var plot = document.getElementById("plot");
+    var max = Math.max(1, score[best]);
+    plot.innerHTML = "";
+    POS.forEach(function(p){
+      var r = el("div","plot__r",
+        '<span>0'+p.n+' '+U.plot(p)+'</span><span class="plot__b"><i></i></span>');
+      if(p.n === best) r.setAttribute("data-top","1");
+      r.style.setProperty("--pc","var(--"+p.key+")");
+      plot.appendChild(r);
+      (function(node, pct){
+        setTimeout(function(){ node.querySelector("i").style.width = pct + "%"; }, 60 + p.n*70);
+      })(r, Math.round(score[p.n]/max*100));
+    });
+
+    quiz.style.display = "none";
+    res.setAttribute("data-on","1");
+    state.textContent = U.complete;
+    bars.forEach(function(b){ b.setAttribute("data-on","1"); });
+  }
+
+  document.getElementById("again").addEventListener("click", function(){
+    idx=0; picks=[]; quiz.style.display=""; res.setAttribute("data-on","0"); render();
+  });
+  document.getElementById("jump").addEventListener("click", function(){
+    var card = document.getElementById("pos-"+finalPos);
+    if(card) card.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+  });
+
+  render();
+})();
+
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){var S=window.EsmrskyScripture;if(!S)return;
+  S.init({key:"where-are-you",scan:".verse cite, .frame h3, .reg__nm",versions:["NIV","NASB","ESV","KJV","NLT"]});
+})();
+</script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
