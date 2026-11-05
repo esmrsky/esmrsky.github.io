@@ -7,7 +7,18 @@
 /* --------------------------------------------------------------------------
    1. DESIGN TOKENS  (pattern: "design tokens" — named values reused everywhere)
    -------------------------------------------------------------------------- */
+/* theme swap: register the flat colors so the whole page eases between modes */
+@property --bg        { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --surface   { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --surface-2 { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --text      { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --muted     { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --border    { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --accent    { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --accent-ink { syntax: '<color>'; inherits: true; initial-value: transparent; }
+
 :root {
+  transition: --bg var(--t2) var(--ease), --surface var(--t2) var(--ease), --surface-2 var(--t2) var(--ease), --text var(--t2) var(--ease), --muted var(--t2) var(--ease), --border var(--t2) var(--ease), --accent var(--t2) var(--ease), --accent-ink var(--t2) var(--ease);
   color-scheme: light;
 
   /* color */
@@ -55,6 +66,9 @@
   --ease-out: cubic-bezier(.16, 1, .3, 1);
   --ease-in-out: cubic-bezier(.65, 0, .35, 1);
   --dur-fast: 120ms; --dur: 220ms; --dur-slow: 480ms;
+  /* the page's own chrome uses these; the specimens keep the tokens above */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --t1: .12s; --t2: .22s; --t3: .48s;
 
   /* layout */
   --sidebar-w: 240px;
@@ -129,7 +143,7 @@ body.sim-reduced-motion *, body.sim-reduced-motion *::before, body.sim-reduced-m
 .skip-link {
   position: absolute; top: -100px; left: var(--s-4); z-index: 100;
   background: var(--accent); color: var(--accent-ink); padding: var(--s-2) var(--s-4);
-  border-radius: var(--r-2); text-decoration: none; font-weight: 600;
+  border-radius: var(--r-2); text-decoration: none; font-weight: 600; min-height: 44px; display: inline-flex; align-items: center;
 }
 .skip-link:focus { top: var(--s-2); }
 
@@ -140,16 +154,16 @@ body.sim-reduced-motion *, body.sim-reduced-motion *::before, body.sim-reduced-m
   background: color-mix(in srgb, var(--bg) 85%, transparent);
   backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px);
   border-bottom: 1px solid var(--border);
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--t2) var(--ease);
 }
 .site-header.is-hidden { transform: translateY(-100%); }
 .brand { font-weight: 700; letter-spacing: -.02em; text-decoration: none; color: var(--text); font-size: var(--fs-1); display: flex; align-items: center; gap: .5rem; }
 .brand__mark { width: 22px; height: 22px; border-radius: 6px; background: var(--accent); box-shadow: inset 0 0 0 4px var(--bg), inset 0 0 0 6px var(--accent); }
 .header-actions { margin-left: auto; display: flex; gap: var(--s-2); align-items: center; }
 .icon-btn {
-  display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: var(--r-2);
+  display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r-2);
   border: 1px solid var(--border); background: var(--surface); color: var(--text);
-  transition: background var(--dur-fast), transform var(--dur-fast);
+  transition: background-color var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 .icon-btn:hover { background: var(--surface-2); }
 .icon-btn:active { transform: scale(.94); }
@@ -167,12 +181,13 @@ body.sim-reduced-motion *, body.sim-reduced-motion *::before, body.sim-reduced-m
 .toc { list-style: none; margin: 0; padding: 0; }
 .toc__group { font-size: var(--fs--1); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: var(--s-4) 0 var(--s-2); font-weight: 600; }
 .toc a {
-  display: block; padding: .3rem .6rem; border-radius: var(--r-2); text-decoration: none; color: var(--text);
+  display: flex; align-items: center; min-height: 44px; padding: .3rem .6rem; border-radius: var(--r-2); text-decoration: none; color: var(--text);
   font-size: var(--fs--1); border-left: 2px solid transparent;
+  transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease), border-color var(--t1) var(--ease);
 }
 .toc a:hover { background: var(--surface-2); }
 .toc a.is-active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
-.sidebar-search { width: 100%; padding: .5rem .7rem; border: 1px solid var(--border); border-radius: var(--r-2); background: var(--surface); margin-bottom: var(--s-2); }
+.sidebar-search { width: 100%; min-height: 44px; padding: .5rem .7rem; border: 1px solid var(--border); border-radius: var(--r-2); background: var(--surface); margin-bottom: var(--s-2); }
 .sidebar-search:focus { border-color: var(--accent); }
 .search-count { font-size: var(--fs--1); color: var(--muted); margin: 0 0 var(--s-2); }
 
@@ -180,16 +195,16 @@ main { padding: var(--s-6) var(--s-6) var(--s-8); }
 .container { max-width: var(--content-max); margin-inline: auto; }
 
 /* pattern: off-canvas drawer (mobile nav) */
-.scrim { position: fixed; inset: 0; background: rgb(0 0 0 / .4); opacity: 0; pointer-events: none; transition: opacity var(--dur); z-index: 60; }
+.scrim { position: fixed; inset: 0; background: rgb(0 0 0 / .4); opacity: 0; pointer-events: none; transition: opacity var(--t2) var(--ease); z-index: 60; }
 @media (max-width: 900px) {
   .menu-btn { display: inline-grid; }
   .shell { grid-template-columns: minmax(0, 1fr); }
   .sidebar {
     position: fixed; top: 0; left: 0; height: 100vh; width: min(84vw, 320px); z-index: 70;
-    transform: translateX(-100%); transition: transform var(--dur-slow) var(--ease-out); box-shadow: var(--shadow-4);
+    opacity: 0; visibility: hidden; pointer-events: none; transition: opacity var(--t2) var(--ease), visibility var(--t2) var(--ease); box-shadow: var(--shadow-4);
     padding-top: var(--s-6);
   }
-  body.drawer-open .sidebar { transform: none; }
+  body.drawer-open .sidebar { opacity: 1; visibility: visible; pointer-events: auto; }
   body.drawer-open .scrim { opacity: 1; pointer-events: auto; }
   main { padding: var(--s-5) var(--s-4) var(--s-8); }
 }
@@ -409,8 +424,8 @@ main { padding: var(--s-6) var(--s-6) var(--s-8); }
 .mega__panel h5 { margin: 0 0 .4rem; font-size: var(--fs--1); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .mega__panel a { display: block; padding: .2rem 0; }
 
-.back-to-top { position: fixed; right: var(--s-5); bottom: var(--s-5); z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity var(--dur), transform var(--dur) var(--ease-out); box-shadow: var(--shadow-3); }
-.back-to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.back-to-top { position: fixed; right: var(--s-5); bottom: var(--s-5); z-index: 40; min-width: 44px; min-height: 44px; opacity: 0; pointer-events: none; transition: opacity var(--t2) var(--ease), transform var(--t1) var(--ease), background-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease); box-shadow: var(--shadow-3); }
+.back-to-top.is-visible { opacity: 1; pointer-events: auto; }
 
 .stepper-nav { display: flex; align-items: center; gap: .5rem; list-style: none; padding: 0 0 2px; margin: 0; font-size: var(--fs--1); overflow-x: auto; }
 .stepper-nav li { display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
@@ -913,6 +928,7 @@ table.data td.num, table.data th.num { text-align: right; font-variant-numeric: 
 .glossary dd { margin: 0; color: var(--muted); font-size: var(--fs--1); break-inside: avoid; }
 
 .site-footer { border-top: 1px solid var(--border); padding: var(--s-6) 0; color: var(--muted); font-size: var(--fs--1); }
+.site-footer .home { display: inline-flex; align-items: center; min-height: 44px; color: var(--accent); }
 
 /* --------------------------------------------------------------------------
    16. UTILITIES
