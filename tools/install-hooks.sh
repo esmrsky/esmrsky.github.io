@@ -6,7 +6,7 @@
 #   sh hub/esmrsky.github.io/tools/install-hooks.sh
 HUB="$(cd "$(dirname "$0")/.." && pwd)"
 CHECK="$HUB/tools/baseline-check.py"
-for repo in "$HUB" "$HUB"/../../live-linked/*/ "$HUB"/../../live-unlinked/*/; do
+for repo in "$HUB" "$HUB"/../../apps/*/; do
   repo="${repo%/}"
   [ -d "$repo/.git" ] || continue
   hook="$repo/.git/hooks/pre-commit"

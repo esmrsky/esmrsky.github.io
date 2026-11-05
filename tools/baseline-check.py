@@ -71,7 +71,7 @@ def sheets(html, base):
 def shadowed(path):
     """A hub folder that a standalone repo of the same name serves over: dead code."""
     rel = os.path.relpath(path, ROOT).split(os.sep)
-    return len(rel) > 1 and os.path.isdir(os.path.join(ROOT, "..", "..", "live-linked", rel[0]))
+    return len(rel) > 1 and os.path.isdir(os.path.join(ROOT, "..", "..", "apps", rel[0]))
 
 
 def transitions_all(css):

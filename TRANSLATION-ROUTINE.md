@@ -22,9 +22,10 @@ All paths below are relative to this repo root. Nothing outside this repo is in 
    toggle, pill, or link — it was removed on purpose.
 3. **The RU grid shows only translated sites.** A card whose Russian target does not
    exist is dropped from the Russian homepage, not linked to its English page.
-4. **Hub only.** `live-linked/*` standalone repos (Convergence Atlas, The Loop, Loop
-   Atlas) are out of scope until the consolidation question in `STATUS.md` is settled.
-   If the queue reaches one, skip it and note why.
+4. **Hub only.** Since November 5, 2026 the old standalone sites (Convergence Atlas, The
+   Loop, Loop Atlas and the rest) are hub folders. The three repos in `apps/` publish
+   built output and stay out of scope. `the-thread/` builds its own `ru/` with `build.sh`
+   and `be-filled/` is a Pagesmith mirror: if the queue reaches either, skip it and note why.
 5. **Work the queue until it is done.** Do not stop after one page. Stop only on the
    conditions below.
 
