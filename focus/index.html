@@ -23,11 +23,13 @@ try{if(localStorage.getItem("esmrsky-learn")==="off")document.documentElement.se
 </script>
 <link rel="stylesheet" href="/assets/learn-mode.css">
 <style>
+:root{--ease:cubic-bezier(.2,.7,.3,1)}
+
 /* ==========================================================================
    The Stayed Mind
    Layout: a twelve-column editorial grid. Section heads sit in a narrow left
    rail; running text and figures take the right eight columns. Every figure
-   is a loop that shows one mechanism, in one two-colour encoding:
+   is a loop that shows one mechanism, in one two-color encoding:
    evergreen = attention resting on what you chose, marigold = attention pulled away.
    ========================================================================== */
 :root{
@@ -83,13 +85,13 @@ button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
 /* buttons the page owns; the learn-mode switch and its buttons wear these */
 .btn,.tog{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink);background:transparent;border:1px solid var(--hair);border-radius:100px;padding:.5rem 1rem;cursor:pointer;line-height:1.2;
-  transition:border-color .15s,background-color .15s,transform .08s}
+  transition:border-color .2s var(--ease),background-color .2s var(--ease),transform .2s var(--ease)}
 .btn:hover,.tog:hover{border-color:var(--ink-3)}
 .btn:active,.tog:active{transform:scale(.97)}
 .btn.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .btn.solid:hover{background:var(--ink-2);border-color:var(--ink-2)}
-.tog{min-height:40px;color:var(--ink-2)}
-@media (pointer:coarse){.tog,.btn{min-height:44px}}
+.tog{color:var(--ink-2)}
+.btn,.tog{min-height:44px}
 
 /* learn-mode tokens mapped to this page */
 .lm-cp,.lm-close,.lm-note,.lm-toggle{--lm-accent:var(--stay);--lm-accent-ink:var(--stay-ink);--lm-sans:var(--sans);--lm-radius:3px}
@@ -101,11 +103,11 @@ button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
 /* ---------- top bar ---------- */
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:.75rem;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid var(--hair)}
 .brand{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
-.brand{text-decoration:none}
+.brand{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
 .brand:hover{color:var(--ink)}
 .brand b{color:var(--ink);font-weight:500}
 .topbar nav{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
-.toc-link{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;padding:.4rem .2rem}
+.toc-link{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;padding:.4rem .2rem;display:inline-flex;align-items:center;min-height:44px}
 .toc-link:hover{color:var(--ink)}
 @media (max-width:720px){.toc-link{display:none}}
 
@@ -126,7 +128,7 @@ h1 .stay{color:var(--stay-ink)}
 .fig-cap{display:block;padding:.85rem 1rem 1rem;border-top:1px solid var(--hair);font-family:var(--sans);font-size:.86rem;line-height:1.45;color:var(--ink-2)}
 .fig-cap b{color:var(--ink);font-weight:600}
 .phase-key{display:flex;gap:.35rem;flex-wrap:wrap;padding:.75rem 1rem 0;margin:0;list-style:none;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
-.phase-key li{padding:.32rem .6rem;border-radius:100px;border:1px solid var(--hair);color:var(--ink-3);transition:color .25s,border-color .25s,background-color .25s}
+.phase-key li{padding:.32rem .6rem;border-radius:100px;border:1px solid var(--hair);color:var(--ink-3);transition:color .2s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease)}
 .phase-key li.is-on[data-k="stay"],.phase-key li.is-on[data-k="return"]{color:var(--stay-ink);border-color:var(--stay);background:color-mix(in srgb,var(--stay) 10%,transparent)}
 .phase-key li.is-on[data-k="drift"]{color:var(--drift-ink);border-color:var(--drift);background:color-mix(in srgb,var(--drift) 14%,transparent)}
 .phase-key li.is-on[data-k="notice"]{color:var(--ink);border-color:var(--ink)}
@@ -177,9 +179,8 @@ html[data-learn="off"] .pretest{display:none}
 .pt-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.6rem 1rem;align-items:center;padding:.8rem 0;border-top:1px solid var(--hair)}
 .pt-list li > span{font-size:1.02rem;line-height:1.4}
 .pt-choices{display:flex;gap:.3rem;flex-wrap:wrap}
-.pt-choices button{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--hair);background:transparent;border-radius:100px;padding:.42rem .7rem;cursor:pointer;min-height:36px;color:var(--ink-2)}
+.pt-choices button{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--hair);background:transparent;border-radius:100px;padding:.42rem .7rem;cursor:pointer;min-height:44px;color:var(--ink-2)}
 .pt-choices button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-@media (pointer:coarse){.pt-choices button{min-height:44px}}
 @media (max-width:620px){.pt-list li{grid-template-columns:1fr}}
 .pt-status{font-family:var(--sans);font-size:.86rem;color:var(--ink-3);margin:.7rem 0 0}
 
@@ -212,7 +213,7 @@ html[data-learn="off"] .pretest{display:none}
 /* the chain */
 .chain{list-style:none;margin:2rem 0 .6rem;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;counter-reset:ch}
 @media (max-width:640px){.chain{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.chain li{counter-increment:ch;border:1px solid var(--hair);background:var(--panel);border-radius:3px;padding:.7rem .8rem .8rem;min-width:0;transition:border-color .35s,background-color .35s,transform .35s}
+.chain li{counter-increment:ch;border:1px solid var(--hair);background:var(--panel);border-radius:3px;padding:.7rem .8rem .8rem;min-width:0;transition:border-color .32s var(--ease),background-color .32s var(--ease),transform .32s var(--ease)}
 .chain li::before{content:counter(ch,decimal-leading-zero);display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--ink-3);margin-bottom:.25rem}
 .chain b{display:block;font-family:var(--display);font-weight:800;font-stretch:80%;text-transform:uppercase;font-size:1.08rem;line-height:1.05}
 .chain span{display:block;font-family:var(--sans);font-size:.8rem;line-height:1.35;color:var(--ink-2);margin-top:.25rem}
@@ -226,7 +227,7 @@ html[data-learn="off"] .pretest{display:none}
 .loop h4{grid-column:1 / -1;margin:0 0 .2rem;font-family:var(--display);font-weight:800;font-stretch:80%;text-transform:uppercase;font-size:1.25rem}
 .loop svg{width:84px;height:84px}
 .loop ol{margin:0;padding:0 0 0 1.1rem;font-family:var(--sans);font-size:.84rem;line-height:1.4;color:var(--ink-3)}
-.loop ol li{transition:color .25s}
+.loop ol li{transition:color .2s var(--ease)}
 .loop ol li.is-lit{color:var(--ink);font-weight:600}
 .loop .ev{grid-column:1 / -1;justify-self:start;margin-top:.4rem}
 
@@ -280,7 +281,79 @@ html[data-learn="off"] .review{display:none}
 .sources li{break-inside:avoid;margin:0 0 .55rem}
 .foot{border-top:1px solid var(--hair);padding:2rem 0 0;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink-3);line-height:1.7}
 
-@media (prefers-reduced-motion: reduce){.chain li,.loop ol li,.phase-key li{transition:none}}
+/* theme switch eases once the toggle has been pressed */
+@property --bg{syntax:"<color>";inherits:true;initial-value:#EDEFEA}
+@property --bg-2{syntax:"<color>";inherits:true;initial-value:#E3E7E1}
+@property --panel{syntax:"<color>";inherits:true;initial-value:#F7F8F5}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#12161A}
+@property --ink-2{syntax:"<color>";inherits:true;initial-value:#3E464C}
+@property --ink-3{syntax:"<color>";inherits:true;initial-value:#5E6870}
+@property --hair{syntax:"<color>";inherits:true;initial-value:#CBD1CA}
+@property --stay{syntax:"<color>";inherits:true;initial-value:#0B6E4F}
+@property --stay-ink{syntax:"<color>";inherits:true;initial-value:#0A6247}
+@property --drift{syntax:"<color>";inherits:true;initial-value:#E0A019}
+@property --drift-ink{syntax:"<color>";inherits:true;initial-value:#8A5800}
+@property --myth{syntax:"<color>";inherits:true;initial-value:#B3261E}
+@property --theo{syntax:"<color>";inherits:true;initial-value:#4B3FA8}
+:root.theme-eases{transition:--bg .32s var(--ease),--bg-2 .32s var(--ease),--panel .32s var(--ease),--ink .32s var(--ease),--ink-2 .32s var(--ease),--ink-3 .32s var(--ease),--hair .32s var(--ease),--stay .32s var(--ease),--stay-ink .32s var(--ease),--drift .32s var(--ease),--drift-ink .32s var(--ease),--myth .32s var(--ease),--theo .32s var(--ease)}
+@media (prefers-reduced-motion: reduce){.chain li,.loop ol li,.phase-key li{transition:none}:root.theme-eases{transition:none}}
+</style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior from /assets/scripture-popover.js, which ships no colors; these are this page's clothes for it. */
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,var(--stay-ink) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--ink);text-decoration-color:var(--ink)}
+.esv-tip{position:absolute;z-index:120;display:none;max-width:360px;padding:15px 17px 13px;border:1px solid var(--hair);border-radius:3px;background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.28);color:var(--ink);font-family:var(--serif);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--stay-ink);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-tip-text{min-height:3em;transition:opacity .2s var(--ease)}
+.esv-tip-text.is-loading{opacity:.45}
+.esv-note{display:block;margin-top:8px;color:var(--ink-3);font-family:var(--sans);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--hair)}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--hair);border-radius:999px;background:none;color:var(--stay-ink);font-family:var(--sans);font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border-color:var(--stay-ink);color:var(--ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--hair);border-radius:999px;background:none;color:var(--ink);font-family:var(--sans);font-size:.84rem;font-weight:700;cursor:pointer;transition:border-color .2s var(--ease),background-color .2s var(--ease)}
+.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border-color:var(--stay-ink)}
+.esv-pick-ic{width:15px;height:15px;color:var(--stay-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--ink-3);transition:rotate .2s var(--ease)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:130;min-width:250px;max-height:min(62dvh,420px);overflow-y:auto;padding:6px;border:1px solid var(--hair);border-radius:3px;background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.28);opacity:1;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--hair);color:var(--ink-3);font-family:var(--sans);font-size:.78rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--ink-2);text-align:left;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--ink);font-family:var(--sans);font-size:.82rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--serif);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--stay-ink) 10%,transparent);color:var(--ink)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--stay-ink)}
+.esv-ctx{width:min(880px,calc(100% - 24px));max-height:min(86dvh,800px);padding:0;border:1px solid var(--hair);border-radius:3px;background:var(--bg);color:var(--ink);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden;opacity:0;scale:.98;transition:opacity .32s var(--ease),scale .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.98}}
+.esv-ctx::backdrop{background:rgba(14,18,20,0);transition:background-color .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(14,18,20,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(14,18,20,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(86dvh,800px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--hair)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--stay-ink);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-ctx-head h3{margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.15;color:var(--ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--hair);border-radius:50%;background:none;color:var(--ink-2);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close:hover{color:var(--ink);border-color:var(--stay-ink)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--serif);text-align:left}
+.esv-ctx-passage{margin:0}
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--stay-ink) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--stay-ink) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-note{margin:.8em 0 0;color:var(--ink-3);font-family:var(--sans);font-size:.82rem}
+.esv-ctx-loading{color:var(--ink-3);font-family:var(--sans);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--hair);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--hair);border-radius:999px;background:none;color:var(--ink-2);font-family:var(--sans);font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--stay-ink);color:var(--ink)}
+.esv-ctx-more:disabled{opacity:.5;cursor:default}
+@media (max-width:560px){.esv-ctx-head{flex-wrap:wrap}.esv-ctx-body{padding:16px 16px 18px}}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
 </style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -356,7 +429,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 
     <figure class="fig" aria-labelledby="comp-cap">
       <canvas id="comp" width="800" height="380" role="img" aria-label="Dots drift in a field. Green dots relevant to the goal gather in a spotlight; a marigold ping flares and briefly pulls the spotlight away before it returns."></canvas>
-      <figcaption class="fig-cap" id="comp-cap"><b>Selection under competition.</b> Green dots matter to your goal; grey ones don't. Holding the goal in mind pulls the beam toward what's relevant. Every so often a loud marigold ping drags the beam off, and it has to be steered back.</figcaption>
+      <figcaption class="fig-cap" id="comp-cap"><b>Selection under competition.</b> Green dots matter to your goal; gray ones don't. Holding the goal in mind pulls the beam toward what's relevant. Every so often a loud marigold ping drags the beam off, and it has to be steered back.</figcaption>
     </figure>
 
     <div class="prose">
@@ -379,7 +452,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <div class="signals">
       <div><h4>Direction</h4><p><span class="y">Focused:</span> you can say what you're doing and why. <span class="n">Drifting:</span> several half-goals compete.</p></div>
       <div><h4>Continuity</h4><p><span class="y">Focused:</span> one task stays active long enough for progress to stack. <span class="n">Drifting:</span> checking, switching, restarting.</p></div>
-      <div><h4>Noticing</h4><p><span class="y">Focused:</span> you catch yourself soon after you leave. <span class="n">Drifting:</span> ten minutes vanish before you realise.</p></div>
+      <div><h4>Noticing</h4><p><span class="y">Focused:</span> you catch yourself soon after you leave. <span class="n">Drifting:</span> ten minutes vanish before you realize.</p></div>
       <div><h4>Output</h4><p><span class="y">Focused:</span> understanding, work, prayer or decisions pile up. <span class="n">Drifting:</span> time passes and little stays.</p></div>
     </div>
     <p class="aside">Flow is one kind of deep absorption, and it isn't required. Ordinary focus is often effortful, plain or a little uncomfortable, and still counts.</p>
@@ -415,7 +488,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       <p>Attention training like this improves some parts of attention and lowers stress for many people. The effects are real and modest, not miraculous. Amishi Jha's studies with soldiers found mindfulness training reduced attention lapses under pressure. <span class="ev emg">Established to emerging, modest</span></p>
       <p>Four hundred years earlier, Brother Lawrence described the same loop as prayer. When he noticed his mind had wandered from God, he didn't spend time scolding himself. He turned back, quietly, and kept working. The procedure matches the research. The purpose doesn't: he wasn't training a skill, he was returning to a Person.</p>
       <blockquote><p>Notice. Release. Return.</p><cite>The whole method, in three words</cite></blockquote>
-      <p>Don't spend the next thirty seconds criticising the last thirty. Self-criticism is just a second distraction.</p>
+      <p>Don't spend the next thirty seconds criticizing the last thirty. Self-criticism is just a second distraction.</p>
     </div>
   </div>
 </section>
@@ -474,7 +547,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       <div class="word"><span class="en">Behold</span><span class="gk">katoptrizomenoi</span><span class="ref">2 Corinthians 3:18</span><p>“Beholding as in a glass… are changed into the same image.” Scholars debate “beholding” versus “reflecting.” Either way, Paul says the Spirit does the changing.</p></div>
       <div class="word"><span class="en">Single</span><span class="gk">haplous</span><span class="ref">Matthew 6:22</span><p>“If thine eye be single.” The word also means sound and generous, and the passage is about treasure and two masters. It speaks to undivided loyalty more than tunnel vision.</p></div>
       <div class="word"><span class="en">Mindset</span><span class="gk">phronēma</span><span class="ref">Romans 8:6</span><p>“To be spiritually minded is life and peace.” Phronēma is a settled outlook, not one passing thought. The closest biblical word to “mindset.”</p></div>
-      <div class="word"><span class="en">Think on</span><span class="gk">logizesthe</span><span class="ref">Philippians 4:8–9</span><p>Reckon with, take account of. Then verse 9: “those things… do.” Paul joins what you dwell on to what you practise.</p></div>
+      <div class="word"><span class="en">Think on</span><span class="gk">logizesthe</span><span class="ref">Philippians 4:8–9</span><p>Reckon with, take account of. Then verse 9: “those things… do.” Paul joins what you dwell on to what you practice.</p></div>
     </div>
 
     <div class="correction">
@@ -488,7 +561,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 
 <!-- ============================================================= -->
 <section class="sec" id="worship" aria-labelledby="worship-h">
-  <div class="sec-head"><div><p class="kicker">Formation</p><h2 id="worship-h">Worship organises attention</h2></div></div>
+  <div class="sec-head"><div><p class="kicker">Formation</p><h2 id="worship-h">Worship organizes attention</h2></div></div>
   <div class="sec-body wrap">
     <p class="lede prose">You tend to notice what you've learned to value. What you treat as ultimately worthy keeps winning the contest for your attention, and what keeps winning shapes you.</p>
     <ol class="chain" id="chain">
@@ -599,7 +672,7 @@ p,li,dd,figcaption{text-wrap:pretty}
   <div class="sec-body wrap">
     <p class="lede prose">Pulled together from both sides, one loop. It's a synthesis, not a clinically tested protocol. The order is the point.</p>
     <ol class="steps">
-      <li><b>Choose</b><span>Name what deserves your attention now. Before feeds, messages, email or AI: what will organise my attention today?</span></li>
+      <li><b>Choose</b><span>Name what deserves your attention now. Before feeds, messages, email or AI: what will organize my attention today?</span></li>
       <li><b>Attend</b><span>One task, one document, phone in another room, notifications off.</span></li>
       <li><b>Notice</b><span>Catch the drift. Curious, not condemning.</span></li>
       <li><b>Release</b><span>Let go of the distraction and of the urge to scold yourself. Write the impulse on paper instead of obeying it.</span></li>
@@ -623,7 +696,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       <li><q>What did my attention produce in how I treated people?</q><span>Fruit</span></li>
       <li><q>What did I say mattered but rarely attend to?</q><span>Value and attention out of line</span></li>
     </ul>
-    <blockquote><p>Focus is the practised ability to keep returning your awareness and action to what you've judged worthy of them. Worship answers what is worthy.</p><cite>The whole page in two sentences</cite></blockquote>
+    <blockquote><p>Focus is the practiced ability to keep returning your awareness and action to what you've judged worthy of them. Worship answers what is worthy.</p><cite>The whole page in two sentences</cite></blockquote>
   </div>
 </section>
 
@@ -658,7 +731,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       <li><a href="https://www.biblegateway.com/passage/?search=Proverbs+23%3A6-8&amp;version=KJV%3BNIV" target="_blank" rel="noopener">Proverbs 23:6–8, KJV and NIV</a> · <a href="https://www.biblegateway.com/passage/?search=Isaiah+26&amp;version=KJV" target="_blank" rel="noopener">Isaiah 26, KJV</a></li>
       <li>G. K. Beale, <em>We Become What We Worship</em> (2008) · James K. A. Smith, <em>You Are What You Love</em> (2016) · Brother Lawrence, <em>The Practice of the Presence of God</em></li>
     </ol>
-    <p class="foot">Synthesised from four deep-research reports (ChatGPT and Gemini), checked against their cited sources where links were given. Learn mode is the hub's shared one: questions that ask before they tell, a close-it-and-explain-it recall, and missed questions that come back on a schedule.</p>
+    <p class="foot">Synthesized from four deep-research reports (ChatGPT and Gemini), checked against their cited sources where links were given. Learn mode is the hub's shared one: questions that ask before they tell, a close-it-and-explain-it recall, and missed questions that come back on a schedule.</p>
   </div>
 </section>
 
@@ -670,6 +743,7 @@ p,li,dd,figcaption{text-wrap:pretty}
   function dark() { var t = r.getAttribute("data-theme"); return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; }
   b.addEventListener("click", function () {
     var next = dark() ? "light" : "dark";
+    r.classList.add("theme-eases");
     r.setAttribute("data-theme", next);
     try { localStorage.setItem("esmrsky-theme", next); } catch (e) {}
   });
@@ -700,7 +774,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       "Drift is normal. Noticing and returning is the skill, and each return is a rep.",
       "Famous focus numbers are often overstated: 23 minutes, the goldfish, the phone on the desk, dopamine detox, 90-minute blocks.",
       "Isaiah 26:3's peace rests on trust in God who keeps. Proverbs 23:7 is about a stingy host, not mindset.",
-      "Worship organises attention. What you treat as worthy wins your attention, and what keeps winning forms you.",
+      "Worship organizes attention. What you treat as worthy wins your attention, and what keeps winning forms you.",
       "With AI, think first, then use it to challenge and check. Keep the friction that is the workout.",
       "ADHD is a different category from a habit problem, and needing treatment isn't a failure of faith."
     ],
@@ -860,9 +934,11 @@ p,li,dd,figcaption{text-wrap:pretty}
   }
   readTokens();
   try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readTokens); } catch (e) {}
-  new MutationObserver(readTokens).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  new MutationObserver(function () { readTokens(); setTimeout(readTokens, 450); }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 
   function rgba(hex, a) {
+    var m = /^rgba?\(([^)]+)\)/.exec(hex);
+    if (m) { var q = m[1].split(/[ ,\/]+/); return "rgba(" + Math.round(q[0]) + "," + Math.round(q[1]) + "," + Math.round(q[2]) + "," + a + ")"; }
     var h = hex.replace("#", "");
     if (h.length === 3) h = h.split("").map(function (x) { return x + x; }).join("");
     var n = parseInt(h, 16);
@@ -1128,6 +1204,12 @@ p,li,dd,figcaption{text-wrap:pretty}
     }, 150);
   });
   if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () { if (reduce) { heroDraw(7.4, false); compDraw(4.2, 0); } });
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){var S=window.EsmrskyScripture;if(!S)return;
+  S.init({key:"focus",scan:".page p, .page td, .page li, .page cite, .page .ref",versions:["NIV","NASB","ESV","KJV","NLT"]});
 })();
 </script>
 </body>
