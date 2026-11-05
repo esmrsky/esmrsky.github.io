@@ -27,9 +27,21 @@
     --wrap: 74rem;
     --text: 40rem;
     --ease: cubic-bezier(.22,.61,.36,1);
+    --t1: .3s; --t2: .5s; --t3: .8s;
     --radius: 14px;
   }
 
+  /* The palette is typed so the theme swap eases every surface at once, not just body. */
+  @property --bg{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --bg-soft{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --panel{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --panel-solid{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --fg{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --fg-dim{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --fg-faint{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --hair{syntax:'<color>';inherits:true;initial-value:transparent}
+  @property --hair-strong{syntax:'<color>';inherits:true;initial-value:transparent}
+  html { transition: --bg var(--t2) var(--ease), --bg-soft var(--t2) var(--ease), --panel var(--t2) var(--ease), --panel-solid var(--t2) var(--ease), --fg var(--t2) var(--ease), --fg-dim var(--t2) var(--ease), --fg-faint var(--t2) var(--ease), --hair var(--t2) var(--ease), --hair-strong var(--t2) var(--ease); }
   html[data-theme="dark"] {
     --bg:        #0E0D0B;
     --bg-soft:   #141210;
@@ -67,7 +79,6 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    transition: background .5s var(--ease), color .5s var(--ease);
   }
 
   ::selection { background: var(--ember); color: #0E0D0B; }
@@ -125,7 +136,7 @@
   /* ============================================================
      TOP BAR — scroll progress + theme toggle
      ============================================================ */
-  .progress { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--ember); z-index: 90; transition: width .1s linear; box-shadow: 0 0 8px color-mix(in srgb, var(--ember) 60%, transparent); }
+  .progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: var(--ember); z-index: 90; box-shadow: 0 0 8px color-mix(in srgb, var(--ember) 60%, transparent); }
 
   .toggle {
     position: fixed; top: 1.1rem; right: 1.1rem; z-index: 100;
@@ -133,13 +144,12 @@
     background: var(--panel-solid); border: 1px solid var(--hair-strong);
     color: var(--fg); padding: .5rem .8rem; border-radius: 100px;
     font-family: "JetBrains Mono", monospace; font-size: .68rem; letter-spacing: .12em;
-    cursor: pointer; backdrop-filter: blur(8px); transition: border-color .3s, transform .3s var(--ease);
+    cursor: pointer; min-height: 44px; backdrop-filter: blur(8px); transition: border-color var(--t1) var(--ease), transform var(--t1) var(--ease);
   }
   .toggle:hover { border-color: var(--ember); transform: translateY(-1px); }
   .toggle:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
   /* 44px touch target on phones/tablets; the .68rem pill computes to ~33px otherwise.
      Coarse-pointer only, so the mouse pill keeps its compact proportions. */
-  @media (pointer: coarse) { .toggle { min-height: 44px; } }
   .toggle svg { width: 15px; height: 15px; }
   .toggle .lbl-dark { display: none; }
   html[data-theme="dark"] .toggle .lbl-dark { display: inline; }
@@ -431,6 +441,11 @@
   @media (max-width: 640px) { .sources { columns: 1; } }
   .sources p { break-inside: avoid; font-size: .78rem; line-height: 1.5; color: var(--fg-faint); margin-bottom: .8rem; font-family: "JetBrains Mono", monospace; letter-spacing: .01em; }
   .sources p b { color: var(--fg-dim); font-weight: 500; }
+  .foot-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 2rem; }
+  .foot-row .home { display: inline-flex; align-items: center; min-height: 44px; font-family: "JetBrains Mono", monospace; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-dim); text-decoration: none; transition: color var(--t1) var(--ease); }
+  .foot-row .home:hover { color: var(--ember); }
+  .foot-pick { display: flex; align-items: center; gap: 10px; font-family: "JetBrains Mono", monospace; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-faint); }
+  .foot-pick .esv-pick-menu { top: auto; bottom: calc(100% + 8px); text-transform: none; letter-spacing: 0; }
   .disclaimer { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1px solid var(--hair); font-size: .8rem; color: var(--fg-faint); max-width: 52rem; }
   .signoff { font-family: var(--disp); font-style: italic; font-size: clamp(1.5rem,1.1rem+1.8vw,2.4rem); color: var(--fg); text-wrap: balance; max-width: 20ch; margin-bottom: 3rem; line-height: 1.25; }
   .signoff .accent { color: var(--ember); }
@@ -438,20 +453,20 @@
   /* ============================================================
      SECTION RAIL NAV — fixed dots, desktop only (built in JS)
      ============================================================ */
-  .railnav { position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%); z-index: 80; display: flex; flex-direction: column; gap: .35rem; align-items: flex-end; }
-  .railnav__dot { position: relative; display: grid; place-items: center; width: 26px; height: 22px; text-decoration: none; }
-  .railnav__dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--hair-strong); background: transparent; transition: background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease); }
+  .railnav { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 80; display: flex; flex-direction: column; gap: 0; align-items: flex-end; }
+  .railnav__dot { position: relative; display: grid; place-items: center; width: 44px; height: 44px; text-decoration: none; }
+  .railnav__dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--hair-strong); background: transparent; transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease), transform var(--t1) var(--ease); }
   .railnav__dot:hover::after { border-color: var(--ember); transform: scale(1.25); }
   .railnav__dot.is-active::after { background: var(--ember); border-color: var(--ember); box-shadow: 0 0 calc(9px * (0.4 + var(--glow))) color-mix(in srgb, var(--ember) 65%, transparent); }
-  .railnav__lbl { position: absolute; right: 26px; top: 50%; transform: translateY(-50%) translateX(6px); white-space: nowrap; font-family: "JetBrains Mono", monospace; font-size: .6rem; letter-spacing: .09em; text-transform: uppercase; color: var(--fg); background: var(--panel-solid); border: 1px solid var(--hair); padding: .3rem .55rem; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity .25s var(--ease), transform .25s var(--ease); backdrop-filter: blur(6px); }
-  .railnav__dot:hover .railnav__lbl { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .railnav__lbl { position: absolute; right: 40px; top: 50%; transform: translateY(-50%); white-space: nowrap; font-family: "JetBrains Mono", monospace; font-size: .6rem; letter-spacing: .09em; text-transform: uppercase; color: var(--fg); background: var(--panel-solid); border: 1px solid var(--hair); padding: .3rem .55rem; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity var(--t1) var(--ease); backdrop-filter: blur(6px); }
+  .railnav__dot:hover .railnav__lbl, .railnav__dot:focus-visible .railnav__lbl { opacity: 1; }
   .railnav__dot:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; border-radius: 4px; }
   @media (max-width: 1180px) { .railnav { display: none; } }
   section[id] { scroll-margin-top: 1.5rem; }
 
   /* ---------- scroll reveal ---------- */
-  .r { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
-  .r.in { opacity: 1; transform: none; }
+  .js-reveal .r { opacity: 0; transform: translateY(22px); transition: opacity var(--t3) var(--ease), transform var(--t3) var(--ease); }
+  .js-reveal .r.in { opacity: 1; transform: none; }
 
   /* ---------- reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
@@ -472,6 +487,74 @@
     } catch (e) {}
   })();
 </script>
+<style id="scripture-skin">
+/* ==========================================================================
+   THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
+   which ships no colors on purpose. These are this page's clothes for it:
+   the first rule maps the reader's few roles onto this page's own tokens.
+   Opens and closes fade in place; nothing readable slides.
+   ========================================================================== */
+:root{--sr-panel:var(--panel-solid);--sr-ink:var(--fg);--sr-ink2:var(--fg-dim);--sr-ink3:var(--fg-faint);--sr-line:var(--hair-strong);--sr-accent:var(--scripture);--sr-accent-ink:var(--scripture);--sr-hl:var(--scripture);--sr-display:"Instrument Sans",system-ui,sans-serif;--sr-read:"Instrument Sans",system-ui,sans-serif;--sr-shadow:rgba(0,0,0,.45);--sr-t:var(--t1);--sr-t2:var(--t1);--sr-ease:var(--ease)}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color var(--sr-t) var(--sr-ease),text-decoration-color var(--sr-t) var(--sr-ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--sr-accent-ink);text-decoration-color:var(--sr-accent-ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 14px 8px 12px;border:1px solid var(--sr-line);border-radius:999px;background:var(--sr-chip,transparent);color:var(--sr-ink);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-pick-btn:hover{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 10%,transparent)}
+.esv-pick-ic{width:15px;height:15px;color:var(--sr-accent-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--sr-ink3);transition:rotate var(--sr-t) var(--sr-ease)}
+.esv-pick.open .esv-pick-btn{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 13%,transparent)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;display:block;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;padding:6px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 24px 60px var(--sr-shadow);opacity:1;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--sr-line);color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:9px;background:none;color:var(--sr-ink2);text-align:left;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--sr-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--sr-read);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--sr-accent) 10%,transparent);color:var(--sr-ink)}
+.esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--sr-accent) 17%,transparent)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--sr-accent-ink)}
+.esv-tip{position:absolute;z-index:130;display:none;max-width:min(360px,calc(100vw - 24px));padding:15px 17px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);box-shadow:0 24px 64px var(--sr-shadow);color:var(--sr-ink);font-family:var(--sr-read);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700;letter-spacing:.01em}
+.esv-tip-text{font-family:var(--sr-read);white-space:pre-line;min-height:3em;font-size:1.02rem;transition:opacity var(--sr-t) var(--sr-ease)}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--sr-ink3);font-family:var(--sr-display);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--sr-line)}
+.esv-tip-ctx{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid color-mix(in srgb,var(--sr-accent) 40%,var(--sr-line));background:color-mix(in srgb,var(--sr-accent) 11%,transparent);color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.86rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease)}
+.esv-tip-ctx:hover{background:color-mix(in srgb,var(--sr-accent) 19%,transparent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--sr-line);border-radius:18px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 34px 100px rgba(0,0,0,.45);overflow:hidden;opacity:0;transition:opacity var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]{opacity:1}
+@starting-style{.esv-ctx[open]{opacity:0}}
+.esv-ctx::backdrop{background:rgba(8,8,14,0);transition:background-color var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(8,8,14,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(8,8,14,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--sr-line)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.82rem;font-weight:600}
+.esv-ctx-head h3{margin:0;font-family:var(--sr-display);font-weight:700;font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.12;color:var(--sr-ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--sr-line);border-radius:50%;background:none;color:var(--sr-ink2);font-size:18px;line-height:1;cursor:pointer;transition:color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-ctx-close:hover{color:var(--sr-ink);border-color:var(--sr-ink3)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sr-read);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--sr-hl) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sr-hl) 30%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--sr-line);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--sr-line);background:none;color:var(--sr-ink2);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-ctx-more:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-ctx-note{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;margin-top:.6em;display:block}
+.esv-ctx-prefs{color:var(--sr-ink);font-family:var(--sr-display)}
+/* the pop-up's one action is reading in place, not leaving for another site */
+.esv-tip-out,.esv-ctx-out{display:none!important}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+</style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
@@ -484,6 +567,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 </style>
 </head>
 <body>
+<script>if(matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('js-reveal')</script>
 
 <div class="progress" id="progress"></div>
 
@@ -1126,8 +1210,14 @@ p,li,dd,figcaption{text-wrap:pretty}
     </div>
 
     <p class="disclaimer">A teaching artifact, not medical advice. NSDR is a complement to sleep, never a replacement for it. Persistent insomnia, non-restorative sleep, or daytime exhaustion warrant a conversation with a clinician — some causes (sleep apnea, among others) need diagnosis, not just better habits.</p>
+    <div class="foot-row">
+      <a class="home" href="https://esmrsky.github.io/">← All projects</a>
+      <div class="foot-pick"><span>Verse pop-ups read in</span><span id="pickerHost"></span></div>
+    </div>
   </div>
 </footer>
+
+<script src="/assets/scripture-popover.js"></script>
 
 <script>
 (function () {
@@ -1158,18 +1248,34 @@ p,li,dd,figcaption{text-wrap:pretty}
   function onScroll() {
     var h = document.documentElement;
     var max = h.scrollHeight - h.clientHeight;
-    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    prog.style.transform = "scaleX(" + (max > 0 ? h.scrollTop / max : 0) + ")";
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
   /* ---------- reveal on scroll ---------- */
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-  document.querySelectorAll(".r").forEach(function (el) { io.observe(el); });
+  /* threshold 0, so a block taller than the screen still fires; the backstop shows
+     everything if the observer never reports at all */
+  var revealEls = document.querySelectorAll(".r"), ioSeen = false;
+  function revealAll() { revealEls.forEach(function (el) { el.classList.add("in"); }); }
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      ioSeen = true;
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
+    setTimeout(function () { if (!ioSeen) revealAll(); }, 2500);
+  } else revealAll();
+
+  /* ---------- scripture: click a reference for the verse and its context ---------- */
+  var SR = window.EsmrskyScripture;
+  if (SR) {
+    SR.init({ key: "anatomy-of-rest", scan: ".term__ref, .ref-inline, .rl-s, .sources", versions: ["NIV", "NASB", "NLT", "KJV"] });
+    var host = document.getElementById("pickerHost");
+    host.innerHTML = SR.pickerHtml(); SR.wirePicker(host.querySelector(".esv-pick"));
+  }
 
   /* ---------- section rail nav (desktop) ---------- */
   (function () {
@@ -1206,7 +1312,7 @@ p,li,dd,figcaption{text-wrap:pretty}
   if (dopa) {
     var dio = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { dopa.classList.add("reveal-draw"); dio.disconnect(); } });
-    }, { threshold: 0.3 });
+    }, { threshold: 0, rootMargin: "0px 0px -20% 0px" });
     dio.observe(dopa);
   }
 
