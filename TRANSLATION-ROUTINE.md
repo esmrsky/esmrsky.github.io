@@ -17,9 +17,14 @@ All paths below are relative to this repo root. Nothing outside this repo is in 
 1. **НРП, not Синодальный.** bolls.life carries `NRT` = Новый русский Перевод. The old
    egress block that forced СП does not apply to bolls. All quoted scripture is НРП,
    cited «· НРП».
-2. **No language button.** The `.lang-alt` anchor is gone from both sides. Russian is
-   reached by typing `/ru/`. No `navigator.language` redirect. Do not reintroduce a
-   toggle, pill, or link — it was removed on purpose.
+2. **A small EN/RU switch in the header, never a floating pill** (changed November 5,
+   2026 at the user's request; the August rule removed the switch entirely). Every
+   translated page carries a two-option EN · RU control in its own header, styled in
+   that page's tokens, beside its theme toggle if it has one. Author it once in the
+   English source with `data-ru-href` on both links and `aria-current` flipped by
+   `data-ru-aria-current`, the way the hub's `.lang-switch` in `index.html` does, so the
+   generator writes the mirror. Only add it to a page whose `ru/` exists. Still no
+   `navigator.language` redirect, and still no pill floating over the content.
 3. **The RU grid shows only translated sites.** A card whose Russian target does not
    exist is dropped from the Russian homepage, not linked to its English page.
 4. **Hub only.** Since November 5, 2026 the old standalone sites (Convergence Atlas, The
