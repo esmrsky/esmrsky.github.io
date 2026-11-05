@@ -100,7 +100,6 @@
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* fine */ } }
 
-  var HOVER_CAPABLE = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------- versions ---------- */
   var VERSIONS = [
@@ -922,29 +921,10 @@
       refreshLiveVerses();
     });
 
-    if (!HOVER_CAPABLE) {
-      tooltipEl.addEventListener('mouseenter', function () {
-        if (tooltipTimer) clearTimeout(tooltipTimer);
-      });
-      tooltipEl.addEventListener('mouseleave', function () { hideTooltip(); });
-    }
-
-    document.body.addEventListener('mouseover', function (ev) {
-      if (tooltipPinned) return;
-      var link = ev.target.closest('.ref-link');
-      if (!link) return;
-      if (link.hasAttribute('data-written')) return;   /* the verse is already on the page */
-      var ref = link.dataset.ref || link.textContent;
-      if (!ref) return;
-      showTooltip(link, ref, false);
-    });
-
-    document.body.addEventListener('mouseout', function (ev) {
-      var link = ev.target.closest('.ref-link');
-      if (!link) return;
-      hideTooltip();
-    });
-
+    /* Click, never hover (November 5, 2026, with the estate's shared reader): a pop-up that
+       appears because the pointer crossed a word covers the line being read. Every device now
+       works the way a phone always did: click a reference for its pop-up, "See in context" for
+       the passage, and a second click, a click elsewhere or Escape to close. */
     document.body.addEventListener('click', function (ev) {
       var link = ev.target.closest('.ref-link');
       if (link) {
@@ -955,8 +935,11 @@
            to show the verse. Under a verse that is already printed there is nothing for that
            tap to reveal, so it goes straight to the passage — the same place the pointer
            click goes, and the only thing the reader could still be asking for. */
-        if (HOVER_CAPABLE || link.hasAttribute('data-written')) {
+        if (link.hasAttribute('data-written')) {
+          contextTrigger = link;
           openVerseContext(ref, getVersion());
+          hideTooltip(true, true);
+        } else if (tooltipPinned && tooltipLink === link) {
           hideTooltip(true);
         } else {
           showTooltip(link, ref, true);
@@ -965,11 +948,12 @@
       }
       var contextButton = ev.target.closest('.tooltip-context-button');
       if (contextButton) {
+        contextTrigger = tooltipLink;
         openVerseContext(contextButton.dataset.ref, contextButton.dataset.version);
-        hideTooltip(true);
+        hideTooltip(true, true);
         return;
       }
-      if (tooltipPinned && !ev.target.closest('.verse-tooltip') && !ev.target.closest('.verpick')) hideTooltip(true);
+      if (tooltipPinned && !ev.target.closest('.verse-tooltip') && !ev.target.closest('.verpick')) hideTooltip(true, true);
     });
 
     document.addEventListener('keydown', function (ev) {
@@ -980,7 +964,14 @@
       hideTooltip(true);
     });
 
-    contextDialogEl.querySelector('.context-dialog-close').addEventListener('click', function () { contextDialogEl.close(); });
+    contextDialogEl.querySelector('.context-dialog-close').addEventListener('click', closeVerseContext);
+    /* Escape arrives as `cancel`; take it so the close eases like the button's. An open
+       picker or settings panel inside the dialog takes Escape first. */
+    contextDialogEl.addEventListener('cancel', function (ev) {
+      ev.preventDefault();
+      if (contextDialogEl.querySelector('.verpick.open') || contextDialogEl.querySelector('.ctxprefs-menu:not([hidden])')) return;
+      closeVerseContext();
+    });
     contextDialogEl.querySelector('.context-more-button').addEventListener('click', function () {
       contextDialogEl.dataset.radius = String((parseInt(contextDialogEl.dataset.radius, 10) || CONTEXT_RADIUS) + 8);
       refreshVerseContext(true);
@@ -988,9 +979,12 @@
     contextDialogEl.addEventListener('close', function () {
       setCtxLock(false);
       if (contextVersionPicker) contextVersionPicker.close();
+      var back = contextTrigger;
+      contextTrigger = null;
+      if (back && back.isConnected) { try { back.focus({ preventScroll: true }); } catch (e) { /* fine */ } }
     });
     contextDialogEl.addEventListener('click', function (ev) {
-      if (ev.target === contextDialogEl) contextDialogEl.close();
+      if (ev.target === contextDialogEl) closeVerseContext();
     });
   }
 
@@ -1041,7 +1035,6 @@
   }
 
   function tooltipActionHtml(ref, version) {
-    if (HOVER_CAPABLE) return '<div class="tooltip-actions is-hint">Click the reference to read it in context</div>';
     return '<div class="tooltip-actions"><button class="tooltip-context-button" type="button" data-ref="' +
       escapeScriptureText(ref) + '" data-version="' + version + '">See in context</button></div>';
   }
@@ -1067,14 +1060,20 @@
     fillTooltip(ref, version, requestId);
   }
 
-  function hideTooltip(force) {
+  /* `keepFocus` for closes caused elsewhere; Escape and a second click hand focus back to the
+     reference so a keyboard reader never lands at the top of the document. */
+  function hideTooltip(force, keepFocus) {
     if (tooltipPinned && !force) return;
+    if (tooltipTimer) clearTimeout(tooltipTimer);
+    if (!keepFocus && tooltipLink && tooltipLink.isConnected && tooltipEl.contains(document.activeElement)) {
+      try { tooltipLink.focus({ preventScroll: true }); } catch (e) { /* fine */ }
+    }
     tooltipTimer = setTimeout(function () {
       tooltipPinned = false;
       setTipLock(false);
       tooltipEl.classList.remove('open');
       tooltipEl.classList.remove('is-pinned');
-    }, HOVER_CAPABLE ? 60 : 200);
+    }, 200);
   }
 
   function refreshVerseContext(preserveSelection) {
@@ -1115,8 +1114,35 @@
     });
   }
 
+  /* The dialog fades out before it closes (dialog and backdrop, WAAPI, so no stylesheet rule
+     can clobber it); reduced motion closes at once. */
+  var contextTrigger = null;
+  var contextClosing = false;
+  function closeVerseContext() {
+    var d = contextDialogEl;
+    if (!d || !d.open || contextClosing) return;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || typeof d.animate !== 'function') { d.close(); return; }
+    contextClosing = true;
+    var opts = { duration: 200, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' };
+    var anims = [d.animate([{ opacity: getComputedStyle(d).opacity }, { opacity: 0 }], opts)];
+    try { anims.push(d.animate([{ opacity: 1 }, { opacity: 0 }], Object.assign({ pseudoElement: '::backdrop' }, opts))); }
+    catch (e) { /* the backdrop goes with the close */ }
+    var done = false;
+    var finish = function () {
+      if (done) return;
+      done = true;
+      contextClosing = false;
+      d.close();
+      anims.forEach(function (a) { try { a.cancel(); } catch (e) { /* fine */ } });
+    };
+    anims[0].finished.then(finish, finish);
+    setTimeout(finish, 320);
+  }
+
   function openVerseContext(ref, version) {
     if (!contextDialogEl || !ref) return;
+    if (!contextTrigger && document.activeElement && document.activeElement !== document.body) contextTrigger = document.activeElement;
     version = version || getVersion();
     contextDialogEl.dataset.ref = ref;
     contextDialogEl.dataset.version = version;

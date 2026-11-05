@@ -190,9 +190,10 @@ a:hover { color: var(--ink); }
 .muted { color: var(--ink-soft); }
 
 /* ---------- scroll reveals ---------- */
+/* Hidden only while scripting is live (html.rv-on, set in <head>; dropped again if the
+   observer has not answered within 2.5s), so a failed script never strands the text. */
+html.rv-on .reveal:not(.in) { opacity: 0; transform: translateY(26px); }
 .reveal {
-  opacity: 0;
-  transform: translateY(26px);
   transition: opacity 0.7s cubic-bezier(.2, .7, .3, 1), transform 0.7s cubic-bezier(.2, .7, .3, 1);
   transition-delay: var(--rd, 0s);
 }
@@ -202,9 +203,8 @@ a:hover { color: var(--ink); }
 }
 
 /* staggered grids: the container reveals, children follow in sequence */
+html.rv-on .stagger:not(.in) > * { opacity: 0; transform: translateY(22px); }
 .stagger > * {
-  opacity: 0;
-  transform: translateY(22px);
   transition: opacity 0.6s cubic-bezier(.2, .7, .3, 1), transform 0.6s cubic-bezier(.2, .7, .3, 1);
 }
 .stagger.in > * { opacity: 1; transform: none; }
@@ -260,7 +260,8 @@ a:hover { color: var(--ink); }
 }
 
 :is(h1, h2, h3, h4).in:has(> .rule-draw)::after,
-.reveal.in :is(h1, h2, h3, h4):has(> .rule-draw)::after { transform: scaleX(1); }
+.reveal.in :is(h1, h2, h3, h4):has(> .rule-draw)::after,
+html:not(.rv-on) :is(h1, h2, h3, h4):has(> .rule-draw)::after { transform: scaleX(1); }
 
 @media (prefers-reduced-motion: reduce) {
   :is(h1, h2, h3, h4):has(> .rule-draw)::after { transform: scaleX(1); transition: none; }
@@ -349,6 +350,12 @@ a:hover { color: var(--ink); }
   transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 .theme-toggle:hover { color: var(--ink); border-color: var(--ink-faint); background: var(--card); }
+/* The 40px circle reads right beside the switcher; the tap target reaches the 44px floor,
+   the same way .dirsw's does. The picker and the nav links get the same invisible margin. */
+.theme-toggle, .verpick-btn { position: relative; }
+.theme-toggle::after, .dirsw::after { content: ""; position: absolute; inset: -2px; }
+.verpick-btn::after { content: ""; position: absolute; inset: -3px 0; }
+.nav-links a::before { content: ""; position: absolute; inset: -2px 0; }
 .theme-toggle svg { width: 17px; height: 17px; display: block; }
 .theme-toggle .ic-sun { display: none; }
 :root[data-theme="dark"] .theme-toggle .ic-sun { display: block; }
@@ -1343,13 +1350,13 @@ cite .ref-link { color: inherit; }
   line-height: 1.65;
   color: var(--ink);
   opacity: 0;
-  transition: opacity 0.16s ease;
+  /* display is discrete: without allow-discrete the box snaps in and out instead of fading. */
+  transition: opacity 0.16s ease, display 0.16s allow-discrete;
 }
 .verse-tooltip.is-pinned { pointer-events: auto; }
 .verse-tooltip.open { display: block; opacity: 1; }
-@media (hover: hover) and (pointer: fine) {
-  .verse-tooltip { pointer-events: none; }
-}
+@starting-style { .verse-tooltip.open { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .verse-tooltip { transition: none; } }
 .verse-tooltip .tooltip-ref {
   font-family: var(--sans);
   font-size: 0.64rem;
@@ -1419,7 +1426,7 @@ cite .ref-link { color: inherit; }
 @media (prefers-reduced-motion: no-preference) {
   .verse-context-dialog[open] { animation: ctx-in 0.24s cubic-bezier(.2, .7, .3, 1) both; }
   .verse-context-dialog[open]::backdrop { animation: ctx-veil 0.24s ease both; }
-  @keyframes ctx-in { from { opacity: 0; transform: translateY(10px) scale(0.985); } to { opacity: 1; transform: none; } }
+  @keyframes ctx-in { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
   @keyframes ctx-veil { from { opacity: 0; } to { opacity: 1; } }
 }
 .verse-context-dialog::backdrop {

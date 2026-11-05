@@ -41,16 +41,21 @@
     var els = Array.from(document.querySelectorAll('.reveal'));
     if (!els.length) return;
     if (REDUCED || !('IntersectionObserver' in window)) {
+      window.__rvLive = true;
       els.forEach(function (el) { el.classList.add('in'); });
       return;
     }
+    /* threshold 0: a percentage of an element taller than the screen can never be met,
+       which left whole sections invisible on phones. __rvLive tells the <head> backstop
+       that the observer is answering. */
     var io = new IntersectionObserver(function (entries) {
+      window.__rvLive = true;
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('in');
         io.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
     els.forEach(function (el) { io.observe(el); });
   }
 
