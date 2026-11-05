@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — a field guide to web design patterns</title>
+<meta name="description" content="Live, labeled examples of web layouts, components, interactions and visual styles — learn the names and when to use each.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%23b3411f%27/%3E%3Crect x=%279%27 y=%279%27 width=%2714%27 height=%2714%27 rx=%273%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%273%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script>/* pattern: prevent theme flash — apply saved theme before first paint.
+   Also mark that JS runs, so CSS may hide reveal-on-scroll elements: without
+   the .js class nothing is ever invisible (progressive enhancement). */
+(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);document.documentElement.classList.add('js');})();</script>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+<script src="/assets/ease-details.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- pattern: sticky header (hides on scroll down, returns on scroll up) -->
+<header class="site-header" id="siteHeader">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="#top"><span class="brand__mark" aria-hidden="true"></span>Specimens</a>
+  <div class="header-actions">
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle theme">◐</button>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="shell">
+  <!-- pattern: sticky sidebar / table of contents with scrollspy; off-canvas drawer on mobile -->
+  <nav class="sidebar" id="sidebar" aria-label="Table of contents">
+    <input class="sidebar-search" id="search" type="search" placeholder="Filter specimens…" aria-label="Filter specimens">
+    <p class="search-count" id="searchCount"></p>
+    <ul class="toc" id="toc"></ul>
+  </nav>
+
+  <main id="main">
+    <div class="container" id="top">
+
+      <section class="hero">
+        <p class="eyebrow">A field guide</p>
+        <h1>Web design, one specimen at a time.</h1>
+        <p class="lede">Every entry below is a real, working example of a layout, component, interaction, or visual style — labeled with its proper name, its aliases, when to reach for it, and the CSS/JS idea that makes it work. Learn the vocabulary; build better sites.</p>
+        <div class="meta-note">
+          <strong>This page eats its own cooking.</strong> Patterns used by the site itself:
+          <ul>
+            <li><b>Sticky header</b> that hides on scroll-down, returns on scroll-up</li>
+            <li><b>Sidebar layout</b> with a <b>sticky table of contents</b></li>
+            <li><b>Scrollspy</b> — the TOC highlights the section in view</li>
+            <li><b>Off-canvas drawer</b> for the nav on small screens (resize to see it)</li>
+            <li><b>Skip link</b> — press <kbd>Tab</kbd> once at the top of the page</li>
+            <li><b>Dark mode</b> via design tokens + <code>prefers-color-scheme</code>, saved to <code>localStorage</code></li>
+            <li><b>Fluid type scale</b> with <code>clamp()</code> — resize the window</li>
+            <li><b>Live filter</b> — the search box in the sidebar</li>
+            <li><b>Back-to-top</b> button that appears after scrolling</li>
+            <li><b>Reduced-motion</b> respect via <code>prefers-reduced-motion</code></li>
+            <li><b>Card</b> frame around every specimen, on a <b>surface/background</b> token pair</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="layout" data-section="Layout">
+        <header>
+          <p class="section-num">01</p>
+          <h2>Layout</h2>
+          <p>How the big boxes get arranged. Most modern layout is a handful of named CSS Grid and Flexbox recipes.</p>
+        </header>
+
+        <article class="specimen" id="holy-grail" data-terms="grid areas header footer sidebar aside">
+          <div class="specimen__head"><h3>Holy Grail Layout</h3><p class="specimen__aka">three-column layout, header–nav–main–aside–footer</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">The classic page skeleton: full-width header and footer, with a fluid main column flanked by two fixed-width columns. Historically painful; now trivial with named grid areas. Collapses to a single column on small screens.</p>
+          <div class="specimen__demo">
+            <div class="holy">
+              <div class="holy__h">header</div><div class="holy__n">nav</div><div class="holy__m">main</div><div class="holy__a">aside</div><div class="holy__f">footer</div>
+            </div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" data-toggle-class="is-stacked" data-target=".holy" aria-pressed="false">Collapse to one column</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> documentation, dashboards, news sites — anything with persistent side navigation plus supplementary content.</p>
+        </article>
+
+        <article class="specimen" id="sidebar-layout" data-terms="every layout flex wrap intrinsic">
+          <div class="specimen__head"><h3>The Sidebar</h3><p class="specimen__aka">Every Layout "Sidebar", intrinsic sidebar</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Two columns where one has a fixed preferred width and the other takes the rest — but when there isn't room, they wrap into a stack. No media query needed; the layout responds to its own container. Drag the corner handle to shrink the box and watch it wrap.</p>
+          <div class="specimen__demo">
+            <div class="demo-resize" style="width:min(100%,560px)"><div class="sb"><div class="box box--muted">sidebar<br>(flex-basis: 12rem)</div><div class="box box--tall">main (flex-grow: 999; min-width: 55%)</div></div></div>
+            <p class="demo-note">↘ drag the bottom-right corner</p>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> a media object, a settings panel next to a preview, any "label + content" pair that should degrade gracefully.</p>
+        </article>
+
+        <article class="specimen" id="card-grid" data-terms="ram auto-fit minmax responsive grid">
+          <div class="specimen__head"><h3>Responsive Card Grid</h3><p class="specimen__aka">RAM (repeat, auto-fit, minmax), auto-fill grid</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">One line of CSS that fits as many equal columns as will hold a minimum width, and reflows without breakpoints. The single most useful grid recipe. The subtle choice: <code>auto-fit</code> collapses empty tracks so few items stretch wide; <code>auto-fill</code> keeps the empty tracks so items hold their size.</p>
+          <div class="specimen__demo">
+            <div class="ram"><div class="box">1</div><div class="box">2</div><div class="box">3</div><div class="box">4</div></div>
+            <div class="demo-controls">
+              <div class="seg" role="radiogroup" aria-label="Grid keyword"><input type="radio" name="ramMode" id="ramFit" checked><label for="ramFit">auto-fit</label><input type="radio" name="ramMode" id="ramFill"><label for="ramFill">auto-fill</label></div>
+              <label>min track <input type="range" data-prop="--ram-min" data-unit="px" data-target=".ram" min="80" max="240" step="10" value="140"><output></output></label>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> product grids, blog listings, team pages, galleries.</p>
+        </article>
+
+        <article class="specimen" id="bento" data-terms="bento box grid span dashboard tiles">
+          <div class="specimen__head"><h3>Bento Grid</h3><p class="specimen__aka">bento box, mosaic grid, feature grid</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">A tiled grid where cells span different numbers of rows and columns, like compartments in a Japanese lunch box. Popularized by Apple marketing pages. Uses <code>grid-column: span n</code>. Click any tile to cycle its span and re-compose the box.</p>
+          <div class="specimen__demo">
+            <div class="bento" id="bentoGrid"><button class="box span-22">2×2</button><button class="box span-21">2×1</button><button class="box span-12">1×2</button><button class="box">1×1</button><button class="box span-31">3×1</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> feature overviews, dashboards, portfolio landing pages — content of varying importance you want to show at once.</p>
+        </article>
+
+        <article class="specimen" id="split-screen" data-terms="50/50 hero two column">
+          <div class="specimen__head"><h3>Split Screen</h3><p class="specimen__aka">50/50 layout, media + text hero</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Two equal halves — usually image on one side, copy on the other. Stacks vertically on narrow screens. Often alternated ("zig-zag") down a marketing page.</p>
+          <div class="specimen__demo is-flush">
+            <div class="demo-resize demo-resize--flush"><div class="split"><div class="split__media"><h4 style="color:#fff">Visual half</h4><p style="margin:0">image, illustration, product shot</p></div><div class="split__text"><h4>Text half</h4><p style="margin:0 0 .75rem" class="muted">Headline, supporting copy, a call to action.</p><button class="btn btn--sm">Get started</button></div></div></div>
+            <div class="demo-controls"><span class="demo-note" style="margin:0">↘ drag the corner — the halves stack when they run out of room</span></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> heroes, feature explainers, login pages (form on one side, brand on the other).</p>
+        </article>
+
+        <article class="specimen" id="full-bleed" data-terms="breakout container edge to edge">
+          <div class="specimen__head"><h3>Full-Bleed Section</h3><p class="specimen__aka">breakout, edge-to-edge, "bleed"</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Text sits in a comfortable narrow measure, but a specific element (image, colored band) breaks out to the container's edges — via negative inline margins, or a three-column grid where the bleed spans all columns. Borrowed from print, where "bleed" means ink runs off the page.</p>
+          <div class="specimen__demo is-flush">
+            <div class="bleed-wrap"><p>Constrained prose column, easy to read…</p><div class="full-bleed">full-bleed band</div><p class="mt-4">…and back to the constrained column.</p></div>
+            <div class="demo-controls"><label class="switch"><input type="checkbox" id="bleedToggle" role="switch" checked><span class="switch__track"></span>Bleed to the edges</label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> long-form articles with hero images, colored CTA bands inside a narrow content column.</p>
+        </article>
+
+        <article class="specimen" id="stack" data-terms="owl selector lobotomized owl flow spacing rhythm">
+          <div class="specimen__head"><h3>The Stack</h3><p class="specimen__aka">flow utility, lobotomized owl (<code>* + *</code>)</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Puts consistent vertical space <em>between</em> siblings, never above the first or below the last. Uses the "owl" selector <code>* + *</code> which matches any element that follows a sibling.</p>
+          <div class="specimen__demo">
+            <div class="stack" style="--stack-space:.6rem"><div class="box box--muted">one</div><div class="box box--muted">two</div><div class="box box--muted">three</div></div>
+            <div class="demo-controls"><label>--stack-space <input type="range" data-prop="--stack-space" data-unit="rem" data-target=".stack" min="0" max="2" step="0.1" value="0.6"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> everywhere. It replaces ad-hoc margin-bottom on every element and is the basis of good "vertical rhythm".</p>
+        </article>
+
+        <article class="specimen" id="cluster" data-terms="tags chips wrap inline group">
+          <div class="specimen__head"><h3>The Cluster</h3><p class="specimen__aka">inline group, tag cloud, wrapping row</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">A row of items of unknown width that wrap naturally with even spacing in both directions. <code>gap</code> makes this trivial.</p>
+          <div class="specimen__demo">
+            <div class="cluster"><span class="badge">design</span><span class="badge">css</span><span class="badge">layout</span><span class="badge">accessibility</span><span class="badge">typography</span><span class="badge">motion</span><span class="badge">color theory</span><span class="badge">grid</span></div>
+            <div class="demo-controls"><label>gap <input type="range" data-prop="--cluster-gap" data-unit="rem" data-target=".cluster" min="0" max="1.5" step="0.1" value="0.5"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> tags, filter chips, button groups, nav links.</p>
+        </article>
+
+        <article class="specimen" id="center" data-terms="centering place-items vertical horizontal">
+          <div class="specimen__head"><h3>The Center</h3><p class="specimen__aka">place-items center, absolute centering</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Perfect horizontal + vertical centering, once the hardest thing in CSS. Now: <code>display: grid; place-items: center</code>.</p>
+          <div class="specimen__demo"><div class="demo-resize demo-resize--both" style="height:150px;width:min(100%,420px)"><div class="center-demo"><div class="box">centered</div></div></div><p class="demo-note">↘ resize in either direction — it stays centered</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> empty states, hero content, modals, icons in buttons.</p>
+        </article>
+
+        <article class="specimen" id="cover" data-terms="hero viewport min-height cover">
+          <div class="specimen__head"><h3>The Cover / Hero</h3><p class="specimen__aka">above-the-fold hero, cover block, jumbotron</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">A block that fills the viewport height with a centered principal element and optional header/footer pinned to top and bottom. The "hero" is the first thing users see — the space above the fold.</p>
+          <div class="specimen__demo is-flush"><div class="demo-resize demo-resize--v demo-resize--flush" style="height:230px"><div class="cover"><p class="small muted" style="margin:0">↑ pinned top (nav)</p><div><h4 style="margin:0">Centered headline</h4><p class="muted small" style="margin:0">Supporting line + primary CTA</p></div><p class="small muted" style="margin:0;text-align:center">↓ pinned bottom (scroll cue)</p></div></div><div class="demo-controls"><span class="demo-note" style="margin:0">↕ drag the bottom edge — the middle row absorbs the change</span></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> landing pages, section intros.</p>
+        </article>
+
+        <article class="specimen" id="sticky-footer" data-terms="footer bottom short page">
+          <div class="specimen__head"><h3>Sticky Footer</h3><p class="specimen__aka">bottom-pinned footer</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">The footer stays at the bottom of the viewport when content is short, but is pushed down naturally when content is long. Not to be confused with <code>position: sticky</code>.</p>
+          <div class="specimen__demo"><div class="sticky-footer-demo" id="stickyFooterDemo"><div class="box box--muted">header</div><div class="box">content (1fr)<span class="filler"><br><br>…but when the content grows…<br><br>…and keeps growing…<br><br>…the footer is pushed down naturally instead of overlapping.</span></div><div class="box box--muted">footer stays at bottom</div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" data-toggle-class="is-long" data-target="#stickyFooterDemo" aria-pressed="false">Toggle content length</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> every page — a footer floating mid-screen looks broken.</p>
+        </article>
+
+        <article class="specimen" id="aspect-ratio" data-terms="16:9 square image placeholder video">
+          <div class="specimen__head"><h3>Aspect Ratio Boxes</h3><p class="specimen__aka">padding-top hack (legacy), ratio containers</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Boxes that keep a fixed proportion as they resize — essential for image/video placeholders so the layout doesn't jump when media loads (avoids "layout shift").</p>
+          <div class="specimen__demo"><div class="demo-resize" style="width:100%"><div class="ratios"><div class="ratio" style="aspect-ratio:1">1:1</div><div class="ratio" style="aspect-ratio:4/3">4:3</div><div class="ratio" style="aspect-ratio:16/9">16:9</div><div class="ratio" style="aspect-ratio:2/3">2:3</div></div></div><p class="demo-note">↘ drag the corner — every box keeps its proportion</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> thumbnails, video embeds, avatars, cards with media.</p>
+        </article>
+
+        <article class="specimen" id="container-queries" data-terms="@container component responsive">
+          <div class="specimen__head"><h3>Container Queries</h3><p class="specimen__aka">component-level responsiveness, element queries</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Media queries respond to the <em>viewport</em>; container queries respond to the <em>parent's</em> width. The same card can be a vertical stack in a narrow sidebar and horizontal in a wide main column. Drag the corner handle to resize this box.</p>
+          <div class="specimen__demo">
+            <div class="cq-host"><div class="cq-card"><div class="cq-card__img"></div><div><h4 style="margin-bottom:.2rem">Card title</h4><p class="muted small" style="margin:0">Goes horizontal past 420px of <em>container</em> width.</p></div></div></div>
+            <p class="demo-note">↘ drag the bottom-right corner</p>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> reusable components dropped into layouts of unknown width.</p>
+        </article>
+
+        <article class="specimen" id="masonry" data-terms="pinterest columns brick waterfall">
+          <div class="specimen__head"><h3>Masonry</h3><p class="specimen__aka">Pinterest layout, waterfall grid, brick layout</p><span class="tag">Layout</span></div>
+          <p class="specimen__desc">Items of varying height packed into columns with no horizontal gaps. CSS multi-column gives an approximation (order flows down columns, not across rows); true masonry needs JS or the emerging <code>grid-template-rows: masonry</code>.</p>
+          <div class="specimen__demo"><div class="masonry"><div class="box" style="height:60px">a</div><div class="box box--muted" style="height:110px">b</div><div class="box" style="height:80px">c</div><div class="box box--muted" style="height:50px">d</div><div class="box" style="height:130px">e</div><div class="box box--muted" style="height:70px">f</div><div class="box" style="height:90px">g</div></div>
+            <div class="demo-controls"><label>columns <input type="range" data-prop="--masonry-cols" data-target=".masonry" min="1" max="5" step="1" value="3"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> image galleries, mood boards, mixed-length cards where reading order doesn't matter much.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="archetypes" data-section="Page Archetypes">
+        <header>
+          <p class="section-num">02</p>
+          <h2>Page Archetypes</h2>
+          <p>How whole pages are composed, by industry. Each wireframe below is scrollable — the bands are in the order real sites in that vertical use, labeled with the job each band does. Composition, not style: any of these can be executed brutalist or corporate. Agency sites are the portfolio archetype plus a services band and a client-logo strip; medical &amp; dental take the trades skeleton and swap the quote form for a booking widget plus an insurance band; fitness adds a live class schedule and transparent pricing to the same trust frame. Learn these seven and you can compose the rest.</p>
+        </header>
+
+        <article class="specimen" id="arch-restaurant" data-terms="restaurant cafe hospitality menu reserve order hours location map website layout">
+          <div class="specimen__head"><h3>Restaurant &amp; Hospitality</h3><p class="specimen__aka">photography-led, menu-first, logistics above the fold</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">Most visitors arrive with one question — <em>can I eat there tonight?</em> — so hours, location, and phone live at the top, not the footer, and the menu is a first-class object: real HTML with prices and dietary flags, never a PDF download. Photography carries the atmosphere; the story section sits low because it answers no transactional question. Reservations and ordering are usually embedded third-party widgets.</p>
+          <div class="specimen__demo">
+            <div class="wf" tabindex="0" aria-label="Restaurant page wireframe, scrollable">
+              <div class="wf__page">
+                <div class="wf__band wf--sticky-top"><b>Header</b><span>name · hours · phone · Reserve button — sticky</span></div>
+                <div class="wf__band wf--hero"><b>Hero</b><span>full-bleed food/interior photography + cuisine one-liner + hours &amp; address repeated</span></div>
+                <div class="wf__band wf--cta"><b>Reserve / Order</b><span>the one dominant action — booking widget or online ordering</span></div>
+                <div class="wf__band"><b>Menu</b><span>HTML, categorized, priced, allergen-flagged — the real product page</span></div>
+                <div class="wf__band wf--soft"><b>Gallery</b><span>dishes and room — appetite + setting expectations</span></div>
+                <div class="wf__band"><b>Story</b><span>chef, sourcing, history — differentiation, so it sits low</span></div>
+                <div class="wf__band wf--soft"><b>Find us</b><span>map embed · address · hours again · phone — the most-visited band on mobile</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> reserve a table (dine-in) or order online (fast-casual), repeated in header, hero, and after the menu. <strong>Classic mistake:</strong> burying hours, location, and the menu under a decorative hero and brand copy — or shipping the menu as a PDF.</p>
+        </article>
+
+        <article class="specimen" id="arch-trades" data-terms="plumber hvac roofing construction contractor local service trades emergency call quote lead website layout">
+          <div class="specimen__head"><h3>Local Service &amp; Trades</h3><p class="specimen__aka">plumbing / HVAC / roofing / construction — the call-first page</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">The most conversion-driven archetype and the least written about. It runs two intents at once: an <b>emergency path</b> (burst pipe at 2am — tap-to-call, high contrast, 24/7 language) and a <b>planned-work path</b> (new roof — quote form, financing, reviews). The phone number is the product: in the top strip, the header, the hero, and a sticky bar on mobile, so a caller never has to scroll to find it. Trust is front-loaded — license number, insured, years in business, review stars — with real crew-and-truck photos, not stock. Per-city service-area pages are a first-class section, driven by local search.</p>
+          <div class="specimen__demo">
+            <div class="wf" tabindex="0" aria-label="Local trades page wireframe, scrollable">
+              <div class="wf__page">
+                <div class="wf__band wf--cta wf--sticky-top"><b>☎ 24/7 emergency</b><span>tap-to-call strip — the highest-converting element</span></div>
+                <div class="wf__band"><b>Header</b><span>logo · 4–5 links max · big clickable phone number</span></div>
+                <div class="wf__band wf--hero"><b>Hero</b><span>"AC Repair in Mesa, AZ" + ★ 4.9 reviews + Licensed &amp; Insured + two CTAs: Call now / Free quote</span></div>
+                <div class="wf__band wf--soft"><b>Trust row</b><span>license № · insured · BBB · manufacturer certs · guarantees</span></div>
+                <div class="wf__band"><b>Services</b><span>3–6 cards (repair / replace / maintain), each its own page</span></div>
+                <div class="wf__band wf--soft"><b>Reviews</b><span>embedded Google reviews with names and dates</span></div>
+                <div class="wf__band"><b>Before / after</b><span>matched-angle project gallery — the trades' portfolio</span></div>
+                <div class="wf__band wf--soft"><b>Service area</b><span>city + neighborhood list, map — feeds per-city pages</span></div>
+                <div class="wf__band"><b>Financing</b><span>prominent for big-ticket work (roof, HVAC install)</span></div>
+                <div class="wf__band wf--soft"><b>Quote form</b><span>4 fields max: name, phone, zip, issue</span></div>
+                <div class="wf__band"><b>Footer</b><span>name/address/phone exactly matching the Google Business Profile</span></div>
+                <div class="wf__band wf--cta wf--sticky-bottom"><b>☎ Call now</b><span>sticky on mobile — visible at every scroll position</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> the phone call — repeated at every viewport; the quote form is the secondary path for planned work. <strong>Classic mistake:</strong> a phone number that isn't visible and tappable at all times on mobile (footer-only, or not a <code>tel:</code> link), compounded by slow mobile load and long forms.</p>
+        </article>
+
+        <article class="specimen" id="arch-portfolio" data-terms="portfolio designer creative case study work project index personal site layout">
+          <div class="specimen__head"><h3>Creative Portfolio</h3><p class="specimen__aka">work-first, chrome-last</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">Navigation and copy are minimized so the work lands within one scroll: a name-plus-positioning line in oversized type, then straight into a curated grid of three to six projects. The real signature of the vertical is the <b>case study anatomy</b>: context and problem → <em>my role, stated early</em> → only the process steps that show decision-making → outcome, with numbers if they exist. Three to five deep case studies beat twenty shallow ones. The contact action stays deliberately quiet — the page's job is getting a case study read.</p>
+          <div class="specimen__demo">
+            <div class="wf" tabindex="0" aria-label="Portfolio page wireframe, scrollable">
+              <div class="wf__page">
+                <div class="wf__band wf--hero"><b>Hero</b><span>name + one-line positioning in display type — "Product designer in Berlin, previously X"</span></div>
+                <div class="wf__band"><b>Selected work</b><span>3–6 curated projects: title, category, hover preview — the body of the page</span></div>
+                <div class="wf__band wf--soft"><b>Case study</b><span>problem → my role → decisive process moments → outcome</span></div>
+                <div class="wf__band"><b>Archive</b><span>quiet "all work" link — depth without clutter</span></div>
+                <div class="wf__band wf--soft"><b>Bio</b><span>one paragraph, photo optional</span></div>
+                <div class="wf__band wf--cta"><b>Contact</b><span>plain-text email + availability status — quiet, not shouty</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> the email / "available for work" contact — mentioned in the hero, end of each case study, and footer, never repeated aggressively. <strong>Classic mistake:</strong> case studies that document every process step instead of the decisions — recruiters skim; a vague "the goal was to improve the UX" with no stated outcome loses them.</p>
+        </article>
+
+        <article class="specimen" id="arch-saas" data-terms="saas landing page product marketing hero social proof pricing faq cta layout">
+          <div class="specimen__head"><h3>SaaS / Product Landing</h3><p class="specimen__aka">the argument in a fixed order</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">The page is an argument, and the band order is the argument's logic — each section answers the next objection: what is it → who else uses it → what problem it kills → how it works → what it costs. Reordering it (features before problem, pricing before proof) breaks the argument. One conversion action rules the page; trial and demo as co-equal buttons dilute each other. The current shift: static hero screenshots giving way to embedded interactive product demos.</p>
+          <div class="specimen__demo">
+            <div class="wf" tabindex="0" aria-label="SaaS landing page wireframe, scrollable">
+              <div class="wf__page">
+                <div class="wf__band wf--sticky-top"><b>Header</b><span>logo · product · pricing · docs · the same primary CTA — sticky</span></div>
+                <div class="wf__band wf--hero"><b>Hero</b><span>one claim, under ~8 words, outcome not jargon + interactive demo or product video</span></div>
+                <div class="wf__band wf--cta"><b>Primary CTA</b><span>start free trial <em>or</em> book a demo — never both as equals</span></div>
+                <div class="wf__band wf--soft"><b>Logo strip</b><span>"who else uses this" — answered before any feature claim</span></div>
+                <div class="wf__band"><b>Problem → benefit</b><span>name the pain before the solution</span></div>
+                <div class="wf__band wf--soft"><b>Features</b><span>bento grid for complex products, alternating bands for simple ones</span></div>
+                <div class="wf__band"><b>How it works</b><span>3 steps — shrink the perceived effort</span></div>
+                <div class="wf__band wf--soft"><b>Customer evidence</b><span>named testimonials, case-study numbers, video</span></div>
+                <div class="wf__band"><b>Pricing</b><span>transparent tiers, one highlighted — transparency is itself a trust signal</span></div>
+                <div class="wf__band wf--soft"><b>FAQ</b><span>objection handling (and structured-data SEO)</span></div>
+                <div class="wf__band wf--cta"><b>Final CTA</b><span>restate the claim + the same action; nothing after but the footer</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> one action — trial or demo — in the header, hero, after evidence, on every pricing card, and in the closing band. <strong>Classic mistake:</strong> a vague, jargon-heavy hero plus competing CTAs; the visitor's "what do I get?" test fails in the first five seconds and no lower band matters.</p>
+        </article>
+
+        <article class="specimen" id="arch-ecom" data-terms="ecommerce shop listing plp pdp product page filters facets add to cart drawer checkout layout">
+          <div class="specimen__head"><h3>E-commerce — Listing vs Product</h3><p class="specimen__aka">PLP + PDP + cart drawer</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">Two distinct pages doing two distinct jobs. The <b>listing page</b> is a filtering machine: facets combine as OR within a group and AND across groups, every filter value shows a live product count so no path dead-ends, and the default sort is "bestselling". The <b>product page</b> is an anxiety-reduction machine: gallery beside a buy-box, the trust row (shipping, returns, payment marks — three or four badges, more reads as desperate) directly under the add-to-cart button, reviews below. Adding to cart opens a <b>drawer</b>, not a new page — with a free-shipping progress bar at the top. On long mobile pages a sticky add-to-cart bar follows the reader down.</p>
+          <div class="specimen__demo">
+            <div class="wf-pair">
+              <div><h5>Listing (PLP)</h5>
+                <div class="wf" tabindex="0" aria-label="Product listing wireframe, scrollable" style="height:280px">
+                  <div class="wf__page">
+                    <div class="wf__band"><b>Breadcrumb</b><span>category name + product count</span></div>
+                    <div class="wf__band wf--soft"><b>Filters</b><span>facets with live counts; bottom-sheet on mobile</span></div>
+                    <div class="wf__band"><b>Applied chips</b><span>removable, one per active filter</span></div>
+                    <div class="wf__band wf--soft"><b>Sort</b><span>default: bestselling</span></div>
+                    <div class="wf__band wf--hero"><b>Product grid</b><span>image · name · price · rating count · swatches</span></div>
+                    <div class="wf__band"><b>Load more</b><span>or pagination — keep a way back to a spot</span></div>
+                  </div>
+                </div>
+              </div>
+              <div><h5>Product (PDP)</h5>
+                <div class="wf" tabindex="0" aria-label="Product detail wireframe, scrollable" style="height:280px">
+                  <div class="wf__page">
+                    <div class="wf__band wf--hero"><b>Gallery + buy box</b><span>multi-angle zoomable images · title · ★ rating link · price · variant swatches</span></div>
+                    <div class="wf__band wf--cta"><b>Add to cart</b><span>the dominant button — opens the cart drawer</span></div>
+                    <div class="wf__band wf--soft"><b>Trust row</b><span>free shipping · returns · payment marks — right under the button</span></div>
+                    <div class="wf__band"><b>Details</b><span>accordion: description bullets, specs, shipping/returns</span></div>
+                    <div class="wf__band wf--soft"><b>Reviews</b><span>most shoppers read them before buying</span></div>
+                    <div class="wf__band"><b>Cross-sell</b><span>"pairs well with" recommendations</span></div>
+                    <div class="wf__band wf--cta wf--sticky-bottom"><b>Sticky add-to-cart</b><span>appears when the buy box scrolls away</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> add to cart → checkout, restated by the sticky bar and the drawer's checkout button. <strong>Classic mistake:</strong> filter dead ends on the listing page (no counts, alphabetical facet dumps) and, on the product page, weak imagery with the buy action buried below the fold on mobile.</p>
+        </article>
+
+        <article class="specimen" id="arch-realestate" data-terms="real estate realtor idx mls property search listings home valuation layout">
+          <div class="specimen__head"><h3>Real Estate</h3><p class="specimen__aka">search-first — the hero is a tool</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">The only archetype whose hero is a working widget: an IDX/MLS property search (location, price, beds) over a full-bleed photo, often with a map-search entry point. Everything else supports the two lead funnels — buyers inquiring about listings, and sellers lured by a "what's my home worth?" valuation form.</p>
+          <div class="specimen__demo">
+            <div class="wf" tabindex="0" aria-label="Real estate page wireframe, scrollable">
+              <div class="wf__page">
+                <div class="wf__band wf--hero"><b>Search hero</b><span>IDX search bar: location · price · beds — a functional tool, not a picture</span></div>
+                <div class="wf__band"><b>Featured listings</b><span>photo · price · beds/baths · "view details" cards</span></div>
+                <div class="wf__band wf--cta"><b>Seller funnel</b><span>"What's my home worth?" — the valuation lead magnet</span></div>
+                <div class="wf__band wf--soft"><b>Agent / team</b><span>credibility: sales record, local tenure, photo</span></div>
+                <div class="wf__band"><b>Neighborhood guides</b><span>area pages — local SEO and buyer research</span></div>
+                <div class="wf__band wf--soft"><b>Testimonials</b><span>named buyers and sellers</span></div>
+                <div class="wf__band"><b>Footer</b><span>brokerage, licensing, contact</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> property inquiries plus home-valuation lead capture — two funnels, one page. <strong>Classic mistake:</strong> hiding the search behind marketing copy; the visitor came to search, and a hero that's just a mood photo sends them to a portal instead.</p>
+        </article>
+
+        <article class="specimen" id="arch-legal" data-terms="law firm attorney lawyer practice areas consultation case results bios layout">
+          <div class="specimen__head"><h3>Legal</h3><p class="specimen__aka">practice areas + results + bios</p><span class="tag">Archetype</span></div>
+          <p class="specimen__desc">Two bands carry weight no other vertical gives them: <b>case results</b> (anonymized, concrete outcomes — often dollar figures in personal injury) and <b>attorney bios</b>, which are the most-visited pages on a firm's site — people hire a lawyer, not a firm. Practice-area cards each link to a deep page; that structure is the site's search backbone. A large share of mobile visitors call straight from the homepage, so the phone sits above the fold beside a "free consultation" offer.</p>
+          <div class="specimen__demo">
+            <div class="wf" tabindex="0" aria-label="Law firm page wireframe, scrollable">
+              <div class="wf__page">
+                <div class="wf__band wf--hero"><b>Hero</b><span>case-type headline ("Injured? …") + clickable phone + free-consultation CTA</span></div>
+                <div class="wf__band"><b>Practice areas</b><span>grid of cards, each a deep page — the SEO backbone</span></div>
+                <div class="wf__band wf--soft"><b>Case results</b><span>concrete, anonymized outcomes — "$2.1M settlement"</span></div>
+                <div class="wf__band"><b>Attorney bios</b><span>real photography, narrative voice — the most-visited pages</span></div>
+                <div class="wf__band wf--soft"><b>Awards &amp; testimonials</b><span>Super Lawyers, Avvo, client quotes</span></div>
+                <div class="wf__band wf--cta"><b>Free consultation</b><span>short form + phone repeated</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Primary conversion:</strong> the call or the free-consultation form. <strong>Classic mistake:</strong> generic gavel-and-columns stock imagery and buried bios — the two things visitors actually came to judge (who are you, what have you won) pushed below interchangeable marketing copy.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="navigation" data-section="Navigation">
+        <header>
+          <p class="section-num">03</p>
+          <h2>Navigation</h2>
+          <p>How people find their way. Good nav answers "where am I, where can I go, how do I get back?"</p>
+        </header>
+
+        <article class="specimen" id="navbar" data-terms="header nav bar menu logo links cta">
+          <div class="specimen__head"><h3>Navbar</h3><p class="specimen__aka">top nav, app bar, header bar</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">Brand on the left, links in the middle or right, one primary call-to-action highlighted. The site's own header (above) is a <em>sticky</em> navbar that <em>hides on scroll-down</em> — a pattern that reclaims screen space on mobile.</p>
+          <div class="specimen__demo"><nav class="mini-nav" aria-label="Example"><strong>Brand</strong><a href="#navbar">Product</a><a href="#navbar">Pricing</a><a href="#navbar">Docs</a><span class="spacer"></span><a href="#navbar" class="muted">Sign in</a><button class="btn btn--sm">Get started</button></nav></div>
+          <p class="specimen__use"><strong>Use when:</strong> always. Keep it to 5–7 items; more than that wants a mega menu or a drawer.</p>
+        </article>
+
+        <article class="specimen" id="hamburger" data-terms="drawer off-canvas mobile menu slide">
+          <div class="specimen__head"><h3>Hamburger → Off-Canvas Drawer</h3><p class="specimen__aka">side drawer, slide-out menu, mobile nav</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">The ☰ icon opens a panel that slides in from the edge over a dimmed backdrop ("scrim"). Tap the scrim or press Esc to close. This site uses one under 900px wide — try it, or click below.</p>
+          <div class="specimen__demo"><button class="btn btn--secondary" id="drawerDemoBtn">☰ Open the site drawer</button><p class="demo-note">On wide screens the sidebar is already visible, so this only slides in on narrow viewports.</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> mobile nav, filter panels, settings. Avoid hiding primary nav behind a hamburger on desktop — discoverability drops.</p>
+        </article>
+
+        <article class="specimen" id="mega-menu" data-terms="dropdown panel columns hover">
+          <div class="specimen__head"><h3>Mega Menu</h3><p class="specimen__aka">flyout panel, multi-column dropdown</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">A large dropdown panel showing many links grouped in columns — used when a site has too many sections for a plain dropdown. Hover or click "Products".</p>
+          <div class="specimen__demo" style="min-height:220px"><nav class="mini-nav" aria-label="Mega menu example"><strong>Brand</strong><div class="mega"><button class="btn btn--tertiary btn--sm" id="megaBtn" aria-expanded="false" aria-controls="megaPanel">Products ▾</button><div class="mega__panel" id="megaPanel" hidden><div><h5>Build</h5><a href="#mega-menu">Editor</a><a href="#mega-menu">Components</a><a href="#mega-menu">Templates</a></div><div><h5>Ship</h5><a href="#mega-menu">Hosting</a><a href="#mega-menu">Domains</a><a href="#mega-menu">Analytics</a></div><div><h5>Learn</h5><a href="#mega-menu">Docs</a><a href="#mega-menu">Guides</a><a href="#mega-menu">Community</a></div></div></div><a href="#mega-menu">Pricing</a></nav></div>
+          <p class="specimen__use"><strong>Use when:</strong> e-commerce, large corporate sites. Group by task, keep 3–5 columns.</p>
+        </article>
+
+        <article class="specimen" id="dropdown" data-terms="menu popup select actions">
+          <div class="specimen__head"><h3>Dropdown Menu</h3><p class="specimen__aka">action menu, context menu, kebab/overflow menu</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">A button that reveals a short list of actions. The "kebab" (⋮) and "meatball" (⋯) icons are conventional triggers for overflow menus. Closes on outside click and Esc; arrow keys move focus.</p>
+          <div class="specimen__demo" style="min-height:190px"><div class="dropdown"><button class="btn btn--secondary" id="ddBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="ddMenu">Actions ▾</button><ul class="dropdown__menu" id="ddMenu" role="menu" hidden><li role="none"><button role="menuitem">Rename</button></li><li role="none"><button role="menuitem">Duplicate</button></li><li role="none"><button role="menuitem">Move to…</button></li><hr><li role="none"><button role="menuitem" style="color:var(--danger)">Delete</button></li></ul></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> secondary actions on a row/card, user account menus.</p>
+        </article>
+
+        <article class="specimen" id="breadcrumbs" data-terms="path trail hierarchy location">
+          <div class="specimen__head"><h3>Breadcrumbs</h3><p class="specimen__aka">breadcrumb trail, path navigation</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">Shows where the current page sits in the hierarchy and lets users jump up levels. The current page is plain text (not a link) with <code>aria-current="page"</code>. Click an ancestor to jump up the trail.</p>
+          <div class="specimen__demo"><nav aria-label="Breadcrumb"><ol class="crumbs" id="crumbTrail"><li><a href="#breadcrumbs">Home</a></li><li><a href="#breadcrumbs">Library</a></li><li><a href="#breadcrumbs">Patterns</a></li><li aria-current="page">Breadcrumbs</li></ol></nav>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="crumbReset" hidden>Restore full trail</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> deep hierarchies — docs, e-commerce categories, file browsers. Not for flat sites.</p>
+        </article>
+
+        <article class="specimen" id="tabs" data-terms="tablist panels switch">
+          <div class="specimen__head"><h3>Tabs</h3><p class="specimen__aka">tab bar, segmented views</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">Switch between sibling panels in the same space. Only one visible at a time. Proper ARIA: <code>role=tablist/tab/tabpanel</code>, arrow keys move between tabs.</p>
+          <div class="specimen__demo">
+            <div class="tabs" role="tablist" aria-label="Example tabs"><button role="tab" aria-selected="true" aria-controls="tp1" id="tab1">Overview</button><button role="tab" aria-selected="false" aria-controls="tp2" id="tab2" tabindex="-1">Specs</button><button role="tab" aria-selected="false" aria-controls="tp3" id="tab3" tabindex="-1">Reviews</button></div>
+            <div role="tabpanel" id="tp1" aria-labelledby="tab1" class="small">Overview panel. Tabs are for <em>peer</em> content, not sequential steps — for steps use a stepper.</div>
+            <div role="tabpanel" id="tp2" aria-labelledby="tab2" class="small" hidden>Specs panel. Try ← → arrow keys while a tab is focused.</div>
+            <div role="tabpanel" id="tp3" aria-labelledby="tab3" class="small" hidden>Reviews panel. Underline indicator = the "selected" affordance.</div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> 2–6 related views of one object (product details, settings groups).</p>
+        </article>
+
+        <article class="specimen" id="pagination" data-terms="pages next previous numbers">
+          <div class="specimen__head"><h3>Pagination</h3><p class="specimen__aka">pager, page numbers</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">Numbered links through a long list, with truncation ("…") for many pages. Alternatives: <em>infinite scroll</em> (auto-loads more) and <em>load-more button</em>. Pagination is best when users need to return to a specific spot.</p>
+          <div class="specimen__demo"><nav aria-label="Pagination"><ul class="pager" id="pagerDemo"><li><a href="#pagination" aria-label="Previous">‹</a></li><li><a href="#pagination">1</a></li><li><a href="#pagination" aria-current="page">2</a></li><li><a href="#pagination">3</a></li><li><span class="ellipsis">…</span></li><li><a href="#pagination">12</a></li><li><a href="#pagination" aria-label="Next">›</a></li></ul></nav><p class="demo-note">Live — click through; watch the “…” move as you approach the middle.</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> search results, tables, archives.</p>
+        </article>
+
+        <article class="specimen" id="stepper-nav" data-terms="wizard progress steps checkout">
+          <div class="specimen__head"><h3>Stepper / Wizard</h3><p class="specimen__aka">progress steps, multi-step form indicator</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">Shows position in a sequential flow: done, current, upcoming. Unlike tabs, order matters and later steps are often locked.</p>
+          <div class="specimen__demo"><ol class="stepper-nav" id="stepperDemo"><li><span class="dot">1</span>Cart</li><li><span class="dot">2</span>Shipping</li><li><span class="dot">3</span>Payment</li><li><span class="dot">4</span>Review</li></ol>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="stepBack">‹ Back</button><button class="btn btn--sm" id="stepNext">Continue ›</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> checkout, onboarding, any form too long for one screen.</p>
+        </article>
+
+        <article class="specimen" id="scrollspy" data-terms="toc table of contents intersection observer active">
+          <div class="specimen__head"><h3>Table of Contents + Scrollspy</h3><p class="specimen__aka">on-this-page nav, anchor nav, active-section highlighting</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">A list of in-page anchor links whose active item tracks the section currently in view. Look at the sidebar of this page as you scroll — that's it. Built with <code>IntersectionObserver</code>, not scroll listeners.</p>
+          <div class="specimen__demo"><p class="small" style="margin:0">← The sidebar TOC on this page is the live demo. Also note <code>scroll-margin-top</code> on sections so anchors land below the sticky header, and <code>scroll-behavior: smooth</code> on <code>html</code>.</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> long docs, articles with many headings, single-page sites.</p>
+        </article>
+
+        <article class="specimen" id="back-to-top" data-terms="scroll top button floating">
+          <div class="specimen__head"><h3>Back-to-Top Button</h3><p class="specimen__aka">scroll-to-top, FAB (floating action button)</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">A floating button that fades in after the user has scrolled a screen or so, and scrolls smoothly back to the top. A "FAB" more generally is any floating circular action button (Material Design term).</p>
+          <div class="specimen__demo"><p class="small" style="margin:0">↘ Look at the bottom-right corner of this page — you've scrolled far enough for it to be visible.</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> long pages, especially on mobile.</p>
+        </article>
+
+        <article class="specimen" id="skip-link" data-terms="accessibility keyboard a11y bypass">
+          <div class="specimen__head"><h3>Skip Link</h3><p class="specimen__aka">skip-to-content, bypass block</p><span class="tag">Navigation</span></div>
+          <p class="specimen__desc">A visually hidden link, first in the tab order, that jumps keyboard users past the header straight to main content. Click somewhere blank on the page, then press <kbd>Tab</kbd> once — it appears top-left.</p>
+          <div class="specimen__demo"><p class="small" style="margin:0">Press <kbd>Tab</kbd> from the top of this page to reveal it.</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> always. It's a WCAG requirement and costs three lines.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="typography" data-section="Typography">
+        <header>
+          <p class="section-num">04</p>
+          <h2>Typography</h2>
+          <p>Ninety-five percent of web design is typography. These are the levers.</p>
+        </header>
+
+        <article class="specimen" id="type-scale" data-terms="modular scale ratio headings sizes">
+          <div class="specimen__head"><h3>Type Scale</h3><p class="specimen__aka">modular scale, typographic scale</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">A small set of font sizes derived from one ratio (e.g. 1.25 "major third", 1.333 "perfect fourth") instead of arbitrary numbers. Consistency comes from choosing sizes from the scale, never inventing new ones.</p>
+          <div class="specimen__demo scale-demo" id="scaleDemo"><p data-exp="4" style="font-weight:800">Display<small></small></p><p data-exp="3" style="font-weight:700">Heading<small></small></p><p data-exp="2" style="font-weight:700">Subheading<small></small></p><p data-exp="1" style="font-weight:600">Lead<small></small></p><p data-exp="0">Body<small></small></p><p data-exp="-1" class="muted">Caption<small></small></p>
+            <div class="demo-controls"><label>ratio <input type="range" id="scaleRatio" min="1.1" max="1.618" step="0.001" value="1.25"><output id="scaleRatioOut"></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> always — define 5–7 steps as tokens and use only those.</p>
+        </article>
+
+        <article class="specimen" id="fluid-type" data-terms="clamp responsive font-size viewport">
+          <div class="specimen__head"><h3>Fluid Type</h3><p class="specimen__aka">responsive typography, clamp() type</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">Font sizes that scale smoothly with the viewport between a minimum and maximum, without breakpoints. Always include a <code>rem</code> term in the preferred value so text still grows when the user zooms. Every size on this page is fluid — resize the window and watch the headings.</p>
+          <div class="specimen__demo"><p id="fluidSample" style="font-size:clamp(1.2rem,.5rem + 3vw,2.6rem);font-weight:700;margin:0;line-height:1.1">clamp(1.2rem, .5rem + 3vw, 2.6rem)</p><p class="demo-note">min · preferred (scales with vw) · max</p>
+            <div class="demo-controls"><label>simulate viewport <input type="range" id="fluidRange" min="320" max="1440" step="10" value="760"><output id="fluidOut"></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> headings and display type; body text can stay closer to fixed.</p>
+        </article>
+
+        <article class="specimen" id="measure" data-terms="line length ch characters readability width">
+          <div class="specimen__head"><h3>Measure (Line Length)</h3><p class="specimen__aka">optimal line length, 45–75 characters, <code>ch</code> unit</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">Lines longer than ~75 characters are tiring: the eye loses its place on the return sweep. Constrain prose with <code>max-width</code> in <code>ch</code> units (width of the "0" glyph). Compare:</p>
+          <div class="specimen__demo"><p class="measure-demo small"><strong>Adjustable measure:</strong> The quick brown fox jumps over the lazy dog while the five boxing wizards jump quickly and the sphinx of black quartz judges my vow, packing my box with five dozen liquor jugs.</p><p class="measure-demo measure-demo--bad small" style="margin:0"><strong>Unconstrained (bad on wide screens):</strong> The quick brown fox jumps over the lazy dog while the five boxing wizards jump quickly and the sphinx of black quartz judges my vow, packing my box with five dozen liquor jugs, and then keeps going, and going, and the line gets very hard to follow back to the start.</p>
+            <div class="demo-controls"><label>max-width <input type="range" data-prop="--measure-w" data-unit="ch" data-target=".measure-demo" min="35" max="95" step="5" value="65"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> any paragraph text. 45–75ch; ~65ch is a good default.</p>
+        </article>
+
+        <article class="specimen" id="hierarchy" data-terms="visual hierarchy weight size color kicker">
+          <div class="specimen__head"><h3>Visual Hierarchy</h3><p class="specimen__aka">typographic hierarchy, kicker/eyebrow + headline + dek</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">Size, weight, color, and spacing tell the eye what to read first. The three-level combo below is the workhorse: a small uppercase <em>kicker</em> (aka eyebrow/overline), a bold <em>headline</em>, and a muted <em>dek</em> (subhead), plus dim <em>meta</em>.</p>
+          <div class="specimen__demo"><div class="hierarchy"><span class="kicker">Kicker / eyebrow</span><span class="h">The headline carries the weight</span><span class="sub">The dek or subhead explains, in a lighter color and normal weight.</span><span class="meta">Meta · 4 min read · Aug 2026</span></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" data-toggle-class="is-flat" data-target=".hierarchy" aria-pressed="false">Flatten the hierarchy</button><span class="demo-note" style="margin:0">— see what the eye loses</span></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> section intros, cards, article headers, hero blocks.</p>
+        </article>
+
+        <article class="specimen" id="rhythm" data-terms="vertical rhythm leading line-height baseline spacing">
+          <div class="specimen__head"><h3>Leading &amp; Vertical Rhythm</h3><p class="specimen__aka">line-height, baseline grid</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">"Leading" (rhymes with sledding) is line spacing. Body text wants ~1.5–1.7; headings tighter (~1.1–1.2). Vertical rhythm means margins between blocks are multiples of one base unit, so the page feels evenly paced.</p>
+          <div class="specimen__demo"><div class="rhythm" style="max-width:52ch"><h4>Tight heading leading (1.15)</h4><p class="small">Body leading around 1.6 lets the eye track lines comfortably. Spacing between paragraphs equals one line of text — that's rhythm.</p><p class="small" style="margin:0">Headings get less space below than above so they visually attach to what follows (proximity).</p></div>
+            <div class="demo-controls"><label>body leading <input type="range" data-prop="--demo-leading" data-target=".rhythm" min="1" max="2.2" step="0.05" value="1.6"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> always. It's the difference between "off" and "polished" that nobody can name.</p>
+        </article>
+
+        <article class="specimen" id="dropcap" data-terms="first letter initial editorial">
+          <div class="specimen__head"><h3>Drop Cap</h3><p class="specimen__aka">initial letter, versal</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">An enlarged first letter that drops into the paragraph. Editorial flourish signalling "long-form starts here."</p>
+          <div class="specimen__demo"><p class="dropcap serif" style="max-width:52ch;margin:0">Once upon a time, before flexbox and grid, developers floated everything and cleared their fixes with a prayer. The drop cap is one float that still earns its keep.</p>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" data-toggle-class="is-plain" data-target=".dropcap" aria-pressed="false">Toggle the drop cap</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> essays, magazine-style articles. Once per piece, never in UI.</p>
+        </article>
+
+        <article class="specimen" id="pullquote" data-terms="blockquote callout editorial">
+          <div class="specimen__head"><h3>Pull Quote</h3><p class="specimen__aka">callout quote, lift-out</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">A striking line repeated from the article at larger size to break up long text and lure skimmers. Different from a blockquote, which introduces <em>new</em> quoted material.</p>
+          <div class="specimen__demo"><div class="demo-resize" style="width:min(100%,520px)"><blockquote class="pullquote">"Good typography is invisible; bad typography is everywhere."<footer>— an oft-repeated maxim</footer></blockquote></div><p class="demo-note">↘ narrow the box — <code>text-wrap: balance</code> keeps the lines even</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> long articles, testimonials, case studies.</p>
+        </article>
+
+        <article class="specimen" id="truncation" data-terms="ellipsis line-clamp overflow text">
+          <div class="specimen__head"><h3>Text Truncation</h3><p class="specimen__aka">ellipsis, line clamp</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">Cutting text with "…" — single-line via <code>text-overflow</code>, multi-line via <code>-webkit-line-clamp</code>. Always give a way to see the full text (title attribute, expand, or detail page).</p>
+          <div class="specimen__demo"><p class="truncate small" title="Single-line truncation keeps table cells and card titles tidy">Single-line truncation keeps table cells and card titles tidy and prevents overflow</p><p class="clamp small" style="margin:0">Multi-line clamp cuts after N lines. This paragraph is intentionally long so that it overflows the line limit and gets an ellipsis at the end of the last allowed line, demonstrating the effect — keep dragging the slider and watch where the cut lands.</p>
+            <div class="demo-controls"><label>clamp lines <input type="range" data-prop="--clamp-lines" data-target=".clamp" min="1" max="4" step="1" value="2"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> cards, tables, previews with fixed heights.</p>
+        </article>
+
+        <article class="specimen" id="type-details" data-terms="tabular nums balance pretty ligatures small caps">
+          <div class="specimen__head"><h3>Typographic Details</h3><p class="specimen__aka">tabular numbers, text-wrap: balance, small caps</p><span class="tag">Typography</span></div>
+          <p class="specimen__desc">Small settings that separate careful from careless: <b>tabular numerals</b> so digits align in columns; <b>text-wrap: balance</b> so headings don't leave one lonely word (an "orphan"); <b>letter-spacing</b> for uppercase.</p>
+          <div class="specimen__demo"><div class="row" style="gap:var(--s-6);align-items:flex-start"><div><p class="small muted" style="margin:0 0 .3rem">proportional (misaligned)</p><div class="mono small">1,111.11<br>8,888.88<br>4,040.40</div></div><div><p class="small muted" style="margin:0 0 .3rem">tabular-nums (aligned)</p><div class="tnum small">1,111.11<br>8,888.88<br>4,040.40</div></div><div style="max-width:200px"><p class="small muted" style="margin:0 0 .3rem">text-wrap: balance</p><h4 style="margin:0;font-size:var(--fs-1)" id="balanceSample">Balanced headings avoid a lonely last word</h4><label class="small" style="display:flex;gap:.4rem;align-items:center;margin-top:.4rem"><input type="checkbox" id="balanceToggle" checked style="accent-color:var(--accent)">balance on</label></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> tables/stats (tabular), all headings (balance), uppercase labels (letter-spacing .05–.12em).</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="feedback" data-section="Feedback &amp; Overlays">
+        <header>
+          <p class="section-num">05</p>
+          <h2>Feedback &amp; Overlays</h2>
+          <p>How the interface talks back — telling users what happened, what's loading, and what needs a decision.</p>
+        </header>
+
+        <article class="specimen" id="modal" data-terms="dialog overlay backdrop focus trap">
+          <div class="specimen__head"><h3>Modal Dialog</h3><p class="specimen__aka">modal, lightbox, overlay dialog</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">Blocks the page until dismissed. Native <code>&lt;dialog&gt;</code> gives you the backdrop, focus trapping, and Esc-to-close for free. Rule: modals interrupt, so use them only for decisions that must be made now.</p>
+          <div class="specimen__demo"><button class="btn" id="openModal">Open modal</button>
+            <dialog class="modal" id="demoModal" aria-labelledby="modalTitle"><div class="modal__body"><h4 id="modalTitle">Delete 3 items?</h4><p class="muted small" style="margin:0">This can't be undone. Notice the dimmed backdrop, focus inside the dialog, and that Esc closes it.</p></div><div class="modal__actions"><button class="btn btn--secondary" data-close>Cancel</button><button class="btn btn--danger" data-close>Delete</button></div></dialog>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> destructive confirmations, short focused forms. Not for content that could be a page.</p>
+        </article>
+
+        <article class="specimen" id="toast" data-terms="snackbar notification transient message">
+          <div class="specimen__head"><h3>Toast / Snackbar</h3><p class="specimen__aka">notification, growl, flash message</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">A brief, non-blocking message that appears at an edge and dismisses itself. A <em>snackbar</em> (Material term) is a toast with one optional action, like "Undo". Should live in an <code>aria-live</code> region so screen readers announce it.</p>
+          <div class="specimen__demo"><div class="row"><button class="btn btn--secondary" data-toast="Saved changes">Show toast</button><button class="btn btn--secondary" data-toast="Item archived" data-toast-action="Undo">Snackbar with action</button></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> confirming background actions (saved, sent, copied). Not for errors that need attention.</p>
+        </article>
+
+        <article class="specimen" id="tooltip" data-terms="hint hover title label">
+          <div class="specimen__head"><h3>Tooltip</h3><p class="specimen__aka">hint, infotip</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">A tiny label on hover/focus that explains an element. Never put essential info only in a tooltip (no hover on touch). Show on focus too, for keyboard users.</p>
+          <div class="specimen__demo"><p style="margin:0">Hover or tab to <span class="tip" tabindex="0" data-tip="A tooltip! Pure CSS via attr()">this term</span> or <span class="tip" tabindex="0" data-tip="Keyboard-focusable too">this one</span>.</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> icon-only buttons, abbreviations, tiny clarifications.</p>
+        </article>
+
+        <article class="specimen" id="popover" data-terms="popover api anchored panel non-modal">
+          <div class="specimen__head"><h3>Popover</h3><p class="specimen__aka">non-modal dialog, anchored panel, flyout</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">Richer than a tooltip, lighter than a modal: an anchored panel with interactive content that closes on outside click ("light dismiss"). The native Popover API handles it with zero JS.</p>
+          <div class="specimen__demo" style="min-height:170px"><div class="pop-anchor"><button class="btn btn--secondary" popovertarget="pop1">Share ▾</button><div popover id="pop1" class="pop"><h4 style="font-size:var(--fs-0);margin-bottom:.4rem">Share this specimen</h4><p class="small muted" style="margin:0 0 .6rem">Native <code>[popover]</code> — no JS. Click outside to dismiss.</p><div class="row"><button class="btn btn--sm">Copy link</button><button class="btn btn--sm btn--secondary">Email</button></div></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> share menus, filter panels, date pickers, "more info" cards.</p>
+        </article>
+
+        <article class="specimen" id="accordion" data-terms="details summary disclosure collapse expand faq">
+          <div class="specimen__head"><h3>Accordion / Disclosure</h3><p class="specimen__aka">collapsible, expander, FAQ list</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">A <em>disclosure</em> is one show/hide toggle; an <em>accordion</em> is a stack of them. Native <code>&lt;details&gt;/&lt;summary&gt;</code> works without JS; the <code>name</code> attribute makes them exclusive (open one, others close).</p>
+          <div class="specimen__demo"><div class="acc"><details name="faq" open><summary>What's the difference from tabs?</summary><div>Accordions stack vertically and can show several panels at once; tabs show one panel in a fixed area.</div></details><details name="faq"><summary>Is it accessible?</summary><div>Native details/summary is keyboard-operable and announced correctly. Style the summary, hide the default marker.</div></details><details name="faq"><summary>Can it animate?</summary><div>Yes — see "Animate Height" in the Motion section, or use <code>interpolate-size: allow-keywords</code> in new browsers.</div></details></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> FAQs, settings groups, long forms — progressive disclosure of secondary detail.</p>
+        </article>
+
+        <article class="specimen" id="skeleton" data-terms="loading placeholder shimmer">
+          <div class="specimen__head"><h3>Skeleton Screen</h3><p class="specimen__aka">content placeholder, shimmer, ghost UI</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">Grey shapes in the layout of the content that's coming, often with a shimmer sweep. Feels faster than a spinner because the page's structure is already visible.</p>
+          <div class="specimen__demo"><div class="skeleton" id="skelLoading" style="max-width:360px"><div class="sk sk--avatar"></div><div><div class="sk sk--line" style="width:60%"></div><div class="sk sk--line"></div><div class="sk sk--line" style="width:85%;margin:0"></div></div></div>
+            <div class="media-obj" id="skelLoaded" hidden style="max-width:360px"><div class="avatar" style="background:#2f7d4a">SR</div><div><strong>Sam Rivera</strong> <span class="muted small">· just now</span><p class="small" style="margin:.2rem 0 0">The content pops in exactly where the grey shapes were — same layout, no jump.</p></div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="skelBtn">Finish loading</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> loading lists, cards, profiles — anything with predictable shape.</p>
+        </article>
+
+        <article class="specimen" id="loaders" data-terms="spinner progress bar indeterminate loading button">
+          <div class="specimen__head"><h3>Spinners &amp; Progress</h3><p class="specimen__aka">loading indicator, activity indicator, determinate/indeterminate progress</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc"><em>Determinate</em> progress shows how much is done; <em>indeterminate</em> just says "working". A <em>loading button</em> swaps its label for a spinner and disables itself to prevent double-submits.</p>
+          <div class="specimen__demo"><div class="row" style="gap:var(--s-6)"><div class="spinner" role="status" aria-label="Loading"></div><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><button class="btn" id="loadBtn">Save</button></div><div class="mt-4" style="max-width:320px"><p class="small muted" style="margin:0 0 .3rem">determinate</p><div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><i id="progBar"></i></div><p class="small muted" style="margin:.8rem 0 .3rem">indeterminate</p><div class="progress progress--indeterminate"><i></i></div></div><button class="btn btn--sm btn--tertiary mt-4" id="progBtn">Run progress</button></div>
+          <p class="specimen__use"><strong>Use when:</strong> spinner for &lt;1–2s waits, skeleton for content, progress bar for uploads/multi-step jobs.</p>
+        </article>
+
+        <article class="specimen" id="empty-state" data-terms="zero data blank slate first run">
+          <div class="specimen__head"><h3>Empty State</h3><p class="specimen__aka">blank slate, zero state, first-run experience</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">What shows when there's no data yet. A blank list feels broken; a good empty state explains what will appear here and offers the first action.</p>
+          <div class="specimen__demo"><div class="empty" id="emptyState"><div class="empty__icon">📭</div><h4>No projects yet</h4><p>Projects you create will show up here. Start with a template or from scratch.</p><button class="btn btn--sm" id="emptyCreate">Create project</button></div>
+            <div id="emptyFilled" hidden><div class="media-obj" style="max-width:360px"><div class="avatar" style="background:#b3411f">P1</div><div><strong>New project</strong><p class="small muted" style="margin:.2rem 0 .5rem">Created just now. Delete it to see the empty state return.</p><button class="btn btn--sm btn--secondary" id="emptyDelete">Delete project</button></div></div></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> any list, inbox, search-with-no-results, dashboard before data.</p>
+        </article>
+
+        <article class="specimen" id="badges" data-terms="pill status label chip tag counter notification dot">
+          <div class="specimen__head"><h3>Badges, Chips &amp; Tags</h3><p class="specimen__aka">pill, status indicator, label, notification dot/counter</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc"><b>Badge</b>: small non-interactive status label. <b>Chip</b>: interactive — selectable or removable (with an ×). <b>Tag</b>: a chip used for categorization. <b>Counter badge</b>: a number on an icon. Colors carry meaning: green success, amber warning, red danger, blue info. Remove chips with their ×; click the bell or inbox to mark it read.</p>
+          <div class="specimen__demo"><div class="row" style="margin-bottom:var(--s-4)"><span class="badge">Default</span><span class="badge badge--success badge--dot">Active</span><span class="badge badge--warning badge--dot">Pending</span><span class="badge badge--danger badge--dot">Failed</span><span class="badge badge--info">New</span></div><div class="row" style="margin-bottom:var(--s-4)"><span class="chip">React <button aria-label="Remove React">×</button></span><span class="chip is-selected">CSS <button aria-label="Remove CSS">×</button></span><span class="chip">Design <button aria-label="Remove Design">×</button></span></div><div class="row" style="gap:var(--s-6)"><span class="count"><button class="icon-btn" aria-label="Notifications, 3 unread">🔔</button><span class="count__n">3</span></span><span class="count"><button class="icon-btn" aria-label="Inbox, 12 unread">✉</button><span class="count__n">12</span></span></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> status in tables, filters (chips), categories (tags), unread counts.</p>
+        </article>
+
+        <article class="specimen" id="alerts" data-terms="callout notice banner inline message warning error success">
+          <div class="specimen__head"><h3>Alerts &amp; Banners</h3><p class="specimen__aka">callout, notice, inline message, announcement bar</p><span class="tag">Feedback</span></div>
+          <p class="specimen__desc">Persistent inline messages (unlike toasts). Color + icon + a bold lead line. A <b>banner</b> is a full-width alert at the top of the page for site-wide notices ("cookie notice", "new version available").</p>
+          <div class="specimen__demo"><div class="stack" style="--stack-space:.6rem"><div class="alert alert--info">ℹ️<div><strong>Heads up</strong>Your trial ends in 3 days.</div><button class="alert__close" aria-label="Dismiss">×</button></div><div class="alert alert--success">✅<div><strong>Deployed</strong>Build #412 is live.</div></div><div class="alert alert--warning">⚠️<div><strong>Unsaved changes</strong>You'll lose edits if you leave.</div></div><div class="alert alert--danger">⛔<div><strong>Payment failed</strong>Update your card to continue.</div></div><div class="banner">🎉 Version 2.0 is out — new grid tools and dark mode.<button class="btn btn--sm">See what's new</button></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> form-level errors, system status, onboarding tips.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="forms" data-section="Forms &amp; Inputs">
+        <header>
+          <p class="section-num">06</p>
+          <h2>Forms &amp; Inputs</h2>
+          <p>Where users do work. Every control has states; good forms make each state obvious.</p>
+        </header>
+
+        <article class="specimen" id="button-hierarchy" data-terms="primary secondary tertiary ghost destructive cta">
+          <div class="specimen__head"><h3>Button Hierarchy</h3><p class="specimen__aka">primary / secondary / tertiary (ghost) / destructive</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">One <b>primary</b> button per view (the main CTA — call to action). <b>Secondary</b> for alternatives, <b>tertiary/ghost</b> for low-emphasis, <b>destructive</b> in red for irreversible actions. Sizes come from a small set.</p>
+          <div class="specimen__demo"><div class="row"><button class="btn">Primary</button><button class="btn btn--secondary">Secondary</button><button class="btn btn--tertiary">Tertiary</button><button class="btn btn--danger">Destructive</button><button class="btn" disabled>Disabled</button><button class="btn btn--sm">Small</button></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> always. If everything is a primary button, nothing is.</p>
+        </article>
+
+        <article class="specimen" id="input-states" data-terms="default hover focus error disabled ring">
+          <div class="specimen__head"><h3>Input States</h3><p class="specimen__aka">default · hover · focus · invalid · disabled</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">Each state gets a distinct border/ring. The <b>focus ring</b> is non-negotiable for keyboard users. Errors pair a red border with a text message — color alone is not enough.</p>
+          <div class="specimen__demo"><div class="states"><div class="field"><label>Default</label><input class="input" placeholder="Type here"></div><div class="field"><label>Hover</label><input class="input mock-hover" placeholder="Hovered"></div><div class="field"><label>Focus</label><input class="input mock-focus" placeholder="Focused ring"></div><div class="field is-invalid"><label>Invalid</label><input class="input" aria-invalid="true" value="not-an-email"><span class="error">Enter a valid email address.</span></div><div class="field"><label>Disabled</label><input class="input" disabled value="Read only"></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> every text input, select, textarea.</p>
+        </article>
+
+        <article class="specimen" id="floating-label" data-terms="material label animate placeholder">
+          <div class="specimen__head"><h3>Floating Label</h3><p class="specimen__aka">Material text field, animated label</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">The label sits inside the field as a placeholder, then floats up when the field is focused or filled. Saves vertical space; make sure the floated label stays readable.</p>
+          <div class="specimen__demo"><div class="float"><input class="input" id="fl1" placeholder=" "><label for="fl1">Email address</label></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> compact forms (login, checkout). Plain top labels are still the safest default.</p>
+        </article>
+
+        <article class="specimen" id="inline-validation" data-terms="live validation password strength meter">
+          <div class="specimen__head"><h3>Inline Validation</h3><p class="specimen__aka">live validation, real-time feedback, strength meter</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">Check input as the user types or on blur, and show the result right next to the field. Validate <em>after</em> they leave the field, not on the first keystroke (avoid "premature error"). A strength meter is inline validation for passwords.</p>
+          <div class="specimen__demo"><div class="stack" style="--stack-space:1rem"><div class="field" id="emailField"><label for="emailIn">Email (validates on blur)</label><input class="input" id="emailIn" type="email" placeholder="you@example.com"><span class="error">That doesn't look like an email.</span></div><div class="field"><label for="pwIn">Password (live strength)</label><input class="input" id="pwIn" type="password" placeholder="Try typing…"><div class="pw-meter" id="pwMeter" data-score="0"><i></i><i></i><i></i><i></i></div><span class="hint" id="pwHint">8+ chars, mixed case, a number, a symbol</span></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> sign-up, anything with format rules.</p>
+        </article>
+
+        <article class="specimen" id="toggle" data-terms="switch checkbox on off boolean">
+          <div class="specimen__head"><h3>Toggle Switch</h3><p class="specimen__aka">switch, on/off toggle</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">A checkbox styled as a physical switch. Use for settings that take effect <em>immediately</em>; use a checkbox when the choice is submitted with a form.</p>
+          <div class="specimen__demo"><div class="stack" style="--stack-space:.75rem"><label class="switch"><input type="checkbox" role="switch" checked><span class="switch__track"></span>Email notifications</label><label class="switch"><input type="checkbox" role="switch"><span class="switch__track"></span>Public profile</label></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> preferences, feature flags, "dark mode".</p>
+        </article>
+
+        <article class="specimen" id="segmented" data-terms="radio group toggle buttons view switcher">
+          <div class="specimen__head"><h3>Segmented Control</h3><p class="specimen__aka">toggle button group, radio pills, view switcher</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">A radio group styled as connected buttons — pick exactly one of 2–5 options, all visible at once. iOS-native feel. Underneath it's real radio inputs, so keyboard and forms work.</p>
+          <div class="specimen__demo"><div class="seg" role="radiogroup" aria-label="View"><input type="radio" name="seg" id="segA" checked><label for="segA">List</label><input type="radio" name="seg" id="segB"><label for="segB">Grid</label><input type="radio" name="seg" id="segC"><label for="segC">Map</label></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> view modes, short mutually-exclusive filters, billing monthly/yearly.</p>
+        </article>
+
+        <article class="specimen" id="stepper-input" data-terms="number quantity increment decrement">
+          <div class="specimen__head"><h3>Number Stepper</h3><p class="specimen__aka">quantity selector, increment/decrement input</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">− and + buttons around a number field. Better than a bare number input on touch. Clamp to min/max and disable the button at the limit.</p>
+          <div class="specimen__demo"><div class="qty"><button aria-label="Decrease" id="numDec">−</button><input type="number" id="numIn" value="1" min="1" max="9" aria-label="Quantity"><button aria-label="Increase" id="numInc">+</button></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> cart quantities, small integer settings.</p>
+        </article>
+
+        <article class="specimen" id="range" data-terms="slider output value">
+          <div class="specimen__head"><h3>Range Slider with Output</h3><p class="specimen__aka">slider, scrubber</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">A slider whose current value is shown live in an <code>&lt;output&gt;</code>. Sliders are for approximate values; if precision matters, pair with a number input.</p>
+          <div class="specimen__demo"><div class="range-row"><label for="rng" class="small">Volume</label><input type="range" id="rng" min="0" max="100" value="40"><output for="rng" id="rngOut">40</output></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> volume, brightness, price ranges, opacity.</p>
+        </article>
+
+        <article class="specimen" id="combobox" data-terms="autocomplete typeahead search suggestions">
+          <div class="specimen__head"><h3>Combobox / Autocomplete</h3><p class="specimen__aka">typeahead, search suggestions, select-with-search</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">A text input that shows filtered suggestions as you type; arrow keys move through them, Enter picks. Matching text is highlighted. Type a country:</p>
+          <div class="specimen__demo" style="min-height:220px"><div class="combo"><input class="input" id="comboIn" role="combobox" aria-expanded="false" aria-controls="comboList" aria-autocomplete="list" placeholder="Search countries…"><ul id="comboList" role="listbox" hidden></ul></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> long option lists (countries, users, tags), site search.</p>
+        </article>
+
+        <article class="specimen" id="checks" data-terms="checkbox radio native accent-color">
+          <div class="specimen__head"><h3>Checkboxes &amp; Radios</h3><p class="specimen__aka">native controls with accent-color</p><span class="tag">Forms</span></div>
+          <p class="specimen__desc">You rarely need custom checkboxes anymore: <code>accent-color</code> themes the native ones. Checkbox = many-of; radio = one-of. Labels must be clickable (wrap or <code>for=</code>).</p>
+          <div class="specimen__demo"><div class="row" style="gap:var(--s-7);align-items:flex-start"><div class="checks"><label><input type="checkbox" checked>Newsletter</label><label><input type="checkbox">Product updates</label><label><input type="checkbox">Partner offers</label></div><div class="checks"><label><input type="radio" name="plan" checked>Monthly</label><label><input type="radio" name="plan">Yearly (save 20%)</label></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> any multi/single choice with ≤7 visible options; beyond that use a select or combobox.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="motion" data-section="Motion">
+        <header>
+          <p class="section-num">07</p>
+          <h2>Motion</h2>
+          <p>Animation should explain, not decorate: where did this come from, where did it go, did my click register? Short (150–400ms), eased, and optional.</p>
+        </header>
+
+        <article class="specimen" id="micro" data-terms="micro-interaction press feedback ripple hover">
+          <div class="specimen__head"><h3>Micro-interactions</h3><p class="specimen__aka">press feedback, hover lift, ripple, animated underline</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Tiny responses to input that confirm "the thing registered". Press: scale down 2–3%. Hover on cards: lift 2–4px + deeper shadow. Ripple: Material's radial pulse from the tap point. Underline that grows on hover.</p>
+          <div class="specimen__demo"><div class="row" style="gap:var(--s-5);align-items:stretch"><button class="btn">Press me (scale)</button><button class="btn ripple-btn" id="rippleBtn">Ripple</button><div class="lift small" style="display:grid;place-items:center;padding:.6rem 1rem">Hover lift</div><a href="#micro" class="hover-underline" style="align-self:center;color:var(--text)">Animated underline</a></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> every interactive element gets at least a hover and press state.</p>
+        </article>
+
+        <article class="specimen" id="easing" data-terms="cubic-bezier timing function ease-out spring linear">
+          <div class="specimen__head"><h3>Easing Curves</h3><p class="specimen__aka">timing functions, cubic-bezier, ease-out / ease-in-out / spring</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Real objects don't move at constant speed. <b>ease-out</b> (fast start, gentle stop) is the default for things entering; <b>ease-in-out</b> for things moving between places; <b>linear</b> only for continuous motion like spinners. Overshoot curves feel "springy". Click play and compare.</p>
+          <div class="specimen__demo"><div class="ease-lab" id="easeLab"><div class="track t-linear"><i></i><span>linear</span></div><div class="track t-ease"><i></i><span>ease (default)</span></div><div class="track t-out"><i></i><span>ease-out · cubic-bezier(.16,1,.3,1)</span></div><div class="track t-inout"><i></i><span>ease-in-out · cubic-bezier(.65,0,.35,1)</span></div><div class="track t-spring"><i></i><span>overshoot · cubic-bezier(.34,1.56,.64,1)</span></div></div><button class="btn btn--sm btn--secondary mt-4" id="easeBtn">▶ Play</button></div>
+          <p class="specimen__use"><strong>Use when:</strong> always pick a curve deliberately; ease-out for 80% of UI motion.</p>
+        </article>
+
+        <article class="specimen" id="stagger" data-terms="staggered animation delay sequence cascade">
+          <div class="specimen__head"><h3>Staggered Reveal</h3><p class="specimen__aka">cascade, sequential entrance, animation-delay stagger</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Siblings animate in one after another with a small delay (40–80ms each). Turns a list popping in all at once into something that reads as orderly. Keep total under ~500ms.</p>
+          <div class="specimen__demo"><div class="stagger" id="staggerRow"><i></i><i></i><i></i><i></i><i></i><i></i></div><button class="btn btn--sm btn--secondary mt-4" id="staggerBtn">↻ Replay</button></div>
+          <p class="specimen__use"><strong>Use when:</strong> lists, grids, menus appearing.</p>
+        </article>
+
+        <article class="specimen" id="scroll-reveal" data-terms="intersection observer fade in on scroll aos">
+          <div class="specimen__head"><h3>Scroll-Triggered Reveal</h3><p class="specimen__aka">fade-in on scroll, AOS (animate on scroll), scroll reveal</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Elements fade/slide in the first time they enter the viewport. Use <code>IntersectionObserver</code>, add a class once, and never re-hide (re-animating on scroll-up is annoying). These three cards animated when you scrolled here.</p>
+          <div class="specimen__demo"><div class="reveal-grid"><div class="reveal box box--tall">1</div><div class="reveal box box--tall">2</div><div class="reveal box box--tall">3</div></div><button class="btn btn--sm btn--secondary mt-4" id="revealBtn">↻ Replay</button></div>
+          <p class="specimen__use"><strong>Use when:</strong> marketing pages, portfolios. Sparingly — content should never be invisible if JS fails (this site sets the class on load as a fallback).</p>
+        </article>
+
+        <article class="specimen" id="parallax" data-terms="depth scroll speed layers">
+          <div class="specimen__head"><h3>Parallax</h3><p class="specimen__aka">depth scrolling, layered scroll</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Background moves slower than foreground, creating depth. Scroll inside the box. Pure-CSS version uses <code>perspective</code> + <code>translateZ</code>. Overused in 2013; today use it subtly and never on essential content.</p>
+          <div class="specimen__demo is-flush"><div class="parallax"><div class="parallax__bg"></div><div class="parallax__fg"><div class="box">foreground scrolls at 1×,<br>stripes behind at ~0.5×</div></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> hero backgrounds, storytelling pages. Disable under <code>prefers-reduced-motion</code>.</p>
+        </article>
+
+        <article class="specimen" id="flip" data-terms="3d card flip rotate backface">
+          <div class="specimen__head"><h3>Card Flip</h3><p class="specimen__aka">3D flip, two-sided card</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">A rotateY transform with <code>backface-visibility: hidden</code> so each face only shows when facing you. Click the card.</p>
+          <div class="specimen__demo"><div class="flip" id="flipCard" tabindex="0" role="button" aria-pressed="false"><div class="flip__inner"><div class="flip__face flip__front">Front — click</div><div class="flip__face flip__back">Back!</div></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> flashcards, reveal-on-interaction tiles, playful team cards.</p>
+        </article>
+
+        <article class="specimen" id="animate-height" data-terms="expand collapse grid-template-rows auto height transition">
+          <div class="specimen__head"><h3>Animate to Auto Height</h3><p class="specimen__aka">smooth expand/collapse, grid-rows trick</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">You can't transition <code>height: auto</code> — but you can transition <code>grid-template-rows</code> from <code>0fr</code> to <code>1fr</code>. The classic trick for smooth accordions.</p>
+          <div class="specimen__demo"><button class="btn btn--sm btn--secondary" id="heightBtn" aria-expanded="false">Toggle details</button><div class="animate-height mt-2" id="heightPanel"><div><p class="small muted" style="margin:.5rem 0 0">This panel grows to fit its content, however tall that turns out to be. The trick: wrap the content in a grid whose single row goes from 0fr to 1fr, and give the child overflow: hidden. New browsers can also do <code>interpolate-size: allow-keywords</code>.</p></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> accordions, "show more", expanding cards.</p>
+        </article>
+
+        <article class="specimen" id="marquee" data-terms="ticker infinite scroll logos loop">
+          <div class="specimen__head"><h3>Marquee / Ticker</h3><p class="specimen__aka">logo carousel, infinite scroll strip</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Content scrolls continuously in a loop, faded at the edges with a mask. Content is duplicated so the loop is seamless. Pauses on hover. Common for "trusted by" logo strips.</p>
+          <div class="specimen__demo is-flush"><div class="marquee" style="padding:var(--s-4) 0"><div class="marquee__inner" aria-hidden="true"><span class="badge">Acme</span><span class="badge">Globex</span><span class="badge">Initech</span><span class="badge">Umbrella</span><span class="badge">Hooli</span><span class="badge">Vandelay</span><span class="badge">Acme</span><span class="badge">Globex</span><span class="badge">Initech</span><span class="badge">Umbrella</span><span class="badge">Hooli</span><span class="badge">Vandelay</span></div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" data-toggle-class="is-paused" data-target=".marquee" aria-pressed="false">Pause / play</button><label>loop duration <input type="range" data-prop="--marquee-dur" data-unit="s" data-target=".marquee" min="6" max="30" step="1" value="14"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> logo walls, announcement tickers. Must respect reduced-motion.</p>
+        </article>
+
+        <article class="specimen" id="reduced-motion" data-terms="accessibility vestibular prefers-reduced-motion">
+          <div class="specimen__head"><h3>Reduced Motion</h3><p class="specimen__aka">prefers-reduced-motion, motion accessibility</p><span class="tag">Motion</span></div>
+          <p class="specimen__desc">Some people get dizzy or nauseous from motion (vestibular disorders). The OS exposes a preference; honor it by shrinking durations to near-zero. This whole site does — enable "Reduce motion" in your OS accessibility settings and reload.</p>
+          <div class="specimen__demo"><p class="small" style="margin:0" id="rmStatus">Checking your setting…</p>
+            <div class="demo-controls"><label class="switch"><input type="checkbox" id="simRm" role="switch"><span class="switch__track"></span>Simulate reduced motion on this page</label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> always. A single global rule covers most cases.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="entrances" data-section="Entrances &amp; Exits">
+        <header>
+          <p class="section-num">08</p>
+          <h2>Entrances &amp; Exits</h2>
+          <p>How things appear and disappear. An entrance tells the user what just arrived and why; an exit gets out of the way. The craft is choosing the family, the duration, and the choreography — not adding more motion.</p>
+        </header>
+
+        <article class="specimen" id="entrance-gallery" data-terms="fade rise slide-up scale-in blur-in wipe mask clip-path reveal appear enter animation families">
+          <div class="specimen__head"><h3>The Entrance Families</h3><p class="specimen__aka">fade-in, rise (slide-up), scale-in, blur-in, wipe, clip reveal</p><span class="tag">Entrances</span></div>
+          <p class="specimen__desc">Six ways to arrive, side by side — click any tile to replay it alone. Each says something different: <b>fade</b> is neutral; <b>rise</b> reads as content settling into place; <b>scale</b> as something newly created; <b>blur</b> as focus arriving; <b>wipe</b> and <b>clip</b> as deliberately unveiling something that was already there. Entrances want 200–500ms and ease-out — fast start, gentle landing.</p>
+          <div class="specimen__demo">
+            <div class="ent-grid" id="entGrid">
+              <figure class="ent"><div class="ent__stage" tabindex="0" role="button" aria-label="Replay fade entrance"><div class="ent__box ent--fade">fade</div></div><figcaption>opacity · 300ms · neutral default</figcaption></figure>
+              <figure class="ent"><div class="ent__stage" tabindex="0" role="button" aria-label="Replay rise entrance"><div class="ent__box ent--rise">rise</div></div><figcaption>opacity + translateY · 350ms · settling in</figcaption></figure>
+              <figure class="ent"><div class="ent__stage" tabindex="0" role="button" aria-label="Replay scale entrance"><div class="ent__box ent--scale">scale</div></div><figcaption>opacity + scale(.85→1) · 300ms · newly born</figcaption></figure>
+              <figure class="ent"><div class="ent__stage" tabindex="0" role="button" aria-label="Replay blur entrance"><div class="ent__box ent--blur">blur</div></div><figcaption>opacity + blur(8px→0) · 400ms · coming into focus</figcaption></figure>
+              <figure class="ent"><div class="ent__stage" tabindex="0" role="button" aria-label="Replay wipe entrance"><div class="ent__box ent--wipe">wipe</div></div><figcaption>clip-path inset · 500ms · curtain reveal</figcaption></figure>
+              <figure class="ent"><div class="ent__stage" tabindex="0" role="button" aria-label="Replay clip entrance"><div class="ent__box ent--clip">clip</div></div><figcaption>clip-path circle · 500ms · spotlight reveal</figcaption></figure>
+            </div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="entReplay">↻ Replay all</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> anything appears. Pick one family per surface and stick to it — mixed entrances read as chaos.</p>
+        </article>
+
+        <article class="specimen" id="text-reveal" data-terms="staggered text reveal split letters words headline animation kinetic">
+          <div class="specimen__head"><h3>Staggered Text Reveal</h3><p class="specimen__aka">split-text animation, letter stagger, word cascade</p><span class="tag">Entrances</span></div>
+          <p class="specimen__desc">The headline is split into words or letters and each fragment rises in with a small delay (30–60ms). JS wraps each fragment in a <code>span</code> with an index; one CSS rule turns the index into a delay. Total time should stay under ~700ms — a headline is not a film title.</p>
+          <div class="specimen__demo">
+            <p class="text-reveal" id="textReveal" aria-label="Design is in the details">Design is in the details</p>
+            <div class="demo-controls">
+              <div class="seg" role="radiogroup" aria-label="Split mode"><input type="radio" name="trMode" id="trWords" checked><label for="trWords">by word</label><input type="radio" name="trMode" id="trLetters"><label for="trLetters">by letter</label></div>
+              <button class="btn btn--sm btn--secondary" id="trReplay">↻ Replay</button>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> hero headlines, section titles on marketing pages. Keep the real text in the DOM (<code>aria-label</code> on the container, <code>aria-hidden</code> spans) so screen readers hear a sentence, not letters.</p>
+        </article>
+
+        <article class="specimen" id="count-up" data-terms="number count-up counter animate stats odometer">
+          <div class="specimen__head"><h3>Number Count-Up</h3><p class="specimen__aka">animated counter, stat roll-up</p><span class="tag">Entrances</span></div>
+          <p class="specimen__desc">A statistic counts from zero to its value with an ease-out curve — most of the movement happens early, then it glides to a stop. Built with <code>requestAnimationFrame</code>; use <code>tabular-nums</code> so the digits don't wobble as they change width. Fire it once, when the number first scrolls into view.</p>
+          <div class="specimen__demo">
+            <div class="row" style="gap:var(--s-7)"><div><div class="countup tnum" id="countUp1" data-value="12480" data-suffix="">12,480</div><p class="small muted" style="margin:0">patterns viewed</p></div><div><div class="countup tnum" id="countUp2" data-value="99.98" data-decimals="2" data-suffix="%">99.98%</div><p class="small muted" style="margin:0">uptime</p></div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="countReplay">↻ Replay</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> "by the numbers" bands, dashboards on first load. Skip it under reduced motion — jump straight to the value.</p>
+        </article>
+
+        <article class="specimen" id="draw-on" data-terms="svg stroke draw dasharray dashoffset line animation signature">
+          <div class="specimen__head"><h3>Draw-On SVG Stroke</h3><p class="specimen__aka">line drawing animation, stroke-dashoffset trick</p><span class="tag">Entrances</span></div>
+          <p class="specimen__desc">The stroke appears to draw itself: set <code>pathLength="1"</code> on the path, make the dash pattern one full path long (<code>stroke-dasharray: 1</code>), then animate <code>stroke-dashoffset</code> from 1 to 0. Feels handmade — good for checkmarks, signatures, diagrams.</p>
+          <div class="specimen__demo">
+            <svg class="draw-svg" id="drawSvg" viewBox="0 0 120 60" width="180" aria-hidden="true"><circle cx="30" cy="30" r="22" pathLength="1" fill="none"/><path d="M20 30 l7 8 l14 -16" pathLength="1" fill="none"/><path d="M64 42 C 70 18, 84 18, 90 30 S 106 46, 112 24" pathLength="1" fill="none"/></svg>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="drawReplay">↻ Replay</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> success states, logos, illustrated explainers. One drawing per view.</p>
+        </article>
+
+        <article class="specimen" id="exit-asymmetry" data-terms="exit leave dismiss faster ease-in enter asymmetry">
+          <div class="specimen__head"><h3>Exit Asymmetry</h3><p class="specimen__aka">exits are faster, enter/leave pairing</p><span class="tag">Exits</span></div>
+          <p class="specimen__desc">Entrances and exits are not mirror images. An entrance introduces something, so it takes its time — here 400ms, ease-out, rising. An exit is the user saying "done", so it obeys quickly — 180ms, ease-in, fading down. Toggle the card repeatedly and feel the difference.</p>
+          <div class="specimen__demo">
+            <div class="exit-stage" id="exitStage"><div class="exit-card" id="exitCard"><strong>Notification</strong><p class="small muted" style="margin:.2rem 0 0">Enters in 400ms, leaves in 180ms.</p></div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="exitToggle" aria-pressed="true">Dismiss</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> pairing any enter/leave: toasts, modals, menus. Rule of thumb — exit duration ≈ half the entrance, ease-in instead of ease-out.</p>
+        </article>
+
+        <article class="specimen" id="flip-remove" data-terms="flip technique removal reflow list animate position web animations api waapi">
+          <div class="specimen__head"><h3>Removal Reflow — FLIP</h3><p class="specimen__aka">First–Last–Invert–Play, animated list removal</p><span class="tag">Exits</span></div>
+          <p class="specimen__desc">When an item leaves a list, the survivors should glide into their new places, not teleport. FLIP: record each item's <b>F</b>irst position, make the change, read the <b>L</b>ast position, <b>I</b>nvert the difference with a transform, then <b>P</b>lay it back to zero — here via the Web Animations API (<code>element.animate</code>). Remove a few:</p>
+          <div class="specimen__demo">
+            <div class="flip-list" id="flipList"><span class="flip-item">Research <button aria-label="Remove Research">×</button></span><span class="flip-item">Wireframe <button aria-label="Remove Wireframe">×</button></span><span class="flip-item">Prototype <button aria-label="Remove Prototype">×</button></span><span class="flip-item">Test <button aria-label="Remove Test">×</button></span><span class="flip-item">Ship <button aria-label="Remove Ship">×</button></span><span class="flip-item">Iterate <button aria-label="Remove Iterate">×</button></span></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="flipRestore">Restore all</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> deleting rows, filtering grids, reordering. Anywhere layout jumps, FLIP smooths it.</p>
+        </article>
+
+        <article class="specimen" id="starting-style" data-terms="starting-style transition-behavior allow-discrete display none animate hidden popover">
+          <div class="specimen__head"><h3>@starting-style — animating from display:none</h3><p class="specimen__aka">transition-behavior: allow-discrete, discrete transitions</p><span class="tag">Modern API</span></div>
+          <p class="specimen__desc">Transitions never used to work on elements entering from <code>display: none</code> — there was no "before" style to start from. <code>@starting-style</code> supplies one, and <code>transition-behavior: allow-discrete</code> lets <code>display</code> itself participate, delaying the flip to <code>none</code> until the exit finishes. Pure CSS enter <em>and</em> exit for popovers, dialogs, tooltips.</p>
+          <div class="specimen__demo">
+            <button class="btn btn--sm btn--secondary" id="ssToggle" aria-expanded="true">Hide the panel</button>
+            <div class="ss-panel mt-4" id="ssPanel"><strong>CSS-only enter and exit</strong><p class="small muted" style="margin:.2rem 0 0" id="ssSupport">Both directions animate even though the hidden state is display:none.</p></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> popovers, dialogs, disclosure panels — anywhere you previously needed JS timers just to animate out. Baseline in Chrome/Edge/Safari since 2024; check current Firefox support before relying on it.</p>
+        </article>
+
+        <article class="specimen" id="view-transitions" data-terms="view transitions api startViewTransition morph shared element page transition">
+          <div class="specimen__head"><h3>View Transitions</h3><p class="specimen__aka">startViewTransition, shared-element transitions</p><span class="tag">Modern API</span></div>
+          <p class="specimen__desc">The browser snapshots the page, you mutate the DOM however you like, and it animates between the two states — elements with a shared <code>view-transition-name</code> morph to their new position. One API call replaces a pile of FLIP code. Also works across full page loads in multi-page sites.</p>
+          <div class="specimen__demo">
+            <div class="vt-grid" id="vtGrid"><div class="vt-tile" style="background:var(--accent)">A</div><div class="vt-tile" style="background:var(--info)">B</div><div class="vt-tile" style="background:var(--success)">C</div><div class="vt-tile" style="background:var(--warning)">D</div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="vtShuffle">Shuffle</button><span class="demo-note" style="margin:0" id="vtSupport"></span></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> list re-sorting, tab-like content swaps, page navigations. Falls back gracefully — without support the change just happens instantly.</p>
+        </article>
+
+        <article class="specimen" id="scroll-driven" data-terms="scroll-driven animation animation-timeline view scroll progress reveal">
+          <div class="specimen__head"><h3>Scroll-Driven Animations</h3><p class="specimen__aka">animation-timeline: view() / scroll(), scroll-linked animation</p><span class="tag">Modern API</span></div>
+          <p class="specimen__desc">The animation's clock is the scroll position, not time — pure CSS, runs off the main thread, no <code>IntersectionObserver</code>. Here the progress bar tracks scroll via <code>scroll()</code> and each card fades up as it crosses into view via <code>view()</code>. Scroll inside the box, then scrub back and forth.</p>
+          <div class="specimen__demo is-flush">
+            <div class="sd-scroller" id="sdScroller"><div class="sd-progress" aria-hidden="true"></div><div class="sd-inner"><p class="small muted" style="margin:0">scroll ↓</p><div class="sd-card">view() — entry 0% → 40%</div><div class="sd-card">the scrubber is the scroll bar</div><div class="sd-card">reverse works too</div><div class="sd-card">no JS anywhere</div><p class="small muted sd-unsupported" style="margin:0">If nothing animates, this browser doesn't support <code>animation-timeline</code> yet (Firefox: behind a flag as of mid-2026).</p></div></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> reading-progress bars, reveal-on-scroll, parallax — replacing scroll-listener JS. Progressive enhancement only; content must be fine without it.</p>
+        </article>
+
+        <article class="specimen" id="orchestration" data-terms="sequence overlap choreography stagger hero entrance order">
+          <div class="specimen__head"><h3>Sequence &amp; Overlap</h3><p class="specimen__aka">choreography, entrance orchestration</p><span class="tag">Entrances</span></div>
+          <p class="specimen__desc">A composed entrance runs elements in reading order — media, then headline, then support, then the action — but <em>overlapping</em>: each starts while the previous is still moving (delays 0 / 120 / 220 / 320ms here). Strictly sequential feels bureaucratic; simultaneous feels like a glitch. The overlap is the craft.</p>
+          <div class="specimen__demo">
+            <div class="orch" id="orchDemo"><div class="orch__media" style="--d:0ms"></div><h4 class="orch__el" style="--d:120ms;margin:0">Headline lands second</h4><p class="orch__el small muted" style="--d:220ms;margin:0">Support copy follows while it's still settling.</p><button class="btn btn--sm orch__el" style="--d:320ms">CTA arrives last</button></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="orchReplay">↻ Replay</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> hero sections, dialog content, onboarding steps. Cap the whole performance at ~700ms — the page should never feel like it's making the user wait.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="style" data-section="Visual Style">
+        <header>
+          <p class="section-num">09</p>
+          <h2>Visual Style</h2>
+          <p>Named aesthetics and the systems (tokens, scales) that keep a design consistent. The current-era styles further down are a spread, not a ranking: the thread connecting them is a reaction against flat, samey, template-feeling design — texture, warmth, and depth coming back in several directions at once. No single one "leads"; context decides.</p>
+        </header>
+
+        <article class="specimen" id="tokens" data-terms="css variables custom properties design system theme">
+          <div class="specimen__head"><h3>Design Tokens</h3><p class="specimen__aka">CSS custom properties, theme variables, design system primitives</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Named values — colors, spacing, radii, shadows, type sizes — defined once and referenced everywhere. Change the token, change the site. Dark mode is just a second set of values for the same names. Toggle the theme (◐ top-right) and watch every specimen follow.</p>
+          <div class="specimen__demo"><div class="tokens-demo"><div><i style="background:var(--bg)"></i>--bg</div><div><i style="background:var(--surface)"></i>--surface</div><div><i style="background:var(--surface-2)"></i>--surface-2</div><div><i style="background:var(--text)"></i>--text</div><div><i style="background:var(--muted)"></i>--muted</div><div><i style="background:var(--accent)"></i>--accent</div><div><i style="background:var(--accent-soft)"></i>--accent-soft</div><div><i style="background:var(--success)"></i>--success</div><div><i style="background:var(--warning)"></i>--warning</div><div><i style="background:var(--danger)"></i>--danger</div></div>
+            <div class="demo-controls" role="group" aria-label="Try another accent token"><span class="small muted">Swap <code>--accent</code> live:</span><button class="accent-swatch" data-accent="" style="background:#b3411f" aria-label="Sienna (default)" aria-pressed="true"></button><button class="accent-swatch" data-accent="#2b5fb3" style="background:#2b5fb3" aria-label="Ocean" aria-pressed="false"></button><button class="accent-swatch" data-accent="#2f7d4a" style="background:#2f7d4a" aria-label="Forest" aria-pressed="false"></button><button class="accent-swatch" data-accent="#8f3a72" style="background:#8f3a72" aria-label="Plum" aria-pressed="false"></button><span class="demo-note" style="margin:0">one token, the whole site follows (a real theme would set a light and a dark value)</span></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> from the first line of CSS on any project.</p>
+        </article>
+
+        <article class="specimen" id="dark-mode" data-terms="theme color-scheme light dark toggle">
+          <div class="specimen__head"><h3>Dark Mode</h3><p class="specimen__aka">color scheme, theme switching</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Not just inverted colors: dark surfaces get <em>lighter</em> as they rise (elevation = lighter, not shadowed), pure black and pure white are avoided (use #15161a / #ebe9e3), accents get slightly desaturated and brighter, shadows get stronger. Follow the OS by default, let users override, remember the choice — and apply the saved theme <em>before first paint</em> to avoid a flash of the wrong theme.</p>
+          <div class="specimen__demo"><div class="dark-preview"><div class="l"><strong>Light</strong><br>bg #f6f5f2 · text #1b1a17<br>surfaces sit on shadows</div><div class="d"><strong>Dark</strong><br>bg #15161a · text #ebe9e3<br>surfaces get lighter as they rise</div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" data-theme-toggle>Toggle the site theme</button><span class="demo-note" style="margin:0">same as ◐ in the header — saved to <code>localStorage</code></span></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> most products now — users expect it; reading apps and dev tools especially.</p>
+        </article>
+
+        <article class="specimen" id="elevation" data-terms="shadow depth z-axis layers box-shadow">
+          <div class="specimen__head"><h3>Elevation / Shadow Scale</h3><p class="specimen__aka">depth levels, z-axis, layered shadows</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">A small ladder of shadows signals how far something floats: cards low, dropdowns mid, modals high. Good shadows are layered (two or three stacked), soft, and low-opacity — never one hard dark blob.</p>
+          <div class="specimen__demo"><div class="swatches" id="shadowSwatches"><button class="swatch" data-level="1" style="box-shadow:var(--shadow-1)" aria-pressed="false">--shadow-1<br>card</button><button class="swatch" data-level="2" style="box-shadow:var(--shadow-2)" aria-pressed="true">--shadow-2<br>raised</button><button class="swatch" data-level="3" style="box-shadow:var(--shadow-3)" aria-pressed="false">--shadow-3<br>dropdown</button><button class="swatch" data-level="4" style="box-shadow:var(--shadow-4)" aria-pressed="false">--shadow-4<br>modal</button></div>
+            <div class="elev-sample mt-4" id="shadowSample" style="box-shadow:var(--shadow-2)">A sample card floating at <code id="shadowLabel">--shadow-2</code> — click a swatch to change its elevation.</div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> anything that overlaps something else. Consistent = believable.</p>
+        </article>
+
+        <article class="specimen" id="radius" data-terms="border-radius corners rounded pill scale">
+          <div class="specimen__head"><h3>Border Radius Scale</h3><p class="specimen__aka">corner radius tokens, pill / fully rounded</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Corners set the personality: 0 = serious/brutal, 4–8px = neutral product, 12–16px = friendly, 999px = pill. Pick a scale and nest correctly — inner radius = outer radius − padding, or things look wrong.</p>
+          <div class="specimen__demo"><div class="radii" id="radiusSwatches"><button style="border-radius:0" data-r="0" aria-pressed="false">0</button><button style="border-radius:var(--r-1)" data-r="3px" aria-pressed="false">3px</button><button style="border-radius:var(--r-2)" data-r="6px" aria-pressed="false">6px</button><button style="border-radius:var(--r-3)" data-r="10px" aria-pressed="true">10px</button><button style="border-radius:var(--r-4)" data-r="16px" aria-pressed="false">16px</button><button style="border-radius:var(--r-pill)" data-r="999px" aria-pressed="false">pill</button></div>
+            <div class="radius-sample mt-4" id="radiusSample">A sample panel at <code id="radiusLabel">10px</code> — click a swatch and feel the personality change. <button class="btn btn--sm mt-2" id="radiusBtn" style="display:block">Button follows too</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> everywhere; 3–4 values plus pill is enough.</p>
+        </article>
+
+        <article class="specimen" id="glassmorphism" data-terms="frosted glass blur backdrop-filter translucent">
+          <div class="specimen__head"><h3>Glassmorphism</h3><p class="specimen__aka">frosted glass, backdrop blur, translucent panels</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Semi-transparent surface + <code>backdrop-filter: blur()</code> + a thin light border, over a colorful background. Popularized by macOS/iOS. Needs something colorful behind it to read as glass. Also used subtly on sticky headers (like this site's).</p>
+          <div class="specimen__demo is-flush"><div class="glass-stage"><div class="glass"><h4>Frosted panel</h4><p class="small" style="margin:0;opacity:.9">Blur what's behind, tint slightly, add a 1px light edge.</p></div></div>
+            <div class="demo-controls"><label>backdrop blur <input type="range" data-prop="--glass-blur" data-unit="px" data-target=".glass" min="0" max="24" step="1" value="14"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> overlays on imagery, sticky headers, music/media UIs. Watch text contrast.</p>
+        </article>
+
+        <article class="specimen" id="neumorphism" data-terms="soft ui extruded inset shadows">
+          <div class="specimen__head"><h3>Neumorphism</h3><p class="specimen__aka">soft UI, skeuomorphic-lite</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Elements appear extruded from or pressed into a same-colored surface using a light shadow up-left and a dark shadow down-right. Press and hold the raised one to feel it sink. Striking, but has poor contrast and weak affordance — know it, use it rarely.</p>
+          <div class="specimen__demo is-flush"><div class="neu-stage"><button class="neu">press me</button><div class="neu neu--in">pressed</div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> decorative dashboards, concept work. Not for anything accessibility-critical.</p>
+        </article>
+
+        <article class="specimen" id="brutalism" data-terms="neo-brutalism raw bold hard shadow mono">
+          <div class="specimen__head"><h3>Neo-Brutalism</h3><p class="specimen__aka">brutalist web design, raw/anti-design</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Thick black borders, hard offset shadows (no blur), flat loud colors, monospace or heavy grotesque type, zero border radius. Deliberately "unpolished". Great for personality; tiring for dense apps.</p>
+          <div class="specimen__demo"><div class="brutal"><h4>Loud &amp; proud</h4><p class="small" style="margin:0 0 .75rem;color:#000">3px borders. 6px hard shadow. Zero radius.</p><button class="btn btn--sm">CLICK IT</button></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> personal sites, indie products, editorial — where standing out beats blending in.</p>
+        </article>
+
+        <article class="specimen" id="gradients" data-terms="gradient text mesh gradient background-clip aurora">
+          <div class="specimen__head"><h3>Gradient Text &amp; Mesh Gradients</h3><p class="specimen__aka">background-clip: text, aurora / mesh background</p><span class="tag">Style</span></div>
+          <p class="specimen__desc"><b>Gradient text</b> clips a background to the glyphs. A <b>mesh gradient</b> layers several radial gradients into a soft, blobby wash — the 2020s hero-background look.</p>
+          <div class="specimen__demo"><p class="gradient-text" style="margin:0 0 var(--s-4)">Gradient headline</p><div class="mesh"></div>
+            <div class="demo-controls"><label>gradient angle <input type="range" data-prop="--grad-angle" data-unit="deg" data-target=".gradient-text" min="0" max="360" step="5" value="90"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> heroes, one headline per page. Never body text.</p>
+        </article>
+
+        <article class="specimen" id="tactile" data-terms="tactile textural grain noise feTurbulence paper material press depth neo-skeuomorphism 2026">
+          <div class="specimen__head"><h3>Tactile / Textural</h3><p class="specimen__aka">grain &amp; noise overlays, neo-skeuomorphism, material surfaces</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">Surfaces that feel touched by hands: film-grain noise from an SVG <code>feTurbulence</code> filter (rendered at runtime, zero image weight), paper-warm gradients, and controls with real press depth — push the button and it physically travels. It signals <em>a human made this</em>, the counter-note to AI-generated sameness. Worth knowing honestly: it draws more critical buzz than shipped usage. It fails when grain sits over low-contrast text, or when imitation goes literal — fake leather is still 2010.</p>
+          <div class="specimen__demo is-flush">
+            <div class="tactile"><h4>Paper, not pixels</h4><p class="small" style="margin:0 0 .9rem;max-width:34ch">Noise overlay + warm gradient + a button with actual travel. Press and hold it.</p><button class="tactile-btn">Press me properly</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> brands selling craft, food, print, music — anywhere warmth beats sheen. Keep grain off body text and below ~15% opacity.</p>
+        </article>
+
+        <article class="specimen" id="organic-soft" data-terms="organic soft blobs flowing shapes curved dividers waves asymmetry 2026">
+          <div class="specimen__head"><h3>Organic &amp; Soft</h3><p class="specimen__aka">blobs, flowing shapes, curved section breaks</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">Nature doesn't do 90° corners: blob shapes from eight-value <code>border-radius</code> (this one slowly morphs), wave dividers from a single SVG path, gently asymmetric grids. Signals calm and approachability against rigid template grids. Start subtle — rounded corners and one curved divider — before going full anti-grid; overdone blobs read as 2019 clip-art, and asymmetry that breaks scanning reading order costs more than it charms.</p>
+          <div class="specimen__demo is-flush">
+            <div class="organic"><div class="organic__top"><div class="blob" aria-hidden="true"></div><div><h4 style="margin-bottom:.2rem">Soft geometry</h4><p class="small" style="margin:0;max-width:30ch">The blob is morphing right now — slowly, which is the point.</p></div></div><svg class="organic__wave" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 120 42 220 2 320 18 S 520 34 600 14 L 600 40 L 0 40 Z"/></svg><div class="organic__below small">…and the section below flows in under a wave, not a straight rule.</div></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> wellness, education, community, consumer brands courting warmth. Freeze the morph under reduced motion.</p>
+        </article>
+
+        <article class="specimen" id="kinetic-type" data-terms="kinetic typography animated type variable font motion headline 2026">
+          <div class="specimen__head"><h3>Kinetic Typography</h3><p class="specimen__aka">type in motion, animated headlines, variable-font animation</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">Type as the primary visual — moving instead of illustrated. Letters wave, stretch, or shift weight (variable fonts can animate <code>font-variation-settings</code> smoothly). A page that leads with kinetic type often needs no hero image at all, which is also a performance win. The iron rule: headlines only. Body copy that moves is unreadable, and everything stops under <code>prefers-reduced-motion</code>.</p>
+          <div class="specimen__demo">
+            <p class="kinetic" id="kineticType" aria-label="Type can carry the page">Type can carry the page</p>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="kineticReplay">↻ Replay</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> editorial, event, studio, and campaign sites where the message <em>is</em> the visual. One kinetic moment per view.</p>
+        </article>
+
+        <article class="specimen" id="dopamine" data-terms="dopamine color saturated bright y2k nostalgia neon maximalism chrome 2026">
+          <div class="specimen__head"><h3>Saturated / Dopamine Color</h3><p class="specimen__aka">dopamine design, Y2K revival, neon maximalism</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">Loud, high-contrast, joy-first palettes — neon gradients, chrome sheens, Y2K-nostalgic pinks and cyber-purples. Flip the switch: same layout, different energy. It signals youth and confidence and photographs beautifully on social; it fails in trust-critical contexts (banks, clinics), punishes sloppy contrast, and nostalgia only lands with an audience that has the referent.</p>
+          <div class="specimen__demo">
+            <div class="dopa" id="dopaCard"><span class="dopa__badge">New drop</span><h4 style="margin:.3rem 0 .2rem">Turn the volume up</h4><p class="dopa__sub small" style="margin:0 0 .8rem">Same card, two moods.</p><button class="dopa__btn">Add to bag</button></div>
+            <div class="demo-controls"><label class="switch"><input type="checkbox" id="dopaToggle" role="switch"><span class="switch__track"></span>Dopamine mode</label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> fashion, music, snacks, events, youth products. Check every pair against WCAG — saturation is not contrast.</p>
+        </article>
+
+        <article class="specimen" id="depth-spatial" data-terms="3d depth spatial tilt parallax dimensional lighting liquid glass webgl 2026">
+          <div class="specimen__head"><h3>Depth &amp; Spatial</h3><p class="specimen__aka">3D tilt, dimensional lighting, liquid glass, WebGL scenes</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">Interfaces that acknowledge a third axis: pointer-tracked tilt, a specular highlight that follows your cursor (move it over the card), layered translucency — the direction Apple pushed mainstream with its glassy 2025 design language, and the high end takes further with WebGL scenes. Its known failure is legibility: glass over busy backgrounds breaks contrast badly enough that even Apple shipped an opacity toggle after complaints. Depth is seasoning, not the meal.</p>
+          <div class="specimen__demo">
+            <div class="tilt-stage" id="tiltStage"><div class="tilt" id="tiltCard"><h4 style="margin-bottom:.2rem">Dimensional card</h4><p class="small muted" style="margin:0">Tilts toward your pointer; the light follows. Touch or keyboard? It floats on its own.</p></div></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> product showcases, portfolios, launch pages on capable devices. Cap tilt at ~10°, disable under reduced motion, and never put essential text on moving glass.</p>
+        </article>
+
+        <article class="specimen" id="intent-minimalism" data-terms="intent-first minimalism warm purposeful one action focus calm 2026">
+          <div class="specimen__head"><h3>Intent-First Minimalism</h3><p class="specimen__aka">warm minimalism, purposeful reduction</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">Minimalism reorganized around one <em>action</em> rather than one aesthetic — everything on screen either advances the single goal or leaves. What separates it from the sterile beige minimalism now considered dated: character-rich type, warmth, and texture survive the cut; only competing asks are removed. Flip the switch to watch the anti-pattern bury the button.</p>
+          <div class="specimen__demo">
+            <div class="intent" id="intentDemo">
+              <p class="intent__kicker">Short course</p>
+              <h4 style="margin-bottom:.2rem">Learn typography in 12 lessons</h4>
+              <p class="muted small" style="margin:0 0 .9rem;max-width:34ch">One idea per lesson. Ten minutes each.</p>
+              <button class="btn">Start lesson one</button>
+              <div class="intent__clutter" aria-hidden="true"><div class="banner" style="font-size:.7rem">🍪 We value your privacy<button class="btn btn--sm">Accept</button></div><div class="row"><button class="btn btn--sm btn--secondary">Newsletter</button><button class="btn btn--sm btn--secondary">Watch video</button><button class="btn btn--sm btn--secondary">Book a call</button><span class="badge badge--danger badge--dot">50% off!!</span></div><div class="intent__chat" title="chat widget">💬</div></div>
+            </div>
+            <div class="demo-controls"><label class="switch"><input type="checkbox" id="intentToggle" role="switch"><span class="switch__track"></span>Add everything else back</label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> landing pages with one job, checkout flows, focus tools. If two things compete for the click, neither is the intent.</p>
+        </article>
+
+        <article class="specimen" id="adaptive" data-terms="adaptive personalized surfaces generative ui context aware visitor behavior 2026">
+          <div class="specimen__head"><h3>Adaptive / Personalized Surfaces</h3><p class="specimen__aka">generative UI, context-aware content</p><span class="tag">Style · current</span></div>
+          <p class="specimen__desc">The page rearranges itself per visitor — by time, history, or behavior. This little demo actually does it: it knows the hour and remembers your visits via <code>localStorage</code>. At scale the same idea reorders content and CTAs per user, increasingly AI-driven ("generative UI"). The trade-offs are real: unpredictable interfaces erode learned muscle memory, personalization needs data users may not want taken, and every variant is another state to QA. The practical 2026 shape is hybrid — stable pages plus adaptive slots like this one.</p>
+          <div class="specimen__demo">
+            <div class="adapt"><h4 id="adaptGreeting" style="margin-bottom:.2rem">Hello</h4><p class="small muted" id="adaptNote" style="margin:0 0 .8rem"></p><button class="btn btn--sm btn--secondary" id="adaptReset">Forget me</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> return-visit dashboards, onboarding, content feeds. Keep navigation and structure stable; adapt slots, not skeletons.</p>
+        </article>
+
+        <article class="specimen" id="focus-ring" data-terms="focus-visible outline keyboard accessibility">
+          <div class="specimen__head"><h3>Focus Ring</h3><p class="specimen__aka">focus indicator, :focus-visible</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">The outline shown on the element that will receive keyboard input. <code>:focus-visible</code> shows it for keyboard users but not on mouse click — so there's no reason to remove it. Tab through the buttons.</p>
+          <div class="specimen__demo"><div class="focus-demo"><button class="btn btn--secondary">Tab to me</button><button class="btn btn--secondary">Then me</button><button class="btn btn--secondary fake-focus" tabindex="-1">Styled ring (static)</button></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> always. <code>outline: none</code> without a replacement is an accessibility bug.</p>
+        </article>
+
+        <article class="specimen" id="contrast" data-terms="wcag color contrast ratio accessibility 4.5">
+          <div class="specimen__head"><h3>Color Contrast</h3><p class="specimen__aka">WCAG contrast ratio, AA / AAA</p><span class="tag">Style</span></div>
+          <p class="specimen__desc">Text needs enough luminance difference from its background: <b>4.5:1</b> for normal text (AA), <b>3:1</b> for large text and UI parts, <b>7:1</b> for AAA. Light grey on white is the most common failure.</p>
+          <div class="specimen__demo"><div class="contrast"><span style="background:#fff;color:#1b1a17;border:1px solid #ddd">#1b1a17 on white · 17:1 ✓</span><span style="background:#fff;color:#6b675e;border:1px solid #ddd">#6b675e on white · 5.2:1 ✓ AA</span><span style="background:#fff;color:#aaa;border:1px solid #ddd">#aaa on white · 2.3:1 ✗</span><span style="background:#b3411f;color:#fff">white on accent · 6.1:1 ✓</span></div>
+            <div class="contrast-lab mt-4"><span class="contrast-chip" id="contrastChip" style="background:#fff;border:1px solid #ddd">The quick brown fox — can you still read this?</span></div>
+            <div class="demo-controls"><label>text lightness <input type="range" id="contrastRange" min="0" max="100" step="1" value="55"><output id="contrastOut"></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> choosing every text/background pair. Check with a contrast tool.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="trends" data-section="Trends">
+        <header>
+          <p class="section-num">10</p>
+          <h2>Trends</h2>
+          <p>Styles placed in time — what's gathering momentum, what's everywhere, what has already turned. The point isn't fashion-watching; it's judgment: knowing <em>when</em> a look is right, what it costs, and what it will say about the site in three years. Snapshot as of mid-2026; hold it loosely.</p>
+        </header>
+
+        <article class="specimen" id="trend-map" data-terms="trends rising peaking dated lifecycle 2026 what's current momentum">
+          <div class="specimen__head"><h3>The State of the Styles</h3><p class="specimen__aka">rising · peaking · turned</p><span class="tag">Trends</span></div>
+          <p class="specimen__desc">Every entry expands — each one names the problem the trend solves, where it breaks down, and what it costs. "Rising" means loud discourse and growing use, not a guarantee; at least one rising style (tactile/skeuomorphic revival) is talked about far more than it is shipped.</p>
+          <div class="specimen__demo">
+            <div class="trend-board">
+              <div class="trend-col trend-col--rising"><h4>▲ Rising</h4>
+                <details class="trend"><summary>Tactile texture</summary><div><b>Solves:</b> AI-era sameness — grain, warmth and press-depth read as human. <b>Breaks:</b> texture over low-contrast text; literal skeuomorphism reads 2010. <b>Costs:</b> restraint — and the honesty that critical buzz still outpaces shipped usage.</div></details>
+                <details class="trend"><summary>Kinetic typography</summary><div><b>Solves:</b> a hero without hero-image weight; personality from type alone. <b>Breaks:</b> the instant body copy moves; ignoring reduced-motion. <b>Costs:</b> variable-font licensing and motion discipline.</div></details>
+                <details class="trend"><summary>Scroll-driven native CSS</summary><div><b>Solves:</b> scroll-linked motion without JS scroll listeners — smoother and off the main thread. <b>Breaks:</b> browser support is still uneven (Firefox behind a flag mid-2026); must be progressive enhancement. <b>Costs:</b> almost nothing when layered on properly.</div></details>
+                <details class="trend"><summary>Adaptive / generative UI</summary><div><b>Solves:</b> one page serving many intents; returning visitors skip the pitch. <b>Breaks:</b> unpredictable layouts erode muscle memory; privacy cost is real. <b>Costs:</b> every personalized variant is another state to design and QA.</div></details>
+              </div>
+              <div class="trend-col trend-col--peaking"><h4>● Peaking</h4>
+                <details class="trend"><summary>Bento grids</summary><div><b>Solves:</b> showing many unequal things at once with clear hierarchy. <b>Breaks:</b> thin content stretched into boxes; static bentos are starting to look like everyone else. <b>Costs:</b> real content for every cell. The evolution is interactive cells, not abandonment.</div></details>
+                <details class="trend"><summary>Glass / translucency</summary><div><b>Solves:</b> layered depth and context — you see what's behind the panel. <b>Breaks:</b> contrast over busy backgrounds; even Apple added an opacity toggle after legibility complaints. <b>Costs:</b> GPU time on low-end devices. Contested: "defining the era" vs "accent only" — both positions are live.</div></details>
+                <details class="trend"><summary>Mesh / aurora gradients</summary><div><b>Solves:</b> cheap atmosphere, no photography needed. <b>Breaks:</b> it became the background noise of SaaS — differentiation now needs motion or restraint. <b>Costs:</b> genericness more than performance.</div></details>
+                <details class="trend"><summary>3D &amp; WebGL scenes</summary><div><b>Solves:</b> product showcases and award-tier immersion nothing else matches. <b>Breaks:</b> payload, battery, accessibility; useless for content-first sites. <b>Costs:</b> specialist build effort — which is why it peaks at the high end and only trickles down.</div></details>
+                <details class="trend"><summary>Neo-brutalism</summary><div><b>Solves:</b> instant personality; impossible to mistake for a template. <b>Breaks:</b> dense productivity UIs; the chaotic variant tests badly for task success. <b>Costs:</b> it splits — disciplined brutalism thrives, anti-design brutalism is already fading.</div></details>
+              </div>
+              <div class="trend-col trend-col--turned"><h4>▼ Turned</h4>
+                <details class="trend"><summary>Heavy parallax</summary><div><b>Solved:</b> 2013's hunger for cinematic scrolling. <b>Turned because:</b> motion sickness, jank, and content held hostage by choreography. <b>Now:</b> subtle single-layer depth, or native scroll-driven animation.</div></details>
+                <details class="trend"><summary>Scroll-jacking</summary><div><b>Solved:</b> forcing a narrative sequence. <b>Turned because:</b> it fights the user's own scroll — the one interaction they own. <b>Now:</b> scroll-driven CSS that follows the reader instead of driving them.</div></details>
+                <details class="trend"><summary>Extreme minimalism</summary><div><b>Solved:</b> 2018's clutter, and it photographed well in portfolios. <b>Turned because:</b> beige-on-white sameness became its own noise, then AI templates made it free. <b>Now:</b> warm minimalism — still reduced, but with character-rich type and texture.</div></details>
+                <details class="trend"><summary>Neumorphism</summary><div><b>Solved:</b> soft, calm, single-surface aesthetics. <b>Turned because:</b> contrast and affordance failures were structural, not fixable. <b>Now:</b> a niche survivor in instrument-style UIs (players, smart-home), and soft shadows used <em>with</em> borders and labels.</div></details>
+                <details class="trend"><summary>Hero video backgrounds</summary><div><b>Solved:</b> instant atmosphere. <b>Turned because:</b> they wreck load metrics and mobile data budgets for decoration. <b>Now:</b> big type, gradients, lightweight 3D.</div></details>
+                <details class="trend"><summary>Auto-carousels &amp; custom cursors</summary><div><b>Solved:</b> stakeholder arguments (put everything in the hero). <b>Turned because:</b> slide two is where content goes to die, and cursor gimmicks tax usability. <b>Now:</b> curated static heroes; one thing said well.</div></details>
+              </div>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> choosing a direction for a redesign — check which column your reference sites live in, and how close to "turned" the look you love is.</p>
+        </article>
+
+        <article class="specimen" id="trend-judgment" data-terms="judging trends when to adopt disagreements flat design dead lifecycle adopt">
+          <div class="specimen__head"><h3>How to Judge a Trend</h3><p class="specimen__aka">the three questions + honest disagreements</p><span class="tag">Trends</span></div>
+          <p class="specimen__desc">Before adopting any look, ask: <b>1.</b> What problem does it solve for <em>this</em> site — or is it decoration? <b>2.</b> Where does it break — and does that overlap with your users (motion sensitivity, old devices, screen readers)? <b>3.</b> What does it cost — build time, performance budget, accessibility risk, and how soon it will date. A trend that survives all three questions isn't a trend for you anymore; it's a decision. Some questions the industry itself hasn't settled — disagreements below, left unresolved on purpose.</p>
+          <div class="specimen__demo">
+            <div class="acc">
+              <details><summary>"Flat design is dead" — is it?</summary><div>As an ideology, yes: nobody argues for pure flatness anymore. As a substrate, no: most shipped UI is still flat surfaces with subtle depth and motion layered on ("flat-plus"). Both headlines exist in 2026 sources because both are true at different altitudes.</div></details>
+              <details><summary>Is glass the defining look or an accent?</summary><div>One camp points at Apple pushing translucency across every OS; the other points at the accessibility backlash and Apple's own opacity concession. Safe reading: glass is a legitimate layer treatment, not a system-wide identity — the disagreement is about dosage.</div></details>
+              <details><summary>Bento: must-have or already tired?</summary><div>Usage data says it's near-standard for SaaS homepages; commentary increasingly calls static bentos samey. Both are right — the grid is now table stakes, and differentiation moved inside the cells (live data, interaction, motion).</div></details>
+              <details><summary>Does the tactile revival actually ship?</summary><div>It dominates 2026 trend writing, but at least one large telemetry set found skeuomorphic styles in a fraction of a percent of real projects. Discourse leads production by a year or more — which is exactly why "one thread among several" is the honest framing.</div></details>
+            </div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> a stakeholder says "make it look like [award-winning site]" — run the three questions out loud before you commit the budget.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="data" data-section="Data &amp; Content">
+        <header>
+          <p class="section-num">11</p>
+          <h2>Data &amp; Content Display</h2>
+          <p>Named containers for showing stuff: cards, tables, stats, timelines.</p>
+        </header>
+
+        <article class="specimen" id="card" data-terms="card media body actions clickable">
+          <div class="specimen__head"><h3>Card</h3><p class="specimen__aka">tile, media card, clickable card</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">A bounded surface grouping media + title + description + actions. The whole card is clickable via a pseudo-element stretched over it ("stretched link") while keeping a real link for accessibility. Hover lift shows it's interactive.</p>
+          <div class="specimen__demo"><div class="card card--clickable"><div class="card__media"></div><div class="card__body"><h4 style="font-size:var(--fs-0)"><a href="#card" style="color:inherit;text-decoration:none">Card title is the link</a></h4><p>Two lines of supporting copy, clamped. The stretched-link trick makes the whole surface clickable.</p><span class="badge">Tag</span></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> collections of similar items — products, posts, people.</p>
+        </article>
+
+        <article class="specimen" id="media-object" data-terms="avatar text comment row list item">
+          <div class="specimen__head"><h3>Media Object</h3><p class="specimen__aka">avatar + text row, comment layout, list item</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">An image/avatar on the left, text that fills the rest. Coined by Nicole Sullivan in 2010; still everywhere — every comment, notification, chat message.</p>
+          <div class="specimen__demo"><div class="demo-resize" style="width:min(100%,440px)"><div class="media-obj"><div class="avatar" style="background:#6b8fd8">JD</div><div><strong>Jordan Doe</strong> <span class="muted small">· 2h</span><p class="small" style="margin:.2rem 0 0">The media object never wraps the text under the image — that's the defining property.</p></div></div></div><p class="demo-note">↘ narrow the box — the text column squeezes but never wraps under the avatar</p></div>
+          <p class="specimen__use"><strong>Use when:</strong> comments, feeds, notification lists, contact rows.</p>
+        </article>
+
+        <article class="specimen" id="table" data-terms="data table zebra sticky header sortable numeric">
+          <div class="specimen__head"><h3>Data Table</h3><p class="specimen__aka">zebra striping, sticky header, sortable table</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Alternate row shading (zebra) helps the eye track wide rows; sticky header keeps columns labeled while scrolling; numbers right-align with tabular figures; row hover highlights. Scroll inside. Click a header to sort.</p>
+          <div class="specimen__demo is-flush"><div class="table-wrap"><table class="data" id="sortTable"><thead><tr><th data-sort="text">Name</th><th data-sort="text">Category</th><th class="num" data-sort="num">Views</th><th class="num" data-sort="num">Δ</th><th>Status</th></tr></thead><tbody><tr><td>Holy grail</td><td>Layout</td><td class="num">12,405</td><td class="num">+4.2%</td><td><span class="badge badge--success badge--dot">Live</span></td></tr><tr><td>Bento grid</td><td>Layout</td><td class="num">9,811</td><td class="num">+18.0%</td><td><span class="badge badge--success badge--dot">Live</span></td></tr><tr><td>Toast</td><td>Feedback</td><td class="num">7,203</td><td class="num">−1.1%</td><td><span class="badge badge--warning badge--dot">Review</span></td></tr><tr><td>Combobox</td><td>Forms</td><td class="num">4,090</td><td class="num">+0.4%</td><td><span class="badge badge--success badge--dot">Live</span></td></tr><tr><td>Parallax</td><td>Motion</td><td class="num">1,318</td><td class="num">−12.5%</td><td><span class="badge badge--danger badge--dot">Deprecated</span></td></tr><tr><td>Glassmorphism</td><td>Style</td><td class="num">6,554</td><td class="num">+7.9%</td><td><span class="badge badge--success badge--dot">Live</span></td></tr><tr><td>Skeleton</td><td>Feedback</td><td class="num">3,742</td><td class="num">+2.2%</td><td><span class="badge badge--success badge--dot">Live</span></td></tr></tbody></table></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> tabular data (comparisons, admin lists). Not for layout, ever.</p>
+        </article>
+
+        <article class="specimen" id="stats" data-terms="kpi metric stat tile sparkline dashboard">
+          <div class="specimen__head"><h3>Stat Tiles</h3><p class="specimen__aka">KPI cards, metric tiles, sparklines</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Label small, number big, delta colored, optional sparkline. The dashboard staple. Numbers use tabular figures so they don't wobble when they update.</p>
+          <div class="specimen__demo"><div class="stat-row"><div class="stat"><div class="stat__label">Visitors</div><div class="stat__value">48.2k</div><div class="stat__delta up">▲ 12.4%</div><svg class="sparkline" viewBox="0 0 100 28" preserveAspectRatio="none"><polyline fill="none" stroke="var(--success)" stroke-width="2" points="0,22 15,18 30,20 45,12 60,14 75,8 100,4"/></svg></div><div class="stat"><div class="stat__label">Bounce rate</div><div class="stat__value">31%</div><div class="stat__delta down">▼ 2.1%</div><svg class="sparkline" viewBox="0 0 100 28" preserveAspectRatio="none"><polyline fill="none" stroke="var(--danger)" stroke-width="2" points="0,6 15,10 30,8 45,14 60,12 75,20 100,22"/></svg></div><div class="stat"><div class="stat__label">Revenue</div><div class="stat__value">$9,140</div><div class="stat__delta up">▲ 5.0%</div><svg class="sparkline" viewBox="0 0 100 28" preserveAspectRatio="none"><polyline fill="none" stroke="var(--success)" stroke-width="2" points="0,20 15,16 30,18 45,10 60,12 75,6 100,8"/></svg></div></div>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="statsBtn">Simulate new data</button><span class="demo-note" style="margin:0">numbers count up, deltas recolor, sparklines redraw</span></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> dashboards, analytics summaries, "by the numbers" sections.</p>
+        </article>
+
+        <article class="specimen" id="timeline" data-terms="history changelog activity feed vertical">
+          <div class="specimen__head"><h3>Timeline</h3><p class="specimen__aka">activity feed, changelog, vertical stepper</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Events on a vertical line with dot markers and timestamps. Chronological storytelling: order history, release notes, "our story".</p>
+          <div class="specimen__demo"><ol class="timeline" id="timelineDemo"><li><time>2026-08-19 09:12</time><strong>Order shipped</strong> — tracking number issued.</li><li><time>2026-08-18 16:40</time><strong>Packed</strong> at warehouse 3.</li><li><time>2026-08-18 10:05</time><strong>Order placed</strong> — payment confirmed.</li></ol>
+            <div class="demo-controls"><button class="btn btn--sm btn--secondary" id="timelineBtn">Add an event</button></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> order tracking, audit logs, roadmaps, about pages.</p>
+        </article>
+
+        <article class="specimen" id="avatars" data-terms="avatar stack facepile group overlap">
+          <div class="specimen__head"><h3>Avatar Stack</h3><p class="specimen__aka">facepile, overlapping avatars, "+N more"</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Overlapping circular avatars with a border in the surface color to separate them, ending in a "+N" overflow. Initials as fallback when there's no photo.</p>
+          <div class="specimen__demo"><div class="row" style="gap:var(--s-5)"><div class="avatars" id="avatarStack"><div class="avatar" style="background:#b3411f">AK</div><div class="avatar" style="background:#6b8fd8">JD</div><div class="avatar" style="background:#2f7d4a">MR</div><div class="avatar" style="background:#b8860b">TS</div><div class="avatar avatar--more">+7</div></div><span class="small muted" id="avatarCount">11 collaborators</span></div>
+            <div class="demo-controls"><label>collaborators <input type="range" id="avatarRange" min="1" max="15" step="1" value="11"><output></output></label></div>
+          </div>
+          <p class="specimen__use"><strong>Use when:</strong> showing participants, assignees, "who's viewing".</p>
+        </article>
+
+        <article class="specimen" id="kanban" data-terms="board columns drag and drop trello">
+          <div class="specimen__head"><h3>Kanban Board</h3><p class="specimen__aka">columns + cards, drag-and-drop board</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Columns as states, cards as items, drag to move. Uses native HTML5 drag-and-drop here (<code>draggable</code>, <code>dragover</code>, <code>drop</code>). Try dragging a card.</p>
+          <div class="specimen__demo"><div class="kanban" id="kanbanBoard"><div class="kanban__col"><h5>To do <span>2</span></h5><div class="kanban__card" draggable="true">Write glossary</div><div class="kanban__card" draggable="true">Add OG image</div></div><div class="kanban__col"><h5>Doing <span>1</span></h5><div class="kanban__card" draggable="true">Build kanban demo</div></div><div class="kanban__col"><h5>Done <span>1</span></h5><div class="kanban__card" draggable="true">Design tokens</div></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> task/status tracking, pipelines (sales, hiring).</p>
+        </article>
+
+        <article class="specimen" id="pricing" data-terms="pricing table tiers featured plan">
+          <div class="specimen__head"><h3>Pricing Table</h3><p class="specimen__aka">plan comparison, tiered pricing, featured tier</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Three tiers with the recommended one visually emphasized (bigger, colored border, "Popular" badge) — a nudge called <em>anchoring</em>. Feature lists short; CTA in every column.</p>
+          <div class="specimen__demo"><div class="seg" role="radiogroup" aria-label="Billing period" style="margin-bottom:var(--s-4)"><input type="radio" name="billing" id="billM" checked><label for="billM">Monthly</label><input type="radio" name="billing" id="billY"><label for="billY">Yearly · save 20%</label></div>
+            <div class="pricing"><div class="price"><strong>Starter</strong><div class="price__amt" data-m="$0" data-y="$0">$0</div><p class="small muted price__per">per month</p><ul><li>1 project</li><li>Community support</li></ul><button class="btn btn--sm btn--secondary">Choose</button></div><div class="price is-featured"><span class="badge badge--info">Popular</span><strong>Pro</strong><div class="price__amt" data-m="$12" data-y="$115">$12</div><p class="small muted price__per">per month</p><ul><li>Unlimited projects</li><li>Priority support</li></ul><button class="btn btn--sm">Choose</button></div><div class="price"><strong>Team</strong><div class="price__amt" data-m="$39" data-y="$374">$39</div><p class="small muted price__per">per month</p><ul><li>Everything in Pro</li><li>SSO &amp; audit log</li></ul><button class="btn btn--sm btn--secondary">Choose</button></div></div></div>
+          <p class="specimen__use"><strong>Use when:</strong> SaaS pricing pages, plan upgrade prompts.</p>
+        </article>
+
+        <article class="specimen" id="description-list" data-terms="key value pairs metadata dl dt dd">
+          <div class="specimen__head"><h3>Description List</h3><p class="specimen__aka">key–value pairs, metadata list, definition list</p><span class="tag">Data</span></div>
+          <p class="specimen__desc">Term + detail pairs using semantic <code>&lt;dl&gt;</code>. Grid makes the two columns align. The right element for specs, metadata panels, and — yes — glossaries like the one below.</p>
+          <div class="specimen__demo"><dl class="dl"><dt>Owner</dt><dd>Jordan Doe</dd><dt>Created</dt><dd>Aug 19, 2026</dd><dt>Status</dt><dd><span class="badge badge--success badge--dot">Active</span></dd><dt>Region</dt><dd>eu-west-1</dd></dl></div>
+          <p class="specimen__use"><strong>Use when:</strong> object detail panels, product specs, invoice metadata.</p>
+        </article>
+      </section>
+
+      <!-- ================================================================ -->
+      <section class="section" id="glossary" data-section="Glossary">
+        <header>
+          <p class="section-num">12</p>
+          <h2>Glossary</h2>
+          <p>Vocabulary that comes up in design reviews, tutorials, and hand-offs. Knowing the word is half of noticing the thing.</p>
+        </header>
+        <div class="glossary"><dl>
+          <dt>Above the fold</dt><dd>What's visible before scrolling. From newspapers folded on the stand.</dd>
+          <dt>Affordance</dt><dd>A visual cue that something can be interacted with — a button looks pressable, a link looks clickable.</dd>
+          <dt>Atomic design</dt><dd>Brad Frost's hierarchy: atoms (button) → molecules (search field) → organisms (header) → templates → pages.</dd>
+          <dt>BEM</dt><dd>Block__Element--Modifier CSS naming (<code>.card__title--large</code>). Used on this site.</dd>
+          <dt>Breakpoint</dt><dd>A viewport width where a media query changes the layout. Common: 640, 768, 1024, 1280.</dd>
+          <dt>Call to action (CTA)</dt><dd>The button/link you most want clicked. One primary CTA per screen.</dd>
+          <dt>Chrome</dt><dd>The UI framing around content: headers, sidebars, toolbars.</dd>
+          <dt>Cognitive load</dt><dd>How much thinking the interface demands. Reduce it: fewer choices, familiar patterns, clear hierarchy.</dd>
+          <dt>Cumulative Layout Shift (CLS)</dt><dd>Content jumping as things load. Prevent with aspect-ratio boxes, reserved space, font-display swap tuning.</dd>
+          <dt>Dark pattern</dt><dd>Design that tricks users (hidden unsubscribe, pre-checked upsells). Don't.</dd>
+          <dt>Design system</dt><dd>Tokens + components + guidelines, documented, so a team ships consistent UI.</dd>
+          <dt>F-pattern / Z-pattern</dt><dd>Eye-tracking shapes: text-heavy pages read in an F; sparse landing pages scan in a Z (logo → nav → hero → CTA).</dd>
+          <dt>Fitts's law</dt><dd>Bigger and closer targets are faster to hit. Make buttons big; put them where the pointer already is.</dd>
+          <dt>Fold</dt><dd>See "above the fold". Less meaningful now with varied screens; still a useful concept.</dd>
+          <dt>Gestalt principles</dt><dd>Proximity (close = related), similarity, continuity, closure, common region — how the eye groups things. Spacing is grouping.</dd>
+          <dt>Grid (12-column)</dt><dd>Classic layout system: 12 equal columns with gutters; elements span 3, 4, 6, etc.</dd>
+          <dt>Hick's law</dt><dd>More options → slower decisions. Trim menus.</dd>
+          <dt>Hit target / tap target</dt><dd>The tappable area. Minimum ~44×44px on touch.</dd>
+          <dt>Interaction states</dt><dd>default, hover, focus, active (pressed), disabled, loading, selected, visited.</dd>
+          <dt>Jank</dt><dd>Stuttery scrolling/animation from dropped frames. Animate only transform and opacity.</dd>
+          <dt>Kerning / tracking / leading</dt><dd>Space between letter pairs / across a word (letter-spacing) / between lines (line-height).</dd>
+          <dt>Mobile-first</dt><dd>Write base styles for small screens, then add complexity with <code>min-width</code> media queries.</dd>
+          <dt>Modal vs non-modal</dt><dd>Modal blocks the rest of the UI (dialog); non-modal doesn't (popover, toast).</dd>
+          <dt>Negative space / whitespace</dt><dd>Empty area. Not wasted — it's what creates grouping and calm.</dd>
+          <dt>Optimistic UI</dt><dd>Show the result immediately (liked, sent), then reconcile with the server; roll back on failure.</dd>
+          <dt>Orphan / widow</dt><dd>A single word alone on the last line (orphan) or a single line stranded at the top of a column (widow). <code>text-wrap: balance/pretty</code> helps.</dd>
+          <dt>Progressive disclosure</dt><dd>Show the basics; reveal detail on demand (accordions, "advanced" toggles).</dd>
+          <dt>Progressive enhancement</dt><dd>Works with HTML alone, better with CSS, best with JS. Opposite of graceful degradation's direction, same goal.</dd>
+          <dt>Responsive vs adaptive</dt><dd>Responsive: fluid layout that reflows continuously. Adaptive: fixed layouts swapped at breakpoints.</dd>
+          <dt>Semantic HTML</dt><dd>Using the element that means the thing: <code>nav, main, article, button, dialog</code>. Free accessibility and SEO.</dd>
+          <dt>Skeuomorphism / flat design</dt><dd>Mimicking real materials (leather, stitching) vs. abstract flat shapes. Flat won ~2013; "flat 2.0" added subtle depth back.</dd>
+          <dt>Surface</dt><dd>A raised container color (card, sheet) distinct from the page background. Tokens: <code>--bg</code> vs <code>--surface</code>.</dd>
+          <dt>Utility classes</dt><dd>Single-purpose classes like <code>.mt-4</code>, <code>.flex</code> (Tailwind style). Fast; can bloat markup.</dd>
+          <dt>Viewport units</dt><dd><code>vw, vh, dvh, svh, lvh</code> — % of the viewport. Use <code>dvh</code> for mobile-safe full height.</dd>
+          <dt>Visual weight</dt><dd>How much an element pulls the eye: size, contrast, color saturation, density. Balance it.</dd>
+          <dt>WCAG</dt><dd>Web Content Accessibility Guidelines. Levels A / AA / AAA. Aim for AA.</dd>
+          <dt>Wireframe → mockup → prototype</dt><dd>Boxes-and-lines structure → styled static picture → clickable simulation.</dd>
+        </dl></div>
+      </section>
+
+      <footer class="site-footer">
+        <p>Specimens — a self-teaching pattern library. Every demo here is plain HTML/CSS/JS with no framework; view source or open <code>styles.css</code> and <code>app.js</code>, which are commented by pattern name.</p>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<button class="btn back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

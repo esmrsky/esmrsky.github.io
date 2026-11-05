@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Landscape — Code School</title>
+  <link rel="stylesheet" href="css/style.css" />
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body data-page="landscape">
+
+  <main class="wrap">
+    <header class="page-head">
+      <div class="kicker">The perishable page — dated on purpose</div>
+      <h1>The AI Landscape</h1>
+      <p class="lede">
+        What AI coding tools are genuinely strong at, where they're still weak, and —
+        most useful of all — which weaknesses are about to disappear. Read the
+        trajectory column as carefully as the rating.
+      </p>
+      <span class="updated-badge" id="updated-badge">📅 Last updated: …</span>
+    </header>
+
+    <div class="legend" id="legend"></div>
+
+    <div id="landscape-root"></div>
+
+    <section class="verdict-section">
+      <h2>So what do you do with this?</h2>
+      <div class="grid grid-3" id="takeaways-root"></div>
+    </section>
+
+    <section class="card" style="margin-top: 2rem;">
+      <h3>🔄 Keeping this page honest</h3>
+      <p style="color: var(--text-dim); font-size: 0.94rem; margin: 0;">
+        Every rating on this page lives in <code>data/landscape-data.js</code> — one
+        editable file. When the landscape shifts (it will), open this project in Claude
+        Code and say: <em>“research the current state of AI coding capabilities and
+        update landscape-data.js, keeping the same format.”</em> A capability page that
+        can't be cheaply updated becomes misinformation within months; this one is
+        designed to be refreshed in five minutes.
+      </p>
+    </section>
+  </main>
+
+  <script src="data/landscape-data.js"></script>
+  <script>
+    function esc(s) {
+      return s ? s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    }
+
+    document.getElementById("updated-badge").textContent = "📅 Last updated: " + LANDSCAPE_UPDATED;
+
+    document.getElementById("legend").innerHTML = Object.values(LANDSCAPE_RATINGS)
+      .map((r) => `<span><span class="dot ${r.dot}"></span> <strong>${r.label}</strong> — ${r.desc}</span>`)
+      .join("");
+
+    document.getElementById("landscape-root").innerHTML = LANDSCAPE.map((domain) => `
+      <section class="cap-domain">
+        <h2>${esc(domain.domain)}</h2>
+        <p class="domain-sub">${esc(domain.sub)}</p>
+        ${domain.items
+          .map((item) => {
+            const r = LANDSCAPE_RATINGS[item.rating];
+            const t = LANDSCAPE_TRAJECTORIES[item.trajectory];
+            return `
+            <div class="cap-row">
+              <div class="cap-name"><span class="dot ${r.dot}" style="margin-right:0.5em"></span>${esc(item.name)}</div>
+              <span class="badge ${t.badge}">${t.arrow} ${t.label}</span>
+              <span class="badge badge-gray">${r.label}</span>
+              <p class="cap-note">${esc(item.note)}</p>
+            </div>`;
+          })
+          .join("")}
+      </section>`).join("");
+
+    document.getElementById("takeaways-root").innerHTML = LANDSCAPE_TAKEAWAYS.map(
+      (t) => `
+      <div class="card">
+        <h3>${esc(t.title)}</h3>
+        <p style="color: var(--text-dim); font-size: 0.94rem; margin: 0;">${esc(t.body)}</p>
+      </div>`
+    ).join("");
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

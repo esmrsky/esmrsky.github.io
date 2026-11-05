@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timeline — Code School</title>
+  <link rel="stylesheet" href="css/style.css" />
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body data-page="timeline">
+
+  <main class="wrap">
+    <header class="page-head">
+      <div class="kicker">How we got here</div>
+      <h1>The Timeline</h1>
+      <p class="lede">
+        Every era had skills people poured years into. Some compounded forever; some
+        evaporated. Noticing <strong>which kind</strong> each was is the whole game —
+        because the same split is happening right now.
+      </p>
+    </header>
+
+    <div class="timeline" id="timeline-root"></div>
+
+    <section class="manifesto">
+      <h2>The pattern, in one sentence</h2>
+      <p>
+        <strong>Tool-specific knowledge depreciates; system-level understanding compounds.</strong>
+        jQuery tricks, webpack configs, and prompt incantations all died within a decade
+        of mattering. The request/response model, the git mental model, component
+        thinking, and code review culture are each decades old and more relevant than
+        ever. When deciding what to learn next, ask which pile it belongs to.
+      </p>
+    </section>
+  </main>
+
+  <script src="data/timeline-data.js"></script>
+  <script>
+    function esc(s) {
+      return s ? s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    }
+
+    document.getElementById("timeline-root").innerHTML = TIMELINE.map((item) => `
+      <div class="tl-item${item.future ? " future" : ""}">
+        <div class="tl-era">${esc(item.era)}</div>
+        <h3>${esc(item.title)}</h3>
+        <p class="tl-desc">${esc(item.desc)}</p>
+        <div class="tl-tags">
+          ${item.tags.map((t) => `<span class="badge badge-gray">${esc(t)}</span>`).join("")}
+        </div>
+        <div style="margin-top: 0.75rem;">
+          ${
+            item.then && item.then !== "—"
+              ? `<div class="tl-verdict">
+                  <span class="label then">What people studied then</span>
+                  <p>${esc(item.then)}</p>
+                </div>`
+              : ""
+          }
+          <div class="tl-verdict">
+            <span class="label still">${item.future ? "How to position for it" : "What still matters"}</span>
+            <p>${esc(item.still)}</p>
+          </div>
+        </div>
+      </div>`).join("");
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

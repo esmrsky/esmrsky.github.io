@@ -1,0 +1,3699 @@
+/* ================= THE THREAD — map-room design system ================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+
+:root {
+  /* chart paper + sepia ink */
+  --paper: #f1f0e6;
+  --paper-deep: #e9e7d7;
+  --card: #faf9f2;
+  --card-2: #f4f3e8;
+  --ink: #2b2620;
+  --ink-soft: #675f4e;
+  --ink-faint: #6f6957;
+  --line: #d7d3c0;
+  --line-soft: #e5e2d2;
+  --grat: rgba(43, 38, 32, 0.055);
+
+  /* the scarlet route + lamplight gold */
+  --thread: #b3242f;
+  --gold: #a1791f;
+
+  /* section hues (muted map inks) */
+  --c-start: #b3242f;
+  --c-pattern: #a06b1e;
+  --c-threads: #b3242f;
+  --c-codes: #8f6c12;
+  --c-triune: #4d679b;
+  --c-walk: #3f7a44;
+  --c-detour: #a8502f;
+  --c-mind: #5b5a93;
+  --c-library: #2f6f8c;
+
+  /* thread route hues */
+  --t-lamb: #b3242f;
+  --t-bread: #a97b23;
+  --t-water: #2e6f8e;
+  --t-light: #a8851c;
+  --t-shepherd: #4a7c46;
+  --t-king: #6f4d8f;
+  --t-temple: #2f7a70;
+  --t-rest: #55648c;
+  --t-covenant: #8a5a2b;
+  --t-bride: #b0506e;
+  --t-exile: #5a6472;
+  --t-name: #bf5b22;
+  --t-garment: #9e4b86;
+
+  /* pattern season hues */
+  --s-egypt: #5a6472;
+  --s-desert: #a06b1e;
+  --s-land: #3f7a44;
+
+  --shadow: 0 1px 2px rgba(43,38,32,.05), 0 10px 28px -14px rgba(43,38,32,.22);
+  --shadow-sm: 0 1px 2px rgba(43,38,32,.05), 0 8px 20px -16px rgba(43,38,32,.2);
+  --shadow-md: 0 2px 4px rgba(43,38,32,.06), 0 14px 30px -16px rgba(43,38,32,.26);
+  --shadow-lift: 0 2px 4px rgba(43,38,32,.06), 0 16px 36px -14px rgba(43,38,32,.28);
+
+  /* Fallbacks only — the web faces below load from Google Fonts. These are the nearest
+     system stacks, so the first paint sits close to where the real face will land. */
+  --fb-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --fb-sans: "Avenir Next", Avenir, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  /* A typeface theme is a pairing, not a font: headings, body and labels are set together,
+     and some themes deliberately cross the two (serif headings over sans text). The reading
+     settings swap the whole trio; the palette never touches them. */
+  --font-head: "Literata", var(--fb-serif);
+  --font-body: "Literata", var(--fb-serif);
+  --font-label: "Figtree", var(--fb-sans);
+  /* Each theme carries its own optical multiplier, so swapping one keeps the same reading
+     size on the page instead of jumping a step smaller or larger. */
+  --fs-theme: 1;
+  /* the reader's own text size, driven by the +/- stepper */
+  --fs: 1;
+
+  /* One line-height dial. Everything that is prose derives from it, so Snug and Roomy are
+     felt across the whole page rather than on body copy alone. */
+  --lh: 1.75;
+  --lh-tight: calc(var(--lh) - 0.3);
+  --lh-ui: calc(var(--lh) - 0.2);
+  --lh-wide: calc(var(--lh) + 0.15);
+
+  --r: 10px;
+  --r-lg: 16px;
+
+  /* one ladder, so a new layer never has to guess a number */
+  --z-rail: 40;
+  --z-fab: 45;
+  --z-topbar: 50;
+  --z-tooltip: 200;
+  --z-menu: 400;
+}
+
+/* ---------- warm ----------
+   Lamplight rather than daylight: the same sepia ink on a paper that has sat in the sun.
+   It is a third choice, not a variant of light, so the dark media query below has to let
+   it through untouched — hence the second :not() on that guard. */
+/* ---------- the palette eases from one theme to the next ----------
+   Color is the one site-wide setting that costs no layout, so it does not need the view
+   transition the type dials depend on — it can be interpolated for real. A custom property is
+   an untyped string to the browser until it is registered; declared as a <color> with
+   @property, every token below becomes a value it knows how to walk from one end to the other.
+   One transition list on :root then carries the whole palette across, and nothing else has to
+   declare anything: every rule already reading var(--paper) or var(--t-water) simply follows.
+
+   The list is switched on by a class rather than left standing, because the first paint sets
+   data-theme too — left standing, every visit would open by fading into its own palette.
+   Registration is not optional here: without it these transitions silently do nothing. */
+@property --paper { syntax: "<color>"; inherits: true; initial-value: #f1f0e6; }
+@property --paper-deep { syntax: "<color>"; inherits: true; initial-value: #e9e7d7; }
+@property --card { syntax: "<color>"; inherits: true; initial-value: #faf9f2; }
+@property --card-2 { syntax: "<color>"; inherits: true; initial-value: #f4f3e8; }
+@property --ink { syntax: "<color>"; inherits: true; initial-value: #2b2620; }
+@property --ink-soft { syntax: "<color>"; inherits: true; initial-value: #675f4e; }
+@property --ink-faint { syntax: "<color>"; inherits: true; initial-value: #6f6957; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: #d7d3c0; }
+@property --line-soft { syntax: "<color>"; inherits: true; initial-value: #e5e2d2; }
+@property --grat { syntax: "<color>"; inherits: true; initial-value: rgba(43, 38, 32, 0.055); }
+@property --thread { syntax: "<color>"; inherits: true; initial-value: #b3242f; }
+@property --gold { syntax: "<color>"; inherits: true; initial-value: #a1791f; }
+@property --c-start { syntax: "<color>"; inherits: true; initial-value: #b3242f; }
+@property --c-pattern { syntax: "<color>"; inherits: true; initial-value: #a06b1e; }
+@property --c-threads { syntax: "<color>"; inherits: true; initial-value: #b3242f; }
+@property --c-codes { syntax: "<color>"; inherits: true; initial-value: #8f6c12; }
+@property --c-triune { syntax: "<color>"; inherits: true; initial-value: #4d679b; }
+@property --c-walk { syntax: "<color>"; inherits: true; initial-value: #3f7a44; }
+@property --c-detour { syntax: "<color>"; inherits: true; initial-value: #a8502f; }
+@property --c-mind { syntax: "<color>"; inherits: true; initial-value: #5b5a93; }
+@property --c-library { syntax: "<color>"; inherits: true; initial-value: #2f6f8c; }
+@property --t-lamb { syntax: "<color>"; inherits: true; initial-value: #b3242f; }
+@property --t-bread { syntax: "<color>"; inherits: true; initial-value: #a97b23; }
+@property --t-water { syntax: "<color>"; inherits: true; initial-value: #2e6f8e; }
+@property --t-light { syntax: "<color>"; inherits: true; initial-value: #a8851c; }
+@property --t-shepherd { syntax: "<color>"; inherits: true; initial-value: #4a7c46; }
+@property --t-king { syntax: "<color>"; inherits: true; initial-value: #6f4d8f; }
+@property --t-temple { syntax: "<color>"; inherits: true; initial-value: #2f7a70; }
+@property --t-rest { syntax: "<color>"; inherits: true; initial-value: #55648c; }
+@property --t-covenant { syntax: "<color>"; inherits: true; initial-value: #8a5a2b; }
+@property --t-bride { syntax: "<color>"; inherits: true; initial-value: #b0506e; }
+@property --t-exile { syntax: "<color>"; inherits: true; initial-value: #5a6472; }
+@property --t-name { syntax: "<color>"; inherits: true; initial-value: #bf5b22; }
+@property --t-garment { syntax: "<color>"; inherits: true; initial-value: #9e4b86; }
+@property --s-egypt { syntax: "<color>"; inherits: true; initial-value: #5a6472; }
+@property --s-desert { syntax: "<color>"; inherits: true; initial-value: #a06b1e; }
+@property --s-land { syntax: "<color>"; inherits: true; initial-value: #3f7a44; }
+
+:root { --theme-ease: 340ms cubic-bezier(.2, .7, .3, 1); }
+:root.theme-eases {
+  transition:
+    --paper var(--theme-ease),
+    --paper-deep var(--theme-ease),
+    --card var(--theme-ease),
+    --card-2 var(--theme-ease),
+    --ink var(--theme-ease),
+    --ink-soft var(--theme-ease),
+    --ink-faint var(--theme-ease),
+    --line var(--theme-ease),
+    --line-soft var(--theme-ease),
+    --grat var(--theme-ease),
+    --thread var(--theme-ease),
+    --gold var(--theme-ease),
+    --c-start var(--theme-ease),
+    --c-pattern var(--theme-ease),
+    --c-threads var(--theme-ease),
+    --c-codes var(--theme-ease),
+    --c-triune var(--theme-ease),
+    --c-walk var(--theme-ease),
+    --c-detour var(--theme-ease),
+    --c-mind var(--theme-ease),
+    --c-library var(--theme-ease),
+    --t-lamb var(--theme-ease),
+    --t-bread var(--theme-ease),
+    --t-water var(--theme-ease),
+    --t-light var(--theme-ease),
+    --t-shepherd var(--theme-ease),
+    --t-king var(--theme-ease),
+    --t-temple var(--theme-ease),
+    --t-rest var(--theme-ease),
+    --t-covenant var(--theme-ease),
+    --t-bride var(--theme-ease),
+    --t-exile var(--theme-ease),
+    --t-name var(--theme-ease),
+    --t-garment var(--theme-ease),
+    --s-egypt var(--theme-ease),
+    --s-desert var(--theme-ease),
+    --s-land var(--theme-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root.theme-eases { transition: none; }
+}
+
+/* ---------- the palette swap, and 40,000px of document ----------
+   Measured: a theme change spends 182ms of style recalculation inside its own 340ms ease, and
+   the main thread does ~430ms of work in that window, so it cannot keep up and the fade stutters.
+   The cause is not the number of tokens — trimming the transition list from 37 properties to the
+   10 ground ones only took it to 143ms. It is that every one of them is an inherited registered
+   property on :root, so each frame re-resolves inherited style for all 5,647 elements of a
+   40,302px document, ~97%% of which is off screen. `backdrop-filter` is not involved (175ms with
+   it forced off) and halving the duration only shortens the stutter (113ms).
+
+   Containment is what actually moves it: 182ms -> 51ms, keeping all 37 tokens and the 340ms ease.
+   Off-screen sections stop being re-resolved every frame.
+
+   `contain-intrinsic-size` is a fixed length and these sections are not — `pattern` is 5,711px
+   at 1400 and 12,309px at 375 — so the placeholder is measured per section at each end rather
+   than guessed once. The `auto` keyword makes the browser prefer the real size once it has
+   rendered a section — verified: `pattern` reports its real 5,711px after being scrolled past
+   and away again — so these numbers only govern what has never been on screen, and the estimate
+   corrects itself section by section as the reader goes down. They are measured at three widths
+   rather than fitted from one, because a single desktop figure used at 1400 over-stated the
+   document by 4,595px; they are declared twice because `auto <length>` is dropped whole where it
+   is not understood, and a bare length has to survive underneath it. Nothing here has a `position: fixed` descendant —
+   checked, 0 of them — so paint containment has nothing to trap. */
+.section-block { content-visibility: auto; }
+#start { contain-intrinsic-size: 3526px; contain-intrinsic-size: auto 3526px; }
+#pattern { contain-intrinsic-size: 5711px; contain-intrinsic-size: auto 5711px; }
+#threads { contain-intrinsic-size: 5716px; contain-intrinsic-size: auto 5716px; }
+#codes { contain-intrinsic-size: 1666px; contain-intrinsic-size: auto 1666px; }
+#triune { contain-intrinsic-size: 3410px; contain-intrinsic-size: auto 3410px; }
+#walking { contain-intrinsic-size: 3902px; contain-intrinsic-size: auto 3902px; }
+#detours { contain-intrinsic-size: 4934px; contain-intrinsic-size: auto 4934px; }
+#mind { contain-intrinsic-size: 7082px; contain-intrinsic-size: auto 7082px; }
+#library { contain-intrinsic-size: 3958px; contain-intrinsic-size: auto 3958px; }
+@media (max-width: 1000px) {
+  #start { contain-intrinsic-size: 3660px; contain-intrinsic-size: auto 3660px; }
+  #pattern { contain-intrinsic-size: 6393px; contain-intrinsic-size: auto 6393px; }
+  #threads { contain-intrinsic-size: 5921px; contain-intrinsic-size: auto 5921px; }
+  #codes { contain-intrinsic-size: 1727px; contain-intrinsic-size: auto 1727px; }
+  #triune { contain-intrinsic-size: 3656px; contain-intrinsic-size: auto 3656px; }
+  #walking { contain-intrinsic-size: 4282px; contain-intrinsic-size: auto 4282px; }
+  #detours { contain-intrinsic-size: 5501px; contain-intrinsic-size: auto 5501px; }
+  #mind { contain-intrinsic-size: 7684px; contain-intrinsic-size: auto 7684px; }
+  #library { contain-intrinsic-size: 4580px; contain-intrinsic-size: auto 4580px; }
+}
+@media (max-width: 720px) {
+  #start { contain-intrinsic-size: 5646px; contain-intrinsic-size: auto 5646px; }
+  #pattern { contain-intrinsic-size: 12309px; contain-intrinsic-size: auto 12309px; }
+  #threads { contain-intrinsic-size: 8647px; contain-intrinsic-size: auto 8647px; }
+  #codes { contain-intrinsic-size: 6064px; contain-intrinsic-size: auto 6064px; }
+  #triune { contain-intrinsic-size: 6927px; contain-intrinsic-size: auto 6927px; }
+  #walking { contain-intrinsic-size: 8329px; contain-intrinsic-size: auto 8329px; }
+  #detours { contain-intrinsic-size: 11331px; contain-intrinsic-size: auto 11331px; }
+  #mind { contain-intrinsic-size: 12604px; contain-intrinsic-size: auto 12604px; }
+  #library { contain-intrinsic-size: 8414px; contain-intrinsic-size: auto 8414px; }
+}
+
+/* Warmer than it was: the paper had drifted toward a neutral cream, which read as "light with
+   a tint" rather than as lamplight. The ink is untouched — it is what carries the contrast.
+
+   Brown, not orange. Every ground token sat around hue 38 with 53-95% saturation, which is
+   marigold — the paper read as tinted rather than as old paper. They are pulled to hue 29-31
+   at about two-thirds the chroma and a point darker, which is where tan lives; the ink follows
+   the same way but keeps its lightness, because lightness is the contrast and the contrast was
+   already measured. */
+:root[data-theme="warm"] {
+  --paper: #f0dfc7;
+  --paper-deep: #e6cfaf;
+  --card: #f9ecd9;
+  --card-2: #f3e2c8;
+  --ink: #312518;
+  --ink-soft: #695236;
+  --ink-faint: #7b6446;
+  --line: #d6be9c;
+  --line-soft: #e5cfb0;
+  --grat: rgba(74, 52, 32, 0.07);
+  --thread: #a8202b;
+  --gold: #91661a;
+  --c-start: #a8202b;
+  --c-pattern: #905c17;
+  --c-threads: #a8202b;
+  --c-codes: #7f5d0d;
+  --c-triune: #455d8f;
+  --c-walk: #366d3b;
+  --c-detour: #9a4526;
+  --c-mind: #524f88;
+  --c-library: #266380;
+  --t-lamb: #a8202b;
+  --t-bread: #996c1c;
+  --t-water: #29627e;
+  --t-light: #96760f;
+  --t-shepherd: #416f3d;
+  --t-king: #644382;
+  --t-temple: #276d63;
+  --t-rest: #4c5a80;
+  --t-covenant: #7c4e22;
+  --t-bride: #a34762;
+  --t-exile: #515b68;
+  --t-name: #b25018;
+  --t-garment: #8f4179;
+  --s-egypt: #515b68;
+  --s-desert: #905c17;
+  --s-land: #366d3b;
+  --shadow: 0 1px 2px rgba(62,44,30,.07), 0 10px 28px -14px rgba(62,44,30,.3);
+  --shadow-sm: 0 1px 2px rgba(62,44,30,.07), 0 8px 20px -16px rgba(62,44,30,.26);
+  --shadow-md: 0 2px 4px rgba(62,44,30,.08), 0 14px 30px -16px rgba(62,44,30,.34);
+  --shadow-lift: 0 2px 4px rgba(62,44,30,.08), 0 16px 36px -14px rgba(62,44,30,.36);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="warm"]) {
+    --paper: #14171d;
+    --paper-deep: #10131a;
+    --card: #1b1f27;
+    --card-2: #171b22;
+    --ink: #e6e0d1;
+    --ink-soft: #a89f8a;
+    --ink-faint: #948c7a;
+    --line: #303642;
+    --line-soft: #252b35;
+    --grat: rgba(230, 224, 209, 0.045);
+    --thread: #e05a66;
+    --gold: #cfa648;
+    --c-start: #e05a66;
+    --c-pattern: #d09c40;
+    --c-threads: #e05a66;
+    --c-codes: #cfa73e;
+    --c-triune: #93a8e6;
+    --c-walk: #6fb075;
+    --c-detour: #dd8358;
+    --c-mind: #9d9cd6;
+    --c-library: #6caccb;
+    --t-lamb: #e05a66;
+    --t-bread: #d4a447;
+    --t-water: #62a3c4;
+    --t-light: #d6b23f;
+    --t-shepherd: #79b475;
+    --t-king: #a481c9;
+    --t-temple: #5fada1;
+    --t-rest: #8b9cc9;
+    --t-covenant: #c08d55;
+    --t-bride: #d97f9c;
+    --t-exile: #93a0b1;
+    --t-name: #e08a4e;
+    --t-garment: #cf82ba;
+    --s-egypt: #8fa0b4;
+    --s-desert: #d09c40;
+    --s-land: #6fb075;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.6);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.28), 0 8px 18px -14px rgba(0,0,0,.5);
+    --shadow-md: 0 2px 4px rgba(0,0,0,.32), 0 14px 30px -14px rgba(0,0,0,.62);
+    --shadow-lift: 0 2px 4px rgba(0,0,0,.35), 0 18px 38px -14px rgba(0,0,0,.7);
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #14171d;
+  --paper-deep: #10131a;
+  --card: #1b1f27;
+  --card-2: #171b22;
+  --ink: #e6e0d1;
+  --ink-soft: #a89f8a;
+  --ink-faint: #948c7a;
+  --line: #303642;
+  --line-soft: #252b35;
+  --grat: rgba(230, 224, 209, 0.045);
+  --thread: #e05a66;
+  --gold: #cfa648;
+  --c-start: #e05a66;
+  --c-pattern: #d09c40;
+  --c-threads: #e05a66;
+  --c-codes: #cfa73e;
+  --c-triune: #93a8e6;
+  --c-walk: #6fb075;
+  --c-detour: #dd8358;
+  --c-mind: #9d9cd6;
+  --c-library: #6caccb;
+  --t-lamb: #e05a66;
+  --t-bread: #d4a447;
+  --t-water: #62a3c4;
+  --t-light: #d6b23f;
+  --t-shepherd: #79b475;
+  --t-king: #a481c9;
+  --t-temple: #5fada1;
+  --t-rest: #8b9cc9;
+  --t-covenant: #c08d55;
+  --t-bride: #d97f9c;
+  --t-exile: #93a0b1;
+  --t-name: #e08a4e;
+  --t-garment: #cf82ba;
+  --s-egypt: #8fa0b4;
+  --s-desert: #d09c40;
+  --s-land: #6fb075;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.6);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.28), 0 8px 18px -14px rgba(0,0,0,.5);
+  --shadow-md: 0 2px 4px rgba(0,0,0,.32), 0 14px 30px -14px rgba(0,0,0,.62);
+  --shadow-lift: 0 2px 4px rgba(0,0,0,.35), 0 18px 38px -14px rgba(0,0,0,.7);
+}
+
+/* ---------- base ----------
+   The line-height dial is for reading, and a heading is not reading — it is a label. Opening a
+   paragraph out to 2.4 and dragging a two-line title along with it just pulls the title apart.
+   Every heading holds its own leading whatever the dial says. */
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Text size is one number on the root, so every rem in the sheet follows it. Nothing about
+   it is animated — see the crossfade note further down for why. */
+:root { font-size: calc(100% * var(--fs) * var(--fs-theme)); }
+
+h1, h2, h3, h4, h5, h6 { line-height: 1.22; }
+.label, .eyebrow, .badge, .nav-link, .subtab, .legend-chip, .prefs-head, .stepper-val,
+.chart-corner, .thread-count, .feast-when, .station-num { line-height: 1.3; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.08rem;
+  line-height: var(--lh);
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grat) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grat) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.18; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; padding: 0; }
+p, li, h1, h2, h3, h4, td, th, span { overflow-wrap: break-word; }
+p, li { text-wrap: pretty; }
+
+/* ---------- typeface themes ----------
+   Four pairings: two that read in a serif, two that read in a sans. One of them crosses the
+   pair deliberately, which is the whole point of naming them themes rather than fonts.
+   The unset default is Literata. */
+:root[data-type="source-serif"] {
+  --font-head: "Figtree", var(--fb-sans);
+  --font-body: "Source Serif 4", var(--fb-serif);
+  --font-label: "Figtree", var(--fb-sans);
+  --fs-theme: 1.02;
+}
+:root[data-type="figtree"] {
+  --font-head: "Figtree", var(--fb-sans);
+  --font-body: "Figtree", var(--fb-sans);
+  --font-label: "Figtree", var(--fb-sans);
+  --fs-theme: 0.98;
+}
+:root[data-type="atkinson"] {
+  --font-head: "Atkinson Hyperlegible Next", var(--fb-sans);
+  --font-body: "Atkinson Hyperlegible Next", var(--fb-sans);
+  --font-label: "Atkinson Hyperlegible Next", var(--fb-sans);
+  --fs-theme: 0.97;
+}
+
+/* The site's own ladder, which is a different question from the passage dialog's — see the
+   dialog's scope further down. Moving this one up to suit long scripture made every page of
+   cards float, so it sits back where it reads well for prose about the text. */
+:root[data-lh="snug"] { --lh: 1.5; }
+:root[data-lh="roomy"] { --lh: 2.4; }
+
+/* ---------- how a reading setting changes ----------
+   Every setting in the panel changes layout, and layout is the one thing a page this size
+   cannot animate. Interpolating line-height across the document costs a full reflow every
+   frame; measured over rAF that ran at ~25fps with 170ms gaps — a slideshow, not a
+   transition, and worse than the snap it replaced. A typeface has nothing to interpolate
+   at all.
+
+   So none of it animates. The reading column fades down, the change lands in one reflow
+   while it is nearly invisible, and it fades back up with the reader's line pinned where
+   it was. Opacity is a compositor property, so the fade itself holds 60fps on any device,
+   and all four settings get the same calm behavior. The topbar is left out of it so the
+   panel you are clicking in stays crisp. */
+/* Text size and leading land in one step, and the reason is worth writing down because the
+   obvious fix keeps suggesting itself. 96 Promises eases font-size and line-height over 0.15s
+   and it is lovely — but it eases them on one card, the only thing on screen. Here the same
+   two properties are on the root of a 40,000px document, so every interpolated frame is a full
+   re-layout: 0.32s measured five or six frames over 50ms, 0.15s four, and content-visibility
+   on the sections made it five while collapsing the rail's dots onto estimated offsets. One
+   reflow measures at two or three. What was actually wrong was never the step — it was the
+   blink that hid it, and the chrome that lurched around it. Both are gone; see holdScroll. */
+
+/* ---------- changing the palette ----------
+   The other three reading settings re-lay the page, so they fade the column down and back.
+   Colors do not: nothing moves, only every color on the page lands on a new value at once,
+   and snapping them all in a single frame reads as a blink. So instead of hiding the change,
+   drive it — every painted color interpolates to its new value together. The class is on
+   for the length of the crossfade and no longer, because a permanent transition on `*` makes
+   every hover on the page feel like it is dragging. */
+/* Every reading setting — palette, typeface, leading, size — cross-fades as a view transition.
+   The browser photographs the page, makes the change in one reflow behind the photograph, and
+   dissolves the old image into the new one on the compositor. Nothing about the layout is
+   animated, which is why it is smooth: the cost is a single layout however long the fade runs.
+   Transitioning real properties across five thousand elements was the slow way to a worse
+   result. */
+/* The document cannot be clicked while this runs — see applySmooth in the script. The site-wide
+   dials still need it, so the next best thing is to keep the window short. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { transition: none; }
+}
+
+::selection { background: color-mix(in srgb, var(--thread) 25%, transparent); }
+
+.hint-hover { display: none; }
+@media (hover: hover) and (pointer: fine) { .hint-hover { display: inline; } }
+
+/* ---------- one scrollbar, everywhere something scrolls ----------
+   Anything that hides its scrollbar entirely (nav strip, filmstrips) opts out below. */
+.table-scroll,
+.feast-arc-scroll,
+.context-dialog-body,
+.verpick-menu,
+.thread-preview-card,
+.tabernacle-graphic-container {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--thread) 45%, var(--line)) transparent;
+}
+.table-scroll::-webkit-scrollbar,
+.feast-arc-scroll::-webkit-scrollbar,
+.context-dialog-body::-webkit-scrollbar,
+.verpick-menu::-webkit-scrollbar,
+.thread-preview-card::-webkit-scrollbar,
+.tabernacle-graphic-container::-webkit-scrollbar { width: 8px; height: 8px; }
+.table-scroll::-webkit-scrollbar-track,
+.feast-arc-scroll::-webkit-scrollbar-track,
+.context-dialog-body::-webkit-scrollbar-track,
+.verpick-menu::-webkit-scrollbar-track,
+.thread-preview-card::-webkit-scrollbar-track,
+.tabernacle-graphic-container::-webkit-scrollbar-track { background: transparent; }
+.table-scroll::-webkit-scrollbar-thumb,
+.feast-arc-scroll::-webkit-scrollbar-thumb,
+.context-dialog-body::-webkit-scrollbar-thumb,
+.verpick-menu::-webkit-scrollbar-thumb,
+.thread-preview-card::-webkit-scrollbar-thumb,
+.tabernacle-graphic-container::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--thread) 45%, var(--line));
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+html, a, button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+
+:focus-visible { outline: 2px solid var(--thread); outline-offset: 2px; border-radius: 4px; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+@media (max-width: 560px) {
+  .wrap { width: min(100% - 28px, 1080px); }
+}
+
+.nowrap { white-space: nowrap; }
+
+.label {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ref-link { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--ink-faint); white-space: nowrap; }
+.ref-link:hover { color: var(--thread); border-bottom-color: var(--thread); }
+
+/* ---------- top bar ---------- */
+.topbar {
+  /* The reading settings scale the article, not the toolbar. Left on the root, a 136% text
+     size (or just a typeface's optical bump) grew the nav too and ran the brand straight into
+     the pills at 1280px. Dividing the two multipliers back out of 1rem lands on exactly the
+     browser's own default size — so a reader who set a larger default still gets it here,
+     which a hard 16px would have taken away. Everything below is sized in em off this.
+
+     `--lh` needed the same treatment and did not have it: Roomy pushed the toolbar 5px taller,
+     which walked the settings panel hanging off it down the screen while the reader was still
+     reaching for the next control. Pinned to the default, so the dial moves the article and
+     leaves the furniture alone. */
+  font-size: calc(1rem / (var(--fs) * var(--fs-theme)));
+  /* Both lines are needed. `line-height` inherits as a computed LENGTH — body resolved
+     `var(--lh)` to 38.4px and handed that down — so redeclaring the variable alone changes
+     nothing here, exactly as redeclaring --font-body alone does nothing for the passage
+     dialog. The variable pins it for anything below that reads it; the property makes the
+     toolbar itself re-read it. */
+  --lh: 1.75;
+  line-height: var(--lh);
+  position: sticky; top: 0; z-index: var(--z-topbar);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+/* one line: brand (left) · nav (centered) · actions (right) */
+.topbar-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 24px;
+  width: 100%;
+  min-width: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  min-width: 0;
+  justify-self: start;
+}
+.brand-cross { stroke: var(--gold); }
+.brand svg {
+  width: 26px;
+  height: 26px;
+  color: var(--thread);
+}
+.brand-name {
+  font-weight: 700;
+  font-size: 1.15em;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.brand-sub {
+  font-family: var(--font-label);
+  font-size: 0.62em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-left: 4px;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-width: 0;
+  justify-self: end;
+}
+
+.theme-toggle {
+  flex-shrink: 0; width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  color: var(--ink-soft); background: var(--card-2);
+}
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink-faint); }
+.theme-toggle svg { width: 16px; height: 16px; }
+.theme-toggle .ic-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .ic-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .ic-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="warm"]) .theme-toggle .ic-sun { display: block; }
+  :root:not([data-theme="light"]):not([data-theme="warm"]) .theme-toggle .ic-moon { display: none; }
+}
+
+/* centered middle column; scrolls internally only if cramped */
+.navstrip {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  justify-self: center;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.navstrip::-webkit-scrollbar { display: none; }
+
+/* not enough room for one line: brand + actions on row 1, nav wraps to row 2 */
+@media (max-width: 1180px) {
+  .topbar-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    padding: 9px 18px;
+  }
+  .navstrip {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    justify-self: stretch;
+    padding-top: 8px;
+    border-top: 1px solid var(--line-soft);
+  }
+}
+
+
+.nav-link {
+  font-family: var(--font-label);
+  font-size: 0.7em; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 999px;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+/* subtitle lives in the hero eyebrow + footer; keep the top bar to one crisp line */
+.brand-sub { display: none; }
+.nav-link .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c); opacity: 0.85; flex-shrink: 0; }
+.nav-link:hover { color: var(--ink); background: var(--card-2); }
+.nav-link.active { color: var(--c); background: color-mix(in srgb, var(--c) 11%, transparent); }
+
+/* ---------- views & section headers ---------- */
+.view {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 34px) 0 clamp(18px, 2.4vw, 28px);
+}
+@media (max-width: 560px) {
+  .view { width: min(100% - 28px, 1080px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .view { animation: view-in 0.35s ease both; }
+  @keyframes view-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}
+
+.section-head { max-width: 720px; margin-bottom: clamp(30px, 4vw, 46px); }
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--c, var(--thread));
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.eyebrow svg { width: 18px; height: 18px; }
+.section-head h2 { font-size: clamp(1.75rem, 4vw, 2.4rem); font-weight: 700; margin-bottom: 12px; }
+.lede { font-size: 1.1rem; color: var(--ink-soft); max-width: 65ch; }
+
+
+/* ---------- chart panels ---------- */
+.chart-panel {
+  position: relative;
+  background: var(--card);
+  background-image:
+    linear-gradient(var(--grat) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grat) 1px, transparent 1px);
+  background-size: 42px 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.chart-corner {
+  position: absolute;
+  font-family: var(--font-label); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 10px 14px;
+  pointer-events: none;
+}
+.chart-corner.tl { top: 0; left: 0; }
+.chart-corner.br { bottom: 0; right: 0; }
+/* the corner co-ordinates are real references — let them be read, not just seen */
+.chart-corner .ref-link {
+  pointer-events: auto;
+  color: inherit;
+  border-bottom-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+.chart-corner .ref-link:hover { color: var(--ink); }
+
+/* ---------- cards ---------- */
+.grid { display: grid; gap: clamp(20px, 3vw, 30px); }
+.grid-1 { grid-template-columns: 1fr; }
+.grid-2 { grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr)); }
+
+/* No card ever sits alone next to dead space: on a six-column base each card spans two,
+   and a short last row widens to fill instead of leaving a hole. */
+@media (min-width: 820px) {
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .grid-3 > * { grid-column: span 2; }
+  /* One card left over reads better as a 2 x 2 with the row above it than as one wide slab. */
+  .grid-3 > :nth-last-child(4):nth-child(3n + 1),
+  .grid-3 > :nth-last-child(4):nth-child(3n + 1) ~ * { grid-column: span 3; }
+  .grid-3 > :last-child:nth-child(3n + 1):nth-child(-n + 3) { grid-column: span 6; }
+  .grid-3 > :nth-last-child(2):nth-child(3n + 1),
+  .grid-3 > :nth-last-child(2):nth-child(3n + 1) + * { grid-column: span 3; }
+}
+/* a card that widened this way lays its innards out along the row rather than stretching one column */
+/* Wide cards read across; narrow ones stack. A fixed three columns broke words down the middle
+   ("unglamo rous") the moment the card was only half the row. */
+.grid-3 > :last-child:nth-child(3n + 1) .case-rows,
+.grid-3 > :nth-last-child(4):nth-child(3n + 1) .case-rows,
+.grid-3 > :nth-last-child(4):nth-child(3n + 1) ~ * .case-rows,
+.grid-2 > :last-child:nth-child(odd) .case-rows {
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+
+.card {
+  background: color-mix(in srgb, var(--c, var(--card)) 4%, var(--card));
+  border: 1.5px solid color-mix(in srgb, var(--c, var(--line)) 18%, var(--line));
+  border-top: 4.5px solid var(--c, var(--line));
+  border-radius: var(--r-lg);
+  padding: clamp(22px, 3.2vw, 32px);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s ease, border-top-color 0.2s ease;
+}
+/* These cards are not clickable. A lift on hover promised an action that was never there;
+   the shadow alone still acknowledges the pointer. */
+.card:hover {
+  box-shadow: var(--shadow-lift);
+}
+
+.icon-chip {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  color: var(--c, var(--ink));
+  background: color-mix(in srgb, var(--c, var(--ink)) 12%, transparent);
+}
+.icon-chip svg { width: 21px; height: 21px; }
+
+/* trailhead cards (home) */
+.trailhead {
+  display: flex; gap: 14px; align-items: flex-start;
+  text-decoration: none;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--c) 11%, transparent), color-mix(in srgb, var(--c) 3%, transparent)),
+    var(--card);
+  border: 1px solid color-mix(in srgb, var(--c) 25%, var(--line));
+  border-radius: var(--r-lg);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+.trailhead > span:last-child,
+.station-meta > * {
+  min-width: 0;
+}
+.trailhead:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: color-mix(in srgb, var(--c) 45%, var(--line)); }
+.trailhead h3 { font-size: 1.08rem; margin-bottom: 3px; }
+.trailhead p { font-size: 0.9rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+.trailhead .go { font-family: var(--font-label); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c); margin-top: 8px; display: inline-block; }
+
+/* ---------- thread cards ---------- */
+.lands-on {
+  margin-top: 16px; padding: 13px 16px;
+  border-left: 3px solid var(--gold);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 0.96rem;
+}
+.lands-on .label { color: var(--gold); display: block; margin-bottom: 4px; }
+.for-you { margin-top: 12px; font-size: 0.94rem; color: var(--ink-soft); font-style: italic; }
+.for-you b { color: var(--ink); font-style: normal; }
+
+/* ---------- pattern / seasons ---------- */
+.season-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+.season-card {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--c) 7%, transparent), transparent 42%),
+    var(--card);
+  border: 1px solid color-mix(in srgb, var(--c) 22%, var(--line));
+  border-top: 4px solid var(--c);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.season-head {
+  display: flex; align-items: center; gap: 13px;
+  padding: 16px 18px 13px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 13%, transparent), transparent);
+}
+.season-head h3 { font-size: 1.22rem; color: var(--c); }
+.season-sub { font-size: 0.85rem; color: var(--ink-soft); font-style: italic; margin-top: 1px; }
+.season-rows { display: grid; gap: 9px; padding: 4px 12px 14px; align-content: start; flex: 1; }
+.season-row {
+  background: color-mix(in srgb, var(--c) 6%, var(--card-2));
+  border: 1px solid color-mix(in srgb, var(--c) 16%, var(--line-soft));
+  border-radius: var(--r);
+  padding: 10px 13px 11px;
+}
+.season-row-label {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-label); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--c);
+  margin-bottom: 4px;
+}
+.season-row-label svg { width: 13px; height: 13px; flex-shrink: 0; }
+.season-row p { font-size: 0.9rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+
+.insight-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+/* nine pieces of trail wisdom — a clean 3 x 3 beats 4 + 4 + 1 */
+@media (min-width: 1060px) { .insight-grid > * { flex-basis: calc(33.333% - 12px); } }
+.insight-card {
+  background: color-mix(in srgb, var(--c) 4%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 20%, var(--line));
+  border-radius: var(--r-lg);
+  padding: 20px 22px 22px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.insight-card:hover {
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--c) 45%, var(--line));
+}
+.insight-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.insight-ic { color: var(--c); opacity: 0.55; }
+.insight-ic svg { width: 22px; height: 22px; }
+.insight-marker {
+  position: relative;
+  flex-shrink: 0; width: 28px; height: 28px;
+  display: grid; place-items: center;
+  color: var(--c);
+  font-family: var(--font-label); font-size: 0.72rem; font-weight: 700;
+}
+/* The ring turns, the numeral stays put — so it reads as a compass bezel, not a spinning label. */
+.insight-marker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed color-mix(in srgb, var(--c) 60%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .insight-marker::before { animation: bezel-turn 34s linear infinite; }
+  @keyframes bezel-turn { to { transform: rotate(360deg); } }
+}
+.insight-card > b { display: block; font-size: 1.04rem; margin-bottom: 6px; }
+.insight-card .ins-txt { font-size: 0.93rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+.insight-card .ins-txt b { display: inline; color: var(--ink); }
+
+.case-card .case-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+.case-card h3 { font-size: 1.15rem; }
+.case-card .case-sub { font-size: 0.82rem; color: var(--ink-faint); font-style: italic; }
+.phase-bar { display: flex; height: 7px; border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+.phase-bar span { flex: 1; }
+.phase-bar .p1 { background: var(--s-egypt); }
+.phase-bar .p2 { background: var(--s-desert); }
+.phase-bar .p3 { background: var(--s-land); }
+.case-rows { display: grid; gap: 12px; font-size: 0.94rem; align-content: start; }
+.case-rows .row {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 14px;
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--rc) 7%, var(--card-2));
+  border: 1px solid color-mix(in srgb, var(--rc) 20%, var(--line-soft));
+}
+.case-rows .row.r1 { --rc: var(--s-egypt); }
+.case-rows .row.r2 { --rc: var(--s-desert); }
+.case-rows .row.r3 { --rc: var(--s-land); }
+.case-rows .row b { font-family: var(--font-label); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--rc); }
+.case-rows .row span { color: var(--ink-soft); line-height: var(--lh-ui); }
+
+/* ---------- codes ---------- */
+.subtabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; }
+.subtab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  font-family: var(--font-label); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 8px 18px; border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink-soft); background: var(--card);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.subtab svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.subtab:hover { border-color: var(--ink-faint); color: var(--ink); }
+.subtab.active { background: color-mix(in srgb, var(--c-codes) 13%, transparent); border-color: color-mix(in srgb, var(--c-codes) 50%, var(--line)); color: var(--c-codes); }
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-label); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  padding: 2.5px 8px; border-radius: 999px;
+  white-space: nowrap; vertical-align: middle;
+}
+.badge.explicit { color: var(--c-walk); background: color-mix(in srgb, var(--c-walk) 13%, transparent); }
+.badge.classical { color: var(--c-library); background: color-mix(in srgb, var(--c-library) 13%, transparent); }
+.badge.loose { color: var(--c-detour); background: color-mix(in srgb, var(--c-detour) 14%, transparent); }
+
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); }
+table.map-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 640px; }
+.map-table th {
+  font-family: var(--font-label); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  text-align: left; color: var(--ink-faint);
+  padding: 12px 14px; border-bottom: 1px solid var(--line);
+}
+/* A mark per claim, in the column's own ink, sized to sit on the first line of the text
+   rather than floating beside a wrapped paragraph. */
+.map-table .claim { display: flex; align-items: flex-start; gap: 10px; }
+.map-table .claim-ic {
+  flex: 0 0 22px; width: 22px; height: 22px;
+  display: grid; place-items: center;
+  border-radius: 7px;
+  color: var(--c-codes);
+  background: color-mix(in srgb, var(--c-codes) 12%, transparent);
+  margin-top: -1px;
+}
+.map-table .claim-ic svg { width: 14px; height: 14px; }
+.map-table td { padding: 10px 14px; border-bottom: 1px solid var(--line-soft); vertical-align: top; line-height: var(--lh-ui); }
+.map-table tr:last-child td { border-bottom: none; }
+.map-table td:first-child { font-weight: 700; }
+
+.type-card h3 { font-size: 1.02rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.type-card .type-refs { font-family: var(--font-label); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-codes); margin: 4px 0 8px; }
+.type-card p { font-size: 0.93rem; color: var(--ink-soft); }
+
+.feast-groups { display: grid; gap: 26px; }
+.feast-group-label {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  font-family: var(--font-label); font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--fc);
+}
+.feast-group-label svg { width: 15px; height: 15px; }
+.feast-group.is-done { --fc: var(--c-walk); }
+.feast-group.is-ahead { --fc: var(--c-codes); }
+.feast-cards {
+  display: flex; gap: 14px;
+  flex-wrap: wrap;
+}
+.feast-card {
+  background: color-mix(in srgb, var(--fc) 4%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--fc) 22%, var(--line));
+  border-left: 3px solid var(--fc);
+  border-radius: var(--r);
+  padding: 16px 18px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.feast-card.is-ahead { border-left-style: dashed; }
+.feast-card-top { display: flex; align-items: flex-start; gap: 11px; margin-bottom: 10px; }
+.feast-card-top .icon-chip { width: 34px; height: 34px; border-radius: 10px; color: var(--fc); }
+.feast-card .feast-id { flex: 1; min-width: 0; }
+.feast-card h4 { font-size: 1.02rem; }
+.feast-when {
+  font-family: var(--font-label); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
+}
+.feast-card p { font-size: 0.92rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+
+/* ---------- threefold witness ---------- */
+.triune-rails {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.rail-label {
+  display: block; margin-bottom: 5px;
+  font-family: var(--font-label); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--c);
+}
+.triune-rail {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: flex-start;
+  align-content: start;
+  padding: 18px 20px;
+  border: 1px dashed color-mix(in srgb, var(--c-triune) 30%, var(--line));
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--c-triune) 5%, var(--card));
+}
+.triune-rail .icon-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+.triune-rail h3 {
+  font-size: 1.02rem;
+  margin-bottom: 4px;
+}
+.triune-rail p {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+}
+.triune-anchor-card,
+.triune-pattern-card {
+  display: grid;
+  gap: 16px;
+}
+.triune-anchor-card h3,
+.triune-pattern-card h3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 1.1rem;
+}
+.triune-roles {
+  display: grid;
+  gap: 10px;
+}
+.triune-role {
+  padding: 12px 14px;
+  border-radius: var(--r);
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+}
+.triune-role b {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-triune);
+  margin-bottom: 4px;
+}
+.triune-role span,
+.triune-pattern-card p {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+}
+.triune-pattern-card .story {
+  color: var(--ink);
+}
+.triune-pattern-card .reading {
+  padding: 14px 16px;
+  border-left: 3px solid var(--c-triune);
+  border-radius: 0 var(--r) var(--r) 0;
+  background: color-mix(in srgb, var(--c-triune) 7%, transparent);
+}
+
+/* tabernacle walk */
+.tabernacle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 20px;
+}
+.tabernacle-zone {
+  background: var(--card);
+  border: 1.2px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tabernacle-zone.zone-court {
+  border-color: color-mix(in srgb, var(--s-desert) 28%, var(--line));
+  background: color-mix(in srgb, var(--s-desert) 3%, var(--card));
+  --zone-c: var(--s-desert);
+}
+.tabernacle-zone.zone-holy {
+  border-color: color-mix(in srgb, var(--s-egypt) 28%, var(--line));
+  background: color-mix(in srgb, var(--s-egypt) 3%, var(--card));
+  --zone-c: var(--s-egypt);
+}
+.tabernacle-zone.zone-most-holy {
+  border-color: color-mix(in srgb, var(--c-codes) 32%, var(--line));
+  background: color-mix(in srgb, var(--c-codes) 4%, var(--card));
+  --zone-c: var(--c-codes);
+}
+.zone-header {
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--zone-c) 30%, var(--line));
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+.zone-header .zone-sub {
+  font-size: 0.65rem;
+  color: var(--ink-faint);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-style: italic;
+}
+.zone-stations {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tab-station-card {
+  background: var(--card-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.tab-station-card:hover {
+  border-color: color-mix(in srgb, var(--zone-c) 35%, var(--line));
+  box-shadow: var(--shadow-sm);
+}
+.station-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.station-num {
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--zone-c);
+  background: color-mix(in srgb, var(--zone-c) 11%, transparent);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.station-desc {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.tab-station-card h3 {
+  font-family: var(--font-body);
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 2px 0 0 0;
+}
+.station-jesus {
+  font-size: 0.93rem;
+  line-height: var(--lh-ui);
+  color: var(--ink-soft);
+  margin: 2px 0 0 0;
+}
+
+@media (max-width: 990px) {
+  .tabernacle-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ---------- walk it out (pillars) ---------- */
+.pillar-card .pillar-body { font-size: 0.94rem; color: var(--ink-soft); }
+.pillar-refs { margin-top: 10px; font-family: var(--font-label); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; color: var(--ink-faint); }
+
+/* ---------- detours ---------- */
+.detour-card h3 {
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* ---------- mind & body ---------- */
+.mind-card {
+  display: grid;
+  gap: 22px;
+  padding: clamp(24px, 4vw, 38px);
+}
+.mind-card h3 {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--c, var(--c-mind)) 34%, var(--line));
+}
+.neuro-primer {
+  display: grid;
+  gap: 22px;
+  margin-bottom: clamp(22px, 3vw, 32px);
+}
+.neuro-primer h3 {
+  font-size: 1.35rem;
+}
+.neuro-primer .lede {
+  font-size: 1rem;
+}
+.mind-panel-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.mind-panel {
+  font-size: 0.96rem;
+  color: var(--ink-soft);
+  line-height: var(--lh);
+  background: color-mix(in srgb, var(--c, var(--c-mind)) 7%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c, var(--c-mind)) 22%, var(--line));
+  border-radius: var(--r);
+  padding: clamp(16px, 2.5vw, 22px);
+  min-width: 0;
+}
+.mind-panel .label {
+  color: var(--c, var(--c-mind));
+  display: block;
+}
+/* An icon and a colored rule per panel: eight blocks of prose needed something to read by. */
+.mind-panel-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--c, var(--c-mind)) 20%, var(--line-soft));
+}
+.mind-panel-ic {
+  width: 30px; height: 30px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  color: var(--c, var(--c-mind));
+  background: color-mix(in srgb, var(--c, var(--c-mind)) 15%, transparent);
+}
+.mind-panel-ic svg { width: 16px; height: 16px; }
+.mind-panel h4 + p { margin-top: 0; }
+.mind-panel h4 {
+  font-size: 1.12rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.mind-panel p {
+  line-height: inherit;
+}
+.mind-panel p + p {
+  margin-top: 12px;
+}
+.mind-card .mind-body-txt {
+  display: grid;
+  gap: 16px;
+}
+.mind-card .pillar-refs {
+  margin-top: 0;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line-soft);
+}
+.mind-panel .pillar-refs {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-soft);
+  font-size: 0.64rem;
+}
+
+.tv-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.tv-box {
+  border-radius: var(--r);
+  padding: 16px 20px;
+  font-size: 0.96rem;
+  line-height: var(--lh-ui);
+  border: 1.2px solid transparent;
+}
+.tv-box.treasure {
+  background: color-mix(in srgb, var(--s-land) 8%, var(--card));
+  border-color: color-mix(in srgb, var(--s-land) 28%, var(--line));
+}
+.tv-box.ditch {
+  background: color-mix(in srgb, var(--c-detour) 6%, var(--card));
+  border-color: color-mix(in srgb, var(--c-detour) 22%, var(--line));
+}
+.tv-box .label {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.tv-box.treasure .label {
+  color: var(--s-land);
+}
+.tv-box.ditch .label {
+  color: var(--c-detour);
+}
+.tv-box ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--ink-soft);
+}
+.tv-box li {
+  line-height: var(--lh-ui);
+}
+
+/* ---------- library ---------- */
+.shelf { margin-bottom: 32px; }
+.shelf-title {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.15rem; margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
+}
+.shelf-title svg { width: 19px; height: 19px; color: var(--c-library); }
+.shelf-items {
+  display: flex; gap: 12px;
+  flex-wrap: wrap;
+}
+/* one card per resource: the kind chip carries the color, so a shelf reads as a
+   shelf rather than a paragraph that happens to have links in it */
+.shelf-item {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 15px 17px 14px;
+  background: color-mix(in srgb, var(--c) 3%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 18%, var(--line-soft));
+  border-radius: var(--r);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.shelf-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--c) 45%, var(--line));
+}
+.shelf-item .kind {
+  justify-self: start;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-label); font-size: 0.56rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  padding: 3px 9px 3px 7px; border-radius: 999px;
+  margin-bottom: 2px;
+}
+.shelf-item .kind svg { width: 12px; height: 12px; }
+.shelf-item b { font-size: 1rem; line-height: 1.35; }
+.shelf-item .by {
+  font-family: var(--font-label); font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--ink-faint);
+}
+.shelf-item .note-txt { font-size: 0.88rem; line-height: var(--lh-ui); color: var(--ink-soft); }
+/* The cue used to be invisible until hover, so a card gave no sign it opened anything. */
+.shelf-go {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 6px;
+  font-family: var(--font-label); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--c);
+  opacity: 0.72; transition: opacity 0.18s ease;
+}
+.shelf-go svg { width: 12px; height: 12px; }
+.shelf-item:hover .shelf-go, .shelf-item:focus-visible .shelf-go { opacity: 1; }
+
+/* ---------- home / hero ---------- */
+.hero { padding: clamp(40px, 6vw, 58px) 0 10px; }
+.hero .eyebrow { justify-content: center; }
+.hero h1 {
+  font-size: clamp(2.2rem, 5.4vw, 3.5rem);
+  font-weight: 700; text-align: center;
+  max-width: 17ch; margin: 0 auto 16px;
+}
+.hero h1 em { font-style: italic; color: var(--thread); }
+.hero .lede { text-align: center; margin: 0 auto 34px; }
+
+.hero-chart { padding: 12px; }
+.hero-chart svg { width: 100%; height: auto; }
+.hero-legend { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; padding: 0 12px 10px; }
+.legend-chip {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-label); font-size: 0.64rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-soft);
+}
+.legend-chip:hover, .legend-chip.hot, .legend-chip.selected { color: var(--c); border-color: color-mix(in srgb, var(--c) 55%, var(--line)); background: color-mix(in srgb, var(--c) 9%, transparent); }
+.legend-chip.selected { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 28%, transparent); }
+.legend-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+
+/* The Walk It Out words are labels, not controls. They used to reuse .legend-chip, which
+   carries a hover state and a selected state and so reads as something you can pick. */
+.word-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-label); font-size: 0.64rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 4px 10px; border-radius: var(--r);
+  background: color-mix(in srgb, var(--c) 7%, transparent);
+}
+.word-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+
+/* Touch targets. Fingers need ~44px; a mouse does not, and forcing it everywhere would
+   pull the header apart — so the floor applies where the pointer is actually coarse. */
+@media (pointer: coarse) {
+  .nav-link, .verpick-btn, .theme-toggle, .subtab, .legend-chip, .tooltip-context-button,
+  .typegrid button {
+    min-height: 44px;
+  }
+  .typegrid button { align-items: center; }
+  .nav-link, .verpick-btn, .subtab, .legend-chip { padding-top: 10px; padding-bottom: 10px; }
+  .theme-toggle { min-width: 44px; }
+  /* the rail dot stays a 14px mark; only its hit area grows */
+  .rail-dot::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    width: 44px; height: 44px; transform: translate(-50%, -50%);
+  }
+}
+
+.hero-verse { text-align: center; max-width: 56ch; margin: 30px auto 0; font-style: italic; color: var(--ink-soft); font-size: 1.02rem; }
+.hero-verse .vref { font-family: var(--font-label); font-style: normal; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--thread); display: block; margin-top: 8px; }
+
+.home-section-title { display: flex; align-items: center; gap: 12px; margin: clamp(46px, 6vw, 64px) 0 20px; }
+.home-section-title h2 { font-size: 1.3rem; }
+.home-section-title .rr { flex: 1; height: 12px; color: var(--thread); opacity: 0.5; }
+
+.big-idea {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.idea-card {
+  background: color-mix(in srgb, var(--c) 4%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 20%, var(--line));
+  border-radius: var(--r-lg);
+  padding: 20px 22px 22px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.idea-card:hover {
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--c) 45%, var(--line));
+}
+.idea-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.idea-ic { color: var(--c); opacity: 0.55; }
+.idea-ic svg { width: 22px; height: 22px; }
+.idea-num {
+  counter-increment: idea; flex-shrink: 0;
+  width: 30px; height: 30px; margin-top: 2px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--thread) 11%, transparent);
+  color: var(--thread);
+  font-family: var(--font-label); font-size: 0.78rem; font-weight: 700;
+}
+.idea-card b { display: block; font-size: 1.06rem; margin-bottom: 6px; }
+.idea-card p { font-size: 0.94rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+
+/* ---------- bento grid (how to read your Bible) ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; grid-auto-rows: minmax(112px, auto); --c: var(--c-walk); }
+.bento-tile {
+  display: flex; flex-direction: column; gap: 9px;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: 18px 20px; box-shadow: var(--shadow);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.bento-tile:hover { box-shadow: var(--shadow-lift); border-color: color-mix(in srgb, var(--c) 40%, var(--line)); }
+.bento-wide { grid-column: span 3; }
+.bento-reg { grid-column: span 2; }
+.bento-feature {
+  grid-column: span 3; grid-row: span 2;
+  background:
+    radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--c-walk) 16%, transparent), transparent 60%),
+    var(--card);
+  border-color: color-mix(in srgb, var(--c-walk) 32%, var(--line));
+  justify-content: flex-start;
+}
+.bento-ic { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; color: var(--c-walk); background: color-mix(in srgb, var(--c-walk) 12%, transparent); flex-shrink: 0; }
+.bento-ic svg { width: 19px; height: 19px; }
+.bento-feature .bento-ic { width: 46px; height: 46px; border-radius: 13px; }
+.bento-feature .bento-ic svg { width: 26px; height: 26px; }
+.bento-txt b { display: block; font-size: 1.03rem; margin-bottom: 4px; }
+.bento-feature .bento-txt b { font-size: 1.32rem; line-height: 1.2; }
+.bento-txt p { font-size: 0.92rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+.bento-feature .bento-txt p { font-size: 1rem; }
+@media (max-width: 860px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .bento-wide, .bento-reg, .bento-feature { grid-column: span 1; grid-row: auto; }
+}
+@media (max-width: 520px) {
+  .bento { grid-template-columns: 1fr; }
+}
+
+/* ---------- journey caption strip ---------- */
+.journey-caps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 8px 16px 16px; }
+.journey-cap { border-top: 3px solid var(--c); padding-top: 8px; }
+.journey-cap b { display: block; font-size: 0.96rem; margin-bottom: 2px; }
+.journey-cap span { font-size: 0.85rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+@media (max-width: 700px) { .journey-caps { grid-template-columns: 1fr; } }
+
+/* ---------- thread filmstrip rows ---------- */
+.thread-rows { display: grid; gap: clamp(22px, 3.2vw, 34px); }
+.thread-row {
+  background: color-mix(in srgb, var(--c) 7%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 26%, var(--line));
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  padding: 0 0 16px;
+  overflow: hidden;
+  border-top: 4px solid var(--c);
+}
+.thread-row-head {
+  display: flex; align-items: center; gap: 13px;
+  padding: 16px 18px 13px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 15%, transparent), transparent);
+}
+.thread-row-title h3 { font-size: 1.14rem; }
+.thread-tag { font-size: 0.88rem; color: var(--ink-soft); line-height: var(--lh-tight); display: block; }
+.thread-count {
+  margin-left: auto; flex-shrink: 0;
+  font-family: var(--font-label); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  padding: 4px 10px; border-radius: 999px;
+}
+/* The fade sits on this static window. A mask on the *scrolling* element is one of the two
+   suspects behind the filmstrips going blank on iOS, and it costs nothing to move it out. */
+.marquee-window {
+  mask-image: linear-gradient(90deg, transparent, #000 3.5%, #000 96.5%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3.5%, #000 96.5%, transparent);
+}
+.thread-marquee {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  cursor: grab;
+  /* pan-x so a finger scrolls the strip natively, with momentum, instead of through JS */
+  touch-action: pan-x pan-y pinch-zoom;
+}
+.thread-marquee::-webkit-scrollbar { display: none; }
+.thread-marquee.is-dragging { cursor: grabbing; }
+.thread-marquee.is-dragging, .thread-marquee.is-dragging * { user-select: none; }
+.marquee-track { display: flex; gap: 10px; width: max-content; padding: 2px 18px; will-change: transform; }
+.marquee-group { display: flex; gap: 10px; }
+.wp-card {
+  flex: 0 0 252px;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--c) 18%, var(--line-soft));
+  border-radius: var(--r);
+  padding: 10px 14px 12px;
+  cursor: pointer;
+}
+/* The reference is this card's heading, and it was set BELOW the card's body copy — 0.64rem
+   against 0.85rem — and, having no line-height of its own, it inherited the body's `--lh`.
+   So on Roomy the card's title sat in 1.75 lines of air while reading smaller than the
+   sentence under it. Titles rank above their paragraph and keep their own tight leading;
+   the reading dial is for the reading, not for the labels. */
+.wp-card .wp-ref {
+  display: block; margin-bottom: 5px;
+  font-family: var(--font-label); font-size: 0.88rem; font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--c);
+}
+.wp-card .wp-ref .ref-link { color: inherit; border-bottom-color: color-mix(in srgb, var(--c) 50%, transparent); }
+.wp-card p { font-size: 0.85rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+.wp-card.wp-cross {
+  background: color-mix(in srgb, var(--gold) 9%, var(--card-2));
+  border-color: color-mix(in srgb, var(--gold) 55%, var(--line));
+}
+.wp-card.wp-cross .wp-ref { color: var(--gold); }
+.thread-row-foot { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; align-items: start; padding: 14px 18px 0; }
+.thread-row-foot .lands-on { margin-top: 0; }
+.thread-row-foot .for-you { margin-top: 4px; }
+@media (max-width: 780px) {
+  .thread-row-foot { grid-template-columns: 1fr; }
+  .wp-card { flex-basis: 220px; }
+}
+/* On a phone the icon, a wrapping title, its tag and a waypoint pill were all competing for
+   347px, which cost 154px of header and broke the title across two lines. Give the title the
+   full width on its own row and let the chip and the count share the one above it. */
+@media (max-width: 600px) {
+  .thread-row-head { flex-wrap: wrap; row-gap: 8px; padding: 14px 16px 12px; }
+  .thread-row-head .icon-chip { order: 1; }
+  .thread-count { order: 1; margin-left: auto; }
+  .thread-row-title { order: 2; flex: 1 1 100%; }
+  .wp-card { flex-basis: min(76vw, 280px); }
+  .marquee-track { padding-left: 16px; padding-right: 16px; }
+  .thread-row-foot { padding: 12px 16px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thread-marquee { overflow-x: auto; touch-action: auto; }
+  .marquee-window { mask-image: none; -webkit-mask-image: none; }
+}
+
+/* ---------- scarlet progress rail ---------- */
+#rail { position: fixed; left: 16px; top: 130px; bottom: 56px; width: 14px; z-index: var(--z-rail); }
+/* The dots were unlabelled — thirteen identical 14px targets with only a title attribute. */
+/* The name is the target as much as the dot is — a 14px circle is a poor thing to aim at when
+   there is a word sitting right beside it saying what it does. It starts at the dot's own edge
+   (padding rather than offset) so the pointer never crosses a dead gap and loses the hover. */
+.rail-dot-label {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  padding: 4px 4px 4px 6px;
+  font-family: var(--font-label); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  color: var(--ink-faint); opacity: 0; transition: opacity 0.15s ease, color 0.2s ease;
+  pointer-events: none; cursor: pointer;
+}
+/* Only ever clickable while it is on screen: an invisible word reaching 120px into the page
+   margin would eat clicks meant for the column behind it. */
+.rail-dot:hover .rail-dot-label, .rail-dot:focus-visible .rail-dot-label { opacity: 1; pointer-events: auto; }
+.rail-dot:hover .rail-dot-label, .rail-dot.passed .rail-dot-label { color: var(--c); }
+@media (min-width: 1460px) { .rail-dot-label { opacity: 0.75; pointer-events: auto; } }
+.rail-track { position: absolute; left: 6px; top: 0; bottom: 0; border-left: 2px dashed var(--line); }
+/* The line is one continuous strip painted in every section's own color, in order, with the
+   hand-offs sitting exactly on the dots — so the color under your eye names the section you
+   are actually in. Growth is a clip, not a height: a shrinking box would rescale the gradient
+   and drag every hand-off along with it, away from the dot it belongs to. */
+.rail-fill {
+  position: absolute; left: 6px; top: 0; bottom: 0; width: 2px;
+  background: var(--thread);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--thread) 45%, transparent);
+  clip-path: inset(0 0 100% 0);
+}
+.rail-dot {
+  position: absolute; left: 0; width: 14px; height: 14px;
+  border-radius: 50%; border: 2px solid var(--line);
+  background: var(--paper);
+  transform: translateY(-50%);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+}
+.rail-dot.passed { border-color: var(--c); background: color-mix(in srgb, var(--c) 30%, var(--paper)); }
+.rail-dot:hover { transform: translateY(-50%) scale(1.35); border-color: var(--c); }
+@media (max-width: 1199px) { #rail { display: none; } }
+
+/* ---------- the four words, as a sequence ----------
+   They were four italicised Greek terms inside one paragraph, which reads as a glossary
+   someone dropped mid-sentence. Numbered and laid side by side they read as what they are:
+   a pattern presses a shape, the shape falls as a shadow, the shadow is built as a copy,
+   and the reality walks in. */
+.vocab-card { margin-bottom: clamp(22px, 3vw, 30px); }
+.vocab-head {
+  display: flex; align-items: center; gap: 9px; margin-bottom: 16px;
+  font-family: var(--font-label); font-size: 0.64rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint);
+}
+.vocab-head svg { width: 15px; height: 15px; color: var(--c); flex-shrink: 0; }
+.vocab-steps {
+  display: grid; gap: 14px; margin: 0; padding: 0; list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+}
+.vocab-step {
+  padding: 14px 14px 13px;
+  border: 1px solid var(--line-soft);
+  border-top: 2px solid color-mix(in srgb, var(--c) 55%, transparent);
+  border-radius: var(--r);
+  background: var(--card-2);
+}
+/* It was absolutely positioned at top:-1px, which put it on the 2px border rather than inside
+   the card. It reads as the step it is, on the line with the word it numbers. */
+/* The Greek word and the English term underneath it were 2px apart, which read as one
+   two-line heading rather than a word and its translation. */
+.vocab-top { display: flex; align-items: baseline; gap: 9px; margin-bottom: 9px; }
+.vocab-num {
+  flex: 0 0 auto;
+  width: 19px; height: 19px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--c) 16%, transparent);
+  font-family: var(--font-label); font-size: 0.6rem; font-weight: 700;
+  color: var(--c);
+  align-self: center;
+}
+.vocab-greek {
+  font-style: italic; font-size: 0.95rem;
+  color: var(--c); line-height: 1.2;
+}
+.vocab-term {
+  display: block; font-family: var(--font-label); font-size: 0.64rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin-bottom: 7px;
+}
+.vocab-gloss { font-size: 0.9rem; color: var(--ink-soft); line-height: var(--lh-ui); margin: 0 0 9px; }
+.vocab-refs { font-size: 0.82rem; color: var(--ink-faint); }
+.vocab-note {
+  margin: 16px 0 0; padding-top: 13px;
+  border-top: 1px dashed var(--line-soft);
+  font-size: 0.9rem; color: var(--ink-soft); line-height: var(--lh-ui);
+}
+
+/* ---------- feast arc ---------- */
+/* The panel no longer scrolls — the arc inside it does. The two book names are pinned to the
+   panel, so panning the year no longer drags Colossians across the legend under it, and the
+   pair now read along the top edge where the arc's own ends are lowest. */
+.feast-arc-panel { margin-bottom: 22px; padding: 30px 10px 6px; }
+.feast-arc-panel svg { width: 100%; height: auto; }
+.feast-arc-panel .chart-corner.br { top: 0; bottom: auto; right: 0; left: auto; }
+
+/* ---------- tabernacle "details worth noticing" ---------- */
+.tab-insights { margin-top: 30px; }
+.tabernacle-graphic-container { margin-bottom: 8px; }
+.tab-insights-title { display: flex; align-items: center; gap: 9px; font-family: var(--font-label); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-codes); margin-bottom: 14px; }
+.tab-insights-title svg { width: 17px; height: 17px; }
+.insight-mini { border-left: 3px solid color-mix(in srgb, var(--c-codes) 55%, var(--line)); }
+.insight-mini b { display: block; font-size: 1rem; margin-bottom: 5px; }
+.insight-mini p { font-size: 0.92rem; color: var(--ink-soft); line-height: var(--lh-ui); }
+
+/* ---------- journey svg ---------- */
+/* Both ends of the promise read along the top edge. At the panel's bottom right the second
+   one landed on the "The land walks" caption and, on a scrolled page, straight under the
+   back-to-top button. */
+.journey-panel { padding: 26px 10px 4px; margin: 8px 0 clamp(30px, 4vw, 42px); }
+.journey-panel .chart-corner.br { top: 0; bottom: auto; right: 0; left: auto; }
+.journey-panel svg { width: 100%; height: auto; min-width: 0; }
+.journey-scroll { overflow: clip; }
+
+/* ---------- misc ---------- */
+.note {
+  font-size: 0.88rem; color: var(--ink-soft);
+  border-left: 3px solid var(--line);
+  padding: 8px 14px; margin-top: 18px;
+}
+.mt { margin-top: 26px; }
+.mt-lg { margin-top: 40px; }
+
+footer.site-foot {
+  border-top: 1px solid var(--line);
+  margin-top: 50px;
+  padding: 30px 0 44px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+footer.site-foot .foot-verse { font-style: italic; max-width: 58ch; margin: 0 auto 14px; }
+/* The last thing on the page, and it was set at the same size and color as the small print
+   under it. It is the point of the whole site, so it reads like it. */
+footer.site-foot .foot-creed {
+  max-width: 30ch;
+  margin: 0 auto;
+  font-family: var(--font-head);
+  font-size: clamp(1.24rem, 2.6vw, 1.62rem);
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--thread);
+  text-wrap: balance;
+}
+footer.site-foot .label { color: var(--ink-faint); margin-top: 12px; display: block; }
+/* The scripture licence line. Only the Russian page carries one (НРП is Biblica's, quoted under
+   its permission); small print, under the creed rather than competing with it. */
+footer.site-foot .foot-note { max-width: 62ch; margin: 18px auto 0; font-size: 0.8rem; line-height: 1.5; color: var(--ink-faint); }
+
+/* hero thread interactions */
+.hero-scroll { position: relative; overflow: clip; min-width: 0; }
+.hero-scroll svg { min-width: 0; width: 100%; height: auto; display: block; }
+.hero-thread { opacity: 0.7; cursor: pointer; transition: opacity 0.25s ease, stroke-width 0.25s ease; }
+.hero-thread:hover, .hero-thread.hot, .hero-thread.selected { opacity: 1; stroke-width: 3.6; }
+
+/* ---------- one route at a time ----------
+   Thirteen lines at 0.7 and one at 1.0 is a difference you have to hunt for, and the
+   0.7 -> 3.6 width step reads as almost nothing on a phone. So while a route is hot or
+   held, the other twelve fall back: the live one is the only thing left at full strength.
+   Falling all the way to 0.12 erased them, though, and the point of the picture is that
+   the held route runs *with* twelve others — so they stay visible, just quiet. Letting go,
+   clicking the held route again, or tapping empty chart brings them all back. */
+.hero-chart.route-focus .hero-thread { opacity: 0.3; stroke-width: 2; }
+.hero-chart.route-focus .hero-thread.hot,
+.hero-chart.route-focus .hero-thread.selected { opacity: 1; stroke-width: 4.4; }
+.hero-chart.route-focus .legend-chip:not(.hot):not(.selected) { opacity: 0.55; }
+.hero-chart.route-focus .hero-line-label:not(.hot):not(.selected) { opacity: 0.45; }
+.hero-chart .legend-chip,
+.hero-chart .hero-line-label { transition: opacity 0.25s ease, color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease; }
+/* No hover on a phone, so this only ever fires on a tap — which is exactly when the
+   width difference was hardest to read. The gap stays in the stroke width there rather
+   than in how far the other twelve are faded out. */
+@media (max-width: 760px) {
+  .hero-chart.route-focus .hero-thread { opacity: 0.28; stroke-width: 1.9; }
+  .hero-chart.route-focus .hero-thread.hot,
+  .hero-chart.route-focus .hero-thread.selected { stroke-width: 5.4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-chart .legend-chip, .hero-chart .hero-line-label { transition: none; }
+}
+
+.flash { animation: flash-ring 2.2s ease; }
+@keyframes flash-ring {
+  0% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--thread) 55%, transparent); }
+  100% { box-shadow: 0 0 0 3px transparent; }
+}
+/* Anything the app swaps with innerHTML fades in rather than replacing mid-read. */
+@media (prefers-reduced-motion: no-preference) {
+  .swap-in { animation: swap-in 0.22s ease both; }
+  @keyframes swap-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  /* the thread summary changes often, so it only fades — no travel, no flash */
+  .swap-fade { animation: swap-fade 0.2s ease both; }
+  @keyframes swap-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view { animation: none; }
+  .flash { animation: none; outline: 2px solid var(--thread); }
+  .swap-in, .swap-fade { animation: none; }
+  .thread-preview-card { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .brand-sub { display: none; }
+  .view { padding: 30px 0 20px; }
+  .feast-row { grid-template-columns: 1fr; gap: 4px; }
+  .case-rows .row { grid-template-columns: 64px 1fr; }
+  .lands-on {
+    padding: 12px 14px;
+  }
+  .shelf-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* ================= NEW COMPONENT STYLES ================= */
+
+/* Translation picker — a map-room dropdown, not a native select */
+.verpick { position: relative; flex-shrink: 0; }
+.verpick-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-label);
+  font-size: 0.7em; font-weight: 700; letter-spacing: 0.09em;
+  color: var(--ink-soft);
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  /* the book icon sat almost on the border; the left inset is the one that has to clear it */
+  padding: 6px 12px 6px 13px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.verpick-btn:hover { color: var(--ink); border-color: var(--ink-faint); background: var(--card); }
+.verpick-ic { width: 13px; height: 13px; color: var(--gold); flex-shrink: 0; }
+.verpick-caret { width: 12px; height: 12px; color: var(--ink-faint); transition: transform 0.18s ease; }
+.verpick.open .verpick-btn { color: var(--ink); border-color: color-mix(in srgb, var(--gold) 55%, var(--line)); background: var(--card); }
+.verpick.open .verpick-caret { transform: rotate(180deg); }
+
+.verpick-menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: var(--z-menu);
+  /* The options are codes now, so the column is as wide as the heading over it and no wider. */
+  min-width: 180px;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lift);
+}
+.verpick-menu::before {
+  content: ""; position: absolute; top: -5px; right: 17px;
+  width: 9px; height: 9px; transform: rotate(45deg);
+  background: var(--card);
+  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
+}
+.verpick-head {
+  display: block; padding: 5px 9px 7px;
+  font-family: var(--font-label); font-size: 0.56em; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint);
+  border-bottom: 1px dashed var(--line-soft); margin-bottom: 5px;
+}
+.verpick-opt {
+  display: flex; align-items: center; width: 100%;
+  padding: 8px 9px; border-radius: 7px;
+  background: none; border: 0; text-align: left; cursor: pointer;
+  color: var(--ink-soft);
+}
+.verpick-opt .code {
+  font-family: var(--font-label); font-size: 0.72em; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--ink);
+}
+.verpick-opt:hover, .verpick-opt.cursor { background: var(--card-2); color: var(--ink); }
+.verpick-opt[aria-selected="true"] { background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.verpick-opt[aria-selected="true"] .code { color: var(--gold); }
+
+/* Section block and scrolling */
+/* The tint used to be a hard-edged 1080px column down the middle of the page, because the
+   band itself was inside the reading wrapper. The band is now full width and the wrapper
+   moved in to .view, which also takes ~40px off the stacked padding above every section. */
+/* The tint had two jobs and was doing neither. It was 4%% — sampled off the painted page, a
+   6-unit step out of 255 — and it faded to *fully* transparent by 520px, so on a section 3,500
+   to 12,300px tall it was a wash under the heading and nothing at all under the other 90%% of
+   the reading. Two sections met as identical paper with a dashed rule between them.
+
+   So: a head strong enough to announce the change, and a floor that does not go away, because
+   the floor is what makes a section feel like one place while you are inside it. The step a
+   reader actually crosses is the previous section's floor against the next one's head — two
+   different colours now, not one colour against bare paper.
+
+   The head is 15%% but spent in 260px, not 560px, and that is a contrast decision rather than a
+   taste one. Body copy is `--ink-soft`, which starts at 5.52:1 on Light's bare paper, and a 14%%
+   tint held under it took that to 4.51:1 — measured off the painted page, not computed. 200px is
+   the section's top padding, its eyebrow and its heading, all of which are `--ink` at 13:1 and
+   can carry a strong wash; measured, the first paragraph of every section begins at 205px or
+   lower — and lower still at narrow widths, where the heading wraps — so the prose always lands
+   on the 5%% floor. */
+.section-block {
+  padding: clamp(40px, 5.5vw, 76px) 0;
+  border-bottom: 2px dashed var(--line-soft);
+  scroll-margin-top: 128px;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--section-c, var(--thread)) var(--tint-head), transparent),
+    color-mix(in srgb, var(--section-c, var(--thread)) var(--tint-floor), transparent) 200px);
+}
+
+/* ---------- how much tint, per palette ----------
+   The same percentage is not the same amount of colour. Against Dark's near-black paper a 5%%
+   floor is a large proportional lift and the whole section reads as tinted; against Light's
+   bright paper the identical mix is almost nothing, so only the 200px head showed and the rest
+   of the section fell back to bare paper — a thin band, which is exactly how it looked.
+
+   So the light palettes get more of it. The ceiling is body copy, and it is a low ceiling:
+   `--ink-soft` starts at 5.52:1 on Light's bare paper and every point of floor costs about a
+   tenth of that, so 7%% measured 4.92:1 and 6%% is the most that still holds 5. The head can be far stronger — 22%% — because only the eyebrow
+   and the heading sit inside those 200px, and both are `--ink` at 11:1 or better.
+
+   Dark is deliberately left at what it already had. */
+.section-block { --tint-head: 22%; --tint-floor: 6%; }
+/* The first section is the hero, and `--c-start` is red — on a warm paper that wash read as a
+   pink page rather than as a section colour. It carries no tint in the light palettes; against
+   Dark's near-black it reads as intended and is left alone. */
+#start { --tint-head: 0%; --tint-floor: 0%; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="warm"]) .section-block,
+  :root:not([data-theme="light"]):not([data-theme="warm"]) #start { --tint-head: 15%; --tint-floor: 5%; }
+}
+:root[data-theme="dark"] .section-block,
+:root[data-theme="dark"] #start { --tint-head: 15%; --tint-floor: 5%; }
+.section-block:last-of-type {
+  border-bottom: none;
+}
+
+/* Verse hover tooltip */
+.verse-tooltip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  display: none;
+  max-width: 340px;
+  background: color-mix(in srgb, var(--card) 95%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-lift);
+  pointer-events: auto;
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+  color: var(--ink);
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+.verse-tooltip.is-pinned { pointer-events: auto; }
+.verse-tooltip.open {
+  display: block;
+  opacity: 1;
+}
+.verse-tooltip .tooltip-ref {
+  font-family: var(--font-label);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--thread);
+  margin-bottom: 6px;
+  display: block;
+}
+.verse-tooltip .tooltip-text {
+  font-style: normal;
+  /* the cleaner turns <br> into a real newline, so poetry lines and inline headings
+     keep their break instead of gluing to the next word */
+  white-space: pre-line;
+  min-height: 3.1em;
+  transition: opacity 0.15s ease;
+}
+/* Waiting for a verse dims the words rather than collapsing the box to a short one. */
+.verse-tooltip .tooltip-text.is-loading { opacity: 0.45; }
+.verse-fallback-note {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-label);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.tooltip-actions { display: flex; margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
+/* On a pointing device the pop-up is a read-out, not a place to go: it never takes the cursor,
+   so a list of references can be skimmed straight down without the box parking itself over the
+   next one. The way to the passage is the reference itself, which is already under the hand. */
+@media (hover: hover) and (pointer: fine) {
+  .verse-tooltip { pointer-events: none; }
+}
+.tooltip-actions.is-hint {
+  display: block;
+  font-family: var(--font-label); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+/* The only thing to press in the pop-up, so it gets the whole width of it rather than a pill
+   in one corner — and it takes the pop-up's own corner radius so the two read as one object. */
+.tooltip-context-button {
+  flex: 1 1 auto;
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--thread) 35%, var(--line));
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--thread) 8%, var(--card));
+  color: var(--thread);
+  padding: 10px 11px;
+  font-family: var(--font-label);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+/* ---------- the passage dialog's own typography ----------
+   Redeclaring --lh and the font variables on the dialog stops them at its edge: the passage
+   reads at whatever the reader set *here*, and the site behind it keeps its own. The ladder is
+   pitched higher than the site's because this is scripture at length rather than prose about
+   it — even Snug here is looser than the site's Normal. */
+/* --font-body is re-read here on purpose: font-family computes to a concrete stack on <body>,
+   and the dialog inherits that computed value, so redeclaring the variable alone changed the
+   heading (which asks for --font-head itself) and left the passage in the old face. */
+.verse-context-dialog { --lh: 2.15; --ctx-fs: 1; font-family: var(--font-body); }
+.verse-context-dialog[data-ctx-lh="snug"] { --lh: 1.85; }
+.verse-context-dialog[data-ctx-lh="roomy"] { --lh: 2.55; }
+.verse-context-dialog[data-ctx-type="source-serif"] {
+  --font-head: "Figtree", var(--fb-sans);
+  --font-body: "Source Serif 4", var(--fb-serif);
+}
+.verse-context-dialog[data-ctx-type="figtree"] {
+  --font-head: "Figtree", var(--fb-sans);
+  --font-body: "Figtree", var(--fb-sans);
+}
+.verse-context-dialog[data-ctx-type="atkinson"] {
+  --font-head: "Atkinson Hyperlegible Next", var(--fb-sans);
+  --font-body: "Atkinson Hyperlegible Next", var(--fb-sans);
+}
+/* The passage is the thing the dials are for, so it reads at --lh and --ctx-fs directly rather
+   than at values derived from them.
+
+   And both of them ease, because here they can. A dial on :root re-lays the whole 40,000px
+   document, which is why the site-wide pair are cross-faded through a view transition instead
+   of animated. This one moves a single paragraph inside a dialog, so a frame of it costs one
+   small reflow and `font-size` and `line-height` — both animatable, both interpolable numbers —
+   can simply be transitioned. The type grows and the lines open up under the eye. */
+.verse-context-dialog .context-passage {
+  line-height: var(--lh);
+  font-size: calc(var(--ctx-base) * var(--ctx-fs));
+  transition: font-size 0.22s cubic-bezier(.2, .7, .3, 1), line-height 0.22s cubic-bezier(.2, .7, .3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .verse-context-dialog .context-passage { transition: none; }
+}
+.verse-context-dialog .context-dialog-head h3,
+.verse-context-dialog .context-heading { line-height: 1.22; }
+
+.verse-context-dialog {
+  width: min(1180px, calc(100% - 40px));
+  /* The box grows with the screen; the type used to sit at a flat 16px inside it, so a passage
+     that filled a laptop left a third of a large monitor empty and ran to 142 characters a line
+     — about double a comfortable measure. The type now answers to the same two dimensions the
+     box does: width, because that is the line it has to fill, and height, because that is what
+     it has to reach. Both floors are hit well before phone size, so a phone still reads at 1rem
+     and a URL bar sliding away moves nothing. Sized so a nine-verse-either-side passage lands
+     just under the fold at 1280x800 and again at 1920x1080. */
+  --ctx-base: clamp(1rem, 0.42rem + 0.45vw + 0.55dvh, 1.28rem);
+  /* One height, always. It used to be sized to its passage between a floor and a ceiling, which
+     meant every dial in the reading settings resized the window: Roomy made the passage taller,
+     the dialog grew into its ceiling, and — being centred — the whole thing slid up the screen
+     under the reader, taking the open settings panel with it. Opening and closing the panel did
+     it too. A reading surface should not move while you are reading on it, so the box is fixed
+     and the passage scrolls inside it, which is what the body was already set up to do. */
+  height: min(88dvh, 940px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 32px 100px color-mix(in srgb, #000 38%, transparent);
+  overflow: hidden;
+}
+.verse-context-dialog:focus { outline: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .verse-context-dialog[open] { animation: ctx-in 0.24s cubic-bezier(.2, .7, .3, 1) both; }
+  .verse-context-dialog[open]::backdrop { animation: ctx-veil 0.24s ease both; }
+  @keyframes ctx-in { from { opacity: 0; transform: translateY(10px) scale(0.985); } to { opacity: 1; transform: none; } }
+  @keyframes ctx-veil { from { opacity: 0; } to { opacity: 1; } }
+}
+/* Swapping translation used to blank the body, collapsing the box and flashing. The old passage
+   now stays put and dims while the new one loads, so the height never jumps. */
+.context-dialog-body.is-refreshing { opacity: 0.4; }
+.context-dialog-body { transition: opacity 0.18s ease; }
+.verse-context-dialog::backdrop { background: color-mix(in srgb, var(--paper) 22%, rgba(0,0,0,.72)); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+/* The scrolling column needs a definite height to shrink inside, and `height: 100%` is not one
+   when the parent is sized between a min and a max — it resolves to auto, the column grows past
+   the dialog, and the footer with "Even more context" ends up below the clip with the passage
+   running off the bottom. Carrying the same bounds here is what makes .context-dialog-body's
+   `flex: 1 1 auto; min-height: 0` actually bite. */
+.context-dialog-inner {
+  display: flex; flex-direction: column;
+  height: 100%;
+}
+.context-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 20px 22px 15px; border-bottom: 1px solid var(--line); }
+.context-dialog-head .label { display: block; color: var(--thread); margin-bottom: 4px; }
+.context-dialog-head h3 { font-size: clamp(1.28rem, 3vw, 1.7rem); }
+/* `min-width: 0` because this is a flex child holding a long unbreakable range — without it the
+   title column refuses to shrink and pushes the translation picker off the header. The badge sits
+   on the heading's baseline where there is room and drops to its own line where there is not. */
+.context-dialog-title { min-width: 0; }
+/* Centred, not baseline-aligned. Sharing a baseline is right for two runs of text at similar
+   sizes; here the badge is a bordered pill at 0.64rem beside a heading at up to 1.7rem, so
+   matching baselines hung the whole pill 8.8px below the heading's cap-height middle and it read
+   as having slipped. Measured, the heading's line-box centre and its cap centre are 0.6px apart,
+   so plain centring is also the optical answer. */
+.context-dialog-ref { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
+.context-range {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card-2);
+  color: var(--ink-soft);
+  font-family: var(--font-label);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.context-range[hidden] { display: none; }
+/* Gold, not the accent: `--thread` in this header already means the highlighted verse and the
+   "See in context" label, and a third red thing beside them would read as part of that rather
+   than as a correction to the translation named two inches to the right. Wraps to its own line
+   on its own — the row it sits in is `flex-wrap: wrap` — so it never squeezes the picker. */
+.context-fallback {
+  flex: 0 1 auto;
+  padding: 3px 10px;
+  border: 1px solid color-mix(in srgb, var(--gold) 42%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 12%, var(--card));
+  /* Mixed toward `--ink`, not `--gold` neat: gold on a gold-tinted pill measured 3.3:1 in Light
+     and 3.96:1 in Warm — under AA at 10px of uppercase. The mix darkens in the light palettes
+     and lightens in the dark one, because `--ink` turns over with them, so one declaration
+     clears AA in all three (5.58 / 6.16 / 7.33) and still reads gold. */
+  color: color-mix(in srgb, var(--gold) 60%, var(--ink));
+  font-family: var(--font-label);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.context-fallback[hidden] { display: none; }
+.context-dialog-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.context-verpick { z-index: 3; }
+/* Both header menus hang from a header that sits near the top of a dialog which is itself
+   near the top of the screen — so the room under them is what is left of the dialog, not what
+   is left of the window. On a short screen the translation list used to run past the dialog's
+   own edge and the last few versions were unreachable. */
+.context-verpick .verpick-menu { min-width: 180px; max-height: calc(88dvh - 190px); overflow-y: auto; }
+/* The pill's own 9px left padding sat the book tight against the border while the caret had
+   the whole gap on the right. Here the row is short enough for the difference to show. */
+.context-verpick .verpick-btn { padding-left: 13px; }
+/* The close mark was the "×" character, which is centered on the font's own maths rather than
+   on the circle — it sat high and a hair to the left in every face. A drawn cross is centered
+   by its own geometry, so it stays put whichever typeface the reader has chosen. */
+.context-dialog-close { width: 34px; height: 34px; flex: 0 0 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink-soft); background: var(--card-2); }
+.context-dialog-close svg { width: 15px; height: 15px; display: block; }
+.context-dialog-close:hover { color: var(--ink); border-color: var(--ink-faint); }
+
+/* ---------- the dialog's settings are a sheet too, at phone width ----------
+   The topbar's panel portals to <body> to escape the blurred header; this one cannot — the
+   dialog is in the top layer and anything on <body> paints behind it. It does not need to:
+   an open <dialog> is `position: fixed`, so it is already a containing block, and the sheet can
+   be pinned to the bottom of the dialog itself with `position: absolute`. `.context-prefs` has
+   to stop being `position: relative` for that to resolve past it. */
+/* ---------- the passage dialog's controls, on a phone ----------
+   Translation, settings and "even more context" are the three things that change how this reads,
+   and down here they are one row of the same height rather than two of them tucked into a header
+   corner at 34px square. Both menus open upward: from the footer there is nothing below them. */
+@media (max-width: 720px) {
+  .context-dialog-foot {
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+  .context-dialog-foot .context-more-button { flex: 1 1 auto; min-height: 42px; }
+  .context-dialog-foot .verpick,
+  .context-dialog-foot .context-prefs { flex: 0 0 auto; }
+  .context-dialog-foot .verpick-btn,
+  .context-dialog-foot .context-prefs-btn {
+    height: 42px;
+    min-height: 42px;
+    border-radius: 999px;
+  }
+  .context-dialog-foot .context-prefs-btn { width: 42px; flex: 0 0 42px; }
+  .context-dialog-foot .verpick-menu {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 0; right: auto;
+  }
+  /* The notch is drawn 5px past the menu's bottom edge, and an absolutely positioned child
+     that overhangs the END edge counts towards scrollable overflow — so a menu whose eight
+     options fitted it exactly still scrolled, by seven pixels, for the sake of a nine-pixel
+     decoration. Upward-opening menus only: an overhang at the start edge is not scrollable and
+     the dropdown variant is fine as it is. Draw it on the wrapper, where nothing scrolls. */
+  .context-dialog-foot .verpick-menu::before { display: none; }
+  .context-dialog-foot .verpick.open::after {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 17px;
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg);
+    background: var(--card);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    z-index: calc(var(--z-menu) + 1);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 760px) {
+  /* `.verse-context-dialog` prefix on purpose: `.context-prefs { position: relative }` is
+     declared later in this sheet, and a media query adds no specificity — a bare
+     `.context-prefs` here would lose on source order and the sheet would still hang off the
+     button. */
+  .verse-context-dialog .context-prefs { position: static; }
+  .verse-context-dialog .context-prefs .prefs-menu {
+    position: absolute;
+    top: auto; right: 0; bottom: 0; left: 0;
+    width: auto; min-width: 0;
+    max-height: min(72dvh, 520px);
+    padding: 10px 16px calc(14px + env(safe-area-inset-bottom));
+    border-width: 1px 0 0;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: 0 -14px 40px color-mix(in srgb, #000 28%, transparent);
+    overscroll-behavior: contain;
+  }
+  .verse-context-dialog .context-prefs .prefs-menu::before { display: none; }
+}
+
+/* Reading settings, in the place the reading is actually happening. */
+.context-prefs { position: relative; z-index: 4; }
+.context-prefs-btn { width: 34px; height: 34px; flex: 0 0 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink-soft); background: var(--card-2); }
+.context-prefs-btn svg { width: 16px; height: 16px; display: block; }
+.context-prefs-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+.context-prefs .prefs-menu { max-height: calc(88dvh - 190px); overflow-y: auto; }
+.context-prefs .prefs-menu .prefs-head:first-child { margin-top: 0; }
+/* The floor that used to be applied only while the settings panel was open — and which resized
+   the dialog when it closed — is gone: the dialog has one height now, tall enough for the panel
+   at every size it comes in. */
+.context-dialog-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 18px 22px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--thread) 55%, var(--line)) transparent;
+  overscroll-behavior: contain;
+}
+.context-dialog-body::-webkit-scrollbar { width: 7px; }
+.context-dialog-body::-webkit-scrollbar-track { background: transparent; }
+.context-dialog-body::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--thread) 45%, var(--line));
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+.context-loading { color: var(--ink-soft); }
+/* `pre-line` kept every newline the API happened to send. In a poetic passage that is a
+   hard break every few words, so half-lines sat alone, the gaps between them read as
+   uneven, and the highlight broke into a separate underlined pill per fragment. The
+   passage is one flowing paragraph; the breaks are stripped where the text is built. */
+.context-passage { margin: 0; color: var(--ink-soft); font-size: 1rem; line-height: var(--lh); }
+/* A translation's own section heading, given the line it was written to have. */
+/* em, not rem: these sit inside the passage, so they answer to its own text-size dial. */
+/* `--ink`, not a literal white: this heading sits on `--card`, which turns over with the palette,
+   so a fixed near-white would be a black-on-black label the moment anyone chooses Light. At
+   `--ink-faint` it was 4.95:1 in dark — quieter than the 6.3:1 body it is meant to head, which is
+   backwards for a heading. Full ink puts it at 12.5:1 and above the text it introduces. */
+.context-heading {
+  display: block; margin: 1.1em 0 0.35em;
+  font-family: var(--font-label); font-size: 0.66em; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
+  line-height: 1.3;
+}
+.context-passage > .context-heading:first-child { margin-top: 0; }
+/* Keyed on the attribute NOT being "on", so the apparatus is absent from the very first paint
+   rather than shown and then taken away once the stored setting is read back. */
+.verse-context-dialog:not([data-nums="on"]) .context-verse-number { display: none; }
+.verse-context-dialog:not([data-heads="on"]) .context-heading { display: none; }
+.context-verse, .context-block { display: inline; }
+.context-verse + .context-verse::before, .context-block + .context-block::before { content: " "; }
+.context-verse-number { margin-right: 0.3em; color: var(--ink-faint); font-family: var(--font-label); font-size: 0.62em; font-weight: 700; }
+/* Inside the mark, a faint number reads as a hole in it. */
+.context-verse.is-selected .context-verse-number { color: color-mix(in srgb, var(--thread) 72%, var(--ink)); }
+/* The mark used to sit on `.ctx-t`, which is the verse text only — so it began after the
+   verse number and, across a selection of several verses, broke at every number. Beside a
+   `.context-block` selection, which is one unbroken run, that read as a verse that had not been
+   fully underlined. The mark belongs to the whole verse: the number goes under it, and the
+   space between two selected verses (the `::before` above, which belongs to the second of the
+   pair) falls inside the run and joins them. */
+.context-verse.is-selected, .context-block.is-selected {
+  padding: 0.08em 0.14em;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--thread) 16%, transparent);
+  border-radius: 3px;
+  text-decoration: underline;
+  text-decoration-color: var(--thread);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* A typeface has nothing to interpolate, so the swap needs a moment of cover. It is the
+   passage that changes, so it is the passage that dips — not the document. The face is already
+   loaded by the time this runs, so there is nothing here but the one beat. */
+.context-dialog-body { transition: opacity 200ms ease; }
+.context-dialog-body.is-reface { opacity: 0.42; transition-duration: 110ms; }
+@media (prefers-reduced-motion: reduce) {
+  .context-dialog-body, .context-dialog-body.is-reface { transition: none; opacity: 1; }
+}
+
+.context-source { margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--line-soft); color: var(--ink-faint); font-family: var(--font-label); font-size: 0.65rem; line-height: 1.5; }
+.context-dialog-foot { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; padding: 12px 18px 14px; border-top: 1px solid var(--line); background: var(--card); }
+/* The same group in two homes. In the footer it is a row beside "Even more context" and the
+   label would be noise, since the button it sits next to already says what this is about; in
+   the panel the label is the only thing naming it, and it takes its own line above the pair. */
+.ctx-shows { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+/* Scoped to the panel, NOT hidden-when-in-the-footer: below 720px the whole prefs wrapper is
+   moved *into* the footer, so a `.context-dialog-foot .ctx-shows .prefs-head { display: none }`
+   matched in the panel as well and took the label with it. Say where it shows, not where it
+   doesn't — the ancestor this group hangs from is the thing that moves. */
+.ctx-shows .prefs-head { display: none; }
+.prefs-menu .ctx-shows .prefs-head { display: block; flex: 1 0 100%; margin-bottom: 2px; }
+.ctx-shows button {
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card-2);
+  color: var(--ink-soft);
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+}
+.ctx-shows button:hover { color: var(--ink); border-color: var(--ink-faint); }
+/* Compound selector, never a bare `.is-on` — the estate's one immunity pattern against a later
+   variant clobbering the base declaration it was meant to vary. */
+.ctx-shows button[aria-pressed="true"] {
+  /* Same mix, same reason as the fallback badge: `--thread` neat on a `--thread`-tinted pill is
+     4.1:1 in Dark. `--ink` turns over with the palette, so mixing toward it lifts this in Dark
+     and deepens it in the light two from one declaration. */
+  color: color-mix(in srgb, var(--thread) 75%, var(--ink));
+  border-color: color-mix(in srgb, var(--thread) 38%, var(--line));
+  background: color-mix(in srgb, var(--thread) 10%, var(--card));
+}
+/* The panel is where a thumb reaches these, so that copy gets the touch target; the footer copy
+   sits beside a 31px pill under a cursor and matching it keeps the row level. */
+.prefs-menu .ctx-shows button { min-height: 44px; flex: 1 1 auto; }
+.context-more-button {
+  border: 1px solid color-mix(in srgb, var(--thread) 38%, var(--line));
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: color-mix(in srgb, var(--thread) 75%, var(--ink));
+  background: color-mix(in srgb, var(--thread) 8%, var(--card));
+  font-family: var(--font-label);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.context-more-button:hover { background: color-mix(in srgb, var(--thread) 13%, var(--card)); }
+.context-more-button:disabled { cursor: wait; opacity: .58; }
+/* Asking again at the end of a book used to re-fetch the same verses forever, because there are
+   none past them. The button says so and stops, and it is not waiting for anything. */
+.context-more-button.is-done { cursor: default; color: var(--ink-faint); border-color: var(--line); background: var(--card-2); }
+.context-more-button.is-done:disabled { cursor: default; opacity: 1; }
+/* Only the verses that were not there a moment ago fade in. The passage used to dim whole and
+   come back, which reads as a flash on a widening where most of the text has not changed — and
+   these are inline spans, so opacity is the only thing that can move without breaking the flow. */
+@media (prefers-reduced-motion: no-preference) {
+  .context-passage .is-new { animation: ctx-grow 0.4s cubic-bezier(.2, .7, .3, 1) both; }
+  @keyframes ctx-grow { from { opacity: 0; } to { opacity: 1; } }
+}
+
+/* ================= PREVIEW CARD & THREAD HOVER STYLES ================= */
+
+/* Navigation link icons */
+.nav-link svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2.2px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+  margin-right: 6px;
+  display: inline-block;
+}
+.nav-link:hover svg {
+  transform: scale(1.18) rotate(5deg);
+}
+
+/* Hero chart layout */
+/* The chart is the point of the panel, so it gets the whole width and the summary sits
+   underneath it. Side by side, the summary ate 43% of the panel and forced the card to a
+   fixed height with its own scrollbar; stacked, both can size to their content. */
+.chart-panel.hero-chart {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(12px, 1.8vw, 18px);
+  align-items: stretch;
+  background-image: none;
+  height: auto;
+  overflow: hidden;
+}
+
+@media (min-width: 1100px) {
+  .chart-panel.hero-chart {
+    --hero-chart-width: min(1240px, calc(100vw - 32px));
+    width: var(--hero-chart-width);
+    max-width: var(--hero-chart-width);
+    margin-left: calc((100% - var(--hero-chart-width)) / 2);
+    margin-right: calc((100% - var(--hero-chart-width)) / 2);
+  }
+}
+
+.chart-main {
+  grid-row: 1;
+  position: relative;
+  min-width: 0;
+  padding: 16px 0 4px;
+  background-image:
+    linear-gradient(var(--grat) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grat) 1px, transparent 1px);
+  background-size: 42px 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow: hidden;
+}
+
+@media (max-width: 960px) {
+  .chart-panel.hero-chart { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; overflow: visible; }
+  .chart-main { padding-top: 20px; overflow: visible; }
+  .hero-scroll svg { min-width: 0; }
+}
+
+/* Where the route labels sit at the head of each line, the pill legend is the same
+   thirteen names a second time — so the labels take over as the control and the pills go. */
+.hero-line-label { display: none; }
+@media (min-width: 1100px) {
+  /* The weight lives here rather than on the element: an inline font-weight outranks any
+     stylesheet rule, so the lit state could never actually thicken the name. */
+  .hero-line-label { display: block; cursor: pointer; font-weight: 700; }
+  .hero-line-label:hover, .hero-line-label.hot, .hero-line-label.selected { font-weight: 900; }
+  .hero-chart .hero-legend { display: none; }
+}
+
+/* Thread preview card styling */
+.thread-preview-card {
+  background: var(--card-2);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Keeps active preview title at a static vertical position */
+  grid-row: 2;
+  position: relative;
+  min-height: 208px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: border-color 0.2s ease, background-color 0.2s ease, height 0.26s cubic-bezier(.2, .7, .3, 1);
+}
+/* Wide enough to read across: who the thread is on the left, its waypoints on the right. */
+@media (min-width: 900px) {
+  .thread-preview-card .preview-content {
+    display: grid;
+    grid-template-columns: minmax(230px, 0.85fr) minmax(0, 2fr);
+    column-gap: clamp(22px, 3vw, 34px);
+    align-items: start;
+  }
+  .thread-preview-card .preview-side { grid-column: 1; }
+  .thread-preview-card .preview-tag { border-bottom: none; padding-bottom: 0; margin-bottom: 14px; }
+  .thread-preview-card .preview-foot { margin-top: 4px; padding-top: 0; }
+  .thread-preview-card .preview-body { grid-column: 2; }
+}
+@media (min-width: 1180px) {
+  .thread-preview-card .preview-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    column-gap: clamp(18px, 2.4vw, 28px);
+    align-items: start;
+  }
+  .thread-preview-card .preview-body h4 { grid-column: 1 / -1; }
+  .thread-preview-card .preview-lands { margin-top: 0; }
+}
+
+/* The way in, given the same corner and the same edges as the squares above it. As a bare
+   uppercase link it was the one thing in the column with no shape at all. */
+.preview-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  /* A full-width bar 33px tall reads as a rule with words on it. Given a button's height, and
+     the touch floor on top of that, because this is the one thing on the card meant to be
+     pressed rather than read. */
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid color-mix(in srgb, var(--c) 34%, var(--line));
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--c) 9%, transparent);
+  color: var(--c);
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.preview-more:hover {
+  background: color-mix(in srgb, var(--c) 16%, transparent);
+  border-color: color-mix(in srgb, var(--c) 55%, var(--line));
+}
+.preview-more::after { content: ' →'; margin-left: 5px; transition: transform .2s ease; }
+.preview-more:hover::after { transform: translateX(3px); }
+
+.preview-side { display: flex; flex-direction: column; min-width: 0; }
+.preview-foot {
+  display: flex; align-items: stretch;
+  margin-top: auto; padding-top: 16px;
+}
+/* Nothing left to cancel: `.preview-more` was an inline link that carried `margin-top: auto` and
+   `padding-top: 16px` to push itself to the foot of the column, and this undid both when the foot
+   took that job over. As a button with real padding, the surviving `padding-top: 0` was landing
+   *after* the base rule and flattening the top of it — 12px of room above the words and 22 below. */
+
+/* Two circles, directly under the name.
+
+   Sitting them under the name is not enough on its own: the name is one line for "Bread" and
+   two for "The King & the Seed", and where it wraps depends on the column width, so the
+   arrows rode up and down as the route changed. A flat two-line reservation pinned them, but
+   at any width where every name fits on one line it also left a whole empty line between the
+   name and the arrows. The title now carries all thirteen names in one grid cell with twelve
+   of them hidden, so the box is as tall as the longest name *at this width* and no taller:
+   the arrows sit tight under the name on a wide screen, and still never move. */
+.preview-title { display: grid; }
+.preview-title > * { grid-area: 1 / 1; }
+.preview-title > .pt-ghost { visibility: hidden; pointer-events: none; }
+/* Under the icon rather than under the name: the chip, and the two arrows cut to the same
+   square with the same corner, make an L — one shape hanging off the left edge of the column,
+   which is where the eye already is. Indented past the chip they were a third alignment in a
+   card that only has two. */
+.preview-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--preview-l-gap);
+  margin: var(--preview-l-gap) 0 16px;
+}
+.preview-step {
+  width: var(--preview-chip); height: var(--preview-chip); flex: 0 0 var(--preview-chip);
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--card-2);
+  color: var(--ink-soft);
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.preview-step svg { width: 16px; height: 16px; }
+.preview-step:hover {
+  color: var(--c);
+  border-color: color-mix(in srgb, var(--c) 50%, var(--line));
+  background: color-mix(in srgb, var(--c) 10%, var(--card));
+}
+
+/* Placed AFTER `.preview-side` and `.preview-stepper` are declared, not before them: a media
+   query adds no specificity, so up there `display: grid` lost to the base `display: flex` on
+   source order while `align-items: center` — which nothing else declared — took hold anyway and
+   centred the entire column. Half a rule applied is worse than none of it.
+
+   Between 721 and 899 the card is one stacked column, so the L would be two squares of dead
+   space beside a full-width paragraph. The arrows go up onto the name's own row instead, hard
+   right — the same amount of room, taken out of a line that already had it going spare. Below
+   721 both the header and the arrows are gone entirely; the floating bar is the stepper there. */
+@media (min-width: 721px) and (max-width: 899px) {
+  .preview-side {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  .preview-header { grid-column: 1; grid-row: 1; }
+  .preview-stepper { grid-column: 2; grid-row: 1; margin: 0; justify-self: end; }
+  /* the stepper's own bottom margin used to open this gap; out of the flow it cannot */
+  .preview-tag { grid-column: 1 / -1; margin-top: 16px; }
+  .preview-foot { grid-column: 1 / -1; }
+}
+
+/* Stacked, the way in is no longer the last thing in the column — the milestones follow it. As
+   an inline link that was a line of text above a heading; as a filled bar it needs the heading
+   told to stand off. */
+@media (max-width: 899px) {
+  .thread-preview-card .preview-foot { padding-bottom: 20px; }
+}
+
+@media (pointer: coarse) {
+  /* The touch floor is applied to the quantity all three squares are cut from, not to the two
+     arrows — sized on their own they outgrew the chip and the L came apart. */
+  .preview-content { --preview-chip: 44px; }
+  .preview-step svg { width: 18px; height: 18px; }
+  .preview-more { min-height: 44px; }
+  /* Sideways belongs to the swipe handler, up and down still belongs to the page. Without this
+     the browser claims the whole gesture for scrolling and the swipe never gets a second event. */
+  .thread-preview-card { touch-action: pan-y; }
+  .preview-content, .preview-placeholder { transition: transform 0.24s cubic-bezier(.2, .7, .3, 1); }
+  /* while the thumb is down the card tracks it 1:1 — a transition here would lag the finger */
+  .preview-content.is-dragging, .preview-placeholder.is-dragging { transition: none; }
+}
+
+
+@media (max-width: 720px) {
+  .table-scroll {
+    overflow: visible;
+  }
+  table.map-table,
+  .map-table thead,
+  .map-table tbody,
+  .map-table tr,
+  .map-table td {
+    display: block;
+    width: 100%;
+  }
+  table.map-table {
+    min-width: 0;
+    border-collapse: separate;
+  }
+  .map-table thead {
+    display: none;
+  }
+  .map-table tr {
+    padding: 14px 16px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .map-table tr:last-child {
+    border-bottom: none;
+  }
+  .map-table td {
+    border-bottom: none;
+    padding: 5px 0;
+  }
+  .map-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 2px;
+  }
+  .hero-chart {
+    padding: 10px;
+  }
+  .thread-preview-card {
+    padding: 18px;
+    /* Clip, not visible: the card slides its own contents under a thumb now, and with nothing
+       to cut them off they crossed the dashed frame and sat on the page beside it. `clip`
+       rather than `hidden` because this must not become a scroll container — the swipe reads
+       its own gesture and the page keeps the vertical. */
+    overflow: clip;
+  }
+  /* Not sticky on a phone: once a preview loaded, the pinned panel grew by the height of
+     the mobile header and covered the first milestone of the thing it was previewing. */
+  .chart-main {
+    align-self: start;
+    padding: 10px 0 8px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r-lg);
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+    gap: 10px;
+  }
+  .hero-chart .hero-legend {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 2px 0 8px 14px;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    /* The snap point is the scrollport edge unless told otherwise, so scrolling the strip
+       parked whichever pill was nearest hard against the panel wall — the leading padding
+       only ever showed at rest. Inset the snap line by the same amount and the pills keep
+       their margin wherever the strip stops. */
+    scroll-padding-left: 14px;
+  }
+  .hero-chart .hero-legend::-webkit-scrollbar { display: none; }
+  .hero-chart .legend-chip { flex: 0 0 auto; scroll-snap-align: start; }
+  /* Trailing padding on a flex scroller is dropped by some engines, which put the last pill
+     on the edge; a flex spacer is the same gap nothing skips. */
+  .hero-chart .hero-legend::after { content: ""; flex: 0 0 14px; }
+  .thread-preview-card .preview-header { display: none; }
+  /* the floating bar at the bottom of the screen is the stepper here */
+  .thread-preview-card .preview-stepper { display: none; }
+  .verse-tooltip { max-width: calc(100vw - 28px); }
+  .context-dialog-head, .context-dialog-body { padding-left: 16px; padding-right: 16px; }
+}
+
+/* ---------- where you are in the thirteen ----------
+   Almost a scrollbar on purpose. The card answers a swipe now, and a swipe wants what a
+   carousel wants: a row of marks saying how many there are and which one this is. Nothing to
+   press — pressing a 5px dot on a phone is a miss waiting to happen — just something to read
+   out of the corner of the eye. */
+.preview-dots {
+  display: none;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 0 2px;
+}
+.preview-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  opacity: 0.26;
+  transition: opacity 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+.preview-dot.is-on {
+  background: var(--c, var(--thread));
+  opacity: 1;
+  transform: scale(1.5);
+}
+@media (max-width: 720px) {
+  .preview-dots { display: flex; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .preview-dot { transition: none; }
+}
+
+/* ---------- back to top ---------- */
+.back-to-top {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: var(--z-fab);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--thread) 35%, var(--line));
+  border-radius: 50%;
+  color: var(--thread);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .18s ease, visibility .18s ease, transform .18s ease, background-color .18s ease;
+}
+.back-to-top.visible { opacity: 1; visibility: visible; transform: none; }
+.back-to-top:hover { background: var(--card); }
+.back-to-top svg { width: 19px; height: 19px; }
+
+@media (max-width: 520px) {
+  .context-dialog-head { gap: 10px; }
+  .context-verpick .verpick-ic { display: block; }
+  .context-verpick .verpick-menu { min-width: min(180px, calc(100vw - 56px)); }
+  .back-to-top { right: 14px; bottom: 14px; width: 40px; height: 40px; }
+}
+
+.thread-preview-card .preview-placeholder {
+  margin: auto 0; /* Centers placeholder vertically in the fixed-height container */
+  text-align: center;
+  color: var(--ink-faint);
+  padding: 20px;
+}
+/* Full width, the placeholder was a wide empty box; laid out along the row it reads as a hint. */
+@media (min-width: 900px) {
+  .thread-preview-card .preview-placeholder {
+    display: grid;
+    grid-template-columns: auto minmax(0, 32ch);
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    column-gap: 14px;
+    row-gap: 2px;
+    margin: auto;
+    text-align: left;
+    padding: 8px 20px;
+  }
+  .thread-preview-card .preview-placeholder-icon { grid-row: span 2; margin: 0; width: 34px; height: 34px; }
+  .thread-preview-card .preview-placeholder h3 { margin-bottom: 0; align-self: end; }
+  .thread-preview-card .preview-placeholder p { align-self: start; }
+}
+.thread-preview-card .preview-placeholder-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.thread-preview-card .preview-placeholder h3 {
+  font-family: var(--font-label);
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.thread-preview-card .preview-placeholder p {
+  font-size: 0.98rem;
+  line-height: var(--lh-ui);
+}
+
+/* Active preview content styling */
+.preview-content {
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* The icon chip is one shared quantity: the name is set to the right of it and the two arrows
+     are cut to the same square, so the three of them are one shape answering to one number
+     rather than to a guess that drifts the moment the chip changes size. */
+  --preview-chip: 40px;
+  --preview-chip-gap: 14px;
+  /* The gap inside the L, used in both directions — icon to arrow and arrow to arrow. Equal is
+     what makes three squares read as one piece instead of three controls. */
+  --preview-l-gap: 8px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: var(--preview-chip-gap);
+  /* the arrows below carry the gap now, so the name and its arrows read as one block */
+  margin-bottom: 0;
+}
+.preview-icon {
+  width: var(--preview-chip);
+  height: var(--preview-chip);
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+  color: var(--c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.preview-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.preview-header h3 {
+  font-family: var(--font-body);
+  font-size: 1.38rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.preview-tag {
+  font-size: 0.98rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: var(--lh-ui);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 14px;
+}
+.preview-body {
+  font-size: 0.96rem;
+  line-height: var(--lh-ui);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.preview-body h4 {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0;
+}
+.preview-body ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.preview-body li {
+  line-height: var(--lh-ui);
+  font-size: 0.95rem;
+}
+.preview-body li b {
+  color: var(--c);
+  font-family: var(--font-body);
+}
+.preview-body li b .ref-link {
+  color: var(--c);
+  border-bottom-color: color-mix(in srgb, var(--c) 45%, transparent);
+}
+.preview-lands {
+  margin-top: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--c);
+  border-radius: var(--r);
+  padding: 12px 14px;
+}
+.preview-lands strong {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c);
+  display: block;
+  margin-bottom: 6px;
+}
+.preview-lands p {
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+
+
+/* ================= NESTED CARDS & TEXT READABILITY POLISH ================= */
+
+/* Walk It Out nested cards */
+.pillar-card .case-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.pillar-card .case-top .icon-chip {
+  margin-bottom: 4px;
+}
+/* This pair used to be two sentences with an inline bold lead-in, which is not how any other
+   contrast on the site is set. It now follows the Detour rows: a small uppercase label in the
+   row's own color, the sentence underneath. */
+.pillar-card .lie, .pillar-card .truth { display: flex; flex-direction: column; }
+.pillar-card .lie b, .pillar-card .truth b {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.pillar-card .lie b svg, .pillar-card .truth b svg { width: 14px; height: 14px; flex-shrink: 0; }
+.pillar-card .lie b { color: var(--c-detour); }
+.pillar-card .truth b { color: var(--s-land); }
+.pillar-card .truth span { color: var(--ink); }
+.pillar-card .lie {
+  background: color-mix(in srgb, var(--c-detour) 6%, var(--card));
+  border: 1.2px solid color-mix(in srgb, var(--c-detour) 22%, var(--line));
+  border-radius: var(--r);
+  padding: 14px 18px;
+  margin-top: 18px;
+  margin-bottom: 16px;
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+  color: var(--ink-soft);
+}
+.pillar-card .truth {
+  background: color-mix(in srgb, var(--s-land) 8%, var(--card));
+  border: 1.2px solid color-mix(in srgb, var(--s-land) 28%, var(--line));
+  border-radius: var(--r);
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  font-size: 0.98rem;
+  line-height: var(--lh-ui);
+  font-weight: 600;
+  color: var(--ink);
+}
+.pillar-card .pillar-body {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  line-height: calc(var(--lh-ui) + 0.1);
+}
+.pillar-card .practice {
+  background: color-mix(in srgb, var(--c) 8%, var(--card));
+  border: 1.2px dashed color-mix(in srgb, var(--c) 30%, var(--line));
+  border-radius: var(--r);
+  padding: 14px 18px;
+  margin: 22px 0 16px;
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+}
+.pillar-card .practice .label {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 8px;
+  color: var(--c);
+}
+.pillar-card .practice .label svg { width: 14px; height: 14px; }
+
+/* Detours nested cards */
+.detour-card .detour-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+  margin-top: 18px;
+}
+.detour-card .row {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px;
+  border-radius: var(--r);
+  font-size: 0.94rem;
+  line-height: var(--lh-ui);
+  border: 1.2px solid transparent;
+}
+.detour-card .row.pull {
+  background: color-mix(in srgb, var(--c) 6%, var(--card));
+  border-color: color-mix(in srgb, var(--c) 20%, var(--line));
+}
+.detour-card .row.cost {
+  background: color-mix(in srgb, var(--c-detour) 6%, var(--card));
+  border-color: color-mix(in srgb, var(--c-detour) 20%, var(--line));
+}
+.detour-card .row.home {
+  background: color-mix(in srgb, var(--s-land) 8%, var(--card));
+  border-color: color-mix(in srgb, var(--s-land) 25%, var(--line));
+}
+.detour-card .row b {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.detour-card .row b svg { width: 14px; height: 14px; flex-shrink: 0; }
+.detour-card .row.pull b { color: var(--c); }
+.detour-card .row.cost b { color: var(--c-detour); }
+.detour-card .row.home b { color: var(--s-land); }
+
+/* SVG thread trigger styles */
+.hero-thread-trigger {
+  cursor: pointer;
+  pointer-events: stroke;
+}
+.hero-thread {
+  pointer-events: none;
+  will-change: opacity, stroke-width;
+}
+
+/* ---------- the hero chart draws itself ----------
+   .hero-anim is added by JS only after every path length has been measured, so an
+   un-run script leaves a finished chart rather than an empty one. */
+.hero-anim .hero-thread {
+  stroke-dasharray: var(--len);
+  animation: hero-draw 1.5s cubic-bezier(.36,.28,.2,1) both;
+  animation-delay: calc(var(--i) * 0.05s);
+}
+@keyframes hero-draw {
+  from { stroke-dashoffset: var(--len); }
+  to { stroke-dashoffset: 0; }
+}
+.hero-anim .hero-spur {
+  stroke-dasharray: var(--len);
+  animation: hero-draw 0.75s cubic-bezier(.36,.28,.2,1) 1.5s both;
+}
+.hero-anim .hero-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-pop 0.5s cubic-bezier(.34,1.56,.64,1) 1.35s both;
+}
+@keyframes hero-pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+/* the convergence keeps a slow heartbeat once everything has landed */
+.hero-node-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+}
+.hero-anim .hero-node-halo { animation: hero-ping 3.4s ease-out 2.4s infinite; }
+@keyframes hero-ping {
+  0%   { transform: scale(1); opacity: 0.55; }
+  55%  { transform: scale(2.9); opacity: 0; }
+  100% { transform: scale(2.9); opacity: 0; }
+}
+.hero-anim .hero-cross {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: hero-rise 0.7s cubic-bezier(.22,.9,.3,1) 1.7s both;
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(7px) scale(0.86); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-anim .hero-jesus { animation: hero-fade 0.6s ease 2.05s both; }
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* the dotted drop from the cross to the convergence never stops traveling */
+.hero-anim .hero-drop {
+  animation: hero-fade 0.5s ease 1.9s both, hero-drip 9s linear 1.9s infinite;
+}
+@keyframes hero-drip {
+  to { stroke-dashoffset: -45; } /* multiple of the 5px dash period = seamless loop */
+}
+/* the brand mark's thread keeps the same slow march as the map routes */
+.brand-thread { animation: brand-march 16s linear infinite; will-change: stroke-dashoffset; }
+@keyframes brand-march {
+  to { stroke-dashoffset: -21.6; } /* 4 x the 5.4 dash period */
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim .hero-thread,
+  .hero-anim .hero-spur,
+  .hero-anim .hero-node,
+  .hero-anim .hero-node-halo,
+  .hero-anim .hero-cross,
+  .hero-anim .hero-jesus,
+  .hero-anim .hero-drop,
+  .brand-thread { animation: none; }
+}
+
+/* Shared route march — identical speed on the journey and tabernacle diagrams */
+.journey-route-path,
+.tabernacle-route {
+  stroke-dasharray: 6 5;
+  animation: route-march 60s linear infinite;
+}
+@keyframes route-march {
+  to {
+    stroke-dashoffset: -990; /* multiple of the 11px dash period = seamless loop */
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-route-path, .tabernacle-route { animation: none; }
+}
+
+/* Halo behind every diagram label. It used to be --card everywhere, which on the white
+   slab labels of the journey diorama drew a light outline on a light fill and left the
+   text barely readable; each diagram now names the surface its labels actually sit on. */
+.journey-scroll text,
+.tabernacle-svg text,
+.hero-scroll text {
+  paint-order: stroke;
+  stroke: var(--label-halo, var(--card));
+  stroke-width: 2.6px;
+  stroke-linejoin: round;
+}
+.journey-scroll { --label-halo: var(--paper); }
+.tabernacle-svg { --label-halo: var(--card-2); }
+.hero-scroll { --label-halo: var(--card); }
+
+/* Tabernacle animated blueprint graphic container */
+.tabernacle-graphic-container {
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background-size: 16px 16px;
+  background-image: 
+    linear-gradient(to right, color-mix(in srgb, var(--line) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--line) 40%, transparent) 1px, transparent 1px);
+}
+.tabernacle-svg {
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  display: block;
+}
+/* .tabernacle-route shares the route-march animation defined with .journey-route-path */
+
+.svg-station-node {
+  transition: transform 0.2s ease;
+}
+.svg-station-node circle {
+  transition: r 0.2s ease, fill 0.2s ease, stroke-width 0.2s ease;
+}
+.svg-station-node text {
+  transition: fill 0.2s ease, opacity 0.2s ease;
+}
+.svg-station-node.active circle {
+  r: 12px;
+  fill: color-mix(in srgb, var(--zone-c) 15%, var(--card));
+  stroke-width: 3.5px;
+}
+.svg-station-node.active text {
+  fill: var(--ink);
+}
+
+.tab-station-card.active-hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--zone-c) 50%, var(--line)) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Narrow-phone overrides live at the end of the sheet on purpose: they used to sit above
+   the .nav-link and .verpick-* rules they override and, at equal specificity, never applied. */
+@media (max-width: 520px) {
+  .topbar-row {
+    gap: 10px 12px;
+    padding: 9px 14px;
+  }
+  .brand {
+    flex: 1 1 auto;
+  }
+  .brand-name {
+    font-size: 1.02em;
+  }
+  .topbar-actions {
+    gap: 8px;
+  }
+  .verpick-btn { padding: 6px 12px 6px 13px; }
+  .verpick-ic { display: block; }
+  .verpick-menu { min-width: 180px; }
+  .navstrip {
+    padding-top: 8px;
+  }
+  .nav-link {
+    font-size: 0.66em;
+    padding: 6px 9px;
+  }
+}
+
+
+/* ---------- no card is ever left alone beside dead space ----------
+   These rows wrap and grow: whatever lands on the last row expands to fill it, whatever the
+   count and whatever the width. It replaces per-count nth-child arithmetic that only held at
+   the one breakpoint it was written for. */
+.season-grid > *, .insight-grid > *, .feast-cards > *, .triune-rails > *,
+.mind-panel-grid > *, .tv-grid > *, .shelf-items > *, .big-idea > * { min-width: 0; }
+.season-grid > * { flex: 1 1 280px; }
+.insight-grid > * { flex: 1 1 300px; }
+.feast-cards > * { flex: 1 1 300px; }
+.triune-rails > * { flex: 1 1 290px; }
+.mind-panel-grid > * { flex: 1 1 260px; }
+.tv-grid > * { flex: 1 1 260px; }
+.shelf-items > * { flex: 1 1 310px; }
+.big-idea > * { flex: 1 1 280px; }
+
+
+/* ---------- reading settings ---------- */
+.prefs { position: relative; flex-shrink: 0; }
+/* ---------- the panel is furniture, not text ----------
+   Every dial in here is inherited by the panel itself: `--lh` is declared on :root and on the
+   passage dialog, `--fs`/`--fs-theme` scale the root font-size, and the typeface themes swap
+   `--font-body`. So changing line height grew the panel by 21px and moved it 5px up the screen
+   while the reader was still reaching for the next control, and changing the typeface resized
+   every label in it. The panel states all three for itself and stops moving. `1rem` is already
+   `100% * --fs * --fs-theme`, so dividing by them cancels back to a fixed size. */
+.prefs-menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: var(--z-menu);
+  --lh: 1.4;
+  font-size: calc(1rem / (var(--fs) * var(--fs-theme)));
+  font-family: var(--font-label);
+  line-height: 1.4;
+  min-width: 272px;
+  padding: 12px 13px 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lift);
+  /* four settings instead of two — on a short screen the panel scrolls rather than
+     running off the bottom with the text size out of reach */
+  max-height: calc(100dvh - 76px);
+  overflow-y: auto;
+}
+.prefs-menu::before {
+  content: ""; position: absolute; top: -5px; right: 12px;
+  width: 9px; height: 9px; transform: rotate(45deg);
+  background: var(--card);
+  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
+}
+.prefs-head {
+  display: block; margin: 0 0 6px;
+  font-family: var(--font-label); font-size: 0.56em; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint);
+}
+.prefs-head-val { font-weight: 700; color: var(--thread); }
+.prefs-head-val::before { content: "\00b7"; margin: 0 5px 0 2px; color: var(--ink-faint); }
+.seg { display: flex; gap: 2px; padding: 3px; margin-bottom: 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--card-2); }
+/* Warm / Light / Dark, Snug / Normal / Roomy and Reset are the same kind of thing — the labels
+   on the controls of one panel — and were set three different ways: sentence case at 0.66em
+   here, uppercase at 0.8em on the button below. One treatment for all of them, and it is the
+   label idiom the rest of the site already uses. */
+.seg button {
+  flex: 1 1 auto; padding: 7px 8px; border-radius: 999px;
+  font-family: var(--font-label); font-size: 0.66em; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft); white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--thread) 14%, var(--card));
+  color: var(--thread);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--thread) 30%, transparent);
+}
+/* Only the phone's sheet has a handle; in a dropdown there is nothing to drag. */
+.prefs-grab { display: none; }
+.prefs-note { display: block; font-size: 0.68em; color: var(--ink-faint); line-height: 1.4; }
+/* A way back. Every dial above this line is sticky on the device, and a panel you can only
+   walk forwards through is a panel you end up stuck in. */
+.prefs-foot { margin-top: 11px; padding-top: 10px; border-top: 1px dashed var(--line-soft); }
+.prefs-reset {
+  width: 100%; padding: 10px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card-2);
+  font-family: var(--font-label); font-size: 0.66em; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft); cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.prefs-reset:hover {
+  color: var(--thread);
+  border-color: color-mix(in srgb, var(--thread) 40%, var(--line));
+  background: color-mix(in srgb, var(--thread) 8%, var(--card));
+}
+
+/* Six pairings, each previewed in its own two faces — but as six named rows with a
+   descriptive line each they were over half the panel's height, which on a phone meant
+   scrolling a settings sheet to reach the text size. A pairing only ever needed two
+   letters to show itself: the cap is set in the theme's heading font and the lowercase
+   in its body font, so a theme that crosses serif and sans still shows that it does. */
+.typegrid { display: flex; gap: 5px; margin-bottom: 14px; }
+/* The pair were aligned on their shared baseline, which is right for the two letters and wrong
+   for the box around them — the ink sat high and left a gap underneath. Centered as a unit, with
+   the baseline alignment kept between the two glyphs by an inline wrapper's own line box. */
+.typegrid button {
+  flex: 1 1 0; min-width: 0;
+  display: flex; align-items: center; justify-content: center; gap: 1px;
+  padding: 9px 2px 8px; border-radius: 9px;
+  border: 1px solid var(--line-soft);
+  background: var(--card-2);
+  line-height: 1;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.typegrid button:hover { border-color: color-mix(in srgb, var(--thread) 30%, var(--line)); }
+.typegrid button b { font-size: 1.05em; font-weight: 600; color: var(--ink); }
+.typegrid button i { font-style: normal; font-size: 0.92em; color: var(--ink-soft); }
+.typegrid button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--thread) 12%, var(--card));
+  border-color: color-mix(in srgb, var(--thread) 42%, transparent);
+}
+.typegrid button[aria-pressed="true"] b,
+.typegrid button[aria-pressed="true"] i { color: var(--thread); }
+
+.typegrid button[data-v="literata"] b,
+.typegrid button[data-v="literata"] i { font-family: "Literata", var(--fb-serif); }
+.typegrid button[data-v="source-serif"] b { font-family: "Figtree", var(--fb-sans); }
+.typegrid button[data-v="source-serif"] i { font-family: "Source Serif 4", var(--fb-serif); }
+.typegrid button[data-v="figtree"] b,
+.typegrid button[data-v="figtree"] i { font-family: "Figtree", var(--fb-sans); }
+.typegrid button[data-v="atkinson"] b,
+.typegrid button[data-v="atkinson"] i { font-family: "Atkinson Hyperlegible Next", var(--fb-sans); }
+
+.stepper {
+  display: flex; align-items: center; gap: 2px; padding: 3px; margin-bottom: 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--card-2);
+}
+.stepper button {
+  flex: 0 0 auto; width: 34px; height: 30px; border-radius: 999px;
+  font-family: var(--font-label); font-size: 1em; font-weight: 700; line-height: 1;
+  color: var(--ink-soft);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.stepper button:hover:not(:disabled) { color: var(--thread); background: color-mix(in srgb, var(--thread) 12%, transparent); }
+.stepper button:disabled { opacity: 0.32; cursor: default; }
+.stepper-val {
+  flex: 1 1 auto; text-align: center;
+  font-family: var(--font-label); font-size: 0.66em; font-weight: 700; letter-spacing: 0.05em;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+
+/* It was two equal halves of a pill with a rule down the middle — which is the shape of a
+   two-way preset, and read as one. A minus at one end, a plus at the other, and the step you
+   are standing on in between says ladder instead. The value earns its third of the pill by
+   being the only thing that tells you where you are on it. */
+.stepper.sizer { gap: 0; padding: 3px; }
+.stepper.sizer button {
+  flex: 0 0 auto; width: 38px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+}
+.stepper.sizer .stepper-val { flex: 1 1 auto; }
+.sz-op {
+  font-family: var(--font-label);
+  font-size: 1.05em;
+  font-weight: 700;
+  line-height: 1;
+}
+.sz-a {
+  font-family: var(--font-head); font-weight: 700; line-height: 1;
+  color: var(--ink-soft);
+  transition: color 0.15s ease;
+}
+.sz-sm { font-size: 0.88em; }
+.sz-lg { font-size: 1.32em; }
+.stepper.sizer button:hover:not(:disabled) .sz-a { color: var(--thread); }
+.stepper.sizer button[aria-pressed="true"] .sz-a { color: var(--thread); }
+
+@media (max-width: 520px) { .prefs-menu { min-width: min(272px, calc(100vw - 28px)); } }
+
+/* ---------- the panel comes up from the bottom on a phone ----------
+   Hung off the button it covered the top third of the screen — the header, the section
+   you were reading, and the chart whose type you were adjusting. Everything this panel
+   changes is *below* it, so it belongs at the bottom of the screen with the page still
+   showing above. No scrim, deliberately: the point is watching the page change. */
+@media (max-width: 760px) {
+  .prefs-menu {
+    position: fixed;
+    top: auto; right: 0; bottom: 0; left: 0;
+    width: auto; min-width: 0;
+    max-height: min(72dvh, 520px);
+    padding: 10px 16px calc(14px + env(safe-area-inset-bottom));
+    border-width: 1px 0 0;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: 0 -14px 40px color-mix(in srgb, #000 28%, transparent);
+    overscroll-behavior: contain;
+  }
+  /* the little pointer that aimed at the button has nothing to aim at down here */
+  .prefs-menu::before { display: none; }
+  /* The handle used to be drawn as that pseudo-element, which looked the part but could not be
+     grabbed: a pseudo-element takes no pointer capture. It is a real element now, and its box
+     runs the full width of the sheet so the thumb has a bar to catch rather than a 40px pill.
+     `touch-action: none` is what keeps the drag from scrolling the sheet's own contents. */
+  .prefs-grab {
+    display: block;
+    width: 100%;
+    padding: 4px 0 12px;
+    margin: 0;
+    touch-action: none;
+    cursor: grab;
+  }
+  .prefs-grab::after {
+    content: "";
+    display: block;
+    width: 40px; height: 4px;
+    margin: 0 auto;
+    border-radius: 999px;
+    background: var(--line);
+    transition: background-color 0.15s ease, width 0.15s ease;
+  }
+  .prefs-menu.is-dragging .prefs-grab { cursor: grabbing; }
+  .prefs-menu.is-dragging .prefs-grab::after { background: var(--ink-faint); width: 52px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .prefs-menu:not([hidden]) { animation: sheet-up 0.24s cubic-bezier(.2,.7,.3,1) both; }
+    /* Down is a transition, not a second keyframe animation, so it leaves from wherever the
+       sheet is — closed by the button it starts from rest, closed by a flick it carries on from
+       the thumb. `is-dragging` takes the transition off so the sheet tracks the finger 1:1. */
+    .prefs-menu.is-closing { transition: transform 0.22s cubic-bezier(.4, 0, 1, 1); }
+    .prefs-menu.is-snapping { transition: transform 0.22s cubic-bezier(.2, .7, .3, 1); }
+    .prefs-menu.is-dragging { transition: none; }
+  }
+}
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+
+/* ---------- the two ends of the story ----------
+   They read as book names and carry the verse on hover. Both charts live in the DOM and CSS
+   picks one, so these rules must outrank `.hero-scroll svg` and sit after it. */
+.chart-corner .ref-link {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+/* Both ends of the story read along the top edge, flush with the panel's own corners. Below the
+   drawing the right-hand one crowded the era ruler; up here they frame it. The inherited
+   10px/14px padding is dropped so each sits exactly in its corner rather than inset from it.
+   They also sit the same distance from the panel's top, left and right edges: the scroll box
+   already starts 13px in from the side and 29px down from the top, so the 16px inset here is
+   what evens all three gaps out at 29px instead of pinning the names to the very corners. */
+.hero-scroll { padding-top: 20px; }
+.hero-scroll .chart-corner { padding: 0; line-height: 1; }
+.hero-scroll .chart-corner.tl { top: 0; bottom: auto; left: 16px; right: auto; }
+.hero-scroll .chart-corner.br { top: 0; bottom: auto; right: 16px; left: auto; }
+/* Full book names above, abbreviations once the panel is phone-width — see below. */
+.chart-corner .cc-short { display: none; }
+
+@media (max-width: 720px) {
+  /* The era ruler runs past the crop, so it goes; the two book names carry the ends instead. */
+  .hero-svg .hero-era { display: none; }
+  /* GENESIS and REVELATION, letterspaced, ran the full width of a phone panel and sat hard
+     against both edges. The abbreviations are what the chart's own era ruler used anyway,
+     and the pair now sits inside the frame rather than on it. */
+  .chart-corner .cc-long { display: none; }
+  .chart-corner .cc-short { display: inline; }
+}
+
+
+/* ---------- diagram rails ----------
+   Three diagrams drew themselves on canvases 900 units wide. Shrunk to a 325px phone that put
+   their labels at 2–3px — present, unreadable, and each one solved it differently (one clipped,
+   one shrank, one scrolled). They now share one behavior: below the width where the type stays
+   legible they scroll sideways, with the edges faded so it is obvious there is more to see. */
+.journey-scroll, .tabernacle-graphic-container, .feast-arc-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--thread) 45%, var(--line)) transparent;
+  overscroll-behavior-x: contain;
+}
+/* Rather than enlarge the type — which collided on the desktop diorama — the diagram itself
+   stays big enough to read on a phone and pans. Desktop is untouched. */
+@media (max-width: 880px) {
+  .journey-scroll > svg { min-width: 1000px; }
+  .tabernacle-svg { min-width: 940px; }
+  .feast-arc-scroll > svg { min-width: 1000px; }
+}
+.diagram-hint {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 0;
+  font-family: var(--font-label);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.diagram-hint svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+@media (max-width: 880px) {
+  .journey-scroll, .tabernacle-graphic-container, .feast-arc-scroll {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  }
+  .diagram-hint { display: flex; }
+}

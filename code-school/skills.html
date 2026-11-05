@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills Map — Code School</title>
+  <link rel="stylesheet" href="css/style.css" />
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body data-page="skills">
+
+  <main class="wrap">
+    <header class="page-head">
+      <div class="kicker">The spine of this site</div>
+      <h1>The Skills Map</h1>
+      <p class="lede">
+        Every hour you spend learning is an investment. In the AI era, some classic
+        investments now pay nothing — and a few pay more than ever. Three verdicts:
+        <strong style="color: var(--green)">learn deeply</strong>,
+        <strong style="color: var(--yellow)">know of</strong>, or
+        <strong style="color: var(--red)">safely skip</strong>.
+      </p>
+    </header>
+
+    <div class="chips" id="filter-chips">
+      <button class="chip on" data-filter="all">All</button>
+      <button class="chip" data-filter="learn">🟢 Learn deeply</button>
+      <button class="chip" data-filter="know">🟡 Know of</button>
+      <button class="chip" data-filter="skip">🔴 Safely skip</button>
+    </div>
+
+    <div id="skills-root"></div>
+  </main>
+
+  <script src="data/skills-data.js"></script>
+  <script>
+    const root = document.getElementById("skills-root");
+
+    function esc(s) {
+      return s ? s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    }
+
+    function render(filter) {
+      root.innerHTML = "";
+      const order = ["learn", "know", "skip"];
+      order.forEach((verdict) => {
+        if (filter !== "all" && filter !== verdict) return;
+        const meta = SKILLS_META[verdict];
+        const items = SKILLS.filter((s) => s.verdict === verdict);
+
+        const section = document.createElement("section");
+        section.className = "verdict-section";
+        section.innerHTML = `
+          <div class="verdict-head">
+            <h2>${meta.title}</h2>
+            <span class="badge ${meta.badge}">${meta.label}</span>
+          </div>
+          <p class="verdict-sub">${meta.sub}</p>
+          <div class="grid grid-2">
+            ${items
+              .map(
+                (s) => `
+              <div class="card skill-card">
+                <div class="skill-top">
+                  <h3>${esc(s.name)}</h3>
+                  <span class="badge badge-gray">${esc(s.tag)}</span>
+                </div>
+                <p class="why">${esc(s.why)}</p>
+                ${
+                  s.how
+                    ? `<details class="deeper">
+                        <summary>How to actually learn it</summary>
+                        <div class="deeper-body">${esc(s.how)}</div>
+                      </details>`
+                    : ""
+                }
+              </div>`
+              )
+              .join("")}
+          </div>`;
+        root.append(section);
+      });
+    }
+
+    document.getElementById("filter-chips").addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if (!btn) return;
+      document.querySelectorAll("#filter-chips .chip").forEach((c) => c.classList.remove("on"));
+      btn.classList.add("on");
+      render(btn.dataset.filter);
+    });
+
+    render("all");
+  </script>
+  <script src="js/main.js"></script>
+<script src="/assets/ease-details.js" defer></script>
+</body>
+</html>

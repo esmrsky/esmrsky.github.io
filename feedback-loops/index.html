@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  (function() {
+    var storedTheme = localStorage.getItem('theme');
+    var systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', storedTheme || systemTheme);
+  })();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0f15'/%3E%3Cpath d='M8 32c5-14 11-14 16 0s11 14 16 0 11-14 16 0' fill='none' stroke='%238f85f3' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Feedback loops — a field guide to habits, motivation and emotional cycles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css" rel="stylesheet">
+<style>
+:root {
+  --site-width: 1360px;
+  --bg: #0e0f15;
+  --card: #161924;
+  --tx: #f1f2f8;
+  --tx2: #9ba1b5;
+  --line: #262b3c;
+  --ch: #8f85f3;
+  --cm: #2fc296;
+  --cr: #ff8a5c;
+  --ce: #f472a8;
+  --ok: #3fae7a;
+  --warn: #e0a23e;
+  
+  /* Tactile shadow/highlight strengths (Dark Mode Default) */
+  --highlight-glow: rgba(255, 255, 255, 0.05);
+  --btn-highlight: rgba(255, 255, 255, 0.12);
+  --btn-shadow: rgba(0, 0, 0, 0.4);
+  --btn-drop-shadow: rgba(0, 0, 0, 0.2);
+  --btn-text-color: color-mix(in srgb, var(--c) 45%, var(--tx2));
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f7f7f4;
+    --card: #ffffff;
+    --tx: #1b1d25;
+    --tx2: #5c6172;
+    --line: #e7e7e1;
+    --ch: #5b4fd6;
+    --cm: #0c8f6e;
+    --cr: #d85a30;
+    --ce: #d2447e;
+    --ok: #1e8a5a;
+    --warn: #a9761c;
+    
+    /* Tactile strengths for light theme */
+    --highlight-glow: rgba(255, 255, 255, 0.4);
+    --btn-highlight: rgba(255, 255, 255, 0.7);
+    --btn-shadow: rgba(0, 0, 0, 0.12);
+    --btn-drop-shadow: rgba(0, 0, 0, 0.06);
+    --btn-text-color: color-mix(in srgb, var(--c) 75%, var(--tx2));
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f7f7f4;
+  --card: #ffffff;
+  --tx: #1b1d25;
+  --tx2: #5c6172;
+  --line: #e7e7e1;
+  --ch: #5b4fd6;
+  --cm: #0c8f6e;
+  --cr: #d85a30;
+  --ce: #d2447e;
+  --ok: #1e8a5a;
+  --warn: #a9761c;
+  
+  /* Tactile strengths for light theme */
+  --highlight-glow: rgba(255, 255, 255, 0.4);
+  --btn-highlight: rgba(255, 255, 255, 0.7);
+  --btn-shadow: rgba(0, 0, 0, 0.12);
+  --btn-drop-shadow: rgba(0, 0, 0, 0.06);
+  --btn-text-color: color-mix(in srgb, var(--c) 75%, var(--tx2));
+}
+:root[data-theme="dark"] {
+  --bg: #0e0f15;
+  --card: #161924;
+  --tx: #f1f2f8;
+  --tx2: #9ba1b5;
+  --line: #262b3c;
+  --ch: #8f85f3;
+  --cm: #2fc296;
+  --cr: #ff8a5c;
+  --ce: #f472a8;
+  --ok: #3fae7a;
+  --warn: #e0a23e;
+  
+  /* Tactile strengths for dark theme */
+  --highlight-glow: rgba(255, 255, 255, 0.05);
+  --btn-highlight: rgba(255, 255, 255, 0.12);
+  --btn-shadow: rgba(0, 0, 0, 0.4);
+  --btn-drop-shadow: rgba(0, 0, 0, 0.2);
+  --btn-text-color: color-mix(in srgb, var(--c) 45%, var(--tx2));
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+/* Smooth transition for theme switching */
+body, article, .cathead, .step, .lg, #toc, .tpill, .cpill, .toc-arrow i, .theme-toggle, .how, .result, .brk {
+  transition: 
+    background-color 0.3s ease,
+    background-image 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.08s ease;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+.wrap {
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.hero {
+  padding-top: 60px;
+  padding-bottom: 32px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero h1 .dots {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin-left: 4px;
+  transform: translateY(3px);
+}
+.hero h1 .dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: dot-wave 2s infinite ease-in-out;
+  opacity: 0.7;
+}
+.hero h1 .dots span:nth-child(1) { animation-delay: 0.0s; }
+.hero h1 .dots span:nth-child(2) { animation-delay: 0.15s; }
+.hero h1 .dots span:nth-child(3) { animation-delay: 0.3s; }
+.hero h1 .dots span:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes dot-wave {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.15);
+    opacity: 1;
+  }
+}
+.sub {
+  color: var(--tx2);
+  font-size: 17px;
+  max-width: 820px;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.lg {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: linear-gradient(to bottom, var(--card), color-mix(in srgb, var(--bg) 95%, var(--card)));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-size: 13.5px;
+  color: var(--tx2);
+  max-width: 360px;
+  box-shadow: 
+    inset 0 1px 0 var(--highlight-glow),
+    0 4px 10px var(--btn-drop-shadow);
+}
+.lg i {
+  font-size: 20px;
+  margin-top: 1px;
+}
+.lg b {
+  color: var(--tx);
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+#toc {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.toc-container {
+  position: relative;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.toc-scroller {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  width: 100%;
+}
+.toc-scroller::-webkit-scrollbar {
+  display: none;
+}
+.toc-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 52px;
+  background: transparent;
+  border: none;
+  color: var(--tx2);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: color 0.2s, opacity 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+.toc-arrow i {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border: 1px solid transparent;
+}
+.toc-arrow.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.toc-arrow:hover i {
+  background: linear-gradient(to bottom, var(--card), color-mix(in srgb, var(--bg) 95%, var(--card)));
+  border: 1px solid var(--line);
+  color: var(--tx);
+  box-shadow: 
+    inset 0 1px 0 var(--btn-highlight),
+    inset 0 -1px 0 var(--btn-shadow),
+    0 2px 4px var(--btn-drop-shadow);
+}
+.toc-arrow:active i {
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--tx) 8%, var(--bg)), color-mix(in srgb, var(--tx) 4%, var(--bg)));
+  box-shadow: inset 0 2px 4px var(--btn-shadow);
+}
+.toc-arrow.left {
+  left: 0;
+  background: linear-gradient(to right, color-mix(in srgb, var(--bg) 84%, transparent) 50%, transparent 100%);
+}
+.toc-arrow.right {
+  right: 0;
+  background: linear-gradient(to left, color-mix(in srgb, var(--bg) 84%, transparent) 50%, transparent 100%);
+}
+.tpill {
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line));
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--c) 8%, var(--card)), color-mix(in srgb, var(--c) 3%, var(--card)));
+  color: var(--btn-text-color);
+  text-decoration: none;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  box-shadow: 
+    inset 0 1px 0 var(--btn-highlight),
+    inset 0 -1px 0 var(--btn-shadow),
+    0 2px 4px var(--btn-drop-shadow);
+  transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.08s;
+}
+.tpill i {
+  color: var(--c);
+  font-size: 15px;
+}
+.tpill:hover {
+  border-color: var(--c);
+  color: var(--tx);
+}
+.tpill.active {
+  border-color: var(--c);
+  color: var(--tx);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--c) 20%, var(--card)), color-mix(in srgb, var(--c) 10%, var(--card)));
+  box-shadow: 
+    inset 0 2px 4px var(--btn-shadow),
+    0 0 14px color-mix(in srgb, var(--c) 25%, transparent);
+  transform: translateY(1px);
+}
+.tpill:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px var(--btn-shadow);
+}
+section.cat {
+  margin: 64px 0 16px;
+}
+.cathead {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 22px 28px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--c) 9%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 28%, transparent);
+}
+.cathead>i {
+  font-size: 28px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 16%, var(--card));
+  padding: 12px;
+  border-radius: 14px;
+}
+.cathead h2 {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.cathead p {
+  font-size: 14.5px;
+  color: var(--tx2);
+}
+article {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 36px;
+  margin: 24px 0;
+  scroll-margin-top: 74px;
+}
+.mhead {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.mic {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--c) 15%, var(--card));
+  color: var(--c);
+  font-size: 26px;
+  flex: none;
+}
+.mhead h3 {
+  font-size: 23px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.meta {
+  font-size: 12.5px;
+  color: var(--tx2);
+}
+.badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--c) 14%, var(--card));
+  color: var(--c);
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin-left: auto;
+}
+.sum {
+  margin: 12px 0 18px;
+  max-width: 82ch;
+  color: var(--tx);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.examples {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 0 24px;
+}
+.exlabel,
+.expill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  border-radius: 99px;
+}
+.exlabel {
+  color: var(--c);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.exlabel i {
+  font-size: 14px;
+}
+.expill {
+  color: var(--tx);
+  font-size: 12.5px;
+  font-weight: 550;
+  padding: 6px 11px;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--c) 13%, var(--card)), color-mix(in srgb, var(--c) 6%, var(--card)));
+  border: 1px solid color-mix(in srgb, var(--c) 32%, var(--line));
+  box-shadow:
+    inset 0 1px 0 var(--btn-highlight),
+    0 2px 5px var(--btn-drop-shadow);
+}
+.expill i {
+  color: var(--c);
+  font-size: 13px;
+}
+.apps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.apphead {
+  grid-column: 1 / -1;
+  color: var(--c);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.apphead i {
+  font-size: 14px;
+}
+.appitem {
+  background: color-mix(in srgb, var(--c) 7%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--c) 18%, var(--line));
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: var(--tx2);
+  font-size: 13.5px;
+  line-height: 1.5;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.appitem>i {
+  color: var(--c);
+  font-size: 16px;
+  flex: none;
+  margin-top: 2px;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  position: relative;
+  isolation: isolate;
+}
+.steps.looped::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--c) 62%, transparent) 9%, color-mix(in srgb, var(--c) 62%, transparent) 91%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--c) 20%, transparent);
+  z-index: 0;
+  pointer-events: none;
+}
+.step {
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--c) 6%, var(--card)), color-mix(in srgb, var(--c) 2%, var(--card)));
+  border: 1px solid color-mix(in srgb, var(--c) 15%, var(--line));
+  border-top: 3px solid var(--c);
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 
+    inset 0 1px 0 var(--highlight-glow),
+    0 4px 12px var(--btn-drop-shadow);
+  position: relative;
+  z-index: 1;
+}
+.step>* {
+  position: relative;
+  z-index: 3;
+}
+.snum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--c) 82%, #fff), var(--c));
+  color: #11141c;
+  font-size: 15px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  border: 2px solid color-mix(in srgb, var(--c) 72%, var(--bg));
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent),
+    0 8px 18px color-mix(in srgb, var(--c) 28%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  position: relative;
+  z-index: 3;
+}
+:root[data-theme="light"] .snum {
+  color: #fff;
+  border-color: color-mix(in srgb, var(--c) 55%, #fff);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--c) 13%, transparent),
+    0 6px 14px color-mix(in srgb, var(--c) 18%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .snum {
+    color: #fff;
+    border-color: color-mix(in srgb, var(--c) 55%, #fff);
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--c) 13%, transparent),
+      0 6px 14px color-mix(in srgb, var(--c) 18%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+}
+.sl {
+  font-weight: 600;
+  font-size: 15.5px;
+}
+.sd {
+  font-size: 14px;
+  color: var(--tx2);
+  flex: 1;
+  line-height: 1.55;
+}
+.nxt {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--c);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto;
+}
+.combine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  color: var(--tx2);
+  font-size: 13.5px;
+  margin: 16px 0 12px;
+}
+.combine i {
+  color: var(--c);
+}
+.result {
+  border: 1px solid var(--c);
+  background: color-mix(in srgb, var(--c) 11%, var(--card));
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.result i {
+  color: var(--c);
+  font-size: 24px;
+  margin-top: 2px;
+}
+.brk {
+  border: 1.5px dashed var(--bc);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.brk i {
+  color: var(--bc);
+  font-size: 22px;
+  margin-top: 2px;
+}
+.brk.ok {
+  --bc: var(--ok);
+}
+.brk.warn {
+  --bc: var(--warn);
+}
+.bl {
+  font-weight: 600;
+  font-size: 15.5px;
+}
+.btag {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--bc);
+  margin-left: 10px;
+}
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+.how {
+  background: color-mix(in srgb, var(--c) 7%, var(--card));
+  border-left: 3px solid var(--c);
+  border-radius: 0 16px 16px 0;
+  padding: 18px 22px;
+  font-size: 14px;
+  color: var(--tx2);
+  line-height: 1.55;
+}
+.how b {
+  color: var(--c);
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.conn h4 {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--tx2);
+  margin: 2px 0 10px;
+}
+.cpill {
+  font-size: 13px;
+  border: 1px solid color-mix(in srgb, var(--c) 25%, var(--line));
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--c) 6%, var(--card)), color-mix(in srgb, var(--c) 2%, var(--card)));
+  color: var(--btn-text-color);
+  padding: 8px 13px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0 8px 8px 0;
+  box-shadow: 
+    inset 0 1px 0 var(--btn-highlight),
+    inset 0 -1px 0 var(--btn-shadow),
+    0 2px 4px var(--btn-drop-shadow);
+  transition: border-color 0.2s, transform 0.08s, box-shadow 0.08s, background 0.2s, color 0.2s;
+}
+.cpill i {
+  color: var(--c);
+  font-size: 13px;
+}
+.cpill b {
+  font-weight: 600;
+}
+.cpill .cl {
+  color: var(--tx2);
+}
+.cpill:hover {
+  border-color: var(--c);
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 1px 0 var(--btn-highlight),
+    inset 0 -1px 0 var(--btn-shadow),
+    0 3px 6px var(--btn-drop-shadow);
+}
+.cpill:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px var(--btn-shadow);
+}
+footer {
+  color: var(--tx2);
+  font-size: 13.5px;
+  padding: 44px 0 54px;
+  max-width: 82ch;
+  line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+  .wrap {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .toc-scroller {
+    padding: 12px 0;
+  }
+  article {
+    padding: 28px;
+  }
+  .steps {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+  }
+  .apps {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 44px;
+    padding-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 34px;
+  }
+  .lg {
+    max-width: 100%;
+  }
+  .row2 {
+    grid-template-columns: 1fr;
+  }
+  .steps.looped::before {
+    top: 24px;
+    bottom: 24px;
+    transform: none;
+    left: 38px;
+    right: auto;
+    width: 3px;
+    height: auto;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--c) 62%, transparent) 9%, color-mix(in srgb, var(--c) 62%, transparent) 91%, transparent);
+  }
+  .step {
+    padding-left: 62px;
+  }
+  .snum {
+    position: absolute;
+    left: 18px;
+    top: 20px;
+  }
+  article {
+    padding: 22px;
+  }
+  .badge {
+    margin-left: 0;
+  }
+}
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+  article {
+    padding: 18px;
+  }
+  .step {
+    padding: 16px 18px 16px 58px;
+  }
+  .snum {
+    top: 16px;
+  }
+  .steps.looped::before {
+    left: 34px;
+  }
+}
+.theme-toggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 99;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, var(--card), color-mix(in srgb, var(--bg) 95%, var(--card)));
+  border: 1px solid var(--line);
+  color: var(--tx);
+  font-size: 20px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.2s, background 0.2s;
+}
+.theme-toggle:hover {
+  transform: scale(1.05);
+  border-color: var(--ch);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 6px 16px color-mix(in srgb, var(--ch) 25%, transparent);
+}
+.theme-toggle:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+@media (max-width: 768px) {
+  .theme-toggle {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 .dots span {
+    animation: none;
+  }
+}
+
+  /* reading comfort: balance display text */
+  h1, h2, h3 { text-wrap: balance; }
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"><i class="ti ti-sun"></i></button>
+<div class="wrap hero">
+<h1>Feedback loops <span class="dots"><span style="background:var(--cr)"></span><span style="background:var(--ch)"></span><span style="background:var(--cm)"></span><span style="background:var(--ce)"></span></span></h1>
+<p class="sub">A field guide to twelve models of why we repeat what we repeat — habits, motivation, and the emotional cycles that run on autopilot. Everything lives on this one page: scroll through, or jump with the menu below.</p>
+<div class="legend">
+<div class="lg"><i class="ti ti-refresh" style="color:var(--ch)"></i><span><b>Reinforcing loops</b>Each pass around the cycle makes the next pass more likely — for better or worse.</span></div>
+<div class="lg"><i class="ti ti-scissors" style="color:var(--ok)"></i><span><b>Break points</b>Dashed cards mark where the evidence says to cut in.</span></div>
+<div class="lg"><i class="ti ti-arrow-right" style="color:var(--cr)"></i><span><b>Shared mechanisms</b>The same machinery appears across models — follow the links between them.</span></div>
+</div>
+</div>
+<nav id="toc" aria-label="Models"></nav>
+<main id="page" class="wrap"></main>
+<div class="wrap"><footer>These are simplified educational models — the anxiety and low-mood loops especially are teaching sketches of CBT ideas, not clinical guidance. Sources are listed with each model. Built with Claude.</footer></div>
+<script>
+var CAT={h:{name:'Habits & design',v:'--ch'},m:{name:'Motivation',v:'--cm'},r:{name:'Learning & reward',v:'--cr'},e:{name:'Emotional loops',v:'--ce'}};
+var ANG={3:[-90,30,150],4:[-90,0,90,180]};
+var M=[
+{id:'operant',t:'Operant conditioning',c:'r',kind:'hub',meta:'B.F. Skinner (1938), building on Thorndike',sum:'The grammar of consequences. Behaviors followed by good outcomes happen more; behaviors followed by bad outcomes happen less. Reinforcement (adding pleasure or removing pain) strengthens behavior, punishment weakens it, and the schedule of delivery matters as much as the consequence itself.',how:'Reinforcement outperforms punishment for lasting change, and intermittent reward outlasts constant reward. For any stuck loop, ask: what is this behavior’s payoff, and on what schedule does it arrive?',center:{id:'freq',l:'Behavior frequency',d:'Operant behavior is voluntary action shaped by its consequences. Frequency is the output: consequences dial it up or down, and reinforcement schedules set how resistant the behavior becomes to extinction.'},nodes:[
+{id:'posre',l:'Positive reinforcement',d:'Add something pleasant after a behavior and it increases: praise, likes, treats, pay. The most reliable lever for building behavior — and the income that collapses first inside a low-mood spiral.'},
+{id:'negre',l:'Negative reinforcement',d:'Remove something unpleasant and behavior also increases: the seatbelt chime stops, the anxiety fades. This is the engine of avoidance, procrastination, and compulsion — relief is a powerful, sneaky teacher.'},
+{id:'punish',l:'Punishment',d:'Adding pain or removing privileges suppresses behavior, but weakly and with side effects: it teaches avoiding the punisher rather than the lesson, and fades when surveillance does. Skinner judged it far inferior to reinforcement.'},
+{id:'schedule',l:'Reinforcement schedules',d:'Continuous reward teaches fast but extinguishes fast. Intermittent reward — especially variable-ratio, reward after an unpredictable number of responses — produces the highest, most persistent response rates. Slot machines and feeds run on it.'}]},
+{id:'rpe',t:'Reward prediction error',c:'r',kind:'loop',meta:'Wolfram Schultz (1997) · wanting vs liking, Berridge & Robinson',sum:'Dopamine is a learning signal, not a pleasure chemical. It fires at cues that predict reward, and after the outcome it encodes the gap between expectation and result. Better than expected: burst, learn, repeat. As expected: silence. Worse: dip and deweight.',how:'This explains why anticipation often beats the reward itself, why the same treat thrills less each time, and why unpredictable rewards hook hardest. To keep a pursuit rewarding, preserve genuine uncertainty and novelty in outcomes.',nodes:[
+{id:'spark',l:'Cue sparks wanting',d:'A learned cue fires dopamine before anything good happens — this is wanting, the pull to seek. Berridge showed wanting and liking are separate systems: you can intensely want what you barely enjoy, the signature of compulsive use.'},
+{id:'act',l:'Act, observe outcome',d:'The organism acts and an outcome lands. The brain does not score it in absolute terms — it scores it against the running prediction attached to that cue and context.'},
+{id:'error',l:'Compare to prediction',d:'The prediction error is the gap between expected and received. Positive errors burst dopamine and stamp in the preceding actions; negative errors dip below baseline and weaken them. No error, no learning.'},
+{id:'update',l:'Update expectations',d:'Each error updates the cue’s value, so predictions climb toward reality and yesterday’s thrill becomes today’s baseline — hedonic adaptation. Escalation and novelty-chasing follow, unless rewards stay variable enough to keep producing errors.'}]},
+{id:'hooked',t:'Hooked model',c:'h',kind:'loop',meta:'Nir Eyal, Hooked (2014); builds on Fogg and Skinner',sum:'How products manufacture habits. A trigger prompts a small action, the action earns a variable reward, and a bit of user investment loads the next trigger. With enough cycles the product attaches to internal triggers — boredom, loneliness, uncertainty — and use becomes self-prompted.',how:'Useful in both directions: for designing products people return to, and for noticing when an app has attached itself to your emotional states. Ask: what internal trigger does this answer, and what have I invested that keeps me stored inside it?',nodes:[
+{id:'trigger',l:'Trigger',d:'External triggers (notifications, emails, badges) start the cycle. The goal of habit-forming design is to migrate to internal triggers, where an emotion — boredom, loneliness, fear of missing out — prompts use with no notification needed.'},
+{id:'action',l:'Action',d:'The simplest behavior done in anticipation of reward: pull to refresh, open the feed, tap the icon. Per Fogg, it fires when motivation, ability, and a prompt converge — so designers relentlessly cut effort from this step.'},
+{id:'variable',l:'Variable reward',d:'Rewards of the tribe (social approval), the hunt (information, deals), and the self (mastery, completion). Unpredictability is the active ingredient: variable rewards spike dopamine harder than expected ones and resist habituation.'},
+{id:'invest',l:'Investment',d:'Followers, playlists, streaks, history, reputation. Each bit of stored value makes the product better with use, raises the cost of leaving, and queues the next trigger. Commitment also reshapes self-image: we keep using what we have invested in.'}]},
+{id:'goal',t:'Goal gradient & progress',c:'m',kind:'loop',meta:'Hull (1932) · Kivetz et al. (2006) · Amabile & Kramer (2011)',sum:'Effort is not constant across a pursuit — it accelerates as the goal nears (the goal gradient), and the strongest daily motivator is visible progress on meaningful work. Momentum compounds: wins lift affect, affect lifts effort, finished goals seed bigger ones. The fragile points are the distant start and the aftermath of a miss.',how:'Give pursuits a visible progress bar, seed a head start (endowed progress), and shrink the distance to the next milestone. Guard the miss: one skipped day is noise, two is the start of a new habit — never miss twice.',nodes:[
+{id:'set',l:'Set goal, seed progress',d:'Commitment plus a dash of endowed progress: a punch card that arrives with two stamps already on it gets completed more often than an empty one needing the same purchases. Starting at 20 percent beats starting at zero.'},
+{id:'gradient',l:'Effort rises near goal',d:'Rats run faster near the food box; people buy faster near the free coffee. Motivation scales with proximity to the finish, which is why long pursuits sag in the middle — break them into nearer finish lines.'},
+{id:'wins',l:'Small wins register',d:'Amabile’s diary studies found that of everything lifting inner work life, the most common event is simply making progress on meaningful work. Small wins count nearly as much as big ones — if they are visible.'},
+{id:'raise',l:'Momentum builds',d:'Progress lifts affect, affect lifts persistence and creativity, and completed goals recalibrate what feels possible. Momentum is a loop, not a personality trait.'}],breaks:[{id:'wth',l:'Risk: what-the-hell effect',pre:'Risk note',ba:135,d:'Break a goal — one cookie off the diet — and restraint often collapses for the whole day: the goal, not the appetite, was doing the restraining. Design flexible rules and never-miss-twice norms so one slip stays one slip.'}]},
+{id:'fogg',t:'Fogg behavior model',c:'h',kind:'hub',meta:'B.J. Fogg (2009); Tiny Habits (2019)',sum:'Behavior happens when motivation, ability, and a prompt converge in the same moment: B = MAP. High motivation can carry a hard behavior and high ability can carry a weakly motivated one, but nothing happens without a prompt — and nothing reliable gets built on motivation alone, because motivation arrives in waves.',how:'Design for the low-motivation day: shrink the behavior until it is almost trivially easy, then attach a reliable prompt to an existing routine. Troubleshoot failures in order: no prompt? too hard? only then, not motivated?',center:{id:'behavior',l:'Behavior happens',d:'The behavior fires only above the action line, where motivation times ability clears the threshold at the moment the prompt lands. Below the line, the same prompt gets ignored — or becomes an irritant.'},nodes:[
+{id:'motivation',l:'Motivation',d:'Pleasure and pain, hope and fear, belonging and rejection. Powerful but unreliable — it surges and collapses in waves, which is why plans made at peak motivation fail on ordinary days. Never build a system that requires it to stay high.'},
+{id:'ability',l:'Ability',d:'How easy the behavior is right now, measured in time, money, physical effort, mental effort, and deviation from routine. The most designable factor: shrinking the behavior (floss one tooth) beats pumping motivation.'},
+{id:'prompt',l:'Prompt',d:'The spark that says act now: an alarm, a notification, a person, or — most durably — an existing habit used as an anchor. No prompt, no behavior, regardless of motivation and ability.'}]},
+{id:'habit',t:'The habit loop',c:'h',kind:'loop',meta:'Duhigg (2012) · Clear (2018) · rooted in Skinner',sum:'The basic unit of behavior change. A cue triggers a craving, the craving motivates a response, and the response delivers a reward that teaches the brain to repeat the cycle. Each pass strengthens the cue–reward association — which is why habits feel automatic: the loop runs before conscious deliberation gets a vote.',how:'To build a habit: make the cue obvious, the craving attractive, the response easy, the reward satisfying. To break one, invert each lever: hide the cue, reframe the craving, add friction, remove the payoff.',nodes:[
+{id:'cue',l:'Cue',d:'Any signal that predicts reward: a time, a place, an emotional state, the previous action in a chain, or certain people. The brain scans for cues continuously and launches the loop before you consciously notice — which is why environment design beats willpower.'},
+{id:'craving',l:'Craving',d:'The motivational engine. You crave the state change, not the behavior — not the cigarette but the relief, not the scroll but the escape from boredom. Dopamine peaks here, in anticipation, not at the reward.'},
+{id:'response',l:'Response',d:'The habit itself, a thought or an action. Whether it fires depends on friction: how much time, effort, and skill the behavior demands right now. Reduce friction and the response happens on less motivation.'},
+{id:'reward',l:'Reward',d:'The payoff that satisfies the craving and teaches the brain which actions deserve remembering. Rewards close the loop: they end this cycle and deepen the cue–reward association that starts the next one.'}],breaks:[{id:'redesign',l:'Break: redesign the cue',pre:'Break point',ba:-135,d:'Habits are cue-dependent, so redesign the environment instead of fighting the urge: remove or hide the cue, add steps between you and the response, and make the payoff less immediate. Inverting the loop’s levers beats raw willpower.'}]},
+{id:'sdt',t:'Self-determination theory',c:'m',kind:'hub',meta:'Edward Deci & Richard Ryan (1985, 2000)',sum:'Motivation quality depends on three psychological needs. When autonomy, competence, and relatedness are fed, motivation becomes intrinsic: self-sustaining, creative, durable. When they are starved — or overridden by controlling rewards and pressure — motivation goes brittle and compliance replaces engagement.',how:'Diagnose flagging motivation by asking which need is starved: no choice (autonomy), no progress (competence), or no connection (relatedness). Beware the overjustification effect — paying people for what they love can convert play into work.',center:{id:'intrinsic',l:'Intrinsic motivation',d:'Doing the thing because the doing satisfies. Predicts persistence, creativity, and well-being better than external incentives — and it is fragile: rewards, deadlines, and surveillance can crowd it out.'},nodes:[
+{id:'autonomy',l:'Autonomy',d:'The need to feel volitional — author of your actions rather than a pawn. Deadlines, surveillance, and contingent rewards undermine it; genuine choice, a rationale, and acknowledged feelings restore it.'},
+{id:'competence',l:'Competence',d:'The need to feel effective and growing. Fed by optimal challenge and clear, informative feedback; starved by chronic overwhelm or trivial tasks. The bridge to flow and self-efficacy.'},
+{id:'related',l:'Relatedness',d:'The need to feel connected to and cared for by others. The forgotten need: people internalize the values of communities where they belong, which is why groups change behavior better than willpower.'}]},
+{id:'flow',t:'Flow',c:'m',kind:'loop',meta:'Mihaly Csikszentmihalyi (1975, 1990)',sum:'Total absorption in an activity that stretches you at the edge of ability. Requires clear goals, immediate feedback, and challenge just above skill. Inside the channel, action and awareness merge, time distorts, and the activity becomes its own reward — and because skill grows, the bar must keep rising.',how:'To reach flow more often, tighten feedback loops and tune difficulty: bored means raise the challenge, anxious means build skill or shrink the task. Protect attention — flow does not survive interruption.',nodes:[
+{id:'balance',l:'Challenge just above skill',d:'Flow lives in the channel where challenge slightly exceeds skill. Too far above: anxiety. Too far below: boredom. Both are exits — and both are signals telling you which dial to turn.'},
+{id:'absorb',l:'Deep absorption',d:'Attention fully invested in the task: self-consciousness drops away, time dilates or vanishes, action and awareness fuse. The state is autotelic — rewarding in itself — which loops it back into motivation.'},
+{id:'grow',l:'Skill grows, raise the bar',d:'Flow is a moving target: performing at the edge grows skill, and yesterday’s challenge turns boring. The loop is a growth spiral — seek slightly harder problems or lose the state.'}]},
+{id:'procrast',t:'Procrastination loop',c:'e',kind:'loop',meta:'Sirois & Pychyl (2013), mood-repair account',sum:'Procrastination is mood repair, not laziness. An aversive task stirs anxiety, boredom, or self-doubt; diverting to something easier repairs the mood instantly; the relief reinforces diverting. Meanwhile the task accretes deadline pressure and guilt that make it more aversive tomorrow.',how:'Shrink the first step until starting is trivially easy and concrete — open the doc, write one ugly sentence. And forgive past procrastination: self-compassion measurably reduces the next round, while self-criticism feeds it.',nodes:[
+{id:'aversive',l:'Task feels aversive',d:'Tasks get avoided for how they feel: boring, ambiguous, frustrating, or ego-threatening — what if my best is not good enough? Ambiguity is the quiet one: no clear first step reads as danger.'},
+{id:'affect',l:'Anxiety & self-doubt',d:'Contemplating the task spikes negative affect, and the urge to feel better right now takes over. The future self who must eventually do the task is treated, neurologically, rather like a stranger.'},
+{id:'divert',l:'Divert to feel better',d:'Anything easier absorbs attention: feeds, snacks, suddenly urgent cleaning. Often disguised as preparation — more research, more setup, a better system first.'},
+{id:'relief',l:'Relief now, guilt later',d:'The discomfort lifts instantly — negative reinforcement — then guilt compounds and the deadline tightens, both of which make the task more aversive at the next encounter. The loop trains itself.'}],breaks:[{id:'tiny',l:'Break: shrink the first step',pre:'Break point',ba:45,d:'Cut a first step so small it is hard to dread — two minutes, one sentence, one file opened. Pair it with self-compassion for past avoidance: forgiving yourself is empirically linked to less procrastination next time.'}]},
+{id:'anxiety',t:'Anxiety–avoidance loop',c:'e',kind:'loop',meta:'Mowrer’s two-factor theory (1947) · core of CBT exposure work',sum:'The loop that keeps fears alive. A feared situation spikes anxiety; escaping or avoiding drops the anxiety fast; that relief powerfully reinforces avoiding next time. The catch: you never stay long enough to learn the threat was survivable, so the fear persists and territory quietly shrinks.',how:'The evidence-based exit is graded exposure: approach the feared thing in steps and remain until anxiety falls on its own and predictions are disconfirmed. Watch for subtle safety behaviors — they are avoidance in disguise.',nodes:[
+{id:'trigger',l:'Feared situation',d:'A situation, sensation, or thought appraised as dangerous — a party, a racing heartbeat, an unread email. The appraisal, not the thing itself, sets the loop off, and each cycle widens what counts as threatening.'},
+{id:'spike',l:'Anxiety spikes',d:'Fight-or-flight arousal plus catastrophic prediction: I will embarrass myself, this is a heart attack, they are angry at me. Uncomfortable but not dangerous — and built to fall on its own if you wait.'},
+{id:'avoid',l:'Avoid or escape',d:'Decline, leave, distract, or bring safety behaviors — a phone, a script, an exit seat. Every variant delivers the same lesson to the brain: the situation was dangerous and escape saved you.'},
+{id:'relief',l:'Short-lived relief',d:'Anxiety drops immediately — negative reinforcement at its purest. Relief is the loop’s wage, and it quietly confirms the threat, so tomorrow’s anxiety arrives a little earlier and spreads a little wider.'}],breaks:[{id:'exposure',l:'Break: graded exposure',pre:'Break point',ba:135,d:'Graded exposure reverses the loop: approach in planned steps, stay until fear crests and falls, repeat until predictions update. It works because it finally lets disconfirming evidence arrive.'}]},
+{id:'mood',t:'Low-mood spiral',c:'e',kind:'loop',meta:'Lewinsohn (1974) · behavioral activation, Jacobson et al. (1996)',sum:'The behavioral engine of low mood. Feeling low, you withdraw from effortful and social activity; withdrawal strips the days of reward and mastery; emptier days lower mood further, inviting more withdrawal. Each turn is locally sensible — rest until you feel better — and globally corrosive, because the feeling follows the doing.',how:'Behavioral activation breaks it: schedule small doses of pleasure and mastery and do them on schedule, not on mood. Action precedes motivation here — waiting to feel like it is the loop talking.',nodes:[
+{id:'low',l:'Low mood, low energy',d:'Low energy, flat affect, and a mind that discounts future enjoyment — it will not be fun anyway. The state biases every forecast pessimistic, which makes withdrawal feel like the rational choice.'},
+{id:'withdraw',l:'Withdraw from activity',d:'Cancel plans, drop hobbies, stay in. Framed as recovery — I will re-engage when I feel better — but it removes exactly the activities that generate the improvement being waited for.'},
+{id:'fewer',l:'Fewer rewarding moments',d:'Fewer social contacts, fewer completed tasks, fewer moments of pleasure or mastery: the day’s positive-reinforcement income collapses, and guilt about inactivity moves in as a bonus punisher.'},
+{id:'drop',l:'Mood drops further',d:'With less reinforcement and more rumination, mood sinks further and the next withdrawal gets easier to justify. The spiral, not any single day, is the problem.'}],breaks:[{id:'activation',l:'Break: behavioral activation',pre:'Break point',ba:45,d:'Pick tiny, specific, scheduled activities mixing pleasure and mastery, and execute regardless of mood. Mood follows action with a lag — track it for two weeks and the lag becomes visible proof.'}]},
+{id:'efficacy',t:'Self-efficacy loop',c:'m',kind:'loop',meta:'Albert Bandura (1977)',sum:'The belief that you can execute what a situation demands — and the engine that makes the belief self-fulfilling. Succeeding at hard-enough tasks raises efficacy; higher efficacy buys harder goals, more effort, and persistence through setbacks; persistence produces the wins that feed back as proof. It spins both ways: vicious as well as virtuous.',how:'Engineer mastery experiences: tasks hard enough to mean something and small enough to win. Vicarious models (someone like me did it), encouragement, and reading arousal as readiness rather than fear also feed the belief.',nodes:[
+{id:'mastery',l:'Mastery experience',d:'Direct success at something genuinely difficult — the strongest of Bandura’s four sources, ahead of vicarious experience, persuasion, and physiological state. Cheap wins teach little; survivable struggle teaches most.'},
+{id:'belief',l:'Self-efficacy belief',d:'Task-specific confidence — can I do this, here? Not self-esteem. It governs which challenges you attempt, how much effort you spend, and whether setbacks read as information or as verdicts.'},
+{id:'effort',l:'Effort & persistence',d:'High-efficacy people set steeper goals, work harder, and persist longer through failure. Low efficacy triggers avoidance — and avoided tasks generate no mastery, locking the belief in place.'},
+{id:'perform',l:'Stronger performance',d:'Better performance closes the loop as fresh evidence. Attribution matters: wins credited to your own effort and strategy build efficacy; wins credited to luck do not.'}]}];
+var XL=[
+{a:'rpe.spark',b:'habit.craving',l:'wanting fuels craving'},
+{a:'operant.schedule',b:'hooked.variable',l:'slot-machine math'},
+{a:'operant.negre',b:'anxiety.relief',l:'relief trains escape'},
+{a:'operant.negre',b:'procrast.relief',l:'same wage, same trap'},
+{a:'fogg.prompt',b:'habit.cue',l:'two names, one idea'},
+{a:'sdt.intrinsic',b:'fogg.motivation',l:'durable fuel'},
+{a:'sdt.competence',b:'flow.balance',l:'fed by optimal challenge'},
+{a:'sdt.competence',b:'efficacy.belief',l:'sibling constructs'},
+{a:'habit.reward',b:'rpe.error',l:'outcomes update predictions'},
+{a:'rpe.update',b:'hooked.variable',l:'variability resists adaptation'},
+{a:'goal.wins',b:'efficacy.mastery',l:'wins become proof'}];
+XL.push({a:'mood.fewer',b:'operant.posre',l:'reinforcement starves'});
+var IC={operant:'adjustments',rpe:'brain',hooked:'device-mobile',goal:'target',fogg:'bulb',habit:'refresh',sdt:'compass',flow:'wave-sine',procrast:'hourglass',anxiety:'shield',mood:'cloud',efficacy:'trending-up'};
+var CATD={r:{ic:'flask',d:'The machinery underneath everything else — how consequences and dopamine teach the brain what to repeat.'},h:{ic:'repeat',d:'How repeated behavior turns automatic — and how products engineer that on purpose.'},m:{ic:'flame',d:'What makes effort feel worth it, and what quietly kills it.'},e:{ic:'heart',d:'Cycles where short-term relief feeds long-term trouble — and the evidence-based ways out.'}};
+var ORDER=['r','h','m','e'];
+var EX={
+operant:['Coffee punch card','Seatbelt chime stops','Praise after cleanup','Bonus for referrals','Late fee avoided','Dog sits for treat'],
+rpe:['Surprise bonus','Mystery loot drop','Feed refresh jackpot','Unexpected compliment','New song discovery','Scratch-off uncertainty'],
+hooked:['Pull to refresh','Daily streaks','Saved playlists','Notification badges','Unread message dots','Personalized recommendations'],
+goal:['Fitness ring nearly full','Nine stamps on a card','Progress bar at 90%','Fundraiser thermometer','Language app streak','Checklist almost done'],
+fogg:['Floss after brushing','Meds beside coffee','One push-up after lunch','Water bottle on desk','Calendar reminder','Shoes by the door'],
+habit:['Phone on the nightstand','Running shoes by the door','Snack after dishes','Playlist for chores','Keys in one tray','Tea before reading'],
+sdt:['Choosing your own project','Getting useful feedback','Training with friends','Mentoring a teammate','Picking your route','Sharing a win'],
+flow:['Coding with fast tests','A hard game level','Just-right climbing route','Practicing scales slowly','Editing with a timer','Cooking a familiar recipe'],
+procrast:['Avoiding taxes with chores','Checking messages before essay','Cleaning instead of emailing','Researching instead of drafting','Tweaking tools first','Opening tabs to feel busy'],
+anxiety:['Skipping a party','Avoiding a phone call','Leaving when panic rises','Not opening a bill','Taking the long route','Rehearsing every sentence'],
+mood:['Cancelling walks','Dropping hobbies','Staying in all weekend','Ignoring texts','Skipping meals','Letting laundry pile up'],
+efficacy:['Adding five pounds','Finishing a first draft','Practicing a presentation','Making one sales call','Solving a harder puzzle','Cooking for guests']
+};
+var APP={
+operant:['Find the payoff: name what reward or relief keeps the behavior alive.','Move reinforcement closer: reward the desired action immediately.','Change the schedule: make useful rewards reliable and harmful rewards harder to reach.'],
+rpe:['Use novelty on purpose: rotate practice prompts, routes, or project constraints.','Protect attention from jackpots: batch feeds, games, and inbox checks.','Make learning visible: compare prediction with outcome after each attempt.'],
+hooked:['Audit triggers: list what emotion or notification starts the loop.','Add friction: remove badges, log out, or move the app off the home screen.','Design ethically: attach return loops to real user value, not anxiety.'],
+goal:['Shrink the distance: turn big goals into nearby finish lines.','Show progress: use checklists, bars, counts, or visible streaks.','Plan for slips: define the smallest next action after a miss.'],
+fogg:['Anchor it: place the new behavior after a routine that already happens.','Make it tiny: scale the action until it works on a low-energy day.','Fix the prompt first: if it did not happen, ask whether the cue showed up.'],
+habit:['Redesign cues: put good cues in sight and bad cues out of reach.','Reduce friction: make the desired response the easiest available option.','Close the loop: add a small satisfying finish so the brain marks it complete.'],
+sdt:['Restore choice: offer options about method, order, or timing.','Feed competence: set challenges that are hard enough to matter and small enough to win.','Build relatedness: pair the effort with a person, group, or shared purpose.'],
+flow:['Tune difficulty: raise challenge when bored and shrink it when anxious.','Shorten feedback: use tests, timers, scores, drafts, or visible output.','Protect the session: remove interruptions before starting deep work.'],
+procrast:['Name the feeling: identify whether the task is boring, vague, scary, or frustrating.','Define the first move: open the file, write a bad sentence, or send one note.','Repair gently: treat the last delay as data, then restart with a tiny action.'],
+anxiety:['Map the ladder: rank feared steps from easiest to hardest.','Stay long enough: let the fear crest and fall before leaving the step.','Drop safety props slowly: notice the crutches that prevent new learning.'],
+mood:['Schedule action first: put small pleasure and mastery activities on the calendar.','Track the lag: rate mood before and after action for a couple of weeks.','Lower the bar: make the action small enough to do while motivation is absent.'],
+efficacy:['Engineer wins: pick tasks that are challenging but winnable.','Borrow proof: study someone similar who has done the thing.','Reframe arousal: read nerves as readiness when the body ramps up.']
+};
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function byId(id){for(var i=0;i<M.length;i++)if(M[i].id===id)return M[i];return null}
+function cv(c){return 'var('+CAT[c].v+')'}
+function conns(m){var o=[];XL.forEach(function(x){var A=x.a.split('.'),B=x.b.split('.');if(A[0]===m.id)o.push({t:B[0],l:x.l});if(B[0]===m.id)o.push({t:A[0],l:x.l})});return o}
+function exrow(m){var xs=EX[m.id]||[];if(!xs.length)return '';var s='<div class="examples" aria-label="Real-life examples"><span class="exlabel"><i class="ti ti-sparkles"></i>real life</span>';xs.forEach(function(x){s+='<span class="expill"><i class="ti ti-map-pin"></i>'+esc(x)+'</span>'});return s+'</div>'}
+function approw(m){var xs=APP[m.id]||[];if(!xs.length)return '';var s='<div class="apps" aria-label="Real-life application"><div class="apphead"><i class="ti ti-tool"></i>real-life application</div>';xs.forEach(function(x){s+='<div class="appitem"><i class="ti ti-check"></i><span>'+esc(x)+'</span></div>'});return s+'</div>'}
+var toc='';
+ORDER.forEach(function(c){M.forEach(function(m){if(m.c===c)toc+='<a class="tpill" style="--c:'+cv(c)+'" href="#'+m.id+'"><i class="ti ti-'+IC[m.id]+'"></i>'+esc(m.t)+'</a>'})});
+document.getElementById('toc').innerHTML = 
+  '<div class="toc-container wrap">' +
+    '<button id="toc-prev" class="toc-arrow left" aria-label="Scroll left"><i class="ti ti-chevron-left"></i></button>' +
+    '<div class="toc-scroller">' + toc + '</div>' +
+    '<button id="toc-next" class="toc-arrow right" aria-label="Scroll right"><i class="ti ti-chevron-right"></i></button>' +
+  '</div>';
+var h='';
+ORDER.forEach(function(cid){
+h+='<section class="cat" style="--c:'+cv(cid)+'"><div class="cathead"><i class="ti ti-'+CATD[cid].ic+'"></i><div><h2>'+CAT[cid].name+'</h2><p>'+CATD[cid].d+'</p></div></div>';
+M.forEach(function(m){
+if(m.c!==cid)return;
+var badge=m.kind==='loop'?'<span class="badge"><i class="ti ti-refresh"></i>reinforcing loop — each pass strengthens the next</span>':'<span class="badge"><i class="ti ti-plus"></i>ingredients — all must be present together</span>';
+h+='<article id="'+m.id+'"><div class="mhead"><span class="mic"><i class="ti ti-'+IC[m.id]+'"></i></span><div><h3>'+esc(m.t)+'</h3><div class="meta">'+esc(m.meta)+'</div></div>'+badge+'</div>';
+h+='<p class="sum">'+esc(m.sum)+'</p>'+exrow(m)+'<div class="steps '+(m.kind==='loop'?'looped':'hubbed')+'">';
+m.nodes.forEach(function(n,i){
+var ft;
+if(m.kind==='loop'){var nx=m.nodes[(i+1)%m.nodes.length];ft=i<m.nodes.length-1?'<span class="nxt"><i class="ti ti-arrow-right"></i>then: '+esc(nx.l)+'</span>':'<span class="nxt"><i class="ti ti-repeat"></i>loops back to: '+esc(nx.l)+'</span>'}
+else ft='<span class="nxt"><i class="ti ti-arrow-down"></i>feeds the outcome below</span>';
+h+='<div class="step">'+(m.kind==='loop'?'<span class="snum">'+(i+1)+'</span>':'<span class="snum"><i class="ti ti-puzzle" style="font-size:12px"></i></span>')+'<div class="sl">'+esc(n.l)+'</div><div class="sd">'+esc(n.d)+'</div>'+ft+'</div>';
+});
+h+='</div>';
+if(m.kind==='hub')h+='<div class="combine"><i class="ti ti-arrow-down"></i>together they produce</div><div class="result"><i class="ti ti-bolt"></i><div><div class="sl">'+esc(m.center.l)+'</div><div class="sd">'+esc(m.center.d)+'</div></div></div>';
+(m.breaks||[]).forEach(function(b){
+var risk=b.pre==='Risk note';
+h+='<div class="brk '+(risk?'warn':'ok')+'"><i class="ti ti-'+(risk?'alert-triangle':'scissors')+'"></i><div><div class="bl">'+esc(b.l.replace(/^(Break|Risk): /,''))+'<span class="btag">'+(risk?'watch out':'how to break the loop')+'</span></div><div class="sd">'+esc(b.d)+'</div></div></div>';
+});
+h+=approw(m);
+h+='<div class="row2"><div class="how"><b>How to use it</b>'+esc(m.how)+'</div><div class="conn"><h4>Same mechanism elsewhere</h4>';
+conns(m).forEach(function(cn){var tm=byId(cn.t);h+='<a class="cpill" style="--c:'+cv(tm.c)+'" href="#'+tm.id+'"><i class="ti ti-arrow-right"></i><b>'+esc(tm.t)+'</b><span class="cl">'+esc(cn.l)+'</span></a>'});
+h+='</div></div></article>';
+});
+h+='</section>';
+});
+document.getElementById('page').innerHTML=h;
+
+// Dynamic scroll spy & arrow controls
+(function() {
+  var scroller = document.querySelector('.toc-scroller');
+  var prevBtn = document.getElementById('toc-prev');
+  var nextBtn = document.getElementById('toc-next');
+
+  // 1. Scroll arrows visibility & clicking
+  function updateArrows() {
+    if (!scroller || !prevBtn || !nextBtn) return;
+    var scrollLeft = scroller.scrollLeft;
+    var scrollWidth = scroller.scrollWidth;
+    var clientWidth = scroller.clientWidth;
+
+    // Show/hide left arrow
+    if (scrollLeft > 2) {
+      prevBtn.classList.add('visible');
+    } else {
+      prevBtn.classList.remove('visible');
+    }
+
+    // Show/hide right arrow
+    if (scrollLeft + clientWidth < scrollWidth - 2) {
+      nextBtn.classList.add('visible');
+    } else {
+      nextBtn.classList.remove('visible');
+    }
+  }
+
+  if (scroller && prevBtn && nextBtn) {
+    scroller.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    
+    prevBtn.addEventListener('click', function() {
+      scroller.scrollBy({ left: -240, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function() {
+      scroller.scrollBy({ left: 240, behavior: 'smooth' });
+    });
+
+    // Run initial update after render
+    setTimeout(updateArrows, 100);
+  }
+
+  // 2. Scroll Spy (Active section highlighter)
+  var articles = document.querySelectorAll('article');
+  var pills = document.querySelectorAll('.tpill');
+  
+  if ('IntersectionObserver' in window) {
+    var activeId = null;
+    
+    // Create an observer that triggers when a section occupies the upper part of screen
+    var observerOptions = {
+      root: null,
+      rootMargin: '-12% 0px -75% 0px', // focused viewport band
+      threshold: 0
+    };
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          activeId = entry.target.id;
+          highlightPill(activeId);
+        }
+      });
+    }, observerOptions);
+
+    articles.forEach(function(article) {
+      observer.observe(article);
+    });
+
+    // Fallback: update on manual scroll if observer isn't capturing
+    window.addEventListener('scroll', function() {
+      if (window.scrollY === 0) {
+        if (pills.length > 0) {
+          var firstId = pills[0].getAttribute('href').substring(1);
+          highlightPill(firstId);
+        }
+      }
+    });
+
+    function highlightPill(id) {
+      var activePill = null;
+      pills.forEach(function(pill) {
+        if (pill.getAttribute('href') === '#' + id) {
+          pill.classList.add('active');
+          activePill = pill;
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+
+      // Auto scroll the active pill into view in TOC scroller
+      if (activePill && scroller) {
+        var scrollerRect = scroller.getBoundingClientRect();
+        var pillRect = activePill.getBoundingClientRect();
+        
+        var targetScrollLeft = scroller.scrollLeft + (pillRect.left - scrollerRect.left) - (scrollerRect.width / 2) + (pillRect.width / 2);
+        
+        scroller.scrollTo({
+          left: targetScrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  // Handle initial hash in URL if present
+  if (window.location.hash) {
+    var hashId = window.location.hash.substring(1);
+    setTimeout(function() {
+      var targetEl = document.getElementById(hashId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'auto' });
+        highlightPill(hashId);
+      }
+    }, 350);
+  }
+  // Theme Toggle Logic
+  var themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    updateThemeIcon();
+
+    themeToggle.addEventListener('click', function() {
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon();
+    });
+
+    function updateThemeIcon() {
+      var currentTheme = document.documentElement.getAttribute('data-theme');
+      var icon = themeToggle.querySelector('i');
+      if (icon) {
+        if (currentTheme === 'dark') {
+          icon.className = 'ti ti-sun';
+        } else {
+          icon.className = 'ti ti-moon';
+        }
+      }
+    }
+  }
+})();
+</script>
+</body>
+</html>

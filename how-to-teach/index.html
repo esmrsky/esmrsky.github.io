@@ -1,0 +1,509 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3ECDD'/%3E%3Cg fill='%238A2B3C'%3E%3Crect x='9' y='34' width='21' height='21' rx='3'/%3E%3Crect x='34' y='34' width='21' height='21' rx='3'/%3E%3Crect x='21.5' y='9' width='21' height='21' rx='3'/%3E%3C/g%3E%3C/svg%3E"><title>The Reconstruction Method</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400..800&family=Hanken+Grotesk:wght@400..700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --ff-display:'Bricolage Grotesque',system-ui,sans-serif; --ff-body:'Hanken Grotesk',system-ui,sans-serif; --ff-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --bg:#F3ECDD; --fg:#211B18; --body:rgba(33,27,24,0.9); --muted:rgba(33,27,24,0.52);
+  --hair:rgba(33,27,24,0.12); --hair2:rgba(33,27,24,0.24); --panel:rgba(33,27,24,0.045);
+  --accent:#8A2B3C; --slab-bg:#5A1A2C; --slab-fg:#F3ECDD; --slab-muted:rgba(243,236,221,0.66); --slab-line:rgba(243,236,221,0.20);
+  --t-rob-fg:#17624A; --t-rob-bg:rgba(23,98,74,0.10); --t-rob-edge:rgba(23,98,74,0.34);
+  --t-mod-fg:#8A5A0B; --t-mod-bg:rgba(138,90,11,0.11); --t-mod-edge:rgba(138,90,11,0.34);
+  --t-con-fg:#B8460E; --t-con-bg:rgba(184,70,14,0.10); --t-con-edge:rgba(184,70,14,0.36);
+  --t-wea-fg:#A2382C; --t-wea-bg:rgba(162,56,44,0.10); --t-wea-edge:rgba(162,56,44,0.34);
+}
+body[data-theme="dark"]{
+  --bg:#181210; --fg:#F1E9DB; --body:rgba(241,233,219,0.88); --muted:rgba(241,233,219,0.50);
+  --hair:rgba(241,233,219,0.13); --hair2:rgba(241,233,219,0.26); --panel:rgba(241,233,219,0.05);
+  --accent:#CB6072; --slab-bg:#742639; --slab-fg:#F5EDE0; --slab-muted:rgba(245,237,224,0.66); --slab-line:rgba(245,237,224,0.20);
+  --t-rob-fg:#83CFA3; --t-rob-bg:rgba(50,130,92,0.18); --t-rob-edge:rgba(131,207,163,0.34);
+  --t-mod-fg:#E6B86C; --t-mod-bg:rgba(160,112,30,0.18); --t-mod-edge:rgba(230,184,108,0.34);
+  --t-con-fg:#FF9A66; --t-con-bg:rgba(198,86,30,0.18); --t-con-edge:rgba(255,154,102,0.36);
+  --t-wea-fg:#EE8E86; --t-wea-bg:rgba(168,54,54,0.20); --t-wea-edge:rgba(238,142,134,0.34);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+/* typography readability optimizations */
+h1, h2, h3, h4, h5, h6, .hero-title, .h2, .h3, .step-t, .engine-verse {
+  text-wrap: balance;
+}
+p, li, blockquote, .body, .hero-p, .lead, .engine-plain, .slab-sub, .slab-lead, .slab-foot, .leg-note, .proc-desc {
+  text-wrap: pretty;
+}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ff-body);
+  -webkit-font-smoothing:antialiased;font-weight:450;transition:background .25s,color .25s}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* prose toggle */
+body[data-prose="plain"] .po{display:none}
+body[data-prose="original"] .pp{display:none}
+
+.wrap{max-width:788px;margin:0 auto;padding:0 28px}
+section{padding-bottom:94px}
+em{font-style:italic}
+
+/* control bar */
+.bar-top{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--hair)}
+.bar-inner{max-width:788px;margin:0 auto;padding:13px 28px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.segs{display:flex;gap:10px;flex-wrap:wrap}
+.seg{display:flex;border:1px solid var(--hair2);border-radius:3px;overflow:hidden}
+.seg-btn{cursor:pointer;border:none;padding:7px 13px;background:transparent;color:var(--muted);
+  font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:background .12s,color .12s}
+.seg-btn.active{background:var(--fg);color:var(--bg)}
+.seg-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* type */
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.eyebrow .bar{width:26px;height:2px;background:var(--accent);flex:none}
+.eyebrow .eb-t{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.eyebrow.weak .bar,.eyebrow.weak .eb-t{color:var(--t-wea-fg);background:var(--t-wea-fg)}
+.eyebrow.weak .eb-t{background:none}
+.eyebrow.contested .bar{background:var(--t-con-fg)}
+.eyebrow.contested .eb-t{color:var(--t-con-fg)}
+
+.h2{font-family:var(--ff-display);font-weight:700;font-size:clamp(27px,5vw,40px);line-height:1.09;letter-spacing:-0.02em;margin:0 0 18px}
+.h2.sm{font-size:clamp(24px,4.6vw,34px)}
+.h3{font-family:var(--ff-display);font-weight:600;font-size:26px;line-height:1.14;letter-spacing:-0.018em;margin:0}
+.body{margin:0 0 16px;font-size:18px;line-height:1.68;color:var(--body)}
+.lead{font-size:17.5px;line-height:1.55;margin:0 0 8px}
+.muted{color:var(--muted)}
+.hint{font-size:16.5px;margin:0}
+.ico{margin-right:10px}
+.minilabel{font-family:var(--ff-mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.minilabel.accent{color:var(--accent)}
+
+/* hero */
+.hero{padding-top:104px;padding-bottom:84px}
+.hero-title{font-family:var(--ff-display);font-weight:700;font-size:clamp(38px,7.4vw,66px);line-height:0.99;letter-spacing:-0.028em;margin:0 0 34px}
+.hero-p{font-size:20px;line-height:1.62;color:var(--body);max-width:600px;margin:0 0 22px}
+.hero-p:last-child{margin-bottom:0}
+
+/* rule block + legend */
+.rule-block{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:32px 0}
+.legend{display:grid;gap:8px}
+.leg-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-left:2px solid;padding:12px 0 12px 16px}
+.leg-note{font-size:16px;line-height:1.5;flex:1;min-width:230px}
+
+/* tags */
+.tag{display:inline-flex;gap:6px;align-items:center;border-radius:2px;padding:3px 9px;
+  font-family:var(--ff-mono);font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+.tag .dot{font-size:9px}
+.t-robust{color:var(--t-rob-fg);background:var(--t-rob-bg);border:1px solid var(--t-rob-edge)}
+.t-moderate{color:var(--t-mod-fg);background:var(--t-mod-bg);border:1px solid var(--t-mod-edge)}
+.t-contested{color:var(--t-con-fg);background:var(--t-con-bg);border:1px solid var(--t-con-edge)}
+.t-weak{color:var(--t-wea-fg);background:var(--t-wea-bg);border:1px solid var(--t-wea-edge)}
+.t-robust-fg{color:var(--t-rob-fg)} .t-moderate-fg{color:var(--t-mod-fg)}
+.t-contested-fg{color:var(--t-con-fg)} .t-weak-fg{color:var(--t-wea-fg)}
+.edge-robust{border-left:2px solid var(--t-rob-edge)} .edge-moderate{border-left:2px solid var(--t-mod-edge)}
+.edge-contested{border-left:2px solid var(--t-con-edge)} .edge-weak{border-left:2px solid var(--t-wea-edge)}
+
+/* slab (maroon block) */
+.slab{background:var(--slab-bg);color:var(--slab-fg);border-radius:6px;padding:52px 40px}
+.slab-eb{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--slab-fg);opacity:.85;margin-bottom:22px}
+.engine-verse{font-family:var(--ff-display);font-weight:600;font-size:clamp(25px,4.4vw,36px);line-height:1.2;letter-spacing:-0.016em;margin:0}
+.engine-plain{margin:0;font-size:20px;line-height:1.58}
+.slab-sub{margin:24px 0 0;font-size:16.5px;line-height:1.62;color:var(--slab-muted)}
+.slab-lead{margin:0 0 16px;font-size:19.5px;line-height:1.6}
+.slab-foot{margin-top:26px;padding-top:20px;border-top:1px solid var(--slab-line);font-size:15.5px;line-height:1.62;color:var(--slab-muted)}
+.slab-foot .minilabel{color:var(--slab-fg);opacity:.9}
+.slab-foot>div{margin-top:8px}
+
+/* moves */
+.move{border-top:1px solid var(--hair);padding:42px 0}
+.move-h{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
+.move-n{font-family:var(--ff-mono);font-size:26px;font-weight:600;color:var(--accent);line-height:1;padding-top:4px}
+.move-title{flex:1;min-width:220px}
+.move-title .h3{margin-bottom:8px}
+.evidence{padding-left:14px;margin-top:16px;font-size:15.5px;line-height:1.6}
+.evidence>div{margin-top:6px}
+.caution{border-left:2px solid var(--accent);padding-left:14px;margin-top:16px;font-size:15.5px;line-height:1.6;color:var(--muted)}
+.caution>div{margin-top:6px}
+
+/* myths */
+.myths,.breaks{display:grid;gap:34px}
+.myth,.jbreak{padding-left:18px}
+.myth-h{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
+.myth-h .h3{flex:1;min-width:200px;font-size:23px}
+.honest{margin-top:12px;font-size:16px;line-height:1.58}
+.honest>div{margin-top:6px}
+
+/* procedure */
+.proc{margin-top:28px}
+.proc-row{display:flex;gap:16px;align-items:baseline;border-top:1px solid var(--hair);padding:21px 0;flex-wrap:wrap}
+.proc-n{font-family:var(--ff-mono);font-size:15px;font-weight:600;color:var(--accent);min-width:22px}
+.proc-name{font-family:var(--ff-display);font-weight:600;font-size:19px;min-width:190px;letter-spacing:-0.01em}
+.proc-desc{font-size:17px;flex:1;min-width:220px;line-height:1.5}
+
+/* two ways */
+.two-ways{display:grid;gap:28px}
+.way{padding-left:18px}
+.way .minilabel{margin-bottom:12px;display:block}
+.way-note{font-size:16px;line-height:1.6}
+
+/* frame + steps */
+.frame{border:1.5px solid var(--hair2);border-radius:6px;padding:48px 32px}
+.note{font-family:var(--ff-mono);font-size:11.5px;color:var(--muted);border:1px dashed var(--hair);border-radius:2px;padding:11px 13px;margin-bottom:22px;line-height:1.6}
+.step{margin-top:46px;padding-top:36px;border-top:1px solid var(--hair)}
+.step:first-of-type{border-top:none;margin-top:8px;padding-top:0}
+.step-h{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.step-n{font-family:var(--ff-mono);font-size:11.5px;font-weight:600;color:var(--accent);letter-spacing:.14em}
+.step-t{font-family:var(--ff-display);font-weight:600;font-size:22px;margin:0 0 8px;line-height:1.2;letter-spacing:-0.012em}
+.scene{background:var(--slab-bg);color:var(--slab-fg);border-radius:4px;padding:30px 28px;margin-top:18px;font-size:18px;line-height:1.66}
+.scene-gap{height:16px}
+
+/* choices */
+.choices{display:grid;gap:11px;margin-top:20px}
+.choice{text-align:left;cursor:pointer;background:transparent;color:var(--fg);border:1px solid var(--hair);border-radius:2px;
+  padding:15px 17px;font-family:var(--ff-body);font-size:17px;line-height:1.5;transition:background .12s,border-color .12s}
+.choice:hover{border-color:var(--hair2)}
+.choice .ci{font-family:var(--ff-mono);font-size:12px;font-weight:600;opacity:.6;margin-right:11px}
+.choice.selected{background:var(--slab-bg);color:var(--slab-fg);border-color:var(--slab-bg)}
+.choice.selected .ci{opacity:.75}
+.choice:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* gate */
+.gate-btn{margin-top:16px;width:100%;text-align:left;cursor:pointer;background:transparent;
+  border:1.5px solid var(--accent);border-radius:2px;padding:14px 16px;color:var(--accent);
+  font-family:var(--ff-mono);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:background .12s}
+.gate-btn:hover{background:var(--panel)}
+.gate-btn:disabled{cursor:not-allowed;border-color:var(--hair);color:var(--muted);background:transparent}
+.gate-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gate-content{margin-top:16px;animation:riseIn .4s ease both}
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* responses + verdict */
+.responses .resp{display:none}
+.responses .resp.show{display:block}
+.responses .resp{font-size:18px;line-height:1.65;color:var(--body);margin-bottom:14px}
+.verdict{border-radius:2px;padding:22px;font-size:17.5px;line-height:1.62}
+.verdict[data-correct="true"]{background:var(--t-rob-bg);border:1px solid var(--t-rob-edge);color:var(--t-rob-fg)}
+.verdict[data-correct="false"]{background:var(--t-wea-bg);border:1px solid var(--t-wea-edge);color:var(--t-wea-fg)}
+.vd{display:none}
+.verdict[data-correct="true"] .vd[data-vd="correct"]{display:block}
+.verdict[data-correct="false"] .vd[data-vd="incorrect"]{display:block}
+.vspace{margin-top:10px}
+
+/* textarea + recall answer */
+textarea{width:100%;margin-top:14px;background:var(--panel);border:1px solid var(--hair);border-radius:2px;
+  padding:13px 15px;font-family:var(--ff-body);font-size:16px;line-height:1.55;color:var(--fg);resize:vertical}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.recall-answer{padding-left:18px}
+.recall-answer ol{margin:0;padding-left:18px;font-size:17.5px;line-height:1.8}
+
+/* jesus */
+.jmove{border-top:1px solid var(--hair);padding:40px 0}
+.jref{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}
+.jmove .h3{font-size:24px;margin-bottom:12px}
+.maps{margin-top:12px;font-size:15.5px;line-height:1.6;color:var(--muted)}
+.maps>div{margin-top:5px}
+.jbreak .h3{font-size:22px;margin-bottom:10px}
+
+/* cuts */
+.cuts{display:grid;gap:24px}
+.cut{padding-left:18px}
+.cut-line{font-family:var(--ff-display);font-style:italic;font-weight:500;font-size:19px;line-height:1.35;color:var(--t-wea-fg);
+  margin-bottom:8px;text-decoration:line-through;text-decoration-color:var(--t-wea-edge)}
+.cut-why{font-size:16px;line-height:1.6}
+
+/* sources + footer */
+.sources{font-family:var(--ff-mono);font-size:13.8px;line-height:1.8;color:var(--muted)}
+.foot{padding:34px 0 80px;font-family:var(--ff-mono);font-size:11.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--hair)}
+</style><style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head><body data-prose="plain" data-theme="light"><div class="bar-top"><div class="bar-inner">
+  <span class="brand">Reconstruction / v7</span>
+  <div class="segs">
+    <div class="seg" data-group="prose">
+      <button class="seg-btn active" data-toggle="prose" data-val="plain">✂️ Plain</button>
+      <button class="seg-btn" data-toggle="prose" data-val="original">🎭 Original</button>
+    </div>
+    <div class="seg" data-group="theme">
+      <button class="seg-btn active" data-toggle="theme" data-val="light">☀︎ Light</button>
+      <button class="seg-btn" data-toggle="theme" data-val="dark">☾ Dark</button>
+    </div>
+  </div>
+</div></div><div class="wrap"><header class="hero">
+  <div class="eyebrow"><span class="po"><span class="bar"></span><span class="eb-t">A method, not a description</span></span><span class="pp"><span class="bar"></span><span class="eb-t">Stripped of ornament</span></span></div>
+  <h1 class="hero-title"><span class="po">Clean transmission<br>is a trap.</span><span class="pp">Students learned more<br>when it felt worse.</span></h1>
+  <p class="hero-p"><span class="po">In a randomized study at Harvard, students taught actively learned more — and felt like they'd learned less. The two ran in opposite directions. The passive group had experienced, highly-rated lecturers, and walked out confident.</span><span class="pp">In a randomized study, students taught actively scored higher on tests than students taught by experienced, highly rated lecturers using identical material. The active students reported feeling they had learned less. Perceived learning and measured learning correlated negatively.</span></p>
+  <p class="hero-p"><span class="po">That is the problem this page is built around. It applies to you when you teach, and to you when you learn. Everything below is designed to work against it — including the way this page is built.</span><span class="pp">So a learner's sense that a lesson worked is unreliable evidence that it worked. This page is designed around that fact, including in how it presents itself.</span></p>
+</header><section><div class="rule-block">
+  <p class="body">The same content, written twice. <strong>Original</strong> uses metaphor, aphorism and rhythm. <strong>Plain</strong> states the claims and nothing else.</p>
+  <p class="body muted" style="margin-bottom:0">Original mode is more pleasant to read. That does not mean it teaches better, and this page argues the opposite.</p>
+</div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">How to read the colors</span></div><p class="body"><span class="po">Color here isn't decoration. Every claim carries a tag showing how much weight it can bear. If a teaching page won't tell you where its evidence is thin, it isn't teaching you — it's selling you.</span><span class="pp">Color encodes evidence strength, not emphasis. Each claim carries a tag showing how much weight it can bear.</span></p><div class="legend"><div class="leg-row edge-robust"><span class="tag t-robust"><span class="dot">🟢</span>Robust</span><span class="leg-note t-robust-fg"><span class="po">Replicated across many studies and settings. Build on it.</span><span class="pp">Replicated across many studies and settings.</span></span></div><div class="leg-row edge-moderate"><span class="tag t-moderate"><span class="dot">🟡</span>Moderate</span><span class="leg-note t-moderate-fg"><span class="po">Promising, real, but thinner or narrower evidence. Use with care.</span><span class="pp">Real effect, but the evidence base is thinner or narrower.</span></span></div><div class="leg-row edge-contested"><span class="tag t-contested"><span class="dot">🟠</span>Contested</span><span class="leg-note t-contested-fg"><span class="po">Live scientific dispute. Don't cite it like settled fact.</span><span class="pp">Currently disputed among researchers. Not settled.</span></span></div><div class="leg-row edge-weak"><span class="tag t-weak"><span class="dot">🔴</span>Overreach</span><span class="leg-note t-weak-fg"><span class="po">Popular, intuitive, and not supported at the strength people claim.</span><span class="pp">Not supported at the strength commonly claimed.</span></span></div></div></section><section><div class="slab">
+  <div class="slab-eb"><span class="po">The whole engine</span><span class="pp">Summary</span></div>
+  <div class="po"><p class="engine-verse">Engineer reconstruction.<br>Keep it slightly effortful.<br>Spread it across time.</p></div><div class="pp"><p class="engine-plain">Three variables predict whether learning persists: whether the learner reconstructs the material rather than rereading it, whether that reconstruction requires effort, and whether it is distributed across time rather than massed.</p></div>
+  <p class="slab-sub"><span class="po">Nearly every robust finding below is a special case of that sentence. The rest of this page is the sentence, unpacked — and then enacted on you.</span><span class="pp">Most of the findings below are instances of one of those three variables.</span></p>
+</div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">The eight moves</span></div><h2 class="h2"><span class="po">What actually works, and how hard you can lean on it.</span><span class="pp">What works, and how much weight it holds.</span></h2><p class="lead muted">Each entry lists its supporting evidence and the limits of that evidence.</p><div class="move">
+          <div class="move-h">
+            <span class="move-n">01</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🔁</span><span class="po">Retrieval, not review</span><span class="pp">Test yourself instead of rereading</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Robust</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Pulling knowledge out strengthens it; putting it back in — rereading — barely moves the needle. The test is not the measurement of learning. It is the learning.</span><span class="pp">Recalling information strengthens memory for it more than rereading does. A test changes memory rather than only measuring it. So self-quizzing is not a way to check whether studying worked — it is the studying.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Evidence</span><div>Rowland 2014: g = 0.50 across 159 comparisons. Adesope 2017: g ≈ 0.61–0.70. Dunlosky rates practice testing high utility — one of only two techniques to receive that grade.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">Not universal. A 2025 meta-analysis of mathematics learning found the effect at g = 0.18 with a confidence interval crossing zero.</span><span class="pp">Not universal. A 2025 meta-analysis of mathematics learning found testing versus restudy at g = 0.18, with a confidence interval crossing zero. The effect varies by domain.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">02</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">⏳</span><span class="po">Space it</span><span class="pp">Spread practice across days</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Robust</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">The same total effort spread across days beats the same effort crammed. Let it decay a little, then force the harder rebuild.</span><span class="pp">The same total study time produces more retention when distributed across sessions than when massed. Delay permits partial forgetting, which makes later recall harder and therefore more effective.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Evidence</span><div>Distributed practice is the other technique Dunlosky rates high utility. Benefits appear across ages, materials, and retention intervals.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">The optimal gap scales with how long you need to remember it. There's no single correct interval.</span><span class="pp">The optimal gap scales with the intended retention interval. There is no single correct spacing schedule.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">03</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🔀</span><span class="po">Interleave</span><span class="pp">Mix problem types</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Moderate</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Mixing problem types instead of drilling one blocks the pattern-matching shortcut and forces the learner to first decide which tool applies. That decision is most of the skill.</span><span class="pp">Mixing problem types requires the learner to identify which method applies before applying it. Blocked practice removes that step, because the context supplies the method.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Evidence</span><div>Dunlosky rates interleaved practice moderate — real benefits, but at the time of review systematic exploration had only begun.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">Weaker and more domain-dependent than retrieval and spacing. Don't file it in the same drawer.</span><span class="pp">Weaker and more domain-dependent than retrieval and spacing. It does not carry equal weight.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">04</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🪜</span><span class="po">Scaffold, then kick the scaffold away</span><span class="pp">Match guidance to prior knowledge</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Robust</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">For a true novice, a clean worked example beats making them flail. Once the schema exists, that same example robs them, and generation becomes the thing that teaches.</span><span class="pp">Novices learn more from worked examples than from unguided problem solving, because they lack the schema needed to reconstruct a solution. Once the schema exists, the same guidance stops helping and can interfere.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Evidence</span><div>The expertise reversal effect (Kalyuga, Ayres, Chandler & Sweller). Guidance that helps novices can actively harm more advanced learners.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">Usually a partial reversal — support stops helping — rather than a full flip to harm.</span><span class="pp">Usually a partial reversal, in which support stops helping, rather than a full reversal in which it harms.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">05</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🗣️</span><span class="po">Make them explain</span><span class="pp">Have learners explain</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Moderate</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Self-explanation and elaborative interrogation force the learner to build the causal links themselves instead of receiving them prebuilt.</span><span class="pp">Prompting learners to state why something is true, in their own words, produces better outcomes than supplying the explanation. The learner generates the causal links rather than reading them.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Evidence</span><div>Both rated moderate utility by Dunlosky. Promising; under-tested in real educational settings rather than labs.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">Moderate means moderate. The evidence base is thinner than for retrieval and spacing.</span><span class="pp">The evidence base is thinner than for retrieval and spacing.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">06</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🕳️</span><span class="po">Mind the gap you can't see</span><span class="pp">Experts skip steps without noticing</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Moderate</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">As expertise grows you silently compress the steps you no longer notice, and the learner falls straight into the gap.</span><span class="pp">Experts omit steps that have become automatic and are no longer available to introspection. The steps that feel most obvious to the teacher are the ones most likely to be skipped, and where learners most often get stuck.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Evidence</span><div>The curse of knowledge is well-documented as a bias. Its specific instructional cost is more inferred than directly quantified.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">I'm rating this moderate on purpose. The bias is real; the effect size on teaching outcomes is not something I found a clean number for.</span><span class="pp">Rated moderate deliberately. The bias is documented; I did not find a clean effect size for its cost to teaching outcomes.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">07</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">😬</span><span class="po">Distrust the smile</span><span class="pp">Perceived learning is unreliable</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Robust</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Students taught actively learned measurably more — and reported feeling like they'd learned less. Effort gets misread as failure.</span><span class="pp">Students in active classrooms scored higher and reported lower perceived learning than students given polished lectures on identical material. Learners interpret cognitive effort as evidence they are learning badly.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Evidence</span><div>Deslauriers et al. 2019 (PNAS), randomized, identical materials, experienced and highly-rated lecturers on the passive side.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">Implication: positive reception is not evidence your teaching worked. It may be mild evidence against.</span><span class="pp">Implication: positive reception is not evidence that teaching worked, and may be weak evidence against it.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">08</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🚨</span><span class="po">Build something that can say no</span><span class="pp">Include a way for the learner to be wrong</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Moderate</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Retrieval and teaching only work when something can genuinely fail the learner. Without a real no, they rehearse whatever model they walked in with.</span><span class="pp">Practice without corrective feedback rehearses whatever model the learner already holds, including an incorrect one. Repetition increases confidence in a wrong model as readily as a correct one.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Evidence</span><div>Feedback strengthens retrieval practice (Rowland). Tutoring's advantage is generally attributed to immediate error correction and adaptive pacing.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Where it stops</span><div><span class="po">The sharpened version — that a falsifying loop is the load-bearing element — is my synthesis, not a finding.</span><span class="pp">The claim that this is the single most important element is my inference, not a finding. Treat it as a testable design principle.</span></div></div>
+        </div></section><section><div class="eyebrow weak"><span class="bar"></span><span class="eb-t">What to stop repeating</span></div><h2 class="h2">Four claims that are weaker than they sound.</h2><p class="lead muted">Two are overstated. Two are actively disputed.</p><div class="myths"><div class="myth edge-weak">
+          <div class="myth-h"><h3 class="h3 t-weak-fg"><span class="ico">🎨</span>Matching instruction to learning style</h3><span class="tag t-weak"><span class="dot">🔴</span>Overreach</span></div>
+          <p class="body">The testable claim is the meshing hypothesis: that matching instruction to a preferred style improves outcomes. Validating it requires a crossover interaction. Pashler, McDaniel, Rohrer and Bjork found that very few studies used a design capable of testing this, and several that did produced contradicting results.</p>
+          <div class="honest t-weak-fg"><span class="minilabel">🧭 The honest version</span><div>A 2024 meta-analysis reports that roughly a quarter of the outcome measures it examined did show the required crossover pattern. This does not support the practice, but the question is less closed than most debunkings state.</div></div>
+        </div><div class="myth edge-weak">
+          <div class="myth-h"><h3 class="h3 t-weak-fg"><span class="ico">🖍️</span>Rereading and highlighting</h3><span class="tag t-weak"><span class="dot">🔴</span>Overreach</span></div>
+          <p class="body">Both received low utility ratings from Dunlosky, alongside summarization, the keyword mnemonic, and imagery for text. They were included in the review because students rely on them heavily.</p>
+          <div class="honest t-weak-fg"><span class="minilabel">🧭 The honest version</span><div>They are not harmful. They increase familiarity with the text without increasing recall, and familiarity is easily mistaken for knowledge.</div></div>
+        </div><div class="myth edge-contested">
+          <div class="myth-h"><h3 class="h3 t-contested-fg"><span class="ico">📈</span>Growth mindset interventions</h3><span class="tag t-contested"><span class="dot">🟠</span>Contested</span></div>
+          <p class="body">Sisk et al. found an average effect on achievement of about d = 0.08. A 2025 structured review reports d = 0.05 overall and d = 0.02 when restricted to the highest-quality studies. Macnamara and Burgoyne attribute apparent effects to design and reporting problems.</p>
+          <div class="honest t-contested-fg"><span class="minilabel">🧭 The honest version</span><div>Defenders argue the meta-analyses averaged real effects in predicted subgroups, such as low-achieving students, together with null effects where no effect was hypothesized, and that pre-registered large trials did find gains in the predicted subgroup. The dispute is unresolved.</div></div>
+        </div><div class="myth edge-contested">
+          <div class="myth-h"><h3 class="h3 t-contested-fg"><span class="ico">🎯</span>Bloom's two sigma</h3><span class="tag t-contested"><span class="dot">🟠</span>Contested</span></div>
+          <p class="body">The claim that one-to-one tutoring moves the average student two standard deviations. It has not been replicated at that magnitude. VanLehn's systematic review found the next-largest effect near 0.82; a replication of one source study produced about 0.52. Tutoring meta-analyses cluster around 0.36–0.37 SD.</p>
+          <div class="honest t-contested-fg"><span class="minilabel">🧭 The honest version</span><div>Tutoring works. The specific figure is not supported. Bloom framed the paper as an open challenge rather than a result.</div></div>
+        </div></div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">The procedure</span></div><h2 class="h2">Six steps, applicable to any concept.</h2><div class="proc"><div class="proc-row">
+          <span class="proc-n">1</span>
+          <strong class="proc-name"><span class="ico">🎬</span><span class="po">Scene</span><span class="pp">Concrete case</span></strong>
+          <span class="proc-desc muted"><span class="po">Concrete before abstract. Put them inside it before you name it.</span><span class="pp">Present a concrete instance before naming the concept.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">2</span>
+          <strong class="proc-name"><span class="ico">✋</span><span class="po">Commit</span><span class="pp">Force a prediction</span></strong>
+          <span class="proc-desc muted"><span class="po">Force a prediction. Seal the answer until they've chosen.</span><span class="pp">Require the learner to answer before the answer is available.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">3</span>
+          <strong class="proc-name"><span class="ico">⚡</span><span class="po">Friction</span><span class="pp">Show why the prediction fails</span></strong>
+          <span class="proc-desc muted"><span class="po">Their answer meets resistance. This is the moment that teaches.</span><span class="pp">Respond to the specific answer given, including why it fails.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">4</span>
+          <strong class="proc-name"><span class="ico">💡</span><span class="po">Reveal</span><span class="pp">Give the mechanism</span></strong>
+          <span class="proc-desc muted"><span class="po">Now the mechanism lands — on a mind that's already reaching.</span><span class="pp">Explain the mechanism, after the learner has attempted it.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">5</span>
+          <strong class="proc-name"><span class="ico">🔁</span><span class="po">Retrieve</span><span class="pp">Recall it unaided</span></strong>
+          <span class="proc-desc muted"><span class="po">Rebuild from memory, no scrolling back.</span><span class="pp">Reconstruct the material from memory, without reference to the text.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">6</span>
+          <strong class="proc-name"><span class="ico">🧪</span><span class="po">Transfer</span><span class="pp">Apply to a new case</span></strong>
+          <span class="proc-desc muted"><span class="po">A new case, where the model can genuinely break.</span><span class="pp">Apply the model to a novel case that it could fail to explain.</span></span>
+        </div></div><p class="lead muted" style="margin-top:20px">Steps 2, 3 and 6 are commonly omitted. They carry most of the effect.</p></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Side by side</span></div>
+  <h2 class="h2">The same lesson, taught two ways.</h2>
+  <p class="lead muted">Topic: why distributed practice beats cramming.</p>
+  <div class="two-ways">
+    <div class="way edge-weak">
+      <div class="minilabel t-weak-fg">❌ Transmission</div>
+      <p class="body">Distributed practice is more effective than massed practice. When study sessions are separated by intervals, partial forgetting occurs between them, and the effort of re-retrieval strengthens memory more than a fluent repetition would. This is called the spacing effect.</p>
+      <div class="way-note t-weak-fg">Accurate. Clear. Well written. The reader nods and retains almost nothing, because they did no work.</div>
+    </div>
+    <div class="way edge-robust">
+      <div class="minilabel t-robust-fg">✅ Reconstruction</div>
+      <p class="body">Two students study four hours each. Ana does all four the night before. Ben does one hour on four separate nights. <strong>Who scores higher on a test two weeks later?</strong></p>
+      <p class="body">Most people say Ben, and they're right. So here is the harder one, and the reason this version teaches: <strong>who scores higher the next morning?</strong></p>
+      <p class="body">Often Ana. Massing can win on an immediate test. That is exactly why cramming survives — rewarded on the timescale students are graded on, punished on the timescale they need. If you had only read the paragraph above, you would not have that.</p>
+      <div class="way-note t-robust-fg">Same content, plus a prediction the reader can get wrong, plus a second case where the naive rule breaks.</div>
+    </div>
+  </div>
+</section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Worked example · a craving loop</span></div><div class="frame"><div class="note">⚠︎ EXAMPLE CONTENT — a stand-in, to demonstrate the six steps. The transferable thing is the procedure, not these claims.</div><h2 class="h2 sm">Teaching the loop, and the exit, without explaining either first.</h2><div class="step"><div class="step-h"><span class="step-n">STEP 1</span><span class="ico">🎬</span></div><h4 class="step-t">A concrete case</h4><div class="scene"><span class="po">Something feels empty. Something promises to fill it. You reach, and for a moment the reaching stops. Then the emptiness is back — a little deeper — and the same something promises again.</span><span class="pp">A person feels a lack. A behavior promises to remove it. They perform the behavior and the urge subsides briefly. The lack returns, somewhat stronger. The same behavior promises again. Across repetitions, more is required to produce the same relief.</span></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 2</span><span class="ico">✋</span></div><h4 class="step-t">Predict: where would you intervene?</h4><p class="hint muted">The explanation stays hidden until you answer.</p><div class="choices" data-choice-group="spiral"><button class="choice" data-group="spiral" data-id="a"><span class="ci">A</span>At the pursuit — resist the behavior itself</button><button class="choice" data-group="spiral" data-id="b"><span class="ci">B</span>At the trigger — remove what sets it off</button><button class="choice" data-group="spiral" data-id="c"><span class="ci">C</span>At the promise — when it predicts this will satisfy</button><button class="choice" data-group="spiral" data-id="d"><span class="ci">D</span>At the reward — make it harder to obtain</button></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 3</span><span class="ico">⚡</span></div><h4 class="step-t">Why that answer does or doesn't work</h4><div class="gate" data-locked="true" data-req-choice="spiral"><button class="gate-btn" disabled data-label="Show the response to my answer" data-lock="Sealed — choose an option first">🔒 Sealed — choose an option first</button><div class="gate-content" hidden><div class="responses" data-responses-for="spiral"><div class="resp" data-when="a">The pursuit. The most commonly chosen option and the least effective. It intervenes after the motivational state is already active, so it requires sustained effort against it.</div><div class="resp" data-when="b">Removing triggers reduces frequency. But triggers are numerous and substitutable, so this addresses instances rather than the mechanism.</div><div class="resp" data-when="c">This is the earliest intervention point, and the one the mechanism below supports. Note that arriving at it yourself makes the explanation easier to retain than reading it would have been.</div><div class="resp" data-when="d">Restricting access to the reward still intervenes after the motivational state has formed, so it faces the same difficulty as resisting the pursuit.</div></div><p class="body" style="margin-bottom:0">The most effective intervention point is the earliest one — when the prediction forms — not the point of strongest urge.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 4</span><span class="ico">💡</span></div><h4 class="step-t">The mechanism</h4><div class="gate" data-locked="true" data-req-choice="spiral"><button class="gate-btn" disabled data-label="Show the mechanism" data-lock="Sealed">🔒 Sealed</button><div class="gate-content" hidden><p class="body">Wanting is the motivational pull toward a stimulus. Liking is the hedonic satisfaction produced by consuming it. The behavior reduces wanting without producing liking, so the underlying lack persists. Wanting also adapts upward with repetition.</p><p class="body" style="margin-bottom:0">Resisting the pursuit therefore addresses a downstream symptom. The upstream cause is the prediction that this behavior will produce liking, which it structurally cannot.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 5</span><span class="ico">🔁</span></div><h4 class="step-t">Reconstruct it from memory</h4><p class="hint muted">State the stages, and why resisting the pursuit fails. Don't scroll back.</p><textarea id="loopText" rows="4" placeholder="From memory…"></textarea><div class="gate" data-locked="true" data-req-text="loopText"><button class="gate-btn" disabled data-label="Check yourself" data-lock="Sealed — write a real attempt first">🔒 Sealed — write a real attempt first</button><div class="gate-content" hidden><p class="body">Lack → prediction that a behavior will remove it → the behavior → wanting subsides, liking is not produced → the lack returns, stronger → repeat, with escalation.</p><p class="body" style="margin-bottom:0">Resisting the pursuit fails because it intervenes downstream of the prediction that drives the loop.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 6</span><span class="ico">🧪</span></div><h4 class="step-t">Apply it to a case that could break it</h4><p class="body" style="margin-bottom:0">Three of these fit the model. One does not. Which one?</p><div class="choices" data-choice-group="spiralT"><button class="choice" data-group="spiralT" data-id="a"><span class="ci">A</span>Refreshing a feed — briefly informed, emptier after</button><button class="choice" data-group="spiralT" data-id="b"><span class="ci">B</span>Hunger → eat → genuinely full → hungry again hours later</button><button class="choice" data-group="spiralT" data-id="c"><span class="ci">C</span>Re-checking a post for approval you already received</button><button class="choice" data-group="spiralT" data-id="d"><span class="ci">D</span>Buying a new thing to become a different person</button></div><div class="gate" data-locked="true" data-req-choice="spiralT"><button class="gate-btn" disabled data-label="Test my answer" data-lock="Sealed — choose one">🔒 Sealed — choose one</button><div class="gate-content" hidden><div class="verdict" data-verdict-for="spiralT" data-answer="b" data-correct=""><div class="vd" data-vd="correct"><strong>✅ Correct.</strong><div class="vspace">Hunger is a homeostatic cycle. Eating produces liking — you are genuinely satisfied — and it does not escalate: tomorrow's hunger is not stronger than today's.</div><div class="vspace">The model has two discriminators, and you used both: <strong>does it produce liking?</strong> and <strong>does it escalate?</strong></div></div><div class="vd" data-vd="incorrect"><strong>❌ Not this one.</strong><div class="vspace">The option you chose does fit: it reduces wanting, produces no liking, and escalates. The exception is <strong>hunger</strong>. Eating produces genuine satisfaction, and hunger does not escalate across days.</div><div class="vspace">The discriminators are <strong>does it produce liking?</strong> and <strong>does it escalate?</strong> Getting this wrong locates where your model was underspecified.</div></div></div></div></div></div></div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Worked example · a statistical idea</span></div><div class="frame"><h2 class="h2 sm">Survivorship bias, taught in four minutes.</h2><p class="lead muted">Watch how much of the work happens before any explanation arrives.</p><div class="step"><div class="step-h"><span class="step-n">STEP 1</span><span class="ico">🎬</span></div><h4 class="step-t">A concrete case</h4><div class="scene">It is 1943. Bombers return from raids over Europe riddled with holes. Analysts map where the damage falls: heavily on the wings and rear fuselage, hardly at all on the engines and cockpit. Armor is heavy. You can only reinforce some of the plane.</div></div><div class="step"><div class="step-h"><span class="step-n">STEP 2</span><span class="ico">✋</span></div><h4 class="step-t">Predict: where do you put the armor?</h4><div class="choices" data-choice-group="wald"><button class="choice" data-group="wald" data-id="a"><span class="ci">A</span>The wings and fuselage — where the damage is concentrated</button><button class="choice" data-group="wald" data-id="b"><span class="ci">B</span>The engines and cockpit — where there is almost no damage</button><button class="choice" data-group="wald" data-id="c"><span class="ci">C</span>Spread it evenly across the whole airframe</button><button class="choice" data-group="wald" data-id="d"><span class="ci">D</span>Skip armor; reduce weight so the planes fly faster</button></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 3</span><span class="ico">⚡</span></div><h4 class="step-t">Why that answer does or doesn't work</h4><div class="gate" data-locked="true" data-req-choice="wald"><button class="gate-btn" disabled data-label="Show the response to my answer" data-lock="Sealed — choose an option first">🔒 Sealed — choose an option first</button><div class="gate-content" hidden><div class="responses" data-responses-for="wald"><div class="resp" data-when="a">The most common answer, and precisely backwards. Before reading on: ask yourself which planes were available to be examined.</div><div class="resp" data-when="b">Correct, and unusual. Hold it — but make sure you can say why, because the right answer for the wrong reason will not transfer.</div><div class="resp" data-when="c">Spreading armor evenly wastes weight on regions that demonstrably tolerate damage. It also avoids the question rather than answering it.</div><div class="resp" data-when="d">A defensible engineering tradeoff, but it sidesteps the inference problem. The data on the table is still being read incorrectly.</div></div><p class="body" style="margin-bottom:0">One question dissolves this: <strong>which planes were available to be examined?</strong></p></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 4</span><span class="ico">💡</span></div><h4 class="step-t">The mechanism</h4><div class="gate" data-locked="true" data-req-choice="wald"><button class="gate-btn" disabled data-label="Show the mechanism" data-lock="Sealed">🔒 Sealed</button><div class="gate-content" hidden><p class="body">Only the planes that came back could be measured. The holes therefore mark the places a bomber can be hit and still return. The clean areas are not lucky — they are where hits were fatal, and those aircraft are at the bottom of the Channel.</p><p class="body">Armor the engines and cockpit. The statistician Abraham Wald, working for the Statistical Research Group at Columbia, developed the method for estimating vulnerability from damage to survivors.</p><p class="body">The general form: when your sample is selected on the outcome you are studying, the pattern in the data is inverted.</p><div class="caution"><div>⚠️ Wald's wartime memoranda are real. The widely circulated diagram of a bomber covered in red dots is a modern illustration, not his, and the anecdote is often retold with embellishment. The statistical point stands; the story around it has been polished.</div></div></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 6</span><span class="ico">🧪</span></div><h4 class="step-t">Apply it to a case that could break it</h4><p class="body" style="margin-bottom:0">Three of these are survivorship bias. One is not. Which one?</p><div class="choices" data-choice-group="waldT"><button class="choice" data-group="waldT" data-id="a"><span class="ci">A</span>“Most great founders dropped out of college.”</button><button class="choice" data-group="waldT" data-id="b"><span class="ci">B</span>“Old buildings were built better than new ones.”</button><button class="choice" data-group="waldT" data-id="c"><span class="ci">C</span>“This drug beat placebo in a randomized controlled trial.”</button><button class="choice" data-group="waldT" data-id="d"><span class="ci">D</span>“Cats that fall from higher floors survive more often.”</button></div><div class="gate" data-locked="true" data-req-choice="waldT"><button class="gate-btn" disabled data-label="Test my answer" data-lock="Sealed — choose one">🔒 Sealed — choose one</button><div class="gate-content" hidden><div class="verdict" data-verdict-for="waldT" data-answer="c" data-correct=""><div class="vd" data-vd="correct"><strong>✅ Correct.</strong><div class="vspace">Random assignment means the sample was not selected on the outcome. The other three all condition on survival: dropouts who failed aren't famous, badly built old buildings were demolished, and cats that died on impact were never carried into the vet's office.</div><div class="vspace">The discriminator: <strong>was the sample selected on the outcome being studied?</strong></div></div><div class="vd" data-vd="incorrect"><strong>❌ Not this one.</strong><div class="vspace">The case you picked does condition on survival. The exception is the <strong>randomized trial</strong>: random assignment means the sample was not selected on the outcome.</div><div class="vspace">The discriminator: <strong>was the sample selected on the outcome being studied?</strong> Notice you can now state the rule, which you could not have done from the definition alone.</div></div></div></div></div></div></div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Worked example · a theological idea</span></div><div class="frame"><h2 class="h2 sm">The fear of God, taught without defining it first.</h2><div class="note">⚠︎ MY CONSTRUCTION. The direction-of-movement reading is a homiletical framework, not a settled exegetical result. Some scholars argue the Hebrew does not cleanly separate dread from reverence, and that the numinous includes real terror. Testable, not authoritative.</div><div class="step"><div class="step-h"><span class="step-n">STEP 1</span><span class="ico">🎬</span></div><h4 class="step-t">Two concrete cases</h4><div class="scene">A man hears God moving in the garden and hides himself among the trees. Asked why, he says he was afraid.<div class="scene-gap"></div>Another sees the Lord high and lifted up, cries out that he is ruined, unclean, undone — and does not move. A coal from the altar touches his mouth. He stays. He volunteers.</div><p class="hint muted" style="margin-top:14px">Genesis 3:8–10 · Isaiah 6:1–8. Both men are terrified. Both texts use fear language.</p></div><div class="step"><div class="step-h"><span class="step-n">STEP 2</span><span class="ico">✋</span></div><h4 class="step-t">Predict: which man fears God?</h4><div class="choices" data-choice-group="fear"><button class="choice" data-group="fear" data-id="a"><span class="ci">A</span>Adam — his fear is the more obviously real one</button><button class="choice" data-group="fear" data-id="b"><span class="ci">B</span>Isaiah — his fear does something different</button><button class="choice" data-group="fear" data-id="c"><span class="ci">C</span>Both — the fear is the same, the response differs</button><button class="choice" data-group="fear" data-id="d"><span class="ci">D</span>Neither — the word means something else entirely</button></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 3</span><span class="ico">⚡</span></div><h4 class="step-t">Why that answer does or doesn't work</h4><div class="gate" data-locked="true" data-req-choice="fear"><button class="gate-btn" disabled data-label="Show the response to my answer" data-lock="Sealed — choose an option first">🔒 Sealed — choose an option first</button><div class="gate-content" hidden><div class="responses" data-responses-for="fear"><div class="resp" data-when="a">The intuitive answer, and it treats intensity as the criterion. Adam is certainly afraid. But notice what his fear does to him: it moves him away from God and into the trees.</div><div class="resp" data-when="b">You've located it. But be careful you can say why — Isaiah is not less afraid than Adam. He is undone. The difference is not the volume of the fear.</div><div class="resp" data-when="c">Close, and the most defensible of the four. Hold the question of whether a fear that reliably drives you away and a fear that reliably draws you in are usefully called the same thing.</div><div class="resp" data-when="d">Too quick. The word is doing real work in both texts. The question is whether it is doing the same work.</div></div><p class="body" style="margin-bottom:0">The discriminator is not how much fear. It is which direction the fear moves you.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 4</span><span class="ico">💡</span></div><h4 class="step-t">The mechanism</h4><div class="gate" data-locked="true" data-req-choice="fear"><button class="gate-btn" disabled data-label="Show the mechanism" data-lock="Sealed">🔒 Sealed</button><div class="gate-content" hidden><p class="body">The Hebrew root <em>yare'</em> carries both senses — dread and reverence — and the single English word inherits the ambiguity. The term does two jobs, and the reader silently picks one.</p><p class="body">Adam's fear is centrifugal: it moves him out of the presence. Isaiah's is centripetal: it holds him in the presence he cannot survive, and he is cleansed there rather than elsewhere. Same terror. Opposite vector.</p><p class="body" style="margin-bottom:0">On this reading, the fear of God commended in the wisdom literature is not a lower dose of terror. It is terror reoriented toward its object rather than away.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">STEP 6</span><span class="ico">🧪</span></div><h4 class="step-t">Apply it to a case that could break it</h4><p class="body" style="margin-bottom:0">Three of these move away from God. One moves toward. Which?</p><div class="choices" data-choice-group="fearT"><button class="choice" data-group="fearT" data-id="a"><span class="ci">A</span>Adam hides among the trees</button><button class="choice" data-group="fearT" data-id="b"><span class="ci">B</span>Jonah boards a ship going the other direction</button><button class="choice" data-group="fearT" data-id="c"><span class="ci">C</span>The servant buries the talent, saying he was afraid</button><button class="choice" data-group="fearT" data-id="d"><span class="ci">D</span>Isaiah says he is ruined, and stays</button></div><div class="gate" data-locked="true" data-req-choice="fearT"><button class="gate-btn" disabled data-label="Test my answer" data-lock="Sealed — choose one">🔒 Sealed — choose one</button><div class="gate-content" hidden><div class="verdict" data-verdict-for="fearT" data-answer="d" data-correct=""><div class="vd" data-vd="correct"><strong>✅ Correct — now here is where the model strains.</strong><div class="vspace">Peter, in Luke 5:8, falls at Jesus's knees and says <em>depart from me, I am a sinful man</em>. His words move away. His body moves toward. A clean direction test does not resolve him.</div><div class="vspace">That is not a defect in the exercise. It is the exercise. A framework that never meets a case it cannot sort has not been tested — and if you build teaching on this distinction, Peter is the case you owe an answer to.</div></div><div class="vd" data-vd="incorrect"><strong>❌ Not this one.</strong><div class="vspace">The case you chose moves away from the presence. <strong>Isaiah</strong> is the exception: undone, and unmoving.</div><div class="vspace">Now the harder case, which the model does not cleanly sort: Peter falls at Jesus's knees and says <em>depart from me</em>. Words away, body toward. Where does he go? You can only feel the force of that because you committed to a rule first.</div></div></div></div></div></div></div></section><section>
+      <div class="eyebrow "><span class="bar"></span><span class="eb-t">The hardest case</span></div>
+      <h2 class="h2">How Jesus taught — and where it breaks this page.</h2>
+      <div class="note">⚠︎ READ FIRST. What follows is retrofitting. Reading twenty-first-century cognitive science onto a first-century rabbi is anachronistic by construction. The gospels are theological documents, not transcripts. The parable was a standard Jewish teaching form, so nothing here claims originality of method. And this section has no ornamented variant — the prose toggle does nothing below — because this is precisely the ground on which the temptation to sound profound is strongest.</div>
+      <p class="body">One counter, often quoted: Copenhaver tallies 307 questions asked by Jesus, 183 asked of him, and 3 he answers directly. Reviewers dispute the count — several point to places he does answer plainly, and Copenhaver elsewhere allows fewer than ten. The figure depends entirely on an undefined term: <em>answers directly</em>. Take the direction of it, not the number.</p>
+      <div class="jmove">
+          <div class="jref"><span class="ico">❓</span>Luke 10:25–37</div>
+          <h3 class="h3">He answers a question with a question — then inverts it</h3>
+          <p class="body">A lawyer asks who counts as his neighbor. Jesus does not define the term. He tells a story, then asks the lawyer which of the three men acted as a neighbor. The lawyer produces the answer himself. And the question has been reversed: he asked who qualifies for his love; he leaves with the question of whom he is a neighbor to.</p>
+          <div class="maps"><span class="minilabel accent">↳ Maps to</span><div>Steps 2, 3 and 6. The commit is forced. The reframe is the friction. Go and do likewise is transfer.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🪞</span>2 Samuel 12:1–7</div>
+          <h3 class="h3">The listener convicts himself first</h3>
+          <p class="body">Not Jesus, but the purest specimen of the form, and he would have known it well. Nathan tells David a story about a rich man who takes a poor man's only lamb. David, enraged, passes sentence. Then Nathan applies it: you are the man. David committed to the verdict before he knew it was his own.</p>
+          <div class="maps"><span class="minilabel accent">↳ Maps to</span><div>A commit so complete the learner cannot retreat. The reveal lands as self-recognition rather than information.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🪙</span>Mark 12:13–17</div>
+          <h3 class="h3">He makes them produce the evidence</h3>
+          <p class="body">Asked a trap question about taxes, he does not answer. He asks for a coin, then asks whose image is on it. They answer. Only then does he speak, and what he says depends on the words they just said.</p>
+          <div class="maps"><span class="minilabel accent">↳ Maps to</span><div>Generation, not transmission. He requires an act and an utterance from the learner before supplying anything.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🗣️</span>Mark 8:27–33</div>
+          <h3 class="h3">Forced commitment, then an immediate transfer test</h3>
+          <p class="body">He asks what people say about him, then narrows it: who do you say that I am? Peter commits. He is right. Moments later Jesus explains that the Messiah must suffer and die, Peter objects, and is rebuked sharply. Peter had the correct label attached to the wrong model.</p>
+          <div class="maps"><span class="minilabel accent">↳ Maps to</span><div>Step 6, unmistakably. A right answer at step 2 does not guarantee the model survives a new case.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🚶</span>Luke 10:1–20</div>
+          <h3 class="h3">Practice, then debrief</h3>
+          <p class="body">He sends seventy-two out to do the work before they have seen it done to completion. They return and report, and he responds to what they bring back — including correcting what they were pleased about.</p>
+          <div class="maps"><span class="minilabel accent">↳ Maps to</span><div>Deliberate practice with feedback. He does not lecture them into readiness first.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🐫</span>Mark 10:25</div>
+          <h3 class="h3">Ornament as memory technology</h3>
+          <p class="body">A camel through the eye of a needle. A plank in the eye. Salt that loses its taste. In an oral culture with no notebooks, hyperbole and vivid absurdity are not decoration — they are how a saying survives transmission at all. This complicates the strip pass below, and it should.</p>
+          <div class="maps"><span class="minilabel accent">↳ Maps to</span><div>The distinction that holds: his images are welded to hard, specific, costly claims. The vividness makes a definite thing memorable. It does not stand in place of the thing.</div></div>
+        </div>
+      <div style="margin-top:44px">
+        <div class="eyebrow contested"><span class="bar"></span><span class="eb-t">Where the model breaks</span></div>
+        <h2 class="h2">Four places he does not do what this page recommends.</h2>
+        <p class="lead muted">If every example confirmed the framework, the framework would be doing no work.</p>
+        <div class="breaks"><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🚪</span>He often omits the reveal entirely</h3>
+          <p class="body" style="margin-bottom:0">Most parables end without explanation. The disciples get private interpretations occasionally; the crowd frequently does not. On this page's model, that is a broken lesson — step 4 never arrives. On his, it appears to be the point.</p>
+        </div><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🌑</span>He describes the parables as concealing</h3>
+          <p class="body" style="margin-bottom:0">Asked why he speaks in parables, he says the secret is given to those around him but that outsiders receive parables so that seeing they do not perceive, quoting Isaiah 6. Mark uses a purpose construction (hina); Matthew shifts to a causal one (hoti), which reads more like consequence than intent. The interpretation is heavily contested. What is not contested is that no modern instructional designer would write this.</p>
+        </div><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🥀</span>He lets people leave</h3>
+          <p class="body" style="margin-bottom:0">After a hard teaching in John 6, many disciples stop following. He does not soften it or chase them. The rich young ruler walks away and is not pursued. A method optimized for comprehension does not do this. A method optimized for allegiance might.</p>
+        </div><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🎯</span>The objective function is different</h3>
+          <p class="body" style="margin-bottom:0">This page optimizes for retention and transfer of a model. He is not primarily trying to install a model. Measuring him by test scores is a category error, and the fact that his methods happen to look like good pedagogy is worth noticing but proves nothing.</p>
+        </div></div>
+      </div>
+      <div class="slab" style="margin-top:44px">
+        <div class="slab-eb">What he has that this page doesn't</div>
+        <p class="slab-lead">A parable withholds the reveal on purpose. The hearer carries it around, unresolved, for days or years. It surfaces again at a wedding, at a graveside, when a Samaritan stops on a road. It is retrieval practice with no scheduler, no app and no notification — the story does its own spacing, by refusing to close.</p>
+        <p class="slab-sub">Which is exactly the technique this page cannot perform. Retrieval happens here in one sitting; spacing does not happen at all. The oldest teaching method in the room is built entirely on the pillar the newest one is missing.</p>
+        <div class="slab-foot"><span class="minilabel accent">🛑 And the honest limit</span><div>That paragraph is the most attractive idea on this page, which is the reason to distrust it. It is my inference, unmeasured. Nobody has tested whether an unresolved parable produces durable retention, and the mechanism I have named — delayed re-retrieval — is a modern category imposed on the material. It also risks reducing a call to repentance to a memory technique, which is the specific way this section could be wrong while feeling true.</div></div>
+      </div>
+    </section><section>
+      <div class="eyebrow weak"><span class="bar"></span><span class="eb-t">What the strip pass removed</span></div>
+      <h2 class="h2">Six lines that survived only as sound.</h2>
+      <p class="lead muted">The test: unpack the sentence. If what comes out is a claim that could be false, the compression earned itself. If what comes out was already one plain sentence, the phrasing was ornament.</p>
+      <div class="cuts"><div class="cut edge-weak"><div class="cut-line">The boring accumulation is the fuel; the revelation is combustion.</div><div class="cut-why muted">Unpacks to: insight requires prior knowledge. The metaphor added heat, not information.</div></div><div class="cut edge-weak"><div class="cut-line">If a page won't tell you where its evidence is thin, it isn't teaching you — it's selling you.</div><div class="cut-why muted">Chiasmus. The sentence shape is doing the persuading, not the claim.</div></div><div class="cut edge-weak"><div class="cut-line">It isn't a framework — it's a mood.</div><div class="cut-why muted">Cannot be unpacked into anything falsifiable. Pure ornament.</div></div><div class="cut edge-weak"><div class="cut-line">The study equivalent of eating the menu.</div><div class="cut-why muted">Vivid. Says less than 'increases familiarity without increasing recall.'</div></div><div class="cut edge-weak"><div class="cut-line">Fluency is a liar.</div><div class="cut-why muted">Compresses a real finding, but used three times. Repetition is how you spot a phrase kept for its sound.</div></div><div class="cut edge-weak"><div class="cut-line">The leverage isn't where the loop is loudest.</div><div class="cut-why muted">Means: intervene early. Dressed up to feel like a discovery.</div></div></div>
+      <div class="caution" style="margin-top:20px"><div>The failure is not figurative language. <strong>Camel through the eye of a needle</strong> is figurative and unforgettable, and it is welded to a hard, specific, costly claim. The failure is figurative language covering a claim that was already fully stated in plain words. Vividness attached to a definite thing is a mnemonic. Vividness attached to a vague thing is a deepity.</div></div>
+    </section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Before you leave</span></div><h2 class="h2">Reconstruct the six steps without scrolling.</h2><p class="lead muted">Getting some wrong is worth more than getting them all right by looking.</p><textarea id="stepText" rows="4" placeholder="The six steps, from memory…"></textarea><div class="gate" data-locked="true" data-req-text="stepText"><button class="gate-btn" disabled data-label="Check yourself" data-lock="Sealed — attempt it first">🔒 Sealed — attempt it first</button><div class="gate-content" hidden><div class="edge-robust recall-answer"><ol class="t-robust-fg"><li>🎬 <span class="po">Scene</span><span class="pp">Concrete case</span> — <span class="po">Concrete before abstract. Put them inside it before you name it.</span><span class="pp">Present a concrete instance before naming the concept.</span></li><li>✋ <span class="po">Commit</span><span class="pp">Force a prediction</span> — <span class="po">Force a prediction. Seal the answer until they've chosen.</span><span class="pp">Require the learner to answer before the answer is available.</span></li><li>⚡ <span class="po">Friction</span><span class="pp">Show why the prediction fails</span> — <span class="po">Their answer meets resistance. This is the moment that teaches.</span><span class="pp">Respond to the specific answer given, including why it fails.</span></li><li>💡 <span class="po">Reveal</span><span class="pp">Give the mechanism</span> — <span class="po">Now the mechanism lands — on a mind that's already reaching.</span><span class="pp">Explain the mechanism, after the learner has attempted it.</span></li><li>🔁 <span class="po">Retrieve</span><span class="pp">Recall it unaided</span> — <span class="po">Rebuild from memory, no scrolling back.</span><span class="pp">Reconstruct the material from memory, without reference to the text.</span></li><li>🧪 <span class="po">Transfer</span><span class="pp">Apply to a new case</span> — <span class="po">A new case, where the model can genuinely break.</span><span class="pp">Apply the model to a novel case that it could fail to explain.</span></li></ol></div></div></div></section><section><div class="slab">
+  <div class="slab-eb">The honest caution</div>
+  <p class="slab-lead"><span class="po">The same emotional spike that makes a true insight stick makes a wrong-but-compelling one feel just as true. Vividness and accuracy are separable.</span><span class="pp">Emotionally vivid ideas are remembered well whether or not they are correct. Vividness does not track accuracy, so the confidence an idea produces is not evidence for it.</span></p>
+  <p class="slab-sub"><span class="po">So the last move isn't the one that feels best. It's the one most able to tell you you're wrong. Build that in — for your learners, and for yourself.</span><span class="pp">So choose the method most able to disconfirm you, rather than the one that feels most persuasive. Build that in for your learners and for yourself.</span></p>
+  <div class="slab-foot"><span class="minilabel accent">🛑 Where the evidence runs out</span><div>The eight moves rest on cited findings. The six steps are my synthesis — a design pattern assembled from those findings, not a tested curriculum. No trial has been run on this page. It delivers retrieval within one session and no spacing across days: two of Dunlosky's high-utility techniques, one implemented. See Matuschak &amp; Nielsen's mnemonic medium for the other half — and the parables for the oldest version of it.</div></div>
+</div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Sources</span></div>
+  <div class="sources">Dunlosky, Rawson, Marsh, Nathan &amp; Willingham (2013) · Rowland (2014) · Adesope, Trevisan &amp; Sundararajan (2017) · Deslauriers, McCarty, Miller, Callaghan &amp; Kestin (2019), <em>PNAS</em> · Freeman et al. (2014), <em>PNAS</em> · Kalyuga, Ayres, Chandler &amp; Sweller (2003) · Pashler, McDaniel, Rohrer &amp; Bjork (2008) · Sisk, Burgoyne, Sun, Taylor &amp; Macnamara (2018) · Macnamara &amp; Burgoyne (2023) · Tipton, Bryan, Murray &amp; Schneider (2022) · Gazmuri et al. (2025) · VanLehn on Bloom's two sigma · Frontiers (2024), learning-styles matching meta-analysis · Matuschak, <em>Why books don't work</em> (2019) · Matuschak &amp; Nielsen, <em>Quantum Country</em> · Wald, Statistical Research Group memoranda (1943) · Copenhaver, <em>Jesus Is the Question</em> (2014) · Genesis 3 · Isaiah 6 · 2 Samuel 12 · Mark 4, 8, 10, 12 · Luke 5, 10 · Matthew 13 · John 6</div>
+</section><footer class="foot">The reconstruction method · v7</footer></div><script>
+const state={};
+function selectChoice(group,id){
+  state[group]=id;
+  document.querySelectorAll('[data-choice-group="'+group+'"] .choice').forEach(function(c){
+    c.classList.toggle('selected', c.dataset.id===id);
+  });
+  document.querySelectorAll('[data-responses-for="'+group+'"]').forEach(function(w){
+    w.querySelectorAll('.resp').forEach(function(r){ r.classList.toggle('show', r.dataset.when===id); });
+  });
+  document.querySelectorAll('[data-verdict-for="'+group+'"]').forEach(function(w){
+    w.dataset.correct = (id===w.dataset.answer)?'true':'false';
+  });
+  refreshGates();
+}
+function refreshGates(){
+  document.querySelectorAll('.gate').forEach(function(g){
+    var rc=g.dataset.reqChoice, rt=g.dataset.reqText, locked=false;
+    if(rc && !state[rc]) locked=true;
+    if(rt){ var ta=document.getElementById(rt); if(!ta || ta.value.trim().length<12) locked=true; }
+    g.dataset.locked = locked?'true':'false';
+    var btn=g.querySelector('.gate-btn');
+    if(btn && !btn.hidden){
+      btn.disabled=locked;
+      btn.textContent = locked ? ('🔒 '+btn.dataset.lock) : ('→ '+btn.dataset.label);
+    }
+  });
+}
+document.addEventListener('click',function(e){
+  var ch=e.target.closest('.choice');
+  if(ch){ selectChoice(ch.dataset.group, ch.dataset.id); return; }
+  var gb=e.target.closest('.gate-btn');
+  if(gb){ var g=gb.closest('.gate'); if(g.dataset.locked==='true') return;
+    g.querySelector('.gate-content').hidden=false; gb.hidden=true; return; }
+  var sb=e.target.closest('.seg-btn');
+  if(sb){ var t=sb.dataset.toggle, v=sb.dataset.val;
+    document.body.dataset[t]=v;
+    sb.parentElement.querySelectorAll('.seg-btn').forEach(function(b){ b.classList.toggle('active', b===sb); });
+    return; }
+});
+document.querySelectorAll('textarea').forEach(function(ta){ ta.addEventListener('input', refreshGates); });
+refreshGates();
+</script></body></html>

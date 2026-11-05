@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="An interactive reference atlas for psychological feedback loops, habit cycles, and motivation models."
+    >
+    <title>Loop Atlas</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23d7ff45'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2311110f' stroke-width='4'/%3E%3Cpath d='M20 32h24M32 20v24' stroke='%2311110f' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Loop Atlas home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="16"></circle>
+            <path d="M12 20h16M20 12v16"></path>
+            <path d="M28 14c4 5 3 13-2 17"></path>
+          </svg>
+        </span>
+        <span>Loop Atlas</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#map">Map</a>
+        <a href="#library">Library</a>
+        <a href="#examples">Examples</a>
+        <a href="#matrix">Levers</a>
+        <a href="#integration">Integration</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="atlas-shell" id="map" aria-labelledby="page-title">
+        <div class="intro-panel">
+          <p class="eyebrow">Psychology reference system</p>
+          <h1 id="page-title">Feedback loops for why people start, stop, repeat, and change.</h1>
+          <p class="lede">
+            A clean map of motivation models, habit cycles, and regulatory systems, arranged for pattern
+            recognition rather than memorization.
+          </p>
+
+          <form class="search-card" role="search">
+            <label for="searchInput">Search the atlas</label>
+            <div class="search-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m16 16 4 4"></path>
+              </svg>
+              <input id="searchInput" type="search" autocomplete="off" placeholder="cue, autonomy, reward, coping">
+            </div>
+          </form>
+
+          <div class="filter-wrap" aria-label="Model groups">
+            <button class="filter-chip is-active" type="button" data-filter="all">
+              <span class="chip-dot all"></span>
+              All systems
+            </button>
+            <button class="filter-chip" type="button" data-filter="Habit">
+              <span class="chip-dot habit"></span>
+              Habit
+            </button>
+            <button class="filter-chip" type="button" data-filter="Motivation">
+              <span class="chip-dot motivation"></span>
+              Motivation
+            </button>
+            <button class="filter-chip" type="button" data-filter="Feedback">
+              <span class="chip-dot feedback"></span>
+              Feedback
+            </button>
+            <button class="filter-chip" type="button" data-filter="Cognition">
+              <span class="chip-dot cognition"></span>
+              Cognition
+            </button>
+            <button class="filter-chip" type="button" data-filter="Social">
+              <span class="chip-dot social"></span>
+              Social
+            </button>
+          </div>
+
+          <div class="stat-strip" aria-label="Atlas statistics">
+            <div>
+              <strong id="visibleCount">14</strong>
+              <span>models</span>
+            </div>
+            <div>
+              <strong>05</strong>
+              <span>families</span>
+            </div>
+            <div>
+              <strong>54</strong>
+              <span>levers</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="map-board" aria-label="Interactive model map">
+          <div class="board-toolbar">
+            <div>
+              <p class="tiny-label">System map</p>
+              <h2>Shared mechanisms</h2>
+            </div>
+            <div class="icon-actions" aria-label="Map actions">
+              <button class="icon-button" id="traceButton" type="button" aria-label="Trace related models" data-tooltip="Trace related models">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12h9"></path>
+                  <path d="m10 8 4 4-4 4"></path>
+                  <path d="M20 5v5a6 6 0 0 1-6 6h-1"></path>
+                </svg>
+              </button>
+              <button class="icon-button" id="resetButton" type="button" aria-label="Reset selection" data-tooltip="Reset selection">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                  <path d="M3 4v6h6"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="map-stage">
+            <svg id="loopMap" class="loop-map" viewBox="0 0 1120 760" role="img" aria-label="Clickable map of psychological models">
+              <defs>
+                <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#141414" flood-opacity=".12"></feDropShadow>
+                </filter>
+              </defs>
+              <g id="edgeLayer"></g>
+              <g id="nodeLayer"></g>
+            </svg>
+          </div>
+
+          <aside class="detail-panel" aria-live="polite">
+            <div class="detail-kicker">
+              <span id="detailGroupDot" class="group-dot"></span>
+              <span id="detailGroup">Habit</span>
+            </div>
+            <h2 id="detailTitle">Habit Loop</h2>
+            <p id="detailSummary"></p>
+            <div class="detail-meta" id="detailMeta" aria-label="Model metadata"></div>
+            <div class="loop-chain" id="detailChain" aria-label="Loop components"></div>
+
+            <div class="lens-selector" role="tablist" aria-label="Analysis Lens">
+              <button class="lens-btn is-active" id="lens-psych" type="button" role="tab" aria-selected="true" aria-controls="practice-stack">Psychology</button>
+              <button class="lens-btn" id="lens-theo" type="button" role="tab" aria-selected="false" aria-controls="integration-stack">Theology &amp; Neuro</button>
+            </div>
+
+            <div class="integration-stack" id="integration-stack" style="display: none;">
+              <div class="practice-card is-primary" style="border-left-color: var(--coral);">
+                <span class="mini-heading">Spiritual Telos</span>
+                <p id="detailTelos" style="font-weight: 600;"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Biological Substrate</span>
+                <p id="detailSubstrate" style="font-family: var(--mono); font-size: 0.85rem; color: var(--muted);"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Theological Integration</span>
+                <p id="detailTheology"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Contemplative Practice</span>
+                <p id="detailPractice" style="border-left-color: var(--mint);"></p>
+              </div>
+            </div>
+
+            <div class="practice-stack" id="practice-stack" data-group="Habit">
+              <div class="practice-card is-primary">
+                <span class="mini-heading">Best for</span>
+                <p id="detailBestFor"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Practical example</span>
+                <p id="detailSituation"></p>
+                <p id="detailExampleLoop"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">First move</span>
+                <p id="detailFirstMove"></p>
+              </div>
+            </div>
+            <div class="detail-grid">
+              <div>
+                <span class="mini-heading">Intervention levers</span>
+                <ul id="detailLevers"></ul>
+              </div>
+              <div>
+                <span class="mini-heading">Use with care</span>
+                <p id="detailCaution"></p>
+              </div>
+            </div>
+            <div class="related-panel">
+              <span class="mini-heading">Related models</span>
+              <div id="detailRelated" class="related-list"></div>
+            </div>
+          </aside>
+        </section>
+      </section>
+
+      <section class="library-section" id="library" aria-labelledby="library-title">
+        <div class="section-heading">
+          <p class="eyebrow">Reference library</p>
+          <h2 id="library-title">Models as lenses, not laws.</h2>
+          <p>
+            Each card isolates the smallest useful loop: input, interpretation, action, feedback, and
+            the environmental conditions that keep the cycle alive.
+          </p>
+        </div>
+        <div class="model-grid" id="modelGrid"></div>
+      </section>
+
+      <section class="examples-section" id="examples" aria-labelledby="examples-title">
+        <div class="section-heading">
+          <p class="eyebrow">Applied examples</p>
+          <h2 id="examples-title">Translate a messy loop into a first move.</h2>
+          <p>
+            Pick a common pattern to see which models clarify the loop, where the cycle is being
+            reinforced, and what to try before inventing a whole program.
+          </p>
+        </div>
+        <div class="scenario-layout">
+          <div class="scenario-rail" id="scenarioRail" aria-label="Example scenarios"></div>
+          <article class="scenario-panel" id="scenarioPanel" aria-live="polite">
+            <div>
+              <p class="tiny-label">Scenario</p>
+              <h3 id="scenarioTitle"></h3>
+              <p id="scenarioSetup"></p>
+            </div>
+            <div class="scenario-flow" id="scenarioFlow" aria-label="Scenario loop"></div>
+            <div class="scenario-columns">
+              <div>
+                <span class="mini-heading">Useful lenses</span>
+                <div class="scenario-models" id="scenarioModels"></div>
+              </div>
+              <div>
+                <span class="mini-heading">Try next</span>
+                <ul id="scenarioMoves"></ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="matrix-section" id="matrix" aria-labelledby="matrix-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Intervention matrix</p>
+          <h2 id="matrix-title">Choose the lever that matches the loop.</h2>
+        </div>
+        <div class="lever-matrix" id="leverMatrix"></div>
+      </section>
+
+<!-- INTEGRATION: THEOLOGY & NEUROBIOLOGY -->
+<section class="move integration" id="integration">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Integration &middot; Theology &amp; Neurobiology</div>
+      <h2>The biology of <span class="glyph">stillness and desire.</span></h2>
+      <p class="lede">
+        Our minds are not just thinking engines, and our bodies are not just survival machines. 
+        The Christian calling to attention, habit transformation, purpose, and rest maps directly to our neurobiological architecture. 
+        <b>Contemplation is a physical discipline.</b>
+      </p>
+    </div>
+
+    <!-- TABS NAVIGATION -->
+    <div class="tabs-nav" role="tablist" aria-label="Integration Lenses">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-attention" id="btn-attention">Attention &amp; Focus</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-habit" id="btn-habit">Habit &amp; Liturgy</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-purpose" id="btn-purpose">Purpose &amp; Seeking</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-rest" id="btn-rest">Sabbath &amp; Play</button>
+    </div>
+
+    <!-- TAB CONTENTS -->
+    <div class="tab-contents">
+      <!-- TAB 1: ATTENTION -->
+      <div class="tab-content active" id="tab-attention" role="tabpanel" aria-labelledby="btn-attention">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Centering Prayer &amp; Sacred Words:</strong> Sitting in silent surrender, using a single word (e.g., <em>Abba</em>, <em>Silence</em>, <em>Jesus</em>) as a simple anchor. When thoughts arise, the practitioner doesn't engage them, but gently returns to the word to re-aim the will.</p>
+            <span class="cite">The Cloud of Unknowing (14th Century)</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>DMN vs. TPN Activation:</strong> The Default Mode Network (mPFC, PCC, precuneus) handles self-talk and anxiety. Contemplative prayer deactivates these nodes while functional coupling increases between the prefrontal attention centers (dlPFC) and the PCC, training automated, non-judgmental executive monitoring.</p>
+            <span class="cite">Brewer et al., PNAS (2011)</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Apophatic Cloud:</strong> The hyperactive Default Mode Network is the neurobiological signature of the egoic "narrative self." Silent apophatic contemplation acts as a physiological "cloud of forgetting," quieting self-referential loops to open space for union with God.</p>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE MODEL: ATTENTIONAL HINGE -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Interactive Model: The Attentional Hinge</h4>
+            <p>Click the toggles to see how silent centering prayer shifts neural activity from the rumination loops of the Default Mode Network (DMN) to the receptive Task-Positive Network (TPN).</p>
+          </div>
+          <div class="visual-attention-layout">
+            <div class="visual-hinge-controls">
+              <button class="hinge-btn active" id="hinge-dmn" type="button">Active Rumination (DMN)</button>
+              <button class="hinge-btn" id="hinge-tpn" type="button">Still Contemplation (TPN)</button>
+            </div>
+            <div class="visual-hinge-svg-container">
+              <svg viewBox="0 0 500 240" class="hinge-svg">
+                <path d="M50 120 C50 48, 150 32, 250 32 C350 32, 450 48, 450 120 C450 192, 380 208, 300 208 C260 208, 240 224, 200 224 C150 224, 50 192, 50 120 Z" class="brain-contour" fill="none" stroke="var(--hair-2)" stroke-width="2" stroke-dasharray="4 4" />
+                
+                <path d="M120 100 L380 120" id="path-dmn" class="connection-line active" stroke="var(--ember-dim)" stroke-width="3" />
+                <path d="M260 80 L350 160" id="path-tpn" class="connection-line" stroke="var(--cream-dim)" stroke-width="3" stroke-dasharray="5 5" />
+                
+                <g class="brain-node active" id="node-mpfc">
+                  <circle cx="120" cy="100" r="16" class="node-outer" fill="var(--raise)" stroke="var(--ember)" stroke-width="2" />
+                  <circle cx="120" cy="100" r="6" class="node-inner" fill="var(--ember)" />
+                  <text x="120" y="132" class="node-txt" text-anchor="middle">Medial PFC</text>
+                </g>
+                <g class="brain-node active" id="node-pcc">
+                  <circle cx="380" cy="120" r="16" class="node-outer" fill="var(--raise)" stroke="var(--ember)" stroke-width="2" />
+                  <circle cx="380" cy="120" r="6" class="node-inner" fill="var(--ember)" />
+                  <text x="380" y="152" class="node-txt" text-anchor="middle">PCC / Precuneus</text>
+                </g>
+                
+                <g class="brain-node tpn-node" id="node-dlpfc">
+                  <circle cx="260" cy="80" r="16" class="node-outer" fill="var(--raise)" stroke="var(--hair-2)" stroke-width="2" />
+                  <circle cx="260" cy="80" r="6" class="node-inner" fill="var(--cream-dim)" />
+                  <text x="260" y="60" class="node-txt" text-anchor="middle">Dorsolateral PFC</text>
+                </g>
+                <g class="brain-node tpn-node" id="node-insula">
+                  <circle cx="350" cy="160" r="16" class="node-outer" fill="var(--raise)" stroke="var(--hair-2)" stroke-width="2" />
+                  <circle cx="350" cy="160" r="6" class="node-inner" fill="var(--cream-dim)" />
+                  <text x="350" y="192" class="node-txt" text-anchor="middle">Insula</text>
+                </g>
+              </svg>
+            </div>
+            <div class="visual-hinge-description" id="hinge-desc">
+              <strong>Narrative Rumination Loop Active:</strong> Energy moves continuously between the Medial Prefrontal Cortex (mPFC) and the Posterior Cingulate Cortex (PCC). The brain compiles histories, anticipates threats, and maintains self-defensive stories, generating cortisol.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: HABIT -->
+      <div class="tab-content" id="tab-habit" role="tabpanel" aria-labelledby="btn-habit">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Structured Liturgy &amp; Physical Postures:</strong> The physical rhythms of daily offices (Morning and Evening prayers, kneeling, chanting, breathing) convert spiritual intentions into repetitive muscular reflexes, bypassing cognitive hesitation.</p>
+            <span class="cite">The Daily Office (Traditional Rhythms)</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>The Striatum &amp; Synaptic Myelination:</strong> Repeating an embodied sequence automates the action in the Basal Ganglia (dorsal striatum), grouping complex routines into single neurological commands. Repeated firing initiates myelin wrapping of synapses, speeding communication 100x.</p>
+            <span class="cite">Hebb's Law &amp; Striatal Chunking</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Liturgical Animal:</strong> We are shaped by whatever routines we physically practice. Traditional liturgies of faith act as physical counter-strategies, transferring theological truths from the fragile conscious prefrontal cortex into automatic striatal instincts.</p>
+            <span class="cite">James K.A. Smith, Desiring the Kingdom</span>
+          </div>
+        </div>
+
+        <!-- MODEL 2: LITURGICAL VS COUNTERFEIT LOOP -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Comparison: Cultural Hijacking vs. Liturgical Redirection</h4>
+            <p>Compare how passive cultural loops hijack our striatal cue-routine-reward systems, and how active faith liturgies build somatic stability.</p>
+          </div>
+          <div class="visual-habit-layout">
+            <div class="habit-loop-box hijacked">
+              <h5>The Compulsive Loop (Hijacked)</h5>
+              <div class="loop-graphic-box">
+                <svg viewBox="0 0 200 120" class="mini-loop-svg">
+                  <path d="M 30,60 A 40,40 0 1,1 170,60 A 40,40 0 1,1 30,60" fill="none" stroke="var(--ember-dim)" stroke-width="2" stroke-dasharray="3 3"/>
+                  <circle cx="100" cy="20" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="140" cy="60" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="100" cy="100" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="60" cy="60" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <text x="100" y="24" text-anchor="middle" font-size="8" fill="var(--cream)">CUE</text>
+                  <text x="140" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">ROUTINE</text>
+                  <text x="100" y="104" text-anchor="middle" font-size="8" fill="var(--cream)">REWARD</text>
+                  <text x="60" y="64" text-anchor="middle" font-size="7" fill="var(--ember)">HEDONIC</text>
+                </svg>
+              </div>
+              <ul class="habit-steps-list">
+                <li><strong>Cue:</strong> Anxiety, boredom, or a notification chime.</li>
+                <li><strong>Routine:</strong> Compulsive scrolling of feed (automatic).</li>
+                <li><strong>Reward:</strong> Anticipatory dopamine surge, quickly dropping.</li>
+                <li><strong>Long-Term:</strong> Receptor down-regulation, increasing baseline anxiety.</li>
+              </ul>
+            </div>
+            
+            <div class="habit-loop-box liturgical">
+              <h5>The Sanctifying Loop (Liturgical)</h5>
+              <div class="loop-graphic-box">
+                <svg viewBox="0 0 200 120" class="mini-loop-svg">
+                  <path d="M 30,60 A 40,40 0 1,1 170,60 A 40,40 0 1,1 30,60" fill="none" stroke="var(--cream-dim)" stroke-width="2" />
+                  <circle cx="100" cy="20" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="140" cy="60" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="100" cy="100" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="60" cy="60" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <text x="100" y="24" text-anchor="middle" font-size="8" fill="var(--cream)">CUE</text>
+                  <text x="140" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">ROUTINE</text>
+                  <text x="100" y="104" text-anchor="middle" font-size="8" fill="var(--cream)">REWARD</text>
+                  <text x="60" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">LTP</text>
+                </svg>
+              </div>
+              <ul class="habit-steps-list">
+                <li><strong>Cue:</strong> Rising sun, hourly chime, or somatic stress.</li>
+                <li><strong>Routine:</strong> Posture alignment, litany recital, breathing.</li>
+                <li><strong>Reward:</strong> Serotonin release, physical calming, safety.</li>
+                <li><strong>Long-Term:</strong> Long-Term Potentiation (LTP) of peaceful reflexes.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PURPOSE -->
+      <div class="tab-content" id="tab-purpose" role="tabpanel" aria-labelledby="btn-purpose">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Vocation &amp; Ignatian Discernment:</strong> Reviewing choices using rules for the discernment of spirits. Cultivating "spiritual consolation" (deep joy and peace) rather than "spiritual desolation" (fleeting validation followed by anxiety).</p>
+            <span class="cite">St. Ignatius of Loyola, Spiritual Exercises</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>Dopaminergic SEEKING vs. Serotonin:</strong> The mesolimbic SEEKING system (VTA -> NAc) fuels the chase, not satisfaction. Reaching temporary goals results in dopamine drops (hedonic treadmill). Serotonergic tracks supply deep relational safety, balancing seeking with contentment.</p>
+            <span class="cite">Panksepp, Affective Neuroscience (1998)</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Restless Heart &amp; Theosis:</strong> The brain adapts structurally to all finite rewards, making permanent physical satisfaction impossible. The dopaminergic seeking pathway is built for the infinite. Vocation and <em>theosis</em> (union with God) satisfy this infinite seeking drive.</p>
+            <span class="cite">Augustine of Hippo, Confessions</span>
+          </div>
+        </div>
+
+        <!-- MODEL 3: ALIGNMENT TABLE -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Neurochemical Alignment Matrix</h4>
+            <p>Hover over each row to highlight the deep physiological and theological linkages between neural systems, drivers, and practices.</p>
+          </div>
+          <div class="integration-table-wrapper">
+            <table class="neuro-table">
+              <thead>
+                <tr>
+                  <th>Neural Structure</th>
+                  <th>Chemical Driver</th>
+                  <th>Theological Concept</th>
+                  <th>Contemplative Practice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-row">
+                  <td><strong>Default Mode Network</strong><br><span class="tbl-subtext">mPFC, PCC, precuneus</span></td>
+                  <td>Glutamate / baseline activity</td>
+                  <td>The Egoic Narrative / "The Old Man"</td>
+                  <td>Apophatic Silent Centering Prayer</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Basal Ganglia</strong><br><span class="tbl-subtext">Dorsal striatum</span></td>
+                  <td>Dopamine (anticipatory cue)</td>
+                  <td>Liturgical Love (Augustine's <em>Pondus</em>)</td>
+                  <td>Embodied liturgy, kneeling, Daily Office</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Mesolimbic Pathway</strong><br><span class="tbl-subtext">VTA, Nucleus Accumbens</span></td>
+                  <td>Dopamine (SEEKING system)</td>
+                  <td>The Restless Heart / Transcendent Drive</td>
+                  <td>Vocation alignment &amp; Ignatian Discernment</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Mammalian PLAY Circuit</strong><br><span class="tbl-subtext">PAG, Thalamus</span></td>
+                  <td>Endorphins &amp; Oxytocin</td>
+                  <td>Sabbath Sanctuary / <em>Deus Ludens</em></td>
+                  <td>Sabbath ceasing, communal feasts, play</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: REST -->
+      <div class="tab-content" id="tab-rest" role="tabpanel" aria-labelledby="btn-rest">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Sabbath Keeping &amp; Eutrapelia:</strong> Actively halting commerce, tracking, and striving for a full 24 hours. Cultivating the virtue of <em>eutrapelia</em> (graceful, lighthearted play), reminding the mind that creation is a gift to be enjoyed, not exploited.</p>
+            <span class="cite">The Sabbath Commandment · Eutrapelia Virtue</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>Subcortical PLAY Circuits &amp; BDNF:</strong> Perceived safety deactivates the threat response (fear/rage), allowing subcortical play pathways to fire. Play releases endorphins, decreases cortisol, and releases BDNF in the prefrontal cortex, promoting brain plasticity.</p>
+            <span class="cite">Jaak Panksepp, Affective Neuroscience</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Sanctuary in Time:</strong> Sabbath is the liturgical activation of safety circuits. By halting survival efforts, we establish a weekly sanctuary where the brain moves from threat management to relational joy. Creation is experienced as play, not raw material.</p>
+            <span class="cite">Abraham Joshua Heschel, The Sabbath</span>
+          </div>
+        </div>
+
+        <!-- MODEL 4: PLAY SPECTURM SLIDER -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Interactive Simulator: The Sabbath / Play Spectrum</h4>
+            <p>Drag the slider below to shift the nervous system from the threat and striving of weekday survival to the deep neurological rest of Sabbath safety.</p>
+          </div>
+          <div class="visual-slider-layout" id="slider-card-box">
+            <div class="slider-control-row">
+              <span class="slider-side-lbl threat">Threat &amp; Striving</span>
+              <input type="range" min="0" max="100" value="0" class="spectrum-range-slider" id="spectrum-slider" aria-label="Sabbath Rest Slider">
+              <span class="slider-side-lbl rest">Sabbath Delight</span>
+            </div>
+            
+            <div class="slider-metrics-grid">
+              <div class="metric-card" id="metric-neuro">
+                <span class="mini-heading">Nervous State</span>
+                <p class="metric-val" id="val-state">Hyperactive Threat Loop</p>
+                <p class="metric-sub" id="val-brain">High Amygdala &amp; Cortisol levels</p>
+              </div>
+              <div class="metric-card" id="metric-focus">
+                <span class="mini-heading">Primary Focus</span>
+                <p class="metric-val" id="val-focus">Control &amp; Accumulation</p>
+                <p class="metric-sub" id="val-drive">Dopamine seeking / hedonic chasing</p>
+              </div>
+              <div class="metric-card" id="metric-outcome">
+                <span class="mini-heading">Neurological Outcome</span>
+                <p class="metric-val" id="val-outcome">Chronic Stiffening</p>
+                <p class="metric-sub" id="val-myelin">Reinforcing fear-based superhighways</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section class="sources-section" aria-labelledby="sources-title">
+        <div>
+          <p class="eyebrow">Selected sources</p>
+          <h2 id="sources-title">Grounded in established frameworks.</h2>
+        </div>
+        <ul>
+          <li><a href="https://selfdeterminationtheory.org/theory/">Self-Determination Theory overview</a></li>
+          <li><a href="https://www.behaviourchangewheel.com/about-wheel">Behaviour Change Wheel and COM-B overview</a></li>
+          <li><a href="https://www.behaviormodel.org/">Fogg Behavior Model</a></li>
+          <li><a href="https://doi.org/10.1037/0033-295X.84.2.191">Self-efficacy and expectancy foundations</a></li>
+          <li><a href="https://doi.org/10.1177/001872675400700202">Social Comparison Theory</a></li>
+          <li><a href="https://doi.org/10.1037/0022-3514.68.3.518">Sociometer Theory</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <template id="modelCardTemplate">
+      <article class="model-card">
+        <button class="card-hit" type="button">
+          <span class="card-icon"></span>
+          <span class="card-group"></span>
+          <strong></strong>
+          <span class="card-summary"></span>
+          <span class="card-tags"></span>
+        </button>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
