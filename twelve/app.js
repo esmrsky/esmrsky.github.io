@@ -319,8 +319,8 @@
     headerVersionMenu.classList.toggle('is-closing', !shouldOpen);
     headerVersionAnimation = options.animate(
       shouldOpen
-        ? [{ opacity: 0, transform: 'translateY(-7px) scale(.97)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }]
-        : [{ opacity: 1, transform: 'translateY(0) scale(1)' }, { opacity: 0, transform: 'translateY(-6px) scale(.98)' }],
+        ? [{ opacity: 0 }, { opacity: 1 }]
+        : [{ opacity: 1 }, { opacity: 0 }],
       { duration: shouldOpen ? 210 : 160, easing: shouldOpen ? 'cubic-bezier(.2,.8,.2,1)' : 'cubic-bezier(.4,0,1,1)', fill: 'both' }
     );
     headerVersionAnimation.onfinish = () => {
@@ -1359,11 +1359,14 @@
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
     targets.forEach(target => {
       target.classList.add('reveal-ready');
       observer.observe(target);
     });
+    // A percentage threshold never fires on a block taller than the screen, and a stalled
+    // observer must not leave text at opacity 0: everything shows by 2s.
+    window.setTimeout(() => targets.forEach(target => target.classList.add('is-visible')), 2000);
   }
 
   function openProfile(id) {
@@ -1386,8 +1389,8 @@
     dialog.querySelector('.dialog-shell').scrollTop = 0;
     if (!prefersReducedMotion() && typeof profileBody.animate === 'function') {
       profileBody.animate(
-        [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }],
-        { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' }
+        [{ opacity: 0 }, { opacity: 1 }],
+        { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' }
       );
     }
     document.body.style.overflow = 'hidden';
@@ -1463,7 +1466,7 @@
     const regions = cards.flatMap(card => Array.from(card.querySelectorAll('.card-mode, .card-chips')));
     regions.forEach(region => region.getAnimations().forEach(animation => animation.cancel()));
     await Promise.all(regions.map(region => region.animate(
-      [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-7px)' }],
+      [{ opacity: 1 }, { opacity: 0 }],
       { duration: 130, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' }
     ).finished.catch(() => {})));
     if (token !== viewSwitchToken) return;
@@ -1474,7 +1477,7 @@
     });
     window.scrollTo(0, preservedScrollY);
     regions.forEach((region, index) => region.animate(
-      [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }],
+      [{ opacity: 0 }, { opacity: 1 }],
       { duration: 260, delay: Math.min(index % 6, 3) * 18, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }
     ));
   }

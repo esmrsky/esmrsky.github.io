@@ -2744,10 +2744,9 @@ h1 em {
   box-shadow: 0 22px 60px var(--shadow-strong, var(--shadow));
   opacity: 0;
   pointer-events: none;
-  transform: translateY(5px) scale(.985);
-  transform-origin: bottom center;
   backdrop-filter: blur(20px);
-  transition: opacity 150ms ease, transform 190ms var(--ease-out);
+  /* fades in place: nothing readable slides */
+  transition: opacity 180ms var(--ease-out);
 }
 
 .verse-popover.below {
@@ -2757,7 +2756,6 @@ h1 em {
 .verse-popover.is-visible {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0) scale(1);
 }
 
 .verse-popover-topline {
@@ -3182,8 +3180,7 @@ h1 em {
 .is-collapsing > .case-content,
 .is-collapsing > .deep-copy {
   opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 180ms ease, transform 220ms var(--ease-standard);
+  transition: opacity 180ms var(--ease-standard);
 }
 
 .profile-drawer.is-collapsing > summary::after,
@@ -3692,6 +3689,17 @@ summary:focus-visible {
     gap: 5px;
   }
 }
+
+/* The 44px floor (November 5, 2026). Reference chips keep their size and gain an
+   invisible hit area instead, so the lines they sit in do not move. */
+.header-version-options button,
+.view-switch button,
+.axis-tribes button { min-height: 44px; }
+.theme-toggle { min-width: 44px; min-height: 44px; }
+.brand,
+.footer-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.reference-badge { position: relative; }
+.reference-badge::after { content: ""; position: absolute; inset: -9px -2px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
