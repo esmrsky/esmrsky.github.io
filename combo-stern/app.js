@@ -1,3 +1,14 @@
+// Russian: on /combo-stern/ru/ (data-lang="ru") ru-data.js has already swapped the data tables
+// and defined CS_RU. TXT(key, english, ...args) returns the Russian string when there is one.
+const IS_RU = document.documentElement.getAttribute("data-lang") === "ru";
+const CS_RU = window.CS_RU || { ui: {} };
+function TXT(key, en, ...args) {
+  if (!IS_RU) return en;
+  const v = CS_RU.ui[key];
+  if (v === undefined) { console.warn("combo-stern: no Russian for", key); return en; }
+  return typeof v === "function" ? v(...args) : v;
+}
+
 // ============================================================
 // APP ENTRY POINT & STATE MANAGEMENT
 // ============================================================
@@ -102,7 +113,7 @@ function initTheme() {
     localStorage.setItem("theme", newTheme);
     updateThemeIcon(newTheme);
     
-    showToast(`Switched to ${newTheme} mode`, "success");
+    showToast(TXT("themeToast", `Switched to ${newTheme} mode`, newTheme), "success");
     
     // Refresh canvas colors on theme change if visible
     if (document.getElementById("tab-simulator").classList.contains("active")) {
@@ -204,6 +215,8 @@ const SLOTS_DATA = {
   }
 };
 
+if (IS_RU) CS_RU.merge(SLOTS_DATA, CS_RU.slots);
+
 function initSlots() {
   const slotItems = document.querySelectorAll(".slot-item");
   const displayTitle = document.getElementById("slot-display-title");
@@ -256,23 +269,23 @@ function initAxisMap() {
       </div>
       <div class="axis-card-body">
         <div class="axis-card-item">
-          <span class="axis-card-lbl">The Cue</span>
+          <span class="axis-card-lbl">${TXT("cue", "The Cue")}</span>
           <p class="axis-card-val">${data.cue}</p>
         </div>
         <div class="axis-card-item">
-          <span class="axis-card-lbl">Counterfeit Routine</span>
+          <span class="axis-card-lbl">${TXT("counterfeitRoutine", "Counterfeit Routine")}</span>
           <p class="axis-card-val">${data.counterfeit}</p>
         </div>
         <div class="axis-card-item">
-          <span class="axis-card-lbl">Stagnant Leak</span>
+          <span class="axis-card-lbl">${TXT("stagnantLeak", "Stagnant Leak")}</span>
           <p class="axis-card-val">${data.leak}</p>
         </div>
         <div class="axis-card-item">
-          <span class="axis-card-lbl">Self-Accusation Shame</span>
+          <span class="axis-card-lbl">${TXT("selfAccusationShame", "Self-Accusation Shame")}</span>
           <p class="axis-card-val">${data.shame}</p>
         </div>
         <div class="axis-card-item exit">
-          <span class="axis-card-lbl">The Grace Exit</span>
+          <span class="axis-card-lbl">${TXT("graceExit", "The Grace Exit")}</span>
           <p class="axis-card-val highlight">${data.exit}</p>
         </div>
       </div>
@@ -340,23 +353,23 @@ function initCounterfeits() {
       </div>
       <div class="cf-full-body">
         <div class="cf-full-block">
-          <span class="cf-full-lbl">The Cue</span>
+          <span class="cf-full-lbl">${TXT("cue", "The Cue")}</span>
           <p class="cf-full-val">${trap.cue}</p>
         </div>
         <div class="cf-full-block">
-          <span class="cf-full-lbl">Counterfeit Routine</span>
+          <span class="cf-full-lbl">${TXT("counterfeitRoutine", "Counterfeit Routine")}</span>
           <p class="cf-full-val">${trap.routine}</p>
         </div>
         <div class="cf-full-block">
-          <span class="cf-full-lbl">Immediate Reward</span>
+          <span class="cf-full-lbl">${TXT("immediateReward", "Immediate Reward")}</span>
           <p class="cf-full-val">${trap.reward}</p>
         </div>
         <div class="cf-full-block warning">
-          <span class="cf-full-lbl">How it Creates Dependence</span>
+          <span class="cf-full-lbl">${TXT("howDependence", "How it Creates Dependence")}</span>
           <p class="cf-full-val highlight-stress">${trap.dependency}</p>
         </div>
         <div class="cf-full-block success">
-          <span class="cf-full-lbl">Displacement Strategy (Grace Exit)</span>
+          <span class="cf-full-lbl">${TXT("displacementStrategy", "Displacement Strategy (Grace Exit)")}</span>
           <p class="cf-full-val highlight-grace">${trap.displacement}</p>
         </div>
       </div>
@@ -413,7 +426,7 @@ function initSimulator() {
   // Decoupler buttons
   document.getElementById("btn-inject-striving").addEventListener("click", () => {
     if (!isRunning) {
-      showToast("Start the engine first to inject striving actions.", "error");
+      showToast(TXT("startFirstStriving", "Start the engine first to inject striving actions."), "error");
       return;
     }
     const profileKey = profileSelect.value;
@@ -425,14 +438,14 @@ function initSimulator() {
     S = Math.max(0, Math.min(100, S + profile.strivingDelta.S));
     SH = Math.max(0, Math.min(100, SH + profile.strivingDelta.SH));
 
-    logTerminal(`⚡ [Striving Action] ${profile.strivingMsg}`, "text-amber-500");
+    logTerminal(`⚡ ${TXT("strivingTag", "[Striving Action]")} ${profile.strivingMsg}`, "text-amber-500");
     updateSimUI();
     drawChart();
   });
 
   document.getElementById("btn-apply-exit").addEventListener("click", () => {
     if (!isRunning) {
-      showToast("Start the engine first to apply a Grace exit.", "error");
+      showToast(TXT("startFirstExit", "Start the engine first to apply a Grace exit."), "error");
       return;
     }
     const profileKey = profileSelect.value;
@@ -447,7 +460,7 @@ function initSimulator() {
     // Switch active paradigm to Grace
     setSimParadigm("grace");
 
-    logTerminal(`🌱 [Grace Exit] ${profile.exitMsg}`, "text-emerald-500");
+    logTerminal(`🌱 ${TXT("exitTag", "[Grace Exit]")} ${profile.exitMsg}`, "text-emerald-500");
     updateSimUI();
     drawChart();
   });
@@ -464,7 +477,7 @@ function selectLoopProfile(profileKey) {
   S = profile.initial.S;
   SH = profile.initial.SH;
 
-  document.getElementById("sim-profile-desc").innerHTML = `<strong>Starting metrics:</strong> Willpower: ${W}, Stress: ${S}, Shame: ${SH}.`;
+  document.getElementById("sim-profile-desc").innerHTML = TXT("startingMetrics", `<strong>Starting metrics:</strong> Willpower: ${W}, Stress: ${S}, Shame: ${SH}.`, W, S, SH);
 
   // Auto-fill sliders
   document.getElementById("param-leak").value = profile.params.leak;
@@ -475,7 +488,7 @@ function selectLoopProfile(profileKey) {
   updateSimUI();
   
   // Reset logs
-  document.getElementById("sim-terminal-logs").innerHTML = `<div class="mono text-stone-500" style="font-size:0.72rem;"><span style="color:var(--ink-faint)">[System]</span> Selected profile: ${profile.title}. Ready to run.</div>`;
+  document.getElementById("sim-terminal-logs").innerHTML = `<div class="mono text-stone-500" style="font-size:0.72rem;"><span style="color:var(--ink-faint)">${TXT("systemTag", "[System]")}</span> ${TXT("selectedProfile", `Selected profile: ${profile.title}. Ready to run.`, profile.title)}</div>`;
   setSimParadigm("works");
 
   dataPoints = [];
@@ -527,14 +540,14 @@ function setSimParadigm(paradigm) {
     btnWorks.classList.add("active");
     btnGrace.classList.remove("active");
     tglWrap.classList.remove("grace");
-    desc.innerHTML = "<strong>Works Paradigm:</strong> Worth must be generated. Willpower drains dry under performance anxiety and shame.";
-    logTerminal("⚠️ Loaded Works mode. Striving drain active.", "text-amber-500");
+    desc.innerHTML = TXT("worksDesc", "<strong>Works Paradigm:</strong> Worth must be generated. Willpower drains dry under performance anxiety and shame.");
+    logTerminal(TXT("logWorks", "⚠️ Loaded Works mode. Striving drain active."), "text-amber-500");
   } else {
     btnGrace.classList.add("active");
     btnWorks.classList.remove("active");
     tglWrap.classList.add("grace");
-    desc.innerHTML = "<strong>Grace Paradigm:</strong> Worth is unconditional. Recovery begins as the self stops out-muscling the self.";
-    logTerminal("🛡️ Loaded Grace mode. Recovery curves initialized.", "text-emerald-500");
+    desc.innerHTML = TXT("graceDesc", "<strong>Grace Paradigm:</strong> Worth is unconditional. Recovery begins as the self stops out-muscling the self.");
+    logTerminal(TXT("logGrace", "🛡️ Loaded Grace mode. Recovery curves initialized."), "text-emerald-500");
   }
   updateSimUI();
 }
@@ -545,7 +558,7 @@ function startSimulation() {
   document.getElementById("sim-btn-start").disabled = true;
   document.getElementById("sim-btn-pause").disabled = false;
   
-  logTerminal("🚀 Simulator engine running.", "text-stone-200");
+  logTerminal(TXT("logRun", "🚀 Simulator engine running."), "text-stone-200");
 
   simInterval = setInterval(() => {
     if (activeParadigm === "works") {
@@ -559,7 +572,7 @@ function startSimulation() {
         SH = Math.min(100, SH + 1.2 * F_shame);
         S = Math.min(100, S + 0.9 * F_shame); // Shame raises stress
         if (Math.random() < 0.15) {
-          logTerminal("💥 Willpower critical! Self-condemnation voice active.", "text-fuchsia-400");
+          logTerminal(TXT("logCritical", "💥 Willpower critical! Self-condemnation voice active."), "text-fuchsia-400");
         }
       }
     } else {
@@ -585,7 +598,7 @@ function pauseSimulation() {
   clearInterval(simInterval);
   document.getElementById("sim-btn-start").disabled = false;
   document.getElementById("sim-btn-pause").disabled = true;
-  logTerminal("⏸️ Simulator engine paused.", "text-stone-500");
+  logTerminal(TXT("logPause", "⏸️ Simulator engine paused."), "text-stone-500");
 }
 
 function resetSimulation() {
@@ -670,19 +683,19 @@ function initArchetypes() {
       </div>
       <div class="ap-full-body">
         <div class="ap-full-block calling">
-          <span class="ap-full-lbl">Spiritual Calling</span>
+          <span class="ap-full-lbl">${TXT("spiritualCalling", "Spiritual Calling")}</span>
           <p class="ap-full-val">${data.calling}</p>
         </div>
         <div class="ap-full-block inverse">
-          <span class="ap-full-lbl">Inverse Frequency</span>
+          <span class="ap-full-lbl">${TXT("inverseFrequency", "Inverse Frequency")}</span>
           <p class="ap-full-val">${data.inverse}</p>
         </div>
         <div class="ap-full-block failure">
-          <span class="ap-full-lbl">Point of Attack / Failure</span>
+          <span class="ap-full-lbl">${TXT("pointOfAttack", "Point of Attack / Failure")}</span>
           <p class="ap-full-val">${data.failure}</p>
         </div>
         <div class="ap-full-block legacy">
-          <span class="ap-full-lbl">Generational Script (Legacy)</span>
+          <span class="ap-full-lbl">${TXT("generationalScript", "Generational Script (Legacy)")}</span>
           <p class="ap-full-val">${data.legacy}</p>
         </div>
       </div>
@@ -718,7 +731,11 @@ const ARCHITECT_PRESETS = {
   }
 };
 
+if (IS_RU) CS_RU.merge(ARCHITECT_PRESETS, CS_RU.presets);
+
 const RISK_WORDS = ["must", "always", "never", "fail", "lazy", "perfect", "worthless", "need to", "try harder", "discipline"];
+// [text to look for, word to show]; Russian looks for word stems
+const RISK_PAIRS = IS_RU ? CS_RU.risk : RISK_WORDS.map(w => [w, w]);
 
 function initArchitect() {
   const fields = ["cistern", "counterfeit", "habit", "shame", "grace"];
@@ -750,17 +767,17 @@ function checkFieldLinguisticRisk(field) {
   const warning = document.getElementById(`risk-warn-${field}`);
   
   let found = [];
-  RISK_WORDS.forEach(word => {
-    if (val.includes(word)) found.push(`"${word}"`);
+  RISK_PAIRS.forEach(([stem, shown]) => {
+    if (val.includes(stem)) found.push(IS_RU ? `«${shown}»` : `"${shown}"`);
   });
 
   if (found.length > 0) {
     warning.classList.remove("hidden");
     if (field === "grace") {
-      warning.innerText = "Striving indicators in grace anchor";
+      warning.innerText = TXT("riskGrace", "Striving indicators in grace anchor");
       warning.className = "workbook-risk-badge grace-alert";
     } else {
-      warning.innerText = `Striving indicators: ${found.join(", ")}`;
+      warning.innerText = TXT("riskPrefix", "Striving indicators: ") + found.join(", ");
       warning.className = "workbook-risk-badge striving";
     }
   } else {
@@ -778,7 +795,7 @@ function loadArchitectPreset(key) {
   });
 
   updateBlueprint();
-  showToast(`Loaded preset for ${key.toUpperCase()}`, "success");
+  showToast(TXT("presetToast", `Loaded preset for ${key.toUpperCase()}`, key), "success");
 }
 
 function updateBlueprint() {
@@ -791,7 +808,7 @@ function updateBlueprint() {
       if (val) {
         display.innerText = val;
       } else {
-        display.innerText = `Define your ${f}...`;
+        display.innerText = TXT("define" + f.charAt(0).toUpperCase() + f.slice(1), `Define your ${f}...`);
       }
     }
   });
@@ -804,7 +821,7 @@ function resetArchitect() {
     document.getElementById(`risk-warn-${f}`).classList.add("hidden");
   });
   updateBlueprint();
-  showToast("Workbook cleared", "info");
+  showToast(TXT("cleared", "Workbook cleared"), "info");
 }
 
 function copyBlueprintToClipboard() {
@@ -814,17 +831,17 @@ function copyBlueprintToClipboard() {
   const shm = document.getElementById("bp-txt-shame").innerText;
   const grc = document.getElementById("bp-txt-grace").innerText;
 
-  const blueprintText = `📋 MY DE-ESCALATION COORDINATES\n\n` +
-                        `1. MY BROKEN CISTERN:\n   ${cis}\n\n` +
-                        `2. MY COUNTERFEIT NEED:\n   ${cnt}\n\n` +
-                        `3. MY Compulsion LOOP SEQUENCE:\n   ${hab}\n\n` +
-                        `4. MY SELF-CONDEMNATION VOICE:\n   ${shm}\n\n` +
-                        `5. MY GRACE ANCHOR:\n   ${grc}\n\n` +
-                        `Constructed with The Loop Breaker.`;
+  const blueprintText = `${TXT("copyTitle", "📋 MY DE-ESCALATION COORDINATES")}\n\n` +
+                        `${TXT("copy1", "1. MY BROKEN CISTERN:")}\n   ${cis}\n\n` +
+                        `${TXT("copy2", "2. MY COUNTERFEIT NEED:")}\n   ${cnt}\n\n` +
+                        `${TXT("copy3", "3. MY Compulsion LOOP SEQUENCE:")}\n   ${hab}\n\n` +
+                        `${TXT("copy4", "4. MY SELF-CONDEMNATION VOICE:")}\n   ${shm}\n\n` +
+                        `${TXT("copy5", "5. MY GRACE ANCHOR:")}\n   ${grc}\n\n` +
+                        `${TXT("copyFoot", "Constructed with The Loop Breaker.")}`;
 
   navigator.clipboard.writeText(blueprintText)
-    .then(() => showToast("Blueprint copied to clipboard!", "success"))
-    .catch(() => showToast("Failed to copy clipboard", "error"));
+    .then(() => showToast(TXT("copied", "Blueprint copied to clipboard!"), "success"))
+    .catch(() => showToast(TXT("copyFailed", "Failed to copy clipboard"), "error"));
 }
 
 // ============================================================
@@ -878,12 +895,12 @@ function renderGlossary() {
     // Setup visual components
     let versesHTML = "";
     if (item.verses && item.verses.length > 0) {
-      versesHTML = `<div class="glossary-synonyms" style="margin-top: 0.5rem; background: var(--grace-soft); border-left: 2px solid var(--grace); padding: 4px 8px; border-radius: 4px; font-size: 0.82rem; color: var(--ink-dim);"><strong>Verses:</strong> ${item.verses.join(", ")}</div>`;
+      versesHTML = `<div class="glossary-synonyms" style="margin-top: 0.5rem; background: var(--grace-soft); border-left: 2px solid var(--grace); padding: 4px 8px; border-radius: 4px; font-size: 0.82rem; color: var(--ink-dim);"><strong>${TXT("gVerses", "Verses:")}</strong> ${item.verses.join(", ")}</div>`;
     }
 
     let topicsHTML = "";
     if (item.topics && item.topics.length > 0) {
-      topicsHTML = `<div style="font-size: 0.8rem; color: var(--ink-faint); margin-top: 0.3rem;"><strong>Topics:</strong> ${item.topics.join(" · ")}</div>`;
+      topicsHTML = `<div style="font-size: 0.8rem; color: var(--ink-faint); margin-top: 0.3rem;"><strong>${TXT("gTopics", "Topics:")}</strong> ${item.topics.join(" · ")}</div>`;
     }
 
     card.innerHTML = `
@@ -892,25 +909,25 @@ function renderGlossary() {
           <h3>${item.term}</h3>
         </div>
       </div>
-      <div class="glossary-synonyms"><strong>Synonyms:</strong> ${item.synonyms.join(", ")}</div>
+      <div class="glossary-synonyms"><strong>${TXT("gSynonyms", "Synonyms:")}</strong> ${item.synonyms.join(", ")}</div>
       ${versesHTML}
       <div class="glossary-body-section">
         <div class="glossary-section-block">
-          <span class="glossary-section-lbl">Definition</span>
+          <span class="glossary-section-lbl">${TXT("gDefinition", "Definition")}</span>
           <span class="glossary-section-val">${item.definition}</span>
         </div>
         <div class="glossary-section-block">
-          <span class="glossary-section-lbl">Theological Context</span>
+          <span class="glossary-section-lbl">${TXT("gTheology", "Theological Context")}</span>
           <span class="glossary-section-val">${item.theology}</span>
         </div>
         <div class="glossary-section-block">
-          <span class="glossary-section-lbl">Psychological Mapping</span>
+          <span class="glossary-section-lbl">${TXT("gPsychology", "Psychological Mapping")}</span>
           <span class="glossary-section-val psych">${item.psychology}</span>
         </div>
       </div>
       ${topicsHTML}
       <div style="display:flex; gap:0.3rem; margin-top:auto; padding-top:1rem; border-top:1px dashed var(--border);">
-        ${item.tags.map(t => `<span class="glossary-tag-btn active" style="padding: 2px 8px; font-size: 0.72rem; cursor:default; border-color: var(--accent); color: var(--accent);">${t}</span>`).join("")}
+        ${item.tags.map(t => `<span class="glossary-tag-btn active" style="padding: 2px 8px; font-size: 0.72rem; cursor:default; border-color: var(--accent); color: var(--accent);">${IS_RU ? (CS_RU.tags[t] || t) : t}</span>`).join("")}
       </div>
     `;
 
@@ -920,7 +937,7 @@ function renderGlossary() {
   if (container.children.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--ink-faint); font-family: var(--mono); font-size: 0.88rem;">
-        ✕ No matches found for "${query}"
+        ${TXT("noMatch", `✕ No matches found for "${query}"`, query)}
       </div>
     `;
   }
