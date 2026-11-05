@@ -302,10 +302,25 @@ body{text-wrap-style:pretty}
 h1,h2,h3{text-wrap:balance}
 :where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
 p,li,dd,figcaption{text-wrap:pretty}
+
+/* the way back to every other project: inherits the footer's own color */
+.home-link{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;color:inherit;opacity:.72;text-decoration:none;transition:opacity .25s cubic-bezier(.22,1,.36,1)}
+.home-link:hover{opacity:1}
+
+/* 44px touch floor; desktop proportions untouched */
+@media (pointer:coarse){.theme-btn{min-width:44px;min-height:44px}.btn{min-height:44px}}
+
+/* EN · RU: two links, the current one marked. Opacity and color only. */
+.lang-switch{position:fixed;top:14px;right:64px;z-index:200;height:42px;align-items:center;display:inline-flex;padding:2px;border:1px solid var(--tb-bd);border-radius:100px;background:var(--tb-bg);color:var(--tb-fg);font-size:.7rem;letter-spacing:.12em;line-height:1}
+.lang-opt{display:grid;place-items:center;min-width:44px;min-height:38px;border-radius:100px;color:inherit;opacity:.62;text-decoration:none;font-weight:600;transition:opacity .25s cubic-bezier(.22,1,.36,1),background-color .25s cubic-bezier(.22,1,.36,1)}
+.lang-opt:hover{opacity:1}
+.lang-opt[aria-current="page"]{opacity:1;background:color-mix(in srgb,var(--tb-hov) 16%,transparent);pointer-events:none}
+.lang-opt:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 </head>
 <body>
-<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme" data-ru-aria-label="Переключить тему">
+<nav class="lang-switch" aria-label="Language" data-ru-aria-label="Язык"><a class="lang-opt" href="/two-hundred-milliseconds/" data-ru-href="/two-hundred-milliseconds/" lang="en" hreflang="en" aria-current="page" data-ru-aria-current="false">EN</a><a class="lang-opt" href="/two-hundred-milliseconds/ru/" data-ru-href="/two-hundred-milliseconds/ru/" lang="ru" hreflang="ru" data-ru-aria-current="page">RU</a></nav>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch color theme" data-ru-aria-label="Переключить тему">
   <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
   <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
 </button>
@@ -694,9 +709,11 @@ p,li,dd,figcaption{text-wrap:pretty}
 <footer class="wrap colophon" data-ru="
   <span>Archivo · Instrument Sans · JetBrains Mono</span>
   <span>Нотация заимствована из анализа разговора</span>
-" data-ru-src="f9e7e1b70c">
+  <a class=&quot;home-link&quot; href=&quot;/ru/&quot;>← Все проекты</a>
+" data-ru-src="d4970e5d8b">
   <span>Archivo · Instrument Sans · JetBrains Mono</span>
   <span>Notation borrowed from conversation analysis</span>
+  <a class="home-link" href="/">← All projects</a>
 </footer>
 
 <script>
