@@ -1,0 +1,642 @@
+<!DOCTYPE html><html lang="ru" data-lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/how-to-teach/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/how-to-teach/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/how-to-teach/">
+<!-- lang-alt:end -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3ECDD'/%3E%3Cg fill='%238A2B3C'%3E%3Crect x='9' y='34' width='21' height='21' rx='3'/%3E%3Crect x='34' y='34' width='21' height='21' rx='3'/%3E%3Crect x='21.5' y='9' width='21' height='21' rx='3'/%3E%3C/g%3E%3C/svg%3E"><title>Метод реконструкции</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400..800&family=Hanken+Grotesk:wght@400..700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --ease:cubic-bezier(.22,.61,.36,1); --t1:.15s; --t2:.3s;
+  --ff-display:'Bricolage Grotesque',system-ui,sans-serif; --ff-body:'Hanken Grotesk',system-ui,sans-serif; --ff-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --bg:#F3ECDD; --fg:#211B18; --body:rgba(33,27,24,0.9); --muted:rgba(33,27,24,0.52);
+  --hair:rgba(33,27,24,0.12); --hair2:rgba(33,27,24,0.24); --panel:rgba(33,27,24,0.045);
+  --accent:#8A2B3C; --slab-bg:#5A1A2C; --slab-fg:#F3ECDD; --slab-muted:rgba(243,236,221,0.66); --slab-line:rgba(243,236,221,0.20);
+  --t-rob-fg:#17624A; --t-rob-bg:rgba(23,98,74,0.10); --t-rob-edge:rgba(23,98,74,0.34);
+  --t-mod-fg:#8A5A0B; --t-mod-bg:rgba(138,90,11,0.11); --t-mod-edge:rgba(138,90,11,0.34);
+  --t-con-fg:#B8460E; --t-con-bg:rgba(184,70,14,0.10); --t-con-edge:rgba(184,70,14,0.36);
+  --t-wea-fg:#A2382C; --t-wea-bg:rgba(162,56,44,0.10); --t-wea-edge:rgba(162,56,44,0.34);
+}
+body[data-theme="dark"]{
+  --bg:#181210; --fg:#F1E9DB; --body:rgba(241,233,219,0.88); --muted:rgba(241,233,219,0.50);
+  --hair:rgba(241,233,219,0.13); --hair2:rgba(241,233,219,0.26); --panel:rgba(241,233,219,0.05);
+  --accent:#CB6072; --slab-bg:#742639; --slab-fg:#F5EDE0; --slab-muted:rgba(245,237,224,0.66); --slab-line:rgba(245,237,224,0.20);
+  --t-rob-fg:#83CFA3; --t-rob-bg:rgba(50,130,92,0.18); --t-rob-edge:rgba(131,207,163,0.34);
+  --t-mod-fg:#E6B86C; --t-mod-bg:rgba(160,112,30,0.18); --t-mod-edge:rgba(230,184,108,0.34);
+  --t-con-fg:#FF9A66; --t-con-bg:rgba(198,86,30,0.18); --t-con-edge:rgba(255,154,102,0.36);
+  --t-wea-fg:#EE8E86; --t-wea-bg:rgba(168,54,54,0.20); --t-wea-edge:rgba(238,142,134,0.34);
+}
+
+/* the palette is typed, so Light/Dark eases every surface together */
+@property --bg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --fg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --body{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --muted{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --hair{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --hair2{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --panel{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --accent{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --slab-bg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --slab-fg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --slab-muted{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --slab-line{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-rob-fg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-rob-bg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-rob-edge{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-mod-fg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-mod-bg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-mod-edge{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-con-fg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-con-bg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-con-edge{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-wea-fg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-wea-bg{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --t-wea-edge{syntax:'<color>';inherits:true;initial-value:transparent}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+/* typography readability optimizations */
+h1, h2, h3, h4, h5, h6, .hero-title, .h2, .h3, .step-t, .engine-verse {
+  text-wrap: balance;
+}
+p, li, blockquote, .body, .hero-p, .lead, .engine-plain, .slab-sub, .slab-lead, .slab-foot, .leg-note, .proc-desc {
+  text-wrap: pretty;
+}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ff-body);
+  -webkit-font-smoothing:antialiased;font-weight:450;transition:--bg var(--t2) var(--ease),--fg var(--t2) var(--ease),--body var(--t2) var(--ease),--muted var(--t2) var(--ease),--hair var(--t2) var(--ease),--hair2 var(--t2) var(--ease),--panel var(--t2) var(--ease),--accent var(--t2) var(--ease),--slab-bg var(--t2) var(--ease),--slab-fg var(--t2) var(--ease),--slab-muted var(--t2) var(--ease),--slab-line var(--t2) var(--ease),--t-rob-fg var(--t2) var(--ease),--t-rob-bg var(--t2) var(--ease),--t-rob-edge var(--t2) var(--ease),--t-mod-fg var(--t2) var(--ease),--t-mod-bg var(--t2) var(--ease),--t-mod-edge var(--t2) var(--ease),--t-con-fg var(--t2) var(--ease),--t-con-bg var(--t2) var(--ease),--t-con-edge var(--t2) var(--ease),--t-wea-fg var(--t2) var(--ease),--t-wea-bg var(--t2) var(--ease),--t-wea-edge var(--t2) var(--ease)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* prose toggle */
+body[data-prose="plain"] .po{display:none}
+body[data-prose="original"] .pp{display:none}
+
+.wrap{max-width:788px;margin:0 auto;padding:0 28px}
+section{padding-bottom:94px}
+em{font-style:italic}
+
+/* control bar */
+.bar-top{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--hair)}
+.bar-inner{max-width:788px;margin:0 auto;padding:13px 28px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.segs{display:flex;gap:10px;flex-wrap:wrap}
+/* the segments stay compact; each button's hit area reaches 44px past its edges */
+.seg{display:flex;border:1px solid var(--hair2);border-radius:3px}
+.seg-btn:first-child{border-radius:2px 0 0 2px}.seg-btn:last-child{border-radius:0 2px 2px 0}
+.seg-btn::after{content:"";position:absolute;left:0;right:0;top:50%;height:44px;transform:translateY(-50%)}
+.seg-btn{position:relative;cursor:pointer;border:none;padding:7px 13px;background:transparent;color:var(--muted);
+  font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:background-color var(--t1) var(--ease),color var(--t1) var(--ease)}
+.seg-btn.active{background:var(--fg);color:var(--bg)}
+.seg-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* EN · RU switch: lives with the brand in the control bar */
+.bar-id{display:flex;align-items:center;gap:14px}
+.lang-switch{position:relative;display:inline-flex;align-items:center;height:44px;border-radius:3px;overflow:hidden;flex:0 0 auto}
+.lang-switch::after{content:"";position:absolute;inset:0;border:1px solid var(--hair2);border-radius:inherit;pointer-events:none}
+.lang-opt{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 12px;font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-decoration:none;color:var(--muted);transition:color var(--t1) var(--ease),background-color var(--t1) var(--ease)}
+.lang-opt:hover{color:var(--fg)}
+.lang-opt[aria-current="page"]{background:var(--hair);color:var(--fg);pointer-events:none}
+.lang-opt:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+/* short Russian book abbreviations ("Ис. 6") are narrower than 44px; widen the hit area sideways */
+:lang(ru) .esv-ref::after{left:-3px;right:-3px}
+
+/* type */
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.eyebrow .bar{width:26px;height:2px;background:var(--accent);flex:none}
+.eyebrow .eb-t{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.eyebrow.weak .bar,.eyebrow.weak .eb-t{color:var(--t-wea-fg);background:var(--t-wea-fg)}
+.eyebrow.weak .eb-t{background:none}
+.eyebrow.contested .bar{background:var(--t-con-fg)}
+.eyebrow.contested .eb-t{color:var(--t-con-fg)}
+
+.h2{font-family:var(--ff-display);font-weight:700;font-size:clamp(27px,5vw,40px);line-height:1.09;letter-spacing:-0.02em;margin:0 0 18px}
+.h2.sm{font-size:clamp(24px,4.6vw,34px)}
+.h3{font-family:var(--ff-display);font-weight:600;font-size:26px;line-height:1.14;letter-spacing:-0.018em;margin:0}
+.body{margin:0 0 16px;font-size:18px;line-height:1.68;color:var(--body)}
+.lead{font-size:17.5px;line-height:1.55;margin:0 0 8px}
+.muted{color:var(--muted)}
+.hint{font-size:16.5px;margin:0}
+.ico{margin-right:10px}
+.minilabel{font-family:var(--ff-mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.minilabel.accent{color:var(--accent)}
+
+/* hero */
+.hero{padding-top:104px;padding-bottom:84px}
+.hero-title{font-family:var(--ff-display);font-weight:700;font-size:clamp(38px,7.4vw,66px);line-height:0.99;letter-spacing:-0.028em;margin:0 0 34px}
+.hero-p{font-size:20px;line-height:1.62;color:var(--body);max-width:600px;margin:0 0 22px}
+.hero-p:last-child{margin-bottom:0}
+
+/* rule block + legend */
+.rule-block{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:32px 0}
+.legend{display:grid;gap:8px}
+.leg-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-left:2px solid;padding:12px 0 12px 16px}
+.leg-note{font-size:16px;line-height:1.5;flex:1;min-width:230px}
+
+/* tags */
+.tag{display:inline-flex;gap:6px;align-items:center;border-radius:2px;padding:3px 9px;
+  font-family:var(--ff-mono);font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+.tag .dot{font-size:9px}
+.t-robust{color:var(--t-rob-fg);background:var(--t-rob-bg);border:1px solid var(--t-rob-edge)}
+.t-moderate{color:var(--t-mod-fg);background:var(--t-mod-bg);border:1px solid var(--t-mod-edge)}
+.t-contested{color:var(--t-con-fg);background:var(--t-con-bg);border:1px solid var(--t-con-edge)}
+.t-weak{color:var(--t-wea-fg);background:var(--t-wea-bg);border:1px solid var(--t-wea-edge)}
+.t-robust-fg{color:var(--t-rob-fg)} .t-moderate-fg{color:var(--t-mod-fg)}
+.t-contested-fg{color:var(--t-con-fg)} .t-weak-fg{color:var(--t-wea-fg)}
+.edge-robust{border-left:2px solid var(--t-rob-edge)} .edge-moderate{border-left:2px solid var(--t-mod-edge)}
+.edge-contested{border-left:2px solid var(--t-con-edge)} .edge-weak{border-left:2px solid var(--t-wea-edge)}
+
+/* slab (maroon block) */
+.slab{background:var(--slab-bg);color:var(--slab-fg);border-radius:6px;padding:52px 40px}
+.slab-eb{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--slab-fg);opacity:.85;margin-bottom:22px}
+.engine-verse{font-family:var(--ff-display);font-weight:600;font-size:clamp(25px,4.4vw,36px);line-height:1.2;letter-spacing:-0.016em;margin:0}
+.engine-plain{margin:0;font-size:20px;line-height:1.58}
+.slab-sub{margin:24px 0 0;font-size:16.5px;line-height:1.62;color:var(--slab-muted)}
+.slab-lead{margin:0 0 16px;font-size:19.5px;line-height:1.6}
+.slab-foot{margin-top:26px;padding-top:20px;border-top:1px solid var(--slab-line);font-size:15.5px;line-height:1.62;color:var(--slab-muted)}
+.slab-foot .minilabel{color:var(--slab-fg);opacity:.9}
+.slab-foot>div{margin-top:8px}
+
+/* moves */
+.move{border-top:1px solid var(--hair);padding:42px 0}
+.move-h{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
+.move-n{font-family:var(--ff-mono);font-size:26px;font-weight:600;color:var(--accent);line-height:1;padding-top:4px}
+.move-title{flex:1;min-width:220px}
+.move-title .h3{margin-bottom:8px}
+.evidence{padding-left:14px;margin-top:16px;font-size:15.5px;line-height:1.6}
+.evidence>div{margin-top:6px}
+.caution{border-left:2px solid var(--accent);padding-left:14px;margin-top:16px;font-size:15.5px;line-height:1.6;color:var(--muted)}
+.caution>div{margin-top:6px}
+
+/* myths */
+.myths,.breaks{display:grid;gap:34px}
+.myth,.jbreak{padding-left:18px}
+.myth-h{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
+.myth-h .h3{flex:1;min-width:200px;font-size:23px}
+.honest{margin-top:12px;font-size:16px;line-height:1.58}
+.honest>div{margin-top:6px}
+
+/* procedure */
+.proc{margin-top:28px}
+.proc-row{display:flex;gap:16px;align-items:baseline;border-top:1px solid var(--hair);padding:21px 0;flex-wrap:wrap}
+.proc-n{font-family:var(--ff-mono);font-size:15px;font-weight:600;color:var(--accent);min-width:22px}
+.proc-name{font-family:var(--ff-display);font-weight:600;font-size:19px;min-width:190px;letter-spacing:-0.01em}
+.proc-desc{font-size:17px;flex:1;min-width:220px;line-height:1.5}
+
+/* two ways */
+.two-ways{display:grid;gap:28px}
+.way{padding-left:18px}
+.way .minilabel{margin-bottom:12px;display:block}
+.way-note{font-size:16px;line-height:1.6}
+
+/* frame + steps */
+.frame{border:1.5px solid var(--hair2);border-radius:6px;padding:48px 32px}
+.note{font-family:var(--ff-mono);font-size:11.5px;color:var(--muted);border:1px dashed var(--hair);border-radius:2px;padding:11px 13px;margin-bottom:22px;line-height:1.6}
+.step{margin-top:46px;padding-top:36px;border-top:1px solid var(--hair)}
+.step:first-of-type{border-top:none;margin-top:8px;padding-top:0}
+.step-h{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.step-n{font-family:var(--ff-mono);font-size:11.5px;font-weight:600;color:var(--accent);letter-spacing:.14em}
+.step-t{font-family:var(--ff-display);font-weight:600;font-size:22px;margin:0 0 8px;line-height:1.2;letter-spacing:-0.012em}
+.scene{background:var(--slab-bg);color:var(--slab-fg);border-radius:4px;padding:30px 28px;margin-top:18px;font-size:18px;line-height:1.66}
+.scene-gap{height:16px}
+
+/* choices */
+.choices{display:grid;gap:11px;margin-top:20px}
+.choice{text-align:left;cursor:pointer;background:transparent;color:var(--fg);border:1px solid var(--hair);border-radius:2px;
+  padding:15px 17px;font-family:var(--ff-body);font-size:17px;line-height:1.5;transition:background-color var(--t1) var(--ease),border-color var(--t1) var(--ease),color var(--t1) var(--ease)}
+.choice:hover{border-color:var(--hair2)}
+.choice .ci{font-family:var(--ff-mono);font-size:12px;font-weight:600;opacity:.6;margin-right:11px}
+.choice.selected{background:var(--slab-bg);color:var(--slab-fg);border-color:var(--slab-bg)}
+.choice.selected .ci{opacity:.75}
+.choice:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* gate */
+.gate-btn{margin-top:16px;width:100%;text-align:left;cursor:pointer;background:transparent;
+  border:1.5px solid var(--accent);border-radius:2px;padding:14px 16px;color:var(--accent);
+  font-family:var(--ff-mono);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:background-color var(--t1) var(--ease)}
+.gate-btn:hover{background:var(--panel)}
+.gate-btn:disabled{cursor:not-allowed;border-color:var(--hair);color:var(--muted);background:transparent}
+.gate-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* the opened answer fades in place; text that is being read does not slide */
+.gate-content{margin-top:16px;animation:riseIn var(--t2) var(--ease) both}
+@keyframes riseIn{from{opacity:0}to{opacity:1}}
+
+/* responses + verdict */
+.responses .resp{display:none}
+.responses .resp.show{display:block}
+.responses .resp{font-size:18px;line-height:1.65;color:var(--body);margin-bottom:14px}
+.verdict{border-radius:2px;padding:22px;font-size:17.5px;line-height:1.62}
+.verdict[data-correct="true"]{background:var(--t-rob-bg);border:1px solid var(--t-rob-edge);color:var(--t-rob-fg)}
+.verdict[data-correct="false"]{background:var(--t-wea-bg);border:1px solid var(--t-wea-edge);color:var(--t-wea-fg)}
+.vd{display:none}
+.verdict[data-correct="true"] .vd[data-vd="correct"]{display:block}
+.verdict[data-correct="false"] .vd[data-vd="incorrect"]{display:block}
+.vspace{margin-top:10px}
+
+/* textarea + recall answer */
+textarea{width:100%;margin-top:14px;background:var(--panel);border:1px solid var(--hair);border-radius:2px;
+  padding:13px 15px;font-family:var(--ff-body);font-size:16px;line-height:1.55;color:var(--fg);resize:vertical}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.recall-answer{padding-left:18px}
+.recall-answer ol{margin:0;padding-left:18px;font-size:17.5px;line-height:1.8}
+
+/* jesus */
+.jmove{border-top:1px solid var(--hair);padding:40px 0}
+.jref{font-family:var(--ff-mono);font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}
+.jmove .h3{font-size:24px;margin-bottom:12px}
+.maps{margin-top:12px;font-size:15.5px;line-height:1.6;color:var(--muted)}
+.maps>div{margin-top:5px}
+.jbreak .h3{font-size:22px;margin-bottom:10px}
+
+/* cuts */
+.cuts{display:grid;gap:24px}
+.cut{padding-left:18px}
+.cut-line{font-family:var(--ff-display);font-style:italic;font-weight:500;font-size:19px;line-height:1.35;color:var(--t-wea-fg);
+  margin-bottom:8px;text-decoration:line-through;text-decoration-color:var(--t-wea-edge)}
+.cut-why{font-size:16px;line-height:1.6}
+
+/* sources + footer */
+.sources{font-family:var(--ff-mono);font-size:13.8px;line-height:1.8;color:var(--muted)}
+.foot{padding:34px 0 80px;font-family:var(--ff-mono);font-size:11.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--hair)}
+.foot-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:18px}
+.foot .home{display:inline-flex;align-items:center;min-height:44px;color:var(--fg);text-decoration:none;transition:color var(--t1) var(--ease)}
+.foot .home:hover{color:var(--accent)}
+.foot-pick{display:flex;align-items:center;gap:10px}
+.foot-pick .esv-pick-menu{top:auto;bottom:calc(100% + 8px);text-transform:none;letter-spacing:0}
+.foot-fine{margin-top:18px;text-transform:none;letter-spacing:.02em;line-height:1.6;font-size:11px}
+</style><style id="scripture-skin">
+/* ==========================================================================
+   THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
+   which ships no colors on purpose. These are this page's clothes for it:
+   the first rule maps the reader's few roles onto this page's own tokens.
+   Opens and closes fade in place; nothing readable slides.
+   ========================================================================== */
+:root{--sr-panel:var(--bg);--sr-ink:var(--fg);--sr-ink2:var(--body);--sr-ink3:var(--muted);--sr-line:var(--hair2);--sr-accent:var(--accent);--sr-accent-ink:var(--accent);--sr-hl:var(--t-mod-fg);--sr-display:var(--ff-mono);--sr-read:var(--ff-body);--sr-shadow:rgba(20,14,12,.28);--sr-t:var(--t1);--sr-t2:var(--t2);--sr-ease:var(--ease)}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color var(--sr-t) var(--sr-ease),text-decoration-color var(--sr-t) var(--sr-ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--sr-accent-ink);text-decoration-color:var(--sr-accent-ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 14px 8px 12px;border:1px solid var(--sr-line);border-radius:999px;background:var(--sr-chip,transparent);color:var(--sr-ink);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-pick-btn:hover{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 10%,transparent)}
+.esv-pick-ic{width:15px;height:15px;color:var(--sr-accent-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--sr-ink3);transition:rotate var(--sr-t) var(--sr-ease)}
+.esv-pick.open .esv-pick-btn{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 13%,transparent)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;display:block;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;padding:6px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 24px 60px var(--sr-shadow);opacity:1;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--sr-line);color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:9px;background:none;color:var(--sr-ink2);text-align:left;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--sr-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--sr-read);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--sr-accent) 10%,transparent);color:var(--sr-ink)}
+.esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--sr-accent) 17%,transparent)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--sr-accent-ink)}
+.esv-tip{position:absolute;z-index:130;display:none;max-width:min(360px,calc(100vw - 24px));padding:15px 17px;border:1px solid var(--sr-line);border-radius:14px;background:var(--sr-panel);box-shadow:0 24px 64px var(--sr-shadow);color:var(--sr-ink);font-family:var(--sr-read);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.84rem;font-weight:700;letter-spacing:.01em}
+.esv-tip-text{font-family:var(--sr-read);white-space:pre-line;min-height:3em;font-size:1.02rem;transition:opacity var(--sr-t) var(--sr-ease)}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--sr-ink3);font-family:var(--sr-display);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--sr-line)}
+.esv-tip-ctx{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid color-mix(in srgb,var(--sr-accent) 40%,var(--sr-line));background:color-mix(in srgb,var(--sr-accent) 11%,transparent);color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.86rem;font-weight:600;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease)}
+.esv-tip-ctx:hover{background:color-mix(in srgb,var(--sr-accent) 19%,transparent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--sr-line);border-radius:18px;background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 34px 100px rgba(0,0,0,.45);overflow:hidden;opacity:0;transition:opacity var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]{opacity:1}
+@starting-style{.esv-ctx[open]{opacity:0}}
+.esv-ctx::backdrop{background:rgba(8,8,14,0);transition:background-color var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(8,8,14,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(8,8,14,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--sr-line)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.82rem;font-weight:600}
+.esv-ctx-head h3{margin:0;font-family:var(--sr-display);font-weight:700;font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.12;color:var(--sr-ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--sr-line);border-radius:50%;background:none;color:var(--sr-ink2);font-size:18px;line-height:1;cursor:pointer;transition:color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-ctx-close:hover{color:var(--sr-ink);border-color:var(--sr-ink3)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sr-read);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--sr-hl) 30%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sr-hl) 30%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--sr-line);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--sr-line);background:none;color:var(--sr-ink2);font-family:var(--sr-display);font-size:.88rem;font-weight:600;cursor:pointer;transition:border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-ctx-more:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-ctx-note{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;margin-top:.6em;display:block}
+.esv-ctx-prefs{color:var(--sr-ink);font-family:var(--sr-display)}
+/* the pop-up's one action is reading in place, not leaving for another site */
+.esv-tip-out,.esv-ctx-out{display:none!important}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head><body data-prose="plain" data-theme="light"><div class="bar-top"><div class="bar-inner">
+  <div class="bar-id"><span class="brand">Реконструкция / v7</span><div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/how-to-teach/" lang="en" hreflang="en" aria-current="false">EN</a><a class="lang-opt" href="/how-to-teach/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div></div>
+  <div class="segs">
+    <div class="seg" data-group="prose">
+      <button class="seg-btn active" data-toggle="prose" data-val="plain">✂️ Просто</button>
+      <button class="seg-btn" data-toggle="prose" data-val="original">🎭 Образно</button>
+    </div>
+    <div class="seg" data-group="theme">
+      <button class="seg-btn active" data-toggle="theme" data-val="light">☀︎ День</button>
+      <button class="seg-btn" data-toggle="theme" data-val="dark">☾ Ночь</button>
+    </div>
+  </div>
+</div></div><div class="wrap"><header class="hero">
+  <div class="eyebrow"><span class="po"><span class="bar"></span><span class="eb-t">Метод, а не описание</span></span><span class="pp"><span class="bar"></span><span class="eb-t">Без украшений</span></span></div>
+  <h1 class="hero-title"><span class="po">Чистая передача<br>знаний — ловушка.</span><span class="pp">Студенты учились лучше,<br>когда это ощущалось хуже.</span></h1>
+  <p class="hero-p"><span class="po">В рандомизированном исследовании в Гарварде студенты, которых учили активно, усвоили больше — и при этом чувствовали, что усвоили меньше. Одно шло вразрез с другим. У пассивной группы были опытные, высоко оценённые лекторы, и они вышли с занятий уверенными в себе.</span><span class="pp">В рандомизированном исследовании студенты, которых учили активно, набрали на тестах больше баллов, чем студенты, которых учили опытные, высоко оценённые лекторы по тому же материалу. При этом активные студенты сообщали, что, по их ощущениям, усвоили меньше. Ощущаемое и измеренное обучение коррелировали отрицательно.</span></p>
+  <p class="hero-p"><span class="po">Вокруг этой проблемы и построена страница. Она касается тебя и когда ты учишь, и когда учишься. Всё ниже сделано так, чтобы с ней бороться, — в том числе и сама конструкция страницы.</span><span class="pp">Значит, ощущение учащегося, что урок удался, — ненадёжное доказательство того, что он удался. Страница построена с учётом этого факта, в том числе в том, как она сама себя подаёт.</span></p>
+</header><section><div class="rule-block">
+  <p class="body">Одно и то же содержание, написанное дважды. <strong>Образно</strong> — с метафорами, афоризмами и ритмом. <strong>Просто</strong> — только утверждения, и ничего больше.</p>
+  <p class="body muted" style="margin-bottom:0">Образный режим читать приятнее. Но это не значит, что он лучше учит, и эта страница доказывает обратное.</p>
+</div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Как читать цвета</span></div><p class="body"><span class="po">Цвет здесь — не украшение. У каждого утверждения есть метка: сколько веса оно выдержит. Если страница об обучении не говорит, где её доказательства слабы, она не учит тебя — она тебе что-то продаёт.</span><span class="pp">Цвет кодирует силу доказательств, а не акцент. У каждого утверждения есть метка: сколько веса оно выдерживает.</span></p><div class="legend"><div class="leg-row edge-robust"><span class="tag t-robust"><span class="dot">🟢</span>Надёжно</span><span class="leg-note t-robust-fg"><span class="po">Подтверждено во многих исследованиях и условиях. Можно опираться.</span><span class="pp">Подтверждено во многих исследованиях и условиях.</span></span></div><div class="leg-row edge-moderate"><span class="tag t-moderate"><span class="dot">🟡</span>Умеренно</span><span class="leg-note t-moderate-fg"><span class="po">Эффект реален и многообещающ, но доказательств меньше, или они уже по охвату. Пользуйся осторожно.</span><span class="pp">Эффект реален, но база доказательств тоньше или уже.</span></span></div><div class="leg-row edge-contested"><span class="tag t-contested"><span class="dot">🟠</span>Спорно</span><span class="leg-note t-contested-fg"><span class="po">Научный спор ещё идёт. Не ссылайся на это как на установленный факт.</span><span class="pp">Исследователи сейчас спорят. Не решено.</span></span></div><div class="leg-row edge-weak"><span class="tag t-weak"><span class="dot">🔴</span>Натяжка</span><span class="leg-note t-weak-fg"><span class="po">Популярно, интуитивно понятно — но подтверждено слабее, чем принято считать.</span><span class="pp">Подтверждено слабее, чем принято утверждать.</span></span></div></div></section><section><div class="slab">
+  <div class="slab-eb"><span class="po">Весь двигатель</span><span class="pp">Резюме</span></div>
+  <div class="po"><p class="engine-verse">Строй реконструкцию.<br>Пусть будет чуть-чуть трудно.<br>Растяни во времени.</p></div><div class="pp"><p class="engine-plain">Три переменные предсказывают, останется ли выученное: восстанавливает ли учащийся материал, а не перечитывает его; требует ли это восстановление усилий; и распределено ли оно во времени, а не собрано в один присест.</p></div>
+  <p class="slab-sub"><span class="po">Почти каждый надёжный результат ниже — частный случай этой фразы. Остальная страница — эта же фраза в развёрнутом виде, а затем проверенная на тебе.</span><span class="pp">Большинство результатов ниже — примеры одной из этих трёх переменных.</span></p>
+</div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Восемь приёмов</span></div><h2 class="h2"><span class="po">Что на самом деле работает и насколько на это можно опираться.</span><span class="pp">Что работает и сколько веса оно выдерживает.</span></h2><p class="lead muted">У каждого приёма указаны подтверждающие данные и пределы этих данных.</p><div class="move">
+          <div class="move-h">
+            <span class="move-n">01</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🔁</span><span class="po">Вспоминай, а не перечитывай</span><span class="pp">Проверяй себя вместо перечитывания</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Надёжно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Когда знание достаёшь, оно крепнет; когда закладываешь обратно — то есть перечитываешь, — почти ничего не меняется. Тест не измеряет обучение. Тест и есть обучение.</span><span class="pp">Вспоминание укрепляет память сильнее, чем перечитывание. Тест не просто измеряет память, а меняет её. Поэтому самопроверка — это не способ узнать, сработала ли учёба, а сама учёба.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Данные</span><div>Rowland 2014: g = 0,50 по 159 сравнениям. Adesope 2017: g ≈ 0,61–0,70. Dunlosky оценивает практические тесты как высокополезные — одна из двух техник, получивших такую оценку.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Не универсально. Метаанализ 2025 года по обучению математике дал эффект g = 0,18 с доверительным интервалом, пересекающим ноль.</span><span class="pp">Не универсально. Метаанализ 2025 года по обучению математике нашёл для теста против повторного изучения g = 0,18 с доверительным интервалом, пересекающим ноль. Эффект зависит от области.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">02</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">⏳</span><span class="po">Разноси во времени</span><span class="pp">Распределяй практику по дням</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Надёжно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Те же усилия, разнесённые по дням, дают больше, чем те же усилия, втиснутые в один присест. Дай знанию чуть потускнеть, а потом заставь себя собрать его заново — это труднее.</span><span class="pp">Одно и то же общее время учёбы даёт лучшее удержание материала, если распределить его по занятиям, а не собрать в одно. Перерыв допускает частичное забывание, из-за чего последующее вспоминание труднее — а значит, эффективнее.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Данные</span><div>Распределённая практика — вторая техника, которую Dunlosky оценивает как высокополезную. Выгода заметна для разных возрастов, материалов и сроков удержания.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Оптимальный промежуток растёт вместе со сроком, на который нужно запомнить. Единственно верного интервала нет.</span><span class="pp">Оптимальный промежуток растёт вместе с планируемым сроком удержания. Единственно верного графика повторений нет.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">03</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🔀</span><span class="po">Чередуй</span><span class="pp">Смешивай типы задач</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Умеренно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Если смешивать типы задач, а не гонять один и тот же, отпадает лазейка узнавания по шаблону, и учащийся сначала должен решить, какой инструмент применить. Это решение — большая часть навыка.</span><span class="pp">Смешение типов задач требует от учащегося определить, какой метод применим, прежде чем его применять. Блочная практика убирает этот шаг, потому что метод подсказывает контекст.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Данные</span><div>Dunlosky оценивает чередующуюся практику как умеренно полезную: выгода реальна, но на момент обзора систематическое изучение только начиналось.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Слабее и сильнее зависит от области, чем вспоминание и разнесение. Не клади это в тот же ящик.</span><span class="pp">Слабее и сильнее зависит от области, чем вспоминание и разнесение. Равного веса оно не имеет.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">04</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🪜</span><span class="po">Дай опору, а потом выбей её</span><span class="pp">Подбирай подсказки под то, что человек уже знает</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Надёжно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Новичку чистый разобранный пример помогает больше, чем заставлять его барахтаться. Но когда схема уже сложилась, тот же пример его обкрадывает, и учит уже самостоятельное построение.</span><span class="pp">Новички учатся лучше на разобранных примерах, чем на самостоятельном решении без подсказок: у них ещё нет схемы, чтобы восстановить решение. Когда схема появляется, та же подсказка перестаёт помогать и может мешать.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Данные</span><div>Эффект обращения экспертности (Kalyuga, Ayres, Chandler и Sweller). Подсказки, которые помогают новичкам, могут активно вредить более продвинутым.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Обычно это частичный разворот — поддержка перестаёт помогать, — а не полный переход во вред.</span><span class="pp">Обычно это частичный разворот, при котором поддержка перестаёт помогать, а не полный, при котором она вредит.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">05</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🗣️</span><span class="po">Пусть объяснят сами</span><span class="pp">Проси учащихся объяснять</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Умеренно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Самообъяснение и уточняющие вопросы «почему?» заставляют учащегося самому строить причинные связи, а не получать их готовыми.</span><span class="pp">Если просить учащихся своими словами сказать, почему что-то верно, результат лучше, чем когда им дают готовое объяснение. Причинные связи учащийся создаёт сам, а не читает.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Данные</span><div>Оба приёма Dunlosky оценивает как умеренно полезные. Многообещающе, но в реальных учебных условиях, а не в лабораториях, проверено мало.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Умеренно — значит умеренно. Доказательств меньше, чем у вспоминания и разнесения.</span><span class="pp">Доказательств меньше, чем у вспоминания и разнесения.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">06</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🕳️</span><span class="po">Следи за пропуском, который не видно</span><span class="pp">Эксперты пропускают шаги, не замечая этого</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Умеренно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">По мере роста мастерства ты молча сжимаешь шаги, которых уже не замечаешь, — и учащийся падает прямо в образовавшуюся дыру.</span><span class="pp">Эксперты опускают шаги, ставшие автоматическими и недоступные для самонаблюдения. Чем очевиднее шаг кажется преподавателю, тем вероятнее, что его пропустят, — и именно здесь учащиеся чаще всего застревают.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Данные</span><div>«Проклятие знания» хорошо описано как когнитивное искажение. А вот его конкретная цена для обучения скорее выводится, чем измерена напрямую.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Оценка «умеренно» здесь намеренная. Искажение реально, но чистой цифры его влияния на результаты обучения мне найти не удалось.</span><span class="pp">Оценка «умеренно» поставлена намеренно. Искажение задокументировано; чистого размера эффекта для его цены в результатах обучения найти не удалось.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">07</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">😬</span><span class="po">Не верь улыбке</span><span class="pp">Ощущаемое обучение ненадёжно</span></h3>
+              <span class="tag t-robust"><span class="dot">🟢</span>Надёжно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Студенты, которых учили активно, измеримо усвоили больше — и сообщали, что усвоили меньше. Усилие принимают за провал.</span><span class="pp">Студенты на активных занятиях набирали больше баллов, но сообщали о меньшем ощущаемом обучении, чем те, кому читали отточенные лекции по тому же материалу. Умственное усилие учащиеся воспринимают как признак того, что учатся плохо.</span></p>
+          <div class="evidence edge-robust"><span class="minilabel">📊 Данные</span><div>Deslauriers и др., 2019 (PNAS): рандомизированное исследование, одинаковые материалы, на пассивной стороне — опытные, высоко оценённые лекторы.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Следствие: тёплый приём — не доказательство того, что твоё преподавание сработало. Возможно, это даже слабое свидетельство против.</span><span class="pp">Следствие: положительный отклик — не доказательство того, что преподавание сработало, и может быть слабым доказательством обратного.</span></div></div>
+        </div><div class="move">
+          <div class="move-h">
+            <span class="move-n">08</span>
+            <div class="move-title">
+              <h3 class="h3"><span class="ico">🚨</span><span class="po">Построй то, что умеет говорить «нет»</span><span class="pp">Дай учащемуся возможность ошибиться</span></h3>
+              <span class="tag t-moderate"><span class="dot">🟡</span>Умеренно</span>
+            </div>
+          </div>
+          <p class="body"><span class="po">Вспоминание и обучение работают, только если что-то может по-настоящему провалить учащегося. Без настоящего «нет» человек просто репетирует ту модель, с которой пришёл.</span><span class="pp">Практика без корректирующей обратной связи закрепляет ту модель, что у учащегося уже есть, — в том числе неверную. Повторение укрепляет уверенность в неверной модели так же легко, как в верной.</span></p>
+          <div class="evidence edge-moderate"><span class="minilabel">📊 Данные</span><div>Обратная связь усиливает практику вспоминания (Rowland). Преимущество репетиторства обычно объясняют немедленным исправлением ошибок и адаптивным темпом.</div></div>
+          <div class="caution"><span class="minilabel accent">⚠️ Пределы</span><div><span class="po">Заострённая версия — что цикл, способный опровергнуть, и есть несущий элемент, — это мой вывод, а не научный результат.</span><span class="pp">Утверждение, что это самый важный элемент, — моё умозаключение, а не результат исследований. Относись к нему как к проверяемому принципу проектирования.</span></div></div>
+        </div></section><section><div class="eyebrow weak"><span class="bar"></span><span class="eb-t">Что пора перестать повторять</span></div><h2 class="h2">Четыре утверждения, которые слабее, чем звучат.</h2><p class="lead muted">Два преувеличены. Два — предмет активного спора.</p><div class="myths"><div class="myth edge-weak">
+          <div class="myth-h"><h3 class="h3 t-weak-fg"><span class="ico">🎨</span>Подбор подачи под стиль обучения</h3><span class="tag t-weak"><span class="dot">🔴</span>Натяжка</span></div>
+          <p class="body">Проверяемое утверждение — гипотеза соответствия: подача материала в предпочитаемом стиле улучшает результаты. Чтобы её подтвердить, нужно перекрёстное взаимодействие. Pashler, McDaniel, Rohrer и Bjork обнаружили, что очень немногие исследования использовали дизайн, способный это проверить, а несколько таких дали противоречивые результаты.</p>
+          <div class="honest t-weak-fg"><span class="minilabel">🧭 Честная версия</span><div>Метаанализ 2024 года сообщает, что примерно в четверти рассмотренных показателей нужный перекрёстный паттерн всё же проявился. Это не оправдывает саму практику, но вопрос закрыт не так наглухо, как утверждает большинство разоблачений.</div></div>
+        </div><div class="myth edge-weak">
+          <div class="myth-h"><h3 class="h3 t-weak-fg"><span class="ico">🖍️</span>Перечитывание и выделение маркером</h3><span class="tag t-weak"><span class="dot">🔴</span>Натяжка</span></div>
+          <p class="body">Обе техники получили у Dunlosky низкую оценку полезности — наряду с резюмированием, мнемоникой ключевых слов и созданием образов по тексту. В обзор они попали потому, что студенты очень на них полагаются.</p>
+          <div class="honest t-weak-fg"><span class="minilabel">🧭 Честная версия</span><div>Вреда от них нет. Они повышают знакомость текста, но не улучшают вспоминание, а знакомость легко принять за знание.</div></div>
+        </div><div class="myth edge-contested">
+          <div class="myth-h"><h3 class="h3 t-contested-fg"><span class="ico">📈</span>Программы по развитию установки на рост</h3><span class="tag t-contested"><span class="dot">🟠</span>Спорно</span></div>
+          <p class="body">Sisk и др. нашли средний эффект на успеваемость около d = 0,08. Структурированный обзор 2025 года даёт d = 0,05 в целом и d = 0,02, если оставить только самые качественные исследования. Macnamara и Burgoyne объясняют кажущиеся эффекты проблемами дизайна и отчётности.</p>
+          <div class="honest t-contested-fg"><span class="minilabel">🧭 Честная версия</span><div>Защитники метода возражают: метаанализы усреднили настоящие эффекты в предсказанных подгруппах, например среди слабо успевающих, с нулевыми там, где никакого эффекта и не ожидали; а крупные предварительно зарегистрированные испытания как раз показали прирост в предсказанной подгруппе. Спор не решён.</div></div>
+        </div><div class="myth edge-contested">
+          <div class="myth-h"><h3 class="h3 t-contested-fg"><span class="ico">🎯</span>Две сигмы Блума</h3><span class="tag t-contested"><span class="dot">🟠</span>Спорно</span></div>
+          <p class="body">Утверждение, что индивидуальное репетиторство поднимает среднего ученика на два стандартных отклонения. В таком масштабе оно не воспроизведено. Систематический обзор VanLehn нашёл следующий по величине эффект около 0,82; повторение одного из исходных исследований дало около 0,52. Метаанализы репетиторства группируются около 0,36–0,37 стандартного отклонения.</p>
+          <div class="honest t-contested-fg"><span class="minilabel">🧭 Честная версия</span><div>Репетиторство работает. Конкретная цифра не подтверждена. Блум подавал свою статью как открытый вызов, а не как результат.</div></div>
+        </div></div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Процедура</span></div><h2 class="h2">Шесть шагов, подходящих для любого понятия.</h2><div class="proc"><div class="proc-row">
+          <span class="proc-n">1</span>
+          <strong class="proc-name"><span class="ico">🎬</span><span class="po">Сцена</span><span class="pp">Конкретный случай</span></strong>
+          <span class="proc-desc muted"><span class="po">Сначала конкретное, потом абстрактное. Помести человека внутрь ситуации, прежде чем назовёшь её.</span><span class="pp">Сначала показать конкретный пример, а потом назвать понятие.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">2</span>
+          <strong class="proc-name"><span class="ico">✋</span><span class="po">Выбор</span><span class="pp">Потребовать прогноз</span></strong>
+          <span class="proc-desc muted"><span class="po">Вынуди сделать прогноз. Запечатай ответ, пока человек не выбрал.</span><span class="pp">Потребовать, чтобы учащийся ответил до того, как ответ станет доступен.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">3</span>
+          <strong class="proc-name"><span class="ico">⚡</span><span class="po">Трение</span><span class="pp">Показать, почему прогноз не сбывается</span></strong>
+          <span class="proc-desc muted"><span class="po">Ответ встречает сопротивление. Именно в этот момент и происходит обучение.</span><span class="pp">Отреагировать именно на тот ответ, который дан, и объяснить, почему он не срабатывает.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">4</span>
+          <strong class="proc-name"><span class="ico">💡</span><span class="po">Раскрытие</span><span class="pp">Объяснить механизм</span></strong>
+          <span class="proc-desc muted"><span class="po">Теперь механизм ложится на готовую почву — на ум, который уже тянется к ответу.</span><span class="pp">Объяснить механизм после того, как учащийся попробовал сам.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">5</span>
+          <strong class="proc-name"><span class="ico">🔁</span><span class="po">Вспоминание</span><span class="pp">Вспомнить без подсказок</span></strong>
+          <span class="proc-desc muted"><span class="po">Собери из памяти, не прокручивая назад.</span><span class="pp">Восстановить материал по памяти, не заглядывая в текст.</span></span>
+        </div><div class="proc-row">
+          <span class="proc-n">6</span>
+          <strong class="proc-name"><span class="ico">🧪</span><span class="po">Перенос</span><span class="pp">Применить к новому случаю</span></strong>
+          <span class="proc-desc muted"><span class="po">Новый случай, в котором модель может по-настоящему сломаться.</span><span class="pp">Применить модель к новому случаю, который она может не объяснить.</span></span>
+        </div></div><p class="lead muted" style="margin-top:20px">Шаги 2, 3 и 6 обычно пропускают. А на них приходится большая часть эффекта.</p></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Рядом друг с другом</span></div>
+  <h2 class="h2">Один урок, два способа его провести.</h2>
+  <p class="lead muted">Тема: почему распределённая практика лучше зубрёжки.</p>
+  <div class="two-ways">
+    <div class="way edge-weak">
+      <div class="minilabel t-weak-fg">❌ Передача</div>
+      <p class="body">Распределённая практика эффективнее массированной. Когда занятия разделены промежутками, между ними происходит частичное забывание, и усилие повторного вспоминания укрепляет память сильнее, чем гладкое повторение. Это называется эффектом разнесения.</p>
+      <div class="way-note t-weak-fg">Точно. Ясно. Хорошо написано. Читатель кивает и почти ничего не запоминает, потому что ничего не делал сам.</div>
+    </div>
+    <div class="way edge-robust">
+      <div class="minilabel t-robust-fg">✅ Реконструкция</div>
+      <p class="body">Два студента занимаются по четыре часа. Аня делает все четыре часа накануне вечером. Боря занимается по часу в четыре разных вечера. <strong>Кто наберёт больше баллов на тесте через две недели?</strong></p>
+      <p class="body">Большинство отвечает: Боря, — и оказывается право. Тогда вот вопрос потруднее, и именно из-за него эта версия учит: <strong>кто наберёт больше баллов на следующее утро?</strong></p>
+      <p class="body">Часто — Аня. Массированная практика может выиграть на немедленном тесте. Именно поэтому зубрёжка и жива: её награждают на том отрезке времени, по которому студентов оценивают, и наказывают на том, который им действительно нужен. Если бы ты ограничился абзацем выше, этого понимания у тебя не было бы.</p>
+      <div class="way-note t-robust-fg">То же содержание, плюс прогноз, в котором читатель может ошибиться, плюс второй случай, где наивное правило ломается.</div>
+    </div>
+  </div>
+</section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Разобранный пример · цикл тяги</span></div><div class="frame"><div class="note">⚠︎ УЧЕБНОЕ СОДЕРЖАНИЕ — заменитель, чтобы показать шесть шагов. Переносится процедура, а не эти утверждения.</div><h2 class="h2 sm">Как научить циклу и выходу из него, не объясняя ни того, ни другого заранее.</h2><div class="step"><div class="step-h"><span class="step-n">ШАГ 1</span><span class="ico">🎬</span></div><h4 class="step-t">Конкретный случай</h4><div class="scene"><span class="po">Что-то кажется пустым. Что-то обещает это заполнить. Ты тянешься — и на мгновение тяга стихает. Потом пустота возвращается — чуть глубже, — и то же самое «что-то» обещает снова.</span><span class="pp">Человек ощущает нехватку. Некое поведение обещает её устранить. Он совершает это поведение, и позыв ненадолго стихает. Нехватка возвращается, чуть сильнее. То же поведение обещает снова. С каждым повторением нужно всё больше, чтобы получить то же облегчение.</span></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 2</span><span class="ico">✋</span></div><h4 class="step-t">Предскажи: где стоило бы вмешаться?</h4><p class="hint muted">Объяснение скрыто, пока ты не ответишь.</p><div class="choices" data-choice-group="spiral"><button class="choice" data-group="spiral" data-id="a"><span class="ci">А</span>На погоне — сопротивляться самому поведению</button><button class="choice" data-group="spiral" data-id="b"><span class="ci">Б</span>На триггере — убрать то, что его запускает</button><button class="choice" data-group="spiral" data-id="c"><span class="ci">В</span>На обещании — в тот момент, когда оно предсказывает, что это насытит</button><button class="choice" data-group="spiral" data-id="d"><span class="ci">Г</span>На награде — сделать её труднее получить</button></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 3</span><span class="ico">⚡</span></div><h4 class="step-t">Почему этот ответ работает или не работает</h4><div class="gate" data-locked="true" data-req-choice="spiral"><button class="gate-btn" disabled data-label="Показать ответ на мой выбор" data-lock="Запечатано — сначала выбери вариант">🔒 Sealed — choose an option first</button><div class="gate-content" hidden><div class="responses" data-responses-for="spiral"><div class="resp" data-when="a">Погоня. Самый частый выбор и наименее эффективный. Он вмешивается уже после того, как мотивационное состояние запущено, и потому требует постоянных усилий против него.</div><div class="resp" data-when="b">Устранение триггеров снижает частоту. Но триггеров много, и они взаимозаменяемы, так что это решает отдельные случаи, а не механизм.</div><div class="resp" data-when="c">Это самая ранняя точка вмешательства, и именно её поддерживает механизм ниже. Заметь: когда до неё додумываешься сам, объяснение запоминается легче, чем при простом чтении.</div><div class="resp" data-when="d">Ограничение доступа к награде тоже вмешивается уже после того, как мотивационное состояние сформировалось, и сталкивается с той же трудностью, что и сопротивление погоне.</div></div><p class="body" style="margin-bottom:0">Самая эффективная точка вмешательства — самая ранняя, в момент, когда формируется предсказание, а не в точке сильнейшего позыва.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 4</span><span class="ico">💡</span></div><h4 class="step-t">Механизм</h4><div class="gate" data-locked="true" data-req-choice="spiral"><button class="gate-btn" disabled data-label="Показать механизм" data-lock="Запечатано">🔒 Sealed</button><div class="gate-content" hidden><p class="body">Хотение — это мотивационная тяга к стимулу. Удовольствие — гедоническое удовлетворение от его потребления. Поведение снижает хотение, но не даёт удовольствия, поэтому глубинная нехватка остаётся. К тому же хотение с повторением подстраивается вверх.</p><p class="body" style="margin-bottom:0">Поэтому сопротивление погоне лечит симптом ниже по течению. Причина выше по течению — предсказание, что это поведение принесёт удовольствие, а оно по своей структуре не может.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 5</span><span class="ico">🔁</span></div><h4 class="step-t">Восстанови это по памяти</h4><p class="hint muted">Назови стадии и объясни, почему сопротивление погоне не работает. Не прокручивай назад.</p><textarea id="loopText" rows="4" placeholder="По памяти…"></textarea><div class="gate" data-locked="true" data-req-text="loopText"><button class="gate-btn" disabled data-label="Проверить себя" data-lock="Запечатано — сначала напиши настоящую попытку">🔒 Sealed — write a real attempt first</button><div class="gate-content" hidden><p class="body">Нехватка → предсказание, что поведение её устранит → само поведение → хотение стихает, удовольствия нет → нехватка возвращается, сильнее → повтор с эскалацией.</p><p class="body" style="margin-bottom:0">Сопротивление погоне не работает, потому что вмешивается уже после предсказания, которое запускает цикл.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 6</span><span class="ico">🧪</span></div><h4 class="step-t">Примени это к случаю, который может его сломать</h4><p class="body" style="margin-bottom:0">Три из этих случаев вписываются в модель. Один — нет. Какой?</p><div class="choices" data-choice-group="spiralT"><button class="choice" data-group="spiralT" data-id="a"><span class="ci">А</span>Обновление ленты — на миг в курсе, после — ещё пустее</button><button class="choice" data-group="spiralT" data-id="b"><span class="ci">Б</span>Голод → еда → по-настоящему сыт → снова голоден через несколько часов</button><button class="choice" data-group="spiralT" data-id="c"><span class="ci">В</span>Повторная проверка поста ради одобрения, которое уже получено</button><button class="choice" data-group="spiralT" data-id="d"><span class="ci">Г</span>Покупка новой вещи, чтобы стать другим человеком</button></div><div class="gate" data-locked="true" data-req-choice="spiralT"><button class="gate-btn" disabled data-label="Проверить мой ответ" data-lock="Запечатано — сначала выбери один">🔒 Sealed — choose one</button><div class="gate-content" hidden><div class="verdict" data-verdict-for="spiralT" data-answer="b" data-correct=""><div class="vd" data-vd="correct"><strong>✅ Верно.</strong><div class="vspace">Голод — гомеостатический цикл. Еда приносит удовольствие — ты по-настоящему насыщен — и не нарастает: завтрашний голод не сильнее сегодняшнего.</div><div class="vspace">У модели два различающих признака, и твой ответ опирается на оба: <strong>приносит ли это удовольствие?</strong> и <strong>нарастает ли это?</strong></div></div><div class="vd" data-vd="incorrect"><strong>❌ Не этот.</strong><div class="vspace">Выбранный тобой вариант как раз вписывается в модель: он снижает хотение, не приносит удовольствия и нарастает. Исключение — <strong>голод</strong>. Еда даёт настоящее насыщение, а голод не нарастает день ото дня.</div><div class="vspace">Различающие признаки — <strong>приносит ли это удовольствие?</strong> и <strong>нарастает ли это?</strong> Ошибка здесь показывает, где твоя модель была задана недостаточно точно.</div></div></div></div></div></div></div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Разобранный пример · статистическая идея</span></div><div class="frame"><h2 class="h2 sm">Ошибка выжившего за четыре минуты.</h2><p class="lead muted">Смотри, как много работы делается до того, как появится хоть какое-то объяснение.</p><div class="step"><div class="step-h"><span class="step-n">ШАГ 1</span><span class="ico">🎬</span></div><h4 class="step-t">Конкретный случай</h4><div class="scene">Год 1943-й. Бомбардировщики возвращаются с налётов на Европу, изрешечённые пробоинами. Аналитики наносят повреждения на карту: много на крыльях и хвостовой части фюзеляжа, почти нет на двигателях и в кабине пилота. Броня тяжёлая. Усилить можно лишь часть самолёта.</div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 2</span><span class="ico">✋</span></div><h4 class="step-t">Предскажи: куда ты поставишь броню?</h4><div class="choices" data-choice-group="wald"><button class="choice" data-group="wald" data-id="a"><span class="ci">А</span>На крыльях и фюзеляже — там, где повреждения сосредоточены</button><button class="choice" data-group="wald" data-id="b"><span class="ci">Б</span>На двигателях и в кабине — там, где повреждений почти нет</button><button class="choice" data-group="wald" data-id="c"><span class="ci">В</span>Равномерно по всему планеру</button><button class="choice" data-group="wald" data-id="d"><span class="ci">Г</span>Без брони: снизить вес, чтобы самолёты летали быстрее</button></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 3</span><span class="ico">⚡</span></div><h4 class="step-t">Почему этот ответ работает или не работает</h4><div class="gate" data-locked="true" data-req-choice="wald"><button class="gate-btn" disabled data-label="Показать ответ на мой выбор" data-lock="Запечатано — сначала выбери вариант">🔒 Sealed — choose an option first</button><div class="gate-content" hidden><div class="responses" data-responses-for="wald"><div class="resp" data-when="a">Самый частый ответ — и ровно наоборот. Прежде чем читать дальше, спроси себя: какие самолёты вообще можно было осмотреть?</div><div class="resp" data-when="b">Верно, и это необычный ответ. Держись его, но убедись, что можешь объяснить почему: правильный ответ по неправильной причине не переносится.</div><div class="resp" data-when="c">Равномерная броня тратит вес на участки, которые заведомо выдерживают повреждения. К тому же она обходит вопрос, а не отвечает на него.</div><div class="resp" data-when="d">Разумный инженерный компромисс, но он обходит стороной проблему вывода. Данные на столе по-прежнему читаются неверно.</div></div><p class="body" style="margin-bottom:0">Один вопрос всё разрешает: <strong>какие самолёты вообще можно было осмотреть?</strong></p></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 4</span><span class="ico">💡</span></div><h4 class="step-t">Механизм</h4><div class="gate" data-locked="true" data-req-choice="wald"><button class="gate-btn" disabled data-label="Показать механизм" data-lock="Запечатано">🔒 Sealed</button><div class="gate-content" hidden><p class="body">Измерить можно было только вернувшиеся самолёты. Значит, пробоины отмечают места, куда бомбардировщик могут поразить, и он всё равно вернётся. Чистые участки — не везение: именно туда попадания были смертельными, а те самолёты лежат на дне Ла-Манша.</p><p class="body">Бронируй двигатели и кабину. Статистик Абрахам Вальд, работавший в Statistical Research Group при Колумбийском университете, разработал метод оценки уязвимости по повреждениям выживших.</p><p class="body">В общем виде: если выборка отобрана по тому исходу, который ты изучаешь, закономерность в данных переворачивается.</p><div class="caution"><div>⚠️ Военные меморандумы Вальда подлинные. Широко ходящая схема бомбардировщика, усыпанного красными точками, — современная иллюстрация, а не его, и саму историю часто пересказывают с прикрасами. Статистический вывод остаётся верным; история вокруг него отполирована.</div></div></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 6</span><span class="ico">🧪</span></div><h4 class="step-t">Примени это к случаю, который может его сломать</h4><p class="body" style="margin-bottom:0">Три из этих случаев — ошибка выжившего. Один — нет. Какой?</p><div class="choices" data-choice-group="waldT"><button class="choice" data-group="waldT" data-id="a"><span class="ci">А</span>«Большинство великих основателей бросили колледж».</button><button class="choice" data-group="waldT" data-id="b"><span class="ci">Б</span>«Старые здания строили лучше, чем новые».</button><button class="choice" data-group="waldT" data-id="c"><span class="ci">В</span>«Этот препарат превзошёл плацебо в рандомизированном контролируемом исследовании».</button><button class="choice" data-group="waldT" data-id="d"><span class="ci">Г</span>«Кошки, упавшие с верхних этажей, выживают чаще».</button></div><div class="gate" data-locked="true" data-req-choice="waldT"><button class="gate-btn" disabled data-label="Проверить мой ответ" data-lock="Запечатано — сначала выбери один">🔒 Sealed — choose one</button><div class="gate-content" hidden><div class="verdict" data-verdict-for="waldT" data-answer="c" data-correct=""><div class="vd" data-vd="correct"><strong>✅ Верно.</strong><div class="vspace">Случайное распределение означает, что выборку не отбирали по исходу. Остальные три случая все привязаны к выживанию: отчисленные, у которых ничего не вышло, не становятся известными; плохо построенные старые здания снесли; а кошек, погибших при падении, в ветеринарку так и не принесли.</div><div class="vspace">Различающий признак: <strong>отбирали ли выборку по изучаемому исходу?</strong></div></div><div class="vd" data-vd="incorrect"><strong>❌ Не этот.</strong><div class="vspace">Случай, который ты выбрал, как раз привязан к выживанию. Исключение — <strong>рандомизированное исследование</strong>: случайное распределение означает, что выборку не отбирали по исходу.</div><div class="vspace">Различающий признак: <strong>отбирали ли выборку по изучаемому исходу?</strong> Обрати внимание: теперь ты можешь сформулировать правило, а по одному определению сделать это было бы нельзя.</div></div></div></div></div></div></div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Разобранный пример · богословская идея</span></div><div class="frame"><h2 class="h2 sm">Страх Божий: урок без предварительного определения.</h2><div class="note">⚠︎ МОЯ КОНСТРУКЦИЯ. Прочтение через направление движения — гомилетическая рамка, а не установленный экзегетический результат. Некоторые учёные считают, что древнееврейский язык не разделяет чётко ужас и благоговение и что нуминозное включает настоящий ужас. Проверяемо, но не авторитетно.</div><div class="step"><div class="step-h"><span class="step-n">ШАГ 1</span><span class="ico">🎬</span></div><h4 class="step-t">Два конкретных случая</h4><div class="scene">Человек слышит, как Бог ходит по саду, и прячется среди деревьев. На вопрос, почему, отвечает, что испугался.<div class="scene-gap"></div>Другой видит Владыку на высоком и превознесённом престоле, восклицает, что погиб, нечист, раздавлен, — и не двигается с места. Уголь с жертвенника касается его уст. Он остаётся. Он вызывается идти.</div><p class="hint muted" style="margin-top:14px">Быт. 3:8–10 · Ис. 6:1–8. Оба человека в ужасе. В обоих текстах есть язык страха.</p></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 2</span><span class="ico">✋</span></div><h4 class="step-t">Предскажи: кто из двоих боится Бога?</h4><div class="choices" data-choice-group="fear"><button class="choice" data-group="fear" data-id="a"><span class="ci">А</span>Адам — его страх очевидно более настоящий</button><button class="choice" data-group="fear" data-id="b"><span class="ci">Б</span>Исаия — его страх делает нечто другое</button><button class="choice" data-group="fear" data-id="c"><span class="ci">В</span>Оба — страх один и тот же, различается реакция</button><button class="choice" data-group="fear" data-id="d"><span class="ci">Г</span>Никто — слово означает совсем другое</button></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 3</span><span class="ico">⚡</span></div><h4 class="step-t">Почему этот ответ работает или не работает</h4><div class="gate" data-locked="true" data-req-choice="fear"><button class="gate-btn" disabled data-label="Показать ответ на мой выбор" data-lock="Запечатано — сначала выбери вариант">🔒 Sealed — choose an option first</button><div class="gate-content" hidden><div class="responses" data-responses-for="fear"><div class="resp" data-when="a">Интуитивный ответ, и в нём критерием служит сила страха. Адам, безусловно, боится. Но посмотри, что страх с ним делает: уводит его от Бога и прячет среди деревьев.</div><div class="resp" data-when="b">В точку. Но убедись, что можешь сказать почему: Исаия боится не меньше Адама. Он сокрушён. Разница не в громкости страха.</div><div class="resp" data-when="c">Близко, и это самый защитимый из четырёх ответов. Но оставь открытым вопрос: можно ли с пользой называть одним словом страх, который неизменно гонит прочь, и страх, который неизменно удерживает рядом?</div><div class="resp" data-when="d">Слишком поспешно. В обоих текстах слово делает настоящую работу. Вопрос в том, одну ли и ту же.</div></div><p class="body" style="margin-bottom:0">Различает не то, сколько страха, а то, в какую сторону страх тебя двигает.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 4</span><span class="ico">💡</span></div><h4 class="step-t">Механизм</h4><div class="gate" data-locked="true" data-req-choice="fear"><button class="gate-btn" disabled data-label="Показать механизм" data-lock="Запечатано">🔒 Sealed</button><div class="gate-content" hidden><p class="body">Древнееврейский корень <em>яре</em> несёт оба значения — ужас и благоговение, — и одно-единственное слово «страх» наследует эту двусмысленность. Слово выполняет две работы, а читатель молча выбирает одну.</p><p class="body">Страх Адама центробежен: он выносит его из присутствия. Страх Исаии центростремителен: он удерживает его в присутствии, которого тому не пережить, и очищается он именно там, а не где-то ещё. Тот же ужас. Противоположный вектор.</p><p class="body" style="margin-bottom:0">При таком прочтении страх Божий, о котором говорит литература мудрости, — не меньшая доза ужаса. Это ужас, развёрнутый к своему предмету, а не от него.</p></div></div></div><div class="step"><div class="step-h"><span class="step-n">ШАГ 6</span><span class="ico">🧪</span></div><h4 class="step-t">Примени это к случаю, который может его сломать</h4><p class="body" style="margin-bottom:0">Три случая — это движение от Бога. Один — к Нему. Какой?</p><div class="choices" data-choice-group="fearT"><button class="choice" data-group="fearT" data-id="a"><span class="ci">А</span>Адам прячется среди деревьев</button><button class="choice" data-group="fearT" data-id="b"><span class="ci">Б</span>Иона садится на корабль, идущий в другую сторону</button><button class="choice" data-group="fearT" data-id="c"><span class="ci">В</span>Слуга зарывает талант, говоря, что испугался</button><button class="choice" data-group="fearT" data-id="d"><span class="ci">Г</span>Исаия говорит, что погиб, — и остаётся</button></div><div class="gate" data-locked="true" data-req-choice="fearT"><button class="gate-btn" disabled data-label="Проверить мой ответ" data-lock="Запечатано — сначала выбери один">🔒 Sealed — choose one</button><div class="gate-content" hidden><div class="verdict" data-verdict-for="fearT" data-answer="d" data-correct=""><div class="vd" data-vd="correct"><strong>✅ Верно — а вот теперь модель начинает трещать.</strong><div class="vspace">Пётр в Лк. 5:8 падает к ногам Иисуса и говорит: <em>Уйди от меня, Господи, ведь я человек грешный!</em> Его слова движутся прочь. Его тело — навстречу. Чистая проверка направления его не разрешает.</div><div class="vspace">Это не изъян упражнения. Это и есть упражнение. Рамка, которая ни разу не встретила случай, который не может разложить по полкам, не проверена, — и если ты строишь обучение на этом различении, то Пётр — тот случай, на который тебе придётся ответить.</div></div><div class="vd" data-vd="incorrect"><strong>❌ Не этот.</strong><div class="vspace">Выбранный тобой случай — это движение прочь от присутствия. Исключение — <strong>Исаия</strong>: сокрушённый, но не сдвигающийся с места.</div><div class="vspace">Теперь случай потруднее, который модель чисто не разбирает: Пётр падает к ногам Иисуса и говорит: <em>Уйди от меня</em>. Слова — прочь, тело — навстречу. Куда он идёт? Почувствовать всю силу этого можно только потому, что сначала ты связал себя правилом.</div></div></div></div></div></div></div></section><section>
+      <div class="eyebrow "><span class="bar"></span><span class="eb-t">Самый трудный случай</span></div>
+      <h2 class="h2">Как учил Иисус — и где это ломает эту страницу.</h2>
+      <div class="note">⚠︎ ПРОЧТИ СНАЧАЛА. Дальнейшее — подгонка задним числом. Накладывать когнитивную науку XXI века на раввина I века — анахронизм по самому замыслу. Евангелия — богословские документы, а не стенограммы. Притча была стандартной формой иудейского обучения, поэтому ничто здесь не претендует на оригинальность метода. И у этого раздела нет украшенного варианта — переключатель «Просто / Образно» ниже ничего не меняет, — потому что именно здесь соблазн прозвучать глубокомысленно сильнее всего.</div>
+      <p class="body">Один часто цитируемый подсчёт: Copenhaver насчитывает 307 вопросов, заданных Иисусом, 183 вопроса, заданных Ему, и 3 случая, когда Он отвечает прямо. Рецензенты оспаривают эти цифры — некоторые указывают места, где Он отвечает прямо, а в другом месте и сам Copenhaver допускает меньше десяти. Цифра целиком зависит от неопределённого термина: <em>отвечает прямо</em>. Бери направление, а не число.</p>
+      <div class="jmove">
+          <div class="jref"><span class="ico">❓</span>Лк. 10:25–37</div>
+          <h3 class="h3">Он отвечает вопросом на вопрос — а затем переворачивает его</h3>
+          <p class="body">Учитель Закона спрашивает, кто считается его ближним. Иисус не определяет это понятие. Он рассказывает историю, а потом спрашивает, кто из трёх поступил как ближний. Ответ учитель Закона находит сам. И вопрос перевёрнут: он спрашивал, кто заслуживает его любви, а уходит с вопросом, чьим ближним является он сам.</p>
+          <div class="maps"><span class="minilabel accent">↳ Соответствует</span><div>Шаги 2, 3 и 6. Выбор вынужден. Смена рамки — это трение. «Иди и ты поступай так же» — это перенос.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🪞</span>2 Цар. 12:1–7</div>
+          <h3 class="h3">Слушатель сам себя осуждает первым</h3>
+          <p class="body">Не Иисус, но самый чистый образец этой формы, и Он знал её хорошо. Нафан рассказывает Давиду историю о богаче, который отнимает у бедняка его единственную овечку. Давид в гневе выносит приговор. Тогда Нафан применяет рассказ к нему: «Ты — тот человек!» Давид вынес вердикт, не зная, что он про него самого.</p>
+          <div class="maps"><span class="minilabel accent">↳ Соответствует</span><div>Выбор настолько полный, что учащемуся некуда отступать. Раскрытие приходит как узнавание себя, а не как информация.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🪙</span>Мк. 12:13–17</div>
+          <h3 class="h3">Он заставляет их самих предъявить улики</h3>
+          <p class="body">На вопрос-ловушку о налогах Он не отвечает. Он просит монету, а затем спрашивает, чьё на ней изображение. Они отвечают. Лишь тогда Он говорит, и то, что Он говорит, опирается на слова, которые они только что произнесли.</p>
+          <div class="maps"><span class="minilabel accent">↳ Соответствует</span><div>Порождение, а не передача. Прежде чем что-либо дать, Он требует от учащегося действия и высказывания.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🗣️</span>Мк. 8:27–33</div>
+          <h3 class="h3">Вынужденный выбор, а сразу за ним — проверка на перенос</h3>
+          <p class="body">Он спрашивает, что говорят о Нём люди, а затем сужает вопрос: «А вы кем считаете Меня?» Пётр делает выбор. Он прав. Через мгновения Иисус объясняет, что Мессия должен пострадать и умереть, Пётр возражает — и получает суровый упрёк. У Петра был верный ярлык, приклеенный к неверной модели.</p>
+          <div class="maps"><span class="minilabel accent">↳ Соответствует</span><div>Шаг 6, без сомнений. Верный ответ на шаге 2 не гарантирует, что модель переживёт новый случай.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🚶</span>Лк. 10:1–20</div>
+          <h3 class="h3">Практика, а затем разбор</h3>
+          <p class="body">Он отправляет семьдесят двух человек делать дело, не дав им увидеть, как оно доводится до конца. Они возвращаются с отчётом, и Он отвечает на то, что они принесли, — в том числе поправляя то, чему они радовались.</p>
+          <div class="maps"><span class="minilabel accent">↳ Соответствует</span><div>Целенаправленная практика с обратной связью. Сначала Он не читает им лекций, чтобы довести до готовности.</div></div>
+        </div><div class="jmove">
+          <div class="jref"><span class="ico">🐫</span>Мк. 10:25</div>
+          <h3 class="h3">Украшение как технология памяти</h3>
+          <p class="body">Верблюд, проходящий сквозь игольное ушко. Бревно в глазу. Соль, потерявшая вкус. В устной культуре, где нет блокнотов, гипербола и яркая нелепость — не украшение, а способ, которым изречение вообще переживает передачу. Это усложняет зачистку ниже, и так и должно быть.</p>
+          <div class="maps"><span class="minilabel accent">↳ Соответствует</span><div>Различие, которое выдерживает: Его образы спаяны с трудными, конкретными и дорогими утверждениями. Яркость делает запоминающимся нечто определённое. Она не подменяет это нечто собой.</div></div>
+        </div>
+      <div style="margin-top:44px">
+        <div class="eyebrow contested"><span class="bar"></span><span class="eb-t">Где модель ломается</span></div>
+        <h2 class="h2">Четыре места, где Он делает не то, что рекомендует эта страница.</h2>
+        <p class="lead muted">Если бы каждый пример подтверждал рамку, рамка ничего бы не делала.</p>
+        <div class="breaks"><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🚪</span>Он часто вообще опускает раскрытие</h3>
+          <p class="body" style="margin-bottom:0">Большинство притч заканчивается без объяснения. Ученики иногда получают толкование наедине; толпа — часто нет. По модели этой страницы это сломанный урок: шаг 4 так и не наступает. По Его модели, похоже, в этом и смысл.</p>
+        </div><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🌑</span>Он говорит о притчах как о сокрытии</h3>
+          <p class="body" style="margin-bottom:0">Когда Его спрашивают, почему Он говорит притчами, Он отвечает, что тайна дана тем, кто рядом, а внешним всё достаётся в притчах, «чтобы они смотрели, но не увидели», — цитируя Ис. 6. У Марка стоит союз цели (<em>хина</em>); у Матфея — причинный (<em>хоти</em>), и он читается скорее как следствие, чем как замысел. Толкование сильно оспаривается. Не оспаривается другое: ни один современный проектировщик обучения так бы не написал.</p>
+        </div><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🥀</span>Он позволяет людям уйти</h3>
+          <p class="body" style="margin-bottom:0">После трудного учения в Ин. 6 многие ученики перестают за Ним ходить. Он не смягчает сказанное и не бежит за ними. Богатый юноша уходит, и за ним не гонятся. Метод, оптимизированный под понимание, так не поступает. Метод, оптимизированный под преданность, — возможно.</p>
+        </div><div class="jbreak edge-contested">
+          <h3 class="h3 t-contested-fg"><span class="ico">🎯</span>Целевая функция другая</h3>
+          <p class="body" style="margin-bottom:0">Эта страница оптимизирует удержание и перенос модели. Он же в первую очередь не пытается установить модель. Мерить Его баллами за тесты — категориальная ошибка, а то, что Его методы случайно похожи на хорошую педагогику, стоит заметить, но это ничего не доказывает.</p>
+        </div></div>
+      </div>
+      <div class="slab" style="margin-top:44px">
+        <div class="slab-eb">Что есть у Него и чего нет у этой страницы</div>
+        <p class="slab-lead">Притча намеренно удерживает раскрытие. Слушатель носит её с собой неразрешённой — днями или годами. Она всплывает снова на свадьбе, у могилы, когда самарянин останавливается на дороге. Это практика вспоминания без планировщика, без приложения и без уведомлений: история сама делает разнесение — тем, что отказывается закрыться.</p>
+        <p class="slab-sub">Именно этого приёма эта страница выполнить не может. Вспоминание здесь происходит за один присест; разнесения нет вовсе. Самый древний метод обучения в этой комнате целиком построен на опоре, которой не хватает самому новому.</p>
+        <div class="slab-foot"><span class="minilabel accent">🛑 И честное ограничение</span><div>Этот абзац — самая привлекательная идея на странице, и потому ему стоит не доверять. Это моё умозаключение, не измеренное. Никто не проверял, даёт ли неразрешённая притча долговременное запоминание, а механизм, который я назвал, — отложенное повторное вспоминание, — это современная категория, наложенная на материал. К тому же есть риск свести призыв к покаянию к приёму запоминания — именно так этот раздел может оказаться неправым, продолжая казаться верным.</div></div>
+      </div>
+    </section><section>
+      <div class="eyebrow weak"><span class="bar"></span><span class="eb-t">Что убрала зачистка</span></div>
+      <h2 class="h2">Шесть строк, которые уцелели только ради звучания.</h2>
+      <p class="lead muted">Проверка: распакуй фразу. Если на выходе получается утверждение, которое может оказаться ложным, сжатие себя оправдало. Если на выходе была уже одна простая фраза, оборот был украшением.</p>
+      <div class="cuts"><div class="cut edge-weak"><div class="cut-line">Скучное накопление — это топливо; озарение — горение.</div><div class="cut-why muted">Распаковывается в: для озарения нужны предварительные знания. Метафора добавила жара, но не информации.</div></div><div class="cut edge-weak"><div class="cut-line">Если страница не говорит, где её доказательства слабы, она не учит тебя — она тебе что-то продаёт.</div><div class="cut-why muted">Хиазм. Убеждает форма фразы, а не утверждение.</div></div><div class="cut edge-weak"><div class="cut-line">Это не рамка — это настроение.</div><div class="cut-why muted">Не распаковывается ни во что, что можно опровергнуть. Чистое украшение.</div></div><div class="cut edge-weak"><div class="cut-line">Учебный эквивалент того, чтобы есть меню.</div><div class="cut-why muted">Образно. Говорит меньше, чем «повышает знакомость, но не улучшает вспоминание».</div></div><div class="cut edge-weak"><div class="cut-line">Беглость — лгунья.</div><div class="cut-why muted">Сжимает реальный результат, но использована трижды. По повторению и узнаёшь фразу, которую оставили ради звучания.</div></div><div class="cut edge-weak"><div class="cut-line">Рычаг не там, где цикл громче всего.</div><div class="cut-why muted">Означает: вмешивайся рано. Нарядили так, чтобы звучало как открытие.</div></div></div>
+      <div class="caution" style="margin-top:20px"><div>Беда не в образном языке. <strong>Верблюд сквозь игольное ушко</strong> образен и незабываем, и он спаян с трудным, конкретным, дорогостоящим утверждением. Беда — в образном языке, который прикрывает утверждение, уже полностью выраженное простыми словами. Яркость, прикреплённая к определённому, — это мнемоника. Яркость, прикреплённая к расплывчатому, — мнимая глубина.</div></div>
+    </section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Прежде чем уйти</span></div><h2 class="h2">Восстанови шесть шагов, не прокручивая страницу.</h2><p class="lead muted">Ошибиться в части шагов полезнее, чем безошибочно переписать все, заглянув в текст.</p><textarea id="stepText" rows="4" placeholder="Шесть шагов, по памяти…"></textarea><div class="gate" data-locked="true" data-req-text="stepText"><button class="gate-btn" disabled data-label="Проверить себя" data-lock="Запечатано — сначала попробуй вспомнить">🔒 Sealed — attempt it first</button><div class="gate-content" hidden><div class="edge-robust recall-answer"><ol class="t-robust-fg"><li>🎬 <span class="po">Сцена</span><span class="pp">Конкретный случай</span> — <span class="po">Сначала конкретное, потом абстрактное. Помести человека внутрь ситуации, прежде чем назовёшь её.</span><span class="pp">Сначала показать конкретный пример, а потом назвать понятие.</span></li><li>✋ <span class="po">Выбор</span><span class="pp">Потребовать прогноз</span> — <span class="po">Вынуди сделать прогноз. Запечатай ответ, пока человек не выбрал.</span><span class="pp">Потребовать, чтобы учащийся ответил до того, как ответ станет доступен.</span></li><li>⚡ <span class="po">Трение</span><span class="pp">Показать, почему прогноз не сбывается</span> — <span class="po">Ответ встречает сопротивление. Именно в этот момент и происходит обучение.</span><span class="pp">Отреагировать именно на тот ответ, который дан, и объяснить, почему он не срабатывает.</span></li><li>💡 <span class="po">Раскрытие</span><span class="pp">Объяснить механизм</span> — <span class="po">Теперь механизм ложится на готовую почву — на ум, который уже тянется к ответу.</span><span class="pp">Объяснить механизм после того, как учащийся попробовал сам.</span></li><li>🔁 <span class="po">Вспоминание</span><span class="pp">Вспомнить без подсказок</span> — <span class="po">Собери из памяти, не прокручивая назад.</span><span class="pp">Восстановить материал по памяти, не заглядывая в текст.</span></li><li>🧪 <span class="po">Перенос</span><span class="pp">Применить к новому случаю</span> — <span class="po">Новый случай, в котором модель может по-настоящему сломаться.</span><span class="pp">Применить модель к новому случаю, который она может не объяснить.</span></li></ol></div></div></div></section><section><div class="slab">
+  <div class="slab-eb">Честное предостережение</div>
+  <p class="slab-lead"><span class="po">Тот же эмоциональный всплеск, из-за которого верное озарение запоминается, делает столь же верным на вид и ошибочное, но убедительное. Яркость и точность отделимы друг от друга.</span><span class="pp">Эмоционально яркие идеи хорошо запоминаются независимо от того, верны ли они. Яркость не отслеживает точность, поэтому уверенность, которую вызывает идея, — не доказательство в её пользу.</span></p>
+  <p class="slab-sub"><span class="po">Поэтому последний ход — не тот, от которого лучше всего на душе, а тот, который лучше всех способен сказать тебе, что ты ошибаешься. Заложи это в процесс — для своих учеников и для себя.</span><span class="pp">Поэтому выбирай метод, который лучше всего способен тебя опровергнуть, а не тот, что кажется самым убедительным. Заложи это в процесс для своих учеников и для себя.</span></p>
+  <div class="slab-foot"><span class="minilabel accent">🛑 Где доказательства кончаются</span><div>Восемь приёмов опираются на приведённые результаты. Шесть шагов — мой синтез: паттерн проектирования, собранный из этих результатов, а не проверенная программа. На этой странице не проводили ни одного испытания. Она даёт вспоминание в рамках одного сеанса и не даёт разнесения по дням: из двух высокополезных техник по Dunlosky реализована одна. О второй половине см. мнемонический медиум Matuschak и Nielsen — и притчи как самую древнюю его версию.</div></div>
+</div></section><section><div class="eyebrow "><span class="bar"></span><span class="eb-t">Источники</span></div>
+  <div class="sources">Dunlosky, Rawson, Marsh, Nathan и Willingham (2013) · Rowland (2014) · Adesope, Trevisan и Sundararajan (2017) · Deslauriers, McCarty, Miller, Callaghan и Kestin (2019), <em>PNAS</em> · Freeman и др. (2014), <em>PNAS</em> · Kalyuga, Ayres, Chandler и Sweller (2003) · Pashler, McDaniel, Rohrer и Bjork (2008) · Sisk, Burgoyne, Sun, Taylor и Macnamara (2018) · Macnamara и Burgoyne (2023) · Tipton, Bryan, Murray и Schneider (2022) · Gazmuri и др. (2025) · VanLehn о «двух сигмах» Блума · Frontiers (2024), метаанализ соответствия подачи стилям обучения · Matuschak, <em>Why books don't work</em> (2019) · Matuschak и Nielsen, <em>Quantum Country</em> · Wald, меморандумы Statistical Research Group (1943) · Copenhaver, <em>Jesus Is the Question</em> (2014) · Быт. 3 · Ис. 6 · 2 Цар. 12 · Мк. 4, 8, 10, 12 · Лк. 5, 10 · Мф. 13 · Ин. 6</div>
+</section><footer class="foot"><span>Метод реконструкции · v7</span>
+  <div class="foot-row"><a class="home" href="/ru/">← Все проекты</a><div class="foot-pick"><span>Стихи во всплывающих окнах:</span><span id="pickerHost"></span></div></div>
+  <p class="foot-fine">Стихи во всплывающих окнах приводятся по Новому русскому переводу (НРП®) © <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener" style="color:inherit">Biblica, Inc.</a>® Используется по разрешению. Все права защищены.</p>
+</footer></div><script src="/assets/scripture-popover.js"></script><script>
+const state={};
+function selectChoice(group,id){
+  state[group]=id;
+  document.querySelectorAll('[data-choice-group="'+group+'"] .choice').forEach(function(c){
+    c.classList.toggle('selected', c.dataset.id===id);
+  });
+  document.querySelectorAll('[data-responses-for="'+group+'"]').forEach(function(w){
+    w.querySelectorAll('.resp').forEach(function(r){ r.classList.toggle('show', r.dataset.when===id); });
+  });
+  document.querySelectorAll('[data-verdict-for="'+group+'"]').forEach(function(w){
+    w.dataset.correct = (id===w.dataset.answer)?'true':'false';
+  });
+  refreshGates();
+}
+function refreshGates(){
+  document.querySelectorAll('.gate').forEach(function(g){
+    var rc=g.dataset.reqChoice, rt=g.dataset.reqText, locked=false;
+    if(rc && !state[rc]) locked=true;
+    if(rt){ var ta=document.getElementById(rt); if(!ta || ta.value.trim().length<12) locked=true; }
+    g.dataset.locked = locked?'true':'false';
+    var btn=g.querySelector('.gate-btn');
+    if(btn && !btn.hidden){
+      btn.disabled=locked;
+      btn.textContent = locked ? ('🔒 '+btn.dataset.lock) : ('→ '+btn.dataset.label);
+    }
+  });
+}
+document.addEventListener('click',function(e){
+  var ch=e.target.closest('.choice');
+  if(ch){ selectChoice(ch.dataset.group, ch.dataset.id); return; }
+  var gb=e.target.closest('.gate-btn');
+  if(gb){ var g=gb.closest('.gate'); if(g.dataset.locked==='true') return;
+    g.querySelector('.gate-content').hidden=false; gb.hidden=true; return; }
+  var sb=e.target.closest('.seg-btn');
+  if(sb){ var t=sb.dataset.toggle, v=sb.dataset.val;
+    document.body.dataset[t]=v;
+    sb.parentElement.querySelectorAll('.seg-btn').forEach(function(b){ b.classList.toggle('active', b===sb); });
+    return; }
+});
+document.querySelectorAll('textarea').forEach(function(ta){ ta.addEventListener('input', refreshGates); });
+refreshGates();
+/* click a reference for the verse and its context */
+(function(){var SR=window.EsmrskyScripture;if(!SR)return;
+  SR.init({key:'how-to-teach',scan:'.hint, .jref, p.body, .sources',versions:['NIV','NASB','NLT','KJV']});
+  var host=document.getElementById('pickerHost');host.innerHTML=SR.pickerHtml();SR.wirePicker(host.querySelector('.esv-pick'));})();
+</script><script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body></html>
