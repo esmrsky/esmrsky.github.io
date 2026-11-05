@@ -204,7 +204,10 @@
   ];
   /* Only one published Russian translation is used across the estate, so on the
      Russian pages the picker states what you are reading rather than offering a choice. */
-  var RU_VERSIONS = [{ code: 'НРП', full: 'Новый русский перевод', bolls: 'NRT' }];
+  var RU_VERSIONS = [{ code: 'НРП', full: 'Новый русский перевод', bolls: 'NRT', bg: 'NRT' }];
+  /* The Synodal is offered only where a page asks for it (`ruVersions`): fear-of-god-ii is a
+     study of how the Synodal renders one word, so its pop-ups must read the same text. */
+  var RU_ALL = RU_VERSIONS.concat([{ code: 'СП', full: 'Синодальный перевод', bolls: 'SYNOD', bg: 'RUSV' }]);
 
   var cfg = { key: 'esmrsky', scan: '', lang: 'en' };
   var VERSIONS = EN_VERSIONS;
@@ -225,7 +228,7 @@
   function setVersion(code) {
     if (!VERSIONS.some(function (v) { return v.code === code; })) return;
     active = code;
-    lsSet(cfg.key + '-scripture-version', code);
+    lsSet(cfg.key + (isRu() ? '-scripture-version-ru' : '-scripture-version'), code);
     document.querySelectorAll('.esv-pick-val').forEach(function (el) { el.textContent = code; });
     document.querySelectorAll('.esv-pick-opt').forEach(function (o) {
       o.setAttribute('aria-selected', String(o.dataset.v === code));
@@ -351,6 +354,24 @@
     return String(text).replace(/\s*\n+\s*/g, ' ').replace(/[ \t]{2,}/g, ' ').trim();
   }
 
+  /* Some translations post a section heading inside the first verse it belongs to, on its own
+     line ("The Beginning" ahead of Genesis 1:1). Folded into the prose it reads as stray words
+     glued to the front of the sentence. Same test as the-thread's splitHeading: a heading leads
+     the verse, is short, has no closing punctuation, and is Title Case (a broken line of verse
+     opens lower-case or on a quote mark). Takes cleaned text, before flow(). */
+  function splitHeading(text) {
+    var nl = text.indexOf('\n');
+    if (nl < 1) return { heading: '', body: flow(text) };
+    var head = text.slice(0, nl).trim();
+    var rest = text.slice(nl + 1);
+    var plain = head.replace(/<[^>]*>/g, '').trim();
+    if (!plain || plain.length > 64 || /[.!?;:,—]$/.test(plain) || !rest.trim() ||
+        !/^[A-ZА-ЯЁ]/.test(plain)) return { heading: '', body: flow(text) };
+    var titleCase = plain.split(/\s+/).every(function (w) { return w.length < 4 || /^[^a-zа-яё]/.test(w); });
+    if (!titleCase) return { heading: '', body: flow(text) };
+    return { heading: head, body: flow(rest) };
+  }
+
   function toUsfm(parsed) {
     var book = USFM_BY_ID[parsed.bookId];
     if (!book) return '';
@@ -424,7 +445,8 @@
       if (!picked.length) return t('Verse not found.', 'Стих не найден.');
       var shown = verses.standIn || version;
       var note = asked ? swapNote(asked, shown, why) : shown !== version ? swapNote(version, shown, 'failed') : '';
-      return flow(picked.map(function (v) { return cleanBolls(v.text); }).join(' ')) + (note ? ' ' + note : '');
+      /* A pop-up is one verse or a few: a section heading inside it is dropped, not shown. */
+      return flow(picked.map(function (v) { return splitHeading(cleanBolls(v.text)).body; }).join(' ')) + (note ? ' ' + note : '');
     }).catch(function () {
       return t('Could not retrieve scripture text.', 'Не удалось загрузить текст Писания.');
     });
@@ -469,9 +491,11 @@
         return '<p class="esv-ctx-passage">' + rows.map(function (v) {
           var on = v.chapter === parsed.chapter && v.verse >= selStart && v.verse <= selEnd;
           var num = v.chapter === parsed.chapter ? String(v.verse) : v.chapter + ':' + v.verse;
-          return '<span class="esv-ctx-verse' + (on ? ' is-selected' : '') + '">' +
+          var parts = splitHeading(cleanBolls(v.text));
+          return (parts.heading ? '<b class="esv-ctx-heading">' + parts.heading + '</b>' : '') +
+            '<span class="esv-ctx-verse' + (on ? ' is-selected' : '') + '">' +
             '<sup class="esv-ctx-num">' + num + '</sup><span class="esv-ctx-t">' +
-            flow(cleanBolls(v.text)) + '</span></span>';
+            parts.body + '</span></span>';
         }).join(' ') + '</p>' + note;
       });
     });
@@ -558,7 +582,12 @@
 
   function bgUrl(ref) {
     return BG + encodeURIComponent(String(ref).replace(/·/g, ';')) +
-      '&version=' + (isRu() ? 'NRT' : active);
+      '&version=' + (isRu() ? bgCode(active) : active);
+  }
+
+  function bgCode(code) {
+    var v = VERSIONS.filter(function (x) { return x.code === code; })[0];
+    return (v && v.bg) || 'NRT';
   }
 
   function linkFor(ref, label) {
@@ -764,6 +793,18 @@
     /* The dialog's footer is a <footer>, so a page's own `footer{margin-top:…}` reached into it
        and opened a gap above the buttons (the-word). It belongs to the dialog, not the page. */
     'dialog.esv-ctx .esv-ctx-foot{margin:0}' +
+    /* Section headings are apparatus, like verse numbers: off unless the reader asks. */
+    '.esv-ctx-heading{display:none}' +
+    'dialog.esv-ctx[data-heads="on"] .esv-ctx-heading{display:block;margin:1.1em 0 .35em;font-size:.82em;font-weight:700;' +
+      'letter-spacing:.02em;opacity:.78;font-family:inherit}' +
+    'dialog.esv-ctx[data-heads="on"] .esv-ctx-heading:first-child{margin-top:0}' +
+    /* A floor of motion for any page whose skin has none: the pop-up and the dialog fade in
+       place. :where() has no specificity, so a skin's own transition always wins. Closing the
+       dialog eases from script (closeContext), so it works whatever the skin declares. */
+    '@media (prefers-reduced-motion:no-preference){' +
+      ':where(.esv-tip){transition:opacity .18s ease,display .18s allow-discrete}' +
+      ':where(.esv-ctx){transition:opacity .22s ease,display .22s allow-discrete,overlay .22s allow-discrete}' +
+      '@starting-style{:where(.esv-tip.open){opacity:0}:where(.esv-ctx[open]){opacity:0}}}' +
     '@media (prefers-reduced-motion:no-preference){dialog.esv-ctx .esv-ctx-body{transition:font-size .18s ease,line-height .18s ease,opacity .18s ease}}';
 
   /* ------------------------------------------------------- reading settings */
@@ -791,6 +832,7 @@
   var FS_KEY = 'thread-ctx-fs';
   var LH_KEY = 'thread-ctx-lh';
   var NUMS_KEY = 'thread-ctx-nums';
+  var HEADS_KEY = 'thread-ctx-heads';
   var FACE_KEY = 'esmrsky-ctx-face';
   var FS_DEF = 2;
   var LH_DEF = 'normal';
@@ -799,8 +841,10 @@
   var lhName = LH_DEF;
   var faceName = FACE_DEF;
   var numsOn = false;
+  var headsOn = false;
 
   function readSaved() {
+    headsOn = lsGet(HEADS_KEY) === 'on';
     var fs = parseInt(lsGet(FS_KEY), 10);
     fsIndex = fs >= 0 && fs < FS_STEPS.length ? fs : FS_DEF;
     var lh = lsGet(LH_KEY);
@@ -827,6 +871,7 @@
       lsSet(LH_KEY, lhName);
       lsSet(FACE_KEY, faceName);
       lsSet(NUMS_KEY, numsOn ? 'on' : 'off');
+      lsSet(HEADS_KEY, headsOn ? 'on' : 'off');
     }
     if (!dialog) return;
     ensureFaces();
@@ -836,6 +881,9 @@
     else dialog.style.setProperty('--esv-face', FACES[faceName].stack);
     dialog.dataset.face = faceName;
     dialog.dataset.nums = numsOn ? 'on' : 'off';
+    dialog.dataset.heads = headsOn ? 'on' : 'off';
+    var heads = dialog.querySelector('.esv-heads-opt');
+    if (heads) heads.setAttribute('aria-pressed', String(headsOn));
     var val = dialog.querySelector('.esv-fs-val');
     if (val) val.textContent = Math.round(FS_STEPS[fsIndex] * 100) + '%';
     [].forEach.call(dialog.querySelectorAll('.esv-fs-step'), function (b) {
@@ -876,6 +924,7 @@
       }).join('') + '</span></div>' +
       '<div class="esv-pref"><span class="esv-pref-group">' +
       '<button type="button" class="esv-nums-opt" aria-pressed="false">' + t('Verse numbers', 'Номера стихов') + '</button>' +
+      '<button type="button" class="esv-heads-opt" aria-pressed="false">' + t('Headings', 'Заголовки') + '</button>' +
       '</span></div>' +
       '<button type="button" class="esv-pref-reset">' + t('Reset', 'Сбросить') + '</button>' +
       '</div>';
@@ -898,7 +947,8 @@
       else if (opt) lhName = opt.dataset.lh;
       else if (face) faceName = face.dataset.face;
       else if (ev.target.closest('.esv-nums-opt')) numsOn = !numsOn;
-      else if (ev.target.closest('.esv-pref-reset')) { fsIndex = FS_DEF; lhName = LH_DEF; faceName = FACE_DEF; numsOn = false; }
+      else if (ev.target.closest('.esv-heads-opt')) headsOn = !headsOn;
+      else if (ev.target.closest('.esv-pref-reset')) { fsIndex = FS_DEF; lhName = LH_DEF; faceName = FACE_DEF; numsOn = false; headsOn = false; }
       else return;
       applyReading(true);
     });
@@ -995,8 +1045,16 @@
     fill(ref, active, id);
   }
 
-  function hide(force) {
+  /* `keepFocus` is for closes the reader caused somewhere else (clicking another spot, opening
+     the passage): focus stays where they put it. Escape and a second click hand focus back to
+     the reference, so a keyboard reader never lands at the top of the document. */
+  function hide(force, keepFocus) {
     if (pinned && !force) return;
+    if (tipTimer) clearTimeout(tipTimer);
+    var back = !keepFocus && tipAnchor;
+    if (back && back.isConnected && tip.contains(document.activeElement)) {
+      try { back.focus({ preventScroll: true }); } catch (e) { /* fine */ }
+    }
     tipTimer = setTimeout(function () {
       pinned = false;
       setTipLock(false);
@@ -1049,8 +1107,36 @@
     });
   }
 
+  /* The dialog fades out before it closes, whatever the host's skin declares: the animation
+     runs on the element itself (and its backdrop where the browser allows), so no skin rule
+     can clobber it. Reduced motion closes at once. */
+  var ctxTrigger = null;
+  var closing = false;
+  function closeContext() {
+    if (!dialog || !dialog.open || closing) return;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || typeof dialog.animate !== 'function') { dialog.close(); return; }
+    closing = true;
+    dialog.classList.add('is-closing');
+    var opts = { duration: 200, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' };
+    var anims = [dialog.animate([{ opacity: getComputedStyle(dialog).opacity }, { opacity: 0 }], opts)];
+    try { anims.push(dialog.animate([{ opacity: 1 }, { opacity: 0 }], Object.assign({ pseudoElement: '::backdrop' }, opts))); }
+    catch (e) { /* the backdrop simply goes with the close */ }
+    var done = false;
+    var finish = function () {
+      if (done) return;
+      done = true;
+      closing = false;
+      dialog.close();
+      anims.forEach(function (a) { try { a.cancel(); } catch (e) { /* fine */ } });
+    };
+    anims[0].finished.then(finish, finish);
+    setTimeout(finish, 320);
+  }
+
   function openContext(ref) {
     if (!dialog || !ref) return;
+    if (!ctxTrigger && document.activeElement && document.activeElement !== document.body) ctxTrigger = document.activeElement;
     dialog.dataset.ref = ref;
     dialog.dataset.radius = '4';
     dialog.querySelector('.esv-ctx-head h3').textContent = fullTitle(ref);
@@ -1092,47 +1178,55 @@
     wirePrefs();
     ctxPicker = wirePicker(dialog.querySelector('.esv-pick'), t('Read this passage in', 'Читать этот отрывок в'));
 
-    tip.addEventListener('mouseenter', function () { if (tipTimer) clearTimeout(tipTimer); });
-    tip.addEventListener('mouseleave', function () { hide(); });
-
-    document.body.addEventListener('mouseover', function (ev) {
-      if (pinned) return;
-      var link = ev.target.closest('.esv-ref');
-      if (!link) return;
-      show(link, link.dataset.ref || link.textContent, false);
-    });
-    document.body.addEventListener('mouseout', function (ev) {
-      if (ev.target.closest('.esv-ref')) hide();
-    });
-
+    /* Click, never hover (November 5, 2026). A pop-up that appears because the pointer
+       crossed a word covers the line being read, and a phone has no hover anyway, so every
+       device now works the way a phone always did: tap or click a reference to open its
+       pop-up, "See in context" for the passage, and a second click on the same reference,
+       a click elsewhere or Escape to close. */
     document.body.addEventListener('click', function (ev) {
       var link = ev.target.closest('.esv-ref');
       if (link) {
         ev.preventDefault();
+        if (pinned && tipAnchor === link) { hide(true); return; }
         show(link, link.dataset.ref || link.textContent, true);
         return;
       }
       var ctxBtn = ev.target.closest('.esv-tip-ctx');
-      if (ctxBtn) { openContext(ctxBtn.dataset.ref); hide(true); return; }
+      if (ctxBtn) { ctxTrigger = tipAnchor; openContext(ctxBtn.dataset.ref); hide(true, true); return; }
       /* The translation picker is part of the pop-up's controls, not "somewhere else". */
-      if (pinned && !ev.target.closest('.esv-tip') && !ev.target.closest('.esv-pick')) hide(true);
+      if (pinned && !ev.target.closest('.esv-tip') && !ev.target.closest('.esv-pick')) hide(true, true);
     });
 
     document.addEventListener('keydown', function (ev) {
       if (ev.key !== 'Escape' || !pinned) return;
-      if (dialog && dialog.open) return;                      // <dialog> closes itself
+      if (dialog && dialog.open) return;                      // the dialog takes it (cancel below)
       if (document.querySelector('.esv-pick.open')) return;    // the open menu takes it first
       ev.preventDefault();
       hide(true);
     });
 
-    dialog.querySelector('.esv-ctx-close').addEventListener('click', function () { dialog.close(); });
+    dialog.querySelector('.esv-ctx-close').addEventListener('click', closeContext);
     dialog.querySelector('.esv-ctx-more').addEventListener('click', function () {
       dialog.dataset.radius = String((parseInt(dialog.dataset.radius, 10) || 4) + 6);
       refreshContext(true);
     });
-    dialog.addEventListener('close', function () { setCtxLock(false); if (ctxPicker) ctxPicker.close(); });
-    dialog.addEventListener('click', function (ev) { if (ev.target === dialog) dialog.close(); });
+    /* Escape arrives as `cancel`; take it over so the close eases like the button's does.
+       An open picker inside the dialog takes Escape first, and keeps the dialog open. */
+    dialog.addEventListener('cancel', function (ev) {
+      ev.preventDefault();
+      if (dialog.querySelector('.esv-pick.open')) return;
+      closeContext();
+    });
+    dialog.addEventListener('close', function () {
+      dialog.classList.remove('is-closing');
+      setCtxLock(false);
+      if (ctxPicker) ctxPicker.close();
+      /* Back to the reference that opened it, without scrolling the page to reach it. */
+      var back = ctxTrigger;
+      ctxTrigger = null;
+      if (back && back.isConnected) { try { back.focus({ preventScroll: true }); } catch (e) { /* fine */ } }
+    });
+    dialog.addEventListener('click', function (ev) { if (ev.target === dialog) closeContext(); });
 
     /* The pop-up is positioned against the document, so it has to be re-anchored
        whenever the page reflows underneath it. */
@@ -1156,9 +1250,16 @@
       }).filter(Boolean);
       if (offered.length) VERSIONS = offered;
     }
+    if (isRu() && options.ruVersions && options.ruVersions.length) {
+      var ru = options.ruVersions.map(function (code) {
+        return RU_ALL.filter(function (v) { return v.code === code; })[0];
+      }).filter(Boolean);
+      if (ru.length) VERSIONS = ru;
+    }
     active = VERSIONS[0].code;
-    if (!isRu()) {
-      var saved = lsGet(cfg.key + '-scripture-version');
+    /* A one-translation Russian page has nothing to remember; a page offering two does. */
+    if (!isRu() || VERSIONS.length > 1) {
+      var saved = lsGet(cfg.key + (isRu() ? '-scripture-version-ru' : '-scripture-version'));
       if (saved && VERSIONS.some(function (v) { return v.code === saved; })) active = saved;
     }
     ensureBehaviourCss();
