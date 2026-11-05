@@ -26,6 +26,19 @@
     }
   })();
 </script>
+<script>
+  /* The view the reader last chose, before first paint, so a return visit to the
+     map never flashes the grid first. If the views script never arrives, fall
+     back to the grid rather than leave an empty stage. */
+  (function () {
+    var r = document.documentElement, v = 'grid';
+    try { v = new URLSearchParams(location.search).get('view') || localStorage.getItem('esmrsky-view') || 'grid'; } catch (e) {}
+    if (!/^(grid|shelves|threads|map)$/.test(v)) v = 'grid';
+    r.setAttribute('data-view', v);
+    if (v !== 'grid') setTimeout(function () { if (!window.__hubViews) r.setAttribute('data-view', 'grid'); }, 3000);
+  })();
+</script>
+<link rel="stylesheet" href="/assets/hub-views.css">
 <style>
   /* Cobalt is the one brand colour: header, active states, focus rings, glow.
      The reds/yellows/oranges/greens live only on the cards, as per-project
@@ -520,11 +533,13 @@
   .theme-soundings      { --accent: #25AEDA; }  /* cyan */
   .theme-whereareyou    { --accent: #FF3D93; }  /* riso pink */
   .theme-fathertime     { --accent: #A8483F; }  /* oxblood, the courtroom lens it argues with */
+  .theme-mountains      { --accent: #2F5A8F; }  /* high blue: the road seen whole, beside the ember of the road walked */
   .theme-drawnear       { --accent: #B83A24; }  /* the father's cloak in the Rembrandt: presence */
   .theme-innerroom      { --accent: #9C968A; }  /* the gray of Hammershøi's walls: the one quiet card */
   .theme-samefire       { --accent: #D9542B; }  /* Gauguin's vermilion field: the fire itself */
   .theme-wordseason     { --accent: #7FA6CF; }  /* first light, the blue hour before the sun */
   .theme-wordtalk       { --accent: #E7A99D; }  /* the same morning as slides: the blush between the blue hour and the sun */
+  .theme-received       { --accent: #2C8C86; }  /* threshold teal: the open door, a need met at the root */
   .theme-focus          { --accent: #34B98A; }  /* evergreen: attention resting on what you chose */
   .theme-oneaccord      { --accent: #9AA33A; }  /* the oil of Psalm 133, running down: unity poured, not built */
   .theme-judgment       { --accent: #B5822A; }  /* wheat / threshing gold */
@@ -822,7 +837,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 <body>
 
 
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Сменить тему">
   <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="4.2"/>
     <path d="M12 2.4v2.3M12 19.3v2.3M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.3M19.3 12h2.3M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
@@ -831,6 +846,10 @@ p,li,dd,figcaption{text-wrap:pretty}
     <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/>
   </svg>
 </button>
+<nav class="lang-switch" aria-label="Язык">
+  <a class="lang-opt" href="/" lang="en" hreflang="en" aria-current="false">EN</a>
+  <a class="lang-opt" href="/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a>
+</nav>
 
 <div class="bg-field" aria-hidden="true"><div class="bg-grid"></div></div>
 
@@ -845,8 +864,17 @@ p,li,dd,figcaption{text-wrap:pretty}
       <button class="filter-btn" data-filter="spirit">Писание и дух</button>
       <button class="filter-btn" data-filter="learning">Учёба и инструменты</button>
     </div>
+    <div class="view-switch-wrap">
+      <div class="view-switch" role="group" aria-label="Вид">
+        <button type="button" class="view-btn" data-view="grid" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Сетка</span></button>
+        <button type="button" class="view-btn" data-view="shelves" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17M3.5 12h17M3.5 19h17"/><path d="M6 5v-.01M6 12v-.01M6 19v-.01" stroke-width="3"/></svg><span>Полки</span></button>
+        <button type="button" class="view-btn" data-view="threads" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 17h18"/><circle cx="8" cy="7" r="2.2"/><circle cx="16" cy="7" r="2.2"/><circle cx="11" cy="17" r="2.2"/></svg><span>Нити</span></button>
+        <button type="button" class="view-btn" data-view="map" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="7" r="2.3"/><circle cx="18" cy="5.5" r="2.3"/><circle cx="12" cy="13" r="2.3"/><circle cx="6" cy="19" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.4 8.3l2.8 3M16.6 7.2l-3 4M10.3 14.6l-2.6 2.8M13.9 14.2l2.8 2.4"/></svg><span>Карта</span></button>
+      </div>
+    </div>
   </header>
 
+  <div class="view-stage">
   <!-- Bento Grid -->
   <main class="bento-grid">
     <!-- FEATURED · The Thread (Hero 2x2) -->
@@ -1358,6 +1386,9 @@ p,li,dd,figcaption{text-wrap:pretty}
     </div>
   </section>
 
+  <div class="views" id="views"></div>
+  </div>
+
 
 </div>
 
@@ -1517,6 +1548,7 @@ p,li,dd,figcaption{text-wrap:pretty}
   });
 </script>
 
+<script src="/assets/hub-views.js" defer></script>
 <script>
 /* Static Russian page. The old EN/RU toggle is gone; this only tells a
    page's own JS which language it is rendering into. */

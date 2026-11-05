@@ -26,6 +26,19 @@
     }
   })();
 </script>
+<script>
+  /* The view the reader last chose, before first paint, so a return visit to the
+     map never flashes the grid first. If the views script never arrives, fall
+     back to the grid rather than leave an empty stage. */
+  (function () {
+    var r = document.documentElement, v = 'grid';
+    try { v = new URLSearchParams(location.search).get('view') || localStorage.getItem('esmrsky-view') || 'grid'; } catch (e) {}
+    if (!/^(grid|shelves|threads|map)$/.test(v)) v = 'grid';
+    r.setAttribute('data-view', v);
+    if (v !== 'grid') setTimeout(function () { if (!window.__hubViews) r.setAttribute('data-view', 'grid'); }, 3000);
+  })();
+</script>
+<link rel="stylesheet" href="/assets/hub-views.css">
 <style>
   /* Cobalt is the one brand colour: header, active states, focus rings, glow.
      The reds/yellows/oranges/greens live only on the cards, as per-project
@@ -824,7 +837,7 @@ p,li,dd,figcaption{text-wrap:pretty}
 <body>
 
 
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch color theme" data-ru-aria-label="Сменить тему">
   <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="4.2"/>
     <path d="M12 2.4v2.3M12 19.3v2.3M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.3M19.3 12h2.3M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
@@ -833,6 +846,10 @@ p,li,dd,figcaption{text-wrap:pretty}
     <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/>
   </svg>
 </button>
+<nav class="lang-switch" aria-label="Language" data-ru-aria-label="Язык">
+  <a class="lang-opt" href="/" data-ru-href="/" lang="en" hreflang="en" aria-current="page" data-ru-aria-current="false">EN</a>
+  <a class="lang-opt" href="/ru/" data-ru-href="/ru/" lang="ru" hreflang="ru" data-ru-aria-current="page">RU</a>
+</nav>
 
 <div class="bg-field" aria-hidden="true"><div class="bg-grid"></div></div>
 
@@ -847,8 +864,17 @@ p,li,dd,figcaption{text-wrap:pretty}
       <button class="filter-btn" data-filter="spirit" data-ru="Писание и дух" data-ru-src="0a962a9c49">Scripture & Spirit</button>
       <button class="filter-btn" data-filter="learning" data-ru="Учёба и инструменты" data-ru-src="5a05242cd4">Learning & Tools</button>
     </div>
+    <div class="view-switch-wrap">
+      <div class="view-switch" role="group" aria-label="View" data-ru-aria-label="Вид">
+        <button type="button" class="view-btn" data-view="grid" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span data-ru="Сетка" data-ru-src="0d7d12ac62">Grid</span></button>
+        <button type="button" class="view-btn" data-view="shelves" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17M3.5 12h17M3.5 19h17"/><path d="M6 5v-.01M6 12v-.01M6 19v-.01" stroke-width="3"/></svg><span data-ru="Полки" data-ru-src="74f3b4f39c">Shelves</span></button>
+        <button type="button" class="view-btn" data-view="threads" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 17h18"/><circle cx="8" cy="7" r="2.2"/><circle cx="16" cy="7" r="2.2"/><circle cx="11" cy="17" r="2.2"/></svg><span data-ru="Нити" data-ru-src="3e42e38507">Threads</span></button>
+        <button type="button" class="view-btn" data-view="map" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="7" r="2.3"/><circle cx="18" cy="5.5" r="2.3"/><circle cx="12" cy="13" r="2.3"/><circle cx="6" cy="19" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.4 8.3l2.8 3M16.6 7.2l-3 4M10.3 14.6l-2.6 2.8M13.9 14.2l2.8 2.4"/></svg><span data-ru="Карта" data-ru-src="be176b0015">Map</span></button>
+      </div>
+    </div>
   </header>
 
+  <div class="view-stage">
   <!-- Bento Grid -->
   <main class="bento-grid">
 
@@ -2782,6 +2808,9 @@ p,li,dd,figcaption{text-wrap:pretty}
     </div>
   </section>
 
+  <div class="views" id="views"></div>
+  </div>
+
 
 </div>
 
@@ -2941,5 +2970,6 @@ p,li,dd,figcaption{text-wrap:pretty}
   });
 </script>
 
+<script src="/assets/hub-views.js" defer></script>
 </body>
 </html>
