@@ -129,10 +129,11 @@
     .sort(function (a, b) { return b.length - a.length; });
   var NAME_PATTERN = ALL_NAMES.join('|');
   /* The optional trailing "." lets the Russian abbreviations ("Мф. 16:18") match. */
-  var REF_BODY = '(?:[123]\\s)?(?:' + NAME_PATTERN + ')\\.?\\s\\d+(?::\\d+(?:[-–]\\d+)?)?';
+  /* Volumes run to 4: Russian counts Samuel and Kings as 1-4 Царств, so «4 Цар. 5:11» is 2 Kings. */
+  var REF_BODY = '(?:[1-4]\\s)?(?:' + NAME_PATTERN + ')\\.?\\s\\d+(?::\\d+(?:[-–]\\d+)?)?';
   var REF_RE = new RegExp('(' + REF_BODY + ')', 'g');
-  var PARSE_RE = new RegExp('^([123])?\\s?(' + NAME_PATTERN + ')\\.?\\s(\\d+)(?::(\\d+)(?:[-–](\\d+))?)?');
-  var BOOK_ONLY_RE = new RegExp('^(?:[123]\\s)?(?:' + NAME_PATTERN + ')\\.?');
+  var PARSE_RE = new RegExp('^([1-4])?\\s?(' + NAME_PATTERN + ')\\.?\\s(\\d+)(?::(\\d+)(?:[-–](\\d+))?)?');
+  var BOOK_ONLY_RE = new RegExp('^(?:[1-4]\\s)?(?:' + NAME_PATTERN + ')\\.?');
   var CONT_RE = /(\s*[·;,]\s*)(\d+:\d+(?:[-–]\d+)?)/g;
 
   /* Obadiah, Philemon, 2 John, 3 John and Jude have exactly one chapter, so a
@@ -174,7 +175,7 @@
     var parts = String(refs).split(/\s*[;·]\s*/).filter(Boolean);
     var lastBook = '';
     var out = [];
-    var bookRe = new RegExp('^((?:[123]\\s)?(?:' + NAME_PATTERN + ')\\.?)\\s+\\d');
+    var bookRe = new RegExp('^((?:[1-4]\\s)?(?:' + NAME_PATTERN + ')\\.?)\\s+\\d');
     parts.forEach(function (part) {
       part = part.trim();
       var book = part.match(bookRe);
@@ -343,6 +344,9 @@
       .replace(/[ \t]*\n[ \t]*/g, '\n')
       .replace(/\n{3,}/g, '\n\n')
       .replace(/[ \t]{2,}/g, ' ')
+      /* НРП sets speech on its own line and bolls drops the break, leaving «сказал:— Не»;
+         put back the space Russian typesets after the colon. Latin text never has «:—». */
+      .replace(/:([—–])/g, ': $1')
       .trim();
   }
 
