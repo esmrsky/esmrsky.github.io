@@ -21,6 +21,81 @@
 <link rel="stylesheet" href="../css/content.css">
 <link rel="stylesheet" href="../css/synth.css">
 <link rel="stylesheet" href="../css/interactives.css">
+<style id="scripture-skin">
+/* ==========================================================================
+   THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
+   which ships no colors on purpose. These are this page's clothes for it.
+   The roles are mapped on BODY, not :root, because the accent travels with
+   the chapter and is set on body: mapped on :root they would freeze to the
+   opening brass. The pop-up and the dialog are body's children, so they
+   follow the chapter you are reading. Opens and closes fade in place.
+   ========================================================================== */
+body{--sr-panel:var(--surface);--sr-ink:var(--ink);--sr-ink2:var(--ink-dim);--sr-ink3:var(--ink-faint);--sr-line:var(--line-strong);--sr-accent:var(--accent);--sr-accent-ink:var(--accent-ink);--sr-hl:var(--accent);--sr-display:var(--font-sans);--sr-read:var(--font-serif);--sr-label:var(--font-mono);--sr-t:.2s;--sr-t2:.24s;--sr-ease:ease}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color var(--sr-t) var(--sr-ease),text-decoration-color var(--sr-t) var(--sr-ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--sr-accent-ink);text-decoration-color:var(--sr-accent-ink)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:.42rem 1rem .42rem .85rem;border:1px solid var(--sr-line);border-radius:999px;background:var(--surface);color:var(--sr-ink);font-family:var(--sr-label);font-size:.7rem;letter-spacing:.08em;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-btn:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-pick-ic{width:15px;height:15px;color:var(--sr-accent-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--sr-ink3);transition:rotate var(--sr-t) var(--sr-ease)}
+.esv-pick.open .esv-pick-btn{border-color:var(--sr-accent);background:var(--accent-soft)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;display:block;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;padding:6px;border:1px solid var(--sr-line);border-radius:var(--radius);background:var(--sr-panel);color:var(--sr-ink);box-shadow:var(--shadow-lg);opacity:1;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--line);color:var(--sr-ink3);font-family:var(--sr-label);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:var(--radius-sm);background:none;color:var(--sr-ink2);text-align:left;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--sr-ink);font-family:var(--sr-label);font-size:.74rem;font-weight:500}
+.esv-pick-opt .full{font-family:var(--sr-display);font-size:.92rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--sr-accent) 10%,transparent);color:var(--sr-ink)}
+.esv-pick-opt[aria-selected="true"]{background:var(--accent-soft)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--sr-accent-ink)}
+/* above the need drawer (160), below the contents sheet (190) */
+.esv-tip{position:absolute;z-index:170;display:none;max-width:min(360px,calc(100vw - 24px));padding:15px 17px;border:1px solid var(--sr-line);border-radius:var(--radius);background:var(--sr-panel);box-shadow:var(--shadow-lg);color:var(--sr-ink);font-family:var(--sr-read);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:7px;color:var(--sr-accent-ink);font-family:var(--sr-label);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
+.esv-tip-text{font-family:var(--sr-read);font-style:italic;white-space:pre-line;min-height:3em;font-size:1.04rem;transition:opacity var(--sr-t) var(--sr-ease)}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--sr-ink3);font-family:var(--sr-display);font-style:normal;font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--sr-line)}
+.esv-tip-ctx{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border-radius:999px;border:1px solid color-mix(in srgb,var(--sr-accent) 40%,var(--sr-line));background:var(--accent-soft);color:var(--sr-accent-ink);font-family:var(--sr-display);font-size:.86rem;font-weight:500;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-tip-ctx:hover{border-color:var(--sr-accent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--sr-line);border-radius:var(--radius-lg);background:var(--bg);color:var(--sr-ink);box-shadow:var(--shadow-lg);overflow:hidden;opacity:0;transition:opacity var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]{opacity:1}
+@starting-style{.esv-ctx[open]{opacity:0}}
+.esv-ctx::backdrop{background:rgba(20,16,12,0);transition:background-color var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(20,16,12,.5)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(20,16,12,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+.esv-ctx-label{display:block;margin-bottom:6px;color:var(--sr-accent-ink);font-family:var(--sr-label);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+.esv-ctx-head h3{margin:0;font-family:var(--sr-read);font-weight:400;font-size:var(--step-2);line-height:1.12;color:var(--sr-ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--sr-ink2);font-size:18px;line-height:1;cursor:pointer;transition:color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-ctx-close:hover{color:var(--sr-ink);border-color:var(--sr-line)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sr-read);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--sr-hl) 24%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sr-hl) 24%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--sr-line);background:var(--surface);color:var(--sr-ink2);font-family:var(--sr-display);font-size:.88rem;font-weight:500;cursor:pointer;transition:border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-ctx-more:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-ctx-note{color:var(--sr-ink3);font-family:var(--sr-display);font-size:.8rem;margin-top:.6em;display:block}
+.esv-ctx-prefs{color:var(--sr-ink);font-family:var(--sr-display)}
+/* the pop-up's one action is reading in place, not leaving for another site */
+.esv-tip-out,.esv-ctx-out{display:none!important}
+/* the translation picker shares the glossary's filter row */
+.gloss-tools:has(.gloss-pick .esv-pick){grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.gloss-tools:has(.gloss-pick .esv-pick) .gloss-search{grid-column:1/-1}
+.gloss-pick:empty{display:none}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+</style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
@@ -556,6 +631,7 @@ p,li,dd,figcaption{text-wrap:pretty}
               <button class="gloss-tag" data-tag="Scripture" type="button">Писание</button>
               <button class="gloss-tag" data-tag="Psychological" type="button">Психология</button>
             </div>
+            <div class="gloss-pick" id="pickerHost"></div>
           </div>
           <div class="tint-teal gloss-grid mini-grid" id="glossary-grid"></div>
         </div>
@@ -785,6 +861,32 @@ p,li,dd,figcaption{text-wrap:pretty}
 <script src="../js/synth.js"></script>
 <script src="../js/interactives.js"></script>
 <script src="../js/app.js"></script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+/* scripture: tap a reference for the verse and its context. Most references
+   here are written by script (the glossary, the axis cards, the need drawer),
+   and the glossary and drawer are rewritten on every filter and every open,
+   so linking waits for the first render and then follows each rewrite. */
+document.addEventListener("DOMContentLoaded", function () {
+  var SR = window.EsmrskyScripture;
+  if (!SR) return;
+  SR.init({ key: "one-shape", versions: ["NIV", "NASB", "NLT", "KJV"],
+    scan: ".scripture cite, .guard p, #axes-grid .erow, #glossary-grid .erow, .nd-scripture cite" });
+  var host = document.getElementById("pickerHost");
+  if (host && SR.versions().length > 1) { host.innerHTML = SR.pickerHtml(); SR.wirePicker(host.querySelector(".esv-pick")); }
+  if (!window.MutationObserver) return;
+  var queued = false;
+  var mo = new MutationObserver(function () {
+    if (queued) return;
+    queued = true;
+    setTimeout(function () { queued = false; SR.linkAll(); }, 0);
+  });
+  ["glossary-grid", "axes-grid", "need-drawer"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) mo.observe(el, { childList: true });
+  });
+});
+</script>
 <script>
 /* Static Russian page. The old EN/RU toggle is gone; this only tells a
    page's own JS which language it is rendering into. */

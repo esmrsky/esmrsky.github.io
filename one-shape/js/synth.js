@@ -119,7 +119,13 @@
     scrim = document.getElementById("need-scrim");
     renderMap();
     if (scrim) scrim.addEventListener("click", closeNeed);
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeNeed(); });
+    // A verse pop-up or its context dialog opened from inside the drawer takes
+    // Escape first; only the next Escape closes the drawer.
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || e.defaultPrevented) return;
+      if (document.querySelector(".esv-tip.is-pinned, dialog.esv-ctx[open], .esv-pick.open")) return;
+      closeNeed();
+    });
     // Delegated: any need-chip in any catalogue opens the drawer.
     document.addEventListener("click", function (e) {
       var chip = e.target.closest && e.target.closest(".need-chip");
