@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/soundings/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/soundings/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/soundings/">
+<!-- lang-alt:end -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306141C'/%3E%3Crect x='12' y='9' width='40' height='6' rx='3' fill='%2325AEDA'/%3E%3Cpath d='M32 15v19' stroke='%2325AEDA' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M32 57 24 33h16Z' fill='%2325AEDA'/%3E%3C/svg%3E">
+<title>Промеры глубины — где ты в воде?</title>
+<meta name="description" content="Наглядный путеводитель по христианской зрелости. Пять глубин, восемь болот, в которых люди застревают, слова, которыми люди говорят на самом деле, тринадцать библейских историй, тринадцать моделей рядом и то единственное, что все они измеряют.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,300..800;1,75..125,300..700&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,300..600,0..100&family=Martian+Mono:wght@300..600&display=swap" rel="stylesheet">
+<style>
+:root{--ease:cubic-bezier(.2,.7,.3,1)}
+
+:root{
+  --bg:#06141C; --bg2:#0A1F2A; --panel:#0D2733; --panel2:#113140;
+  --foam:#E8F2F3; --dim:rgba(232,242,243,.60); --dimmer:rgba(232,242,243,.34);
+  --line:rgba(232,242,243,.13);
+  --s0:#E0A63C; --s1:#4FD6C0; --s2:#25AEDA; --s3:#3D7BEE; --s4:#8A63F0;
+  --wall:#FF5C3B;
+  /* the marshes: off-channel, still. Deliberately outside the depth ramp, and
+     desaturated, so a marsh can never read as one of the five. 6.2:1 on --panel. */
+  --marsh:#93A99B;
+  --disp:"Archivo",system-ui,sans-serif;
+  --mono:"Martian Mono",ui-monospace,monospace;
+  --script:"Fraunces",Georgia,serif;
+  --accent:var(--s2);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--foam);font-family:var(--disp);
+  font-variation-settings:"wdth" 100;font-size:clamp(15px,.6vw + 13.4px,17px);
+  line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:600;line-height:.96;letter-spacing:-.035em;
+  font-variation-settings:"wdth" 112,"wght" 600}
+p{margin:0 0 .85em} a{color:inherit}
+.mono{font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase;line-height:1.5;font-variation-settings:normal}
+.wrap{max-width:1220px;margin:0 auto;padding:0 clamp(18px,4.5vw,54px)}
+section{padding:clamp(70px,9vw,124px) 0;position:relative}
+
+/* grain */
+.grain{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(../%23n)'/%3E%3C/svg%3E")}
+
+.tag{display:inline-flex;align-items:center;gap:9px;padding:6px 12px;border-radius:100px;
+  border:1px solid var(--line);margin-bottom:24px}
+.tag i{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+h2{font-size:clamp(2rem,5.4vw,3.9rem);margin-bottom:.35em}
+.sec-lede{max-width:46ch;color:var(--dim);font-size:clamp(1rem,1.3vw,1.14rem);line-height:1.5}
+
+/* ============ HERO ============ */
+.hero{min-height:100svh;display:flex;align-items:center;padding:0;overflow:hidden}
+#contours{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.85}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-top:96px;padding-bottom:60px}
+.hero-top{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:clamp(30px,7vh,60px)}
+.pill{padding:6px 13px;border-radius:100px;background:rgba(232,242,243,.06);
+  border:1px solid var(--line);font-family:var(--mono);font-size:.55rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim)}
+h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
+  font-variation-settings:"wdth" 118,"wght" 700;
+  padding:.14em 0 .12em;margin-block:-.14em -.12em;
+  background:linear-gradient(96deg,#E0A63C,#4FD6C0 26%,#25AEDA 50%,#3D7BEE 74%,#8A63F0);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:200% 100%;animation:hue 14s ease-in-out infinite}
+@keyframes hue{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-sub{max-width:31ch;font-size:clamp(1.15rem,2.4vw,1.75rem);line-height:1.22;
+  font-weight:500;letter-spacing:-.025em;margin-top:clamp(20px,4vh,36px);
+  font-variation-settings:"wdth" 104,"wght" 500}
+.hero-sub b{color:var(--s1);font-weight:500}
+.hero-btns{display:flex;gap:11px;flex-wrap:wrap;margin-top:clamp(26px,5vh,44px)}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border-radius:100px;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;border:1px solid var(--line);background:transparent;
+  color:var(--foam);transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease);font-variation-settings:normal;min-height:44px}
+.btn:hover{border-color:var(--accent);background:rgba(232,242,243,.05)}
+.btn.solid{background:var(--foam);color:#06141C;border-color:var(--foam);font-weight:500}
+.btn:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--dimmer)}
+.scrollcue .ln{width:1px;height:34px;background:linear-gradient(180deg,transparent,var(--dim));
+  animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}
+  51%{transform-origin:bottom}100%{transform:scaleY(.2);transform-origin:bottom}}
+
+/* ============ THE ONE LINE ============ */
+.oneline{background:radial-gradient(80% 60% at 50% 0%,rgba(37,174,218,.10),transparent 70%),var(--bg2);
+  text-align:center;overflow:hidden}
+.braid{width:100%;max-width:900px;margin:0 auto clamp(28px,5vw,50px);display:block}
+.braid path{fill:none;stroke-width:2.4;stroke-linecap:round;
+  stroke-dasharray:14 200;animation:flow 6s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-214}}
+.big{font-size:clamp(2.1rem,6.6vw,5rem);letter-spacing:-.045em;line-height:.98;
+  font-variation-settings:"wdth" 110,"wght" 600;max-width:16ch;margin:0 auto}
+.big em{font-style:normal;background:linear-gradient(96deg,#4FD6C0,#25AEDA,#8A63F0);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  padding:.14em 0 .12em}
+.one-sub{max-width:56ch;margin:clamp(22px,3.5vw,34px) auto 0;color:var(--dim);
+  font-size:clamp(1rem,1.35vw,1.15rem);line-height:1.55}
+.refs{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.ref{padding:9px 14px;border-radius:100px;border:1px solid var(--line);
+  font-size:.82rem;color:var(--dim);line-height:1.3}
+.ref b{color:var(--foam);font-weight:600}
+.one-note{max-width:60ch;margin:clamp(34px,5vw,52px) auto 0;padding:22px;border-radius:16px;
+  border:1px solid var(--line);background:var(--panel);text-align:left;color:var(--dim);
+  font-size:.95rem;line-height:1.55}
+.one-note b{color:var(--foam)}
+
+/* ============ DEPTH DIAGRAM ============ */
+.rig{display:grid;gap:clamp(24px,3vw,44px);margin-top:44px;align-items:start}
+@media(min-width:940px){.rig{grid-template-columns:minmax(320px,400px) minmax(0,1fr)}}
+.figbox{position:sticky;top:24px;border-radius:20px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(180deg,#0B1E28,#071720)}
+@media(max-width:939px){.figbox{position:relative;top:0}}
+.figbox svg{display:block;width:100%;height:auto}
+.fig-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:13px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.fig-foot b{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--accent);font-weight:500}
+.fig-foot span{font-family:var(--mono);font-size:.53rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--dimmer)}
+.picker{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:22px}
+.pick{min-width:0;padding:11px 4px 12px;border-radius:12px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(232,242,243,.03);color:var(--dim);
+  display:flex;flex-direction:column;align-items:center;gap:7px;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease);
+  font-family:var(--mono);font-size:clamp(.42rem,1.5vw,.5rem);letter-spacing:.08em;
+  text-transform:uppercase;text-align:center;overflow-wrap:anywhere}
+.pick svg{width:clamp(18px,5.4vw,24px);height:clamp(18px,5.4vw,24px);stroke:currentColor;fill:none;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round}
+.pick:hover{color:var(--foam);border-color:rgba(232,242,243,.3)}
+.pick[aria-selected="true"]{color:#07161D;background:var(--pc);border-color:var(--pc);font-weight:500}
+.pick:focus-visible{outline:2px solid var(--foam);outline-offset:2px}
+.panel{border-radius:20px;border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.p-head{padding:clamp(20px,3vw,30px);border-bottom:1px solid var(--line);position:relative}
+.p-head::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 62%)}
+.p-head>*{position:relative}
+.p-kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.p-num{font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;color:var(--accent);font-weight:500}
+.p-greek{font-family:var(--script);font-style:italic;font-size:.95rem;color:var(--dim)}
+.p-title{font-size:clamp(1.8rem,4.4vw,2.9rem);letter-spacing:-.04em;
+  font-variation-settings:"wdth" 110,"wght" 600;line-height:.95}
+.p-alt{color:var(--dim);margin-top:10px;max-width:46ch;font-size:.98rem;line-height:1.45}
+.p-grid{display:grid;gap:1px;background:var(--line)}
+@media(min-width:660px){.p-grid{grid-template-columns:1fr 1fr}}
+.cell{background:var(--panel);padding:clamp(18px,2.4vw,24px)}
+.cell h4{margin:0 0 13px;font-family:var(--mono);font-size:.56rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--dimmer);font-weight:400;display:flex;align-items:center;gap:8px}
+ul{margin:0;padding:0;list-style:none}
+li{padding:7px 0 7px 20px;position:relative;font-size:.95rem;line-height:1.42}
+li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;background:var(--accent)}
+.quotes li{font-family:var(--script);font-style:italic;font-size:1.02rem;color:var(--dim);line-height:1.38}
+.quotes li::before{content:"“";background:none;width:auto;height:auto;top:6px;
+  color:var(--accent);font-size:1.4rem;font-family:var(--script)}
+
+/* Four lists that used to differ only by a 5px dot, so marks and needs read as
+   the same thing. Each now carries its own icon, rule and hue. The hues are
+   fixed rather than derived from --accent: s3/s4 measure 3.89:1 and 3.78:1 on
+   this panel and fail 4.5:1 at 9px, so a depth-following heading would go
+   illegible at waist and swim. s2/s0/s1/wall all pass. */
+.sect{--sc:var(--accent);border-left:2px solid color-mix(in srgb,var(--sc) 42%,transparent);
+  padding-left:14px}
+.sect + .sect{margin-top:24px}
+.sect h4{color:var(--sc)}
+.sect h4 svg{width:13px;height:13px;flex:none;stroke:var(--sc);fill:none;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.sect li::before{background:var(--sc)}
+.sect .quotes li::before{background:none;color:var(--sc)}
+.p-move{padding:clamp(18px,2.4vw,24px);border-top:1px solid var(--line);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 13%,transparent),transparent);
+  display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.p-move svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.5;flex:none;margin-top:2px}
+.p-move div{flex:1;min-width:220px}
+.p-move b{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.p-move p{margin:0;font-size:1rem;line-height:1.42}
+
+/* ============ VERNACULAR ============ */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:34px 0 20px}
+.filt{padding:8px 14px;border-radius:100px;border:1px solid var(--line);background:transparent;
+  color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;
+  text-transform:uppercase;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease)}
+.filt,.per,.opts button{position:relative}
+.filt::after,.per::after,.opts button::after{content:"";position:absolute;inset:-8px 0}
+.filt:hover{color:var(--foam)}
+.filt[aria-pressed="true"]{background:var(--foam);color:#06141C;border-color:var(--foam);font-weight:500}
+.filt:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.phrases{display:grid;gap:10px}
+@media(min-width:640px){.phrases{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1040px){.phrases{grid-template-columns:repeat(3,1fr)}}
+/* The left edge was the only thing carrying the depth, so eighteen cards read as
+   one grey field with a stripe. The tint now bleeds off that edge and is gone by
+   62%, which keeps the body copy over near-plain panel: at the strongest point
+   (s0 amber) .means still measures 4.9:1, and most of the line sits well above
+   that. Border and foot rule follow the same hue so the card reads as one piece.
+   The verdict chips deliberately do NOT follow — fair/loaded/misused is a
+   separate axis from depth and must not blend into it. */
+.ph{border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:9px;
+  background:linear-gradient(96deg,
+      color-mix(in srgb,var(--c) 16%,transparent) 0%,
+      color-mix(in srgb,var(--c) 6%,transparent) 34%,
+      transparent 62%),var(--panel);
+  border:1px solid color-mix(in srgb,var(--c) 26%,var(--line));
+  border-left:3px solid var(--c);transition:transform .2s var(--ease),border-color .2s var(--ease)}
+.ph:hover{transform:translateY(-2px);
+  border-color:color-mix(in srgb,var(--c) 52%,var(--line));border-left-color:var(--c)}
+.ph.hide{display:none}
+.ph q{quotes:none;font-family:var(--script);font-style:italic;font-size:1.18rem;line-height:1.2;
+  color:var(--foam)}
+.ph q::before{content:"“"}.ph q::after{content:"”"}
+.ph .means{color:var(--dim);font-size:.88rem;line-height:1.45}
+.ph .foot{margin-top:auto;padding-top:10px;
+  border-top:1px solid color-mix(in srgb,var(--c) 22%,var(--line));
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+/* Name collision: the thirteen framework cards further down claim `.maps` as a
+   grid container (`.maps{display:grid}`), and that generic rule was winning here
+   because this one never set `display`. The span became a full-width block, so
+   "over your head" broke across two lines and shoved the verdict chip onto a
+   third. Pin the display and it behaves like the span it is. */
+.ph .maps{display:inline-block;font-family:var(--mono);font-size:.48rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--c);white-space:nowrap}
+.verdict{padding:3px 9px;border-radius:100px;font-family:var(--mono);font-size:.45rem;
+  letter-spacing:.15em;text-transform:uppercase}
+.v-fair{background:rgba(79,214,192,.16);color:#8DEEDD}
+.v-loaded{background:rgba(224,166,60,.16);color:#F0C87E}
+.v-misused{background:rgba(255,92,59,.16);color:#FF9C86}
+
+/* ============ TRACES ============ */
+.people{display:flex;gap:7px;flex-wrap:wrap;margin:34px 0 20px}
+.per{padding:9px 15px;border-radius:100px;border:1px solid var(--line);background:transparent;
+  color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:.53rem;letter-spacing:.13em;
+  text-transform:uppercase;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease)}
+.per:hover{color:var(--foam);border-color:rgba(232,242,243,.3)}
+.per[aria-selected="true"]{background:var(--pc);border-color:var(--pc);color:#06141C;font-weight:500}
+.per:focus-visible{outline:2px solid var(--foam);outline-offset:2px}
+.tracebox{border-radius:20px;border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.trace-head{padding:22px 24px;border-bottom:1px solid var(--line);position:relative}
+.trace-head::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 150% at 0% 0%,color-mix(in srgb,var(--accent) 15%,transparent),transparent 60%)}
+.trace-head>*{position:relative}
+.trace-head h3{font-size:clamp(1.5rem,3.6vw,2.3rem);letter-spacing:-.035em;
+  font-variation-settings:"wdth" 110,"wght" 600}
+.trace-head p{margin:10px 0 0;color:var(--dim);font-size:.96rem;line-height:1.45;max-width:62ch}
+.trace-svg{padding:8px 4px 0}
+.trace-svg svg{display:block;width:100%;height:auto}
+.legs{display:grid;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+@media(min-width:760px){.legs{grid-template-columns:repeat(2,1fr)}}
+.leg{background:var(--panel);padding:15px 18px;display:flex;gap:13px;align-items:flex-start;
+  width:100%;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.leg b{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;color:var(--lc);flex:none;
+  padding-top:3px;transition:color .2s var(--ease)}
+.leg .leg-txt{flex:1;display:block}
+.leg strong{display:block;font-weight:600;font-size:.95rem;letter-spacing:-.015em;margin-bottom:3px}
+.leg .leg-note{display:block;color:var(--dim);font-size:.87rem;line-height:1.42}
+.leg.wallpoint{background:rgba(255,92,59,.07)}
+.leg.wallpoint b{color:var(--wall)}
+.leg:focus-visible{outline:2px solid var(--foam);outline-offset:-3px}
+
+/* a moment and its card are the same thing in two places — light both at once */
+.leg.is-active{background:color-mix(in srgb,var(--lc) 15%,var(--panel));
+  box-shadow:inset 3px 0 0 var(--lc)}
+.leg.is-active b{color:var(--foam)}
+.dot{cursor:pointer}
+.dot:focus-visible{outline:2px solid var(--foam);outline-offset:1px}
+/* the band is the target; the wash and guide are decoration and must never
+   intercept, or the topmost sibling would swallow the pointer instead */
+.dot .hit{pointer-events:all}
+.dot .colwash,.dot .guide{pointer-events:none;opacity:0;transition:opacity .2s var(--ease)}
+.dot.is-active .colwash{opacity:.07}
+.dot.is-active .guide{opacity:.4}
+.dot .ring,.dot .pip{transform-box:fill-box;transform-origin:center}
+.dot .ring{opacity:0;transform:scale(.6);
+  transition:opacity .2s var(--ease),transform .32s var(--ease)}
+.dot .pip{transition:transform .32s var(--ease)}
+.dot text{fill:rgba(232,242,243,.4);transition:fill .2s var(--ease)}
+.dot.is-active .ring{opacity:.5;transform:scale(2.2)}
+.dot.is-active .pip{transform:scale(1.35)}
+.dot.is-active text{fill:var(--foam)}
+/* once something is pinned, everything else steps back */
+.tracebox.has-lock .leg:not(.is-active){opacity:.45}
+.tracebox.has-lock .dot:not(.is-active) .pip{opacity:.4}
+
+/* cycling names: the head and the cards arrive rather than snapping */
+@keyframes traceIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes dotIn{from{opacity:0}to{opacity:1}}
+.tracebox .trace-head{animation:traceIn .45s cubic-bezier(.22,1,.36,1) both}
+.tracebox .leg{animation:traceIn .5s cubic-bezier(.22,1,.36,1) both}
+.tracebox .dot{animation:dotIn .4s ease both}
+.callout{margin-top:32px;border-radius:18px;border:1px solid rgba(138,99,240,.32);
+  background:linear-gradient(120deg,rgba(138,99,240,.10),transparent);padding:26px}
+.callout h4{margin:0 0 8px;font-size:1.15rem;letter-spacing:-.025em;
+  font-variation-settings:"wdth" 106,"wght" 600}
+.callout p{margin:0 0 18px;color:var(--dim);font-size:.94rem;line-height:1.5;max-width:60ch}
+/* The phrase used to sit inside the bar as dark text on the gradient. That is
+   fine where the fill reaches — 4.6:1 — but the labels are longer than the
+   shorter bars, so they overflowed onto the track and measured 1.29:1, which is
+   what "least of the apostles" looked like at 54%. The bar is now a pure
+   measure and the phrase sits on the panel at 14.8:1, so it cannot depend on
+   how wide its own bar happens to be. */
+.descend{display:grid;gap:16px;max-width:640px}
+.dstep{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center}
+.dstep i{font-family:var(--mono);font-size:.5rem;letter-spacing:.11em;color:var(--dim);font-style:normal}
+.dbody{min-width:0}
+.dbody b{display:block;font-size:.88rem;font-weight:600;color:var(--foam);
+  letter-spacing:-.012em;line-height:1.3;margin-bottom:7px}
+.dstep .barwrap{height:8px;border-radius:5px;background:rgba(232,242,243,.08);overflow:hidden}
+.dstep .barwrap span{display:block;height:100%;border-radius:5px;
+  background:linear-gradient(90deg,var(--s4),var(--s3))}
+.dstep em{font-family:var(--mono);font-size:.48rem;letter-spacing:.12em;color:var(--dim);font-style:normal}
+@media(max-width:520px){
+  .dstep{grid-template-columns:1fr auto;gap:6px 10px}
+  .dstep i{grid-column:1/-1}
+}
+
+/* ============ WALL ============ */
+.wallsec{background:radial-gradient(70% 50% at 50% 0%,rgba(255,92,59,.13),transparent 70%),var(--bg2)}
+.wall-vis{position:relative;height:150px;margin:34px 0 44px;border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,92,59,.28);background:#0A1B23;display:flex;align-items:center;
+  justify-content:center;gap:6px;padding:0 8px}
+.brick{flex:1;height:64%;border-radius:3px;background:rgba(255,92,59,.16);animation:pulse 3.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.30;transform:scaleY(.86)}50%{opacity:1;transform:scaleY(1)}}
+.wall-vis .swim{position:absolute;left:6%;top:50%;width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--s3);background:rgba(61,123,238,.25);transform:translateY(-50%);
+  animation:push 5.5s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes push{0%{left:6%;opacity:.35}42%{left:44%;opacity:1}56%{left:47%}70%{left:44%}100%{left:6%;opacity:.35}}
+.wall-vis .lbl{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--wall)}
+.tiles{display:grid;gap:12px}
+@media(min-width:720px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{border-radius:16px;border:1px solid var(--line);background:var(--panel);padding:22px}
+.tile.hot{border-color:rgba(255,92,59,.32)}
+.tile h4{margin:0 0 14px;font-family:var(--mono);font-size:.56rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--wall);font-weight:400}
+.tile.cool h4{color:var(--s1)}
+.tile.cool li::before{background:var(--s1)}
+.tile.hot li::before{background:var(--wall)}
+.stats{display:grid;gap:12px;margin-top:12px}
+@media(min-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{border-radius:16px;border:1px solid var(--line);background:var(--panel);padding:24px}
+.stat b{display:block;font-size:clamp(2.4rem,6vw,3.4rem);line-height:1;letter-spacing:-.05em;
+  color:var(--wall);font-variation-settings:"wdth" 115,"wght" 700;margin-bottom:10px}
+.stat.blue b{color:var(--s3)}
+.stat p{margin:0;color:var(--dim);font-size:.94rem;line-height:1.45}
+
+/* ============ THE MARSHES ============ */
+/* Every other section on this page is keyed to a depth colour, because every
+   other section measures height. This one measures current, so it sits off the
+   ramp entirely — flat wash rather than the radial glows used elsewhere, because
+   the whole point is that nothing here is moving. */
+/* the two ends of the depth ramp, echoing the figure's left-to-right run */
+#marshes{background:
+  radial-gradient(66% 42% at 10% 2%,rgba(224,166,60,.075),transparent 62%),
+  radial-gradient(66% 48% at 90% 10%,rgba(138,99,240,.10),transparent 62%),
+  linear-gradient(180deg,rgba(147,169,155,.05),transparent 46%),var(--bg)}
+
+/* ---- figure motion. The channel moves; the pools do not. That contrast IS the
+   argument, so nothing below the spurs is ever allowed an animation. ---- */
+.mr-flow{stroke-dasharray:24 30;animation:mrflow 3.6s linear infinite}
+@keyframes mrflow{to{stroke-dashoffset:-54}}
+.mr-chev{animation:mrchev 3s ease-in-out infinite}
+@keyframes mrchev{0%,100%{opacity:.3}42%{opacity:1}}
+.mr-spur{animation:mrdrip 2.8s linear infinite}
+@keyframes mrdrip{to{stroke-dashoffset:-8}}
+.mr-band{animation:mrband 16s ease-in-out infinite}
+@keyframes mrband{0%,100%{opacity:.88}50%{opacity:1}}
+.verse{margin:34px 0 0;max-width:60ch;
+  border-left:2px solid color-mix(in srgb,var(--marsh) 55%,transparent);
+  padding-left:clamp(16px,2.4vw,26px)}
+.verse q{quotes:none;display:block;font-family:var(--script);font-style:italic;
+  font-size:clamp(1.25rem,2.6vw,1.75rem);line-height:1.28;letter-spacing:-.01em;color:var(--foam)}
+.verse cite{display:block;margin-top:12px;font-family:var(--mono);font-size:.52rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--marsh);font-style:normal}
+.verse p{margin:14px 0 0;color:var(--dim);font-size:.95rem;line-height:1.55}
+
+/* the two questions, stated as a pair. This is the whole idea of the section and
+   it was previously buried in the lede, so it gets its own object. */
+.axis{display:grid;gap:14px;margin-top:clamp(30px,4vw,46px)}
+@media(min-width:760px){.axis{grid-template-columns:repeat(2,1fr)}}
+.axcell{border-radius:18px;border:1px solid var(--line);background:var(--panel);
+  padding:clamp(22px,2.4vw,30px)}
+.axcell.now{border-color:color-mix(in srgb,var(--marsh) 42%,transparent);
+  background:linear-gradient(150deg,rgba(147,169,155,.11),var(--panel) 62%)}
+.axcell span{display:block;margin-bottom:15px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--dimmer)}
+.axcell.now span{color:var(--marsh)}
+.axcell b{display:block;margin-bottom:14px;font-size:clamp(1.45rem,2.7vw,2.05rem);
+  letter-spacing:-.035em;line-height:1.02;font-variation-settings:"wdth" 108,"wght" 600}
+.axcell p{margin:0;font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);line-height:1.8}
+
+.marshfig{margin:clamp(30px,4vw,46px) 0 0;border-radius:20px;border:1px solid var(--line);
+  background:linear-gradient(180deg,#0B1E28,#071720);overflow:hidden}
+.marshfig svg{display:block;width:100%;min-width:760px;height:auto}
+.mfig-foot{display:grid;gap:6px 22px;padding:clamp(18px,2.2vw,24px);
+  border-top:1px solid var(--line);background:rgba(147,169,155,.05)}
+@media(min-width:820px){.mfig-foot{grid-template-columns:190px minmax(0,1fr)}}
+.mfig-foot span{font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--marsh);line-height:1.7}
+.mfig-foot p{margin:0;max-width:72ch;color:var(--dim);font-size:.93rem;line-height:1.55}
+.mfig-foot b{color:var(--foam);font-weight:600}
+/* the svg needs 760px of content box; .wrap eats 9vw of the viewport below the
+   54px padding cap, so the figure stops scrolling at ~837px, not at 780. Hiding
+   the hint any earlier leaves a band where it scrolls with nothing saying so. */
+@media(min-width:850px){.hint.fig{display:none}}
+
+.mrule{margin:clamp(30px,4vw,46px) 0 0;border-radius:18px;padding:clamp(22px,2.4vw,30px);
+  border:1px solid color-mix(in srgb,var(--marsh) 38%,transparent);
+  background:rgba(147,169,155,.07)}
+.mrule b{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--marsh);margin-bottom:11px}
+.mrule p{margin:0;max-width:72ch;color:var(--dim);font-size:.95rem;line-height:1.6}
+.mrule p+p{margin-top:12px}
+.mrule em{font-style:normal;color:var(--foam)}
+
+/* Wide two-column cards carrying dense prose: the triage grid reads airy at the
+   same 12px gap only because its columns are 269px. At 550px the identical gap
+   and padding read as a slab, so both go up here rather than site-wide. */
+/* without this an open card stretches its row-mate into a tall empty slab */
+.mkey{margin:clamp(26px,3.4vw,38px) 0 0;max-width:74ch;color:var(--dim);
+  font-size:.92rem;line-height:1.6}
+.mkey span{display:block;margin-bottom:8px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--marsh)}
+/* Cards are open by default, so rows stretch to the tallest card and the
+   scripture line is pushed to the foot with margin-top:auto. Slack then collects
+   in one place at the bottom of a card instead of scattering as ragged gaps. */
+.marshgrid{display:grid;gap:18px;margin-top:clamp(20px,2.6vw,28px)}
+@media(min-width:820px){.marshgrid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1180px){.marshgrid{gap:20px}}
+.marsh{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;
+  transition:border-color .2s var(--ease);
+  /* --mk is the depth this marsh counterfeits; --mkt is its text-safe lift. s3 and
+     s4 measure 3.9:1 and 3.8:1 on this panel and fail at the 9px mono sizes used
+     for the chip and the dt labels, so every label reads --mkt, never --mk. */
+  --mkt:color-mix(in srgb,var(--mk) 55%,var(--foam));
+  background:linear-gradient(150deg,color-mix(in srgb,var(--mk) 11%,transparent),transparent 54%),
+    var(--panel);
+  border:1px solid color-mix(in srgb,var(--mk) 24%,var(--line))}
+.marsh::before{content:"";position:absolute;inset:0 0 auto;height:3px;z-index:2;background:var(--mk)}
+/* still water, as a texture: flat parallel levels, fading out. The channel in the
+   figure above is the only thing on this page allowed to look like it moves. */
+.marsh::after{content:"";position:absolute;right:0;top:0;width:210px;height:130px;
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(147,169,155,.17) 0 1px,transparent 1px 9px);
+  -webkit-mask-image:radial-gradient(125% 105% at 100% 0%,#000,transparent 72%);
+          mask-image:radial-gradient(125% 105% at 100% 0%,#000,transparent 72%)}
+.marsh.is-open{border-color:color-mix(in srgb,var(--mk) 50%,var(--line))}
+.m-head{position:relative;z-index:1;display:block;width:100%;text-align:left;
+  background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;
+  padding:clamp(28px,2.6vw,32px) clamp(24px,2.4vw,30px) clamp(24px,2.4vw,30px);
+  transition:background .2s var(--ease)}
+.m-head:hover{background:rgba(232,242,243,.035)}
+.m-head:focus-visible{outline:2px solid var(--mkt);outline-offset:-3px}
+.m-ix{display:block;margin-bottom:18px;font-family:var(--mono);font-size:.48rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--dimmer)}
+.m-head svg{display:block;width:34px;height:34px;margin-bottom:18px;
+  fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;
+  stroke:var(--mkt)}
+.m-head b{display:block;margin-bottom:13px;font-size:1.24rem;letter-spacing:-.03em;
+  line-height:1.12;font-variation-settings:"wdth" 104,"wght" 600}
+.m-as{display:inline-block;margin-bottom:15px;padding:5px 11px;border-radius:100px;
+  background:color-mix(in srgb,var(--mk) 15%,transparent);
+  border:1px solid color-mix(in srgb,var(--mk) 40%,transparent);
+  font-family:var(--mono);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mkt)}
+.m-head .mech{margin:0;color:var(--dim);font-size:.92rem;line-height:1.6}
+.m-more{display:inline-flex;align-items:center;gap:10px;margin-top:20px;
+  font-family:var(--mono);font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mkt)}
+.m-more i{position:relative;display:inline-block;width:13px;height:13px;font-style:normal;flex:none}
+.m-more i::before,.m-more i::after{content:"";position:absolute;background:var(--mkt);
+  transition:transform .2s var(--ease)}
+.m-more i::before{left:0;right:0;top:6px;height:1px}
+.m-more i::after{top:0;bottom:0;left:6px;width:1px}
+.marsh.is-open .m-more i::after{transform:scaleY(0)}
+.m-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
+  padding:clamp(22px,2.4vw,28px) clamp(24px,2.4vw,30px) clamp(24px,2.4vw,30px);
+  background:rgba(4,14,20,.40);
+  border-top:1px solid color-mix(in srgb,var(--mk) 26%,var(--line))}
+.m-body dl{margin:0;display:grid;gap:22px}
+.m-body dt{margin-bottom:9px;padding-left:11px;position:relative;font-family:var(--mono);
+  font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mkt)}
+.m-body dt::before{content:"";position:absolute;left:0;top:1px;bottom:1px;width:2px;
+  border-radius:2px;background:var(--mk)}
+.m-body dd{margin:0;color:var(--dim);font-size:.92rem;line-height:1.6}
+.m-body dd b{color:var(--foam);font-weight:600}
+.m-ref{margin:24px 0 0 0;margin-top:auto;padding-top:18px;border-top:1px solid var(--line);
+  font-family:var(--script);font-style:italic;color:var(--dim);font-size:.95rem;line-height:1.5}
+.m-ref span{display:block;margin-bottom:8px;font-family:var(--mono);font-style:normal;
+  font-size:.46rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dimmer)}
+
+.saltgrid{display:grid;gap:18px;margin-top:clamp(36px,5vw,58px)}
+@media(min-width:860px){.saltgrid{grid-template-columns:repeat(2,1fr)}}
+.saltcell{border-radius:20px;padding:clamp(24px,2.7vw,34px);
+  border:1px solid color-mix(in srgb,var(--marsh) 34%,transparent);
+  background:linear-gradient(150deg,rgba(147,169,155,.11),transparent 66%)}
+.saltcell h4{margin:0 0 14px;font-size:1.22rem;letter-spacing:-.03em;line-height:1.15;
+  font-variation-settings:"wdth" 106,"wght" 600}
+.saltcell p{margin:0;color:var(--dim);font-size:.96rem;line-height:1.6}
+.saltcell p+p{margin-top:13px}
+.saltcell em{font-style:normal;color:var(--foam)}
+.saltend{margin:clamp(30px,4vw,46px) 0 0;text-align:center;line-height:1;
+  font-size:clamp(1.7rem,4.6vw,3.1rem);letter-spacing:-.045em;
+  font-variation-settings:"wdth" 110,"wght" 600;color:var(--foam)}
+.saltend small{display:block;margin-top:16px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--marsh);font-weight:400;
+  font-variation-settings:normal;line-height:1.7}
+/* the instrument's own blind spot, stated where the reading appears */
+.res-marsh{padding:20px 24px;background:rgba(147,169,155,.07);
+  border-top:1px solid color-mix(in srgb,var(--marsh) 34%,transparent)}
+.res-marsh b{display:block;margin-bottom:8px;font-family:var(--mono);font-size:.53rem;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--marsh)}
+.res-marsh p{margin:0;color:var(--dim);font-size:.94rem;line-height:1.5}
+.res-marsh a{display:inline-block;padding:4px 0;color:var(--foam);
+  text-decoration:underline;text-underline-offset:3px}
+
+/* ============ CHART ============ */
+.chart{margin-top:38px;border-radius:18px;border:1px solid var(--line);overflow:hidden;background:var(--panel)}
+.chart-head,.row{display:grid;grid-template-columns:150px repeat(5,1fr)}
+.chart-head{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel2);z-index:2}
+.chart-head div{padding:12px 10px;font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--dimmer)}
+.chart-head div+div{text-align:center}
+/* depth headers are buttons: click one to read that depth down every framework */
+.colh{font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;text-transform:uppercase;
+  padding:12px 10px;text-align:center;background:transparent;border:0;cursor:pointer;
+  line-height:1.5;min-height:44px;transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.colh:hover{background:rgba(232,242,243,.07)}
+.colh:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+.colh[aria-pressed="true"]{background:color-mix(in srgb,currentColor 22%,transparent);
+  box-shadow:inset 0 -2px 0 currentColor}
+.band .seg{transition:opacity .2s var(--ease)}
+.band.dim .seg{opacity:.13}
+.chart-focus{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dimmer);margin-top:12px}
+.row{border-bottom:1px solid rgba(232,242,243,.07)}
+.row:last-child{border-bottom:0}
+.row>.rn{padding:14px 10px;font-family:var(--mono);font-size:.52rem;letter-spacing:.08em;
+  color:var(--dim);display:flex;align-items:center;line-height:1.4}
+.band{padding:8px 4px;display:flex;align-items:center}
+.seg{width:100%;padding:7px 9px;border-radius:7px;font-size:.72rem;line-height:1.25;
+  color:#06141C;font-weight:500}
+.seg.ghost{background:rgba(232,242,243,.05);color:var(--dimmer);font-weight:400}
+/* ---- the thirteen map cards ---- */
+.maps{display:grid;gap:12px;margin-top:38px}
+@media(min-width:780px){.maps{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1180px){.maps{grid-template-columns:repeat(3,1fr)}}
+.map{position:relative;border-radius:16px;border:1px solid var(--line);background:var(--panel);
+  padding:20px;display:flex;flex-direction:column;gap:13px;overflow:hidden}
+.map::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--mc)}
+.map::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 10%,transparent),transparent 42%)}
+.map>*{position:relative;z-index:1}
+.map-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  font-family:var(--mono);font-size:.48rem;letter-spacing:.13em;text-transform:uppercase}
+.map-n{color:var(--dim)}
+.map-yr{color:var(--dim);text-align:right}
+.map h4{margin:0;font-size:1.1rem;letter-spacing:-.025em;line-height:1.15;
+  font-variation-settings:"wdth" 104,"wght" 600}
+.map .who{color:var(--dim);font-size:.82rem;line-height:1.45;margin:-4px 0 0}
+.map dl{margin:0;display:grid;gap:10px}
+.map dt{font-family:var(--mono);font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:4px}
+.map dd{margin:0;font-size:.87rem;line-height:1.5;color:var(--dim)}
+.map dd b{color:var(--foam);font-weight:600}
+.map-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:-2px}
+.kind{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:100px;
+  background:color-mix(in srgb,var(--mc) 15%,transparent);
+  border:1px solid color-mix(in srgb,var(--mc) 34%,transparent);
+  font-family:var(--mono);font-size:.45rem;letter-spacing:.13em;text-transform:uppercase;color:var(--foam)}
+.kind svg{width:12px;height:12px;flex:none;stroke:var(--mc);fill:none;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round}
+.map .nw{display:inline-flex;align-items:center;font-family:var(--mono);font-size:.45rem;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--wall);
+  border:1px solid color-mix(in srgb,var(--wall) 55%,transparent);
+  background:rgba(255,92,59,.12);border-radius:100px;padding:4px 10px}
+
+/* the stages, so the sequence is visible rather than described */
+.stagewrap .slab{display:block;font-family:var(--mono);font-size:.46rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.stages{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.stages li{position:relative;padding:8px 11px 9px 32px;border-radius:9px;
+  border-left:2px solid transparent}
+.stages li i{position:absolute;left:11px;top:9px;font-style:normal;font-family:var(--mono);
+  font-size:.44rem;letter-spacing:.06em;color:var(--dim)}
+/* the global li::before bullet leaks in here. Keep it as a tick, but centre it on
+   the number (whose box centre is 14px, not the bullet's default 15px), shorten
+   it, and key it to the card's own colour instead of the page accent — which
+   moves with the depth picker three sections up. */
+.stages li::before{left:2px;top:14px;width:5px;background:var(--mc)}
+.stages li b{display:block;font-size:.83rem;font-weight:600;color:var(--foam);
+  letter-spacing:-.012em;line-height:1.25}
+.stages li span{display:block;font-size:.78rem;line-height:1.45;color:var(--dim);margin-top:3px}
+.stages li.wall{background:rgba(255,92,59,.13);border-left-color:var(--wall)}
+.stages li.wall b,.stages li.wall i{color:var(--wall)}
+
+.chart-intro{margin-top:clamp(48px,7vw,84px)}
+.chart-intro h3{font-size:clamp(1.5rem,3.6vw,2.5rem);margin-bottom:.4em;letter-spacing:-.03em;
+  font-variation-settings:"wdth" 110,"wght" 600}
+
+/* ---- the sideways scroller, styled rather than left to the UA ---- */
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px;
+  scrollbar-width:thin;scrollbar-color:var(--s2) rgba(232,242,243,.07)}
+.scroller::-webkit-scrollbar{height:9px}
+.scroller::-webkit-scrollbar-track{background:rgba(232,242,243,.07);border-radius:100px}
+.scroller::-webkit-scrollbar-thumb{border-radius:100px;
+  background:color-mix(in srgb,var(--s2) 60%,transparent)}
+.scroller::-webkit-scrollbar-thumb:hover{background:var(--s2)}
+.scroller>.chart{min-width:820px}
+.hint{font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--dimmer);margin-top:12px}
+@media(min-width:900px){.hint{display:none}}
+
+/* ============ INSTRUMENT ============ */
+.inst{border-radius:20px;border:1px solid var(--line);background:var(--panel);overflow:hidden;margin-top:38px}
+.inst-top{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:15px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.prog{flex:1;min-width:120px;height:3px;border-radius:3px;background:rgba(232,242,243,.12);
+  position:relative;overflow:hidden}
+.prog i{position:absolute;inset:0 auto 0 0;width:0%;border-radius:3px;
+  background:linear-gradient(90deg,var(--s1),var(--s3));transition:width .32s var(--ease)}
+.q{padding:18px 20px;border-bottom:1px solid rgba(232,242,243,.07)}
+.q:last-of-type{border-bottom:0}
+.q p{margin:0 0 12px;font-size:.98rem;line-height:1.4;max-width:52ch}
+.q p b{font-family:var(--mono);font-size:.52rem;letter-spacing:.14em;color:var(--dimmer);
+  display:inline-block;margin-right:9px;font-weight:400}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opts button{padding:8px 13px;border-radius:100px;border:1px solid var(--line);background:transparent;
+  color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;
+  text-transform:uppercase;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease)}
+.opts button:hover{color:var(--foam);border-color:rgba(232,242,243,.35)}
+.opts button[aria-pressed="true"]{background:var(--s2);border-color:var(--s2);color:#06141C;font-weight:500}
+.opts button:focus-visible{outline:2px solid var(--foam);outline-offset:2px}
+.inst-foot{padding:18px 20px;display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line)}
+.res{display:none;margin-top:14px;border-radius:20px;overflow:hidden;border:1px solid var(--accent);background:var(--panel)}
+.res.on{display:block;animation:rise .55s cubic-bezier(.22,1,.36,1)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.res-top{padding:26px;display:flex;gap:26px;align-items:center;flex-wrap:wrap;
+  background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 20%,transparent),transparent)}
+.res-num{font-size:clamp(2.6rem,8vw,4.4rem);line-height:.9;letter-spacing:-.05em;color:var(--accent);
+  font-variation-settings:"wdth" 116,"wght" 700}
+.res-num small{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim);margin-top:11px;font-variation-settings:normal;font-weight:400}
+.ladder{flex:1;min-width:200px;display:flex;gap:5px;align-items:flex-end;height:56px}
+.rung{flex:1;border-radius:4px 4px 0 0;background:rgba(232,242,243,.09);transition:background-color .8s var(--ease)}
+.rung.on{background:var(--accent)}
+.res-body{padding:24px;display:grid;gap:20px}
+.res-body dt{font-family:var(--mono);font-size:.53rem;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:7px}
+.res-body dd{margin:0;color:var(--dim);font-size:.96rem;line-height:1.5}
+.res-body dd b{color:var(--foam)}
+.adv{display:none;padding:20px 24px;border-top:1px solid rgba(255,92,59,.35);background:rgba(255,92,59,.08)}
+.adv.on{display:block}
+.adv b{font-family:var(--mono);font-size:.53rem;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--wall);display:block;margin-bottom:8px}
+.adv p{margin:0;font-size:.94rem;color:var(--dim);line-height:1.5}
+
+/* ============ TRIAGE / LIMITS / FOOTER ============ */
+.tri{display:grid;gap:12px;margin-top:38px}
+@media(min-width:680px){.tri{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1060px){.tri{grid-template-columns:repeat(4,1fr)}}
+.tri>div{border-radius:16px;border:1px solid var(--line);background:var(--panel);padding:22px}
+.tri svg{width:26px;height:26px;stroke:var(--c);fill:none;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px}
+.tri h4{margin:0 0 9px;font-size:1.04rem;letter-spacing:-.02em;font-variation-settings:"wdth" 104,"wght" 600}
+.tri p{margin:0 0 10px;color:var(--dim);font-size:.9rem;line-height:1.45}
+.tri .sym{margin:0;font-family:var(--mono);font-size:.5rem;letter-spacing:.11em;color:var(--c);
+  line-height:1.5;text-transform:uppercase}
+.lim{margin-top:34px;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:16px;overflow:hidden}
+@media(min-width:800px){.lim{grid-template-columns:repeat(2,1fr)}}
+.lim>div{background:var(--panel);padding:22px}
+.lim b{display:block;font-size:1rem;letter-spacing:-.02em;margin-bottom:7px;
+  font-variation-settings:"wdth" 104,"wght" 600}
+.lim p{margin:0;color:var(--dim);font-size:.9rem;line-height:1.45}
+.lim span{font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;color:var(--dimmer);
+  display:block;margin-bottom:11px}
+footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);background:#040E14}
+.srcgrid{display:grid;gap:10px;margin-top:30px}
+@media(min-width:700px){.srcgrid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1060px){.srcgrid{grid-template-columns:repeat(3,1fr)}}
+.src{padding:14px 16px;border-radius:12px;border:1px solid var(--line);font-size:.85rem;
+  line-height:1.4;color:var(--dim)}
+.src b{display:block;color:var(--foam);font-weight:600;margin-bottom:3px;letter-spacing:-.01em}
+.src i{font-family:var(--mono);font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;
+  font-style:normal;color:var(--s4);display:block;margin-bottom:6px}
+.home{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;padding:0 4px;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s var(--ease)}
+.home:hover{color:var(--foam)}
+.home:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+.colo{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--dimmer)}
+
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .rv{opacity:1;transform:none;transition:none}
+  .res.on{animation:none}
+  *,*::before,*::after{transition:none!important}
+  .brick,.swim,.scrollcue .ln,h1,.braid path,.wave{animation:none!important}
+  .mr-flow,.mr-chev,.mr-spur,.mr-band{animation:none!important}
+  .tracebox .trace-head,.tracebox .leg,.tracebox .dot{animation:none!important}
+}
+::selection{background:var(--s2);color:#06141C}
+
+/* ---- master additions ---- */
+.rn{position:relative}
+.rn u{font-family:var(--mono);font-size:.46rem;letter-spacing:.1em;color:var(--dimmer);
+  text-decoration:none;margin-right:7px;flex:none}
+.rn em{display:inline-block;font-style:normal;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--wall);border:1px solid var(--wall);
+  border-radius:3px;padding:1px 4px;margin-left:7px;vertical-align:middle;opacity:.9}
+.src i.tool{display:inline-block;background:rgba(79,214,192,.16);color:var(--s1);
+  padding:3px 7px;border-radius:4px;margin-bottom:7px}
+.src .bias{display:block;margin-top:6px;color:var(--dimmer);font-size:.78rem;line-height:1.45}
+.src a{color:var(--s1);text-decoration:underline;text-underline-offset:3px}
+.res-body .second dd{color:var(--dim)}
+.res-body .second b{color:var(--accent)}
+/* 9px tile headings sat at 3.8:1 on the panel — lift the tint without touching
+   the --s* tokens, which are correct everywhere they're used at size or as fills */
+.tile h4{filter:brightness(1.34) saturate(.92)}
+/* inline source links: give the hit area some height without breaking the prose line */
+.src a{display:inline-block;padding:4px 0}
+
+/* reading comfort: balance display text */
+h1, h2, h3 { text-wrap: balance; }
+</style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior from /assets/scripture-popover.js, which ships no colors; these are this page's clothes for it. */
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,var(--s2) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--s1);text-decoration-color:var(--s1)}
+.esv-tip{position:absolute;z-index:120;display:none;max-width:360px;padding:15px 17px 13px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);box-shadow:0 18px 50px rgba(0,0,0,.5);color:var(--foam);font-family:var(--disp);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--s2);font-family:var(--disp);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-tip-text{min-height:3em;transition:opacity .2s var(--ease)}
+.esv-tip-text.is-loading{opacity:.45}
+.esv-note{display:block;margin-top:8px;color:var(--dim);font-family:var(--disp);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(232,242,243,.08)}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--s2);font-family:var(--disp);font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border-color:var(--s2);color:var(--s1)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--foam);font-family:var(--disp);font-size:.84rem;font-weight:700;cursor:pointer;transition:border-color .2s var(--ease),background-color .2s var(--ease)}
+.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border-color:var(--s2)}
+.esv-pick-ic{width:15px;height:15px;color:var(--s2);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--dim);transition:rotate .2s var(--ease)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:130;min-width:250px;max-height:min(62dvh,420px);overflow-y:auto;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);box-shadow:0 18px 50px rgba(0,0,0,.5);opacity:1;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid rgba(232,242,243,.08);color:var(--dim);font-family:var(--disp);font-size:.78rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--dim);text-align:left;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--foam);font-family:var(--disp);font-size:.82rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--disp);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--s2) 10%,transparent);color:var(--foam)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--s2)}
+.esv-ctx{width:min(880px,calc(100% - 24px));max-height:min(86dvh,800px);padding:0;border:1px solid var(--line);border-radius:14px;background:var(--bg2);color:var(--foam);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden;opacity:0;scale:.98;transition:opacity .32s var(--ease),scale .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.98}}
+.esv-ctx::backdrop{background:rgba(3,10,14,0);transition:background-color .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(3,10,14,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(3,10,14,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(86dvh,800px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid rgba(232,242,243,.08)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--s2);font-family:var(--disp);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-ctx-head h3{margin:0;font-family:var(--disp);font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.15;color:var(--foam)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:none;color:var(--dim);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close:hover{color:var(--foam);border-color:var(--s2)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--disp);text-align:left}
+.esv-ctx-passage{margin:0}
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--s2) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--s2) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-note{margin:.8em 0 0;color:var(--dim);font-family:var(--disp);font-size:.82rem}
+.esv-ctx-loading{color:var(--dim);font-family:var(--disp);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid rgba(232,242,243,.08);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--dim);font-family:var(--disp);font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--s2);color:var(--foam)}
+.esv-ctx-more:disabled{opacity:.5;cursor:default}
+@media (max-width:560px){.esv-ctx-head{flex-wrap:wrap}.esv-ctx-body{padding:16px 16px 18px}}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+</style>
+<style id="lang-switch">
+/* EN · RU: two links, the current one underlined; the generator writes the mirror */
+.lang-switch{display:flex;align-items:center;flex:none}
+.lang-switch .lang-opt{display:inline-grid;place-items:center;min-width:44px;min-height:44px;font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.16em;line-height:1;text-transform:uppercase;text-decoration:none;color:var(--dim);transition:color .2s var(--ease)}
+.lang-switch .lang-opt:hover{color:var(--foam)}
+.lang-switch .lang-opt[aria-current="page"]{color:var(--foam);text-decoration:underline;text-decoration-color:var(--s1);text-decoration-thickness:1.5px;text-underline-offset:5px;pointer-events:none}
+.lang-switch .lang-sep{font-size:.6rem;color:var(--dim);opacity:.6}
+@media (prefers-reduced-motion:reduce){.lang-switch .lang-opt{transition:none}}
+.hero{position:relative}
+.hero .wrap.hero-bar{position:absolute;top:12px;left:0;right:0;padding-top:0;padding-bottom:0;z-index:3;display:flex;justify-content:flex-end}
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- HERO -->
+<header class="hero">
+  <canvas id="contours"></canvas>
+  <div class="wrap hero-bar"><div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/soundings/" lang="en" hreflang="en" aria-current="false">EN</a><span class="lang-sep" aria-hidden="true">·</span><a class="lang-opt" href="/soundings/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div></div>
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="pill">Иез. 47 · 1 Ин. 2 · Евр. 5</span>
+      <span class="pill">5 глубин · 13 историй · 1 мерило</span>
+    </div>
+    <h1>Промеры</h1>
+    <p class="hero-sub">Где ты в воде, что нужно, чтобы двигаться дальше, и <b>то единственное, что всё это измеряет.</b></p>
+    <div class="hero-btns">
+      <a class="btn solid" href="#instrument">Пройти двухминутный замер →</a>
+      <a class="btn" href="#depths">Пять глубин</a>
+    </div>
+  </div>
+  <div class="scrollcue"><span class="mono">Вниз</span><span class="ln"></span></div>
+</header>
+
+<!-- THE ONE LINE -->
+<section class="oneline" id="short">
+  <div class="wrap">
+    <svg class="braid" viewBox="0 0 900 200" aria-hidden="true">
+      <path d="M0 20 C300 20 420 100 900 100" stroke="#E0A63C"/>
+      <path d="M0 65 C320 65 430 100 900 100" stroke="#4FD6C0"/>
+      <path d="M0 110 C340 110 440 100 900 100" stroke="#25AEDA"/>
+      <path d="M0 155 C320 155 430 100 900 100" stroke="#3D7BEE"/>
+      <path d="M0 190 C300 190 420 100 900 100" stroke="#8A63F0"/>
+      <circle cx="880" cy="100" r="5" fill="#E8F2F3"/>
+    </svg>
+    <h2 class="big">В каком-то смысле всё просто. Зрелость — это <em>ходить в любви.</em></h2>
+    <p class="one-sub">Всё ниже — строительные леса для этой фразы. Павел перечисляет то, что церкви на самом деле измеряют: красноречие, пророчество, знание, веру, двигающую горы, готовность всё раздать, даже мученичество, — и говорит, что без любви всё это в сумме ничто. Не меньше. Ничто.</p>
+    <div class="refs">
+      <span class="ref"><b>1 Кор. 13</b> — без любви ничто</span>
+      <span class="ref"><b>Гал. 5:6</b> — вера, которая действует через любовь</span>
+      <span class="ref"><b>Ин. 13:35</b> — все узнают</span>
+      <span class="ref"><b>1 Ин. 4:8</b> — кто не любит, тот не знает Бога</span>
+      <span class="ref"><b>REVEAL</b> определяло рост как растущую любовь к Богу и людям</span>
+    </div>
+    <div class="one-note"><b>Тогда зачем вся остальная страница?</b> Потому что «просто люби людей» — правда и почти бесполезная инструкция. С этим и так все согласны. Чего никто не видит, так это <b>что мешает</b>, а на каждой глубине мешает своё. Младенец пока не может любить, потому что внутри ещё ничего не обустроено. Ребёнок не может, потому что фразы всё ещё возвращаются к нему самому. Молодой взрослый любит изо всех сил и выгорает, потому что спутал любовь с полезностью. Карта не заменяет мерило. Она показывает, где препятствие.</div>
+  </div>
+</section>
+
+<!-- DEPTHS -->
+<section id="depths">
+  <div class="wrap">
+    <span class="tag"><i></i><span class="mono">Пять глубин</span></span>
+    <h2>Вода поднимается.<br>Ты перестаёшь стоять.</h2>
+    <p class="sec-lede">Иезекииля ведут в реку и четыре раза отмеряют расстояние: по лодыжки, по колено, по пояс, а потом вода, которую не перейти. Зрелость идёт в ту же сторону: не больше опоры, а меньше.</p>
+    <div class="rig">
+      <div class="figbox">
+        <svg viewBox="0 0 300 380" role="img" aria-label="Вода поднимается по стоящей фигуре">
+          <defs>
+            <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity=".22"/>
+            </linearGradient>
+            <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--s0)" stop-opacity=".44"/>
+              <stop offset="100%" stop-color="var(--s0)" stop-opacity=".12"/>
+            </linearGradient>
+            <clipPath id="box"><rect x="0" y="0" width="300" height="380"/></clipPath>
+          </defs>
+          <!-- Rules sit on the figure's real landmarks: 3000 at the waist, 2000 at the
+               knee, 1000 just above the foot. The old marks were evenly spaced, so
+               "waist-deep" water arrived at the armpits and "knee-deep" mid-thigh.
+               Each tick is centered under its own label: the labels measure 20..45.2,
+               but 1.4 of that is trailing letter-spacing, so the glyphs end at 43.8
+               and the true center is 31.9 rather than 32.6. -->
+          <g stroke="rgba(232,242,243,.16)" stroke-width="1">
+            <line x1="24.9" y1="128" x2="38.9" y2="128"/><line x1="24.9" y1="208" x2="38.9" y2="208"/>
+            <line x1="24.9" y1="287" x2="38.9" y2="287"/><line x1="24.9" y1="315" x2="38.9" y2="315"/>
+            <line x1="20" y1="331" x2="280" y2="331" stroke-dasharray="3 5"/>
+          </g>
+          <!-- The bed is sand, and it is always drawn. Dry ground shows no water at
+               all, so without it the figure reads as floating in an empty box; and
+               because the water is translucent the sand carries through every other
+               depth, which is what makes the river look shallow at the ankles. It is
+               keyed to --s0 rather than --accent so it stays sand as the accent moves.
+               The surface is the dashed rule above, same as every other depth mark. -->
+          <rect x="0" y="331" width="300" height="49" fill="url(#sand)"/>
+          <g fill="rgba(232,242,243,.35)" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1.4">
+            <text x="20" y="122">4000</text><text x="20" y="202">3000</text>
+            <text x="20" y="281">2000</text><text x="20" y="309">1000</text>
+          </g>
+          <!-- Stick.svg, dropped in by the author. Scaled 0.61443 and placed so its
+               soles land on the riverbed at 331; every rule below is derived from
+               its own landmarks rather than spaced evenly. -->
+          <g id="figure" fill="var(--foam)" opacity=".4"
+             style="transition:transform .8s cubic-bezier(.22,1,.36,1)">
+            <g transform="translate(65.67,51.5) scale(0.61443)">
+              <path d="M156.37,432.91l-19.09-93.78-19.41,94.26c-2.81,13.65-13.71,23.59-27.61,22.19-14-1.41-23.74-12.86-23.32-27.22l5.76-198.62-29,66.69c-4.62,10.63-17.05,15.25-27.45,11.89-9.7-3.13-18.8-14.59-15.58-26.02l29.87-105.87c6.87-24.36,27.24-45.37,53.59-45.39l105.26-.09c27.97-.02,48.59,22.44,55.73,48.23l28.78,103.91c3.11,11.23-6.52,22.57-15.71,25.43-11.73,3.65-23.35-2.47-28.09-13.56l-28.14-65.75,5.74,197.06c.42,14.57-7.46,26.84-21.74,29.1s-26.54-7.46-29.59-22.46Z"/>
+              <path d="M134.2,123.24c-34.81-1.75-59.47-31.33-58-64.38C77.68,25.15,106.22-1.87,140.65.1s59.16,31.17,57.59,64.85-29.29,60.03-64.05,58.28Z"/>
+            </g>
+          </g>
+          <g clip-path="url(#box)">
+            <g id="water" style="transition:transform 1s cubic-bezier(.22,1,.36,1)" transform="translate(0,278)">
+              <g class="wave">
+                <path d="M0 8 Q37.5 -6 75 8 T150 8 T225 8 T300 8 T375 8 T450 8 T525 8 T600 8 V380 H0 Z" fill="url(#wg)"/>
+                <path d="M0 8 Q37.5 -6 75 8 T150 8 T225 8 T300 8 T375 8 T450 8 T525 8 T600 8"
+                      fill="none" stroke="var(--accent)" stroke-width="2" stroke-opacity=".9"/>
+              </g>
+            </g>
+          </g>
+          <style>.wave{animation:flowx 7s linear infinite}
+            @keyframes flowx{from{transform:translateX(0)}to{transform:translateX(-300px)}}</style>
+        </svg>
+        <div class="fig-foot"><b id="figDepth">0 cubits</b><span id="figState">dry ground</span></div>
+      </div>
+      <div>
+        <div class="picker" role="tablist" aria-label="Выбери глубину" id="picker"></div>
+        <div class="panel" id="panel"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERNACULAR -->
+<section id="vernacular">
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--s1)"><i></i><span class="mono">Как говорят в церкви</span></span>
+    <h2>Никто не говорит «третья стадия».<br>Говорят «младенец в вере».</h2>
+    <p class="sec-lede">У церкви уже есть народная классификация: неточная, иногда жестокая, порой острее академических моделей. Вот на что на самом деле указывают ходовые фразы и какие из них приносят вред.</p>
+    <div class="filters" id="filters"></div>
+    <div class="phrases" id="phrases"></div>
+  </div>
+</section>
+
+<!-- TRACES -->
+<section id="journeys" style="background:var(--bg2)">
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--s4)"><i></i><span class="mono">Живые истории</span></span>
+    <h2>Никто в Библии<br>не шёл по прямой.</h2>
+    <p class="sec-lede">Тринадцать линий на одной шкале: восемь мужчин, пять женщин. Чем выше, тем глубже вода. Обрати внимание, сколько из них откатываются после своего лучшего момента и что почти каждый переход на настоящую глубину проходит через провал, а не через успех.</p>
+    <div class="people" role="tablist" aria-label="Выбери человека" id="people"></div>
+    <div class="tracebox" id="tracebox"></div>
+
+    <div class="callout">
+      <h4>Самое ясное свидетельство в Новом Завете</h4>
+      <p>Как Павел описывает себя в письмах примерно за восемь лет. По мере того как он зреет, его оценка себя идёт <em>вниз</em>, а уверенность в благодати растёт. Что бы ни было зрелостью, это не растущее мнение о себе.</p>
+      <div class="descend">
+        <div class="dstep"><i>≈ 55 г. н. э.</i>
+          <div class="dbody"><b>Самый наименьший из апостолов</b>
+            <div class="barwrap"><span style="width:100%"></span></div></div>
+          <em>1 Кор. 15:9</em></div>
+        <div class="dstep"><i>≈ 60 г. н. э.</i>
+          <div class="dbody"><b>Самый незначительный из всех святых</b>
+            <div class="barwrap"><span style="width:78%"></span></div></div>
+          <em>Еф. 3:8</em></div>
+        <div class="dstep"><i>≈ 63 г. н. э.</i>
+          <div class="dbody"><b>Грешников, самый худший из которых — я</b>
+            <div class="barwrap"><span style="width:54%"></span></div></div>
+          <em>1 Тим. 1:15</em></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WALL -->
+<section class="wallsec" id="wall">
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--wall)"><i></i><span class="mono">Между «по пояс» и «с головой»</span></span>
+    <h2 style="max-width:16ch">Стена — место, где большинство останавливается.</h2>
+    <p class="sec-lede">Хагберг и Гьюлих обнаружили её между продуктивной жизнью и всем, что после: там, где твоя воля встречается с Божьей лицом к лицу. Почти никого не предупреждают.</p>
+    <div class="wall-vis" aria-hidden="true">
+      <span class="brick"></span><span class="brick" style="animation-delay:.2s"></span>
+      <span class="brick" style="animation-delay:.4s"></span><span class="brick" style="animation-delay:.6s"></span>
+      <span class="brick" style="animation-delay:.8s"></span><span class="brick" style="animation-delay:1s"></span>
+      <span class="brick" style="animation-delay:1.2s"></span><span class="brick" style="animation-delay:1.4s"></span>
+      <span class="brick" style="animation-delay:1.6s"></span><span class="brick" style="animation-delay:1.8s"></span>
+      <span class="swim"></span><span class="lbl">подход · застой · отступление · снова</span>
+    </div>
+    <div class="tiles">
+      <div class="tile hot"><h4>Каково это</h4><ul>
+        <li>То, что раньше приносило плод, перестаёт работать</li>
+        <li>Подводит уверенность: не вера, а именно уверенность</li>
+        <li>Молитва затихает, и чтение о молитве не помогает</li>
+        <li>Всплывает погребённое, обычно с чьим-то именем</li>
+        <li>Верные слова других христиан ложатся не туда</li></ul></div>
+      <div class="tile cool"><h4>Чем это не является</h4><ul>
+        <li>Не отпадение: большинство продолжает служить и вести других всё это время</li>
+        <li>Не наказание. «Найди скрытый грех» — самый разрушительный ответ</li>
+        <li>Не клиническая депрессия, хотя они часто идут вместе. Если затронуты сон, аппетит или силы жить дальше, сходи и к врачу</li>
+        <li>Не по желанию, если цель — другой берег</li></ul></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>2 выхода</b><p>Назад, в ещё более занятую и заметную продуктивность, где механизм всё ещё работает и никто ничего не спрашивает. Или насквозь: уединение, горе, честные спутники, настоящая помощь со старыми ранами. Хагберг прямо говорит, что через Стену не пройти на шестидесятичасовых неделях. Большинство выбирает первый выход и называет это верностью.</p></div>
+      <div class="stat blue"><b>≈1 из 4</b><p>Доля людей в церквях, опрошенных REVEAL, которые назвали себя застрявшими или неудовлетворёнными, и больше всего их среди <em>самых</em> преданных. Вот как снаружи выглядит здание, полное людей у Стены.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARSHES -->
+<section id="marshes">
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--marsh)"><i></i><span class="mono">Иез. 47:11 — стих, который никто не цитирует</span></span>
+    <h2>Иная вода касается тебя<br>и так и не становится пресной.</h2>
+    <p class="sec-lede">Всё выше измеряет, насколько ты глубоко. Ничто выше не может сказать, движешься ли ты. Это разные вопросы, и застревают люди как раз на втором.</p>
+
+    <div class="verse">
+      <q>Но болота и лужи не станут пресными. Они останутся источниками соли.</q>
+      <cite>Иез. 47:11</cite>
+      <p>Одиннадцать стихов подряд река исцеляет мёртвое море, а потом видение останавливается, чтобы сказать: какая-то вода, до которой она доходит, не исцеляется. Стоячая вода. Отрезанная от течения, медленно солонеющая, в том же пейзаже и из того же источника.</p>
+    </div>
+
+    <div class="axis">
+      <div class="axcell">
+        <span>Разделы с первого по пятый спрашивают</span>
+        <b>Насколько ты глубоко?</b>
+        <p>Высота · место на шкале<br>Измеримо · тринадцать моделей согласны, что это есть</p>
+      </div>
+      <div class="axcell now">
+        <span>Этот спрашивает</span>
+        <b>Движется ли ещё хоть что-то?</b>
+        <p>Течение · с глубиной не связано<br>Снаружи не видно · ни в одной модели нет такой категории</p>
+      </div>
+    </div>
+
+    <div class="marshfig">
+      <div class="scroller">
+      <svg viewBox="0 0 900 410" role="img" aria-label="Схема: русло реки становится глубже слева направо, по нему идёт течение, а под ним пять стоячих прудов, каждый висит на своей глубине на пунктирном отводе. Пруд под «с головой» отмечен как самый трудный для того, чтобы его заметить.">
+        <defs>
+          <linearGradient id="mrflow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#E0A63C" stop-opacity=".40"/>
+            <stop offset=".25" stop-color="#4FD6C0" stop-opacity=".40"/>
+            <stop offset=".5" stop-color="#25AEDA" stop-opacity=".40"/>
+            <stop offset=".75" stop-color="#3D7BEE" stop-opacity=".40"/>
+            <stop offset="1" stop-color="#8A63F0" stop-opacity=".40"/>
+          </linearGradient>
+          <linearGradient id="mrpool" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#93A99B" stop-opacity=".28"/>
+            <stop offset="1" stop-color="#93A99B" stop-opacity=".06"/>
+          </linearGradient>
+          <clipPath id="mrclip"><path d="M60 132 L840 96 L840 204 L60 168 Z"/></clipPath>
+        </defs>
+
+        <g font-family="Martian Mono, ui-monospace, monospace" letter-spacing="1.7">
+          <text x="60" y="34" font-size="12" fill="rgba(232,242,243,.62)">РУСЛО</text>
+          <text x="185" y="34" font-size="12" fill="rgba(232,242,243,.34)">— ОНО ДВИЖЕТСЯ И СТАНОВИТСЯ ГЛУБЖЕ</text>
+          <g font-size="11.5" fill="rgba(232,242,243,.60)" text-anchor="middle">
+            <text x="122" y="72">СУХАЯ ЗЕМЛЯ</text>
+            <text x="296" y="72">ЛОДЫЖКИ</text>
+            <text x="470" y="72">КОЛЕНИ</text>
+            <text x="644" y="72">ПОЯС</text>
+            <text x="790" y="72">С ГОЛОВОЙ</text>
+          </g>
+        </g>
+        <g stroke="rgba(232,242,243,.20)" stroke-width="1">
+          <path d="M122 82V134.1M296 82V125.9M470 82V117.9M644 82V109.8M790 82V103"/>
+        </g>
+
+        <path class="mr-band" d="M60 132 L840 96 L840 204 L60 168 Z" fill="url(#mrflow)"/>
+        <g clip-path="url(#mrclip)" fill="none" stroke="#E8F2F3" stroke-opacity=".24" stroke-width="1.3">
+          <path class="mr-flow" d="M60 146c60-9 120 9 180 0s120-18 180-9 120 18 180 9 120-18 240-27"/>
+          <path class="mr-flow" style="animation-duration:4.6s;animation-delay:-1.2s"
+                d="M60 156c60 9 120-9 180 0s120 22 180 13 120-22 180-13 120 22 240 13"/>
+        </g>
+        <g clip-path="url(#mrclip)" fill="none" stroke="#E8F2F3" stroke-opacity=".72"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path class="mr-chev" style="animation-delay:0.00s" d="M150 144l8 6-8 6"/>
+          <path class="mr-chev" style="animation-delay:-0.26s" d="M245 143l8 7-8 7"/>
+          <path class="mr-chev" style="animation-delay:-0.52s" d="M340 142l8 8-8 8"/>
+          <path class="mr-chev" style="animation-delay:-0.78s" d="M435 141l8 9-8 9"/>
+          <path class="mr-chev" style="animation-delay:-1.04s" d="M530 140l8 10-8 10"/>
+          <path class="mr-chev" style="animation-delay:-1.30s" d="M625 139l8 11-8 11"/>
+          <path class="mr-chev" style="animation-delay:-1.56s" d="M720 138l9 12-9 12"/>
+          <path class="mr-chev" style="animation-delay:-1.82s" d="M812 137l9 13-9 13"/>
+        </g>
+
+        <g stroke-width="1.2" stroke-dasharray="2 6">
+          <path class="mr-spur" style="animation-delay:0.00s" stroke="#E0A63C" stroke-opacity=".55" d="M122 164V274"/>
+          <path class="mr-spur" style="animation-delay:-0.34s" stroke="#4FD6C0" stroke-opacity=".55" d="M296 172V274"/>
+          <path class="mr-spur" style="animation-delay:-0.68s" stroke="#25AEDA" stroke-opacity=".55" d="M470 180V274"/>
+          <path class="mr-spur" style="animation-delay:-1.02s" stroke="#3D7BEE" stroke-opacity=".55" d="M644 188V274"/>
+          <path class="mr-spur" style="animation-delay:-1.36s" stroke="#8A63F0" stroke-opacity=".55" d="M790 194V270"/>
+        </g>
+
+        <!-- still: nothing in this group animates, by design -->
+        <g class="mr-still">
+          <ellipse cx="122" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="122" cy="300" rx="55" ry="20" fill="#E0A63C" fill-opacity=".20"
+                   stroke="#E0A63C" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M96 294h52M88 300h68M102 307h40"/>
+          </g>
+          <ellipse cx="296" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="296" cy="300" rx="55" ry="20" fill="#4FD6C0" fill-opacity=".20"
+                   stroke="#4FD6C0" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M270 294h52M262 300h68M276 307h40"/>
+          </g>
+          <ellipse cx="470" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="470" cy="300" rx="55" ry="20" fill="#25AEDA" fill-opacity=".20"
+                   stroke="#25AEDA" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M444 294h52M436 300h68M450 307h40"/>
+          </g>
+          <ellipse cx="644" cy="300" rx="64" ry="26" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="644" cy="300" rx="55" ry="20" fill="#3D7BEE" fill-opacity=".20"
+                   stroke="#3D7BEE" stroke-opacity=".55" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round">
+            <path d="M618 294h52M610 300h68M624 307h40"/>
+          </g>
+          <ellipse cx="790" cy="300" rx="72" ry="30" fill="none" stroke="#93A99B"
+                   stroke-opacity=".4" stroke-width="1" stroke-dasharray="2 6"/>
+          <ellipse cx="790" cy="300" rx="62" ry="23" fill="#8A63F0" fill-opacity=".26"
+                   stroke="#8A63F0" stroke-opacity=".82" stroke-width="1.3"/>
+          <g stroke="#93A99B" stroke-opacity=".78" stroke-width="1.5" stroke-linecap="round">
+            <path d="M764 294h52M756 300h68M770 307h40"/>
+          </g>
+        </g>
+        <path d="M790 330v9" stroke="#93A99B" stroke-opacity=".75" stroke-width="1.2"/>
+
+        <g font-family="Martian Mono, ui-monospace, monospace" letter-spacing="1.6">
+          <text x="790" y="354" font-size="10.5" fill="#93A99B" text-anchor="middle">ЗАМЕТИТЬ ТРУДНЕЕ ВСЕГО</text>
+          <text x="60" y="386" font-size="12" fill="#93A99B">БОЛОТА</text>
+          <text x="185" y="386" font-size="12" fill="rgba(147,169,155,.55)">— ИСТОЧНИК ТОТ ЖЕ, ТЕЧЕНИЯ НЕТ, ОСТАЮТСЯ СОЛЁНЫМИ</text>
+        </g>
+      </svg>
+      </div>
+      <div class="mfig-foot">
+        <span>Как читать схему</span>
+        <p><b>Болото — не шестая глубина.</b> Оно свисает сбоку от той глубины, на которой ты уже находишься, поэтому последний пруд в этом ряду настоящий. Человек, который по-настоящему с головой в воде, может сидеть в стоячей воде, и к этому моменту почти не остаётся тех, у кого есть право ему об этом сказать. Глубина — это горизонтальная ось. Ничто на этой странице, кроме этой схемы, не измеряет вертикальную.</p>
+      </div>
+    </div>
+    <p class="hint fig">Прокрути вбок →</p>
+
+    <div class="mrule">
+      <b>Прочитай это раньше восьми</b>
+      <p>Они описывают одного человека: <em>тебя</em>. Каждое из них невидимо снаружи, это определение, а не оговорка, поэтому читать по ним кого-то другого — гарантированно ошибиться и при этом легко быть жестоким. Это самое удобное для злоупотребления на всей странице.</p>
+      <p>Ограничение 02 здесь кусается сильнее всего: ты худший из возможных судей своей глубины, <em>и</em> ты единственный, у кого есть к этому доступ. Верно и то и другое. Поэтому считай всё, в чём узнаёшь себя, гипотезой о себе, отнеси её одному человеку, который действительно тебя знает, и позволь ему не согласиться.</p>
+    </div>
+
+    <div class="mrule">
+      <b>Как образуется болото</b>
+      <p>Восемь ниже описывают, как выглядит стоячая вода, когда ты уже в ней стоишь. Ни одно не описывает переход. Никто не решает перестать двигаться: течение просто останавливается, и тремя способами.</p>
+      <p>Первый — низкий контраст. Медленный дрейф от того, где ты был, лежит ниже шумового порога обычной недели, он меньше помех, которые и так есть в любой жизни. Ты не видишь, как это происходит. Ты видишь это позже, когда разрыв вырос достаточно, чтобы перешагнуть этот порог.</p>
+      <p>Второй, и именно он важен: само сравнение ненадёжно. Ты сверяешь сегодня с недавним — несколько недель, несколько месяцев назад, — а недавнее уже сдвинулось вместе с тобой. Линейка, которая дрейфует вместе с тем, что измеряет, никогда ничего не покажет. Поэтому фраза чуть выше — <em>ты худший из возможных судей своей глубины</em> — не про изъян характера. Это арифметика: линейка сдвинулась. И поэтому же чужой взгляд на тебя весит больше твоего: не потому, что другой знает больше, а потому, что его точка отсчёта не сдвинулась. Не информация. Информация просто даёт сдвинутой рамке больше материала.</p>
+      <p>Третий — кластерная реактивация, и здесь уверенность падает. Поведение хранится не по одному действию, оно хранится вместе с контекстом, который его породил, и сигнал заново открывает весь шаблон, связанный с этим контекстом, а не одно действие отдельно. В пределах одной привычки это хорошо подтверждено. Доходит ли это до болот, которые выглядят настолько несвязанными, — бухгалтерия, поддельный голос, привычка жить лагерем у стены, — утверждение куда серьёзнее, и данные для него далеко не так устоялись. Оценивай соответственно.</p>
+      <p>Отсюда предсказание, а не вывод: если вход устроен сетью, восемь болот ниже должны встречаться кластерами, а не поодиночке. Узнал себя в одном — честный шаг проверить остальные семь, а не считать те, в которых тебя нет.</p>
+    </div>
+
+    <p class="mkey"><span>Как читать цвет</span>Каждая карточка окрашена в ту глубину, которую она подделывает, по той же шкале, что и фигура выше. Четыре из восьми выходят «по пояс», и как раз там стоит Стена, и это не случайность: по пояс — первое место, где у тебя достаточно рабочей компетентности, чтобы прикрыть всё, чего нет.</p>
+    <div class="marshgrid" id="marshgrid"></div>
+
+    <div class="saltgrid">
+      <div class="saltcell">
+        <h4>Что общего у всех восьми</h4>
+        <p>Неподвижность. В каждом из них что-то, созданное, чтобы двигаться, остановилось: покаяние, зависимость от Бога или то, что тебя знают, — а всё видимое продолжает идти как шло.</p>
+        <p>Именно поэтому ни в одной из тринадцати моделей нет для этого категории, и поэтому прибор ниже не может это уловить: <em>каждое мерило на этой странице измеряет высоту, а болото — это сбой течения.</em> Можно быть с головой в воде и полностью застояться. Эти два факта ни разу друг другу не противоречили.</p>
+      </div>
+      <div class="saltcell">
+        <h4>И остаётся ровно один выход</h4>
+        <p>Один и тот же, восемь раз подряд: что-то должно снова начать двигаться. Почти никогда не информация: к этому моменту информация у тебя уже есть. Это и есть шестое болото.</p>
+        <p>Почти всегда <em>один человек, у которого есть право сказать правдивую фразу вслух</em>, и твоё заранее данное ему разрешение её сказать. Иезекииль оставляет болота соли, потому что у болота нет пути обратно в русло своими силами.</p>
+      </div>
+    </div>
+    <p class="saltend">Ты не география.<small>У болот нет пути назад · у тебя есть</small></p>
+  </div>
+</section>
+
+<!-- CHART -->
+<section id="frameworks">
+  <div class="wrap rv">
+    <span class="tag"><i></i><span class="mono">Тринадцать карт, одна местность</span></span>
+    <h2>Тринадцать способов нарисовать<br>одну и ту же воду.</h2>
+    <p class="sec-lede">Каждая из них создавалась, чтобы ответить на свой вопрос, поэтому они и расходятся. На каждой карточке написано, что эта карта на самом деле измеряет, и эта одна строка обычно объясняет весь спор.</p>
+    <div class="maps" id="maps"></div>
+
+    <div class="chart-intro">
+      <span class="tag" style="--accent:var(--s3)"><i></i><span class="mono">Рядом</span></span>
+      <h3>Они не совпадают ровно.<br>В этом и польза.</h3>
+      <p class="sec-lede">Те же тринадцать в том же порядке, наложенные на пять глубин. Фаулер измеряет, как ты держишь убеждения. Тереза описывает молитву. Путман спрашивает, воспроизводишь ли ты себя. Примерные широты, а не равенства.</p>
+    </div>
+    <div class="scroller"><div class="chart" id="chart"></div></div>
+    <p class="hint">Прокрути вбок →</p>
+    <p class="chart-focus" id="chartFocus" aria-live="polite">Tap a depth to read it straight down all thirteen.</p>
+    <div class="tiles" style="margin-top:34px">
+      <div class="tile"><h4 style="color:var(--s3)">Самое острое расхождение: сомнение</h4><ul style="--accent:var(--s3)">
+        <li>Путман: вопросы обычно признак детскости</li>
+        <li>Фаулер и Пек: это двигатель самого важного перехода, от унаследованной веры к своей</li>
+        <li>Хагберг: это <em>и есть</em> Стена</li>
+        <li>От того, где ты окажешься, зависит, будет ли сомневающийся тридцатилетний проблемой или роженицей</li></ul></div>
+      <div class="tile"><h4 style="color:var(--s4)">Второе: что вообще такое зрелость</h4><ul style="--accent:var(--s4)">
+        <li>Конечная точка у Путмана — воспроизводство: ученики, которые делают учеников</li>
+        <li>Конечная точка у Терезы, Хагберг и Рора — соединение и забвение себя</li>
+        <li>По их мерке плодовитый делатель учеников, ни разу не встречавший Стену, всё ещё на третьей стадии</li>
+        <li>Вместе они уравновешивают друг друга: плод без глубины выгорает, глубина без плода скисает</li></ul></div>
+      <div class="tile hot"><h4>Третье: в четырёх картах Стены нет вовсе</h4><ul style="--accent:var(--wall)">
+        <li>1 Иоанна называет три группы и просто оставляет пустым место, где стоит Стена</li>
+        <li>Путман, REVEAL и Спейдер — три самые используемые современные модели ученичества, и ни в одной нет категории для веры, которая по мере зрелости работает <em>хуже</em></li>
+        <li>Все три прекрасно двигают людей от сухой земли до глубины по пояс. Для этого их и создавали</li>
+        <li>Цена: церковь, которая ими пользуется, читает Стену как откат и прописывает ещё больше того, что бывает по пояс, а это единственное, что стабильно не работает</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUMENT -->
+<section id="instrument">
+  <div class="wrap rv">
+    <span class="tag"><i></i><span class="mono">Прибор 01 — самоотчёт</span></span>
+    <h2>Сделай замер.</h2>
+    <p class="sec-lede">Отвечай за последние полгода, а не за свою лучшую неделю. Известная слабость: та глубина, которая сильнее всех себя переоценивает, — та, на которой большинство людей. Дай эти же двенадцать вопросов двум людям, которые живут с тобой.</p>
+    <div class="inst">
+      <div class="inst-top"><span class="mono" id="count">0 / 12</span><div class="prog"><i id="bar"></i></div></div>
+      <div id="questions"></div>
+      <div class="inst-foot">
+        <button class="btn solid" id="calc" disabled>Узнать глубину</button>
+        <button class="btn" id="reset">Сбросить</button>
+      </div>
+    </div>
+    <div class="res" id="res" aria-live="polite">
+      <div class="res-top">
+        <div class="res-num" id="resNum">—</div>
+        <div class="ladder" aria-hidden="true">
+          <span class="rung" style="height:22%"></span><span class="rung" style="height:40%"></span>
+          <span class="rung" style="height:60%"></span><span class="rung" style="height:80%"></span>
+          <span class="rung" style="height:100%"></span></div>
+      </div>
+      <dl class="res-body">
+        <div><dt>Что это значит</dt><dd id="resMean"></dd></div>
+        <div><dt>Твой тормоз — что тянет на мелководье</dt><dd id="resDrag"></dd></div>
+        <div><dt>Следующий настоящий шаг</dt><dd id="resMove"></dd></div>
+        <div class="second" id="secondWrap" hidden><dt>Второе прочтение</dt><dd id="resSecond"></dd></div>
+      </dl>
+      <div class="adv" id="adv"><b>Предупреждение</b><p id="advText"></p></div>
+      <div class="res-marsh"><b>Чего этот замер не видит</b><p>Двенадцать вопросов измеряют высоту. О течении они не говорят ничего, так что человек может получить здесь <em>с головой</em> и при этом полностью застрять, а болота, которые выглядят как зрелость, этот прибор ловит хуже всего. Возьми число, а потом вернись к <a href="#marshes">восьми болотам</a> и посмотри, не описывает ли тебя какое-нибудь из них.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRIAGE -->
+<section>
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--wall)"><i></i><span class="mono">Сортировка</span></span>
+    <h2>Большинство провалов в ученичестве<br>— это ошибки диагноза.</h2>
+    <p class="sec-lede">Четыре несовпадения, которые приносят больше всего вреда, примерно по порядку.</p>
+    <div class="tri" id="tri"></div>
+    <div class="tile" style="margin-top:32px;border-color:rgba(138,99,240,.3)">
+      <h4 style="color:var(--s4)">Закономерность, о которой никто не говорит</h4>
+      <p style="margin:0;color:var(--dim);font-size:.96rem;line-height:1.5;max-width:62ch">Пек заметил, что больше всего нам угрожают люди на одну стадию <em>выше</em> нас. Значит, трения в твоей церкви редко на самом деле о музыке, переводах или фонде на здание: это люди на разной глубине, которые не выносят друг друга и хватаются за ближайший повод. И ещё это значит, что лучше всего помочь человеку обычно может не самый зрелый из доступных. А тот, кто на одну глубину впереди и ещё помнит воду на этой высоте.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIMITS -->
+<section>
+  <div class="wrap rv">
+    <span class="tag" style="--accent:var(--s0)"><i></i><span class="mono">Прочитай, прежде чем применять к живому человеку</span></span>
+    <h2>Семь честных ограничений.</h2>
+    <div class="lim">
+      <div><span>01 / измерение</span><b>Самое известное исследование не даёт выводов</b><p>Социолог Брэдли Райт счёл дизайн и анализ REVEAL слабыми и сильно переинтерпретированными. Знаменитый вывод — церковная активность не двигает рост — большинству пасторов кажется верным. Но это не то же самое, что доказано.</p></div>
+      <div><span>02 / самоотчёт</span><b>Ты худший судья в этом</b><p>Глубина по колено стабильно оценивает себя выше, потому что изнутри гладкая речь ощущается как глубина. Любой результат, полученный в одиночку, считай гипотезой. Доказательства у тех, кто живёт с тобой.</p></div>
+      <div><span>03 / определения</span><b>Фаулер измеряет не христианскую веру</b><p>Он определяет веру как универсальное смыслообразование, структуру, а не содержание, так что атеист проходит те же стадии. Полезно о том, <em>как</em> человек держит убеждения; бесполезно о том, истинны ли они.</p></div>
+      <div><span>04 / форма</span><b>Ничто здесь не линейно</b><p>Под горем, болезнью, предательством и истощением ты движешься назад. В один и тот же месяц можно быть с головой в страдании и по колено в конфликте. «Домашняя стадия» Хагберг лучше любого языка рангов.</p></div>
+      <div><span>05 / выборка</span><b>Построено на узком срезе человечества</b><p>В основном западные, грамотные, посещающие церковь взрослые конца двадцатого века; классическая модель вышла из затворнических монашеских орденов. Культурная предвзятость у Фаулера — давняя критика.</p></div>
+      <div><span>06 / авторство</span><b>Спуск Павла предполагает спорное авторство</b><p>Падение его самооценки — наименьший из апостолов, потом самый незначительный из всех святых, потом худший из грешников — проходит через 1 Коринфянам, Ефесянам и 1 Тимофею. Критическая библеистика оспаривает авторство Павла для последних двух, и тогда спуск оказывается портретом, написанным его учениками, а не самоотчётом. Как раннее свидетельство о нём закономерность всё равно держится; как автобиография она слабее.</p></div>
+      <div style="border-color:rgba(224,166,60,.3)"><span style="color:var(--s0)">07 / карта</span><b>Видение Иезекииля не о тебе</b><p>Оно о реке, которая исцеляет мёртвое море. Использовать его как схему зрелости — это применение, а не толкование. Если схема когда-нибудь станет интереснее человека, ты потерял нить.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <span class="tag"><i></i><span class="mono">Источники</span></span>
+    <h2 style="font-size:clamp(1.6rem,3.4vw,2.4rem)">Читай первоисточники.</h2>
+    <div class="srcgrid">
+      <div class="src"><b>Hagberg &amp; Guelich — The Critical Journey</b>Шесть стадий плюс Стена. Лучшая отдельная книга в этом списке.</div>
+      <div class="src"><b>Jim Putman — Real-Life Discipleship</b>Модель из пяти стадий и фразы, которые люди говорят на каждой.</div>
+      <div class="src"><b>James Fowler — Stages of Faith (1981)</b>Основополагающий структурный подход, на основе примерно 600 интервью.</div>
+      <div class="src"><b>M. Scott Peck — Further Along the Road Less Traveled</b>Четыре стадии и кто кому угрожает.</div>
+      <div class="src"><b>Teresa of Ávila — The Interior Castle</b>Семь покоев через очищение, просвещение и соединение.</div>
+      <div class="src"><b>John of the Cross — The Dark Night</b>Классическое описание самих переходов.</div>
+      <div class="src"><b>Hawkins &amp; Parkinson — REVEAL (2007)</b>Самоисследование Willow Creek. Читать вместе с критикой Райта.</div>
+      <div class="src"><b>Richard Rohr — Falling Upward</b>Две половины жизни; переход между ними — провал, а не победа.</div>
+      <div class="src"><i>Современное</i><b>Peter Scazzero — Emotionally Healthy Spirituality</b>Нельзя быть духовно зрелым и эмоционально незрелым одновременно.</div>
+      <div class="src"><i>Современное</i><b>John Mark Comer — Practicing the Way</b>Быть с Ним, становиться как Он, делать как Он делал, и всё это держится на правиле жизни.</div>
+      <div class="src"><i>Современное</i><b>Jack Frost / Paul Ellis — orphan to son</b>Зрелость как идентичность, а не как выступление. Держи рядом критику образа «слуги».</div>
+      <div class="src"><i>Современное</i><b>The Deep End — Taylor Welch</b>Долгий разговор, где деконструкцию считают тем, через что проходят, а не где поселяются.<span class="bias">Предвзятость: предпринимательский взгляд и нарочитая провокация. Бери ради давления, а не ради доктрины.</span></div>
+      <div class="src"><i>Современное</i><b>Dallas Willard — Renovation of the Heart</b>Механика самих перемен: <em>VIM</em> — Vision, Intention, Means (видение, намерение, средства). Недостающий двигатель под каждой моделью стадий, которая говорит, где ты, но не как что-либо движется.<span class="bias">Предвзятость: философская и неспешная. Стоит того.</span></div>
+      <div class="src"><i>Современное</i><b>Ruth Haley Barton — Strengthening the Soul of Your Leadership</b>Для тех, кто где-то в воде по пояс потерял из виду собственную душу. Если ты устал и не можешь сказать почему, это она.<span class="bias">Предвзятость: адресована прямо служителям.</span></div>
+      <div class="src"><i>Современное</i><b>Bill Hull — Conversion &amp; Discipleship</b>Утверждает, что евангелие, через которое ты обратился, определяет, каким учеником ты станешь: он описывает шесть конкурирующих евангелий и шесть типов христиан, которых они производят.<span class="bias">Предвзятость: полемична намеренно.</span></div>
+      <div class="src"><i>Современное</i><b>Curt Thompson — The Soul of Desire</b>Межличностная нейробиология встречается с формированием. Прекрасно о стыде, который и есть настоящий двигатель большой части поведения глубины по колено.<span class="bias">Предвзятость: клинический словарь; читается медленнее, чем можно ждать по объёму.</span></div>
+      <div class="src"><i class="tool">Бесплатно</i><b>Bill &amp; Kristi Gaultiere — Journey of the Soul</b>Шесть стадий от психолога и лицензированного консультанта, на основе Хагберг, с бесплатной двухминутной оценкой на <a href="https://assessments.soulshepherding.org/spiritualgrowthpath/" target="_blank" rel="noopener noreferrer">assessments.soulshepherding.org</a>. Проверь с её помощью всё, что сказала тебе эта страница.<span class="bias">Предвзятость: терапевтическая рамка. Их аббревиатура стадий не опубликована на бесплатных страницах, так что бери модель, а не буквы.</span></div>
+      <div class="src"><i class="tool">Бесплатно</i><b>The Navigators — The Wheel</b>Христос в центре; Слово, молитва, общение и свидетельство как спицы. Девяносто лет, и всё ещё самый быстрый способ объяснить сбалансированную практику тому, кто на мелководье. <a href="https://www.navigators.org/resource/the-wheel-illustration/" target="_blank" rel="noopener noreferrer">navigators.org</a><span class="bias">Предвзятость: схема поддержания без оси времени, она показывает равновесие, но никогда не глубину.</span></div>
+      <div class="src"><i class="tool">Исследование</i><b>Barna — State of the Church</b>Цифры под всем этим, включая вывод, что 57% прихожан поколений Z и миллениалов выбирают отношения, а не проповеди. <a href="https://www.barna.com/research/five-themes-to-frame-next-gen-discipleship/" target="_blank" rel="noopener noreferrer">barna.com</a><span class="bias">Предвзятость: данные опросов, евангельская выборка, всё на самоотчёте.</span></div>
+    </div>
+    <div class="colo">
+      <span class="mono">Промеры — путеводитель по христианской зрелости</span>
+      <span class="mono">Иез. 47:3–5 · 1 Кор. 13 · 1 Ин. 2:12–14</span>
+    </div>
+    <a class="home" href="https://esmrsky.github.io/">← Все проекты</a>
+  </div>
+</footer>
+
+<script type="text/javascript" src="/soundings/ru-data.js"></script>
+<script>
+(function(){
+"use strict";
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* interface strings the script writes; the Russian page swaps them via ru-data.js */
+const RU=document.documentElement.getAttribute('data-lang')==='ru'&&window.SoundingsRU||null;
+const U={marks:"Marks",sounds:"What it sounds like",needs:"What they need",avoid:"What not to do",move:"The move",
+ bands:["Dry","Ankles","Knees","Waist","Swim"],wall:"THE WALL",never:"NEVER PASSES THROUGH",
+ moment:(i,n,t)=>"Moment "+i+" of "+n+": "+t,traceFor:n=>"Depth trace for "+n,
+ marsh:"marsh",more:"The tell · the guard · the way out",tell:"The tell",notThis:"Not this",wayOut:"The way out",
+ mapWord:"Map",noWall:"No Wall",stages:"The stages",measures:"What it measures",how:"How it works",
+ good:"What it's good for",runs:"Where it runs out",
+ framework:"Framework",noWallTitle:"This framework has no category for the Wall",noWallTag:"no wall",
+ focusNone:"Tap a depth to read it straight down all thirteen.",
+ focusOn:c=>'Showing “'+c+'” only — tap it again to bring the rest back.',
+ stmt:i=>"Statement "+i,cubits:"cubits · ",
+ second:(n,low)=>'<b>'+n+'.</b> You are sitting on the boundary: one answer moved a single notch and this would read '+low+' instead. That is a statement about the instrument, not about you — almost nobody is at one depth in every part of their life. Read both and notice which parts of your life each one is describing. Where they disagree, the shallower reading is usually the honest one.',
+ adv1:"Statement 12 matters most in your answers. Tiredness that rest doesn't touch, carried because people depend on you, is the standard approach to the Wall — and the usual reflex is to work harder at what used to produce fruit. Read the Wall section before anything else here. If sleep, appetite or your will to keep going are affected, treat it as a medical question too and talk to a doctor.",
+ adv2:"You're serving at depth without having been through deep water yet. Not a deficiency — a sequence. It does mean the Wall is ahead rather than behind, and people who've been warned navigate it far better. Read that section as a forecast.",
+ adv3:"Two answers point hard at consumer posture — the specific thing that keeps people here for decades. Worth asking someone who knows you well whether they'd agree with this reading. This is the depth where self-report is least reliable."};
+RU&&RU.put('U',U);
+
+const IC = {
+  dry:'<svg viewBox="0 0 24 24"><path d="M2 17h20"/><path d="M7 17l1.5-3"/><path d="M13 17l-1-4 2-2"/><path d="M18 17l-1-2.5"/><circle cx="12" cy="5" r="2.4"/></svg>',
+  ankle:'<svg viewBox="0 0 24 24"><path d="M2 16c2.5-2.5 5-2.5 7.5 0s5 2.5 7.5 0 3.5-1.7 5 0"/><path d="M12 3c2.6 3.2 4 5.2 4 6.8a4 4 0 1 1-8 0C8 8.2 9.4 6.2 12 3z"/></svg>',
+  knee:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.5 12a4.5 4.5 0 0 1 9 0"/><path d="M4 12a8 8 0 0 1 16 0"/><path d="M2 19c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0"/></svg>',
+  waist:'<svg viewBox="0 0 24 24"><path d="M3 7h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3.2 3.2 0 1 1-3 3.4"/><path d="M3 17h9a2.6 2.6 0 1 0-2.6-2.6"/></svg>',
+  swim:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.4 13.6c1.7-1.4 3.4-1.4 5.1 0s3.4 1.4 5.1 0 3.4-1.4 5.1 0"/><path d="M4.5 8.6c1.5-1.2 3-1.2 4.5 0s3 1.2 4.5 0 3-1.2 4.5 0"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>',
+  book:'<svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20"/></svg>',
+  stage:'<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V9l6-5 6 5v12"/><path d="M10 21v-6h4v6"/></svg>',
+  burn:'<svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-5-4-6-4-11 0 0-3 2-3 6 0-2-2-3-2-3s-5 3-5 8a7 7 0 0 0 7 7z"/></svg>',
+  alone:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><path d="M2 3l20 18" opacity=".55"/></svg>',
+  /* one per panel section — four lists that used to be told apart only by a 5px dot */
+  eye:'<svg viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>',
+  quote:'<svg viewBox="0 0 24 24"><path d="M20.5 4.5h-17v11h4v4.2l5-4.2h8Z"/></svg>',
+  give:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 8v8M8 12h8"/></svg>',
+  stop:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M6.2 6.2l11.6 11.6"/></svg>'
+};
+
+/* ===== DEPTHS ===== */
+const D=[
+ {key:"dry",num:"0 cubits",state:"dry ground",short:"Dry",color:"var(--s0)",level:400,lift:0,
+  greek:"psychikós — natural",name:"Dry ground",
+  alt:"Warm toward Jesus, not surrendered. The gospel is still information rather than news.",
+  marks:["Faith as positions held, not a person known","Jesus admired — teacher, ethic, inheritance","Church out of habit or someone else's ask","No felt need for rescue"],
+  says:["I'm spiritual, just not religious","I have my own relationship with God","If you're a good person, that's what counts"],
+  needs:["One friendship that isn't a project","Room for hostile questions","The gospel once, clearly, from someone trusted","Time — a longer clock than the evangelist wants"],
+  avoid:["Handing over a discipleship plan","Winning the argument","Treating questions as obstacles"],
+  move:"From information to surrender. Through a relationship, under pressure, at a moment nobody scheduled."},
+ {key:"ankle",num:"1000 cubits",state:"ankle-deep",short:"Ankles",color:"var(--s1)",level:315,lift:0,
+  greek:"nḗpios — infant",name:"Ankle-deep",
+  alt:"Something real happened. Nothing is furnished yet. Ignorance here is the accurate word, not an insult.",
+  marks:["High emotion, zero habits","Beliefs mixed in from everywhere — karma, luck, the universe","Surprised it didn't fix the marriage or the money","Can't feed themselves yet","Often isolated by choice: just me and Jesus"],
+  says:["I didn't know the Bible said that","How do you even do a quiet time?","I thought this would make things easier"],
+  needs:["A person, not a program","Habits installed by imitation","Milk, with no shame about milk","Warning that the feeling fades — and that it's normal"],
+  avoid:["Stage time because the testimony is fresh","Correcting theology faster than building trust","Assuming physical age tracks spiritual age"],
+  move:"From being fed to feeding yourself. The marker is concrete: the first time they open the Bible without being told."},
+ {key:"knee",num:"2000 cubits",state:"knee-deep",short:"Knees",color:"var(--s2)",level:287,lift:0,
+  greek:"sarkikós — fleshly",name:"Knee-deep",
+  alt:"The most populated depth and the most missed. The tell isn't knowledge — it's that the sentences run back toward the self.",
+  marks:["Consumer posture, held sincerely and unconsciously","Highs and lows track circumstances","Obedience motivated by reward or trouble","Preferences held as convictions","Still fighting like everyone else — Paul's actual test","Attendance and giving may be excellent. Neither is the measurement"],
+  says:["I didn't get anything out of that","Nobody here has ever checked on me","This church has changed"],
+  needs:["Belonging that costs something","Someone who names the self-reference kindly, once, and stays","Identity teaching, so standing stops depending on the service","Responsibility for one specific person"],
+  avoid:["Fixing the complaint — it confirms the frame","Giving them a platform","Mistaking fluency for depth"],
+  move:"From \u201cwhat am I getting\u201d to \u201cwho am I responsible for.\u201d Rarely triggered by teaching. Usually by being handed someone to carry."},
+ {key:"waist",num:"3000 cubits",state:"waist-deep",short:"Waist",color:"var(--s3)",level:208,lift:0,
+  greek:"neanískos — young man",name:"Waist-deep",
+  alt:"The sentences point outward now. And the current is finally strong enough to knock you over.",
+  marks:["Serves without being recruited","Shares faith on purpose, sees people converted","Wants real authority, sometimes too independent","Occasionally harsh with people slower than them","Tired in a way rest doesn't fix — and can't say so","Reproduces converts, not yet disciple-makers"],
+  says:["Who can I bring to this?","They missed group — I'll organize meals","I'm fine, I'll handle it"],
+  needs:["Equipping, then actual release — authority, not tasks","A rule of life: limits chosen before exhaustion chooses","Someone asking about their soul, not their output","Explicit permission to be limited"],
+  avoid:["Using them — they say yes to everything","Promoting past their character","Treating capacity as maturity"],
+  move:"Usually not upward. Through — the Wall stands here, and the passage is downward first."},
+ {key:"swim",num:"4000 cubits",state:"over your head",short:"Swim",color:"var(--s4)",level:128,lift:-12,
+  greek:"patḗr / téleios — father, mature",name:"Over your head",
+  alt:"John describes this group twice and says only one thing: they know him who is from the beginning. No metric. Just knowing.",
+  marks:["Makes disciples who make disciples, by name","Holds paradox without anxiety","Can be wronged without correcting the record","Unimpressed by their own gifts","Asks more than answers","Depends on God more visibly than ten years ago, not less"],
+  says:["Who am I bringing — and who is she bringing?","I used to be certain about that","Tell me more about that"],
+  needs:["Peers, not admirers — outside their own organization","One person with standing to say no","Continued spiritual direction","To be asked how they are by someone who waits"],
+  avoid:["Assuming they're fine","Treating them as a resource","Expecting them to look impressive"],
+  move:"No next rung. The direction is further out and further down — more dependence, less need to be seen doing it."}
+];
+RU&&RU.put('D',D);
+
+/* ===== HERO CONTOURS ===== */
+(function(){
+  const cv=document.getElementById('contours'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const RAMP=[[224,166,60],[79,214,192],[37,174,218],[61,123,238],[138,99,240]];
+  let W,H,DPR,lines;
+  function size(){DPR=Math.min(window.devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);lines=Math.max(16,Math.round(H/26));}
+  function mix(t){const s=Math.min(.999,Math.max(0,t))*(RAMP.length-1),i=Math.floor(s),f=s-i,
+    a=RAMP[i],b=RAMP[Math.min(i+1,RAMP.length-1)];
+    return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f].map(Math.round);}
+  function frame(time){const t=time*0.00016;ctx.clearRect(0,0,W,H);
+    for(let l=0;l<lines;l++){const p=l/(lines-1),y0=H*0.10+p*H*0.92,c=mix(p),amp=8+p*30;
+      ctx.beginPath();
+      for(let x=0;x<=W+8;x+=8){const u=x/W;
+        const y=y0+Math.sin(u*4.2+t*1.5+p*3.4)*amp+Math.sin(u*9.1-t*1.05+p*6.2)*amp*.36+Math.sin(u*1.7+t*.6)*amp*.5;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.strokeStyle='rgba('+c[0]+','+c[1]+','+c[2]+','+(.10+p*.30)+')';ctx.lineWidth=1;ctx.stroke();}}
+  size();window.addEventListener('resize',size);
+  if(RM){frame(0);}else{let run=true;
+    new IntersectionObserver(e=>{run=e[0].isIntersecting;},{threshold:0}).observe(cv);
+    (function loop(ts){if(run)frame(ts||0);requestAnimationFrame(loop);})();}
+})();
+
+/* ===== DEPTH PICKER ===== */
+const picker=document.getElementById('picker'),panel=document.getElementById('panel'),
+      water=document.getElementById('water'),figure=document.getElementById('figure'),
+      figD=document.getElementById('figDepth'),figS=document.getElementById('figState');
+D.forEach((d,i)=>{const b=document.createElement('button');
+  b.className='pick';b.setAttribute('role','tab');b.setAttribute('aria-selected',i===0?'true':'false');
+  b.style.setProperty('--pc',d.color);b.innerHTML=IC[d.key]+'<span>'+d.short+'</span>';
+  b.addEventListener('click',()=>select(i));picker.appendChild(b);});
+function select(i){const d=D[i];
+  document.querySelectorAll('.pick').forEach((b,j)=>b.setAttribute('aria-selected',String(j===i)));
+  document.documentElement.style.setProperty('--accent',d.color);
+  water.setAttribute('transform','translate(0,'+d.level+')');
+  figure.style.transform='translateY('+d.lift+'px)';
+  figD.textContent=d.num;figS.textContent=d.state;
+  panel.innerHTML=`<div class="p-head"><div class="p-kicker"><span class="p-num">${d.num}</span>
+      <span class="p-greek">${d.greek}</span></div><div class="p-title">${d.name}</div>
+      <p class="p-alt">${d.alt}</p></div>
+    <div class="p-grid">
+      <div class="cell">
+        <div class="sect" style="--sc:var(--s2)"><h4>${IC.eye}${U.marks}</h4>
+          <ul>${d.marks.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+      </div>
+      <div class="cell">
+        <div class="sect" style="--sc:var(--s0)"><h4>${IC.quote}${U.sounds}</h4>
+          <ul class="quotes">${d.says.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+        <div class="sect" style="--sc:var(--s1)"><h4>${IC.give}${U.needs}</h4>
+          <ul>${d.needs.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+        <div class="sect" style="--sc:var(--wall)"><h4>${IC.stop}${U.avoid}</h4>
+          <ul>${d.avoid.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+      </div>
+    </div>
+    <div class="p-move">${IC.arrow}<div><b>${U.move}</b><p>${d.move}</p></div></div>`;}
+select(0);
+
+/* ===== VERNACULAR ===== */
+const CV=["var(--s0)","var(--s1)","var(--s2)","var(--s3)","var(--s4)"];
+const P=[
+ {q:"Baby Christian",d:1,v:"fair",m:"Points at ankle-deep. Usually accurate and usually kind — the trouble starts when it's used to dismiss an adult rather than describe a stage."},
+ {q:"Carnal Christian",d:2,v:"loaded",m:"Straight from 1 Corinthians 3 — fleshly, still on milk, still fighting like everyone else. Accurate as a description; it became a theological weapon and now mostly lands as an insult."},
+ {q:"I'm not being fed",d:2,v:"misused",m:"The single most reliable knee-deep tell in the English language. Almost never about teaching quality. Usually means: nothing here is currently costing me anything."},
+ {q:"Lukewarm",d:2,v:"misused",m:"Revelation 3, deployed as an accusation roughly 100% of the time. Diagnoses nothing and gives no next step — it just makes the speaker feel hot."},
+ {q:"On fire for God",d:1,v:"loaded",m:"Real zeal, usually ankle or knee-deep. The mistake is treating intensity as depth. Fire is a start condition, not a finish line — and it burns brightest with the least fuel."},
+ {q:"Sold out / all in",d:3,v:"fair",m:"Points at waist-deep commitment. Watch it in the same breath as exhaustion: it's the vocabulary people use right before they burn out, because it makes limits sound like compromise."},
+ {q:"Backslidden",d:1,v:"misused",m:"Assumes a straight line and a moral cause. Frequently misapplied to the Wall — a person going through the most important passage of their life gets told they've fallen away."},
+ {q:"Deconstructing",d:3,v:"loaded",m:"The modern name for the stage-3-to-4 transition: moving from inherited faith to owned faith. Sometimes ends in leaving, often doesn't. Treating it as automatic apostasy is how you guarantee the exit."},
+ {q:"In a season",d:3,v:"fair",m:"The kind, pastoral version of the Wall. Genuinely useful — it makes the desert normal instead of a verdict — but vague enough that people hide in it for years."},
+ {q:"Dry spell",d:3,v:"fair",m:"The everyday register of what John of the Cross called the dark night. The instinct is to fix it with more input. That's the one thing that reliably doesn't work."},
+ {q:"Milk vs meat",d:2,v:"misused",m:"Hebrews 5. Note what it actually measures: not complexity of teaching but trained perception — senses exercised to tell good from evil. \u201cI need deeper teaching\u201d is very often a knee-deep sentence."},
+ {q:"Head knowledge vs heart knowledge",d:2,v:"fair",m:"Folk theology, but it's naming something real: the gap between information and formation. Fowler's whole model exists because that gap is measurable."},
+ {q:"Sunday Christian",d:0,v:"loaded",m:"Usually thrown at knee-deep by knee-deep. Describes attendance patterns, not depth — plenty of deeply formed people are quiet, and plenty of every-service people are the loudest complainers."},
+ {q:"Prayer warrior",d:3,v:"fair",m:"An honorific, not a measurement. Often accurate. Occasionally it's the only public role available to someone the church can't think what else to do with."},
+ {q:"Spiritual father / mother",d:4,v:"loaded",m:"The parent stage, named. Earned versions of this are among the best things in church life. Claimed versions — where it becomes a standing authority over other adults — are among the worst."},
+ {q:"On the shelf",d:3,v:"loaded",m:"Sidelined, often after the Wall or a failure. Sometimes it's rest. Sometimes it's a church quietly deciding it has no category for a leader who stopped performing."},
+ {q:"Walking in love",d:4,v:"fair",m:"The vernacular happens to name the actual measure. Everything on this page is a long way of asking whether this sentence is true of you."},
+ {q:"He's got a good heart",d:1,v:"misused",m:"Often used to excuse a pattern nobody wants to name. Real affection, no diagnosis — and it's how people stay at the same depth for twenty years without anyone saying so."}
+];
+const VERD={fair:["v-fair","Fair"],loaded:["v-loaded","Loaded"],misused:["v-misused","Often misused"]};
+const DL=["Dry ground","Ankles","Knees","Waist","Over your head"];
+RU&&(RU.put('P',P),RU.put('VERD',VERD),RU.put('DL',DL));
+const phHost=document.getElementById('phrases');
+phHost.innerHTML=P.map((p,i)=>`
+  <article class="ph" data-v="${p.v}" data-i="${i}" style="--c:${CV[p.d]}">
+    <q>${p.q}</q>
+    <p class="means">${p.m}</p>
+    <div class="foot"><span class="maps">→ ${DL[p.d]}</span>
+      <span class="verdict ${VERD[p.v][0]}">${VERD[p.v][1]}</span></div>
+  </article>`).join('');
+const FL=[["all","All 18"],["fair","Fair"],["loaded","Loaded"],["misused","Often misused"]];
+RU&&RU.put('FL',FL);
+const fHost=document.getElementById('filters');
+fHost.innerHTML=FL.map((f,i)=>`<button class="filt" data-f="${f[0]}" aria-pressed="${i===0}">${f[1]}</button>`).join('');
+fHost.addEventListener('click',e=>{const b=e.target.closest('.filt');if(!b)return;
+  fHost.querySelectorAll('.filt').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  const f=b.dataset.f;
+  phHost.querySelectorAll('.ph').forEach(el=>el.classList.toggle('hide',f!=='all'&&el.dataset.v!==f));});
+
+/* ===== BIBLICAL TRACES ===== */
+const J=[
+ {n:"Peter",c:"var(--s2)",wall:4,
+  sum:"The loudest disciple in the room, undone by a servant girl and a charcoal fire — then rebuilt by a question about love rather than a lecture about failure.",
+  pts:[
+   [2.0,"Nets down at the lake","Obeys instantly. Zeal running well ahead of understanding."],
+   [3.4,"\u201cYou are the Christ\u201d","A revelation he didn't work out himself — and is told so."],
+   [1.8,"\u201cNever, Lord\u201d — \u201cGet behind me\u201d","Same mouth, minutes later. Revelation doesn't equal maturity."],
+   [2.6,"\u201cI'll die with you\u201d","Peak self-confidence. Always the sound just before a fall."],
+   [0.6,"Three denials, then the rooster","Total collapse — in public, on the worst night available."],
+   [2.8,"Breakfast on the beach","Restored by \u201cdo you love me,\u201d not by a performance review."],
+   [3.6,"Pentecost, then Cornelius' house","The man terrified of exclusion becomes the one who opens the door."],
+   [3.3,"Rebuked by Paul at Antioch","Still correctable, decades in. Nobody graduates."],
+   [4.2,"\u201cClothe yourselves with humility\u201d","The impulsive one writes the letter on submission and suffering."]]},
+ {n:"Mary Magdalene",c:"var(--s1)",wall:4,
+  sum:"Delivered of seven demons and named first in every list of the women who followed. She is also the only person in the Gospels recorded standing in front of the resurrection and failing to recognize it.",
+  pts:[
+   [1.2,"Seven demons cast out","Luke names the number without explaining it. She starts lower than anyone else on this page."],
+   [2.4,"Follows, and funds it herself","Out of her own means. Not a beneficiary of the ministry — a patron of it."],
+   [3.6,"At the cross after the men have gone","Named at Golgotha in three of the four Gospels. She does not leave."],
+   [3.4,"Watches where they lay the body","Stays for the burial too. This is why she knows which tomb to return to."],
+   [2.5,"Weeping, she takes him for the gardener","Standing in front of the answer, asking where the body went. Grief is not unbelief, but it blinds the same way."],
+   [4.0,"“Mary.” — “Rabboni.”","Recognition comes through her name, not through an argument."],
+   [4.3,"“Do not cling to me. Go to my brothers.”","Given him back, then immediately asked to let go of the form she wanted him in."],
+   [4.2,"First to announce it","The first preacher of the resurrection, to the men who were not there."]]},
+ {n:"Moses",c:"var(--s3)",wall:1,
+  sum:"Forty years learning he was somebody, forty learning he was nobody, forty learning what God can do with a nobody.",
+  pts:[
+   [1.2,"Kills the Egyptian","Right calling, wrong method, wrong timing, wrong everything."],
+   [0.8,"Forty years shepherding in Midian","The long erasure. Nothing visible happens for four decades."],
+   [1.6,"The bush: \u201cWho am I?\u201d","Same man, now genuinely unsure. That's the progress."],
+   [3.0,"Exodus, plagues, the sea","Public power. The most visible season, not the deepest."],
+   [4.2,"\u201cBlot me out of your book instead\u201d","Intercession that costs him everything. This is the summit."],
+   [4.3,"\u201cShow me your glory\u201d","Still asking for more of God after all of it."],
+   [3.4,"Strikes the rock in anger","Loses the land. Depth is not immunity."]]},
+ {n:"Hannah",c:"var(--s4)",wall:2,
+  sum:"The clearest case on this page of depth arriving through a prayer God did not answer for years — and of peace arriving before the circumstances did.",
+  pts:[
+   [2.2,"Devout, loved, and childless","Goes up to Shiloh year after year. The faithfulness is never the problem."],
+   [1.4,"Provoked by Peninnah until she can't eat","The rival wife has children and uses them. Year after year, the text says."],
+   [0.9,"“The Lord had closed her womb”","Scripture says it twice, and lays it directly at God's door. No explanation is offered to her."],
+   [1.6,"Prays so bitterly the priest thinks she's drunk","Eli, who should recognize prayer, misreads it as drunkenness and rebukes her."],
+   [2.4,"The vow: if you give him, I give him back","She asks for the one thing she wants, and surrenders it in the same sentence."],
+   [3.0,"“Her face was no longer sad” — before anything changed","Nothing external has moved yet. This verse is the whole turn."],
+   [3.6,"Weans him and walks him to Shiloh","Hands over the child she begged for, to be raised by the priest who misjudged her."],
+   [4.2,"“My heart exults in the Lord”","The song Mary will echo almost line for line a thousand years later."]]},
+ {n:"David",c:"var(--s1)",wall:3,
+  sum:"Deep early, catastrophic in the middle, deeper after. The clearest evidence in Scripture that competence and character run on separate clocks.",
+  pts:[
+   [2.6,"Lion, bear, Goliath","Real faith, young. Not naive — tested at small scale first."],
+   [3.4,"Fugitive years; spares Saul twice","Refuses to take by force what he was promised. Rare at any age."],
+   [3.0,"King, consolidated, undefeated","The productive life. Everything works. Nobody is asking questions."],
+   [0.7,"Bathsheba, then Uriah","The collapse arrives at peak competence, not at weakness."],
+   [2.6,"Psalm 51","No excuses, no blame, no management of the story."],
+   [4.0,"Flees Absalom barefoot","Won't use the ark as insurance: \u201cif he has no delight in me, here I am.\u201d"],
+   [3.2,"The census, and the plague","Regression, late, after everything. Still not a straight line."]]},
+ {n:"Miriam",c:"var(--s3)",wall:4,
+  sum:"Prophetess, and the first person in Scripture to lead worship. She is also the sharpest illustration on this page that the fall comes after the peak, not before it.",
+  pts:[
+   [2.0,"Watches the basket and speaks to Pharaoh's daughter","A child, thinking fast, and the reason Moses lives. Nerve long before depth."],
+   [3.4,"Leads Israel in the song at the sea","Takes the tambourine and leads the nation in worship. The high point of her life."],
+   [3.2,"Named a prophetess, and a leader of the people","Micah lists her with Moses and Aaron as the three God sent. Not a supporting role."],
+   [1.0,"“Has the Lord spoken only through Moses?”","Complains about her brother's wife, then reaches for her own standing. The collapse begins at the summit."],
+   [0.6,"Struck leprous, shut outside the camp","Seven days outside, in front of everyone. The consequence is public because the challenge was."],
+   [1.8,"Moses cries out for her","Healed through the intercession of the brother whose authority she resented."],
+   [2.4,"The nation does not move until she returns","Two million people wait a week for her. Whatever she had done, they would not go on without her."],
+   [2.6,"Remembered as one of the three","Centuries later the prophets still name her alongside Moses and Aaron, not in spite of this."]]},
+ {n:"Joseph",c:"var(--s4)",wall:3,
+  sum:"The rare trace with no recorded regression — and the cost is thirteen years in places he didn't choose.",
+  pts:[
+   [1.8,"Tells his brothers the dreams","True revelation, immature delivery. Both things at once."],
+   [1.4,"Pit, sold, Egypt","A descent he did not choose. Most of them aren't chosen."],
+   [3.0,"Potiphar's house; refuses his wife","Integrity with no audience and no reward."],
+   [1.6,"Prison; forgotten for two years","The cupbearer walks free and doesn't mention him. This is the Wall."],
+   [3.6,"Before Pharaoh","\u201cIt is not in me. God will give the answer.\u201d Gift without ownership."],
+   [4.3,"\u201cYou meant evil; God meant good\u201d","Weeps, feeds them, keeps no ledger. Power with nothing to prove."]]},
+ {n:"Naomi",c:"var(--s0)",wall:2,
+  sum:"The only person in Scripture who renames herself after her grief. Her restoration arrives entirely through the daughter-in-law she spent a chapter trying to send away.",
+  pts:[
+   [2.4,"Bethlehem to Moab in the famine","Leaves the land of promise to survive. A reasonable decision that costs her everything."],
+   [1.2,"Her husband dies, then both sons","Three funerals and no explanation. In the ancient world this is destitution as well as grief."],
+   [0.7,"“Call me Mara — the Almighty has dealt bitterly with me”","She changes her own name to match her circumstances, and lays them at God's door by name."],
+   [1.0,"“Go back, my daughters”","Tries three times to send away the only two people left to her. Grief argues for isolation."],
+   [1.8,"Ruth clings; they walk back together","She does not choose this. It is done to her by someone who refuses to be sent away."],
+   [2.6,"Starts scheming for Ruth's redemption","The first thing she does with returning strength is spend it on somebody else's future."],
+   [3.4,"“Blessed be the Lord, who has not left you without a redeemer”","The women of the town say it over her. She had said the opposite about herself."],
+   [3.8,"Obed on her lap — “a son has been born to Naomi”","Not her son. The town names him hers anyway, and he is David's grandfather."]]},
+ {n:"John",c:"var(--s0)",wall:2,
+  sum:"Son of Thunder to apostle of love. If you want one life that proves the whole thesis of this page, it's this one.",
+  pts:[
+   [1.5,"Wants to call fire on a Samaritan village","Zeal aimed at destruction, and confident it's righteous."],
+   [1.8,"Asks for the seat at Jesus' right hand","Ambition dressed as devotion. Gets asked about a cup instead."],
+   [3.2,"At the cross when the others are gone","Takes Mary home. The first quiet thing he's recorded doing."],
+   [3.4,"Runs to the empty tomb","Sees the cloths and believes before understanding."],
+   [4.0,"Exiled to Patmos","Old, sidelined, still receiving."],
+   [4.4,"\u201cBeloved, let us love one another\u201d","The man who wanted fire spends a whole letter on love."]]},
+ {n:"Mary of Nazareth",c:"var(--s2)",wall:5,
+  sum:"Said yes to the whole thing at the start and still spent thirty years not understanding it. The Gospels are unusually honest that she was among those who thought he had lost his mind.",
+  pts:[
+   [2.6,"“Let it be to me according to your word”","Young, and agrees to something that will cost her reputation before it costs her anything else."],
+   [3.4,"The Magnificat","Dense with Scripture and openly political. She knows exactly what she is singing."],
+   [2.8,"Egypt, and the sword Simeon promised","Told at the dedication that a sword would pierce her own soul. No timeline given."],
+   [2.0,"Three days looking for him — “why were you searching?”","Luke says plainly that they did not understand what he told them. Twelve years in, she is lost."],
+   [2.4,"“They have no wine.” — “Woman, my hour has not yet come.”","Gently refused in public, and still tells the servants to do whatever he says."],
+   [1.4,"Comes with his brothers to take him home","Mark says the family went to seize him because people were saying he was out of his mind. She is in that group."],
+   [3.6,"At the cross — “Woman, behold your son”","Of all the people who left, she is not one. The sword lands here."],
+   [4.0,"In the upper room, praying with the rest","Acts names her among the disciples, not above them. She ends as one of the congregation."]]},
+ {n:"Paul",c:"var(--s2)",wall:4,
+  sum:"Religiously advanced and spiritually dry at the same time — which is the most uncomfortable data point on this page.",
+  pts:[
+   [0.5,"Pharisee; approves Stephen's death","Maximum religious sophistication. Dry ground."],
+   [1.6,"Damascus; three days blind","Undone in a moment, then dependent on the people he came to arrest."],
+   [2.4,"Arabia, then years of obscurity","Roughly a decade before the work anyone remembers."],
+   [3.2,"Churches planted across the empire","The productive life, at a scale nobody has matched."],
+   [2.2,"\u201cWe despaired of life itself\u201d","The thorn. Asks three times. Gets a no and an explanation he didn't want."],
+   [3.8,"\u201cPower made perfect in weakness\u201d","Stops asking for its removal. Starts boasting about it."],
+   [4.4,"\u201cForemost of sinners\u201d","His self-estimate keeps descending as his grasp of grace rises."]]},
+ {n:"Job",c:"var(--s3)",wall:2,
+  sum:"The archetype of the Wall. Nothing in the book is his fault, no explanation is ever given to him, and he comes out deeper anyway.",
+  pts:[
+   [2.6,"Blameless, upright, prosperous","Genuinely godly. Also entirely untested."],
+   [2.4,"Everything gone in a day","\u201cThe Lord gave, the Lord has taken away.\u201d Holds — barely."],
+   [1.8,"Friends arrive with correct theology","Right doctrine, catastrophic application. This is the Wall, made worse by help."],
+   [2.8,"Demands an audience with God","Stops managing his image and starts arguing. Progress, not rebellion."],
+   [3.4,"God answers with questions","No explanation is ever offered. That turns out not to be the point."],
+   [4.4,"\u201cNow my eye sees you\u201d","Secondhand to firsthand. The single best description of this transition in Scripture."]]},
+ {n:"Jonah",c:"var(--wall)",wall:-1,
+  sum:"The counterexample. Obeys, preaches, sees the largest revival recorded in Scripture — and ends the book furious about a plant.",
+  pts:[
+   [0.8,"Called to Nineveh; runs","Not doubt. Preference. He knows exactly what God is like and objects to it."],
+   [1.6,"Storm, fish, prayer","A textbook repentance prayer from inside a fish. It doesn't stick."],
+   [2.4,"Preaches; a city repents","Maximum fruit. Zero formation. The numbers prove nothing about him."],
+   [1.0,"Sits outside hoping it burns","Fruitfulness and bitterness, side by side, in the same man."],
+   [0.9,"Angry about a plant","God's last word is a question. The book ends without an answer because Jonah never gave one."]]}
+];
+RU&&RU.put('J',J);
+const peoHost=document.getElementById('people'),tbox=document.getElementById('tracebox');
+J.forEach((p,i)=>{const b=document.createElement('button');
+  b.className='per';b.setAttribute('role','tab');b.setAttribute('aria-selected',i===0?'true':'false');
+  b.style.setProperty('--pc',p.c);b.textContent=p.n;
+  b.addEventListener('click',()=>trace(i));peoHost.appendChild(b);});
+
+const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+function trace(idx){
+  const p=J[idx];
+  lockI=null; hoverI=null;
+  document.querySelectorAll('.per').forEach((b,j)=>b.setAttribute('aria-selected',String(j===idx)));
+  const W=900,H=300,L=54,R=26,T=26,B=42;
+  const n=p.pts.length;
+  const x=i=>L+(W-L-R)*(n===1?0:i/(n-1));
+  const y=v=>T+(H-T-B)*(1-Math.min(4.5,Math.max(0,v))/4.5);
+  const BANDS=[[0,.9,"var(--s0)",U.bands[0]],[.9,1.9,"var(--s1)",U.bands[1]],[1.9,2.9,"var(--s2)",U.bands[2]],
+               [2.9,3.9,"var(--s3)",U.bands[3]],[3.9,4.5,"var(--s4)",U.bands[4]]];
+  const bandFor=v=>BANDS.findIndex(b=>v>=b[0]&&v<b[1]) < 0 ? 4 : BANDS.findIndex(b=>v>=b[0]&&v<b[1]);
+  const pts=p.pts.map((pt,i)=>[x(i),y(pt[0])]);
+  const line=pts.map((c,i)=>(i?'L':'M')+c[0].toFixed(1)+' '+c[1].toFixed(1)).join(' ');
+  const bands=BANDS.map(b=>`<rect x="${L}" y="${y(b[1])}" width="${W-L-R}" height="${Math.max(0,y(b[0])-y(b[1]))}"
+      fill="${b[2]}" opacity=".055"/>
+      <text x="6" y="${y(b[0])-5}" fill="${b[2]}" opacity=".65" font-family="Martian Mono,monospace" font-size="7" letter-spacing="1">${b[3]}</text>`).join('');
+  const wallMark = p.wall>=0 ? `
+      <line x1="${x(p.wall)}" y1="${T-6}" x2="${x(p.wall)}" y2="${H-B+8}" stroke="var(--wall)"
+            stroke-width="1" stroke-dasharray="3 4" opacity=".8"/>
+      <text x="${x(p.wall)+6}" y="${T+2}" fill="var(--wall)" font-family="Martian Mono,monospace"
+            font-size="7.5" letter-spacing="1.6">${U.wall}</text>` : `
+      <text x="${W-R}" y="${T+2}" text-anchor="end" fill="var(--wall)" font-family="Martian Mono,monospace"
+            font-size="7.5" letter-spacing="1.6">${U.never}</text>`;
+  /* dots land in step with the line drawing past them, and each one is a control
+     paired with the numbered card below it. The hit area is the whole vertical
+     band the dot sits in, not the dot: the x axis is split at the midpoints
+     between neighbors so every column of the plot belongs to its nearest
+     moment, and you never have to find a 6px target. */
+  const dots=pts.map((c,i)=>{
+    const col=BANDS[bandFor(p.pts[i][0])][2];
+    const delay=RM?0:Math.round(130+i*(820/Math.max(1,n-1)));
+    const bandL = i===0     ? 0 : (pts[i-1][0]+c[0])/2;
+    const bandR = i===n-1   ? W : (c[0]+pts[i+1][0])/2;
+    return `<g class="dot" data-i="${i}" tabindex="0" role="button"
+        aria-label="${U.moment(i+1,n,esc(p.pts[i][1]))}" style="animation-delay:${delay}ms">
+        <rect class="hit" x="${bandL.toFixed(1)}" y="0" width="${(bandR-bandL).toFixed(1)}"
+              height="${H}" fill="transparent"/>
+        <rect class="colwash" x="${bandL.toFixed(1)}" y="${T}" width="${(bandR-bandL).toFixed(1)}"
+              height="${H-B+30-T}" fill="${col}"/>
+        <line class="guide" x1="${c[0]}" y1="${T}" x2="${c[0]}" y2="${H-B}"
+              stroke="${col}" stroke-width="1"/>
+        <circle class="ring" cx="${c[0]}" cy="${c[1]}" r="6" fill="none" stroke="${col}" stroke-width="2"/>
+        <circle class="pip" cx="${c[0]}" cy="${c[1]}" r="6" fill="${col}" stroke="#0D2733" stroke-width="2"/>
+        <text x="${c[0]}" y="${H-B+22}" text-anchor="middle"
+              font-family="Martian Mono,monospace" font-size="7.5">${String(i+1).padStart(2,'0')}</text>
+      </g>`;}).join('');
+
+  tbox.style.setProperty('--accent',p.c);
+  tbox.innerHTML=`
+    <div class="trace-head"><h3>${p.n}</h3><p>${p.sum}</p></div>
+    <div class="trace-svg">
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${U.traceFor(p.n)}">
+        ${bands}
+        <path d="${line}" fill="none" stroke="${p.c}" stroke-width="2.6" stroke-linejoin="round"
+              stroke-linecap="round" id="tline"/>
+        ${wallMark}${dots}
+      </svg>
+    </div>
+    <div class="legs">${p.pts.map((pt,i)=>`
+      <button type="button" class="leg ${p.wall===i?'wallpoint':''}" data-i="${i}"
+        style="--lc:${BANDS[bandFor(pt[0])][2]};animation-delay:${RM?0:Math.round(100+i*36)}ms">
+        <b>${String(i+1).padStart(2,'0')}</b>
+        <span class="leg-txt"><strong>${pt[1]}</strong><span class="leg-note">${pt[2]}</span></span>
+      </button>`).join('')}</div>`;
+  paintTrace();
+  /* the trace summary is rebuilt on every tab change, so link its references again */
+  if(window.EsmrskyScripture){const sm=tbox.querySelector('.trace-head p');if(sm)window.EsmrskyScripture.linkTextNodes(sm);}
+  const ln=document.getElementById('tline');
+  if(ln && !RM){const len=ln.getTotalLength();
+    ln.style.strokeDasharray=len;ln.style.strokeDashoffset=len;
+    ln.getBoundingClientRect();
+    ln.style.transition='stroke-dashoffset 1.15s cubic-bezier(.4,0,.2,1)';
+    ln.style.strokeDashoffset=0;}
+}
+/* dot <-> card pairing. Delegated on the box, so it survives trace() replacing
+   its innerHTML. Hover always answers — an earlier version froze it out whenever
+   something was pinned, which read as hover being broken. Click still pins, so
+   the pairing works on a phone; leaving falls back to the pin, not to nothing. */
+let lockI=null, hoverI=null;
+function paintTrace(){
+  const i = hoverI!==null ? hoverI : lockI;
+  tbox.querySelectorAll('.dot,.leg').forEach(el=>
+    el.classList.toggle('is-active', i!==null && +el.dataset.i===i));
+  tbox.classList.toggle('has-lock', lockI!==null);
+}
+const overTrace = e => {
+  const t=e.target.closest('.dot,.leg'); if(!t) return;
+  hoverI=+t.dataset.i; paintTrace();
+};
+tbox.addEventListener('pointerover',overTrace);
+tbox.addEventListener('focusin',overTrace);
+tbox.addEventListener('pointerleave',()=>{ hoverI=null; paintTrace(); });
+tbox.addEventListener('focusout',e=>{
+  if(!tbox.contains(e.relatedTarget)){ hoverI=null; paintTrace(); }});
+tbox.addEventListener('click',e=>{
+  const t=e.target.closest('.dot,.leg'); if(!t) return;
+  const i=+t.dataset.i;
+  lockI = (lockI===i) ? null : i;
+  paintTrace();});
+/* a <g> is focusable via tabindex but never fires click from the keyboard */
+tbox.addEventListener('keydown',e=>{
+  const t=e.target.closest('.dot'); if(!t) return;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();
+    t.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
+
+trace(0);
+
+/* ===== THE EIGHT MARSHES ===== */
+/* Ordered as an arc rather than by frequency: the two most recognizable first,
+   then the three interior ones, then the three that read as maturity. The last
+   three are the point of the section — everything else on the page already has
+   language for the first five. Each card carries a `guard`, because without the
+   false-positive line these become an accusation generator. */
+const M=[
+ {as:"Reads as waist-deep",n:"The ledger",d:3,
+  mech:"Grace is the doctrine and performance is the operating system. Your standing before God moves with the week's record — which means it is never actually received, only re-earned every Monday.",
+  tell:"A flicker of relief when someone more visible than you fails. You don't act on it and you would never say it. It's still information.",
+  guard:"Conviction over an actual sin. That has an object and an end — you repent and it lifts. The ledger has neither. It just resets.",
+  out:"Say the specific thing out loud to one person with no stake in your reputation. The ledger survives on privacy, not on the sin.",
+  ref:"Luke 18:11",quote:"God, I thank thee, that I am not as other men. The Pharisee's prayer is a comparison — and he addresses it to God."},
+
+ {as:"Reads as reverence",n:"Fear as the operating system",d:2,
+  mech:"Obedience running on dread of God's mood rather than confidence in his character. It produces excellent behavior, which is precisely why nobody ever interrupts it.",
+  tell:"You can describe what God requires of you in detail, and you cannot say without hedging that he likes you.",
+  guard:"The fear of the Lord, which is awe and produces rest, not vigilance. And not clinical anxiety or scrupulosity — if the checking is compulsive or it is costing you sleep, this is a doctor's question as well as a pastor's. Treating an anxiety disorder as a faith problem is its own kind of harm.",
+  out:"Read 1 John slowly, with someone else. It is the same letter the five depths come from, and it treats the fear itself as the diagnosis — not whatever you are afraid of.",
+  ref:"1 John 4:18",quote:"There is no fear in love; but perfect love casteth out fear: because fear hath torment."},
+
+ {as:"Reads as devotion",n:"False altars",d:2,
+  mech:"You seek God sincerely while something else quietly holds the veto. Not a rival religion — a good thing promoted to load-bearing: a child's outcome, a marriage, a reputation, being right, the ministry itself.",
+  tell:"Finish the sentence: I could accept almost anything from God except ___. Most people have their answer inside five seconds. That speed is the finding.",
+  guard:"Loving something deeply. Love is not the tell, the veto is. You can love your child enormously without having made their outcome the condition of your trust.",
+  out:"Name it to God as an altar, in those words. Ezekiel's charge against the elders isn't that they had idols — it's that they came to inquire while carrying them, and said nothing.",
+  ref:"Ezekiel 14:3",quote:"These men have set up their idols in their heart… should I be enquired of at all by them?"},
+
+ {as:"Reads as discernment",n:"Counterfeit voices",d:3,
+  mech:"Impulse, anxiety, ambition and other people's expectations, all filed under “the Lord told me.” The label is unfalsifiable, so nothing ever corrects it.",
+  tell:"Run the last year back. If the voice consistently told you what you already wanted — or consistently accused you and never once comforted — you have located the source, and it isn't the Spirit.",
+  guard:"Actually being led. Real guidance survives being checked; it is content to be tested against scripture and against people who know you. The counterfeit is the one that treats the question as disloyalty.",
+  out:"Give two people standing to say “I don't think that was God,” and let them say it without penalty. Guidance that can't be checked isn't guidance. It's cover.",
+  ref:"1 John 4:1",quote:"Believe not every spirit, but try the spirits whether they are of God."},
+
+ {as:"Reads as standing for truth",n:"Bitterness in a doctrinal jacket",d:3,
+  mech:"An injury nobody ever dealt with, converted into a position. The position may well be correct — that is what makes it so durable. It is being held for a different reason than it appears, and it is doing different work.",
+  tell:"There is a face attached. If naming the doctrine also brings up a person, the doctrine is not why you hold it that hard.",
+  guard:"Being right about a real wrong. Some things should be opposed, and grief over what someone did is not bitterness. The tell is the heat, not the position.",
+  out:"Deal with the person — forgiveness, or a real conversation, or grief properly done — and then see whether the position still stands on its own. Usually it does. It just stops costing everyone near you.",
+  ref:"Hebrews 12:15",quote:"Lest any root of bitterness springing up trouble you, and thereby many be defiled. Note the many. It never stays personal."},
+
+ {as:"Reads as over your head",n:"Knowledge instead of surrender",d:4,
+  mech:"Reading about the thing as a substitute for doing it. The vocabulary of depth is unusually easy to acquire, and from the inside it feels identical to depth.",
+  tell:"You can name your stage, your Wall, your attachment style and your enneagram number, and nobody who lives with you has noticed a change in eighteen months.",
+  guard:"Learning. Study is how most people get anywhere at all. The marsh is study that stopped producing obedience and started producing commentary.",
+  out:"Take the one thing on this page you already knew was true about you and do something about it this week — with a date, and a person. Then stop reading for a while.",
+  ref:"1 Corinthians 8:1",quote:"Knowledge puffeth up, but charity edifieth. This page is the likeliest thing on it to become a marsh; a maturity framework is exactly the sort of interesting that substitutes for the thing."},
+
+ {as:"Reads as waist-deep, nearly over",n:"Ministry as identity",d:3,
+  mech:"Service that is genuinely useful to other people and is doing something else for you. It medicates. Which is why stopping is unthinkable — not because the work would fail, but because there would be nothing underneath.",
+  tell:"Picture the role gone tomorrow, nobody's fault, honorably. Grief you can name is fine. A blankness about who you would then be is the marsh.",
+  guard:"Loving your work, or being genuinely needed. Vocation isn't the problem. The question is only whether your standing survives the role being removed.",
+  out:"A sabbath you actually keep, and one relationship where you contribute nothing. Both will feel wildly disproportionate in difficulty. That is the confirmation.",
+  ref:"Luke 10:20",quote:"Rejoice not, that the spirits are subject unto you; but rather rejoice, because your names are written in heaven."},
+
+ {as:"Reads as depth, hard-won",n:"Camping at the Wall",d:4,
+  mech:"The Wall was real, the passage genuinely started, and then not-believing-naively hardened into a permanent address. Deconstruction that stopped being a passage and became somewhere to live.",
+  tell:"You can say precisely what you no longer believe and almost nothing about what you now do. Ask how many years the sentence has been the same sentence.",
+  guard:"The Wall itself, which takes years and is supposed to. And not honest doubt — this page's whole position is that doubt is the engine of the most important transition there is. The marsh is the stall, never the passage.",
+  out:"Hagberg's answer is not more argument. It is practice without certainty: keep showing up, keep serving, in company, while it is still dark. The far side gets entered by walking, not by resolving.",
+  ref:"Psalm 42:5",quote:"Why art thou cast down, O my soul?… hope thou in God. A man arguing with himself, and choosing anyway."}
+];
+RU&&RU.put('M',M);
+/* One glyph each, so eight prose cards stop reading as one wall of text. Same
+   line-art vocabulary as the triage icons above. */
+const MI=[
+ '<path d="M12 5v14M7 19h10M4 9h16M4 9l-2 4.4a3 3 0 0 0 4 0zM20 9l-2 4.4a3 3 0 0 0 4 0z"/>',
+ '<path d="M12 20.5S4.6 16 4.6 11a3.9 3.9 0 0 1 7.4-2.5A3.9 3.9 0 0 1 19.4 11c0 5-7.4 9.5-7.4 9.5z"/><path d="M12 9.6v3.1M12 15.6h.01"/>',
+ '<path d="M4.5 20.5h15M7 20.5v-7h10v7M12 13c0-2 2.1-2.7 2.1-4.6A3.1 3.1 0 0 0 12 5.4a3.1 3.1 0 0 0-2.1 3c0 1.9 2.1 2.6 2.1 4.6z"/>',
+ '<path d="M3 6.4A2 2 0 0 1 5 4.4h8.6a2 2 0 0 1 2 2v4.4a2 2 0 0 1-2 2H8.4L5 15.6v-2.8a2 2 0 0 1-2-2z"/><path d="M18.4 8.6a2 2 0 0 1 2.6 2v4.5a2 2 0 0 1-2 2v2.8l-3.2-2.8h-2.6"/>',
+ '<path d="M2.8 9.6h18.4"/><path d="M12 9.6v11.2M12 13.4c-1.9 1.1-3.3 2.6-4 4.6M12 16.2c1.7 1 2.8 2.3 3.4 3.8"/><path d="M12 9.6V4.4"/>',
+ '<path d="M12 7.2v13.2M12 7.2C10 5 6.8 4.4 3 4.9v12.4c3.8-.5 7 .1 9 2.1M12 7.2c2-2.2 5.2-2.8 9-2.3v12.4c-3.8-.5-7 .1-9 2.1"/>',
+ '<path d="M9.4 3h5.2v3.2H9.4zM7 6.2h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8.2a2 2 0 0 1 2-2z"/><path d="M8.6 11.6h6.8M8.6 15.4h4.4"/>',
+ '<path d="M12 3.4 2.8 20.6h18.4zM12 20.6l-3.6-6M12 20.6l3.6-6"/>'
+];
+(function(){
+  const host=document.getElementById('marshgrid'); if(!host) return;
+  host.innerHTML=M.map((m,i)=>{
+    const id='mp'+i, bid='mb'+i, n=String(i+1).padStart(2,'0');
+    return `<article class="marsh is-open" style="--mk:${CV[m.d]}">
+      <button type="button" class="m-head" id="${bid}" aria-expanded="true" aria-controls="${id}">
+        <span class="m-ix">${n} / ${U.marsh}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">${MI[i]}</svg>
+        <b>${m.n}</b>
+        <span class="m-as">${m.as}</span>
+        <p class="mech">${m.mech}</p>
+        <span class="m-more">${U.more} <i></i></span>
+      </button>
+      <div class="m-body" id="${id}" role="region" aria-labelledby="${bid}">
+        <dl>
+          <div><dt>${U.tell}</dt><dd>${m.tell}</dd></div>
+          <div><dt>${U.notThis}</dt><dd>${m.guard}</dd></div>
+          <div><dt>${U.wayOut}</dt><dd>${m.out}</dd></div>
+        </dl>
+        <p class="m-ref"><span>${m.ref}</span>${m.quote}</p>
+      </div>
+    </article>`;}).join('');
+  host.addEventListener('click',e=>{
+    const b=e.target.closest('.m-head'); if(!b) return;
+    const open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open));
+    document.getElementById(b.getAttribute('aria-controls')).hidden=open;
+    b.closest('.marsh').classList.toggle('is-open',!open);
+  });
+})();
+
+/* ===== THE THIRTEEN MAPS ===== */
+/* Same order as ROWS below, so a card and its row in the table are the same
+   index. Color comes from the kind, not from the individual map, so the five
+   families read as families. */
+const KIND={
+ scripture:{l:"Scripture",c:"var(--s0)",
+  i:'<svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>'},
+ church:{l:"Church practice",c:"var(--s1)",
+  i:'<svg viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><path d="M2.5 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M14.6 20a5 5 0 0 1 6.9-4.6"/></svg>'},
+ formation:{l:"Formation",c:"var(--s2)",
+  i:'<svg viewBox="0 0 24 24"><path d="M3 21V4h18v17"/><path d="M3 10h18"/><path d="M10 21v-7h4v7"/></svg>'},
+ research:{l:"Research",c:"var(--s3)",
+  i:'<svg viewBox="0 0 24 24"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg>'},
+ contemplative:{l:"Contemplative",c:"var(--s4)",
+  i:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.4"/><circle cx="12" cy="12" r="1.9"/></svg>'}
+};
+const MAPS=[
+ {n:"1 John 2:12–14",yr:"c. AD 90",k:"scripture",nw:1,
+  who:"The apostle John, to a church being picked apart by teachers who claimed to know more.",
+  axis:"What you know, and how long you have known it.",
+  how:"Three groups, each addressed twice. The only thing that changes between them is what they know — and what the oldest group knows is stated twice, identically, and left there.",
+  st:[["Children","Your sins are forgiven, and you know the Father."],
+      ["Young men","You are strong, the word abides in you, you have overcome the evil one."],
+      ["Fathers","You know him who is from the beginning. That is the whole description."]],
+  use:"The oldest maturity map still in use, and the shortest. Six lines of text.",
+  watch:"Names groups, never movement. No method, and no category for a faith that stops working."},
+ {n:"1 Corinthians 2–3 · Hebrews 5",yr:"c. AD 55–65",k:"scripture",
+  who:"Paul, to a church that thought it was advanced; and the writer to the Hebrews, to one that had gone backwards.",
+  axis:"What you can digest, and what you do with conflict.",
+  how:"The test is not knowledge. It is whether jealousy and quarrelling still run the room — and Hebrews supplies the mechanism: senses trained by constant practice, which makes maturity a function of reps rather than years.",
+  st:[["Natural","Cannot receive the things of the Spirit; they are folly to him."],
+      ["Infant","On milk, because you were not ready for solid food."],
+      ["Fleshly","Still on milk, and the tell is the jealousy and the factions."],
+      ["Mature","Senses trained by practice to distinguish good from evil."]],
+  use:"The sharpest diagnostic in Scripture, because it is behavioral rather than self-reported.",
+  watch:"Written as rebuke inside a specific fight, not as a developmental scheme."},
+ {n:"The threefold way · Teresa",yr:"4th c. · Castle 1577",k:"contemplative",
+  who:"The desert and monastic tradition, given its most detailed form in Teresa of Ávila's Interior Castle.",
+  axis:"Prayer, and what happens to the self inside it.",
+  how:"Teresa draws it as seven rooms of a single castle, and the movement is inward rather than upward. Dryness is not a fault in the method; past a point it is the method.",
+  st:[["Purgative","Beginners. Breaking with sin, and consolation still comes easily."],
+      ["Illuminative","Proficients. Real light and real dryness, at the same time."],
+      ["Unitive","Union. The self stops being the subject of its own prayer."]],
+  use:"By far the richest account of the deep end, and the only tradition with a vocabulary for dryness that does not read it as failure.",
+  watch:"Written from inside enclosed religious life, and nearly silent on how anybody starts."},
+ {n:"Putman · Real-Life Discipleship",yr:"2010",k:"church",nw:1,
+  who:"Jim Putman, out of Real Life Ministries in Idaho.",
+  axis:"Whether you reproduce.",
+  how:"Borrowed from how families actually work, and diagnosed by the phrases people say rather than by a test — which is what makes it hard to fake.",
+  slab:"The five stages, and what each one says",
+  st:[["Spiritually dead","“I don't believe” — or believes, and nothing follows from it."],
+      ["Infant","“I didn't know the Bible said that.”"],
+      ["Child","“Nobody is feeding me.”"],
+      ["Young adult","“Who can I help?”"],
+      ["Parent","“Who am I raising?”"]],
+  use:"The most immediately usable model here for a church trying to place real people.",
+  watch:"No Wall. A faith that works less well than it used to reads as regression, and the prescription is more of whatever caused it."},
+ {n:"Hagberg &amp; Guelich",yr:"1989",k:"formation",
+  who:"Janet Hagberg and Robert Guelich, The Critical Journey.",
+  axis:"Where your security actually comes from.",
+  how:"Six stages with the Wall standing between the third and the fourth. It is the only model here whose central claim is that the route on is downward.",
+  st:[["1 · Recognition of God","Awe, and the first real sense that God is there."],
+      ["2 · The life of discipleship","Belonging, learning, someone to follow."],
+      ["3 · The productive life","You are useful — and your identity quietly moves into the usefulness."],
+      ["THE WALL","What used to work stops working. There is no route forward, only down.",1],
+      ["4 · The journey inward","You meet what you were avoiding, and meet God in it."],
+      ["5 · The outward journey","Back to the same work, with nothing left to prove."],
+      ["6 · The life of love","Rare. Other people notice it well before you do."]],
+  use:"The best single book on this list, and the only one that treats the collapse as the doorway rather than the failure.",
+  watch:"Stage four can be read as permission to stay in deconstruction indefinitely, which is not what they wrote."},
+ {n:"Fowler",yr:"1981",k:"research",
+  who:"James Fowler, Stages of Faith, built from roughly 600 long interviews.",
+  axis:"<b>How</b> you hold beliefs — not what they are.",
+  how:"A structural account: the same content can be held in six quite different ways, and the move that matters is from believing what your group believes to owning it yourself.",
+  st:[["1 · Intuitive-projective","Childhood. Images and stories, absorbed whole."],
+      ["2 · Mythic-literal","The story is true because it is the story."],
+      ["3 · Synthetic-conventional","You believe what your group believes, and cannot see the frame."],
+      ["4 · Individuative-reflective","You take ownership — usually by breaking something first."],
+      ["5 · Conjunctive","You can hold paradox without needing it resolved."],
+      ["6 · Universalizing","Rare enough that Fowler struggled to find examples."]],
+  use:"The foundational structural account, and the reason a doubting thirty-year-old may be advancing rather than falling away.",
+  watch:"“Faith” here means meaning-making in general, so an atheist moves through the same stages. It says nothing about whether any of it is true."},
+ {n:"Peck",yr:"1987",k:"research",
+  who:"M. Scott Peck, The Different Drum and Further Along the Road Less Traveled.",
+  axis:"Your relationship to rules, and to mystery.",
+  how:"Four stages, and one observation nobody forgets: we are most threatened by the people one stage ahead of us. It explains church conflict better than the stated topics do.",
+  st:[["1 · Chaotic / antisocial","No governing principle but self-interest."],
+      ["2 · Formal / institutional","Needs the structure, and defends it hard."],
+      ["3 · Skeptic / individual","Rejects the structure — often on principle, and often more honestly."],
+      ["4 · Mystical / communal","Holds mystery without anxiety, and sees how things connect."]],
+  use:"The best available explanation of why two sincere people at different depths find each other intolerable.",
+  watch:"Four very wide stages. A lens, not a placement tool."},
+ {n:"REVEAL",yr:"2007",k:"research",nw:1,
+  who:"Greg Hawkins and Cally Parkinson — Willow Creek auditing itself, then 250,000+ people across a thousand churches.",
+  axis:"Self-reported love of God and love of others.",
+  how:"Four segments, plus the finding that made it famous: church activity does not drive movement, and people stall hardest one step short of the end.",
+  slab:"The four segments",
+  st:[["Exploring Christ","Curious, not committed."],
+      ["Growing in Christ","Committed, and learning the practices."],
+      ["Close to Christ","Depends on him daily — and this is where the stall happens."],
+      ["Christ-centered","Identity is him, rather than the activity."]],
+  use:"The stall it identified is real, and most pastors recognize it on sight.",
+  watch:"Bradley Wright found the design and analysis weak and heavily over-interpreted. Self-reported throughout, and no Wall."},
+ {n:"Spader · 4 Chairs",yr:"2014",k:"church",nw:1,
+  who:"Dann Spader, 4 Chair Discipling, drawn from the sequence of invitations Jesus actually issued.",
+  axis:"What Jesus asked of a person at each point.",
+  how:"Each chair carries its own invitation, so the model tells you what to say next as well as where somebody is.",
+  slab:"The four chairs, and the invitation at each",
+  st:[["Chair 1 · Come and see","Curious. The invitation is to look."],
+      ["Chair 2 · Follow me","Believing. The invitation is to imitate."],
+      ["Chair 3 · Fishers of men","Equipped. The invitation is to go and bring others."],
+      ["Chair 4 · Bear fruit","Reproducing. The invitation is to remain."]],
+  use:"Extremely teachable. A volunteer holds the whole thing after one sitting, which is why it spreads.",
+  watch:"No Wall. Built entirely to move people forward, with no category for a faith coming apart on purpose."},
+ {n:"Scazzero · Emotionally Healthy",yr:"2006 / 2017",k:"formation",
+  who:"Peter Scazzero, after his church and his marriage nearly came apart while the ministry was growing.",
+  axis:"Whether your emotional age matches your spiritual claims.",
+  how:"Takes Hagberg's six stages and the Wall as the frame, then adds the claim underneath: you cannot be spiritually mature and emotionally immature at the same time. What it contributes is the list of symptoms.",
+  slab:"The symptoms it names",
+  st:[["Using God to run from God","Ministry as the most respectable available hiding place."],
+      ["Ignoring anger, sadness and fear","Treated as unspiritual, so they go underground and run things from there."],
+      ["Dying to the wrong things","Killing off what God gave you rather than what is actually in the way."],
+      ["Denying the past","Acting as though the family you came from has no vote in who you are now."],
+      ["Living without limits","No sabbath, no no, and a body that eventually says it for you."]],
+  use:"The most practically useful account of the Wall for somebody standing in one right now.",
+  watch:"Leans hard on family-systems language, which not everyone finds native."},
+ {n:"Sonship",yr:"2002 onward",k:"formation",
+  who:"Jack Frost, Paul Ellis and the wider sonship stream.",
+  axis:"Identity — who you believe you are to God.",
+  how:"The Greek underneath is real: the New Testament moves between <b>nēpios</b>, an infant under guardians, and <b>huios</b>, a son come of age who can be trusted with the estate.",
+  st:[["Orphan","No father. Everything has to be secured for yourself."],
+      ["Slave","Works from fear, and for permission to stay."],
+      ["Servant","Works for approval. Closer in, and still earning."],
+      ["Friend","Trusted with what the father is actually doing."],
+      ["Son","Heir. The estate was already yours before you performed."]],
+  use:"Gets at the engine under a great deal of religious behavior — performing for a father you are not sure has accepted you.",
+  watch:"The servant/son contrast gets pushed until “servant” becomes an insult, which Scripture does not support."},
+ {n:"The Exodus pattern",yr:"the oldest of them",k:"scripture",
+  who:"Nobody built this one. It is the shape of the story, used as a map ever since.",
+  axis:"Where you are in the journey out.",
+  how:"The deliverance takes a night and the wilderness takes forty years, which means the middle is not a delay in the journey. It is most of the journey.",
+  st:[["Egypt","Slavery, and it is all you have ever known."],
+      ["Deliverance","Fast, decisive, and not your doing."],
+      ["Wilderness","Provision without control. Bread that will not keep overnight."],
+      ["Testing","The same lesson coming back around until it lands."],
+      ["The land","Possessed slowly — and never by the generation that left."]],
+  use:"The most pastorally honest thing on this list, because it makes the long middle normal rather than a sign something has gone wrong.",
+  watch:"An application of a narrative, not an exegesis of one. A shape, not a schedule."},
+ {n:"Rohr · Falling Upward",yr:"2011",k:"contemplative",
+  who:"Richard Rohr, drawing on Jung as much as on the tradition.",
+  axis:"Which half of life you are in.",
+  how:"Two halves and one passage — and the passage is not a promotion. “We grow spiritually much more by doing it wrong than by doing it right.”",
+  slab:"Two halves, and what sits between them",
+  st:[["First half","Building the container: identity, boundaries, security, being right about things."],
+      ["The passage","A failure, and it is meant to be one. Nobody volunteers.",1],
+      ["Second half","Filling the container. Less certain, and considerably more use to anyone."]],
+  use:"The clearest statement of why the descent is the mechanism rather than an interruption of it.",
+  watch:"Two very wide categories, and Rohr's wider theology is contested — take the shape, argue the rest elsewhere."}
+];
+RU&&(RU.put('KIND',KIND),RU.put('MAPS',MAPS));
+document.getElementById('maps').innerHTML=MAPS.map((m,i)=>{
+  const kd=KIND[m.k];
+  const stages=m.st.map((st,j)=>{
+    const tint=(4+j*2.4).toFixed(1)+'%', edge=Math.min(88,30+j*12)+'%';
+    return st[2]
+      ? `<li class="wall"><i>${String(j+1).padStart(2,'0')}</i><b>${st[0]}</b><span>${st[1]}</span></li>`
+      : `<li style="background:color-mix(in srgb,var(--mc) ${tint},transparent);
+           border-left-color:color-mix(in srgb,var(--mc) ${edge},transparent)"
+          ><i>${String(j+1).padStart(2,'0')}</i><b>${st[0]}</b><span>${st[1]}</span></li>`;
+  }).join('');
+  return `<article class="map" style="--mc:${kd.c}">
+    <div class="map-top"><span class="map-n">${U.mapWord} ${String(i+1).padStart(2,'0')}</span><span class="map-yr">${m.yr}</span></div>
+    <h4>${m.n}</h4>
+    <div class="map-chips"><span class="kind">${kd.i}${kd.l}</span>${m.nw?'<span class="nw">'+U.noWall+'</span>':''}</div>
+    <p class="who">${m.who}</p>
+    <dl>
+      <div><dt>${U.measures}</dt><dd>${m.axis}</dd></div>
+      <div><dt>${U.how}</dt><dd>${m.how}</dd></div>
+    </dl>
+    <div class="stagewrap"><span class="slab">${m.slab||U.stages}</span><ol class="stages">${stages}</ol></div>
+    <dl>
+      <div><dt>${U.good}</dt><dd>${m.use}</dd></div>
+      <div><dt>${U.runs}</dt><dd>${m.watch}</dd></div>
+    </dl>
+  </article>`;}).join('');
+
+/* ===== FRAMEWORK CHART ===== */
+const COLS=["Dry ground","Ankles","Knees","Waist","Over your head"];
+const ROWS=[
+ {n:"1 John 2:12–14",nw:1,c:[null,"Little children","Children","Young men — overcame the evil one","Fathers — you know him"]},
+ {n:"1 Cor 2–3 · Heb 5",c:["Natural — cannot receive","Infant, on milk","Fleshly — jealousy, factions","Growing toward solid food","Mature — senses trained"]},
+ {n:"Threefold way · Teresa",c:["Outside the castle","Purgative — beginners","Purgative, late","Illuminative — proficients","Unitive — mansions 6–7"]},
+ {n:"Putman · Real Life",nw:1,c:["Spiritually dead","Infant — ignorance","Child — self-centered","Young adult — serves","Parent — reproduces"]},
+ {n:"Hagberg & Guelich",c:[null,"1 · Recognition","2 · Discipleship","3 · Productive life → THE WALL","5 · Outward · 6 · Life of love"]},
+ {n:"Fowler (1981)",c:["1 · Intuitive","2 · Mythic-literal","3 · Synthetic-conventional","4 · Individuative-reflective","5 · Conjunctive · 6 · Universalizing"]},
+ {n:"Peck (1987)",c:["1 · Chaotic","2 · Formal / institutional","2 · Formal / institutional","3 · Skeptic / individual","4 · Mystical / communal"]},
+ {n:"REVEAL (2007)",nw:1,c:["Exploring","Growing in Christ","Growing in Christ","Close to Christ — stalls here","Christ-centered"]},
+ {n:"Spader · 4 Chairs",nw:1,c:["Chair 1 · Come and see","Chair 2 · Follow me","Chair 2 · Follow me","Chair 3 · Fish for men","Chair 4 · Bear fruit"]},
+ {n:"Scazzero · EHS",c:[null,"1 · Awareness of God","2 · Discipleship","3 · Active life → THE WALL","5 · Outward · 6 · Transformed by love"]},
+ {n:"Sonship (Frost, Ellis)",c:["Orphan","Slave — performs for approval","Servant","Friend","Son / heir — nḗpios→huiós"]},
+ {n:"Exodus pattern",c:["Egypt","Deliverance","Wilderness","Wilderness — testing","Promised land"]},
+ {n:"Rohr (2011)",c:["First half — building the container","First half","First half","Second half — filling it","Second half"]}
+];
+RU&&(RU.put('COLS',COLS),RU.put('ROWS',ROWS));
+const chartEl=document.getElementById('chart');
+chartEl.innerHTML=
+ '<div class="chart-head"><div>'+U.framework+'</div>'+
+   COLS.map((c,i)=>'<button type="button" class="colh" data-col="'+i+'" aria-pressed="false" '+
+     'style="color:'+CV[i]+'">'+c+'</button>').join('')+'</div>'+
+ ROWS.map((r,ri)=>'<div class="row"><div class="rn"><u>'+String(ri+1).padStart(2,'0')+'</u>'+r.n+(r.nw?'<em title="'+U.noWallTitle+'">'+U.noWallTag+'</em>':'')+'</div>'+
+  r.c.map((cell,i)=>{
+    if(!cell) return '<div class="band" data-col="'+i+'"><span class="seg ghost">—</span></div>';
+    const bg=/WALL|СТЕНА/.test(cell)?'var(--wall)':CV[i];
+    return '<div class="band" data-col="'+i+'"><span class="seg" style="background:'+bg+'">'+cell+'</span></div>';
+  }).join('')+'</div>').join('');
+
+/* Read one depth straight down the thirteen frameworks. Click, not hover — the
+   chart lives in a horizontal scroller on a phone, where hover doesn't exist. */
+let focusCol=null;
+const bands=[...chartEl.querySelectorAll('.band')],
+      colhs=[...chartEl.querySelectorAll('.colh')],
+      focusNote=document.getElementById('chartFocus');
+if(RU)focusNote.textContent=U.focusNone;
+function setFocus(i){
+  focusCol = (focusCol===i) ? null : i;
+  bands.forEach(b=>b.classList.toggle('dim', focusCol!==null && +b.dataset.col!==focusCol));
+  colhs.forEach(h=>h.setAttribute('aria-pressed',String(focusCol!==null && +h.dataset.col===focusCol)));
+  focusNote.textContent = focusCol===null
+    ? U.focusNone
+    : U.focusOn(COLS[focusCol]);
+}
+colhs.forEach(h=>h.addEventListener('click',()=>setFocus(+h.dataset.col)));
+
+/* ===== TRIAGE ===== */
+const T=[
+ {i:"book",c:"var(--s1)",h:"Giving an infant a program",
+  p:"New believers need a person — a kitchen table, a phone that gets answered, an ordinary life to copy. Curriculum hands them information they have no categories for.",
+  s:"Symptom: finishes the class, gone in four months"},
+ {i:"stage",c:"var(--s2)",h:"Giving a child a platform",
+  p:"They're gifted, available and keen, which is exactly why they get recruited. Put them in front of people and the self-reference at the center gets amplified, rewarded, load-bearing.",
+  s:"Symptom: talented volunteer leaves wounded, takes a group"},
+ {i:"burn",c:"var(--s3)",h:"Using a young adult",
+  p:"They run on being needed and say yes to everything. So they get filled up, and nobody asks about their soul — only their output.",
+  s:"Symptom: quiet resentment, then sudden exit"},
+ {i:"alone",c:"var(--s4)",h:"Assuming a parent is fine",
+  p:"The least likely to be asked how they are, and the most isolated by their own competence. They need peers rather than admirers.",
+  s:"Symptom: the collapse everyone calls out of nowhere"}
+];
+RU&&RU.put('T',T);
+document.getElementById('tri').innerHTML=T.map(t=>
+ `<div style="--c:${t.c}">${IC[t.i]}<h4>${t.h}</h4><p>${t.p}</p><p class="sym">${t.s}</p></div>`).join('');
+
+/* ===== INSTRUMENT ===== */
+const Q=[
+ {t:"I only open the Bible when someone else puts it in front of me.",k:"inf"},
+ {t:"When a sermon doesn't land, my first thought is what I didn't get out of it.",k:"chi"},
+ {t:"There's at least one person whose spiritual life I check on unprompted.",k:"ya"},
+ {t:"There's at least one person I'm deliberately training to do what I do.",k:"par"},
+ {t:"I can name a season where God didn't answer and didn't explain, and I stayed.",k:"wall"},
+ {t:"My sense of standing with God tracks how well the week went.",k:"chi"},
+ {t:"Faced with a hard passage, I'd rather be told what to think than sit with it.",k:"inf"},
+ {t:"I serve regularly, and nobody had to recruit me.",k:"ya"},
+ {t:"I've changed my mind about something I was certain of, without losing my faith.",k:"wall"},
+ {t:"I can be criticized unfairly and not need to correct the record.",k:"par"},
+ {t:"Most of what I know about God I was told — I haven't been through it with him.",k:"inf"},
+ {t:"I'm tired in a way rest hasn't fixed, and I keep going because people depend on me.",k:"flag"}
+];
+const SCALE=["Not me","Sometimes","Often","That's me"];
+const READ={
+ 1000:{n:"Ankle-deep",l:"1000",i:1,c:"var(--s1)",
+  m:"Real, recent, largely unfurnished. You have the experience and not the equipment — which is exactly what this depth is, and no reflection on you. What you need isn't more content. It's proximity.",
+  v:"Ask one Christian you actually like whether you can be around them regularly — meals, errands, the boring parts. Learn one habit by imitation rather than instruction."},
+ 2000:{n:"Knee-deep",l:"2000",i:2,c:"var(--s2)",
+  m:"You know the language and the water hasn't got above your knees. The most populated depth and the easiest to mistake for maturity, because fluency feels like depth from inside. Nothing here says you aren't a Christian — only that the sentences still run back toward you.",
+  v:"Take responsibility for one person who can't repay it, for six months, with a set time. Not a role — a person. This moves people at this depth more reliably than teaching does."},
+ 3000:{n:"Waist-deep",l:"3000",i:3,c:"var(--s3)",
+  m:"You've turned outward: you serve, initiate, carry people. You're also in real current. The failure here isn't scandal — it's substitution, your identity quietly migrating from Christ to usefulness on a timeline you won't notice.",
+  v:"Write down what you will not do this year and give the list to someone with permission to enforce it. Then find someone to meet with monthly about your soul, not your output."},
+ 4000:{n:"Over your head",l:"4000",i:4,c:"var(--s4)",
+  m:"You reproduce rather than merely produce, and you've been through enough deep water to hold certainties loosely. The risk here isn't failure — it's isolation, and being surrounded by people who are impressed by you.",
+  v:"Find one peer at your depth outside your own organization and meet with no agenda. Then name who you're carrying next, before someone assigns them to you."}
+};
+const DRAG={
+ inf:["Dependence on being fed","You're still receiving faith secondhand — through services, teachers and plans rather than firsthand contact. Normal to start there; it's also what keeps people in the shallows for decades. The fix is small and physical: opening the Bible without being told changes the trajectory more than any course."],
+ chi:["Consumer posture","The sentences run back toward you — what you got, what you needed, what wasn't provided. Not a character flaw, and usually invisible from inside, which is what makes it stubborn. Watch for it specifically when church disappoints you, because that's when it speaks."],
+ none:["No dominant drag","Nothing points clearly backwards, which either means you're moving cleanly or that self-report has hit its ceiling. Assume the second until two people who live with you agree with the first."]
+};
+RU&&(RU.put('Q',Q),RU.put('SCALE',SCALE),RU.put('READ',READ),RU.put('DRAG',DRAG),RU.done());
+const qHost=document.getElementById('questions'),ans=new Array(Q.length).fill(null);
+qHost.innerHTML=Q.map((q,i)=>`<div class="q"><p><b>${String(i+1).padStart(2,'0')}</b>${q.t}</p>
+  <div class="opts" role="group" aria-label="${U.stmt(i+1)}">
+  ${SCALE.map((s,v)=>`<button type="button" aria-pressed="false" data-q="${i}" data-v="${v}">${s}</button>`).join('')}
+  </div></div>`).join('');
+const countEl=document.getElementById('count'),barEl=document.getElementById('bar'),
+      calcBtn=document.getElementById('calc');
+qHost.addEventListener('click',e=>{const b=e.target.closest('button[data-q]');if(!b)return;
+  ans[+b.dataset.q]=+b.dataset.v;
+  b.parentElement.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');
+  const n=ans.filter(a=>a!==null).length;
+  countEl.textContent=n+' / 12';barEl.style.width=(n/Q.length*100)+'%';calcBtn.disabled=n<Q.length;});
+function avg(k){const idx=Q.map((q,i)=>q.k===k?i:-1).filter(i=>i>=0);
+  return idx.reduce((s,i)=>s+(ans[i]||0),0)/idx.length;}
+/* the depth cascade, as a pure function so the boundary test below can re-run it */
+function classify(inf,chi,ya,par,wl){
+  let d;
+  if(ya<1.2&&inf>=1.6)d=1000; else if(ya<1.5)d=2000; else if(par<1.8)d=3000; else d=4000;
+  if(d>=3000&&chi>=2.4)d=2000;
+  if(d===4000&&wl<1.2)d=3000;
+  return d;
+}
+calcBtn.addEventListener('click',()=>{
+  const inf=avg('inf'),chi=avg('chi'),ya=avg('ya'),par=avg('par'),wl=avg('wall');
+  const flag=ans[Q.findIndex(q=>q.k==='flag')]||0;
+  const d=classify(inf,chi,ya,par,wl);
+  const r=READ[d],dg=(inf>=chi&&inf>=1.3)?DRAG.inf:(chi>=1.3?DRAG.chi:DRAG.none);
+  const res=document.getElementById('res');
+  res.style.setProperty('--accent',r.c);
+  document.getElementById('resNum').innerHTML=r.l+'<small>'+U.cubits+r.n+'</small>';
+  document.getElementById('resMean').textContent=r.m;
+  document.getElementById('resDrag').innerHTML='<b>'+dg[0]+'.</b> '+dg[1];
+  document.getElementById('resMove').textContent=r.v;
+
+  /* second reading — only when the answers sit on a bracket boundary, i.e. nudging
+     any one dimension by less than a single response step lands you somewhere else.
+     Comparing the dimension averages directly doesn't work: inf/chi measure what
+     pulls you shallow and ya/par measure what pushes you deep, so they aren't rival
+     estimates of one quantity and a naive comparison fires on every result. */
+  const M=0.3, base=[inf,chi,ya,par,wl], near=new Set();
+  for(let i=0;i<base.length;i++) for(const step of [-M,M]){
+    const v=base.slice();
+    v[i]=Math.max(0,Math.min(3,v[i]+step));
+    const alt=classify(v[0],v[1],v[2],v[3],v[4]);
+    if(alt!==d) near.add(alt);
+  }
+  /* nearest bracket wins; on a tie take the shallower, per the note below */
+  const sec=[...near].sort((a,b)=>Math.abs(a-d)-Math.abs(b-d)||a-b)[0];
+  const sw=document.getElementById('secondWrap');
+  if(sec){
+    sw.hidden=false;
+    document.getElementById('resSecond').innerHTML=
+      U.second(READ[sec].n,READ[sec].n.toLowerCase());
+  } else sw.hidden=true;
+  document.querySelectorAll('.rung').forEach((el,i)=>el.classList.toggle('on',i<=r.i));
+  const adv=document.getElementById('adv'),at=document.getElementById('advText');
+  let msg='';
+  if(flag>=2&&ya>=1.5){
+    msg=U.adv1;
+  }else if(ya>=2&&wl<1){
+    msg=U.adv2;
+  }else if(d===2000&&chi>=2.2){
+    msg=U.adv3;
+  }
+  adv.classList.toggle('on',!!msg); if(msg)at.textContent=msg;
+  res.classList.add('on');
+  res.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  ans.fill(null);
+  qHost.querySelectorAll('button[aria-pressed]').forEach(b=>b.setAttribute('aria-pressed','false'));
+  countEl.textContent='0 / 12';barEl.style.width='0%';calcBtn.disabled=true;
+  document.getElementById('res').classList.remove('on');
+  document.getElementById('adv').classList.remove('on');
+  document.getElementById('secondWrap').hidden=true;
+  document.querySelectorAll('.rung').forEach(el=>el.classList.remove('on'));
+});
+
+/* ===== REVEAL ===== */
+if('IntersectionObserver' in window){
+  const root=document.documentElement;
+  root.classList.add('js');
+  /* threshold 0: a percentage of a block taller than the screen is never met.
+     If the observer has not answered within 2.5s, everything shows (html.js is what hides). */
+  setTimeout(()=>{if(!window.__rvLive)root.classList.remove('js');},2500);
+  const io=new IntersectionObserver(es=>{
+    window.__rvLive=true;
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},
+    {threshold:0,rootMargin:'0px 0px -5% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+}else document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){var S=window.EsmrskyScripture;if(!S)return;
+  S.init({key:"soundings",scan:".refs .ref b, .dstep em, .verse cite, .m-ref span, .colo span, .trace-head p",versions:["NIV","NASB","ESV","KJV","NLT"]});
+})();
+</script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
