@@ -35,6 +35,18 @@ body.light {
   --node-lo: #eadfca;
 }
 
+/* The palette is typed, so the story's dark → deeper → light shifts ease every surface
+   together instead of body alone (everything else used to snap). */
+@property --bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ink { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ink-dim { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --spiral-ink { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --card { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --line { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --chip-bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --node-hi { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --node-lo { syntax: '<color>'; inherits: true; initial-value: transparent; }
+
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
@@ -46,7 +58,7 @@ body {
   font-family: var(--body);
   font-size: 17px;
   line-height: 1.7;
-  transition: background 1.6s ease, color 1.6s ease;
+  transition: --bg 1.6s ease, --ink 1.6s ease, --ink-dim 1.6s ease, --spiral-ink 1.6s ease, --card 1.6s ease, --line 1.6s ease, --chip-bg 1.6s ease, --node-hi 1.6s ease, --node-lo 1.6s ease;
 }
 
 /* scroll progress — ember to emerald */
@@ -54,7 +66,9 @@ body {
   position: fixed;
   top: 0; left: 0;
   height: 4px;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
   background: linear-gradient(90deg, var(--loop), var(--loop-2) 45%, var(--spiral));
   z-index: 50;
 }
@@ -187,8 +201,9 @@ blockquote.green { border-left-color: var(--spiral-ink); }
   border: 2px solid var(--line);
   border-radius: 999px;
   padding: 0.5rem 1.15rem;
+  min-height: 44px;
   cursor: pointer;
-  transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.15s;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 
 .chip:hover { border-color: var(--ink-dim); transform: translateY(-2px); }
@@ -267,8 +282,9 @@ body.light .echo em { color: var(--loop); }
   border: 2px solid var(--loop);
   border-radius: 999px;
   padding: 0.75rem 1.8rem;
+  min-height: 44px;
   cursor: pointer;
-  transition: background 0.25s, color 0.25s, opacity 0.25s, border-color 0.25s, transform 0.15s;
+  transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .btn:hover:not(:disabled) { background: var(--loop); color: #14090b; transform: translateY(-2px); }
@@ -512,6 +528,13 @@ footer {
   color: var(--ink-dim);
   padding: 3rem 1.5rem 4rem;
 }
+footer p { margin: 0 0 0.6rem; }
+.foot-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.8rem 2rem; margin-top: 1.4rem; }
+.foot-row .home { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; text-transform: uppercase; letter-spacing: 0.12em; transition: color 0.25s ease; }
+.foot-row .home:hover { color: var(--loop-bright); }
+.foot-pick { display: flex; align-items: center; gap: 0.7rem; }
+.foot-pick .esv-pick-menu { top: auto; bottom: calc(100% + 8px); text-align: left; letter-spacing: 0; }
+.foot-fine { max-width: 46rem; margin: 1.6rem auto 0; font-size: 0.68rem; line-height: 1.6; opacity: 0.8; }
 
 /* ------- responsive ------- */
 @media (max-width: 880px) {
@@ -524,7 +547,6 @@ footer {
     top: 0;
     z-index: 5;
     background: var(--bg);
-    transition: background 1.6s ease;
     border-bottom: 1px solid var(--line);
   }
   .stage svg { max-height: 35vh; }

@@ -74,7 +74,7 @@
     const vh = innerHeight;
 
     const max = document.documentElement.scrollHeight - vh;
-    if (progressBar) progressBar.style.width = (max > 0 ? Math.min(scrollY / max, 1) * 100 : 0) + "%";
+    if (progressBar) progressBar.style.transform = "scaleX(" + (max > 0 ? Math.min(scrollY / max, 1) : 0) + ")";
     const scrollyTop = elScrolly.getBoundingClientRect().top;
 
     const earnOn = passedBy(elEarn, 0.55);
