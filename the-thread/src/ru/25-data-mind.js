@@ -124,7 +124,7 @@ const LIBRARY = {
     {
       title: 'Разум, радость и мозг', icon: 'brain',
       items: [
-        { kind: 'book', title: 'The Other Half of Church', by: 'Jim Wilder & Michel Hendricks', note: 'Почему ученичество, состоящее из одной информации, буксует: радость, привязанность и правое полушарие, отвечающее за отношения. Самая надежная наука на этой полке.', url: 'https://lifemodelworks.org/the-other-half-of-church/' },
+        { kind: 'book', title: 'The Other Half of Church', by: 'Jim Wilder & Michel Hendricks', note: 'Почему ученичество, состоящее из одной информации, буксует: радость, привязанность и правое полушарие, отвечающее за отношения. Самая надежная наука на этой полке.', url: 'https://lifemodelworks.org/resources/read/the-other-half-of-church' },
         { kind: 'book', title: 'Anatomy of the Soul', by: 'Curt Thompson, MD', note: 'Психиатр о привязанности, стыде и о том, каково быть полностью узнанным людьми и Богом.', url: 'https://curtthompsonmd.com/books/' },
         { kind: 'book', title: 'Rare Leadership', by: 'Marcus Warner & Jim Wilder', note: 'Оставайся в отношениях, будь собой, возвращайся к радости, выдерживай достойно: рамка радости, примененная к лидерству.', url: 'https://lifemodelworks.org/' },
         { kind: 'book', title: 'How God Changes Your Brain', by: 'Andrew Newberg, MD', note: 'Доступный синтез от исследователя нейротеологии: наука на ранней стадии, честно обрамленная.', url: 'https://www.andrewnewberg.com/' },

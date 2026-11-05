@@ -120,7 +120,7 @@ const LIBRARY = {
     {
       title: 'Mind, joy & the brain', icon: 'brain',
       items: [
-        { kind: 'book', title: 'The Other Half of Church', by: 'Jim Wilder & Michel Hendricks', note: 'Why information-only discipleship stalls: joy, attachment, and the relational right brain. The safest science on this shelf.', url: 'https://lifemodelworks.org/the-other-half-of-church/' },
+        { kind: 'book', title: 'The Other Half of Church', by: 'Jim Wilder & Michel Hendricks', note: 'Why information-only discipleship stalls: joy, attachment, and the relational right brain. The safest science on this shelf.', url: 'https://lifemodelworks.org/resources/read/the-other-half-of-church' },
         { kind: 'book', title: 'Anatomy of the Soul', by: 'Curt Thompson, MD', note: 'A psychiatrist on attachment, shame, and being fully known — by people and by God.', url: 'https://curtthompsonmd.com/books/' },
         { kind: 'book', title: 'Rare Leadership', by: 'Marcus Warner & Jim Wilder', note: 'Remain relational, act like yourself, return to joy, endure well — the joy framework applied to leading.', url: 'https://lifemodelworks.org/' },
         { kind: 'book', title: 'How God Changes Your Brain', by: 'Andrew Newberg, MD', note: 'The neurotheology researcher’s accessible synthesis — early-stage science, honestly framed.', url: 'https://www.andrewnewberg.com/' },
