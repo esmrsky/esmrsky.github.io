@@ -187,7 +187,7 @@ function initStages() {
     // Update progress bar
     if (progressFill) {
       const percent = ((index + 1) / slides.length) * 100;
-      progressFill.style.width = `${percent}%`;
+      progressFill.style.transform = `scaleX(${percent / 100})`;
     }
   }
   
@@ -447,7 +447,7 @@ function calculateDiagnosticResults() {
     const fillEl = document.getElementById(`score-fill-${k}`);
     const numEl = document.getElementById(`score-val-${k}`);
     if (fillEl && numEl) {
-      fillEl.style.width = `${percentage}%`;
+      fillEl.style.transform = `scaleX(${percentage / 100})`;
       numEl.innerText = `${percentage}%`;
     }
   });
@@ -834,9 +834,9 @@ function updateSimulatorUI() {
   document.getElementById("sim-val-stress").innerText = Math.round(simStress);
   document.getElementById("sim-val-shame").innerText = Math.round(simShame);
   
-  document.getElementById("sim-bar-willpower").style.width = `${simWillpower}%`;
-  document.getElementById("sim-bar-stress").style.width = `${simStress}%`;
-  document.getElementById("sim-bar-shame").style.width = `${simShame}%`;
+  document.getElementById("sim-bar-willpower").style.transform = `scaleX(${simWillpower / 100})`;
+  document.getElementById("sim-bar-stress").style.transform = `scaleX(${simStress / 100})`;
+  document.getElementById("sim-bar-shame").style.transform = `scaleX(${simShame / 100})`;
 }
 
 function drawSimulatorChart() {

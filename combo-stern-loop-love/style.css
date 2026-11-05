@@ -51,7 +51,48 @@
   --glass-blur: 16px;
 }
 
+@property --bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --bg-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --surface { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --surface-strong { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --surface-glass { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --border { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --border-strong { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --text { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --text-muted { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --text-faint { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --gold { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --gold-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --jade { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --jade-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --rust { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --rust-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --purple { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --purple-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+
 :root {
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --t1: .2s;
+  --t2: .35s;
+  --t3: .6s;
+  transition: --bg var(--t2) var(--ease),
+    --bg-soft var(--t2) var(--ease),
+    --surface var(--t2) var(--ease),
+    --surface-strong var(--t2) var(--ease),
+    --surface-glass var(--t2) var(--ease),
+    --border var(--t2) var(--ease),
+    --border-strong var(--t2) var(--ease),
+    --text var(--t2) var(--ease),
+    --text-muted var(--t2) var(--ease),
+    --text-faint var(--t2) var(--ease),
+    --gold var(--t2) var(--ease),
+    --gold-soft var(--t2) var(--ease),
+    --jade var(--t2) var(--ease),
+    --jade-soft var(--t2) var(--ease),
+    --rust var(--t2) var(--ease),
+    --rust-soft var(--t2) var(--ease),
+    --purple var(--t2) var(--ease),
+    --purple-soft var(--t2) var(--ease);
   --font-serif: "Fraunces", "Spectral", Georgia, serif;
   --font-sans: "Instrument Sans", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -98,7 +139,6 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: background-color 0.4s ease, color 0.4s ease;
   padding-bottom: 110px; /* Space for sticky bottom nav */
 }
 
@@ -141,7 +181,7 @@ h1, h2, h3, h4 {
 a {
   color: var(--jade);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--t1) var(--ease);
 }
 a:hover {
   color: var(--jade-soft);
@@ -155,18 +195,19 @@ a:hover {
 /* Skip Link */
 .skip-link {
   position: absolute;
-  top: -100px;
+  top: 20px;
   left: 20px;
+  transform: translateY(-160px);
   background: var(--surface);
   color: var(--text);
   padding: 10px 20px;
   border-radius: var(--radius-sm);
   z-index: 10000;
   border: 1px solid var(--border-strong);
-  transition: top 0.25s ease;
+  transition: transform var(--t1) var(--ease);
 }
 .skip-link:focus {
-  top: 20px;
+  transform: none;
 }
 
 /* ============================================================
@@ -179,7 +220,6 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 900;
-  transition: background-color 0.4s, border-color 0.4s;
 }
 
 .header-inner {
@@ -219,11 +259,14 @@ a:hover {
   color: var(--text-muted);
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
   border-radius: 50%;
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: border-color 0.2s, color 0.2s, background-color 0.2s, transform 0.2s;
+  transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease), background-color var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 .theme-toggle-btn:hover {
   border-color: var(--border-strong);
@@ -252,7 +295,6 @@ a:hover {
   box-shadow: var(--shadow);
   z-index: 950;
   width: min(540px, calc(100vw - 32px));
-  transition: background-color 0.4s, border-color 0.4s;
 }
 
 .bottom-nav-menu {
@@ -283,7 +325,7 @@ a:hover {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  transition: color 0.25s, background-color 0.25s, transform 0.15s;
+  transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 
 .bottom-nav-btn:hover {
@@ -313,8 +355,7 @@ a:hover {
   z-index: 800;
   background-color: var(--bg-soft);
   border-bottom: 1px solid var(--border);
-  padding: 10px 0;
-  transition: background-color 0.4s, border-color 0.4s;
+  padding: 4px 0;
 }
 
 .sub-nav-links {
@@ -329,10 +370,6 @@ a:hover {
   display: none;
 }
 
-@media (pointer: coarse) {
-  /* ~33px computed; scoped to touch so the sticky bar's desktop height is unchanged. */
-  .sub-nav-btn { min-height: 44px; }
-}
 .sub-nav-btn {
   display: inline-flex;
   align-items: center;
@@ -340,13 +377,14 @@ a:hover {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-muted);
+  min-height: 44px;
   padding: 6px 16px;
   border-radius: 999px;
   font-family: var(--font-sans);
   font-size: var(--step--1);
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease), border-color var(--t1) var(--ease);
 }
 
 .sub-nav-btn:hover {
@@ -366,14 +404,15 @@ a:hover {
 .tab-panel {
   display: none;
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity var(--t2) var(--ease), display var(--t2) allow-discrete;
 }
 
 .tab-panel.active {
   display: block;
   opacity: 1;
-  transform: translateY(0);
+}
+@starting-style {
+  .tab-panel.active { opacity: 0; }
 }
 
 /* ============================================================
@@ -494,7 +533,7 @@ h1.hero-title em {
   border-radius: var(--radius-lg);
   padding: 24px;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform var(--t1) var(--ease), border-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
   position: relative;
   overflow: hidden;
 }
@@ -603,7 +642,7 @@ details.disclosure {
   border-radius: var(--radius-md);
   margin-bottom: 12px;
   overflow: hidden;
-  transition: border-color 0.2s;
+  transition: border-color var(--t1) var(--ease);
 }
 details.disclosure:hover {
   border-color: var(--border-strong);
@@ -637,7 +676,7 @@ details.disclosure summary::after {
   place-items: center;
   font-size: var(--step--1);
   color: var(--text-muted);
-  transition: transform 0.2s, background-color 0.2s;
+  transition: transform var(--t1) var(--ease), background-color var(--t1) var(--ease);
 }
 
 details.disclosure[open] summary::after {
@@ -676,14 +715,15 @@ details.disclosure[open] .disclosure-body {
 .stage-slide {
   display: none;
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity var(--t2) var(--ease), display var(--t2) allow-discrete;
 }
 
 .stage-slide.active {
   display: block;
   opacity: 1;
-  transform: translateY(0);
+}
+@starting-style {
+  .stage-slide.active { opacity: 0; }
 }
 
 .stage-progress-bar-wrap {
@@ -698,8 +738,10 @@ details.disclosure[open] .disclosure-body {
 .stage-progress-bar-fill {
   height: 100%;
   background-color: var(--jade);
-  width: 14.28%; /* 1/7 default */
-  transition: width 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
+  width: 100%;
+  transform: scaleX(0.1428); /* 1/7 default */
+  transform-origin: 0 50%;
+  transition: transform var(--t2) var(--ease);
 }
 
 .stage-top-meta {
@@ -775,13 +817,13 @@ details.disclosure[open] .disclosure-body {
 
 .axis-point {
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform var(--t1) var(--ease);
 }
 .axis-point circle {
   fill: var(--gold);
   stroke: var(--bg);
   stroke-width: 1.5;
-  transition: fill 0.2s, r 0.2s, filter 0.2s;
+  transition: fill var(--t1) var(--ease), r var(--t1) var(--ease), filter var(--t1) var(--ease);
 }
 .axis-point:hover circle {
   fill: var(--jade-soft);
@@ -847,15 +889,16 @@ details.disclosure[open] .disclosure-body {
 .diag-slide {
   display: none;
   opacity: 0;
-  transform: translateX(18px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity var(--t2) var(--ease), display var(--t2) allow-discrete;
 }
 .diag-slide.active {
   display: flex;
   flex-direction: column;
   gap: 20px;
   opacity: 1;
-  transform: translateX(0);
+}
+@starting-style {
+  .diag-slide.active { opacity: 0; }
 }
 
 .diag-wizard-nav {
@@ -876,7 +919,7 @@ details.disclosure[open] .disclosure-body {
   height: 8px;
   border-radius: 50%;
   background-color: var(--border-strong);
-  transition: background-color 0.25s, transform 0.25s;
+  transition: background-color var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 .diag-dot.active {
   background-color: var(--jade);
@@ -945,7 +988,7 @@ details.disclosure[open] .disclosure-body {
   padding: 16px;
   cursor: pointer;
   font-family: inherit;
-  transition: border-color 0.2s, background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  transition: border-color var(--t1) var(--ease), background-color var(--t1) var(--ease), transform var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1048,8 +1091,10 @@ details.disclosure[open] .disclosure-body {
 .signal-fill {
   height: 100%;
   background-color: var(--jade);
-  width: 0%;
-  transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1);
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--t3) var(--ease);
 }
 
 .repair-card {
@@ -1098,7 +1143,7 @@ details.disclosure[open] .disclosure-body {
   text-transform: uppercase;
   background-color: var(--surface-strong);
   color: var(--text-muted);
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
+  transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease), color var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 .btn:hover {
   background-color: rgba(255, 255, 255, 0.03);
@@ -1181,6 +1226,7 @@ svg.loop text {
 
 .toggle-btn {
   flex: 1;
+  min-height: 44px;
   background: transparent;
   border: 0;
   border-radius: var(--radius-sm);
@@ -1190,7 +1236,7 @@ svg.loop text {
   text-transform: uppercase;
   color: var(--text-muted);
   cursor: pointer;
-  transition: background-color 0.25s, color 0.25s;
+  transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease);
 }
 .toggle-btn.active.works {
   background-color: rgba(214, 104, 83, 0.15);
@@ -1235,7 +1281,7 @@ svg.loop text {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: border-color 0.25s;
+  transition: border-color var(--t1) var(--ease);
 }
 .archetype-card-full:hover {
   border-color: var(--border-strong);
@@ -1337,7 +1383,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--text);
   cursor: pointer;
-  transition: transform 0.1s;
+  transition: transform var(--t1) var(--ease);
   border: 2px solid var(--bg);
   box-shadow: 0 0 8px currentColor;
 }
@@ -1398,7 +1444,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   cursor: pointer;
   font-family: inherit;
   font-size: var(--step--2);
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease), color var(--t1) var(--ease);
 }
 .cath-option-btn:hover {
   border-color: var(--border-strong);
@@ -1446,6 +1492,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .search-input {
   min-width: 240px;
+  min-height: 44px;
   flex: 1;
   background-color: var(--bg);
   border: 1px solid var(--border);
@@ -1455,7 +1502,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-family: inherit;
   font-size: var(--step--1);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color var(--t1) var(--ease);
 }
 .search-input:focus {
   border-color: var(--border-strong);
@@ -1611,7 +1658,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-family: inherit;
   font-size: var(--step--1);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color var(--t1) var(--ease);
   width: 100%;
 }
 .form-select:focus, .form-input:focus, .form-textarea:focus {
@@ -1710,7 +1757,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   display: grid;
   grid-template-columns: 240px 1fr;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  transition: border-color var(--t1) var(--ease);
 }
 @media (max-width: 768px) {
   .feel-top-row {
@@ -1773,7 +1820,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 .feel-card summary::after {
   content: "➔";
-  transition: transform 0.25s;
+  transition: transform var(--t1) var(--ease);
 }
 .feel-card details[open] summary {
   border-bottom: 1px solid var(--border);
@@ -1927,13 +1974,11 @@ input[type="range"]::-webkit-slider-thumb:hover {
   gap: 10px;
   pointer-events: auto;
   opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.35s cubic-bezier(0.1, 0.8, 0.2, 1), transform 0.35s cubic-bezier(0.1, 0.8, 0.2, 1);
+  transition: opacity var(--t2) var(--ease);
 }
 
 .toast.show {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .toast.success { border-color: var(--jade); }
@@ -1945,3 +1990,47 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 /* reading comfort: balance display text */
 h1, h2, h3 { text-wrap: balance; }
+
+/* ============================================================
+   FOOTER: way home + verse version
+   ============================================================ */
+.site-footer {
+  padding: 28px 0 8px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+.foot-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+.site-footer .home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-muted);
+}
+.site-footer .home:hover { color: var(--text); }
+.foot-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.foot-pick .esv-pick-menu { top: auto; bottom: calc(100% + 8px); }
+.foot-fine {
+  margin-top: 8px;
+  font-size: var(--step--2);
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
