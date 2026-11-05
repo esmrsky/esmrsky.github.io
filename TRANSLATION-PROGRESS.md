@@ -115,7 +115,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `same-fire` | not started | Shared reader; NIV baked. Large. |
 | `something-in-the-air` | not started | Shared reader; references, few quotes. |
 | `word-in-season` | not started | Shared reader; learn mode. |
-| `word-in-season-talk` | not started | 30 slides; quotes NIV without the shared reader. |
+| `word-in-season-talk` | **done** | `/word-in-season-talk/ru/`, November 5, 2026. 163 markup units, including 30 speaker notes and 10 image alts; the slide aria-label is the only JS string. Every slide quote is **НРП**, each fragment checked against the bolls verse (Ис. 50:4–5, Пс. 45:11, Откр. 10:10, Ин. 21:22, Лк. 24:19, Зах. 3:2, 3:4, Иов 42:7, Быт. 3:11, Ин. 4:7, 4:42, Нав. 4:6); the credits slide carries the НРП/Biblica line. Still no pop-up reader, on purpose. Slide 2 keeps the King James phrase it discusses. All 30 slides stepped to their last build at 1280×720: no overflow or overlap; slides 1 and 29 have `:lang(ru)` size rules. Russian-layout keys (щ, т, а) mirror O, N, F; the switch keeps the slide number. |
 | `tuned` | not started | Quotes NIV without the shared reader. |
 | `focus` | not started | No quoted scripture found. Learn mode. |
 | `app-playbook` | not started | No scripture. |
