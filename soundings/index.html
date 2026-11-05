@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,300..800;1,75..125,300..700&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,300..600,0..100&family=Martian+Mono:wght@300..600&display=swap" rel="stylesheet">
 <style>
+:root{--ease:cubic-bezier(.2,.7,.3,1)}
+
 :root{
   --bg:#06141C; --bg2:#0A1F2A; --panel:#0D2733; --panel2:#113140;
   --foam:#E8F2F3; --dim:rgba(232,242,243,.60); --dimmer:rgba(232,242,243,.34);
@@ -72,7 +74,7 @@ h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border-radius:100px;
   font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
   text-decoration:none;cursor:pointer;border:1px solid var(--line);background:transparent;
-  color:var(--foam);transition:.2s ease;font-variation-settings:normal}
+  color:var(--foam);transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease);font-variation-settings:normal;min-height:44px}
 .btn:hover{border-color:var(--accent);background:rgba(232,242,243,.05)}
 .btn.solid{background:var(--foam);color:#06141C;border-color:var(--foam);font-weight:500}
 .btn:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
@@ -121,7 +123,7 @@ h1{font-size:clamp(3.6rem,15vw,12rem);line-height:.82;letter-spacing:-.055em;
 .picker{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:22px}
 .pick{min-width:0;padding:11px 4px 12px;border-radius:12px;cursor:pointer;
   border:1px solid var(--line);background:rgba(232,242,243,.03);color:var(--dim);
-  display:flex;flex-direction:column;align-items:center;gap:7px;transition:.22s ease;
+  display:flex;flex-direction:column;align-items:center;gap:7px;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease);
   font-family:var(--mono);font-size:clamp(.42rem,1.5vw,.5rem);letter-spacing:.08em;
   text-transform:uppercase;text-align:center;overflow-wrap:anywhere}
 .pick svg{width:clamp(18px,5.4vw,24px);height:clamp(18px,5.4vw,24px);stroke:currentColor;fill:none;stroke-width:1.4;
@@ -178,7 +180,9 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .filters{display:flex;gap:7px;flex-wrap:wrap;margin:34px 0 20px}
 .filt{padding:8px 14px;border-radius:100px;border:1px solid var(--line);background:transparent;
   color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;
-  text-transform:uppercase;transition:.18s}
+  text-transform:uppercase;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease)}
+.filt,.per,.opts button{position:relative}
+.filt::after,.per::after,.opts button::after{content:"";position:absolute;inset:-8px 0}
 .filt:hover{color:var(--foam)}
 .filt[aria-pressed="true"]{background:var(--foam);color:#06141C;border-color:var(--foam);font-weight:500}
 .filt:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
@@ -198,7 +202,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
       color-mix(in srgb,var(--c) 6%,transparent) 34%,
       transparent 62%),var(--panel);
   border:1px solid color-mix(in srgb,var(--c) 26%,var(--line));
-  border-left:3px solid var(--c);transition:.22s}
+  border-left:3px solid var(--c);transition:transform .2s var(--ease),border-color .2s var(--ease)}
 .ph:hover{transform:translateY(-2px);
   border-color:color-mix(in srgb,var(--c) 52%,var(--line));border-left-color:var(--c)}
 .ph.hide{display:none}
@@ -226,7 +230,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .people{display:flex;gap:7px;flex-wrap:wrap;margin:34px 0 20px}
 .per{padding:9px 15px;border-radius:100px;border:1px solid var(--line);background:transparent;
   color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:.53rem;letter-spacing:.13em;
-  text-transform:uppercase;transition:.18s}
+  text-transform:uppercase;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease)}
 .per:hover{color:var(--foam);border-color:rgba(232,242,243,.3)}
 .per[aria-selected="true"]{background:var(--pc);border-color:var(--pc);color:#06141C;font-weight:500}
 .per:focus-visible{outline:2px solid var(--foam);outline-offset:2px}
@@ -244,9 +248,9 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 @media(min-width:760px){.legs{grid-template-columns:repeat(2,1fr)}}
 .leg{background:var(--panel);padding:15px 18px;display:flex;gap:13px;align-items:flex-start;
   width:100%;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer;
-  transition:background .2s ease,box-shadow .2s ease}
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
 .leg b{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;color:var(--lc);flex:none;
-  padding-top:3px;transition:color .2s ease}
+  padding-top:3px;transition:color .2s var(--ease)}
 .leg .leg-txt{flex:1;display:block}
 .leg strong{display:block;font-weight:600;font-size:.95rem;letter-spacing:-.015em;margin-bottom:3px}
 .leg .leg-note{display:block;color:var(--dim);font-size:.87rem;line-height:1.42}
@@ -263,14 +267,14 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 /* the band is the target; the wash and guide are decoration and must never
    intercept, or the topmost sibling would swallow the pointer instead */
 .dot .hit{pointer-events:all}
-.dot .colwash,.dot .guide{pointer-events:none;opacity:0;transition:opacity .22s ease}
+.dot .colwash,.dot .guide{pointer-events:none;opacity:0;transition:opacity .2s var(--ease)}
 .dot.is-active .colwash{opacity:.07}
 .dot.is-active .guide{opacity:.4}
 .dot .ring,.dot .pip{transform-box:fill-box;transform-origin:center}
 .dot .ring{opacity:0;transform:scale(.6);
-  transition:opacity .22s ease,transform .28s cubic-bezier(.22,1,.36,1)}
-.dot .pip{transition:transform .28s cubic-bezier(.22,1,.36,1)}
-.dot text{fill:rgba(232,242,243,.4);transition:fill .2s ease}
+  transition:opacity .2s var(--ease),transform .32s var(--ease)}
+.dot .pip{transition:transform .32s var(--ease)}
+.dot text{fill:rgba(232,242,243,.4);transition:fill .2s var(--ease)}
 .dot.is-active .ring{opacity:.5;transform:scale(2.2)}
 .dot.is-active .pip{transform:scale(1.35)}
 .dot.is-active text{fill:var(--foam)}
@@ -425,7 +429,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 @media(min-width:820px){.marshgrid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1180px){.marshgrid{gap:20px}}
 .marsh{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;
-  transition:border-color .22s ease;
+  transition:border-color .2s var(--ease);
   /* --mk is the depth this marsh counterfeits; --mkt is its text-safe lift. s3 and
      s4 measure 3.9:1 and 3.8:1 on this panel and fail at the 9px mono sizes used
      for the chip and the dt labels, so every label reads --mkt, never --mk. */
@@ -445,7 +449,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .m-head{position:relative;z-index:1;display:block;width:100%;text-align:left;
   background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;
   padding:clamp(28px,2.6vw,32px) clamp(24px,2.4vw,30px) clamp(24px,2.4vw,30px);
-  transition:background .18s ease}
+  transition:background .2s var(--ease)}
 .m-head:hover{background:rgba(232,242,243,.035)}
 .m-head:focus-visible{outline:2px solid var(--mkt);outline-offset:-3px}
 .m-ix{display:block;margin-bottom:18px;font-family:var(--mono);font-size:.48rem;
@@ -466,7 +470,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
   color:var(--mkt)}
 .m-more i{position:relative;display:inline-block;width:13px;height:13px;font-style:normal;flex:none}
 .m-more i::before,.m-more i::after{content:"";position:absolute;background:var(--mkt);
-  transition:transform .22s ease}
+  transition:transform .2s var(--ease)}
 .m-more i::before{left:0;right:0;top:6px;height:1px}
 .m-more i::after{top:0;bottom:0;left:6px;width:1px}
 .marsh.is-open .m-more i::after{transform:scaleY(0)}
@@ -521,12 +525,12 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 /* depth headers are buttons: click one to read that depth down every framework */
 .colh{font-family:var(--mono);font-size:.5rem;letter-spacing:.13em;text-transform:uppercase;
   padding:12px 10px;text-align:center;background:transparent;border:0;cursor:pointer;
-  line-height:1.5;min-height:44px;transition:background .18s ease,box-shadow .18s ease}
+  line-height:1.5;min-height:44px;transition:background .2s var(--ease),box-shadow .2s var(--ease)}
 .colh:hover{background:rgba(232,242,243,.07)}
 .colh:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
 .colh[aria-pressed="true"]{background:color-mix(in srgb,currentColor 22%,transparent);
   box-shadow:inset 0 -2px 0 currentColor}
-.band .seg{transition:opacity .22s ease}
+.band .seg{transition:opacity .2s var(--ease)}
 .band.dim .seg{opacity:.13}
 .chart-focus{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--dimmer);margin-top:12px}
@@ -615,7 +619,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .prog{flex:1;min-width:120px;height:3px;border-radius:3px;background:rgba(232,242,243,.12);
   position:relative;overflow:hidden}
 .prog i{position:absolute;inset:0 auto 0 0;width:0%;border-radius:3px;
-  background:linear-gradient(90deg,var(--s1),var(--s3));transition:width .35s ease}
+  background:linear-gradient(90deg,var(--s1),var(--s3));transition:width .32s var(--ease)}
 .q{padding:18px 20px;border-bottom:1px solid rgba(232,242,243,.07)}
 .q:last-of-type{border-bottom:0}
 .q p{margin:0 0 12px;font-size:.98rem;line-height:1.4;max-width:52ch}
@@ -624,7 +628,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .opts{display:flex;gap:6px;flex-wrap:wrap}
 .opts button{padding:8px 13px;border-radius:100px;border:1px solid var(--line);background:transparent;
   color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;
-  text-transform:uppercase;transition:.18s}
+  text-transform:uppercase;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease)}
 .opts button:hover{color:var(--foam);border-color:rgba(232,242,243,.35)}
 .opts button[aria-pressed="true"]{background:var(--s2);border-color:var(--s2);color:#06141C;font-weight:500}
 .opts button:focus-visible{outline:2px solid var(--foam);outline-offset:2px}
@@ -639,7 +643,7 @@ li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:1px;bac
 .res-num small{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.16em;
   text-transform:uppercase;color:var(--dim);margin-top:11px;font-variation-settings:normal;font-weight:400}
 .ladder{flex:1;min-width:200px;display:flex;gap:5px;align-items:flex-end;height:56px}
-.rung{flex:1;border-radius:4px 4px 0 0;background:rgba(232,242,243,.09);transition:.6s cubic-bezier(.22,1,.36,1)}
+.rung{flex:1;border-radius:4px 4px 0 0;background:rgba(232,242,243,.09);transition:background-color .8s var(--ease)}
 .rung.on{background:var(--accent)}
 .res-body{padding:24px;display:grid;gap:20px}
 .res-body dt{font-family:var(--mono);font-size:.53rem;letter-spacing:.17em;text-transform:uppercase;
@@ -681,13 +685,18 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
 .src b{display:block;color:var(--foam);font-weight:600;margin-bottom:3px;letter-spacing:-.01em}
 .src i{font-family:var(--mono);font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;
   font-style:normal;color:var(--s4);display:block;margin-bottom:6px}
+.home{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;padding:0 4px;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s var(--ease)}
+.home:hover{color:var(--foam)}
+.home:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
 .colo{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);display:flex;
   justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--dimmer)}
 
-.rv{opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,1,.36,1)}
-.rv.in{opacity:1;transform:none}
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
-  .rv{opacity:1;transform:none;transition:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .res.on{animation:none}
+  *,*::before,*::after{transition:none!important}
   .brick,.swim,.scrollcue .ln,h1,.braid path,.wave{animation:none!important}
   .mr-flow,.mr-chev,.mr-spur,.mr-band{animation:none!important}
   .tracebox .trace-head,.tracebox .leg,.tracebox .dot{animation:none!important}
@@ -715,6 +724,63 @@ footer{padding:clamp(60px,8vw,100px) 0 46px;border-top:1px solid var(--line);bac
 
 /* reading comfort: balance display text */
 h1, h2, h3 { text-wrap: balance; }
+</style>
+<style id="scripture-layer">/* THE SCRIPTURE LAYER. Behavior from /assets/scripture-popover.js, which ships no colors; these are this page's clothes for it. */
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,var(--s2) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--s1);text-decoration-color:var(--s1)}
+.esv-tip{position:absolute;z-index:120;display:none;max-width:360px;padding:15px 17px 13px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);box-shadow:0 18px 50px rgba(0,0,0,.5);color:var(--foam);font-family:var(--disp);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:6px;color:var(--s2);font-family:var(--disp);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-tip-text{min-height:3em;transition:opacity .2s var(--ease)}
+.esv-tip-text.is-loading{opacity:.45}
+.esv-note{display:block;margin-top:8px;color:var(--dim);font-family:var(--disp);font-size:.78rem}
+.esv-tip-actions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(232,242,243,.08)}
+.esv-tip-ctx,.esv-tip-out{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--s2);font-family:var(--disp);font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-tip-ctx:hover,.esv-tip-out:hover{border-color:var(--s2);color:var(--s1)}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--foam);font-family:var(--disp);font-size:.84rem;font-weight:700;cursor:pointer;transition:border-color .2s var(--ease),background-color .2s var(--ease)}
+.esv-pick-btn:hover,.esv-pick.open .esv-pick-btn{border-color:var(--s2)}
+.esv-pick-ic{width:15px;height:15px;color:var(--s2);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--dim);transition:rotate .2s var(--ease)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:130;min-width:250px;max-height:min(62dvh,420px);overflow-y:auto;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);box-shadow:0 18px 50px rgba(0,0,0,.5);opacity:1;transition:opacity .2s var(--ease),display .2s allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid rgba(232,242,243,.08);color:var(--dim);font-family:var(--disp);font-size:.78rem;font-weight:600}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--dim);text-align:left;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--foam);font-family:var(--disp);font-size:.82rem;font-weight:700}
+.esv-pick-opt .full{font-family:var(--disp);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--s2) 10%,transparent);color:var(--foam)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--s2)}
+.esv-ctx{width:min(880px,calc(100% - 24px));max-height:min(86dvh,800px);padding:0;border:1px solid var(--line);border-radius:14px;background:var(--bg2);color:var(--foam);box-shadow:0 34px 100px rgba(0,0,0,.4);overflow:hidden;opacity:0;scale:.98;transition:opacity .32s var(--ease),scale .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{.esv-ctx[open]{opacity:0;scale:.98}}
+.esv-ctx::backdrop{background:rgba(3,10,14,0);transition:background-color .32s var(--ease),display .32s allow-discrete,overlay .32s allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(3,10,14,.62)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(3,10,14,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(86dvh,800px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid rgba(232,242,243,.08)}
+.esv-ctx-label{display:block;margin-bottom:4px;color:var(--s2);font-family:var(--disp);font-size:.8rem;font-weight:700;letter-spacing:.04em}
+.esv-ctx-head h3{margin:0;font-family:var(--disp);font-weight:500;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.15;color:var(--foam)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:none;color:var(--dim);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-close:hover{color:var(--foam);border-color:var(--s2)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--disp);text-align:left}
+.esv-ctx-passage{margin:0}
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--s2) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--s2) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-note{margin:.8em 0 0;color:var(--dim);font-family:var(--disp);font-size:.82rem}
+.esv-ctx-loading{color:var(--dim);font-family:var(--disp);font-size:.9rem}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid rgba(232,242,243,.08);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more,.esv-ctx-out{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--dim);font-family:var(--disp);font-size:.86rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--s2);color:var(--foam)}
+.esv-ctx-more:disabled{opacity:.5;cursor:default}
+@media (max-width:560px){.esv-ctx-head{flex-wrap:wrap}.esv-ctx-body{padding:16px 16px 18px}}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
 </style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -797,9 +863,9 @@ p,li,dd,figcaption{text-wrap:pretty}
           <!-- Rules sit on the figure's real landmarks: 3000 at the waist, 2000 at the
                knee, 1000 just above the foot. The old marks were evenly spaced, so
                "waist-deep" water arrived at the armpits and "knee-deep" mid-thigh.
-               Each tick is centred under its own label: the labels measure 20..45.2,
+               Each tick is centered under its own label: the labels measure 20..45.2,
                but 1.4 of that is trailing letter-spacing, so the glyphs end at 43.8
-               and the true centre is 31.9 rather than 32.6. -->
+               and the true center is 31.9 rather than 32.6. -->
           <g stroke="rgba(232,242,243,.16)" stroke-width="1">
             <line x1="24.9" y1="128" x2="38.9" y2="128"/><line x1="24.9" y1="208" x2="38.9" y2="208"/>
             <line x1="24.9" y1="287" x2="38.9" y2="287"/><line x1="24.9" y1="315" x2="38.9" y2="315"/>
@@ -1066,7 +1132,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <div class="mrule">
       <b>Read this before the eight</b>
       <p>These describe one person: <em>you</em>. Every one of them is invisible from outside — that is the definition, not a caveat — so using them to read somebody else is guaranteed to be wrong and free to be cruel. It is the single most misusable thing on this page.</p>
-      <p>Limit 02 bites hardest right here: you are the worst available judge of your own depth, <em>and</em> you are the only person with access to this. Both are true. So treat anything you recognise as a hypothesis about yourself, take it to one person who actually knows you, and let them disagree.</p>
+      <p>Limit 02 bites hardest right here: you are the worst available judge of your own depth, <em>and</em> you are the only person with access to this. Both are true. So treat anything you recognize as a hypothesis about yourself, take it to one person who actually knows you, and let them disagree.</p>
     </div>
 
     <div class="mrule">
@@ -1074,11 +1140,11 @@ p,li,dd,figcaption{text-wrap:pretty}
       <p>The eight below describe what still water looks like once you're standing in it. None of them describe the crossing. Nobody decides to stop moving — the current just stops, in three ways.</p>
       <p>First, low contrast. A slow drift from where you were sits below the noise floor of an ordinary week — smaller than the static every life already has. You don't see it happening. You see it later, once the gap has grown wide enough to clear that floor.</p>
       <p>Second, and this is the one that matters: the comparison itself is unreliable. You check today against recently — a few weeks, a few months back — and recently has already moved with you. A ruler that drifts with the thing it measures never shows a reading. This is why the sentence just above — <em>you are the worst available judge of your own depth</em> — isn't a character flaw. It's arithmetic: the ruler moved. It's also why someone else's read on you outweighs your own — not because they know more, but because their reference hasn't moved. Not information. Information just gives a drifted frame more to work with.</p>
-      <p>Third, clustered reactivation, and here the confidence drops. Behaviours aren't stored one at a time — they're stored with the context that produced them, and a cue reopens the whole pattern that context is linked to, not one act in isolation. That part is well evidenced within a single habit. Whether it reaches across marshes this unrelated-looking — a ledger, a counterfeit voice, a habit of camping at the wall — is a bigger claim, and the evidence for it is nowhere near as settled. Grade it accordingly.</p>
+      <p>Third, clustered reactivation, and here the confidence drops. Behaviors aren't stored one at a time — they're stored with the context that produced them, and a cue reopens the whole pattern that context is linked to, not one act in isolation. That part is well evidenced within a single habit. Whether it reaches across marshes this unrelated-looking — a ledger, a counterfeit voice, a habit of camping at the wall — is a bigger claim, and the evidence for it is nowhere near as settled. Grade it accordingly.</p>
       <p>Which gives a prediction, not a finding: if entry is networked this way, the eight below should turn up in clusters, not singly. Find yourself in one and the honest move is to check the other seven — not count the ones you're clear of.</p>
     </div>
 
-    <p class="mkey"><span>How to read the colour</span>Each card is tinted with the depth it
+    <p class="mkey"><span>How to read the color</span>Each card is tinted with the depth it
       counterfeits, on the same ramp as the figure above. Four of the eight come out waist-deep —
       which is exactly where the Wall stands, and no accident: waist-deep is the first place you
       have enough working competence to cover for everything that isn't.</p>
@@ -1121,7 +1187,7 @@ p,li,dd,figcaption{text-wrap:pretty}
         <li>Putman: questioning is usually childishness</li>
         <li>Fowler &amp; Peck: it's the engine of the most important transition — inherited faith to owned faith</li>
         <li>Hagberg: it <em>is</em> the Wall</li>
-        <li>Where you land decides whether a doubting 30-year-old is a problem or in labour</li></ul></div>
+        <li>Where you land decides whether a doubting 30-year-old is a problem or in labor</li></ul></div>
       <div class="tile"><h4 style="color:var(--s4)">Second: what maturity even is</h4><ul style="--accent:var(--s4)">
         <li>Putman's endpoint is reproduction — disciples who make disciples</li>
         <li>Teresa, Hagberg and Rohr's endpoint is union and self-forgetting</li>
@@ -1222,8 +1288,8 @@ p,li,dd,figcaption{text-wrap:pretty}
       <div class="src"><i>Modern</i><b>Dallas Willard — Renovation of the Heart</b>The mechanics of change itself: <em>VIM</em> — Vision, Intention, Means. The missing engine under every stage model, which tells you where you are but not how anything moves.<span class="bias">Bias: philosophical and slow going. Worth it.</span></div>
       <div class="src"><i>Modern</i><b>Ruth Haley Barton — Strengthening the Soul of Your Leadership</b>Written for people who lost track of their own souls somewhere in waist-deep water. If you're tired and can't say why, this is the one.<span class="bias">Bias: aimed squarely at vocational ministry.</span></div>
       <div class="src"><i>Modern</i><b>Bill Hull — Conversion &amp; Discipleship</b>Argues the gospel you were converted by determines the disciple you become — he maps six competing gospels and the six kinds of Christian they produce.<span class="bias">Bias: polemical by design.</span></div>
-      <div class="src"><i>Modern</i><b>Curt Thompson — The Soul of Desire</b>Interpersonal neurobiology meets formation. Excellent on shame, which is the actual engine under a great deal of knee-deep behaviour.<span class="bias">Bias: clinical vocabulary; slower going than its size suggests.</span></div>
-      <div class="src"><i class="tool">Free tool</i><b>Bill &amp; Kristi Gaultiere — Journey of the Soul</b>Six stages from a psychologist and a licensed counsellor, built on Hagberg, with a free two-minute assessment at <a href="https://assessments.soulshepherding.org/spiritualgrowthpath/" target="_blank" rel="noopener noreferrer">assessments.soulshepherding.org</a>. Use it to check whatever this page told you.<span class="bias">Bias: therapeutic framing. Their stage acronym isn't published on the free pages, so take the model rather than the letters.</span></div>
+      <div class="src"><i>Modern</i><b>Curt Thompson — The Soul of Desire</b>Interpersonal neurobiology meets formation. Excellent on shame, which is the actual engine under a great deal of knee-deep behavior.<span class="bias">Bias: clinical vocabulary; slower going than its size suggests.</span></div>
+      <div class="src"><i class="tool">Free tool</i><b>Bill &amp; Kristi Gaultiere — Journey of the Soul</b>Six stages from a psychologist and a licensed counselor, built on Hagberg, with a free two-minute assessment at <a href="https://assessments.soulshepherding.org/spiritualgrowthpath/" target="_blank" rel="noopener noreferrer">assessments.soulshepherding.org</a>. Use it to check whatever this page told you.<span class="bias">Bias: therapeutic framing. Their stage acronym isn't published on the free pages, so take the model rather than the letters.</span></div>
       <div class="src"><i class="tool">Free tool</i><b>The Navigators — The Wheel</b>Christ the hub; Word, prayer, fellowship and witness the spokes. Ninety years old and still the fastest way to explain a balanced practice to someone in the shallows. <a href="https://www.navigators.org/resource/the-wheel-illustration/" target="_blank" rel="noopener noreferrer">navigators.org</a><span class="bias">Bias: a maintenance diagram with no time axis — it shows balance, never depth.</span></div>
       <div class="src"><i class="tool">Research</i><b>Barna — State of the Church</b>The numbers underneath all of this, including the finding that 57% of Gen Z and Millennial churchgoers pick relationships over sermons. <a href="https://www.barna.com/research/five-themes-to-frame-next-gen-discipleship/" target="_blank" rel="noopener noreferrer">barna.com</a><span class="bias">Bias: survey data, evangelical sample, self-reported throughout.</span></div>
     </div>
@@ -1231,6 +1297,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       <span class="mono">Soundings — a field guide to Christian maturity</span>
       <span class="mono">Ezekiel 47:3–5 · 1 Cor 13 · 1 John 2:12–14</span>
     </div>
+    <a class="home" href="https://esmrsky.github.io/">← All projects</a>
   </div>
 </footer>
 
@@ -1287,7 +1354,7 @@ const D=[
   greek:"neanískos — young man",name:"Waist-deep",
   alt:"The sentences point outward now. And the current is finally strong enough to knock you over.",
   marks:["Serves without being recruited","Shares faith on purpose, sees people converted","Wants real authority, sometimes too independent","Occasionally harsh with people slower than them","Tired in a way rest doesn't fix — and can't say so","Reproduces converts, not yet disciple-makers"],
-  says:["Who can I bring to this?","They missed group — I'll organise meals","I'm fine, I'll handle it"],
+  says:["Who can I bring to this?","They missed group — I'll organize meals","I'm fine, I'll handle it"],
   needs:["Equipping, then actual release — authority, not tasks","A rule of life: limits chosen before exhaustion chooses","Someone asking about their soul, not their output","Explicit permission to be limited"],
   avoid:["Using them — they say yes to everything","Promoting past their character","Treating capacity as maturity"],
   move:"Usually not upward. Through — the Wall stands here, and the passage is downward first."},
@@ -1296,7 +1363,7 @@ const D=[
   alt:"John describes this group twice and says only one thing: they know him who is from the beginning. No metric. Just knowing.",
   marks:["Makes disciples who make disciples, by name","Holds paradox without anxiety","Can be wronged without correcting the record","Unimpressed by their own gifts","Asks more than answers","Depends on God more visibly than ten years ago, not less"],
   says:["Who am I bringing — and who is she bringing?","I used to be certain about that","Tell me more about that"],
-  needs:["Peers, not admirers — outside their own organisation","One person with standing to say no","Continued spiritual direction","To be asked how they are by someone who waits"],
+  needs:["Peers, not admirers — outside their own organization","One person with standing to say no","Continued spiritual direction","To be asked how they are by someone who waits"],
   avoid:["Assuming they're fine","Treating them as a resource","Expecting them to look impressive"],
   move:"No next rung. The direction is further out and further down — more dependence, less need to be seen doing it."}
 ];
@@ -1414,7 +1481,7 @@ const J=[
    [3.3,"Rebuked by Paul at Antioch","Still correctable, decades in. Nobody graduates."],
    [4.2,"\u201cClothe yourselves with humility\u201d","The impulsive one writes the letter on submission and suffering."]]},
  {n:"Mary Magdalene",c:"var(--s1)",wall:4,
-  sum:"Delivered of seven demons and named first in every list of the women who followed. She is also the only person in the Gospels recorded standing in front of the resurrection and failing to recognise it.",
+  sum:"Delivered of seven demons and named first in every list of the women who followed. She is also the only person in the Gospels recorded standing in front of the resurrection and failing to recognize it.",
   pts:[
    [1.2,"Seven demons cast out","Luke names the number without explaining it. She starts lower than anyone else on this page."],
    [2.4,"Follows, and funds it herself","Out of her own means. Not a beneficiary of the ministry — a patron of it."],
@@ -1440,7 +1507,7 @@ const J=[
    [2.2,"Devout, loved, and childless","Goes up to Shiloh year after year. The faithfulness is never the problem."],
    [1.4,"Provoked by Peninnah until she can't eat","The rival wife has children and uses them. Year after year, the text says."],
    [0.9,"“The Lord had closed her womb”","Scripture says it twice, and lays it directly at God's door. No explanation is offered to her."],
-   [1.6,"Prays so bitterly the priest thinks she's drunk","Eli, who should recognise prayer, misreads it as drunkenness and rebukes her."],
+   [1.6,"Prays so bitterly the priest thinks she's drunk","Eli, who should recognize prayer, misreads it as drunkenness and rebukes her."],
    [2.4,"The vow: if you give him, I give him back","She asks for the one thing she wants, and surrenders it in the same sentence."],
    [3.0,"“Her face was no longer sad” — before anything changed","Nothing external has moved yet. This verse is the whole turn."],
    [3.6,"Weans him and walks him to Shiloh","Hands over the child she begged for, to be raised by the priest who misjudged her."],
@@ -1567,7 +1634,7 @@ function trace(idx){
   /* dots land in step with the line drawing past them, and each one is a control
      paired with the numbered card below it. The hit area is the whole vertical
      band the dot sits in, not the dot: the x axis is split at the midpoints
-     between neighbours so every column of the plot belongs to its nearest
+     between neighbors so every column of the plot belongs to its nearest
      moment, and you never have to find a 6px target. */
   const dots=pts.map((c,i)=>{
     const col=BANDS[bandFor(p.pts[i][0])][2];
@@ -1606,6 +1673,8 @@ function trace(idx){
         <span class="leg-txt"><strong>${pt[1]}</strong><span class="leg-note">${pt[2]}</span></span>
       </button>`).join('')}</div>`;
   paintTrace();
+  /* the trace summary is rebuilt on every tab change, so link its references again */
+  if(window.EsmrskyScripture){const sm=tbox.querySelector('.trace-head p');if(sm)window.EsmrskyScripture.linkTextNodes(sm);}
   const ln=document.getElementById('tline');
   if(ln && !RM){const len=ln.getTotalLength();
     ln.style.strokeDasharray=len;ln.style.strokeDashoffset=len;
@@ -1647,7 +1716,7 @@ tbox.addEventListener('keydown',e=>{
 trace(0);
 
 /* ===== THE EIGHT MARSHES ===== */
-/* Ordered as an arc rather than by frequency: the two most recognisable first,
+/* Ordered as an arc rather than by frequency: the two most recognizable first,
    then the three interior ones, then the three that read as maturity. The last
    three are the point of the section — everything else on the page already has
    language for the first five. Each card carries a `guard`, because without the
@@ -1661,7 +1730,7 @@ const M=[
   ref:"Luke 18:11",quote:"God, I thank thee, that I am not as other men. The Pharisee's prayer is a comparison — and he addresses it to God."},
 
  {as:"Reads as reverence",n:"Fear as the operating system",d:2,
-  mech:"Obedience running on dread of God's mood rather than confidence in his character. It produces excellent behaviour, which is precisely why nobody ever interrupts it.",
+  mech:"Obedience running on dread of God's mood rather than confidence in his character. It produces excellent behavior, which is precisely why nobody ever interrupts it.",
   tell:"You can describe what God requires of you in detail, and you cannot say without hedging that he likes you.",
   guard:"The fear of the Lord, which is awe and produces rest, not vigilance. And not clinical anxiety or scrupulosity — if the checking is compulsive or it is costing you sleep, this is a doctor's question as well as a pastor's. Treating an anxiety disorder as a faith problem is its own kind of harm.",
   out:"Read 1 John slowly, with someone else. It is the same letter the five depths come from, and it treats the fear itself as the diagnosis — not whatever you are afraid of.",
@@ -1697,7 +1766,7 @@ const M=[
 
  {as:"Reads as waist-deep, nearly over",n:"Ministry as identity",d:3,
   mech:"Service that is genuinely useful to other people and is doing something else for you. It medicates. Which is why stopping is unthinkable — not because the work would fail, but because there would be nothing underneath.",
-  tell:"Picture the role gone tomorrow, nobody's fault, honourably. Grief you can name is fine. A blankness about who you would then be is the marsh.",
+  tell:"Picture the role gone tomorrow, nobody's fault, honorably. Grief you can name is fine. A blankness about who you would then be is the marsh.",
   guard:"Loving your work, or being genuinely needed. Vocation isn't the problem. The question is only whether your standing survives the role being removed.",
   out:"A sabbath you actually keep, and one relationship where you contribute nothing. Both will feel wildly disproportionate in difficulty. That is the confirmation.",
   ref:"Luke 10:20",quote:"Rejoice not, that the spirits are subject unto you; but rather rejoice, because your names are written in heaven."},
@@ -1754,7 +1823,7 @@ const MI=[
 
 /* ===== THE THIRTEEN MAPS ===== */
 /* Same order as ROWS below, so a card and its row in the table are the same
-   index. Colour comes from the kind, not from the individual map, so the five
+   index. Color comes from the kind, not from the individual map, so the five
    families read as families. */
 const KIND={
  scripture:{l:"Scripture",c:"var(--s0)",
@@ -1786,7 +1855,7 @@ const MAPS=[
       ["Infant","On milk, because you were not ready for solid food."],
       ["Fleshly","Still on milk, and the tell is the jealousy and the factions."],
       ["Mature","Senses trained by practice to distinguish good from evil."]],
-  use:"The sharpest diagnostic in Scripture, because it is behavioural rather than self-reported.",
+  use:"The sharpest diagnostic in Scripture, because it is behavioral rather than self-reported.",
   watch:"Written as rebuke inside a specific fight, not as a developmental scheme."},
  {n:"The threefold way · Teresa",yr:"4th c. · Castle 1577",k:"contemplative",
   who:"The desert and monastic tradition, given its most detailed form in Teresa of Ávila's Interior Castle.",
@@ -1852,8 +1921,8 @@ const MAPS=[
   st:[["Exploring Christ","Curious, not committed."],
       ["Growing in Christ","Committed, and learning the practices."],
       ["Close to Christ","Depends on him daily — and this is where the stall happens."],
-      ["Christ-centred","Identity is him, rather than the activity."]],
-  use:"The stall it identified is real, and most pastors recognise it on sight.",
+      ["Christ-centered","Identity is him, rather than the activity."]],
+  use:"The stall it identified is real, and most pastors recognize it on sight.",
   watch:"Bradley Wright found the design and analysis weak and heavily over-interpreted. Self-reported throughout, and no Wall."},
  {n:"Spader · 4 Chairs",yr:"2014",k:"church",nw:1,
   who:"Dann Spader, 4 Chair Discipling, drawn from the sequence of invitations Jesus actually issued.",
@@ -1887,7 +1956,7 @@ const MAPS=[
       ["Servant","Works for approval. Closer in, and still earning."],
       ["Friend","Trusted with what the father is actually doing."],
       ["Son","Heir. The estate was already yours before you performed."]],
-  use:"Gets at the engine under a great deal of religious behaviour — performing for a father you are not sure has accepted you.",
+  use:"Gets at the engine under a great deal of religious behavior — performing for a father you are not sure has accepted you.",
   watch:"The servant/son contrast gets pushed until “servant” becomes an insult, which Scripture does not support."},
  {n:"The Exodus pattern",yr:"the oldest of them",k:"scripture",
   who:"Nobody built this one. It is the shape of the story, used as a map ever since.",
@@ -1943,11 +2012,11 @@ const ROWS=[
  {n:"1 John 2:12–14",nw:1,c:[null,"Little children","Children","Young men — overcame the evil one","Fathers — you know him"]},
  {n:"1 Cor 2–3 · Heb 5",c:["Natural — cannot receive","Infant, on milk","Fleshly — jealousy, factions","Growing toward solid food","Mature — senses trained"]},
  {n:"Threefold way · Teresa",c:["Outside the castle","Purgative — beginners","Purgative, late","Illuminative — proficients","Unitive — mansions 6–7"]},
- {n:"Putman · Real Life",nw:1,c:["Spiritually dead","Infant — ignorance","Child — self-centred","Young adult — serves","Parent — reproduces"]},
+ {n:"Putman · Real Life",nw:1,c:["Spiritually dead","Infant — ignorance","Child — self-centered","Young adult — serves","Parent — reproduces"]},
  {n:"Hagberg & Guelich",c:[null,"1 · Recognition","2 · Discipleship","3 · Productive life → THE WALL","5 · Outward · 6 · Life of love"]},
  {n:"Fowler (1981)",c:["1 · Intuitive","2 · Mythic-literal","3 · Synthetic-conventional","4 · Individuative-reflective","5 · Conjunctive · 6 · Universalizing"]},
  {n:"Peck (1987)",c:["1 · Chaotic","2 · Formal / institutional","2 · Formal / institutional","3 · Skeptic / individual","4 · Mystical / communal"]},
- {n:"REVEAL (2007)",nw:1,c:["Exploring","Growing in Christ","Growing in Christ","Close to Christ — stalls here","Christ-centred"]},
+ {n:"REVEAL (2007)",nw:1,c:["Exploring","Growing in Christ","Growing in Christ","Close to Christ — stalls here","Christ-centered"]},
  {n:"Spader · 4 Chairs",nw:1,c:["Chair 1 · Come and see","Chair 2 · Follow me","Chair 2 · Follow me","Chair 3 · Fish for men","Chair 4 · Bear fruit"]},
  {n:"Scazzero · EHS",c:[null,"1 · Awareness of God","2 · Discipleship","3 · Active life → THE WALL","5 · Outward · 6 · Transformed by love"]},
  {n:"Sonship (Frost, Ellis)",c:["Orphan","Slave — performs for approval","Servant","Friend","Son / heir — nḗpios→huiós"]},
@@ -1988,7 +2057,7 @@ const T=[
   p:"New believers need a person — a kitchen table, a phone that gets answered, an ordinary life to copy. Curriculum hands them information they have no categories for.",
   s:"Symptom: finishes the class, gone in four months"},
  {i:"stage",c:"var(--s2)",h:"Giving a child a platform",
-  p:"They're gifted, available and keen, which is exactly why they get recruited. Put them in front of people and the self-reference at the centre gets amplified, rewarded, load-bearing.",
+  p:"They're gifted, available and keen, which is exactly why they get recruited. Put them in front of people and the self-reference at the center gets amplified, rewarded, load-bearing.",
   s:"Symptom: talented volunteer leaves wounded, takes a group"},
  {i:"burn",c:"var(--s3)",h:"Using a young adult",
   p:"They run on being needed and say yes to everything. So they get filled up, and nobody asks about their soul — only their output.",
@@ -2011,7 +2080,7 @@ const Q=[
  {t:"Faced with a hard passage, I'd rather be told what to think than sit with it.",k:"inf"},
  {t:"I serve regularly, and nobody had to recruit me.",k:"ya"},
  {t:"I've changed my mind about something I was certain of, without losing my faith.",k:"wall"},
- {t:"I can be criticised unfairly and not need to correct the record.",k:"par"},
+ {t:"I can be criticized unfairly and not need to correct the record.",k:"par"},
  {t:"Most of what I know about God I was told — I haven't been through it with him.",k:"inf"},
  {t:"I'm tired in a way rest hasn't fixed, and I keep going because people depend on me.",k:"flag"}
 ];
@@ -2028,7 +2097,7 @@ const READ={
   v:"Write down what you will not do this year and give the list to someone with permission to enforce it. Then find someone to meet with monthly about your soul, not your output."},
  4000:{n:"Over your head",l:"4000",i:4,c:"var(--s4)",
   m:"You reproduce rather than merely produce, and you've been through enough deep water to hold certainties loosely. The risk here isn't failure — it's isolation, and being surrounded by people who are impressed by you.",
-  v:"Find one peer at your depth outside your own organisation and meet with no agenda. Then name who you're carrying next, before someone assigns them to you."}
+  v:"Find one peer at your depth outside your own organization and meet with no agenda. Then name who you're carrying next, before someone assigns them to you."}
 };
 const DRAG={
  inf:["Dependence on being fed","You're still receiving faith secondhand — through services, teachers and plans rather than firsthand contact. Normal to start there; it's also what keeps people in the shallows for decades. The fix is small and physical: opening the Bible without being told changes the trajectory more than any course."],
@@ -2116,11 +2185,23 @@ document.getElementById('reset').addEventListener('click',()=>{
 
 /* ===== REVEAL ===== */
 if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),
-    {threshold:.05,rootMargin:'0px 0px -5% 0px'});
+  const root=document.documentElement;
+  root.classList.add('js');
+  /* threshold 0: a percentage of a block taller than the screen is never met.
+     If the observer has not answered within 2.5s, everything shows (html.js is what hides). */
+  setTimeout(()=>{if(!window.__rvLive)root.classList.remove('js');},2500);
+  const io=new IntersectionObserver(es=>{
+    window.__rvLive=true;
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},
+    {threshold:0,rootMargin:'0px 0px -5% 0px'});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 }else document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+(function(){var S=window.EsmrskyScripture;if(!S)return;
+  S.init({key:"soundings",scan:".refs .ref b, .dstep em, .verse cite, .m-ref span, .colo span, .trace-head p",versions:["NIV","NASB","ESV","KJV","NLT"]});
 })();
 </script>
 </body>
