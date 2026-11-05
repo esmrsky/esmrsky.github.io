@@ -1,0 +1,1309 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/never-done/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/never-done/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/never-done/">
+<!-- lang-alt:end -->
+<title>Never Done — как команды, которые постоянно улучшают продукт, на самом деле проходят цикл</title>
+<meta name="description" content="Подробная история и практическое руководство с источниками по циклу «создать → выпустить → измерить → узнать»: от Шухарта и Toyota до DevOps, A/B-тестов в масштабе и итераций на ИИ — и как понять, когда пора остановиться.">
+<meta property="og:title" content="Never Done">
+<meta property="og:description" content="Как команды, которые постоянно улучшают продукт, на самом деле проходят цикл: век итераций, инструменты, которые его ведут сегодня, и как понять, когда пора остановиться.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://esmrsky.github.io/never-done/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..620;1,8..60,400&family=Inter:wght@400;500;650&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=3">
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+<script>if(matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('js-reveal')</script>
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+<div class="progress" aria-hidden="true"></div>
+
+<div class="frame">
+  <nav class="toc" aria-label="Содержание">
+    <p class="toc-title">Never Done</p>
+    <ol>
+      <li><a href="#updates"><span class="n">—</span> Обновления, октябрь 2026</a></li>
+      <li><a href="#loop"><span class="n">01</span> Сам цикл</a></li>
+      <li><a href="#timeline"><span class="n">02</span> Век сокращающихся циклов</a></li>
+      <li><a href="#trends"><span class="n">03</span> Что меняется прямо сейчас</a></li>
+      <li><a href="#compound"><span class="n">04</span> Те, кто набирает ход, и те, кто буксует</a></li>
+      <li><a href="#cases"><span class="n">05</span> Разбор случаев</a></li>
+      <li><a href="#tooling"><span class="n">06</span> Карта инструментов</a></li>
+      <li><a href="#automation"><span class="n">07</span> Циклы, которые крутятся сами</a></li>
+      <li><a href="#smallshop"><span class="n">08</span> Цикл для маленькой команды</a></li>
+      <li><a href="#stopping"><span class="n">09</span> Как понять, что пора остановиться</a></li>
+      <li><a href="#sources"><span class="n">—</span> Источники и метод</a></li>
+    </ol>
+  </nav>
+
+  <main id="main">
+    <header class="hero">
+      <div class="hero-top"><p class="kicker">Собрать · Выпустить · Измерить · Понять · И снова</p><div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/never-done/" lang="en" hreflang="en" aria-current="false">EN</a><a class="lang-opt" href="/never-done/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div></div>
+      <h1>Never Done</h1>
+      <p class="dek">Софт никогда не бывает закончен — просто хорошие команды перестали делать вид, что это не так. Это история и практическое руководство по <strong>циклу итераций</strong>: откуда он взялся, как его гоняют самые быстрые продуктовые компании, сколько на самом деле стоят инструменты и — о чём почти никто не пишет — <strong>как понять, что пора остановиться</strong>.</p>
+      <div class="hero-loop">
+        <svg viewBox="0 0 640 260" role="img" aria-label="Схема: цикл итераций продукта. Гипотеза ведёт к сборке, выпуску, замеру, затем к решению, которое возвращает к гипотезе; цикл идёт непрерывно.">
+          <!-- track -->
+          <path d="M 140 60 H 500 A 70 70 0 0 1 570 130 A 70 70 0 0 1 500 200 H 140 A 70 70 0 0 1 70 130 A 70 70 0 0 1 140 60 Z"
+                fill="none" stroke="var(--hairline)" stroke-width="2"/>
+          <path class="loop-dash" d="M 140 60 H 500 A 70 70 0 0 1 570 130 A 70 70 0 0 1 500 200 H 140 A 70 70 0 0 1 70 130 A 70 70 0 0 1 140 60 Z"
+                fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.85"/>
+          <!-- direction arrow on the left ascent -->
+          <path d="M 96 84 L 108 71 L 112 88" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- stations -->
+          <g fill="var(--accent)" stroke="var(--paper)" stroke-width="3">
+            <circle cx="160" cy="60" r="7"/>
+            <circle cx="320" cy="60" r="7"/>
+            <circle cx="480" cy="60" r="7"/>
+            <circle cx="480" cy="200" r="7"/>
+            <circle cx="320" cy="200" r="7"/>
+            <circle cx="160" cy="200" r="7"/>
+          </g>
+          <g font-size="15" font-weight="600" fill="var(--ink)" text-anchor="middle">
+            <text x="160" y="40">Гипотеза</text>
+            <text x="320" y="40">Сборка</text>
+            <text x="480" y="40">Выпуск</text>
+            <text x="480" y="232">Замер</text>
+            <text x="320" y="232">Решение</text>
+            <text x="160" y="232">Выводы</text>
+          </g>
+          <text x="320" y="138" font-size="13" fill="var(--ink-3)" text-anchor="middle" font-style="italic" font-family="Georgia, serif">и снова, и снова, и снова…</text>
+        </svg>
+      </div>
+      <p class="hero-meta"><span>Долгое чтение — около часа</span><span>Исследовано и написано в августе 2026 · Обновлено 22 октября 2026</span><span>Каждое утверждение с датой подкреплено ссылкой на источник</span></p>
+    </header>
+
+    <section class="chapter" id="updates" aria-labelledby="updates-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Обновление</span>
+        <h2 id="updates-h">Обновления, октябрь 2026</h2>
+      </div>
+
+      <div class="prose">
+        <p>22 октября 2026 года мы ещё раз проверили, что нового в этой области. У каждого пункта ниже указана собственная дата публикации. Крупных новых исследований за сентябрь и октябрь 2026 года мы не нашли, так что это самое свежее, что нам удалось подтвердить.</p>
+        <p><strong>Отчёт CircleCI о состоянии доставки ПО за 2026 год (18 февраля 2026).</strong> Авторы проанализировали более 28 миллионов CI/CD-процессов, а не ответы в опросах. Среднее число ежедневных запусков <a href="https://circleci.com/blog/five-takeaways-2026-software-delivery-report">выросло на 59% за год</a>, но почти весь прирост достался самым активным командам. У медианной команды пропускная способность основной ветки упала на 7%, а доля успешных запусков опустилась до минимума за пять лет. Главным узким местом отрасли в отчёте названа проверка. <a href="https://blog.robbowley.net/2026/04/02/more-code-less-delivery-but-does-the-circleci-2026-report-really-show-1-in-20-teams-are-benefiting/">Критики замечают</a>, что считаются запуски конвейера, а не выкладки на прод, так что 59% показывают активность, а не выпущенный продукт.</p>
+        <p><strong>Большинство экспериментов не дают победителя.</strong> <a href="https://www.visionary-marketing.co.uk/blog/ab-testing-statistics-2026">Один анализ 2 408 тестов</a>, проведённых с января 2023 по март 2026 года, показал: у 17,4% нашёлся статистически значимый победитель, а 35,8% оказались неубедительными. Цифры, которые называют сами вендоры, выше — например, 26,4% у Optimizely за тот же период. Разброс в основном объясняется тем, как каждый источник определяет «победу», поэтому сначала сравнивайте определения, а потом числа. <a href="https://www.convertcart.com/insights/why-ab-testing-fails">Анализ Convertcart по 1 103 клиентским экспериментам</a> говорит о 37% статистически значимых улучшений.</p>
+        <p><strong>Повторное исследование METR не дало надёжной оценки скорости (март 2026).</strong> Рандомизированное исследование METR 2025 года с участием 16 опытных разработчиков открытого кода <a href="https://leaddev.com/velocity/ai-doesnt-make-devs-as-productive-as-they-think-study-finds">показало, что с ИИ-инструментами задачи занимали примерно на 19% дольше</a>, хотя сами разработчики ждали ускорения на 24%. Более крупное продолжение, начатое в августе 2025 года, <a href="https://conffab.com/?p=10163">дало, по словам METR, ненадёжный сигнал</a>. Главная причина: разработчики всё чаще отказывались работать без ИИ. Затем с февраля по апрель 2026 года METR опросил 349 технических специалистов.</p>
+        <p><strong>У остановки теперь есть формальный критерий, хотя пришёл он из исследований ИИ.</strong> В <a href="https://arxiv.org/pdf/2603.27440">статье за март 2026 года о кодирующих LLM-агентах</a> предложено правило плато: если два раунда подряд улучшают метрику меньше чем на 0,02, дальнейшая доработка вряд ли поможет. В <a href="https://arxiv.org/pdf/2608.10729">статье на arXiv за август 2026 года о самоулучшающихся моделях</a> показано, что прирост от раунда к раунду сокращается, а стоимость растёт примерно линейно, и утверждается, что оптимальное правило остановки может свестись к единственному порогу. Обе работы изучают результаты ИИ, а не продуктовые команды, так что считайте их аналогиями.</p>
+        <p><strong>Агент теперь может провести весь цикл эксперимента (AWS, без даты).</strong> В <a href="https://aws.amazon.com/blogs/devops/automating-the-experimentation-lifecycle-with-kiro-aws-devops-agent-and-launchdarkly/">блоге AWS о DevOps</a> описан агент, который формулирует гипотезу, прячет изменение за фича-флагом, запускает сплит 50/50 на части трафика и сам откатывает изменение при ухудшении, а результаты передаёт в следующий раунд. Автоматизация охватывает шаг «решить». Но это рассказ вендора, а не независимая проверка.</p>
+        <p>Ничто из перечисленного не говорит команде, когда остановиться. Каждый источник измеряет цикл, а решение остановиться по-прежнему принимает человек.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="loop" aria-labelledby="loop-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 01</span>
+        <h2 id="loop-h">Сам цикл</h2>
+        <p class="standfirst">Каждая организация, которая постоянно улучшает продукт, — от сборочной линии Toyota до SaaS на двух человек — крутит один и тот же шестишаговый цикл. Важно не то, какие шаги они проходят, а три числа: как часто цикл делает оборот, сколько изменений едет в каждом обороте и как долго ждать ответа.</p>
+      </div>
+
+      <div class="prose">
+        <p>Вот цикл так, как его на самом деле проходят команды, которые делают это хорошо. <strong>Гипотеза</strong>: проверяемое утверждение, а не задача — «если дать пользователям приглашать коллег с пустого экрана, удержание на первой неделе вырастет», а не «добавить приглашения». <strong>Измерения</strong>: до разработки решить, какое число должно сдвинуться и как вы будете его читать — шаг, который кажется бюрократией, а на деле отделяет обучение от угадывания. <strong>Сборка</strong>: самая маленькая версия, на которой можно проверить утверждение. <strong>Выпуск</strong>: за флагом, на части трафика, в виде превью — чтобы доля аудитории была ручкой громкости, а не обрывом. <strong>Замер</strong> по тому числу, которое вы назвали заранее. И шаг, который организации пропускают чаще всего: <strong>решение</strong>. Победители раскатываются. Проигравшие откатываются <em>и записываются</em>, потому что задокументированный тупик — единственный результат эксперимента, который продолжает окупаться. В любом случае то, чему вы научились, возвращается в бэклог как следующая гипотеза, точнее предыдущей.</p>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Механизм — и где он ломается</p>
+          <p class="viz-sub">Шесть этапов, которые проходит любой работающий цикл, и типичный сбой на каждом из них — под линией.</p>
+          <svg viewBox="0 0 900 400" role="img" aria-label="Блок-схема цикла итераций: гипотеза, измерения, мелкая сборка, частичный выпуск, замер, решение; стрелка возвращает от решения к гипотезе. У каждого этапа отмечен характерный сбой: выпуск на глазок без проверяемого утверждения; метрика, выбранная после запуска; порции слишком крупные, чтобы понять причину; релиз как событие «всё или ничего»; подглядывание и метрики для красоты; результаты, которые игнорируют, так что проигравшие всё равно выходят.">
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ink-3)"/>
+              </marker>
+              <marker id="arr-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+              </marker>
+            </defs>
+            <!-- stations -->
+            <g font-size="13.5" text-anchor="middle">
+              <g>
+                <rect x="20" y="120" width="120" height="46" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <text x="80" y="148" fill="var(--ink)" font-weight="650">Гипотеза</text>
+              </g>
+              <g>
+                <rect x="168" y="120" width="120" height="46" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <text x="228" y="148" fill="var(--ink)" font-weight="650">Измерения</text>
+              </g>
+              <g>
+                <rect x="316" y="120" width="120" height="46" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <text x="376" y="141" fill="var(--ink)" font-weight="650">Сборка</text>
+                <text x="376" y="158" fill="var(--ink-2)" font-size="11.5">самая маленькая версия</text>
+              </g>
+              <g>
+                <rect x="464" y="120" width="120" height="46" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <text x="524" y="141" fill="var(--ink)" font-weight="650">Выпуск</text>
+                <text x="524" y="158" fill="var(--ink-2)" font-size="11.5">за флагом · частично</text>
+              </g>
+              <g>
+                <rect x="612" y="120" width="120" height="46" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <text x="672" y="148" fill="var(--ink)" font-weight="650">Замер</text>
+              </g>
+              <g>
+                <rect x="760" y="120" width="120" height="46" rx="10" fill="var(--accent-wash)" stroke="var(--accent)"/>
+                <text x="820" y="148" fill="var(--ink)" font-weight="650">Решение</text>
+              </g>
+            </g>
+            <!-- forward arrows -->
+            <g stroke="var(--ink-3)" stroke-width="1.75" fill="none">
+              <line x1="140" y1="143" x2="160" y2="143" marker-end="url(#arr)"/>
+              <line x1="288" y1="143" x2="308" y2="143" marker-end="url(#arr)"/>
+              <line x1="436" y1="143" x2="456" y2="143" marker-end="url(#arr)"/>
+              <line x1="584" y1="143" x2="604" y2="143" marker-end="url(#arr)"/>
+              <line x1="732" y1="143" x2="752" y2="143" marker-end="url(#arr)"/>
+            </g>
+            <!-- decide outcomes -->
+            <g font-size="12" text-anchor="start">
+              <line x1="820" y1="120" x2="820" y2="84" stroke="var(--ink-3)" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="700" y="66" fill="var(--good-text)" font-weight="650">победа → раскатить на 100%</text>
+              <line x1="852" y1="166" x2="852" y2="196" stroke="var(--ink-3)" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="668" y="216" fill="var(--ink-2)" font-weight="650">провал → откатить, записать</text>
+            </g>
+            <!-- return arc -->
+            <path d="M 790 166 C 700 250, 200 250, 84 170" fill="none" stroke="var(--accent)" stroke-width="2" class="loop-dash" marker-end="url(#arr-a)"/>
+            <text x="440" y="252" font-size="12.5" fill="var(--accent-ink)" text-anchor="middle" font-weight="650">в любом случае выводы возвращаются в бэклог</text>
+            <!-- failure annotations -->
+            <g font-size="11.5" text-anchor="middle" fill="var(--bad-text)">
+              <line x1="80" y1="286" x2="80" y2="306" stroke="var(--hairline)"/>
+              <text x="80" y="322">выпуск на глазок:</text>
+              <text x="80" y="337">без гипотезы</text>
+              <line x1="228" y1="286" x2="228" y2="306" stroke="var(--hairline)"/>
+              <text x="228" y="322">метрику выбрали</text>
+              <text x="228" y="337">уже после запуска</text>
+              <line x1="376" y1="286" x2="376" y2="306" stroke="var(--hairline)"/>
+              <text x="376" y="322">слишком крупная порция,</text>
+              <text x="376" y="337">чтобы понять причину</text>
+              <line x1="524" y1="286" x2="524" y2="306" stroke="var(--hairline)"/>
+              <text x="524" y="322">релиз как</text>
+              <text x="524" y="337">событие «всё или ничего»</text>
+              <line x1="672" y1="286" x2="672" y2="306" stroke="var(--hairline)"/>
+              <text x="672" y="322">подсмотр, мало данных,</text>
+              <text x="672" y="337">красивые метрики</text>
+              <line x1="820" y1="286" x2="820" y2="306" stroke="var(--hairline)"/>
+              <text x="820" y="322">итог игнорируют:</text>
+              <text x="820" y="337">проигравшее выходит</text>
+            </g>
+            <text x="450" y="380" font-size="12" fill="var(--ink-3)" text-anchor="middle">Под линией — шесть мест, где настоящие циклы ломаются. Каждый сбой невидим изнутри команды, у которой он случился.</text>
+          </svg>
+        </div>
+        <figcaption>Цикл так, как его на самом деле гоняют быстрые команды. Обратите внимание: акцентом выделено «Решение», а не «Выпуск»: выпуск — это середина цикла, а не конец.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Три числа определяют всё</h3>
+        <p><strong>Каденс</strong> — как часто цикл делает оборот. <strong>Размер порции</strong> — сколько изменений едет в каждом обороте. <strong>Задержка обратной связи</strong> — сколько проходит между выпуском и знанием. Они не независимы: крупные порции заставляют замедлять каденс (больше проверять, больше ломается, больше согласовывать), а медленный каденс заставляет копить крупные порции (квартальный релизный поезд собирает груз за целый квартал). Это порочный круг, который разобрал Дональд Райнертсен в книге <em>The Principles of Product Development Flow</em> (2009), и весь фокус в его обратной стороне: маленькие порции делают каждый релиз скучным, скучные релизы можно делать постоянно, а постоянные релизы означают, что ответ на вопрос «сработало?» приходит, пока вы ещё помните сам вопрос.</p>
+        <p>Довод про накопление — это арифметика, а не философия. Команда, которая выпускает один большой релиз в квартал, получает четыре шанса в год ошибиться и поправить курс. Команда, которая выпускает каждый день, — больше двухсот. А поскольку, по лучшим опубликованным данным, большинство продуктовых идей просто не работают (на экспериментальной платформе Microsoft <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">примерно треть идей сдвинула целевые метрики</a>; в Google и Bing долю успеха оценивали в 10–20%), быстрая команда не просто чаще итерирует, она <em>обнаруживает свои провалы</em> в пятьдесят раз чаще — и каждый провал в пятьдесят раз меньше. Скорость, если делать её правильно, — это стратегия снижения риска в костюме скорости.</p>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Почему мелкие порции выигрывают: та же работа, другой риск</p>
+          <p class="viz-sub">Две команды выпускают одни и те же шесть изменений за один и тот же срок. Одна учится один раз, другая — шесть.</p>
+          <svg viewBox="0 0 860 300" role="img" aria-label="Схема сравнивает одну большую порцию с шестью мелкими за тот же срок. У большой порции одна поздняя точка обратной связи, а риск и непроверенные допущения копятся всё это время; плохой исход теряет всю порцию. У каждой из шести мелких порций быстрая обратная связь, и плохая третья порция теряет лишь шестую часть работы, а следующие учитывают извлечённые уроки.">
+            <g font-size="12.5">
+              <!-- big batch row -->
+              <text x="20" y="52" fill="var(--ink)" font-weight="650" font-size="13.5">Одна большая порция</text>
+              <rect x="20" y="66" width="600" height="26" rx="6" fill="var(--s1)" opacity="0.85"/>
+              <text x="320" y="83" fill="#ffffff" text-anchor="middle" font-size="12">сборка · сборка · сборка · сборка · сборка · сборка</text>
+              <circle cx="648" cy="79" r="8" fill="var(--bad-text)"/>
+              <text x="668" y="76" fill="var(--ink)" font-weight="650">отклик один раз, поздно</text>
+              <text x="668" y="93" fill="var(--ink-2)">промах теряет всю порцию</text>
+              <line x1="20" y1="112" x2="620" y2="112" stroke="var(--hairline)"/>
+              <text x="20" y="130" fill="var(--bad-text)" font-size="11.5">непроверенные допущения копятся всё это время →</text>
+
+              <!-- small batches row -->
+              <text x="20" y="182" fill="var(--ink)" font-weight="650" font-size="13.5">Шесть мелких порций</text>
+              <g>
+                <rect x="20"  y="196" width="88" height="26" rx="6" fill="var(--s1)" opacity="0.85"/>
+                <rect x="122" y="196" width="88" height="26" rx="6" fill="var(--s1)" opacity="0.85"/>
+                <rect x="224" y="196" width="88" height="26" rx="6" fill="var(--bad-text)" opacity="0.9"/>
+                <rect x="326" y="196" width="88" height="26" rx="6" fill="var(--s1)" opacity="0.85"/>
+                <rect x="428" y="196" width="88" height="26" rx="6" fill="var(--s1)" opacity="0.85"/>
+                <rect x="530" y="196" width="88" height="26" rx="6" fill="var(--s1)" opacity="0.85"/>
+              </g>
+              <g fill="var(--accent)">
+                <circle cx="112" cy="209" r="5"/>
+                <circle cx="214" cy="209" r="5"/>
+                <circle cx="316" cy="209" r="5"/>
+                <circle cx="418" cy="209" r="5"/>
+                <circle cx="520" cy="209" r="5"/>
+                <circle cx="622" cy="209" r="5"/>
+              </g>
+              <text x="268" y="243" fill="var(--bad-text)" text-anchor="middle" font-size="11.5">порция 3 — провал, минус 1/6</text>
+              <text x="472" y="243" fill="var(--good-text)" text-anchor="middle" font-size="11.5">порции 4–6 учли уроки 1–3</text>
+              <text x="648" y="200" fill="var(--ink)" font-weight="650">отклик после каждой порции</text>
+              <text x="648" y="217" fill="var(--ink-2)">риск обнуляется шесть раз</text>
+              <text x="20" y="278" fill="var(--ink-3)" font-size="12">Оранжевые точки — обратная связь. Работы столько же, но на одну догадку идёт не больше шестой части.</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Аргумент про размер порции — по книге Райнертсена <em>Principles of Product Development Flow</em> (2009) и практике IMVU и Etsy, описанной в <a href="#timeline">главе 2</a>.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Задержка обратной связи — тихий убийца</h3>
+        <p>Каденс и размер порции видны на любой командной панели. Задержка прячется. Это сумма всех пауз между «оно в проде» и «мы знаем»: событие аналитики, которое так и не подключили, дашборд, у которого нет хозяина, метрика, которой нужно четыре недели данных, чтобы хоть что-то значить, обзорная встреча раз в месяц. Цикл с быстрым каденсом и шестинедельной задержкой — не быстрый цикл, а медленный с суетливыми декорациями: изменение за изменением уходят <em>в темноту</em>, и каждое новое решение принимается до того, как пришли результаты предыдущего. Когда IMVU в 2009 году построил конвейер непрерывного развёртывания, на слуху было число <a href="https://timothyfitz.com/2009/02/10/continuous-deployment-at-imvu-doing-the-impossible-fifty-times-a-day/">пятьдесят выкладок в день</a>, а главным было другое — девять минут: полное время от коммита до знания, через стену автотестов и «кластерную иммунную систему», которая сама откатывала плохие выкладки. Шнур андон у Toyota (<a href="#timeline">глава 2</a>) — тот же замысел в хлопке и стали: дело было не в остановке линии, а в том, что о дефекте узнавали через <em>секунды</em> после его появления, и узнавал тот, кто лучше всех видел.</p>
+        <h3>Где цикл ломается</h3>
+        <p>На схеме выше отмечены шесть типичных разломов, и о каждом стоит сказать прямо, потому что изнутри каждый похож на усердие. Команды выпускают без гипотезы и зовут это гибкостью. Подключают измерения после запуска и зовут это прагматизмом — а потом выясняется, что данных «до» не существует. Складывают в один релиз редизайн, рефакторинг и три фичи и зовут это эффективностью, а потом не могут сказать, какое из изменений сдвинуло число. Превращают день релиза в событие со штабом, и это гарантирует, что релизы останутся редкими. Подглядывают в результаты каждый день и останавливаются, как только значимость мигнула, — а такая практика, как показано в <a href="#smallshop">главе 8</a>, плодит ложные срабатывания по заказу. И, самое тихое: проводят честные эксперименты, получают явного проигравшего и всё равно выпускают его, потому что у спринта был разгон, невозвратные затраты были реальны и ничья работа не состояла в том, чтобы сказать «стоп». Команды Рона Кохави встречали это достаточно часто, чтобы дать противоядию имя: результат эксперимента — это <em>решение</em>, а не отчёт.</p>
+        <p>Ещё один разлом заслуживает отдельной фразы, потому что в 2012 году ему выставили счёт: цикл предполагает, что сами выкладки скучны, автоматизированы и обратимы, а когда это не так — когда ручная выкладка доходит до семи серверов из восьми, а устаревший флаг будит мёртвый код, — получается <a href="https://specbranch.com/posts/knight-capital/">Knight Capital: 440 млн долларов за 45 минут</a>. Скорость цикла безопасна ровно настолько, насколько надёжны его тормоза.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="timeline" aria-labelledby="timeline-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 02</span>
+        <h2 id="timeline-h">Век сокращающихся циклов</h2>
+        <p class="standfirst">Цикл итераций изобрёл не стартап. Его придумали на заводе в 1924 году, он дважды пересёк Тихий океан, тридцать лет воевал с водопадом и дошёл до мейнстрима в софте лишь тогда, когда выкладывать стало так дёшево, что можно каждый день. Вот вся родословная с датами и источниками — что каждый шаг действительно изменил, а не просто как он переименовал старое.</p>
+        <p class="standfirst" style="margin-top:1rem; font-size:0.9975rem;">Замечание о форме: эта история идёт несколькими переплетёнными нитями, а не одной цепочкой. Заводская нить и нить софта десятилетиями идут рядом и сходятся только в 2009 году. Эпохи ниже следуют за этой косой.</p>
+      </div>
+
+      <nav class="era-nav reveal" aria-label="Перейти к эпохе"> <a href="#era-measure">1919 · Измерить процесс</a> <a href="#era-factory">1948 · Завод учится</a> <a href="#era-waterfall">1970 · Против водопада</a> <a href="#era-deploy">2009 · Выкладки дешевеют</a> <a href="#era-experiment">2000 · Машина экспериментов</a> <a href="#era-platform">2019 · Мощёные дороги</a> <a href="#era-ai">2021 · Цикл встречает ИИ</a> </nav>
+
+      <div class="timeline">
+        <div class="tl-spine" aria-hidden="true"><div class="tl-fill"></div></div>
+
+        <div class="tl-era" id="era-measure">
+          <span class="era-span">1919 – 1951</span>
+          <h3>Измерить процесс</h3>
+          <p>Статистика выходит из университета и приходит на заводской пол. Здесь появляется главная идея всего, что будет дальше: относиться к тому, что вы делаете, как к результату процесса, измерять его и ходить по кругу.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1923</span>
+          <h4>Клод Хопкинс публикует <em>Scientific Advertising</em></h4>
+          <p>Купоны с кодами позволяют Хопкинсу отследить каждый отклик до конкретного объявления и сравнивать заголовки и предложения друг с другом. Первое работающее описание сплит-тестирования — в маркетинге, а не в софте.</p>
+          <p class="tl-shift">Рекламные расходы стали измеримыми. В коммерческую практику входит правило «проверяй, а не спорь».</p>
+          <p class="tl-src">Источник: <a href="https://en.wikipedia.org/wiki/Scientific_Advertising">Scientific Advertising (1923)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Май 1924</span>
+          <h4>Уолтер Шухарт чертит первую контрольную карту</h4>
+          <p>16 мая 1924 года в Western Electric Шухарт передаёт начальнику одностраничную записку с первой контрольной картой: она отделяет изменчивость от «назначаемых причин», которую можно исправить, от изменчивости от «случайных причин», с которой приходится жить. Затем в книге 1939 года он сворачивает контроль качества в круг: спецификация → производство → проверка «должны идти по кругу, а не по прямой». Этот круг — предок каждого цикла итераций в этом тексте.</p>
+          <p class="tl-shift">Процесс стал чем-то, что можно прочесть, стабилизировать и улучшать, а не просто проверять задним числом.</p>
+          <p class="tl-src">Источники: <a href="https://asq.org/about-asq/honorary-members/shewhart">ASQ о Шухарте</a> · <a href="https://www.tandfonline.com/doi/full/10.1080/00224065.2023.2282926">100 лет контрольной карте (2023)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1925 – 1935</span>
+          <h4>Р.&nbsp;А. Фишер формализует рандомизированный эксперимент</h4>
+          <p>Работая над полевыми опытами с урожаем в Ротамстеде, Фишер вводит рандомизацию, повторность и нулевую гипотезу — <em>Statistical Methods for Research Workers</em> (1925), <em>The Design of Experiments</em> (1935). Каждый A/B-тест, когда-либо запущенный, стоит ниже по течению от этих полей.</p>
+          <p class="tl-shift">Причинные утверждения — «это изменение вызвало этот результат» — стали статистически защитимыми.</p>
+          <p class="tl-src">Источники: <a href="https://www.britannica.com/biography/Ronald-Aylmer-Fisher">Britannica</a> · <a href="https://en.wikipedia.org/wiki/The_Design_of_Experiments">The Design of Experiments</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1950</span>
+          <h4>Деминг читает лекции в Японии; колесо начинает вращаться</h4>
+          <p>По приглашению JUSE У. Эдвардс Деминг учит японских инженеров статистическому контролю качества, а затем, в августе 1950 года в Хаконэ, — руководителей, представлявших большую часть промышленного капитала Японии. Около 1951 года японские руководители перерабатывают его «колесо Деминга» в PDCA (планируй — делай — проверяй — действуй). Сам Деминг предпочитал PDSA: «проверять», по его мнению, значит просто сверяться, тогда как «изучать» требует учиться. (Цитата, которую все ему приписывают, — «Мы верим в Бога; все остальные пусть приносят данные», — апокрифична: <a href="https://quoteinvestigator.com/2017/12/29/god-data/">нет свидетельств, что он это говорил</a>.)</p>
+          <p class="tl-shift">Цикл улучшения стал именованным, преподаваемым методом управления — и предметом экспорта.</p>
+          <p class="tl-src">Источники: <a href="https://deming.org/speech-by-dr-deming-to-japanese-business-leaders-in-1950/">Институт Деминга, речь 1950 года</a> · <a href="https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf">Moen, «Foundation and History of the PDSA Cycle»</a></p>
+        </div>
+
+        <div class="tl-era" id="era-factory">
+          <span class="era-span">1948 – 1988</span>
+          <h3>Завод учится</h3>
+          <p>Toyota превращает цикл в производственную систему: мелкие порции, вытягивание и — что важно — шнур, за который может дёрнуть любой рабочий, чтобы остановить всю линию. Софт потратит следующие пятьдесят лет на то, чтобы заново открыть каждую из этих деталей.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1948 →</span>
+          <h4>Тайити Оно строит производственную систему Toyota</h4>
+          <p>С 1948 года Оно собирает поток «точно в срок», сигналы вытягивания канбан и шнур андон — шнур остановки линии, который даёт <em>любому</em> рабочему право остановить производство, заметив дефект, чтобы дефекты всплывали сразу, а не копились ниже по потоку. Система работает десятилетиями, пока её не описывают в книге Оно 1978 года (английский перевод — 1988).</p>
+          <p class="tl-shift">Мелкие порции и остановка линии по инициативе рабочего: быстрая обратная связь победила эффект масштаба в самой масштабной отрасли мира.</p>
+          <p class="tl-src">Источники: <a href="https://artoflean.com/reference/taiichi-ohno/">Art of Lean об Оно</a> · <a href="https://www.vorne.com/learn/key-concepts/andon/origins/">Происхождение андона</a> · <a href="https://www.oreilly.com/library/view/toyota-production-system/9781000056488/xhtml/04_Copyright01.xhtml">Данные об изданиях 1978/1988</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1986</span>
+          <h4>Масааки Имаи экспортирует <em>кайдзен</em></h4>
+          <p>Книга <em>Kaizen: The Key to Japan's Competitive Success</em> несёт непрерывное улучшение в западный менеджмент: все, каждый день, улучшают процесс маленькими шагами. Именно книга Имаи, а не Оно, сделала «кайдзен» всемирным словом.</p>
+          <p class="tl-src">Источник: <a href="https://archive.org/details/kaizen00masa">Imai, Kaizen (1986)</a></p>
+        </div>
+
+        <div class="tl-era" id="era-waterfall">
+          <span class="era-span">1970 – 2001</span>
+          <h3>Софт против водопада</h3>
+          <p>Тридцать лет софт спорит с диаграммой — той самой, от которой предостерегал её собственный автор. Спор заканчивается в лыжном домике в Юте.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Авг. 1970</span>
+          <h4>Ройс публикует статью про «водопад» — как предостережение</h4>
+          <p>В статье Уинстона Ройса «Managing the Development of Large Software Systems» есть знаменитая диаграмма из последовательных этапов, проходимых один раз. Что забыли те, кто на неё ссылается: Ройс ни разу не употребляет слово «водопад», а прямо под диаграммой пишет: <em>«Я верю в эту концепцию, но описанная выше реализация рискованна и ведёт к провалу»</em> — и рекомендует вместо неё построить систему дважды. Самая влиятельная статья века о процессах разработки стала влиятельной благодаря диаграмме, против которой выступал её автор.</p>
+          <p class="tl-src">Источник: <a href="https://www.praxisframework.org/files/royce1970.pdf">Royce 1970 (PDF)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1986 – 88</span>
+          <h4>Спиральная модель Боэма делает риск двигателем итераций</h4>
+          <p>Спиральная модель Барри Боэма (ACM SIGSOFT, 1986; расширена в <em>IEEE Computer</em>, май 1988) заменяет единственный проход повторяющимися циклами: цели → анализ рисков → прототип → план следующего витка. В январе того же года статья Такэути и Нонаки в HBR «The New New Product Development Game» переносит из японского производства метафору регбийной схватки (scrum).</p>
+          <p class="tl-shift">Итерации стали законной моделью процесса внутри организаций, которые предписывали водопад.</p>
+          <p class="tl-src">Источники: <a href="https://dl.acm.org/doi/10.1145/12944.12948">Boehm 1986</a> · <a href="https://www.cse.msu.edu/~cse435/Homework/HW3/boehm.pdf">версия 1988 года (PDF)</a> · <a href="https://hbr.org/1986/01/the-new-new-product-development-game">Takeuchi &amp; Nonaka 1986</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1993 – 95</span>
+          <h4>Скрам: первая команда, первая статья</h4>
+          <p>Джефф Сазерленд ведёт первую скрам-команду в Easel Corporation в 1993 году; Кен Швабер представляет «SCRUM Development Process» на OOPSLA '95 в Остине — это первая официальная публикация фреймворка. Спринты задают циклу фиксированные часы.</p>
+          <p class="tl-src">Источник: <a href="http://www.jeffsutherland.org/oopsla/schwapub.pdf">Schwaber, OOPSLA '95 (PDF)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1996 – 99</span>
+          <h4>Экстремальное программирование собирает современный набор инструментов</h4>
+          <p>В проекте расчёта зарплат C3 в Chrysler Кент Бек соединяет парное программирование, разработку через тестирование, мелкие релизы, заказчика на площадке и непрерывную интеграцию в одну именованную дисциплину, опубликованную как <em>Extreme Programming Explained</em> (октябрь 1999). Почти каждая практика сегодняшнего конвейера доставки впервые отрепетирована здесь.</p>
+          <p class="tl-shift">Короткие итерации плюс автотесты стали системой, которую можно перенять, а не темпераментом, который нужно иметь.</p>
+          <p class="tl-src">Источники: <a href="https://martinfowler.com/bliki/C3.html">Фаулер о C3</a> · <a href="https://en.wikipedia.org/wiki/Chrysler_Comprehensive_Compensation_System">Проект C3</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Сент. 2000</span>
+          <h4>Фаулер и Фоммел описывают непрерывную интеграцию</h4>
+          <p>Статья на martinfowler.com (10 сентября 2000 года) описывает полностью автоматические сборки и прогоны тестов много раз в день. Следом, 30 марта 2001 года, от ThoughtWorks появляется CruiseControl, первый открытый CI-сервер; а Hudson Косукэ Кавагути (2005) — в феврале 2011 года, после того как Oracle заявила права на торговую марку, форкнутый в Jenkins, — делает CI нормой везде.</p>
+          <p class="tl-shift">«Сборка проходит?» стало работой машины, которая отвечает за минуты и сотни раз в день.</p>
+          <p class="tl-src">Источники: <a href="https://martinfowler.com/articles/originalContinuousIntegration.html">оригинальная статья о CI</a> · <a href="https://cruisecontrol.sourceforge.net/">CruiseControl</a> · <a href="https://en.wikipedia.org/wiki/Jenkins_(software)">Форк Jenkins</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Фев. 2001</span>
+          <h4>Семнадцать человек в лыжном домике пишут Манифест Agile</h4>
+          <p>11–13 февраля 2001 года в Сноубёрде, штат Юта, Бек, Фаулер, Сазерленд, Швабер, Каннингем, Мартин и ещё одиннадцать человек сводят свои конкурирующие методы к четырём ценностям — работающее ПО важнее исчерпывающей документации, реакция на изменения важнее следования плану. Слово «agile» побеждает; спор с водопадом в культурном смысле окончен.</p>
+          <p class="tl-src">Источники: <a href="https://agilemanifesto.org/history.html">agilemanifesto.org/history</a> · <a href="https://martinfowler.com/articles/agileStory.html">Fowler, «Writing The Agile Manifesto»</a></p>
+        </div>
+
+        <div class="tl-era" id="era-deploy">
+          <span class="era-span">2009 – 2012</span>
+          <h3>Выкладки дешевеют</h3>
+          <p>Agile сократил разработку, но релиз всё ещё оставался квартальной церемонией. За два года сайт обмена фотографиями, компания с виртуальными товарами и маркетплейс ремесленных изделий доказывают, что релиз может быть незаметным событием, которое случается пятьдесят раз в день, — и у DevOps появляется имя.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Фев. 2009</span>
+          <h4>IMVU выпускает по пятьдесят раз в день</h4>
+          <p>В посте Тимоти Фитца «Continuous Deployment at IMVU: Doing the impossible fifty times a day» описан механизм: тысячи автотестов на сборочном кластере, девятиминутный конвейер и «кластерная иммунная система», которая автоматически откатывает плохие выкладки. Эрик Рис обобщает эту практику в своём блоге Startup Lessons Learned в июне того же года.</p>
+          <p class="tl-shift">Выкладка перестала быть рискованным событием. Рискованным стало <em>не</em> выкладывать — копить непроверенные изменения.</p>
+          <p class="tl-src">Источники: <a href="https://timothyfitz.com/2009/02/10/continuous-deployment-at-imvu-doing-the-impossible-fifty-times-a-day/">Fitz, фев. 2009</a> · <a href="http://www.startuplessonslearned.com/2009/06/why-continuous-deployment.html">Ries, июнь 2009</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Июнь 2009</span>
+          <h4>«10+ выкладок в день» на Velocity — DevOps вспыхивает</h4>
+          <p>23 июня 2009 года Джон Оллспо и Пол Хэммонд из Flickr показывают залу инженеров по эксплуатации компанию, где разработка и эксплуатация работают вместе — общие инструменты, выкладка одной кнопкой, фича-флаги, культура без поиска виноватых — и выпускают больше десяти раз в день. Патрик Дебуа, наблюдавший за докладом удалённо, организует первый DevOpsDays в Генте 30–31 октября; хештег конференции #devops дал движению имя.</p>
+          <p class="tl-shift">Противостояние разработки и эксплуатации перестало быть законом природы. Стена между «собрать» и «запустить» рухнула, и цикл замкнулся вокруг продакшена.</p>
+          <p class="tl-src">Источники: <a href="https://www.kitchensoap.com/2009/06/23/slides-for-velocity-talk-2009/">Слайды Оллспо</a> · <a href="https://www.youtube.com/watch?v=LdOe18KhtT4">Доклад (видео)</a> · <a href="https://legacy.devopsdays.org/events/2009-ghent/">DevOpsDays Ghent 2009</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Дек. 2009</span>
+          <h4>Flickr описывает разработку на флагах</h4>
+          <p>Росс Хармс в посте «Flipping Out» в блоге разработчиков Flickr: никаких веток, всё в транке, в продакшен несколько раз в день, а за долю аудитории отвечают «флаги» и пользовательские «переключатели». Первое публичное описание фича-флагов — механизма, который отделяет <em>выкладку кода</em> от <em>релиза функций</em>. Статья Мартина Фаулера FeatureToggle в его bliki выходит в октябре 2010 года; LaunchDarkly превращает этот приём в продукт в 2014-м.</p>
+          <p class="tl-src">Источники: <a href="https://code.flickr.net/2009/12/02/flipping-out/">«Flipping Out» (2009)</a> · <a href="https://martinfowler.com/articles/feature-toggles.html">Канонический пересказ Ходжсона (2017)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Май 2010</span>
+          <h4>Deployinator в Etsy: одна кнопка, две минуты</h4>
+          <p>В посте Etsy «Quantum of Deployment» описано, как выкладка сократилась с часа согласованных усилий до одного человека, нажимающего одну кнопку, меньше чем за две минуты. К 2015 году Etsy публикует цифру примерно в 40 выкладок в день. Джон Оллспо, теперь работающий в Etsy, добавляет культурную половину в мае 2012-го: «Blameless PostMortems and a Just Culture» — инженеры, ближе всех стоявшие к сбою, разбирают его без страха, и благодаря этому организация действительно учится.</p>
+          <p class="tl-shift">У непрерывной выкладки появилась культура: маленькие изменения, честные разборы, никаких козлов отпущения.</p>
+          <p class="tl-src">Источники: <a href="https://codeascraft.com/2010/05/20/quantum-of-deployment/">Quantum of Deployment</a> · <a href="https://codeascraft.com/2015/02/20/re-introducing-deployinator-now-as-a-gem/">~40 выкладок в день (2015)</a> · <a href="https://www.codeascraft.com/2012/05/22/blameless-postmortems/">Blameless PostMortems (2012)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Июль 2010</span>
+          <h4>Книга <em>Continuous Delivery</em> дала конвейеру его канон</h4>
+          <p>Книга Джеза Хамбла и Дэвида Фарли (27 июля 2010 года) называет конвейер выкладки: каждый коммит сам собирается, тестируется и готовится к релизу одной кнопкой. Она становится эталоном, под который следующие десять лет подгоняют инструменты.</p>
+          <p class="tl-src">Источник: <a href="https://martinfowler.com/books/continuousDelivery.html">Страница книги у Фаулера</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Сент. 2011</span>
+          <h4><em>The Lean Startup</em> называет цикл для всех остальных</h4>
+          <p>Книга Эрика Риса (13 сентября 2011 года) упаковывает непрерывную выкладку, сплит-тесты и бережливое производство в «создать — измерить — узнать», проверенное обучение и MVP. Цикл внезапно становится не инженерной практикой, а принципом устройства компании — и бестселлером.</p>
+          <p class="tl-shift">Цикл вышел за пределы инженерии. Основатели и руководители стали описывать весь свой бизнес как цикл экспериментов.</p>
+          <p class="tl-src">Источник: <a href="https://en.wikipedia.org/wiki/The_Lean_Startup">The Lean Startup (2011)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Авг. 2012</span>
+          <h4>Knight Capital: контрпример на 440 млн долларов</h4>
+          <p>1 августа 2012 года ручная выкладка на восемь серверов маршрутизации заявок пропускает один, переиспользованный фича-флаг включает восьмилетний мёртвый код, и Knight Capital теряет примерно 440 млн долларов за 45 минут. Хрестоматийный пример того, почему автоматизация выкладок и порядок с флагами не факультативны, — на него с тех пор ссылаются в каждом споре о непрерывной доставке.</p>
+          <p class="tl-src">Источники: <a href="https://specbranch.com/posts/knight-capital/">технический разбор</a> · <a href="https://www.henricodolfing.ch/en/case-study-4-the-440-million-software-error-at-knight-capital/">разбор случая</a></p>
+        </div>
+
+        <div class="tl-era" id="era-experiment">
+          <span class="era-span">2000 – 2020</span>
+          <h3>Машина экспериментов</h3>
+          <p>Параллельно с революцией выкладок идёт индустриализация A/B-теста. То, что Фишер сделал для урожая, небольшие команды платформ делают для софта — и с неудобством обнаруживают, что большинство продуктовых идей не работают.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2000</span>
+          <h4>Google проводит свой первый A/B-тест</h4>
+          <p>Эксперимент о том, сколько результатов поиска показывать на странице, — как известно, смазанный задержкой загрузки страницы (Кохави и Томке датируют его 27 февраля 2000 года). Через десять лет Google строит инфраструктуру для экспериментов в перекрывающихся слоях, так что на одном и том же трафике могут идти тысячи одновременно.</p>
+          <p class="tl-src">Источники: <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">Kohavi &amp; Thomke, HBR 2017</a> · <a href="https://research.google/pubs/overlapping-experiment-infrastructure-more-better-faster-experimentation/">Tang et al., KDD 2010</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2006</span>
+          <h4>Рекомендации в корзине Amazon побеждают HiPPO</h4>
+          <p>В блоге Грега Линдена пересказана основополагающая легенда онлайн-экспериментов: он сделал прототип рекомендаций на странице корзины Amazon, старший вице-президент запретил его как помеху оформлению заказа, Линден всё равно провёл тест — и функция победила «с таким отрывом, что её отсутствие в проде обходилось Amazon в ощутимую сумму». Мнение самого высокооплачиваемого человека (HiPPO) проиграло измерению.</p>
+          <p class="tl-shift">Авторитет перестал решать продуктовые споры. В компаниях, живущих экспериментами, последнее слово осталось за тестом.</p>
+          <p class="tl-src">Источник: <a href="http://glinden.blogspot.com/2006/04/early-amazon-shopping-cart.html">Linden, «Early Amazon: Shopping cart recommendations» (2006)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2006</span>
+          <h4>Кохави основывает экспериментальную платформу Microsoft</h4>
+          <p>Команда ExP Рона Кохави превращает контролируемые эксперименты в Microsoft в индустрию. Ко времени статьи KDD 2013 года один только Bing в любой день запускает свыше 200 экспериментов одновременно — а самый цитируемый вывод платформы отрезвляет: лишь около трети проверенных идей улучшают те метрики, ради которых их придумали.</p>
+          <p class="tl-shift">Экспериментирование стало инфраструктурой — и дало твёрдые доказательства того, что экспертная интуиция насчёт желаний пользователей в большинстве случаев ошибается.</p>
+          <p class="tl-src">Источники: <a href="https://exp-platform.com/">exp-platform.com</a> · <a href="https://www.exp-platform.com/Documents/2013%20controlledExperimentsAtScale.pdf">Kohavi et al., KDD 2013 (PDF)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Март 2009</span>
+          <h4>41 оттенок синего; дизайнер уходит</h4>
+          <p>Дуг Боуман, первый руководитель визуального дизайна в Google, уходит — публично, в тексте «Goodbye, Google»: команда «не могла выбрать между двумя синими, поэтому тестирует 41 оттенок между ними»; ему предложили доказать, какой ширины должна быть рамка — 3, 4 или 5 пикселей. Символ напряжения между измерением и дизайнерской убеждённостью, о котором спорят и сегодня. (Фольклор Google позже оценил победивший синий примерно в 200 млн долларов рекламной выручки в год; считайте эту цифру легендой, а не результатом аудита.)</p>
+          <p class="tl-src">Источники: <a href="https://stopdesign.com/journal/2009/03/20/goodbye-google.html">Bowman, «Goodbye, Google» (2009)</a> · <a href="https://zeldman.com/2009/03/20/41-shades-of-blue/">Реакция Зелдмана</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2007 – 16</span>
+          <h4>Команды роста и организация «сначала метрика»</h4>
+          <p>Команда роста Чамата Палихапитии в Facebook (с 2007 года) перестраивает продуктовую работу вокруг одного наблюдения об удержании: довести нового пользователя до 7 друзей за 10 дней. Шон Эллис придумывает термин «growth hacker» в июле 2010-го; реферальная программа Dropbox (по 500 МБ обеим сторонам) увеличивает регистрации на 60% — так рассказывает сам Дрю Хьюстон в тексте 2010 года. К маю 2016-го Блейк Бартлетт из OpenView называет следующую модель «product-led growth»: сам продукт, измеряемый от начала до конца, и есть воронка.</p>
+          <p class="tl-src">Источники: <a href="https://ryangum.com/chamath-palihapitiya-how-we-put-facebook-on-the-path-to-1-billion-users/">Рассказ Палихапитии</a> · <a href="https://www.startup-marketing.com/2010/07/">Ellis, июль 2010</a> · <a href="https://openviewpartners.com/blog/inventing-product-led-growth/">История появления PLG у OpenView</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Сент. 2017</span>
+          <h4>Эксперимент на 100 млн долларов, который никто не хотел проводить</h4>
+          <p>Статья Кохави и Томке в HBR рассказывает историю, которая продаёт экспериментирование руководителям: идея инженера Bing про рекламные заголовки месяцами лежала в бэклоге с низким приоритетом — пока один инженер не запустил её как тест. Она подняла выручку на 12%, то есть более чем на 100 млн долларов в год: лучшая идея для выручки за всю историю Bing, а собственная продуктовая команда отложила её в стол.</p>
+          <p class="tl-shift">Довод перевернулся: дорого стоит не запуск плохих экспериментов, а <em>незапуск</em> хорошего, который вы недооценили.</p>
+          <p class="tl-src">Источник: <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">HBR, сент.–окт. 2017</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2018</span>
+          <h4><em>Accelerate</em> от DORA: у скорости появляется доказательная база</h4>
+          <p>Николь Форсгрен, Джез Хамбл и Джин Ким публикуют <em>Accelerate</em> (март 2018), сводя годы опросов State of DevOps к четырём измеримым метрикам доставки — частота выкладок, время выполнения, время восстановления, доля неудачных изменений — и к статистическому выводу, что скорость и стабильность не обмениваются друг на друга: лучшие команды получают и то и другое. В декабре того же года Google Cloud покупает DORA.</p>
+          <p class="tl-shift">«Нужно выпускать быстрее» перестало быть ощущением и стало проверенным, рецензируемым утверждением с числами.</p>
+          <p class="tl-src">Источники: <a href="https://itrevolution.com/product/accelerate/">Accelerate (2018)</a> · <a href="https://dora.dev/news/dora-joins-google-cloud/">DORA присоединяется к Google Cloud</a> · <a href="https://www.globenewswire.com/news-release/2013/03/26/1229773/0/en/DevOps-Adoption-Accelerating-Puppet-Labs-Survey-Results-Indicate.html">первый отчёт State of DevOps (2013)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Март 2020</span>
+          <h4>Появляется учебник по экспериментированию</h4>
+          <p>Кохави, Тан и Сюй публикуют <em>Trustworthy Online Controlled Experiments</em> (Cambridge, март 2020) — главный справочник отрасли, написанный людьми, которые запускали платформы в Microsoft, Google и LinkedIn. Ремесло теперь стало учебной программой.</p>
+          <p class="tl-src">Источник: <a href="https://experimentguide.com/">experimentguide.com</a></p>
+        </div>
+
+        <div class="tl-era" id="era-platform">
+          <span class="era-span">2019 – 2022</span>
+          <h3>Мощёные дороги</h3>
+          <p>Когда каждая команда крутит свой цикл, обвязка цикла становится продуктом. Платформенная инженерия делает «золотую тропу» чьей-то настоящей работой.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2019 – 21</span>
+          <h4>Team Topologies, Backstage, SPACE</h4>
+          <p>Книга Скелтона и Пэйса <em>Team Topologies</em> (сентябрь 2019) называет платформенную команду, чей продукт — скорость других команд. Spotify открывает код Backstage, своего внутреннего портала для разработчиков, в марте 2020-го (в песочнице CNCF — с сентября того же года). Фреймворк SPACE Форсгрен с коллегами (ACM Queue, март 2021) возражает против метрик продуктивности разработчиков в виде одного числа.</p>
+          <p class="tl-src">Источники: <a href="https://teamtopologies.com/book">Team Topologies</a> · <a href="https://engineering.atspotify.com/2021/03/happy-birthday-backstage-spotifys-biggest-open-source-project-grows-up-fast">Первый год Backstage</a> · <a href="https://queue.acm.org/detail.cfm?id=3454124">SPACE (2021)</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2022</span>
+          <h4>«Платформенная инженерия» на пике</h4>
+          <p>Термин попадает в Hype Cycle for Emerging Technologies от Gartner за 2022 год с прогнозом, что к 2026 году 80% крупных инженерных организаций заведут платформенные команды. Многое тут — практики эпохи DevOps под новым названием, но сдвиг настоящий: самообслуживаемая инфраструктура как внутренний продукт, а инструменты цикла поддерживаются централизованно, и продуктовые команды лишь берут их в аренду.</p>
+          <p class="tl-src">Источник: <a href="https://www.gartner.com/en/infrastructure-and-it-operations-leaders/topics/platform-engineering">Gartner о платформенной инженерии</a></p>
+        </div>
+
+        <div class="tl-era" id="era-ai">
+          <span class="era-span">2021 → сегодня</span>
+          <h3>Цикл встречает ИИ</h3>
+          <p>Генерация дешевеет, узким местом становится проверка. Цикл начинает работать на уровне отдельного изменения — его предлагают, тестируют и выпускают с помощью машин, — а продукты на ИИ приносят с собой новый вид тестов.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2021 – 22</span>
+          <h4>Copilot, затем ChatGPT</h4>
+          <p>Техническое превью GitHub Copilot (июнь 2021) и его общая доступность (21 июня 2022) помещают генерацию кода в редактор. ChatGPT (30 ноября 2022) набирает примерно 100 миллионов пользователей за два месяца — и меняет ожидания от того, как быстро можно выпускать продукт: постоянно обновляемые модели, заметные каждую неделю изменения.</p>
+          <p class="tl-src">Источники: <a href="https://github.blog/news-insights/product-news/github-copilot-is-generally-available-to-all-developers/">Общая доступность Copilot</a> · <a href="https://techcrunch.com/2025/11/30/chatgpt-launched-three-years-ago-today/">Запуск ChatGPT: взгляд назад</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Март 2023</span>
+          <h4>Эвалы становятся новым набором регрессионных тестов</h4>
+          <p>OpenAI открывает код Evals одновременно с GPT-4 (14 марта 2023 года). Три месяца спустя статья Чжэна и соавторов «Judging LLM-as-a-Judge» формализует использование сильной модели для оценки ответов другой модели — около 85% согласия с людьми-оценщиками, выше, чем согласие людей между собой, — и при этом описывает собственные предвзятости такого судьи. Для ИИ-продуктов эвалы начинают играть ту же роль, что юнит-тесты для CI: автоматические ворота, вокруг которых замыкается цикл.</p>
+          <p class="tl-shift">Поведение модели, раньше бывшее ощущением, стало числом, которое можно гонять в регрессионных тестах в CI.</p>
+          <p class="tl-src">Источники: <a href="https://techcrunch.com/2023/03/14/with-evals-openai-hopes-to-crowdsource-ai-model-testing/">OpenAI Evals</a> · <a href="https://arxiv.org/abs/2306.05685">Zheng et al., 2023</a></p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2024 – 25</span>
+          <h4>Агенты входят в конвейер</h4>
+          <p>Демонстрация Devin от Cognition (март 2024) обещает лишнее и публично опровергается — но категория, о которой она объявила, всё равно приходит: Claude Code выходит как исследовательское превью 24 февраля 2025 года; агент Codex от OpenAI запускается 16 мая 2025-го; кодирующий агент GitHub Copilot принимает задачи из тикетов с 19 мая 2025-го. Все они, что заметно, выдают черновые pull request, которые должен одобрить человек. К сентябрю 2025 года OpenAI платит 1,1 млрд долларов за платформу экспериментов Statsig: новейшие работники цикла и его слой измерения оказываются куплены одной и той же компанией в один и тот же год.</p>
+          <p class="tl-shift">Написать изменение стало дёшево. Дефицитом стало решить, хорошо ли оно: тесты, эвалы, ревью.</p>
+          <p class="tl-src">Источники: <a href="https://www.anthropic.com/news/claude-3-7-sonnet">Превью Claude Code</a> · <a href="https://openai.com/index/introducing-codex/">Codex</a> · <a href="https://github.blog/changelog/2025-05-19-github-copilot-coding-agent-in-public-preview/">Кодирующий агент Copilot</a> · <a href="https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/">OpenAI × Statsig</a></p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <h3>Что на самом деле менялось каждый раз</h3>
+        <p>Если убрать имена, у этого века один сюжет: <strong>каждая эпоха делала одну часть цикла резко дешевле, и практика перестраивалась вокруг нового дешёвого ресурса.</strong> Шухарт сделал дешёвым измерение на заводском полу. Toyota — мелкие порции. XP и CI — интеграцию. Flickr, IMVU и Etsy — <em>выкладку</em>. Платформы экспериментов — <em>причинное измерение</em>. Эпоха ИИ делает дешёвой <em>генерацию</em>, и поэтому впервые узким местом становится суждение: решить, что строить, и хорошо ли то, что построено. Каждая следующая глава — о том, как та или иная команда справляется с дефицитом, который оставила ей её эпоха.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="trends" aria-labelledby="trends-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 03</span>
+        <h2 id="trends-h">Что меняется прямо сейчас</h2>
+        <p class="standfirst">Нынешнее десятилетие цикла определяют четыре измеримых сдвига: каденс релизов рухнул, объём экспериментов взорвался, регулирование приватности перестроило слой измерения, а ИИ поднял пропускную способность, но заметно подпортил стабильность. Каждое утверждение ниже либо опирается на опубликованные данные, либо прямо помечено как предположение.</p>
+      </div>
+
+      <div class="stat-strip reveal">
+        <div class="stat">
+          <div class="stat-value">269 → 4</div>
+          <div class="stat-label">недель между релизами браузера: разрыв IE6→IE7 (2001–06) и цикл Chrome с III квартала 2021 года</div>
+          <div class="stat-src"><a href="https://blog.chromium.org/2021/03/speeding-up-release-cycle.html">Chromium Blog, март 2021</a></div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">973×</div>
+          <div class="stat-label">чаще выкладывают лучшие команды по сравнению с отстающими (≈1 460 в год против ≈1,5 в год)</div>
+          <div class="stat-src"><a href="https://dora.dev/research/2021/dora-report/">DORA State of DevOps, 2021</a></div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">10 000+</div>
+          <div class="stat-label">экспериментов в год у каждой из компаний: Microsoft, Amazon, Google, Meta и Booking.com</div>
+          <div class="stat-src"><a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">Kohavi &amp; Thomke, HBR 2017</a></div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">−7,2%</div>
+          <div class="stat-label">оценка стабильности доставки на каждые 25% роста внедрения ИИ</div>
+          <div class="stat-src"><a href="https://dora.dev/research/2024/dora-report/">Отчёт DORA, 2024</a></div>
+        </div>
+      </div>
+
+      <div class="prose">
+        <h3>Каденс рухнул — и это измерено, а не заявлено</h3>
+        <p>Самый ясный временной ряд во всей области — браузер, в котором вы это читаете. Между IE6 (2001) и IE7 (2006) у Internet Explorer прошло пять лет. Firefox перешёл на шестинедельный «поезд» быстрых релизов в 2011 году; у Chrome шестинедельные циклы шли с 2010 года, а в марте 2021-го он <a href="https://blog.chromium.org/2021/03/speeding-up-release-cycle.html">объявил о переходе на четыре недели</a> — «поскольку мы улучшили процессы тестирования и выпуска… мы поняли, что можем сократить цикл релиза». Тот же обвал виден по всей отрасли в десятилетии данных DORA State of DevOps — лучших долгосрочных данных, которые у нас есть:</p>
+      </div>
+
+      <div class="tablewrap reveal">
+        <table class="data">
+          <caption>DORA State of DevOps: лучшие и отстающие команды по годам отчётов</caption>
+          <thead><tr><th scope="col">Отчёт</th><th scope="col">Доля лучших команд</th><th scope="col">Разрыв в частоте выкладок</th><th scope="col">Доля неудачных изменений у лучших</th><th scope="col">Примечательно</th></tr></thead>
+          <tbody>
+            <tr><td class="mono"><a href="https://dora.dev/research/2016/">2016</a></td><td class="dim">«высокие результаты»</td><td>в 200 раз чаще</td><td class="dim">в 3 раза ниже, чем у отстающих</td><td>Время выполнения в 2 555 раз быстрее</td></tr>
+            <tr><td class="mono"><a href="https://dora.dev/research/2018/dora-report/">2018</a></td><td>первая группа «лучших»</td><td>в 46 раз чаще</td><td>в 7 раз ниже</td><td>Восстановление в 2 604 раза быстрее</td></tr>
+            <tr><td class="mono"><a href="https://dora.dev/research/2019/dora-report/">2019</a></td><td>20%</td><td>в 208 раз (≈1 460 в год против 7 в год)</td><td>0–15%</td><td>Время выполнения у лучших &lt;1 дня</td></tr>
+            <tr><td class="mono"><a href="https://dora.dev/research/2021/dora-report/">2021</a></td><td>26%</td><td>в 973 раза (≈1 460 в год против 1,5 в год)</td><td>0–15%</td><td>Время выполнения у лучших &lt;1 часа</td></tr>
+            <tr><td class="mono"><a href="https://dora.dev/research/2023/dora-report/">2023</a></td><td>18%</td><td>по запросу против раза в неделю–месяц</td><td>5%</td><td>Доля неудачных изменений у отстающих: 64%</td></tr>
+            <tr><td class="mono"><a href="https://dora.dev/research/2024/dora-report/">2024</a></td><td colspan="3">пропускная способность и стабильность разделены на отдельные конструкты</td><td>Первые оценки влияния ИИ (ниже)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>Читайте таблицу с оглядкой на методологию: определения групп меняются от года к году (потому множители и скачут), данные — это самооценки из опросов, а «лучшие» — группа, а не фиксированная планка. Устойчив во все годы исследования вывод, который сделал знаменитой <em>Accelerate</em>: <strong>скорость и стабильность коррелируют положительно.</strong> Команды, которые выкладывают чаще всех, реже всех ломают и быстрее всех восстанавливаются — их защищает малый размер порции, а не медленный темп. «Двигайся быстро и ломай всё» всегда было ложным выбором; данные говорят: двигайся быстро <em>и</em> ломай меньше.</p>
+
+        <h3>Объём экспериментов взорвался</h3>
+      </div>
+
+      <figure class="viz reveal">
+        <div class="viz-card">
+          <p class="viz-title">Эксперименты Weblab в Amazon за год</p>
+          <p class="viz-sub">Единственные цифры по экспериментам большой компании, которые когда-либо публиковались в письме акционерам.</p>
+          <svg viewBox="0 0 560 240" role="img" aria-label="Столбчатая диаграмма числа экспериментов Weblab в Amazon: 546 в 2011 году, 1 092 в 2012-м и 1 976 в 2013-м — примерно удвоение каждый год.">
+            <g font-size="13">
+              <line x1="70" y1="190" x2="530" y2="190" stroke="var(--baseline)" stroke-width="1"/>
+              <g fill="var(--s1)">
+                <rect x="143" y="145.4" width="24" height="44.6" rx="4"/>
+                <rect x="143" y="186" width="24" height="4"/>
+                <rect x="273" y="100.8" width="24" height="89.2" rx="4"/>
+                <rect x="273" y="186" width="24" height="4"/>
+                <rect x="403" y="28.6" width="24" height="161.4" rx="4"/>
+                <rect x="403" y="186" width="24" height="4"/>
+              </g>
+              <g fill="var(--ink)" text-anchor="middle" font-weight="650">
+                <text x="155" y="137">546</text>
+                <text x="285" y="92">1 092</text>
+                <text x="415" y="20">1 976</text>
+              </g>
+              <g fill="var(--ink-2)" text-anchor="middle">
+                <text x="155" y="212">2011</text>
+                <text x="285" y="212">2012</text>
+                <text x="415" y="212">2013</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption><span class="src">Источник: <a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2013-Letter-to-Shareholders.pdf">письмо Amazon акционерам за 2013 год</a> (опубликовано в апреле 2014-го). После этого Amazon перестал публиковать такие цифры; к 2017 году в HBR компанию отнесли к категории «10 000+ в год».</span></figcaption>
+      </figure>
+
+      <div class="prose">
+        <p>Картина объёма везде, где данные публиковались, одна и та же. Bing к 2013 году <a href="https://www.exp-platform.com/Documents/2013%20controlledExperimentsAtScale.pdf">в любой день вёл более 200 одновременных экспериментов</a>, каждый обычно охватывал несколько миллионов пользователей. Booking.com дошёл до <a href="https://hbr.org/2020/03/building-a-culture-of-experimentation">1 000+ одновременных тестов</a>. Google раскрыл <a href="https://www.seroundtable.com/google-3200-changes-to-search-27890.html">654 680 экспериментов с поиском в 2019 году</a>, из которых вышло 3 620 запусков — доля запусков 0,6% говорит о базовой частоте провалов не меньше, чем об амбициях Google. А сквозную мысль из статьи Кохави на KDD стоит где-нибудь выгравировать: эксперименты, которые <em>выигрывали</em>, часто были до абсурда дёшевы — два изменения в Bing, «на которые ушли считаные дни, принесли по 100 миллионов долларов рекламной выручки в год каждое».</p>
+
+        <h3>От мнений к телеметрии — и ответная реакция</h3>
+        <p>Культурный сдвиг под цифрами: продуктовые споры, которые в 2005 году решал стаж, сегодня решают дашборды. Но у ответной реакции уже есть собственная классика, и ей стоит дать справедливый вес. В <a href="https://stopdesign.com/journal/2009/03/20/goodbye-google.html">прощальном посте</a> 2009 года Дуг Боуман назвал цену измерения всего подряд: дизайн сводится к оправдываемым микрорешениям, «спорам о том, какой ширины должна быть рамка — 3, 4 или 5 пикселей». Закон Гудхарта — в формулировке Мэрилин Стратерн 1997 года, <em>«когда мера становится целью, она перестаёт быть хорошей мерой»</em> — предсказывает то, что рано или поздно заново открывает любая организация, помешанная на метриках, а Джерри Мюллер в книге <em>The Tyranny of Metrics</em> (2018) показал это на примерах медицины, полиции и образования, а не только софта. Даже основатель этой области предупреждает о ловушке локального максимума; в статье Кохави на KDD 2013 это сказано одной строкой: <a href="https://www.exp-platform.com/Documents/2013%20controlledExperimentsAtScale.pdf">«на Луну не попадёшь, забираясь на всё более высокие деревья».</a> Вывод, к которому приходит большинство зрелых команд: телеметрия решает <em>небольшие</em> обратимые вопросы, а вкус и стратегия решают, на какое дерево лезть, — позиция, которую Linear превратила в свою идентичность (<a href="#cases">глава 5</a>).</p>
+
+        <h3>Приватность перестроила слой измерения</h3>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Регуляторное десятилетие слоя измерения</p>
+          <p class="viz-sub">Датированные вехи, изменившие то, что сайту позволено знать.</p>
+          <svg viewBox="0 0 860 250" role="img" aria-label="Хронология вех приватности с 2017 по 2025 год. Июнь 2017: Safari выпускает Intelligent Tracking Prevention 1.0. Май 2018: вступает в силу GDPR. Февраль 2019: ITP 2.1 ограничивает JavaScript-куки первой стороны семью днями, ломая распределение по группам в аналитике. Январь 2020: Chrome объявляет об отказе от сторонних куки в течение двух лет. Июль 2024: Google отказывается от отказа в пользу выбора пользователя. Апрель 2025: Google подтверждает, что отдельного запроса о куки не будет; сторонние куки остаются.">
+            <g font-size="12.5">
+              <line x1="40" y1="125" x2="820" y2="125" stroke="var(--baseline)" stroke-width="2"/>
+              <g fill="var(--s1)" stroke="var(--paper)" stroke-width="2.5">
+                <circle cx="80" cy="125" r="7"/>
+                <circle cx="200" cy="125" r="7"/>
+                <circle cx="320" cy="125" r="7"/>
+                <circle cx="440" cy="125" r="7"/>
+                <circle cx="620" cy="125" r="7"/>
+                <circle cx="760" cy="125" r="7"/>
+              </g>
+              <!-- above-line entries -->
+              <g text-anchor="middle">
+                <text x="80" y="78" fill="var(--ink)" font-weight="650">Июнь 2017</text>
+                <text x="80" y="96" fill="var(--ink-2)">Safari ITP 1.0</text>
+                <text x="320" y="60" fill="var(--ink)" font-weight="650">Фев. 2019</text>
+                <text x="320" y="78" fill="var(--ink-2)">ITP 2.1: потолок в 7 дней для</text>
+                <text x="320" y="94" fill="var(--ink-2)">JS-куки первой стороны</text>
+                <text x="620" y="78" fill="var(--ink)" font-weight="650">Июль 2024</text>
+                <text x="620" y="96" fill="var(--ink-2)">Chrome отказывается от отказа</text>
+              </g>
+              <!-- below-line entries -->
+              <g text-anchor="middle">
+                <text x="200" y="160" fill="var(--ink)" font-weight="650">Май 2018</text>
+                <text x="200" y="178" fill="var(--ink-2)">Вступает в силу GDPR</text>
+                <text x="440" y="160" fill="var(--ink)" font-weight="650">Янв. 2020</text>
+                <text x="440" y="178" fill="var(--ink-2)">Chrome объявляет об отказе от</text>
+                <text x="440" y="194" fill="var(--ink-2)">сторонних куки «в течение двух лет»</text>
+                <text x="760" y="160" fill="var(--ink)" font-weight="650">Апр. 2025</text>
+                <text x="760" y="178" fill="var(--ink-2)">…куки остаются;</text>
+                <text x="760" y="194" fill="var(--ink-2)">запроса так и не выпустили</text>
+              </g>
+              <text x="430" y="234" fill="var(--ink-3)" text-anchor="middle" font-size="12">Пять с половиной лет от «устареет через два года» до «мы сохраним нынешний подход».</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption><span class="src">Источники: <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">WebKit ITP 1.0 (2017)</a> · <a href="https://webkit.org/blog/8613/intelligent-tracking-prevention-2-1/">ITP 2.1 (2019)</a> · <a href="https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html">Chromium (янв. 2020)</a> · <a href="https://privacysandbox.com/news/privacy-sandbox-update/">Privacy Sandbox (июль 2024)</a> · <a href="https://privacysandbox.com/news/privacy-sandbox-next-steps/">Privacy Sandbox (апр. 2025)</a>.</span></figcaption>
+      </figure>
+
+      <div class="prose">
+        <p>Две из этих дат важнее знаменитых. ITP 2.1 (февраль 2019) ограничил <em>JavaScript-куки первой стороны</em> в Safari семью днями — и тихо сломал не рекламные технологии, а обычную аналитику и распределение по группам в экспериментах: вернувшийся через неделю посетитель Safari становится «новым» пользователем, а двухнедельный A/B-тест может заново рандомизировать собственных участников. А антикульминация истории с Chrome — объявлено в январе 2020 года как отказ в течение двух лет, <a href="https://privacysandbox.com/news/privacy-sandbox-update/">отменено в июле 2024-го</a>, окончательно похоронено в апреле 2025-го — мотала всю отрасль, которая четыре года перестраивалась под отказ, так и не наступивший. Долгосрочные последствия структурные, и они объясняют половину <a href="#tooling">главы 6</a>: измерение переехало на сервер и стало собственным; аналитика, изначально обходящаяся без куки (Plausible, Fathom, Cloudflare), стала настоящей категорией; управление согласиями стало постоянным налогом; а идентичность в экспериментах всё чаще живёт в вашем собственном хранилище данных, а не в куки вендора — «склад-ориентированный» поворот, консолидация которого (dbt слилась с Fivetran в октябре 2025-го, Eppo ушла к Datadog, Statsig — к OpenAI) знаменует конец его фазы захвата земель.</p>
+
+        <h3>ИИ: пропускная способность растёт, стабильность падает — первые настоящие данные</h3>
+        <p>У действительно нового тренда последних трёх лет есть настоящие числа, и они интереснее маркетинга. В отчёте DORA за 2024 год под прямолинейным заголовком «ИИ вредит показателям доставки» оценивалось, что рост внедрения ИИ на 25% связан со <strong>снижением пропускной способности доставки на 1,5% и снижением её стабильности на 7,2%</strong> — притом что то же внедрение улучшало качество документации (+7,5%), качество кода (+3,4%) и скорость ревью. Предполагаемый механизм — самый старый урок этого текста: ИИ позволяет легко писать <em>больше кода на одно изменение</em>, а крупные порции расшатывают доставку — кривая размера порции из главы 1, разыгранная с роботом. В <a href="https://dora.dev/research/2025/dora-report/">отчёте 2025 года</a> (переименованном в «State of AI-assisted Software Development»; 90% респондентов уже пользуются ИИ на работе) пропускная способность вернулась в плюс по мере того, как команды приспособились, — а <strong>нестабильность осталась</strong>, и ИИ описан как «усилитель»: он увеличивает сильные стороны хорошо налаженных циклов и сбои сломанных. Это оценки по опросам, а не контролируемые эксперименты — DORA говорит об этом сама, — но других долгосрочных данных по отрасли нет, и обе стороны истории (настоящий выигрыш, настоящая цена в стабильности) стоит приводить вместе.</p>
+
+        <h3>Новое или переименованное? Табель</h3>
+        <p>Честность требует разобрать словарь десятилетия. <strong>Действительно новое с 2022 года:</strong> наборы эвалов как ворота CI для поведения модели; кодирующие агенты, открывающие pull request в боевых репозиториях; измеренные (хотя и оспариваемые) отраслевые данные о влиянии ИИ на доставку; платформы экспериментов внутри ИИ-лабораторий (1,1 млрд долларов говорят, что это не ребрендинг). <strong>Настоящее, но переименованное:</strong> «платформенная инженерия» — в основном практика внутренних инструментов и SRE 2010-х, которой дали кривую Gartner и строку в бюджете; сдвиг по сути (самообслуживаемая инфраструктура как внутренний продукт) реален, новизна — нет. «Product-led growth» — это сценарий 2009–2012 годов из фримиума и аналитики, только с инструментами получше. «Непрерывное исследование» (continuous discovery) — это пользовательские исследования по расписанию: хорошая практика, старая идея. <strong>Заявленное, но не измеренное:</strong> что ИИ-агенты автономно замкнут весь цикл (<a href="#automation">глава 7</a> разбирает, сколько из этого уже существует) и большинство заявок вендоров про «десятикратную производительность разработчика», которые сейчас не подтверждает ни одно независимое долгосрочное исследование.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="compound" aria-labelledby="compound-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 04</span>
+        <h2 id="compound-h">Почему одни набирают ход, а другие буксуют</h2>
+        <p class="standfirst">Скорость — свойство не инструментов, а организации. Компании, которые продолжали итерировать, объединяли четыре структурных механизма, делавших скорость безопасной, — а знаменитые заморозки, если разобрать их честно, почти никогда не были слепотой. Это были рациональные организации, пойманные маржой, долгом, советом директоров или страхом.</p>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Четыре механизма, делающие скорость безопасной</p>
+          <p class="viz-sub">Каждый превращает культурное стремление («двигайся быстро») в структурное правило, которому реально можно следовать.</p>
+          <svg viewBox="0 0 860 420" role="img" aria-label="Схема из четырёх панелей. Первая: двери в обе стороны — решения делятся на обратимые, которые малые группы должны принимать быстро, и необратимые, которые заслуживают неторопливого обдумывания. Вторая: бюджеты ошибок — согласованная цель по уровню сервиса задаёт допустимую ненадёжность; пока бюджет есть, выпускаешь свободно, когда он потрачен, релизы приостанавливаются. Третья: разработка в транке — недолговечные ветки вливаются в единый транк ежедневно, удерживая порции мелкими. Четвёртая: бюджет неудач — ожидайте, что примерно девяносто процентов идей провалятся, так что отдельные провалы — рутина, а не кризисы.">
+            <g font-size="13">
+              <!-- Panel 1: two-way doors -->
+              <rect x="10" y="10" width="410" height="190" rx="12" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="30" y="42" font-weight="650" fill="var(--ink)" font-size="14.5">1 · Двери в обе стороны</text>
+              <g stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="40" y="70" width="54" height="84" rx="4"/>
+                <line x1="66" y1="70" x2="66" y2="154"/>
+                <path d="M 46 100 L 58 112 L 46 124 M 86 100 L 74 112 L 86 124"/>
+              </g>
+              <text x="120" y="92" fill="var(--ink)" font-weight="650">Обратимо?</text>
+              <text x="120" y="112" fill="var(--good-text)">→ решай быстро, малой группой, выпускай</text>
+              <text x="120" y="136" fill="var(--ink)" font-weight="650">Дверь в одну сторону?</text>
+              <text x="120" y="156" fill="var(--ink-2)">→ медленно, обдуманно, эскалируй</text>
+              <text x="30" y="184" fill="var(--ink-3)" font-size="11.5">Безос, письмо акционерам 2015 года</text>
+
+              <!-- Panel 2: error budget -->
+              <rect x="440" y="10" width="410" height="190" rx="12" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="460" y="42" font-weight="650" fill="var(--ink)" font-size="14.5">2 · Бюджеты ошибок</text>
+              <rect x="460" y="76" width="300" height="18" rx="9" fill="var(--surface)" stroke="var(--border)"/>
+              <rect x="460" y="76" width="210" height="18" rx="9" fill="var(--s1)"/>
+              <text x="470" y="118" fill="var(--ink-2)"><tspan>потрачено:</tspan> <tspan fill="var(--ink)" font-weight="650">выпускай смело</tspan></text>
+              <text x="700" y="118" fill="var(--ink-2)">осталось</text>
+              <text x="460" y="146" fill="var(--ink-2)">Бюджета нет → релизы встают, силы</text>
+              <text x="460" y="164" fill="var(--ink-2)">уходят на надёжность. Договорено заранее, без политики.</text>
+              <text x="460" y="188" fill="var(--ink-3)" font-size="11.5">Книга Google SRE, 2016 — «Embracing Risk»</text>
+
+              <!-- Panel 3: trunk-based -->
+              <rect x="10" y="220" width="410" height="190" rx="12" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="30" y="252" font-weight="650" fill="var(--ink)" font-size="14.5">3 · Разработка в транке</text>
+              <g stroke-width="2.5" fill="none" stroke-linecap="round">
+                <line x1="40" y1="330" x2="390" y2="330" stroke="var(--accent)"/>
+                <path d="M 80 330 C 100 300, 130 300, 150 330" stroke="var(--ink-3)"/>
+                <path d="M 170 330 C 190 300, 220 300, 240 330" stroke="var(--ink-3)"/>
+                <path d="M 260 330 C 280 300, 310 300, 330 330" stroke="var(--ink-3)"/>
+              </g>
+              <text x="215" y="362" fill="var(--ink-2)" text-anchor="middle">ветки живут часы, а не недели — вливай каждый день</text>
+              <text x="30" y="394" fill="var(--ink-3)" font-size="11.5">Flickr 2009 · trunkbaseddevelopment.com · DORA</text>
+
+              <!-- Panel 4: failure budget -->
+              <rect x="440" y="220" width="410" height="190" rx="12" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="460" y="252" font-weight="650" fill="var(--ink)" font-size="14.5">4 · Бюджет на неудачные идеи</text>
+              <g>
+                <circle cx="478" cy="300" r="10" fill="var(--baseline)"/><circle cx="510" cy="300" r="10" fill="var(--baseline)"/><circle cx="542" cy="300" r="10" fill="var(--baseline)"/><circle cx="574" cy="300" r="10" fill="var(--baseline)"/><circle cx="606" cy="300" r="10" fill="var(--baseline)"/>
+                <circle cx="638" cy="300" r="10" fill="var(--baseline)"/><circle cx="670" cy="300" r="10" fill="var(--baseline)"/><circle cx="702" cy="300" r="10" fill="var(--baseline)"/><circle cx="734" cy="300" r="10" fill="var(--baseline)"/><circle cx="766" cy="300" r="10" fill="var(--accent)"/>
+              </g>
+              <text x="460" y="342" fill="var(--ink-2)">~9 из 10 проверенных идей не двигают свою метрику.</text>
+              <text x="460" y="360" fill="var(--ink-2)">Заложите это — и один провал будет рутиной, а не кризисом.</text>
+              <text x="460" y="392" fill="var(--ink-3)" font-size="11.5">Booking.com ~90% · Microsoft ~2/3 · Google/Bing 80–90%</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Источники: <a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2015-Letter-to-Shareholders.PDF">письмо акционерам Amazon 2015 года</a> · <a href="https://sre.google/sre-book/embracing-risk/">Google SRE, «Embracing Risk» (2016)</a> · <a href="https://hbr.org/2020/03/building-a-culture-of-experimentation">Thomke, HBR 2020</a> · <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">Kohavi &amp; Thomke, HBR 2017</a>.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <p>Начнём с механизма, на котором держатся все остальные. В <a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2015-Letter-to-Shareholders.PDF">письме акционерам 2015 года</a> Джефф Безос отделил решения типа 1 — «значимые и необратимые или почти необратимые, двери в одну сторону», которые нужно принимать «методично, осторожно, медленно» — от типа 2: «изменяемых, обратимых, дверей в обе стороны», которые «могут и должны приниматься быстро опытными людьми или небольшими группами». Предостерегал он от сбоя, который приходит с масштабом: крупные организации скатываются к тяжёлому процессу типа 1 для всего подряд, и результатом становятся «медлительность, бездумное нежелание рисковать, недостаток экспериментов и, как следствие, меньше изобретений». Почти каждая практика в этом тексте — флаги, канареечные выкладки, поэтапные раскатки, лёгкий откат — это инженерия, которая <em>превращает решения типа 1 в решения типа 2</em>, чтобы как можно больше компании двигалось со скоростью типа 2.</p>
+        <p>Организация Google SRE решила другую хроническую борьбу за скорость — «ваши релизы ломают мою надёжность» — с помощью <a href="https://sre.google/sre-book/embracing-risk/">бюджета ошибок</a> (2016): согласуется явная цель по надёжности ниже 100%, и разница становится бюджетом, который продуктовые команды могут потратить на выпуски. Пока бюджет есть, релизы идут без споров; когда он потрачен, релизы останавливаются без споров. Гениально здесь не число, а <em>договорённость заранее</em>: «надёжность против скорости» превращается из драки, которую каждый раз затеваешь заново, в правило, с которым сверяешься. Добавьте разработку в транке (структурно мелкие порции — исследования DORA снова и снова связывают её с лучшими показателями доставки) и признанную терпимость к ~90% провалов идей — и полный набор механизмов у вас есть. Есть ещё одно условие, которое ничего не стоит и встречается реже всего: <em>у каждой метрики ровно один владелец.</em> Число без хозяина — декорация; число с двумя хозяевами — борьба за территорию.</p>
+
+        <h3>Blockbuster против Netflix — честная версия</h3>
+        <p>Карикатура гласит, что Blockbuster высмеял Netflix и не увидел угрозы. Отчасти правда: в 2000 году Рид Гастингс и Марк Рэндольф действительно предлагали Blockbuster купить Netflix за 50 млн долларов, а гендиректор Джон Антиоко <a href="https://www.inc.com/minda-zetlin/netflix-blockbuster-meeting-marc-randolph-reed-hastings-john-antioco.html">отказался, назвав истерию вокруг доткомов раздутой</a>. Но интересно то, что было дальше: Blockbuster <em>итерировал</em>. Blockbuster Online запустился в 2004 году; штрафы за просрочку отменили в январе 2005-го; Total Access (возврат онлайн-заказов в любом магазине) запустили в <a href="https://www.npr.org/templates/story/story.php?storyId=9151791">ноябре 2006 года</a>, и он сработал — к началу 2007 года Blockbuster прогнозировал около трёх миллионов онлайн-подписчиков, а рост Netflix <a href="https://www.cnbc.com/2020/09/22/how-netflix-almost-lost-the-movie-rental-wars-to-blockbuster.html">заметно затормозился</a>. А потом цикл сломали сверху: борьба активистов в совете директоров из-за бонуса Антиоко вытеснила его в 2007 году, и его преемник сократил вложения в онлайн-бизнес. Вердикт самого Антиоко в <a href="https://hbr.org/2011/04/how-i-did-it-blockbusters-former-ceo-on-sparring-with-an-activist-shareholder">HBR (2011)</a>: если бы стратегию не «по сути бросили», Blockbuster Online соперничал бы с Netflix. Банкротство наступило в сентябре 2010 года. Урок не в том, что «они не итерировали», а в том, что <strong>итерация — способность, которую совет директоров может уничтожить одним решением</strong>, а долги и экономика сети магазинов превращали каждый эксперимент в драку.</p>
+        <p>Вторая половина этой пары у Netflix не менее поучительна, потому что её определяющий момент — это <em>провал</em>: повышение цен и выделение Qwikster в 2011 году стоили 800 000 подписчиков за квартал и примерно трёх четвертей цены акций, а Гастингс закрыл Qwikster <a href="https://www.npr.org/sections/thetwo-way/2011/10/10/141209082/netflix-kills-qwikster-price-hike-lives-on">через 23 дня после объявления</a>. Суперсила итератора никогда не состояла в том, чтобы не ошибаться. Она в том, чтобы относиться даже к запуску стратегии уровня гендиректора как к обратимому — и отменить его публично в течение месяца.</p>
+
+        <h3>Kodak и Nokia — застой и страх, а не слепота</h3>
+        <p>Инженер Kodak Стив Сассон собрал первую цифровую камеру в декабре 1975 года; реакция руководства — <a href="https://www.forbes.com/sites/chunkamui/2012/01/18/how-kodak-failed/">«мило, но никому об этом не рассказывай»</a> — самая цитируемая фраза в литературе о корпоративных провалах. Но карикатура не выдерживает простой проверки фактов: Kodak запатентовал технологию, вложил миллиарды в цифровые исследования и разработки, а к 2005 году лидировал на американском рынке цифровых камер с линейкой EasyShare. Чего она не смогла — так это <em>захотеть</em>, чтобы цифра победила: у плёнки была огромная маржа, а цифровые камеры были товаром с тонкой маржой. Это дилемма инноватора Клейтона Кристенсена в чистом виде: ловушка именно в том, что рациональные менеджеры защищают свой лучший бизнес. Kodak подал на банкротство в январе 2012 года — выпустив будущее и не сумев его себе позволить.</p>
+        <p>У Nokia было больше половины мирового рынка смартфонов, когда вышел iPhone. Замечательное свидетельство того, что случилось дальше, дало исследование Вуори и Хюи 2016 года в <em>Administrative Science Quarterly</em>, построенное на 76 интервью с инсайдерами: <a href="https://journals.sagepub.com/doi/10.1177/0001839215606951">культура распределённого страха</a>. Топ-менеджеры боялись конкурентов и акционеров; средние менеджеры боялись начальства — и потому скрывали плохие новости о реальном состоянии Symbian, оставляя руководство излишне оптимистичным, пока раздробленные слои интерфейса платформы замедляли любую итерацию. К тому времени, когда гендиректор Стивен Элоп написал утёкшее в сеть <a href="https://www.engadget.com/2011-02-08-nokia-ceo-stephen-elop-rallies-troops-in-brutally-honest-burnin.html">письмо о «горящей платформе»</a> (февраль 2011) — «первый iPhone вышел в 2007-м, а у нас до сих пор нет продукта, который был бы близок к их уровню» — цикл был сломан уже много лет, не из-за незнания, а из-за того, что <strong>точные плохие новости не могли подниматься наверх</strong>. Телефонный бизнес продали Microsoft в сентябре 2013 года. Разборы без поиска виноватых (<a href="#timeline">глава 2</a>) — не вежливость, а антидот против Nokia.</p>
+
+        <h3>Sears — магазин на все случаи, который повесил трубку первым</h3>
+        <p>Sears — самый странный случай, потому что на руках у него были все карты. Его каталог <em>был</em> магазином на все случаи, на сто лет раньше срока; в 1984 году он стал сооснователем онлайн-сервиса Prodigy — онлайн-покупки за десятилетие до того, как веб что-то значил. А в январе 1993 года, истекая убытком в 3,9 млрд долларов, он закрыл каталог Big Book — мускулы почтовой торговли и данные о клиентах, которые напрямую перешли бы в электронную коммерцию, — примерно за восемнадцать месяцев до основания Amazon (хотя, справедливости ради, это сопоставление видно только задним числом). Эпоха Лэмперта добавила современный вариант провала: <a href="https://sites.law.berkeley.edu/thenetwork/2018/10/20/a-financial-engineering-failure-sears-files-for-bankruptcy/">финансовая инженерия вместо вложений в продукт</a> — обратный выкуп акций и выделение недвижимости, пока магазины приходили в упадок. Банкротство по главе 11 случилось в октябре 2018 года. Sears никогда не проигрывал спор о продукте; он перестал их вести.</p>
+
+        <h3>Craigslist — намеренный неитератор</h3>
+        <p>Контрольный случай, который удерживает эту главу честной: Craigslist почти не менял дизайн с начала 2000-х — намеренно. Заявленная философия Крейга Ньюмарка в том, что людям нужно <a href="https://www.adammendler.com/blog/craigslist-founder-craig-newmark/">«функционально, эффективно, просто и быстро»</a>, — и цифры оправдывают неподвижность: примерно <a href="https://www.forbes.com/sites/ryanmac/2017/05/03/how-does-craigslist-make-money/">694 млн долларов выручки в 2016 году при примерно 50 сотрудниках</a>, а к 2018 году, по оценкам, больше миллиарда. Не итерировать оказалось прибыльной стратегией. Но важны обе половины эпилога. Во-первых, стратегия работала, потому что у объявлений жёсткие сетевые эффекты — деньги печатал ров, а не минимализм. Во-вторых, неподвижность имела цену, которую собрал кто-то другой: знаменитая карта <a href="https://www.cbinsights.com/research/craigslist-unbundling/">«развязывания Craigslist»</a> — по одному подсчёту 2012 года, 82 стартапа, получивших 8,87 млрд долларов, — откусывала аренду на отдых (Airbnb), знакомства, вакансии и билеты по одной категории. Остановиться может быть стратегией (<a href="#stopping">глава 9</a> относится к этому всерьёз). Но остановиться можно лишь там, где держится ваш ров, а рынок выставляет счёт за каждый зуд, который вы не стали чесать.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="cases" aria-labelledby="cases-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 05</span>
+        <h2 id="cases-h">Разбор случаев: как это на самом деле делают быстрые</h2>
+        <p class="standfirst">Семь компаний подробно и пять вкратце — с задокументированными цифрами каденса, по одному конкретному эксперименту у каждой и сознательным упором на эксперименты, которые <em>провалились</em>: именно моменты, когда данные противоречили дизайнерскому чутью, показывают, чего стоит цикл. Все числа ниже подкреплены источниками; там, где знаменитая история держится на пересказах, а не на первичном документе, так и сказано.</p>
+      </div>
+
+      <div class="stat-strip reveal">
+        <div class="stat">
+          <div class="stat-value">490</div>
+          <div class="stat-label">версий Claude Code, опубликованных за первые 18 месяцев, — примерно по одной в день</div>
+          <div class="stat-src">реестр npm, подсчитано 19 августа 2026</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1 976</div>
+          <div class="stat-label">экспериментов Weblab провёл Amazon в 2013 году — против 546 в 2011-м</div>
+          <div class="stat-src"><a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2013-Letter-to-Shareholders.pdf">Письмо акционерам Безоса, 2013</a></div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1 000+</div>
+          <div class="stat-label">одновременных экспериментов идёт в Booking.com в любой момент</div>
+          <div class="stat-src"><a href="https://hbr.org/2020/03/building-a-culture-of-experimentation">Thomke, HBR 2020</a></div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">20–30%</div>
+          <div class="stat-label">больше просмотров от победившей обложки в тесте Netflix</div>
+          <div class="stat-src"><a href="https://netflixtechblog.com/its-all-a-bout-testing-the-netflix-experimentation-platform-4e1ca458c15">Netflix TechBlog, 2016</a></div>
+        </div>
+      </div>
+
+      <article class="case reveal">
+        <header><h3>Anthropic — Claude Code</h3><span class="case-tag">собственный продукт → ежедневный релиз</span></header>
+        <p>Claude Code начинался как внутренний терминальный прототип Бориса Черни; по его словам, примерно половина инженеров Anthropic начала им пользоваться в первые дни после внутреннего релиза, а публично он вышел как исследовательское превью 24 февраля 2025 года. Цикл здесь — работа на собственном продукте на максимальной интенсивности: команда, которая делает инструмент, использует инструмент, чтобы делать инструмент, и потому задержка обратной связи стремится к нулю: инженер натыкается на мелкую неудобную мелочь утром, и исправление может уйти в тот же день.</p>
+        <p>Каденс — самая яркая и проверяемая часть. Реестр npm показывает <strong>490 версий <span class="num">@anthropic-ai/claude-code</span>, опубликованных между 24 февраля 2025 года и августом 2026-го</strong> — устойчивый релиз в день на протяжении восемнадцати месяцев, включая 35 в месяц выхода v1.0 (22 мая 2025 года), и у каждой подробная запись в <a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">журнале изменений</a>. Anthropic заявляла, что <a href="https://fortune.com/2026/01/29/100-percent-of-code-at-anthropic-and-openai-is-now-ai-written-boris-cherny-roon/">более 90% кода команды Claude Code написано с помощью Claude Code</a> — это заявление компании, а не аудит, но динамика самого утверждения задокументирована, а инженерные посты описывают внутренние раскатки (например, классификатор разрешений «auto mode»), проверенные на постоянном журнале инцидентов с реальными сбоями агентов.</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Пользуйтесь собственным продуктом для реальной работы каждый день и считайте число релизов показателем здоровья — журнал изменений, который двигается каждый день, это инструмент, а не повинность. (Раскрытие: эта страница исследована и собрана с помощью Claude Code, так что учтите заинтересованность и опирайтесь на публичные числа, а не на повествование.)</div>
+      </article>
+
+      <article class="case reveal">
+        <header><h3>OpenAI — Codex</h3><span class="case-tag">измеряйте собственное принятие</span></header>
+        <p>Codex перезапустили как облачного агента для разработки <a href="https://openai.com/index/introducing-codex/">16 мая 2025 года</a>: каждая задача идёт в своей песочнице, а результат — черновые pull request. Его цикл виден всем: у открытого CLI уже <strong>897 разных версий в npm с апреля 2025 года</strong> (данные реестра, август 2026), часто по несколько релизов в день, а обновления моделей — GPT-5-Codex, 15 сентября 2025 года — считаются продуктовыми релизами.</p>
+        <p>Отличительная практика — одержимое измерение внутреннего принятия как главной опережающей метрики: OpenAI публиковала, что почти все её сотрудники ежедневно пользуются Codex, а на инструмент приходится подавляющая часть выработки. Это заявления компании с очевидной маркетинговой ценностью, но использовать <em>кривую принятия в собственной организации</em> как главный инструмент для внутреннего продукта — устройство цикла, достойное копирования, чьим бы числам вы ни верили. Показательно, что затем OpenAI купила свой слой измерения целиком: <a href="https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/">покупка Statsig за 1,1 млрд долларов</a> (сентябрь 2025) принесла внутрь компании платформу экспериментов, которой она пользовалась.</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Итерируйте публично, с открытым журналом изменений, а когда делаете что-то для себя, отслеживайте, продолжаете ли вы этим пользоваться: собственное принятие — самая дешёвая честная метрика.</div>
+      </article>
+
+      <article class="case reveal">
+        <header><h3>Linear</h3><span class="case-tag">намеренный противник экспериментов</span></header>
+        <p>Linear — контрольная группа этой главы: быстро выпускающая команда, которая <em>принципиально отвергает</em> A/B-тесты. Карри Сааринен говорил об этом прямо: в Linear <a href="https://www.lennysnewsletter.com/p/inside-linear-building-with-taste">нет A/B-тестов, решения принимаются по вкусу и убеждению</a>, с поправкой на постоянную бета-когорту, которая видит функции за дни или месяцы до запуска. Нет продуктовых менеджеров в привычном смысле и нет командных целей по метрикам; <a href="https://www.lennysnewsletter.com/p/how-linear-builds-product">команды собираются под проект и расходятся</a>.</p>
+        <p>От цикла Linear беспощадно сохраняет <em>каденс</em>: запись в журнале изменений каждую неделю, в один и тот же день, независимо от того, принесла ли неделя флагманскую функцию или горстку исправлений. Пульс — это обязательство; объём гибко подстраивается под него. Для Linear это работает, потому что его рынок — инструменты для разработчиков с взыскательными пользователями, где основатели сами целевые клиенты, — это рынок, где у вкуса необычно много информации, а трафика для экспериментов сравнительно мало. Урок не в том, чтобы «не экспериментировать», а в том, что <em>явная, записанная политика принятия решений лучше непроговорённой</em>, какую бы политику вы ни выбрали.</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Фиксированный еженедельный день выпуска. И честность Linear: если вы собираетесь решать по вкусу — а при трафике небольшого сайта в основном так и придётся (<a href="#smallshop">глава 8</a>), — скажите это вслух и заведите бета-читателя, вместо того чтобы изображать статистику, которой у вас нет.</div>
+      </article>
+
+      <article class="case reveal">
+        <header><h3>Netflix</h3><span class="case-tag">проверяйте не только код, но и креатив</span></header>
+        <p>Статья Netflix 2016 года о платформе начинается с доктрины: <a href="https://netflixtechblog.com/its-all-a-bout-testing-the-netflix-experimentation-platform-4e1ca458c15">«каждое изменение продукта проходит строгий процесс A/B-тестирования»</a> — интерфейс, рекомендации, воспроизведение, поиск, почта, регистрация. Та же культура распространяется на надёжность: <a href="https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116">Simian Army</a> (июль 2011) намеренно убивает экземпляры в проде, чтобы устойчивость тоже постоянно проверялась, а не предполагалась.</p>
+        <p>Эксперимент, который сделал аргумент компании: обложки. Netflix сообщила, что победившая картинка может дать <strong>на 20–30% больше просмотров</strong> этого названия, а в её <a href="https://netflixtechblog.com/selecting-the-best-artwork-for-videos-through-a-b-testing-f6155c4595f6">записи от мая 2016 года</a> о первом тесте для одного названия (документальный фильм <em>The Short Game</em>) одна альтернативная картинка дала прирост 14%. Неудобная находка, из-за которой это история «данные побеждают чутьё»: победившие картинки, как правило, были не теми, которые выбрала бы команда дизайна, — выразительные лица побеждали отполированный киноплакат, а злодеи в некоторых жанрах обгоняли героев. К 2017 году сам выбор был автоматизирован для каждого пользователя как <a href="https://netflixtechblog.com/artwork-personalization-c589f074ad76">контекстный бандит</a> (<a href="#automation">глава 7</a>).</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Сначала тестируйте дешёвые поверхности. Смена картинки, заголовка или текста уведомления ничего не стоит в разработке и часто двигает числа сильнее, чем квартал работы над функциями, — поэтому Netflix и тратила свой бюджет экспериментов именно там.</div>
+      </article>
+
+      <article class="case reveal">
+        <header><h3>Booking.com</h3><span class="case-tag">без разрешений, но с ограждениями</span></header>
+        <p>Самое радикальное устройство цикла в этой главе: в Booking.com <a href="https://hbr.org/2020/03/building-a-culture-of-experimentation">любой сотрудник компании может запустить эксперимент на миллионах пользователей без разрешения руководства</a> (Стефан Томке, HBR, март–апрель 2020; платформа описана в <a href="https://arxiv.org/abs/1710.08217">статье команды 2017 года</a>). Согласование заменено автоматическими ограждениями — проверками соотношения выборок, стандартными метриками, автоматической остановкой. Результат — объём, которого не достичь ни одному процессу согласования: больше тысячи одновременных экспериментов, порядка 25 000 в год.</p>
+        <p>Этот объём принёс честное число, о котором рано или поздно сообщает любая культура экспериментов: в Booking выяснили, что их предсказания поведения клиентов были <strong>неверны примерно в 90% случаев</strong>. В отчёте Томке названы провалы, рождённые интуицией, — оценка пешей доступности района, пакетные предложения отелей, чат-линия, — все они умерли на тестах. Десять неудач на одну победу — не поломка системы, а измеренная базовая частота продуктовой интуиции, в согласии с опубликованными цифрами Microsoft и Google (<a href="#loop">глава 1</a>). Компании, которые знают это число, закладывают его в бюджет. Те, кто не знает, всё равно выпускают эти 90%.</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Переворот ограждений: вместо того чтобы усложнять попытки, сделайте их безопасными — превью-стенды, лёгкий откат, определённая метрика, — и пробуйте больше. И записывайте нулевые результаты: это плата за обучение, которую вы уже внесли.</div>
+      </article>
+
+      <article class="case reveal">
+        <header><h3>Duolingo</h3><span class="case-tag">выбирайте северную звезду аналитически</span></header>
+        <p>Лучше всего задокументированный цикл роста в потребительском софте благодаря <a href="https://www.lennysnewsletter.com/p/how-duolingo-reignited-user-growth">подробному рассказу 2023 года</a> бывшего директора по продукту Хорхе Масала. Прежде чем что-то оптимизировать, Duolingo смоделировала, <em>какая</em> метрика удержания сильнее всего двигает число активных пользователей в день, и обнаружила, что улучшение удержания текущих пользователей (CURR) влияет на DAU примерно в пять раз сильнее, чем следующая по силе метрика. Только после этого заработала машина A/B-тестов: механика серий, тексты уведомлений, таблицы лидеров — десятки небольших побед сложились в <strong>рост DAU в 4,5 раза с 2018 по 2022 год</strong>.</p>
+        <p>Тезис главы несут два эксперимента. Провал: Duolingo скопировала механику геймификации хита Gardenscapes — серьёзное, многоквартальное усилие, — и результат был, по словам Масала, «совершенно нейтральным. Никаких изменений в удержании. Никакого роста DAU». Команду распустили. Неожиданная победа: таблицы лидеров, сравнительно простая социальная механика, увеличили общее время обучения на 17% и <em>втрое</em> увеличили число сильно вовлечённых учеников. А знаменитое пассивно-агрессивное уведомление — «Кажется, эти напоминания не работают. Пока перестанем их присылать» — реальный выпущенный результат программы тестирования текстов уведомлений (<a href="https://sherwood.news/tech/duolingo-q2-earnings-monthly-active-users-milestone/">о нём много писали</a>; к конкретным цифрам прироста в пересказах относитесь осторожно).</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Потратьте день на то, чтобы решить, какое одно число вы на самом деле пытаетесь сдвинуть, прежде чем трогать сайт. Самым большим рычагом Duolingo был выбор правильной метрики, а не какой-то отдельный тест. И ждите, что механики, пересаженные из других продуктов, не сработают, — обычно так и бывает.</div>
+      </article>
+
+      <article class="case reveal">
+        <header><h3>Amazon</h3><span class="case-tag">число экспериментов как KPI</span></header>
+        <p>Amazon — компания, которая указала число своих экспериментов в письме акционерам: <a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2013-Letter-to-Shareholders.pdf">«В 2013 году мы провели по всему миру 1 976 Weblab, против 1 092 в 2012-м и 546 в 2011-м»</a> — <em>темп самого экспериментирования</em> сообщался инвесторам как показатель эффективности. Опорная структура цикла известна: команды «на две пиццы», достаточно малые, чтобы владеть метрикой, и Working Backwards — написание пресс-релиза и FAQ до кода, то есть документ с гипотезой под другим названием.</p>
+        <p>История основополагающего эксперимента — в <a href="#timeline">главе 2</a>: рекомендации в корзине Грега Линдена, запрещённые старшим вице-президентом, всё равно проверенные и выпущенные, потому что измерение выиграло спор. Другая половина вклада Amazon — рамка обратимых и необратимых решений, делающая эту скорость безопасной, — лежит в основе <a href="#compound">главы 4</a>.</p>
+        <div class="steal"><span class="steal-label">Что может позаимствовать маленькая команда</span>Working Backwards прекрасно уменьшается до одного человека: напишите объявление об изменении в три предложения, прежде чем его делать. Если вы не можете сказать, что изменится для клиента, вы выяснили это в самый дешёвый момент.</div>
+      </article>
+
+      <h3 style="font-family:var(--font-display); font-size:var(--size-3); font-weight:620; margin:3.5rem 0 0.5rem;" class="reveal">Ещё пять, коротко</h3>
+      <div class="prose reveal">
+        <p><strong>Vercel</strong> применяет двухскоростные релизы с максимальным разбросом: в репозитории Next.js канареечная сборка выходит практически на каждое слияние — <strong>3 899 версий в npm всего</strong>, по 30–64 релиза в месяц в 2025–26 годах (данные реестра), — а стабильные мажорные версии выходят обдуманно, примерно дважды в год. Их <a href="https://vercel.com/blog/flags-as-code-in-next-js">Flags SDK</a> (2024) внёс «флаги как код» в сам фреймворк. <strong>Figma</strong> — противовес, построенный на культуре качества: вместо объёма экспериментов она закрепляет <a href="https://www.figma.com/blog/little-big-updates-dispatches-from-quality-week/">Quality Weeks</a> (описаны в январе 2022) — плановые спринты всей команды по мелким неудобствам — и проверяет крупные изменения долгими бетами и обратной связью сообщества перед ежегодным показом на Config. <strong>GitHub</strong> описал свой цикл на флагах в статье <a href="https://github.blog/2021-04-27-ship-code-faster-safer-feature-flags/">«How we ship code faster and safer with feature flags»</a> (апрель 2021): всё выкладывается в прод «в тёмную», сначала «выпускается на сотрудников», затем раскатывается постепенно — выкладка и релиз полностью разделены. <strong>Shopify</strong> выпускает непрерывно, но рассказывает порциями: с лета 2022 года каждое полугодие она собирает выпущенное в микросайт <a href="https://www.shopify.com/editions">Editions</a> со сотней с лишним обновлений — превращая обычную итерацию в событие дважды в год, ни разу не придерживая ради него релиз.</p>
+        <p><strong>Spotify</strong> заслужил место как предостережение о копировании циклов. Знаменитая белая книга 2012 года о модели «сквадов» стала самой копируемой оргструктурой в софте — а к 2020 году осведомлённым вердиктом было <a href="https://www.jeremiahlee.com/posts/failed-squad-goals/">«Spotify не использует “модель Spotify”, и вам не стоит»</a>: сама компания ушла дальше, а навыков сотрудничества, на которые модель рассчитывала, как раз не хватало тем, кто её импортировал. Действительно хороший рассказ о цикле у Spotify скромнее: Discover Weekly (2015) вышел с ошибкой, из-за которой в плейлист, задуманный как полностью новый, попадали уже знакомые песни. Когда инженеры её исправили, вовлечённость упала — знакомые песни создавали доверие, благодаря которому люди пробовали незнакомые, — и команда <a href="https://www.anecdote.com/2018/11/spotify-bugs-bite-back-35/">вернула «баг» на место</a> (эту историю команда рассказывала в интервью и пересказах, а не в первичной инженерной статье; цитировать можно механизм, а не точные числа).</p>
+      </div>
+
+      <div class="tablewrap reveal">
+        <table class="data">
+          <caption>Задокументированный каденс и стиль цикла, рядом</caption>
+          <thead><tr><th scope="col">Компания</th><th scope="col">Стиль цикла</th><th scope="col">Задокументированный каденс / объём</th><th scope="col">Лучше всего подтверждённое число</th></tr></thead>
+          <tbody>
+            <tr><td>Anthropic (Claude Code)</td><td>Сначала на себе, непрерывный релиз</td><td>~1 релиз в npm в день с февраля 2025</td><td class="mono">490 версий за 18 мес.</td></tr>
+            <tr><td>OpenAI (Codex)</td><td>Итерация публично, внутреннее принятие как метрика</td><td>На пике несколько релизов в день</td><td class="mono">897 версий с апреля 2025</td></tr>
+            <tr><td>Vercel (Next.js)</td><td>Канареечная сборка на каждое слияние + обдуманные стабильные</td><td>30–64 релиза в мес.</td><td class="mono">3 899 версий всего</td></tr>
+            <tr><td>Linear</td><td>Вкус + бета-когорта, без A/B-тестов</td><td>Фиксированный еженедельный журнал изменений</td><td class="mono">каждую неделю, в один день</td></tr>
+            <tr><td>Amazon</td><td>Эксперименты без бюрократии (Weblab)</td><td>Число экспериментов как KPI</td><td class="mono">1 976 тестов в 2013 году</td></tr>
+            <tr><td>Booking.com</td><td>Без разрешений, с автоматическими ограждениями</td><td>~25 000 экспериментов в год</td><td class="mono">1 000+ одновременных</td></tr>
+            <tr><td>Netflix</td><td>Тестируется всё, включая креатив</td><td>Все изменения продукта через A/B</td><td class="mono">+20–30% просмотров (обложки)</td></tr>
+            <tr><td>Duolingo</td><td>Моделирование северной звезды + тесты уведомлений и серий</td><td>Непрерывные, накапливающиеся небольшие победы</td><td class="mono">DAU в 4,5 раза, 2018–22</td></tr>
+            <tr><td>Shopify</td><td>Выпускать непрерывно, рассказывать порциями</td><td>Editions 2 раза в год с 2022 года</td><td class="mono">100+ обновлений в выпуске</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>Источники для таблицы — те, что указаны в каждом случае выше; цифры npm подсчитаны по публичному реестру 19 августа 2026 года. Разброс и есть главное: еженедельный журнал изменений, который ведётся по вкусу, и 25 000 экспериментов в год — оба рабочие циклы. Чего нет ни у одной компании из этого списка, так это того, что есть у большинства застрявших продуктов, — <em>неопределённого каденса и непроговорённой политики решений</em>.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="tooling" aria-labelledby="tooling-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 06</span>
+        <h2 id="tooling-h">Карта инструментов</h2>
+        <p class="standfirst">На каждом этапе цикла теперь есть готовый инструмент, и у большинства бесплатный тариф, повторить который в 2010 году стоило бы шестизначную сумму. Вот стек, слой за слоем: для чего каждый инструмент на самом деле нужен, примерно сколько стоит, когда он избыточен и откуда взялся. Происхождение важно: почти каждый инструмент на этой карте — это внутренний цикл какой-то компании, превращённый в продукт.</p>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Стек, наложенный на цикл</p>
+          <p class="viz-sub">Каждый слой инструментов обслуживает один этап цикла. Большинство команд покупают сверху вниз; большая часть ценности накапливается снизу вверх.</p>
+          <svg viewBox="0 0 910 430" role="img" aria-label="Слоистая схема соотносит категории инструментов с этапами цикла. Решение: эксперименты и фича-флаги. Выводы: запись сессий и сбор обратной связи. Замер: продуктовая аналитика, мониторинг реальных пользователей, отслеживание ошибок. Выпуск: CI/CD, превью-выкладки, мониторинг аптайма. Сборка: контроль версий и агентные инструменты кодирования.">
+            <g font-size="13">
+              <!-- bands -->
+              <g>
+                <rect x="150" y="20"  width="690" height="66" rx="10" fill="var(--accent-wash)" stroke="var(--border)"/>
+                <rect x="150" y="98"  width="690" height="66" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <rect x="150" y="176" width="690" height="66" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <rect x="150" y="254" width="690" height="66" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+                <rect x="150" y="332" width="690" height="66" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+              </g>
+              <!-- loop-stage labels -->
+              <g text-anchor="end" font-weight="650" fill="var(--ink)">
+                <text x="130" y="50">Решение</text>
+                <text x="130" y="128">Выводы</text>
+                <text x="130" y="206">Замер</text>
+                <text x="130" y="284">Выпуск</text>
+                <text x="130" y="362">Сборка</text>
+              </g>
+              <!-- band content -->
+              <g fill="var(--ink)" font-weight="650">
+                <text x="172" y="46">Эксперименты и фича-флаги</text>
+                <text x="172" y="124">Запись сессий · качественные данные · обратная связь</text>
+                <text x="172" y="202">Продуктовая аналитика · RUM · отслеживание ошибок</text>
+                <text x="172" y="280">CI/CD · превью-выкладки · аптайм</text>
+                <text x="172" y="358">Контроль версий · ревью кода · кодирующие агенты</text>
+              </g>
+              <g fill="var(--ink-2)">
+                <text x="172" y="68">Statsig · LaunchDarkly · GrowthBook · Eppo · Optimizely · OpenFeature</text>
+                <text x="172" y="146">PostHog · Clarity · Hotjar · FullStory · Canny · обычная почта</text>
+                <text x="172" y="224">PostHog · Amplitude · Mixpanel · Plausible · Sentry · Datadog · CrUX</text>
+                <text x="172" y="302">GitHub Actions · Vercel · Netlify · Cloudflare Pages · UptimeRobot · Checkly</text>
+                <text x="172" y="380">GitHub · Copilot · Claude Code · боты ревью в CI</text>
+              </g>
+              <!-- return arrow: decide feeds build -->
+              <path d="M 846 53 C 878 53, 878 365, 852 365" fill="none" stroke="var(--accent)" stroke-width="2" class="loop-dash"/>
+              <path d="M 862 357 L 852 365 L 863 371" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="893" y="209" font-size="12" fill="var(--accent-ink)" transform="rotate(90 893 209)" text-anchor="middle">решения → следующая сборка</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Расстановка инструментов на август 2026 года. Некоторые названия повторяются в нескольких слоях — PostHog намеренно охватывает четыре из них, в этом вся его стратегия.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Продуктовая аналитика: кто что делает в вашем продукте</h3>
+        <p>Слой, который отвечает на вопрос «пользуются ли люди тем, что я выпустил?» <a href="https://mixpanel.com/blog/mixpanel-pricing-1m-free-events-autocapture/">Mixpanel</a> (2009) и Amplitude (2012, <a href="https://www.cnbc.com/2021/09/28/amplitude-starts-trading-on-nasdaq-in-direct-listing.html">прямой листинг на Nasdaq в сентябре 2021 года</a>) создали категорию на потоках событий — не просмотры страниц, а именованные действия со свойствами, воронки, кривые удержания. <a href="https://posthog.com/">PostHog</a> (основан в январе 2020 года, Y&nbsp;Combinator W20, открытый код) атаковал её снизу — набором для инженеров, который подключается самостоятельно. Экономика обвалилась в пользу покупателя: на август 2026 года бесплатный тариф PostHog включает миллион событий в месяц, а Mixpanel <a href="https://mixpanel.com/blog/mixpanel-pricing-1m-free-events-autocapture/">поднял бесплатный лимит с 10 000 до миллиона событий в феврале 2025 года</a> — стократный скачок, ставший возможным благодаря экономике колоночных хранилищ и вынужденный ценами PostHog. В бесплатном тарифе Amplitude теперь есть запись сессий и фича-флаги до 50 000 отслеживаемых пользователей.</p>
+        <p>Ниже инструментов на потоках событий лежит веб-аналитика с упором на приватность и без куки — <a href="https://plausible.io/">Plausible</a> (от 9 долларов в месяц), Fathom, Simple Analytics, — существующая в основном потому, что Google закрыл Universal Analytics <a href="https://blog.google/products/ads-commerce/upgrade-to-google-analytics-4-before-july-1/">1 июля 2023 года</a> и заменил его широко нелюбимым GA4 — самым сильным скачком спроса, какой когда-либо видел этот слой. <strong>Проверка на избыточность:</strong> если вы не можете назвать три события, которые определите, инструмент событийной аналитики вам пока не нужен; счётчика просмотров и числа отправленных форм хватит надолго.</p>
+
+        <h3>Эксперименты и фича-флаги: слой решений</h3>
+        <p>Фича-флаги разделяют <em>выкладку</em> и <em>релиз</em>; платформы экспериментов решают, какое состояние флага побеждает. Происхождение здесь необычно прозрачно: почти каждый серьёзный инструмент — чья-то внутренняя система, вынесенная наружу. <a href="https://launchdarkly.com/about-us/">LaunchDarkly</a> (2014) превратил в продукт системы флагов Flickr, Facebook и GitHub. <a href="https://www.geekwire.com/2021/former-facebook-exec-vijaye-raji-leads-new-startup-statsig-help-developers-build-features-quickly/">Statsig</a> (февраль 2021) — по сути внутренний стек гейтинга и экспериментов Facebook, пересобранный Виджаем Раджи, который руководил сиэтлским инженерным офисом Facebook; среди его клиентов позже оказались OpenAI, Notion, Atlassian и Anthropic. <a href="https://en.wikipedia.org/wiki/Optimizely">Optimizely</a> (2010) вышел из кампании Обамы 2008 года, где команда Дэна Сирокера A/B-тестировала приветственную страницу (семейное фото побило все видео, подняв регистрации на 40,6% и, по оценкам, пожертвования на 60 млн долларов). <a href="https://www.datadoghq.com/blog/datadog-acquires-eppo/">Eppo</a> (2021, от четвёртого дата-сайентиста Airbnb) первой предложила эксперименты, живущие в хранилище данных: статистика считается в <em>вашем</em> хранилище, а не в копии у вендора. <a href="https://www.growthbook.io/pricing">GrowthBook</a> (2020) — открытая версия той же идеи, которую можно развернуть у себя.</p>
+        <p>А потом за полтора года категорию поглотили. Harness купила Split.io (<a href="https://www.prnewswire.com/news-releases/harness-completes-acquisition-of-split-software-302170987.html">сделка закрыта в июне 2024 года</a>). Datadog купила Eppo (<a href="https://www.datadoghq.com/blog/datadog-acquires-eppo/">5 мая 2025 года</a>, по сообщениям ~220 млн долларов). А OpenAI купила Statsig целиком за <a href="https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/">1,1&nbsp;млрд долларов акциями, объявлено 2 сентября 2025 года</a>, назначив Раджи техническим директором по приложениям: ИИ-лаборатория, платящая миллиард за платформу экспериментов, — самый сильный сигнал, куда пришла эта область практики. Из независимых остались LaunchDarkly, GrowthBook, PostHog и стандарт CNCF <a href="https://www.cncf.io/blog/2023/12/19/openfeature-becomes-a-cncf-incubating-project/">OpenFeature</a> (2022) как независимая от вендора запасная дверь. <strong>Проверка на избыточность:</strong> флаги окупаются в любой команде, которая выкладывает чаще раза в неделю; облачная платформа <em>экспериментов</em> избыточна, пока конверсий меньше примерно тысячи в месяц, — почему, объясняет математика в <a href="#smallshop">главе 8</a>.</p>
+
+        <h3>Запись сессий и качественные данные: смотреть одного пользователя вместо усреднения десяти тысяч</h3>
+        <p>Инструменты записи восстанавливают отдельные сессии по изменениям DOM — качественный противовес средним значениям аналитики и самый быстрый способ узнать, <em>почему</em> протекает шаг воронки. FullStory и Hotjar (куплен Contentsquare, <a href="https://contentsquare.com/press/contentsquare-acquires-hotjar/">сентябрь 2021</a>) создали эту категорию; <a href="https://learn.microsoft.com/en-us/clarity/faq">Microsoft Clarity</a> (октябрь 2020) затем превратил её нижний сегмент в товар за ровно 0 долларов, бесплатный при любом масштабе и без лимита сессий. PostHog снизил цены на запись больше чем вдвое в июле 2024 года в посте с точным названием <a href="https://posthog.com/blog/session-replay-pricing">«Мы решили зарабатывать меньше»</a>. <strong>Проверка на избыточность:</strong> запись — один из немногих инструментов, который для маленьких сайтов <em>не</em> избыточен: десять минут просмотра настоящих сессий регулярно ценнее месяца разглядывания дашбордов. Корпоративная запись (FullStory — по запросу, по сообщениям, порядка 199 долларов в месяц на входе и шесть знаков при больших объёмах на 2026 год) — другое дело.</p>
+
+        <h3>Производительность и мониторинг реальных пользователей: цикл, который браузер крутит за вас</h3>
+        <p><a href="https://web.dev/blog/inp-cwv-march-12">Core Web Vitals</a> от Google (объявлены в мае 2020, фактор ранжирования в поиске с июня 2021) превратили производительность в три публичных числа, измеряемых на реальных пользователях Chrome через набор данных CrUX и проверяемых с помощью Lighthouse и PageSpeed Insights — всё бесплатно. Сами метрики тоже итерируются: INP заменил FID как показатель отзывчивости <a href="https://web.dev/blog/inp-cwv-march-12">12 марта 2024 года</a>. Над бесплатным уровнем стоят платные продукты RUM: Datadog RUM (<a href="https://docs.datadoghq.com/account_management/billing/rum/">0,15 доллара за 1 000 сессий на август 2026 года</a>), <a href="https://vercel.com/docs/speed-insights/limits-and-pricing">Vercel Speed Insights</a> (10 долларов за проект в месяц), SpeedCurve (куплен Embrace, <a href="https://embrace.io/blog/embrace-acquires-speedcurve/">ноябрь 2025</a>). <strong>Проверка на избыточность:</strong> платный RUM нужен командам с SLO по производительности; остальным достаточно раз в квартал смотреть CrUX и ограничить CI по Lighthouse (<a href="#automation">глава 7</a>).</p>
+
+        <h3>Ошибки и наблюдаемость: узнать, что сломалось, раньше пользователя</h3>
+        <p>Отслеживание ошибок — пожарная сигнализация цикла. <a href="https://cra.mr/sentry-from-the-beginning/">Sentry</a> начался в 2008 году как <span class="num">django-db-log</span>, открытый логгер ошибок Дэвида Крамера, и до сих пор имеет бессрочно бесплатный тариф (5 000 ошибок в месяц; платные — от 26 долларов в месяц по <a href="https://sentry.zendesk.com/hc/en-us/articles/40116900282011-How-is-my-plan-changing-August-27-2025">тарифам августа 2025 года</a>). Тяжёлый конец спектра — Datadog и открытая пара Prometheus (SoundCloud, 2012; <a href="https://www.cncf.io/projects/prometheus/">второй в истории проект CNCF, 2016</a>) + Grafana (2014), а под ними в качестве стандарта инструментирования — <a href="https://opensource.googleblog.com/2019/05/opentelemetry-merger-of-opencensus-and.html">OpenTelemetry</a> (слияние OpenCensus и OpenTracing 2019 года, выпускник CNCF с мая 2026-го). Поучительная история этого слоя: на звонке с инвесторами по итогам I квартала 2023 года Datadog раскрыла один счёт клиента примерно на 65 млн долларов, который позже <a href="https://newsletter.pragmaticengineer.com/p/datadogs-65myear-customer-mystery">Pragmatic Engineer определил как траты Coinbase в 2021 году</a>, — хрестоматийное напоминание, что цена наблюдаемости растёт вместе с вашими данными, а не с вашей выгодой. <strong>Проверка на избыточность:</strong> отслеживание ошибок нужно всем, начиная с первого пользователя; полная наблюдаемость почти никому из маленьких не нужна.</p>
+
+        <h3>CI/CD и превью-выкладки: слой выпуска</h3>
+        <p>Механика выпуска стала бесплатной и мгновенной за два шага. Netlify представила <a href="https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/">превью-выкладки в июле 2016 года</a> — у каждого pull request свой адрес, и «зайди посмотри» стало рабочим процессом ревью. <a href="https://github.blog/changelog/2019-11-11-github-actions-is-generally-available/">GitHub Actions стал общедоступным в ноябре 2019 года</a>, поставив бесплатный CI-раннер (2 000 минут в месяц для приватных репозиториев и без ограничений для публичных) рядом с каждым репозиторием на Земле. Cloudflare Pages (2021) предлагает неограниченный трафик и 500 сборок в месяц бесплатно. Для статического сайта весь слой выпуска теперь стоит ноль — именно на нём и работает эта страница. <strong>Проверка на избыточность:</strong> её нет. Этот слой никогда не избыточен; это фундамент.</p>
+
+        <h3>Сбор обратной связи: немодный слой</h3>
+        <p>Структурированные доски обратной связи (Canny, Featurebase, GitHub Discussions) замыкают цикл качественно. Стоит знать: NPS, балл из опроса, прикрученный к каждому продукту, восходит к <a href="https://hbr.org/2003/12/the-one-number-you-need-to-grow">статье Фреда Райхельда в HBR 2003 года</a> и с тех пор получил серьёзную методологическую критику (<a href="https://jmspool.medium.com/net-promoter-score-considered-harmful-and-what-ux-professionals-can-do-about-it-fe7a132f4430">«NPS Considered Harmful» Спула</a>). Для маленьких команд самый сильный инструмент этого слоя неловко прост: адрес электронной почты, на который можно ответить, и дисциплина, чтобы действительно позвонить пяти пользователям. <strong>Проверка на избыточность:</strong> платные инструменты обратной связи начинают окупаться, когда входящий поток больше, чем способен прочитать один человек.</p>
+
+        <h3>Консолидация и переоценка в обе стороны</h3>
+      </div>
+
+      <div class="tablewrap reveal">
+        <table class="data">
+          <caption>Как консолидировался рынок инструментов цикла, 2020–2026</caption>
+          <thead><tr><th scope="col">Дата</th><th scope="col">Событие</th><th scope="col">О чём это говорит</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">Сент. 2020</td><td><a href="https://techcrunch.com/2020/09/03/episerver-acquires-optimizely/">Episerver покупает Optimizely</a> и в январе 2021 берёт его имя</td><td>Иконка A/B-тестирования среди стартапов становится корпоративным брендом CMS</td></tr>
+            <tr><td class="mono">Сент. 2021</td><td><a href="https://contentsquare.com/press/contentsquare-acquires-hotjar/">Contentsquare покупает Hotjar</a>; в 2023 добавляет Heap</td><td>Качественная аналитика собирается вокруг одного покупателя</td></tr>
+            <tr><td class="mono">Июнь 2024</td><td><a href="https://www.prnewswire.com/news-releases/harness-completes-acquisition-of-split-software-302170987.html">Harness закрывает покупку Split.io</a></td><td>Флаги и эксперименты вошли в платформу CI/CD</td></tr>
+            <tr><td class="mono">Май 2025</td><td><a href="https://www.datadoghq.com/blog/datadog-acquires-eppo/">Datadog покупает Eppo</a> (~220 млн долларов по сообщениям)</td><td>Гигант наблюдаемости покупает эксперименты, живущие в хранилище данных</td></tr>
+            <tr><td class="mono">Июль 2025</td><td><a href="https://www.june.so/blog/a-new-chapter">Основатели June переходят в Amplitude</a>; продукт закрыт через 30 дней</td><td>Риск консолидации при выборе маленького вендора в миниатюре</td></tr>
+            <tr><td class="mono">Сент. 2025</td><td><a href="https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/">OpenAI покупает Statsig за 1,1 млрд долларов</a>; основатель становится техническим директором по приложениям</td><td>ИИ-лаборатория платит миллиард за инфраструктуру экспериментов</td></tr>
+            <tr><td class="mono">Нояб. 2025</td><td><a href="https://embrace.io/blog/embrace-acquires-speedcurve/">Embrace покупает SpeedCurve</a></td><td>Мониторинг веб-производительности присоединяется к мобильной наблюдаемости</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <p>Прочтите таблицу сверху вниз, и проявится закономерность: каждый заметный независимый вендор экспериментов был поглощён — компанией-CMS, платформой CI/CD, гигантом наблюдаемости и, наконец, ИИ-лабораторией. Между тем цены двигались сразу в <em>две</em> стороны. Категории с открытой конкуренцией резко подешевели: PostHog опубликовал два поста с буквальным названием <a href="https://posthog.com/blog/analytics-pricing">«Мы решили зарабатывать меньше»</a> (2024), Mixpanel расширил бесплатный тариф в 100 раз, Statsig сделал флаги безлимитными и бесплатными. Категории без такого давления подорожали: VWO отменил бесплатный тариф после того, как в 2025 году в нём появился мажоритарный инвестор из прайвит-эквити, Canny в мае 2025 года перешёл на оплату за отслеживаемого пользователя, Netlify в конце 2025-го перевёл новые аккаунты на систему кредитов. Эмпирическое правило верно для всей карты: <strong>там, где есть открытая альтернатива, бесплатный тариф вендора щедр и растёт; там, где её нет, ждите сжатия.</strong> Выбирайте с учётом этого — клиентам June закрытие дало тридцать дней.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="automation" aria-labelledby="automation-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 07</span>
+        <h2 id="automation-h">Циклы, которые крутятся сами</h2>
+        <p class="standfirst">Какую часть цикла машина может реально вести в 2026 году? Больше, чем думают скептики, и меньше, чем обещают демо, — и у честного ответа есть форма: автоматизация поднимается по лестнице, и каждая ступень безопасна ровно настолько, насколько изменение узкое, обратимое и проверяемое машиной.</p>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Лестница автономии</p>
+          <p class="viz-sub">Каждая ступень отдаёт машине ещё один этап цикла. Статус отражает задокументированное боевое применение по состоянию на середину 2026 года.</p>
+          <svg viewBox="0 0 860 478" role="img" aria-label="Лестница уровней автоматизации цикла. Ступень 1, машина проверяет: тесты CI, бюджеты Lighthouse, визуальная регрессия — внедрено повсеместно примерно с 2000 по 2019 год. Ступень 2, машина распределяет: многорукие бандиты перераспределяют трафик между вариантами, написанными людьми, — внедрено с 2010 по 2017 год. Ступень 3, машина создаёт, человек одобряет: кодирующие агенты открывают черновые pull request, автоматические исправления — внедрено в 2023–2025 годах, человеческие ворота заложены в замысел. Ступень 4, машина создаёт и выпускает в узких областях: автослияние зависимостей, циклы с рекламными текстами — внедрено, но узко. Ступень 5, машина ведёт весь цикл от гипотезы до выпущенного победителя — только демо, нет задокументированного боевого случая в названной компании.">
+            <g font-size="13">
+              <!-- steps -->
+              <g stroke="var(--border)">
+                <rect x="20"  y="376" width="820" height="82" rx="10" fill="var(--surface-2)"/>
+                <rect x="120" y="286" width="720" height="82" rx="10" fill="var(--surface-2)"/>
+                <rect x="220" y="196" width="620" height="82" rx="10" fill="var(--surface-2)"/>
+                <rect x="320" y="106" width="520" height="82" rx="10" fill="var(--surface-2)"/>
+                <rect x="420" y="16"  width="420" height="82" rx="10" fill="var(--accent-wash)" stroke-dasharray="5 4"/>
+              </g>
+              <g fill="var(--ink)" font-weight="650" font-size="14">
+                <text x="40"  y="402">1 · Машина проверяет</text>
+                <text x="140" y="312">2 · Машина распределяет</text>
+                <text x="240" y="222">3 · Машина создаёт, человек одобряет</text>
+                <text x="340" y="132"><tspan>4 · Машина создаёт</tspan> <tspan font-style="italic">и выпускает</tspan> <tspan>— в узких областях</tspan></text>
+                <text x="440" y="42">5 · Машина ведёт весь цикл</text>
+              </g>
+              <g fill="var(--ink-2)" font-size="12.5">
+                <text x="40"  y="423">тесты CI · бюджеты Lighthouse · визуальная регрессия · эвалы</text>
+                <text x="140" y="333">бандиты перераспределяют трафик между вариантами, написанными людьми</text>
+                <text x="240" y="243">кодирующие агенты → черновые PR · автоматические исправления</text>
+                <text x="340" y="153">автослияние зависимостей · циклы с рекламными текстами</text>
+                <text x="440" y="63">гипотеза → вариант → тест → выпуск, без присмотра</text>
+              </g>
+              <g font-size="11.5" font-weight="650">
+                <text x="40"  y="444" fill="var(--good-text)">ВНЕДРЕНО · везде · ~2000–2019</text>
+                <text x="140" y="354" fill="var(--good-text)">ВНЕДРЕНО · 2010–2017</text>
+                <text x="240" y="264" fill="var(--good-text)">ВНЕДРЕНО 2023–25 · человеческие ворота по замыслу</text>
+                <text x="340" y="174" fill="var(--ink-2)">ВНЕДРЕНО · только узкое и обратимое</text>
+                <text x="440" y="84"  fill="var(--bad-text)">ДЕМО · нет задокументированных боевых случаев</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Расстановка — по источникам, приведённым в этой главе. Верхняя пунктирная ступень — честная граница: к середине 2026 года ни одна названная компания не задокументировала случай, когда агент сам придумывает, выпускает и подводит итоги собственного продуктового эксперимента от начала до конца в боевых условиях.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Ступень 1: машина как привратник (старая, скучная, несущая)</h3>
+        <p>На этой ступени стоит всё, что выше. CI блокирует плохие слияния со времён CruiseControl (2001). <a href="https://web.dev/blog/lighthouse-evolution-cds-2019">Lighthouse CI</a> (Google, 2019) сделал производительность блокируемым утверждением — бюджеты в JSON-файле, проверка на каждом коммите, — после того как Алекс Рассел годами доказывал, что производительность без бюджета всегда деградирует; <a href="https://medium.com/@addyosmani/a-tinder-progressive-web-app-performance-case-study-78919d98ece0">разбор Tinder</a> Эдди Османи (декабрь 2017) показал бюджеты, удерживающие бандл настоящего продукта на уровне ~155 КБ. Визуальная регрессия — Percy (куплен BrowserStack в июле 2020), Chromatic от команды Storybook и встроенный в Playwright <span class="num">toHaveScreenshot()</span> — распространила ворота на пиксели: люди смотрят отрисованные различия, а не код. Ничего из этого не ИИ. Но всё это — важный прецедент: <strong>машина уже блокирует ваше решение о выпуске, и никто не возражает, потому что проверка детерминирована, а изменение можно откатить.</strong></p>
+
+        <h3>Ступень 2: машина как распределитель трафика</h3>
+        <p>Многорукий бандит не ждёт вердикта на фиксированном горизонте; он постоянно смещает трафик к текущему лидеру, меняя статистическую уверенность на меньшее сожаление. Боевая родословная настоящая и датированная: главная страница Yahoo гоняла контекстных бандитов для ранжирования новостей (<a href="https://arxiv.org/abs/1003.0146">Li et al., WWW 2010</a> — статья про LinUCB); Washington Post построила <a href="https://www.washingtonpost.com/pr/wp/2016/02/08/the-washington-post-unveils-new-real-time-content-testing-tool-bandito/">Bandito</a> (февраль 2016), чтобы варианты заголовков редакторов перераспределялись автоматически; Amazon внедрила многомерную оптимизацию на выборке Томпсона на своей розничной странице (<a href="https://blog.acolyer.org/2017/09/27/an-efficient-bandit-algorithm-for-real-time-multivariate-optimization/">KDD 2017</a>); <a href="https://netflixtechblog.com/artwork-personalization-c589f074ad76">персонализация обложек</a> Netflix (декабрь 2017) превратила тесты миниатюр из главы 5 в контекстного бандита на каждого участника. Сегодня это стандартный товар — Autotune в Statsig, Stats Accelerator в Optimizely, режим бандита в VWO.</p>
+        <p>Знайте, где эта ступень ломается. Бандиты подходят для короткоживущего контента с быстрым сигналом награды — заголовки, акции, обложки. Они не подходят, когда награда медленная (удержание, выручка на аккаунт: алгоритму просто нечему учиться), когда эффект новизны заставляет ранний интерес спадать (бандит слишком привязывается к блестящему варианту, который тест с фиксированным делением заметил бы), и когда вам важны ограничивающие метрики, потому что оптимизатор с одной целью охотно променяет ваше удержание на кликабельность. В <a href="https://www.geteppo.com/blog/bandit-or-experiment">практическом руководстве Eppo</a> также отмечено, что наивное применение тестов значимости к данным, распределённым бандитом, раздувает ложные срабатывания. Эмпирическое правило: бандиты — чтобы <em>выбирать из креативов</em>, эксперименты с фиксированным горизонтом — чтобы <em>узнавать то, что пригодится снова</em>.</p>
+
+        <h3>Ступень 3: машина как автор, с человеческими воротами</h3>
+        <p>2025 год стал годом, когда каждый крупный вендор выпустил одну и ту же конструкцию. Кодирующий агент GitHub Copilot (<a href="https://github.blog/changelog/2025-05-19-github-copilot-coding-agent-in-public-preview/">19 мая 2025 года</a>) берёт назначенную задачу, работает во временной среде Actions и открывает <em>черновой</em> PR, который не может ни одобрить, ни слить. Codex от OpenAI (май 2025) помещает каждую задачу в песочницу и предлагает PR. <a href="https://github.com/anthropics/claude-code-action">GitHub Action Claude Code</a> от Anthropic отвечает на упоминания <span class="num">@claude</span> в задачах и PR. Jules от Google вышел в общий доступ 6 августа 2025 года. Cursor добавил ревью PR через BugBot (июнь 2025). Autofix/Seer от Sentry (с марта 2024) находит первопричину ошибок в проде и набрасывает исправление. Общий выбор в пользу человеческих ворот — не робость, а отрасль, читающая собственные данные: вывод DORA 2024–25 (<a href="#trends">глава 3</a>) о том, что внедрение ИИ подрывает стабильность доставки, как раз довод за то, чтобы проверку оставлять за человеком, пока генерация масштабируется.</p>
+        <p>Поучительная история, завершающая ступень: Devin, объявленный в марте 2024 года «первым ИИ-инженером-программистом», чья демонстрация при запуске была <a href="https://news.ycombinator.com/item?id=40008109">публично разобрана</a> за считаные недели («выполненное задание с Upwork» оказалось не тем, что просил заказчик), и который, по оценке независимых тестировщиков в начале 2025 года, справлялся примерно с 3 из 20 поставленных задач. Продукт выжил и повзрослел — позже Cognition поглотила Windsurf (июль 2025), — но этот эпизод закрепил правило жанра: <strong>проверяйте на рабочем процессе, а не на демо.</strong></p>
+
+        <h3>Ступень 4: замкнутые циклы, которые действительно выпускают, — и почему именно они</h3>
+        <p>Самый старый полностью замкнутый цикл выпуска кода в проде — вовсе не про ИИ: это <strong>боты зависимостей</strong>. Renovate и Dependabot (куплен GitHub в мае 2019) открывают PR с повышением версий, а при включённом автослиянии на зелёном изменения, написанные ботом, уходят без человека в цепочке — в огромных масштабах, годами, безопасно. Причина — чек-лист, и это вся теория главы: класс изменений <em>узкий</em> (строка с версией), <em>проверяемый машиной</em> (CI зелёный) и <em>обратимый</em> (откатить повышение). Циклы оптимизации рекламных текстов (Persado, Phrasee) генерируют, тестируют и выпускают темы писем с конца 2010-х — внутри ограниченных языковых библиотек с процессом согласования бренда, то есть по тому же чек-листу. Эволюционная оптимизация веб-страниц (Sentient Ascend, 2016, позже Evolv AI, описана в <a href="https://dl.acm.org/doi/10.1609/aimag.v41i1.5256"><em>AI Magazine</em>, 2020</a>) выводит варианты страниц под метрику конверсии, но человек по-прежнему задаёт генофонд и функцию приспособленности. Обратите внимание, что объединяет все выпускаемые замкнутые циклы: <em>машина никогда не выбирает метрику.</em></p>
+
+        <h3>Ступень 5 — и слой эвалов, который, возможно, однажды её поддержит</h3>
+        <p>Для ИИ-продуктов пришлось заново изобрести сам набор регрессионных тестов: поведение модели нельзя проверить юнит-тестом, поэтому команды ставят ворота на <strong>эвалах</strong> — отобранных наборах задач, оцениваемых утверждениями или более сильной моделью. Основа подхода «LLM как судья» — <a href="https://arxiv.org/abs/2306.05685">Zheng et al. (июнь 2023)</a>: GPT-4 в роли оценщика согласовывался с людьми-оценщиками примерно в 85% случаев — больше, чем люди между собой (~81%), — но при этом проявлял измеримое позиционное смещение (порядок меняет вердикт), смещение в пользу длинных ответов (длиннее выглядит лучше) и смещение в пользу собственных ответов. Практическая доктрина оформилась в «Your AI Product Needs Evals» Хамеля Хьюсейна (<a href="https://hamel.dev/blog/posts/evals/">март 2024</a>); инструменты (Braintrust, promptfoo, LangSmith) теперь подключают баллы эвалов к CI как блокирующие проверки. Честно о состоянии практики: инструменты для жёсткого запрета выкладок по баллам эвалов настоящие и продаются, но публичных случаев, когда команды действительно блокируют релизы по оценкам LLM-судьи, меньше, чем в рекламе, — в большинстве боевых практик по-прежнему «прогнали эвалы, человек смотрит дашборд». И рекурсия не решена: судья дрейфует и обладает смещениями, как любая модель, так что набору регрессионных тестов теперь нужен свой набор регрессионных тестов.</p>
+        <p>Где же человек должен остаться? В четырёх местах, каждое из которых заработано сбоем, описанным выше: <strong>выбор метрики</strong> (любой оптимизатор максимизирует ровно то, что вы сказали, а не то, что имели в виду); <strong>ограничивающие метрики и нестационарность</strong> (бандиты и новизна); <strong>необратимые изменения и изменения с медленной обратной связью</strong> (цены, миграции, всё, чья награда приходит через недели); и <strong>ревью сгенерированных изменений</strong> (данные DORA о стабильности, консенсус вокруг черновых PR). Закономерность, на которую стоит ставить до конца десятилетия, — не беспилотная продуктовая команда, а трещотка: каждый год ещё один узкий класс изменений становится достаточно скучным — достаточно проверяемым, достаточно обратимым, — чтобы передать его машинам, как это произошло с повышением версий.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="smallshop" aria-labelledby="smallshop-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 08</span>
+        <h2 id="smallshop-h">Цикл для маленькой команды</h2>
+        <p class="standfirst">Всё сказанное выше масштабируется вниз — кроме статистики. Одиночный дизайнер, который ведёт несколько клиентских сайтов, может вести настоящий, честный цикл за 0–9 долларов в месяц и 30 минут в месяц. Чего он не может — это A/B-тесты, а арифметика, которая это доказывает, — самое полезное в этой главе.</p>
+      </div>
+
+      <div class="prose">
+        <h3>Сначала плохие новости: математика</h3>
+        <p>Стандартный расчёт мощности (тот, что стоит за <a href="https://www.evanmiller.org/ab-testing/sample-size.html">калькулятором размера выборки Эвана Миллера</a>: мощность 80%, значимость 5%, двусторонний) говорит, что для обнаружения улучшения на 20% относительно при базовой конверсии 3% — 3,0% → 3,6%, <em>хороший</em> результат по любым профессиональным меркам — нужно примерно <strong>13 900 посетителей на группу, около 27 800 в сумме</strong>. Сайту местного бизнеса с 500 визитами в месяц на это потребовалось бы около <strong>четырёх с половиной лет</strong>. И это лёгкий случай: чтобы заметить относительный выигрыш в 2%, который празднуют Bing и Google, такому сайту понадобилось бы несколько десятилетий. Смотреть результаты каждый день и останавливаться, когда значимость мигнула, тоже не спасает — это фабрика ложных срабатываний, та самая проблема «подглядывания», которую Эван Миллер разобрал в <a href="https://www.evanmiller.org/how-not-to-run-an-ab-test.html">«How Not To Run an A/B Test»</a> (2010). Эти числа посчитаны по стандартной формуле, а не взяты у кого-то, — проверьте сами; формула не идёт на уступки.</p>
+      </div>
+
+      <figure class="viz reveal">
+        <div class="viz-card">
+          <p class="viz-title">Месяцев A/B-тестирования при 500 визитах в месяц</p>
+          <p class="viz-sub">базовая конверсия 3% · мощность 80% · α = 0,05, двусторонний · обе группы вместе</p>
+          <svg viewBox="0 0 620 250" role="img" aria-label="Столбчатая диаграмма: сколько месяцев A/B-тестирования нужно при 500 визитах в месяц и базовой конверсии 3 процента. Чтобы заметить прирост на 100 процентов, то есть удвоение, нужно около 3 месяцев. Прирост на 50 процентов — около 10 месяцев. Прирост на 20 процентов — около 56 месяцев, почти пять лет.">
+            <g font-size="13">
+              <line x1="40" y1="190" x2="590" y2="190" stroke="var(--baseline)" stroke-width="1"/>
+              <g fill="var(--s1)">
+                <rect x="103" y="181" width="24" height="9" rx="3"/>
+                <rect x="283" y="160" width="24" height="30" rx="4"/>
+                <rect x="283" y="186" width="24" height="4"/>
+                <rect x="463" y="22" width="24" height="168" rx="4"/>
+                <rect x="463" y="186" width="24" height="4"/>
+              </g>
+              <g fill="var(--ink)" text-anchor="middle" font-weight="650">
+                <text x="115" y="172">~3 мес.</text>
+                <text x="295" y="151">~10 мес.</text>
+                <text x="475" y="14">~56 мес.</text>
+              </g>
+              <g fill="var(--ink-2)" text-anchor="middle">
+                <text x="115" y="212">заметить удвоение</text>
+                <text x="115" y="228">(3% → 6%)</text>
+                <text x="295" y="212">заметить +50%</text>
+                <text x="295" y="228">(3% → 4,5%)</text>
+                <text x="475" y="212">заметить +20%</text>
+                <text x="475" y="228">(3% → 3,6%)</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption><span class="src">Рассчитано по стандартной формуле мощности для двух пропорций (методология — по <a href="https://www.evanmiller.org/ab-testing/sample-size.html">калькулятору Эвана Миллера</a>), август 2026. Практический вывод: при трафике маленького сайта статистикой можно заметить только эффекты, достаточно большие, чтобы увидеть их и без статистики.</span></figcaption>
+      </figure>
+
+      <div class="prose">
+        <p>Вывод освобождает, а не обескураживает: <strong>перестаньте изображать методологию, на которую у вас нет трафика, и пользуйтесь теми, на которые есть.</strong> Три замены, по убыванию ценности. Во-первых, <em>«до и после» только для больших эффектов</em>: если вы переписали посадочную страницу, а звонков за следующие два месяца заметно не стало больше, честный вердикт — «заметного эффекта нет», и это находка. Во-вторых, <em>понаблюдайте, как пятеро настоящих людей пользуются сайтом</em>: классический довод Якоба Нильсена (<a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">2000</a>), что горстка пользователей вскрывает большинство проблем юзабилити, остаётся в силе, и в таком масштабе один растерянный посетитель в записи Clarity стоит квартала данных дашборда. В-третьих, <em>спросите клиентов, откуда они о вас узнали</em>: у местных сервисных бизнесов большинство конверсий и так звонки (в отраслевых данных Ruler Analytics больше половины конверсий в юридической сфере приходит по телефону), а вопрос «как вы нас нашли?» бесплатен.</p>
+
+        <h3>Стек: 0–9 долларов в месяц, один вечер на настройку</h3>
+      </div>
+
+      <div class="tablewrap reveal">
+        <table class="data">
+          <caption>Полный стек измерений для маленькой команды (цены на август 2026 года)</caption>
+          <thead><tr><th scope="col">Задача</th><th scope="col">Инструмент</th><th scope="col">Цена</th><th scope="col">Примечание</th></tr></thead>
+          <tbody>
+            <tr><td>Трафик и источники переходов</td><td><a href="https://www.cloudflare.com/press/press-releases/2020/cloudflare-announces-web-analytics-a-privacy-first-free-alternative-for-all/">Cloudflare Web Analytics</a> или <a href="https://plausible.io/">Plausible</a></td><td class="mono">0 $ / 9 $ в мес.</td><td>Без куки — баннер согласия не нужен</td></tr>
+            <tr><td>Наблюдение за настоящими сессиями</td><td><a href="https://clarity.microsoft.com/">Microsoft Clarity</a></td><td class="mono">0 $</td><td>Бесплатно при любом масштабе; запись хранится ~30 дней</td></tr>
+            <tr><td>Поисковые запросы и позиции</td><td><a href="https://search.google.com/search-console/about">Google Search Console</a></td><td class="mono">0 $</td><td>Единственный источник данных на уровне запросов</td></tr>
+            <tr><td>Звонки и маршруты</td><td>Google Business Profile</td><td class="mono">0 $</td><td>Где местные клиенты на самом деле конвертируются</td></tr>
+            <tr><td>Производительность</td><td><a href="https://pagespeed.web.dev/">PageSpeed Insights</a> / CrUX</td><td class="mono">0 $</td><td>Проверять раз в квартал, а не раз в неделю</td></tr>
+            <tr><td>Аптайм</td><td><a href="https://uptimerobot.com/pricing/">UptimeRobot</a> или пинг по cron</td><td class="mono">0–7 $ в мес.</td><td>Бесплатный тариф теперь только для личного использования — прочтите условия</td></tr>
+            <tr><td>Ошибки (если на сайте есть JS)</td><td>Бесплатный тариф <a href="https://sentry.io/">Sentry</a></td><td class="mono">0 $</td><td>5 тыс. ошибок в мес. — с запасом</td></tr>
+            <tr><td>Хостинг и превью</td><td>Cloudflare Pages / Netlify / GitHub Pages</td><td class="mono">0 $</td><td>Превью-выкладки = ваша тестовая среда</td></tr>
+            <tr><td>Событийная аналитика (только если это почти продукт)</td><td><a href="https://posthog.com/">PostHog</a></td><td class="mono">0 $ до 1 млн событий</td><td>Для сайта-визитки избыточна — пропустите, пока нет сценариев</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <p>Не менее важен список того, что игнорировать. В масштабе маленького сайта игнорируйте показатель отказов (он в основном измеряет, быстро ли люди нашли номер телефона, а для местного бизнеса это <em>успех</em>); игнорируйте длительность сессии; игнорируйте позиции по тщеславным запросам; игнорируйте баллы Lighthouse выше «зелёного»; игнорируйте каждый дашборд, который инструмент присылает по почте раз в неделю. Измерять больше, чем вы будете разбирать, — вот как цикл умирает от чувства вины.</p>
+
+        <h3>Живой пример: компания по ландшафтному дизайну</h3>
+        <p>Допустим, вы ведёте сайт местной компании по ландшафтному дизайну — сайт-визитку из пяти страниц, 400–800 визитов в месяц, в основном из Google. Весь слой измерений цикла — это <strong>три числа</strong>, которые вы разбираете раз в месяц:</p>
+        <ul>
+          <li><strong>Заявки: звонки + отправленные формы.</strong> Число, которое бизнес действительно чувствует. Считайте и то и другое: события нажатия на <span class="num">tel:</span> и страницы благодарности после формы — вполне достаточно измерений. В типичный месяц может быть 8–25. Это единственное число, которое оправдывает существование сайта.</li>
+          <li><strong>Действия в профиле Google Business</strong> — звонки, запросы маршрута, переходы на сайт из профиля. Для многих местных бизнесов это <em>и есть</em> воронка; отраслевые исследования стабильно показывают, что типичный профиль даёт десятки действий в месяц, и лишь малая доля просмотров профиля превращается в действия. Если профиль работает лучше сайта, то 30 минут следующего месяца стоит потратить на него.</li>
+          <li><strong>Клики из поиска по денежным запросам</strong> (Search Console) — «ландшафтный дизайнер &lt;город&gt;», «укладка террасы &lt;район&gt;». Показы говорят, видны ли вы; клики — заслуживают ли заголовок и сниппет визита.</li>
+        </ul>
+        <p>Как выглядит <em>значимое</em> изменение при таком трафике? Честно и грубо: при ~15 заявках в месяц случайный разброс ±4–5 — норма (один только пуассоновский шум: √15 ≈ 4). Так что 14 против 17 заявок — это погода, а не сигнал. Реагировать стоит на изменения, которые выходят за полосу шума: заявки удвоились или вдвое сократились два месяца подряд, денежный запрос выиграл или потерял страницу в выдаче, звонки из профиля разошлись со звонками с сайта. Всё, что внутри полосы, записывается и остаётся в покое — эта дисциплина и есть вариант «фиксированного горизонта» из главы 1 для маленькой команды.</p>
+        <p>А вот 30-минутный ежемесячный разбор конкретно: <em>минуты 0–5</em> — запишите три числа рядом с прошлым месяцем. <em>5–10</em>: проверка аптайма и ошибок, PageSpeed — если месяц квартальный. <em>10–20</em>: посмотрите две-три записи Clarity с настоящими посетителями — именно здесь живёт настоящее понимание. <em>20–30</em>: одно решение, записанное одним предложением — «ничего не менять» или одно конкретное изменение с числом, которое оно должно сдвинуть, и датой проверки («переписать верх страницы так, чтобы начинался с номера телефона; ждём рост звонков к концу следующего месяца»). Одно изменение в месяц, максимум. Год такой работы — двенадцать честных экспериментов, а это, судя по графику выше, больше статистической выработки, чем дали бы A/B-тесты за десятилетие.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="stopping" aria-labelledby="stopping-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Глава 09</span>
+        <h2 id="stopping-h">Как понять, что пора остановиться</h2>
+        <p class="standfirst">Грязный секрет евангелия итераций: у цикла нет встроенной кнопки выключения. Каждая практика в этом тексте делает изменения проще, дешевле и привычнее — и ни одна не говорит, когда дело закончено. Этот навык нужно устанавливать отдельно, и команды с инструментами, которые его установили, — те, что накапливают результат, а не мечутся на месте.</p>
+      </div>
+
+      <div class="prose">
+        <p>Ещё раз начнём с базовой частоты, потому что она меняет экономику возни с мелочами. Если примерно <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">80–90% проверенных идей не двигают свою метрику</a> у компаний с лучшими экспериментаторами и миллионами пользователей, то ожидаемая ценность ещё одной спекулятивной правки на уже работающем маленьком сайте <em>низкая, а с учётом цены вашего времени обычно отрицательная</em>. Большие платформы выходят из положения тысячами дешёвых параллельных попыток. Вы не можете. Для маленькой команды частота провалов по Кохави — не довод тестировать больше, а довод возиться меньше и выбирать более обоснованные изменения, когда уж делаете.</p>
+
+        <h3>Правила остановки, которые можно реально принять</h3>
+        <p><strong>Запишите «готово» до того, как начнёте.</strong> Definition of Done в Scrum — промышленная версия: формальное описание состояния, в котором работа считается завершённой. Версия для одиночки — одно предложение в файле проекта: «Этот сайт готов, когда он быстро загружается, называет услуги, показывает настоящие фото, а номер телефона — одно касание». Когда сайт соответствует этому предложению, изменениям нужна <em>причина</em>, а не настроение.</p>
+        <p><strong>Фиксируйте бюджет, а не объём.</strong> <em>Shape Up</em> от Basecamp (2019) строится на «аппетите» — до начала решить, чего работа <em>стоит</em> в неделях; когда бюджет исчерпан, по умолчанию проект <em>останавливается</em>, а не продлевается: автоматический выключатель. Невыпущенная работа должна заново заслужить место, будучи предложена снова. Это организационный вариант фиксированного горизонта экспериментатора: заранее решите, когда остановитесь, потому что решение на лету — это место, где живёт вся самообманчивость (это в точности проблема подглядывания из <a href="#smallshop">главы 8</a>, только применённая к усилиям, а не к значимости).</p>
+        <p><strong>Сравнивайте размер эффекта с шумом, прежде чем действовать.</strong> Правило √n из главы 8 обобщается: любое изменение, чей правдоподобный эффект меньше месячной качки вашей метрики, в вашем масштабе не проверяется — вы никогда не узнаете, сработало ли оно, а значит, это не итерация, а перестановка мебели. Герберт Саймон назвал лежащий в основе принцип ещё в 1956 году: <em>satisficing</em>, «достаточно хорошо». Организмы, которые выживают, не оптимизируют; они находят достаточно хорошее и идут дальше — потому что поиск стоит дорого, а среда всё равно меняется под вами.</p>
+        <p><strong>Выставьте себе счёт за упущенное.</strong> Час полировки сайта, который уже соответствует своему определению готовности, — это час, отнятый у профиля клиента в Google Business, у следующего клиента, у работы, которая реально что-то двигает. 37signals сказали это прямо в <em>Getting Real</em> (2006) — в названии главы, которое само является правилом остановки: «Это просто не важно». Большая часть предложенной работы не важна.</p>
+        <p><strong>Берегитесь метрики, ставшей целью.</strong> Закон Гудхарта — в формулировке Стратерн: «когда мера становится целью, она перестаёт быть хорошей мерой» — тоже правило остановки: когда замечаете, что оптимизируете балл Lighthouse, а не сайт, число оторвалось от того, что измеряло, и продолжение — движение без прогресса.</p>
+
+        <h3>Режим поддержки — законное конечное состояние</h3>
+        <p>В литературе о циклах почти никогда не говорится этого, поэтому скажем прямо: <strong>продукт может быть закончен.</strong> Режим поддержки — зависимости обновлены, резервные копии проверены, аптайм под присмотром, содержимое остаётся правдой (часы работы, цены, сезонные фото) и <em>больше ничего</em> — это не провал, а правильное устойчивое состояние для сайта, чья задача не изменилась. Craigslist два десятилетия работал практически без изменений при ~700 млн долларов в год и 50 людях (<a href="#compound">глава 4</a>); его неподвижность была стратегией, взвешенной и выбранной. Оговорка идёт вместе с этим: остановка безопасна там, где ваша позиция защищена (ров, привязанная местная клиентская база, выполненная задача), и опасна там, где нет, — поэтому решение остановиться стоит пересматривать по календарю, а не по настроению. Раз или два в год запускайте цикл <em>на самом решении</em>: изменился ли бизнес? изменился ли трафик? изменился ли конкурент? Если нет, нет и нет — спите дальше.</p>
+
+        <h3>Нужна работа или просто зуд?</h3>
+        <p>Остаётся честный финальный вопрос, знакомый каждому дизайнеру-разработчику изнутри: сайт в порядке, а переделать его всё равно хочется. Зуд настоящий, но он — информация о <em>вас</em>: ваш вкус ушёл вперёд, вы выучили новый приём, вам скучно, — а не о сайте. Пользователи не видят архитектуру вашего CSS. Дерево ниже — вся дисциплина этой главы на одной схеме; смысл цикла никогда не состоял в том, что его нужно всегда крутить. Он в том, что <em>крутить его или нет — становится решением, которое вы принимаете осознанно, на основе данных, а не навязчивостью.</em></p>
+      </div>
+
+      <figure class="viz wide reveal">
+        <div class="viz-card">
+          <p class="viz-title">Нужна ли сайту работа — или у вас просто зуд?</p>
+          <p class="viz-sub">Проходите раз в месяц. Четыре вопроса по порядку. Порядок — это и есть дисциплина.</p>
+          <svg viewBox="0 0 860 520" role="img" aria-label="Дерево решений. Вопрос первый: вышло ли отслеживаемое число — заявки, ошибки, скорость — за обычную полосу шума? Если да: настоящая работа — определите изменение, ожидаемый эффект и дату проверки. Если нет, вопрос второй: изменился ли сам бизнес — услуги, цены, сезон? Если да: поддержка содержимого — обновите факты и остановитесь. Если нет, вопрос третий: сообщил ли настоящий пользователь о проблеме или показала ли запись сессии растерянность? Если да: исправьте эту одну вещь и больше ничего. Если нет, вопрос четвёртый: можете ли вы записать, какое число должно сдвинуть это изменение, на сколько и когда вы проверите? Если да: это законный эксперимент — запланируйте его в рамках фиксированного бюджета. Если нет: у вас зуд. Закройте ноутбук; потратьте силы на профиль, на следующего клиента или на прогулку.">
+            <g font-size="13">
+              <!-- Q1 -->
+              <rect x="20" y="24" width="380" height="58" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="40" y="48" fill="var(--ink)" font-weight="650">1 · Вышло ли отслеживаемое число за полосу шума?</text>
+              <text x="40" y="68" fill="var(--ink-2)" font-size="12">заявки · ошибки · скорость · позиции</text>
+              <rect x="480" y="24" width="360" height="58" rx="10" fill="var(--accent-wash)" stroke="var(--accent)"/>
+              <text x="500" y="48" fill="var(--ink)" font-weight="650">Настоящая работа.</text>
+              <text x="500" y="68" fill="var(--ink-2)" font-size="12">Опишите изменение, эффект и дату проверки.</text>
+              <line x1="400" y1="53" x2="472" y2="53" stroke="var(--ink-3)" stroke-width="1.75" marker-end="url(#arr)"/>
+              <text x="436" y="44" fill="var(--good-text)" font-size="12" text-anchor="middle" font-weight="650">да</text>
+
+              <!-- Q2 -->
+              <rect x="20" y="134" width="380" height="58" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="40" y="158" fill="var(--ink)" font-weight="650">2 · Изменился ли сам бизнес?</text>
+              <text x="40" y="178" fill="var(--ink-2)" font-size="12">новые услуги · цены · часы · сезон</text>
+              <rect x="480" y="134" width="360" height="58" rx="10" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="500" y="158" fill="var(--ink)" font-weight="650">Поддержка содержимого.</text>
+              <text x="500" y="178" fill="var(--ink-2)" font-size="12">Обновите факты. Потом остановитесь.</text>
+              <line x1="400" y1="163" x2="472" y2="163" stroke="var(--ink-3)" stroke-width="1.75" marker-end="url(#arr)"/>
+              <text x="436" y="154" fill="var(--good-text)" font-size="12" text-anchor="middle" font-weight="650">да</text>
+
+              <!-- Q3 -->
+              <rect x="20" y="244" width="380" height="58" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="40" y="268" fill="var(--ink)" font-weight="650">3 · Упёрся ли пользователь в проблему?</text>
+              <text x="40" y="288" fill="var(--ink-2)" font-size="12">жалоба · растерянная запись сессии · сорвавшаяся задача</text>
+              <rect x="480" y="244" width="360" height="58" rx="10" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="500" y="268" fill="var(--ink)" font-weight="650">Исправьте эту одну вещь.</text>
+              <text x="500" y="288" fill="var(--ink-2)" font-size="12">Только её. Не поддавайтесь «раз уж я здесь».</text>
+              <line x1="400" y1="273" x2="472" y2="273" stroke="var(--ink-3)" stroke-width="1.75" marker-end="url(#arr)"/>
+              <text x="436" y="264" fill="var(--good-text)" font-size="12" text-anchor="middle" font-weight="650">да</text>
+
+              <!-- Q4 -->
+              <rect x="20" y="354" width="380" height="58" rx="10" fill="var(--surface-2)" stroke="var(--border)"/>
+              <text x="40" y="378" fill="var(--ink)" font-weight="650">4 · Назовёте ли число, которое оно сдвинет,</text>
+              <text x="40" y="396" fill="var(--ink)" font-weight="650">на сколько и когда вы проверите?</text>
+              <rect x="480" y="354" width="360" height="58" rx="10" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="500" y="378" fill="var(--ink)" font-weight="650">Законный эксперимент.</text>
+              <text x="500" y="396" fill="var(--ink-2)" font-size="12">Запланируйте его в рамках фиксированного аппетита.</text>
+              <line x1="400" y1="383" x2="472" y2="383" stroke="var(--ink-3)" stroke-width="1.75" marker-end="url(#arr)"/>
+              <text x="436" y="374" fill="var(--good-text)" font-size="12" text-anchor="middle" font-weight="650">да</text>
+
+              <!-- verdict -->
+              <rect x="20" y="452" width="820" height="52" rx="10" fill="var(--surface-2)" stroke="var(--baseline)"/>
+              <text x="40" y="474" fill="var(--ink)" font-weight="650">У вас зуд.</text>
+              <text x="40" y="493" fill="var(--ink-2)" font-size="12.5">Сайт в порядке. Закройте ноутбук: займитесь профилем, новым клиентом или прогулкой. Повторите через месяц.</text>
+
+              <!-- no-arrows down the left -->
+              <g stroke="var(--ink-3)" stroke-width="1.75" fill="none">
+                <line x1="210" y1="82" x2="210" y2="126" marker-end="url(#arr)"/>
+                <line x1="210" y1="192" x2="210" y2="236" marker-end="url(#arr)"/>
+                <line x1="210" y1="302" x2="210" y2="346" marker-end="url(#arr)"/>
+                <line x1="210" y1="412" x2="210" y2="444" marker-end="url(#arr)"/>
+              </g>
+              <g fill="var(--ink-3)" font-size="12" font-weight="650">
+                <text x="222" y="108">нет</text>
+                <text x="222" y="218">нет</text>
+                <text x="222" y="328">нет</text>
+                <text x="222" y="432">нет</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Порядок кодирует приоритеты: измеренный сигнал важнее факта о бизнесе, тот важнее пользовательского анекдота, а тот — дизайнерского чутья; и чутью всё же оставлена полоса, если оно способно сформулировать проверяемое ожидание.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <p>Заключительная мысль, которая оправдывает название сайта. «Never Done» («вечно не закончено») было названием этого текста, и каждая глава доказывала, что цикл в целом не должен останавливаться: практика итераций — через век заводов, конвейеров и платформ — самая надёжно накапливающаяся способность, которой может владеть организация. Но цикл — это инструмент с назначением, и на любом <em>конкретном</em> продукте, в любой конкретный месяц сильнейший ход, который цикл способен выдать, — тот, что Craigslist делал двадцать лет и которым заканчивается дерево выше: <strong>осознанное, подкреплённое данными, пересматриваемое решение оставить всё как есть.</strong> Никогда не закончено — но это не значит, что нужно всегда делать.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="sources" aria-labelledby="sources-h">
+      <div class="chapter-head reveal">
+        <span class="ch-no">Приложение</span>
+        <h2 id="sources-h">Источники и метод</h2>
+        <p class="standfirst">Каждое датированное или числовое утверждение на этой странице сопровождается ссылкой прямо в месте использования — такова система цитирования. В этом приложении перечислены самые весомые первичные источники и честно описан метод.</p>
+      </div>
+      <div class="prose">
+        <h3>Метод</h3>
+        <p>Исследовано и написано в августе 2026 года в одной автоматизированной сессии. Утверждения проверялись по первичным источникам — статьям, инженерным блогам, письмам акционерам, официальным PDF-отчётам, данным реестра npm — везде, где это было возможно; там, где исследовательская среда могла добраться лишь до проиндексированных поиском отрывков или зеркал первоисточника, текст так и говорит или осторожничает. Данные о каденсе релизов Claude Code, Codex и Next.js рассчитаны прямо из публичного реестра npm 19 августа 2026 года. Размеры выборок рассчитаны по стандартной формуле мощности для двух пропорций, а не процитированы. Известные истории, которые держатся на пересказах, а не на первичных документах (баг Discover Weekly в Spotify, синий на 200 млн), помечены как таковые на месте. Исправления приветствуются через <a href="https://github.com/esmrsky/never-done">репозиторий</a>.</p>
+        <h3>Источники, которые несут больше всего веса</h3>
+        <ul>
+          <li>Рон Кохави и др., <a href="https://www.exp-platform.com/Documents/2013%20controlledExperimentsAtScale.pdf">«Online Controlled Experiments at Large Scale»</a> (KDD 2013); Кохави и Томке, <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">«The Surprising Power of Online Experiments»</a> (HBR, 2017); Кохави, Тан и Сюй, <a href="https://experimentguide.com/"><em>Trustworthy Online Controlled Experiments</em></a> (Cambridge, 2020).</li>
+          <li>PDF-отчёты DORA / Accelerate State of DevOps, <a href="https://dora.dev/research/">dora.dev/research</a> — 2016, 2018, 2019, 2021, 2023, 2024 и отчёт 2025 года о разработке с помощью ИИ.</li>
+          <li>Стефан Томке, <a href="https://hbr.org/2020/03/building-a-culture-of-experimentation">«Building a Culture of Experimentation»</a> (HBR, 2020) и <em>Experimentation Works</em> (HBS Press, 2020).</li>
+          <li>Первичная история процессов: <a href="https://www.praxisframework.org/files/royce1970.pdf">Royce (1970)</a>, <a href="https://dl.acm.org/doi/10.1145/12944.12948">Boehm (1986)</a>, <a href="http://www.jeffsutherland.org/oopsla/schwapub.pdf">Schwaber (OOPSLA '95)</a>, <a href="https://agilemanifesto.org/history.html">agilemanifesto.org</a>, <a href="https://martinfowler.com/articles/originalContinuousIntegration.html">Fowler &amp; Foemmel (2000)</a>, <a href="https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf">история PDSA у Moen</a>.</li>
+          <li>Момент DevOps со слов людей, бывших в зале: <a href="https://www.kitchensoap.com/2009/06/23/slides-for-velocity-talk-2009/">Allspaw &amp; Hammond (Velocity 2009)</a>, <a href="https://timothyfitz.com/2009/02/10/continuous-deployment-at-imvu-doing-the-impossible-fifty-times-a-day/">Fitz об IMVU (2009)</a>, <a href="https://code.flickr.net/2009/12/02/flipping-out/">«Flipping Out» из Flickr (2009)</a>, <a href="https://codeascraft.com/2010/05/20/quantum-of-deployment/">Code as Craft из Etsy (2010–15)</a>.</li>
+          <li>Первичные документы компаний: <a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2013-Letter-to-Shareholders.pdf">письма акционерам Amazon (2013</a>, <a href="https://s2.q4cdn.com/299287126/files/doc_financials/annual/2015-Letter-to-Shareholders.PDF">2015)</a>, <a href="https://netflixtechblog.com/its-all-a-bout-testing-the-netflix-experimentation-platform-4e1ca458c15">Netflix TechBlog (2016–17)</a>, <a href="https://www.lennysnewsletter.com/p/how-duolingo-reignited-user-growth">Масал о Duolingo (2023)</a>, <a href="https://github.blog/2021-04-27-ship-code-faster-safer-feature-flags/">GitHub о фича-флагах (2021)</a>, <a href="https://hbr.org/2011/04/how-i-did-it-blockbusters-former-ceo-on-sparring-with-an-activist-shareholder">Антиоко в HBR (2011)</a>, <a href="https://journals.sagepub.com/doi/10.1177/0001839215606951">Vuori &amp; Huy о Nokia (ASQ, 2016)</a>.</li>
+          <li>Регуляторное десятилетие измерений: <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">посты WebKit об ITP (2017–19)</a>, <a href="https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html">Chromium (2020)</a>, <a href="https://privacysandbox.com/news/privacy-sandbox-next-steps/">заявления Privacy Sandbox (2024–25)</a>.</li>
+          <li>Поворот к ИИ: <a href="https://arxiv.org/abs/2306.05685">Zheng et al. о LLM-как-судье (2023)</a>, <a href="https://hamel.dev/blog/posts/evals/">Хьюсейн об эвалах (2024)</a>, <a href="https://github.blog/changelog/2025-05-19-github-copilot-coding-agent-in-public-preview/">GitHub (2025)</a>, <a href="https://openai.com/index/introducing-codex/">OpenAI (2025)</a>, <a href="https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/">покупка Statsig (2025)</a> и отчёты <a href="https://dora.dev/research/2024/dora-report/">DORA 2024</a>/<a href="https://dora.dev/research/2025/dora-report/">2025</a>.</li>
+          <li>Остановка: <a href="https://basecamp.com/shapeup"><em>Shape Up</em></a> (2019), <a href="https://gettingreal.37signals.com/"><em>Getting Real</em></a> (2006), <a href="https://www.evanmiller.org/how-not-to-run-an-ab-test.html">Эван Миллер (2010)</a>, <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">Нильсен (2000)</a>, satisficing Саймона (1956), <a href="https://quoteinvestigator.com/2017/12/29/god-data/">Quote Investigator об ошибочной атрибуции Демингу</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <footer class="site-footer">
+      <p><strong>Never Done</strong> — исследовано, написано, проиллюстрировано и выпущено в одной автоматизированной сессии, август 2026. Рукописные HTML, CSS и JavaScript; без фреймворка, без этапа сборки, без трекинга.</p>
+      <p><a class="home" href="/ru/">← Все проекты</a></p>
+      <p>Исправления приветствуются через <a href="https://github.com/esmrsky/never-done">репозиторий</a>. В духе предмета: сама эта страница — версия номер один какого-то цикла.</p>
+    </footer>
+  </main>
+</div>
+
+<script src="../main.js?v=2" defer></script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
