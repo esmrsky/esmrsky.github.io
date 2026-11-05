@@ -33,6 +33,7 @@ function renderFooter() {
         <p><strong>Get <span style="color:var(--cool)">Uncooked</span></strong> — six loops, the mechanics behind each, and the way out.</p>
         <p>This site is education and encouragement, not therapy, diagnosis, or a substitute for professional care.</p>
         <p><a href="why.html">Curious about the Bible overlap? The full argument →</a></p>
+        <p><a class="home" href="https://esmrsky.github.io/">← All projects</a></p>
       </div>
       <div>
         <p><a href="crisis.html">Thinking about suicide or self-harm? Support is here →</a></p>
@@ -182,7 +183,7 @@ function renderQuiz() {
     const q = QUIZ[i];
 
     root.innerHTML = `
-      <div class="quiz-progress"><div class="bar" style="width:${Math.round((i / QUIZ.length) * 100)}%"></div></div>
+      <div class="quiz-progress"><div class="bar" style="transform:scaleX(${i / QUIZ.length})"></div></div>
       <p class="faint">Question ${i + 1} of ${QUIZ.length}</p>
       <p class="quiz-q">${q.q}</p>
       ${q.opts.map((o, j) => `<button class="quiz-opt" data-j="${j}">${o.text}</button>`).join("")}
@@ -223,7 +224,7 @@ function renderQuiz() {
       </div>`).join("");
 
     root.innerHTML = `
-      <div class="quiz-progress"><div class="bar" style="width:100%"></div></div>
+      <div class="quiz-progress"><div class="bar" style="transform:scaleX(1)"></div></div>
       <h1 style="font-size:2rem">Found it. Here's your loop.</h1>
       <p class="dim">No judgment — a loop is a mechanism, not a verdict. Knowing which one you're in is most of the battle.</p>
 

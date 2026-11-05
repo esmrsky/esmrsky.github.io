@@ -15,6 +15,9 @@
   --danger: #ff5a5a;
   --max: 720px;
   --radius: 12px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --t1: .15s;
+  --t2: .3s;
 }
 
 * { box-sizing: border-box; }
@@ -78,6 +81,7 @@ nav {
   color: var(--text);
   text-decoration: none;
 }
+.brand { display: inline-flex; align-items: center; min-height: 44px; }
 .brand:hover { text-decoration: none; }
 .brand .un { color: var(--cool); }
 
@@ -90,7 +94,7 @@ nav {
 }
 /* inline-block + vertical padding: these declared colour only, giving the
    primary nav a ~24px tap height on every page. */
-.nav-links a { color: var(--text-dim); display: inline-block; padding: 11px 0; }
+.nav-links a { color: var(--text-dim); display: inline-flex; align-items: center; min-height: 44px; padding: 0; }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
 
 /* ---------- buttons ---------- */
@@ -103,7 +107,7 @@ nav {
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
   font-family: inherit;
 }
 .btn:hover { text-decoration: none; transform: translateY(-1px); }
@@ -160,7 +164,7 @@ nav {
   padding: 22px;
   color: var(--text);
   display: block;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: border-color var(--t1) var(--ease), transform var(--t1) var(--ease);
 }
 a.card:hover {
   border-color: var(--cool);
@@ -208,8 +212,10 @@ a.card:hover {
 .quiz-progress .bar {
   height: 100%;
   background: linear-gradient(90deg, var(--ember), var(--cool));
-  width: 0%;
-  transition: width 0.3s ease;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--t2) var(--ease);
 }
 
 .quiz-q { font-size: 1.45rem; font-weight: 700; font-family: "Space Grotesk", sans-serif; margin: 0 0 1em; }
@@ -228,7 +234,7 @@ a.card:hover {
   font-family: inherit;
   cursor: pointer;
   line-height: 1.5;
-  transition: border-color 0.12s ease, background 0.12s ease;
+  transition: border-color var(--t1) var(--ease), background-color var(--t1) var(--ease);
 }
 .quiz-opt:hover { border-color: var(--cool); background: var(--bg-raised); }
 
@@ -339,6 +345,7 @@ details.flyout summary {
   color: var(--text-dim);
   user-select: none;
 }
+details > summary { display: flex; align-items: center; min-height: 44px; }
 details.flyout summary::-webkit-details-marker { display: none; }
 details.flyout summary strong { color: var(--ember-soft); }
 details.flyout summary:hover { color: var(--text); }
@@ -386,6 +393,8 @@ button.linklike {
   font: inherit;
   font-size: inherit;
 }
+button.linklike { position: relative; }
+button.linklike::after { content: ""; position: absolute; inset: -12px -4px; }
 button.linklike:hover { text-decoration: underline; }
 
 .one-thing {
@@ -411,6 +420,8 @@ footer {
 }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; }
 footer a { color: var(--text-dim); }
+footer p a { display: inline-flex; align-items: center; min-height: 44px; }
+footer a.home { margin-top: 4px; }
 
 /* ---------- misc ---------- */
 .dim { color: var(--text-dim); }
@@ -436,3 +447,13 @@ section.pad { padding: 30px 0; }
 
 /* reading comfort: balance display text */
 h1, h2, h3 { text-wrap: balance; }
+
+/* reduced motion: stop ambient motion, make state changes instant */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
