@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/code-school/landscape.html">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/code-school/ru/landscape.html">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/code-school/landscape.html">
+<!-- lang-alt:end -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Cpath d='M32 13 5 26l27 13 27-13Z' fill='%2358a6ff'/%3E%3Cpath d='M18 33v11c0 4 6 7 14 7s14-3 14-7V33l-14 7Z' fill='%2358a6ff'/%3E%3C/svg%3E">
+  <title>Ландшафт ИИ — Code School</title>
+  <link rel="stylesheet" href="../css/style.css?v=2" />
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body data-page="landscape">
+<template id="lang-switch"><div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/code-school/landscape.html" lang="en" hreflang="en" aria-current="false">EN</a><a class="lang-opt" href="/code-school/ru/landscape.html" lang="ru" hreflang="ru" aria-current="page">RU</a></div></template>
+
+  <main class="wrap">
+    <header class="page-head">
+      <div class="kicker">Скоропортящаяся страница — с датой намеренно</div>
+      <h1>Ландшафт ИИ</h1>
+      <p class="lede">В чём ИИ-инструменты для кода по-настоящему сильны, где всё ещё слабы и, что полезнее всего, какие слабости скоро исчезнут. Колонку с динамикой читай так же внимательно, как и оценку.</p>
+      <span class="updated-badge" id="updated-badge">📅 Last updated: …</span>
+    </header>
+
+    <div class="legend" id="legend"></div>
+
+    <div id="landscape-root"></div>
+
+    <section class="verdict-section">
+      <h2>И что с этим делать?</h2>
+      <div class="grid grid-3" id="takeaways-root"></div>
+    </section>
+
+    <section class="card" style="margin-top: 2rem;">
+      <h3>🔄 Как не дать этой странице устареть</h3>
+      <p style="color: var(--text-dim); font-size: 0.94rem; margin: 0;">Каждая оценка на этой странице лежит в <code>data/landscape-data.js</code> — одном редактируемом файле. Когда ландшафт изменится (а он изменится), открой проект в Claude Code и скажи: <em>«изучи текущее состояние возможностей ИИ для кода и обнови landscape-data.js, сохранив тот же формат»</em>. Страница о возможностях, которую нельзя дёшево обновить, за несколько месяцев превращается в дезинформацию; эта рассчитана на обновление за пять минут.</p>
+    </section>
+  </main>
+
+  <script src="../data/landscape-data.js?v=2"></script>
+  <script>
+    const IS_RU = document.documentElement.getAttribute("data-lang") === "ru";
+    function esc(s) {
+      return s ? s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    }
+
+    document.getElementById("updated-badge").textContent = (IS_RU ? "📅 Обновлено: " : "📅 Last updated: ") + LANDSCAPE_UPDATED;
+
+    document.getElementById("legend").innerHTML = Object.values(LANDSCAPE_RATINGS)
+      .map((r) => `<span><span class="dot ${r.dot}"></span> <strong>${r.label}</strong> — ${r.desc}</span>`)
+      .join("");
+
+    document.getElementById("landscape-root").innerHTML = LANDSCAPE.map((domain) => `
+      <section class="cap-domain">
+        <h2>${esc(domain.domain)}</h2>
+        <p class="domain-sub">${esc(domain.sub)}</p>
+        ${domain.items
+          .map((item) => {
+            const r = LANDSCAPE_RATINGS[item.rating];
+            const t = LANDSCAPE_TRAJECTORIES[item.trajectory];
+            return `
+            <div class="cap-row">
+              <div class="cap-name"><span class="dot ${r.dot}" style="margin-right:0.5em"></span>${esc(item.name)}</div>
+              <span class="badge ${t.badge}">${t.arrow} ${t.label}</span>
+              <span class="badge badge-gray">${r.label}</span>
+              <p class="cap-note">${esc(item.note)}</p>
+            </div>`;
+          })
+          .join("")}
+      </section>`).join("");
+
+    document.getElementById("takeaways-root").innerHTML = LANDSCAPE_TAKEAWAYS.map(
+      (t) => `
+      <div class="card">
+        <h3>${esc(t.title)}</h3>
+        <p style="color: var(--text-dim); font-size: 0.94rem; margin: 0;">${esc(t.body)}</p>
+      </div>`
+    ).join("");
+  </script>
+  <script src="../js/main.js?v=2"></script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
