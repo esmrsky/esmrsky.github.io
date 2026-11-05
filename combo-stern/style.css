@@ -6,8 +6,53 @@
   --read: 'Fraunces', 'EB Garamond', Georgia, serif;
   --ui: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --t1: .2s;
+  --t2: .35s;
   --sidebar-w: 270px;
+}
+
+/* Theme swap: every flipping plain color is registered so one transition list on html eases them all. */
+@property --bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --bg-deep { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --card { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --card-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --border { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --border-strong { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ink { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ink-dim { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --ink-faint { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --accent { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --accent-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --grace { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --grace-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --shame { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --shame-soft { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --stress { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --gold { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glow-a { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glow-b { syntax: '<color>'; inherits: true; initial-value: transparent; }
+
+html {
+  transition: --bg var(--t2) var(--ease),
+    --bg-deep var(--t2) var(--ease),
+    --card var(--t2) var(--ease),
+    --card-soft var(--t2) var(--ease),
+    --border var(--t2) var(--ease),
+    --border-strong var(--t2) var(--ease),
+    --ink var(--t2) var(--ease),
+    --ink-dim var(--t2) var(--ease),
+    --ink-faint var(--t2) var(--ease),
+    --accent var(--t2) var(--ease),
+    --accent-soft var(--t2) var(--ease),
+    --grace var(--t2) var(--ease),
+    --grace-soft var(--t2) var(--ease),
+    --shame var(--t2) var(--ease),
+    --shame-soft var(--t2) var(--ease),
+    --stress var(--t2) var(--ease),
+    --gold var(--t2) var(--ease),
+    --glow-a var(--t2) var(--ease),
+    --glow-b var(--t2) var(--ease);
 }
 
 html[data-theme="dark"] {
@@ -79,7 +124,6 @@ body {
   min-height: 100%;
   display: flex;
   overflow: hidden;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -121,7 +165,7 @@ h1, h2, h3, h4 {
 a {
   color: var(--accent);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color var(--t1) var(--ease);
 }
 a:hover {
   color: var(--ink);
@@ -211,7 +255,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  transition: all 0.25s var(--ease);
+  transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease), border-color var(--t1) var(--ease);
 }
 
 .nav-item button:hover {
@@ -248,7 +292,7 @@ a:hover {
   align-self: flex-start;
   width: 44px;
   height: 44px;
-  transition: all 0.2s;
+  transition: border-color var(--t1) var(--ease);
 }
 .theme-toggle-btn:hover {
   border-color: var(--accent);
@@ -307,15 +351,15 @@ a:hover {
 
 .tab-content {
   display: none;
-  animation: fadeIn 0.4s var(--ease);
+  animation: fadeIn var(--t2) var(--ease);
 }
 .tab-content.active {
   display: block;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Mobile top menu triggers */
@@ -397,7 +441,7 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
-  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
 }
 .stage-card:hover {
   border-color: var(--border-strong);
@@ -443,7 +487,7 @@ a:hover {
   width: 18px;
   height: 18px;
   color: var(--ink-dim);
-  transition: transform 0.3s var(--ease);
+  transition: transform var(--t2) var(--ease);
 }
 .stage-card.open .stage-chev {
   transform: rotate(90deg);
@@ -452,7 +496,7 @@ a:hover {
 .stage-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s var(--ease);
+  transition: max-height var(--t2) var(--ease);
 }
 
 .stage-body-inner {
@@ -513,7 +557,7 @@ a:hover {
   font-family: var(--ui);
   font-size: 0.82rem;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: border-color var(--t1) var(--ease), background-color var(--t1) var(--ease), transform var(--t1) var(--ease);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -538,7 +582,7 @@ a:hover {
   border-radius: 10px;
   padding: 1.5rem;
   min-height: 120px;
-  animation: fadeIn 0.3s var(--ease);
+  animation: fadeIn var(--t2) var(--ease);
 }
 .slots-display-panel h4 {
   font-family: var(--ui);
@@ -627,7 +671,7 @@ svg.loop {
   font-size: 0.82rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.25s var(--ease);
+  transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
 }
 .toggle-container button:hover {
   color: var(--ink);
@@ -718,7 +762,7 @@ svg.loop {
   stroke: var(--ink-faint);
   stroke-width: 1.5px;
   cursor: pointer;
-  transition: all 0.3s var(--ease);
+  transition: fill var(--t2) var(--ease), stroke var(--t2) var(--ease), r var(--t2) var(--ease), filter var(--t2) var(--ease);
 }
 .axis-node:hover {
   fill: var(--accent-soft);
@@ -738,7 +782,7 @@ svg.loop {
   font-size: 3.5px;
   fill: var(--ink-dim);
   pointer-events: none;
-  transition: fill 0.3s;
+  transition: fill var(--t2) var(--ease);
 }
 .axis-node:hover + .axis-node-text, .axis-node.active + .axis-node-text {
   fill: var(--ink);
@@ -762,7 +806,7 @@ svg.loop {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  animation: fadeIn 0.4s var(--ease);
+  animation: fadeIn var(--t2) var(--ease);
 }
 
 .axis-details-card h3 {
@@ -836,7 +880,7 @@ svg.loop {
   border-radius: 16px;
   padding: 1.8rem;
   box-shadow: var(--shadow);
-  transition: all 0.3s var(--ease);
+  transition: border-color var(--t2) var(--ease), box-shadow var(--t2) var(--ease), transform var(--t2) var(--ease);
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -938,7 +982,7 @@ svg.loop {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  transition: all 0.3s var(--ease);
+  transition: border-color var(--t2) var(--ease), transform var(--t2) var(--ease);
 }
 
 .counterfeit-card-full:hover {
@@ -1136,8 +1180,10 @@ html[data-theme="light"] .matrix-table tbody tr:hover {
 .sim-slider-input {
   width: 100%;
   accent-color: var(--accent);
-  height: 4px;
-  background: var(--border-strong);
+  /* 44px hit area; the 4px track is painted in the middle and the margin keeps the old layout */
+  height: 44px;
+  margin: -20px 0;
+  background: linear-gradient(var(--border-strong), var(--border-strong)) center / 100% 4px no-repeat;
   border-radius: 2px;
   outline: none;
 }
@@ -1169,7 +1215,7 @@ html[data-theme="light"] .matrix-table tbody tr:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.2s;
+  transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease), background-color var(--t1) var(--ease);
 }
 .sim-event-btn:hover {
   border-color: var(--accent);
@@ -1227,7 +1273,9 @@ html[data-theme="light"] .matrix-table tbody tr:hover {
   height: 100%;
   width: 100%;
   border-radius: 2px;
-  transition: width 0.3s;
+  transform: scaleX(1);
+  transform-origin: 0 50%;
+  transition: transform var(--t2) var(--ease);
 }
 
 /* Specific colors */
@@ -1289,7 +1337,7 @@ canvas.sim-canvas {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: background 0.2s;
+  transition: background-color var(--t1) var(--ease);
 }
 .btn-primary:hover:not(:disabled) {
   background: color-mix(in srgb, var(--accent) 85%, #fff);
@@ -1309,8 +1357,9 @@ canvas.sim-canvas {
   font-weight: 500;
   font-size: 0.88rem;
   cursor: pointer;
-  transition: all 0.2s;
-}.btn-secondary:hover:not(:disabled) {
+  transition: background-color var(--t1) var(--ease);
+}
+.btn-secondary:hover:not(:disabled) {
   background: var(--card);
 }
 
@@ -1326,7 +1375,7 @@ canvas.sim-canvas {
   font-size: 0.88rem;
   outline: none;
   cursor: pointer;
-  transition: border-color 0.25s var(--ease);
+  transition: border-color var(--t1) var(--ease);
 }
 .sim-select:focus {
   border-color: var(--accent);
@@ -1351,7 +1400,7 @@ canvas.sim-canvas {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.25s var(--ease);
+  transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
 }
 
 .btn-decoupler.striving {
@@ -1395,7 +1444,7 @@ canvas.sim-canvas {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  transition: border-color 0.25s;
+  transition: border-color var(--t1) var(--ease);
 }
 
 .archetype-card-full:hover {
@@ -1500,7 +1549,7 @@ canvas.sim-canvas {
   padding: 0.5rem 1rem;
   border-radius: 20px;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease);
 }
 .filter-btn:hover {
   border-color: var(--accent);
@@ -1561,7 +1610,7 @@ canvas.sim-canvas {
   font-size: 0.85rem;
   resize: none;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color var(--t1) var(--ease);
 }
 .workbook-textarea:focus {
   border-color: var(--accent);
@@ -1660,7 +1709,7 @@ html[data-theme="light"] .blueprint-card {
   font-size: 0.9rem;
   outline: none;
   width: 100%;
-  transition: border-color 0.2s;
+  transition: border-color var(--t1) var(--ease);
 }
 .glossary-input:focus {
   border-color: var(--accent);
@@ -1679,7 +1728,7 @@ html[data-theme="light"] .blueprint-card {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.2s;
+  transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease);
 }
 .glossary-lang-toggle:hover {
   background: var(--card);
@@ -1704,7 +1753,7 @@ html[data-theme="light"] .blueprint-card {
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color var(--t1) var(--ease), border-color var(--t1) var(--ease), background-color var(--t1) var(--ease);
 }
 .glossary-tag-btn:hover, .glossary-tag-btn.active {
   color: var(--ink);
@@ -1731,7 +1780,7 @@ html[data-theme="light"] .blueprint-card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: transform var(--t1) var(--ease), border-color var(--t1) var(--ease);
 }
 .glossary-card:hover {
   border-color: var(--border-strong);
@@ -1822,15 +1871,13 @@ html[data-theme="light"] .blueprint-card {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  transform: translateY(30px);
   opacity: 0;
-  transition: all 0.4s var(--ease);
+  transition: opacity var(--t2) var(--ease);
   pointer-events: auto;
   min-width: 260px;
   max-width: 380px;
 }
 .toast.show {
-  transform: translateY(0);
   opacity: 1;
 }
 
@@ -1871,7 +1918,7 @@ html[data-theme="light"] .blueprint-card {
     background: var(--bg-deep);
     display: flex;
     flex-direction: column;
-    transition: max-height 0.35s var(--ease);
+    transition: max-height var(--t2) var(--ease);
   }
   
   .sidebar.open {
@@ -1902,7 +1949,7 @@ html[data-theme="light"] .blueprint-card {
     padding-right: 0;
     overflow-y: visible;
     opacity: 0;
-    transition: opacity 0.2s var(--ease);
+    transition: opacity var(--t1) var(--ease);
     pointer-events: none;
   }
   
@@ -1942,7 +1989,7 @@ html[data-theme="light"] .blueprint-card {
     padding-top: 1rem;
     border-top: 1px solid var(--border);
     opacity: 0;
-    transition: opacity 0.2s var(--ease);
+    transition: opacity var(--t1) var(--ease);
     pointer-events: none;
   }
   
@@ -1962,3 +2009,78 @@ html[data-theme="light"] .blueprint-card {
 
 /* reading comfort: balance display text */
 h1, h2, h3 { text-wrap: balance; }
+
+/* ============================================================
+   44px FLOOR, HUB LINK, REDUCED MOTION
+   ============================================================ */
+.toggle-container button,
+.sim-event-btn,
+.btn-primary,
+.btn-secondary,
+.btn-decoupler,
+.sim-select,
+.glossary-input {
+  min-height: 44px;
+}
+.toggle-container button {
+  display: inline-flex;
+  align-items: center;
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.glossary-tag-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.glossary-card .glossary-tag-btn {
+  min-height: 0;
+}
+
+.site-foot {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem 2.5rem;
+}
+.foot-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+}
+.home:hover { color: var(--ink); }
+.foot-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+}
+.foot-pick .esv-pick-menu { top: auto; bottom: calc(100% + 8px); }
+@media (max-width: 768px) {
+  .site-foot { padding: 0 1.2rem 1.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

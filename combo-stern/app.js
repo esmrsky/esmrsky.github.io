@@ -599,9 +599,9 @@ function updateSimUI() {
   document.getElementById("sim-val-stress").innerText = Math.round(S);
   document.getElementById("sim-val-shame").innerText = Math.round(SH);
 
-  document.getElementById("sim-bar-willpower").style.width = `${W}%`;
-  document.getElementById("sim-bar-stress").style.width = `${S}%`;
-  document.getElementById("sim-bar-shame").style.width = `${SH}%`;
+  document.getElementById("sim-bar-willpower").style.transform = `scaleX(${Math.max(0, Math.min(100, W)) / 100})`;
+  document.getElementById("sim-bar-stress").style.transform = `scaleX(${Math.max(0, Math.min(100, S)) / 100})`;
+  document.getElementById("sim-bar-shame").style.transform = `scaleX(${Math.max(0, Math.min(100, SH)) / 100})`;
 }
 
 function drawChart() {
