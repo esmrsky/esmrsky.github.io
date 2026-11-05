@@ -3,6 +3,20 @@
   const ultimate = window.TWELVE_ULTIMATE || { axes: [], resonance: [] };
   const diagnostic = window.TWELVE_DIAGNOSTIC || null;
   const scriptureApi = window.ESMRSKY_SCRIPTURE_API || window.TWELVE_SCRIPTURE_API || { configured: false };
+  // The Russian page (/twelve/ru/) runs this same file. data-ru.js has already merged the Russian
+  // text into the data objects; the strings this file writes itself switch on RU.
+  const RU = document.documentElement.lang === 'ru';
+  const RU_APP = RU ? window.TWELVE_RU_APP : null;
+  if (RU && !RU_APP) throw new Error('twelve RU: data-ru.js did not load');
+  // tribe.tribe stays English everywhere: the diagnostic and the saved result compare it.
+  const tn = tribe => (RU && tribe.tribeRu ? tribe.tribeRu : tribe.tribe);
+  const TRIBE_GENITIVE = {
+    asher: 'Асира', gad: 'Гада', reuben: 'Рувима', naphtali: 'Неффалима', judah: 'Иуды', joseph: 'Иосифа',
+    benjamin: 'Вениамина', simeon: 'Симеона', zebulun: 'Завулона', levi: 'Левия', issachar: 'Иссахара', dan: 'Дана'
+  };
+  const CL = RU
+    ? { strong: 'Надёжно', partial: 'Частично', interpretive: 'Толкование', none: 'Нет чёткого соответствия', named: 'Названное родословие', story: 'Созвучие истории' }
+    : { strong: 'Strong', partial: 'Partial', interpretive: 'Interpretive', none: 'No clean map', named: 'Named lineage', story: 'Story resonance' };
 
   const BOOK_USFM = {
     'Genesis': 'GEN', 'Numbers': 'NUM', 'Deuteronomy': 'DEU', 'Joshua': 'JOS',
@@ -18,6 +32,19 @@
   };
 
   // Bolls.life uses canonical book numbers (Genesis 1 … Revelation 66) for its NLT text.
+  // The Russian page cites with Russian abbreviations and reads НРП (bolls NRT, same book numbers;
+  // psalms are cited in the Septuagint numbering NRT itself uses).
+  const RU_BOLLS_BOOK_IDS = {
+    'Быт.': 1, 'Исх.': 2, 'Лев.': 3, 'Чис.': 4, 'Втор.': 5, 'Нав.': 6, 'Суд.': 7, 'Руфь': 8,
+    '1 Цар.': 9, '2 Цар.': 10, '3 Цар.': 11, '4 Цар.': 12, '1 Пар.': 13, '2 Пар.': 14, 'Езд.': 15,
+    'Неем.': 16, 'Есф.': 17, 'Иов': 18, 'Пс.': 19, 'Притч.': 20, 'Екк.': 21, 'Песн.': 22, 'Ис.': 23,
+    'Иер.': 24, 'Плач': 25, 'Иез.': 26, 'Дан.': 27, 'Ос.': 28, 'Иоиль': 29, 'Ам.': 30, 'Авд.': 31,
+    'Иона': 32, 'Мих.': 33, 'Наум': 34, 'Авв.': 35, 'Соф.': 36, 'Агг.': 37, 'Зах.': 38, 'Мал.': 39,
+    'Мф.': 40, 'Мк.': 41, 'Лк.': 42, 'Ин.': 43, 'Деян.': 44, 'Рим.': 45, '1 Кор.': 46, '2 Кор.': 47,
+    'Гал.': 48, 'Еф.': 49, 'Флп.': 50, 'Кол.': 51, '1 Фес.': 52, '2 Фес.': 53, '1 Тим.': 54, '2 Тим.': 55,
+    'Тит.': 56, 'Флм.': 57, 'Евр.': 58, 'Иак.': 59, '1 Пет.': 60, '2 Пет.': 61, '1 Ин.': 62, '2 Ин.': 63,
+    '3 Ин.': 64, 'Иуд.': 65, 'Откр.': 66
+  };
   const BOLLS_BOOK_IDS = {
     'Genesis': 1, 'Numbers': 4, 'Deuteronomy': 5, 'Joshua': 6,
     'Judges': 7, '1 Samuel': 9, '2 Samuel': 10, '1 Kings': 11,
@@ -46,6 +73,14 @@
     title: 'New Living Translation',
     copyright: 'New Living Translation (NLT). Scripture text supplied by Bolls.life.',
     deepLink: 'https://www.bible.com/versions/116'
+  };
+
+  const nrtVersion = {
+    id: 'nrt',
+    abbreviation: 'НРП',
+    title: 'Новый русский перевод',
+    copyright: 'Русский текст Писания приводится по Новому русскому переводу (НРП®) © Biblica, Inc.® Используется по разрешению правообладателя.',
+    deepLink: ''
   };
 
   const preferredVersions = [
@@ -84,6 +119,30 @@
     dan: { name: 'Nathan before David', ref: '2 Samuel 12:1–13', type: 'resonance', note: 'Nathan exposes hidden corruption through a story that reaches the conscience, then names the truth directly. The verdict opens a door to repentance.' }
   };
 
+  if (RU) {
+    const check = (table, ru, name) => {
+      Object.keys(ru).forEach(id => { if (!(id in table)) throw new Error(`twelve RU: ${name}.${id}: no English entry`); });
+      Object.keys(table).forEach(id => { if (!(id in ru)) throw new Error(`twelve RU: ${name}.${id}: missing in RU`); });
+    };
+    check(REAL_WORLD_EXAMPLES, RU_APP.examples, 'examples');
+    check(ADDITIONAL_WITNESSES, RU_APP.witnesses, 'witnesses');
+    Object.keys(REAL_WORLD_EXAMPLES).forEach(id => {
+      const ru = RU_APP.examples[id];
+      if (!Array.isArray(ru) || ru.length !== REAL_WORLD_EXAMPLES[id].length || ru.some(item => typeof item !== 'string' || !item)) {
+        throw new Error(`twelve RU: examples.${id}: English has ${REAL_WORLD_EXAMPLES[id].length} lines`);
+      }
+      REAL_WORLD_EXAMPLES[id] = ru;
+    });
+    Object.keys(ADDITIONAL_WITNESSES).forEach(id => {
+      const en = ADDITIONAL_WITNESSES[id];
+      const ru = RU_APP.witnesses[id];
+      if (!ru || !ru.name || !ru.note || Object.keys(ru).some(key => key !== 'name' && key !== 'note')) {
+        throw new Error(`twelve RU: witnesses.${id}: expected exactly a name and a note`);
+      }
+      ADDITIONAL_WITNESSES[id] = { name: ru.name, ref: RU_APP.cite(en.ref), type: en.type, note: ru.note };
+    });
+  }
+
   const ICONS = {
     host: `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 21c2.5-7 17.5-7 20 0v4H6v-4Z"/><path d="M9 17c0-5 3-9 7-9s7 4 7 9"/><path d="M16 8V4M12.5 9 10 6M19.5 9 22 6"/></svg>`,
     shield: `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28S7 24 7 16V7l9-3 9 3v9c0 8-9 12-9 12Z"/><path d="m11 20 10-10M17 10h4v4"/></svg>`,
@@ -121,9 +180,10 @@
   let questionIndex = -1;
   let diagnosticAnswers = loadDiagnosticAnswers();
   let savedDiagnosticResult = loadDiagnosticResult();
-  let bibleVersions = withNlt(preferredVersions);
-  let selectedBibleVersionId = loadBibleVersionId() || '111';
-  let bibleVersionsState = scriptureApi.configured ? 'loading' : 'local';
+  // The Russian page offers НРП only and never touches the English page's saved choice.
+  let bibleVersions = RU ? [nrtVersion] : withNlt(preferredVersions);
+  let selectedBibleVersionId = RU ? 'nrt' : (loadBibleVersionId() || '111');
+  let bibleVersionsState = RU ? 'ready' : (scriptureApi.configured ? 'loading' : 'local');
   let scriptureLoadToken = 0;
   let viewSwitchToken = 0;
   let headerVersionAnimation = null;
@@ -180,7 +240,7 @@
   }
 
   function referenceBadge(reference) {
-    return `<span class="reference-badge" role="button" tabindex="0" data-verse-reference="${escapeHtml(reference)}" aria-label="Preview ${escapeHtml(reference)}">${escapeHtml(reference)}</span>`;
+    return `<span class="reference-badge" role="button" tabindex="0" data-verse-reference="${escapeHtml(reference)}" aria-label="${RU ? 'Открыть отрывок' : 'Preview'} ${escapeHtml(reference)}">${escapeHtml(reference)}</span>`;
   }
 
   function inlineVerses(entry) {
@@ -188,6 +248,7 @@
   }
 
   function loadBibleVersionId() {
+    if (RU) return null;
     try {
       const saved = localStorage.getItem('twelve-bible-version-id');
       // WEB used to be a pickable option; it is now only the fallback.
@@ -198,6 +259,7 @@
   }
 
   function saveBibleVersionId(versionId) {
+    if (RU) return;
     try {
       localStorage.setItem('twelve-bible-version-id', String(versionId));
     } catch (error) {
@@ -217,19 +279,51 @@
   function referenceToBolls(reference) {
     const firstPassage = String(reference).split(';')[0].trim();
     const match = firstPassage.match(/^(.+?) (\d+):(\d+)(?:[\u2013-](\d+))?$/);
-    if (!match || !BOLLS_BOOK_IDS[match[1]]) return null;
+    const books = RU ? RU_BOLLS_BOOK_IDS : BOLLS_BOOK_IDS;
+    if (!match || !books[match[1]]) return null;
     return {
-      bookId: BOLLS_BOOK_IDS[match[1]],
+      bookId: books[match[1]],
       chapter: Number(match[2]),
       verseStart: Number(match[3]),
       verseEnd: Number(match[4] || match[3])
     };
   }
 
+  // bolls.life answers bursts with 429s. On the Russian page every request waits for its own
+  // 200ms slot and is retried twice.
+  let bollsNextSlot = 0;
+  function bollsSlot() {
+    const now = Date.now();
+    const wait = Math.max(0, bollsNextSlot - now);
+    bollsNextSlot = Math.max(now, bollsNextSlot) + 200;
+    return new Promise(resolve => window.setTimeout(resolve, wait));
+  }
+
+  async function bollsPacedFetch(url) {
+    for (let attempt = 0; ; attempt += 1) {
+      await bollsSlot();
+      try {
+        const response = await fetch(url);
+        if (response.ok || attempt >= 2) return response;
+      } catch (error) {
+        if (attempt >= 2) throw error;
+      }
+    }
+  }
+
+  function nrtClean(value) {
+    return cleanScriptureText(String(value || '')
+      .replace(/<S>.*?<\/S>|<sup>.*?<\/sup>/gi, '')
+      .replace(/<br\s*\/?>/gi, ' ')
+      .replace(/<[^>]+>/g, '')
+      .replace(/([:,;.!?])—/g, '$1 —')
+      .replace(/([.,:;!?])(?=[А-ЯЁа-яё«])/g, '$1 '));
+  }
+
   function bollsChapter(bookId, chapter) {
     const key = `${bookId}:${chapter}`;
     if (!bollsChapterCache.has(key)) {
-      bollsChapterCache.set(key, fetch(`https://bolls.life/get-text/NLT/${bookId}/${chapter}/`)
+      bollsChapterCache.set(key, (RU ? bollsPacedFetch : fetch)(`https://bolls.life/get-text/${RU ? 'NRT' : 'NLT'}/${bookId}/${chapter}/`)
         .then(response => {
           if (!response.ok) throw new Error('NLT could not be loaded.');
           return response.json();
@@ -252,7 +346,7 @@
     const chapter = await bollsChapter(parts.bookId, parts.chapter);
     const text = chapter
       .filter(verse => Number(verse.verse) >= parts.verseStart && Number(verse.verse) <= parts.verseEnd)
-      .map(verse => cleanScriptureText(String(verse.text || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '')))
+      .map(verse => RU ? nrtClean(verse.text) : cleanScriptureText(String(verse.text || '').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '')))
       .filter(Boolean)
       .join(' ');
     if (!text) throw new Error('NLT passage was not found.');
@@ -278,6 +372,7 @@
   }
 
   function versionSource(version) {
+    if (version.id === 'nrt') return 'bolls.life';
     if (version.id === 'web') return 'public domain';
     if (version.id === 'nlt') return 'Bolls.life';
     return 'YouVersion';
@@ -336,10 +431,27 @@
       const entry = (tribe.scriptureVault || []).find(item => item.ref === reference || item.ref === firstReference);
       if (entry) return entry.verses.map(verse => `${verse.number} ${verse.text}`).join(' ');
     }
+    if (RU) {
+      const tribe = tribes.find(item => item.reference === reference);
+      if (tribe) return tribe.verse;
+    }
     return '';
   }
 
+  // Russian: the baked НРП text when the passage is in a profile, else НРП from bolls.life.
+  async function nrtPreview(reference) {
+    const local = localWebPassage(reference);
+    if (local) return { text: local, version: 'НРП' };
+    if (!referenceToBolls(reference)) throw new Error('Этот составной отрывок удобнее читать внутри профиля.');
+    try {
+      return { text: await bollsPassage(reference), version: 'НРП' };
+    } catch (error) {
+      throw new Error('Не удалось загрузить отрывок. Попробуй чуть позже.');
+    }
+  }
+
   async function passagePreview(reference) {
+    if (RU) return nrtPreview(reference);
     const selected = selectedBibleVersion();
     const usfm = referenceToUsfm(reference);
     if (!usfm) throw new Error('This combined reference opens best inside its profile.');
@@ -426,7 +538,7 @@
     const reference = target.dataset.verseReference;
     versePopover.querySelector('[data-popover-reference]').textContent = reference;
     versePopover.querySelector('[data-popover-version]').textContent = shortVersionName(selectedBibleVersion());
-    versePopover.querySelector('[data-popover-content]').textContent = 'Loading passage…';
+    versePopover.querySelector('[data-popover-content]').textContent = (RU ? 'Загрузка отрывка…' : 'Loading passage…');
     revealVersePopoverLayer();
     window.requestAnimationFrame(() => versePopover.classList.add('is-visible'));
     positionVersePopover(target);
@@ -456,6 +568,7 @@
   }
 
   function bibleVersionStatus() {
+    if (RU) return 'Все отрывки в этом профиле — Новый русский перевод (НРП).';
     if (bibleVersionsState === 'loading') return 'Connecting to available translations…';
     if (bibleVersionsState === 'error') return 'Licensed translations are temporarily unavailable. NLT is still ready.';
     if (bibleVersionsState === 'local') return 'Licensed translations will appear once the Scripture service is connected.';
@@ -465,12 +578,13 @@
 
   function confidenceBadge(level, label) {
     const normalized = level === 'interpretive' ? 'inference' : level;
-    return `<span class="confidence ${normalized}">${label || (normalized === 'inference' ? 'Interpretive' : normalized)}</span>`;
+    return `<span class="confidence ${normalized}">${label || (normalized === 'inference' ? CL.interpretive : normalized)}</span>`;
   }
 
   function searchText(tribe) {
     return [
       tribe.tribe,
+      tribe.tribeRu,
       tribe.name,
       tribe.frequency,
       tribe.calling,
@@ -493,22 +607,22 @@
   function cardMarkup(tribe, index) {
     const { pressureView, title, copy, chips } = cardViewValues(tribe);
     return `
-      <button class="tribe-card" type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color};--i:${index}" aria-label="Open ${tribe.tribe}, ${tribe.name} profile">
+      <button class="tribe-card" type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color};--i:${index}" aria-label="${RU ? `Открыть профиль: ${tn(tribe)}, ${tribe.name}` : `Open ${tribe.tribe}, ${tribe.name} profile`}">
         <span class="card-topline">
           <span class="tribe-emblem">${icon(tribe.icon)}</span>
           <span class="card-index">${tribe.number} / 12</span>
         </span>
         <span class="card-heading">
-          <p>${tribe.tribe}</p>
+          <p>${tn(tribe)}</p>
           <h3>${tribe.name}</h3>
         </span>
         <span class="card-mode">
-          <span class="mode-label">${pressureView ? 'The repeated bend' : 'Core frequency'}</span>
+          <span class="mode-label">${pressureView ? (RU ? 'Повторяющийся изгиб' : 'The repeated bend') : (RU ? 'Главная нота' : 'Core frequency')}</span>
           <span class="mode-title">${title}</span>
           <span class="mode-copy">${copy}</span>
         </span>
         <span class="card-chips">${chips.map(item => `<span class="card-chip">${item}</span>`).join('')}</span>
-        <span class="card-open">Open field guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="card-open">${(RU ? 'Открыть путеводитель' : 'Open field guide')} <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </button>`;
   }
 
@@ -524,7 +638,7 @@
 
   function applyCardView(card, tribe) {
     const { pressureView, title, copy, chips } = cardViewValues(tribe);
-    card.querySelector('.mode-label').textContent = pressureView ? 'The repeated bend' : 'Core frequency';
+    card.querySelector('.mode-label').textContent = pressureView ? (RU ? 'Повторяющийся изгиб' : 'The repeated bend') : (RU ? 'Главная нота' : 'Core frequency');
     card.querySelector('.mode-title').textContent = title;
     card.querySelector('.mode-copy').textContent = copy;
     card.querySelector('.card-chips').innerHTML = chips.map(item => `<span class="card-chip">${escapeHtml(item)}</span>`).join('');
@@ -536,19 +650,24 @@
     const filtered = query ? tribes.filter(tribe => searchText(tribe).includes(query)) : tribes;
     grid.innerHTML = filtered.map((tribe, index) => cardMarkup(tribe, index)).join('');
     resultsLine.textContent = filtered.length === 12
-      ? 'Showing all twelve patterns'
-      : `Showing ${filtered.length} of twelve patterns`;
+      ? (RU ? 'Показаны все двенадцать образов' : 'Showing all twelve patterns')
+      : (RU ? `Показано образов: ${filtered.length} из двенадцати` : `Showing ${filtered.length} of twelve patterns`);
     emptyState.hidden = filtered.length !== 0;
   }
 
   function witnessBadge(type) {
-    const labels = {
+    const labels = RU ? {
+      lineage: 'Родословие',
+      association: 'Связь с коленом',
+      parable: 'Притча',
+      resonance: 'Созвучие образу'
+    } : {
       lineage: 'Lineage',
       association: 'Tribal association',
       parable: 'Parable',
       resonance: 'Pattern resonance'
     };
-    return labels[type] || 'Pattern resonance';
+    return labels[type] || labels.resonance;
   }
 
   function drawerHeading(iconName, kicker, title) {
@@ -556,7 +675,9 @@
   }
 
   function profileMarkup(tribe) {
-    const journeyLabels = ['Egypt · bondage', 'Wilderness · formation', 'Promised land · fruitful stewardship'];
+    const journeyLabels = RU
+      ? ['Египет · рабство', 'Пустыня · формирование', 'Обетованная земля · плодотворное управление']
+      : ['Egypt · bondage', 'Wilderness · formation', 'Promised land · fruitful stewardship'];
     const scriptureVault = tribe.scriptureVault || [];
     const anchor = scriptureVault[0];
     const additionalWitness = ADDITIONAL_WITNESSES[tribe.id];
@@ -565,20 +686,20 @@
       <div class="profile-intro">
         <article class="profile-block verse-block">
           <span class="evidence-badge" data-translation-badge>${escapeHtml(selectedBibleVersion().abbreviation)}</span>
-          <blockquote data-scripture-anchor>${anchor ? inlineVerses(anchor) : `“${tribe.verse}”`}</blockquote>
+          <blockquote data-scripture-anchor>${anchor ? inlineVerses(anchor) : (RU ? `«${tribe.verse}»` : `“${tribe.verse}”`)}</blockquote>
           <cite>${referenceBadge(anchor ? anchor.ref : tribe.reference)}</cite>
         </article>
         <article class="profile-block frequency-block">
-          <p class="section-kicker">Core frequency · interpretive map</p>
+          <p class="section-kicker">${(RU ? 'Главная нота · толкование' : 'Core frequency · interpretive map')}</p>
           <h3>${tribe.frequency}</h3>
           <p>${tribe.calling}</p>
-          <div class="profile-snapshot" aria-label="Strengths and pressure patterns">
+          <div class="profile-snapshot" aria-label="${(RU ? 'Сильные стороны и реакции под давлением' : 'Strengths and pressure patterns')}">
             <div class="snapshot-group snapshot-strengths">
-              <p class="snapshot-heading"><span aria-hidden="true"></span>Strengths</p>
+              <p class="snapshot-heading"><span aria-hidden="true"></span>${(RU ? 'Сильные стороны' : 'Strengths')}</p>
               <div class="snapshot-chips">${tribe.strengths.map(item => `<span>${item}</span>`).join('')}</div>
             </div>
             <div class="snapshot-group snapshot-pressures">
-              <p class="snapshot-heading"><span aria-hidden="true"></span>Under pressure</p>
+              <p class="snapshot-heading"><span aria-hidden="true"></span>${(RU ? 'Под давлением' : 'Under pressure')}</p>
               <div class="snapshot-chips">${tribe.pressures.map(item => `<span>${item}</span>`).join('')}</div>
             </div>
           </div>
@@ -587,15 +708,15 @@
 
       <details class="profile-drawer talent-drawer" open>
         <summary>
-          ${drawerHeading('lamp', 'Everyday shape', 'Where this shows up')}
-          <span class="drawer-prompt">Roles and moments you may recognize</span>
+          ${drawerHeading('lamp', (RU ? 'Повседневная форма' : 'Everyday shape'), (RU ? 'Где это проявляется' : 'Where this shows up'))}
+          <span class="drawer-prompt">${(RU ? 'Роли и моменты, которые ты можешь узнать' : 'Roles and moments you may recognize')}</span>
         </summary>
         <div class="drawer-content talent-grid">
           <article class="talent-card roles-card">
-            <h4>Familiar roles, not fixed job titles</h4>
+            <h4>${(RU ? 'Знакомые роли, а не должности' : 'Familiar roles, not fixed job titles')}</h4>
             <div class="role-list">${tribe.roles.map(item => `<span>${item}</span>`).join('')}</div>
             <div class="real-world-examples">
-              <p class="section-kicker">You may recognize it when…</p>
+              <p class="section-kicker">${(RU ? 'Ты можешь узнать это, когда…' : 'You may recognize it when…')}</p>
               ${realWorldExamples.map(item => `<p><i aria-hidden="true"></i>${item}</p>`).join('')}
             </div>
           </article>
@@ -604,57 +725,57 @@
 
       <details class="profile-drawer burnout-drawer">
         <summary>
-          ${drawerHeading('shield', 'Pressure diagnostic', 'Burnout vector')}
-          <span class="drawer-prompt">See the warning signals</span>
+          ${drawerHeading('shield', (RU ? 'Диагностика давления' : 'Pressure diagnostic'), (RU ? 'Вектор выгорания' : 'Burnout vector'))}
+          <span class="drawer-prompt">${(RU ? 'Увидеть тревожные сигналы' : 'See the warning signals')}</span>
         </summary>
         <div class="drawer-content burnout-grid">
           <article class="burnout-card">
-            <p class="section-kicker">Burnout vector</p>
+            <p class="section-kicker">${(RU ? 'Вектор выгорания' : 'Burnout vector')}</p>
             <p>${tribe.burnout}</p>
           </article>
           <article class="burnout-card">
-            <p class="section-kicker">Isolation tactic</p>
+            <p class="section-kicker">${(RU ? 'Тактика изоляции' : 'Isolation tactic')}</p>
             <p>${tribe.isolation}</p>
           </article>
           <article class="burnout-card lie-card">
-            <p class="section-kicker">The lie underneath</p>
-            <blockquote>“${tribe.lie}”</blockquote>
+            <p class="section-kicker">${(RU ? 'Ложь под всем этим' : 'The lie underneath')}</p>
+            <blockquote>${RU ? `«${tribe.lie}»` : `“${tribe.lie}”`}</blockquote>
           </article>
         </div>
       </details>
 
       <details class="profile-drawer framework-drawer">
         <summary>
-          ${drawerHeading('scales', 'Cross-framework translation', 'How this connects to other maps')}
-          <span class="drawer-prompt">APEST, gifts, and modern roles</span>
+          ${drawerHeading('scales', (RU ? 'Перевод на другие модели' : 'Cross-framework translation'), (RU ? 'Как это связано с другими картами' : 'How this connects to other maps'))}
+          <span class="drawer-prompt">${(RU ? 'APEST, дары и современные роли' : 'APEST, gifts, and modern roles')}</span>
         </summary>
         <div class="drawer-content framework-content">
-          <p class="framework-note">These are correspondences, not claims that a tribe and a ministry gift or modern archetype are identical. Confidence labels show how tightly each layer can be supported.</p>
+          <p class="framework-note">${(RU ? 'Это соответствия, а не утверждения, что колено тождественно служебному дару или современному архетипу. Метки надёжности показывают, насколько крепко можно обосновать каждый слой.' : 'These are correspondences, not claims that a tribe and a ministry gift or modern archetype are identical. Confidence labels show how tightly each layer can be supported.')}</p>
           <div class="framework-grid">
             <article class="framework-tile">
-              <span>Fivefold / APEST</span>
-              <strong>${tribe.fivefold.length ? tribe.fivefold.map(item => item.name).join(' + ') : 'No clean mapping'}</strong>
-              <p>${tribe.fivefold.length ? tribe.fivefold.map(item => confidenceBadge(item.confidence, 'Partial')).join(' ') : ''}Equipping function in Ephesians 4; it describes ministry contribution, not temperament.</p>
+              <span>${(RU ? 'Пятеричное служение / APEST' : 'Fivefold / APEST')}</span>
+              <strong>${tribe.fivefold.length ? tribe.fivefold.map(item => item.name).join(' + ') : (RU ? 'Нет чёткого соответствия' : 'No clean mapping')}</strong>
+              <p>${tribe.fivefold.length ? tribe.fivefold.map(item => confidenceBadge(item.confidence, CL.partial)).join(' ') : ''}${(RU ? 'Функция снаряжения из 4-й главы Послания к ефесянам: она описывает вклад в служение, а не темперамент.' : 'Equipping function in Ephesians 4; it describes ministry contribution, not temperament.')}</p>
             </article>
             <article class="framework-tile">
-              <span>Romans 12 gift lens</span>
+              <span>${(RU ? 'Дары по Рим. 12' : 'Romans 12 gift lens')}</span>
               <strong>${tribe.gift.name}</strong>
-              <p>${confidenceBadge(tribe.gift.confidence, 'Interpretive')} The nearest service-and-motivation expression in the Romans 12 gift vocabulary.</p>
+              <p>${confidenceBadge(tribe.gift.confidence, CL.interpretive)} ${(RU ? 'Ближайшее выражение служения и мотивации в словаре даров из 12-й главы Послания к римлянам.' : 'The nearest service-and-motivation expression in the Romans 12 gift vocabulary.')}</p>
             </article>
             <article class="framework-tile">
-              <span>Core spiritual axis</span>
+              <span>${(RU ? 'Главная духовная ось' : 'Core spiritual axis')}</span>
               <strong>${tribe.axis}</strong>
-              <p>${confidenceBadge(tribe.axisConfidence, tribe.axisConfidence === 'strong' ? 'Strong' : 'Partial')} The tension this pattern repeatedly learns to hold in truth.</p>
+              <p>${confidenceBadge(tribe.axisConfidence, tribe.axisConfidence === 'strong' ? CL.strong : CL.partial)} ${(RU ? 'Напряжение, которое этот образ снова и снова учится держать в истине.' : 'The tension this pattern repeatedly learns to hold in truth.')}</p>
             </article>
             <article class="framework-tile">
-              <span>Modern archetype translation</span>
+              <span>${(RU ? 'Перевод на современный архетип' : 'Modern archetype translation')}</span>
               <strong>${tribe.secular.label}</strong>
-              <p>${confidenceBadge(tribe.secular.confidence, 'Interpretive')} ${tribe.secular.pearson}. Familiar workplace language for recognition, never a biblical identity claim.</p>
+              <p>${confidenceBadge(tribe.secular.confidence, CL.interpretive)} ${tribe.secular.pearson}. ${(RU ? 'Знакомый язык работы для узнавания, а не библейское утверждение о том, кто ты.' : 'Familiar workplace language for recognition, never a biblical identity claim.')}</p>
             </article>
             <article class="framework-tile framework-wide">
-              <span>Primary blueprint case</span>
+              <span>${(RU ? 'Главный образец' : 'Primary blueprint case')}</span>
               <strong>${tribe.blueprint.figure}</strong>
-              <p>${confidenceBadge(tribe.blueprint.evidence === 'genealogical' ? 'strong' : 'inference', tribe.blueprint.evidence === 'genealogical' ? 'Named lineage' : 'Story resonance')} ${tribe.blueprint.references.map(referenceBadge).join('')}</p>
+              <p>${confidenceBadge(tribe.blueprint.evidence === 'genealogical' ? 'strong' : 'inference', tribe.blueprint.evidence === 'genealogical' ? CL.named : CL.story)} ${tribe.blueprint.references.map(referenceBadge).join('')}</p>
             </article>
           </div>
         </div>
@@ -662,8 +783,8 @@
 
       <details class="profile-drawer scripture-drawer">
         <summary>
-          ${drawerHeading('scroll', 'Seven movements · full text', 'Read the pattern in Scripture')}
-          <span class="drawer-prompt" data-scripture-drawer-label>Read inline · ${escapeHtml(selectedBibleVersion().abbreviation)}</span>
+          ${drawerHeading('scroll', (RU ? 'Семь движений · полный текст' : 'Seven movements · full text'), (RU ? 'Прочитать образ в Писании' : 'Read the pattern in Scripture'))}
+          <span class="drawer-prompt" data-scripture-drawer-label>${(RU ? 'Читать здесь' : 'Read inline')} · ${escapeHtml(selectedBibleVersion().abbreviation)}</span>
         </summary>
         <div class="drawer-content">
           <div class="scripture-list">
@@ -672,39 +793,39 @@
           <div class="scripture-attribution">
             <div>
               <p class="translation-status" data-translation-status aria-live="polite">${bibleVersionStatus()}</p>
-              <p class="scripture-credit" data-scripture-credit>${escapeHtml(webVersion.copyright)}</p>
+              <p class="scripture-credit" data-scripture-credit>${escapeHtml(RU ? nrtVersion.copyright : webVersion.copyright)}</p>
             </div>
-            <a class="scripture-deep-link" data-scripture-link href="#" target="_blank" rel="noopener" hidden>Open this version in YouVersion</a>
+            <a class="scripture-deep-link" data-scripture-link href="#" target="_blank" rel="noopener" hidden>${(RU ? 'Открыть этот перевод в YouVersion' : 'Open this version in YouVersion')}</a>
           </div>
         </div>
       </details>
 
       <details class="profile-drawer related-drawer">
         <summary>
-          ${drawerHeading('deer', 'Shared strengths and friction', 'Related patterns')}
-          <span class="drawer-prompt">See the productive tension</span>
+          ${drawerHeading('deer', (RU ? 'Общие сильные стороны и трения' : 'Shared strengths and friction'), (RU ? 'Родственные образы' : 'Related patterns'))}
+          <span class="drawer-prompt">${(RU ? 'Увидеть полезное напряжение' : 'See the productive tension')}</span>
         </summary>
         <div class="drawer-content relation-card">
           <div>
-            <p class="section-kicker">Frequent friction pair</p>
+            <p class="section-kicker">${(RU ? 'Частая пара с трением' : 'Frequent friction pair')}</p>
             <p>${tribe.friction.note}</p>
           </div>
-          <button type="button" class="relation-link" data-tribe="${tribe.friction.tribe}">Open ${tribes.find(item => item.id === tribe.friction.tribe).tribe} profile</button>
+          <button type="button" class="relation-link" data-tribe="${tribe.friction.tribe}">${RU ? `Открыть профиль: ${tn(tribes.find(item => item.id === tribe.friction.tribe))}` : `Open ${tribes.find(item => item.id === tribe.friction.tribe).tribe} profile`}</button>
         </div>
       </details>
 
       <section class="profile-section">
         <div class="section-title-row">
-          <div><p class="section-kicker">Where the pattern bends</p><h3>When pressure lands</h3></div>
-          <span class="map-label">Map · test the resonance</span>
+          <div><p class="section-kicker">${(RU ? 'Где образ гнётся' : 'Where the pattern bends')}</p><h3>${(RU ? 'Когда приходит давление' : 'When pressure lands')}</h3></div>
+          <span class="map-label">${(RU ? 'Карта · проверь созвучие' : 'Map · test the resonance')}</span>
         </div>
         <div class="pressure-grid">
           <article class="profile-block pressure-card attack">
-            <p class="section-kicker">The attack point</p>
+            <p class="section-kicker">${(RU ? 'Точка удара' : 'The attack point')}</p>
             <p>${tribe.attack}</p>
           </article>
           <article class="profile-block pressure-card spiral">
-            <p class="section-kicker">The familiar spiral</p>
+            <p class="section-kicker">${(RU ? 'Знакомая спираль' : 'The familiar spiral')}</p>
             <p>${tribe.spiral}</p>
           </article>
         </div>
@@ -712,17 +833,17 @@
 
       <section class="profile-section">
         <div class="section-title-row">
-          <div><p class="section-kicker">Interrupt and re-aim</p><h3>The practiced way through</h3></div>
+          <div><p class="section-kicker">${(RU ? 'Прервать и перенаправить' : 'Interrupt and re-aim')}</p><h3>${(RU ? 'Проверенный путь через трудность' : 'The practiced way through')}</h3></div>
         </div>
         <div class="action-grid">
           <article class="action-card immediate">
-            <p class="section-kicker">In the first five minutes</p>
-            <h4>Make the next move small and physical.</h4>
+            <p class="section-kicker">${(RU ? 'В первые пять минут' : 'In the first five minutes')}</p>
+            <h4>${(RU ? 'Сделай следующий шаг маленьким и телесным.' : 'Make the next move small and physical.')}</h4>
             <p>${tribe.firstMove}</p>
           </article>
           <article class="action-card">
-            <p class="section-kicker">The longer practice</p>
-            <h4>What breakthrough begins to look like</h4>
+            <p class="section-kicker">${(RU ? 'Долгая практика' : 'The longer practice')}</p>
+            <h4>${(RU ? 'Как начинается прорыв' : 'What breakthrough begins to look like')}</h4>
             <p>${tribe.breakthrough}</p>
           </article>
         </div>
@@ -730,9 +851,9 @@
 
       <section class="profile-section journey-section">
         <div class="section-title-row">
-          <div><p class="section-kicker">The testimony arc</p><h3>Egypt, wilderness, and promised-land fruit</h3></div>
+          <div><p class="section-kicker">${(RU ? 'Дуга свидетельства' : 'The testimony arc')}</p><h3>${(RU ? 'Египет, пустыня и плоды обетованной земли' : 'Egypt, wilderness, and promised-land fruit')}</h3></div>
         </div>
-        <p class="journey-theology">This uses Israel’s Exodus pattern as a theological analogy: Egypt names the enslaving pattern, wilderness names God’s formation and unlearning, and promised land names fruitful stewardship. It is not a claim that every hardship means someone is literally in one fixed stage.</p>
+        <p class="journey-theology">${(RU ? 'Здесь исход Израиля служит богословской аналогией: Египет — это порабощающая схема, пустыня — Божье формирование и отучение от старого, а обетованная земля — плодотворное управление. Это не утверждение, что каждая трудность буквально помещает человека в одну неизменную стадию.' : 'This uses Israel’s Exodus pattern as a theological analogy: Egypt names the enslaving pattern, wilderness names God’s formation and unlearning, and promised land names fruitful stewardship. It is not a claim that every hardship means someone is literally in one fixed stage.')}</p>
         <div class="journey-line">
           ${tribe.journey.map((item, index) => `
             <article class="journey-card">
@@ -745,10 +866,10 @@
 
       <section class="profile-section">
         <div class="section-title-row">
-          <div><p class="section-kicker">Biblical case files</p><h3>People who carried this strength—and its pressure.</h3></div>
-          <span class="map-label">Evidence type is marked</span>
+          <div><p class="section-kicker">${(RU ? 'Библейские дела' : 'Biblical case files')}</p><h3>${(RU ? 'Люди, которые несли эту силу — и её давление.' : 'People who carried this strength—and its pressure.')}</h3></div>
+          <span class="map-label">${(RU ? 'Тип доказательства отмечен' : 'Evidence type is marked')}</span>
         </div>
-        <p class="case-intro">Open a case to see the story, why it belongs here, where the pattern bent, and what changed. “Lineage” means the biblical text names the tribal connection; “resonance” means the person’s tribe is unknown or different, but the story clearly mirrors the pattern.</p>
+        <p class="case-intro">${(RU ? 'Открой дело, чтобы увидеть историю, почему она здесь, где образ согнулся и что изменилось. «Родословие» значит, что библейский текст прямо называет связь с коленом; «созвучие» — что колено человека неизвестно или другое, но история ясно отражает этот образ.' : 'Open a case to see the story, why it belongs here, where the pattern bent, and what changed. “Lineage” means the biblical text names the tribal connection; “resonance” means the person’s tribe is unknown or different, but the story clearly mirrors the pattern.')}</p>
         <div class="case-stack">
           ${tribe.cases.map(person => `
             <details class="case-file">
@@ -762,17 +883,17 @@
               <div class="case-content">
                 <div class="case-story-grid">
                   <article>
-                    <p class="section-kicker">What happened</p>
+                    <p class="section-kicker">${(RU ? 'Что произошло' : 'What happened')}</p>
                     <p>${person.story}</p>
                   </article>
                   <article class="case-turn">
-                    <p class="section-kicker">The turn—or the warning</p>
+                    <p class="section-kicker">${(RU ? 'Поворот — или предупреждение' : 'The turn—or the warning')}</p>
                     <p>${person.turn}</p>
                   </article>
                 </div>
                 <div class="case-trait-row">
-                  <div><span>Strengths in the story</span>${person.strengths.map(item => `<b>${item}</b>`).join('')}</div>
-                  ${person.shadows.length ? `<div class="shadow-traits"><span>Pressure patterns</span>${person.shadows.map(item => `<b>${item}</b>`).join('')}</div>` : ''}
+                  <div><span>${(RU ? 'Сильные стороны в истории' : 'Strengths in the story')}</span>${person.strengths.map(item => `<b>${item}</b>`).join('')}</div>
+                  ${person.shadows.length ? `<div class="shadow-traits"><span>${(RU ? 'Реакции под давлением' : 'Pressure patterns')}</span>${person.shadows.map(item => `<b>${item}</b>`).join('')}</div>` : ''}
                 </div>
               </div>
             </details>`).join('')}
@@ -781,15 +902,15 @@
           <details class="case-file additional-case">
             <summary>
               <span class="case-summary-main">
-                <span class="additional-case-kicker"><i aria-hidden="true">${icon('scroll')}</i>One more guided comparison</span>
+                <span class="additional-case-kicker"><i aria-hidden="true">${icon('scroll')}</i>${(RU ? 'Ещё одно сравнение с пояснением' : 'One more guided comparison')}</span>
                 <span class="case-title-line"><strong>${additionalWitness.name}</strong>${referenceBadge(additionalWitness.ref)}</span>
                 <span class="case-basis">${additionalWitness.note}</span>
               </span>
               <span class="witness-badge ${additionalWitness.type}">${witnessBadge(additionalWitness.type)}</span>
             </summary>
             <div class="case-content">
-              <p class="section-kicker">Read the passage</p>
-              <div class="witness-passage" data-witness-passage="${escapeHtml(additionalWitness.ref)}">Loading passage…</div>
+              <p class="section-kicker">${(RU ? 'Прочитать отрывок' : 'Read the passage')}</p>
+              <div class="witness-passage" data-witness-passage="${escapeHtml(additionalWitness.ref)}">${(RU ? 'Загрузка отрывка…' : 'Loading passage…')}</div>
             </div>
           </details>` : ''}
       </section>`;
@@ -845,8 +966,8 @@
 
     syncBibleVersionControls();
     if (status) status.textContent = message || bibleVersionStatus();
-    if (badge) badge.textContent = `${shortVersionName(version)} · ${versionSource(version)}`;
-    if (drawerLabel) drawerLabel.textContent = `Read inline · ${shortVersionName(version)}`;
+    if (badge) badge.textContent = RU ? shortVersionName(version) : `${shortVersionName(version)} · ${versionSource(version)}`;
+    if (drawerLabel) drawerLabel.textContent = `${(RU ? 'Читать здесь' : 'Read inline')} · ${shortVersionName(version)}`;
     if (credit) credit.textContent = version.copyright || `${version.title}. Supplied by YouVersion.`;
     if (link) {
       link.hidden = !version.deepLink;
@@ -874,9 +995,9 @@
     const reference = host.dataset.witnessPassage;
     const segments = String(reference).split(';')
       .map(part => part.trim())
-      .filter(part => referenceToUsfm(part));
+      .filter(part => (RU ? referenceToBolls(part) : referenceToUsfm(part)));
     if (!segments.length) {
-      host.textContent = 'This combined reference opens best in a Bible app.';
+      host.textContent = (RU ? 'Этот составной отрывок удобнее открыть в приложении с Библией.' : 'This combined reference opens best in a Bible app.');
       return;
     }
     const results = await Promise.allSettled(segments.map(part => passagePreview(part)));
@@ -888,7 +1009,7 @@
       .filter(Boolean);
     host.innerHTML = rendered.length
       ? rendered.join('')
-      : 'This passage could not be loaded right now.';
+      : (RU ? 'Не удалось загрузить отрывок. Попробуй чуть позже.' : 'This passage could not be loaded right now.');
   }
 
   async function hydrateProfileScripture(tribe) {
@@ -898,6 +1019,8 @@
     updateTranslationChrome(version);
     hydrateWitnessPassage(tribe, token);
 
+    // Russian: the НРП vault is baked into data-ru.js, so there is nothing to fetch.
+    if (RU) return;
     if (version.id === 'web') return;
     const fromBolls = version.id === 'nlt';
     if (!fromBolls && (!scriptureApi.configured || typeof scriptureApi.getPassage !== 'function')) {
@@ -974,7 +1097,7 @@
   }
 
   async function initializeBibleVersions() {
-    if (!scriptureApi.configured || typeof scriptureApi.getVersions !== 'function') return;
+    if (RU || !scriptureApi.configured || typeof scriptureApi.getVersions !== 'function') return;
     try {
       const remoteVersions = await scriptureApi.getVersions();
       // NLT comes straight from Bolls.life, so it survives a Scripture-service outage.
@@ -1003,16 +1126,16 @@
     if (!target) return;
     target.innerHTML = ultimate.axes.map((axis, index) => `
       <article class="axis-card axis-${axis.id}" style="--i:${index}">
-        <div class="axis-topline"><span class="axis-icon" aria-hidden="true">${icon(axis.icon || 'scales')}</span><span>Axis 0${axis.id}</span>${confidenceBadge('strong', 'Strong')}</div>
+        <div class="axis-topline"><span class="axis-icon" aria-hidden="true">${icon(axis.icon || 'scales')}</span><span>${(RU ? 'Ось' : 'Axis')} 0${axis.id}</span>${confidenceBadge('strong', CL.strong)}</div>
         <h4>${axis.name}</h4>
         <p>${axis.principle}</p>
         <div class="axis-polarity"><span>${axis.core}</span><i aria-hidden="true">⇄</i><span>${axis.inverse}</span></div>
-        <div class="axis-in-life"><span>In ordinary life</span><p>${axis.today}</p></div>
-        <p class="axis-question"><b>Practice question</b>${axis.practice}</p>
+        <div class="axis-in-life"><span>${(RU ? 'В обычной жизни' : 'In ordinary life')}</span><p>${axis.today}</p></div>
+        <p class="axis-question"><b>${(RU ? 'Вопрос для практики' : 'Practice question')}</b>${axis.practice}</p>
         <div class="axis-tribes">
           ${axis.tribes.map(id => {
             const tribe = tribes.find(item => item.id === id);
-            return `<button type="button" data-tribe="${id}">${tribe.tribe} · ${tribe.name}</button>`;
+            return `<button type="button" data-tribe="${id}">${tn(tribe)} · ${tribe.name}</button>`;
           }).join('')}
         </div>
         <div class="axis-scriptures">${axis.references.map(referenceBadge).join('')}</div>
@@ -1026,14 +1149,14 @@
       <article class="evidence-card" style="--tribe-color:${tribe.color};--i:${index}">
         <button class="evidence-heading" type="button" data-tribe="${tribe.id}">
           <span class="tribe-emblem">${icon(tribe.icon)}</span>
-          <span><small>${tribe.tribe}</small><strong>${tribe.name}</strong></span>
+          <span><small>${tn(tribe)}</small><strong>${tribe.name}</strong></span>
         </button>
         <dl>
-          <div><dt>Axis</dt><dd>${tribe.axis}${confidenceBadge(tribe.axisConfidence, tribe.axisConfidence === 'strong' ? 'Strong' : 'Partial')}</dd></div>
-          <div><dt>Fivefold / APEST</dt><dd>${tribe.fivefold.length ? `${tribe.fivefold.map(item => item.name).join(' + ')}${confidenceBadge('partial', 'Partial')}` : confidenceBadge('none', 'No clean map')}</dd></div>
-          <div><dt>Romans 12 lens</dt><dd>${tribe.gift.name}${confidenceBadge('inference', 'Interpretive')}</dd></div>
-          <div><dt>Modern translation</dt><dd>${tribe.secular.label} · ${tribe.secular.pearson}${confidenceBadge('inference', 'Interpretive')}</dd></div>
-          <div><dt>Blueprint case</dt><dd>${tribe.blueprint.figure}${confidenceBadge(tribe.blueprint.evidence === 'genealogical' ? 'strong' : 'inference', tribe.blueprint.evidence === 'genealogical' ? 'Named lineage' : 'Story resonance')}${referenceBadge(tribe.blueprint.references[0])}</dd></div>
+          <div><dt>${(RU ? 'Ось' : 'Axis')}</dt><dd>${tribe.axis}${confidenceBadge(tribe.axisConfidence, tribe.axisConfidence === 'strong' ? CL.strong : CL.partial)}</dd></div>
+          <div><dt>${(RU ? 'Пятеричное служение / APEST' : 'Fivefold / APEST')}</dt><dd>${tribe.fivefold.length ? `${tribe.fivefold.map(item => item.name).join(' + ')}${confidenceBadge('partial', CL.partial)}` : confidenceBadge('none', CL.none)}</dd></div>
+          <div><dt>${(RU ? 'Дары по Рим. 12' : 'Romans 12 lens')}</dt><dd>${tribe.gift.name}${confidenceBadge('inference', CL.interpretive)}</dd></div>
+          <div><dt>${(RU ? 'Современный перевод' : 'Modern translation')}</dt><dd>${tribe.secular.label} · ${tribe.secular.pearson}${confidenceBadge('inference', CL.interpretive)}</dd></div>
+          <div><dt>${(RU ? 'Образец' : 'Blueprint case')}</dt><dd>${tribe.blueprint.figure}${confidenceBadge(tribe.blueprint.evidence === 'genealogical' ? 'strong' : 'inference', tribe.blueprint.evidence === 'genealogical' ? CL.named : CL.story)}${referenceBadge(tribe.blueprint.references[0])}</dd></div>
         </dl>
       </article>`).join('');
   }
@@ -1049,9 +1172,9 @@
     }, {});
     target.innerHTML = Object.entries(groups).map(([gift, members], index) => `
       <article class="gift-card" style="--gift-color:${members[0].color};--i:${index}">
-        <span>${confidenceBadge('inference', 'Interpretive')}</span>
+        <span>${confidenceBadge('inference', CL.interpretive)}</span>
         <h4>${gift}</h4>
-        <div>${members.map(tribe => `<button type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color}">${tribe.tribe}<small>${tribe.name}</small></button>`).join('')}</div>
+        <div>${members.map(tribe => `<button type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color}">${tn(tribe)}<small>${tribe.name}</small></button>`).join('')}</div>
       </article>`).join('');
   }
 
@@ -1082,10 +1205,10 @@
     if (questionIndex === -2) {
       diagnosticBox.innerHTML = `
         <div class="diagnostic-complete">
-          <p class="section-kicker">Diagnostic complete</p>
-          <h3>Your result is a doorway into the atlas.</h3>
-          <p>Open the suggested profile, compare its case files, and test both the calling and the pressure pattern—not only the flattering parts.</p>
-          <button class="button secondary" type="button" data-diagnostic-action="restart">Take it again</button>
+          <p class="section-kicker">${(RU ? 'Диагностика пройдена' : 'Diagnostic complete')}</p>
+          <h3>${(RU ? 'Твой результат — дверь в атлас.' : 'Your result is a doorway into the atlas.')}</h3>
+          <p>${(RU ? 'Открой предложенный профиль, сравни его библейские дела и проверь и призвание, и реакцию на давление — а не только приятные стороны.' : 'Open the suggested profile, compare its case files, and test both the calling and the pressure pattern—not only the flattering parts.')}</p>
+          <button class="button secondary" type="button" data-diagnostic-action="restart">${(RU ? 'Пройти ещё раз' : 'Take it again')}</button>
         </div>`;
       return;
     }
@@ -1095,25 +1218,29 @@
       diagnosticBox.innerHTML = `
         <div class="diagnostic-start">
           <div>
-            <p class="section-kicker">Structured discernment</p>
-            <h3>Pressure. Wiring. Differentiation.</h3>
-            <p>Answer for the pattern you return to across seasons, not only your best day or your hardest week. There are no virtuous answers.</p>
+            <p class="section-kicker">${(RU ? 'Различение по шагам' : 'Structured discernment')}</p>
+            <h3>${(RU ? 'Давление. Устройство. Различие.' : 'Pressure. Wiring. Differentiation.')}</h3>
+            <p>${(RU ? 'Отвечай о том, к чему ты возвращаешься из сезона в сезон, а не только о своём лучшем дне или самой тяжёлой неделе. «Правильных» ответов здесь нет.' : 'Answer for the pattern you return to across seasons, not only your best day or your hardest week. There are no virtuous answers.')}</p>
           </div>
           <div class="diagnostic-facts">
-            <span><strong>12</strong> pressure prompts</span>
-            <span><strong>12</strong> wiring prompts</span>
-            <span><strong>3</strong> close-call prompts</span>
+            <span><strong>12</strong> ${(RU ? 'вопросов о давлении' : 'pressure prompts')}</span>
+            <span><strong>12</strong> ${(RU ? 'вопросов об устройстве' : 'wiring prompts')}</span>
+            <span><strong>3</strong> ${(RU ? 'вопроса на тонкое различие' : 'close-call prompts')}</span>
           </div>
           <div class="diagnostic-actions">
-            <button class="button primary" type="button" data-diagnostic-action="${hasProgress ? 'resume' : 'start'}">${hasProgress ? 'Resume diagnostic' : 'Begin diagnostic'}</button>
-            ${savedDiagnosticResult ? '<button class="button secondary" type="button" data-diagnostic-action="show-result">View saved result</button>' : ''}
+            <button class="button primary" type="button" data-diagnostic-action="${hasProgress ? 'resume' : 'start'}">${hasProgress ? (RU ? 'Продолжить диагностику' : 'Resume diagnostic') : (RU ? 'Начать диагностику' : 'Begin diagnostic')}</button>
+            ${savedDiagnosticResult ? '<button class="button secondary" type="button" data-diagnostic-action="show-result">' + (RU ? 'Посмотреть сохранённый результат' : 'View saved result') + '</button>' : ''}
           </div>
         </div>`;
       return;
     }
 
     const step = sequence[questionIndex];
-    const partLabels = {
+    const partLabels = RU ? {
+      1: ['Часть I · давление', 'Как дар гнётся под нагрузкой'],
+      2: ['Часть II · устройство', 'Что ощущается естественным, когда у тебя всё в порядке'],
+      3: ['Часть III · тонкое различие', 'Различить образы с общей осью']
+    } : {
       1: ['Part I · pressure', 'How the gift bends under strain'],
       2: ['Part II · wiring', 'What feels native when you are healthy'],
       3: ['Part III · close calls', 'Distinguish patterns that share an axis']
@@ -1134,8 +1261,8 @@
           ${options.map(option => `<button type="button" data-diagnostic-answer="${option.value}" class="${String(current) === String(option.value) ? 'selected' : ''}"><span>${option.label}</span></button>`).join('')}
         </div>
         <div class="question-actions">
-          <button type="button" data-diagnostic-action="back" ${questionIndex === 0 ? 'disabled' : ''}>← Back</button>
-          <button type="button" data-diagnostic-action="restart">Start over</button>
+          <button type="button" data-diagnostic-action="back" ${questionIndex === 0 ? 'disabled' : ''}>${(RU ? '← Назад' : '← Back')}</button>
+          <button type="button" data-diagnostic-action="restart">${(RU ? 'Начать заново' : 'Start over')}</button>
         </div>
       </div>`;
   }
@@ -1198,35 +1325,37 @@
     let copy;
     let suggested;
     if (result.state === 'null') {
-      headline = 'The instrument did not differentiate.';
-      copy = 'That is useful information, not a failed result. Your answers did not concentrate around one wiring strongly enough; explore the cards and notice which full story recognizes you.';
+      headline = (RU ? 'Инструмент не выделил один образ.' : 'The instrument did not differentiate.');
+      copy = (RU ? 'Это полезная информация, а не провал. Твои ответы не собрались вокруг одного устройства достаточно плотно; посмотри карточки и заметь, в какой истории целиком ты узнаёшь себя.' : 'That is useful information, not a failed result. Your answers did not concentrate around one wiring strongly enough; explore the cards and notice which full story recognizes you.');
       suggested = result.rows.slice(0, 3).map(row => row.tribe);
     } else if (result.state === 'composite') {
-      headline = 'You may be running a composite season.';
-      copy = 'Several patterns landed within reach of one another. Read each complete profile and notice whether the calling, the pressure bend, and the practiced way through all fit.';
+      headline = (RU ? 'Возможно, у тебя сейчас смешанный сезон.' : 'You may be running a composite season.');
+      copy = (RU ? 'Несколько образов оказались совсем рядом. Прочитай каждый профиль целиком и заметь, подходят ли тебе призвание, изгиб под давлением и проверенный путь — все вместе.' : 'Several patterns landed within reach of one another. Read each complete profile and notice whether the calling, the pressure bend, and the practiced way through all fit.');
       suggested = result.composite;
     } else {
       const primary = tribes.find(tribe => tribe.tribe === result.primary);
-      headline = `${primary.tribe} · ${primary.name}`;
-      copy = `Your strongest starting hypothesis lives on the ${primary.axis} axis. Treat it as a profile to test, not an identity assigned by a score.`;
+      headline = `${tn(primary)} · ${primary.name}`;
+      copy = RU
+        ? `Твоя самая сильная начальная гипотеза лежит на оси «${primary.axis}». Считай её профилем для проверки, а не личностью, которую присвоили баллы.`
+        : `Your strongest starting hypothesis lives on the ${primary.axis} axis. Treat it as a profile to test, not an identity assigned by a score.`;
       suggested = [result.primary, result.secondary].filter(Boolean);
     }
 
     diagnosticResult.innerHTML = `
       <div class="result-shell">
         <div class="result-main">
-          <p class="section-kicker">Your starting hypothesis</p>
+          <p class="section-kicker">${(RU ? 'Твоя начальная гипотеза' : 'Your starting hypothesis')}</p>
           <h3>${headline}</h3>
           <p>${copy}</p>
           <div class="result-profiles">
             ${suggested.map(name => {
               const tribe = tribes.find(item => item.tribe === name);
-              return `<button type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color}">${tribe.tribe}<small>${tribe.name}</small></button>`;
+              return `<button type="button" data-tribe="${tribe.id}" style="--tribe-color:${tribe.color}">${tn(tribe)}<small>${tribe.name}</small></button>`;
             }).join('')}
           </div>
         </div>
         <div class="result-axes">
-          <p class="section-kicker">Pressure by axis</p>
+          <p class="section-kicker">${(RU ? 'Давление по осям' : 'Pressure by axis')}</p>
           ${ultimate.axes.map(axis => {
             const value = result.axisPressure[axis.id] || 0;
             return `<div class="result-axis"><span>${axis.name}</span><i><b style="width:${(value / 6) * 100}%"></b></i><strong>${value}/6</strong></div>`;
@@ -1264,7 +1393,7 @@
       return;
     }
     if (action === 'restart') {
-      if (!window.confirm('Start the diagnostic over and clear these answers?')) return;
+      if (!window.confirm((RU ? 'Начать диагностику заново и стереть эти ответы?' : 'Start the diagnostic over and clear these answers?'))) return;
       diagnosticAnswers = { p1: [], p2: [], p3: [] };
       saveDiagnosticAnswers();
       saveDiagnosticResult(null);
@@ -1332,7 +1461,7 @@
     if (!expandAllProfile) return;
     const details = Array.from(profileBody.querySelectorAll('.profile-drawer, .case-file'));
     const allOpen = details.length > 0 && details.every(item => item.open);
-    expandAllProfile.textContent = allOpen ? 'Collapse all' : 'Expand all';
+    expandAllProfile.textContent = allOpen ? (RU ? 'Свернуть всё' : 'Collapse all') : (RU ? 'Развернуть всё' : 'Expand all');
     expandAllProfile.setAttribute('aria-expanded', String(allOpen));
   }
 
@@ -1343,7 +1472,7 @@
       if (item.open === shouldOpen) return;
       window.setTimeout(() => animateDetails(item), prefersReducedMotion() ? 0 : Math.min(index * 18, 120));
     });
-    expandAllProfile.textContent = shouldOpen ? 'Collapse all' : 'Expand all';
+    expandAllProfile.textContent = shouldOpen ? (RU ? 'Свернуть всё' : 'Collapse all') : (RU ? 'Развернуть всё' : 'Expand all');
     expandAllProfile.setAttribute('aria-expanded', String(shouldOpen));
   }
 
@@ -1377,7 +1506,9 @@
     profileBody.style.setProperty('--tribe-color', tribe.color);
     profileEmblem.style.setProperty('--tribe-color', tribe.color);
     profileEmblem.innerHTML = icon(tribe.icon);
-    profileTribe.textContent = `Tribe of ${tribe.tribe} · ${tribe.number} of 12`;
+    profileTribe.textContent = RU
+      ? `Колено ${TRIBE_GENITIVE[tribe.id] || tn(tribe)} · ${tribe.number} из 12`
+      : `Tribe of ${tribe.tribe} · ${tribe.number} of 12`;
     profileTitle.textContent = tribe.name;
     profileBody.innerHTML = profileMarkup(tribe);
     syncBibleVersionControls();
@@ -1436,8 +1567,8 @@
       button.style.setProperty('--y', `${y}%`);
       button.style.setProperty('--tribe-color', tribe.color);
       button.style.setProperty('--i', index);
-      button.setAttribute('aria-label', `Open ${tribe.tribe}, ${tribe.name}`);
-      button.title = `${tribe.tribe} · ${tribe.name}`;
+      button.setAttribute('aria-label', RU ? `Открыть: ${tn(tribe)}, ${tribe.name}` : `Open ${tribe.tribe}, ${tribe.name}`);
+      button.title = `${tn(tribe)} · ${tribe.name}`;
       button.innerHTML = icon(tribe.icon);
       wheel.appendChild(button);
     });
@@ -1616,7 +1747,7 @@
   const themeToggle = document.getElementById('themeToggle');
   function syncThemeLabel() {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    themeToggle.setAttribute('aria-label', isLight ? (RU ? 'Включить тёмную тему' : 'Switch to dark mode') : (RU ? 'Включить светлую тему' : 'Switch to light mode'));
   }
   themeToggle.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
@@ -1643,6 +1774,8 @@
   renderAxes();
   setupReveals();
   syncThemeLabel();
+  syncExpandAllProfile();
+  if (RU && versePopover) versePopover.querySelector('[data-popover-content]').textContent = 'Загрузка отрывка…';
   syncBibleVersionControls();
   syncStickyPatternTools();
   initializeBibleVersions();
