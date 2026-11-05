@@ -13,6 +13,9 @@
   --amber: #f4b740;
   --shadow: 0 24px 80px rgba(17, 17, 15, 0.11);
   --radius: 8px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --t1: .18s;
+  --t2: .3s;
   color-scheme: light;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -146,7 +149,7 @@ a {
   transform: scaleX(0);
   transform-origin: right;
   background: var(--ink);
-  transition: transform 180ms ease;
+  transition: transform var(--t1) var(--ease);
 }
 
 .nav-links a:hover {
@@ -282,9 +285,9 @@ h1 {
   color: #3d3b36;
   font-size: 0.84rem;
   transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    background 160ms ease;
+    transform var(--t1) var(--ease),
+    border-color var(--t1) var(--ease),
+    background-color var(--t1) var(--ease);
 }
 
 .filter-chip:hover,
@@ -436,8 +439,8 @@ h1 {
   background: var(--paper-2);
   cursor: pointer;
   transition:
-    transform 160ms ease,
-    background 160ms ease;
+    transform var(--t1) var(--ease),
+    background-color var(--t1) var(--ease);
 }
 
 .icon-button:hover {
@@ -470,16 +473,12 @@ h1 {
   font-size: 0.72rem;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-4px);
-  transition:
-    opacity 150ms ease,
-    transform 150ms ease;
+  transition: opacity var(--t1) var(--ease);
 }
 
 .icon-button:hover::after,
 .icon-button:focus-visible::after {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .map-stage {
@@ -502,9 +501,9 @@ h1 {
   stroke: #cfcabe;
   stroke-width: 2;
   transition:
-    opacity 180ms ease,
-    stroke 180ms ease,
-    stroke-width 180ms ease;
+    opacity var(--t1) var(--ease),
+    stroke var(--t1) var(--ease),
+    stroke-width var(--t1) var(--ease);
 }
 
 .map-edge.is-related {
@@ -519,7 +518,7 @@ h1 {
 .map-node {
   cursor: pointer;
   outline: 0;
-  transition: opacity 160ms ease;
+  transition: opacity var(--t1) var(--ease);
 }
 
 .map-node.is-muted {
@@ -537,7 +536,7 @@ h1 {
   fill: var(--group);
   opacity: 0.18;
   transform-origin: center;
-  transition: opacity 160ms ease;
+  transition: opacity var(--t1) var(--ease);
 }
 
 .node-core {
@@ -681,7 +680,10 @@ h1 {
   border-radius: calc(var(--radius) - 2px);
   cursor: pointer;
   color: var(--muted);
-  transition: all 0.18s ease;
+  transition:
+    color var(--t1) var(--ease),
+    background-color var(--t1) var(--ease),
+    box-shadow var(--t1) var(--ease);
 }
 
 .lens-btn:hover {
@@ -886,8 +888,8 @@ h1 {
   cursor: pointer;
   text-align: left;
   transition:
-    background 160ms ease,
-    transform 160ms ease;
+    background-color var(--t1) var(--ease),
+    transform var(--t1) var(--ease);
 }
 
 .card-hit:hover,
@@ -1454,7 +1456,11 @@ h1 {
   text-transform: uppercase;
   padding: 8px 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    color var(--t1) var(--ease),
+    border-color var(--t1) var(--ease),
+    background-color var(--t1) var(--ease),
+    box-shadow var(--t1) var(--ease);
 }
 
 .integration .tab-btn:hover {
@@ -1472,12 +1478,20 @@ h1 {
 .integration .tab-content {
   display: none;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition:
+    opacity var(--t2) var(--ease),
+    display var(--t2) allow-discrete;
 }
 
 .integration .tab-content.active {
   display: block;
   opacity: 1;
+}
+
+@starting-style {
+  .integration .tab-content.active {
+    opacity: 0;
+  }
 }
 
 /* Lens Grid */
@@ -1595,7 +1609,11 @@ h1 {
   padding: 12px 16px;
   cursor: pointer;
   text-align: left;
-  transition: all 0.2s ease;
+  transition:
+    color var(--t1) var(--ease),
+    border-color var(--t1) var(--ease),
+    background-color var(--t1) var(--ease),
+    box-shadow var(--t1) var(--ease);
 }
 
 .integration .hinge-btn:hover {
@@ -1627,16 +1645,16 @@ h1 {
 }
 
 .integration .node-outer {
-  transition: stroke 0.3s ease, fill 0.3s ease;
+  transition: stroke var(--t2) var(--ease), fill var(--t2) var(--ease);
 }
 
 .integration .node-inner {
-  transition: fill 0.3s ease, transform 0.3s ease;
+  transition: fill var(--t2) var(--ease), transform var(--t2) var(--ease);
   transform-origin: center;
 }
 
 .integration .connection-line {
-  transition: stroke 0.3s ease, stroke-dasharray 0.3s ease, opacity 0.3s ease;
+  transition: stroke var(--t2) var(--ease), stroke-dasharray var(--t2) var(--ease), opacity var(--t2) var(--ease);
   opacity: 0.25;
 }
 
@@ -1682,7 +1700,9 @@ h1 {
   font-size: 0.88rem;
   line-height: 1.5;
   color: var(--ink);
-  transition: all 0.3s ease;
+  transition:
+    border-left-color var(--t2) var(--ease),
+    background-color var(--t2) var(--ease);
 }
 
 .integration .visual-hinge-description.tpn-state {
@@ -1794,7 +1814,7 @@ h1 {
 }
 
 .integration .align-row {
-  transition: all 0.2s ease;
+  transition: background-color var(--t1) var(--ease);
 }
 
 .integration .align-row:hover {
@@ -1816,7 +1836,7 @@ h1 {
   border: 1px solid var(--ink);
   background: var(--paper-2);
   box-shadow: 4px 4px 0 var(--ink);
-  transition: background 0.35s ease, border-color 0.35s ease;
+  transition: background-color var(--t2) var(--ease), border-color var(--t2) var(--ease);
 }
 
 .integration .slider-control-row {
@@ -1841,7 +1861,7 @@ h1 {
 
 .integration .slider-side-lbl.rest {
   color: var(--muted);
-  transition: color 0.35s ease;
+  transition: color var(--t2) var(--ease);
 }
 
 .integration .spectrum-range-slider {
@@ -1864,7 +1884,7 @@ h1 {
   background: var(--ink);
   border: 2px solid var(--paper-2);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color var(--t2) var(--ease);
 }
 
 .integration .spectrum-range-slider::-moz-range-thumb {
@@ -1874,7 +1894,7 @@ h1 {
   background: var(--ink);
   border: 2px solid var(--paper-2);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color var(--t2) var(--ease);
 }
 
 .integration .slider-metrics-grid {
@@ -1894,7 +1914,7 @@ h1 {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1rem;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition: border-color var(--t2) var(--ease), background-color var(--t2) var(--ease);
 }
 
 .integration .metric-card .mini-heading {
@@ -1906,11 +1926,97 @@ h1 {
   font-family: var(--serif);
   font-size: 1.1rem;
   color: var(--ink);
-  transition: color 0.3s ease;
+  transition: color var(--t2) var(--ease);
 }
 
 .integration .metric-sub {
   margin: 0;
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+/* ==========================================================================
+   TOUCH TARGETS (44px floor) AND HUB LINK
+   Compound selectors only, so a padding shorthand never wipes a layout class.
+   ========================================================================== */
+.brand {
+  min-height: 44px;
+}
+
+.nav-links a {
+  position: relative;
+}
+
+.nav-links a::before {
+  position: absolute;
+  inset: -12px -6px;
+  content: "";
+}
+
+.filter-wrap .filter-chip {
+  min-height: 44px;
+}
+
+.icon-button {
+  width: 44px;
+  height: 44px;
+}
+
+.search-row input {
+  min-height: 44px;
+}
+
+.lens-selector .lens-btn {
+  position: relative;
+}
+
+.lens-selector .lens-btn::before {
+  position: absolute;
+  inset: -9px 0;
+  content: "";
+}
+
+.related-list button,
+.scenario-models button {
+  min-height: 44px;
+}
+
+.integration .tabs-nav .tab-btn,
+.integration .visual-hinge-controls .hinge-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.integration .visual-hinge-controls .hinge-btn {
+  display: flex;
+}
+
+.integration .spectrum-range-slider {
+  height: 44px;
+  padding: 19px 0;
+  background-clip: content-box;
+}
+
+.map-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
+.site-foot {
+  padding: 8px clamp(20px, 4vw, 56px) 32px;
+}
+
+.site-foot .home {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  transition: color var(--t1) var(--ease);
+}
+
+.site-foot .home:hover,
+.site-foot .home:focus-visible {
+  color: var(--ink);
 }

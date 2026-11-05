@@ -698,6 +698,7 @@ function renderNodes() {
     .map(
       (model) => `
         <g class="map-node" data-id="${model.id}" data-group="${model.group}" transform="translate(${model.x} ${model.y})" tabindex="0" role="button" aria-label="${model.title}">
+          <circle class="map-hit" r="74"></circle>
           <circle class="node-halo" r="68"></circle>
           <circle class="node-shell" r="45"></circle>
           <circle class="node-core" cx="33" cy="-33" r="17"></circle>
