@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F9F6F0'/%3E%3Cpath d='M32 55S9 40 9 25a12.5 12.5 0 0 1 23-7 12.5 12.5 0 0 1 23 7c0 15-23 30-23 30Z' fill='%23F3651C'/%3E%3Cpath d='M32 17l-5 13 8 5-5 14' fill='none' stroke='%23F9F6F0' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>The Counterfeit Loop — Reframed by Literature</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +21,9 @@
     --cream-line: rgba(249, 246, 240, 0.15);
     --card-shadow: 0 4px 16px rgba(28, 27, 25, 0.03);
     --focus-ring: 2px solid var(--orange);
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --t1: .2s;
+    --t2: .35s;
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -111,8 +115,8 @@
     padding: 16px 0;
     backdrop-filter: blur(8px);
     background: rgba(249, 246, 240, 0.94);
-    transition: opacity 0.25s, visibility 0.25s;
   }
+  #lens-toggle-container { transition: opacity var(--t1) var(--ease), visibility var(--t1) var(--ease); }
   .control-wrap {
     display: flex;
     justify-content: space-between;
@@ -144,12 +148,15 @@
     font-size: 11px;
     letter-spacing: 0.05em;
     padding: 6px 14px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     border: 0;
     background: transparent;
     color: var(--muted);
     border-radius: 3px;
     cursor: pointer;
-    transition: background 0.18s, color 0.18s;
+    transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease);
   }
   .toggle-btn:hover {
     color: var(--ink);
@@ -204,7 +211,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: var(--card-shadow);
-    transition: transform 0.25s, box-shadow 0.25s;
+    transition: transform var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
     height: auto;
   }
   .feeling-card:hover {
@@ -308,7 +315,7 @@
   }
   .chev {
     align-self: center; flex-shrink: 0; width: 20px; height: 20px; color: var(--muted);
-    transition: transform 0.3s ease;
+    transition: transform var(--t2) var(--ease), color var(--t2) var(--ease);
   }
   .entry-head[aria-expanded="true"] .chev { transform: rotate(180deg); color: var(--ink); }
 
@@ -316,7 +323,7 @@
   .panel {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: grid-template-rows var(--t2) var(--ease);
   }
   .panel.open {
     grid-template-rows: 1fr;
@@ -363,9 +370,7 @@
   .read .rlabel::after { content: ""; flex: 1; height: 1px; background: var(--cream-line); }
   
   .idol { font-family: "Fraunces", serif; font-size: clamp(18px, 2.5vw, 22px); line-height: 1.4; font-weight: 400; color: var(--cream); }
-  .idol b { color: var(--orange); font-weight: 500; }
-
-  /* Loop horizontal (desktop) / vertical (mobile) progress display */
+  .idol b { color: var(--orange); font-weight: 500; }  /* Loop horizontal (desktop) / vertical (mobile) progress display */
   .loop {
     margin-top: 24px;
     display: flex;
@@ -464,7 +469,7 @@
     text-align: center;
     padding: 8px 0;
     font-family: inherit;
-    transition: transform 0.2s;
+    transition: transform var(--t1) var(--ease);
   }
   .step-node:focus-visible {
     outline: var(--focus-ring);
@@ -482,7 +487,7 @@
     font-size: 12px;
     font-weight: 500;
     background: transparent;
-    transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+    transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease), color var(--t1) var(--ease);
     color: var(--muted);
   }
   .step-node:hover .step-circle {
@@ -514,7 +519,7 @@
     border-radius: 4px;
     margin-bottom: 36px;
     min-height: 120px;
-    transition: opacity 0.25s;
+    transition: opacity var(--t1) var(--ease);
   }
   .step-display-card h3 {
     font-family: "Fraunces", serif;
@@ -743,8 +748,9 @@
     color: var(--cream-soft);
     cursor: pointer;
     border-radius: 4px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease), border-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
     text-align: left;
+    min-height: 44px;
   }
   .diag-btn:hover {
     background: rgba(249, 246, 240, 0.12);
@@ -797,10 +803,12 @@
   .close .seq span { color: var(--cream-soft); }
 
   footer { padding: 32px 0; border-top: 1px solid var(--cream-line); font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--cream-soft); background: var(--ink); }
+  footer .home { display: inline-flex; min-height: 44px; align-items: center; color: inherit; text-decoration: none; }
+  footer .home:hover { color: var(--cream); }
   footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 
   @media(prefers-reduced-motion: reduce) {
-    * { transition: none !important; scroll-behavior: auto !important; }
+    * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
   }
 
   /* reading comfort: balance display text */
@@ -1031,6 +1039,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <div class="wrap">
       <span>THE COUNTERFEIT GUIDE</span>
       <span>WOUND → OFFER → CATHEXIS → ALTAR → STRUCTURE</span>
+      <a class="home" href="https://esmrsky.github.io/">← All projects</a>
     </div>
   </footer>
 
