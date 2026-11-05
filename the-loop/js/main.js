@@ -11,8 +11,8 @@
   Loop.init({ durScale: D });
 
   // ---------- personalization ----------
-  const reroute = () => C.reroutes[state.agent] || "the fridge";
-  const fill = (t) => t.replace("{need}", state.need).replace("{agent}", state.agent);
+  const reroute = () => C.reroutes[state.agent] || C.ui.fridge;
+  const fill = (t) => t.replace("{need}", C.names.need[state.need]).replace("{agent}", C.names.agent[state.agent]);
 
   function applyLabels(mode) {
     state.labelMode = mode;
@@ -21,8 +21,8 @@
   }
 
   function syncBinds() {
-    document.querySelectorAll("[data-bind=need]").forEach((el) => (el.textContent = state.need));
-    document.querySelectorAll("[data-bind=agent]").forEach((el) => (el.textContent = state.agent));
+    document.querySelectorAll("[data-bind=need]").forEach((el) => (el.textContent = C.names.bindNeed[state.need]));
+    document.querySelectorAll("[data-bind=agent]").forEach((el) => (el.textContent = C.names.agent[state.agent]));
     document.querySelectorAll("[data-bind=reroute]").forEach((el) => (el.textContent = reroute()));
     const echo = document.getElementById("needEcho");
     if (echo) echo.innerHTML = C.needLines[state.need];
@@ -141,8 +141,8 @@
     runBtn.disabled = true;
     Loop.runPass(() => (runBtn.disabled = false));
     const n = Loop.passes;
-    loopMeta.textContent = "passes: " + n + " · relief: shrinking · shame: growing";
-    const labels = ["Run the loop", "Run it again", "Again", "Again", "You know the way by now"];
+    loopMeta.textContent = C.ui.meta.replace("{n}", n);
+    const labels = C.ui.runLabels;
     runBtn.textContent = labels[Math.min(n, labels.length - 1)];
     if (n >= 4) runNote.classList.add("shown");
   });
@@ -154,13 +154,13 @@
     if (state.will === 1) {
       document.getElementById("beat1").classList.add("shown");
       Loop.willpower(1,
-        () => { Loop.setLabel("behavior", reroute(), "the new exit"); document.getElementById("beat2").classList.add("shown"); },
-        () => { willBtn.disabled = false; willBtn.textContent = "Try willpower again"; });
+        () => { Loop.setLabel("behavior", reroute(), C.ui.newExit); document.getElementById("beat2").classList.add("shown"); },
+        () => { willBtn.disabled = false; willBtn.textContent = C.ui.willAgain; });
     } else {
       document.getElementById("beat3").classList.add("shown");
       Loop.willpower(2, null, () => {
-        Loop.setLabel("behavior", state.agent, "the exit");
-        willBtn.textContent = "The loop knows this trick now";
+        Loop.setLabel("behavior", C.names.agent[state.agent], C.ui.exit);
+        willBtn.textContent = C.ui.willKnows;
       });
     }
   });
@@ -184,7 +184,7 @@
   const receiveBtn = document.getElementById("receiveBtn");
   receiveBtn.addEventListener("click", () => {
     receiveBtn.disabled = true;
-    receiveBtn.textContent = "received";
+    receiveBtn.textContent = C.ui.received;
     elGrace.scrollIntoView({ behavior: RM ? "auto" : "smooth", block: "center" });
   });
 

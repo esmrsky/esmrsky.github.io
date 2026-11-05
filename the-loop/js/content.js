@@ -65,5 +65,24 @@ window.CONTENT = {
     "A perfect streak."
   ],
 
-  spiralCaption: "the ache → brought, not hidden → met at the source → trust deepens → fruit"
+  spiralCaption: "the ache → brought, not hidden → met at the source → trust deepens → fruit",
+
+  // words as shown: node labels use names.need / names.agent, prose binds use bindNeed
+  names: {
+    need:  { "rest": "rest", "comfort": "comfort", "worth": "worth", "closeness": "closeness", "safety": "safety", "joy": "joy" },
+    bindNeed: { "rest": "rest", "comfort": "comfort", "worth": "worth", "closeness": "closeness", "safety": "safety", "joy": "joy" },
+    agent: { "scrolling": "scrolling", "porn": "porn", "food": "food", "a drink": "a drink", "work": "work", "approval": "approval", "shopping": "shopping", "gaming": "gaming" }
+  },
+
+  // strings main.js writes itself
+  ui: {
+    fridge: "the fridge",
+    exit: "the exit",
+    newExit: "the new exit",
+    meta: "passes: {n} · relief: shrinking · shame: growing",
+    runLabels: ["Run the loop", "Run it again", "Again", "Again", "You know the way by now"],
+    willAgain: "Try willpower again",
+    willKnows: "The loop knows this trick now",
+    received: "received"
+  }
 };
