@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1618'/%3E%3Cpath d='M16 13v20a16 16 0 0 0 10 15' fill='none' stroke='%2352d8c5' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M48 13v20a16 16 0 0 1-10 15' fill='none' stroke='%2352d8c5' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='55' r='5' fill='%2352d8c5'/%3E%3C/svg%3E">
+<title>The Broken Cistern · one shape under many wells</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --abyss:#0b1618; --abyss-2:#0f1f21; --panel:#12262722; --panel-solid:#102224;
+    --line:#21413f; --living:#52d8c5; --living-dim:#2f8a80; --stone:#8fa0a3;
+    --shame:#9a7fa6; --shame-dim:#5b4a64; --grace:#ecca8c; --caution:#e0a86b;
+    --ink:#e9f0ee; --ink-dim:#9fb2b0; --ink-faint:#6f8482; --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--abyss);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;line-height:1.62;font-size:17px;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(120% 80% at 50% -10%, #11292b 0%, var(--abyss) 55%);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:"Spectral",Georgia,serif;font-weight:400;line-height:1.12;letter-spacing:-.01em}
+  .serif{font-family:"Spectral",Georgia,serif}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--living-dim)}
+  a{color:var(--living)}
+  .tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;padding:2px 7px;border-radius:3px;display:inline-block;
+    vertical-align:middle;line-height:1.5;white-space:nowrap}
+  .tag.text{color:var(--living);border:1px solid var(--living-dim);background:#0e2a2880}
+  .tag.read{color:var(--grace);border:1px solid #7a6438;background:#241d0f80}
+
+  /* HERO */
+  header.hero{padding:92px 0 56px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(40px,6.4vw,76px);margin:.18em 0 .35em}
+  .hero h1 em{font-style:italic;color:var(--living)}
+  .hero .lede{font-size:19px;color:var(--ink-dim);max-width:44ch}
+  .verse{margin-top:28px;border-left:2px solid var(--living-dim);padding:4px 0 4px 18px;
+    font-family:"Spectral",serif;font-style:italic;color:var(--ink-dim);font-size:16.5px}
+  .verse b{color:var(--ink);font-style:normal;font-weight:500}
+  .cite{margin-top:6px;font-style:normal;color:var(--ink-faint);
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em}
+  .vessel-stage{display:flex;justify-content:center;width:100%}
+  svg.vessel{width:100%;max-width:460px;height:auto;overflow:visible}
+
+  /* SVG motion is handled by SMIL inside the markup — most cross-browser-robust,
+     avoids CSS transform-origin / transform-box pitfalls on SVG child elements. */
+
+  section{padding:60px 0}
+  .sec-head{max-width:66ch;margin-bottom:32px}
+  .sec-head h2{font-size:clamp(28px,4vw,40px);margin:.25em 0 .4em}
+  .sec-head h2 em{font-style:italic}
+  .sec-head p{color:var(--ink-dim);margin:0}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .thesis{font-family:"Spectral",serif;font-size:clamp(24px,3.6vw,34px);line-height:1.34;
+    font-weight:300;color:var(--ink);max-width:25ch}
+  .thesis b{color:var(--living);font-weight:500}
+  .thesis .leak{color:var(--shame);font-weight:500}
+  .aug{max-width:62ch;color:var(--ink-dim);margin-top:22px}
+  .aug em{color:var(--ink)}
+
+  /* LOOP */
+  .loop-wrap{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:center}
+  svg.loop{width:100%;height:auto;overflow:visible}
+  .loop-controls{display:flex;flex-direction:column;gap:14px}
+  .toggle{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .toggle button{flex:1;background:transparent;color:var(--ink-dim);border:0;padding:11px 8px;
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;cursor:pointer;transition:.2s}
+  .toggle button.on{background:#102b29;color:var(--ink)}
+  .toggle.grace button.on{background:#2a230f;color:var(--grace)}
+  .loop-note{font-size:15px;color:var(--ink-dim);min-height:104px}
+  .loop-note b{color:var(--ink)}
+  .gflow{stroke-dasharray:5 6;animation:flow 1s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-22}}
+
+  /* DYNAMIC LOOP ANIMATION CSS */
+  .node-group {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform;
+  }
+  .node-group circle {
+    transition: filter 0.1s ease;
+  }
+  .node-group text {
+    transition: fill 0.1s ease, font-weight 0.15s ease;
+  }
+
+  /* TILES + PANEL */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  #flaw-tiles{grid-template-columns:repeat(3,1fr)}
+  #axis-tiles{grid-template-columns:repeat(5,1fr)}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:16px 14px;
+    cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;font-size:14.5px;
+    transition:.18s;display:flex;flex-direction:column;gap:9px}
+  .tile:hover{border-color:var(--living-dim);transform:translateY(-2px)}
+  .tile.active{border-color:var(--living);background:#0f2a28;box-shadow:0 0 0 1px var(--living) inset}
+  .tile .ti{font-size:22px;line-height:1}
+  .tile .tl{font-weight:500;line-height:1.25}
+  .panelx{margin-top:18px;background:var(--panel-solid);border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .panelx-head{padding:22px 26px 16px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .panelx-head .big{font-family:"Spectral",serif;font-size:25px}
+  .panelx-head .sub{color:var(--ink-faint);font-size:14px}
+  .rows{display:grid;grid-template-columns:1fr 1fr}
+  .cell{padding:18px 26px;border-top:1px solid var(--line)}
+  .cell:nth-child(odd){border-right:1px solid var(--line)}
+  .cell .k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;margin-bottom:6px;color:var(--ink-faint)}
+  .cell .v{font-size:15.5px;color:var(--ink);line-height:1.5}
+  .cell.need .k{color:var(--living)}
+  .cell.loop .k,.cell.trap .k{color:var(--shame)}
+  .cell.grace{grid-column:1 / -1;background:rgba(236,202,140,0.08);border-top:1px solid rgba(236,202,140,0.15)}
+  .cell.grace .k{color:var(--grace)}
+  .cell.full{grid-column:1 / -1}
+
+  /* Expanded Panel Cell Enhancements */
+  .cell.cue{background:rgba(143,160,163,0.02)}
+  .cell.counterfeit{background:rgba(154,127,166,0.025)}
+  .cell.promises{background:rgba(236,202,140,0.015)}
+  .cell.need{background:rgba(82,216,197,0.04)}
+  .cell.loop{background:rgba(154,127,166,0.05)}
+  .cell.trap{background:rgba(224,168,107,0.045)}
+
+  .cell.need .v{color:#8cfceb}
+  .cell.loop .v{color:#ebd5f5}
+  .cell.trap .v{color:#fce4ca}
+  .cell.grace .v{color:#fde8c5}
+
+  /* GUARDRAILS */
+  .guard{background:#1a140d;border:1px solid #4a3a23;border-radius:14px;padding:8px 28px 22px}
+  .guard .eyebrow{color:var(--caution)}
+  .guard h2{color:var(--caution);font-size:25px;margin:14px 0 4px}
+  .guard .intro{color:var(--ink-dim);max-width:64ch;margin:0 0 6px}
+  .grow{padding:15px 0;border-top:1px solid #38301f;display:grid;grid-template-columns:30px 1fr;gap:14px}
+  .grow:first-of-type{border-top:0}
+  .grow .x{color:var(--caution);font-family:"Spectral",serif;font-size:20px;line-height:1.2}
+  .grow b{color:var(--ink)}
+  .grow p{margin:0;color:var(--ink-dim);font-size:15px}
+  .test{margin-top:14px;background:#0e2624;border:1px solid var(--living-dim);border-radius:10px;
+    padding:16px 20px;font-size:15px;color:var(--ink)}
+  .test b{color:var(--living)}
+
+  /* WORKS/GRACE */
+  .wg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .wg-col{padding:26px}
+  .wg-col.old{background:#13191a}
+  .wg-col.new{background:#0e2624}
+  .wg-col h3{font-size:21px;margin:0 0 4px}
+  .wg-col.old h3{color:var(--stone)}
+  .wg-col.new h3{color:var(--living)}
+  .wg-col .who{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px}
+  .wg-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px}
+  .wg-col li{font-size:15px;line-height:1.45;padding-left:20px;position:relative;color:var(--ink-dim)}
+  .wg-col li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%}
+  .wg-col.old li::before{background:var(--shame-dim)}
+  .wg-col.new li::before{background:var(--living-dim)}
+  .wg-col li b{color:var(--ink);font-weight:500}
+  .effort{margin-top:18px;font-size:15px;color:var(--ink-dim);max-width:70ch}
+  .effort b{color:var(--living)}
+
+  /* THREADS */
+  .threads{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .thread{border:1px solid var(--line);border-radius:12px;padding:22px 24px;background:var(--panel)}
+  .thread .n{font-family:"Spectral",serif;font-size:30px;color:var(--living-dim);line-height:1}
+  .thread h3{font-size:19px;margin:10px 0 8px}
+  .thread p{margin:0;color:var(--ink-dim);font-size:15px}
+  .thread.deep{grid-column:1 / -1;background:linear-gradient(120deg,#0e2624,#15110a);border-color:#3a4f3c}
+  .thread.deep .n{color:var(--grace)}
+  .thread.deep p b{color:var(--grace)}
+
+  /* TWO MOVES */
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .move{border:1px solid var(--line);border-radius:12px;padding:22px 24px;background:var(--panel)}
+  .move .num{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-faint)}
+  .move h3{margin:8px 0 8px;font-size:20px}
+  .move.a h3{color:var(--shame)} .move.b h3{color:var(--living)}
+  .move p{margin:0;color:var(--ink-dim);font-size:15px}
+  .house{grid-column:1 / -1;border:1px solid var(--shame-dim);border-radius:12px;
+    padding:18px 24px;background:#160f18;color:var(--ink-dim);font-size:15px}
+  .house b{color:var(--ink)}
+
+  /* CASES */
+  .case{border:1px solid var(--line);border-radius:11px;margin-bottom:10px;overflow:hidden;background:var(--panel)}
+  .case > button{width:100%;text-align:left;background:transparent;border:0;color:var(--ink);
+    padding:18px 22px;cursor:pointer;display:flex;align-items:center;gap:16px;font-family:inherit}
+  .case .ref{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-faint);min-width:128px}
+  .case .title{font-family:"Spectral",serif;font-size:19px;flex:1}
+  .case .pill{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;
+    text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid var(--shame-dim);
+    color:var(--shame);white-space:nowrap}
+  .case .chev{color:var(--ink-faint);transition:.25s}
+  .case.open .chev{transform:rotate(90deg)}
+  .case .body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .case .body-inner{padding:0 22px 20px;color:var(--ink-dim);font-size:15.5px}
+  .case .body-inner p{margin:.4em 0}
+
+  /* PRACTICALS */
+  .chalmers{font-family:"Spectral",serif;font-size:clamp(20px,2.7vw,26px);line-height:1.4;
+    font-weight:300;color:var(--ink);max-width:30ch;margin:0 0 30px}
+  .chalmers b{color:var(--grace);font-weight:500}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:2px}
+  .step{display:grid;grid-template-columns:60px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+  .step:first-child{border-top:0}
+  .step .num{counter-increment:s;font-family:"Spectral",serif;font-size:34px;color:var(--living-dim);line-height:1}
+  .step .num::before{content:counter(s,decimal-leading-zero)}
+  .step h3{font-size:18px;margin:2px 0 5px}
+  .step p{margin:0;color:var(--ink-dim);font-size:15px}
+  .step .scr{color:var(--living);font-family:"IBM Plex Mono",monospace;font-size:12px}
+
+  /* GAPS */
+  .gaps{background:#140f17;border:1px solid var(--shame-dim);border-radius:14px;padding:8px 28px 22px}
+  .gaps .eyebrow{color:var(--shame)}
+  .gaps h2{color:var(--shame);font-size:24px;margin:14px 0 6px}
+  .gaps .gp{padding:14px 0;border-top:1px solid #2c2434}
+  .gaps .gp:first-of-type{border-top:0}
+  .gaps .gp b{color:var(--ink)}
+  .gaps p{margin:.3em 0;color:var(--ink-dim);font-size:15px}
+
+  footer{padding:48px 0 70px;color:var(--ink-faint);font-size:13.5px}
+  footer .serif{color:var(--ink-dim)}
+  footer .mono{font-family:"IBM Plex Mono",monospace;color:var(--ink-faint)}
+
+   /* VERSION TOGGLE */
+  
+  @media(max-width:840px){
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .hero .vessel-stage{order:-1;max-width:360px;margin:0 auto}
+    .loop-wrap,.tiles,.wg,.threads,.moves{grid-template-columns:1fr}
+    #tiles, #flaw-tiles, #axis-tiles{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:480px){
+    #tiles, #flaw-tiles, #axis-tiles{grid-template-columns:1fr}
+    .rows{grid-template-columns:1fr}
+    .cell:nth-child(odd){border-right:0}
+    .case > button{flex-wrap:wrap}
+    .case .ref{min-width:0;width:100%}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+
+  /* reading comfort: balance display text */
+  h1, h2, h3 { text-wrap: balance; }
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">A structural reading · revamped</div>
+      <h1>One shape,<br><em>many wells</em></h1>
+      <p class="lede">Broken cisterns, habit loops, the shame spiral, counterfeit needs, works vs. grace — read closely, they share one recurring shape. Not identical things; the same move wearing different clothes, and it runs through your ordinary Tuesday.</p>
+      <div class="verse">
+        “My people have committed two sins: they have forsaken me, <b>the spring of living water</b>, and have dug their own cisterns — <b>broken cisterns</b> that cannot hold water.”
+        <div class="cite">JEREMIAH 2:13 — the verse this whole page hangs on</div>
+      </div>
+    </div>
+    <div class="vessel-stage">
+      <svg class="vessel" viewBox="0 0 480 260" role="img" aria-label="A cracked, leaking cistern beside an overflowing fountain">
+        <defs>
+          <!-- Glowing effects -->
+          <filter id="glow-shame" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="glow-living" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          
+          <!-- Color Gradients -->
+          <linearGradient id="grad-shame" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#b59fc2" />
+            <stop offset="100%" stop-color="#5b4a64" />
+          </linearGradient>
+          <linearGradient id="grad-shame-liquid" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#9a7fa6" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#403048" stop-opacity="0.8" />
+          </linearGradient>
+          <linearGradient id="grad-living" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#52d8c5" />
+            <stop offset="100%" stop-color="#1c5750" />
+          </linearGradient>
+          <linearGradient id="grad-living-liquid" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#52d8c5" stop-opacity="0.5" />
+            <stop offset="100%" stop-color="#0b2321" stop-opacity="0.9" />
+          </linearGradient>
+          <linearGradient id="grad-glass-reflection" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.05" />
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+          </linearGradient>
+          
+          <!-- Ambient Glows -->
+          <radialGradient id="radial-shame-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#9a7fa6" stop-opacity="1" />
+            <stop offset="100%" stop-color="#9a7fa6" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="radial-living-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#52d8c5" stop-opacity="1" />
+            <stop offset="100%" stop-color="#52d8c5" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Ambient Glowing Backdrops -->
+        <circle cx="120" cy="130" r="80" fill="url(#radial-shame-glow)" opacity="0.16" />
+        <circle cx="360" cy="130" r="90" fill="url(#radial-living-glow)" opacity="0.18" />
+
+        <!-- ==================== BROKEN CISTERN ==================== -->
+        <!-- Glass Rim -->
+        <ellipse cx="120" cy="65" rx="50" ry="8" fill="none" stroke="url(#grad-shame)" stroke-width="1.5" opacity="0.6" />
+        
+        <!-- Liquid inside -->
+        <path d="M 82 140 Q 120 147 158 140 L 148 191 Q 146 201 134 201 L 106 201 Q 94 201 92 191 Z" fill="url(#grad-shame-liquid)" />
+        <path d="M 82 140 Q 120 147 158 140" fill="none" stroke="#b59fc2" stroke-width="1.5" opacity="0.7" />
+        
+        <!-- Stagnant sediment/dust particles -->
+        <circle cx="100" cy="165" r="1.5" fill="#9a7fa6" opacity="0.5" />
+        <circle cx="138" cy="175" r="1.0" fill="#b59fc2" opacity="0.4" />
+        <circle cx="112" cy="185" r="1.8" fill="#5b4a64" opacity="0.6" />
+
+        <!-- Glass Outline -->
+        <path d="M 70 65 L 92 191 Q 94 201 106 201 L 134 201 Q 146 201 148 191 L 170 65" fill="none" stroke="url(#grad-shame)" stroke-width="2.2" stroke-linecap="round" />
+        
+        <!-- Glass Reflection Highlight -->
+        <path d="M 74 72 L 94 186 Q 96 193 105 193" fill="none" stroke="url(#grad-glass-reflection)" stroke-width="1.8" stroke-linecap="round" />
+
+        <!-- Glowing Crack -->
+        <path d="M 120 115 L 114 138 L 126 162 L 118 201" fill="none" stroke="#ecd9f5" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow-shame)" />
+        <path d="M 114 138 L 104 148" fill="none" stroke="#ecd9f5" stroke-width="1.2" opacity="0.8" filter="url(#glow-shame)" />
+        <path d="M 126 162 L 136 172" fill="none" stroke="#ecd9f5" stroke-width="1.2" opacity="0.8" filter="url(#glow-shame)" />
+
+        <!-- Leaking Water Drops -->
+        <circle cx="118" cy="201" r="3.2" fill="#b59fc2" filter="url(#glow-shame)">
+          <animate attributeName="cy" values="201;236" dur="2.2s" repeatCount="indefinite" />
+          <animate attributeName="r" values="3.2;1.5" dur="2.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;0.95;0.7;0" keyTimes="0;0.1;0.8;1" dur="2.2s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="118" cy="201" r="2.8" fill="#b59fc2" filter="url(#glow-shame)">
+          <animate attributeName="cy" values="201;236" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
+          <animate attributeName="r" values="2.8;1.2" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;0.95;0.7;0" keyTimes="0;0.1;0.8;1" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
+        </circle>
+
+        <!-- Label -->
+        <text x="120" y="242" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-dim)" font-weight="500" letter-spacing="0.05em">you dug it · it leaks</text>
+
+
+        <!-- ==================== FOUNTAIN OF LIVING WATER ==================== -->
+        <g>
+          <!-- Water Surface Ellipse -->
+          <ellipse cx="360" cy="145" rx="42" ry="6" fill="url(#grad-living-liquid)" stroke="url(#grad-living)" stroke-width="1.5" />
+          
+          <!-- Outer Bowl Outline -->
+          <path d="M 318 145 Q 318 195 360 201 Q 402 195 402 145" fill="none" stroke="url(#grad-living)" stroke-width="2.5" stroke-linecap="round" />
+          <path d="M 318 145 Q 318 195 360 201 Q 402 195 402 145 Z" fill="rgba(82, 216, 197, 0.05)" />
+          
+          <!-- Nozzle Base -->
+          <path d="M 356 145 L 358 138 L 362 138 L 364 145 Z" fill="#2f8a80" stroke="url(#grad-living)" stroke-width="1" />
+
+          <!-- Overflow Ripples -->
+          <ellipse cx="360" cy="145" rx="42" ry="6" fill="none" stroke="#52d8c5" stroke-width="1.2" opacity="0.8">
+            <animate attributeName="rx" values="42;58" dur="2.5s" repeatCount="indefinite" />
+            <animate attributeName="ry" values="6;10" dur="2.5s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.8;0" dur="2.5s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="360" cy="145" rx="42" ry="6" fill="none" stroke="#52d8c5" stroke-width="1" opacity="0.8">
+            <animate attributeName="rx" values="42;58" dur="2.5s" begin="1.25s" repeatCount="indefinite" />
+            <animate attributeName="ry" values="6;10" dur="2.5s" begin="1.25s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.8;0" dur="2.5s" begin="1.25s" repeatCount="indefinite" />
+          </ellipse>
+
+          <!-- Central Rising Plumes (Core & Outer Highlight) -->
+          <path d="M 360 138 C 356 110 364 85 360 52" fill="none" stroke="#52d8c5" stroke-width="6" stroke-linecap="round" opacity="0.25" />
+          <path d="M 360 138 C 356 110 364 85 360 52" fill="none" stroke="#e0fdfa" stroke-width="3.5" stroke-linecap="round" filter="url(#glow-living)" stroke-dasharray="15 15">
+            <animate attributeName="stroke-dashoffset" values="30;0" dur="0.8s" repeatCount="indefinite" />
+          </path>
+
+          <!-- Overflowing Arches -->
+          <path d="M 360 52 Q 324 58 318 145" fill="none" stroke="url(#grad-living)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="10 10">
+            <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+          </path>
+          <path d="M 360 52 Q 396 58 402 145" fill="none" stroke="url(#grad-living)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="10 10">
+            <animate attributeName="stroke-dashoffset" values="20;0" dur="1.2s" repeatCount="indefinite" />
+          </path>
+          
+          <!-- Sparkle drops shooting up and out -->
+          <circle cx="360" cy="52" r="2" fill="#e0fdfa" filter="url(#glow-living)">
+            <animate attributeName="cx" values="360;345;338" dur="1.6s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="52;35;55" dur="1.6s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="360" cy="52" r="2" fill="#e0fdfa" filter="url(#glow-living)">
+            <animate attributeName="cx" values="360;375;382" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="52;35;55" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
+          </circle>
+
+          <!-- Overflowing Side Drops -->
+          <circle cx="317" cy="145" r="2.2" fill="#52d8c5" filter="url(#glow-living)">
+            <animate attributeName="cy" values="145;190" dur="2s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0;0.9;0" keyTimes="0;0.15;1" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="403" cy="145" r="2.2" fill="#52d8c5" filter="url(#glow-living)">
+            <animate attributeName="cy" values="145;190" dur="2s" begin="1s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0;0.9;0" keyTimes="0;0.15;1" dur="2s" begin="1s" repeatCount="indefinite" />
+          </circle>
+
+          <!-- Label -->
+          <text x="360" y="242" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--living)" font-weight="500" letter-spacing="0.05em">you receive it · it overflows</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- THESIS -->
+<section>
+  <div class="wrap reveal">
+    <div class="eyebrow">The one sentence</div>
+    <p class="thesis" style="margin-top:18px">
+      A real and legitimate desire gets <b>routed to a false source</b> — and the
+      <span class="leak">falseness of the source is exactly what makes it loop.</span>
+    </p>
+    <p class="aug">
+      Augustine put the same thing as <em>disordered loves</em>: the trouble usually isn’t wanting something evil, it’s wanting something good in the wrong order or from the wrong place. The thirst is designed and right. The well is broken. Most of the suffering here comes from blaming the <em>desire</em> (“I’m weak,” “more discipline”) instead of the <em>sourcing</em>.
+    </p>
+  </div>
+</section>
+
+<!-- LOOP -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">How it turns</div>
+      <h2>The loop runs on <em style="color:var(--shame)">almost</em></h2>
+      <p>If the counterfeit fully satisfied, you’d stop. Because it <em>almost</em> works, it reinforces — and the unmet need comes back sharper. That near-miss is the engine shared by a craving, a shame spiral, and the works treadmill.</p>
+    </div>
+    <div class="loop-wrap reveal">
+      <svg class="loop" viewBox="0 0 480 360" role="img" aria-label="The compulsion loop with its two exits">
+        <defs>
+          <marker id="aShame" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#9a7fa6"/></marker>
+          <marker id="aGrace" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#ecca8c"/></marker>
+        </defs>
+        <circle id="ring" cx="200" cy="185" r="110" fill="none" stroke="#5b4a64" stroke-width="1.4"/>
+        <!-- inner try-harder -->
+        <path id="forceArrow" d="M115 142 Q175 220 282 232" fill="none" stroke="#9a7fa6" stroke-width="1.6" marker-end="url(#aShame)"/>
+        <text id="forceLbl" x="168" y="183" font-family="IBM Plex Mono,monospace" font-size="11" fill="#9a7fa6" font-style="italic">try harder ↻</text>
+        <!-- grace exit visual -->
+        <path id="graceArrow" d="M212 72 Q384 48 448 150" fill="none" stroke="#ecca8c" stroke-width="2" stroke-dasharray="4 5" marker-end="url(#aGrace)" opacity="0"/>
+        
+        <!-- hidden paths for JS animation tracking -->
+        <path id="loopPath" d="M 200 75 A 110 110 0 1 1 199.99 75 Z" fill="none" stroke="none" style="display:none;"></path>
+        <path id="gracePath" d="M 200 75 Q 384 48 448 150" fill="none" stroke="none" style="display:none;"></path>
+
+        <!-- nodes -->
+        <g id="nodesContainer" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#e9f0ee">
+          <g id="node-need" class="node-group">
+            <circle cx="200" cy="75" r="6" fill="#52d8c5"/>
+            <text x="200" y="58" text-anchor="middle">real need</text>
+          </g>
+          <g id="node-cue" class="node-group">
+            <circle cx="295" cy="130" r="5" fill="#9a7fa6"/>
+            <text x="312" y="127">cue</text>
+          </g>
+          <g id="node-counterfeit" class="node-group">
+            <circle cx="295" cy="240" r="5" fill="#9a7fa6"/>
+            <text x="312" y="245">counterfeit</text>
+          </g>
+          <g id="node-relief" class="node-group">
+            <circle cx="200" cy="295" r="5" fill="#9a7fa6"/>
+            <text x="200" y="316" text-anchor="middle">brief relief</text>
+          </g>
+          <g id="node-returns" class="node-group">
+            <circle cx="105" cy="240" r="5" fill="#9a7fa6"/>
+            <text x="88" y="245" text-anchor="end">need returns</text>
+          </g>
+          <g id="node-shame" class="node-group">
+            <circle cx="105" cy="130" r="5" fill="#9a7fa6"/>
+            <text x="88" y="127" text-anchor="end">shame</text>
+          </g>
+          <g id="node-resource" class="node-group" style="opacity: 0; transition: opacity 0.3s ease;">
+            <text id="graceLbl" x="455" y="134" text-anchor="end" fill="#ecca8c" font-weight="bold">re-source ↗</text>
+          </g>
+        </g>
+        
+        <!-- rotating pulsing dot -->
+        <circle id="pulse" r="4.5" fill="#c9a8d4" cx="200" cy="75" style="filter: drop-shadow(0 0 5px #c9a8d4); transition: fill 0.3s;"></circle>
+      </svg>
+      <div class="loop-controls">
+        <div class="toggle" id="loopToggle">
+          <button class="on" data-mode="force">By force</button>
+          <button data-mode="grace">By grace</button>
+        </div>
+        <div class="loop-note" id="loopNote"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSLATOR -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The everyday translator</div>
+      <h2>Where you actually meet it</h2>
+      <p>Pick something ordinary. The same anatomy appears — a real need, a leaky well, a near-miss that loops, a “just stop” trap that backfires. Then: where the need actually belongs. <span style="color:var(--ink-faint)">(Read the guardrails below before turning this into a lens for everything.)</span></p>
+    </div>
+    <div class="tiles reveal" id="tiles"></div>
+    <div class="panelx" id="panelx" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- FLAW LOOPS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The character flaws translator</div>
+      <h2>When self-improvement loops</h2>
+      <p>Identify a trait you’ve tried to fix by willpower. Notice how the grit-based solution feeds the baseline anxiety, anchoring the flaw deeper into your life. Then: the exit route of received identity. <span style="color:var(--ink-faint)">(These are spiritual gravity wells, not simple bad habits.)</span></p>
+    </div>
+    <div class="tiles reveal" id="flaw-tiles"></div>
+    <div class="panelx" id="flaw-panelx" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- AXIS LOOPS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The existential axes</div>
+      <h2>The deep gravity wells</h2>
+      <p>Underneath every everyday habit and character flaw sits a core axis of human desire and fear. Trace your striving down to the bedrock and discover the primary engine driving your loops. <span style="color:var(--ink-faint)">(These are the root questions you are trying to answer.)</span></p>
+    </div>
+    <div class="tiles reveal" id="axis-tiles"></div>
+    <div class="panelx" id="axis-panelx" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- GUARDRAILS -->
+<section>
+  <div class="wrap reveal">
+    <div class="guard">
+      <div class="eyebrow">Guardrails</div>
+      <h2>Where this lens breaks</h2>
+      <p class="intro">A frame that explains everything predicts nothing. This one earns its keep only where the loop-signature is actually present — and it does real damage when forced onto things it doesn’t fit.</p>
+      <div class="grow"><div class="x">✕</div><div><p><b>Not every habit is a broken cistern.</b> Brushing your teeth, a morning walk, a standing call with a friend — neutral or good loops. The frame is about <em>counterfeit-sourced compulsion</em>, not behavior as such.</p></div></div>
+      <div class="grow"><div class="x">✕</div><div><p><b>Sometimes you’re just tired, not idolatrous.</b> Scrolling can simply be rest; a snack can simply be hunger. Over-spiritualizing ordinary limits is its own trap — scrupulosity — and it manufactures shame the gospel was meant to remove.</p></div></div>
+      <div class="grow"><div class="x">✕</div><div><p><b>Effort isn’t the enemy.</b> Grace <em>produces</em> work — “work out your salvation, for it is God who works in you” (Phil 2:12–13); created for good works (Eph 2:10). The cistern is effort-as-<em>source-of-worth</em>, not effort itself. This is not a charter for passivity.</p></div></div>
+      <div class="grow"><div class="x">✕</div><div><p><b>Grace is not a rival to ordinary means.</b> “Re-source it” never means “pray instead of sleeping, instead of therapy, instead of medication, instead of accountability.” Those are often <em>how</em> the fountain reaches you, not competitors to it.</p></div></div>
+      <div class="test"><b>A field test:</b> does the thing leave you needing it again — sharper, with shame? Or does it actually satisfy and let you move on? Only the first is a broken cistern. The second is just a good gift.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS / GRACE -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The spine · old covenant / new covenant</div>
+      <h2>A standard that demands, a source that supplies</h2>
+      <p>In a Pauline frame, the Law works like willpower: an external standard that <em>demands</em> performance but supplies no <em>power</em> to produce it. The New Covenant doesn’t raise the bar — it moves the source inside. <span style="color:var(--ink-faint)">(Sharpest in Protestant readings; Catholic, Orthodox, and Wesleyan traditions integrate works and participation differently.)</span></p>
+    </div>
+    <div class="wg reveal">
+      <div class="wg-col old">
+        <h3>Old / Law / Works</h3>
+        <div class="who">the closed loop · I am the source</div>
+        <ul>
+          <li>The standard sits <b>outside</b> you, carved in stone — it shows the target, hands you no power.</li>
+          <li>Order: <b>perform → then maybe you’re worthy.</b> Worth is the prize you never quite reach.</li>
+          <li>The prohibition can <b>arouse</b> the craving — “do not covet,” and coveting wakes up. <span class="tag text">Rom 7:8</span></li>
+          <li>The bar moves; you re-earn tomorrow. The treadmill <b>is</b> the broken cistern.</li>
+        </ul>
+      </div>
+      <div class="wg-col new">
+        <h3>New / Spirit / Grace</h3>
+        <div class="who">the open system · the source is received</div>
+        <ul>
+          <li>The law is <b>written on the heart</b>; stone swapped for flesh, the Spirit put within. <span class="tag text">Ezek 36</span></li>
+          <li>Order flips: <b>worth given first → behavior flows from it.</b> Indicative before imperative.</li>
+          <li>“No condemnation” pulls the <b>shame fuel</b> out of the loop. <span class="tag text">Rom 8:1</span></li>
+          <li>Change comes by <b>beholding</b>, not clenching — you become what you gaze at. <span class="tag text">2 Cor 3:18</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="effort"><b>So effort isn’t abolished — it’s relocated.</b> Under works, effort tries to <em>generate</em> worth. Under grace, effort <em>expresses</em> a worth already given. Same sweat, opposite engine.</p>
+  </div>
+</section>
+
+<!-- THREADS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Common denominators</div>
+      <h2>Four threads under all of it</h2>
+      <p>These are the family resemblances — the reasons it reads as one shape. Where the four members diverge is the guardrails section above.</p>
+    </div>
+    <div class="threads reveal">
+      <div class="thread"><div class="n">i</div><h3>Wrong source</h3>
+        <p>Each well structurally <b>cannot</b> deliver what’s sought, yet stays close enough to keep you returning. Cistern, willpower-reserve, counterfeit, self-as-justifier.</p></div>
+      <div class="thread"><div class="n">ii</div><h3>The cure is the disease</h3>
+        <p>The attempted solution feeds the problem. Effort entrenches the habit; shame triggers the relapse; striving never arrives. A self-defeating recursion.</p></div>
+      <div class="thread"><div class="n">iii</div><h3>Partial satisfaction</h3>
+        <p>It works <em>just</em> enough to reinforce, never enough to free. The near-miss turns a mistake into a loop. Salt water for thirst.</p></div>
+      <div class="thread"><div class="n">iv</div><h3>Closed vs. received</h3>
+        <p>A sealed system where the self is both agent and source — versus something taken from outside. The exit isn’t a better move <em>inside</em> the loop; it’s a different well.</p></div>
+      <div class="thread deep"><div class="n">∴</div><h3>The denominator under the denominators</h3>
+        <p>Strip the four down and you get one line: <b>a good desire routed to a false source, where the falseness is what keeps it spinning.</b> That’s why grace is the structural counterpart, not just the religious item on the list — it doesn’t shame the thirst, it relocates the well.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO MOVES -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Two evils, two moves</div>
+      <h2>Stopping isn’t the same as returning</h2>
+      <p>Jeremiah names <em>two</em> failures, not one — so the cure has two halves. Quit digging cisterns <em>and</em> go back to the fountain. Do only the first and the vacuum refills on its own.</p>
+    </div>
+    <div class="moves reveal">
+      <div class="move a"><div class="num">Move one · necessary, not sufficient</div>
+        <h3>Stop digging</h3>
+        <p>Removing the counterfeit — willpower, deleting the app, white-knuckling the diet. Real, but it only empties the vessel. An empty vessel is an invitation, not a resolution.</p></div>
+      <div class="move b"><div class="num">Move two · the half that holds</div>
+        <h3>Return to the source</h3>
+        <p>Bring the actual need back to a well that fills it. Without this, the loop has nowhere to go but back — the “almost” still calls.</p></div>
+      <div class="house">Jesus’ picture of exactly this: an unclean spirit leaves, the house is found <b>swept and empty</b>, so it returns with seven worse — “the final condition of that person is worse than the first.” <span class="cite" style="display:inline">MATT 12:43–45.</span> <b>Emptiness isn’t freedom; it’s a vacancy.</b> Replace, don’t just remove.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The same shape in scripture</div>
+      <h2>Case studies that actually fit</h2>
+      <p>Not forced parallels — places where the text itself runs the loop, or breaks it.</p>
+    </div>
+    <div id="cases" class="reveal"></div>
+  </div>
+</section>
+
+<!-- PRACTICALS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">The exit · what to actually do</div>
+      <h2>Not “try harder.” Re-source.</h2>
+    </div>
+    <p class="chalmers reveal">
+      Thomas Chalmers’ old line: a love is never willed <em>out</em> of the heart — it’s crowded out by <b>the expulsive power of a new affection.</b> You don’t empty the well; you find a better one and drink.
+    </p>
+    <div class="steps reveal">
+      <div class="step"><div class="num"></div><div>
+        <h3>Re-order: worth before behavior</h3>
+        <p>Start at worth-as-given, then act <em>from</em> it. The one move that drains the shame loop, because it removes its fuel. <span class="scr">indicative → imperative</span></p>
+      </div></div>
+      
+      <div class="step"><div class="num"></div><div>
+        <h3>Replace, don’t just remove</h3>
+        <p>Deleting the routine leaves the craving shopping for a substitute. Keep the cue and the reward; swap what fills it. <span class="scr">Eph 4 · the swept house</span></p>
+      </div></div>
+      
+      <div class="step"><div class="num"></div><div>
+        <h3>Name the counterfeit and the need under it</h3>
+        <p>Ask what the well is promising — rest? worth? control? safety? Bring <em>that</em> to the real source instead of fighting the surface behavior.</p>
+      </div></div>
+      
+      <div class="step"><div class="num"></div><div>
+        <h3>Confess in company, not in secret</h3>
+        <p>Shame metabolizes in isolation and dies in disclosure. This breaks the hide-then-relapse arc structurally. <span class="scr">James 5:16</span></p>
+      </div></div>
+      
+      <div class="step"><div class="num"></div><div>
+        <h3>Cultivate a stronger affection</h3>
+        <p>Beholding as the discipline — the gaze, not the grit. You’re changed by what you attend to and love, not by white-knuckling. <span class="scr">2 Cor 3:18 · John 15 abide</span></p>
+      </div></div>
+      
+      <div class="step"><div class="num"></div><div>
+        <h3>Receive before doing</h3>
+        <p>Keep Zacchaeus’s order: welcome first, fruit second. Reverse it and you’ve rebuilt the treadmill. <span class="scr">Luke 19</span></p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GAPS -->
+<section>
+  <div class="wrap reveal">
+    <div class="gaps">
+      <h2>The honest limits</h2>
+      <div class="gp"><p><b>The mechanism gap is real.</b> The theology says beholding transforms and the Spirit empowers — it doesn’t hand you a neuroscience of how received worth rewires a craving. Many who fully hold grace still relapse. Honest claim: grace changes the <em>terms</em> (removes shame fuel, swaps the source, reorders worth-before-behavior) more than it instantly wins the fight.</p></div>
+      <div class="gp"><p><b>Spiritual bypass is a live risk.</b> “Re-source to grace” can become a way to avoid the slow, practical work — sleep, therapy, repair, sometimes medication. If the language is letting you skip the means, it’s being misused.</p></div>
+      <div class="gp"><p><b>Is the loop ever fully over here? Unsettled.</b> Christians have argued for centuries whether Romans 7’s “wretched man” is the ongoing believer or the pre-Christian self. The practicals land differently depending on which way you read it. I can’t adjudicate that for you.</p></div>
+      <div class="gp"><p><b>Tradition-dependence.</b> The crisp “law = pure demand, works vs. grace” framing is most at home in Reformed/Lutheran Protestantism; other traditions would say it under-reads participation. This is <em>a</em> coherent reading, not the only faithful one.</p></div>
+      <div class="gp">
+        <p><b>One borrowed prop, flagged:</b> “ego depletion” — willpower as a draining battery — has largely failed to replicate since ~2015. The shame loop is real as lived experience; the fuel-tank metaphor is shaky. The “habit loop” model is useful pop-psychology, not settled science.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="serif" style="font-size:18px;font-style:italic;margin:0 0 14px">
+      “Whoever drinks the water I give them will never thirst.” — John 4:14
+    </p>
+    <p class="mono">A reading, not a verdict · Protestant/Pauline frame</p>
+    <p class="mono" style="margin-top:14px">Scripture quotations are taken from the Holy Bible, New International Version®, NIV®. Copyright © 1973, 1978, 1984, 2011 by <a href="https://www.biblica.com/permissions/" target="_blank" rel="noopener">Biblica, Inc.</a> Used by permission. All rights reserved worldwide.</p>
+  </div>
+</footer>
+
+<script>
+
+/* TRANSLATOR DATA */
+const ACTS=[
+ {i:"📱",t:"Endless scrolling",cue:"A lull — boredom, anxiety, the minute before sleep.",counterfeit:"Open the app; chase the next novel thing.",promises:"Connection, stimulation, escape.",need:"Real connection, rest, to feel less alone.",
+  loop:`Each hit almost lands; the loneliness comes back sharper after.`,
+  trap:`“Just delete the app / have more discipline” — willpower against a subconscious cue. Usually fails, adds shame.`,
+  grace:"Name it: connection or rest. Take it to a real well — a person, silence, prayer. Swap the routine; don’t only delete it."},
+ {i:"💼",t:"Overworking",cue:"A quiet moment; idleness feels like falling behind.",counterfeit:"More output, more tasks, more busy.",promises:"Worth, security, proof you’re enough.",need:"To be valued and secure regardless of output.",
+  loop:`Finishing never delivers the worth, so you re-earn it tomorrow. The works treadmill.`,
+  trap:`“Work harder so you’ll deserve rest” — same engine, productivity badge on.`,
+  grace:"Worth received before performance. Rest as gift, not reward — Sabbath as the anti-works act."},
+ {i:"🍫",t:"Stress eating",cue:"Stress, fatigue, evening, an unfelt feeling.",counterfeit:"Food as soothing — the quick warm hit.",promises:"Comfort, calm, a break.",need:"Actual rest and comfort; to feel the feeling.",
+  loop:`Comfort is brief, the stress untouched — now plus guilt, which is a fresh cue.`,
+  trap:`Diet willpower → slip → shame → eat → repeat. The textbook spiral.`,
+  grace:"Name the feeling, meet the real need (rest, comfort from God/another), give the cue a different routine."},
+ {i:"🙂",t:"People-pleasing",cue:"Fear of disapproval; love that has felt conditional.",counterfeit:"Say yes, perform, manage everyone’s mood.",promises:"Love, acceptance, belonging.",need:"To be loved unconditionally.",
+  loop:`Approval earned has to be re-earned; it never converts into secure love.`,
+  trap:`This is the Law applied to relationships — the elder brother’s “all these years I served you.”`,
+  grace:"Love as given, not earned. Identity secured outside everyone’s verdict."},
+ {i:"🛒",t:"Retail therapy",cue:"A bad day; a vague sense of lack; a store already open in your hand.",counterfeit:"Buying — the rush of anticipation and acquisition.",promises:"Control, a fresh start, status, worth.",need:"Agency, comfort, to feel okay about yourself.",
+  loop:`The wanting beats the having; the lack returns once the box arrives.`,
+  trap:`“Budget harder / more self-control” — still sourcing worth from the cart.`,
+  grace:"Name what the cart stands in for, and bring that lack to the source that actually fills it."},
+ {i:"📰",t:"Doomscrolling",cue:"Anxiety about the world; needing to feel on top of it.",counterfeit:"Consume more information.",promises:"Control, safety, preparedness.",need:"A peace you can’t manufacture by knowing more.",
+  loop:`More input raises the anxiety that drives more input.`,
+  trap:`“Just stay responsibly informed” — still sourcing peace from control.`,
+  grace:"Peace as received, not control-built. Trust is the exit from info-as-safety."},
+ {i:"📸",t:"Comparison",cue:"Someone’s highlight reel scrolls past.",counterfeit:"Measure yourself; then perform and curate.",promises:"A stable sense of worth via ranking.",need:"Secure, non-comparative worth.",
+  loop:`Ranking is unstable — someone’s always above. The Pharisee’s “not like other people.”`,
+  trap:`“Win the comparison / achieve more” — playing the game that is the trap.`,
+  grace:"Worth that isn’t ranked — the tax collector’s received verdict: justified, not measured."},
+ {i:"⏳",t:"Procrastinate + self-attack",cue:"A daunting task; fear of doing it badly.",counterfeit:"Avoid it, then beat yourself up about avoiding it.",promises:"Relief from the threat; an illusion that self-hatred = control.",need:"Safety to act imperfectly; worth that doesn’t ride on the outcome.",
+  loop:`Avoidance raises the stakes → more fear → more avoidance → shame. Romans 7 in miniature.`,
+  trap:`“Discipline yourself / hate yourself into action.”`,
+  grace:"No-condemnation as the ground that frees action — act from worth, not for it. (Rom 8:1)"}
+];
+const tiles=document.getElementById('tiles'),panelx=document.getElementById('panelx');
+function renderPanel(a){panelx.innerHTML=`
+  <div class="panelx-head"><span style="font-size:26px">${a.i}</span>
+    <span class="big">${a.t}</span><span class="sub">the same anatomy, your version</span></div>
+  <div class="rows">
+    <div class="cell cue"><div class="k">The cue</div><div class="v">${a.cue}</div></div>
+    <div class="cell counterfeit"><div class="k">The counterfeit routine</div><div class="v">${a.counterfeit}</div></div>
+    <div class="cell promises"><div class="k">What it promises</div><div class="v">${a.promises}</div></div>
+    <div class="cell need"><div class="k">The real need underneath</div><div class="v">${a.need}</div></div>
+    <div class="cell loop full"><div class="k">Why it loops</div><div class="v">${a.loop}</div></div>
+    <div class="cell trap full"><div class="k">The works-trap (“just stop”)</div><div class="v">${a.trap}</div></div>
+    <div class="cell grace"><div class="k">↗ Re-source it</div><div class="v">${a.grace}</div></div>
+  </div>`;}
+ACTS.forEach((a,idx)=>{const b=document.createElement('button');
+  b.className='tile'+(idx===0?' active':'');
+  b.innerHTML=`<span class="ti">${a.i}</span><span class="tl">${a.t}</span>`;
+  b.onclick=()=>{tiles.querySelectorAll('.tile').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderPanel(a);panelx.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  tiles.appendChild(b);});
+renderPanel(ACTS[0]);
+
+/* FLAWS DATA */
+const FLAWS=[
+ {i:"⚖️",t:"Perfectionism",cue:"A mistake, fear of failure, or a sense of personal insufficiency.",counterfeit:"Enforce rigid rules, over-prepare, and critical self-evaluation.",promises:"Control, safety from judgment, and proof of worthiness.",need:"Grace to be human, secure love that covers flaws, and rest.",
+  loop:`High standards breed anxiety ➔ small slip happens ➔ self-attack triggers ➔ fear of failure increases ➔ standards rise.`,
+  trap:`“Work harder to be flawless; have more discipline next time.” Willpower trying to solve standard-striving.`,
+  grace:"Worth received first, not earned by flawless output. Rest in being fully known and fully loved despite errors."},
+ {i:"🛡️",t:"Hyper-Independence",cue:"Vulnerability, needing help, or feeling weak/exposed.",counterfeit:"Refuse assistance, isolate, and do everything yourself.",promises:"Safety, absolute self-reliance, and avoidance of rejection.",need:"Community, support, and secure connection with others.",
+  loop:`Refusing help leads to burnout/exhaustion ➔ confirming the belief that 'no one is there' ➔ deeper self-reliance.`,
+  trap:`“I just need to be stronger and more capable.” Sourcing security entirely from self-sufficiency.`,
+  grace:"Accepting limits and dependence as a created gift. Admitting weakness is where real connection starts."},
+ {i:"🌋",t:"Control / Anger",cue:"Feeling powerless, threatened, or out-of-control.",counterfeit:"Outbursts, micromanaging, demanding compliance.",promises:"Immediate safety, correcting the wrong, dominance.",need:"Deep internal safety, peace, trust in a good Protector.",
+  loop:`Forcing compliance creates alienation and conflict ➔ the environment gets more chaotic ➔ safety drops ➔ anger increases.`,
+  trap:`“Suppress the anger through willpower; grit your teeth.” Management instead of re-sourcing.`,
+  grace:"Surrendering control of variables you cannot govern; finding security in a sovereign, loving Source."},
+ {i:"🥀",t:"Martyrdom / Resentment",cue:"Feeling unappreciated, invisible, or overlooked.",counterfeit:"Quiet over-serving, boundary neglect, passive-aggressive remarks.",promises:"Moral superiority, forcing others to appreciate you.",need:"Unconditional validation and feeling seen.",
+  loop:`Serving from deficit leads to exhaustion ➔ resentment builds and leaks out ➔ others pull away ➔ feeling even more unloved.`,
+  trap:`“Be nicer; repress the anger; double down on serving.” Willpower fueling the resentment treadmill.`,
+  grace:"Sourcing validation from received love first, letting go of the demand to control others' appraisal."},
+ {i:"🏰",t:"Defensiveness / Pride",cue:"Constructive feedback, criticism, or an exposed failure.",counterfeit:"Blaming others, rationalizing mistakes, counter-attacking.",promises:"Protecting self-image, maintaining authority or status.",need:"Security to be wrong without losing basic value.",
+  loop:`Deflection blocks correction/growth ➔ mistakes repeat ➔ more exposure threat ➔ defensiveness intensifies.`,
+  trap:`“Force myself to look humble; white-knuckle through critique.” Protecting the self-image by performing humility.`,
+  grace:"No condemnation means failure is safe to admit. Your worth is anchored, so critique is not a survival threat."},
+ {i:"🎭",t:"Approval Seeking",cue:"Fear of rejection or potential disapproval.",counterfeit:"Say yes to everything, morph to fit in, manage everyone's mood.",promises:"Safety, belonging, guarantee of love.",need:"Secure, unconditional acceptance.",
+  loop:`Approval earned must be re-earned tomorrow ➔ identity stays fragile ➔ dependency on validation grows.`,
+  trap:`“Just stop caring what people think.” Willpower trying to suppress a core relational hunger.`,
+  grace:"Identity is already settled outside the room. Loving others from a secure standing, not to obtain one."}
+];
+const flawTiles=document.getElementById('flaw-tiles'),flawPanelx=document.getElementById('flaw-panelx');
+function renderFlawPanel(a){flawPanelx.innerHTML=`
+  <div class="panelx-head"><span style="font-size:26px">${a.i}</span>
+    <span class="big">${a.t}</span><span class="sub">the character flaw loop, your version</span></div>
+  <div class="rows">
+    <div class="cell cue"><div class="k">The cue / trigger</div><div class="v">${a.cue}</div></div>
+    <div class="cell counterfeit"><div class="k">The counterfeit routine</div><div class="v">${a.counterfeit}</div></div>
+    <div class="cell promises"><div class="k">What it promises</div><div class="v">${a.promises}</div></div>
+    <div class="cell need"><div class="k">The real need underneath</div><div class="v">${a.need}</div></div>
+    <div class="cell loop full"><div class="k">Why it loops (reinforcing feedback)</div><div class="v">${a.loop}</div></div>
+    <div class="cell trap full"><div class="k">The works-trap (“just stop / try harder”)</div><div class="v">${a.trap}</div></div>
+    <div class="cell grace"><div class="k">↗ Re-source it (grace exit)</div><div class="v">${a.grace}</div></div>
+  </div>`;}
+FLAWS.forEach((a,idx)=>{const b=document.createElement('button');
+  b.className='tile'+(idx===0?' active':'');
+  b.innerHTML=`<span class="ti">${a.i}</span><span class="tl">${a.t}</span>`;
+  b.onclick=()=>{flawTiles.querySelectorAll('.tile').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderFlawPanel(a);flawPanelx.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  flawTiles.appendChild(b);});
+renderFlawPanel(FLAWS[0]);
+
+/* AXES DATA */
+const AXES=[
+ {i:"🤝",t:"Acceptance vs Rejection",cue:"Feeling isolated, left out, or standard-deficient.",counterfeit:"Morph personality, say yes constantly, perform to fit in.",promises:"Safety, absolute belonging, guaranteed value.",need:"Unconditional, secure love and relational rest.",
+  loop:`Earning acceptance is temporary ➔ identity stays fragile/insecure ➔ fear of rejection rises ➔ performance demand increases.`,
+  trap:`“Just love yourself / stop caring what others think.” Suppressing a core relational hunger with sheer willpower.`,
+  grace:"Belonging is given before you walk in the room. Love others from overflow, not to buy their verdict."},
+ {i:"🌪️",t:"Control vs Chaos",cue:"Powerlessness, vulnerability, randomness, or high stakes.",counterfeit:"Anxious micromanaging, resource hoarding, obsessive checking.",promises:"Total predictability, safety from failure, anxiety-relief.",need:"Deep internal safety, peace, and trust in a protector.",
+  loop:`Striving for control reveals your limitations ➔ anxiety spikes ➔ you double down on control/checking.`,
+  trap:`“Let go and stop worrying.” Forcing peace by ignoring reality.`,
+  grace:"Surrendering outcomes to a sovereign, good Source; finding peace in trust, not in absolute certainty."},
+ {i:"🌟",t:"Significance vs Insignificance",cue:"Anonymity, mediocrity, failure, or feeling forgotten.",counterfeit:"Workaholism, credentials-chasing, status-seeking, bragging.",promises:"Intrinsic value, status, proof that you matter.",need:"Secure worth that is entirely independent of output.",
+  loop:`Success is transient ➔ value is tied to your next win ➔ fear of failure grows ➔ striving intensifies.`,
+  trap:`“Just optimize your time; work harder to achieve significance.” Earning significance by exhausting yourself.`,
+  grace:"Your value is an objective gift, defined by the Source. Act from significance, not for significance."},
+ {i:"☕",t:"Comfort vs Suffering",cue:"Emotional pain, stress, boredom, or hard feelings.",counterfeit:"Numbing out (scrolling, eating, substances), procrastination.",promises:"Anesthetic relief, escape, instant gratification.",need:"Real comfort, rest, and hope in the middle of pain.",
+  loop:`Escape provides brief relief but leaves stress unsolved ➔ pressure builds ➔ anxiety rises ➔ numbing increases.`,
+  trap:`“Practice extreme asceticism / white-knuckle through the pain.” Fight the escape with pure grit.`,
+  grace:"Comfort that meets you in the suffering. Grieve and feel honestly, sustained by a source that holds you."},
+ {i:"🛡️",t:"Righteousness vs Condemnation",cue:"Guilt, moral slip, or feeling 'unclean' or bad.",counterfeit:"Scrupulosity, moral superiority, judging others' flaws.",promises:"Absolution, moral security, feeling clean.",need:"Pardon, clean conscience, standing before a standard.",
+  loop:`Focus on self-precision exposes more flaws ➔ guilt rises ➔ you judge others or add rules to feel clean.`,
+  trap:`“Be more moral / strictly adhere to the law.” Willpower trying to cleanse a stained conscience.`,
+  grace:"Imputed righteousness. Stand on 'no condemnation' first; actual goodness flows from a clean, secure heart."}
+];
+const axisTiles=document.getElementById('axis-tiles'),axisPanelx=document.getElementById('axis-panelx');
+function renderAxisPanel(a){axisPanelx.innerHTML=`
+  <div class="panelx-head"><span style="font-size:26px">${a.i}</span>
+    <span class="big">${a.t}</span><span class="sub">the identity axis loop, your version</span></div>
+  <div class="rows">
+    <div class="cell cue"><div class="k">The core desire / fear</div><div class="v">${a.cue}</div></div>
+    <div class="cell counterfeit"><div class="k">The counterfeit well</div><div class="v">${a.counterfeit}</div></div>
+    <div class="cell promises"><div class="k">What it promises</div><div class="v">${a.promises}</div></div>
+    <div class="cell need"><div class="k">The real need underneath</div><div class="v">${a.need}</div></div>
+    <div class="cell loop full"><div class="k">Why it loops (reinforcing feedback)</div><div class="v">${a.loop}</div></div>
+    <div class="cell trap full"><div class="k">The works-trap (“just stop / try harder”)</div><div class="v">${a.trap}</div></div>
+    <div class="cell grace"><div class="k">↗ Re-source it (grace exit)</div><div class="v">${a.grace}</div></div>
+  </div>`;}
+AXES.forEach((a,idx)=>{const b=document.createElement('button');
+  b.className='tile'+(idx===0?' active':'');
+  b.innerHTML=`<span class="ti">${a.i}</span><span class="tl">${a.t}</span>`;
+  b.onclick=()=>{axisTiles.querySelectorAll('.tile').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderAxisPanel(a);axisPanelx.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  axisTiles.appendChild(b);});
+renderAxisPanel(AXES[0]);
+
+/* LOOP TOGGLE & ANIMATION */
+const note=document.getElementById('loopNote'),ring=document.getElementById('ring'),
+ fA=document.getElementById('forceArrow'),fL=document.getElementById('forceLbl'),
+ gA=document.getElementById('graceArrow'),gL=document.getElementById('graceLbl'),
+ tgl=document.getElementById('loopToggle');
+const NOTES={
+ force:`<b>By force.</b> You attack the routine with willpower. But the loop is largely automatic, so effort mostly feeds the shame — and shame is itself a cue back into the counterfeit. The cure becomes the disease. <span class="tag text">Romans 7</span>`,
+ grace:`<b>By grace.</b> You don’t out-muscle the ring; you step out of it — taking the <em>real need</em> at the top to a source that actually fills it. The need stops feeding the counterfeit, so the loop loses its fuel.`
+};
+note.innerHTML=NOTES.force;
+
+// Animation Setup
+const loopPath = document.getElementById('loopPath');
+const gracePath = document.getElementById('gracePath');
+const pulse = document.getElementById('pulse');
+
+const loopLength = loopPath.getTotalLength();
+const graceLength = gracePath.getTotalLength();
+
+const animNodes = [
+  { id: 'node-need', x: 200, y: 75 },
+  { id: 'node-cue', x: 295, y: 130 },
+  { id: 'node-counterfeit', x: 295, y: 240 },
+  { id: 'node-relief', x: 200, y: 295 },
+  { id: 'node-returns', x: 105, y: 240 },
+  { id: 'node-shame', x: 105, y: 130 },
+  { id: 'node-resource', x: 448, y: 140 }
+];
+
+let animProgress = 0;
+let animMode = 'force'; // 'force' or 'grace'
+let lastTime = performance.now();
+let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+function animateLoop(time) {
+  if (prefersReducedMotion) {
+    pulse.setAttribute('cx', 200);
+    pulse.setAttribute('cy', 75);
+    pulse.setAttribute('r', 4.5);
+    return;
+  }
+  
+  const dt = time - lastTime;
+  lastTime = time;
+  
+  const duration = animMode === 'force' ? 7000 : 3500;
+  animProgress += dt / duration;
+  
+  let currentPath = loopPath;
+  let currentLength = loopLength;
+  
+  if (animMode === 'grace') {
+    currentPath = gracePath;
+    currentLength = graceLength;
+  }
+  
+  if (animProgress >= 1) {
+    if (animMode === 'force') {
+      animProgress %= 1;
+    } else {
+      animProgress = 0;
+    }
+  }
+  
+  const dist = animProgress * currentLength;
+  const pt = currentPath.getPointAtLength(dist);
+  
+  pulse.setAttribute('cx', pt.x);
+  pulse.setAttribute('cy', pt.y);
+  
+  let minNodeGlow = 0;
+  
+  animNodes.forEach(node => {
+    const el = document.getElementById(node.id);
+    if (!el) return;
+    
+    const dx = pt.x - node.x;
+    const dy = pt.y - node.y;
+    const d = Math.hypot(dx, dy);
+    
+    const maxDist = node.id === 'node-resource' ? 45 : 35;
+    let scale = 1;
+    let glow = 0;
+    
+    if (d < maxDist) {
+      const t = 1 - d / maxDist;
+      const ease = t * t * (3 - 2 * t); // smoothstep
+      scale = 1 + 0.3 * ease;
+      glow = ease;
+      
+      if (glow > minNodeGlow) {
+        minNodeGlow = glow;
+      }
+    }
+    
+    el.style.transform = `scale(${scale})`;
+    
+    const circle = el.querySelector('circle');
+    if (circle) {
+      const baseR = node.id === 'node-need' ? 6 : 5;
+      circle.setAttribute('r', baseR * (1 + 0.25 * glow));
+      if (glow > 0.1) {
+        circle.style.filter = `drop-shadow(0 0 ${4 * glow}px ${circle.getAttribute('fill')})`;
+      } else {
+        circle.style.filter = '';
+      }
+    }
+    
+    const text = el.querySelector('text');
+    if (text) {
+      text.style.fill = glow > 0.15 ? '#ffffff' : '';
+      text.style.fontWeight = glow > 0.4 ? 'bold' : '';
+    }
+  });
+  
+  const basePulseR = 4.5;
+  pulse.setAttribute('r', basePulseR + 3 * minNodeGlow);
+  
+  if (animMode === 'grace') {
+    pulse.setAttribute('fill', '#ecca8c');
+    pulse.style.filter = `drop-shadow(0 0 ${5 + 4 * minNodeGlow}px #ecca8c)`;
+    if (animProgress > 0.8) {
+      pulse.style.opacity = (1 - animProgress) / 0.2;
+    } else if (animProgress < 0.1) {
+      pulse.style.opacity = animProgress / 0.1;
+    } else {
+      pulse.style.opacity = '1';
+    }
+  } else {
+    pulse.setAttribute('fill', '#c9a8d4');
+    pulse.style.filter = `drop-shadow(0 0 ${4 + 4 * minNodeGlow}px #c9a8d4)`;
+    pulse.style.opacity = '1';
+  }
+  
+  requestAnimationFrame(animateLoop);
+}
+
+// Start loop animation
+requestAnimationFrame(time => {
+  lastTime = time;
+  requestAnimationFrame(animateLoop);
+});
+
+tgl.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;
+  [...tgl.children].forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  const grace=btn.dataset.mode==='grace';note.innerHTML=grace?NOTES.grace:NOTES.force;
+  tgl.classList.toggle('grace',grace);
+  
+  animMode = grace ? 'grace' : 'force';
+  animProgress = 0;
+  
+  gA.style.opacity=grace?'0.95':'0';
+  const nodeResource = document.getElementById('node-resource');
+  if (nodeResource) nodeResource.style.opacity = grace ? '1' : '0';
+  
+  fA.style.opacity=grace?'0.18':'0.9';fL.style.opacity=grace?'0.25':'1';
+  ring.setAttribute('stroke',grace?'#2f8a80':'#5b4a64');
+  gA.classList.toggle('gflow',grace);});
+
+// Listen to prefers-reduced-motion changes dynamically
+window.matchMedia('(prefers-reduced-motion:reduce)').addEventListener('change', e => {
+  prefersReducedMotion = e.matches;
+  if (!prefersReducedMotion) {
+    lastTime = performance.now();
+    requestAnimationFrame(animateLoop);
+  }
+});
+
+/* Respect reduced motion: pause all SMIL animations */
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  document.querySelectorAll('svg').forEach(s=>{try{s.pauseAnimations();}catch(e){}});
+}
+
+/* CASES */
+const CASES=[
+ {ref:"JOHN 4:1–26",title:"The woman at the well",pill:"the metaphor, literal",
+  body:`<p>She comes to a literal well at noon, alone — and has had five husbands, looking for in people what they couldn’t hold. Jesus offers “living water,” a spring that ends the daily trip. The whole page’s metaphor, acted out: counterfeit wells you keep returning to vs. a source that satisfies.</p>`},
+ {ref:"ROMANS 7:15–24",title:"The wretched man",pill:"willpower / shame loop",
+  body:`<p>The “I” who does the evil it doesn’t want and not the good it wants — then cries, “who will rescue me?” The loop in its purest scriptural form. The hinge is the next breath, Rom 8:1: <em>no condemnation</em> — shame fuel removed, source swapped. 7→8 is works→grace in two verses.</p>`},
+ {ref:"LUKE 15",title:"Both sons (prodigal & elder)",pill:"two cisterns",
+  body:`<p>The younger son is the obvious broken cistern — far country, counterfeit comfort, empty pods. The <em>elder</em> is the works cistern: “all these years I served you… yet you never gave me.” Religious and irreligious, both leaking, both far from the father — and the elder is angrier.</p>`},
+ {ref:"LUKE 18:9–14",title:"Pharisee & tax collector",pill:"works vs grace",
+  body:`<p>The Pharisee’s prayer is self-referential performance — “I fast, I tithe, I’m not like other people.” The tax collector simply receives mercy. The verdict is the grace move: <em>this</em> one went home justified. The comparison loop, named.</p>`},
+ {ref:"NUMBERS 11",title:"Israel craving Egypt",pill:"relapse to old comfort",
+  body:`<p>Freshly delivered by grace, they crave the fleshpots of Egypt — romanticizing slavery because it was <em>familiar</em>. The pull back to the old comfort behavior, dressed up as need.</p>`},
+ {ref:"JOHN 18 / 21",title:"Peter (vs Judas)",pill:"loop broken by grace",
+  body:`<p>Peter boasts in willpower (“though all fall away, I won’t”), fails three times, weeps. Restoration in John 21 is the tell: not “try harder” but three “do you love me?”s — identity re-sourced through relationship. Beside Judas: same failure, two ends — godly grief to life, worldly grief to death (2 Cor 7:10).</p>`},
+ {ref:"LUKE 19:1–10",title:"Zacchaeus",pill:"grace before works",
+  body:`<p>Jesus comes to his house <em>first</em>; only then does the generosity pour out. Fruit follows reception — it doesn’t earn it. The order the whole “practicals” section depends on.</p>`}
+];
+const cases=document.getElementById('cases');
+CASES.forEach(c=>{const d=document.createElement('div');d.className='case open';
+  d.innerHTML=`<button><span class="ref">${c.ref}</span><span class="title">${c.title}</span>
+    <span class="pill">${c.pill}</span><span class="chev">›</span></button>
+    <div class="body" style="max-height:none"><div class="body-inner">${c.body}</div></div>`;
+  const body=d.querySelector('.body');
+  d.querySelector('button').onclick=()=>{
+    if(body.style.maxHeight==='none'){
+      body.style.maxHeight=body.scrollHeight+'px';
+      body.offsetHeight; // force reflow
+    }
+    const open=d.classList.toggle('open');
+    body.style.maxHeight=open?body.scrollHeight+'px':'0';};
+  cases.appendChild(d);});
+
+/* REVEAL */
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
