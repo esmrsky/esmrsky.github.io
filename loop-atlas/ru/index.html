@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/loop-atlas/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/loop-atlas/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/loop-atlas/">
+<!-- lang-alt:end -->
+    <meta
+      name="description"
+      content="Интерактивный справочник-атлас по психологическим петлям обратной связи, циклам привычек и моделям мотивации.">
+    <title>Loop Atlas</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23d7ff45'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2311110f' stroke-width='4'/%3E%3Cpath d='M20 32h24M32 20v24' stroke='%2311110f' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="../styles.css?v=3">
+  <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Loop Atlas, наверх страницы">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="16"></circle>
+            <path d="M12 20h16M20 12v16"></path>
+            <path d="M28 14c4 5 3 13-2 17"></path>
+          </svg>
+        </span>
+        <span>Loop Atlas</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Разделы">
+        <a href="#map">Карта</a>
+        <a href="#library">Библиотека</a>
+        <a href="#examples">Примеры</a>
+        <a href="#matrix">Рычаги</a>
+        <a href="#integration">Интеграция</a>
+      </nav>
+      <div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/loop-atlas/" lang="en" hreflang="en" aria-current="false">EN</a><a class="lang-opt" href="/loop-atlas/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div>
+    </header>
+
+    <main id="top">
+      <section class="atlas-shell" id="map" aria-labelledby="page-title">
+        <div class="intro-panel">
+          <p class="eyebrow">Справочная система по психологии</p>
+          <h1 id="page-title">Петли обратной связи: почему люди начинают, бросают, повторяют и меняются.</h1>
+          <p class="lede">Чистая карта моделей мотивации, циклов привычек и систем саморегуляции — собранная так, чтобы замечать закономерности, а не заучивать.</p>
+
+          <form class="search-card" role="search">
+            <label for="searchInput">Поиск по атласу</label>
+            <div class="search-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m16 16 4 4"></path>
+              </svg>
+              <input id="searchInput" type="search" autocomplete="off" placeholder="сигнал, автономия, награда, совладание">
+            </div>
+          </form>
+
+          <div class="filter-wrap" aria-label="Группы моделей">
+            <button class="filter-chip is-active" type="button" data-filter="all"><span class="chip-dot all"></span>Все системы</button>
+            <button class="filter-chip" type="button" data-filter="Habit"><span class="chip-dot habit"></span>Привычка</button>
+            <button class="filter-chip" type="button" data-filter="Motivation"><span class="chip-dot motivation"></span>Мотивация</button>
+            <button class="filter-chip" type="button" data-filter="Feedback"><span class="chip-dot feedback"></span>Обратная связь</button>
+            <button class="filter-chip" type="button" data-filter="Cognition"><span class="chip-dot cognition"></span>Мышление</button>
+            <button class="filter-chip" type="button" data-filter="Social"><span class="chip-dot social"></span>Социальное</button>
+          </div>
+
+          <div class="stat-strip" aria-label="Статистика атласа">
+            <div>
+              <strong id="visibleCount">14</strong>
+              <span>моделей</span>
+            </div>
+            <div>
+              <strong>05</strong>
+              <span>семейств</span>
+            </div>
+            <div>
+              <strong>54</strong>
+              <span>рычагов</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="map-board" aria-label="Интерактивная карта моделей">
+          <div class="board-toolbar">
+            <div>
+              <p class="tiny-label">Карта систем</p>
+              <h2>Общие механизмы</h2>
+            </div>
+            <div class="icon-actions" aria-label="Действия с картой">
+              <button class="icon-button" id="traceButton" type="button" aria-label="Пройти по связанным моделям" data-tooltip="Пройти по связанным моделям">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12h9"></path>
+                  <path d="m10 8 4 4-4 4"></path>
+                  <path d="M20 5v5a6 6 0 0 1-6 6h-1"></path>
+                </svg>
+              </button>
+              <button class="icon-button" id="resetButton" type="button" aria-label="Сбросить выбор" data-tooltip="Сбросить выбор">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                  <path d="M3 4v6h6"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="map-stage">
+            <svg id="loopMap" class="loop-map" viewBox="0 0 1120 760" role="img" aria-label="Кликабельная карта психологических моделей">
+              <defs>
+                <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#141414" flood-opacity=".12"></feDropShadow>
+                </filter>
+              </defs>
+              <g id="edgeLayer"></g>
+              <g id="nodeLayer"></g>
+            </svg>
+          </div>
+
+          <aside class="detail-panel" aria-live="polite">
+            <div class="detail-kicker">
+              <span id="detailGroupDot" class="group-dot"></span>
+              <span id="detailGroup">Habit</span>
+            </div>
+            <h2 id="detailTitle">Habit Loop</h2>
+            <p id="detailSummary"></p>
+            <div class="detail-meta" id="detailMeta" aria-label="Сведения о модели"></div>
+            <div class="loop-chain" id="detailChain" aria-label="Компоненты петли"></div>
+
+            <div class="lens-selector" role="tablist" aria-label="Линза анализа">
+              <button class="lens-btn is-active" id="lens-psych" type="button" role="tab" aria-selected="true" aria-controls="practice-stack">Психология</button>
+              <button class="lens-btn" id="lens-theo" type="button" role="tab" aria-selected="false" aria-controls="integration-stack">Богословие и нейронаука</button>
+            </div>
+
+            <div class="integration-stack" id="integration-stack" style="display: none;">
+              <div class="practice-card is-primary" style="border-left-color: var(--coral);">
+                <span class="mini-heading">Духовная цель (телос)</span>
+                <p id="detailTelos" style="font-weight: 600;"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Биологический субстрат</span>
+                <p id="detailSubstrate" style="font-family: var(--mono); font-size: 0.85rem; color: var(--muted);"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Богословская интеграция</span>
+                <p id="detailTheology"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Созерцательная практика</span>
+                <p id="detailPractice" style="border-left-color: var(--mint);"></p>
+              </div>
+            </div>
+
+            <div class="practice-stack" id="practice-stack" data-group="Habit">
+              <div class="practice-card is-primary">
+                <span class="mini-heading">Лучше всего подходит</span>
+                <p id="detailBestFor"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Пример из жизни</span>
+                <p id="detailSituation"></p>
+                <p id="detailExampleLoop"></p>
+              </div>
+              <div class="practice-card">
+                <span class="mini-heading">Первый шаг</span>
+                <p id="detailFirstMove"></p>
+              </div>
+            </div>
+            <div class="detail-grid">
+              <div>
+                <span class="mini-heading">Рычаги вмешательства</span>
+                <ul id="detailLevers"></ul>
+              </div>
+              <div>
+                <span class="mini-heading">Осторожно</span>
+                <p id="detailCaution"></p>
+              </div>
+            </div>
+            <div class="related-panel">
+              <span class="mini-heading">Связанные модели</span>
+              <div id="detailRelated" class="related-list"></div>
+            </div>
+          </aside>
+        </section>
+      </section>
+
+      <section class="library-section" id="library" aria-labelledby="library-title">
+        <div class="section-heading">
+          <p class="eyebrow">Справочная библиотека</p>
+          <h2 id="library-title">Модели — это линзы, а не законы.</h2>
+          <p>Каждая карточка выделяет самую маленькую полезную петлю: сигнал, интерпретацию, действие, обратную связь и условия среды, которые поддерживают цикл.</p>
+        </div>
+        <div class="model-grid" id="modelGrid"></div>
+      </section>
+
+      <section class="examples-section" id="examples" aria-labelledby="examples-title">
+        <div class="section-heading">
+          <p class="eyebrow">Примеры из практики</p>
+          <h2 id="examples-title">Превратить запутанную петлю в первый шаг.</h2>
+          <p>Выбери знакомый паттерн — и увидишь, какие модели проясняют петлю, где цикл подкрепляется и что попробовать, прежде чем придумывать целую программу.</p>
+        </div>
+        <div class="scenario-layout">
+          <div class="scenario-rail" id="scenarioRail" aria-label="Примеры сценариев"></div>
+          <article class="scenario-panel" id="scenarioPanel" aria-live="polite">
+            <div>
+              <p class="tiny-label">Сценарий</p>
+              <h3 id="scenarioTitle"></h3>
+              <p id="scenarioSetup"></p>
+            </div>
+            <div class="scenario-flow" id="scenarioFlow" aria-label="Петля сценария"></div>
+            <div class="scenario-columns">
+              <div>
+                <span class="mini-heading">Полезные линзы</span>
+                <div class="scenario-models" id="scenarioModels"></div>
+              </div>
+              <div>
+                <span class="mini-heading">Что попробовать</span>
+                <ul id="scenarioMoves"></ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="matrix-section" id="matrix" aria-labelledby="matrix-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Матрица вмешательств</p>
+          <h2 id="matrix-title">Выбери рычаг, который подходит к петле.</h2>
+        </div>
+        <div class="lever-matrix" id="leverMatrix"></div>
+      </section>
+
+<!-- INTEGRATION: THEOLOGY & NEUROBIOLOGY -->
+<section class="move integration" id="integration">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Интеграция · Богословие и нейробиология</div>
+      <h2>Биология <span class="glyph">покоя и желания.</span></h2>
+      <p class="lede">Наш разум — не только мыслительная машина, а тело — не только механизм выживания. Христианский призыв к вниманию, преображению привычек, цели и покою напрямую ложится на нашу нейробиологическую архитектуру. <b>Созерцание — это физическая дисциплина.</b></p>
+    </div>
+
+    <!-- TABS NAVIGATION -->
+    <div class="tabs-nav" role="tablist" aria-label="Линзы интеграции">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-attention" id="btn-attention">Внимание и фокус</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-habit" id="btn-habit">Привычка и литургия</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-purpose" id="btn-purpose">Цель и поиск</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-rest" id="btn-rest">Субботний покой и игра</button>
+    </div>
+
+    <!-- TAB CONTENTS -->
+    <div class="tab-contents">
+      <!-- TAB 1: ATTENTION -->
+      <div class="tab-content active" id="tab-attention" role="tabpanel" aria-labelledby="btn-attention">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Практика</span>
+            <p><strong>Центрирующая молитва и священное слово:</strong> Сидеть в тихой отдаче и использовать одно слово (например, <em>Авва</em>, <em>Тишина</em>, <em>Иисус</em>) как простой якорь. Когда приходят мысли, практикующий не вступает с ними в разговор, а мягко возвращается к слову и заново направляет волю.</p>
+            <span class="cite">Облако неведения (XIV век)</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Данные</span>
+            <p><strong>Активность DMN и TPN:</strong> Сеть пассивного режима (DMN: медиальная префронтальная кора, задняя поясная кора, предклинье) отвечает за внутренний монолог и тревогу. Созерцательная молитва снижает активность этих узлов, а связь между префронтальными центрами внимания (дорсолатеральная префронтальная кора) и задней поясной корой усиливается — так тренируется автоматический, непредвзятый исполнительный контроль.</p>
+            <span class="cite">Brewer et al., PNAS (2011)</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Концепция</span>
+            <p><strong>Апофатическое облако:</strong> Гиперактивная сеть пассивного режима — нейробиологический след «нарративного я», в центре которого эго. Тихое апофатическое созерцание действует как физиологическое «облако забвения»: оно успокаивает самореферентные петли и освобождает место для единения с Богом.</p>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE MODEL: ATTENTIONAL HINGE -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Интерактивная модель: шарнир внимания</h4>
+            <p>Нажимай на переключатели и смотри, как тихая центрирующая молитва переводит нейронную активность из руминативных петель сети пассивного режима (DMN) в восприимчивую сеть выполнения задач (TPN).</p>
+          </div>
+          <div class="visual-attention-layout">
+            <div class="visual-hinge-controls">
+              <button class="hinge-btn active" id="hinge-dmn" type="button">Активная руминация (DMN)</button>
+              <button class="hinge-btn" id="hinge-tpn" type="button">Тихое созерцание (TPN)</button>
+            </div>
+            <div class="visual-hinge-svg-container">
+              <svg viewBox="0 0 500 240" class="hinge-svg">
+                <path d="M50 120 C50 48, 150 32, 250 32 C350 32, 450 48, 450 120 C450 192, 380 208, 300 208 C260 208, 240 224, 200 224 C150 224, 50 192, 50 120 Z" class="brain-contour" fill="none" stroke="var(--hair-2)" stroke-width="2" stroke-dasharray="4 4" />
+                
+                <path d="M120 100 L380 120" id="path-dmn" class="connection-line active" stroke="var(--ember-dim)" stroke-width="3" />
+                <path d="M260 80 L350 160" id="path-tpn" class="connection-line" stroke="var(--cream-dim)" stroke-width="3" stroke-dasharray="5 5" />
+                
+                <g class="brain-node active" id="node-mpfc">
+                  <circle cx="120" cy="100" r="16" class="node-outer" fill="var(--raise)" stroke="var(--ember)" stroke-width="2" />
+                  <circle cx="120" cy="100" r="6" class="node-inner" fill="var(--ember)" />
+                  <text x="120" y="132" class="node-txt" text-anchor="middle">Медиальная ПФК</text>
+                </g>
+                <g class="brain-node active" id="node-pcc">
+                  <circle cx="380" cy="120" r="16" class="node-outer" fill="var(--raise)" stroke="var(--ember)" stroke-width="2" />
+                  <circle cx="380" cy="120" r="6" class="node-inner" fill="var(--ember)" />
+                  <text x="380" y="152" class="node-txt" text-anchor="middle">ЗПК / предклинье</text>
+                </g>
+                
+                <g class="brain-node tpn-node" id="node-dlpfc">
+                  <circle cx="260" cy="80" r="16" class="node-outer" fill="var(--raise)" stroke="var(--hair-2)" stroke-width="2" />
+                  <circle cx="260" cy="80" r="6" class="node-inner" fill="var(--cream-dim)" />
+                  <text x="260" y="60" class="node-txt" text-anchor="middle">Дорсолатеральная ПФК</text>
+                </g>
+                <g class="brain-node tpn-node" id="node-insula">
+                  <circle cx="350" cy="160" r="16" class="node-outer" fill="var(--raise)" stroke="var(--hair-2)" stroke-width="2" />
+                  <circle cx="350" cy="160" r="6" class="node-inner" fill="var(--cream-dim)" />
+                  <text x="350" y="192" class="node-txt" text-anchor="middle">Островок</text>
+                </g>
+              </svg>
+            </div>
+            <div class="visual-hinge-description" id="hinge-desc">
+              <strong>Narrative Rumination Loop Active:</strong> Energy moves continuously between the Medial Prefrontal Cortex (mPFC) and the Posterior Cingulate Cortex (PCC). The brain compiles histories, anticipates threats, and maintains self-defensive stories, generating cortisol.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: HABIT -->
+      <div class="tab-content" id="tab-habit" role="tabpanel" aria-labelledby="btn-habit">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Практика</span>
+            <p><strong>Структурированная литургия и телесные позы:</strong> Физические ритмы суточного круга молитв (утренняя и вечерняя молитва, коленопреклонение, пение, дыхание) превращают духовные намерения в повторяющиеся мышечные рефлексы и обходят когнитивные колебания.</p>
+            <span class="cite">Суточный круг молитв (традиционные ритмы)</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Данные</span>
+            <p><strong>Стриатум и миелинизация синапсов:</strong> Повторение телесной последовательности автоматизирует действие в базальных ганглиях (дорсальный стриатум): сложные рутины сворачиваются в единые нейронные команды. Повторные разряды запускают обёртывание синапсов миелином, и сигнал идёт в 100 раз быстрее.</p>
+            <span class="cite">Закон Хебба и стриарный чанкинг</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Концепция</span>
+            <p><strong>Литургическое животное:</strong> Нас формируют те рутины, которые мы телесно практикуем. Традиционные литургии веры работают как физические контрстратегии: они переносят богословские истины из хрупкой сознательной префронтальной коры в автоматические инстинкты стриатума.</p>
+            <span class="cite">James K.A. Smith, Desiring the Kingdom</span>
+          </div>
+        </div>
+
+        <!-- MODEL 2: LITURGICAL VS COUNTERFEIT LOOP -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Сравнение: культурный захват и литургическое перенаправление</h4>
+            <p>Сравни, как пассивные культурные петли перехватывают стриарные системы «сигнал — рутина — награда» и как деятельные литургии веры выстраивают телесную устойчивость.</p>
+          </div>
+          <div class="visual-habit-layout">
+            <div class="habit-loop-box hijacked">
+              <h5>Компульсивная петля (перехваченная)</h5>
+              <div class="loop-graphic-box">
+                <svg viewBox="0 0 200 120" class="mini-loop-svg">
+                  <path d="M 30,60 A 40,40 0 1,1 170,60 A 40,40 0 1,1 30,60" fill="none" stroke="var(--ember-dim)" stroke-width="2" stroke-dasharray="3 3"/>
+                  <circle cx="100" cy="20" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="140" cy="60" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="100" cy="100" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="60" cy="60" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <text x="100" y="24" text-anchor="middle" font-size="8" fill="var(--cream)">СИГНАЛ</text>
+                  <text x="140" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">РУТИНА</text>
+                  <text x="100" y="104" text-anchor="middle" font-size="8" fill="var(--cream)">НАГРАДА</text>
+                  <text x="60" y="64" text-anchor="middle" font-size="7" fill="var(--ember)">ГЕДОНИЯ</text>
+                </svg>
+              </div>
+              <ul class="habit-steps-list">
+                <li><strong>Сигнал:</strong> Тревога, скука или звук уведомления.</li>
+                <li><strong>Рутина:</strong> Компульсивная прокрутка ленты (на автомате).</li>
+                <li><strong>Награда:</strong> Предвкушающий всплеск дофамина, который быстро спадает.</li>
+                <li><strong>Долгосрочно:</strong> Снижение чувствительности рецепторов и рост базовой тревожности.</li>
+              </ul>
+            </div>
+            
+            <div class="habit-loop-box liturgical">
+              <h5>Освящающая петля (литургическая)</h5>
+              <div class="loop-graphic-box">
+                <svg viewBox="0 0 200 120" class="mini-loop-svg">
+                  <path d="M 30,60 A 40,40 0 1,1 170,60 A 40,40 0 1,1 30,60" fill="none" stroke="var(--cream-dim)" stroke-width="2" />
+                  <circle cx="100" cy="20" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="140" cy="60" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="100" cy="100" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="60" cy="60" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <text x="100" y="24" text-anchor="middle" font-size="8" fill="var(--cream)">СИГНАЛ</text>
+                  <text x="140" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">РУТИНА</text>
+                  <text x="100" y="104" text-anchor="middle" font-size="8" fill="var(--cream)">НАГРАДА</text>
+                  <text x="60" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">LTP</text>
+                </svg>
+              </div>
+              <ul class="habit-steps-list">
+                <li><strong>Сигнал:</strong> Восходящее солнце, часовой звон или телесное напряжение.</li>
+                <li><strong>Рутина:</strong> Выравнивание позы, чтение молитвословия, дыхание.</li>
+                <li><strong>Награда:</strong> Выброс серотонина, физическое успокоение, чувство безопасности.</li>
+                <li><strong>Долгосрочно:</strong> Долговременная потенциация (LTP) спокойных рефлексов.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PURPOSE -->
+      <div class="tab-content" id="tab-purpose" role="tabpanel" aria-labelledby="btn-purpose">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Практика</span>
+            <p><strong>Призвание и игнатианское различение:</strong> Проверять выбор по правилам различения духов. Растить «духовное утешение» (глубокую радость и мир), а не «духовное запустение» (мимолётное одобрение, за которым следует тревога).</p>
+            <span class="cite">Игнатий Лойола, «Духовные упражнения»</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Данные</span>
+            <p><strong>Дофаминовый поиск (SEEKING) и серотонин:</strong> Мезолимбическая система поиска (вентральная покрышка → прилежащее ядро) питает погоню, а не удовлетворение. Достижение временных целей оборачивается падением дофамина (гедоническая беговая дорожка). Серотониновые пути дают глубокое чувство безопасности в отношениях и уравновешивают поиск довольством.</p>
+            <span class="cite">Panksepp, Affective Neuroscience (1998)</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Концепция</span>
+            <p><strong>Беспокойное сердце и теозис:</strong> Мозг структурно приспосабливается ко всем конечным наградам, и потому постоянное физическое насыщение невозможно. Дофаминовый путь поиска создан для бесконечного. Призвание и <em>теозис</em> (единение с Богом) утоляют это бесконечное стремление.</p>
+            <span class="cite">Августин Гиппонский, «Исповедь»</span>
+          </div>
+        </div>
+
+        <!-- MODEL 3: ALIGNMENT TABLE -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Матрица нейрохимических соответствий</h4>
+            <p>Наведи курсор на строку, чтобы подсветить глубокие физиологические и богословские связи между нейронными системами, движущими силами и практиками.</p>
+          </div>
+          <div class="integration-table-wrapper">
+            <table class="neuro-table">
+              <thead>
+                <tr>
+                  <th>Нейронная структура</th>
+                  <th>Химический драйвер</th>
+                  <th>Богословское понятие</th>
+                  <th>Созерцательная практика</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-row">
+                  <td><strong>Сеть пассивного режима</strong><br><span class="tbl-subtext">медиальная префронтальная кора, задняя поясная кора, предклинье</span></td>
+                  <td>Глутамат / фоновая активность</td>
+                  <td>Эгоцентричный нарратив / «ветхий человек»</td>
+                  <td>Апофатическая тихая центрирующая молитва</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Базальные ганглии</strong><br><span class="tbl-subtext">Дорсальный стриатум</span></td>
+                  <td>Дофамин (предвкушающий сигнал)</td>
+                  <td>Литургическая любовь (<em>pondus</em> по Августину)</td>
+                  <td>Телесная литургия, коленопреклонение, суточный круг молитв</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Мезолимбический путь</strong><br><span class="tbl-subtext">вентральная покрышка, прилежащее ядро</span></td>
+                  <td>Дофамин (система поиска)</td>
+                  <td>Беспокойное сердце / трансцендентное стремление</td>
+                  <td>Согласование с призванием и игнатианское различение</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Млекопитающая система ИГРЫ (PLAY)</strong><br><span class="tbl-subtext">околоводопроводное серое вещество, таламус</span></td>
+                  <td>Эндорфины и окситоцин</td>
+                  <td>Святилище субботы / <em>Deus ludens</em> (играющий Бог)</td>
+                  <td>Субботний покой, общие трапезы-праздники, игра</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: REST -->
+      <div class="tab-content" id="tab-rest" role="tabpanel" aria-labelledby="btn-rest">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Практика</span>
+            <p><strong>Соблюдение субботы и эутрапелия:</strong> Целых 24 часа сознательно не заниматься торговлей, подсчётами и погоней за результатом. Растить добродетель <em>эутрапелии</em> (изящной, лёгкой игры) — напоминая уму, что творение — дар, которым нужно наслаждаться, а не эксплуатировать.</p>
+            <span class="cite">Заповедь о субботе · добродетель эутрапелии</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Данные</span>
+            <p><strong>Подкорковые контуры ИГРЫ и BDNF:</strong> Ощущение безопасности отключает реакцию угрозы (страх и ярость) и позволяет включиться подкорковым путям игры. Игра высвобождает эндорфины, снижает кортизол и запускает выброс BDNF (нейротрофического фактора мозга) в префронтальной коре, что поддерживает пластичность мозга.</p>
+            <span class="cite">Jaak Panksepp, Affective Neuroscience</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Концепция</span>
+            <p><strong>Святилище во времени:</strong> Суббота — это литургическое включение контуров безопасности. Прекращая усилия ради выживания, мы создаём еженедельное святилище, где мозг переходит от управления угрозой к радости в отношениях. Творение переживается как игра, а не как сырьё.</p>
+            <span class="cite">Abraham Joshua Heschel, The Sabbath</span>
+          </div>
+        </div>
+
+        <!-- MODEL 4: PLAY SPECTURM SLIDER -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Интерактивный симулятор: спектр субботы и игры</h4>
+            <p>Двигай ползунок и смотри, как нервная система переходит от угрозы и гонки будней к глубокому неврологическому покою субботней безопасности.</p>
+          </div>
+          <div class="visual-slider-layout" id="slider-card-box">
+            <div class="slider-control-row">
+              <span class="slider-side-lbl threat">Угроза и гонка</span>
+              <input type="range" min="0" max="100" value="0" class="spectrum-range-slider" id="spectrum-slider" aria-label="Ползунок субботнего покоя">
+              <span class="slider-side-lbl rest">Радость субботы</span>
+            </div>
+            
+            <div class="slider-metrics-grid">
+              <div class="metric-card" id="metric-neuro">
+                <span class="mini-heading">Состояние нервной системы</span>
+                <p class="metric-val" id="val-state">Hyperactive Threat Loop</p>
+                <p class="metric-sub" id="val-brain">High Amygdala &amp; Cortisol levels</p>
+              </div>
+              <div class="metric-card" id="metric-focus">
+                <span class="mini-heading">Главный фокус</span>
+                <p class="metric-val" id="val-focus">Control &amp; Accumulation</p>
+                <p class="metric-sub" id="val-drive">Dopamine seeking / hedonic chasing</p>
+              </div>
+              <div class="metric-card" id="metric-outcome">
+                <span class="mini-heading">Неврологический итог</span>
+                <p class="metric-val" id="val-outcome">Chronic Stiffening</p>
+                <p class="metric-sub" id="val-myelin">Reinforcing fear-based superhighways</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section class="sources-section" aria-labelledby="sources-title">
+        <div>
+          <p class="eyebrow">Избранные источники</p>
+          <h2 id="sources-title">Опираемся на проверенные теории.</h2>
+        </div>
+        <ul>
+          <li><a href="https://selfdeterminationtheory.org/theory/">Обзор теории самодетерминации</a></li>
+          <li><a href="https://www.behaviourchangewheel.com/about-wheel">Колесо изменения поведения и модель COM-B: обзор</a></li>
+          <li><a href="https://www.behaviormodel.org/">Поведенческая модель Фогга</a></li>
+          <li><a href="https://doi.org/10.1037/0033-295X.84.2.191">Самоэффективность и основы ожиданий</a></li>
+          <li><a href="https://doi.org/10.1177/001872675400700202">Теория социального сравнения</a></li>
+          <li><a href="https://doi.org/10.1037/0022-3514.68.3.518">Теория социометра</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      <a class="home" href="/ru/">← Все проекты</a>
+    </footer>
+
+    <template id="modelCardTemplate">
+      <article class="model-card">
+        <button class="card-hit" type="button">
+          <span class="card-icon"></span>
+          <span class="card-group"></span>
+          <strong></strong>
+          <span class="card-summary"></span>
+          <span class="card-tags"></span>
+        </button>
+      </article>
+    </template>
+
+    <script src="../script.js?v=3"></script>
+  <script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
