@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/Fake-Love/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/Fake-Love/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/Fake-Love/">
+<!-- lang-alt:end -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F9F6F0'/%3E%3Cpath d='M32 55S9 40 9 25a12.5 12.5 0 0 1 23-7 12.5 12.5 0 0 1 23 7c0 15-23 30-23 30Z' fill='%23F3651C'/%3E%3Cpath d='M32 17l-5 13 8 5-5 14' fill='none' stroke='%23F9F6F0' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Цикл подделок: любовь, переосмысленная через литературу</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1C1B19;
+    --cream: #F9F6F0;
+    --cream-2: #EFECE6;
+    --orange: #F3651C;
+    --muted: #4E483C; /* WCAG AA Contrast Compliant (>4.5:1) */
+    --line: rgba(28, 27, 25, 0.08);
+    --line-strong: rgba(28, 27, 25, 0.18);
+    --cream-soft: rgba(249, 246, 240, 0.65);
+    --cream-line: rgba(249, 246, 240, 0.15);
+    --card-shadow: 0 4px 16px rgba(28, 27, 25, 0.03);
+    --focus-ring: 2px solid var(--orange);
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --t1: .2s;
+    --t2: .35s;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Instrument Sans", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+  .mono { font-family: "JetBrains Mono", monospace; }
+  
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero { padding: 80px 0 48px; border-bottom: 1px solid var(--line); }
+  .hero .eyebrow { margin-bottom: 24px; }
+  .hero h1 {
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: clamp(38px, 6.8vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em { font-style: italic; font-weight: 400; color: var(--orange); }
+  
+  .thesis {
+    margin-top: 30px;
+    max-width: 68ch;
+    font-size: clamp(17px, 2.3vw, 20px);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .thesis b { font-weight: 600; }
+  .thesis i { font-style: italic; color: var(--orange); }
+
+  /* ---------- THE MEASURING STICK ---------- */
+  .measuring-stick {
+    margin-top: 36px;
+    padding: 24px 28px;
+    background: var(--cream-2);
+    border-left: 3px solid var(--orange);
+    border-radius: 2px;
+  }
+  .stick-title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .stick-quote {
+    font-family: "Fraunces", serif;
+    font-size: 19px;
+    line-height: 1.45;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .stick-author {
+    display: block;
+    margin-top: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- VIEW CONTROLS & LENSBAR ---------- */
+  .control-section {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+    backdrop-filter: blur(8px);
+    background: rgba(249, 246, 240, 0.94);
+  }
+  #lens-toggle-container { transition: opacity var(--t1) var(--ease), visibility var(--t1) var(--ease); }
+  .control-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .control-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .btn-group {
+    display: flex;
+    background: rgba(28, 27, 25, 0.05);
+    padding: 3px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  .toggle-btn {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease);
+  }
+  .toggle-btn:hover {
+    color: var(--ink);
+  }
+  /* Russian lens labels run longer: on the narrowest phones the label sits above its buttons */
+  @media (max-width: 360px) {
+    :lang(ru) .control-group { flex-wrap: wrap; row-gap: 6px; }
+  }
+  /* Long Russian words in the two-column answers must not push the grid wider than the panel */
+  :lang(ru) .diag-opts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :lang(ru) .diag-btn { hyphens: auto; overflow-wrap: break-word; }
+  .toggle-btn[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .toggle-btn:focus-visible {
+    outline: var(--focus-ring);
+  }
+
+  /* ---------- PANELS MANAGEMENT ---------- */
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
+
+  /* ---------- VIEW 1: GUIDED VIEW ---------- */
+  .section-intro {
+    padding: 48px 0 20px;
+    max-width: 60ch;
+  }
+  .section-intro h2 {
+    font-family: "Fraunces", serif;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .section-intro p {
+    color: var(--muted);
+    font-size: 15.5px;
+  }
+
+  /* FAMILY I: EXPANDABLE CARDS GRID */
+  /* FAMILY I: EXPANDABLE CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 16px 0 48px;
+  }
+  @media (max-width: 900px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+  .feeling-card {
+    background: var(--cream-2);
+    border: 1px solid var(--line-strong);
+    padding: 24px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--card-shadow);
+    transition: transform var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
+    height: auto;
+  }
+  .feeling-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 27, 25, 0.06);
+  }
+  .feeling-card:last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+  @media (max-width: 900px) {
+    .feeling-card:last-child:nth-child(odd) {
+      grid-column: span 1;
+    }
+  }
+  .feeling-card .c-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .feeling-card .c-driver {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    background: rgba(243, 101, 28, 0.08);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .feeling-card h3 {
+    font-family: "Fraunces", serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+  .feeling-card .c-sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    margin-bottom: 16px;
+  }
+  .feeling-card .c-sensation-block,
+  .feeling-card .c-reality-block,
+  .feeling-card .c-example-block {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .feeling-card .c-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .feeling-card .c-text {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .feeling-card .c-text.italic {
+    font-style: italic;
+  }
+  .feeling-card .c-lit {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: auto;
+    padding-top: 20px;
+    display: block;
+  }
+
+  /* FAMILY II: CSS GRID ACCORDIONS */
+  .accordion-wrap {
+    border-top: 1px solid var(--line);
+    margin-bottom: 64px;
+  }
+  .entry { border-bottom: 1px solid var(--line); }
+  .entry-head {
+    width: 100%; display: flex; align-items: baseline; gap: 20px;
+    background: transparent; border: 0; cursor: pointer; text-align: left;
+    padding: 28px 0; color: var(--ink);
+  }
+  .entry-head:focus-visible { outline: var(--focus-ring); outline-offset: 4px; }
+  .numeral {
+    font-family: "Fraunces", serif; font-weight: 400; font-size: 22px;
+    color: var(--muted); min-width: 38px; font-feature-settings: "lnum";
+    line-height: 1; padding-top: 4px;
+  }
+  .entry-titles { flex: 1; min-width: 0; }
+  .entry-name {
+    font-family: "Fraunces", serif; font-weight: 500;
+    font-size: clamp(23px, 3.8vw, 32px); line-height: 1.1; letter-spacing: -0.01em;
+  }
+  .entry-mech {
+    margin-top: 6px; font-family: "JetBrains Mono", monospace; font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange);
+  }
+  .chev {
+    align-self: center; flex-shrink: 0; width: 20px; height: 20px; color: var(--muted);
+    transition: transform var(--t2) var(--ease), color var(--t2) var(--ease);
+  }
+  .entry-head[aria-expanded="true"] .chev { transform: rotate(180deg); color: var(--ink); }
+
+  /* Fully CSS-native Accordion Transition using Grid */
+  .panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--t2) var(--ease);
+  }
+  .panel.open {
+    grid-template-rows: 1fr;
+  }
+  .panel-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding-left: 58px;
+  }
+  @media(max-width: 768px) { .panel-inner { padding-left: 0; } }
+
+  /* Grounded details */
+  .ground { padding: 4px 0 32px; }
+  .ground .glabel {
+    font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .ground .glabel::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  
+  .row { display: grid; grid-template-columns: 118px 1fr; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .row:first-of-type { border-top: 0; }
+  .row dt {
+    font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); padding-top: 3px;
+  }
+  .row dd { font-size: 15px; line-height: 1.5; color: var(--ink); }
+  .row.tell dd { font-weight: 600; }
+  .row.echo dd { color: var(--muted); font-style: italic; }
+  @media(max-width: 540px) {
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .row dt { padding-top: 0; }
+  }
+
+  /* Interactive read block */
+  .read {
+    margin-top: 6px; background: var(--ink); color: var(--cream);
+    border-radius: 2px; padding: 28px 28px 32px;
+    margin-bottom: 36px;
+  }
+  .read .rlabel {
+    font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange); margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+  }
+  .read .rlabel::after { content: ""; flex: 1; height: 1px; background: var(--cream-line); }
+  
+  .idol { font-family: "Fraunces", serif; font-size: clamp(18px, 2.5vw, 22px); line-height: 1.4; font-weight: 400; color: var(--cream); }
+  .idol b { color: var(--orange); font-weight: 500; }  /* Loop horizontal (desktop) / vertical (mobile) progress display */
+  .loop {
+    margin-top: 24px;
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 12px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .loop::-webkit-scrollbar {
+    display: none;
+  }
+  .beat {
+    flex: 1 1 0;
+    min-width: 130px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .beat .bk { font-family: "JetBrains Mono", monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-soft); display: block; margin-bottom: 6px; }
+  .beat .bv { font-size: 12.5px; line-height: 1.35; color: var(--cream); }
+  .beat.idol-beat { background: rgba(243,101,28,0.12); border-radius: 4px; padding: 12px 14px; }
+  .beat.idol-beat .bk { color: var(--orange); }
+  
+  .loop-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream-soft);
+    font-size: 15px;
+    flex-shrink: 0;
+    user-select: none;
+    width: 24px;
+    align-self: center;
+  }
+
+  /* Mobile vertical loop configuration */
+  @media(max-width: 768px) {
+    .loop {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      overflow-x: visible;
+    }
+    .beat {
+      flex: none;
+      min-width: 100%;
+    }
+    .loop-arrow {
+      width: auto;
+      height: auto;
+      transform: rotate(90deg);
+      align-self: flex-start;
+      margin-left: 14px;
+      padding: 2px 0;
+    }
+  }
+
+  /* True love turn */
+  .turn { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--cream-line); }
+  .turn .tk { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-soft); margin-bottom: 10px; }
+  .turn .tv { font-size: 15.5px; line-height: 1.5; color: var(--cream); }
+  .turn .tv b { color: #fff; font-weight: 600; }
+
+  /* Lens filtering for accordion rows */
+  body[data-lens="romantic"] .row.parenting,
+  body[data-lens="romantic"] .row.echo { display: none; }
+  body[data-lens="parenting"] .row.romantic { display: none; }
+
+  /* ---------- VIEW 2: THE LOOP VISUALIZER ---------- */
+  .loop-visualizer {
+    padding: 40px 0 64px;
+  }
+  .stepper-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .step-node {
+    background: transparent;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 80px;
+    cursor: pointer;
+    text-align: center;
+    padding: 8px 0;
+    font-family: inherit;
+    transition: transform var(--t1) var(--ease);
+  }
+  .step-node:focus-visible {
+    outline: var(--focus-ring);
+    border-radius: 4px;
+  }
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--line-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    background: transparent;
+    transition: background-color var(--t1) var(--ease), border-color var(--t1) var(--ease), color var(--t1) var(--ease);
+    color: var(--muted);
+  }
+  .step-node:hover .step-circle {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .step-node.active .step-circle {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--cream);
+  }
+  .step-name {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+    color: var(--muted);
+  }
+  .step-node.active .step-name {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  
+  .step-display-card {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 32px;
+    border-radius: 4px;
+    margin-bottom: 36px;
+    min-height: 120px;
+    transition: opacity var(--t1) var(--ease);
+  }
+  .step-display-card h3 {
+    font-family: "Fraunces", serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .step-display-card p {
+    font-size: 16px;
+    color: var(--cream-soft);
+    max-width: 70ch;
+  }
+
+  .step-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .comp-cell {
+    background: var(--cream-2);
+    border: 1px solid var(--line-strong);
+    padding: 20px;
+    border-radius: 2px;
+    box-shadow: var(--card-shadow);
+  }
+  .comp-cell h4 {
+    font-family: "Fraunces", serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+  }
+  .comp-cell .comp-lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .comp-cell p {
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  /* ---------- VIEW 3: THE MATRIX ---------- */
+  .matrix-view {
+    padding: 40px 0 64px;
+  }
+  
+  /* Matrix responsive configuration (desktop table vs mobile cards) */
+  .matrix-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    line-height: 1.4;
+    text-align: left;
+    min-width: 800px;
+    background: var(--cream-2);
+  }
+  .matrix-table th, .matrix-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    vertical-align: top;
+  }
+  .matrix-table th {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    background: rgba(28, 27, 25, 0.04);
+  }
+  .matrix-table tr:last-child td {
+    border-bottom: 0;
+  }
+  .matrix-table tr:hover {
+    background: rgba(28, 27, 25, 0.02);
+  }
+  .matrix-table .m-name {
+    font-family: "Fraunces", serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .matrix-table .m-lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .matrix-cards {
+    display: none;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .matrix-card {
+    background: var(--cream-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+  }
+  .matrix-card h3 {
+    font-family: "Fraunces", serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .matrix-card-row {
+    margin-top: 12px;
+  }
+  .matrix-card-lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .matrix-card-val {
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+
+  @media(max-width: 768px) {
+    .matrix-table-wrap { display: none; }
+    .matrix-cards { display: grid; }
+  }
+
+  /* ---------- THE THREE DISCRIMINATORS ---------- */
+  .discriminator-section {
+    padding: 72px 0 64px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .discriminator-section .eyebrow { margin-bottom: 20px; }
+  .discriminator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  @media(max-width: 780px) {
+    .discriminator-layout { grid-template-columns: 1fr; gap: 32px; }
+  }
+  
+  .disc-text h2 {
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+  }
+  .disc-text p {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .disc-highlight {
+    padding: 20px;
+    border: 1px solid var(--line-strong);
+    border-left: 3px solid var(--orange);
+    background: var(--cream-2);
+    font-family: "Fraunces", serif;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  
+  /* DIAGNOSTIC INTERACTIVE PANEL */
+  .diagnostic-panel {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 32px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 32px rgba(28, 27, 25, 0.15);
+  }
+  .diagnostic-panel h3 {
+    font-family: "Fraunces", serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: var(--orange);
+  }
+  .diag-q {
+    margin-bottom: 20px;
+  }
+  .diag-lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--cream-soft);
+    margin-bottom: 8px;
+    display: block;
+    letter-spacing: 0.08em;
+  }
+  .diag-opts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .diag-btn {
+    font-family: "Instrument Sans", sans-serif;
+    font-size: 12.5px;
+    padding: 10px 12px;
+    background: rgba(249, 246, 240, 0.06);
+    border: 1px solid var(--cream-line);
+    color: var(--cream-soft);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color var(--t1) var(--ease), color var(--t1) var(--ease), border-color var(--t1) var(--ease), box-shadow var(--t1) var(--ease);
+    text-align: left;
+    min-height: 44px;
+  }
+  .diag-btn:hover {
+    background: rgba(249, 246, 240, 0.12);
+    color: var(--cream);
+    border-color: var(--cream-soft);
+  }
+  .diag-btn.selected {
+    background: var(--orange);
+    color: var(--cream);
+    border-color: var(--orange);
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(243, 101, 28, 0.25);
+  }
+  .diag-btn:focus-visible {
+    outline: var(--focus-ring);
+  }
+  
+  .diag-result {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cream-line);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .diag-res-lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .diag-res-text {
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--cream);
+  }
+
+  /* ---------- THE CLOSE / OVERFLOW ---------- */
+  .close { background: var(--ink); color: var(--cream); padding: 80px 0 90px; }
+  .close .eyebrow { color: var(--orange); margin-bottom: 26px; }
+  .close h2 { font-family: "Fraunces", serif; font-weight: 500; font-size: clamp(30px, 5.2vw, 48px); line-height: 1.08; letter-spacing: -0.012em; }
+  .close h2 em { font-style: italic; font-weight: 400; color: var(--orange); }
+  .close p { margin-top: 24px; max-width: 62ch; font-size: 17px; line-height: 1.6; color: var(--cream-soft); }
+  .close p b { color: var(--cream); font-weight: 500; }
+  .close .seq { margin-top: 36px; font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--cream); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .close .seq span { color: var(--cream-soft); }
+
+  footer { padding: 32px 0; border-top: 1px solid var(--cream-line); font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--cream-soft); background: var(--ink); }
+  footer .home { display: inline-flex; min-height: 44px; align-items: center; color: inherit; text-decoration: none; }
+  footer .home:hover { color: var(--cream); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  @media(prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+
+  /* EN · RU switch */
+  .hero .hero-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+  .hero .hero-top .eyebrow { margin-bottom: 0; min-width: 0; }
+  .lang-switch { position: relative; display: inline-flex; align-items: center; height: 44px; border-radius: 999px; overflow: hidden; flex: 0 0 auto; }
+  .lang-switch::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--line-strong); border-radius: inherit; pointer-events: none; }
+  .lang-opt { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 12px; font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-decoration: none; color: var(--muted); transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease); }
+  .lang-opt:hover { color: var(--ink); }
+  .lang-opt[aria-current="page"] { background: var(--cream-2); color: var(--ink); pointer-events: none; }
+  .lang-opt:focus-visible { outline: var(--focus-ring); outline-offset: -3px; }
+
+  /* reading comfort: balance display text */
+  h1, h2, h3 { text-wrap: balance; }
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body data-lens="both">
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-top"><div class="eyebrow">Цикл подделок · Полевой путеводитель</div><div class="lang-switch" role="group" aria-label="Язык"><a class="lang-opt" href="/Fake-Love/" lang="en" hreflang="en" aria-current="false">EN</a><a class="lang-opt" href="/Fake-Love/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></div></div>
+      <h1>Любовь как <em>глагол</em>,<br>и её подделки.</h1>
+      <p class="thesis">Психологическая и клиническая литература сходится в одном: <b>любовь — не пассивное чувство, а осознанный выбор</b>. Когда мы принимаем за любовь эмоциональную вовлечённость (<i>катексис</i>) или способ успокоить самих себя, получаются подделки, в которых другой человек нужен, чтобы закрывать наши собственные дефициты.</p>
+      
+      <div class="measuring-stick">
+        <span class="stick-title">Мерило</span>
+        <blockquote class="stick-quote">«Любовь — это воля выходить за пределы себя ради духовного роста — своего или чужого… Любовь — это действие, а не просто чувство. Любовь — это то, что любовь делает.»</blockquote>
+        <span class="stick-author">— по мотивам M. Scott Peck и bell hooks</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- VIEW CONTROLS / STICKY BAR -->
+  <div class="control-section">
+    <div class="wrap control-wrap">
+      <div class="control-group">
+        <span class="control-label">Вид</span>
+        <div class="btn-group" role="group" aria-label="Переключение видов">
+          <button class="toggle-btn view-btn" data-view="guided" aria-pressed="true">Гид</button>
+          <button class="toggle-btn view-btn" data-view="loop" aria-pressed="false">Цикл</button>
+          <button class="toggle-btn view-btn" data-view="matrix" aria-pressed="false">Матрица</button>
+        </div>
+      </div>
+      
+      <div class="control-group" id="lens-toggle-container">
+        <span class="control-label">Ракурс</span>
+        <div class="btn-group" role="group" aria-label="Фильтр по контексту">
+          <button class="toggle-btn lens-btn" data-lens="both" aria-pressed="true">Оба</button>
+          <button class="toggle-btn lens-btn" data-lens="romantic" aria-pressed="false">Романтика</button>
+          <button class="toggle-btn lens-btn" data-lens="parenting" aria-pressed="false">Родительство</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    
+    <!-- VIEW 1: GUIDED VIEW -->
+    <section id="view-guided" class="view-panel active">
+      
+      <!-- FAMILY I SECTION -->
+      <div class="section-intro">
+        <span class="mono" style="color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;">Семья I</span>
+        <h2>Чувства, принятые за любовь</h2>
+        <p>«Ошибки существительных» — эмоциональные всплески, биологические заряды или системы привязанности, которые имитируют любовь, но работают на автоматических реакциях нервной системы, а не на осознанном действии.</p>
+      </div>
+      
+      <div class="cards-grid" id="feelings-root"><!-- JS rendered --></div>
+      
+      <!-- FAMILY II SECTION -->
+      <div class="section-intro" style="border-top: 1px solid var(--line); padding-top: 48px;">
+        <span class="mono" style="color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;">Семья II</span>
+        <h2>Поступки, принятые за любовь и заботу</h2>
+        <p>«Ошибки ложных глаголов» — извлекающее поведение: мы изображаем заботу о другом, но на самом деле хотим унять собственную внутреннюю нехватку или тревогу.</p>
+      </div>
+      
+      <div class="accordion-wrap" id="acts-root"><!-- JS rendered --></div>
+
+    </section>
+
+    <!-- VIEW 2: LOOP CYCLE VISUALIZER -->
+    <section id="view-loop" class="view-panel">
+      <div class="loop-visualizer">
+        <div class="section-intro" style="padding-top: 20px;">
+          <h2>Анатомия цикла</h2>
+          <p>Каждая подделка идёт по одной циклической схеме. Нажимай на шаги ниже и смотри, как семь «ложных глаголов» проявляются именно на этой фазе цикла извлечения.</p>
+        </div>
+        
+        <nav class="stepper-nav" aria-label="Шаги цикла">
+          <button class="step-node active" data-step="0" aria-label="Шаг 1: Рана">
+            <span class="step-circle">1</span>
+            <span class="step-name">Рана</span>
+          </button>
+          <button class="step-node" data-step="1" aria-label="Шаг 2: Предложение">
+            <span class="step-circle">2</span>
+            <span class="step-name">Предложение</span>
+          </button>
+          <button class="step-node" data-step="2" aria-label="Шаг 3: Идол">
+            <span class="step-circle">3</span>
+            <span class="step-name">Идол</span>
+          </button>
+          <button class="step-node" data-step="3" aria-label="Шаг 4: Алтарь">
+            <span class="step-circle">4</span>
+            <span class="step-name">Алтарь</span>
+          </button>
+          <button class="step-node" data-step="4" aria-label="Шаг 5: Структура">
+            <span class="step-circle">5</span>
+            <span class="step-name">Структура</span>
+          </button>
+        </nav>
+        
+        <div class="step-display-card" id="step-info-card">
+          <!-- JS dynamic -->
+        </div>
+        
+        <div class="step-comparison-grid" id="step-comp-root">
+          <!-- JS dynamic -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: DIAGNOSTIC MATRIX -->
+    <section id="view-matrix" class="view-panel">
+      <div class="matrix-view">
+        <div class="section-intro" style="padding-top: 20px; max-width: 100%;">
+          <h2>Диагностическая матрица</h2>
+          <p>Подробный сравнительный каталог всех 12 подделок: ключевые механизмы, признаки и то, к чему возвращает настоящая любовь.</p>
+        </div>
+        
+        <!-- Desktop Table view -->
+        <div class="matrix-table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">Тип</th>
+                <th style="width: 15%;">Семья</th>
+                <th style="width: 25%;">Главный мотив / потребность</th>
+                <th style="width: 20%;">Признак</th>
+                <th style="width: 20%;">Настоящий поворот</th>
+              </tr>
+            </thead>
+            <tbody id="matrix-tbody">
+              <!-- JS dynamic -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Cards view -->
+        <div class="matrix-cards" id="matrix-cards-root">
+          <!-- JS dynamic -->
+        </div>
+      </div>
+    </section>
+
+    <!-- THE THREE DISCRIMINATORS SECTION -->
+    <section class="discriminator-section">
+      <div class="discriminator-layout">
+        <div class="disc-text">
+          <div class="eyebrow">Лакмусовая бумажка</div>
+          <h2>Это любовь или катексис?</h2>
+          <p>Если тебе трудно понять, что лежит в основе отношений (романтических или родительских) — настоящая любовь или поддельная привязанность, — пропусти их через три главных диагностических различия, выделенных в клинической литературе.</p>
+          <p>Настоящая любовь бережёт свободу и отдельность другого. Подделки воспринимают свободу как угрозу своей эмоциональной безопасности.</p>
+          <div class="disc-highlight">«Признак любви — постоянство и покой, поддержка пути другого вовне. Признак привязанности — высокие ставки, накал и гипербдительность.»</div>
+        </div>
+        
+        <div class="diagnostic-panel">
+          <div>
+            <h3>Диагностика различий</h3>
+            
+            <div class="diag-q" data-q="0">
+              <span class="diag-lbl">1. Глагол или чувство?</span>
+              <div class="diag-opts">
+                <button class="diag-btn" data-val="feeling">Чувство или искра, которую я переживаю</button>
+                <button class="diag-btn" data-val="verb">Деятельные усилия ради роста другого</button>
+              </div>
+            </div>
+            
+            <div class="diag-q" data-q="1">
+              <span class="diag-lbl">2. Другой или я?</span>
+              <div class="diag-opts">
+                <button class="diag-btn" data-val="me">Стабилизация моего состояния и самоценности</button>
+                <button class="diag-btn" data-val="them">Долгосрочный самостоятельный расцвет другого</button>
+              </div>
+            </div>
+            
+            <div class="diag-q" data-q="2">
+              <span class="diag-lbl">3. Двое или слияние?</span>
+              <div class="diag-opts">
+                <button class="diag-btn" data-val="fused">Слияние / требование одинаковости</button>
+                <button class="diag-btn" data-val="two">Различение / принятие свободы</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="diag-result">
+            <span class="diag-res-lbl">Результат диагностики</span>
+            <div class="diag-res-text" id="diag-feedback">
+              Select options above to audit your current dynamic.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="close">
+    <div class="wrap">
+      <div class="eyebrow">Точка поворота</div>
+      <h2>Изобилие — до предложения.</h2>
+      <p>Каждая подделка — это попытка <b>вытянуть</b> из человека то, чего не хватает нам самим: безопасность, ценность, покой, оправдание. Поэтому она и перерождается в контроль или одержимость. Мы возлагаем на человека груз, который предназначалось нести только трансцендентному источнику благодати, и давим этим и его, и себя.</p>
+      <p>Любовь нельзя выжать из голода. Лекарство — не в том, чтобы просто «стараться сильнее» быть бескорыстным. Сначала нужно наполниться у источника, чтобы другой перестал быть твоим спасителем и наконец мог быть принят как дар.</p>
+      <div class="seq">Наполниться у источника <span>→</span> другой свободен от этого груза <span>→</span> любовь, которая даёт, не выставляя счёт</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>ПУТЕВОДИТЕЛЬ ПО ПОДДЕЛКАМ</span>
+      <span>РАНА → ПРЕДЛОЖЕНИЕ → КАТЕКСИС → АЛТАРЬ → СТРУКТУРА</span>
+      <a class="home" href="/ru/">← Все проекты</a>
+    </div>
+  </footer>
+
+<script>
+// FAMILY I DATA
+const DATA_FEELINGS = [
+  {
+    name: "Cathexis",
+    sub: "The Hook of Investment",
+    driver: "Mental/Emotional Charge",
+    sensation: "An intense, consuming focus on a person; feeling they are deeply important to your life, thinking about them constantly.",
+    reality: "Emotional investment of energy (cathexis) is not love. You can cathect someone you do not actually know, respect, or actively act to support. Cathexis is a mental attachment; love is the action of caring.",
+    lit: "M. Scott Peck (The Road Less Traveled) & bell hooks (All About Love)",
+    target: "Any extraction loop",
+    example: "A person spends months daydreaming about an acquaintance, crafting elaborate mental scenarios of a future together and feeling a profound 'bond,' but never initiates a real conversation to learn who they actually are."
+  },
+  {
+    name: "Limerence",
+    sub: "The Obsessive Spark",
+    driver: "Dopamine & Uncertainty",
+    sensation: "Intense, involuntary craving for emotional reciprocation, obsessive mental loops, mood swings depending on their signals.",
+    reality: "A dopamine-driven fantasy fueled by uncertainty. It requires a projection of the person rather than their actual reality.",
+    lit: "Dorothy Tennov (Love and Limerence, 1979)",
+    target: "Love as a Drug",
+    example: "Analyzing every punctuation mark in their text messages, experiencing intense euphoria when they reply quickly, and crashing into physical despair or emptiness when response times drag."
+  },
+  {
+    name: "The 'Anxious Spark'",
+    sub: "Chemistry of Unpredictability",
+    driver: "Cortisol & Attachment Alarm",
+    sensation: "Heart-racing excitement, butterflies, high stakes, magnetic attraction, constant scanning for signals of interest.",
+    reality: "Your nervous system detecting threat or unavailability, triggering an anxious attachment alarm. We mistake anxiety for passion.",
+    lit: "Grounded in Attachment Theory (John Bowlby)",
+    target: "Love as Control",
+    example: "Feeling intense 'chemistry' only around partners who are emotionally distant or unpredictable. Feeling bored or assuming there is 'no spark' when interacting with someone who is consistent, warm, and secure."
+  },
+  {
+    name: "Trauma-Bond Pull",
+    sub: "Intensity Mistaken for Depth",
+    driver: "Intermittent Reinforcement",
+    sensation: "Ecstatic highs and devastating lows; feeling 'us against the world'; an addictive draw to a turbulent person.",
+    reality: "A bond forged by cycles of abuse, neglect, or drama followed by sudden warmth. Pain followed by relief trains the brain to read conflict as intimacy.",
+    lit: "Patrick Carnes (Against the Betrayal Bond)",
+    target: "Love as Rescue / Drug",
+    example: "Staying in a volatile cycle where a partner alternates between harsh criticism and sudden grand gestures of warmth, interpreting the emotional relief of reconciliation as proof of a 'soulmate connection.'"
+  },
+  {
+    name: "Familiarity",
+    sub: "The Static Connection",
+    driver: "Comfort of the Known",
+    sensation: "Low-friction coexistence, shared history, comfortable routine, avoidance of disruption.",
+    reality: "An attachment of convenience. The comfort of predictability and fear of change mistaken for active, willing care for the other's growth.",
+    lit: "Erich Fromm (The Art of Loving)",
+    target: "Love as a Mirror",
+    example: "Coexisting in a roommate-like routine, avoiding difficult conversations to preserve the peace, and mistaking the comfortable habituation and fear of being alone for active care for each other's growth."
+  }
+];
+
+// FAMILY II DATA
+const DATA_ACTS = [
+  {
+    num: "I", name: "Love as a Drug", mech: "Regulation",
+    need: "I cannot regulate my own inner state, so I borrow yours to do it.",
+    romantic: "Limerence and codependency. Your mood sets mine; one text rewrites my whole day; I consume your presence to feel level.",
+    parenting: "Parentification. The child becomes the parent's soother and confidant — managing the adult's feelings to keep them okay.",
+    echo: "A parentified child learns that their value lies in emotional containment, growing up to seek partners whose unstable mood they must regulate.",
+    tell: "I need your state to fix mine.",
+    idol: "The person becomes your <b>peace</b> — the steadiness you were meant to find in God, outsourced to a human nervous system.",
+    loop: ["Unregulated ache", "They soothe it", "They become my peace", "I orient the day around their signals", "I'm only okay if they're okay"],
+    turn: "A self that can be held — that can self-soothe and rest in God — can be <b>with</b> the other instead of feeding on them. Presence, not consumption."
+  },
+  {
+    num: "II", name: "Love as a Mirror", mech: "Validation",
+    need: "I don't know my own worth, so I need you to reflect it back.",
+    romantic: "Loving how they make you feel about yourself. Needing constant reassurance; in love with the admiration more than the person.",
+    parenting: "The child as ego-extension. Living through their wins; their achievement feeds my self-image, their failure shames me.",
+    echo: "A child loved only as an ego-extension grows up to equate achievement and validation with love, constantly performing to keep the mirror kind.",
+    tell: "Love warms when they make me look good, cools when they don't.",
+    idol: "The person becomes your <b>verdict</b> — your sense of being acceptable rests on their reflection instead of on being already beloved.",
+    loop: ["Am I worth anything?", "Their admiration says yes", "They become my verdict", "I perform to keep the mirror kind", "Identity contingent on approval"],
+    turn: "Worth received as a given — belovedness that precedes performance — frees you to actually <b>see</b> the other instead of using them as glass."
+  },
+  {
+    num: "III", name: "Love as Control", mech: "Possession",
+    need: "I secure myself by controlling you; your freedom feels like my danger.",
+    romantic: "Jealousy, monitoring, engulfment. 'If you loved me you'd...' Closeness measured by how much you'll surrender.",
+    parenting: "Overcontrol; love conditional on compliance. The child's individuation experienced as betrayal rather than growth.",
+    echo: "A child raised under overcontrol equates closeness with the surrender of self, leading them to either control partners or seek engulfment.",
+    tell: "The other's separateness feels like a threat.",
+    idol: "The person becomes your <b>security</b> — you trust your grip more than you trust God to hold what you can't.",
+    loop: ["Fear of abandonment / chaos", "If I control you, I'm safe", "Control becomes my security", "I sacrifice your freedom to my fear", "Love means grip"],
+    turn: "Security held elsewhere lets you open your hand. Love strong enough to <b>bless the other's freedom</b> — even the freedom to leave."
+  },
+  {
+    num: "IV", name: "Love as Debt", mech: "Transaction",
+    need: "I can't trust love freely given, so I bind it with obligation.",
+    romantic: "Scorekeeping. Love advanced to be owed. 'I did this, so now you owe me that.' Ledgers.",
+    parenting: "'After all I've done for you.' Guilt as the binding agent; sacrifice quietly weaponized into leverage.",
+    echo: "A child trained in transactional love grows up to keep a ledger, terrified of grace and unable to receive love without checking the invoice.",
+    tell: "There's an invisible ledger, and I'm always reading it.",
+    idol: "The relationship becomes your <b>justification</b> — you earn and extract instead of receiving and extending grace.",
+    loop: ["Love must be earned", "A ledger makes it predictable", "The exchange becomes my justification", "I keep paying and collecting", "Grace is impossible; all is owed"],
+    turn: "Grace received — unearned, un-repayable — dissolves the ledger. Love that <b>gives without invoicing</b> because it was first given to."
+  },
+  {
+    num: "V", name: "Love as Rescue", mech: "The Project",
+    need: "I love by fixing — which keeps me needed and lets me avoid my own wound.",
+    romantic: "The savior / fixer dynamic. Falling for potential; managing the other's life; loving the version I'm building.",
+    parenting: "Over-functioning, helicoptering. Can't let the child struggle or fail; their growing competence quietly threatens my role.",
+    echo: "An over-functioning child learns they are only safe when useful, seeking broken partners in adulthood to maintain their worth.",
+    tell: "I need you to need me.",
+    idol: "You make yourself the person's <b>savior</b> — taking the seat only God can hold, and calling the takeover love.",
+    loop: ["I'm only valuable if useful", "Being your rescuer makes me valuable", "Being needed becomes my worth", "I keep you dependent", "Love means fixing"],
+    turn: "A worth not contingent on being needed lets you support without engulfing — and lets the other outgrow you. <b>Love that launches.</b>"
+  },
+  {
+    num: "VI", name: "Love as Indulgence", mech: "Permissiveness",
+    need: "I want to be liked or avoid conflict, so I give you whatever you want.",
+    romantic: "People-pleasing, never saying no, allowing boundaries to be overrun to keep peace. Relentless compliance.",
+    parenting: "Permissive parenting. Shielding children from consequences; refusing to set boundaries to avoid their discomfort or anger.",
+    echo: "A child raised without boundaries struggles with limits in adulthood, equating rules with rejection and pleasing to survive.",
+    tell: "I cannot tolerate your discomfort or anger with me.",
+    idol: "The relationship becomes your <b>comfort/approval</b> — you sacrifice their character growth to avoid temporary friction.",
+    loop: ["Fear of conflict/disapproval", "I indulge them", "They are temporarily happy/quiet", "I avoid setting boundaries", "They become entitled/stunted"],
+    turn: "Real love is willing to be disliked for the other's long-term good. It sets boundaries that protect their character and maturity."
+  },
+  {
+    num: "VII", name: "Love as Worry", mech: "Anxiety-as-Care",
+    need: "My own anxiety is unmanageable, so I wrap it in 'concern' to control your movements.",
+    romantic: "Constant checking-in, catastrophizing their plans, restricting their risks in the name of safety.",
+    parenting: "Overprotection, helicoptering. Projecting my fears onto the child so they are afraid of the world and stay close.",
+    echo: "A child raised in an anxious, overprotective environment grows up viewing the world as hyper-dangerous and struggles to differentiate.",
+    tell: "I count my anxiety as proof of how much I care about you.",
+    idol: "The other's safety becomes your <b>shield against chaos</b> — you make them carry your fear.",
+    loop: ["Internal anxiety/catastrophizing", "I restrict/overprotect you", "I feel temporarily relieved", "You absorb the fear and withdraw", "The world is scary; you must stay close"],
+    turn: "Love casts out fear. True care supports the other's brave engagement with the world, taking healthy risks and welcoming growth."
+  }
+];
+
+// LOOP STEP DEFINITIONS
+const STEP_DEFS = [
+  {
+    title: "1. The Wound (Scarcity)",
+    desc: "The initial emotional void or deficit in our own system. This is the structural vulnerability that demands stabilization."
+  },
+  {
+    title: "2. The Offer (The Bait)",
+    desc: "How the other person or relation promises to temporarily soothe or fill that wound. It is the initial hook of attachment."
+  },
+  {
+    title: "3. The Idol (Cathexis)",
+    desc: "The other person is elevated to the source of what we cannot find in ourselves. They carry the ultimate weight of our peace, worth, or safety."
+  },
+  {
+    title: "4. The Altar (The Sacrifice)",
+    desc: "What we must sacrifice or deform in order to keep the idol in place. Usually involves sacrificing their freedom or our boundaries."
+  },
+  {
+    title: "5. The Mental Structure (The Captivity)",
+    desc: "The rigid, locked-in relational script. The boundary collapses entirely, and the counterfeit pattern becomes a persistent pattern of extraction."
+  }
+];
+
+// RUSSIAN PAYLOAD (parallel data, swapped in place by index; the English above is the source)
+const IS_RU = document.documentElement.getAttribute('data-lang') === 'ru';
+const UI_EN = {
+ "feelings": "Feelings",
+ "sensation": "The Sensation",
+ "clinical": "Clinical Reality",
+ "common": "Common Expression",
+ "observed": "Observed · the psychology",
+ "need": "The need",
+ "romantic": "Romantic",
+ "parenting": "Parenting",
+ "echo": "The Echo",
+ "tell": "The tell",
+ "read": "The read · the Counterfeit Loop",
+ "turn": "The true-love turn",
+ "fam1s": "Family I (Feeling)",
+ "intensity": "Intensity & Obsession",
+ "realityLbl": "Reality:",
+ "family": "Family",
+ "fam1l": "Family I (Feeling mistaken for love)",
+ "coreSens": "Core Sensation",
+ "clinCard": "The Clinical Reality",
+ "fam2s": "Family II (Act)",
+ "fam2l": "Family II (Act mistaken for love/care)",
+ "coreDriver": "Core Driver / Need",
+ "theTell": "The Tell",
+ "trueTurn": "True Turn",
+ "select": "Select options above to audit your current dynamic.",
+ "alignTrue": "Alignment: True Love",
+ "trueText": "This dynamic functions as an active choice oriented to another's flourishment, holding separate boundaries. It is consistent, differentiation-safe, and healthy.",
+ "alignFake": "Alignment: Counterfeit Loop",
+ "markers": "This dynamic contains extraction markers:",
+ "likely": "It is highly likely to generate exhaustion, resentment, or control.",
+ "a0": "conflating feelings (cathexis) with action",
+ "a1": "extracting emotional stabilization for yourself",
+ "a2": "enmeshment demanding sameness"
+};
+const UI_RU = {
+ "feelings": "Чувства",
+ "sensation": "Ощущение",
+ "clinical": "Клиническая реальность",
+ "common": "Как это выглядит",
+ "observed": "Наблюдение · психология",
+ "need": "Потребность",
+ "romantic": "Романтика",
+ "parenting": "Родительство",
+ "echo": "Эхо",
+ "tell": "Признак",
+ "read": "Прочтение · цикл подделок",
+ "turn": "Поворот к настоящей любви",
+ "fam1s": "Семья I (Чувство)",
+ "intensity": "Накал и одержимость",
+ "realityLbl": "Реальность:",
+ "family": "Семья",
+ "fam1l": "Семья I (чувство, принятое за любовь)",
+ "coreSens": "Ключевое ощущение",
+ "clinCard": "Клиническая реальность",
+ "fam2s": "Семья II (Поступок)",
+ "fam2l": "Семья II (поступок, принятый за любовь или заботу)",
+ "coreDriver": "Главный мотив / потребность",
+ "theTell": "Признак",
+ "trueTurn": "Настоящий поворот",
+ "select": "Выбери варианты выше, чтобы проверить свою нынешнюю динамику.",
+ "alignTrue": "Соответствие: настоящая любовь",
+ "trueText": "Эта динамика работает как осознанный выбор, направленный на расцвет другого, при сохранении раздельных границ. Она последовательна, безопасна для различения «я» и «ты» и здорова.",
+ "alignFake": "Соответствие: цикл подделок",
+ "markers": "В этой динамике есть признаки извлечения:",
+ "likely": "Скорее всего, она порождает истощение, обиду или контроль.",
+ "a0": "подмена действия чувствами (катексисом)",
+ "a1": "выжимание эмоциональной стабилизации для себя",
+ "a2": "слияние, требующее одинаковости"
+};
+const UI = IS_RU ? UI_RU : UI_EN;
+const RU_FEELINGS = [
+ {
+  "name": "Катексис",
+  "sub": "Крючок вложений",
+  "driver": "Ментальный и эмоциональный заряд",
+  "sensation": "Сильная, всепоглощающая сосредоточенность на человеке; чувство, что он очень важен для твоей жизни; мысли о нём не отпускают.",
+  "reality": "Эмоциональное вложение энергии (катексис) — это не любовь. Можно испытывать катексис к человеку, которого ты на самом деле не знаешь, не уважаешь и ничем не поддерживаешь. Катексис — это мысленная привязанность; любовь — это действие заботы.",
+  "lit": "M. Scott Peck (The Road Less Traveled) и bell hooks (All About Love)",
+  "target": "Любой цикл извлечения",
+  "example": "Человек месяцами грезит о знакомом, выстраивает в голове подробные сценарии общего будущего, чувствует глубокую «связь» — и ни разу не заводит настоящего разговора, чтобы узнать, кто этот человек на самом деле."
+ },
+ {
+  "name": "Лимеренция",
+  "sub": "Навязчивая искра",
+  "driver": "Дофамин и неопределённость",
+  "sensation": "Сильная, неподвластная воле жажда ответных чувств, навязчивые мысленные круги, настроение скачет вслед за сигналами другого человека.",
+  "reality": "Фантазия на дофамине, подогретая неопределённостью. Ей нужна проекция человека, а не он сам, какой он есть.",
+  "lit": "Dorothy Tennov (Love and Limerence, 1979)",
+  "target": "Любовь как наркотик",
+  "example": "Разбирать каждый знак препинания в сообщениях, переживать острую эйфорию, когда отвечают быстро, и проваливаться в физическое отчаяние или пустоту, когда ответа приходится ждать."
+ },
+ {
+  "name": "«Тревожная искра»",
+  "sub": "Химия непредсказуемости",
+  "driver": "Кортизол и сигнал тревоги привязанности",
+  "sensation": "Колотящееся сердце, азарт, бабочки в животе, высокие ставки, магнетическое влечение, постоянное выискивание признаков интереса.",
+  "reality": "Твоя нервная система улавливает угрозу или недоступность и включает сигнал тревоги привязанности. Мы принимаем тревогу за страсть.",
+  "lit": "Опирается на теорию привязанности (John Bowlby)",
+  "target": "Любовь как контроль",
+  "example": "Чувствовать сильную «химию» только рядом с партнёрами, которые эмоционально далеки или непредсказуемы. Скучать или решать, что «искры нет», когда рядом человек последовательный, тёплый и надёжный."
+ },
+ {
+  "name": "Тяга травматической связи",
+  "sub": "Накал, принятый за глубину",
+  "driver": "Прерывистое подкрепление",
+  "sensation": "Экстатические взлёты и сокрушительные падения; чувство «мы против целого мира»; затягивающая тяга к неровному, бурному человеку.",
+  "reality": "Связь, выкованная циклами насилия, пренебрежения или драмы, за которыми внезапно следует тепло. Боль, сменяющаяся облегчением, приучает мозг читать конфликт как близость.",
+  "lit": "Patrick Carnes (Against the Betrayal Bond)",
+  "target": "Любовь как спасение / наркотик",
+  "example": "Оставаться в нестабильном цикле, где партнёр чередует жёсткую критику с внезапными пышными жестами тепла, а облегчение после примирения принимается за доказательство «родства душ»."
+ },
+ {
+  "name": "Привычность",
+  "sub": "Застывшая связь",
+  "driver": "Комфорт знакомого",
+  "sensation": "Сосуществование без трения, общая история, удобный распорядок, избегание любых потрясений.",
+  "reality": "Привязанность из удобства. Комфорт предсказуемости и страх перемен, принятые за деятельную, осознанную заботу о росте другого.",
+  "lit": "Erich Fromm (The Art of Loving)",
+  "target": "Любовь как зеркало",
+  "example": "Жить рядом, как соседи по квартире, обходить трудные разговоры ради спокойствия и принимать удобную привычку и страх остаться одному за заботу о росте друг друга."
+ }
+];
+const RU_ACTS = [
+ {
+  "num": "I",
+  "name": "Любовь как наркотик",
+  "mech": "Регуляция",
+  "need": "Я не умею регулировать собственное состояние, поэтому занимаю твоё, чтобы справляться.",
+  "romantic": "Лимеренция и созависимость. Твоё настроение задаёт моё; одно сообщение переписывает мой день; я потребляю твоё присутствие, чтобы чувствовать себя ровно.",
+  "parenting": "Парентификация. Ребёнок становится для родителя утешителем и поверенным: управляет чувствами взрослого, чтобы тот был в порядке.",
+  "echo": "Парентифицированный ребёнок усваивает, что его ценность в эмоциональной «ёмкости» для чужих чувств, и во взрослой жизни ищет партнёров, чьё неустойчивое настроение приходится выравнивать.",
+  "tell": "Мне нужно твоё состояние, чтобы починить моё.",
+  "idol": "Человек становится твоим <b>покоем</b> — той устойчивостью, которую ты должен был находить в Боге, отданной на аутсорс чужой нервной системе.",
+  "loop": [
+   "Невыносимая внутренняя боль",
+   "Другой её унимает",
+   "Другой становится моим покоем",
+   "Я выстраиваю день вокруг его сигналов",
+   "Мне хорошо, только если хорошо ему"
+  ],
+  "turn": "Человек, которого можно удержать, — который умеет сам себя успокаивать и покоиться в Боге, — может быть <b>рядом</b> с другим, а не питаться им. Присутствие, а не потребление."
+ },
+ {
+  "num": "II",
+  "name": "Любовь как зеркало",
+  "mech": "Подтверждение",
+  "need": "Я не знаю собственной ценности, поэтому мне нужно, чтобы ты возвращал мне её, как отражение.",
+  "romantic": "Любить то, что другой заставляет тебя чувствовать о себе. Нуждаться в постоянных заверениях; быть влюблённым в восхищение больше, чем в самого человека.",
+  "parenting": "Ребёнок как продолжение эго. Жить его победами; его достижения питают мой образ себя, его неудачи меня стыдят.",
+  "echo": "Ребёнок, которого любили лишь как продолжение чужого эго, вырастает с убеждением, что любовь равна достижениям и одобрению, и постоянно выступает, чтобы зеркало оставалось добрым.",
+  "tell": "Любовь теплеет, когда другой выставляет меня в хорошем свете, и остывает, когда нет.",
+  "idol": "Человек становится твоим <b>приговором</b> — ощущение, что ты приемлем, держится на его отражении, а не на том, что ты уже возлюблен.",
+  "loop": [
+   "Чего я стою?",
+   "Его восхищение отвечает «да»",
+   "Другой становится моим приговором",
+   "Я выступаю, чтобы зеркало оставалось добрым",
+   "Идентичность зависит от одобрения"
+  ],
+  "turn": "Ценность, полученная как данность, — возлюбленность, которая предшествует достижениям, — освобождает по-настоящему <b>увидеть</b> другого, а не использовать его как стекло."
+ },
+ {
+  "num": "III",
+  "name": "Любовь как контроль",
+  "mech": "Обладание",
+  "need": "Я обеспечиваю себе безопасность, контролируя тебя; твоя свобода кажется мне опасностью.",
+  "romantic": "Ревность, слежка, поглощение. «Если бы ты любил меня, ты бы…» Близость измеряется тем, насколько ты готов уступить.",
+  "parenting": "Гиперконтроль; любовь на условии послушания. Взросление ребёнка воспринимается как предательство, а не как рост.",
+  "echo": "Ребёнок, выросший под гиперконтролем, приравнивает близость к отказу от себя и потом либо контролирует партнёров, либо ищет поглощения.",
+  "tell": "Отдельность другого ощущается как угроза.",
+  "idol": "Человек становится твоей <b>безопасностью</b> — ты доверяешь собственной хватке больше, чем Богу, который удержит то, что тебе удержать не по силам.",
+  "loop": [
+   "Страх брошенности и хаоса",
+   "Если я контролирую тебя, я в безопасности",
+   "Контроль становится моей безопасностью",
+   "Я приношу твою свободу в жертву своему страху",
+   "Любовь — это хватка"
+  ],
+  "turn": "Безопасность, найденная в другом месте, позволяет разжать ладонь. Любовь, достаточно сильная, чтобы <b>благословить свободу другого</b> — даже свободу уйти."
+ },
+ {
+  "num": "IV",
+  "name": "Любовь как долг",
+  "mech": "Сделка",
+  "need": "Я не могу доверять свободно данной любви, поэтому связываю её обязательством.",
+  "romantic": "Подсчёт баллов. Любовь выдаётся авансом, чтобы её вернули. «Я сделал это, значит, теперь ты должен мне то». Бухгалтерские книги.",
+  "parenting": "«После всего, что я для тебя сделал». Вина как связующее; жертва тихо превращается в рычаг давления.",
+  "echo": "Ребёнок, воспитанный на любви-сделке, вырастает и ведёт учётную книгу, боится благодати и не может принять любовь, не проверив счёт.",
+  "tell": "Есть невидимая книга долгов, и я всё время её читаю.",
+  "idol": "Отношения становятся твоим <b>оправданием</b> — ты зарабатываешь и взыскиваешь вместо того, чтобы получать благодать и щедро делиться ею.",
+  "loop": [
+   "Любовь надо заслужить",
+   "Книга учёта делает её предсказуемой",
+   "Обмен становится моим оправданием",
+   "Я продолжаю платить и взыскивать",
+   "Благодать невозможна; всё надо вернуть"
+  ],
+  "turn": "Полученная благодать — незаслуженная, невозвратная — растворяет книгу долгов. Любовь, которая <b>даёт, не выставляя счёт</b>, потому что сначала была одарена сама."
+ },
+ {
+  "num": "V",
+  "name": "Любовь как спасение",
+  "mech": "Проект",
+  "need": "Я люблю, исправляя, — и это делает меня нужным и позволяет не смотреть на собственную рану.",
+  "romantic": "Динамика спасителя и «починщика». Влюбляться в потенциал; управлять чужой жизнью; любить версию, которую я сам выстраиваю.",
+  "parenting": "Гиперопека и «всё сделаю за тебя». Не дать ребёнку побороться или потерпеть неудачу; его растущая самостоятельность тихо угрожает моей роли.",
+  "echo": "Ребёнок, который всё тянул на себе, усваивает, что в безопасности, только когда полезен, и во взрослой жизни ищет надломленных партнёров, чтобы сохранять свою ценность.",
+  "tell": "Мне нужно, чтобы ты во мне нуждался.",
+  "idol": "Ты делаешь себя <b>спасителем</b> этого человека — занимаешь место, которое может занять только Бог, и называешь этот захват любовью.",
+  "loop": [
+   "Я ценен, только если полезен",
+   "Быть твоим спасителем — значит быть ценным",
+   "Быть нужным становится моей ценностью",
+   "Я удерживаю тебя в зависимости",
+   "Любовь — это чинить"
+  ],
+  "turn": "Ценность, которая не зависит от того, нужен ли ты, позволяет поддерживать, не поглощая, — и позволяет другому перерасти тебя. <b>Любовь, которая отпускает в полёт.</b>"
+ },
+ {
+  "num": "VI",
+  "name": "Любовь как потакание",
+  "mech": "Вседозволенность",
+  "need": "Я хочу нравиться или избежать конфликта, поэтому даю тебе всё, чего ты хочешь.",
+  "romantic": "Угодничество, неумение сказать «нет», позволять топтать границы ради мира. Бесконечная уступчивость.",
+  "parenting": "Вседозволенное воспитание. Оберегать детей от последствий; не ставить границ, лишь бы не видеть их недовольства или гнева.",
+  "echo": "Ребёнок, выросший без границ, во взрослой жизни борется с ограничениями, приравнивает правила к отвержению и угождает, чтобы выжить.",
+  "tell": "Я не выношу твоего дискомфорта или гнева на меня.",
+  "idol": "Отношения становятся твоим <b>комфортом и одобрением</b> — ты жертвуешь ростом чужого характера, лишь бы избежать временного трения.",
+  "loop": [
+   "Страх конфликта и неодобрения",
+   "Я потакаю",
+   "Другой пока доволен и тих",
+   "Я не ставлю границ",
+   "Другой становится избалованным и не взрослеет"
+  ],
+  "turn": "Настоящая любовь готова не нравиться ради долгосрочного блага другого. Она ставит границы, которые берегут его характер и зрелость."
+ },
+ {
+  "num": "VII",
+  "name": "Любовь как беспокойство",
+  "mech": "Тревога под видом заботы",
+  "need": "Моя тревога невыносима, поэтому я заворачиваю её в «беспокойство о тебе», чтобы контролировать твои передвижения.",
+  "romantic": "Постоянные проверки, катастрофизация чужих планов, ограничение рисков «ради безопасности».",
+  "parenting": "Гиперопека. Перекладывание моих страхов на ребёнка, чтобы он боялся мира и держался рядом.",
+  "echo": "Ребёнок, выросший в тревожной, гиперопекающей среде, видит мир как предельно опасный и с трудом отделяется от родителя.",
+  "tell": "Свою тревогу я считаю доказательством того, как сильно о тебе забочусь.",
+  "idol": "Безопасность другого становится твоим <b>щитом от хаоса</b> — ты заставляешь его нести твой страх.",
+  "loop": [
+   "Внутренняя тревога и катастрофизация",
+   "Я ограничиваю и опекаю тебя",
+   "Мне ненадолго легче",
+   "Ты впитываешь страх и отдаляешься",
+   "Мир страшен; ты должен быть рядом"
+  ],
+  "turn": "Любовь изгоняет страх. Настоящая забота поддерживает смелый выход другого в мир, здоровый риск и рост."
+ }
+];
+const RU_STEPS = [
+ {
+  "title": "1. Рана (Нехватка)",
+  "desc": "Исходная эмоциональная пустота или дефицит в нашей собственной системе. Это структурная уязвимость, которая требует стабилизации."
+ },
+ {
+  "title": "2. Предложение (Приманка)",
+  "desc": "Как другой человек или отношения обещают временно унять или заполнить эту рану. Это первый крючок привязанности."
+ },
+ {
+  "title": "3. Идол (Катексис)",
+  "desc": "Другого возводят в источник того, чего мы не находим в себе. На нём лежит весь вес нашего покоя, ценности или безопасности."
+ },
+ {
+  "title": "4. Алтарь (Жертва)",
+  "desc": "Чем приходится жертвовать или что приходится искажать, чтобы идол оставался на месте. Обычно это жертва его свободой или нашими границами."
+ },
+ {
+  "title": "5. Ментальная структура (Плен)",
+  "desc": "Жёсткий, застывший сценарий отношений. Границы полностью рушатся, и подделка становится устойчивым паттерном извлечения."
+ }
+];
+if (IS_RU) {
+  const swapIn = (arr, ru, label) => {
+    if (arr.length !== ru.length) throw new Error('RU payload length mismatch: ' + label);
+    arr.forEach((o, i) => {
+      const a = Object.keys(o).sort().join(), b = Object.keys(ru[i]).sort().join();
+      if (a !== b) throw new Error('RU payload keys mismatch: ' + label + '[' + i + ']');
+      if (o.loop && o.loop.length !== ru[i].loop.length) throw new Error('RU loop length mismatch: ' + label + '[' + i + ']');
+      Object.assign(o, ru[i]);
+    });
+  };
+  swapIn(DATA_FEELINGS, RU_FEELINGS, 'feelings');
+  swapIn(DATA_ACTS, RU_ACTS, 'acts');
+  swapIn(STEP_DEFS, RU_STEPS, 'steps');
+}
+
+// INITIALIZE INTERACTIVE COMPONENTS
+const feelingsRoot = document.getElementById("feelings-root");
+const actsRoot = document.getElementById("acts-root");
+const matrixTbody = document.getElementById("matrix-tbody");
+const matrixCardsRoot = document.getElementById("matrix-cards-root");
+const stepInfoCard = document.getElementById("step-info-card");
+const stepCompRoot = document.getElementById("step-comp-root");
+
+// 1. Render Family I Feelings Cards
+// 1. Render Family I Feelings Cards
+function renderFeelings() {
+  feelingsRoot.innerHTML = DATA_FEELINGS.map((f, i) => `
+    <div class="feeling-card" id="feeling-card-${i}">
+      <div class="c-meta">
+        <span class="eyebrow">${UI.feelings}</span>
+        <span class="c-driver">${f.driver}</span>
+      </div>
+      <div>
+        <h3>${f.name}</h3>
+        <div class="c-sub">${f.sub}</div>
+        
+        <div class="c-sensation-block">
+          <span class="c-label">${UI.sensation}</span>
+          <p class="c-text">${f.sensation}</p>
+        </div>
+        
+        <div class="c-reality-block">
+          <span class="c-label">${UI.clinical}</span>
+          <p class="c-text"><b>${f.reality}</b></p>
+        </div>
+        
+        <div class="c-example-block">
+          <span class="c-label">${UI.common}</span>
+          <p class="c-text italic">“${f.example}”</p>
+        </div>
+      </div>
+      <span class="c-lit">${f.lit}</span>
+    </div>
+  `).join("");
+}
+
+// 2. Render Family II Accordion List
+const LOOP_KEYS = IS_RU ? ["Рана", "Предложение", "Идол", "Алтарь", "Структура"] : ["Wound", "Offer", "Idol", "Altar", "Structure"];
+function renderActsAccordion() {
+  actsRoot.innerHTML = DATA_ACTS.map((d, i) => {
+    const loopBeats = d.loop.map((v, idx) => `
+      <div class="beat${idx === 2 ? ' idol-beat' : ''}">
+        <span class="bk">${LOOP_KEYS[idx]}</span>
+        <span class="bv">${v}</span>
+      </div>`).join('<span class="loop-arrow" aria-hidden="true">&rarr;</span>');
+      
+    return `
+      <article class="entry">
+        <button class="entry-head" aria-expanded="${i === 0 ? 'true' : 'false'}" aria-controls="panel-${i}" id="head-${i}" onclick="toggleAccordion(${i})">
+          <span class="numeral">${d.num}</span>
+          <span class="entry-titles">
+            <span class="entry-name">${d.name}</span>
+            <span class="entry-mech">${d.mech}</span>
+          </span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="panel${i === 0 ? ' open' : ''}" id="panel-${i}" role="region" aria-labelledby="head-${i}">
+          <div class="panel-inner">
+            <div class="ground">
+              <div class="glabel">${UI.observed}</div>
+              <dl>
+                <div class="row"><dt>${UI.need}</dt><dd>${d.need}</dd></div>
+                <div class="row romantic"><dt>${UI.romantic}</dt><dd>${d.romantic}</dd></div>
+                <div class="row parenting"><dt>${UI.parenting}</dt><dd>${d.parenting}</dd></div>
+                <div class="row echo"><dt>${UI.echo}</dt><dd>${d.echo}</dd></div>
+                <div class="row tell"><dt>${UI.tell}</dt><dd>${d.tell}</dd></div>
+              </dl>
+            </div>
+            <div class="read">
+              <div class="rlabel">${UI.read}</div>
+              <p class="idol">${d.idol}</p>
+              <div class="loop">${loopBeats}</div>
+              <div class="turn">
+                <div class="tk">${UI.turn}</div>
+                <p class="tv">${d.turn}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+function toggleAccordion(idx) {
+  const btn = document.getElementById(`head-${idx}`);
+  const panel = document.getElementById(`panel-${idx}`);
+  const isOpen = btn.getAttribute("aria-expanded") === "true";
+  
+  btn.setAttribute("aria-expanded", String(!isOpen));
+  if (isOpen) {
+    panel.classList.remove("open");
+  } else {
+    panel.classList.add("open");
+  }
+}
+
+// 3. Render Loop Visualizer view
+function renderLoopStep(stepIdx) {
+  stepInfoCard.style.opacity = 0;
+  setTimeout(() => {
+    const step = STEP_DEFS[stepIdx];
+    stepInfoCard.innerHTML = `
+      <h3>${step.title}</h3>
+      <p>${step.desc}</p>
+    `;
+    stepInfoCard.style.opacity = 1;
+  }, 150);
+  
+  stepCompRoot.innerHTML = DATA_ACTS.map(d => `
+    <div class="comp-cell">
+      <span class="comp-lbl">${d.name} (${d.mech})</span>
+      <h4>${LOOP_KEYS[stepIdx]}</h4>
+      <p>${d.loop[stepIdx]}</p>
+    </div>
+  `).join("");
+}
+
+// Stepper click handlers
+document.querySelectorAll(".step-node").forEach(node => {
+  node.addEventListener("click", () => {
+    document.querySelectorAll(".step-node").forEach(n => n.classList.remove("active"));
+    node.classList.add("active");
+    renderLoopStep(parseInt(node.dataset.step));
+  });
+});
+
+// 4. Render Matrix & Matrix Cards View
+function renderMatrix() {
+  let tableHtml = "";
+  let cardsHtml = "";
+  
+  // Render Family I
+  DATA_FEELINGS.forEach(f => {
+    tableHtml += `
+      <tr>
+        <td>
+          <span class="m-name">${f.name}</span>
+          <span class="m-lbl">${f.sub}</span>
+        </td>
+        <td class="mono" style="color: var(--muted); font-size: 11px;">${UI.fam1s}</td>
+        <td>${f.sensation}</td>
+        <td>${UI.intensity}</td>
+        <td><b>${UI.realityLbl}</b> ${f.reality}</td>
+      </tr>
+    `;
+    
+    cardsHtml += `
+      <div class="matrix-card">
+        <h3>
+          <span>${f.name}</span>
+          <span class="m-lbl">${f.sub}</span>
+        </h3>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.family}</span>
+          <span class="matrix-card-val">${UI.fam1l}</span>
+        </div>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.coreSens}</span>
+          <span class="matrix-card-val">${f.sensation}</span>
+        </div>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.clinCard}</span>
+          <span class="matrix-card-val"><b>${f.reality}</b></span>
+        </div>
+      </div>
+    `;
+  });
+  
+  // Render Family II
+  DATA_ACTS.forEach(d => {
+    tableHtml += `
+      <tr>
+        <td>
+          <span class="m-name">${d.name}</span>
+          <span class="m-lbl">${d.mech}</span>
+        </td>
+        <td class="mono" style="color: var(--orange); font-size: 11px;">${UI.fam2s}</td>
+        <td>${d.need}</td>
+        <td>${d.tell}</td>
+        <td>${d.turn}</td>
+      </tr>
+    `;
+    
+    cardsHtml += `
+      <div class="matrix-card">
+        <h3>
+          <span>${d.name}</span>
+          <span class="m-lbl">${d.mech}</span>
+        </h3>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.family}</span>
+          <span class="matrix-card-val">${UI.fam2l}</span>
+        </div>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.coreDriver}</span>
+          <span class="matrix-card-val">${d.need}</span>
+        </div>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.theTell}</span>
+          <span class="matrix-card-val">${d.tell}</span>
+        </div>
+        <div class="matrix-card-row">
+          <span class="matrix-card-lbl">${UI.trueTurn}</span>
+          <span class="matrix-card-val">${d.turn}</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  matrixTbody.innerHTML = tableHtml;
+  matrixCardsRoot.innerHTML = cardsHtml;
+}
+
+// VIEW SWITCHER STATE (Integrated with View Transitions API)
+document.querySelectorAll(".view-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".view-btn").forEach(b => b.setAttribute("aria-pressed", "false"));
+    btn.setAttribute("aria-pressed", "true");
+    
+    switchView(btn.dataset.view);
+  });
+});
+
+function switchView(viewName) {
+  const updateDOM = () => {
+    document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+    const activePanel = document.getElementById(`view-${viewName}`);
+    activePanel.classList.add("active");
+    
+    // Show/Hide lens filter menu depending on active view
+    const lensContainer = document.getElementById("lens-toggle-container");
+    if (viewName === "guided") {
+      lensContainer.style.visibility = "visible";
+      lensContainer.style.opacity = "1";
+    } else {
+      lensContainer.style.visibility = "hidden";
+      lensContainer.style.opacity = "0";
+    }
+  };
+
+  // Trigger browser view transitions if supported
+  if (document.startViewTransition) {
+    document.startViewTransition(updateDOM);
+  } else {
+    updateDOM();
+  }
+}
+
+// LENS FILTER STATE
+document.querySelectorAll(".lens-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".lens-btn").forEach(b => b.setAttribute("aria-pressed", "false"));
+    btn.setAttribute("aria-pressed", "true");
+    
+    document.body.setAttribute("data-lens", btn.dataset.lens);
+  });
+});
+
+// 5. Diagnostic Interactive Panel Logic
+const diagState = [null, null, null];
+
+function updateDiagnosticFeedback() {
+  const [q0, q1, q2] = diagState;
+  const diagFeedback = document.getElementById("diag-feedback");
+  
+  if (q0 === null || q1 === null || q2 === null) {
+    diagFeedback.innerHTML = UI.select;
+    diagFeedback.style.color = "var(--cream-soft)";
+    return;
+  }
+  
+  const isVerb = q0 === "verb";
+  const isThem = q1 === "them";
+  const isTwo = q2 === "two";
+  
+  if (isVerb && isThem && isTwo) {
+    diagFeedback.innerHTML = `
+      <b style="color: #68BB59; display: block; margin-bottom: 4px; font-size: 15px;">${UI.alignTrue}</b>
+      ${UI.trueText}
+    `;
+  } else {
+    let aspects = [];
+    if (!isVerb) aspects.push(UI.a0);
+    if (!isThem) aspects.push(UI.a1);
+    if (!isTwo) aspects.push(UI.a2);
+    
+    diagFeedback.innerHTML = `
+      <b style="color: var(--orange); display: block; margin-bottom: 4px; font-size: 15px;">${UI.alignFake}</b>
+      ${UI.markers} ${aspects.join(", ")}. ${UI.likely}
+    `;
+  }
+}
+
+document.querySelectorAll(".diag-q").forEach(qNode => {
+  const qIdx = parseInt(qNode.dataset.q);
+  qNode.querySelectorAll(".diag-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      qNode.querySelectorAll(".diag-btn").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      diagState[qIdx] = btn.dataset.val;
+      updateDiagnosticFeedback();
+    });
+  });
+});
+
+// INITIALIZE ON LOAD
+if (IS_RU) document.getElementById("diag-feedback").textContent = UI.select;
+renderFeelings();
+renderActsAccordion();
+renderLoopStep(0);
+renderMatrix();
+</script>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>

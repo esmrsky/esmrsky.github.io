@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/Fake-Love/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/Fake-Love/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/Fake-Love/">
+<!-- lang-alt:end -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F9F6F0'/%3E%3Cpath d='M32 55S9 40 9 25a12.5 12.5 0 0 1 23-7 12.5 12.5 0 0 1 23 7c0 15-23 30-23 30Z' fill='%23F3651C'/%3E%3Cpath d='M32 17l-5 13 8 5-5 14' fill='none' stroke='%23F9F6F0' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<title>The Counterfeit Loop — Reframed by Literature</title>
+<title data-ru="Цикл подделок: любовь, переосмысленная через литературу" data-ru-src="fd9305dbf1">The Counterfeit Loop — Reframed by Literature</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -161,6 +166,13 @@
   .toggle-btn:hover {
     color: var(--ink);
   }
+  /* Russian lens labels run longer: on the narrowest phones the label sits above its buttons */
+  @media (max-width: 360px) {
+    :lang(ru) .control-group { flex-wrap: wrap; row-gap: 6px; }
+  }
+  /* Long Russian words in the two-column answers must not push the grid wider than the panel */
+  :lang(ru) .diag-opts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :lang(ru) .diag-btn { hyphens: auto; overflow-wrap: break-word; }
   .toggle-btn[aria-pressed="true"] {
     background: var(--ink);
     color: var(--cream);
@@ -811,6 +823,16 @@
     * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
   }
 
+  /* EN · RU switch */
+  .hero .hero-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+  .hero .hero-top .eyebrow { margin-bottom: 0; min-width: 0; }
+  .lang-switch { position: relative; display: inline-flex; align-items: center; height: 44px; border-radius: 999px; overflow: hidden; flex: 0 0 auto; }
+  .lang-switch::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--line-strong); border-radius: inherit; pointer-events: none; }
+  .lang-opt { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 12px; font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-decoration: none; color: var(--muted); transition: color var(--t1) var(--ease), background-color var(--t1) var(--ease); }
+  .lang-opt:hover { color: var(--ink); }
+  .lang-opt[aria-current="page"] { background: var(--cream-2); color: var(--ink); pointer-events: none; }
+  .lang-opt:focus-visible { outline: var(--focus-ring); outline-offset: -3px; }
+
   /* reading comfort: balance display text */
   h1, h2, h3 { text-wrap: balance; }
 </style>
@@ -829,18 +851,18 @@ p,li,dd,figcaption{text-wrap:pretty}
 
   <header class="hero">
     <div class="wrap">
-      <div class="eyebrow">The Counterfeit Loop · A Field Guide</div>
-      <h1>Love as a <em>verb</em>,<br>and its counterfeits.</h1>
-      <p class="thesis">
+      <div class="hero-top"><div class="eyebrow" data-ru="Цикл подделок · Полевой путеводитель" data-ru-src="99883d9358">The Counterfeit Loop · A Field Guide</div><div class="lang-switch" role="group" aria-label="Language" data-ru-aria-label="Язык"><a class="lang-opt" href="/Fake-Love/" data-ru-href="/Fake-Love/" lang="en" hreflang="en" aria-current="page" data-ru-aria-current="false">EN</a><a class="lang-opt" href="/Fake-Love/ru/" data-ru-href="/Fake-Love/ru/" lang="ru" hreflang="ru" data-ru-aria-current="page">RU</a></div></div>
+      <h1 data-ru="Любовь как <em>глагол</em>,<br>и её подделки." data-ru-src="18ac9ce68b">Love as a <em>verb</em>,<br>and its counterfeits.</h1>
+      <p class="thesis" data-ru="Психологическая и клиническая литература сходится в одном: <b>любовь — не пассивное чувство, а осознанный выбор</b>. Когда мы принимаем за любовь эмоциональную вовлечённость (<i>катексис</i>) или способ успокоить самих себя, получаются подделки, в которых другой человек нужен, чтобы закрывать наши собственные дефициты." data-ru-src="92ac7d72e1">
         The psychological and clinical literature converges: <b>love is not a passive feeling, but an active choice</b>. When we conflate emotional investment (<i>cathexis</i>) or self-stabilization with love, we construct counterfeits where the other person is used to fill our own deficits.
       </p>
       
       <div class="measuring-stick">
-        <span class="stick-title">The Measuring Stick</span>
-        <blockquote class="stick-quote">
+        <span class="stick-title" data-ru="Мерило" data-ru-src="cceacc7f02">The Measuring Stick</span>
+        <blockquote class="stick-quote" data-ru="«Любовь — это воля выходить за пределы себя ради духовного роста — своего или чужого… Любовь — это действие, а не просто чувство. Любовь — это то, что любовь делает.»" data-ru-src="600c8bfbae">
           "Love is the will to extend one's self for the purpose of nurturing one's own or another's spiritual growth... Love is an action, never simply a feeling. It is as love does."
         </blockquote>
-        <span class="stick-author">— Synthesized from M. Scott Peck & bell hooks</span>
+        <span class="stick-author" data-ru="— по мотивам M. Scott Peck и bell hooks" data-ru-src="5b04606e5a">— Synthesized from M. Scott Peck & bell hooks</span>
       </div>
     </div>
   </header>
@@ -849,20 +871,20 @@ p,li,dd,figcaption{text-wrap:pretty}
   <div class="control-section">
     <div class="wrap control-wrap">
       <div class="control-group">
-        <span class="control-label">View</span>
-        <div class="btn-group" role="group" aria-label="Toggle views">
-          <button class="toggle-btn view-btn" data-view="guided" aria-pressed="true">Guided Guide</button>
-          <button class="toggle-btn view-btn" data-view="loop" aria-pressed="false">The Loop Cycle</button>
-          <button class="toggle-btn view-btn" data-view="matrix" aria-pressed="false">Diagnostic Matrix</button>
+        <span class="control-label" data-ru="Вид" data-ru-src="dcc839a401">View</span>
+        <div class="btn-group" role="group" aria-label="Toggle views" data-ru-aria-label="Переключение видов">
+          <button class="toggle-btn view-btn" data-view="guided" aria-pressed="true" data-ru="Гид" data-ru-src="a2c47b2da4">Guided Guide</button>
+          <button class="toggle-btn view-btn" data-view="loop" aria-pressed="false" data-ru="Цикл" data-ru-src="ae465a7e93">The Loop Cycle</button>
+          <button class="toggle-btn view-btn" data-view="matrix" aria-pressed="false" data-ru="Матрица" data-ru-src="e345ef3c32">Diagnostic Matrix</button>
         </div>
       </div>
       
       <div class="control-group" id="lens-toggle-container">
-        <span class="control-label">Lens</span>
-        <div class="btn-group" role="group" aria-label="Filter context">
-          <button class="toggle-btn lens-btn" data-lens="both" aria-pressed="true">Both</button>
-          <button class="toggle-btn lens-btn" data-lens="romantic" aria-pressed="false">Romantic</button>
-          <button class="toggle-btn lens-btn" data-lens="parenting" aria-pressed="false">Parenting</button>
+        <span class="control-label" data-ru="Ракурс" data-ru-src="4317a99a9c">Lens</span>
+        <div class="btn-group" role="group" aria-label="Filter context" data-ru-aria-label="Фильтр по контексту">
+          <button class="toggle-btn lens-btn" data-lens="both" aria-pressed="true" data-ru="Оба" data-ru-src="b6c1d862f9">Both</button>
+          <button class="toggle-btn lens-btn" data-lens="romantic" aria-pressed="false" data-ru="Романтика" data-ru-src="4eca3d90f4">Romantic</button>
+          <button class="toggle-btn lens-btn" data-lens="parenting" aria-pressed="false" data-ru="Родительство" data-ru-src="f87f607ad3">Parenting</button>
         </div>
       </div>
     </div>
@@ -875,18 +897,18 @@ p,li,dd,figcaption{text-wrap:pretty}
       
       <!-- FAMILY I SECTION -->
       <div class="section-intro">
-        <span class="mono" style="color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;">Family I</span>
-        <h2>Feelings Mistaken for Love</h2>
-        <p>The "Noun Errors" — emotional intensities, biological charges, or attachment systems that mimic love, but operate on automatic nervous system responses rather than willing action.</p>
+        <span class="mono" style="color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;" data-ru="Семья I" data-ru-src="815ff26032">Family I</span>
+        <h2 data-ru="Чувства, принятые за любовь" data-ru-src="9e179af8fc">Feelings Mistaken for Love</h2>
+        <p data-ru="«Ошибки существительных» — эмоциональные всплески, биологические заряды или системы привязанности, которые имитируют любовь, но работают на автоматических реакциях нервной системы, а не на осознанном действии." data-ru-src="35609bd84e">The "Noun Errors" — emotional intensities, biological charges, or attachment systems that mimic love, but operate on automatic nervous system responses rather than willing action.</p>
       </div>
       
       <div class="cards-grid" id="feelings-root"><!-- JS rendered --></div>
       
       <!-- FAMILY II SECTION -->
       <div class="section-intro" style="border-top: 1px solid var(--line); padding-top: 48px;">
-        <span class="mono" style="color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;">Family II</span>
-        <h2>Acts Mistaken for Love & Care</h2>
-        <p>The "False-Verb Errors" — extractive behaviors where we perform care for another, but the underlying drive is to relieve our own internal scarcity or anxiety.</p>
+        <span class="mono" style="color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;" data-ru="Семья II" data-ru-src="9af09c2f80">Family II</span>
+        <h2 data-ru="Поступки, принятые за любовь и заботу" data-ru-src="c432503f09">Acts Mistaken for Love & Care</h2>
+        <p data-ru="«Ошибки ложных глаголов» — извлекающее поведение: мы изображаем заботу о другом, но на самом деле хотим унять собственную внутреннюю нехватку или тревогу." data-ru-src="ae3f3c950f">The "False-Verb Errors" — extractive behaviors where we perform care for another, but the underlying drive is to relieve our own internal scarcity or anxiety.</p>
       </div>
       
       <div class="accordion-wrap" id="acts-root"><!-- JS rendered --></div>
@@ -897,30 +919,30 @@ p,li,dd,figcaption{text-wrap:pretty}
     <section id="view-loop" class="view-panel">
       <div class="loop-visualizer">
         <div class="section-intro" style="padding-top: 20px;">
-          <h2>Anatomy of the Loop</h2>
-          <p>Every counterfeit act follows a cyclical blueprint. Click each step below to see how the seven False-Verb counterfeits manifest at that exact phase of the extraction loop.</p>
+          <h2 data-ru="Анатомия цикла" data-ru-src="f7240888e4">Anatomy of the Loop</h2>
+          <p data-ru="Каждая подделка идёт по одной циклической схеме. Нажимай на шаги ниже и смотри, как семь «ложных глаголов» проявляются именно на этой фазе цикла извлечения." data-ru-src="e4d3ae6e1e">Every counterfeit act follows a cyclical blueprint. Click each step below to see how the seven False-Verb counterfeits manifest at that exact phase of the extraction loop.</p>
         </div>
         
-        <nav class="stepper-nav" aria-label="Loop cycle steps">
-          <button class="step-node active" data-step="0" aria-label="Step 1: Wound">
+        <nav class="stepper-nav" aria-label="Loop cycle steps" data-ru-aria-label="Шаги цикла">
+          <button class="step-node active" data-step="0" aria-label="Step 1: Wound" data-ru-aria-label="Шаг 1: Рана">
             <span class="step-circle">1</span>
-            <span class="step-name">Wound</span>
+            <span class="step-name" data-ru="Рана" data-ru-src="d65e2bcd79">Wound</span>
           </button>
-          <button class="step-node" data-step="1" aria-label="Step 2: Offer">
+          <button class="step-node" data-step="1" aria-label="Step 2: Offer" data-ru-aria-label="Шаг 2: Предложение">
             <span class="step-circle">2</span>
-            <span class="step-name">Offer</span>
+            <span class="step-name" data-ru="Предложение" data-ru-src="0cf57c63eb">Offer</span>
           </button>
-          <button class="step-node" data-step="2" aria-label="Step 3: Idol">
+          <button class="step-node" data-step="2" aria-label="Step 3: Idol" data-ru-aria-label="Шаг 3: Идол">
             <span class="step-circle">3</span>
-            <span class="step-name">Idol</span>
+            <span class="step-name" data-ru="Идол" data-ru-src="a3ad519416">Idol</span>
           </button>
-          <button class="step-node" data-step="3" aria-label="Step 4: Altar">
+          <button class="step-node" data-step="3" aria-label="Step 4: Altar" data-ru-aria-label="Шаг 4: Алтарь">
             <span class="step-circle">4</span>
-            <span class="step-name">Altar</span>
+            <span class="step-name" data-ru="Алтарь" data-ru-src="3301aacea1">Altar</span>
           </button>
-          <button class="step-node" data-step="4" aria-label="Step 5: Structure">
+          <button class="step-node" data-step="4" aria-label="Step 5: Structure" data-ru-aria-label="Шаг 5: Структура">
             <span class="step-circle">5</span>
-            <span class="step-name">Structure</span>
+            <span class="step-name" data-ru="Структура" data-ru-src="7203c2b3da">Structure</span>
           </button>
         </nav>
         
@@ -938,8 +960,8 @@ p,li,dd,figcaption{text-wrap:pretty}
     <section id="view-matrix" class="view-panel">
       <div class="matrix-view">
         <div class="section-intro" style="padding-top: 20px; max-width: 100%;">
-          <h2>The Diagnostic Matrix</h2>
-          <p>A comprehensive side-by-side catalog comparing the core mechanisms, tells, and alignment resolutions for all 12 counterfeits.</p>
+          <h2 data-ru="Диагностическая матрица" data-ru-src="8b3924cee5">The Diagnostic Matrix</h2>
+          <p data-ru="Подробный сравнительный каталог всех 12 подделок: ключевые механизмы, признаки и то, к чему возвращает настоящая любовь." data-ru-src="0627ed1f4f">A comprehensive side-by-side catalog comparing the core mechanisms, tells, and alignment resolutions for all 12 counterfeits.</p>
         </div>
         
         <!-- Desktop Table view -->
@@ -947,11 +969,11 @@ p,li,dd,figcaption{text-wrap:pretty}
           <table class="matrix-table">
             <thead>
               <tr>
-                <th style="width: 20%;">Type</th>
-                <th style="width: 15%;">Family</th>
-                <th style="width: 25%;">Core Driver / Need</th>
-                <th style="width: 20%;">The Tell</th>
-                <th style="width: 20%;">True Turn</th>
+                <th style="width: 20%;" data-ru="Тип" data-ru-src="baaddf70fb">Type</th>
+                <th style="width: 15%;" data-ru="Семья" data-ru-src="bd2d677b2e">Family</th>
+                <th style="width: 25%;" data-ru="Главный мотив / потребность" data-ru-src="79a5bcd7b5">Core Driver / Need</th>
+                <th style="width: 20%;" data-ru="Признак" data-ru-src="4012b16ff6">The Tell</th>
+                <th style="width: 20%;" data-ru="Настоящий поворот" data-ru-src="da019094a1">True Turn</th>
               </tr>
             </thead>
             <tbody id="matrix-tbody">
@@ -971,46 +993,46 @@ p,li,dd,figcaption{text-wrap:pretty}
     <section class="discriminator-section">
       <div class="discriminator-layout">
         <div class="disc-text">
-          <div class="eyebrow">The Litmus Test</div>
-          <h2>Is it Love or is it Cathexis?</h2>
-          <p>If you are struggling to discern whether a relationship pattern (romantic or parental) is rooted in true love or a counterfeit attachment, run it through the three core diagnostic splits established in clinical literature.</p>
-          <p>True love protects the other's freedom and separation. Counterfeits experience freedom as a threat to their emotional safety.</p>
-          <div class="disc-highlight">
+          <div class="eyebrow" data-ru="Лакмусовая бумажка" data-ru-src="68a174c5d6">The Litmus Test</div>
+          <h2 data-ru="Это любовь или катексис?" data-ru-src="65f6d9527f">Is it Love or is it Cathexis?</h2>
+          <p data-ru="Если тебе трудно понять, что лежит в основе отношений (романтических или родительских) — настоящая любовь или поддельная привязанность, — пропусти их через три главных диагностических различия, выделенных в клинической литературе." data-ru-src="ebeca0108a">If you are struggling to discern whether a relationship pattern (romantic or parental) is rooted in true love or a counterfeit attachment, run it through the three core diagnostic splits established in clinical literature.</p>
+          <p data-ru="Настоящая любовь бережёт свободу и отдельность другого. Подделки воспринимают свободу как угрозу своей эмоциональной безопасности." data-ru-src="03305f0b46">True love protects the other's freedom and separation. Counterfeits experience freedom as a threat to their emotional safety.</p>
+          <div class="disc-highlight" data-ru="«Признак любви — постоянство и покой, поддержка пути другого вовне. Признак привязанности — высокие ставки, накал и гипербдительность.»" data-ru-src="35a6fe0f9c">
             "The signature of love is consistency and peace, supporting the other’s journey outward. The signature of attachment is high-stakes intensity and hyper-vigilance."
           </div>
         </div>
         
         <div class="diagnostic-panel">
           <div>
-            <h3>The Discriminator Diagnostic</h3>
+            <h3 data-ru="Диагностика различий" data-ru-src="b30153c07f">The Discriminator Diagnostic</h3>
             
             <div class="diag-q" data-q="0">
-              <span class="diag-lbl">1. Verb or Feeling?</span>
+              <span class="diag-lbl" data-ru="1. Глагол или чувство?" data-ru-src="912928e06f">1. Verb or Feeling?</span>
               <div class="diag-opts">
-                <button class="diag-btn" data-val="feeling">A feeling/spark I'm experiencing</button>
-                <button class="diag-btn" data-val="verb">Active efforts for their growth</button>
+                <button class="diag-btn" data-val="feeling" data-ru="Чувство или искра, которую я переживаю" data-ru-src="d2cdb17fd5">A feeling/spark I'm experiencing</button>
+                <button class="diag-btn" data-val="verb" data-ru="Деятельные усилия ради роста другого" data-ru-src="9fceb5f13d">Active efforts for their growth</button>
               </div>
             </div>
             
             <div class="diag-q" data-q="1">
-              <span class="diag-lbl">2. Them or Me?</span>
+              <span class="diag-lbl" data-ru="2. Другой или я?" data-ru-src="acec78662c">2. Them or Me?</span>
               <div class="diag-opts">
-                <button class="diag-btn" data-val="me">Stabilizing my own state/worth</button>
-                <button class="diag-btn" data-val="them">Their long-term independent flourishing</button>
+                <button class="diag-btn" data-val="me" data-ru="Стабилизация моего состояния и самоценности" data-ru-src="1f3a03fd2b">Stabilizing my own state/worth</button>
+                <button class="diag-btn" data-val="them" data-ru="Долгосрочный самостоятельный расцвет другого" data-ru-src="f252ac7dac">Their long-term independent flourishing</button>
               </div>
             </div>
             
             <div class="diag-q" data-q="2">
-              <span class="diag-lbl">3. Two Selves or Fused?</span>
+              <span class="diag-lbl" data-ru="3. Двое или слияние?" data-ru-src="4d5e62f4a3">3. Two Selves or Fused?</span>
               <div class="diag-opts">
-                <button class="diag-btn" data-val="fused">Enmeshment / Demand for sameness</button>
-                <button class="diag-btn" data-val="two">Differentiation / Welcoming freedom</button>
+                <button class="diag-btn" data-val="fused" data-ru="Слияние / требование одинаковости" data-ru-src="413027e169">Enmeshment / Demand for sameness</button>
+                <button class="diag-btn" data-val="two" data-ru="Различение / принятие свободы" data-ru-src="b2bbf6d715">Differentiation / Welcoming freedom</button>
               </div>
             </div>
           </div>
           
           <div class="diag-result">
-            <span class="diag-res-lbl">Diagnostic Result</span>
+            <span class="diag-res-lbl" data-ru="Результат диагностики" data-ru-src="ce1105fdce">Diagnostic Result</span>
             <div class="diag-res-text" id="diag-feedback">
               Select options above to audit your current dynamic.
             </div>
@@ -1023,23 +1045,23 @@ p,li,dd,figcaption{text-wrap:pretty}
 
   <section class="close">
     <div class="wrap">
-      <div class="eyebrow">The Turning Point</div>
-      <h2>Abundance before the offer.</h2>
-      <p>
+      <div class="eyebrow" data-ru="Точка поворота" data-ru-src="bb356e79a0">The Turning Point</div>
+      <h2 data-ru="Изобилие — до предложения." data-ru-src="a9cae65eb7">Abundance before the offer.</h2>
+      <p data-ru="Каждая подделка — это попытка <b>вытянуть</b> из человека то, чего не хватает нам самим: безопасность, ценность, покой, оправдание. Поэтому она и перерождается в контроль или одержимость. Мы возлагаем на человека груз, который предназначалось нести только трансцендентному источнику благодати, и давим этим и его, и себя." data-ru-src="6fd2743b49">
         Every counterfeit is an attempt to <b>extract</b> from a person what is missing in ourselves — safety, worth, peace, justification. That is why it deforms into control or obsession. We hand a human the weight only a transcendent source of grace was meant to carry, crushing both them and ourselves.
       </p>
-      <p>
+      <p data-ru="Любовь нельзя выжать из голода. Лекарство — не в том, чтобы просто «стараться сильнее» быть бескорыстным. Сначала нужно наполниться у источника, чтобы другой перестал быть твоим спасителем и наконец мог быть принят как дар." data-ru-src="1c8832a234">
         Love cannot be willed out of starvation. The cure is not simply "trying harder" to act selflessly. It is being filled at the source first, so the other is released from being your savior and can finally be received as a gift.
       </p>
-      <div class="seq">Filled at the source <span>→</span> the other freed from carrying it <span>→</span> love that gives without invoicing</div>
+      <div class="seq" data-ru="Наполниться у источника <span>→</span> другой свободен от этого груза <span>→</span> любовь, которая даёт, не выставляя счёт" data-ru-src="429a255687">Filled at the source <span>→</span> the other freed from carrying it <span>→</span> love that gives without invoicing</div>
     </div>
   </section>
 
   <footer>
     <div class="wrap">
-      <span>THE COUNTERFEIT GUIDE</span>
-      <span>WOUND → OFFER → CATHEXIS → ALTAR → STRUCTURE</span>
-      <a class="home" href="https://esmrsky.github.io/">← All projects</a>
+      <span data-ru="ПУТЕВОДИТЕЛЬ ПО ПОДДЕЛКАМ" data-ru-src="3073c88ed5">THE COUNTERFEIT GUIDE</span>
+      <span data-ru="РАНА → ПРЕДЛОЖЕНИЕ → КАТЕКСИС → АЛТАРЬ → СТРУКТУРА" data-ru-src="69859cd302">WOUND → OFFER → CATHEXIS → ALTAR → STRUCTURE</span>
+      <a class="home" href="https://esmrsky.github.io/" data-ru="← Все проекты" data-ru-src="027351de56" data-ru-href="/ru/">← All projects</a>
     </div>
   </footer>
 
@@ -1203,6 +1225,303 @@ const STEP_DEFS = [
   }
 ];
 
+// RUSSIAN PAYLOAD (parallel data, swapped in place by index; the English above is the source)
+const IS_RU = document.documentElement.getAttribute('data-lang') === 'ru';
+const UI_EN = {
+ "feelings": "Feelings",
+ "sensation": "The Sensation",
+ "clinical": "Clinical Reality",
+ "common": "Common Expression",
+ "observed": "Observed · the psychology",
+ "need": "The need",
+ "romantic": "Romantic",
+ "parenting": "Parenting",
+ "echo": "The Echo",
+ "tell": "The tell",
+ "read": "The read · the Counterfeit Loop",
+ "turn": "The true-love turn",
+ "fam1s": "Family I (Feeling)",
+ "intensity": "Intensity & Obsession",
+ "realityLbl": "Reality:",
+ "family": "Family",
+ "fam1l": "Family I (Feeling mistaken for love)",
+ "coreSens": "Core Sensation",
+ "clinCard": "The Clinical Reality",
+ "fam2s": "Family II (Act)",
+ "fam2l": "Family II (Act mistaken for love/care)",
+ "coreDriver": "Core Driver / Need",
+ "theTell": "The Tell",
+ "trueTurn": "True Turn",
+ "select": "Select options above to audit your current dynamic.",
+ "alignTrue": "Alignment: True Love",
+ "trueText": "This dynamic functions as an active choice oriented to another's flourishment, holding separate boundaries. It is consistent, differentiation-safe, and healthy.",
+ "alignFake": "Alignment: Counterfeit Loop",
+ "markers": "This dynamic contains extraction markers:",
+ "likely": "It is highly likely to generate exhaustion, resentment, or control.",
+ "a0": "conflating feelings (cathexis) with action",
+ "a1": "extracting emotional stabilization for yourself",
+ "a2": "enmeshment demanding sameness"
+};
+const UI_RU = {
+ "feelings": "Чувства",
+ "sensation": "Ощущение",
+ "clinical": "Клиническая реальность",
+ "common": "Как это выглядит",
+ "observed": "Наблюдение · психология",
+ "need": "Потребность",
+ "romantic": "Романтика",
+ "parenting": "Родительство",
+ "echo": "Эхо",
+ "tell": "Признак",
+ "read": "Прочтение · цикл подделок",
+ "turn": "Поворот к настоящей любви",
+ "fam1s": "Семья I (Чувство)",
+ "intensity": "Накал и одержимость",
+ "realityLbl": "Реальность:",
+ "family": "Семья",
+ "fam1l": "Семья I (чувство, принятое за любовь)",
+ "coreSens": "Ключевое ощущение",
+ "clinCard": "Клиническая реальность",
+ "fam2s": "Семья II (Поступок)",
+ "fam2l": "Семья II (поступок, принятый за любовь или заботу)",
+ "coreDriver": "Главный мотив / потребность",
+ "theTell": "Признак",
+ "trueTurn": "Настоящий поворот",
+ "select": "Выбери варианты выше, чтобы проверить свою нынешнюю динамику.",
+ "alignTrue": "Соответствие: настоящая любовь",
+ "trueText": "Эта динамика работает как осознанный выбор, направленный на расцвет другого, при сохранении раздельных границ. Она последовательна, безопасна для различения «я» и «ты» и здорова.",
+ "alignFake": "Соответствие: цикл подделок",
+ "markers": "В этой динамике есть признаки извлечения:",
+ "likely": "Скорее всего, она порождает истощение, обиду или контроль.",
+ "a0": "подмена действия чувствами (катексисом)",
+ "a1": "выжимание эмоциональной стабилизации для себя",
+ "a2": "слияние, требующее одинаковости"
+};
+const UI = IS_RU ? UI_RU : UI_EN;
+const RU_FEELINGS = [
+ {
+  "name": "Катексис",
+  "sub": "Крючок вложений",
+  "driver": "Ментальный и эмоциональный заряд",
+  "sensation": "Сильная, всепоглощающая сосредоточенность на человеке; чувство, что он очень важен для твоей жизни; мысли о нём не отпускают.",
+  "reality": "Эмоциональное вложение энергии (катексис) — это не любовь. Можно испытывать катексис к человеку, которого ты на самом деле не знаешь, не уважаешь и ничем не поддерживаешь. Катексис — это мысленная привязанность; любовь — это действие заботы.",
+  "lit": "M. Scott Peck (The Road Less Traveled) и bell hooks (All About Love)",
+  "target": "Любой цикл извлечения",
+  "example": "Человек месяцами грезит о знакомом, выстраивает в голове подробные сценарии общего будущего, чувствует глубокую «связь» — и ни разу не заводит настоящего разговора, чтобы узнать, кто этот человек на самом деле."
+ },
+ {
+  "name": "Лимеренция",
+  "sub": "Навязчивая искра",
+  "driver": "Дофамин и неопределённость",
+  "sensation": "Сильная, неподвластная воле жажда ответных чувств, навязчивые мысленные круги, настроение скачет вслед за сигналами другого человека.",
+  "reality": "Фантазия на дофамине, подогретая неопределённостью. Ей нужна проекция человека, а не он сам, какой он есть.",
+  "lit": "Dorothy Tennov (Love and Limerence, 1979)",
+  "target": "Любовь как наркотик",
+  "example": "Разбирать каждый знак препинания в сообщениях, переживать острую эйфорию, когда отвечают быстро, и проваливаться в физическое отчаяние или пустоту, когда ответа приходится ждать."
+ },
+ {
+  "name": "«Тревожная искра»",
+  "sub": "Химия непредсказуемости",
+  "driver": "Кортизол и сигнал тревоги привязанности",
+  "sensation": "Колотящееся сердце, азарт, бабочки в животе, высокие ставки, магнетическое влечение, постоянное выискивание признаков интереса.",
+  "reality": "Твоя нервная система улавливает угрозу или недоступность и включает сигнал тревоги привязанности. Мы принимаем тревогу за страсть.",
+  "lit": "Опирается на теорию привязанности (John Bowlby)",
+  "target": "Любовь как контроль",
+  "example": "Чувствовать сильную «химию» только рядом с партнёрами, которые эмоционально далеки или непредсказуемы. Скучать или решать, что «искры нет», когда рядом человек последовательный, тёплый и надёжный."
+ },
+ {
+  "name": "Тяга травматической связи",
+  "sub": "Накал, принятый за глубину",
+  "driver": "Прерывистое подкрепление",
+  "sensation": "Экстатические взлёты и сокрушительные падения; чувство «мы против целого мира»; затягивающая тяга к неровному, бурному человеку.",
+  "reality": "Связь, выкованная циклами насилия, пренебрежения или драмы, за которыми внезапно следует тепло. Боль, сменяющаяся облегчением, приучает мозг читать конфликт как близость.",
+  "lit": "Patrick Carnes (Against the Betrayal Bond)",
+  "target": "Любовь как спасение / наркотик",
+  "example": "Оставаться в нестабильном цикле, где партнёр чередует жёсткую критику с внезапными пышными жестами тепла, а облегчение после примирения принимается за доказательство «родства душ»."
+ },
+ {
+  "name": "Привычность",
+  "sub": "Застывшая связь",
+  "driver": "Комфорт знакомого",
+  "sensation": "Сосуществование без трения, общая история, удобный распорядок, избегание любых потрясений.",
+  "reality": "Привязанность из удобства. Комфорт предсказуемости и страх перемен, принятые за деятельную, осознанную заботу о росте другого.",
+  "lit": "Erich Fromm (The Art of Loving)",
+  "target": "Любовь как зеркало",
+  "example": "Жить рядом, как соседи по квартире, обходить трудные разговоры ради спокойствия и принимать удобную привычку и страх остаться одному за заботу о росте друг друга."
+ }
+];
+const RU_ACTS = [
+ {
+  "num": "I",
+  "name": "Любовь как наркотик",
+  "mech": "Регуляция",
+  "need": "Я не умею регулировать собственное состояние, поэтому занимаю твоё, чтобы справляться.",
+  "romantic": "Лимеренция и созависимость. Твоё настроение задаёт моё; одно сообщение переписывает мой день; я потребляю твоё присутствие, чтобы чувствовать себя ровно.",
+  "parenting": "Парентификация. Ребёнок становится для родителя утешителем и поверенным: управляет чувствами взрослого, чтобы тот был в порядке.",
+  "echo": "Парентифицированный ребёнок усваивает, что его ценность в эмоциональной «ёмкости» для чужих чувств, и во взрослой жизни ищет партнёров, чьё неустойчивое настроение приходится выравнивать.",
+  "tell": "Мне нужно твоё состояние, чтобы починить моё.",
+  "idol": "Человек становится твоим <b>покоем</b> — той устойчивостью, которую ты должен был находить в Боге, отданной на аутсорс чужой нервной системе.",
+  "loop": [
+   "Невыносимая внутренняя боль",
+   "Другой её унимает",
+   "Другой становится моим покоем",
+   "Я выстраиваю день вокруг его сигналов",
+   "Мне хорошо, только если хорошо ему"
+  ],
+  "turn": "Человек, которого можно удержать, — который умеет сам себя успокаивать и покоиться в Боге, — может быть <b>рядом</b> с другим, а не питаться им. Присутствие, а не потребление."
+ },
+ {
+  "num": "II",
+  "name": "Любовь как зеркало",
+  "mech": "Подтверждение",
+  "need": "Я не знаю собственной ценности, поэтому мне нужно, чтобы ты возвращал мне её, как отражение.",
+  "romantic": "Любить то, что другой заставляет тебя чувствовать о себе. Нуждаться в постоянных заверениях; быть влюблённым в восхищение больше, чем в самого человека.",
+  "parenting": "Ребёнок как продолжение эго. Жить его победами; его достижения питают мой образ себя, его неудачи меня стыдят.",
+  "echo": "Ребёнок, которого любили лишь как продолжение чужого эго, вырастает с убеждением, что любовь равна достижениям и одобрению, и постоянно выступает, чтобы зеркало оставалось добрым.",
+  "tell": "Любовь теплеет, когда другой выставляет меня в хорошем свете, и остывает, когда нет.",
+  "idol": "Человек становится твоим <b>приговором</b> — ощущение, что ты приемлем, держится на его отражении, а не на том, что ты уже возлюблен.",
+  "loop": [
+   "Чего я стою?",
+   "Его восхищение отвечает «да»",
+   "Другой становится моим приговором",
+   "Я выступаю, чтобы зеркало оставалось добрым",
+   "Идентичность зависит от одобрения"
+  ],
+  "turn": "Ценность, полученная как данность, — возлюбленность, которая предшествует достижениям, — освобождает по-настоящему <b>увидеть</b> другого, а не использовать его как стекло."
+ },
+ {
+  "num": "III",
+  "name": "Любовь как контроль",
+  "mech": "Обладание",
+  "need": "Я обеспечиваю себе безопасность, контролируя тебя; твоя свобода кажется мне опасностью.",
+  "romantic": "Ревность, слежка, поглощение. «Если бы ты любил меня, ты бы…» Близость измеряется тем, насколько ты готов уступить.",
+  "parenting": "Гиперконтроль; любовь на условии послушания. Взросление ребёнка воспринимается как предательство, а не как рост.",
+  "echo": "Ребёнок, выросший под гиперконтролем, приравнивает близость к отказу от себя и потом либо контролирует партнёров, либо ищет поглощения.",
+  "tell": "Отдельность другого ощущается как угроза.",
+  "idol": "Человек становится твоей <b>безопасностью</b> — ты доверяешь собственной хватке больше, чем Богу, который удержит то, что тебе удержать не по силам.",
+  "loop": [
+   "Страх брошенности и хаоса",
+   "Если я контролирую тебя, я в безопасности",
+   "Контроль становится моей безопасностью",
+   "Я приношу твою свободу в жертву своему страху",
+   "Любовь — это хватка"
+  ],
+  "turn": "Безопасность, найденная в другом месте, позволяет разжать ладонь. Любовь, достаточно сильная, чтобы <b>благословить свободу другого</b> — даже свободу уйти."
+ },
+ {
+  "num": "IV",
+  "name": "Любовь как долг",
+  "mech": "Сделка",
+  "need": "Я не могу доверять свободно данной любви, поэтому связываю её обязательством.",
+  "romantic": "Подсчёт баллов. Любовь выдаётся авансом, чтобы её вернули. «Я сделал это, значит, теперь ты должен мне то». Бухгалтерские книги.",
+  "parenting": "«После всего, что я для тебя сделал». Вина как связующее; жертва тихо превращается в рычаг давления.",
+  "echo": "Ребёнок, воспитанный на любви-сделке, вырастает и ведёт учётную книгу, боится благодати и не может принять любовь, не проверив счёт.",
+  "tell": "Есть невидимая книга долгов, и я всё время её читаю.",
+  "idol": "Отношения становятся твоим <b>оправданием</b> — ты зарабатываешь и взыскиваешь вместо того, чтобы получать благодать и щедро делиться ею.",
+  "loop": [
+   "Любовь надо заслужить",
+   "Книга учёта делает её предсказуемой",
+   "Обмен становится моим оправданием",
+   "Я продолжаю платить и взыскивать",
+   "Благодать невозможна; всё надо вернуть"
+  ],
+  "turn": "Полученная благодать — незаслуженная, невозвратная — растворяет книгу долгов. Любовь, которая <b>даёт, не выставляя счёт</b>, потому что сначала была одарена сама."
+ },
+ {
+  "num": "V",
+  "name": "Любовь как спасение",
+  "mech": "Проект",
+  "need": "Я люблю, исправляя, — и это делает меня нужным и позволяет не смотреть на собственную рану.",
+  "romantic": "Динамика спасителя и «починщика». Влюбляться в потенциал; управлять чужой жизнью; любить версию, которую я сам выстраиваю.",
+  "parenting": "Гиперопека и «всё сделаю за тебя». Не дать ребёнку побороться или потерпеть неудачу; его растущая самостоятельность тихо угрожает моей роли.",
+  "echo": "Ребёнок, который всё тянул на себе, усваивает, что в безопасности, только когда полезен, и во взрослой жизни ищет надломленных партнёров, чтобы сохранять свою ценность.",
+  "tell": "Мне нужно, чтобы ты во мне нуждался.",
+  "idol": "Ты делаешь себя <b>спасителем</b> этого человека — занимаешь место, которое может занять только Бог, и называешь этот захват любовью.",
+  "loop": [
+   "Я ценен, только если полезен",
+   "Быть твоим спасителем — значит быть ценным",
+   "Быть нужным становится моей ценностью",
+   "Я удерживаю тебя в зависимости",
+   "Любовь — это чинить"
+  ],
+  "turn": "Ценность, которая не зависит от того, нужен ли ты, позволяет поддерживать, не поглощая, — и позволяет другому перерасти тебя. <b>Любовь, которая отпускает в полёт.</b>"
+ },
+ {
+  "num": "VI",
+  "name": "Любовь как потакание",
+  "mech": "Вседозволенность",
+  "need": "Я хочу нравиться или избежать конфликта, поэтому даю тебе всё, чего ты хочешь.",
+  "romantic": "Угодничество, неумение сказать «нет», позволять топтать границы ради мира. Бесконечная уступчивость.",
+  "parenting": "Вседозволенное воспитание. Оберегать детей от последствий; не ставить границ, лишь бы не видеть их недовольства или гнева.",
+  "echo": "Ребёнок, выросший без границ, во взрослой жизни борется с ограничениями, приравнивает правила к отвержению и угождает, чтобы выжить.",
+  "tell": "Я не выношу твоего дискомфорта или гнева на меня.",
+  "idol": "Отношения становятся твоим <b>комфортом и одобрением</b> — ты жертвуешь ростом чужого характера, лишь бы избежать временного трения.",
+  "loop": [
+   "Страх конфликта и неодобрения",
+   "Я потакаю",
+   "Другой пока доволен и тих",
+   "Я не ставлю границ",
+   "Другой становится избалованным и не взрослеет"
+  ],
+  "turn": "Настоящая любовь готова не нравиться ради долгосрочного блага другого. Она ставит границы, которые берегут его характер и зрелость."
+ },
+ {
+  "num": "VII",
+  "name": "Любовь как беспокойство",
+  "mech": "Тревога под видом заботы",
+  "need": "Моя тревога невыносима, поэтому я заворачиваю её в «беспокойство о тебе», чтобы контролировать твои передвижения.",
+  "romantic": "Постоянные проверки, катастрофизация чужих планов, ограничение рисков «ради безопасности».",
+  "parenting": "Гиперопека. Перекладывание моих страхов на ребёнка, чтобы он боялся мира и держался рядом.",
+  "echo": "Ребёнок, выросший в тревожной, гиперопекающей среде, видит мир как предельно опасный и с трудом отделяется от родителя.",
+  "tell": "Свою тревогу я считаю доказательством того, как сильно о тебе забочусь.",
+  "idol": "Безопасность другого становится твоим <b>щитом от хаоса</b> — ты заставляешь его нести твой страх.",
+  "loop": [
+   "Внутренняя тревога и катастрофизация",
+   "Я ограничиваю и опекаю тебя",
+   "Мне ненадолго легче",
+   "Ты впитываешь страх и отдаляешься",
+   "Мир страшен; ты должен быть рядом"
+  ],
+  "turn": "Любовь изгоняет страх. Настоящая забота поддерживает смелый выход другого в мир, здоровый риск и рост."
+ }
+];
+const RU_STEPS = [
+ {
+  "title": "1. Рана (Нехватка)",
+  "desc": "Исходная эмоциональная пустота или дефицит в нашей собственной системе. Это структурная уязвимость, которая требует стабилизации."
+ },
+ {
+  "title": "2. Предложение (Приманка)",
+  "desc": "Как другой человек или отношения обещают временно унять или заполнить эту рану. Это первый крючок привязанности."
+ },
+ {
+  "title": "3. Идол (Катексис)",
+  "desc": "Другого возводят в источник того, чего мы не находим в себе. На нём лежит весь вес нашего покоя, ценности или безопасности."
+ },
+ {
+  "title": "4. Алтарь (Жертва)",
+  "desc": "Чем приходится жертвовать или что приходится искажать, чтобы идол оставался на месте. Обычно это жертва его свободой или нашими границами."
+ },
+ {
+  "title": "5. Ментальная структура (Плен)",
+  "desc": "Жёсткий, застывший сценарий отношений. Границы полностью рушатся, и подделка становится устойчивым паттерном извлечения."
+ }
+];
+if (IS_RU) {
+  const swapIn = (arr, ru, label) => {
+    if (arr.length !== ru.length) throw new Error('RU payload length mismatch: ' + label);
+    arr.forEach((o, i) => {
+      const a = Object.keys(o).sort().join(), b = Object.keys(ru[i]).sort().join();
+      if (a !== b) throw new Error('RU payload keys mismatch: ' + label + '[' + i + ']');
+      if (o.loop && o.loop.length !== ru[i].loop.length) throw new Error('RU loop length mismatch: ' + label + '[' + i + ']');
+      Object.assign(o, ru[i]);
+    });
+  };
+  swapIn(DATA_FEELINGS, RU_FEELINGS, 'feelings');
+  swapIn(DATA_ACTS, RU_ACTS, 'acts');
+  swapIn(STEP_DEFS, RU_STEPS, 'steps');
+}
+
 // INITIALIZE INTERACTIVE COMPONENTS
 const feelingsRoot = document.getElementById("feelings-root");
 const actsRoot = document.getElementById("acts-root");
@@ -1217,7 +1536,7 @@ function renderFeelings() {
   feelingsRoot.innerHTML = DATA_FEELINGS.map((f, i) => `
     <div class="feeling-card" id="feeling-card-${i}">
       <div class="c-meta">
-        <span class="eyebrow">Feelings</span>
+        <span class="eyebrow">${UI.feelings}</span>
         <span class="c-driver">${f.driver}</span>
       </div>
       <div>
@@ -1225,17 +1544,17 @@ function renderFeelings() {
         <div class="c-sub">${f.sub}</div>
         
         <div class="c-sensation-block">
-          <span class="c-label">The Sensation</span>
+          <span class="c-label">${UI.sensation}</span>
           <p class="c-text">${f.sensation}</p>
         </div>
         
         <div class="c-reality-block">
-          <span class="c-label">Clinical Reality</span>
+          <span class="c-label">${UI.clinical}</span>
           <p class="c-text"><b>${f.reality}</b></p>
         </div>
         
         <div class="c-example-block">
-          <span class="c-label">Common Expression</span>
+          <span class="c-label">${UI.common}</span>
           <p class="c-text italic">“${f.example}”</p>
         </div>
       </div>
@@ -1245,7 +1564,7 @@ function renderFeelings() {
 }
 
 // 2. Render Family II Accordion List
-const LOOP_KEYS = ["Wound", "Offer", "Idol", "Altar", "Structure"];
+const LOOP_KEYS = IS_RU ? ["Рана", "Предложение", "Идол", "Алтарь", "Структура"] : ["Wound", "Offer", "Idol", "Altar", "Structure"];
 function renderActsAccordion() {
   actsRoot.innerHTML = DATA_ACTS.map((d, i) => {
     const loopBeats = d.loop.map((v, idx) => `
@@ -1267,21 +1586,21 @@ function renderActsAccordion() {
         <div class="panel${i === 0 ? ' open' : ''}" id="panel-${i}" role="region" aria-labelledby="head-${i}">
           <div class="panel-inner">
             <div class="ground">
-              <div class="glabel">Observed · the psychology</div>
+              <div class="glabel">${UI.observed}</div>
               <dl>
-                <div class="row"><dt>The need</dt><dd>${d.need}</dd></div>
-                <div class="row romantic"><dt>Romantic</dt><dd>${d.romantic}</dd></div>
-                <div class="row parenting"><dt>Parenting</dt><dd>${d.parenting}</dd></div>
-                <div class="row echo"><dt>The Echo</dt><dd>${d.echo}</dd></div>
-                <div class="row tell"><dt>The tell</dt><dd>${d.tell}</dd></div>
+                <div class="row"><dt>${UI.need}</dt><dd>${d.need}</dd></div>
+                <div class="row romantic"><dt>${UI.romantic}</dt><dd>${d.romantic}</dd></div>
+                <div class="row parenting"><dt>${UI.parenting}</dt><dd>${d.parenting}</dd></div>
+                <div class="row echo"><dt>${UI.echo}</dt><dd>${d.echo}</dd></div>
+                <div class="row tell"><dt>${UI.tell}</dt><dd>${d.tell}</dd></div>
               </dl>
             </div>
             <div class="read">
-              <div class="rlabel">The read · the Counterfeit Loop</div>
+              <div class="rlabel">${UI.read}</div>
               <p class="idol">${d.idol}</p>
               <div class="loop">${loopBeats}</div>
               <div class="turn">
-                <div class="tk">The true-love turn</div>
+                <div class="tk">${UI.turn}</div>
                 <p class="tv">${d.turn}</p>
               </div>
             </div>
@@ -1347,10 +1666,10 @@ function renderMatrix() {
           <span class="m-name">${f.name}</span>
           <span class="m-lbl">${f.sub}</span>
         </td>
-        <td class="mono" style="color: var(--muted); font-size: 11px;">Family I (Feeling)</td>
+        <td class="mono" style="color: var(--muted); font-size: 11px;">${UI.fam1s}</td>
         <td>${f.sensation}</td>
-        <td>Intensity & Obsession</td>
-        <td><b>Reality:</b> ${f.reality}</td>
+        <td>${UI.intensity}</td>
+        <td><b>${UI.realityLbl}</b> ${f.reality}</td>
       </tr>
     `;
     
@@ -1361,15 +1680,15 @@ function renderMatrix() {
           <span class="m-lbl">${f.sub}</span>
         </h3>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">Family</span>
-          <span class="matrix-card-val">Family I (Feeling mistaken for love)</span>
+          <span class="matrix-card-lbl">${UI.family}</span>
+          <span class="matrix-card-val">${UI.fam1l}</span>
         </div>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">Core Sensation</span>
+          <span class="matrix-card-lbl">${UI.coreSens}</span>
           <span class="matrix-card-val">${f.sensation}</span>
         </div>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">The Clinical Reality</span>
+          <span class="matrix-card-lbl">${UI.clinCard}</span>
           <span class="matrix-card-val"><b>${f.reality}</b></span>
         </div>
       </div>
@@ -1384,7 +1703,7 @@ function renderMatrix() {
           <span class="m-name">${d.name}</span>
           <span class="m-lbl">${d.mech}</span>
         </td>
-        <td class="mono" style="color: var(--orange); font-size: 11px;">Family II (Act)</td>
+        <td class="mono" style="color: var(--orange); font-size: 11px;">${UI.fam2s}</td>
         <td>${d.need}</td>
         <td>${d.tell}</td>
         <td>${d.turn}</td>
@@ -1398,19 +1717,19 @@ function renderMatrix() {
           <span class="m-lbl">${d.mech}</span>
         </h3>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">Family</span>
-          <span class="matrix-card-val">Family II (Act mistaken for love/care)</span>
+          <span class="matrix-card-lbl">${UI.family}</span>
+          <span class="matrix-card-val">${UI.fam2l}</span>
         </div>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">Core Driver / Need</span>
+          <span class="matrix-card-lbl">${UI.coreDriver}</span>
           <span class="matrix-card-val">${d.need}</span>
         </div>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">The Tell</span>
+          <span class="matrix-card-lbl">${UI.theTell}</span>
           <span class="matrix-card-val">${d.tell}</span>
         </div>
         <div class="matrix-card-row">
-          <span class="matrix-card-lbl">True Turn</span>
+          <span class="matrix-card-lbl">${UI.trueTurn}</span>
           <span class="matrix-card-val">${d.turn}</span>
         </div>
       </div>
@@ -1474,7 +1793,7 @@ function updateDiagnosticFeedback() {
   const diagFeedback = document.getElementById("diag-feedback");
   
   if (q0 === null || q1 === null || q2 === null) {
-    diagFeedback.innerHTML = "Select options above to audit your current dynamic.";
+    diagFeedback.innerHTML = UI.select;
     diagFeedback.style.color = "var(--cream-soft)";
     return;
   }
@@ -1485,18 +1804,18 @@ function updateDiagnosticFeedback() {
   
   if (isVerb && isThem && isTwo) {
     diagFeedback.innerHTML = `
-      <b style="color: #68BB59; display: block; margin-bottom: 4px; font-size: 15px;">Alignment: True Love</b>
-      This dynamic functions as an active choice oriented to another's flourishment, holding separate boundaries. It is consistent, differentiation-safe, and healthy.
+      <b style="color: #68BB59; display: block; margin-bottom: 4px; font-size: 15px;">${UI.alignTrue}</b>
+      ${UI.trueText}
     `;
   } else {
     let aspects = [];
-    if (!isVerb) aspects.push("conflating feelings (cathexis) with action");
-    if (!isThem) aspects.push("extracting emotional stabilization for yourself");
-    if (!isTwo) aspects.push("enmeshment demanding sameness");
+    if (!isVerb) aspects.push(UI.a0);
+    if (!isThem) aspects.push(UI.a1);
+    if (!isTwo) aspects.push(UI.a2);
     
     diagFeedback.innerHTML = `
-      <b style="color: var(--orange); display: block; margin-bottom: 4px; font-size: 15px;">Alignment: Counterfeit Loop</b>
-      This dynamic contains extraction markers: ${aspects.join(", ")}. It is highly likely to generate exhaustion, resentment, or control.
+      <b style="color: var(--orange); display: block; margin-bottom: 4px; font-size: 15px;">${UI.alignFake}</b>
+      ${UI.markers} ${aspects.join(", ")}. ${UI.likely}
     `;
   }
 }
@@ -1514,6 +1833,7 @@ document.querySelectorAll(".diag-q").forEach(qNode => {
 });
 
 // INITIALIZE ON LOAD
+if (IS_RU) document.getElementById("diag-feedback").textContent = UI.select;
 renderFeelings();
 renderActsAccordion();
 renderLoopStep(0);
