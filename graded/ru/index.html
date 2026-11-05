@@ -284,6 +284,79 @@ footer a{color:var(--tradition-d)}
 .lang-opt:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @media (pointer:coarse){.lang-opt{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin-block:-15px;padding:0}}
 </style>
+<style id="scripture-skin">
+/* ==========================================================================
+   THE SCRIPTURE LAYER. Behavior comes from /assets/scripture-popover.js,
+   which ships no colors on purpose. These are this page's clothes for it:
+   the first rule maps the reader's roles onto this page's own tokens.
+   Color here is the tradition grade only, the same blue the page's links
+   already wear. Labels speak in the page's mono; verse text reads in its
+   serif. Opens and closes fade in place; nothing readable slides.
+   ========================================================================== */
+:root{--sr-panel:var(--tb-bg);--sr-ink:var(--ink);--sr-ink2:color-mix(in srgb,var(--ink) 78%,transparent);--sr-ink3:color-mix(in srgb,var(--ink) 62%,transparent);--sr-line:var(--rule);--sr-accent:var(--tradition);--sr-accent-ink:var(--tradition-d);--sr-hl:var(--tradition);--sr-display:var(--f-d);--sr-read:var(--f-b);--sr-label:var(--f-m);--sr-radius:4px;--sr-radius-sm:3px;--sr-shadow:rgba(22,20,31,.22);--sr-t:.2s;--sr-t2:.24s;--sr-ease:cubic-bezier(.22,1,.36,1)}
+[data-theme="dark"]{--sr-shadow:rgba(0,0,0,.55)}
+.esv-ref{position:relative;color:inherit;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap;transition:color var(--sr-t) var(--sr-ease),text-decoration-color var(--sr-t) var(--sr-ease)}
+.esv-ref::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.esv-ref:hover,.esv-ref:focus-visible{color:var(--sr-accent-ink);text-decoration-color:var(--sr-accent-ink)}
+/* the scripture band is an ink panel in both themes, so its references take the light blue */
+.dark .esv-ref:hover,.dark .esv-ref:focus-visible{color:#8C90FF;text-decoration-color:#8C90FF}
+.esv-pick{position:relative;flex-shrink:0}
+.esv-pick-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 14px 8px 12px;border:1px solid var(--sr-line);border-radius:var(--sr-radius-sm);background:transparent;color:var(--sr-ink);font-family:var(--sr-label);font-size:12px;letter-spacing:.1em;font-weight:700;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-pick-btn:hover{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 8%,transparent)}
+.esv-pick-ic{width:15px;height:15px;color:var(--sr-accent-ink);flex:none}
+.esv-pick-caret{width:12px;height:12px;color:var(--sr-ink3);transition:rotate var(--sr-t) var(--sr-ease)}
+.esv-pick.open .esv-pick-btn{border-color:var(--sr-accent);background:color-mix(in srgb,var(--sr-accent) 11%,transparent)}
+.esv-pick.open .esv-pick-caret{rotate:180deg}
+.esv-pick-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:80;display:block;min-width:264px;max-height:min(62dvh,440px);overflow-y:auto;padding:6px;border:1px solid var(--sr-line);border-radius:var(--sr-radius);background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 20px 50px var(--sr-shadow);opacity:1;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{.esv-pick-menu:not([hidden]){opacity:0}}
+.esv-pick-head{display:block;padding:8px 10px;margin-bottom:4px;border-bottom:1px solid var(--sr-line);color:var(--sr-ink3);font-family:var(--sr-label);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.esv-pick-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:9px 10px;border:0;border-radius:var(--sr-radius-sm);background:none;color:var(--sr-ink2);text-align:left;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-pick-opt .code{flex:none;width:46px;color:var(--sr-ink);font-family:var(--sr-label);font-size:12px;font-weight:700;letter-spacing:.06em}
+.esv-pick-opt .full{font-family:var(--sr-read);font-size:.95rem;line-height:1.3}
+.esv-pick-opt:hover,.esv-pick-opt.cursor{background:color-mix(in srgb,var(--sr-accent) 9%,transparent);color:var(--sr-ink)}
+.esv-pick-opt[aria-selected="true"]{background:color-mix(in srgb,var(--sr-accent) 15%,transparent)}
+.esv-pick-opt[aria-selected="true"] .code{color:var(--sr-accent-ink)}
+.esv-tip{position:absolute;z-index:130;display:none;max-width:min(360px,calc(100vw - 24px));padding:15px 17px;border:1px solid var(--sr-line);border-top:3px solid var(--sr-accent);border-radius:var(--sr-radius);background:var(--sr-panel);box-shadow:0 20px 56px var(--sr-shadow);color:var(--sr-ink);font-family:var(--sr-read);font-size:1rem;line-height:1.55;text-align:left;opacity:0;transition:opacity var(--sr-t) var(--sr-ease),display var(--sr-t) allow-discrete}
+.esv-tip.open{display:block;opacity:1}
+@starting-style{.esv-tip.open{opacity:0}}
+.esv-tip-ref{display:block;margin-bottom:8px;color:var(--sr-accent-ink);font-family:var(--sr-label);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.esv-tip-text{font-family:var(--sr-read);white-space:pre-line;min-height:3em;font-size:1.02rem;transition:opacity var(--sr-t) var(--sr-ease)}
+.esv-tip-text.is-loading{opacity:.42}
+.esv-note{display:block;margin-top:8px;color:var(--sr-ink3);font-family:var(--sr-label);font-size:11px;letter-spacing:.04em}
+.esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--sr-line)}
+.esv-tip-ctx{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border-radius:var(--sr-radius-sm);border:1px solid color-mix(in srgb,var(--sr-accent) 40%,var(--sr-line));background:color-mix(in srgb,var(--sr-accent) 9%,transparent);color:var(--sr-accent-ink);font-family:var(--sr-label);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background-color var(--sr-t) var(--sr-ease)}
+.esv-tip-ctx:hover{background:color-mix(in srgb,var(--sr-accent) 17%,transparent)}
+.esv-ctx{width:min(900px,calc(100% - 24px));max-height:min(84dvh,780px);padding:0;border:1px solid var(--sr-line);border-top:3px solid var(--sr-accent);border-radius:var(--sr-radius);background:var(--sr-panel);color:var(--sr-ink);box-shadow:0 30px 90px var(--sr-shadow);overflow:hidden;opacity:0;transition:opacity var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]{opacity:1}
+@starting-style{.esv-ctx[open]{opacity:0}}
+.esv-ctx::backdrop{background:rgba(22,20,31,0);transition:background-color var(--sr-t2) var(--sr-ease),display var(--sr-t2) allow-discrete,overlay var(--sr-t2) allow-discrete}
+.esv-ctx[open]::backdrop{background:rgba(22,20,31,.6)}
+@starting-style{.esv-ctx[open]::backdrop{background:rgba(22,20,31,0)}}
+.esv-ctx:focus{outline:none}
+.esv-ctx-inner{display:flex;flex-direction:column;max-height:min(84dvh,780px)}
+.esv-ctx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px 14px;border-bottom:1px solid var(--sr-line)}
+.esv-ctx-label{display:block;margin-bottom:6px;color:var(--sr-accent-ink);font-family:var(--sr-label);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.esv-ctx-head h3{margin:0;font-family:var(--sr-display);font-weight:800;font-stretch:88%;font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.1;letter-spacing:-.01em;color:var(--sr-ink)}
+.esv-ctx-actions{display:flex;align-items:center;gap:8px;flex:none}
+.esv-ctx-close{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1.5px solid var(--sr-line);border-radius:50%;background:none;color:var(--sr-ink2);font-size:18px;line-height:1;cursor:pointer;transition:color var(--sr-t) var(--sr-ease),border-color var(--sr-t) var(--sr-ease)}
+.esv-ctx-close:hover{color:var(--sr-accent-ink);border-color:var(--sr-accent-ink)}
+.esv-ctx-body{padding:18px 22px 22px;overflow-y:auto;font-family:var(--sr-read);font-size:1.08rem;line-height:1.65}
+/* Scripture reads like a book: verses run together, no numbers (October 7, 2026). */
+.esv-ctx-verse{display:inline}
+.esv-ctx-num{display:none}
+.esv-ctx-verse.is-selected{background:color-mix(in srgb,var(--sr-hl) 22%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--sr-hl) 22%,transparent);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:2px}
+.esv-ctx-passage{margin:0}
+.esv-ctx-loading{color:var(--sr-ink3);font-family:var(--sr-label);font-size:12px;letter-spacing:.08em}
+.esv-ctx-foot{padding:10px 20px 14px;border-top:1px solid var(--sr-line);display:flex;gap:8px;flex-wrap:wrap}
+.esv-ctx-more{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:var(--sr-radius-sm);border:1px solid var(--sr-line);background:none;color:var(--sr-ink2);font-family:var(--sr-label);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color var(--sr-t) var(--sr-ease),color var(--sr-t) var(--sr-ease)}
+.esv-ctx-more:hover{border-color:var(--sr-accent);color:var(--sr-accent-ink)}
+.esv-ctx-note{color:var(--sr-ink3);font-family:var(--sr-label);font-size:11px;margin-top:.6em;display:block}
+.esv-ctx-prefs{color:var(--sr-ink);font-family:var(--sr-display)}
+/* the pop-up's one action is reading in place, not leaving for another site */
+.esv-tip-out,.esv-ctx-out{display:none!important}
+@media (prefers-reduced-motion:reduce){.esv-tip,.esv-pick-menu,.esv-ctx,.esv-ctx::backdrop{transition:none}}
+</style>
 <style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
@@ -830,6 +903,14 @@ function whenVisible(el, start, stop){
     root.setAttribute('data-theme',next);
     try{localStorage.setItem('gr-theme',next);}catch(e){}
   });
+})();
+</script>
+<script src="/assets/scripture-popover.js"></script>
+<script>
+/* scripture: tap a reference for the verse and its context (too few references here for a picker) */
+(function(){
+  var SR=window.EsmrskyScripture;
+  if(SR) SR.init({key:'graded',scan:'.claim p',versions:['NIV','NASB','NLT','KJV']});
 })();
 </script>
 <script>
