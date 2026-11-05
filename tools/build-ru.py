@@ -73,7 +73,7 @@ VOID = {
 RAWTEXT = {"script", "style", "textarea", "title"}
 
 # Attributes whose value is a URL and therefore has to move with the page.
-URL_ATTRS = {"href", "src", "srcset", "poster", "action", "data", "xlink:href"}
+URL_ATTRS = {"href", "src", "srcset", "imagesrcset", "poster", "action", "data", "xlink:href"}
 
 # Written next to every `data-ru`: a short hash of the English the translation
 # was made from. `--check` only proves the output matches the attributes; it
@@ -549,7 +549,7 @@ def rewrite_urls(src: str, ru_dirs: set[str], sibling_pages: set[str]) -> str:
                 rel = t.attr("rel")
                 if rel is not None and "alternate" in rel.value(src):
                     continue                    # hreflang pair is absolute
-            if a.name == "srcset":
+            if a.name in ("srcset", "imagesrcset"):
                 fixed = rewrite_srcset(value, sibling_pages)
             elif value.startswith("/"):
                 fixed = ru_url(value, ru_dirs)
