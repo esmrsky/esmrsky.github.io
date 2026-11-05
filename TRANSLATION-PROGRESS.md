@@ -138,7 +138,7 @@ JS rewrites — give the JS data object a parallel `ru` field instead.
 | `the-whole` | not started | Project map — its card titles should follow the hub's Russian titles. |
 | `throughline` | not started | Project map, like `the-whole`. |
 | `best-verses-v0` | not started | Probably **n/a** — an earlier draft of `most-best-verses`. Confirm with the owner before spending a run on it. |
-| `given` | not started | Built 2026-10-27. 9 NIV slots (baked), shared reader, a static gift-lists table, case-file tabs, a reflection notebook (`localStorage` key `given-notes`). |
+| `given` | **done** | `/given/ru/`, November 5, 2026. 602 markup units (601 translated; `#mapHint` is JS-owned). JS localizes picker labels, the map hints in both modes, and the notes save/copy/clear messages and confirm; NIV slots baked as НРП (`dataset.shown`). Gift-list table header and footer say НРП. Quotes are **НРП** (1 Кор. 4:7 and Еф. 2:10 slots; Рим. 12:3 «судите о себе здраво» for "sober judgment"; Еф. 4:12–13, 1 Кор. 13–14, Кол. 3:23…); no psalms. Register «ты»; scholars in Cyrillic in prose, Latin in the source list. Footer adds the НРП/Biblica line. EN · RU switch at the end of the sticky bar, beside the translation picker. |
 | `the-thread` | **done** | `/the-thread/ru/`, 2026-10-27. Lives in its own repo (`esmrsky/the-thread`), built by that repo's `build.sh` from `src/ru/` (1,333 data strings, 224 UI strings, 31 shell strings); `tools/check-ru.js` there fails the build on drift. НРП quotes from bolls, СП as the second option. Listed in `EXTERNAL_RU` in `tools/build-ru.py` so its hub card stays on the Russian grid. |
 
 Rows above this line were added on 2026-10-27: 25 sites built since the August runs had no
