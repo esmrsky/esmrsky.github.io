@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ru" data-lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- lang-alt:start -->
+<link rel="alternate" hreflang="en" href="https://esmrsky.github.io/coding-agents-guide/">
+<link rel="alternate" hreflang="ru" href="https://esmrsky.github.io/coding-agents-guide/ru/">
+<link rel="alternate" hreflang="x-default" href="https://esmrsky.github.io/coding-agents-guide/">
+<!-- lang-alt:end -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b10'/%3E%3Cpath d='M21 19l15 13-15 13' fill='none' stroke='%23a78bfa' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M38 46h9' stroke='%23a78bfa' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>Полное руководство 2026 — Claude Code, Codex и агенты для кода</title>
+  <meta name="description" content="Одно руководство по Claude Code от Anthropic и Codex от OpenAI в 2026 году: модели, уровень усилий, воркфлоу, что по-прежнему важно, что уходит и какие навыки качать дальше."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #090b10;
+      --surface: #12151c;
+      --surface-2: #1a1e28;
+      --border: #2a3040;
+      --text: #eef1f6;
+      --muted: #94a3b8;
+      --accent: #a78bfa;
+      --accent-soft: rgba(167,139,250,0.12);
+      --claude: #d97757;
+      --openai: #38bdf8;
+      --green: #4ade80;
+      --yellow: #fbbf24;
+      --pink: #f472b6;
+      --sonnet: #34d399;
+      --opus: #60a5fa;
+      --fable: #f472b6;
+      --sol: #f59e0b;
+      --terra: #34d399;
+      --luna: #a78bfa;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.4rem 5rem; }
+    header {
+      padding: 2rem 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-soft);
+      padding: 0.28rem 0.65rem; border-radius: 999px; margin-bottom: 0.9rem;
+    }
+    h1 {
+      font-size: clamp(1.65rem, 4.2vw, 2.25rem);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.2;
+      margin-bottom: 0.7rem;
+    }
+    .lead { font-size: 1.08rem; color: var(--muted); max-width: 44rem; }
+    h2 {
+      font-size: 1.32rem; font-weight: 650; letter-spacing: -0.02em;
+      margin: 2.6rem 0 0.95rem; padding-top: 0.3rem;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 1.35rem 0 0.5rem; color: var(--text); }
+    p { margin-bottom: 0.95rem; color: var(--muted); }
+    p strong { color: var(--text); }
+    ul, ol { margin: 0.55rem 0 1.1rem 1.25rem; color: var(--muted); }
+    li { margin-bottom: 0.32rem; }
+    li strong { color: var(--text); }
+    .ico { margin-right: 0.35rem; }
+    .toc {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.35rem; margin: 1.4rem 0 1.75rem;
+    }
+    .toc h3 {
+      margin: 0 0 0.4rem; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--muted);
+    }
+    .toc ol { margin: 0; padding-left: 1.15rem; columns: 1; }
+    @media (min-width: 640px) { .toc ol { columns: 2; column-gap: 1.5rem; } }
+    .toc li { break-inside: avoid; }
+    .toc a { color: var(--muted); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+
+    .grid2, .grid3 { display: grid; gap: 0.9rem; margin: 1.15rem 0; }
+    @media (min-width: 640px) {
+      .grid2 { grid-template-columns: 1fr 1fr; }
+      .grid3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.2rem;
+    }
+    .model {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.05rem; position: relative; overflow: hidden;
+    }
+    .model::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .model.sonnet::before { background: var(--sonnet); }
+    .model.opus::before { background: var(--opus); }
+    .model.fable::before { background: var(--fable); }
+    .model.sol::before { background: var(--sol); }
+    .model.terra::before { background: var(--terra); }
+    .model.luna::before { background: var(--luna); }
+    .model.sonnet { background: linear-gradient(180deg, rgba(52,211,153,0.07), transparent 40%); }
+    .model.opus { background: linear-gradient(180deg, rgba(96,165,250,0.08), transparent 40%); }
+    .model.fable { background: linear-gradient(180deg, rgba(244,114,182,0.08), transparent 40%); }
+    .model.sol { background: linear-gradient(180deg, rgba(245,158,11,0.08), transparent 40%); }
+    .model.terra { background: linear-gradient(180deg, rgba(52,211,153,0.07), transparent 40%); }
+    .model.luna { background: linear-gradient(180deg, rgba(167,139,250,0.09), transparent 40%); }
+    .model h3 { margin: 0.25rem 0 0.2rem; font-size: 0.98rem; }
+    .model .meta {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.74rem;
+      color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .tag {
+      font-size: 0.64rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; padding: 0.1rem 0.38rem; border-radius: 4px;
+    }
+    .tag.claude { background: rgba(217,119,87,0.15); color: var(--claude); }
+    .tag.openai { background: rgba(56,189,248,0.15); color: var(--openai); }
+    .tag.keep { background: rgba(74,222,128,0.15); color: var(--green); }
+    .tag.fade { background: rgba(148,163,184,0.15); color: #94a3b8; }
+    .tag.warn { background: rgba(251,191,36,0.15); color: var(--yellow); }
+
+    table {
+      width: 100%; border-collapse: collapse; font-size: 0.86rem;
+      margin: 1rem 0 1.4rem;
+    }
+    th, td {
+      text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th {
+      font-weight: 600; color: var(--text); background: var(--surface);
+      font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.03em;
+    }
+    td { color: var(--muted); }
+    td strong { color: var(--text); }
+
+    .tip {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.15rem; margin: 0.75rem 0;
+      border-left: 3px solid var(--accent);
+    }
+    .tip h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text); }
+    .tip p { margin-bottom: 0.28rem; font-size: 0.92rem; }
+    .tip.keep { border-left-color: var(--green); }
+    .tip.fade { border-left-color: #64748b; }
+    .tip.claude { border-left-color: var(--claude); }
+    .tip.openai { border-left-color: var(--openai); }
+    .tip.warn { border-left-color: var(--yellow); }
+
+    .callout {
+      background: var(--accent-soft); border: 1px solid rgba(167,139,250,0.25);
+      border-radius: var(--radius); padding: 0.9rem 1.1rem; margin: 1.25rem 0;
+    }
+    .callout p { margin: 0; color: var(--text); font-size: 0.92rem; }
+    .warnbox {
+      background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25);
+      border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.15rem 0;
+    }
+    .warnbox p { margin: 0 0 0.45rem; color: var(--text); }
+    .warnbox p:last-child { margin: 0; }
+
+    .timeline {
+      position: relative; margin: 1.4rem 0 1.8rem; padding-left: 1.35rem;
+      border-left: 2px solid var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 1.35rem; padding-left: 0.85rem; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -1.48rem; top: 0.4rem;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .tl-item.past::before { background: #64748b; }
+    .tl-item.now::before { background: var(--green); box-shadow: 0 0 0 3px rgba(74,222,128,0.25); }
+    .tl-item.future::before { background: var(--openai); }
+    .tl-when {
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .tl-title { font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+
+    .decision {
+      background: var(--surface-2); border-left: 3px solid var(--accent);
+      padding: 1rem 1.15rem; margin: 1.25rem 0;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .decision p { margin: 0; color: var(--text); }
+    code {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.84em;
+      background: var(--surface-2); padding: 0.1em 0.32em; border-radius: 4px;
+    }
+    pre {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.85rem 1rem; overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      line-height: 1.55; margin: 0.75rem 0 1.2rem; color: #e2e8f0;
+    }
+    .two-col-label {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem;
+    }
+    .pill {
+      font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem;
+      border-radius: 999px; border: 1px solid var(--border);
+    }
+    .pill.claude { color: var(--claude); border-color: rgba(217,119,87,0.4); }
+    .pill.openai { color: var(--openai); border-color: rgba(56,189,248,0.4); }
+    footer {
+      margin-top: 3rem; padding-top: 1.35rem; border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--muted);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  
+    .cmd {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 0.95rem 1.05rem; margin-bottom: 0.55rem;
+    }
+    .cmd-header { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; margin-bottom: 0.28rem; }
+    .cmd-name { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; font-weight: 600; color: #f0f1f3; }
+    .badge-high { font-size: 0.65rem; font-weight: 600; color: var(--green); background: rgba(74,222,128,0.12); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .badge-medium { font-size: 0.65rem; font-weight: 600; color: var(--openai); background: rgba(56,189,248,0.12); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .badge-low { font-size: 0.65rem; font-weight: 600; color: var(--muted); background: rgba(148,163,184,0.12); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .badge-skip { font-size: 0.65rem; font-weight: 600; color: #64748b; background: rgba(100,116,139,0.15); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .cmd .desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.35rem; }
+    .cmd .detail { color: var(--muted); font-size: 0.84rem; margin-bottom: 0.2rem; }
+    .cmd .detail span { color: var(--text); font-weight: 500; }
+    .cmd .example {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.45rem 0.65rem; margin: 0.35rem 0; color: #cbd5e1; border-left: none;
+    }
+    .desktop-note {
+      font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem;
+      padding: 0.45rem 0.6rem; background: rgba(56,189,248,0.06); border-radius: 6px;
+    }
+    .section-title { font-size: 1.05rem; font-weight: 600; margin: 1.6rem 0 0.75rem; color: var(--claude); }
+    .note {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 0.85rem 1rem; margin: 1rem 0 1.25rem; font-size: 0.9rem; color: var(--muted);
+    }
+    .note strong { color: var(--text); }
+    table.compare th, table.compare td { font-size: 0.82rem; }
+
+  </style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+
+/* the way back to every other project: inherits the footer's own color */
+.home-link{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;padding:0 4px;color:inherit;opacity:.72;font-size:.85em;letter-spacing:.04em;text-decoration:none;transition:opacity .25s cubic-bezier(.22,1,.36,1)}
+.home-link:hover{opacity:1}
+.home-row{margin:0}
+
+    /* A table wider than a phone scrolls inside its own box, not the page. */
+    .table-scroll { overflow-x: auto; overscroll-behavior-x: contain; max-width: 100%; }
+    .table-scroll:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+
+/* 44px touch floor; desktop proportions untouched */
+@media (pointer:coarse){nav a{display:inline-flex;align-items:center;min-height:44px}}
+</style>
+<style id="lang-switch-css">/* EN · RU switch on the badge row of the header */
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.9rem}
+.header-row .badge{margin-bottom:0;white-space:nowrap}
+.lang-switch{display:inline-flex;align-items:center;gap:.1rem;flex-shrink:0;font-size:.72rem;font-weight:600;letter-spacing:.04em}
+.lang-opt{display:inline-flex;align-items:center;justify-content:center;padding:.3rem .3rem;color:var(--muted);text-decoration:none;transition:color .2s ease}
+.lang-opt:hover{color:var(--text);text-decoration:none}
+.lang-opt[aria-current="page"]{color:var(--text)}
+.lang-sep{color:var(--border)}
+@media (pointer:coarse){.lang-opt{min-height:44px;min-width:36px}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-row"><div class="badge">Август 2026 · Живой плейбук</div><nav class="lang-switch" aria-label="Язык"><a class="lang-opt" href="/coding-agents-guide/" lang="en" hreflang="en" aria-current="false">EN</a><span class="lang-sep" aria-hidden="true">·</span><a class="lang-opt" href="/coding-agents-guide/ru/" lang="ru" hreflang="ru" aria-current="page">RU</a></nav></div>
+      <h1><span class="ico">🚀</span> Полное руководство: Claude Code, Codex и агенты для кода</h1>
+      <p class="lead">Всё в одном месте: линейка Claude 5 и Claude Code от Anthropic, линейка GPT-5.6 и Codex от OpenAI, что по-прежнему окупается, что уходит, воркфлоу для работы над сайтами и навыки, которые стоит развивать дальше.</p>
+    </header>
+
+    <nav class="toc">
+      <h3>Содержание</h3>
+      <ol>
+        <li>Карта ландшафта</li>
+        <li>Модели Claude 5</li>
+        <li>Модели GPT-5.6</li>
+        <li>Усилия и режимы</li>
+        <li>Сравнение приложений</li>
+        <li>Борис Черни (YC и практика)</li>
+        <li>Ник Сараев и практики</li>
+        <li>Слеш-команды Claude Code</li>
+        <li>Что по-прежнему окупается</li>
+        <li>Что уходит / карго-культ</li>
+        <li>Воркфлоу для сайтов</li>
+        <li>Хронология и прогноз</li>
+        <li>Какие навыки развивать</li>
+        <li>Шпаргалка для решений</li>
+      </ol>
+    </nav>
+
+    <!-- MAP -->
+    <section id="map">
+      <h2><span class="ico">🗺️</span> Карта ландшафта</h2>
+      <div class="grid2">
+        <div class="card">
+          <div class="two-col-label"><span class="pill claude">Anthropic</span></div>
+          <h3 style="margin-top:0">Claude Code</h3>
+          <p style="margin-bottom:0.4rem">Агентное приложение для кода (Desktop + CLI). Модели: <strong>Sonnet 5</strong>, <strong>Opus 5</strong>, <strong>Fable 5</strong>.</p>
+          <p style="margin:0;font-size:0.9rem">Память: <code>CLAUDE.md</code> · Plan mode · Сабагенты · Worktrees · Skills/hooks · /goal /compact</p>
+        </div>
+        <div class="card">
+          <div class="two-col-label"><span class="pill openai">OpenAI</span></div>
+          <h3 style="margin-top:0">Codex</h3>
+          <p style="margin-bottom:0.4rem">Агентное программирование в CLI, IDE и приложении (объединено с ChatGPT Work). Модели: <strong>GPT-5.6 Sol / Terra / Luna</strong>.</p>
+          <p style="margin:0;font-size:0.9rem">Память: <code>AGENTS.md</code> · Лестница усилий + <strong>Ultra</strong> · Goals · Параллельные агенты</p>
+        </div>
+      </div>
+      <div class="callout">
+        <p>Оба инструмента уже решили задачу «уметь писать код». Теперь игра в другом: <strong>маршрутизация</strong> (какая модель и какой уровень усилий), <strong>проверка</strong> (работает ли это на самом деле) и <strong>оркестрация</strong> (параллельные сессии, скиллы, долгие прогоны) — а не новые волшебные промпты.</p>
+      </div>
+    </section>
+
+    <!-- CLAUDE MODELS -->
+    <section id="claude-models">
+      <h2><span class="ico">🟣</span> Модели Claude 5 <span class="tag claude">Claude Code</span></h2>
+      <div class="grid3">
+        <div class="model sonnet">
+          <span class="tag" style="background:rgba(52,211,153,0.15);color:var(--sonnet)">Исполнение</span>
+          <h3>Sonnet 5</h3>
+          <p class="meta">Быстрый универсал · объём</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Сборка секций и компонентов, адаптивные проходы, много правок, рабочие сабагенты.</p>
+        </div>
+        <div class="model opus">
+          <span class="tag" style="background:rgba(96,165,250,0.15);color:var(--opus)">Суждение</span>
+          <h3>Opus 5</h3>
+          <p class="meta">Эксперт на каждый день · практический потолок</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Архитектура, дизайн-направление, сложные баги, финальная согласованность. «Умный» выбор по умолчанию для большей части работы над сайтом.</p>
+        </div>
+        <div class="model fable">
+          <span class="tag" style="background:rgba(244,114,182,0.15);color:var(--fable)">Фронтир</span>
+          <h3>Fable 5</h3>
+          <p class="meta">Длинный горизонт · самые сложные 5–10%</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Переходи на неё, когда Opus всё ещё промахивается по вкусу или в долгих автономных прогонах. Сильно съедает квоту — не выбор по умолчанию.</p>
+        </div>
+      </div>
+      <p><strong>Привычки в Claude Code, которые всё ещё окупаются:</strong> компактный <code>CLAUDE.md</code> как журнал ошибок · «нажми удалить» примерно раз в 6 месяцев · проверка (превью/скриншоты) · параллельные worktrees · результат + критерии готовности, а не списки шагов · /compact с указаниями, на чём сфокусироваться.</p>
+    </section>
+
+    <!-- OPENAI MODELS -->
+    <section id="openai-models">
+      <h2><span class="ico">🔵</span> Модели GPT-5.6 <span class="tag openai">Codex</span></h2>
+      <div class="grid3">
+        <div class="model sol">
+          <span class="tag" style="background:rgba(245,158,11,0.15);color:var(--sol)">Флагман</span>
+          <h3>Sol</h3>
+          <p class="meta">API ~$5/$30 на июльском запуске (проверь актуальные) · самая глубокая агентность</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Неоднозначная работа по многим файлам, сложная диагностика, ответственное ревью, длинные цепочки инструментов. Сильные результаты в терминальных и агентных бенчмарках.</p>
+        </div>
+        <div class="model terra">
+          <span class="tag" style="background:rgba(52,211,153,0.15);color:var(--terra)">Баланс</span>
+          <h3>Terra</h3>
+          <p class="meta">API ~$2.50/$15 на июльском запуске, снижено на ~20% 30 июля (проверь актуальные) · выбор на каждый день</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Большая часть реализации, когда направление уже зафиксировано. Изменения в нескольких файлах в чётких рамках. Free/Go часто попадают сюда.</p>
+        </div>
+        <div class="model luna">
+          <span class="tag" style="background:rgba(167,139,250,0.15);color:var(--luna)">Объём</span>
+          <h3>Luna</h3>
+          <p class="meta">API ~$1/$6 на июльском запуске, снижено на ~80% 30 июля (проверь актуальные) · быстро и дёшево</p>
+          <p style="font-size:0.88rem;margin:0;color:var(--muted)">Шаблонный код, преобразования, массовые варианты, механическая полировка, рабочие сабагенты.</p>
+        </div>
+      </div>
+      <p><strong>Привычки в Codex, которые всё ещё окупаются:</strong> <code>AGENTS.md</code> · маршрутизация по типу задачи (не всегда Sol) · Extra High только после проваленных проверок · Ultra только когда работа делится на части · циклы проверки · промпты в формате GitHub-issue (цель, пути, критерии готовности).</p>
+    </section>
+
+    <!-- EFFORT -->
+    <section id="effort">
+      <h2><span class="ico">🎚️</span> Усилия и режимы (с обеих сторон)</h2>
+      <div class="table-scroll" tabindex="0"><table>
+        <thead>
+          <tr><th>Уровень</th><th>Claude Code (обычно)</th><th>Codex (обычно)</th><th>Когда</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Low / Light</strong></td><td>Быстро, в рамках</td><td>Light / Low</td><td>Механические, понятные преобразования</td></tr>
+          <tr><td><strong>Medium</strong></td><td>Обычная сборка</td><td>По умолчанию во многих сценариях</td><td>Стандартные фичи и секции</td></tr>
+          <tr><td><strong>High</strong></td><td>Работа на суждение</td><td>Многошаговые задачи / баги</td><td>Неочевидные изменения</td></tr>
+          <tr><td><strong>Extra High / xhigh</strong></td><td>Сложное за один проход</td><td>Глубокое за один проход</td><td>Когда Medium/High всё ещё не проходит проверку</td></tr>
+          <tr><td><strong>Max</strong></td><td>Потолок «качество прежде всего»</td><td>Max</td><td>Самые трудные задачи для одного агента</td></tr>
+          <tr><td><strong>Ultra</strong></td><td>—</td><td>~4 параллельных агента</td><td>Только если работа чисто делится</td></tr>
+        </tbody>
+      </table></div>
+      <div class="warnbox">
+        <p><strong>Общая ловушка:</strong> «Всегда max / всегда Extra High / всегда самая сильная модель».</p>
+        <p>Уровень усилий умножает стоимость (часто ~в 3–5 раз от Low до Extra High). Полировка интерфейса редко требует фронтирного мышления на каждом шаге. Повышай уровень, когда <em>не выполнены критерии приёмки</em>, а не от тревоги.</p>
+      </div>
+    </section>
+
+    <!-- APPS -->
+    <section id="apps">
+      <h2><span class="ico">💻</span> Сравнение приложений для кода</h2>
+      <div class="table-scroll" tabindex="0"><table>
+        <thead>
+          <tr><th></th><th>Claude Code</th><th>Codex</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Где работает</strong></td><td>Desktop-приложение, CLI</td><td>CLI, IDE, приложение / ChatGPT Work</td></tr>
+          <tr><td><strong>«Мозг» проекта</strong></td><td><code>CLAUDE.md</code></td><td><code>AGENTS.md</code></td></tr>
+          <tr><td><strong>Параллельность</strong></td><td>Worktrees, сабагенты, несколько сессий</td><td>Ultra, сабагенты, несколько сессий</td></tr>
+          <tr><td><strong>Долгие прогоны</strong></td><td>/goal, /loop, высокая автономность на Opus/Fable</td><td>Goals, Sol на длинном горизонте, Ultra</td></tr>
+          <tr><td><strong>В чём сильнее</strong></td><td>Вкус / структурный рефакторинг; часто сильнее в бенчмарках на корректность в духе SWE</td><td>Пропускная способность в терминале и агентной работе; мультиагентный веер (Ultra) — часто лидирует в агентных терминальных бенчмарках</td></tr>
+          <tr><td><strong>Лучше всего для сайтов</strong></td><td>Направление + полировка с маршрутизацией Opus/Sonnet по фазам</td><td>Объём сборки на Terra/Luna; Sol для сложных проверок</td></tr>
+        </tbody>
+      </table></div>
+      <p>Многие практики держат <strong>оба</strong>: Codex — ради скорости агентной работы в терминале и параллельного веера; Claude Code — когда визуальное суждение и аккуратная согласованность многих файлов кажутся сильнее. Для одностраничных сайтов брендов выигрывает любой, если разделять модели по фазам и проверять в браузере.</p>
+    </section>
+
+    
+    <!-- BORIS -->
+    <section id="boris">
+      <h2><span class="ico">📌</span> От Бориса Черни, Anthropic и свежие советы практиков</h2>
+      <p>Собрано из доклада Бориса на YC Startup School 2026 (на следующий день после Opus 5), его публичных тредов, документации Anthropic и самых содержательных постов в X/Reddit о работе над сайтами. Советы, которые относились только к более слабым моделям, оставлены за бортом.</p>
+
+      <div class="tip keep">
+        <h4><span class="ico">✅</span> 1. Проверка — рычаг № 1 (качество в 2–3 раза выше)</h4>
+        <p>Claude останавливается, когда работа <em>выглядит</em> готовой. Без проверки «прошло / не прошло» циклом проверки становишься ты. Дай ему то, что он может запустить сам.</p>
+        <p><strong>Для сайтов:</strong> локальное превью, Chrome/DevTools, скриншоты ключевых брейкпоинтов, визуальное сравнение с референсом, Lighthouse, «не останавливайся, пока хиро не совпадёт с брифом на мобильном и десктопе». Пропиши критерии успеха прямо в промпте.</p>
+        <p style="font-size:0.88rem">Борис (YC): проверка — это «пожалуй, самое важное, что люди делают неправильно».</p>
+      </div>
+
+      <div class="tip warn">
+        <h4><span class="ico">🗑️</span> 2. Нажимай «удалить» примерно раз в 6 месяцев</h4>
+        <p>Из доклада на YC, почти дословно: раз в полгода <strong>удаляй свой CLAUDE.md, скиллы и хуки</strong>. Посмотри, что модель делает без них. Возвращай только то, что по-прежнему регулярно ломается.</p>
+        <p>Anthropic сделала это у себя для Opus 5 / Fable 5 — абляция удалила ~80% системного промпта Claude Code без потерь в эвалах. Старые инструкции, написанные для слабых моделей, часто сковывают сильные.</p>
+        <p style="font-size:0.88rem">Практичный размер: ~150–200 строк. Пиши только то, что Claude не может вывести из кода.</p>
+      </div>
+
+      <div class="tip claude">
+        <h4><span class="ico">🔥</span> 3. Задачи сложнее + промпты короче — дай ему поработать</h4>
+        <p>Хватит промптов-приказов («сделай 1, потом 2, потом 3»). Опиши цель, ограничения и критерии готовности. Дай задачу чуть сложнее, чем кажется посильной, и отойди.</p>
+        <p>Пример Бориса с YC: задача на ~3 предложения, которая шла <strong>14–15 дней</strong> — переписать Electron-приложение на Swift, запустить оба в виртуальной машине Mac, сделать скриншоты, сравнить попиксельно, не останавливаться, пока не готово.</p>
+        <p style="font-size:0.88rem">Для сайтов: «Выпусти одностраничный сайт бренда, который совпадает с этим референсом на мобильном и десктопе; открой превью и итерируй, пока хиро и шкала шрифтов не совпадут». А не сценарий из 20 шагов.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">🌳</span> 4. Параллельные сессии / worktrees (по-прежнему главный прорыв)</h4>
+        <p>Давний совет № 1 Бориса по продуктивности — и практики до сих пор его повторяют: 3–5 изолированных Claude (git worktrees или сессии в Desktop). Одно направление главной страницы, одна второстепенная страница, один адаптивный проход — у каждого чистый контекст.</p>
+        <pre>claude --worktree feature-hero
+claude --worktree page-about
+claude --worktree responsive-pass</pre>
+        <p style="font-size:0.88rem">Одна цельная цель на сессию; не запихивай три клиентские задачи в один чат.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">📝</span> 5. CLAUDE.md как журнал ошибок + /init, потом урезать</h4>
+        <p>После каждой правки: «Обнови CLAUDE.md, чтобы больше не совершать эту ошибку». Запусти <code>/init</code> для первого черновика, потом режь безжалостно. Вложенные файлы CLAUDE.md лучше одного гигантского в корне.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">⚙️</span> 6. Скиллы / команды для всего, что делаешь каждый день</h4>
+        <p>Если что-то случается чаще раза в день (проход по доступности, проверка OG, шкала шрифтов бренда, чек-лист деплоя), сделай из этого скилл или слеш-команду и закоммить. Сабагенты для исследования и проверки держат основное окно чистым.</p>
+      </div>
+
+      <div class="tip keep">
+        <h4><span class="ico">🧹</span> 7. Свежая сессия на каждую цельную задачу</h4>
+        <p>Длинные запутанные треды деградируют. Паттерн, который постоянно всплывает в X/Reddit: одна цель → одна сессия → <code>/clear</code> или новая сессия, когда цель меняется. Посреди сессии используй <code>/compact</code> с указаниями, на чём сфокусироваться.</p>
+      </div>
+
+      <div class="callout">
+        <p><strong>Снимать путы, а не добавлять инструкции.</strong> Продуктовый навес — это способности, которые у модели уже есть, но твоя настройка их не вытаскивает. Путы — это когда твои промпты и конфиг мешают. С моделями v5 ход по умолчанию — меньше костылей, задачи сложнее и цикл проверки, а не более толстый CLAUDE.md.</p>
+      </div>
+      <div class="callout">
+        <p><strong>Что не превращать в карго-культ:</strong> «всегда начинай в plan mode» и «всегда используй самую сильную модель для всего» были вернее на старых моделях. Борис на сильных моделях сместился к большему авторежиму и меньшему обязательному планированию.</p>
+      </div>
+    </section>
+
+    <!-- FIELD / SARAEV -->
+    <section id="field">
+      <h2><span class="ico">🧰</span> Полевые советы в духе Ника Сараева и других практиков</h2>
+      <p>Устойчивые привычки из курсов Ника Сараева по Claude Code и от других практиков. Свежего мастер-класса Ника именно под Claude 5 нет — но эти вещи по-прежнему работают для сайтов и клиентской работы.</p>
+      <div class="tip claude">
+        <h4><span class="ico">🗂️</span> 1. Разделяй клиентские и личные рабочие пространства</h4>
+        <p>Правила бренда одного клиента не должны протекать к другому. Отдельные папки, сессии и локальные для проекта <code>CLAUDE.md</code> / <code>CLAUDE.local.md</code>. Правило агентства: одна сессия = одна цель клиента.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">🌐</span> 2. Проверка в браузере / DevTools по умолчанию для интерфейса</h4>
+        <p>Для маркетинговых сайтов «тесты проходят» — недостаточно. Открой локальное превью, сделай скриншоты брейкпоинтов или гоняй Chrome/DevTools MCP, пока хиро, типографика и мобильная версия не совпадут с брифом. Вынеси этот цикл в скилл.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">📎</span> 3. Проверка живёт в скиллах, а не в толстом корневом файле памяти</h4>
+        <p>Постепенное раскрытие: корневая память остаётся компактной (стек, подводные камни, указатели). Подробные шаги проверки, доступность, OG и правила шкалы бренда живут в скиллах, которые подгружаются по необходимости.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">📖</span> 4. Сначала документация для незнакомых API</h4>
+        <p>Формы, аналитика, CMS, платежи: скажи агенту прочитать официальную документацию, прежде чем выдумывать код интеграции. Это срезает уверенное, но неправильное использование API.</p>
+      </div>
+      <div class="tip keep">
+        <h4><span class="ico">🧾</span> 5. Ошибки → в файл памяти; ежедневные воркфлоу → в скиллы</h4>
+        <p>Тот же цикл, что и в пунктах 5–6 Бориса: постоянные правила — в память; всё, что повторяешь каждый день, становится скиллом — не объясняй бренд или шаги деплоя в чате заново.</p>
+      </div>
+    </section>
+
+    <!-- SLASH COMMANDS -->
+    <section id="slash">
+      <h2><span class="ico">⌨️</span> Claude Code Desktop — слеш-команды</h2>
+      <div class="note"><strong>Как это устроено:</strong> сначала команды с наибольшей отдачей, потом автономная работа (<code>/goal</code>, <code>/loop</code>), потом остальное. <code>/plan</code> — по ситуации (изменения во многих файлах / рискованные), а не обязательно для каждой задачи на сильных моделях. Переключение модели и уровня усилий живёт в интерфейсе Desktop, поэтому эти слеш-команды помечены «пропустить». Набери <code>/</code> в поле ввода, чтобы увидеть, что поддерживает твоя версия.</div>
+
+      <h3 class="section-title"><span class="ico">⭐</span> Наибольшая отдача (пользуйся этими)</h3>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/compact [instructions]</span>
+          <span class="badge-high">Высокая ценность</span>
+        </div>
+        <p class="desc">Сжимает историю разговора и освобождает контекст, стараясь сохранить важное.</p>
+        <p class="detail"><span>Когда:</span> индикатор использования растёт (примерно 50–70%) или сразу после законченного куска работы, перед следующей фазой.</p>
+        <p class="detail"><span>Почему это важно:</span> в длинных сессиях на каждом шаге заново отправляется много истории. По-прежнему лучший способ работать эффективно в Desktop.</p>
+        <p class="detail"><span>Совет:</span> всегда давай указания, на чём сфокусироваться. Голый <code>/compact</code> работает хуже.</p>
+        <div class="example">/compact сохрани текущий план, файлы, которые мы правили, и все нерешённые ошибки</div>
+        <div class="example">/compact сфокусируйся на рефакторинге авторизации и оставшихся падающих тестах</div>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/clear</span>
+          <span class="badge-high">Высокая ценность</span>
+        </div>
+        <p class="desc">Начинает совершенно новый разговор. Предыдущий остаётся доступен в боковой панели сессий.</p>
+        <p class="detail"><span>Когда:</span> переходишь к совсем не связанной задаче.</p>
+        <p class="detail"><span>Почему:</span> несколько несвязанных задач в одной сессии сжигают токены и ухудшают качество.</p>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/plan [description]</span>
+          <span class="badge-medium">Полезно</span>
+        </div>
+        <p class="desc">Включает plan mode (анализ без изменений) перед правками. Можно передать описание, чтобы сразу начать.</p>
+        <p class="detail"><span>Когда:</span> изменение во многих файлах, рефакторинг или всё, где сразу бросаться править рискованно.</p>
+        <div class="example">/plan исправь баг авторизации, не меняя публичный API</div>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🔁</span> Пусть Claude работает дальше (/goal или /loop)</h3>
+      <p style="margin-bottom:0.75rem">Это два разных инструмента. Выбирай правильный.</p>
+      <div class="table-scroll" tabindex="0"><table class="compare">
+        <tr><th></th><th>/goal</th><th>/loop</th></tr>
+        <tr><td>Следующий шаг начинается, когда</td><td>Закончился предыдущий шаг</td><td>Прошёл заданный интервал</td></tr>
+        <tr><td>Останавливается, когда</td><td>Условие выполнено (проверяет небольшая модель-оценщик)</td><td>Ты его останавливаешь или Claude решает, что работа сделана</td></tr>
+        <tr><td>Лучше всего для</td><td>Довести дело до конца (тесты проходят, сборка успешна)</td><td>Опрос / мониторинг (CI, деплой, комментарии в PR)</td></tr>
+      </table></div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/goal [condition]</span>
+          <span class="badge-medium">Полезно</span>
+        </div>
+        <p class="desc">Задаёт условие завершения. Claude продолжает работать шаг за шагом, пока отдельная модель-оценщик не подтвердит, что условие выполнено. В сессии активна одна цель.</p>
+        <p class="detail"><span>Когда:</span> есть ясная проверяемая финишная черта и не хочется постоянно писать «продолжай».</p>
+        <p class="detail"><span>Совет:</span> сделай условие измеримым. Добавь лимит шагов, если нужен предохранитель.</p>
+        <div class="example">/goal все тесты в test/auth проходят и линтер чистый</div>
+        <div class="example">/goal npm test завершается с кодом 0 и git status чистый, или остановись через 15 шагов</div>
+        <div class="example">/goal clear</div>
+        <p class="detail" style="margin-top:0.4rem"><span>Статус:</span> набери <code>/goal</code> без аргумента, чтобы увидеть текущую цель, число шагов и потраченные токены.</p>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/loop [interval] [prompt]</span>
+          <span class="badge-medium">Полезно</span>
+        </div>
+        <p class="desc">Повторяет промпт по расписанию, пока сессия открыта. Не укажешь интервал — Claude сам выберет темп.</p>
+        <p class="detail"><span>Когда:</span> периодические проверки (статус деплоя, CI, открытые PR), а не непрерывная работа до выполнения условия.</p>
+        <div class="example">/loop 5m проверь, закончился ли деплой, и сообщи о сбоях</div>
+        <div class="example">/loop 10m проверь мои открытые PR и разбери комментарии ревью</div>
+        <div class="desktop-note">Важно: <code>/loop</code> работает на твоём компьютере, пока сессия открыта. Для долгой регулярной работы в Desktop есть «Запланированные задачи» в боковой панели.</div>
+      </div>
+
+      <div class="cmd">
+        <div class="cmd-header">
+          <span class="cmd-name">/batch &lt;instruction&gt;</span>
+          <span class="badge-low">По ситуации</span>
+        </div>
+        <p class="desc">Изучает кодовую базу, разбивает большое изменение на независимые части, а затем (после твоего одобрения) выполняет их параллельно в изолированных git worktrees.</p>
+        <p class="detail"><span>Когда:</span> большие рефакторинги или миграции, которые можно разделить. Для маленьких задач — перебор.</p>
+        <div class="example">/batch перенеси оставшиеся компоненты из pages/ на новый app router</div>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🔍</span> Ревью и откат</h3>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/code-review [level] [--fix]</span><span class="badge-medium">Полезно</span></div>
+        <p class="desc">Проверяет текущий дифф на баги и что можно почистить. С <code>--fix</code> может сразу применить правки.</p>
+        <p class="detail"><span>Когда:</span> перед тем как принять крупный набор изменений.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/diff</span><span class="badge-medium">Полезно</span></div>
+        <p class="desc">Показывает последние / незакоммиченные изменения и диффы по шагам.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/rewind</span><span class="badge-medium">Полезно</span></div>
+        <p class="desc">Откатывает разговор и/или код к более ранней точке.</p>
+        <p class="detail"><span>Когда:</span> Claude пошёл по плохому пути и нужна чистая отмена.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/branch · /fork · /resume</span><span class="badge-low">По ситуации</span></div>
+        <p class="desc"><code>/branch</code> ответвляет разговор для экспериментов. <code>/fork</code> может отправить работу в фоновую сессию. <code>/resume</code> возвращает к прошлой сессии.</p>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🧠</span> Настройка проекта и память</h3>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/init</span><span class="badge-medium">Полезно один раз</span></div>
+        <p class="desc">Создаёт стартовый <code>CLAUDE.md</code>, просканировав проект. Потом урежь его — держи коротким.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/memory</span><span class="badge-low">По ситуации</span></div>
+        <p class="desc">Редактирование <code>CLAUDE.md</code> / файлов памяти. Лучше держать файл компактным.</p>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/agents</span><span class="badge-low">По ситуации</span></div>
+        <p class="desc">Создание и управление своими сабагентами (исследователь, тестировщик и т. д.).</p>
+      </div>
+
+      <h3 class="section-title"><span class="ico">🖥️</span> В основном есть в интерфейсе Desktop</h3>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/context · /usage</span><span class="badge-skip">Обычно не нужно</span></div>
+        <p class="desc">Подробная разбивка контекста или использование тарифа.</p>
+        <div class="desktop-note">Альтернатива в Desktop: нажми на индикатор использования вверху сессии.</div>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/btw</span><span class="badge-skip">Обычно не нужно</span></div>
+        <p class="desc">Побочный вопрос, не попадающий в основную историю.</p>
+        <div class="desktop-note">Альтернатива в Desktop: Side Chat (<code>⌘ + ;</code> или <code>Ctrl + ;</code>).</div>
+      </div>
+      <div class="cmd">
+        <div class="cmd-header"><span class="cmd-name">/model · /effort</span><span class="badge-skip">Пропустить</span></div>
+        <p class="desc">Переключить модель или уровень рассуждений.</p>
+        <div class="desktop-note">Ты и так делаешь это в интерфейсе Desktop.</div>
+      </div>
+
+      <h3 class="section-title"><span class="ico">📦</span> Простой практичный набор</h3>
+      <div class="cmd">
+        <p class="desc" style="margin-bottom:0.5rem">Всё перечисленное не нужно. Большинству пользователей Desktop хватит этого:</p>
+        <p class="detail">1. <code>/compact</code> с указаниями, когда растёт полоса использования</p>
+        <p class="detail">2. <code>/clear</code> (или новая сессия) при смене задачи</p>
+        <p class="detail">3. <code>/plan</code> перед крупными изменениями</p>
+        <p class="detail">4. <code>/goal</code>, когда есть ясная финишная черта</p>
+        <p class="detail">5. <code>/loop</code>, только когда нужны периодические проверки</p>
+        <p class="detail" style="margin-top:0.45rem">Всё остальное — по желанию. Самая стабильная отдача по-прежнему у <code>/compact</code>.</p>
+      </div>
+      <p style="font-size:0.82rem;margin-top:1rem">Команды и их доступность могут меняться от версии к версии — набери <code>/</code> или <code>/help</code>, чтобы увидеть актуальный список.</p>
+    </section>
+
+
+    <!-- KEEP -->
+    <section id="keep">
+      <h2><span class="ico">✅</span> Что по-прежнему окупается в 2026</h2>
+      <p>Это одни и те же принципы для Claude Code и Codex. Подробности — в разделах про Бориса и практиков выше; здесь — короткий общий чек-лист.</p>
+      <ul>
+        <li><strong>Циклы проверки</strong> — тесты, превью, скриншоты; агент останавливается, когда работа <em>выглядит</em> готовой, если ты не дашь ему проверку</li>
+        <li><strong>Компактная память как журнал ошибок</strong> — <code>CLAUDE.md</code> / <code>AGENTS.md</code> только для подводных камней (~150–200 строк); процедуры → в скиллы</li>
+        <li><strong>Результат + критерии готовности</strong> — цель и что значит «готово», а не списки шагов</li>
+        <li><strong>Параллельная изоляция</strong> — worktrees / сессии / Ultra, только когда работа делится</li>
+        <li><strong>Маршрутизация по фазам</strong> — модель для суждений → модель для объёма; повышай уровень только при проваленных проверках</li>
+        <li><strong>Скиллы для ежедневных повторов</strong> — постепенное раскрытие вместо толстых системных промптов</li>
+        <li><strong>Периодическое удаление</strong> — примерно раз в 6 месяцев выбрасывай конфиг, рассчитанный на слабые модели</li>
+      </ul>
+    </section>
+
+    <!-- FADE -->
+    <section id="fade">
+      <h2><span class="ico">🌫️</span> Что уходит / часто уже неактуально</h2>
+      <div class="tip fade">
+        <h4>Всегда брать самую сильную модель на максимальных усилиях</h4>
+        <p>Было вернее, когда модели среднего уровня были слабыми. Сегодня это сжигает квоту, замедляет итерации и добавляет лишних раздумий над полировкой интерфейса. Повышай уровень по фактам.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Обязательный plan mode для каждой задачи</h4>
+        <p>Критично для неоднозначной творческой работы; необязательно для «добавь этот компонент карточки». Борис публично сместился к большему авторежиму на сильных моделях.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Огромный CLAUDE.md / AGENTS.md как вики</h4>
+        <p>Модели лучше справляются с суждениями сами; горы инструкций размывают сигнал. Оставь подводные камни; процедуры перенеси в скиллы.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Промпты по шагам «сделай 1, потом 2, потом 3»</h4>
+        <p>Наследие слабых моделей. Лучше цель, ограничения, проверка. Пусть агент сам выбирает путь.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Фольклор промпт-инжиниринга как главный навык</h4>
+        <p>Волны «промпт-инжиниринга» → «контекст-инжиниринга» быстро устаревают. Устойчивые навыки: сложные задачи, проектирование проверок, маршрутизация, вкус, оркестрация.</p>
+      </div>
+      <div class="tip fade">
+        <h4>Одна бесконечная мегасессия</h4>
+        <p>Гниение контекста — реальность. Свежая сессия на каждую цельную цель; по ходу — compact с указаниями.</p>
+      </div>
+    </section>
+
+    <!-- WORKFLOWS -->
+    <section id="workflows">
+      <h2><span class="ico">🔄</span> Воркфлоу для сайтов, которые работают в обоих</h2>
+      <div class="tip claude">
+        <h4>Claude Code — сайты брендов и маркетинговые сайты</h4>
+        <p><strong>Направление:</strong> Opus 5 на high или Extra · 2–3 эстетических направления + информационная архитектура + критерии готовности.</p>
+        <p><strong>Сборка:</strong> Sonnet 5 на high для секций, компонентов, мобильной версии.</p>
+        <p><strong>Полировка:</strong> снова Opus, если согласованность или вкус всё ещё хромают.</p>
+        <p><strong>Fable:</strong> только когда Opus всё ещё не справляется после сфокусированной попытки + compact.</p>
+      </div>
+      <div class="tip openai">
+        <h4>Codex — та же работа, GPT-5.6</h4>
+        <p><strong>Направление:</strong> Sol Medium–High.</p>
+        <p><strong>Сборка:</strong> Terra Medium (Luna для чистого объёма).</p>
+        <p><strong>Жёсткий QA:</strong> Sol High + визуальные проверки.</p>
+        <p><strong>Ultra:</strong> только когда страницы/компоненты — независимые потоки работы.</p>
+      </div>
+      <div class="tip keep">
+        <h4>Общий паттерн (копируй)</h4>
+        <pre>1. Запиши критерии готовности (мобильный + десктоп, какие секции, ограничения бренда)
+2. Модель для суждений планирует / предлагает направления
+3. Одобри или сузь
+4. Модель для объёма реализует
+5. Проверь в браузере (скриншоты / превью) — а не «выглядит готовым»
+6. Повышай модель или уровень усилий, только если проверка провалена
+7. Записывай постоянные ошибки в CLAUDE.md / AGENTS.md</pre>
+      </div>
+
+      <h3>Быстрая маршрутизация по задачам для сайта</h3>
+      <div class="table-scroll" tabindex="0"><table>
+        <thead>
+          <tr><th>Задача</th><th>Claude Code</th><th>Codex</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Хиро / типографика / ИА по черновому брифу</td><td><strong>Opus 5</strong> High–Extra</td><td><strong>Sol</strong> Medium–High</td></tr>
+          <tr><td>Сборка секций после утверждения дизайна</td><td><strong>Sonnet 5</strong> Medium–High</td><td><strong>Terra</strong> Medium</td></tr>
+          <tr><td>Массовые варианты, механическая мобильная версия, преобразования</td><td>Sonnet Low–Medium</td><td><strong>Luna</strong> Low–Medium</td></tr>
+          <tr><td>Сложный баг / согласованность между страницами / финальный QA</td><td>Opus High (Fable, если застрял)</td><td>Sol High + визуальные проверки</td></tr>
+          <tr><td>Независимые страницы параллельно</td><td>Worktrees / несколько сессий</td><td>Ultra <em>или</em> несколько сессий</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:0.88rem">Повышай уровень, только когда провалена проверка приёмки, — а не потому, что более сильная модель «может» оказаться лучше.</p>
+
+      <div class="tip warn">
+        <h4>Гигиена агентства с клиентами</h4>
+        <p>Отдельные сессии (или репозитории) на каждого клиента, чтобы правила брендов не протекали друг к другу. Локальные файлы памяти проекта. Проверка в браузере по умолчанию для интерфейса — не по желанию.</p>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <h2><span class="ico">📅</span> Хронология и прогноз</h2>
+      <div class="timeline">
+        <div class="tl-item past">
+          <div class="tl-when">2024 — начало 2025</div>
+          <div class="tl-title">Автодополнение → программирование в чате</div>
+          <p style="margin:0;font-size:0.9rem">Мастерство промптов значило очень много. Моделям нужны были жёсткие рамки и списки шагов. Появляется «вайб-кодинг».</p>
+        </div>
+        <div class="tl-item past">
+          <div class="tl-when">Середина 2025 — начало 2026</div>
+          <div class="tl-title">Агентные инструменты для кода становятся мейнстримом</div>
+          <p style="margin:0;font-size:0.9rem">Claude Code и Codex взрослеют. Plan mode, файлы памяти, worktrees, долгие прогоны. Команды учатся проверке и параллельным сессиям.</p>
+        </div>
+        <div class="tl-item now">
+          <div class="tl-when">Сейчас — середина/конец 2026</div>
+          <div class="tl-title">Модели по уровням + меньше строительных лесов</div>
+          <p style="margin:0;font-size:0.9rem">Claude 5 + GPT-5.6 Sol/Terra/Luna. Лаборатории удаляют большие куски системных промптов. Для хорошо описанной работы программирование «в основном решено»; узкое место смещается к вкусу, продуктовому суждению, оркестрации и доверию (ревью, безопасность, проверка).</p>
+        </div>
+        <div class="tl-item future">
+          <div class="tl-when">Следующие 6–12 месяцев</div>
+          <div class="tl-title">Дольше автономность + мультиагентность по умолчанию</div>
+          <p style="margin:0;font-size:0.9rem">Прогноз по направлению: многодневные прогоны станут обычнее; мультиагентность — более встроенной; циклы IDE/облака — плотнее. Конфиг, написанный для слабых моделей, будет и дальше гнить — планируй удаления.</p>
+        </div>
+        <div class="tl-item future">
+          <div class="tl-when">12–24 месяца</div>
+          <div class="tl-title">Роль оркестратора закрепляется</div>
+          <p style="margin:0;font-size:0.9rem">Вероятное преимущество: формулировать результаты, проектировать проверку, распределять задачи между парками агентов, держать планку качества и отвечать за продуктовые и брендовые решения, с которыми модели пока справляются плохо. Считай это ставкой, а не гарантией.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2><span class="ico">🧠</span> Какие навыки развивать (и какие отодвинуть)</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--green)">Вкладывайся сюда</h3>
+          <ul style="margin-bottom:0">
+            <li><strong>Спецификация и критерии приёмки</strong> — ясное «готово»</li>
+            <li><strong>Проектирование проверок</strong> — тесты, визуальные проверки, циклы в браузере</li>
+            <li><strong>Маршрутизация моделей</strong> — уровень и усилия по типу задачи</li>
+            <li><strong>Оркестрация</strong> — параллельные сессии, скиллы, долгие цели</li>
+            <li><strong>Вкус и чувство бренда</strong> — особенно для клиентских сайтов</li>
+            <li><strong>Читаемость репозитория для агентов</strong> — компактные файлы памяти, хорошая структура</li>
+            <li><strong>Дисциплина ревью</strong> — та же планка для кода ИИ, что и для человеческого</li>
+            <li><strong>Гигиена конфига</strong> — периодически удалять и собирать заново</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--muted)">Отодвинь на второй план</h3>
+          <ul style="margin-bottom:0">
+            <li>Заучивать хрупкие шаблоны промптов</li>
+            <li>Копить всё более длинные системные промпты</li>
+            <li>Набирать каждую строку руками «чтобы не терять форму» как главный навык</li>
+            <li>Трайбализм инструментов (только Claude / только Codex)</li>
+            <li>Считать, что прошлогодние лучшие практики работают и после скачка фронтира</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>Для сайтов и агентской работы особенно:</strong> делай ставку на визуальную проверку, изоляцию клиентов, токены дизайн-системы как источник истины и маршрутизацию по фазам (модель для суждений → модель для объёма). Именно там живут качество и маржа.</p>
+      </div>
+    </section>
+
+    <!-- DECISION -->
+    <section id="decision">
+      <h2><span class="ico">🎯</span> Шпаргалка для решений</h2>
+      <div class="decision">
+        <p><strong>Неоднозначный дизайн / архитектура / сложный баг?</strong><br>Claude: Opus 5 (Fable, если всё ещё застрял) · Codex: Sol<br><br><strong>Реализовать утверждённый дизайн, много правок?</strong><br>Claude: Sonnet 5 · Codex: Terra (Luna для чистого объёма)<br><br><strong>Всегда прикладывай:</strong> критерии готовности + проверку<br><br><strong>Повышай уровень:</strong> только когда проверка провалена — а не потому, что модель «может оказаться умнее»<br><br><strong>Распараллеливай:</strong> изолированные сессии / worktrees / Ultra с разбиением на части<br><br><strong>После ошибок:</strong> записывай правило в CLAUDE.md или AGENTS.md<br><br><strong>Примерно раз в 6 месяцев:</strong> нажимай «удалить» на раздутом конфиге; смотри, что нужно новым моделям</p>
+      </div>
+      <div class="decision">
+        <p><strong>Одной строкой:</strong> сильным моделям нужно меньше костылей, яснее цели и лучше проверка — а не толще промпты и постоянный максимум усилий.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Полное руководство по агентам для кода · август 2026 · Claude Code (Claude 5) + Codex (GPT-5.6).</p>
+      <p style="margin-top:0.45rem">Собрано из документации Anthropic и Бориса Черни (YC Startup School 2026 + треды), паттернов из курсов Ника Сараева, документации и лучших практик OpenAI GPT-5.6 / Codex, справочника слеш-команд Claude Code и отчётов практиков в X/Reddit. Цены API приблизительные, по прайсам середины 2026 года, и меняются; ограничения тарифов и настройки по умолчанию тоже сдвигаются — перепроверь официальные источники, прежде чем закреплять политику команды.</p>
+    
+  <p class="home-row"><a class="home-link" href="/ru/">← Все проекты</a></p>
+</footer>
+  </div>
+<script>
+/* Static Russian page. The old EN/RU toggle is gone; this only tells a
+   page's own JS which language it is rendering into. */
+window.esmrskyLang = 'ru';
+document.dispatchEvent(new CustomEvent('esmrsky:lang', { detail: { lang: 'ru' } }));
+</script>
+</body>
+</html>
