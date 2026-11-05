@@ -169,6 +169,20 @@ body.sim-reduced-motion *, body.sim-reduced-motion *::before, body.sim-reduced-m
 .icon-btn:active { transform: scale(.94); }
 .menu-btn { display: none; }
 
+/* language switch: EN · RU pill. The ring is drawn by ::after so each option stays a 44px target. */
+.lang-switch { position: relative; display: inline-flex; align-items: center; height: 44px; border-radius: var(--r-pill); overflow: hidden; flex: 0 0 auto; }
+.lang-switch::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--border); border-radius: inherit; pointer-events: none; }
+.lang-opt { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 .7rem; font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-decoration: none; color: var(--muted); transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.lang-opt:hover { color: var(--text); }
+.lang-opt[aria-current="page"] { background: var(--surface-2); color: var(--text); pointer-events: none; }
+.lang-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+@media (max-width: 400px) {
+  .site-header { gap: var(--s-2); padding: 0 var(--s-2); }
+  .header-actions { gap: var(--s-1); }
+  .lang-opt { padding: 0; }
+  .brand__mark { display: none; }
+}
+
 /* pattern: sidebar layout — fixed-width column + fluid main */
 .shell { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); min-height: calc(100vh - var(--header-h)); }
 
@@ -242,6 +256,7 @@ main { padding: var(--s-6) var(--s-6) var(--s-8); }
 .specimen__head h3 { margin: 0; font-size: var(--fs-1); }
 .specimen__aka { color: var(--muted); font-size: var(--fs--1); margin: 0; }
 .specimen__aka::before { content: "aka "; font-style: italic; }
+:lang(ru) .specimen__aka::before { content: "также: "; }
 .specimen__desc { max-width: var(--measure); }
 .specimen__demo {
   border: 1px dashed var(--border); border-radius: var(--r-3); padding: var(--s-5);

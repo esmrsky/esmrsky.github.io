@@ -8,6 +8,10 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Russian: the page at /specimens/ru/ is baked from the markup; strings the script writes pick their language here. */
+  const RU = document.documentElement.lang === "ru" || document.documentElement.getAttribute("data-lang") === "ru";
+  const TXT = (en, ru) => (RU ? ru : en);
+  const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many; };
 
   /* ---------- Theme toggle (pattern: dark mode w/ persisted preference) ---------- */
   const toggleTheme = () => {
@@ -16,7 +20,7 @@
     const next = current === "dark" ? "light" : "dark";
     html.dataset.theme = next;
     localStorage.setItem("theme", next);
-    toast(`Theme: ${next}`);
+    toast(TXT(`Theme: ${next}`, `Тема: ${next === "dark" ? "тёмная" : "светлая"}`));
   };
   $("#themeBtn")?.addEventListener("click", toggleTheme);
   $$("[data-theme-toggle]").forEach((b) => b.addEventListener("click", toggleTheme));
@@ -43,7 +47,7 @@
   menuBtn?.addEventListener("click", () => setDrawer(!document.body.classList.contains("drawer-open")));
   scrim?.addEventListener("click", () => setDrawer(false));
   $("#drawerDemoBtn")?.addEventListener("click", () => {
-    if (innerWidth > 900) { toast("Shrink the window below 900px to see the drawer"); return; }
+    if (innerWidth > 900) { toast(TXT("Shrink the window below 900px to see the drawer", "Сузь окно меньше 900px, чтобы увидеть панель")); return; }
     setDrawer(true);
   });
   addEventListener("keydown", (e) => { if (e.key === "Escape" && document.body.classList.contains("drawer-open")) setDrawer(false); });
@@ -88,7 +92,7 @@
   /* ---------- Live filter (pattern: filterable list / instant search) ---------- */
   const search = $("#search"), searchCount = $("#searchCount");
   const allSpecimens = $$(".specimen");
-  const updateCount = (n) => { if (searchCount) searchCount.textContent = search?.value ? `${n} of ${allSpecimens.length} specimens` : `${allSpecimens.length} specimens`; };
+  const updateCount = (n) => { if (searchCount) searchCount.textContent = search?.value ? TXT(`${n} of ${allSpecimens.length} specimens`, `${n} из ${allSpecimens.length} образцов`) : TXT(`${allSpecimens.length} specimens`, `${allSpecimens.length} ${plural(allSpecimens.length, "образец", "образца", "образцов")}`); };
   updateCount(allSpecimens.length);
   search?.addEventListener("input", () => {
     const q = search.value.trim().toLowerCase();
@@ -127,7 +131,7 @@
     if (e.key === "ArrowUp") { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
     if (e.key === "Escape") { setDd(false); ddBtn.focus(); }
   });
-  ddMenu?.addEventListener("click", (e) => { const b = e.target.closest("[role=menuitem]"); if (b) { toast(`Chose "${b.textContent}"`); setDd(false); } });
+  ddMenu?.addEventListener("click", (e) => { const b = e.target.closest("[role=menuitem]"); if (b) { toast(TXT(`Chose "${b.textContent}"`, `Выбрано: «${b.textContent}»`)); setDd(false); } });
   document.addEventListener("click", (e) => {
     if (ddMenu && !ddMenu.hidden && !e.target.closest(".dropdown")) setDd(false);
     if (megaPanel && !megaPanel.hidden && !e.target.closest(".mega")) setMega(false);
@@ -162,7 +166,7 @@
     if (!region) return;
     const el = document.createElement("div"); el.className = "toast";
     el.innerHTML = `<span>${msg}</span>` + (action ? `<button type="button">${action}</button>` : "");
-    $("button", el)?.addEventListener("click", () => { toast(`${action} clicked`); dismiss(); });
+    $("button", el)?.addEventListener("click", () => { toast(TXT(`${action} clicked`, `Нажато: ${action}`)); dismiss(); });
     region.append(el);
     const dismiss = () => { if (!el.isConnected) return; el.classList.add("is-leaving"); el.addEventListener("animationend", () => el.remove(), { once: true }); if (reducedMotion) el.remove(); };
     setTimeout(dismiss, action ? 5000 : 2800);
@@ -172,7 +176,7 @@
   /* ---------- Loading button + progress bar ---------- */
   $("#loadBtn")?.addEventListener("click", function () {
     this.classList.add("is-loading"); this.disabled = true;
-    setTimeout(() => { this.classList.remove("is-loading"); this.disabled = false; toast("Saved"); }, 1500);
+    setTimeout(() => { this.classList.remove("is-loading"); this.disabled = false; toast(TXT("Saved", "Сохранено")); }, 1500);
   });
   $("#progBtn")?.addEventListener("click", () => {
     const bar = $("#progBar"), wrap = bar?.parentElement; if (!bar) return;
@@ -196,7 +200,7 @@
     const v = pwIn.value; let s = 0;
     if (v.length >= 8) s++; if (/[a-z]/.test(v) && /[A-Z]/.test(v)) s++; if (/\d/.test(v)) s++; if (/[^\w]/.test(v)) s++;
     pwMeter.dataset.score = v ? s : 0;
-    pwHint.textContent = !v ? "8+ chars, mixed case, a number, a symbol" : ["Very weak", "Weak", "Okay", "Good", "Strong"][s];
+    pwHint.textContent = !v ? TXT("8+ chars, mixed case, a number, a symbol", "8+ знаков, разный регистр, цифра, символ") : TXT(["Very weak", "Weak", "Okay", "Good", "Strong"], ["Очень слабый", "Слабый", "Нормальный", "Хороший", "Надёжный"])[s];
   });
 
   /* ---------- Number stepper ---------- */
@@ -213,6 +217,7 @@
   const comboIn = $("#comboIn"), comboList = $("#comboList");
   const COUNTRIES = ["Argentina","Australia","Austria","Belgium","Brazil","Canada","Chile","China","Colombia","Croatia","Czechia","Denmark","Egypt","Estonia","Finland","France","Germany","Ghana","Greece","Hungary","Iceland","India","Indonesia","Ireland","Israel","Italy","Japan","Kenya","Latvia","Lithuania","Malaysia","Mexico","Morocco","Netherlands","New Zealand","Nigeria","Norway","Pakistan","Peru","Philippines","Poland","Portugal","Romania","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sweden","Switzerland","Thailand","Turkey","Ukraine","United Kingdom","United States","Uruguay","Vietnam"];
   if (comboIn && comboList) {
+    if (RU) { const ru = ["Аргентина", "Австралия", "Австрия", "Бельгия", "Бразилия", "Канада", "Чили", "Китай", "Колумбия", "Хорватия", "Чехия", "Дания", "Египет", "Эстония", "Финляндия", "Франция", "Германия", "Гана", "Греция", "Венгрия", "Исландия", "Индия", "Индонезия", "Ирландия", "Израиль", "Италия", "Япония", "Кения", "Латвия", "Литва", "Малайзия", "Мексика", "Марокко", "Нидерланды", "Новая Зеландия", "Нигерия", "Норвегия", "Пакистан", "Перу", "Филиппины", "Польша", "Португалия", "Румыния", "Сингапур", "Словакия", "Словения", "Южная Африка", "Южная Корея", "Испания", "Швеция", "Швейцария", "Таиланд", "Турция", "Украина", "Великобритания", "Соединённые Штаты", "Уругвай", "Вьетнам"]; if (ru.length === COUNTRIES.length) COUNTRIES.splice(0, COUNTRIES.length, ...ru); }
     let idx = -1, matches = [];
     const render = () => {
       const q = comboIn.value.trim().toLowerCase();
@@ -221,7 +226,7 @@
       comboList.hidden = matches.length === 0; comboIn.setAttribute("aria-expanded", String(!comboList.hidden));
       comboIn.setAttribute("aria-activedescendant", idx >= 0 ? `opt${idx}` : "");
     };
-    const commit = (i) => { if (matches[i] == null) return; comboIn.value = matches[i]; idx = -1; comboList.hidden = true; comboIn.setAttribute("aria-expanded", "false"); comboIn.removeAttribute("aria-activedescendant"); toast(`Selected ${comboIn.value}`); };
+    const commit = (i) => { if (matches[i] == null) return; comboIn.value = matches[i]; idx = -1; comboList.hidden = true; comboIn.setAttribute("aria-expanded", "false"); comboIn.removeAttribute("aria-activedescendant"); toast(TXT(`Selected ${comboIn.value}`, `Выбрано: ${comboIn.value}`)); };
     comboIn.addEventListener("input", () => { idx = -1; render(); });
     comboIn.addEventListener("keydown", (e) => {
       if (comboList.hidden) return;
@@ -277,12 +282,12 @@
 
   /* ---------- Reduced-motion status ---------- */
   const rm = $("#rmStatus");
-  if (rm) rm.innerHTML = reducedMotion ? "✅ Your OS has <b>Reduce motion</b> on — animations on this page are effectively instant." : "Your OS reports <b>no</b> reduced-motion preference — animations play normally. Turn it on in system accessibility settings and reload to compare.";
+  if (rm) rm.innerHTML = reducedMotion ? TXT("✅ Your OS has <b>Reduce motion</b> on — animations on this page are effectively instant.", "✅ В твоей системе включено <b>«Уменьшить движение»</b> — анимации на этой странице почти мгновенные.") : TXT("Your OS reports <b>no</b> reduced-motion preference — animations play normally. Turn it on in system accessibility settings and reload to compare.", "Система сообщает, что предпочтения уменьшать движение <b>нет</b> — анимации идут как обычно. Включи его в настройках универсального доступа и перезагрузи страницу, чтобы сравнить.");
 
   /* ---------- Sortable table ---------- */
   const table = $("#sortTable");
   table?.querySelectorAll("th[data-sort]").forEach((th, col) => {
-    th.style.cursor = "pointer"; th.title = "Sort";
+    th.style.cursor = "pointer"; th.title = TXT("Sort", "Сортировать");
     th.addEventListener("click", () => {
       const tbody = $("tbody", table); const rows = $$("tr", tbody);
       const dir = th.dataset.dir === "asc" ? "desc" : "asc"; table.querySelectorAll("th").forEach((h) => { delete h.dataset.dir; h.removeAttribute("aria-sort"); });
@@ -374,17 +379,17 @@
       exitCard.classList.remove("entering"); exitCard.classList.add("leaving");
       const hide = () => { exitCard.hidden = true; exitCard.classList.remove("leaving"); };
       if (reducedMotion) hide(); else exitCard.addEventListener("animationend", hide, { once: true });
-      exitToggle.textContent = "Bring it back"; exitToggle.setAttribute("aria-pressed", "false");
+      exitToggle.textContent = TXT("Bring it back", "Вернуть"); exitToggle.setAttribute("aria-pressed", "false");
     } else {
       exitCard.hidden = false; exitCard.classList.remove("leaving"); exitCard.classList.add("entering");
-      exitToggle.textContent = "Dismiss"; exitToggle.setAttribute("aria-pressed", "true");
+      exitToggle.textContent = TXT("Dismiss", "Скрыть"); exitToggle.setAttribute("aria-pressed", "true");
     }
   });
 
   // FLIP removal reflow (Web Animations API)
   const flipList = $("#flipList");
-  const FLIP_ITEMS = ["Research", "Wireframe", "Prototype", "Test", "Ship", "Iterate"];
-  const renderFlip = () => { if (flipList) flipList.innerHTML = FLIP_ITEMS.map((t) => `<span class="flip-item">${t} <button aria-label="Remove ${t}">×</button></span>`).join(""); };
+  const FLIP_ITEMS = TXT(["Research", "Wireframe", "Prototype", "Test", "Ship", "Iterate"], ["Исследование", "Макет", "Прототип", "Тест", "Релиз", "Итерация"]);
+  const renderFlip = () => { if (flipList) flipList.innerHTML = FLIP_ITEMS.map((t) => `<span class="flip-item">${t} <button aria-label="${TXT("Remove", "Убрать")} ${RU ? "«" + t + "»" : t}">×</button></span>`).join(""); };
   renderFlip();
   flipList?.addEventListener("click", (e) => {
     const btn = e.target.closest("button"); if (!btn) return;
@@ -405,14 +410,14 @@
   ssToggle?.addEventListener("click", () => {
     const show = ssPanel.hidden;
     ssPanel.hidden = !show;
-    ssToggle.textContent = show ? "Hide the panel" : "Show the panel";
+    ssToggle.textContent = show ? TXT("Hide the panel", "Скрыть панель") : TXT("Show the panel", "Показать панель");
     ssToggle.setAttribute("aria-expanded", String(show));
   });
-  if (ssPanel && !CSS.supports?.("transition-behavior", "allow-discrete")) $("#ssSupport").textContent = "This browser doesn't support allow-discrete yet — the panel snaps instead of animating.";
+  if (ssPanel && !CSS.supports?.("transition-behavior", "allow-discrete")) $("#ssSupport").textContent = TXT("This browser doesn't support allow-discrete yet — the panel snaps instead of animating.", "Этот браузер пока не поддерживает allow-discrete — панель переключается рывком, без анимации.");
 
   // view transitions
   const vtGrid = $("#vtGrid"), vtSupport = $("#vtSupport");
-  if (vtSupport) vtSupport.textContent = document.startViewTransition ? "✓ supported in this browser" : "✗ no support here — the shuffle happens instantly";
+  if (vtSupport) vtSupport.textContent = document.startViewTransition ? TXT("✓ supported in this browser", "✓ поддерживается в этом браузере") : TXT("✗ no support here — the shuffle happens instantly", "✗ здесь не поддерживается — перемешивание происходит мгновенно");
   $("#vtShuffle")?.addEventListener("click", () => {
     const shuffle = () => $$(".vt-tile", vtGrid).sort(() => Math.random() - .5).forEach((t) => vtGrid.append(t));
     if (document.startViewTransition && !reducedMotion) document.startViewTransition(shuffle); else shuffle();
@@ -482,7 +487,7 @@
     const renderPager = () => {
       const nums = new Set([1, total, page - 1, page, page + 1]);
       const items = [];
-      items.push(`<li><a href="#pagination" data-page="${page - 1}" aria-label="Previous" ${page === 1 ? 'aria-disabled="true"' : ""}>‹</a></li>`);
+      items.push(`<li><a href="#pagination" data-page="${page - 1}" aria-label="${TXT("Previous", "Назад")}" ${page === 1 ? 'aria-disabled="true"' : ""}>‹</a></li>`);
       let prev = 0;
       for (let n = 1; n <= total; n++) {
         if (!nums.has(n)) continue;
@@ -490,7 +495,7 @@
         items.push(`<li><a href="#pagination" data-page="${n}" ${n === page ? 'aria-current="page"' : ""}>${n}</a></li>`);
         prev = n;
       }
-      items.push(`<li><a href="#pagination" data-page="${page + 1}" aria-label="Next" ${page === total ? 'aria-disabled="true"' : ""}>›</a></li>`);
+      items.push(`<li><a href="#pagination" data-page="${page + 1}" aria-label="${TXT("Next", "Вперёд")}" ${page === total ? 'aria-disabled="true"' : ""}>›</a></li>`);
       pager.innerHTML = items.join("");
     };
     pager.addEventListener("click", (e) => {
@@ -522,7 +527,7 @@
   /* ---------- Type scale: one ratio generates every size ---------- */
   const scaleDemo = $("#scaleDemo"), scaleRatio = $("#scaleRatio");
   if (scaleDemo && scaleRatio) {
-    const NAMED = [[1.125, "major second"], [1.2, "minor third"], [1.25, "major third"], [1.333, "perfect fourth"], [1.414, "aug. fourth"], [1.5, "perfect fifth"], [1.618, "golden ratio"]];
+    const NAMED = [[1.125, TXT("major second", "большая секунда")], [1.2, TXT("minor third", "малая терция")], [1.25, TXT("major third", "большая терция")], [1.333, TXT("perfect fourth", "чистая кварта")], [1.414, TXT("aug. fourth", "ув. кварта")], [1.5, TXT("perfect fifth", "чистая квинта")], [1.618, TXT("golden ratio", "золотое сечение")]];
     const renderScale = () => {
       const r = +scaleRatio.value;
       $$("p[data-exp]", scaleDemo).forEach((p) => {
@@ -556,7 +561,7 @@
   skelBtn?.addEventListener("click", () => {
     const loaded = $("#skelLoaded").hidden;
     $("#skelLoaded").hidden = !loaded; $("#skelLoading").hidden = loaded;
-    skelBtn.textContent = loaded ? "Load again" : "Finish loading";
+    skelBtn.textContent = loaded ? TXT("Load again", "Загрузить снова") : TXT("Finish loading", "Завершить загрузку");
   });
 
   /* ---------- Empty state ↔ first item ---------- */
@@ -572,8 +577,8 @@
     btn.addEventListener("click", () => {
       const cleared = !n.hidden;
       n.hidden = cleared;
-      btn.setAttribute("aria-label", cleared ? `${baseLabel}, no unread` : `${baseLabel}, ${original} unread`);
-      if (cleared) toast("Marked as read"); else n.textContent = original;
+      btn.setAttribute("aria-label", cleared ? TXT(`${baseLabel}, no unread`, `${baseLabel}, нет непрочитанных`) : TXT(`${baseLabel}, ${original} unread`, `${baseLabel}, непрочитанных: ${original}`));
+      if (cleared) toast(TXT("Marked as read", "Отмечено как прочитанное")); else n.textContent = original;
     });
   });
 
@@ -617,7 +622,7 @@
       const ratio = (1.05) / (lum(v, v, v) + 0.05);
       const chip = $("#contrastChip");
       chip.style.color = `rgb(${v} ${v} ${v})`;
-      const grade = ratio >= 7 ? "✓ AAA" : ratio >= 4.5 ? "✓ AA" : ratio >= 3 ? "large text only" : "✗ fail";
+      const grade = ratio >= 7 ? "✓ AAA" : ratio >= 4.5 ? "✓ AA" : ratio >= 3 ? TXT("large text only", "только крупный текст") : TXT("✗ fail", "✗ не проходит");
       $("#contrastOut").value = `${ratio.toFixed(1)}:1 ${grade}`;
     };
     contrastRange.addEventListener("input", renderContrast); renderContrast();
@@ -648,7 +653,7 @@
   });
 
   /* ---------- Timeline: prepend an event ---------- */
-  const TL_EVENTS = ["Out for delivery — courier assigned.", "Customs cleared — no duty owed.", "Arrived at local depot.", "Delivery attempted — nobody home.", "Delivered — signed by J. Doe."];
+  const TL_EVENTS = TXT(["Out for delivery — courier assigned.", "Customs cleared — no duty owed.", "Arrived at local depot.", "Delivery attempted — nobody home.", "Delivered — signed by J. Doe."], ["Передан в доставку — назначен курьер.", "Таможня пройдена — пошлина не нужна.", "Прибыл в местное отделение.", "Попытка доставки — никого нет дома.", "Доставлен — получил J. Doe."]);
   let tlIdx = 0;
   $("#timelineBtn")?.addEventListener("click", () => {
     const li = document.createElement("li");
@@ -670,7 +675,7 @@
       let html = POOL.slice(0, shown).map(([init, c]) => `<div class="avatar" style="background:${c}">${init}</div>`).join("");
       if (n > shown) html += `<div class="avatar avatar--more">+${n - shown}</div>`;
       $("#avatarStack").innerHTML = html;
-      $("#avatarCount").textContent = `${n} collaborator${n === 1 ? "" : "s"}`;
+      $("#avatarCount").textContent = TXT(`${n} collaborator${n === 1 ? "" : "s"}`, `${n} ${plural(n, "участник", "участника", "участников")}`);
       avatarRange.parentElement.querySelector("output").value = n;
     };
     avatarRange.addEventListener("input", renderAvatars); renderAvatars();
@@ -679,7 +684,7 @@
   /* ---------- Pricing: monthly / yearly toggle ---------- */
   const setBilling = (yearly) => {
     $$(".price__amt").forEach((amt) => { amt.textContent = yearly ? amt.dataset.y : amt.dataset.m; });
-    $$(".price__per").forEach((p) => { p.textContent = yearly ? "per year (2 months free)" : "per month"; });
+    $$(".price__per").forEach((p) => { p.textContent = yearly ? TXT("per year (2 months free)", "в год (2 месяца бесплатно)") : TXT("per month", "в месяц"); });
   };
   $("#billM")?.addEventListener("change", () => setBilling(false));
   $("#billY")?.addEventListener("change", () => setBilling(true));
@@ -722,16 +727,16 @@
   if (adaptGreeting) {
     const renderAdapt = () => {
       const h = new Date().getHours();
-      const daypart = h < 5 ? "Up late" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+      const daypart = h < 5 ? TXT("Up late", "Не спится") : h < 12 ? TXT("Good morning", "Доброе утро") : h < 18 ? TXT("Good afternoon", "Добрый день") : TXT("Good evening", "Добрый вечер");
       let visits = 0;
       try { visits = (+localStorage.getItem("adaptVisits") || 0) + 1; localStorage.setItem("adaptVisits", visits); } catch {}
       adaptGreeting.textContent = `${daypart}.`;
       $("#adaptNote").textContent = visits > 1
-        ? `This is load №${visits} of this demo in your browser — a real site could resume where you left off instead of re-pitching you.`
-        : "First visit, so you get the introduction. Reload and this line will change.";
+        ? TXT(`This is load №${visits} of this demo in your browser — a real site could resume where you left off instead of re-pitching you.`, `Это загрузка №${visits} этого демо в твоём браузере — настоящий сайт мог бы продолжить с того места, где ты остановился, а не заново рассказывать о себе.`)
+        : TXT("First visit, so you get the introduction. Reload and this line will change.", "Первый визит, поэтому тебе положено знакомство. Перезагрузи страницу, и эта строка изменится.");
     };
     renderAdapt();
-    $("#adaptReset")?.addEventListener("click", () => { try { localStorage.removeItem("adaptVisits"); } catch {} $("#adaptNote").textContent = "Memory cleared — reload to be greeted as a stranger again."; toast("Forgotten"); });
+    $("#adaptReset")?.addEventListener("click", () => { try { localStorage.removeItem("adaptVisits"); } catch {} $("#adaptNote").textContent = TXT("Memory cleared — reload to be greeted as a stranger again.", "Память очищена — перезагрузи страницу, и тебя снова встретят как незнакомца."); toast(TXT("Forgotten", "Забыто")); });
   }
 
   /* ---------- Popover fallback for older browsers ---------- */
