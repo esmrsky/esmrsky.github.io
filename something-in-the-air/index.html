@@ -17,12 +17,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&display=swap" rel="stylesheet">
 <style>
+:root{--ease:cubic-bezier(.2,.7,.2,1)}
 /* ==========================================================================
    SOMETHING IN THE AIR
    Four gels, and each one means something. Mauve is the perception itself —
    the vibe, the aura, the read. Sodium is the measurable world that explains
    most of it. Cyan is a reading that has been tested. Flare is the two ways
-   of cheating. Nothing on this page is coloured decoratively; if a thing is
+   of cheating. Nothing on this page is colored decoratively; if a thing is
    mauve it is a claim about what someone felt, and if it is cyan somebody
    checked.
    ========================================================================== */
@@ -204,13 +205,16 @@ h3.sub:first-of-type{margin-top:1.4em}
 /* the haze: three soft fields, drifting. Purely decorative, and it is drawn on
    a layer of its own so it can never affect layout or hit-testing. */
 .hero-haze{position:absolute;inset:-20%;z-index:0;pointer-events:none;opacity:.5}
+/* The softness is painted, not filtered: a blur() on a layer that drifts and
+   scales is re-rasterized every frame (it halved the frame rate on most-best-verses).
+   Six stops read as a field rather than a disc with an edge. */
 .hero-haze i{
-  position:absolute;border-radius:50%;display:block;
-  filter:blur(58px);mix-blend-mode:screen;
+  position:absolute;display:block;mix-blend-mode:screen;
+  background:radial-gradient(closest-side circle,var(--c) 0%,color-mix(in srgb,var(--c) 90%,transparent) 34%,color-mix(in srgb,var(--c) 66%,transparent) 56%,color-mix(in srgb,var(--c) 36%,transparent) 74%,color-mix(in srgb,var(--c) 12%,transparent) 89%,transparent 100%);
 }
-.hero-haze i:nth-child(1){width:46vw;height:46vw;left:2%;top:-6%;background:#7E3C68;animation:drift1 26s ease-in-out infinite alternate}
-.hero-haze i:nth-child(2){width:38vw;height:38vw;right:-4%;top:18%;background:#8A5418;animation:drift2 31s ease-in-out infinite alternate}
-.hero-haze i:nth-child(3){width:32vw;height:32vw;left:38%;bottom:-14%;background:#17566A;animation:drift3 37s ease-in-out infinite alternate}
+.hero-haze i:nth-child(1){width:46vw;height:46vw;left:2%;top:-6%;--c:#7E3C68;animation:drift1 26s ease-in-out infinite alternate}
+.hero-haze i:nth-child(2){width:38vw;height:38vw;right:-4%;top:18%;--c:#8A5418;animation:drift2 31s ease-in-out infinite alternate}
+.hero-haze i:nth-child(3){width:32vw;height:32vw;left:38%;bottom:-14%;--c:#17566A;animation:drift3 37s ease-in-out infinite alternate}
 @keyframes drift1{to{transform:translate3d(7%,9%,0) scale(1.14)}}
 @keyframes drift2{to{transform:translate3d(-9%,-7%,0) scale(1.1)}}
 @keyframes drift3{to{transform:translate3d(6%,-8%,0) scale(1.16)}}
@@ -259,7 +263,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   padding:9px 15px;min-height:44px;display:inline-flex;align-items:center;
   border:1.4px solid var(--hair);border-radius:99px;background:var(--cream);
   color:var(--ink-2);cursor:pointer;
-  transition:border-color .16s ease,background-color .16s ease,color .16s ease;
+  transition:border-color .18s var(--ease),background-color .18s var(--ease),color .18s var(--ease);
 }
 .wch:hover{border-color:var(--haze);color:var(--ink)}
 .wch[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
@@ -494,7 +498,7 @@ h3.sub:first-of-type{margin-top:1.4em}
    in oklab rather than picked, so nothing here is a fourth invented hue. */
 .rung{--a:var(--sodium);--a-ink:var(--sodium-ink);
   border:1px solid var(--hair);border-radius:12px;background:var(--cream);margin-bottom:10px;overflow:hidden;
-  transition:border-color .3s ease}
+  transition:border-color .26s var(--ease)}
 .rung:nth-of-type(2){--a:color-mix(in oklab,var(--sodium),var(--cyan) 34%);--a-ink:color-mix(in oklab,var(--sodium-ink),var(--cyan-ink) 34%)}
 .rung:nth-of-type(3){--a:color-mix(in oklab,var(--sodium),var(--cyan) 67%);--a-ink:color-mix(in oklab,var(--sodium-ink),var(--cyan-ink) 67%)}
 .rung:nth-of-type(4){--a:var(--cyan);--a-ink:var(--cyan-ink)}
@@ -512,7 +516,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .rung>summary{grid-template-columns:auto auto 1fr auto}
 .rung .rico{display:grid;place-items:center;width:22px;height:22px;flex:none;color:var(--a-ink)}
 .rung .rico svg{width:100%;height:100%}
-.rung .plus{transition:color .3s ease}
+.rung .plus{transition:color .26s var(--ease)}
 .rung[open] .plus{color:var(--a-ink)}
 @media (max-width:520px){.rung .rico{display:none}.rung>summary{grid-template-columns:auto 1fr auto}}
 .rung>summary::-webkit-details-marker{display:none}
@@ -525,7 +529,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .rung .name{font-family:var(--serif);font-weight:600;font-size:clamp(16px,2vw,20px);letter-spacing:-.008em}
 .rung .name small{display:block;font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin-top:.35em}
 .rung .plus{width:22px;height:22px;flex:none;color:var(--ink-3)}
-.rung .plus svg{width:100%;height:100%;transition:transform .34s cubic-bezier(.22,.68,.28,1)}
+.rung .plus svg{width:100%;height:100%;transition:transform .26s var(--ease)}
 .rung[open] .plus svg{transform:rotate(45deg)}
 .rung-body{padding:0 var(--rung-pad) clamp(18px,2.6vw,24px) calc(var(--rung-pad) + 30px + clamp(13px,2vw,20px))}
 /* The action sat under 58ch of prose in a 900px card, leaving 301px of the
@@ -604,7 +608,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   text-transform:uppercase;color:#8E9AA4;white-space:nowrap;
 }
 .lplus{width:22px;height:22px;flex:none;color:#9AA6B0;display:block}
-.lplus svg{width:100%;height:100%;transition:transform .34s cubic-bezier(.22,.68,.28,1)}
+.lplus svg{width:100%;height:100%;transition:transform .26s var(--ease)}
 .lane[open] .lplus svg{transform:rotate(45deg)}
 .lane>summary:hover .lane-count,.lane>summary:hover .lplus{color:#E4A6CB}
 .lane[open]>summary{padding-bottom:clamp(14px,2vw,18px)}
@@ -711,9 +715,9 @@ h3.sub:first-of-type{margin-top:1.4em}
    ========================================================================== */
 .rung::details-content,.lane::details-content,.srcbox::details-content{
   block-size:0;overflow:clip;opacity:.35;
-  transition:block-size .42s cubic-bezier(.22,.68,.28,1),
-             opacity .3s ease,
-             content-visibility .42s allow-discrete;
+  transition:block-size .6s var(--ease),
+             opacity .26s var(--ease),
+             content-visibility .6s allow-discrete;
 }
 .rung[open]::details-content,.lane[open]::details-content,.srcbox[open]::details-content{
   block-size:auto;opacity:1;
@@ -724,7 +728,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 
 /* ————— the reveal, gated behind JS so a stalled observer cannot strand text — */
 .js-reveal .rise{opacity:0;transform:translateY(14px)}
-.js-reveal .rise.in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s cubic-bezier(.22,.68,.28,1)}
+.js-reveal .rise.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
 @media (prefers-reduced-motion:reduce){.js-reveal .rise{opacity:1;transform:none}}
 
 
@@ -971,10 +975,10 @@ h3.sub:first-of-type{margin-top:1.4em}
   border-radius:50%;background:color-mix(in srgb,var(--cream) 88%,transparent);
   color:var(--ink-2);cursor:pointer;
   -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
-  transition:color .2s ease,border-color .2s ease,background-color .2s ease;
+  transition:color .18s var(--ease),border-color .18s var(--ease),background-color .18s var(--ease);
 }
 .tt:hover{color:var(--haze-ink);border-color:var(--haze)}
-.tt svg{width:19px;height:19px;grid-area:1/1;transition:opacity .22s ease,transform .34s cubic-bezier(.22,.68,.28,1)}
+.tt svg{width:19px;height:19px;grid-area:1/1;transition:opacity .26s var(--ease),transform .26s var(--ease)}
 .tt .ic-sun{opacity:0;transform:rotate(-70deg) scale(.6)}
 .tt .ic-moon{opacity:1;transform:none}
 :root[data-theme="dark"] .tt .ic-sun{opacity:1;transform:none}
@@ -1035,7 +1039,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   text-decoration:underline;text-decoration-style:dotted;
   text-decoration-color:color-mix(in srgb,currentColor 42%,transparent);
   text-decoration-thickness:1px;text-underline-offset:3px;
-  white-space:nowrap;transition:color .15s ease,text-decoration-color .15s ease;
+  white-space:nowrap;transition:color .18s var(--ease),text-decoration-color .18s var(--ease);
 }
 .esv-ref{position:relative}
 /* The tap target is grown to 44px with a transparent ::after rather than padding,
@@ -1053,7 +1057,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 }
 .esv-pick-btn:hover{border-color:var(--sift);background:color-mix(in srgb,var(--sift) 9%,transparent)}
 .esv-pick-ic{width:14px;height:14px;color:var(--sift-ink);flex:none}
-.esv-pick-caret{width:12px;height:12px;color:var(--ink-3);transition:transform .18s ease}
+.esv-pick-caret{width:12px;height:12px;color:var(--ink-3);transition:transform .18s var(--ease)}
 .esv-pick.open .esv-pick-btn{border-color:var(--sift);background:color-mix(in srgb,var(--sift) 12%,transparent)}
 .esv-pick.open .esv-pick-caret{transform:rotate(180deg)}
 .esv-pick-menu{
@@ -1070,7 +1074,7 @@ h3.sub:first-of-type{margin-top:1.4em}
 .esv-pick-opt{
   display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;
   padding:9px 10px;border:0;border-radius:9px;background:none;color:var(--ink-2);
-  text-align:left;cursor:pointer;transition:background-color .14s ease,color .14s ease;
+  text-align:left;cursor:pointer;transition:background-color .18s var(--ease),color .18s var(--ease);
 }
 .esv-pick-opt .code{flex:none;width:44px;color:var(--ink);font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em}
 .esv-pick-opt .full{font-size:.8rem;line-height:1.32}
@@ -1083,19 +1087,19 @@ h3.sub:first-of-type{margin-top:1.4em}
   padding:15px 17px;border:1px solid color-mix(in srgb,var(--sift) 26%,var(--hair));
   border-radius:14px;background:var(--paper);
   box-shadow:0 24px 64px var(--shadow-soft);color:var(--ink);
-  font-size:.95rem;line-height:1.55;opacity:0;transition:opacity .16s ease;
+  font-size:.95rem;line-height:1.55;opacity:0;
 }
 .esv-tip.open{display:block;opacity:1}
 .esv-tip-ref{
   display:block;margin-bottom:7px;color:var(--sift-ink);font-family:var(--mono);
   font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
 }
-.esv-tip-text{font-family:var(--serif);white-space:pre-line;min-height:3em;transition:opacity .15s ease;font-size:1.05rem}
+.esv-tip-text{font-family:var(--serif);white-space:pre-line;min-height:3em;transition:opacity .18s var(--ease);font-size:1.05rem}
 .esv-tip-text.is-loading{opacity:.42}
 .esv-note{display:block;margin-top:8px;color:var(--ink-3);font-family:var(--mono);font-size:.56rem;letter-spacing:.05em;text-transform:uppercase}
 .esv-tip-actions{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--hair)}
 .esv-tip-ctx,.esv-tip-out{
-  display:inline-flex;align-items:center;min-height:38px;padding:8px 12px;border-radius:999px;
+  display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border-radius:999px;
   border:1px solid color-mix(in srgb,var(--sift) 34%,var(--hair));
   background:color-mix(in srgb,var(--sift) 10%,transparent);color:var(--sift-ink);
   font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.1em;
@@ -1145,6 +1149,7 @@ h3.sub:first-of-type{margin-top:1.4em}
   border:1px solid var(--hair);background:none;color:var(--ink-2);
   font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
 }
+.esv-ctx-aa{min-width:44px;justify-content:center}
 .esv-ctx-more:hover,.esv-ctx-out:hover{border-color:var(--sift);color:var(--sift-ink)}
 .esv-ctx-note{color:var(--ink-3);font-family:var(--mono);font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;margin-top:.6em;display:block}
 
@@ -1155,33 +1160,25 @@ h3.sub:first-of-type{margin-top:1.4em}
 .esv-tip-actions{border-top:0;padding-top:0;margin-top:11px}
 
 /* ————— the other two things that switch —————
-   The picker menu is toggled by the `hidden` attribute and the popover by a
-   display swap, so neither had anything to transition FROM — an opacity
-   transition across a display change simply does not run. @starting-style
-   supplies the first frame, which is the only way to ease something in from
-   display:none without taking `hidden` away from the accessibility tree.
-   Both close instantly, which is what a menu should do. */
-.esv-pick-menu{
-  transition:opacity .18s ease,transform .2s cubic-bezier(.22,.68,.28,1);
-  opacity:1;transform:none;transform-origin:top right;
-}
-@starting-style{
-  .esv-pick-menu{opacity:0;transform:translateY(-7px) scale(.98)}
-}
-.esv-tip.open{transition:opacity .17s ease,transform .2s cubic-bezier(.22,.68,.28,1);transform:none}
-@starting-style{
-  .esv-tip.open{opacity:0;transform:translateY(-5px)}
-}
-.esv-ctx[open]{transition:opacity .2s ease,transform .24s cubic-bezier(.22,.68,.28,1);opacity:1;transform:none}
-@starting-style{
-  .esv-ctx[open]{opacity:0;transform:translateY(10px) scale(.99)}
-}
-.esv-ctx::backdrop{transition:opacity .2s ease;opacity:1}
-@starting-style{ .esv-ctx::backdrop{opacity:0} }
+   The picker menu is toggled by the `hidden` attribute, the pop-up by a display
+   swap and the dialog by showModal(), so none had anything to transition FROM.
+   @starting-style supplies the first frame on the way in, and allow-discrete
+   holds the display (and the dialog's top layer) until the fade has finished on
+   the way out. All three fade in place: nothing readable slides. */
+.esv-pick-menu{transition:opacity .18s var(--ease),display .18s allow-discrete;opacity:1}
+.esv-pick-menu[hidden]{display:none;opacity:0}
+@starting-style{ .esv-pick-menu:not([hidden]){opacity:0} }
+.esv-tip{transition:opacity .18s var(--ease),display .18s allow-discrete}
+@starting-style{ .esv-tip.open{opacity:0} }
+.esv-ctx{opacity:0;scale:.985;transition:opacity .26s var(--ease),scale .26s var(--ease),display .26s allow-discrete,overlay .26s allow-discrete}
+.esv-ctx[open]{opacity:1;scale:1}
+@starting-style{ .esv-ctx[open]{opacity:0;scale:.985} }
+.esv-ctx::backdrop{opacity:0;transition:opacity .26s var(--ease),display .26s allow-discrete,overlay .26s allow-discrete}
+.esv-ctx[open]::backdrop{opacity:1}
+@starting-style{ .esv-ctx[open]::backdrop{opacity:0} }
 @media (prefers-reduced-motion:reduce){
-  .esv-pick-menu,.esv-tip.open,.esv-ctx[open],.esv-ctx::backdrop{transition:none}
+  .esv-pick-menu,.esv-tip,.esv-ctx,.esv-ctx::backdrop{transition:none}
 }
-
 /* the picker sits in the dark footer, so its paper clothes are turned over */
 .foot .esv-pick-btn{border-color:rgba(255,255,255,.28);color:#E7E4E1}
 .foot .esv-pick-btn:hover{border-color:#E4A6CB;background:rgba(228,166,203,.12)}
@@ -1327,7 +1324,7 @@ try {
 
     <div class="spread rise">
       <h3 class="sub">Aura, taken literally</h3>
-      <p class="opener">The slang is a joke. There is a non-joking version, and it makes a different kind of claim: a coloured field around the body, of variable strength, readable by a sensitive, indicating personality or health. That is not a metaphor. It is a physical claim about a detectable field &mdash; which means, unlike almost everything else on this page, <b>it can be tested directly</b>.</p>
+      <p class="opener">The slang is a joke. There is a non-joking version, and it makes a different kind of claim: a colored field around the body, of variable strength, readable by a sensitive, indicating personality or health. That is not a metaphor. It is a physical claim about a detectable field &mdash; which means, unlike almost everything else on this page, <b>it can be tested directly</b>.</p>
 
       <p>It was, by a nine-year-old. Emily Rosa sat twenty-one experienced therapeutic-touch practitioners &mdash; people who work professionally with what they describe as the human energy field &mdash; on the far side of a cardboard screen with their hands through two holes. She held her own hand a few inches above one of theirs, at random, and asked which. They could not tell above chance, and the journal&rsquo;s editor told patients to save their money.</p>
 
@@ -1343,7 +1340,7 @@ try {
     </div>
 
     <div class="spread rise">
-      <p>The more interesting point is that <b>Scripture does not have this category either</b>. There is no doctrine of coloured human energy fields anywhere in it. What it has instead is a completely different vocabulary &mdash; and not one word of it is a field. They are relations and moral conditions, things that exist <em>between</em> parties rather than radiating from one.</p>
+      <p>The more interesting point is that <b>Scripture does not have this category either</b>. There is no doctrine of colored human energy fields anywhere in it. What it has instead is a completely different vocabulary &mdash; and not one word of it is a field. They are relations and moral conditions, things that exist <em>between</em> parties rather than radiating from one.</p>
 
       <aside class="aside">
         <span class="lbl"><svg aria-hidden="true"><use href="#i-quote"/></svg>What Scripture says instead</span>
@@ -1414,7 +1411,7 @@ try {
 
       <article class="mech">
         <div class="mech-top"><h4>Infrasound at 19&nbsp;Hz</h4><span class="chip mixed">Mixed</span></div>
-        <p>Vic Tandy felt dread and cold sweat in his lab and saw a grey shape at the edge of vision that vanished when he turned. The next day a fencing blade clamped in a vice was visibly vibrating. A newly fitted extractor fan was producing a standing wave at around 19&nbsp;Hz &mdash; close to a resonance of the human eyeball and chest.</p>
+        <p>Vic Tandy felt dread and cold sweat in his lab and saw a gray shape at the edge of vision that vanished when he turned. The next day a fencing blade clamped in a vice was visibly vibrating. A newly fitted extractor fan was producing a standing wave at around 19&nbsp;Hz &mdash; close to a resonance of the human eyeball and chest.</p>
         <p>He later measured the same frequency in a fourteenth-century cellar in Coventry with a long-standing reputation.</p>
         <div class="src">Tandy &amp; Lawrence, Journal of the Society for Psychical Research, late 1990s. A vivid case study, not a controlled result &mdash; which matters enormously, for the reason below.</div>
       </article>
@@ -1428,7 +1425,7 @@ try {
 
       <article class="mech">
         <div class="mech-top"><h4>Expectancy</h4><span class="chip solid">Solid</span></div>
-        <p>Being told a place is haunted reliably increases what people report there. This is the least glamorous finding in the whole literature and by some distance the strongest, and it applies just as hard to the believer as to the sceptic.</p>
+        <p>Being told a place is haunted reliably increases what people report there. This is the least glamorous finding in the whole literature and by some distance the strongest, and it applies just as hard to the believer as to the skeptic.</p>
         <p>If someone tells you on the way in that the building has a history, your instrument has already been tampered with.</p>
         <div class="src">Consistent across the Wiseman work and the study below. The reputation of a place predicts experience in it.</div>
       </article>
@@ -1555,7 +1552,7 @@ try {
         <h4>It&rsquo;s the air conditioning</h4>
         <p class="says">&ldquo;You&rsquo;re tired. You didn&rsquo;t eat. It smells weird in there. That&rsquo;s all it is.&rdquo;</p>
         <p>Sometimes that is exactly all it is, and the person saying it is right. The trouble is that they were going to say it either way &mdash; there is no room, no reading, no circumstance that would move them off it. A position that cannot lose is not a strong position. It is an unused one.</p>
-        <p class="cost"><b>What it costs:</b> a whole faculty, dismissed on principle. And a New Testament in which one of Paul&rsquo;s longest and most concrete passages &mdash; a list of offices, a description of an active hostile authority, an instruction to armour up &mdash; quietly becomes a metaphor for having a difficult week.</p>
+        <p class="cost"><b>What it costs:</b> a whole faculty, dismissed on principle. And a New Testament in which one of Paul&rsquo;s longest and most concrete passages &mdash; a list of offices, a description of an active hostile authority, an instruction to armor up &mdash; quietly becomes a metaphor for having a difficult week.</p>
       </article>
 
       <article class="exit">
@@ -1569,7 +1566,7 @@ try {
 
     <div class="rise">
       <p class="pull">An unfalsifiable reading is not a <em>spiritual</em> one. It is a lazy one.</p>
-      <p>That is the working rule of the rest of this page, and it is not a sceptic&rsquo;s rule &mdash; it is the Bible&rsquo;s. &ldquo;Do not despise prophecies, but test everything; hold fast what is good&rdquo; is a single instruction with two halves, and almost everybody keeps one of them.</p>
+      <p>That is the working rule of the rest of this page, and it is not a skeptic&rsquo;s rule &mdash; it is the Bible&rsquo;s. &ldquo;Do not despise prophecies, but test everything; hold fast what is good&rdquo; is a single instruction with two halves, and almost everybody keeps one of them.</p>
     </div>
   </div>
 </section>
@@ -1581,7 +1578,7 @@ try {
     <h2 class="beat rise">There are <em>offices</em> up there</h2>
 
     <div class="rise">
-      <p class="lead">The intuition that the unseen world is organised the way the seen one is &mdash; jurisdictions, seniority, a chain of command, someone in charge of a region &mdash; is not a modern invention borrowed from fantasy novels. It is in the vocabulary, and once you see it you cannot unsee it.</p>
+      <p class="lead">The intuition that the unseen world is organized the way the seen one is &mdash; jurisdictions, seniority, a chain of command, someone in charge of a region &mdash; is not a modern invention borrowed from fantasy novels. It is in the vocabulary, and once you see it you cannot unsee it.</p>
 
     </div>
 
@@ -1771,19 +1768,19 @@ try {
       <aside class="aside">
         <span class="lbl"><svg aria-hidden="true"><use href="#i-target"/></svg>The rule these six share</span>
         <p>Not the soil &mdash; the <b>practice</b>. Worship, trade, oppression, bloodshed, an encounter with God.</p>
-        <cite>Which is why the ordinary version needs no gift: a workplace organised around fear feels like fear.</cite>
+        <cite>Which is why the ordinary version needs no gift: a workplace organized around fear feels like fear.</cite>
       </aside>
 
       <h3 class="sub">And then there is the sea</h3>
 
-      <p class="opener">Water is the one people ask about most &mdash; the flat indifference of open ocean, the hush over a lake at dusk, the specific unease of water you cannot see the bottom of. It is also where Scripture has the most to say and where the modern literalisation has travelled furthest, so it is worth doing properly.</p>
+      <p class="opener">Water is the one people ask about most &mdash; the flat indifference of open ocean, the hush over a lake at dusk, the specific unease of water you cannot see the bottom of. It is also where Scripture has the most to say and where the modern literalization has traveled furthest, so it is worth doing properly.</p>
     </div>
 
     <div class="spread rise">
-      <p><b>What the text does.</b> From the third sentence of the Bible the sea is not scenery. The earth is formless and void, darkness is over the face of <i>tehom</i> &mdash; the deep &mdash; and the Spirit hovers over the waters. Creation then proceeds by God ordering and bounding that. Israel&rsquo;s neighbours told the same story as a <em>fight</em>. Scripture keeps the imagery and drops the struggle: God shatters the heads of Leviathan in the waters (Psalm 74:14), pierces the fleeing serpent (Isaiah 27:1), and in Job 41 Leviathan is simply a creature &mdash; unmasterable by men, entirely unremarkable to God.</p>
+      <p><b>What the text does.</b> From the third sentence of the Bible the sea is not scenery. The earth is formless and void, darkness is over the face of <i>tehom</i> &mdash; the deep &mdash; and the Spirit hovers over the waters. Creation then proceeds by God ordering and bounding that. Israel&rsquo;s neighbors told the same story as a <em>fight</em>. Scripture keeps the imagery and drops the struggle: God shatters the heads of Leviathan in the waters (Psalm 74:14), pierces the fleeing serpent (Isaiah 27:1), and in Job 41 Leviathan is simply a creature &mdash; unmasterable by men, entirely unremarkable to God.</p>
 
       <aside class="aside aside--ink">
-        <span class="lbl"><svg aria-hidden="true"><use href="#i-water"/></svg>The neighbours&rsquo; version</span>
+        <span class="lbl"><svg aria-hidden="true"><use href="#i-water"/></svg>The neighbors&rsquo; version</span>
         <p><b>Baal against Yamm</b> at Ugarit.<br><b>Marduk splitting Tiamat</b> in the <i>Enuma Elish</i>.</p>
         <cite>Scripture borrows the imagery and drops the combat. Nothing is wrestled; the deep is bounded.</cite>
       </aside>
@@ -1813,7 +1810,7 @@ try {
         <p><b>The scale.</b> <b>The horizon.</b> <b>The sound.</b> And the very old, entirely sensible knowledge that <b>you cannot see the bottom</b>.</p>
       </aside>
 
-      <p>Which means the ordinary version is available to you constantly, with no gift required. A workplace organised around fear feels like fear. A house where something is being denied feels like the denial. You are not imagining that, and you do not need a vision to read it &mdash; you need to be willing to say out loud what the place is actually for.</p>
+      <p>Which means the ordinary version is available to you constantly, with no gift required. A workplace organized around fear feels like fear. A house where something is being denied feels like the denial. You are not imagining that, and you do not need a vision to read it &mdash; you need to be willing to say out loud what the place is actually for.</p>
     </div>
   </div>
 </section>
@@ -1858,14 +1855,14 @@ try {
     <div class="spread rise">
       <h3 class="sub">The movement that went the other way</h3>
 
-      <p class="opener">From the mid-1980s a serious missiological programme was built on these texts. Its central practice was <b>spiritual mapping</b> &mdash; researching a place&rsquo;s history and religious past in order to identify the spirit holding it.</p>
+      <p class="opener">From the mid-1980s a serious missiological program was built on these texts. Its central practice was <b>spiritual mapping</b> &mdash; researching a place&rsquo;s history and religious past in order to identify the spirit holding it.</p>
 
       <aside class="aside aside--sodium">
         <span class="lbl"><svg aria-hidden="true"><use href="#i-clock"/></svg>How it was built</span>
         <p><b>1986</b> &mdash; C. Peter Wagner, <i>Spiritual Power and Church Growth</i>, launching &ldquo;strategic-level spiritual warfare&rdquo;.<br><b>George Otis Jr.</b> develops spiritual mapping.<br><b>Cindy Jacobs</b> and <b>Ed Silvoso</b> build prayer campaigns on it.<br><b>1996</b> &mdash; Wagner answers his critics in <i>Confronting the Powers</i>.</p>
       </aside>
 
-      <p>It was answered at length. Chuck Lowe&rsquo;s <i>Territorial Spirits and World Evangelisation?</i> is a biblical, historical and missiological critique of the whole programme. And the Lausanne Movement published its own assessment, written by A. Scott Moreau, which is worth reading precisely because it is <em>not</em> a hatchet job.</p>
+      <p>It was answered at length. Chuck Lowe&rsquo;s <i>Territorial Spirits and World Evangelisation?</i> is a biblical, historical and missiological critique of the whole program. And the Lausanne Movement published its own assessment, written by A. Scott Moreau, which is worth reading precisely because it is <em>not</em> a hatchet job.</p>
     </div>
 
     <div class="spread rise">
@@ -1883,7 +1880,7 @@ try {
     <h3 class="sub rise">Where that leaves the three claims</h3>
     <div class="verdict rise">
       <div class="vr">
-        <div class="claim"><b>The unseen realm is real, populated, and organised into offices and jurisdictions.</b> Angels, princes, thrones, dominions, a council that deliberates and is held to account.</div>
+        <div class="claim"><b>The unseen realm is real, populated, and organized into offices and jurisdictions.</b> Angels, princes, thrones, dominions, a council that deliberates and is held to account.</div>
         <span class="chip solid">Well attested</span>
       </div>
       <div class="vr">
@@ -1939,13 +1936,13 @@ try {
             <h4>Micah Turnbo</h4>
             <span class="vmeta">Behold Wonder &middot; formerly Vineyard Church Northwest, Cincinnati</span>
             <p>A seer prophet who said he perceived the spirit realm much as he perceived the physical one, and had since childhood &mdash; dreams, visions, angels, demons. Collected in <i>The Invitation</i>, and carried across the podcasts below: The Deep End ep.&nbsp;020, Blurry Creatures ep.&nbsp;89 &ldquo;I See Angels&rdquo;.</p>
-            <p><b>Then the tests in this section ran, in public.</b> In 2025 the apologist Mike Winger published a detailed warning, objecting less to the fact of the visions than to their content &mdash; casual, domestic depictions of God and of angels that he argued could not be squared with how Scripture describes such encounters. Concerns spread through the wider Vineyard movement. His senior pastor defended him, then withdrew the defence.</p>
-            <div class="vfor"><b>How it ended</b> in May 2025 Turnbo, Vineyard Northwest and Vineyard USA &ldquo;together decided that Micah will take an extended leave from public ministry to rest, reflect, and seek guidance.&rdquo; His accounts went dark. His own statement: <em>&ldquo;I recognize that some of my writings and interview comments have included statements that do not align with Scripture.&rdquo;</em> Read that as what it is &mdash; a body weighed it, and the man conceded rather than doubling down, which is rarer than either the accusation or the defence.</div>
+            <p><b>Then the tests in this section ran, in public.</b> In 2025 the apologist Mike Winger published a detailed warning, objecting less to the fact of the visions than to their content &mdash; casual, domestic depictions of God and of angels that he argued could not be squared with how Scripture describes such encounters. Concerns spread through the wider Vineyard movement. His senior pastor defended him, then withdrew the defense.</p>
+            <div class="vfor"><b>How it ended</b> in May 2025 Turnbo, Vineyard Northwest and Vineyard USA &ldquo;together decided that Micah will take an extended leave from public ministry to rest, reflect, and seek guidance.&rdquo; His accounts went dark. His own statement: <em>&ldquo;I recognize that some of my writings and interview comments have included statements that do not align with Scripture.&rdquo;</em> Read that as what it is &mdash; a body weighed it, and the man conceded rather than doubling down, which is rarer than either the accusation or the defense.</div>
           </article>
           <article class="voice">
             <h4>Phoenix Steinfeldt</h4>
             <span class="vmeta">@phoenixfromphoenix &middot; Redeem Eden, with Cody Parker</span>
-            <p>Posts as a prophetic seer on what stands over places. Redeem Eden states the claim about as plainly as it can be stated: he is described as having the gift to distinguish between spirits and to see the spirit realm through sight and visions, and they &ldquo;pray against principalities that are spiritually oppressing different geographical territories all over the Earth.&rdquo; They also sell a 1.5&ndash;2 hour Christ-centred life-coaching and deliverance session.</p>
+            <p>Posts as a prophetic seer on what stands over places. Redeem Eden states the claim about as plainly as it can be stated: he is described as having the gift to distinguish between spirits and to see the spirit realm through sight and visions, and they &ldquo;pray against principalities that are spiritually oppressing different geographical territories all over the Earth.&rdquo; They also sell a 1.5&ndash;2 hour Christ-centered life-coaching and deliverance session.</p>
             <p>Their own framing is more careful than either their followers or their critics tend to be: &ldquo;We are not theologians. We are not pastors or preachers. We never went to seminary. We are not psychics. We are not mediums. We are not fortune tellers.&rdquo; That disclaims the clerical category and the occult one in the same breath, and leaves them standing on the gift alone.</p>
             <div class="vfor"><b>Watch for</b> that is precisely the third claim in section&nbsp;07 &mdash; the one marked <em>not attested</em> &mdash; offered as a service. Note too that the platform&rsquo;s own related searches include the word <i>debunked</i>: the material travels fast and so does the pushback, and neither travels with a way of settling it.</div>
           </article>
@@ -1963,7 +1960,7 @@ try {
         <div class="lane-head">
           <span class="lane-n"><svg aria-hidden="true"><use href="#i-ear"/></svg>Lane 2</span>
           <h3>They take the unseen seriously, at length</h3>
-          <p>Long-form audio is where this subject actually lives now. These differ enormously in rigour, and the difference is the thing to track.</p>
+          <p>Long-form audio is where this subject actually lives now. These differ enormously in rigor, and the difference is the thing to track.</p>
         </div>
         <span class="lane-tog"><span class="lane-count">4 voices</span><span class="lplus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></span>
         </summary>
@@ -2015,7 +2012,7 @@ try {
             <h4>Michael S. Heiser</h4>
             <span class="vmeta"><i>The Unseen Realm</i>, 2015</span>
             <p>The book that put the divine council in front of a general readership. His doctorate was on precisely this &mdash; the council in late canonical and Second Temple Jewish literature &mdash; so the popular book has real machinery underneath it.</p>
-            <div class="vfor"><b>Watch for</b> how fast it gets stretched. A careful argument about ancient cosmology is routinely cited downstream as a licence for things Heiser himself declined to claim.</div>
+            <div class="vfor"><b>Watch for</b> how fast it gets stretched. A careful argument about ancient cosmology is routinely cited downstream as a license for things Heiser himself declined to claim.</div>
           </article>
           <article class="voice">
             <h4>The powers debate</h4>
@@ -2038,7 +2035,7 @@ try {
           <article class="voice">
             <h4>The Remnant Radio</h4>
             <span class="vmeta">Joshua Lewis, Michael Miller &amp; Michael Rowntree</span>
-            <p>Charismatic, practising, unembarrassed about the gifts &mdash; and in an episode called <i>Deliverance Ministry Without the Weird</i> they take on territorial spirits and spiritual mapping directly, cautioning against speculative demonic taxonomy and against a focus on the demonic that displaces the gospel.</p>
+            <p>Charismatic, practicing, unembarrassed about the gifts &mdash; and in an episode called <i>Deliverance Ministry Without the Weird</i> they take on territorial spirits and spiritual mapping directly, cautioning against speculative demonic taxonomy and against a focus on the demonic that displaces the gospel.</p>
             <div class="vfor"><b>Why it matters</b> this is the rarest position available: inside the practice, with the brakes on. It also lands almost exactly on the three verdicts in section&nbsp;07.</div>
           </article>
           <article class="voice">
@@ -2097,7 +2094,7 @@ try {
         <div class="ref">1 Corinthians 14:29</div>
         <div>
           <div class="q">Who is allowed to weigh it?</div>
-          <p>&ldquo;Let two or three prophets speak, and let the others weigh what is said.&rdquo; Weighing is not optional and it is not self-administered. A seer accountable to no one has not been given a licence &mdash; they have skipped the instruction that comes with the gift.</p>
+          <p>&ldquo;Let two or three prophets speak, and let the others weigh what is said.&rdquo; Weighing is not optional and it is not self-administered. A seer accountable to no one has not been given a license &mdash; they have skipped the instruction that comes with the gift.</p>
         </div>
       </article>
       <article class="tcard">
@@ -2316,7 +2313,7 @@ try {
         </summary>
         <div class="rung-body">
           <span class="look">What it looks like when this is the answer</span>
-          <p>Everyone feels it, nobody says it, and it has a name that would be socially expensive to use. A workplace organised so that people are afraid feels like fear. A venue whose business model requires people to lose money feels like it. A house where something is not being said feels like the thing not being said.</p>
+          <p>Everyone feels it, nobody says it, and it has a name that would be socially expensive to use. A workplace organized so that people are afraid feels like fear. A venue whose business model requires people to lose money feels like it. A house where something is not being said feels like the thing not being said.</p>
           <p>This is the biblical pattern from the last section and it is the rung most likely to be true and least likely to be checked, because checking it means saying an uncomfortable sentence about people you have to keep seeing.</p>
           <div class="do"><b>Do:</b> finish the sentence &ldquo;this place runs on&nbsp;&mdash;&mdash;.&rdquo; If the honest ending is <i>fear</i>, <i>debt</i>, <i>appetite</i>, <i>contempt</i> or <i>silence</i>, you have almost certainly found it, and no further explanation is required.</div>
         </div>
@@ -2330,8 +2327,8 @@ try {
         </summary>
         <div class="rung-body">
           <span class="look">What it looks like when this is the answer</span>
-          <p>Something real happened here and the place is arranged so as not to mention it. That is a genuine category &mdash; Scripture treats bloodshed and injustice as leaving a claim on land, and communities that have buried something behave in recognisable ways.</p>
-          <p>But handle this rung with both hands. It is the easiest one on the ladder to abuse, because you almost never actually know the history, a rumour will produce precisely the same feeling as a fact, and being told a building has a past is <em>itself</em> one of the strongest documented causes of feeling something in it. If you learned the history first and felt it second, you have not confirmed anything.</p>
+          <p>Something real happened here and the place is arranged so as not to mention it. That is a genuine category &mdash; Scripture treats bloodshed and injustice as leaving a claim on land, and communities that have buried something behave in recognizable ways.</p>
+          <p>But handle this rung with both hands. It is the easiest one on the ladder to abuse, because you almost never actually know the history, a rumor will produce precisely the same feeling as a fact, and being told a building has a past is <em>itself</em> one of the strongest documented causes of feeling something in it. If you learned the history first and felt it second, you have not confirmed anything.</p>
           <div class="do"><b>Do:</b> notice the order of operations. Felt it, then learned the history &mdash; interesting. Learned the history, then felt it &mdash; discard, or at least do not build on it.</div>
         </div>
       </details>
@@ -2427,7 +2424,7 @@ try {
       <li><span class="kind">Supplying the cause afterwards</span><b>Schachter, S. &amp; Singer, J. (1962)</b>; <b>Dutton, D. &amp; Aron, A. (1974).</b> Both are classics with real replication problems; the general mechanism is far better supported than either specific study.</li>
       <li><span class="kind">The old disciplines</span><b>Evagrius Ponticus</b> (c.&nbsp;346&ndash;399) on the eight generic <i>logismoi</i> and on discriminating thoughts that come from the person, from demons and from angels; carried west by <b>John Cassian</b>. <b>Ignatius of Loyola</b>, <i>Rules for the Discernment of Spirits</i> &mdash; consolation and desolation, and rules 5 and 6: make no change in desolation, but change yourself against it. <a href="https://www.ignatianspirituality.com/making-good-decisions/discernment-of-spirits/rules-for-discernment/" target="_blank" rel="noopener">the rules</a> &middot; <a href="https://orthodoxwiki.org/Logismoi" target="_blank" rel="noopener">logismoi</a></li>
       <li><span class="kind">Aura, tested directly</span><b>Rosa, E., Rosa, L., Sarner, L. &amp; Barrett, S. (1998).</b> A close look at therapeutic touch. <i>JAMA</i> 279. Twenty-one practitioners, a cardboard screen, no better than chance. Designed as a fourth-grade science project. <a href="https://pubmed.ncbi.nlm.nih.gov/9533499/" target="_blank" rel="noopener">PubMed</a></li>
-      <li><span class="kind">The sea</span><b>Chaoskampf and its afterlife.</b> <i>Tehom</i> in Genesis 1:2; Baal and Yamm at Ugarit; Marduk and Tiamat in the <i>Enuma Elish</i>; Leviathan in Job 41, Psalm 74:14 and Isaiah 27:1; the beasts from the sea in Daniel 7 and Revelation 13:1; &ldquo;the sea was no more&rdquo; in Revelation 21:1. The literalised version is <b>John Eckhardt</b>, <i>Marine Demons</i>, and the wider &ldquo;marine spirits&rdquo; teaching, which maps Mami Wata and the water deities of Yoruba and Vodou tradition onto a demonic rank.</li>
+      <li><span class="kind">The sea</span><b>Chaoskampf and its afterlife.</b> <i>Tehom</i> in Genesis 1:2; Baal and Yamm at Ugarit; Marduk and Tiamat in the <i>Enuma Elish</i>; Leviathan in Job 41, Psalm 74:14 and Isaiah 27:1; the beasts from the sea in Daniel 7 and Revelation 13:1; &ldquo;the sea was no more&rdquo; in Revelation 21:1. The literalized version is <b>John Eckhardt</b>, <i>Marine Demons</i>, and the wider &ldquo;marine spirits&rdquo; teaching, which maps Mami Wata and the water deities of Yoruba and Vodou tradition onto a demonic rank.</li>
       <li><span class="kind">Reading a room, contested</span><b>Porges, S.</b> on neuroception and Polyvagal Theory &mdash; and <b>Grossman, P. et al.</b>, the thirty-nine-author critique arguing its central anatomical, RSA and evolutionary claims are untenable, with Porges&rsquo; reply that it targets a theory he does not hold. Included <em>because</em> it is unresolved: it is the best available mechanism for reading a room and it is not settled science.</li>
       <li><span class="kind">The Turnbo outcome</span><b>Mike Winger&rsquo;s 2025 warning; Vineyard USA; and Turnbo&rsquo;s own statement.</b> The leave from public ministry was announced as a joint decision of Turnbo, Vineyard Northwest and Vineyard USA in May 2025. Quoted here from the reporting rather than paraphrased, because a page that hands out tests owes precision when one of them is applied to a real person.</li>
       <li><span class="kind">The movement</span><b>Wagner, C. P.</b> <i>Spiritual Power and Church Growth</i> (1986) and <i>Confronting the Powers</i> (1996). With George Otis Jr. on spiritual mapping, and Cindy Jacobs and Ed Silvoso on the prayer campaigns built from it.</li>
