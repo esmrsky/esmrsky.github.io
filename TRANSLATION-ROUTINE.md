@@ -145,6 +145,15 @@ do not build it inside a translation run.
    updating the progress table in the same commit.
 7. Move to the next page.
 
+Three misses the November 5, 2026 pass found after the fact. Check for each before committing:
+- **A link home written as `https://esmrsky.github.io/`** is left alone by the generator, so the
+  Russian page sends readers to the English hub. Write it as `href="/"`, including inside a parent's
+  `data-ru` value.
+- **`&amp;amp;` inside a `data-ru` value** shows a literal "&amp;" on the Russian page. The value
+  needs `&amp;` once.
+- **Text beside an icon in one element** (`<span><svg/>01 · Label</span>`) gets skipped. Wrap the
+  text in its own `<span data-ru>`.
+
 ## Register
 
 Warm, modern, accessible — how a thoughtful Russian-speaking writer in their late 20s
