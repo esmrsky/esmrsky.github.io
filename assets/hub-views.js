@@ -445,15 +445,28 @@
     });
     var siteNodes = L.nodes.filter(function (n) { return n.site; })
       .sort(function (a, b) { return (b.site.claims.length + b.site.fam.length) - (a.site.claims.length + a.site.fam.length); });
+    /* Every dot is in place before any label, so a label never lands on a dot
+       placed after it. Widths are measured, not guessed per character: Cyrillic
+       runs wider than Latin, and the guess let Russian labels collide. */
+    siteNodes.forEach(function (n) { boxes.push({ x: n.x - n.r - 2, y: n.y - n.r - 2, w: n.r * 2 + 4, h: n.r * 2 + 4 }); });
+    var mctx = null;
+    try { mctx = document.createElement('canvas').getContext('2d'); mctx.font = fs + 'px ' + getComputedStyle(stage).fontFamily; } catch (e) { mctx = null; }
     siteNodes.forEach(function (n) {
-      var w = n.site.title.length * fs * .52;
-      var right = n.x < L.W - w - 30;
-      n.lx = right ? n.x + n.r + 5 : n.x - n.r - 5;
-      n.anchor = right ? 'start' : 'end';
-      var bx = { x: right ? n.lx : n.lx - w, y: n.y - fs * .7, w: w, h: fs * 1.3 };
-      n.lh = hit(bx);
-      if (!n.lh) boxes.push(bx);
-      boxes.push({ x: n.x - n.r, y: n.y - n.r, w: n.r * 2, h: n.r * 2 });
+      var w = mctx ? mctx.measureText(n.site.title).width * 1.04 : n.site.title.length * fs * .6;
+      /* Try the preferred side, then the other one, before hiding the label. */
+      var sides = n.x < L.W - w - 30 ? ['start', 'end'] : ['end'];
+      if (n.x - n.r - 5 - w < 6) sides = sides.filter(function (sd) { return sd !== 'end'; });
+      if (!sides.length) sides = ['start'];
+      var placed = null;
+      for (var k = 0; k < sides.length && !placed; k++) {
+        var rt = sides[k] === 'start', lx = rt ? n.x + n.r + 5 : n.x - n.r - 5;
+        var bx = { x: rt ? lx : lx - w, y: n.y - fs * .7, w: w, h: fs * 1.3 };
+        if (!hit(bx)) placed = { lx: lx, anchor: sides[k], bx: bx };
+      }
+      if (!placed) { var rt0 = sides[0] === 'start'; placed = { lx: rt0 ? n.x + n.r + 5 : n.x - n.r - 5, anchor: sides[0], bx: null }; }
+      n.lx = placed.lx; n.anchor = placed.anchor;
+      n.lh = !placed.bx;
+      if (placed.bx) boxes.push(placed.bx);
     });
 
     L.nodes.forEach(function (n, i) {
