@@ -258,6 +258,21 @@ body{text-wrap-style:pretty}
 h1,h2,h3{text-wrap:balance}
 :where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
 p,li,dd,figcaption{text-wrap:pretty}
+
+/* the way back to every other project: inherits the footer's own color */
+.home-link{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;padding:0 4px;color:inherit;opacity:.72;font-size:.85em;letter-spacing:.04em;text-decoration:none;transition:opacity .25s cubic-bezier(.22,1,.36,1)}
+.home-link:hover{opacity:1}
+.home-row{margin:0}
+
+    /* A table wider than a phone scrolls inside its own box, not the page. */
+    .table-scroll { overflow-x: auto; overscroll-behavior-x: contain; max-width: 100%; }
+    .table-scroll:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+
+/* 44px touch floor; desktop proportions untouched */
+@media (pointer:coarse){nav a{display:inline-flex;align-items:center;min-height:44px}}
 </style>
 </head>
 <body>
@@ -367,7 +382,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <!-- EFFORT -->
     <section id="effort">
       <h2><span class="ico">🎚️</span> Effort &amp; modes (both sides)</h2>
-      <table>
+      <div class="table-scroll" tabindex="0"><table>
         <thead>
           <tr><th>Level</th><th>Claude Code (typical)</th><th>Codex (typical)</th><th>When</th></tr>
         </thead>
@@ -379,7 +394,7 @@ p,li,dd,figcaption{text-wrap:pretty}
           <tr><td><strong>Max</strong></td><td>Quality-first ceiling</td><td>Max</td><td>Hardest single-agent jobs</td></tr>
           <tr><td><strong>Ultra</strong></td><td>—</td><td>~4 parallel agents</td><td>Only if work splits cleanly</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <div class="warnbox">
         <p><strong>Shared trap:</strong> “Always max / always Extra High / always strongest model.”</p>
         <p>Effort multiplies cost (often ~3–5× from Low to Extra High). UI polish rarely needs frontier reasoning every turn. Escalate on <em>failed acceptance criteria</em>, not on anxiety.</p>
@@ -389,7 +404,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <!-- APPS -->
     <section id="apps">
       <h2><span class="ico">💻</span> Coding apps compared</h2>
-      <table>
+      <div class="table-scroll" tabindex="0"><table>
         <thead>
           <tr><th></th><th>Claude Code</th><th>Codex</th></tr>
         </thead>
@@ -401,7 +416,7 @@ p,li,dd,figcaption{text-wrap:pretty}
           <tr><td><strong>Strength bias</strong></td><td>Taste / structured refactors; often stronger on SWE-style correctness benches</td><td>Terminal/agent throughput; multi-agent fan-out (Ultra) — often leads agentic terminal benches</td></tr>
           <tr><td><strong>Website sweet spot</strong></td><td>Direction + polish with Opus/Sonnet phase routing</td><td>Build volume with Terra/Luna; Sol for hard gates</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <p>Many practitioners keep <strong>both</strong>: Codex for agentic terminal speed and parallel fan-out; Claude Code when visual judgment and careful multi-file consistency feel stronger. For one-page brand sites, either wins if you phase models and verify in the browser.</p>
     </section>
 
@@ -538,12 +553,12 @@ claude --worktree responsive-pass</pre>
 
       <h3 class="section-title"><span class="ico">🔁</span> Letting Claude keep working (/goal vs /loop)</h3>
       <p style="margin-bottom:0.75rem">These two are different tools. Use the right one.</p>
-      <table class="compare">
+      <div class="table-scroll" tabindex="0"><table class="compare">
         <tr><th></th><th>/goal</th><th>/loop</th></tr>
         <tr><td>Next turn starts when</td><td>Previous turn finishes</td><td>A time interval elapses</td></tr>
         <tr><td>Stops when</td><td>Condition is met (checked by a small evaluator model)</td><td>You stop it, or Claude decides the work is done</td></tr>
         <tr><td>Best for</td><td>Getting something finished (tests pass, build succeeds)</td><td>Polling / monitoring (CI, deploy, PR comments)</td></tr>
-      </table>
+      </table></div>
 
       <div class="cmd">
         <div class="cmd-header">
@@ -719,7 +734,7 @@ claude --worktree responsive-pass</pre>
       </div>
 
       <h3>Quick routing by website task</h3>
-      <table>
+      <div class="table-scroll" tabindex="0"><table>
         <thead>
           <tr><th>Task</th><th>Claude Code</th><th>Codex</th></tr>
         </thead>
@@ -730,7 +745,7 @@ claude --worktree responsive-pass</pre>
           <tr><td>Hard bug / cross-page consistency / final QA</td><td>Opus High (Fable if stuck)</td><td>Sol High + visual gates</td></tr>
           <tr><td>Independent pages in parallel</td><td>Worktrees / multi-session</td><td>Ultra <em>or</em> multi-session</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <p style="font-size:0.88rem">Escalate only when the acceptance gate fails — not because a stronger model “might” be better.</p>
 
       <div class="tip warn">
@@ -830,7 +845,9 @@ claude --worktree responsive-pass</pre>
     <footer>
       <p>Ultimate Coding Agents Guide · August 2026 · Claude Code (Claude 5) + Codex (GPT-5.6).</p>
       <p style="margin-top:0.45rem">Synthesized from Anthropic docs &amp; Boris Cherny (YC Startup School 2026 + threads), Nick Saraev course patterns, OpenAI GPT-5.6 / Codex docs &amp; best practices, Claude Code slash-command reference, and practitioner reports on X/Reddit. API prices shown are approximate mid-2026 list rates and change; plan gates and defaults also move — recheck official sources before locking team policy.</p>
-    </footer>
+    
+  <p class="home-row"><a class="home-link" href="/" data-ru="← Все проекты">← All projects</a></p>
+</footer>
   </div>
 </body>
 </html>
