@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>esmrsky · The map, second version</title>
+<meta name="description" content="Homepage direction 5: every esmrsky site on one map, grouped by topic, with what leads to what.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0f14'/%3E%3Ccircle cx='22' cy='24' r='9' fill='%23F5B83D'/%3E%3Ccircle cx='43' cy='22' r='7' fill='%232CC8B0'/%3E%3Ccircle cx='40' cy='42' r='10' fill='%23F05BB0'/%3E%3Ccircle cx='20' cy='45' r='6' fill='%239479FF'/%3E%3C/svg%3E">
+<script>
+  /* Same key as the hub, so a reader's light or dark choice follows them here. */
+  (function () {
+    try {
+      var t = localStorage.getItem('esmrsky-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d0f14;
+    --panel: #151923;
+    --panel-2: #1d2233;
+    --ink: #f3f1ec;
+    --dim: rgba(243, 241, 236, .66);
+    --faint: rgba(243, 241, 236, .44);
+    --hair: rgba(243, 241, 236, .12);
+    --t-start: #f3f1ec;
+    --t-bible: #f5b83d;
+    --t-practice: #2cc8b0;
+    --t-mind: #9479ff;
+    --t-body: #ff7a5c;
+    --t-loops: #f05bb0;
+    --t-tools: #4d9bff;
+    --ct-mix: 100%;
+    --isl: 7%;
+    --pill: 15%;
+    --pill-hi: 30%;
+    --shadow: rgba(0, 0, 0, .45);
+    --sans: "Onest", system-ui, sans-serif;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f6f5f1; --panel: #ffffff; --panel-2: #efede7;
+    --ink: #15161a; --dim: rgba(21, 22, 26, .68); --faint: rgba(21, 22, 26, .48); --hair: rgba(21, 22, 26, .12);
+    --t-start: #2a2b30; --t-bible: #c88a0e; --t-practice: #0f9a85; --t-mind: #6c4ff0;
+    --t-body: #e0502f; --t-loops: #cc2f8c; --t-tools: #2470dc;
+    --ct-mix: 66%; --isl: 6%; --pill: 12%; --pill-hi: 24%; --shadow: rgba(30, 28, 20, .18);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+      color-scheme: light;
+      --bg: #f6f5f1; --panel: #ffffff; --panel-2: #efede7;
+      --ink: #15161a; --dim: rgba(21, 22, 26, .68); --faint: rgba(21, 22, 26, .48); --hair: rgba(21, 22, 26, .12);
+      --t-start: #2a2b30; --t-bible: #c88a0e; --t-practice: #0f9a85; --t-mind: #6c4ff0;
+      --t-body: #e0502f; --t-loops: #cc2f8c; --t-tools: #2470dc;
+      --ct-mix: 66%; --isl: 6%; --pill: 12%; --pill-hi: 24%; --shadow: rgba(30, 28, 20, .18);
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--sans); -webkit-font-smoothing: antialiased; padding-bottom: 96px; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  .wrap { width: min(1320px, 100% - 32px); margin-inline: auto; }
+  @media (min-width: 760px) { .wrap { width: min(1320px, 100% - 64px); } }
+  /* a topic's color, deepened enough to be read as text on a light page */
+  [style*="--c"] { --ct: color-mix(in srgb, var(--c) var(--ct-mix), var(--ink)); }
+
+  /* ---- top */
+  .top { display: flex; align-items: center; gap: 8px; padding-block: 14px; }
+  .mark { font-weight: 800; font-size: 20px; letter-spacing: -.02em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-right: auto; }
+  .mark i { display: inline-grid; grid-template-columns: 8px 8px; gap: 3px; }
+  .mark i b { width: 8px; height: 8px; border-radius: 50%; }
+  .top nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 12px; text-decoration: none; color: var(--dim); font-weight: 500; transition: color .2s var(--ease); }
+  .top nav a:hover { color: var(--ink); }
+  .theme { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--hair); background: transparent; cursor: pointer; display: grid; place-items: center; transition: border-color .2s var(--ease), background-color .2s var(--ease); }
+  .theme:hover { border-color: var(--faint); background: var(--panel); }
+  .theme svg { width: 18px; height: 18px; }
+  .theme .moon { display: none; }
+  :root[data-theme="light"] .theme .sun { display: none; }
+  :root[data-theme="light"] .theme .moon { display: block; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme]) .theme .sun { display: none; } :root:not([data-theme]) .theme .moon { display: block; } }
+  @media (max-width: 520px) { .top nav { display: none; } }
+
+  /* ---- hero */
+  .hero { padding-block: clamp(16px, 4vh, 44px) 24px; display: grid; gap: 16px 48px; align-items: end; }
+  @media (min-width: 980px) { .hero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+  .hero h1 { font: 800 clamp(38px, 5.2vw, 74px)/.95 var(--sans); letter-spacing: -.045em; margin: 0; }
+  .hero h1 span { background: linear-gradient(90deg, var(--t-bible), var(--t-body) 30%, var(--t-loops) 55%, var(--t-mind) 78%, var(--t-practice)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { margin: 0; color: var(--dim); font-size: clamp(16px, 1.4vw, 19px); max-width: 32em; }
+
+  /* ---- what brings you here */
+  .ask { display: grid; gap: 14px; margin-bottom: 26px; }
+  .ask-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .ask h2 { font: 750 clamp(22px, 2.4vw, 30px)/1.1 var(--sans); letter-spacing: -.025em; margin: 0 auto 0 0; }
+  .search { flex: 1 1 240px; max-width: 380px; position: relative; }
+  .search input { width: 100%; min-height: 46px; border-radius: 12px; border: 1px solid var(--hair); background: var(--panel); color: var(--ink); font: 500 16px/1 var(--sans); padding: 0 92px 0 40px; transition: border-color .2s var(--ease); }
+  .search input::placeholder { color: var(--faint); }
+  .search input:focus { outline: none; border-color: var(--ink); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search svg { position: absolute; left: 13px; top: 50%; width: 17px; height: 17px; margin-top: -8.5px; color: var(--faint); pointer-events: none; }
+  .search output { position: absolute; right: 14px; top: 50%; translate: 0 -50%; font-size: 13px; color: var(--faint); pointer-events: none; white-space: nowrap; }
+  .qs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .q { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 9px 15px; border-radius: 12px; border: 1px solid var(--hair); background: var(--panel); cursor: pointer; font-size: 15.5px; font-weight: 550; line-height: 1.25; text-align: left; transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+  .q::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+  .q:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, var(--panel)); }
+  .q[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 24%, var(--panel)); }
+  .hint { margin: 0; font-size: 14px; color: var(--faint); }
+  .more-q { display: none; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px dashed var(--faint); background: transparent; color: var(--dim); cursor: pointer; font-size: 15px; font-weight: 600; transition: border-color .15s var(--ease), color .15s var(--ease); }
+  .more-q:hover { color: var(--ink); border-color: var(--ink); }
+  @media (max-width: 600px) {
+    .qs:not(.all) .q:nth-child(n+6) { display: none; }
+    .qs:not(.all) .more-q { display: inline-flex; align-items: center; }
+  }
+  .ask .threads { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-top: 4px; }
+  .ask .threads h2 { margin: 0 4px 0 0; }
+  .ask .threads > p { display: none; }
+  .ask .claims { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ask .claim { width: auto; min-height: 38px; padding: 5px 11px 5px 6px; font-size: 14px; }
+  .ask .claim .full, .claim .sh { display: none; }
+  .ask .claim .sh { display: inline; }
+  .ask .claim .n { display: none; }
+  .hint .h-touch { display: none; }
+  @media (hover: none) { .hint .h-touch { display: inline; } .hint .h-mouse { display: none; } }
+
+  /* ---- the map: one island per topic, every site named */
+  .body { display: grid; gap: 22px; }
+  @media (min-width: 1040px) { .body { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; } }
+  .islands { columns: 2 300px; column-gap: 14px; }
+  .island { break-inside: avoid; margin: 0 0 14px; padding: 16px 16px 18px; border-radius: 18px; background: color-mix(in srgb, var(--c) var(--isl), var(--panel)); border: 1px solid color-mix(in srgb, var(--c) 22%, var(--hair)); transition: opacity .25s var(--ease), border-color .25s var(--ease); }
+  .island.start { column-span: all; }
+  .island header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .island h3 { margin: 0; font: 750 19px/1.2 var(--sans); letter-spacing: -.015em; color: var(--ct); }
+  .island header .n { font-size: 13px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .island .blurb { margin: 0 0 12px; font-size: 14px; line-height: 1.45; color: var(--dim); max-width: 40em; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .island.start .pills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+
+  .pill { position: relative; display: inline-flex; flex-direction: column; justify-content: center; gap: 1px; min-height: 46px; max-width: 100%; padding: 7px 13px 8px; border-radius: 11px; text-decoration: none; background: color-mix(in srgb, var(--c) var(--pill), var(--panel)); border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+    transition: background-color .16s var(--ease), border-color .16s var(--ease), box-shadow .16s var(--ease), opacity .22s var(--ease); }
+  .pill b { font-size: 15px; font-weight: 650; line-height: 1.22; letter-spacing: -.005em; text-wrap: balance; }
+  .pill small { font-size: 12px; line-height: 1.3; color: var(--dim); font-weight: 500; }
+  .pill.s1 b { font-size: 14px; font-weight: 600; }
+  .pill.old { background: transparent; border-style: dashed; }
+  .pill.old b { font-weight: 550; color: var(--dim); }
+  .pill .d { display: none; }
+  .island.start .pill { justify-content: flex-start; padding: 12px 16px 14px; }
+  .island.start .pill b { font-size: 19px; }
+  .island.start .pill .d { display: block; margin-top: 4px; font-size: 14px; line-height: 1.45; color: var(--dim); }
+  .pill:hover, .pill:focus-visible { background: color-mix(in srgb, var(--c) var(--pill-hi), var(--panel)); border-color: var(--c); }
+  .pill:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  /* focus: what is lit lights up in a quick ripple; the rest steps back but stays readable */
+  .atlas.focused .pill { opacity: .3; }
+  .atlas.focused .pill.is-lit { opacity: 1; background: color-mix(in srgb, var(--c) var(--pill-hi), var(--panel)); border-color: var(--c); box-shadow: 0 0 0 1px var(--c); transition-delay: calc(var(--i, 0) * 16ms); }
+  .atlas.focused .pill.is-anchor, .pill.is-peek { opacity: 1; background: color-mix(in srgb, var(--c) 46%, var(--panel)); border-color: var(--c); box-shadow: 0 0 0 2px var(--c), 0 6px 18px var(--shadow); transition-delay: 0s; }
+  .atlas.focused .island.is-quiet { opacity: .5; }
+  .atlas.filtering .pill:not(.is-match), .atlas.filtering .island:not(.has-match) { display: none; }
+  .empty { display: none; margin: 0 0 14px; padding: 28px 20px; border-radius: 18px; border: 1px dashed var(--hair); color: var(--dim); text-align: center; }
+  .atlas.filtering.none .empty { display: block; }
+  @media (prefers-reduced-motion: reduce) { .atlas.focused .pill.is-lit { transition-delay: 0s; } }
+
+  /* ---- the reader panel: beside the map on a wide screen, a sheet on a phone */
+  .side { display: grid; gap: 22px; align-content: start; }
+  @media (min-width: 1040px) { .side { position: sticky; top: 14px; max-height: calc(100vh - 28px); overflow: auto; overscroll-behavior: contain; padding-right: 2px; scrollbar-width: thin; } }
+  .detail { position: relative; padding: 18px 18px 20px; border-radius: 18px; background: var(--panel); border: 1px solid color-mix(in srgb, var(--c, var(--ink)) 40%, var(--hair)); transition: border-color .16s var(--ease); }
+  .d-top { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--dim); margin: 0 44px 6px 0; }
+  .d-top::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--faint)); flex: none; }
+  .detail h3 { margin: 0 44px 8px 0; font-size: 23px; line-height: 1.12; letter-spacing: -.02em; text-wrap: balance; }
+  .detail p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--dim); }
+  .detail .open { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; min-height: 48px; padding: 0 16px; border-radius: 12px; background: var(--ink); color: var(--bg); font-weight: 700; text-decoration: none; transition: background-color .15s var(--ease); }
+  .detail .open:hover { background: color-mix(in srgb, var(--ink) 86%, var(--c, var(--ink))); }
+  .detail .open svg, .d-list svg { width: 18px; height: 18px; flex: none; }
+  .d-x { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border-radius: 12px; border: 0; background: transparent; color: var(--dim); cursor: pointer; display: grid; place-items: center; transition: background-color .15s var(--ease), color .15s var(--ease); }
+  .d-x:hover { background: var(--panel-2); color: var(--ink); }
+  .d-x svg { width: 18px; height: 18px; }
+  .d-x:focus-visible, .q:focus-visible, .mini:focus-visible, .claim:focus-visible, .theme:focus-visible, .detail .open:focus-visible, .d-list a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .d-rel { margin-top: 18px; display: grid; gap: 14px; }
+  .d-rel h4 { margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .d-gh { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 7px; }
+  .cn { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--panel-2); color: var(--dim); font-size: 11px; font-weight: 700; flex: none; }
+  .minis { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mini { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; padding: 5px 11px; border-radius: 9px; border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); background: color-mix(in srgb, var(--c) 10%, transparent); cursor: pointer; font-size: 14px; font-weight: 550; line-height: 1.2; text-align: left; transition: background-color .15s var(--ease), border-color .15s var(--ease); }
+  .mini::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+  .mini:hover { background: color-mix(in srgb, var(--c) 24%, transparent); border-color: var(--c); }
+  @media (pointer: coarse) { .mini { min-height: 44px; } }
+  .d-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; counter-reset: n; }
+  .d-list a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 18px; gap: 2px 10px; align-items: start; padding: 10px 12px; border-radius: 12px; text-decoration: none; background: color-mix(in srgb, var(--c) 9%, transparent); border: 1px solid color-mix(in srgb, var(--c) 26%, transparent); transition: background-color .15s var(--ease), border-color .15s var(--ease); }
+  .d-list a::before { counter-increment: n; content: counter(n); grid-row: span 3; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--c); color: var(--bg); font-size: 12px; font-weight: 800; }
+  .d-list a:hover { background: color-mix(in srgb, var(--c) 20%, transparent); border-color: var(--c); }
+  .d-list .lt { font-weight: 650; font-size: 15.5px; line-height: 1.25; }
+  .d-list .lk { font-size: 12.5px; color: var(--ct); font-weight: 600; }
+  .d-list .ld { font-size: 14px; line-height: 1.45; color: var(--dim); grid-column: 2; }
+  .d-list svg { grid-row: 1; grid-column: 3; margin-top: 2px; color: var(--ct); }
+  .d-tip { margin-top: 14px !important; font-size: 13.5px !important; color: var(--faint) !important; }
+
+  @media (max-width: 1039px) {
+    /* a sheet over the foot of the screen: it fades in place, it never slides */
+    .detail { position: fixed; z-index: 80; left: 8px; right: 8px; bottom: 64px; max-height: min(64vh, 560px); overflow: auto; overscroll-behavior: contain; box-shadow: 0 -6px 40px var(--shadow), 0 0 0 1px var(--hair); opacity: 0; visibility: hidden; transition: opacity .16s var(--ease), visibility 0s linear .16s, border-color .16s var(--ease); }
+    .detail.on { opacity: 1; visibility: visible; transition: opacity .16s var(--ease), visibility 0s, border-color .16s var(--ease); }
+    body.sheet-open { padding-bottom: 70vh; }
+  }
+  @media (max-width: 1039px) and (min-width: 700px) { .detail { left: 50%; right: auto; width: 560px; margin-left: -280px; } }
+  @media (min-width: 1040px) { .d-x.only-sheet { display: none; } }
+
+  /* threads: Throughline's eight claims */
+  .threads h2 { font: 700 12px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 0 0 4px; }
+  .threads > p { margin: 0 0 10px; font-size: 14px; color: var(--dim); }
+  .claims { display: grid; gap: 6px; }
+  @media (max-width: 1039px) and (min-width: 700px) { .claims { grid-template-columns: 1fr 1fr; } }
+  .claim { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--hair); background: var(--panel); cursor: pointer; font-size: 14.5px; font-weight: 550; line-height: 1.3; text-align: left; transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+  .claim .n { margin-left: auto; color: var(--faint); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .claim:hover { border-color: var(--faint); background: var(--panel-2); }
+  .claim[aria-pressed="true"] { border-color: var(--ink); background: var(--panel-2); }
+  .claim[aria-pressed="true"] .cn { background: var(--ink); color: var(--bg); }
+
+  /* ---- everything */
+  .every { padding-top: 72px; scroll-margin-top: 8px; }
+  .every-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 18px; }
+  .every h2 { font: 800 clamp(32px, 4.4vw, 56px)/1 var(--sans); letter-spacing: -.04em; margin: 0; }
+  .every-count { color: var(--faint); font-size: 15px; }
+  .filters { display: grid; gap: 10px; margin-bottom: 22px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 12px; border-radius: 10px; border: 1px solid var(--hair); background: transparent; cursor: pointer; font-size: 14px; font-weight: 500; line-height: 1.25; transition: border-color .2s var(--ease), background-color .2s var(--ease); }
+  @media (pointer: coarse) { .chip { min-height: 44px; } }
+  .chip::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--faint)); flex: none; }
+  .chip .n { color: var(--faint); font-size: 12.5px; }
+  .chip:hover { border-color: color-mix(in srgb, var(--c, var(--ink)) 60%, transparent); }
+  .chip[aria-pressed="true"] { border-color: var(--c, var(--ink)); background: color-mix(in srgb, var(--c, var(--ink)) 18%, transparent); }
+  .chip:focus-visible, .card:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+  .grid li[hidden] { display: none; }
+  .card { position: relative; display: flex; flex-direction: column; height: 100%; padding: 16px 18px 18px; border-radius: 16px; text-decoration: none; background: var(--panel); border: 1px solid var(--hair); overflow: hidden; transition: border-color .22s var(--ease), background-color .22s var(--ease); }
+  .card::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--c); }
+  .card:hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); background: color-mix(in srgb, var(--c) 8%, var(--panel)); }
+  .c-top { display: flex; gap: 8px; align-items: center; font-size: 12.5px; font-weight: 600; color: var(--dim); margin: 4px 0 8px; }
+  .c-top .t { color: var(--ct); }
+  .card h3 { margin: 0 0 8px; font-size: 21px; line-height: 1.12; letter-spacing: -.02em; text-wrap: balance; }
+  .card p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .c-go { margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--faint); }
+  .c-go svg { width: 18px; height: 18px; color: var(--ct); transition: translate .22s var(--ease); }
+  .card:hover .c-go svg { translate: 3px 0; }
+  @media (prefers-reduced-motion: reduce) { .card:hover .c-go svg { translate: none; } }
+
+  .foot { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--hair); font-size: 14px; color: var(--faint); }
+  .foot p { margin: 0 0 6px; }
+</style>
+<style id="polish-pack">/* touch + type courtesies (estate pass Aug 2026; paragraphs Oct 15, 2026; every other text block Oct 30, 2026) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,a,button,summary,label,[role="button"]{-webkit-tap-highlight-color:transparent}
+a,button,summary,[role="button"]{touch-action:manipulation}
+@media (pointer:coarse){a:active,button:active,summary:active,[role="button"]:active{scale:.975}}
+body{text-wrap-style:pretty}
+h1,h2,h3{text-wrap:balance}
+:where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
+p,li,dd,figcaption{text-wrap:pretty}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="mark" href="/"><i aria-hidden="true"><b style="background:var(--t-bible)"></b><b style="background:var(--t-practice)"></b><b style="background:var(--t-mind)"></b><b style="background:var(--t-loops)"></b></i>esmrsky</a>
+  <nav aria-label="Page"><a href="#atlas">Map</a><a href="#every">Everything</a></nav>
+  <button class="theme" type="button" aria-label="Switch light or dark">
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+  </button>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <h1>Everything here, <span>on one map.</span></h1>
+    <p id="hero-p">Studies, guides and tools on Scripture, the mind and the body, in six topics. Start with what brings you here, or touch any site to see what it is and where it leads.</p>
+  </section>
+
+  <section class="wrap atlas" id="atlas" aria-label="Map of every site">
+    <div class="ask">
+      <div class="ask-head">
+        <h2>What brings you here?</h2>
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Or search: a word, a book…" autocomplete="off" aria-label="Search every site">
+          <output id="q-n" for="q"></output>
+        </label>
+      </div>
+      <div class="qs" id="questions" role="group" aria-label="What brings you here"></div>
+      <p class="hint"><span class="h-mouse">Hover any site to see what it is and what it leads to. Click to open it.</span><span class="h-touch">Tap any site to see what it is and what it leads to.</span></p>
+    </div>
+    <div class="body">
+      <div>
+        <div class="islands" id="islands"></div>
+        <p class="empty" id="empty">Nothing matches that yet. Try a shorter word.</p>
+      </div>
+      <aside class="side" aria-label="About the site you picked">
+        <div class="detail" id="detail" aria-live="polite"></div>
+        <div class="threads">
+          <h2>Follow a thread</h2>
+          <p>Eight claims Throughline traces through every topic. Pick one to see where it shows up.</p>
+          <div class="claims" id="claims"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap every" id="every" aria-labelledby="every-h">
+    <div class="every-head"><h2 id="every-h">Everything</h2><span class="every-count" id="every-n"></span></div>
+    <div class="filters">
+      <div class="chips" id="f-topic" role="group" aria-label="Filter by topic"></div>
+      <div class="chips" id="f-type" role="group" aria-label="Filter by type"></div>
+    </div>
+    <ul class="grid" id="grid"></ul>
+  </section>
+
+  <footer class="wrap foot">
+    <p>The topics and their one-line descriptions, the questions and the four types are a first pass for this preview. The eight claims and the family ties come from Throughline and the hub’s views.</p>
+    <p>Preview only. The live homepage is unchanged at <a href="/">esmrsky.github.io</a>. The first version of this map, with bubbles and lines, is at <a href="/directions/map/v1.html">/directions/map/v1.html</a>.</p>
+  </footer>
+</main>
+
+<script src="/directions/data.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = window.ESMRSKY, doc = document, root = doc.documentElement;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var first = function (t) {
+    var one = function (x) { var m = /^.+?[.?!](?=\s+[A-Z“"‘]|$)/.exec(x); return m ? m[0] : x; };
+    /* A short opener ("God does not change.") needs the sentences after it to say what the study is. */
+    var a = '', rest = t;
+    while (rest && a.length < 70) { var b = one(rest); a = a ? a + ' ' + b : b; rest = rest.slice(b.length).trim(); }
+    return a;
+  };
+  var still = function () { return matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var narrow = function () { return matchMedia('(max-width: 1039px)').matches; };
+  var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CROSS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+  /* ---------- theme */
+  doc.querySelector('.theme').addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    var next = cur === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('esmrsky-theme', next); } catch (e) {}
+  });
+
+  /* ---------- topics and types (first pass) */
+  var TOPICS = [
+    { id: 'start', name: 'Start here', short: 'Start', blurb: 'Two overviews of everything below. Read one first if you want the big picture.' },
+    { id: 'bible', name: 'Bible & word studies', short: 'Bible', blurb: 'Close readings of Scripture: single words, whole books, and studies to teach from.' },
+    { id: 'practice', name: 'Faith in practice', short: 'Practice', blurb: 'Field guides for the inner life: what you feel, what you chase, and where you stand with God.' },
+    { id: 'mind', name: 'Mind & learning', short: 'Mind', blurb: 'How attention, prediction and learning work, and why easy can feel like learning.' },
+    { id: 'body', name: 'Body, rest & sleep', short: 'Body', blurb: 'Sleep, rest, fasting and the nervous system.' },
+    { id: 'loops', name: 'Loops & desire', short: 'Loops', blurb: 'Habits and cravings: how a loop forms, what it pays you, and how to leave it.' },
+    { id: 'tools', name: 'Tools & making', short: 'Tools', blurb: 'Guides and labs for building apps, working with coding agents and making things.' }
+  ];
+  var TOPIC = {}; TOPICS.forEach(function (t) { TOPIC[t.id] = t; });
+  var BODY = ['sleep-rest-peace', 'huberman', 'how-not-eating-works', 'still-awake', 'anatomy-of-rest', 'the-watches-of-the-night', 'the-weight-of-rest'];
+  var OLD = { 'still-awake': 1, 'anatomy-of-rest': 1, 'the-watches-of-the-night': 1, 'the-weight-of-rest': 1, 'the-atlas': 1, 'atlas-v2': 1, 'best-verses-v0': 1 };
+  var secOf = {};
+  D.sections.forEach(function (x) { x.s.forEach(function (k) { secOf[k] = x.id; }); });
+  var topicOf = function (k) {
+    if (BODY.indexOf(k) > -1) return 'body';
+    var s = secOf[k];
+    if (s === 'earlier') return k === 'best-verses-v0' ? 'bible' : 'practice';
+    return s;
+  };
+  var TYPES = [
+    { id: 'study', name: 'Studies', re: /bible|teaching|companion|word study|calling|discussion|manual|scripture|catalog|slides/i },
+    { id: 'guide', name: 'Field guides', re: /guide|theory|pedagogy|the state|protocol field/i },
+    { id: 'essay', name: 'Essays', re: /essay|reflection|synthesis|literary|long read|journey|start here|the map/i },
+    { id: 'tool', name: 'Tools & labs', re: /./ }
+  ];
+  var typeOf = function (kind) { for (var i = 0; i < TYPES.length; i++) if (TYPES[i].re.test(kind)) return TYPES[i].id; };
+
+  var sites = D.sites.map(function (s) {
+    return Object.assign({}, s, { topic: topicOf(s.slug), type: typeOf(s.kind), old: !!OLD[s.slug] });
+  });
+  var by = {}; sites.forEach(function (s) { by[s.slug] = s; });
+  var tcol = function (t) { return 'var(--t-' + t + ')'; };
+
+  /* relations: shared claims and family ties */
+  var claimsOf = {}, familyOf = {}, rel = {};
+  sites.forEach(function (s) { claimsOf[s.slug] = []; familyOf[s.slug] = []; rel[s.slug] = {}; });
+  D.claims.forEach(function (c) {
+    c.s.forEach(function (a) {
+      if (!by[a]) return;
+      claimsOf[a].push(c);
+      c.s.forEach(function (b) { if (b !== a && by[b]) rel[a][b] = 1; });
+    });
+  });
+  D.family.forEach(function (f) {
+    if (!by[f[0]] || !by[f[1]]) return;
+    rel[f[0]][f[1]] = 1; rel[f[1]][f[0]] = 1;
+    if (familyOf[f[0]].indexOf(f[1]) < 0) familyOf[f[0]].push(f[1]);
+    if (familyOf[f[1]].indexOf(f[0]) < 0) familyOf[f[1]].push(f[0]);
+  });
+  var topicsIn = function (set) { var t = new Set(); set.forEach(function (k) { t.add(by[k].topic); }); return t; };
+
+  var QUESTIONS = [
+    ['I can’t fall asleep', ['sleep-rest-peace', 'the-return-new', 'still-awake']],
+    ['I keep doing the thing I hate', ['the-loop', 'uncooked', 'one-shape', 'desire-master']],
+    ['Nothing feels like enough', ['the-fixed-point', 'architecture-of-desire', 'the-seeking-machine', 'broken-cistern']],
+    ['I care too much what people think', ['measured', 'received', 'the-gap']],
+    ['Where do I stand with God?', ['soundings', 'where-are-you', 'draw-near', 'three-territories']],
+    ['What does the Bible actually say?', ['the-thread', 'faith', 'salvation', 'judgment', 'fear-of-god-ii']],
+    ['I felt something. What was it?', ['something-in-the-air', 'predicting-mind', 'the-word', 'word-in-season']],
+    ['I can’t stay focused', ['focus', 'the-seeking-machine', 'everything-mid', 'tuned']],
+    ['I’m trying to learn or teach', ['feels-like-learning', 'how-to-teach', 'word-in-season-talk']],
+    ['I build things', ['coding-agents-guide', 'app-playbook', 'never-done', 'specimens']]
+  ];
+
+  doc.getElementById('hero-p').textContent = sites.length + ' studies, guides and tools on Scripture, the mind and the body, in six topics. Start with what brings you here, or touch any site to see what it is and where it leads.';
+
+  /* ---------- the islands: every site named, nothing drawn over anything */
+  var islandsEl = doc.getElementById('islands'), atlas = doc.getElementById('atlas');
+  islandsEl.innerHTML = TOPICS.map(function (t) {
+    var list = sites.filter(function (s) { return s.topic === t.id; })
+      .map(function (s, i) { return { s: s, i: i }; })
+      .sort(function (a, b) { return (a.s.old - b.s.old) || (b.s.size - a.s.size) || (a.i - b.i); })
+      .map(function (x) { return x.s; });
+    return '<section class="island' + (t.id === 'start' ? ' start' : '') + '" data-topic="' + t.id + '" style="--c:' + tcol(t.id) + '" aria-labelledby="isl-' + t.id + '">' +
+      '<header><h3 id="isl-' + t.id + '">' + esc(t.name) + '</h3><span class="n">' + list.length + '</span></header>' +
+      (t.id === 'start' ? '' : '<p class="blurb">' + esc(t.blurb) + '</p>') +
+      '<div class="pills">' + list.map(function (s) {
+        return '<a class="pill s' + s.size + (s.old ? ' old' : '') + '" href="' + s.href + '" data-slug="' + s.slug + '">' +
+          '<b>' + esc(s.title) + '</b><small>' + esc(s.kind) + (s.old ? ' · earlier version' : '') + '</small>' +
+          '<span class="d">' + esc(first(s.desc)) + '</span></a>';
+      }).join('') + '</div></section>';
+  }).join('');
+  var pills = [].slice.call(islandsEl.querySelectorAll('.pill'));
+  var pillBy = {}; pills.forEach(function (p) { pillBy[p.getAttribute('data-slug')] = p; });
+  var islands = [].slice.call(islandsEl.querySelectorAll('.island'));
+
+  /* ---------- focus: what is lit, and what the panel says about it */
+  var pin = null, peek = null;
+  var siteFocus = function (k) {
+    var set = new Set([k]); Object.keys(rel[k]).forEach(function (r) { set.add(r); });
+    return { kind: 'site', key: 's:' + k, anchor: k, set: set, topics: topicsIn(set) };
+  };
+  var focusFor = {};
+  QUESTIONS.forEach(function (q, i) {
+    var ks = q[1].filter(function (k) { return by[k]; }), set = new Set(ks);
+    focusFor['q:' + i] = { kind: 'question', key: 'q:' + i, title: q[0], list: ks, set: set, topics: topicsIn(set) };
+  });
+  D.claims.forEach(function (c) {
+    var ks = c.s.filter(function (k) { return by[k]; }), set = new Set(ks);
+    focusFor['c:' + c.n] = { kind: 'claim', key: 'c:' + c.n, n: c.n, title: c.text, list: ks, set: set, topics: topicsIn(set) };
+  });
+
+  var detail = doc.getElementById('detail');
+  var shown = '';
+  var topicLine = function (s) { return esc(TOPIC[s.topic].name) + ' · ' + esc(s.kind); };
+  var mini = function (k) { return '<button type="button" class="mini" data-go="' + k + '" style="--c:' + tcol(by[k].topic) + '">' + esc(by[k].title) + '</button>'; };
+  var closeBtn = function (sheetOnly) { return '<button type="button" class="d-x' + (sheetOnly ? ' only-sheet' : '') + '" data-close aria-label="Close">' + CROSS + '</button>'; };
+
+  var siteHTML = function (k, pinned) {
+    var s = by[k], groups = [];
+    claimsOf[k].forEach(function (c) {
+      var list = c.s.filter(function (x) { return x !== k && by[x]; });
+      if (list.length) groups.push({ head: '<span class="cn">' + c.n + '</span>' + esc(c.sen || c.short), list: list });
+    });
+    if (familyOf[k].length) groups.push({ head: 'Same family', list: familyOf[k] });
+    detail.style.setProperty('--c', tcol(s.topic));
+    return closeBtn(!pinned) +
+      '<div class="d-top">' + topicLine(s) + (s.old ? ' · earlier version' : '') + '</div>' +
+      '<h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p>' +
+      '<a class="open" href="' + s.href + '">Open ' + esc(s.title) + ARROW + '</a>' +
+      (groups.length
+        ? '<div class="d-rel"><h4>Where it leads</h4>' + groups.map(function (g) {
+            return '<div><div class="d-gh">' + g.head + '</div><div class="minis">' + g.list.map(mini).join('') + '</div></div>';
+          }).join('') + '</div>'
+        : '<p class="d-tip">Nothing else here shares one of the eight claims with this yet.</p>');
+  };
+  var listHTML = function (f) {
+    var kicker, sub;
+    if (f.kind === 'question') { kicker = 'What brings you here'; sub = f.list.length + ' places to start, best first.'; detail.style.setProperty('--c', tcol(by[f.list[0]].topic)); }
+    else if (f.kind === 'claim') { kicker = 'Thread ' + f.n + ' of 8'; sub = 'It runs through ' + f.list.length + ' sites in ' + f.topics.size + ' topics.'; detail.style.setProperty('--c', 'var(--ink)'); }
+    else { kicker = 'Search'; sub = f.list.length ? f.list.length + (f.list.length === 1 ? ' site mentions it.' : ' sites mention it.') : 'Nothing mentions that yet.'; detail.style.setProperty('--c', 'var(--ink)'); }
+    return closeBtn(false) + '<div class="d-top">' + kicker + '</div><h3>' + esc(f.title) + '</h3><p>' + sub + '</p>' +
+      '<ol class="d-list">' + f.list.map(function (k) {
+        var s = by[k];
+        return '<li><a href="' + s.href + '" data-peek="' + k + '" style="--c:' + tcol(s.topic) + '"><span class="lt">' + esc(s.title) + '</span>' + ARROW +
+          '<span class="lk">' + topicLine(s) + '</span><span class="ld">' + esc(first(s.desc)) + '</span></a></li>';
+      }).join('') + '</ol>';
+  };
+  var introHTML = function () {
+    detail.style.removeProperty('--c');
+    return '<div class="d-top">How the map works</div><h3>Find something to read</h3>' +
+      '<p>Each color is a topic. Hover a site to see what it is here, and the sites it leads to light up across the map. Click to open it.</p>' +
+      '<p class="d-tip">Not sure where to begin? Pick a line under “What brings you here?”</p>';
+  };
+
+  var renderDetail = function () {
+    /* on a phone the sheet shows only what was tapped; on a wide screen the panel follows the pointer */
+    var f = narrow() ? pin : (peek || pin);
+    if (f && f.kind === 'search' && narrow()) f = null;
+    var key = f ? f.key + (f === pin ? '!' : '') : 'intro';
+    if (key !== shown) {
+      shown = key;
+      detail.innerHTML = !f ? introHTML() : f.kind === 'site' ? siteHTML(f.anchor, f === pin) : listHTML(f);
+      if (!narrow() && detail.parentNode.scrollTop) detail.parentNode.scrollTop = 0;
+      if (narrow()) detail.scrollTop = 0;
+    }
+    var open = narrow() && !!f;
+    detail.classList.toggle('on', open);
+    doc.body.classList.toggle('sheet-open', open);
+  };
+
+  var applyFocus = function () {
+    var f = peek || pin, i = 0;
+    var search = pin && pin.kind === 'search' ? pin : null;
+    atlas.classList.toggle('focused', !!f && f.kind !== 'search');
+    atlas.classList.toggle('filtering', !!search);
+    atlas.classList.toggle('none', !!search && !search.set.size);
+    pills.forEach(function (p) {
+      var k = p.getAttribute('data-slug'), lit = !!f && f.set.has(k);
+      p.classList.toggle('is-lit', lit);
+      p.classList.toggle('is-anchor', !!f && f.anchor === k);
+      p.classList.toggle('is-match', !!search && search.set.has(k));
+      if (lit && !still()) p.style.setProperty('--i', i++); else p.style.removeProperty('--i');
+    });
+    islands.forEach(function (isl) {
+      var t = isl.getAttribute('data-topic');
+      isl.classList.toggle('is-quiet', !!f && f.kind !== 'search' && !f.topics.has(t));
+      isl.classList.toggle('has-match', !!search && search.topics.has(t));
+    });
+    [].forEach.call(doc.querySelectorAll('[data-f]'), function (b) { b.setAttribute('aria-pressed', String(!!pin && b.getAttribute('data-f') === pin.key)); });
+    renderDetail();
+  };
+
+  /* keep a tapped site in sight above the sheet */
+  var keepVisible = function (k) {
+    if (!narrow()) return;
+    setTimeout(function () {
+      var p = pillBy[k]; if (!p) return;
+      var r = p.getBoundingClientRect(), top = detail.getBoundingClientRect().top, room = top - 12;
+      var dy = r.bottom > room ? r.bottom - room + 8 : r.top < 12 ? r.top - 76 : 0;
+      if (dy) scrollBy({ top: dy, behavior: still() ? 'auto' : 'smooth' });
+    }, 30);
+  };
+  var setPin = function (f) {
+    pin = f; peek = null;
+    if (f && f.kind !== 'search') { q.value = ''; qn.textContent = ''; }
+    applyFocus();
+  };
+  var clearAll = function () { setPin(null); };
+
+  /* ---------- pointer and touch */
+  var lastPointer = 'mouse';
+  doc.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType || 'mouse'; }, true);
+  var touchy = function () { return lastPointer === 'touch' || lastPointer === 'pen' || matchMedia('(hover: none)').matches; };
+  var hoverT = 0;
+  var setPeek = function (f) {
+    if ((peek && f && peek.key === f.key) || (!peek && !f)) return;
+    peek = f; applyFocus();
+  };
+  islandsEl.addEventListener('pointerover', function (e) {
+    if (e.pointerType === 'touch' || e.pointerType === 'pen') return;
+    var p = e.target.closest('.pill'); if (!p) return;
+    clearTimeout(hoverT);
+    /* a short rest before the panel follows, so sweeping across to the panel doesn't change it */
+    var k = p.getAttribute('data-slug');
+    hoverT = setTimeout(function () { setPeek(siteFocus(k)); }, peek ? 70 : 0);
+  });
+  islandsEl.addEventListener('pointerleave', function (e) {
+    clearTimeout(hoverT);
+    if (e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('.side')) return;
+    setPeek(null);
+  });
+  islandsEl.addEventListener('click', function (e) {
+    var p = e.target.closest('.pill'); if (!p) return;
+    var k = p.getAttribute('data-slug');
+    /* a touch shows the sheet first; a second tap, or the sheet's button, opens the site */
+    if (touchy() && !(pin && pin.key === 's:' + k)) { e.preventDefault(); setPin(siteFocus(k)); keepVisible(k); }
+  });
+  islandsEl.addEventListener('focusin', function (e) { var p = e.target.closest('.pill'); if (p && !touchy()) setPeek(siteFocus(p.getAttribute('data-slug'))); });
+  islandsEl.addEventListener('focusout', function (e) { if (!islandsEl.contains(e.relatedTarget)) setPeek(null); });
+
+  var side = doc.querySelector('.side');
+  side.addEventListener('pointerleave', function (e) {
+    if (e.pointerType === 'touch') return;
+    if (e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('.islands')) return;
+    clearTimeout(hoverT); setPeek(null);
+  });
+  /* a link in a reading list shows where that site sits */
+  detail.addEventListener('pointerover', function (e) {
+    var a = e.target.closest('[data-peek]');
+    pills.forEach(function (p) { p.classList.toggle('is-peek', !!a && p.getAttribute('data-slug') === a.getAttribute('data-peek')); });
+  });
+  detail.addEventListener('pointerleave', function () { pills.forEach(function (p) { p.classList.remove('is-peek'); }); });
+  detail.addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) { clearAll(); return; }
+    var go = e.target.closest('[data-go]');
+    if (go) {
+      var k = go.getAttribute('data-go');
+      setPin(siteFocus(k));
+      var p = pillBy[k];
+      if (narrow()) keepVisible(k);
+      else if (p) { var r = p.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) p.scrollIntoView({ block: 'center', behavior: still() ? 'auto' : 'smooth' }); }
+    }
+  });
+
+  /* questions and threads: hover previews on a mouse, a press pins */
+  var qsEl = doc.getElementById('questions'), claimsEl = doc.getElementById('claims');
+  qsEl.innerHTML = QUESTIONS.map(function (x, i) {
+    return '<button type="button" class="q" data-f="q:' + i + '" aria-pressed="false" style="--c:' + tcol(by[focusFor['q:' + i].list[0]].topic) + '">' + esc(x[0]) + '</button>';
+  }).join('') + '<button type="button" class="more-q" aria-expanded="false">' + (QUESTIONS.length - 5) + ' more</button>';
+  qsEl.querySelector('.more-q').addEventListener('click', function () { qsEl.classList.add('all'); this.setAttribute('aria-expanded', 'true'); });
+  claimsEl.innerHTML = D.claims.map(function (c) {
+    return '<button type="button" class="claim" data-f="c:' + c.n + '" aria-pressed="false"><span class="cn">' + c.n + '</span><span class="full">' + esc(c.text) + '</span><span class="sh">' + esc(c.short) + '</span><span class="n">' + focusFor['c:' + c.n].list.length + '</span></button>';
+  }).join('');
+  [qsEl, claimsEl].forEach(function (box) {
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-f]'); if (!b) return;
+      var f = focusFor[b.getAttribute('data-f')];
+      setPin(pin && pin.key === f.key ? null : f);
+    });
+    box.addEventListener('pointerover', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var b = e.target.closest('[data-f]'); if (!b) return;
+      clearTimeout(hoverT); setPeek(focusFor[b.getAttribute('data-f')]);
+    });
+    box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') setPeek(null); });
+  });
+
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && (pin || peek)) { q.value = ''; qn.textContent = ''; clearAll(); } });
+  /* a tap anywhere outside the map, its panel and its controls closes the sheet */
+  doc.addEventListener('pointerdown', function (e) {
+    if (!pin || pin.kind === 'search') return;
+    if (e.target.closest('.pill, .detail, [data-f], .search, .dir-frame')) return;
+    clearAll();
+  });
+
+  /* ---------- search: the map narrows to what matches */
+  var q = doc.getElementById('q'), qn = doc.getElementById('q-n');
+  q.addEventListener('input', function () {
+    var words = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    if (!words.length) { qn.textContent = ''; setPin(null); return; }
+    var list = sites.filter(function (s) {
+      var hay = (s.title + ' ' + s.kind + ' ' + s.desc + ' ' + s.inside.join(' ') + ' ' + s.pills.join(' ')).toLowerCase();
+      return words.every(function (w) { return hay.indexOf(w) > -1; });
+    }).map(function (s) { return s.slug; });
+    var set = new Set(list);
+    qn.textContent = list.length + (list.length === 1 ? ' match' : ' matches');
+    pin = { kind: 'search', key: 'search:' + words.join(' '), title: '“' + q.value.trim() + '”', list: list, set: set, topics: topicsIn(set) };
+    peek = null; applyFocus();
+  });
+
+  /* on a wide screen the threads sit with the questions, so they never move when the panel changes */
+  var threads = doc.querySelector('.threads'), ask = doc.querySelector('.ask'), hint = doc.querySelector('.hint');
+  var place = function () { if (narrow()) side.appendChild(threads); else ask.insertBefore(threads, hint); };
+  place();
+  var lastNarrow = narrow();
+  addEventListener('resize', function () { if (narrow() !== lastNarrow) { lastNarrow = narrow(); place(); shown = ''; applyFocus(); } });
+  applyFocus();
+
+  /* ---------- everything: the grid with filters */
+  var grid = doc.getElementById('grid');
+  grid.innerHTML = TOPICS.map(function (t) { return sites.filter(function (s) { return s.topic === t.id; }); })
+    .reduce(function (a, b) { return a.concat(b); }, []).map(function (s) {
+      return '<li data-topic="' + s.topic + '" data-type="' + s.type + '"><a class="card" href="' + s.href + '" style="--c:' + tcol(s.topic) + '">' +
+        '<span class="c-top"><span class="t">' + esc(TOPIC[s.topic].short) + '</span>·<span>' + esc(s.kind) + '</span></span>' +
+        '<h3>' + esc(s.title) + '</h3><p>' + esc(first(s.desc)) + '</p>' +
+        '<span class="c-go"><span>' + (claimsOf[s.slug].length ? claimsOf[s.slug].length + (claimsOf[s.slug].length === 1 ? ' claim' : ' claims') : '') + (s.old ? (claimsOf[s.slug].length ? ' · ' : '') + 'earlier version' : '') + '</span>' + ARROW + '</span></a></li>';
+    }).join('');
+  var fT = doc.getElementById('f-topic'), fY = doc.getElementById('f-type'), filt = { topic: 'all', type: 'all' };
+  fT.innerHTML = '<button type="button" class="chip" data-v="all" aria-pressed="true">All topics</button>' + TOPICS.map(function (t) {
+    return '<button type="button" class="chip" data-v="' + t.id + '" aria-pressed="false" style="--c:' + tcol(t.id) + '">' + esc(t.name) + '</button>';
+  }).join('');
+  fY.innerHTML = '<button type="button" class="chip" data-v="all" aria-pressed="true">Every type</button>' + TYPES.map(function (t) {
+    return '<button type="button" class="chip" data-v="' + t.id + '" aria-pressed="false">' + esc(t.name) + ' <span class="n">' + sites.filter(function (s) { return s.type === t.id; }).length + '</span></button>';
+  }).join('');
+  var applyFilter = function () {
+    var n = 0;
+    [].forEach.call(grid.children, function (li) {
+      var ok = (filt.topic === 'all' || li.getAttribute('data-topic') === filt.topic) && (filt.type === 'all' || li.getAttribute('data-type') === filt.type);
+      li.hidden = !ok; if (ok) n++;
+    });
+    doc.getElementById('every-n').textContent = n === sites.length ? 'All ' + n : n + ' of ' + sites.length;
+  };
+  [[fT, 'topic'], [fY, 'type']].forEach(function (p) {
+    p[0].addEventListener('click', function (e) {
+      var b = e.target.closest('.chip'); if (!b) return;
+      filt[p[1]] = b.getAttribute('data-v');
+      [].forEach.call(p[0].children, function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      applyFilter();
+    });
+  });
+  applyFilter();
+})();
+</script>
+<script src="/directions/frame.js" defer></script>
+</body>
+</html>
