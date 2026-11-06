@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <title>esmrsky · The map (direction 5)</title>
-<meta name="description" content="Homepage direction 5: every esmrsky site on one interactive map, grouped by topic, with what connects to what.">
+<meta name="description" content="Homepage direction 5: every esmrsky site on one map, grouped by topic, with what leads to what.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0f14'/%3E%3Ccircle cx='22' cy='24' r='9' fill='%23F5B83D'/%3E%3Ccircle cx='43' cy='22' r='7' fill='%232CC8B0'/%3E%3Ccircle cx='40' cy='42' r='10' fill='%23F05BB0'/%3E%3Ccircle cx='20' cy='45' r='6' fill='%239479FF'/%3E%3C/svg%3E">
 <script>
   /* Same key as the hub, so a reader's light or dark choice follows them here. */
@@ -24,10 +24,10 @@
     color-scheme: dark;
     --bg: #0d0f14;
     --panel: #151923;
-    --panel-2: #1b2030;
+    --panel-2: #1d2233;
     --ink: #f3f1ec;
-    --dim: rgba(243, 241, 236, .64);
-    --faint: rgba(243, 241, 236, .4);
+    --dim: rgba(243, 241, 236, .66);
+    --faint: rgba(243, 241, 236, .44);
     --hair: rgba(243, 241, 236, .12);
     --t-start: #f3f1ec;
     --t-bible: #f5b83d;
@@ -36,38 +36,30 @@
     --t-body: #ff7a5c;
     --t-loops: #f05bb0;
     --t-tools: #4d9bff;
-    --tint: 24%;
-    --tint-lit: 46%;
+    --ct-mix: 100%;
+    --isl: 7%;
+    --pill: 15%;
+    --pill-hi: 30%;
+    --shadow: rgba(0, 0, 0, .45);
     --sans: "Onest", system-ui, sans-serif;
     --ease: cubic-bezier(.22, .61, .36, 1);
   }
   :root[data-theme="light"] {
     color-scheme: light;
-    --bg: #f6f5f1;
-    --panel: #ffffff;
-    --panel-2: #efede7;
-    --ink: #15161a;
-    --dim: rgba(21, 22, 26, .66);
-    --faint: rgba(21, 22, 26, .44);
-    --hair: rgba(21, 22, 26, .12);
-    --t-start: #2a2b30;
-    --t-bible: #c88a0e;
-    --t-practice: #0f9a85;
-    --t-mind: #6c4ff0;
-    --t-body: #e0502f;
-    --t-loops: #cc2f8c;
-    --t-tools: #2470dc;
-    --tint: 20%;
-    --tint-lit: 40%;
+    --bg: #f6f5f1; --panel: #ffffff; --panel-2: #efede7;
+    --ink: #15161a; --dim: rgba(21, 22, 26, .68); --faint: rgba(21, 22, 26, .48); --hair: rgba(21, 22, 26, .12);
+    --t-start: #2a2b30; --t-bible: #c88a0e; --t-practice: #0f9a85; --t-mind: #6c4ff0;
+    --t-body: #e0502f; --t-loops: #cc2f8c; --t-tools: #2470dc;
+    --ct-mix: 66%; --isl: 6%; --pill: 12%; --pill-hi: 24%; --shadow: rgba(30, 28, 20, .18);
   }
   @media (prefers-color-scheme: light) {
     :root:not([data-theme]) {
       color-scheme: light;
       --bg: #f6f5f1; --panel: #ffffff; --panel-2: #efede7;
-      --ink: #15161a; --dim: rgba(21, 22, 26, .66); --faint: rgba(21, 22, 26, .44); --hair: rgba(21, 22, 26, .12);
+      --ink: #15161a; --dim: rgba(21, 22, 26, .68); --faint: rgba(21, 22, 26, .48); --hair: rgba(21, 22, 26, .12);
       --t-start: #2a2b30; --t-bible: #c88a0e; --t-practice: #0f9a85; --t-mind: #6c4ff0;
       --t-body: #e0502f; --t-loops: #cc2f8c; --t-tools: #2470dc;
-      --tint: 20%; --tint-lit: 40%;
+      --ct-mix: 66%; --isl: 6%; --pill: 12%; --pill-hi: 24%; --shadow: rgba(30, 28, 20, .18);
     }
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -77,6 +69,8 @@
   button { font: inherit; color: inherit; }
   .wrap { width: min(1320px, 100% - 32px); margin-inline: auto; }
   @media (min-width: 760px) { .wrap { width: min(1320px, 100% - 64px); } }
+  /* a topic's color, deepened enough to be read as text on a light page */
+  [style*="--c"] { --ct: color-mix(in srgb, var(--c) var(--ct-mix), var(--ink)); }
 
   /* ---- top */
   .top { display: flex; align-items: center; gap: 8px; padding-block: 14px; }
@@ -95,123 +89,164 @@
   @media (max-width: 520px) { .top nav { display: none; } }
 
   /* ---- hero */
-  .hero { padding-block: clamp(24px, 6vh, 64px) 28px; display: grid; gap: 20px 48px; align-items: end; }
+  .hero { padding-block: clamp(16px, 4vh, 44px) 24px; display: grid; gap: 16px 48px; align-items: end; }
   @media (min-width: 980px) { .hero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
-  .hero h1 { font: 800 clamp(40px, 6.4vw, 92px)/.94 var(--sans); letter-spacing: -.045em; margin: 0; }
+  .hero h1 { font: 800 clamp(38px, 5.2vw, 74px)/.95 var(--sans); letter-spacing: -.045em; margin: 0; }
   .hero h1 span { background: linear-gradient(90deg, var(--t-bible), var(--t-body) 30%, var(--t-loops) 55%, var(--t-mind) 78%, var(--t-practice)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .hero p { margin: 0 0 14px; color: var(--dim); font-size: clamp(16px, 1.4vw, 19px); max-width: 32em; }
-  .starts { display: flex; flex-wrap: wrap; gap: 10px; }
-  .starts a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 16px 8px 12px; border-radius: 12px; background: var(--panel); border: 1px solid var(--hair); text-decoration: none; font-weight: 600; transition: border-color .2s var(--ease), background-color .2s var(--ease); }
-  .starts a small { font-weight: 500; color: var(--faint); }
-  .starts a:hover { border-color: var(--faint); background: var(--panel-2); }
-  .starts a::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+  .hero p { margin: 0; color: var(--dim); font-size: clamp(16px, 1.4vw, 19px); max-width: 32em; }
 
-  /* ---- the atlas */
-  .atlas { background: var(--panel); border: 1px solid var(--hair); border-radius: 22px; padding: 14px; }
-  @media (min-width: 760px) { .atlas { padding: 18px; } }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .styles { display: inline-flex; padding: 4px; gap: 2px; border-radius: 12px; background: var(--bg); border: 1px solid var(--hair); }
-  .styles button { min-height: 40px; padding-inline: 14px; border-radius: 9px; border: 0; background: transparent; cursor: pointer; font-weight: 600; font-size: 14.5px; color: var(--dim); display: inline-flex; align-items: center; gap: 8px; transition: background-color .25s var(--ease), color .25s var(--ease); }
-  .styles button svg { width: 16px; height: 16px; }
-  .styles button:hover { color: var(--ink); }
-  .styles button[aria-pressed="true"] { background: var(--panel-2); color: var(--ink); box-shadow: 0 1px 0 var(--hair) inset, 0 2px 8px rgba(0,0,0,.16); }
-  @media (pointer: coarse) { .styles button { min-height: 44px; } }
-  @media (max-width: 520px) { .styles button span { display: none; } .styles button { padding-inline: 13px; } }
-  .search { flex: 1 1 200px; max-width: 360px; margin-left: auto; position: relative; }
-  .search input { width: 100%; min-height: 44px; border-radius: 12px; border: 1px solid var(--hair); background: var(--bg); color: var(--ink); font: 500 15px/1 var(--sans); padding: 0 14px 0 38px; transition: border-color .2s var(--ease); }
+  /* ---- what brings you here */
+  .ask { display: grid; gap: 14px; margin-bottom: 26px; }
+  .ask-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .ask h2 { font: 750 clamp(22px, 2.4vw, 30px)/1.1 var(--sans); letter-spacing: -.025em; margin: 0 auto 0 0; }
+  .search { flex: 1 1 240px; max-width: 380px; position: relative; }
+  .search input { width: 100%; min-height: 46px; border-radius: 12px; border: 1px solid var(--hair); background: var(--panel); color: var(--ink); font: 500 16px/1 var(--sans); padding: 0 92px 0 40px; transition: border-color .2s var(--ease); }
   .search input::placeholder { color: var(--faint); }
-  .search input:focus { outline: none; border-color: var(--t-mind); }
-  .search svg { position: absolute; left: 12px; top: 50%; width: 16px; height: 16px; margin-top: -8px; color: var(--faint); pointer-events: none; }
-  .search output { position: absolute; right: 12px; top: 50%; translate: 0 -50%; font-size: 13px; color: var(--faint); pointer-events: none; }
+  .search input:focus { outline: none; border-color: var(--ink); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search svg { position: absolute; left: 13px; top: 50%; width: 17px; height: 17px; margin-top: -8.5px; color: var(--faint); pointer-events: none; }
+  .search output { position: absolute; right: 14px; top: 50%; translate: 0 -50%; font-size: 13px; color: var(--faint); pointer-events: none; white-space: nowrap; }
+  .qs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .q { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 9px 15px; border-radius: 12px; border: 1px solid var(--hair); background: var(--panel); cursor: pointer; font-size: 15.5px; font-weight: 550; line-height: 1.25; text-align: left; transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+  .q::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+  .q:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, var(--panel)); }
+  .q[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 24%, var(--panel)); }
+  .hint { margin: 0; font-size: 14px; color: var(--faint); }
+  .more-q { display: none; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px dashed var(--faint); background: transparent; color: var(--dim); cursor: pointer; font-size: 15px; font-weight: 600; transition: border-color .15s var(--ease), color .15s var(--ease); }
+  .more-q:hover { color: var(--ink); border-color: var(--ink); }
+  @media (max-width: 600px) {
+    .qs:not(.all) .q:nth-child(n+6) { display: none; }
+    .qs:not(.all) .more-q { display: inline-flex; align-items: center; }
+  }
+  .ask .threads { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-top: 4px; }
+  .ask .threads h2 { margin: 0 4px 0 0; }
+  .ask .threads > p { display: none; }
+  .ask .claims { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ask .claim { width: auto; min-height: 38px; padding: 5px 11px 5px 6px; font-size: 14px; }
+  .ask .claim .full, .claim .sh { display: none; }
+  .ask .claim .sh { display: inline; }
+  .ask .claim .n { display: none; }
+  .hint .h-touch { display: none; }
+  @media (hover: none) { .hint .h-touch { display: inline; } .hint .h-mouse { display: none; } }
 
-  .body { display: grid; gap: 16px; }
-  @media (min-width: 1040px) { .body { grid-template-columns: minmax(0, 1fr) 300px; } }
-  .stage { position: relative; border-radius: 16px; background: var(--bg); overflow: hidden; touch-action: manipulation; }
-  .stage svg { display: block; width: 100%; height: auto; user-select: none; -webkit-user-select: none; }
-  .hint { margin: 10px 4px 0; font-size: 13px; color: var(--faint); pointer-events: none; transition: opacity .3s var(--ease); }
+  /* ---- the map: one island per topic, every site named */
+  .body { display: grid; gap: 22px; }
+  @media (min-width: 1040px) { .body { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; } }
+  .islands { columns: 2 300px; column-gap: 14px; }
+  .island { break-inside: avoid; margin: 0 0 14px; padding: 16px 16px 18px; border-radius: 18px; background: color-mix(in srgb, var(--c) var(--isl), var(--panel)); border: 1px solid color-mix(in srgb, var(--c) 22%, var(--hair)); transition: opacity .25s var(--ease), border-color .25s var(--ease); }
+  .island.start { column-span: all; }
+  .island header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .island h3 { margin: 0; font: 750 19px/1.2 var(--sans); letter-spacing: -.015em; color: var(--ct); }
+  .island header .n { font-size: 13px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .island .blurb { margin: 0 0 12px; font-size: 14px; line-height: 1.45; color: var(--dim); max-width: 40em; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .island.start .pills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
 
-  /* nodes */
-  .node { cursor: pointer; outline: none; transition: opacity .28s var(--ease); }
-  .node .shape { fill: color-mix(in srgb, var(--c) var(--tint), var(--bg)); stroke: color-mix(in srgb, var(--c) 70%, var(--bg)); stroke-width: 1.2; transition: fill .25s var(--ease), stroke .25s var(--ease), stroke-width .25s var(--ease); }
-  .node.big .shape { fill: color-mix(in srgb, var(--c) calc(var(--tint) + 8%), var(--bg)); }
-  .node.old .shape { stroke-dasharray: 3 3; fill: color-mix(in srgb, var(--c) 10%, var(--bg)); }
-  .node .lbl { fill: var(--ink); font-family: var(--sans); font-weight: 600; pointer-events: none; transition: opacity .28s var(--ease), fill .25s var(--ease); }
-  .node .lbl .k { fill: var(--dim); font-weight: 500; }
-  .node:hover .shape, .node:focus-visible .shape, .node.is-lit .shape { fill: color-mix(in srgb, var(--c) var(--tint-lit), var(--bg)); stroke: var(--c); stroke-width: 2; }
-  .node.is-anchor .shape { fill: var(--c); stroke: var(--ink); stroke-width: 2.5; }
-  .node.is-anchor .lbl, .node.is-anchor .lbl .k { fill: var(--bg); }
-  .stage.focused .node.is-dim { opacity: .16; }
-  .stage.focused .node.is-dim .lbl { opacity: 0; }
-  .node:focus-visible .shape { stroke: var(--ink); stroke-width: 3; }
+  .pill { position: relative; display: inline-flex; flex-direction: column; justify-content: center; gap: 1px; min-height: 46px; max-width: 100%; padding: 7px 13px 8px; border-radius: 11px; text-decoration: none; background: color-mix(in srgb, var(--c) var(--pill), var(--panel)); border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+    transition: background-color .16s var(--ease), border-color .16s var(--ease), box-shadow .16s var(--ease), opacity .22s var(--ease); }
+  .pill b { font-size: 15px; font-weight: 650; line-height: 1.22; letter-spacing: -.005em; text-wrap: balance; }
+  .pill small { font-size: 12px; line-height: 1.3; color: var(--dim); font-weight: 500; }
+  .pill.s1 b { font-size: 14px; font-weight: 600; }
+  .pill.old { background: transparent; border-style: dashed; }
+  .pill.old b { font-weight: 550; color: var(--dim); }
+  .pill .d { display: none; }
+  .island.start .pill { justify-content: flex-start; padding: 12px 16px 14px; }
+  .island.start .pill b { font-size: 19px; }
+  .island.start .pill .d { display: block; margin-top: 4px; font-size: 14px; line-height: 1.45; color: var(--dim); }
+  .pill:hover, .pill:focus-visible { background: color-mix(in srgb, var(--c) var(--pill-hi), var(--panel)); border-color: var(--c); }
+  .pill:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-  .topic-bg { fill: color-mix(in srgb, var(--c) 7%, var(--bg)); stroke: color-mix(in srgb, var(--c) 30%, transparent); stroke-width: 1; transition: opacity .28s var(--ease); }
-  .topic-lbl { paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; fill: var(--c); font: 700 12px var(--sans); letter-spacing: .14em; text-transform: uppercase; pointer-events: none; transition: opacity .28s var(--ease); }
-  .topic-lbl.big { font-size: 15px; letter-spacing: .08em; }
-  .topic-hub { fill: var(--c); }
-  .stage.focused .topic-bg.is-dim, .stage.focused .topic-lbl.is-dim { opacity: .25; }
-  .spoke { stroke: color-mix(in srgb, var(--c) 32%, transparent); stroke-width: 1; fill: none; transition: opacity .28s var(--ease); }
-  .tie { stroke: var(--faint); stroke-width: 1.2; stroke-dasharray: 2 4; fill: none; transition: opacity .28s var(--ease); }
-  .stage.focused .spoke, .stage.focused .tie { opacity: .15; }
-  .layer-fade { transition: opacity .3s var(--ease); }
-  .layer-fade.out { opacity: 0; }
+  /* focus: what is lit lights up in a quick ripple; the rest steps back but stays readable */
+  .atlas.focused .pill { opacity: .3; }
+  .atlas.focused .pill.is-lit { opacity: 1; background: color-mix(in srgb, var(--c) var(--pill-hi), var(--panel)); border-color: var(--c); box-shadow: 0 0 0 1px var(--c); transition-delay: calc(var(--i, 0) * 16ms); }
+  .atlas.focused .pill.is-anchor, .pill.is-peek { opacity: 1; background: color-mix(in srgb, var(--c) 46%, var(--panel)); border-color: var(--c); box-shadow: 0 0 0 2px var(--c), 0 6px 18px var(--shadow); transition-delay: 0s; }
+  .atlas.focused .island.is-quiet { opacity: .5; }
+  .atlas.filtering .pill:not(.is-match), .atlas.filtering .island:not(.has-match) { display: none; }
+  .empty { display: none; margin: 0 0 14px; padding: 28px 20px; border-radius: 18px; border: 1px dashed var(--hair); color: var(--dim); text-align: center; }
+  .atlas.filtering.none .empty { display: block; }
+  @media (prefers-reduced-motion: reduce) { .atlas.focused .pill.is-lit { transition-delay: 0s; } }
 
-  .tag { pointer-events: none; }
-  .tag rect { fill: var(--panel); stroke: color-mix(in srgb, var(--c) 70%, transparent); stroke-width: 1; }
-  .tag text { fill: var(--ink); font: 600 11.5px var(--sans); }
-  .link { fill: none; stroke: var(--c); stroke-width: 2; stroke-linecap: round; opacity: .9; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .5s var(--ease); pointer-events: none; }
-  .link.on { stroke-dashoffset: 0; }
-  @media (prefers-reduced-motion: reduce) { .link { transition: none; } }
+  /* ---- the reader panel: beside the map on a wide screen, a sheet on a phone */
+  .side { display: grid; gap: 22px; align-content: start; }
+  @media (min-width: 1040px) { .side { position: sticky; top: 14px; max-height: calc(100vh - 28px); overflow: auto; overscroll-behavior: contain; padding-right: 2px; scrollbar-width: thin; } }
+  .detail { position: relative; padding: 18px 18px 20px; border-radius: 18px; background: var(--panel); border: 1px solid color-mix(in srgb, var(--c, var(--ink)) 40%, var(--hair)); transition: border-color .16s var(--ease); }
+  .d-top { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--dim); margin: 0 44px 6px 0; }
+  .d-top::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--faint)); flex: none; }
+  .detail h3 { margin: 0 44px 8px 0; font-size: 23px; line-height: 1.12; letter-spacing: -.02em; text-wrap: balance; }
+  .detail p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--dim); }
+  .detail .open { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; min-height: 48px; padding: 0 16px; border-radius: 12px; background: var(--ink); color: var(--bg); font-weight: 700; text-decoration: none; transition: background-color .15s var(--ease); }
+  .detail .open:hover { background: color-mix(in srgb, var(--ink) 86%, var(--c, var(--ink))); }
+  .detail .open svg, .d-list svg { width: 18px; height: 18px; flex: none; }
+  .d-x { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border-radius: 12px; border: 0; background: transparent; color: var(--dim); cursor: pointer; display: grid; place-items: center; transition: background-color .15s var(--ease), color .15s var(--ease); }
+  .d-x:hover { background: var(--panel-2); color: var(--ink); }
+  .d-x svg { width: 18px; height: 18px; }
+  .d-x:focus-visible, .q:focus-visible, .mini:focus-visible, .claim:focus-visible, .theme:focus-visible, .detail .open:focus-visible, .d-list a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .d-rel { margin-top: 18px; display: grid; gap: 14px; }
+  .d-rel h4 { margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .d-gh { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 7px; }
+  .cn { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--panel-2); color: var(--dim); font-size: 11px; font-weight: 700; flex: none; }
+  .minis { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mini { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; padding: 5px 11px; border-radius: 9px; border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); background: color-mix(in srgb, var(--c) 10%, transparent); cursor: pointer; font-size: 14px; font-weight: 550; line-height: 1.2; text-align: left; transition: background-color .15s var(--ease), border-color .15s var(--ease); }
+  .mini::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+  .mini:hover { background: color-mix(in srgb, var(--c) 24%, transparent); border-color: var(--c); }
+  @media (pointer: coarse) { .mini { min-height: 44px; } }
+  .d-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; counter-reset: n; }
+  .d-list a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 18px; gap: 2px 10px; align-items: start; padding: 10px 12px; border-radius: 12px; text-decoration: none; background: color-mix(in srgb, var(--c) 9%, transparent); border: 1px solid color-mix(in srgb, var(--c) 26%, transparent); transition: background-color .15s var(--ease), border-color .15s var(--ease); }
+  .d-list a::before { counter-increment: n; content: counter(n); grid-row: span 3; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--c); color: var(--bg); font-size: 12px; font-weight: 800; }
+  .d-list a:hover { background: color-mix(in srgb, var(--c) 20%, transparent); border-color: var(--c); }
+  .d-list .lt { font-weight: 650; font-size: 15.5px; line-height: 1.25; }
+  .d-list .lk { font-size: 12.5px; color: var(--ct); font-weight: 600; }
+  .d-list .ld { font-size: 14px; line-height: 1.45; color: var(--dim); grid-column: 2; }
+  .d-list svg { grid-row: 1; grid-column: 3; margin-top: 2px; color: var(--ct); }
+  .d-tip { margin-top: 14px !important; font-size: 13.5px !important; color: var(--faint) !important; }
 
-  /* the preview card: fades in place, never slides */
-  .tip { position: absolute; z-index: 5; width: min(320px, calc(100% - 24px)); padding: 14px 16px 16px; border-radius: 14px; background: var(--panel); border: 1px solid color-mix(in srgb, var(--c) 50%, var(--hair)); box-shadow: 0 14px 40px rgba(0,0,0,.35); opacity: 0; visibility: hidden; transition: opacity .18s var(--ease), visibility 0s linear .18s; pointer-events: none; }
-  .tip.on { opacity: 1; visibility: visible; transition: opacity .18s var(--ease), visibility 0s; }
-  .tip.pinned { pointer-events: auto; }
-  .tip-top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--dim); margin-bottom: 6px; }
-  .tip-top::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
-  .tip h3 { margin: 0 0 6px; font-size: 20px; line-height: 1.12; letter-spacing: -.02em; }
-  .tip p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--dim); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-  .tip .rel { margin-top: 10px; font-size: 13px; color: var(--faint); }
-  .tip .rel b { color: var(--ink); font-weight: 600; }
-  .tip .open { display: none; margin-top: 12px; min-height: 44px; align-items: center; justify-content: center; border-radius: 10px; background: var(--ink); color: var(--bg); font-weight: 700; text-decoration: none; }
-  .tip.pinned .open { display: flex; }
+  @media (max-width: 1039px) {
+    /* a sheet over the foot of the screen: it fades in place, it never slides */
+    .detail { position: fixed; z-index: 80; left: 8px; right: 8px; bottom: 64px; max-height: min(64vh, 560px); overflow: auto; overscroll-behavior: contain; box-shadow: 0 -6px 40px var(--shadow), 0 0 0 1px var(--hair); opacity: 0; visibility: hidden; transition: opacity .16s var(--ease), visibility 0s linear .16s, border-color .16s var(--ease); }
+    .detail.on { opacity: 1; visibility: visible; transition: opacity .16s var(--ease), visibility 0s, border-color .16s var(--ease); }
+    body.sheet-open { padding-bottom: 70vh; }
+  }
+  @media (max-width: 1039px) and (min-width: 700px) { .detail { left: 50%; right: auto; width: 560px; margin-left: -280px; } }
+  @media (min-width: 1040px) { .d-x.only-sheet { display: none; } }
 
-  /* side panel */
-  .side { display: grid; gap: 18px; align-content: start; }
-  .side h2 { font: 700 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin: 0 0 10px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 6px 12px; border-radius: 10px; border: 1px solid var(--hair); background: transparent; cursor: pointer; font-size: 14px; font-weight: 500; text-align: left; line-height: 1.25; transition: border-color .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease); }
-  @media (pointer: coarse) { .chip { min-height: 44px; } }
-  .chip::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--faint)); flex: none; }
-  .chip .n { color: var(--faint); font-size: 12.5px; font-variant-numeric: tabular-nums; }
-  .chip:hover { border-color: color-mix(in srgb, var(--c, var(--ink)) 60%, transparent); background: color-mix(in srgb, var(--c, var(--ink)) 10%, transparent); }
-  .chip[aria-pressed="true"] { border-color: var(--c, var(--ink)); background: color-mix(in srgb, var(--c, var(--ink)) 20%, transparent); }
-  .chip:focus-visible, .styles button:focus-visible, .theme:focus-visible, .starts a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-  .claims .chip { width: 100%; }
-  .claims .chip::before { content: attr(data-n); width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--panel-2); color: var(--dim); }
-  .claims .chip[aria-pressed="true"]::before { background: var(--ink); color: var(--bg); }
-  .qs .chip::before { display: none; }
-  @media (min-width: 1040px) { .side { max-height: var(--stage-h, 760px); overflow: auto; padding-right: 4px; overscroll-behavior: contain; } }
+  /* threads: Throughline's eight claims */
+  .threads h2 { font: 700 12px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 0 0 4px; }
+  .threads > p { margin: 0 0 10px; font-size: 14px; color: var(--dim); }
+  .claims { display: grid; gap: 6px; }
+  @media (max-width: 1039px) and (min-width: 700px) { .claims { grid-template-columns: 1fr 1fr; } }
+  .claim { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--hair); background: var(--panel); cursor: pointer; font-size: 14.5px; font-weight: 550; line-height: 1.3; text-align: left; transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+  .claim .n { margin-left: auto; color: var(--faint); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .claim:hover { border-color: var(--faint); background: var(--panel-2); }
+  .claim[aria-pressed="true"] { border-color: var(--ink); background: var(--panel-2); }
+  .claim[aria-pressed="true"] .cn { background: var(--ink); color: var(--bg); }
 
   /* ---- everything */
-  .every { padding-top: 80px; scroll-margin-top: 8px; }
+  .every { padding-top: 72px; scroll-margin-top: 8px; }
   .every-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 18px; }
   .every h2 { font: 800 clamp(32px, 4.4vw, 56px)/1 var(--sans); letter-spacing: -.04em; margin: 0; }
   .every-count { color: var(--faint); font-size: 15px; }
   .filters { display: grid; gap: 10px; margin-bottom: 22px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 12px; border-radius: 10px; border: 1px solid var(--hair); background: transparent; cursor: pointer; font-size: 14px; font-weight: 500; line-height: 1.25; transition: border-color .2s var(--ease), background-color .2s var(--ease); }
+  @media (pointer: coarse) { .chip { min-height: 44px; } }
+  .chip::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--faint)); flex: none; }
+  .chip .n { color: var(--faint); font-size: 12.5px; }
+  .chip:hover { border-color: color-mix(in srgb, var(--c, var(--ink)) 60%, transparent); }
+  .chip[aria-pressed="true"] { border-color: var(--c, var(--ink)); background: color-mix(in srgb, var(--c, var(--ink)) 18%, transparent); }
+  .chip:focus-visible, .card:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
   .grid li[hidden] { display: none; }
-  .card { position: relative; display: flex; flex-direction: column; height: 100%; padding: 16px 18px 18px; border-radius: 16px; text-decoration: none; background: var(--panel); border: 1px solid var(--hair); overflow: hidden; transition: border-color .22s var(--ease), background-color .22s var(--ease), translate .22s var(--ease); }
+  .card { position: relative; display: flex; flex-direction: column; height: 100%; padding: 16px 18px 18px; border-radius: 16px; text-decoration: none; background: var(--panel); border: 1px solid var(--hair); overflow: hidden; transition: border-color .22s var(--ease), background-color .22s var(--ease); }
   .card::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--c); }
-  .card:hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); background: color-mix(in srgb, var(--c) 8%, var(--panel)); translate: 0 -2px; }
-  .card:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+  .card:hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); background: color-mix(in srgb, var(--c) 8%, var(--panel)); }
   .c-top { display: flex; gap: 8px; align-items: center; font-size: 12.5px; font-weight: 600; color: var(--dim); margin: 4px 0 8px; }
-  .c-top .t { color: var(--c); }
+  .c-top .t { color: var(--ct); }
   .card h3 { margin: 0 0 8px; font-size: 21px; line-height: 1.12; letter-spacing: -.02em; text-wrap: balance; }
   .card p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .c-go { margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--faint); }
-  .c-go svg { width: 18px; height: 18px; color: var(--c); transition: translate .22s var(--ease); }
+  .c-go svg { width: 18px; height: 18px; color: var(--ct); transition: translate .22s var(--ease); }
   .card:hover .c-go svg { translate: 3px 0; }
-  @media (prefers-reduced-motion: reduce) { .card:hover { translate: none; } .card:hover .c-go svg { translate: none; } }
+  @media (prefers-reduced-motion: reduce) { .card:hover .c-go svg { translate: none; } }
 
   .foot { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--hair); font-size: 14px; color: var(--faint); }
   .foot p { margin: 0 0 6px; }
@@ -240,37 +275,34 @@ p,li,dd,figcaption{text-wrap:pretty}
 <main>
   <section class="wrap hero">
     <h1>Everything here, <span>on one map.</span></h1>
-    <div>
-      <p id="hero-p">Studies in Scripture, the mind and the body, grouped by topic. Hover anything to see what it connects to, or pick a claim and watch it cross every topic.</p>
-      <div class="starts" id="starts"></div>
-    </div>
+    <p id="hero-p">Studies, guides and tools on Scripture, the mind and the body, in six topics. Start with what brings you here, or touch any site to see what it is and where it leads.</p>
   </section>
 
   <section class="wrap atlas" id="atlas" aria-label="Map of every site">
-    <div class="bar">
-      <div class="styles" role="group" aria-label="Map style">
-        <button type="button" data-style="bubbles" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="10" r="5"/><circle cx="16.5" cy="15.5" r="4"/><circle cx="16" cy="6" r="2.5"/></svg><span>Bubbles</span></button>
-        <button type="button" data-style="blocks" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg><span>Blocks</span></button>
-        <button type="button" data-style="stars" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="7" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="13" r="2.4"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="18" r="2"/><path d="M6.7 8.2l3.8 3.4M16.4 6.3l-3 5M10.5 14.5l-3 3M13.9 14l3.4 2.8"/></svg><span>Constellation</span></button>
+    <div class="ask">
+      <div class="ask-head">
+        <h2>What brings you here?</h2>
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Or search: a word, a book…" autocomplete="off" aria-label="Search every site">
+          <output id="q-n" for="q"></output>
+        </label>
       </div>
-      <label class="search"><span class="sr" hidden>Search</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Find a topic, a word, a book…" autocomplete="off" aria-label="Find on the map">
-        <output id="q-n" for="q"></output>
-      </label>
+      <div class="qs" id="questions" role="group" aria-label="What brings you here"></div>
+      <p class="hint"><span class="h-mouse">Hover any site to see what it is and what it leads to. Click to open it.</span><span class="h-touch">Tap any site to see what it is and what it leads to.</span></p>
     </div>
     <div class="body">
       <div>
-        <div class="stage" id="stage">
-          <svg id="map" role="img" aria-label="Every site, grouped by topic"></svg>
-          <div class="tip" id="tip" role="status" aria-live="polite"></div>
-        </div>
-        <p class="hint" id="hint">Hover anything on the map to see what connects to it, and click to open it. On a phone, tap once to preview.</p>
+        <div class="islands" id="islands"></div>
+        <p class="empty" id="empty">Nothing matches that yet. Try a shorter word.</p>
       </div>
-      <aside class="side" aria-label="Highlight on the map">
-        <div><h2>Topics</h2><div class="chips" id="topics"></div></div>
-        <div><h2>Start with what you’re carrying</h2><div class="chips qs" id="questions"></div></div>
-        <div class="claims"><h2>Eight claims that cross every topic</h2><div class="chips" id="claims"></div></div>
+      <aside class="side" aria-label="About the site you picked">
+        <div class="detail" id="detail" aria-live="polite"></div>
+        <div class="threads">
+          <h2>Follow a thread</h2>
+          <p>Eight claims Throughline traces through every topic. Pick one to see where it shows up.</p>
+          <div class="claims" id="claims"></div>
+        </div>
       </aside>
     </div>
   </section>
@@ -285,12 +317,11 @@ p,li,dd,figcaption{text-wrap:pretty}
   </section>
 
   <footer class="wrap foot">
-    <p>The topics, the question lines and the four types are a first pass for this preview. The eight claims and the family ties come from Throughline and the hub’s views.</p>
-    <p>Preview only. The live homepage is unchanged at <a href="/">esmrsky.github.io</a>.</p>
+    <p>The topics and their one-line descriptions, the questions and the four types are a first pass for this preview. The eight claims and the family ties come from Throughline and the hub’s views.</p>
+    <p>Preview only. The live homepage is unchanged at <a href="/">esmrsky.github.io</a>. The first version of this map, with bubbles and lines, is at <a href="/directions/map/v1.html">/directions/map/v1.html</a>.</p>
   </footer>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="/directions/data.js"></script>
 <script>
 (function () {
@@ -305,6 +336,9 @@ p,li,dd,figcaption{text-wrap:pretty}
     return a;
   };
   var still = function () { return matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var narrow = function () { return matchMedia('(max-width: 1039px)').matches; };
+  var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CROSS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   /* ---------- theme */
   doc.querySelector('.theme').addEventListener('click', function () {
@@ -316,14 +350,15 @@ p,li,dd,figcaption{text-wrap:pretty}
 
   /* ---------- topics and types (first pass) */
   var TOPICS = [
-    { id: 'start', name: 'Start here', short: 'Start' },
-    { id: 'bible', name: 'Bible & word studies', short: 'Bible' },
-    { id: 'practice', name: 'Faith in practice', short: 'Practice' },
-    { id: 'mind', name: 'Mind & learning', short: 'Mind' },
-    { id: 'body', name: 'Body, rest & sleep', short: 'Body' },
-    { id: 'loops', name: 'Loops & desire', short: 'Loops' },
-    { id: 'tools', name: 'Tools & making', short: 'Tools' }
+    { id: 'start', name: 'Start here', short: 'Start', blurb: 'Two overviews of everything below. Read one first if you want the big picture.' },
+    { id: 'bible', name: 'Bible & word studies', short: 'Bible', blurb: 'Close readings of Scripture: single words, whole books, and studies to teach from.' },
+    { id: 'practice', name: 'Faith in practice', short: 'Practice', blurb: 'Field guides for the inner life: what you feel, what you chase, and where you stand with God.' },
+    { id: 'mind', name: 'Mind & learning', short: 'Mind', blurb: 'How attention, prediction and learning work, and why easy can feel like learning.' },
+    { id: 'body', name: 'Body, rest & sleep', short: 'Body', blurb: 'Sleep, rest, fasting and the nervous system.' },
+    { id: 'loops', name: 'Loops & desire', short: 'Loops', blurb: 'Habits and cravings: how a loop forms, what it pays you, and how to leave it.' },
+    { id: 'tools', name: 'Tools & making', short: 'Tools', blurb: 'Guides and labs for building apps, working with coding agents and making things.' }
   ];
+  var TOPIC = {}; TOPICS.forEach(function (t) { TOPIC[t.id] = t; });
   var BODY = ['sleep-rest-peace', 'huberman', 'how-not-eating-works', 'still-awake', 'anatomy-of-rest', 'the-watches-of-the-night', 'the-weight-of-rest'];
   var OLD = { 'still-awake': 1, 'anatomy-of-rest': 1, 'the-watches-of-the-night': 1, 'the-weight-of-rest': 1, 'the-atlas': 1, 'atlas-v2': 1, 'best-verses-v0': 1 };
   var secOf = {};
@@ -349,8 +384,8 @@ p,li,dd,figcaption{text-wrap:pretty}
   var tcol = function (t) { return 'var(--t-' + t + ')'; };
 
   /* relations: shared claims and family ties */
-  var claimsOf = {}, rel = {};
-  sites.forEach(function (s) { claimsOf[s.slug] = []; rel[s.slug] = {}; });
+  var claimsOf = {}, familyOf = {}, rel = {};
+  sites.forEach(function (s) { claimsOf[s.slug] = []; familyOf[s.slug] = []; rel[s.slug] = {}; });
   D.claims.forEach(function (c) {
     c.s.forEach(function (a) {
       if (!by[a]) return;
@@ -358,7 +393,13 @@ p,li,dd,figcaption{text-wrap:pretty}
       c.s.forEach(function (b) { if (b !== a && by[b]) rel[a][b] = 1; });
     });
   });
-  D.family.forEach(function (f) { if (by[f[0]] && by[f[1]]) { rel[f[0]][f[1]] = 1; rel[f[1]][f[0]] = 1; } });
+  D.family.forEach(function (f) {
+    if (!by[f[0]] || !by[f[1]]) return;
+    rel[f[0]][f[1]] = 1; rel[f[1]][f[0]] = 1;
+    if (familyOf[f[0]].indexOf(f[1]) < 0) familyOf[f[0]].push(f[1]);
+    if (familyOf[f[1]].indexOf(f[0]) < 0) familyOf[f[1]].push(f[0]);
+  });
+  var topicsIn = function (set) { var t = new Set(); set.forEach(function (k) { t.add(by[k].topic); }); return t; };
 
   var QUESTIONS = [
     ['I can’t fall asleep', ['sleep-rest-peace', 'the-return-new', 'still-awake']],
@@ -373,472 +414,259 @@ p,li,dd,figcaption{text-wrap:pretty}
     ['I build things', ['coding-agents-guide', 'app-playbook', 'never-done', 'specimens']]
   ];
 
-  /* ---------- hero */
-  doc.getElementById('starts').innerHTML = ['the-whole', 'throughline'].map(function (k) {
-    var s = by[k]; return '<a href="' + s.href + '" style="--c:' + tcol('start') + '">' + esc(s.title) + ' <small>' + esc(s.kind.toLowerCase()) + '</small></a>';
+  doc.getElementById('hero-p').textContent = sites.length + ' studies, guides and tools on Scripture, the mind and the body, in six topics. Start with what brings you here, or touch any site to see what it is and where it leads.';
+
+  /* ---------- the islands: every site named, nothing drawn over anything */
+  var islandsEl = doc.getElementById('islands'), atlas = doc.getElementById('atlas');
+  islandsEl.innerHTML = TOPICS.map(function (t) {
+    var list = sites.filter(function (s) { return s.topic === t.id; })
+      .map(function (s, i) { return { s: s, i: i }; })
+      .sort(function (a, b) { return (a.s.old - b.s.old) || (b.s.size - a.s.size) || (a.i - b.i); })
+      .map(function (x) { return x.s; });
+    return '<section class="island' + (t.id === 'start' ? ' start' : '') + '" data-topic="' + t.id + '" style="--c:' + tcol(t.id) + '" aria-labelledby="isl-' + t.id + '">' +
+      '<header><h3 id="isl-' + t.id + '">' + esc(t.name) + '</h3><span class="n">' + list.length + '</span></header>' +
+      (t.id === 'start' ? '' : '<p class="blurb">' + esc(t.blurb) + '</p>') +
+      '<div class="pills">' + list.map(function (s) {
+        return '<a class="pill s' + s.size + (s.old ? ' old' : '') + '" href="' + s.href + '" data-slug="' + s.slug + '">' +
+          '<b>' + esc(s.title) + '</b><small>' + esc(s.kind) + (s.old ? ' · earlier version' : '') + '</small>' +
+          '<span class="d">' + esc(first(s.desc)) + '</span></a>';
+      }).join('') + '</div></section>';
   }).join('');
-  doc.getElementById('hero-p').textContent = sites.length + ' studies, guides and tools on Scripture, the mind and the body, grouped by topic. Hover anything to see what it connects to, or pick a claim and watch it cross every topic.';
+  var pills = [].slice.call(islandsEl.querySelectorAll('.pill'));
+  var pillBy = {}; pills.forEach(function (p) { pillBy[p.getAttribute('data-slug')] = p; });
+  var islands = [].slice.call(islandsEl.querySelectorAll('.island'));
 
-  /* ---------- the map */
-  var NS = 'http://www.w3.org/2000/svg';
-  var svg = doc.getElementById('map'), stage = doc.getElementById('stage'), tip = doc.getElementById('tip');
-  var el = function (name, attrs, parent) {
-    var n = doc.createElementNS(NS, name);
-    for (var k in attrs) n.setAttribute(k, attrs[k]);
-    if (parent) parent.appendChild(n);
-    return n;
-  };
-  var gBack = el('g', { 'class': 'layer-fade' }, svg);
-  var gLinks = el('g', {}, svg);
-  var gNodes = el('g', {}, svg);
-  var gTop = el('g', { 'class': 'layer-fade' }, svg);
-  var gHi = el('g', {}, svg);
-
-  var measure = doc.createElement('canvas').getContext('2d');
-  var wrap = function (text, maxW, size, weight, maxLines) {
-    measure.font = (weight || 600) + ' ' + size + 'px Onest, system-ui, sans-serif';
-    var words = text.split(/\s+/), lines = [], line = '';
-    for (var i = 0; i < words.length; i++) {
-      var t = line ? line + ' ' + words[i] : words[i];
-      if (measure.measureText(t).width <= maxW || !line) line = t;
-      else { lines.push(line); line = words[i]; }
-    }
-    if (line) lines.push(line);
-    if (lines.length > maxLines) {
-      lines = lines.slice(0, maxLines);
-      var last = lines[maxLines - 1];
-      var ws = last.split(' ');
-      while (ws.length > 1 && measure.measureText(ws.join(' ') + '…').width > maxW) ws.pop();
-      last = ws.join(' ');
-      /* "A Wor…" helps no one: a name that will not fit whole-worded is left to the hover card */
-      if (measure.measureText(last + '…').width > maxW || (maxLines === 1 && ws.length < 2 && words.length > 1)) return null;
-      lines[maxLines - 1] = last.replace(/[\s,.;:·]+$/, '') + '…';
-    }
-    return lines.every(function (l) { return measure.measureText(l).width <= maxW + 1; }) ? lines : null;
-  };
-
-  /* one <g> per site, kept for life so a style change can move it rather than redraw it */
-  var nodes = sites.map(function (s) {
-    var g = el('g', { 'class': 'node' + (s.size === 3 ? ' big' : '') + (s.old ? ' old' : ''), tabindex: '0', role: 'link', 'aria-label': s.title + ', ' + s.kind, 'data-slug': s.slug }, gNodes);
-    g.style.setProperty('--c', tcol(s.topic));
-    var shape = el('rect', { 'class': 'shape' }, g);
-    var lbl = el('text', { 'class': 'lbl' }, g);
-    return { s: s, g: g, shape: shape, lbl: lbl, cur: { x: 0, y: 0, w: 0, h: 0, rx: 0 }, to: null };
-  });
-  var nodeBy = {}; nodes.forEach(function (n) { nodeBy[n.s.slug] = n; });
-
-  var STYLE = 'bubbles';
-  try { var saved = localStorage.getItem('esmrsky-map-style'); if (/^(bubbles|blocks|stars)$/.test(saved)) STYLE = saved; } catch (e) {}
-  var W = 0, H = 0, topicGeo = {};
-
-  var dims = function () {
-    var w = Math.round(stage.clientWidth), phone = w < 600;
-    var h = STYLE === 'bubbles' ? Math.round(Math.min(w * (phone ? 1.12 : .9), 940))
-      : STYLE === 'blocks' ? (phone ? phoneBlocksH() : Math.round(w * .7))
-      : Math.round(Math.min(w * (phone ? 1.35 : .74), 860));
-    return { w: w, h: h, phone: phone };
-  };
-
-  var hierarchy = function () {
-    return d3.hierarchy({ children: TOPICS.map(function (t) {
-      return { topic: t.id, children: sites.filter(function (s) { return s.topic === t.id; }).map(function (s) { return { site: s }; }) };
-    }) }).sum(function (d) { return d.site ? (d.site.old ? .6 : [1, 2.2, 4.4][d.site.size - 1]) : 0; })
-      .sort(function (a, b) { return b.value - a.value; });
-  };
-
-  /* On a phone a treemap leaves slivers too thin to name, so blocks become
-     two named tiles a row under each topic header: the same colors, readable. */
-  var PB = { head: 30, row: 52, gap: 4, pad: 6 };
-  var inTopic = function (id) { return sites.filter(function (s) { return s.topic === id; }); };
-  var phoneBlocksH = function () {
-    return TOPICS.reduce(function (h, t) { return h + PB.head + Math.ceil(inTopic(t.id).length / 2) * (PB.row + PB.gap) + PB.pad + 8; }, 4);
-  };
-  var phoneBlocks = function (w) {
-    var out = {}, topics = [], y = 4;
-    TOPICS.forEach(function (t) {
-      var list = inTopic(t.id), rows = Math.ceil(list.length / 2), y0 = y, x0 = 4, x1 = w - 4;
-      var cw = (x1 - x0 - PB.pad * 2 - PB.gap) / 2;
-      list.forEach(function (s, i) {
-        var r = Math.floor(i / 2), c = i % 2, alone = i === list.length - 1 && list.length % 2;
-        var ww = alone ? cw * 2 + PB.gap : cw;
-        out[s.slug] = { x: x0 + PB.pad + c * (cw + PB.gap) + ww / 2, y: y0 + PB.head + r * (PB.row + PB.gap) + PB.row / 2, w: ww, h: PB.row, rx: 7 };
-      });
-      y = y0 + PB.head + rows * (PB.row + PB.gap) + PB.pad;
-      topics.push({ id: t.id, x0: x0, y0: y0, x1: x1, y1: y });
-      y += 8;
-    });
-    return { nodes: out, topics: topics };
-  };
-
-  var layouts = {
-    bubbles: function (w, h, phone) {
-      var r = d3.pack().size([w, h]).padding(function (d) { return d.depth === 0 ? (phone ? 16 : 22) : 2; })(hierarchy());
-      var out = {}, topics = [];
-      r.children.forEach(function (t) {
-        topics.push({ id: t.data.topic, x: t.x, y: t.y, r: t.r });
-        t.children.forEach(function (c) { out[c.data.site.slug] = { x: c.x, y: c.y, w: c.r * 2, h: c.r * 2, rx: c.r }; });
-      });
-      return { nodes: out, topics: topics };
-    },
-    blocks: function (w, h, phone) {
-      if (phone) return phoneBlocks(w);
-      var r = d3.treemap().size([w, h]).paddingOuter(phone ? 4 : 6).paddingTop(phone ? 26 : 30).paddingInner(3)
-        .tile(d3.treemapSquarify.ratio(1.4)).round(true)(hierarchy());
-      var out = {}, topics = [];
-      r.children.forEach(function (t) {
-        topics.push({ id: t.data.topic, x0: t.x0, y0: t.y0, x1: t.x1, y1: t.y1 });
-        t.children.forEach(function (c) {
-          var cw = c.x1 - c.x0, ch = c.y1 - c.y0;
-          out[c.data.site.slug] = { x: c.x0 + cw / 2, y: c.y0 + ch / 2, w: cw, h: ch, rx: 7 };
-        });
-      });
-      return { nodes: out, topics: topics };
-    },
-    stars: function (w, h, phone) {
-      /* Topic hubs on an ellipse with "Start here" at the center; each site pulled to its hub,
-         pushed off its neighbours, and tugged by its family ties. A fixed number of ticks
-         from d3's deterministic starting spiral, so the sky is the same on every load. */
-      var hubs = {}, ring = TOPICS.filter(function (t) { return t.id !== 'start'; });
-      ring.forEach(function (t, i) {
-        var a = -Math.PI / 2 + i * 2 * Math.PI / ring.length;
-        hubs[t.id] = { x: w / 2 + Math.cos(a) * w * (phone ? .3 : .34), y: h / 2 + Math.sin(a) * h * (phone ? .34 : .29) };
-      });
-      hubs.start = { x: w / 2, y: h / 2 };
-      var rad = function (s) { return (phone ? 4 : 5) + s.size * (phone ? 2 : 2.6) - (s.old ? 2 : 0); };
-      var pts = sites.map(function (s) { return { id: s.slug, s: s, r: rad(s) }; });
-      var links = D.family.filter(function (f) { return by[f[0]] && by[f[1]]; }).map(function (f) { return { source: f[0], target: f[1] }; });
-      var sim = d3.forceSimulation(pts)
-        .force('x', d3.forceX(function (p) { return hubs[p.s.topic].x; }).strength(phone ? .14 : .09))
-        .force('y', d3.forceY(function (p) { return hubs[p.s.topic].y; }).strength(phone ? .14 : .09))
-        .force('collide', d3.forceCollide(function (p) { return p.r + (phone ? 6 : 13); }).iterations(2))
-        .force('charge', d3.forceManyBody().strength(phone ? -16 : -34))
-        .force('link', d3.forceLink(links).id(function (p) { return p.id; }).distance(phone ? 26 : 38).strength(.12))
-        .stop();
-      for (var i = 0; i < 360; i++) sim.tick();
-      var pad = 24, out = {};
-      pts.forEach(function (p) {
-        p.x = Math.max(pad, Math.min(w - pad, p.x)); p.y = Math.max(pad, Math.min(h - pad, p.y));
-        out[p.id] = { x: p.x, y: p.y, w: p.r * 2, h: p.r * 2, rx: p.r };
-      });
-      return { nodes: out, topics: TOPICS.map(function (t) { return { id: t.id, x: hubs[t.id].x, y: hubs[t.id].y }; }), links: links };
-    }
-  };
-
-  var setGeo = function (n, g) {
-    n.cur = g;
-    n.g.setAttribute('transform', 'translate(' + g.x.toFixed(1) + ',' + g.y.toFixed(1) + ')');
-    n.shape.setAttribute('x', (-g.w / 2).toFixed(1)); n.shape.setAttribute('y', (-g.h / 2).toFixed(1));
-    n.shape.setAttribute('width', Math.max(0, g.w).toFixed(1)); n.shape.setAttribute('height', Math.max(0, g.h).toFixed(1));
-    n.shape.setAttribute('rx', Math.min(g.rx, g.w / 2, g.h / 2).toFixed(1));
-  };
-
-  var labelFor = function (n, g, style, phone) {
-    var s = n.s, t = n.lbl, html = '';
-    t.removeAttribute('text-anchor');
-    if (style === 'bubbles') {
-      var r = g.w / 2;
-      if (r < (phone ? 19 : 23)) { t.innerHTML = ''; return; }
-      var fs = Math.max(9.5, Math.min(15, r / 3.3)), lines = wrap(s.title, r * 1.62, fs, 600, r > 40 ? 3 : 2);
-      if (!lines) { t.innerHTML = ''; return; }
-      t.setAttribute('text-anchor', 'middle'); t.setAttribute('font-size', fs);
-      var y0 = -((lines.length - 1) * fs * 1.12) / 2 + fs * .36;
-      lines.forEach(function (l, i) { html += '<tspan x="0" y="' + (y0 + i * fs * 1.12).toFixed(1) + '">' + esc(l) + '</tspan>'; });
-    } else if (style === 'blocks') {
-      var fs2 = phone ? 12 : g.w > 150 && g.h > 70 ? 15 : 12.5, pad = phone ? 7 : 9;
-      if (g.w < 44 || g.h < 26) { t.innerHTML = ''; return; }
-      var maxL = Math.max(1, Math.floor((g.h - pad * 2) / (fs2 * 1.15)) - (g.h > 64 ? 1 : 0));
-      var ls = wrap(s.title, g.w - pad * 2, fs2, 650, Math.min(3, maxL));
-      if (!ls) { t.innerHTML = ''; return; }
-      t.setAttribute('font-size', fs2);
-      var x = (-g.w / 2 + pad).toFixed(1), y = -g.h / 2 + pad + fs2 * .9;
-      ls.forEach(function (l, i) { html += '<tspan x="' + x + '" y="' + (y + i * fs2 * 1.15).toFixed(1) + '">' + esc(l) + '</tspan>'; });
-      var ky = y + ls.length * fs2 * 1.15 + 2;
-      if (ky + 4 < g.h / 2 - pad + 6) {
-        var kl = wrap(s.kind, g.w - pad * 2, 11.5, 500, 1);
-        if (kl) html += '<tspan class="k" x="' + x + '" y="' + ky.toFixed(1) + '" font-size="11.5">' + esc(kl[0]) + '</tspan>';
-      }
-    } else {
-      /* a constellation names its groups, not its stars: a hover names the star */
-      t.innerHTML = ''; return;
-    }
-    t.innerHTML = html;
-  };
-
-  var drawTopics = function (L, style, phone) {
-    var back = '', top = '';
-    topicGeo = {};
-    L.topics.forEach(function (t) {
-      var c = tcol(t.id), name = TOPICS.find(function (x) { return x.id === t.id; });
-      topicGeo[t.id] = t;
-      if (style === 'bubbles') {
-        back += '<circle class="topic-bg" data-topic="' + t.id + '" style="--c:' + c + '" cx="' + t.x.toFixed(1) + '" cy="' + t.y.toFixed(1) + '" r="' + t.r.toFixed(1) + '"/>';
-        /* the name runs around the top of its circle */
-        var rr = t.r + (phone ? 6 : 8), id = 'arc-' + t.id;
-        back += '<path id="' + id + '" fill="none" d="M' + (t.x - rr).toFixed(1) + ',' + t.y.toFixed(1) + ' A' + rr + ',' + rr + ' 0 0 1 ' + (t.x + rr).toFixed(1) + ',' + t.y.toFixed(1) + '"/>';
-        top += '<text class="topic-lbl" data-topic="' + t.id + '" style="--c:' + c + '"><textPath href="#' + id + '" startOffset="50%" text-anchor="middle">' + esc(t.r > 120 ? name.name : name.short) + '</textPath></text>';
-      } else if (style === 'blocks') {
-        back += '<rect class="topic-bg" data-topic="' + t.id + '" style="--c:' + c + '" x="' + t.x0 + '" y="' + t.y0 + '" width="' + (t.x1 - t.x0) + '" height="' + (t.y1 - t.y0) + '" rx="12"/>';
-        var nm = (t.x1 - t.x0) > 190 ? name.name : name.short;
-        top += '<text class="topic-lbl" data-topic="' + t.id + '" style="--c:' + c + '" x="' + (t.x0 + 10) + '" y="' + (t.y0 + (phone ? 18 : 20)) + '">' + esc(nm) + '</text>';
-      } else {
-        sites.forEach(function (s) {
-          if (s.topic !== t.id) return;
-          var g = L.nodes[s.slug];
-          back += '<path class="spoke" data-topic="' + t.id + '" style="--c:' + c + '" d="M' + t.x.toFixed(1) + ',' + t.y.toFixed(1) + 'L' + g.x.toFixed(1) + ',' + g.y.toFixed(1) + '"/>';
-        });
-        back += '<circle class="topic-hub" style="--c:' + c + '" cx="' + t.x.toFixed(1) + '" cy="' + t.y.toFixed(1) + '" r="3"/>';
-        top += '<text class="topic-lbl big" data-topic="' + t.id + '" style="--c:' + c + '" text-anchor="middle" x="' + t.x.toFixed(1) + '" y="' + (t.y - (phone ? 10 : 14)).toFixed(1) + '">' + esc(phone ? name.short : name.name) + '</text>';
-      }
-    });
-    if (style === 'stars') {
-      L.links.forEach(function (l) {
-        var a = L.nodes[l.source.id || l.source], b = L.nodes[l.target.id || l.target];
-        back += '<path class="tie" d="M' + a.x.toFixed(1) + ',' + a.y.toFixed(1) + 'L' + b.x.toFixed(1) + ',' + b.y.toFixed(1) + '"/>';
-      });
-    }
-    gBack.innerHTML = back; gTop.innerHTML = top;
-  };
-
-  var raf = 0;
-  var render = function (animate) {
-    var d = dims(); W = d.w; H = d.h;
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.setAttribute('width', W); svg.setAttribute('height', H);
-    stage.style.setProperty('--stage-h', H + 'px');
-    doc.querySelector('.side') && doc.querySelector('.side').style.setProperty('--stage-h', H + 'px');
-    var L = layouts[STYLE](W, H, d.phone);
-    clearLinks();
-    var finish = function () {
-      nodes.forEach(function (n) { setGeo(n, L.nodes[n.s.slug]); labelFor(n, L.nodes[n.s.slug], STYLE, d.phone); n.lbl.style.opacity = ''; });
-      drawTopics(L, STYLE, d.phone);
-      gBack.classList.remove('out'); gTop.classList.remove('out');
-      applyFocus();
-    };
-    cancelAnimationFrame(raf);
-    if (!animate || still() || !nodes[0].cur.w) { finish(); return; }
-    /* Move every node from where it is to where the new style puts it; labels and
-       topic outlines fade out for the move and back in when it lands. */
-    gBack.classList.add('out'); gTop.classList.add('out');
-    nodes.forEach(function (n) { n.from = n.cur; n.to = L.nodes[n.s.slug]; n.lbl.style.opacity = '0'; });
-    var t0 = performance.now(), DUR = 720;
-    var ease = function (t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
-    var step = function (now) {
-      var k = Math.min(1, (now - t0) / DUR);
-      nodes.forEach(function (n, i) {
-        var kk = ease(Math.max(0, Math.min(1, (k * DUR - (i % 12) * 14) / (DUR - 160))));
-        var a = n.from, b = n.to;
-        setGeo(n, { x: a.x + (b.x - a.x) * kk, y: a.y + (b.y - a.y) * kk, w: a.w + (b.w - a.w) * kk, h: a.h + (b.h - a.h) * kk, rx: a.rx + (b.rx - a.rx) * kk });
-      });
-      if (k < 1) raf = requestAnimationFrame(step); else finish();
-    };
-    raf = requestAnimationFrame(step);
-    /* if frames never come (a background tab), land anyway */
-    setTimeout(function () { if (nodes[0].cur !== L.nodes[nodes[0].s.slug]) { cancelAnimationFrame(raf); finish(); } }, DUR + 400);
-  };
-
-  /* ---------- focus: what is lit, and the lines between */
-  var pinned = null, hover = null, selected = null;
-  var current = function () { return hover || pinned; };
-  var clearLinks = function () { gLinks.innerHTML = ''; gHi.innerHTML = ''; };
-  var curve = function (a, b, c, bend) {
-    var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y;
-    var cx = mx - dy * (bend || .18), cy = my + dx * (bend || .18);
-    var p = el('path', { 'class': 'link', d: 'M' + a.x.toFixed(1) + ',' + a.y.toFixed(1) + 'Q' + cx.toFixed(1) + ',' + cy.toFixed(1) + ' ' + b.x.toFixed(1) + ',' + b.y.toFixed(1), pathLength: '1' }, gLinks);
-    p.style.setProperty('--c', c);
-    return p;
-  };
-  var applyFocus = function () {
-    var f = current();
-    clearLinks();
-    stage.classList.toggle('focused', !!f);
-        nodes.forEach(function (n) {
-      var lit = !!f && f.set.has(n.s.slug);
-      n.g.classList.toggle('is-lit', lit);
-      n.g.classList.toggle('is-dim', !!f && !lit);
-      n.g.classList.toggle('is-anchor', !!f && f.anchor === n.s.slug);
-    });
-    [].forEach.call(svg.querySelectorAll('[data-topic]'), function (t) {
-      var on = !f || (f.topics && f.topics.has(t.getAttribute('data-topic')));
-      t.classList.toggle('is-dim', !on);
-    });
-    if (!f) return;
-    var made = [];
-    if (f.anchor) {
-      var a = nodeBy[f.anchor].cur;
-      f.set.forEach(function (k) { if (k !== f.anchor) made.push(curve(a, nodeBy[k].cur, f.color)); });
-    } else if (f.ring) {
-      /* a claim or a question: join its sites in one loop around their center */
-      var pts = f.ring.map(function (k) { return nodeBy[k].cur; });
-      var cx = d3.mean(pts, function (p) { return p.x; }), cy = d3.mean(pts, function (p) { return p.y; });
-      pts.sort(function (p, q) { return Math.atan2(p.y - cy, p.x - cx) - Math.atan2(q.y - cy, q.x - cx); });
-      for (var i = 0; i < pts.length; i++) made.push(curve(pts[i], pts[(i + 1) % pts.length], f.color, .12));
-    }
-    /* draw them in: dashoffset 1 to 0 after the browser has seen the start */
-    if (made.length) { svg.getBoundingClientRect(); made.forEach(function (p) { p.classList.add('on'); }); }
-    /* every lit site that is too small to carry its own name gets a tag under it */
-    if (f.set.size <= 24) {
-      measure.font = '600 11.5px Onest, system-ui, sans-serif';
-      f.set.forEach(function (k) {
-        var n = nodeBy[k];
-        if (n.lbl.textContent) return;
-        var g = n.cur, tw = Math.ceil(measure.measureText(n.s.title).width) + 14;
-        var x = Math.max(4, Math.min(W - tw - 4, g.x - tw / 2)), y = Math.min(H - 26, g.y + g.h / 2 + 5);
-        var tag = el('g', { 'class': 'tag' + (k === f.anchor ? ' is-anchor' : '') }, gHi);
-        tag.style.setProperty('--c', tcol(n.s.topic));
-        el('rect', { x: x.toFixed(1), y: y.toFixed(1), width: tw, height: 21, rx: 6 }, tag);
-        el('text', { x: (x + 7).toFixed(1), y: (y + 14.5).toFixed(1) }, tag).textContent = n.s.title;
-      });
-    }
-  };
-  var topicsIn = function (set) { var t = new Set(); set.forEach(function (k) { t.add(by[k].topic); }); return t; };
+  /* ---------- focus: what is lit, and what the panel says about it */
+  var pin = null, peek = null;
   var siteFocus = function (k) {
     var set = new Set([k]); Object.keys(rel[k]).forEach(function (r) { set.add(r); });
-    return { kind: 'site', anchor: k, set: set, color: tcol(by[k].topic), topics: topicsIn(set) };
+    return { kind: 'site', key: 's:' + k, anchor: k, set: set, topics: topicsIn(set) };
   };
-
-  /* ---------- preview card */
-  var showTip = function (k, pin) {
-    var s = by[k], n = nodeBy[k].cur, rc = Object.keys(rel[k]).length;
-    var cl = claimsOf[k].map(function (c) { return '“' + esc(c.short) + '”'; });
-    tip.style.setProperty('--c', tcol(s.topic));
-    tip.innerHTML = '<div class="tip-top">' + esc(TOPICS.find(function (t) { return t.id === s.topic; }).name) + ' · ' + esc(s.kind) + '</div>' +
-      '<h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p>' +
-      '<div class="rel">' + (rc ? '<b>' + rc + '</b> connected ' + (rc === 1 ? 'site' : 'sites') + (cl.length ? ' through ' + cl.slice(0, 2).join(' and ') + (cl.length > 2 ? ' and more' : '') : '') : 'No shared claim yet') + '</div>' +
-      '<a class="open" href="' + s.href + '">Open ' + esc(s.title) + '</a>';
-    tip.classList.toggle('pinned', !!pin);
-    var sw = stage.clientWidth, sh = stage.clientHeight, scale = sw / W;
-    var x = n.x * scale, y = n.y * scale, rx = n.w / 2 * scale;
-    tip.style.left = '0px'; tip.style.top = '0px';
-    var tw = tip.offsetWidth, th = tip.offsetHeight;
-    var left = x + rx + 14; if (left + tw > sw - 8) left = x - rx - 14 - tw; if (left < 8) left = Math.max(8, Math.min(sw - tw - 8, x - tw / 2));
-    var top = y - th / 2; if (left === Math.max(8, Math.min(sw - tw - 8, x - tw / 2))) top = y + n.h / 2 * scale + 12;
-    if (top + th > sh - 8) top = Math.max(8, y - n.h / 2 * scale - 12 - th);
-    tip.style.left = Math.round(left) + 'px'; tip.style.top = Math.round(Math.max(8, top)) + 'px';
-    tip.classList.add('on');
-  };
-  var hideTip = function () { tip.classList.remove('on', 'pinned'); };
-
-  var lastPointer = 'mouse';
-  svg.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType; });
-  var nodeOf = function (t) { var g = t.closest && t.closest('.node'); return g ? g.getAttribute('data-slug') : null; };
-  svg.addEventListener('pointerover', function (e) {
-    if (e.pointerType === 'touch') return;
-    var k = nodeOf(e.target); if (!k) return;
-    hover = siteFocus(k); applyFocus(); showTip(k, false);
-  });
-  svg.addEventListener('pointerout', function (e) {
-    if (e.pointerType === 'touch') return;
-    var k = nodeOf(e.target); if (!k || (e.relatedTarget && nodeOf(e.relatedTarget) === k)) return;
-    hover = null; applyFocus(); if (!selected) hideTip();
-  });
-  svg.addEventListener('click', function (e) {
-    var k = nodeOf(e.target);
-    if (!k) { if (selected) { selected = null; hover = null; hideTip(); applyFocus(); } return; }
-    /* touch: the first tap shows the card and its ties, the second (or the card's button) opens it */
-    var touchy = lastPointer === 'touch' || lastPointer === 'pen' || matchMedia('(hover: none)').matches;
-    if (touchy && selected !== k) {
-      selected = k; hover = siteFocus(k); applyFocus(); showTip(k, true); return;
-    }
-    location.href = by[k].href;
-  });
-  svg.addEventListener('focusin', function (e) { var k = nodeOf(e.target); if (k) { hover = siteFocus(k); applyFocus(); showTip(k, false); } });
-  svg.addEventListener('focusout', function () { hover = null; applyFocus(); hideTip(); });
-  svg.addEventListener('keydown', function (e) { var k = nodeOf(e.target); if (k && e.key === 'Enter') location.href = by[k].href; });
-  doc.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    selected = null; hover = null; setPinned(null); hideTip();
-  });
-  doc.addEventListener('pointerdown', function (e) {
-    if (selected && !stage.contains(e.target)) { selected = null; hover = null; hideTip(); applyFocus(); }
-  });
-
-  /* ---------- side panel: topics, questions, claims (hover previews, click pins) */
-  var chipsEl = { topics: doc.getElementById('topics'), questions: doc.getElementById('questions'), claims: doc.getElementById('claims') };
   var focusFor = {};
-  TOPICS.forEach(function (t) {
-    var set = new Set(sites.filter(function (s) { return s.topic === t.id; }).map(function (s) { return s.slug; }));
-    focusFor['t:' + t.id] = { set: set, color: tcol(t.id), topics: new Set([t.id]) };
-    chipsEl.topics.insertAdjacentHTML('beforeend', '<button type="button" class="chip" data-f="t:' + t.id + '" aria-pressed="false" style="--c:' + tcol(t.id) + '">' + esc(t.name) + ' <span class="n">' + set.size + '</span></button>');
-  });
   QUESTIONS.forEach(function (q, i) {
     var ks = q[1].filter(function (k) { return by[k]; }), set = new Set(ks);
-    focusFor['q:' + i] = { set: set, ring: ks, color: tcol(by[ks[0]].topic), topics: topicsIn(set) };
-    chipsEl.questions.insertAdjacentHTML('beforeend', '<button type="button" class="chip" data-f="q:' + i + '" aria-pressed="false" style="--c:' + tcol(by[ks[0]].topic) + '">' + esc(q[0]) + '</button>');
+    focusFor['q:' + i] = { kind: 'question', key: 'q:' + i, title: q[0], list: ks, set: set, topics: topicsIn(set) };
   });
   D.claims.forEach(function (c) {
     var ks = c.s.filter(function (k) { return by[k]; }), set = new Set(ks);
-    focusFor['c:' + c.n] = { set: set, ring: ks, color: 'var(--ink)', topics: topicsIn(set) };
-    chipsEl.claims.insertAdjacentHTML('beforeend', '<button type="button" class="chip" data-n="' + c.n + '" data-f="c:' + c.n + '" aria-pressed="false">' + esc(c.text) + ' <span class="n">' + ks.length + '</span></button>');
-  });
-  var setPinned = function (key) {
-    pinned = key ? focusFor[key] : null;
-    [].forEach.call(doc.querySelectorAll('.side .chip'), function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-f') === key)); });
-    if (key) { doc.getElementById('q').value = ''; doc.getElementById('q-n').textContent = ''; }
-    applyFocus();
-  };
-  var side = doc.querySelector('.side');
-  side.addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (!b) return;
-    var key = b.getAttribute('data-f');
-    hover = null; selected = null; hideTip();
-    setPinned(b.getAttribute('aria-pressed') === 'true' ? null : key);
-  });
-  side.addEventListener('pointerover', function (e) {
-    if (e.pointerType === 'touch') return;
-    var b = e.target.closest('.chip'); if (!b) return;
-    hover = focusFor[b.getAttribute('data-f')]; applyFocus();
-  });
-  side.addEventListener('pointerout', function (e) {
-    if (e.pointerType === 'touch') return;
-    var b = e.target.closest('.chip'); if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return;
-    hover = null; applyFocus();
+    focusFor['c:' + c.n] = { kind: 'claim', key: 'c:' + c.n, n: c.n, title: c.text, list: ks, set: set, topics: topicsIn(set) };
   });
 
-  /* ---------- search */
+  var detail = doc.getElementById('detail');
+  var shown = '';
+  var topicLine = function (s) { return esc(TOPIC[s.topic].name) + ' · ' + esc(s.kind); };
+  var mini = function (k) { return '<button type="button" class="mini" data-go="' + k + '" style="--c:' + tcol(by[k].topic) + '">' + esc(by[k].title) + '</button>'; };
+  var closeBtn = function (sheetOnly) { return '<button type="button" class="d-x' + (sheetOnly ? ' only-sheet' : '') + '" data-close aria-label="Close">' + CROSS + '</button>'; };
+
+  var siteHTML = function (k, pinned) {
+    var s = by[k], groups = [];
+    claimsOf[k].forEach(function (c) {
+      var list = c.s.filter(function (x) { return x !== k && by[x]; });
+      if (list.length) groups.push({ head: '<span class="cn">' + c.n + '</span>' + esc(c.sen || c.short), list: list });
+    });
+    if (familyOf[k].length) groups.push({ head: 'Same family', list: familyOf[k] });
+    detail.style.setProperty('--c', tcol(s.topic));
+    return closeBtn(!pinned) +
+      '<div class="d-top">' + topicLine(s) + (s.old ? ' · earlier version' : '') + '</div>' +
+      '<h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p>' +
+      '<a class="open" href="' + s.href + '">Open ' + esc(s.title) + ARROW + '</a>' +
+      (groups.length
+        ? '<div class="d-rel"><h4>Where it leads</h4>' + groups.map(function (g) {
+            return '<div><div class="d-gh">' + g.head + '</div><div class="minis">' + g.list.map(mini).join('') + '</div></div>';
+          }).join('') + '</div>'
+        : '<p class="d-tip">Nothing else here shares one of the eight claims with this yet.</p>');
+  };
+  var listHTML = function (f) {
+    var kicker, sub;
+    if (f.kind === 'question') { kicker = 'What brings you here'; sub = f.list.length + ' places to start, best first.'; detail.style.setProperty('--c', tcol(by[f.list[0]].topic)); }
+    else if (f.kind === 'claim') { kicker = 'Thread ' + f.n + ' of 8'; sub = 'It runs through ' + f.list.length + ' sites in ' + f.topics.size + ' topics.'; detail.style.setProperty('--c', 'var(--ink)'); }
+    else { kicker = 'Search'; sub = f.list.length ? f.list.length + (f.list.length === 1 ? ' site mentions it.' : ' sites mention it.') : 'Nothing mentions that yet.'; detail.style.setProperty('--c', 'var(--ink)'); }
+    return closeBtn(false) + '<div class="d-top">' + kicker + '</div><h3>' + esc(f.title) + '</h3><p>' + sub + '</p>' +
+      '<ol class="d-list">' + f.list.map(function (k) {
+        var s = by[k];
+        return '<li><a href="' + s.href + '" data-peek="' + k + '" style="--c:' + tcol(s.topic) + '"><span class="lt">' + esc(s.title) + '</span>' + ARROW +
+          '<span class="lk">' + topicLine(s) + '</span><span class="ld">' + esc(first(s.desc)) + '</span></a></li>';
+      }).join('') + '</ol>';
+  };
+  var introHTML = function () {
+    detail.style.removeProperty('--c');
+    return '<div class="d-top">How the map works</div><h3>Find something to read</h3>' +
+      '<p>Each color is a topic. Hover a site to see what it is here, and the sites it leads to light up across the map. Click to open it.</p>' +
+      '<p class="d-tip">Not sure where to begin? Pick a line under “What brings you here?”</p>';
+  };
+
+  var renderDetail = function () {
+    /* on a phone the sheet shows only what was tapped; on a wide screen the panel follows the pointer */
+    var f = narrow() ? pin : (peek || pin);
+    if (f && f.kind === 'search' && narrow()) f = null;
+    var key = f ? f.key + (f === pin ? '!' : '') : 'intro';
+    if (key !== shown) {
+      shown = key;
+      detail.innerHTML = !f ? introHTML() : f.kind === 'site' ? siteHTML(f.anchor, f === pin) : listHTML(f);
+      if (!narrow() && detail.parentNode.scrollTop) detail.parentNode.scrollTop = 0;
+      if (narrow()) detail.scrollTop = 0;
+    }
+    var open = narrow() && !!f;
+    detail.classList.toggle('on', open);
+    doc.body.classList.toggle('sheet-open', open);
+  };
+
+  var applyFocus = function () {
+    var f = peek || pin, i = 0;
+    var search = pin && pin.kind === 'search' ? pin : null;
+    atlas.classList.toggle('focused', !!f && f.kind !== 'search');
+    atlas.classList.toggle('filtering', !!search);
+    atlas.classList.toggle('none', !!search && !search.set.size);
+    pills.forEach(function (p) {
+      var k = p.getAttribute('data-slug'), lit = !!f && f.set.has(k);
+      p.classList.toggle('is-lit', lit);
+      p.classList.toggle('is-anchor', !!f && f.anchor === k);
+      p.classList.toggle('is-match', !!search && search.set.has(k));
+      if (lit && !still()) p.style.setProperty('--i', i++); else p.style.removeProperty('--i');
+    });
+    islands.forEach(function (isl) {
+      var t = isl.getAttribute('data-topic');
+      isl.classList.toggle('is-quiet', !!f && f.kind !== 'search' && !f.topics.has(t));
+      isl.classList.toggle('has-match', !!search && search.topics.has(t));
+    });
+    [].forEach.call(doc.querySelectorAll('[data-f]'), function (b) { b.setAttribute('aria-pressed', String(!!pin && b.getAttribute('data-f') === pin.key)); });
+    renderDetail();
+  };
+
+  /* keep a tapped site in sight above the sheet */
+  var keepVisible = function (k) {
+    if (!narrow()) return;
+    setTimeout(function () {
+      var p = pillBy[k]; if (!p) return;
+      var r = p.getBoundingClientRect(), top = detail.getBoundingClientRect().top, room = top - 12;
+      var dy = r.bottom > room ? r.bottom - room + 8 : r.top < 12 ? r.top - 76 : 0;
+      if (dy) scrollBy({ top: dy, behavior: still() ? 'auto' : 'smooth' });
+    }, 30);
+  };
+  var setPin = function (f) {
+    pin = f; peek = null;
+    if (f && f.kind !== 'search') { q.value = ''; qn.textContent = ''; }
+    applyFocus();
+  };
+  var clearAll = function () { setPin(null); };
+
+  /* ---------- pointer and touch */
+  var lastPointer = 'mouse';
+  doc.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType || 'mouse'; }, true);
+  var touchy = function () { return lastPointer === 'touch' || lastPointer === 'pen' || matchMedia('(hover: none)').matches; };
+  var hoverT = 0;
+  var setPeek = function (f) {
+    if ((peek && f && peek.key === f.key) || (!peek && !f)) return;
+    peek = f; applyFocus();
+  };
+  islandsEl.addEventListener('pointerover', function (e) {
+    if (e.pointerType === 'touch' || e.pointerType === 'pen') return;
+    var p = e.target.closest('.pill'); if (!p) return;
+    clearTimeout(hoverT);
+    /* a short rest before the panel follows, so sweeping across to the panel doesn't change it */
+    var k = p.getAttribute('data-slug');
+    hoverT = setTimeout(function () { setPeek(siteFocus(k)); }, peek ? 70 : 0);
+  });
+  islandsEl.addEventListener('pointerleave', function (e) {
+    clearTimeout(hoverT);
+    if (e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('.side')) return;
+    setPeek(null);
+  });
+  islandsEl.addEventListener('click', function (e) {
+    var p = e.target.closest('.pill'); if (!p) return;
+    var k = p.getAttribute('data-slug');
+    /* a touch shows the sheet first; a second tap, or the sheet's button, opens the site */
+    if (touchy() && !(pin && pin.key === 's:' + k)) { e.preventDefault(); setPin(siteFocus(k)); keepVisible(k); }
+  });
+  islandsEl.addEventListener('focusin', function (e) { var p = e.target.closest('.pill'); if (p && !touchy()) setPeek(siteFocus(p.getAttribute('data-slug'))); });
+  islandsEl.addEventListener('focusout', function (e) { if (!islandsEl.contains(e.relatedTarget)) setPeek(null); });
+
+  var side = doc.querySelector('.side');
+  side.addEventListener('pointerleave', function (e) {
+    if (e.pointerType === 'touch') return;
+    if (e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('.islands')) return;
+    clearTimeout(hoverT); setPeek(null);
+  });
+  /* a link in a reading list shows where that site sits */
+  detail.addEventListener('pointerover', function (e) {
+    var a = e.target.closest('[data-peek]');
+    pills.forEach(function (p) { p.classList.toggle('is-peek', !!a && p.getAttribute('data-slug') === a.getAttribute('data-peek')); });
+  });
+  detail.addEventListener('pointerleave', function () { pills.forEach(function (p) { p.classList.remove('is-peek'); }); });
+  detail.addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) { clearAll(); return; }
+    var go = e.target.closest('[data-go]');
+    if (go) {
+      var k = go.getAttribute('data-go');
+      setPin(siteFocus(k));
+      var p = pillBy[k];
+      if (narrow()) keepVisible(k);
+      else if (p) { var r = p.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) p.scrollIntoView({ block: 'center', behavior: still() ? 'auto' : 'smooth' }); }
+    }
+  });
+
+  /* questions and threads: hover previews on a mouse, a press pins */
+  var qsEl = doc.getElementById('questions'), claimsEl = doc.getElementById('claims');
+  qsEl.innerHTML = QUESTIONS.map(function (x, i) {
+    return '<button type="button" class="q" data-f="q:' + i + '" aria-pressed="false" style="--c:' + tcol(by[focusFor['q:' + i].list[0]].topic) + '">' + esc(x[0]) + '</button>';
+  }).join('') + '<button type="button" class="more-q" aria-expanded="false">' + (QUESTIONS.length - 5) + ' more</button>';
+  qsEl.querySelector('.more-q').addEventListener('click', function () { qsEl.classList.add('all'); this.setAttribute('aria-expanded', 'true'); });
+  claimsEl.innerHTML = D.claims.map(function (c) {
+    return '<button type="button" class="claim" data-f="c:' + c.n + '" aria-pressed="false"><span class="cn">' + c.n + '</span><span class="full">' + esc(c.text) + '</span><span class="sh">' + esc(c.short) + '</span><span class="n">' + focusFor['c:' + c.n].list.length + '</span></button>';
+  }).join('');
+  [qsEl, claimsEl].forEach(function (box) {
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-f]'); if (!b) return;
+      var f = focusFor[b.getAttribute('data-f')];
+      setPin(pin && pin.key === f.key ? null : f);
+    });
+    box.addEventListener('pointerover', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var b = e.target.closest('[data-f]'); if (!b) return;
+      clearTimeout(hoverT); setPeek(focusFor[b.getAttribute('data-f')]);
+    });
+    box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') setPeek(null); });
+  });
+
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && (pin || peek)) { q.value = ''; qn.textContent = ''; clearAll(); } });
+  /* a tap anywhere outside the map, its panel and its controls closes the sheet */
+  doc.addEventListener('pointerdown', function (e) {
+    if (!pin || pin.kind === 'search') return;
+    if (e.target.closest('.pill, .detail, [data-f], .search, .dir-frame')) return;
+    clearAll();
+  });
+
+  /* ---------- search: the map narrows to what matches */
   var q = doc.getElementById('q'), qn = doc.getElementById('q-n');
   q.addEventListener('input', function () {
     var words = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    [].forEach.call(doc.querySelectorAll('.side .chip'), function (b) { b.setAttribute('aria-pressed', 'false'); });
-    if (!words.length) { pinned = null; qn.textContent = ''; applyFocus(); return; }
-    var set = new Set(sites.filter(function (s) {
+    if (!words.length) { qn.textContent = ''; setPin(null); return; }
+    var list = sites.filter(function (s) {
       var hay = (s.title + ' ' + s.kind + ' ' + s.desc + ' ' + s.inside.join(' ') + ' ' + s.pills.join(' ')).toLowerCase();
       return words.every(function (w) { return hay.indexOf(w) > -1; });
-    }).map(function (s) { return s.slug; }));
-    pinned = { set: set, color: 'var(--ink)', topics: topicsIn(set) };
-    qn.textContent = set.size + (set.size === 1 ? ' match' : ' matches');
-    applyFocus();
+    }).map(function (s) { return s.slug; });
+    var set = new Set(list);
+    qn.textContent = list.length + (list.length === 1 ? ' match' : ' matches');
+    pin = { kind: 'search', key: 'search:' + words.join(' '), title: '“' + q.value.trim() + '”', list: list, set: set, topics: topicsIn(set) };
+    peek = null; applyFocus();
   });
 
-  /* ---------- style switch */
-  [].forEach.call(doc.querySelectorAll('.styles button'), function (b) {
-    b.setAttribute('aria-pressed', String(b.getAttribute('data-style') === STYLE));
-    b.addEventListener('click', function () {
-      var st = b.getAttribute('data-style'); if (st === STYLE) return;
-      STYLE = st; hideTip(); selected = null; hover = null;
-      try { localStorage.setItem('esmrsky-map-style', st); } catch (e) {}
-      [].forEach.call(doc.querySelectorAll('.styles button'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      render(true);
-    });
-  });
-
-  var rt = 0, lastW = 0;
-  addEventListener('resize', function () {
-    clearTimeout(rt);
-    rt = setTimeout(function () { if (Math.round(stage.clientWidth) !== lastW) { lastW = Math.round(stage.clientWidth); hideTip(); render(false); } }, 160);
-  });
-  var start = function () { lastW = Math.round(stage.clientWidth); render(false); };
-  (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(start);
+  /* on a wide screen the threads sit with the questions, so they never move when the panel changes */
+  var threads = doc.querySelector('.threads'), ask = doc.querySelector('.ask'), hint = doc.querySelector('.hint');
+  var place = function () { if (narrow()) side.appendChild(threads); else ask.insertBefore(threads, hint); };
+  place();
+  var lastNarrow = narrow();
+  addEventListener('resize', function () { if (narrow() !== lastNarrow) { lastNarrow = narrow(); place(); shown = ''; applyFocus(); } });
+  applyFocus();
 
   /* ---------- everything: the grid with filters */
-  var TYPE_NAME = {}; TYPES.forEach(function (t) { TYPE_NAME[t.id] = t.name; });
   var grid = doc.getElementById('grid');
   grid.innerHTML = TOPICS.map(function (t) { return sites.filter(function (s) { return s.topic === t.id; }); })
     .reduce(function (a, b) { return a.concat(b); }, []).map(function (s) {
       return '<li data-topic="' + s.topic + '" data-type="' + s.type + '"><a class="card" href="' + s.href + '" style="--c:' + tcol(s.topic) + '">' +
-        '<span class="c-top"><span class="t">' + esc(TOPICS.find(function (t) { return t.id === s.topic; }).short) + '</span>·<span>' + esc(s.kind) + '</span></span>' +
+        '<span class="c-top"><span class="t">' + esc(TOPIC[s.topic].short) + '</span>·<span>' + esc(s.kind) + '</span></span>' +
         '<h3>' + esc(s.title) + '</h3><p>' + esc(first(s.desc)) + '</p>' +
-        '<span class="c-go"><span>' + (claimsOf[s.slug].length ? claimsOf[s.slug].length + (claimsOf[s.slug].length === 1 ? ' claim' : ' claims') : '') + (s.old ? (claimsOf[s.slug].length ? ' · ' : '') + 'earlier version' : '') + '</span>' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>';
+        '<span class="c-go"><span>' + (claimsOf[s.slug].length ? claimsOf[s.slug].length + (claimsOf[s.slug].length === 1 ? ' claim' : ' claims') : '') + (s.old ? (claimsOf[s.slug].length ? ' · ' : '') + 'earlier version' : '') + '</span>' + ARROW + '</span></a></li>';
     }).join('');
   var fT = doc.getElementById('f-topic'), fY = doc.getElementById('f-type'), filt = { topic: 'all', type: 'all' };
   fT.innerHTML = '<button type="button" class="chip" data-v="all" aria-pressed="true">All topics</button>' + TOPICS.map(function (t) {
