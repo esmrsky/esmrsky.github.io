@@ -153,9 +153,10 @@ p,li,dd,figcaption{text-wrap:pretty}
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var first = function (t) {
     var one = function (x) { var m = /^.+?[.?!](?=\s+[A-Z“"‘]|$)/.exec(x); return m ? m[0] : x; };
-    var a = one(t), rest = t.slice(a.length).trim();
-    /* A short opener ("God does not change.") needs the sentence after it to say what the study is. */
-    return a.length < 70 && rest ? a + ' ' + one(rest) : a;
+    /* A short opener ("God does not change.") needs the sentences after it to say what the study is. */
+    var a = '', rest = t;
+    while (rest && a.length < 70) { var b = one(rest); a = a ? a + ' ' + b : b; rest = rest.slice(b.length).trim(); }
+    return a;
   };
 
   /* Draft lines. Each takes its color from the first study under it. */

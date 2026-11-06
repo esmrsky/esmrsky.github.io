@@ -5,7 +5,8 @@
     { slug: 'gallery', name: 'Gallery' },
     { slug: 'contents', name: 'Contents' },
     { slug: 'question', name: 'Question' },
-    { slug: 'two-books', name: 'Two Books' }
+    { slug: 'two-books', name: 'Two Books' },
+    { slug: 'map', name: 'The map' }
   ];
   var here = (/\/directions\/([^\/]+)\//.exec(location.pathname) || [])[1];
   var i = D.findIndex(function (d) { return d.slug === here; });
