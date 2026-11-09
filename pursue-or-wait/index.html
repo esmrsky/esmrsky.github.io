@@ -12,6 +12,8 @@
 <script>
   /* Light by design; dark only when the reader picks it. */
   try { var t = localStorage.getItem('pursue-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  /* Scroll reveal gate: on only with motion allowed, off again if the page never confirms it. */
+  try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) { document.documentElement.classList.add('rv'); setTimeout(function () { if (!window.__rvOK) document.documentElement.classList.remove('rv'); }, 3000); } } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,9 +83,9 @@ a:hover { text-decoration-thickness: 2px; }
 .bar-mark i:first-child { left: 0; background: var(--red); }
 .bar-mark i:last-child { right: 0; background: var(--teal); }
 .seg { display: inline-flex; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
-.seg button { min-height: 38px; min-width: 50px; padding: 0 12px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: 700 .8125rem/1 var(--sans); letter-spacing: .02em; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.seg button { min-height: 38px; min-width: 50px; padding: 0 12px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: 700 .8125rem/1 var(--sans); letter-spacing: .02em; cursor: pointer; transition: background-color .2s var(--out), color .2s var(--out), opacity .3s var(--out), scale .5s var(--spring); }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-.icon-btn { width: 44px; height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink-2); cursor: pointer; transition: color .2s ease, border-color .2s ease; }
+.icon-btn { width: 44px; height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink-2); cursor: pointer; transition: color .2s var(--out), border-color .2s var(--out), opacity .3s var(--out), scale .5s var(--spring); }
 .icon-btn:hover { color: var(--ink); border-color: var(--ink-3); }
 .icon-btn .moon { display: none; }
 [data-theme="dark"] .icon-btn .sun { display: none; }
@@ -134,7 +136,7 @@ h3 { font-size: 1.25rem; line-height: 1.15; font-weight: 750; font-stretch: 108%
 /* ---------------------------------------------------------------- verse figure */
 .vq { margin: 0; padding: 22px 24px 18px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); position: relative; }
 .vq::before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; border-radius: 0 3px 3px 0; background: var(--red); }
-.vq blockquote { margin: 0; font: 400 1.1rem/1.62 var(--serif); color: var(--ink); transition: opacity .18s ease; }
+.vq blockquote { margin: 0; font: 400 1.1rem/1.62 var(--serif); color: var(--ink); transition: opacity .3s var(--out); }
 .vq.swapping blockquote { opacity: 0; }
 .vq figcaption { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font: 650 .84rem/1.2 var(--sans); color: var(--ink-2); }
 .vq cite { font-style: normal; }
@@ -192,19 +194,19 @@ h3 { font-size: 1.25rem; line-height: 1.15; font-weight: 750; font-stretch: 108%
 
 /* ---------------------------------------------------------------- four kinds */
 .kinds-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
-.kind-btn { display: grid; justify-items: start; gap: 10px; padding: 16px; min-height: 120px; text-align: left; border-radius: 20px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; font: inherit; transition: border-color .2s ease, background-color .2s ease, color .2s ease; }
+.kind-btn { display: grid; justify-items: start; gap: 10px; padding: 16px; min-height: 120px; text-align: left; border-radius: 20px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; font: inherit; transition: border-color .2s var(--out), background-color .2s var(--out), color .2s var(--out), opacity .3s var(--out), scale .5s var(--spring); }
 .kind-btn:hover { border-color: var(--ink-3); }
-.kind-btn .k-ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--gray-soft); transition: background-color .2s ease, color .2s ease; }
-.kind-btn .k-ic .ic { width: 28px; height: 28px; }
+.kind-btn .k-ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--gray-soft); transition: background-color .2s var(--out), color .2s var(--out); }
+.kind-btn .k-ic .ic { width: 28px; height: 28px; transition: scale .5s var(--spring); }
+.kind-btn[aria-selected="true"] .k-ic .ic { scale: 1.12; }
 .kind-btn b { font: 800 1.15rem/1 var(--wide); font-stretch: 112%; }
 .kind-btn span { font: 600 .82rem/1.3 var(--sans); color: var(--ink-3); }
 .kind-btn[aria-selected="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .kind-btn[aria-selected="true"] span { color: color-mix(in srgb, var(--paper) 70%, transparent); }
 .kind-btn[aria-selected="true"] .k-ic { background: var(--red); color: var(--on-red); }
 .kind-btn[data-mode="wait"][aria-selected="true"] .k-ic { background: var(--teal); }
-.kind { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 16px; align-items: start; animation: fade .3s ease; }
+.kind { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 16px; align-items: start; }
 .kind[hidden] { display: none; }
-@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 .scene { padding: 22px; border-radius: 24px; background: var(--card); border: 1px solid var(--line); }
 .scene .mode .ic { width: 16px; height: 16px; }
 .mode { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; font: 800 .8rem/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
@@ -228,11 +230,11 @@ h3 { font-size: 1.25rem; line-height: 1.15; font-weight: 750; font-stretch: 108%
 .qrow { display: grid; gap: 8px; }
 .qrow > span { font: 650 1rem/1.35 var(--sans); }
 .yn { display: inline-flex; gap: 6px; }
-.yn button { min-height: 44px; min-width: 72px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: 700 .92rem/1 var(--sans); cursor: pointer; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.yn button { min-height: 44px; min-width: 72px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: 700 .92rem/1 var(--sans); cursor: pointer; transition: background-color .2s var(--out), color .2s var(--out), border-color .2s var(--out), opacity .3s var(--out), scale .5s var(--spring); }
 .yn button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .answer { align-self: start; padding: 22px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); min-height: 200px; }
 .answer p { margin: 8px 0 0; color: var(--ink-2); }
-.answer .go { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--red); color: var(--on-red); font: 700 .92rem/1 var(--sans); cursor: pointer; }
+.answer .go { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--red); color: var(--on-red); font: 700 .92rem/1 var(--sans); cursor: pointer; transition: opacity .3s var(--out), scale .5s var(--spring); }
 .answer .go[hidden] { display: none; }
 
 /* ---------------------------------------------------------------- lines */
@@ -280,7 +282,7 @@ h3 { font-size: 1.25rem; line-height: 1.15; font-weight: 750; font-stretch: 108%
 .close .vq::before { background: #fff; }
 .close .vq-ver { background: rgba(255,255,255,.18); color: #fff; }
 .close p { color: rgba(255,255,255,.9); margin: 22px 0 0; max-width: 42rem; }
-.close .next { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; min-height: 52px; padding: 0 22px; border-radius: 999px; background: #fff; color: #0D4F4F; text-decoration: none; font: 700 1rem/1 var(--sans); transition: background-color .2s ease; }
+.close .next { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; min-height: 52px; padding: 0 22px; border-radius: 999px; background: #fff; color: #0D4F4F; text-decoration: none; font: 700 1rem/1 var(--sans); transition: background-color .2s var(--out), opacity .3s var(--out), scale .5s var(--spring); }
 .close .next:hover { background: #E8F7F6; }
 .close .esv-ref { color: inherit; text-decoration-color: rgba(255,255,255,.5); }
 
@@ -330,6 +332,35 @@ body{text-wrap-style:pretty}
 h1,h2,h3{text-wrap:balance}
 :where(h4,h5,h6,summary,legend,caption,dt,th,button){text-wrap-style:balance}
 p,li,dd,figcaption{text-wrap:pretty}
+</style>
+<style id="motion">/* Motion and touch, November 9, 2026: one easing language, a visible press, eased opens. */
+:root { --out: cubic-bezier(.22, 1, .36, 1); --spring: cubic-bezier(.34, 1.4, .64, 1); }
+button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+a { transition: opacity .3s var(--out), text-decoration-color .3s var(--out); }
+.bar-home, .bar-name { transition: color .25s var(--out), opacity .3s var(--out), scale .5s var(--spring); }
+/* Press: the script adds .is-pressed (after 70ms on touch, so starting a scroll never flashes)
+   and holds it at least 130ms, so even a quick tap shows. Going in is fast; coming back springs. */
+.is-pressed { opacity: .6; }
+:is(.seg button, .icon-btn, .yn button, .answer .go, .close .next, .bar-home, .bar-name, .kind-btn, a, button, [role="tab"]).is-pressed { transition-duration: .08s; }
+:is(.seg button, .icon-btn, .yn button, .answer .go, .close .next, .bar-home, .bar-name).is-pressed { scale: .94; }
+:is(.kind-btn).is-pressed { opacity: .78; scale: .975; }
+:is(.seg button, .icon-btn, .yn button, .answer .go, .close .next, .bar-home, .bar-name, .kind-btn):active:not(.is-pressed) { scale: none; }
+/* A sliding pill behind the selected option */
+.has-thumb { position: relative; isolation: isolate; }
+.has-thumb::before { content: ""; position: absolute; left: 0; top: 0; z-index: -1; width: var(--tw, 0px); height: var(--th, 0px); translate: var(--tx, 0px) var(--ty, 0px); border-radius: 999px; background: var(--ink); opacity: 0; }
+.has-thumb.thumb-on::before { opacity: 1; }
+.has-thumb.thumb-live::before { transition: translate .55s var(--out), width .55s var(--out), height .55s var(--out), opacity .2s var(--out); }
+.has-thumb.has-thumb > [aria-pressed="true"], .has-thumb.has-thumb > [aria-selected="true"] { background: transparent; }
+/* A box changing height clips while it eases */
+.morphing { overflow: clip; }
+/* Theme change: the new palette opens as a circle from the toggle */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+/* Scroll reveal. The head script sets html.rv only when motion is allowed and the observer exists,
+   and takes it off again if the page script has not confirmed the observer within 3 seconds. */
+html.rv :is(.hero-q .l1, .hero-q .l2, .hero-cite, .hero-foot, .track, .sec-head, .tl, .pair, .heart, .not, .well, .feel, .kinds-nav, .kinds, .diag, .line-card, .motto, .story, .close):not(.in) { opacity: 0; }
+html.rv :is(.hero-q .l1, .hero-q .l2, .hero-cite, .hero-foot, .track, .sec-head, .tl, .pair, .heart, .not, .well, .feel, .kinds-nav, .kinds, .diag, .line-card, .motto, .story, .close).in { animation: rise .9s var(--out) var(--d, 0s) backwards; }
+@keyframes rise { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: none; } }
+@media (prefers-reduced-motion: reduce) { .has-thumb.thumb-live::before { transition: none; } }
 </style>
 </head>
 <body>
@@ -521,6 +552,7 @@ p,li,dd,figcaption{text-wrap:pretty}
     <button class="kind-btn" role="tab" id="k-bride" aria-controls="p-bride" aria-selected="false" tabindex="-1" data-mode="pursue"><span class="k-ic"><svg class="ic"><use href="#i-ring"/></svg></span><b>The bride</b><span>Bound, but unfaithful</span></button>
   </div>
 
+  <div class="kinds">
   <div class="kind" id="p-sheep" role="tabpanel" aria-labelledby="k-sheep">
     <div class="scene">
       <span class="mode p"><svg class="ic" width="16" height="16"><use href="#i-run"/></svg>Pursue</span>
@@ -583,6 +615,7 @@ p,li,dd,figcaption{text-wrap:pretty}
       <div class="fact trap"><b>The trap</b><p>Trying to do God&rsquo;s part. Only God can build the hedge and only he can win a heart. Our part is to pray and to keep a door of hope open.</p></div>
       <div class="care">Hosea is a picture of God&rsquo;s love for his people. It is not a rule that anyone must stay in an abusive or unsafe relationship. Scripture also protects the vulnerable, and getting safe is not a failure of love.</div>
     </div>
+  </div>
   </div>
 
   <div class="diag" aria-live="polite">
@@ -682,6 +715,142 @@ p,li,dd,figcaption{text-wrap:pretty}
 <script src="/assets/scripture-popover.js"></script>
 <script src="/assets/ease-details.js" defer></script>
 <script>
+/* Motion, November 9, 2026: press feedback, sliding pills, eased panel swaps, scroll reveals and the
+   theme circle. Every animation here plays over a final state that is already set, and each one is
+   cancelled after a timeout, so a page whose animations never run still reads correctly. */
+(function () {
+  'use strict';
+  var RM = matchMedia('(prefers-reduced-motion: reduce)');
+  var OUT = 'cubic-bezier(.22, 1, .36, 1)';
+  function still() { return RM.matches || !Element.prototype.animate; }
+  var M = window.Motion = {};
+
+  /* ----- press: a visible dim on every tap target */
+  var PRESS = 'a[href], button, [role="tab"]';
+  var held = null, shown = 0, wait = 0;
+  function show(el) { el.classList.add('is-pressed'); shown = performance.now(); }
+  function drop(el, now) {
+    if (!el) return;
+    if (now) { el.classList.remove('is-pressed'); return; }
+    setTimeout(function () { el.classList.remove('is-pressed'); }, Math.max(0, 130 - (performance.now() - shown)));
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (!e.isPrimary || e.button > 0) return;
+    var el = e.target.closest && e.target.closest(PRESS);
+    if (!el || el.disabled) return;
+    clearTimeout(wait); if (held) drop(held, true); held = el;
+    if (e.pointerType === 'touch') wait = setTimeout(function () { if (held === el) show(el); }, 70); else show(el);
+  }, { passive: true });
+  document.addEventListener('pointerup', function () {
+    var el = held; held = null; clearTimeout(wait);
+    if (!el) return;
+    if (!el.classList.contains('is-pressed')) show(el);
+    drop(el);
+  }, { passive: true });
+  ['pointercancel', 'dragstart'].forEach(function (n) {
+    document.addEventListener(n, function () { clearTimeout(wait); drop(held, true); held = null; }, { passive: true });
+  });
+
+  /* ----- sliding pill behind the selected option of a group */
+  M.thumb = function (group, sel) {
+    if (!group) return;
+    group.classList.add('has-thumb');
+    function place() {
+      var b = group.querySelector(sel);
+      if (!b) { group.classList.remove('thumb-on'); return; }
+      group.style.setProperty('--tx', b.offsetLeft + 'px');
+      group.style.setProperty('--ty', b.offsetTop + 'px');
+      group.style.setProperty('--tw', b.offsetWidth + 'px');
+      group.style.setProperty('--th', b.offsetHeight + 'px');
+      group.classList.add('thumb-on');
+    }
+    place();
+    setTimeout(function () { place(); group.classList.add('thumb-live'); }, 60);
+    if (window.ResizeObserver) new ResizeObserver(place).observe(group);
+    new MutationObserver(place).observe(group, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-selected'] });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  };
+
+  /* ----- height: ease a box from the height it had to the height it has now */
+  M.grow = function (box, h0) {
+    if (still() || !box) return;
+    var h1 = box.getBoundingClientRect().height;
+    if (box._grow) box._grow.cancel();
+    if (Math.abs(h1 - h0) < 2) return;
+    box.classList.add('morphing');
+    var a = box.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 560, easing: OUT });
+    box._grow = a;
+    function done() { if (box._grow === a) { box._grow = null; box.classList.remove('morphing'); } }
+    a.onfinish = done; a.oncancel = done;
+    setTimeout(function () { if (box._grow === a) a.cancel(); }, 1400);
+  };
+
+  /* ----- fade a set of blocks in, one after another */
+  M.enter = function (els, step) {
+    if (still()) return;
+    var list = [], anims = [];
+    Array.prototype.forEach.call(els, function (el) {
+      if (el.matches('.stack, .facts, .steps, .stmts')) Array.prototype.push.apply(list, el.children); else list.push(el);
+    });
+    list.forEach(function (el, i) {
+      anims.push(el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 480, delay: Math.min(i, 6) * (step || 60), easing: OUT, fill: 'backwards' }));
+    });
+    setTimeout(function () { anims.forEach(function (a) { if (a.playState !== 'finished') a.cancel(); }); }, 1600);
+  };
+
+  /* ----- swap one tab panel for another: the box eases to the new height while the new panel fades in */
+  M.swap = function (from, to) {
+    if (!to || from === to || (!from && !to.hidden)) return;
+    var box = to.parentElement, h0 = box.getBoundingClientRect().height;
+    if (from) from.hidden = true;
+    to.hidden = false;
+    M.grow(box, h0);
+    M.enter(to.children);
+  };
+
+  /* ----- change a box's contents with an eased height and a soft fade */
+  M.morph = function (box, change, fade) {
+    var h0 = box.getBoundingClientRect().height;
+    change();
+    M.grow(box, h0);
+    if (fade) M.enter(fade, 50);
+  };
+
+  /* ----- theme: the new palette opens as a circle from the button that asked for it */
+  var busy = false;
+  M.theme = function (apply, origin) {
+    if (still() || !document.startViewTransition || busy || !origin) { apply(); return; }
+    busy = true;
+    var r = origin.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    var rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    function free() { busy = false; }
+    var vt = document.startViewTransition(apply);
+    vt.finished.then(free, free); setTimeout(free, 1500);
+    vt.ready.then(function () {
+      document.documentElement.animate(
+        { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + rad + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 650, easing: OUT, pseudoElement: '::view-transition-new(root)' });
+    }, function () {});
+  };
+
+  /* ----- scroll reveal: blocks rise in as they arrive, staggered within each arrival */
+  var REVEAL = '.hero-q .l1, .hero-q .l2, .hero-cite, .hero-foot, .track, .sec-head, .tl, .pair, .heart, .not, .well, .feel, .kinds-nav, .kinds, .diag, .line-card, .motto, .story, .close';
+  if (document.documentElement.classList.contains('rv')) {
+    var io = new IntersectionObserver(function (entries) {
+      window.__rvOK = true;
+      var n = 0;
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.style.setProperty('--d', Math.min(n++, 6) * 70 + 'ms');
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
+    document.querySelectorAll(REVEAL).forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+<script>
 (function () {
   'use strict';
   var VERSES = JSON.parse(document.getElementById('verses').textContent);
@@ -689,25 +858,34 @@ p,li,dd,figcaption{text-wrap:pretty}
   var S = window.EsmrskyScripture;
   var codes = ['NIV', 'NASB', 'TPT'];
   var cur = 'NIV';
+  var M = window.Motion, todo = [], swapT = 0;
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 
   function paint(code) {
     cur = code;
     document.querySelectorAll('.seg button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === code)); });
+    todo = [];
     document.querySelectorAll('.vq').forEach(function (f) {
       var v = VERSES[f.dataset.ref]; if (!v) return;
       var text = v[code], label = code, note = '';
       if (!text) { text = v.NIV; label = 'NIV'; note = code + ' has no text for this book yet'; }
       var bq = f.querySelector('blockquote'), ver = f.querySelector('.vq-ver');
       var old = f.querySelector('.vq-note'); if (old) old.remove();
-      if (bq.textContent === text) { ver.textContent = label; return; }
+      if (bq.textContent === text) { ver.textContent = label; f.classList.remove('swapping'); return; }
       f.classList.add('swapping');
-      setTimeout(function () {
-        bq.textContent = text; ver.textContent = label;
-        if (note) { var n = document.createElement('span'); n.className = 'vq-note'; n.textContent = note; f.querySelector('figcaption').appendChild(n); }
-        f.classList.remove('swapping');
-      }, 180);
+      todo.push({ f: f, bq: bq, ver: ver, text: text, label: label, note: note });
     });
+    clearTimeout(swapT);
+    swapT = setTimeout(function () {
+      var vh = innerHeight, near = todo.map(function (t) { var r = t.f.getBoundingClientRect(); return r.bottom > -200 && r.top < vh + 200 ? r.height : null; });
+      todo.forEach(function (t) {
+        t.bq.textContent = t.text; t.ver.textContent = t.label;
+        if (t.note) { var n = document.createElement('span'); n.className = 'vq-note'; n.textContent = t.note; t.f.querySelector('figcaption').appendChild(n); }
+        t.f.classList.remove('swapping');
+      });
+      if (M) todo.forEach(function (t, i) { if (near[i] !== null) M.grow(t.f, near[i]); });
+      todo = [];
+    }, 200);
   }
   function choose(code, fromPopover) {
     if (codes.indexOf(code) < 0) return;
@@ -723,19 +901,30 @@ p,li,dd,figcaption{text-wrap:pretty}
   var saved = ls(KEY + '-version');
   if (saved && codes.indexOf(saved) >= 0 && saved !== 'NIV') choose(saved);
 
-  document.getElementById('themeBtn').addEventListener('click', function () {
+  var themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click', function () {
     var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next); ls(KEY + '-theme', next);
+    function apply() { document.documentElement.setAttribute('data-theme', next); }
+    if (M) M.theme(apply, themeBtn); else apply();
+    ls(KEY + '-theme', next);
+    var icon = themeBtn.querySelector(next === 'dark' ? '.moon' : '.sun');
+    if (icon && icon.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) icon.animate([{ rotate: '-90deg', opacity: 0 }, { rotate: '0deg', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.34, 1.4, .64, 1)' });
   });
+  if (M) M.thumb(document.querySelector('.seg'), '[aria-pressed="true"]');
 
   /* ----- four kinds tabs */
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.kind-btn'));
   function sel(t, focus) {
-    tabs.forEach(function (x) {
-      var on = x === t;
-      x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
-      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
-    });
+    if (t.getAttribute('aria-selected') !== 'true') {
+      var was = null;
+      tabs.forEach(function (x) {
+        var on = x === t, p = document.getElementById(x.getAttribute('aria-controls'));
+        if (!p.hidden && !on) was = p;
+        x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+      });
+      var now = document.getElementById(t.getAttribute('aria-controls'));
+      if (M) M.swap(was, now); else { if (was) was.hidden = true; now.hidden = false; }
+    }
     if (focus) t.focus();
   }
   tabs.forEach(function (t, i) {
@@ -764,9 +953,15 @@ p,li,dd,figcaption{text-wrap:pretty}
     else if (A.chose === 'n' || A.way === 'n') kind = 'sheep';
     var t = document.getElementById('ansTitle'), b = document.getElementById('ansBody'), g = document.getElementById('ansGo');
     if (!answered) return;
-    if (!kind) { t.textContent = 'Keep going.'; b.textContent = 'A couple more answers and a story will stand out.'; g.hidden = true; return; }
-    t.textContent = R[kind][0]; b.textContent = R[kind][1] + (answered < 4 ? ' (Answer the rest to be surer.)' : '');
-    g.hidden = false; g.dataset.k = kind;
+    var title = kind ? R[kind][0] : 'Keep going.';
+    var body = kind ? R[kind][1] + (answered < 4 ? ' (Answer the rest to be surer.)' : '') : 'A couple more answers and a story will stand out.';
+    var fresh = t.textContent !== title;
+    if (!fresh && b.textContent === body) return;
+    function change() {
+      t.textContent = title; b.textContent = body;
+      g.hidden = !kind; if (kind) g.dataset.k = kind;
+    }
+    if (M) M.morph(document.getElementById('answer'), change, fresh ? [t, b, g] : null); else change();
   }
   document.querySelectorAll('.qrow').forEach(function (row) {
     row.querySelectorAll('button').forEach(function (btn) {
