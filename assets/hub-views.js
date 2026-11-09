@@ -35,7 +35,7 @@
     { id: 'practice', en: 'Faith in practice', ru: 'Вера на практике',
       den: 'Field guides for where you are and how you grow.',
       dru: 'Путеводители о том, где вы сейчас и как растёте.',
-      s: ['soundings', 'where-are-you', 'three-territories', 'received', 'focus', 'tuned',
+      s: ['soundings', 'where-are-you', 'three-territories', 'received', 'firsthand', 'pursue-or-wait', 'focus', 'tuned',
           'measured', 'the-fixed-point', 'the-gap', 'something-in-the-air', 'graded',
           'broken-cistern', 'be-filled', 'the-return-new', 'twelve', 'atlas-v3'] },
     { id: 'mind', en: 'Mind & body', ru: 'Ум и тело',
@@ -112,7 +112,8 @@
     ['combo-stern', 'combo-stern-loop-love', 'sequel'], ['Fake-Love', 'combo-stern-loop-love', 'sibling'],
     ['uncooked', 'happy-heisenberg', 'sibling'], ['broken-cistern', 'be-filled', 'sibling'],
     ['broken-cistern', 'one-shape', 'sibling'], ['desire-master', 'architecture-of-desire', 'sibling'],
-    ['feels-like-learning', 'how-to-teach', 'sibling'], ['the-whole', 'throughline', 'sibling']
+    ['feels-like-learning', 'how-to-teach', 'sibling'], ['the-whole', 'throughline', 'sibling'],
+    ['firsthand', 'pursue-or-wait', 'sibling']
   ];
   var REL = {
     earlier: { a: ['Earlier version of', 'Ранняя версия'], b: ['Rebuilt from', 'Переделка'] },
