@@ -29,6 +29,7 @@
       den: 'Word studies, teachings and companions that stay close to the text.',
       dru: 'Разборы слов, учения и пособия, которые держатся близко к тексту.',
       s: ['the-thread', 'faith', 'salvation', 'the-word', 'ecclesia', 'judgment', 'given', 'rendered',
+          'rose-window', 'interchange', 'eight-rooms', 'vine-and-branches',
           'fear-of-god-ii', 'spirit-soul-body', 'father-inside-time', 'before-the-mountains',
           'draw-near', 'inner-room', 'same-fire', 'one-accord', 'word-in-season',
           'word-in-season-talk', 'most-best-verses', 'master-thread'] },
@@ -113,7 +114,9 @@
     ['uncooked', 'happy-heisenberg', 'sibling'], ['broken-cistern', 'be-filled', 'sibling'],
     ['broken-cistern', 'one-shape', 'sibling'], ['desire-master', 'architecture-of-desire', 'sibling'],
     ['feels-like-learning', 'how-to-teach', 'sibling'], ['the-whole', 'throughline', 'sibling'],
-    ['firsthand', 'pursue-or-wait', 'sibling'], ['given', 'rendered', 'sibling']
+    ['firsthand', 'pursue-or-wait', 'sibling'], ['given', 'rendered', 'sibling'],
+    ['rose-window', 'interchange', 'sibling'], ['interchange', 'eight-rooms', 'sibling'],
+    ['eight-rooms', 'vine-and-branches', 'sibling'], ['vine-and-branches', 'rose-window', 'sibling']
   ];
   var REL = {
     earlier: { a: ['Earlier version of', 'Ранняя версия'], b: ['Rebuilt from', 'Переделка'] },
