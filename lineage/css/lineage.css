@@ -1,8 +1,17 @@
 /* Lineage: a dark instrument panel. Color belongs to the data, never to the chrome. */
+
+/* Stand-ins sized to IBM Plex from rendered widths of the first-screen text (November 11, 2026), so nothing
+   moves when the web font arrives. Ascent and descent are Plex's 1.025 and 0.275, divided by each size-adjust. */
+@font-face { font-family: "Plex Sans Stand-in"; src: local("Arial"), local("ArialMT"); font-weight: 400; size-adjust: 100.8%; ascent-override: 101.7%; descent-override: 27.3%; line-gap-override: 0%; }
+@font-face { font-family: "Plex Sans Stand-in"; src: local("Arial Italic"), local("Arial-ItalicMT"); font-weight: 400; font-style: italic; size-adjust: 100.8%; ascent-override: 101.7%; descent-override: 27.3%; line-gap-override: 0%; }
+@font-face { font-family: "Plex Sans Stand-in"; src: local("Arial"), local("ArialMT"); font-weight: 500; size-adjust: 102.25%; ascent-override: 100.2%; descent-override: 26.9%; line-gap-override: 0%; }
+@font-face { font-family: "Plex Sans Stand-in"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: 600 700; size-adjust: 98.6%; ascent-override: 104%; descent-override: 27.9%; line-gap-override: 0%; }
+@font-face { font-family: "Plex Mono Stand-in"; src: local("Courier New"), local("CourierNewPSMT"); font-weight: 400 500; size-adjust: 100%; ascent-override: 102.5%; descent-override: 27.5%; line-gap-override: 0%; }
+
 :root {
   --bg: #06080c; --panel: #0b0f15; --panel2: #10151d; --line: #19202b; --line2: #273041;
-  --ink: #e9eef6; --mut: #8c96a8; --dim: #5b6578; --acc: #4D7CFE;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace; --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --ink: #e9eef6; --mut: #8c96a8; --dim: #7a859b; --acc: #4D7CFE;
+  --mono: "IBM Plex Mono", "Plex Mono Stand-in", ui-monospace, Menlo, monospace; --sans: "IBM Plex Sans", "Plex Sans Stand-in", system-ui, -apple-system, sans-serif;
   --ease: cubic-bezier(.3, .7, .2, 1);
 }
 * { box-sizing: border-box; }
@@ -14,7 +23,16 @@ h1, h2, h3, h4, p, figure, dl, dd, ul, blockquote { margin: 0; padding: 0; }
 ul { list-style: none; }
 .mono { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; }
 :focus-visible { outline: 2px solid #8FB0FF; outline-offset: 2px; border-radius: 4px; }
-svg :focus-visible { outline: none; stroke: #fff; }
+/* Inside the charts, focus and hover use the same marks: a soft band on a stream, a white edge on a shape, a white underlined label. */
+.vz [tabindex]:focus-visible { outline: none; }
+.vz path.hit:hover { stroke: rgba(255, 255, 255, .09); }
+.vz path.hit:focus-visible { stroke: rgba(255, 255, 255, .22); }
+.vz circle.hit:focus-visible { stroke: #fff; stroke-width: 2; }
+.vz text[tabindex]:hover, .vz text[tabindex]:focus-visible { fill: #fff; text-decoration: underline; }
+.vz .bb:hover circle, .vz .bb:focus-visible circle { stroke: #fff; stroke-opacity: 1; stroke-width: 2; }
+.vz .cd:hover, .vz .cd:focus-visible { stroke: #fff; stroke-width: 2; }
+.vz .bin:focus-visible { fill-opacity: .07; stroke: #fff; stroke-opacity: .6; }
+.vz .pp:hover .pd, .vz .pd:hover { stroke: #fff; }
 .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #000; padding: 8px 12px; border-radius: 8px; z-index: 99; }
 .skip:focus { left: 8px; }
 
@@ -33,7 +51,7 @@ svg :focus-visible { outline: none; stroke: #fff; }
 
 /* ───── stat strip ───── */
 .kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; padding: 14px 18px 0; }
-.kpi { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2px 10px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; transition: border-color .2s ease; }
+.kpi { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2px 10px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; transition: border-color .2s ease; }
 .kpi:hover { border-color: var(--line2); }
 .kpi > .mono { grid-column: 1 / -1; color: var(--mut); }
 .kpi b { font: 500 28px/1 var(--mono); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
@@ -52,20 +70,21 @@ svg :focus-visible { outline: none; stroke: #fff; }
 .cv-h { padding: 18px 22px 6px; }
 .cv-h h1 { display: flex; flex-direction: column; gap: 6px; font-size: 30px; font-weight: 600; line-height: 1.05; letter-spacing: -.02em; }
 .cv-h h1 .mono { color: var(--dim); font-weight: 400; letter-spacing: .1em; }
-.cv-h p { margin-top: 8px; max-width: 62ch; color: var(--mut); font-size: 14.5px; }
+.cv-h p { margin-top: 8px; max-width: 37em; color: var(--mut); font-size: 14.5px; }
 .cv-b { padding: 4px 12px 6px; }
 .cv-b.v-flow { background: radial-gradient(60% 55% at 72% 55%, rgba(77, 124, 254, .07), transparent 70%); }
 .cv-b.v-radial { background: radial-gradient(42% 46% at 50% 50%, rgba(169, 112, 255, .09), transparent 72%); }
 .cv-b.v-scale { background: radial-gradient(40% 50% at 34% 48%, rgba(255, 59, 59, .07), transparent 72%); }
 .cv-f { padding: 4px 22px 18px; color: var(--dim); font-size: 12.5px; }
-.cv-f p { max-width: 96ch; }
+.cv-f p { max-width: 50em; }
 .cv-f b { font-weight: 600; }
 .lg { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; color: var(--mut); white-space: nowrap; }
 .lg i { width: 10px; height: 10px; border-radius: 3px; }
 .scroll { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--line2) transparent; }
 
 /* ───── charts ───── */
-.vz { display: block; width: 100%; height: auto; font-family: var(--sans); }
+/* On wide screens a chart grows to 1.2 times its drawn size at most, so its labels stay in step with the panel text. */
+.vz { display: block; width: 100%; max-width: var(--vmax, none); height: auto; margin-inline: auto; font-family: var(--sans); }
 .vz text { font-size: 11.5px; }
 .vz text:not([fill]) { fill: var(--ink); }
 .vz .eral { font: 500 9px var(--mono); fill: var(--dim); letter-spacing: .05em; }
@@ -109,7 +128,7 @@ svg :focus-visible { outline: none; stroke: #fff; }
 .radial .discl { fill: none; stroke-opacity: .4; stroke-width: 1.4; }
 .radial .stem { stroke: #fff; stroke-opacity: .16; stroke-width: 1; }
 .radial circle.hit { fill: transparent; stroke: none; pointer-events: fill; }
-.vz .rl.gone { font-size: 10px; opacity: .8; }
+.vz .rl.gone { font-size: 10px; }
 .radial .end { stroke: var(--bg); stroke-width: 1.5; }
 
 .vz .mcl { font-size: 11px; font-weight: 500; cursor: pointer; }
@@ -135,7 +154,7 @@ svg :focus-visible { outline: none; stroke: #fff; }
 .rank { padding: 6px 8px 10px 0; }
 .rank h3 { margin: 16px 0 8px; color: var(--dim); font-weight: 500; }
 .rank h3:first-child { margin-top: 2px; }
-.rk { display: grid; grid-template-columns: 112px 1fr 66px; align-items: center; gap: 8px; min-height: 25px; font-size: 12.5px; border-radius: 6px; }
+.rk { display: grid; grid-template-columns: 122px 1fr 66px; align-items: center; gap: 8px; min-height: 25px; font-size: 12.5px; border-radius: 6px; }
 .rk:hover .rk-n { color: #fff; }
 .rk-n { color: #c5cddb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rk-b { height: 6px; background: #141a24; border-radius: 3px; overflow: hidden; }
@@ -199,7 +218,7 @@ p.lk .chip { flex: none; }
 .pchips { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
 .pchip { display: flex; align-items: center; gap: 9px; min-height: 46px; min-width: 0; border-radius: 10px; }
 .pchip span { min-width: 0; display: grid; }
-.pchip b { font-size: 13px; font-weight: 500; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pchip b { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 13px; font-weight: 500; line-height: 1.2; text-wrap: balance; }
 .pchip em { font: 10px var(--mono); font-style: normal; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pchip:hover b { color: #fff; text-decoration: underline; }
 .face { position: relative; flex: none; display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: #151b26; box-shadow: 0 0 0 1.5px var(--c); }
@@ -234,20 +253,20 @@ p.lk .chip { flex: none; }
 .starts .mono { color: var(--dim); font-weight: 400; }
 
 /* verse */
-.vs { margin: 16px 0 0; padding: 14px 16px 18px; background: linear-gradient(180deg, #131a28, #0d121b); border: 1px solid var(--line2); border-radius: 14px; }
+.vs { margin: 16px 0 0; padding: 14px 16px 18px; background: linear-gradient(180deg, #131a28, #0d121b); border: 1px solid var(--line2); border-radius: 12px; }
 .vs figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 10px; margin-bottom: 12px; }
 .vs .ref { font: 500 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #8FB0FF; white-space: nowrap; }
 .trs { display: inline-flex; gap: 1px; padding: 2px; background: #080b11; border: 1px solid var(--line); border-radius: 8px; }
 .trs button, .trs .only { min-width: 34px; min-height: 26px; padding: 0 6px; font: 10px var(--mono); letter-spacing: .04em; color: var(--mut); border-radius: 6px; transition: color .2s ease, background-color .2s ease; }
 .trs .only { display: inline-grid; place-items: center; }
 .trs button.on { background: var(--ink); color: #06080c; }
-.vs blockquote { font-size: 18px; line-height: 1.48; letter-spacing: -.005em; }
+.vs blockquote { font-size: 18px; line-height: 1.48; letter-spacing: -.005em; text-wrap: pretty; }
 .vs[data-len="l"] blockquote { font-size: 16px; }
 .vs[data-len="xl"] blockquote { font-size: 14.5px; }
 .vs sup { margin-right: 3px; font: 9.5px var(--mono); color: var(--dim); }
 .pnote { margin-top: 8px; font-size: 12.5px; color: var(--mut); }
 .pcs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-.pc { min-height: 28px; padding: 0 9px; font: 10.5px var(--mono); color: var(--mut); border: 1px solid var(--line); border-radius: 7px; transition: color .2s ease, border-color .2s ease; }
+.pc { min-height: 28px; padding: 0 9px; font: 10.5px var(--mono); color: var(--mut); border: 1px solid var(--line); border-radius: 8px; transition: color .2s ease, border-color .2s ease; }
 .pc:hover { color: var(--ink); }
 .pc.on { color: #06080c; background: #8FB0FF; border-color: #8FB0FF; }
 .split { display: flex; gap: 2px; height: 10px; }
@@ -276,6 +295,9 @@ p.lk .chip { flex: none; }
 .ease-in p, .ease-in li { font-size: 13.5px; color: #c5cddb; }
 .ease-in ul { margin-top: 10px; display: grid; gap: 6px; }
 .ease-in li { padding-left: 14px; position: relative; }
+/* Title-like bold lines balance; small running text avoids a lone last word. */
+.evr b, .rdrow b, .starts a, .rd h4 { text-wrap: balance; }
+.tiles em, .rdrow span, .ease-in li, .tip { text-wrap: pretty; }
 .ease-in li::before { content: ""; position: absolute; left: 0; top: .62em; width: 5px; height: 5px; background: var(--dim); border-radius: 1px; }
 
 /* sources */
@@ -289,7 +311,7 @@ p.lk .chip { flex: none; }
 .src .fine { display: block; margin-top: 4px; font-size: 12px; color: var(--dim); }
 .src ul { display: grid; gap: 7px; }
 .src .credits { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 18px; }
-.src .credits li { font-size: 12.5px; }
+.src .credits li { min-width: 0; font-size: 12.5px; overflow-wrap: break-word; }
 .src .credits a { color: #8FB0FF; }
 .src .credits a:hover { text-decoration: underline; }
 .src .credits span { color: var(--dim); }
@@ -334,7 +356,8 @@ p.lk .chip { flex: none; }
   .scale-wrap { grid-template-columns: minmax(0, 1fr); }
   .rank { padding: 0 10px 10px; }
   .insp { position: static; max-height: none; }
-  .insp.picked { position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 40; max-height: 74vh; border-radius: 18px 18px 0 0; border-bottom: 0; box-shadow: 0 -18px 50px rgba(0, 0, 0, .7); overscroll-behavior: contain; }
+  /* The sheet stops short of the top half, so the pick stays visible on the chart above it. */
+  .insp.picked { position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 40; max-height: 58vh; max-height: 58dvh; border-radius: 18px 18px 0 0; border-bottom: 0; box-shadow: 0 -18px 50px rgba(0, 0, 0, .7); overscroll-behavior: contain; }
   .insp.picked .ih .x { display: none; }
   .insp.picked .ih { padding-right: 0; }
   .insp.picked .insp-in { padding-top: 4px; }
@@ -342,4 +365,8 @@ p.lk .chip { flex: none; }
   .sheetbar a { display: inline-grid; place-items: center; min-height: 44px; padding: 0 14px; font: 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mut); border: 1px solid var(--line2); border-radius: 10px; background: var(--panel2); }
   .src { grid-template-columns: 1fr; padding: 8px; }
   .foot { padding: 22px 14px 30px; }
+}
+/* Tablets: the sheet keeps a reading width instead of spanning the screen. */
+@media (min-width: 640px) and (max-width: 920px) {
+  .insp.picked { width: 600px; margin-inline: auto; border: 1px solid var(--line2); border-bottom: 0; }
 }

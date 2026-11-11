@@ -1,5 +1,6 @@
-/* Lineage: shell, stat strip, inspector and router. */
-(function () {
+/* Lineage: shell, stat strip, inspector and router. It loads in the head and runs from the last line of the body,
+   so nothing is left to download between the parsed page and its first paint. */
+window.LN.boot = function () {
   "use strict";
   const CH = window.CH, LN = window.LN, V = LN.views;
   const { NOW, T, P, D, C, esc, col, tiny, kids, ancestors, related, alive, PY, READ, cover, overlap, fmtSize, bins, BIN, thumb, face } = LN;
@@ -76,7 +77,7 @@
     const row = d => `<a class="rdrow" href="${href("text/" + d.id)}"><b>${esc(d.title)}</b><span>${esc(READ[d.id][t.id].map(i => d.positions[i].name).join(" / "))}</span></a>`;
     const stance = t.stance ? `<dl class="st">${CH.stanceTopics.filter(s => t.stance[s[0]]).map(s => `<div><dt class="mono">${esc(s[1])}</dt><dd>${esc(t.stance[s[0]])}</dd></div>`).join("")}</dl>` : "";
     return head(esc(CH.families[t.family].name), esc(t.name), esc(t.blurb), c) +
-      (im ? `<figure class="ban"><img src="${esc(thumb(im.src, 500))}" alt="" loading="lazy" decoding="async" onerror="this.closest('figure').remove()"><figcaption>${esc(t.w)}</figcaption></figure>` : "") +
+      (im ? `<figure class="ban">${LN.picture(im, "")}<figcaption>${esc(t.w)}</figcaption></figure>` : "") +
       `<div class="tiles">${tile("Began", t.start, esc(t.founded))}${tile("Size today", sizeBig, esc(t.size || (t.end ? "Ended about " + t.end : "No separate figure")))}${tile("Readings listed", `${texts.length}<small>/${CH.debates.length}</small>`, "of the disputed texts")}</div>` +
       sec("Lineage", `<div class="path">${anc.map(tchip).join('<span class="arr">→</span>')}${anc.length ? '<span class="arr">→</span>' : ""}<span class="chip here" style="--c:${c}"><i></i>${esc(tiny(t))}</span></div>${t.from ? `<p class="note">${esc(t.from)}</p>` : ""}` +
         (ks.length ? `<p class="lbl mono">Branches from it</p><div class="chips">${ks.map(tchip).join("")}</div>` : "") +
@@ -107,7 +108,7 @@
     const t = T[p.t], c = t ? col(t) : "#9AA3B2", era = CH.eras.find(e => e.id === p.e), im = CH.images[p.w];
     const evs = CH.events.filter(e => (e.people || []).indexOf(p.id) >= 0), ds = CH.debates.filter(d => (d.people || []).indexOf(p.id) >= 0);
     return head(esc(era ? era.name : "") + (t ? " · " + esc(t.short) : ""), esc(p.n), esc(p.r + " · " + p.d), c) +
-      (im ? `<figure class="por"><img src="${esc(thumb(im.src, 500))}" alt="${esc(p.n)}" loading="lazy" decoding="async" onerror="this.closest('figure').remove()"></figure>` : "") +
+      (im ? `<figure class="por">${LN.picture(im, p.n)}</figure>` : "") +
       `<p class="bio">${esc(p.b)}</p>` + (t ? `<div class="chips">${tchip(t.id)}</div>` : "") +
       (evs.length ? sec("On the record", evs.map(e => `<div class="evr"><span class="mono">${esc(e.d)}</span><b>${esc(e.t)}</b></div>`).join(""), evs.length) : "") +
       (ds.length ? sec("Texts argued over", ds.map(d => `<a class="rdrow" href="${href("text/" + d.id)}"><b>${esc(d.title)}</b><span>${esc(d.q)}</span></a>`).join(""), ds.length) : "");
@@ -287,9 +288,12 @@
   $("#tabs").innerHTML = VIEWS.concat("sources").map(v => `<a href="#/${v}" data-view="${v}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICON[v]}</svg><span>${META[v].name}</span></a>`).join("");
   kpis();
   window.addEventListener("hashchange", route);
-  // Motion only where frames really run. If none arrives, the page paints still and nothing waits on an animation.
-  let started = false;
-  const start = live => { if (started) return; started = true; if (live) document.documentElement.classList.add("live"); route(); };
-  requestAnimationFrame(() => start(true));
-  setTimeout(() => start(false), 160);
-})();
+  // Draw now, so the first paint is the finished map. Motion runs only where it is welcome and frames really
+  // arrive: if no frame has come within 250ms (a hidden tab, an embedded preview), the still picture stays.
+  const root = document.documentElement;
+  if (matchMedia("(prefers-reduced-motion: no-preference)").matches && document.visibilityState === "visible") root.classList.add("live");
+  route();
+  let framed = false;
+  requestAnimationFrame(() => (framed = true));
+  setTimeout(() => { if (!framed) root.classList.remove("live"); }, 250);
+};

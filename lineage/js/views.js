@@ -70,7 +70,7 @@
     });
     axis += `<text class="trk" x="${L}" y="${H - 4}">COUNCILS AND CONFESSIONS</text>`;
 
-    return `<div class="scroll"><svg class="vz flow" viewBox="0 0 ${W} ${H}" style="--mw:980px" role="img" aria-label="Flow view: every tradition as a stream from the year 30 to today"><defs>${defs}</defs><g class="grid">${grid}</g>${axis}<g class="links">${links}</g><g class="ribs">${ribs}</g>${caps}<g class="labels">${labels}</g><g class="hits">${hits}</g>${dots}</svg></div>`;
+    return `<div class="scroll"><svg class="vz flow" viewBox="0 0 ${W} ${H}" style="--mw:980px;--vmax:${Math.round(W * 1.2)}px" role="group" aria-label="Flow view: every tradition as a stream from the year 30 to today"><defs>${defs}</defs><g class="grid">${grid}</g>${axis}<g class="links">${links}</g><g class="ribs">${ribs}</g>${caps}<g class="labels">${labels}</g><g class="hits">${hits}</g>${dots}</svg></div>`;
   };
 
   /* ═════ RADIAL: the tree grown outward, people as dots ═════ */
@@ -139,7 +139,7 @@
       if (!t.end) { const e = pol(a, R1); ends += `<circle class="end" data-t="${t.id}" cx="${f(e[0])}" cy="${f(e[1])}" r="${f(LN.size[t.id] ? 2.6 + 4.4 * logw(LN.size[t.id]) : 3)}" fill="${c}"/>`; }
     });
 
-    return `<div class="scroll center"><svg class="vz radial" viewBox="0 0 ${W} ${H}" style="--mw:820px" role="img" aria-label="Radial view: the family tree grown outward from the year 30, with people as dots">${rings}<g class="ribs">${lines}</g>${ends}<g class="hits">${hits}</g><g class="people">${ppl}</g><g class="labels">${labels}</g></svg></div>`;
+    return `<div class="scroll center"><svg class="vz radial" viewBox="0 0 ${W} ${H}" style="--mw:820px;--vmax:${Math.round(W * 1.05)}px" role="group" aria-label="Radial view: the family tree grown outward from the year 30, with people as dots">${rings}<g class="ribs">${lines}</g>${ends}<g class="hits">${hits}</g><g class="people">${ppl}</g><g class="labels">${labels}</g></svg></div>`;
   };
 
   /* ═════ MATRIX: texts by traditions ═════ */
@@ -168,7 +168,7 @@
         y += P;
       });
     });
-    return `<div class="scroll"><svg class="vz matrix" viewBox="0 0 ${W} ${y + 8}" style="--mw:${Math.round(W * 0.86)}px" role="img" aria-label="Matrix view: 29 disputed texts by tradition, colored by the reading each one takes">${heads}${body}</svg></div>`;
+    return `<div class="scroll"><svg class="vz matrix" viewBox="0 0 ${W} ${y + 8}" style="--mw:${Math.round(W * 0.86)}px;--vmax:${Math.round(W * 1.2)}px" role="group" aria-label="Matrix view: 29 disputed texts by tradition, colored by the reading each one takes">${heads}${body}</svg></div>`;
   };
   // Color the cells: by reading when nothing is picked, or by agreement with the picked tradition.
   V.paintMatrix = function (root, focus) {
@@ -219,7 +219,7 @@
     const rank = items.map(it => `<a class="rk" href="#/scale/t/${it.t.id}" data-t="${it.t.id}"><span class="rk-n">${esc(tiny(it.t))}</span><span class="rk-b"><i style="width:${f(Math.max(2, logw(it.v) * 100))}%;background:${col(it.t)}"></i></span><span class="rk-v">${esc(LN.soft[it.t.id] ? "no figure" : fmtSize(it.t.id))}</span></a>`).join("");
     const chip = t => `<a class="chip" href="#/scale/t/${t.id}" data-t="${t.id}" style="--c:${col(t)}"><i></i>${esc(tiny(t))}</a>`;
     const inside = living.filter(t => !LN.size[t.id]), gone = CH.traditions.filter(t => t.end);
-    return `<div class="scale-wrap"><div class="scroll"><svg class="vz scale" viewBox="0 0 ${W} ${H}" style="--mw:560px" role="img" aria-label="Scale view: living traditions as circles sized by their estimated membership today"><defs>${defs}</defs>${circles}</svg></div>
+    return `<div class="scale-wrap"><div class="scroll"><svg class="vz scale" viewBox="0 0 ${W} ${H}" style="--mw:560px;--vmax:${Math.round(W * 1.2)}px" role="group" aria-label="Scale view: living traditions as circles sized by their estimated membership today"><defs>${defs}</defs>${circles}</svg></div>
       <div class="rank"><h3 class="mono">Ranked, log scale</h3>${rank}
         <h3 class="mono">Counted inside another figure</h3><div class="chips">${inside.map(chip).join("")}</div>
         <h3 class="mono">No longer a living body</h3><div class="chips">${gone.map(chip).join("")}</div></div></div>`;
@@ -258,7 +258,7 @@
     MARKS.forEach(m => { const n = alive(m); marks += `<circle class="am" cx="${f(X(m))}" cy="${f(ya(n))}" r="3.4"/><text class="an" x="${f(X(m))}" y="${f(ya(n) - 9)}" text-anchor="middle">${n}</text>`; });
     for (let y = 250; y <= 2000; y += 250) axis += `<line class="tick" x1="${f(X(y))}" y1="${yA1}" x2="${f(X(y))}" y2="${yA1 + 6}"/><text class="yr" x="${f(X(y))}" y="${yA1 + 22}" text-anchor="middle">${y}</text>`;
     const trk = (y, s) => `<text class="trk" x="${L + 4}" y="${y}">${s}</text>`;
-    return `<div class="scroll"><svg class="vz pulse" viewBox="0 0 ${W} ${H}" style="--mw:940px" role="img" aria-label="Pulse view: events, people, councils and living bodies in 50-year steps">
+    return `<div class="scroll"><svg class="vz pulse" viewBox="0 0 ${W} ${H}" style="--mw:940px;--vmax:${Math.round(W * 1.2)}px" role="group" aria-label="Pulse view: events, people, councils and living bodies in 50-year steps">
       <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4D7CFE" stop-opacity=".42"/><stop offset="1" stop-color="#4D7CFE" stop-opacity="0"/></linearGradient></defs>
       ${bg}<line class="base" x1="${L}" y1="${yE}" x2="${R}" y2="${yE}"/><line class="base" x1="${L}" y1="${yP}" x2="${R}" y2="${yP}"/><line class="base" x1="${L}" y1="${yA1}" x2="${R}" y2="${yA1}"/>
       ${trk(48, CH.events.length + " EVENTS")}${trk(yE + 22, CH.people.length + " PEOPLE")}${trk(yC - 20, CH.councils.length + " COUNCILS AND CONFESSIONS")}${trk(yA0 + 4, "BODIES ALIVE")}

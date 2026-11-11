@@ -84,6 +84,20 @@
   /* ───── images ───── */
   // Wikimedia serves fixed thumbnail steps; a small face should not pull the full-size file.
   const thumb = (src, px) => (px ? src.replace(/\/(\d+)px-/, (m, n) => (+n > px ? "/" + px + "px-" : m)) : src);
+  // The banner and portrait need about 740px for a sharp picture on a phone or laptop screen. Wikimedia's 960px
+  // step where the original is that wide; otherwise the original file, which is then under 960px.
+  const sharp = im => {
+    const m = /\/(\d+)px-/.exec(im.src);
+    if (!m) return { src: im.src, w: im.w };
+    const ow = LN.mid[im.file];
+    if (!ow) return { src: im.src.replace(/\/\d+px-/, "/960px-"), w: 960 };
+    return { src: im.src.replace("://thumb.wikimedia.org/", "://upload.wikimedia.org/").replace("/thumb/", "/").replace(/\/[^\/]+$/, ""), w: ow };
+  };
+  const picture = (im, alt) => {
+    const lo = thumb(im.src, 500), hi = sharp(im);
+    const set = hi.src === lo ? "" : ` srcset="${esc(lo)} 500w, ${esc(hi.src)} ${hi.w}w" sizes="(max-width: 920px) min(100vw, 600px), 370px"`;
+    return `<img src="${esc(lo)}"${set} alt="${esc(alt)}" loading="lazy" decoding="async" onerror="this.closest('figure').remove()">`;
+  };
   const initials = n => n.replace(/\(.*?\)/g, "").split(/\s+/).filter(w => /^[A-Z]/.test(w)).slice(0, 2).map(w => w[0]).join("");
   const face = (p, px, cls) => {
     const im = CH.images[p.w], c = p.t && T[p.t] ? col(p.t) : "#9AA3B2";
@@ -91,5 +105,5 @@
   };
 
   Object.assign(LN, { NOW, T, P, D, C, esc, col, tiny, tf, MARKS, kids, ancestors, descendants, related, alive, living, PY, peopleOf,
-    READ, cover, share, overlap, matrixCols, fmtSize, BIN, bins, binOf, thumb, face, eraStops: stops });
+    READ, cover, share, overlap, matrixCols, fmtSize, BIN, bins, binOf, thumb, picture, face, eraStops: stops });
 })();
