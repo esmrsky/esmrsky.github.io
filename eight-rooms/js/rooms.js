@@ -356,7 +356,7 @@
       ${more(`Image credits: ${imgs.length} pictures`, `<ul class="imgs">${imgs.map(k => { const im = CH.images[k]; return `<li><a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(im.file)}" target="_blank" rel="noopener">${esc(k)}</a><span>${esc([byline(im), im.lic].filter(Boolean).join(", ") || "Wikimedia Commons")}</span></li>`; }).join("")}</ul>`, "cr-more")}
       <footer class="foot">
         <p class="mono">Other versions</p>
-        <p class="foot-v"><a href="../vine-and-branches/">Vine &amp; Branches</a><a href="../rose-window/">Rose Window</a><a href="../interchange/">Interchange</a></p>
+        <p class="foot-v"><a href="../vine-and-branches/">Vine &amp; Branches</a><a href="../rose-window/">Rose Window</a><a href="../interchange/">Interchange</a><a href="../lineage/">Lineage</a></p>
         <p class="foot-h"><a href="/">All projects</a><a href="#/room/apostolic">Back to Room 1</a></p>
       </footer>
     </section>`;
