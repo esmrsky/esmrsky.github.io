@@ -250,18 +250,32 @@ window.LN.boot = function () {
     if (kind) st.fam = null;
     pendingFocus = null;
     if (changed) renderCanvas();
-    renderInsp(); applySel(); paintTabs();
+    renderInsp(); applySel(); paintTabs(); keepInView();
     if (painted) $("#insp").classList.add("sw");
     painted = true;
     const name = kind === "t" && T[id] ? T[id].name : kind === "text" && D[id] ? D[id].title : kind === "p" && P[id] ? P[id].n : kind === "c" && C[id] ? C[id].name : "";
     document.title = (name ? name + " · " : "") + META[view].name + " · Lineage";
   }
 
-  const open = el => { if (el.dataset.focus) pendingFocus = el.dataset.focus; location.hash = "#/" + st.view + "/" + el.dataset.open; };
+  // On a phone the sheet covers the lower part of the screen. A tap on the map then moves the page until the
+  // tapped spot sits in the open band between the top bar and the sheet, so the pick stays in sight.
+  let tapY = null;
+  function keepInView() {
+    if (tapY == null) return;
+    const y = tapY, sheet = $("#insp"); tapY = null;
+    if (!sheet.classList.contains("picked") || getComputedStyle(sheet).position !== "fixed") return;
+    const top = $(".top").getBoundingClientRect().bottom, bottom = sheet.getBoundingClientRect().top;
+    if (y > bottom - 24 || y < top + 8) window.scrollBy({ top: y - (top + bottom) / 2, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  const open = el => {
+    if (el.dataset.focus) pendingFocus = el.dataset.focus;
+    const h = "#/" + st.view + "/" + el.dataset.open;
+    if (location.hash === h) keepInView(); else location.hash = h;
+  };
   document.addEventListener("click", e => {
     const el = e.target.closest("[data-open],[data-more],[data-tr],[data-pi],[data-fam]");
     if (!el) return;
-    if (el.dataset.open) { e.preventDefault(); open(el); }
+    if (el.dataset.open) { e.preventDefault(); tapY = el.closest("#cvb") ? e.clientY : null; open(el); }
     else if (el.hasAttribute("data-more")) { const m = el.closest(".more"), on = m.classList.toggle("open"); el.setAttribute("aria-expanded", on); }
     else if (el.dataset.tr) { curTr = el.dataset.tr; store.set("vb.tr", curTr); paintVerses(); }
     else if (el.dataset.pi) { psel[st.id] = +el.dataset.pi; const y = $("#insp").scrollTop; renderInsp(); $("#insp").scrollTop = y; }
