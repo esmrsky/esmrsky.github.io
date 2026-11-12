@@ -3735,6 +3735,111 @@ footer.site-foot .foot-note { max-width: 62ch; margin: 18px auto 0; font-size: 0
   .lang-switch .lang-opt[aria-current="page"], .lang-switch .lang-sep { display: none; }
   .topbar-actions { gap: 6px; }
 }
+
+/* ---------- sections menu ----------
+   When the nine section names no longer fit on one line, the strip that used to scroll
+   sideways becomes a list behind a menu button. JS measures the strip (both languages, every
+   typeface) and sets html.nav-menu; without JS the strip stays as it was. The panel is the
+   same #nav element, so active state, scrollspy and click handling are shared, not copied. */
+.menu-btn, .menu-scrim, .nav-foot, .nav-blurb { display: none; }
+
+.nav-menu .menu-btn {
+  display: grid; place-items: center;
+  flex-shrink: 0; width: 34px; height: 34px;
+  border: 1px solid var(--line); border-radius: 50%;
+  color: var(--ink-soft); background: var(--card-2);
+}
+.nav-menu .menu-btn:hover, .menu-open .menu-btn { color: var(--ink); border-color: var(--ink-faint); }
+@media (pointer: coarse) { .nav-menu .menu-btn { width: 44px; height: 44px; } }
+.menu-bars { position: relative; display: block; width: 16px; height: 12px; }
+.menu-bars i {
+  position: absolute; left: 0; right: 0; height: 1.8px; border-radius: 2px;
+  background: currentColor;
+  transition: transform .22s cubic-bezier(.2,.7,.2,1), opacity .15s ease;
+}
+.menu-bars i:nth-child(1) { top: 0; }
+.menu-bars i:nth-child(2) { top: 5.1px; }
+.menu-bars i:nth-child(3) { top: 10.2px; }
+.menu-open .menu-bars i:nth-child(1) { transform: translateY(5.1px) rotate(45deg); }
+.menu-open .menu-bars i:nth-child(2) { opacity: 0; }
+.menu-open .menu-bars i:nth-child(3) { transform: translateY(-5.1px) rotate(-45deg); }
+
+.nav-menu .navstrip { display: none; }
+.nav-menu.menu-open .navstrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
+  align-content: start;
+  gap: 4px 10px;
+  position: absolute; top: 100%; left: 0; right: 0;
+  /* lines the list up with the page column on a tablet, 14px gutters on a phone */
+  padding: 10px max(14px, calc((100% - 1080px) / 2)) 18px;
+  margin: 0;
+  border-top: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
+  /* the percentage is the header's height: the list never runs off the bottom of the screen */
+  max-height: calc(100vh - 100%);
+  max-height: calc(100dvh - 100%);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.nav-menu .nav-link {
+  display: grid;
+  grid-template-columns: 7px 1fr;
+  column-gap: 12px;
+  align-items: center;
+  white-space: normal;
+  font-size: 0.74em;
+  padding: 11px 14px;
+  min-height: 0;
+  border-radius: var(--r);
+}
+.nav-menu .nav-blurb {
+  display: block;
+  grid-column: 2;
+  margin-top: 3px;
+  font-family: var(--font-body);
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.menu-open { overflow: hidden; }
+.menu-open .menu-scrim {
+  display: block;
+  position: fixed; inset: 0;
+  z-index: calc(var(--z-topbar) - 1);
+  background: rgba(20, 17, 13, 0.36);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* fades in place: the list is readable while it arrives, so it does not slide */
+  .nav-menu.menu-open .navstrip, .menu-open .menu-scrim { animation: menu-fade .18s ease both; }
+  @keyframes menu-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) { .menu-bars i { transition: none; } }
+
+/* On a phone the bar has room for the picker, the settings and the menu button, not the
+   language switch too: it moves to the foot of the list, both languages shown. */
+@media (max-width: 560px) {
+  .nav-menu .topbar-actions > .lang-switch { display: none; }
+  .nav-menu .nav-foot {
+    display: flex; align-items: center;
+    grid-column: 1 / -1;
+    margin-top: 6px; padding-top: 4px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--ink-soft);
+  }
+  .nav-foot .lang-switch .lang-opt[aria-current="page"] { display: inline-grid; }
+  .nav-foot .lang-switch .lang-sep { display: inline; }
+}
+/* 360px phones: the book icon on the picker is the one thing the bar can spare */
+@media (max-width: 400px) {
+  .nav-menu .verpick-ic { display: none; }
+}
 </style>
 </head>
 <body>
@@ -8159,12 +8264,89 @@ function initBackToTop() {
   update();
 }
 
+/* Sections menu. The strip used to scroll sideways whenever the nine names did not fit, which
+   on a phone hid six of them and doubled the header. Now, when they do not fit on one line,
+   the same #nav becomes a list behind a menu button. Fit is measured, not guessed from a
+   breakpoint: Russian names run longer, and the Atkinson typeface widens the labels. */
+function initNavMenu() {
+  const root = document.documentElement;
+  const nav = document.getElementById('nav');
+  const actions = document.querySelector('.topbar-actions');
+  if (!nav || !actions) return;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'menu-btn';
+  btn.id = 'menu-btn';
+  btn.setAttribute('aria-controls', 'nav');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-label', TXT('Sections'));
+  btn.title = TXT('Sections');
+  btn.innerHTML = '<span class="menu-bars" aria-hidden="true"><i></i><i></i><i></i></span>';
+  actions.appendChild(btn);
+
+  /* on a phone the language switch has no room in the bar, so it sits at the foot of the list */
+  const lang = actions.querySelector('.lang-switch');
+  if (lang) {
+    const foot = document.createElement('div');
+    foot.className = 'nav-foot';
+    foot.appendChild(lang.cloneNode(true));
+    nav.appendChild(foot);
+  }
+
+  const scrim = document.createElement('div');
+  scrim.className = 'menu-scrim';
+  document.body.appendChild(scrim);
+
+  let open = false;
+  const setOpen = (v, opts) => {
+    if (v === open) return;
+    open = v;
+    root.classList.toggle('menu-open', v);
+    btn.setAttribute('aria-expanded', String(v));
+    if (v) {
+      const a = nav.querySelector('.nav-link.active') || nav.querySelector('.nav-link');
+      if (a) a.focus({ preventScroll: true });
+    } else if (opts && opts.focus) btn.focus();
+  };
+
+  const fit = () => {
+    root.classList.remove('nav-menu');
+    const tight = nav.scrollWidth > nav.clientWidth + 2;
+    root.classList.toggle('nav-menu', tight);
+    if (!tight) setOpen(false);
+  };
+
+  btn.addEventListener('click', () => setOpen(!open));
+  scrim.addEventListener('click', () => setOpen(false));
+  /* capture: the list closes (and the page unlocks) before the link's own handler scrolls */
+  nav.addEventListener('click', ev => { if (open && ev.target.closest('a')) setOpen(false); }, true);
+  nav.addEventListener('focusout', ev => {
+    if (open && ev.relatedTarget && !ev.relatedTarget.closest('#nav, #menu-btn')) setOpen(false);
+  });
+  document.addEventListener('click', ev => {
+    if (open && !ev.target.closest('#nav, #menu-btn')) setOpen(false);
+  });
+  document.addEventListener('keydown', ev => {
+    if (ev.key === 'Escape' && open) { ev.preventDefault(); setOpen(false, { focus: true }); }
+  });
+  window.addEventListener('hashchange', () => setOpen(false));
+
+  let raf = 0;
+  const refit = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); };
+  window.addEventListener('resize', refit);
+  /* the typeface setting changes the label font, and so the strip's width */
+  new MutationObserver(refit).observe(root, { attributes: true, attributeFilter: ['data-type'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+}
+
 function boot() {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   const nav = document.getElementById('nav');
   nav.innerHTML = NAV.map(n =>
-    '<a class="nav-link" data-view="' + n.id + '" href="#/' + n.id + '" style="--c:var(' + n.cvar + ')"><span class="dot"></span>' + n.label + '</a>').join('');
+    '<a class="nav-link" data-view="' + n.id + '" href="#/' + n.id + '" style="--c:var(' + n.cvar + ')"><span class="dot"></span>' + n.label + '<span class="nav-blurb">' + n.blurb + '</span></a>').join('');
 
   // Set up nav click listeners for smooth scrolling
   document.querySelectorAll('.nav-link').forEach(a => {
@@ -8185,6 +8367,7 @@ function boot() {
     });
   });
 
+  initNavMenu();
   initPrefs();
 
   initVersionPicker();

@@ -269,5 +269,6 @@ const UI_RU = {
   'Loading more…': 'Загружаю еще…',
   'That’s all of it': 'Это все',
   'Unable to load the surrounding verses right now.': 'Сейчас не удается загрузить соседние стихи.',
-  'Jump to {label}': 'Перейти: {label}'
+  'Jump to {label}': 'Перейти: {label}',
+  'Sections': 'Разделы'
 };

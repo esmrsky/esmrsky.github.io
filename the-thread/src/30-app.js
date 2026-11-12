@@ -3451,12 +3451,89 @@ function initBackToTop() {
   update();
 }
 
+/* Sections menu. The strip used to scroll sideways whenever the nine names did not fit, which
+   on a phone hid six of them and doubled the header. Now, when they do not fit on one line,
+   the same #nav becomes a list behind a menu button. Fit is measured, not guessed from a
+   breakpoint: Russian names run longer, and the Atkinson typeface widens the labels. */
+function initNavMenu() {
+  const root = document.documentElement;
+  const nav = document.getElementById('nav');
+  const actions = document.querySelector('.topbar-actions');
+  if (!nav || !actions) return;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'menu-btn';
+  btn.id = 'menu-btn';
+  btn.setAttribute('aria-controls', 'nav');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-label', TXT('Sections'));
+  btn.title = TXT('Sections');
+  btn.innerHTML = '<span class="menu-bars" aria-hidden="true"><i></i><i></i><i></i></span>';
+  actions.appendChild(btn);
+
+  /* on a phone the language switch has no room in the bar, so it sits at the foot of the list */
+  const lang = actions.querySelector('.lang-switch');
+  if (lang) {
+    const foot = document.createElement('div');
+    foot.className = 'nav-foot';
+    foot.appendChild(lang.cloneNode(true));
+    nav.appendChild(foot);
+  }
+
+  const scrim = document.createElement('div');
+  scrim.className = 'menu-scrim';
+  document.body.appendChild(scrim);
+
+  let open = false;
+  const setOpen = (v, opts) => {
+    if (v === open) return;
+    open = v;
+    root.classList.toggle('menu-open', v);
+    btn.setAttribute('aria-expanded', String(v));
+    if (v) {
+      const a = nav.querySelector('.nav-link.active') || nav.querySelector('.nav-link');
+      if (a) a.focus({ preventScroll: true });
+    } else if (opts && opts.focus) btn.focus();
+  };
+
+  const fit = () => {
+    root.classList.remove('nav-menu');
+    const tight = nav.scrollWidth > nav.clientWidth + 2;
+    root.classList.toggle('nav-menu', tight);
+    if (!tight) setOpen(false);
+  };
+
+  btn.addEventListener('click', () => setOpen(!open));
+  scrim.addEventListener('click', () => setOpen(false));
+  /* capture: the list closes (and the page unlocks) before the link's own handler scrolls */
+  nav.addEventListener('click', ev => { if (open && ev.target.closest('a')) setOpen(false); }, true);
+  nav.addEventListener('focusout', ev => {
+    if (open && ev.relatedTarget && !ev.relatedTarget.closest('#nav, #menu-btn')) setOpen(false);
+  });
+  document.addEventListener('click', ev => {
+    if (open && !ev.target.closest('#nav, #menu-btn')) setOpen(false);
+  });
+  document.addEventListener('keydown', ev => {
+    if (ev.key === 'Escape' && open) { ev.preventDefault(); setOpen(false, { focus: true }); }
+  });
+  window.addEventListener('hashchange', () => setOpen(false));
+
+  let raf = 0;
+  const refit = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); };
+  window.addEventListener('resize', refit);
+  /* the typeface setting changes the label font, and so the strip's width */
+  new MutationObserver(refit).observe(root, { attributes: true, attributeFilter: ['data-type'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+}
+
 function boot() {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   const nav = document.getElementById('nav');
   nav.innerHTML = NAV.map(n =>
-    '<a class="nav-link" data-view="' + n.id + '" href="#/' + n.id + '" style="--c:var(' + n.cvar + ')"><span class="dot"></span>' + n.label + '</a>').join('');
+    '<a class="nav-link" data-view="' + n.id + '" href="#/' + n.id + '" style="--c:var(' + n.cvar + ')"><span class="dot"></span>' + n.label + '<span class="nav-blurb">' + n.blurb + '</span></a>').join('');
 
   // Set up nav click listeners for smooth scrolling
   document.querySelectorAll('.nav-link').forEach(a => {
@@ -3477,6 +3554,7 @@ function boot() {
     });
   });
 
+  initNavMenu();
   initPrefs();
 
   initVersionPicker();
